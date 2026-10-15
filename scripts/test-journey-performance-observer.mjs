@@ -47,6 +47,7 @@ function harness(
       'edition',
       'multiplayer-target',
       'sample-scope',
+      'sample-duration',
     ].map((id) => [id, element(id)]),
   );
   const nodes = new Map(
@@ -505,8 +506,10 @@ test('bounded passive frame samples record distributions without pretending unsu
   assert.equal(sample.action, 'Frame sample');
   assert.equal(sample.frameIntervals.p95Ms, 16);
   assert.equal(sample.frameIntervals.medianMs, 16);
+  assert.equal(sample.requestedDurationMs, 30000);
   assert.ok(sample.frameIntervals.count >= 1800);
   assert.deepEqual(sample.longTasks, { supported: false });
+  assert.deepEqual(sample.jsHeapTimeline, { supported: false });
   assert.equal(h.outer.get('sample').disabled, false);
   assert.deepEqual(h.doc.body.dataset, {});
 });
@@ -581,8 +584,152 @@ test('supported long-task observations include only this sample and disconnect o
     count: 2,
     over50Ms: 2,
     maxMs: 75,
+    omittedCount: 0,
   });
   assert.equal(disconnected, true);
+});
+
+test('sample duration is explicit, bounded and captured when armed, including the 30-second default', () => {
+  for (const [value, seconds] of [
+    ['', 30],
+    ['30', 30],
+    ['120', 120],
+    ['300', 300],
+    ['Infinity', 30],
+    ['-1', 30],
+    ['10000', 30],
+  ]) {
+    const h = harness('team');
+    h.frame();
+    h.frame();
+    h.outer.get('sample-duration').value = value;
+    h.outer.get('sample-duration').listeners.get('change')();
+    assert.equal(h.outer.get('sample').textContent, `Observe ${seconds} seconds`);
+    h.outer.get('sample-scope').value = 'active';
+    h.outer.get('sample').listeners.get('click')();
+    assert.match(h.outer.get('status').textContent, new RegExp(`play for ${seconds} seconds`));
+    h.frame(5000);
+    h.nodes.get('coop-play').hidden = false;
+    h.frame();
+    h.outer.get('sample-duration').value = '30';
+    for (let i = 0; i < seconds * 10 - 1; i++) h.frame(100);
+    assert.equal(
+      h.records().some((row) => row.action === 'Frame sample'),
+      false,
+    );
+    h.frame(100);
+    const sample = h.records().at(-1);
+    assert.equal(sample.requestedDurationMs, seconds * 1000);
+    assert.equal(sample.durationMs, seconds * 1000);
+    assert.equal(sample.frameIntervals.p95Ms, 100);
+    assert.equal(h.outer.get('sample').disabled, false);
+  }
+});
+
+test('long active samples still discard interruption after the original 30-second window', () => {
+  for (const reason of ['pause', 'focus', 'mission', 'visibility', 'pagehide', 'navigation']) {
+    const h = harness('team', {
+      memory: { usedJSHeapSize: 100, totalJSHeapSize: 200, jsHeapSizeLimit: 300 },
+    });
+    h.frame();
+    h.frame();
+    h.outer.get('sample-duration').value = '120';
+    h.outer.get('sample-scope').value = 'active';
+    h.outer.get('sample').listeners.get('click')();
+    h.nodes.get('coop-play').hidden = false;
+    h.frame();
+    for (let i = 0; i < 700; i++) h.frame(100);
+    assert.equal(
+      h.records().some((row) => row.action === 'Frame sample'),
+      false,
+    );
+    if (reason === 'pause') h.nodes.get('coop-overlay').hidden = false;
+    if (reason === 'focus') h.doc.focused = false;
+    if (reason === 'mission') h.nodes.get('coop-level').value = 'another-field';
+    if (reason === 'visibility') {
+      h.doc.hidden = true;
+      h.doc.listeners.get('visibilitychange')();
+    }
+    if (reason === 'pagehide') h.outerWin.listeners.get('pagehide')();
+    if (reason === 'navigation') h.outer.get('game').onload();
+    h.frame();
+    const records = h.records().filter((row) => row.action === 'Frame sample');
+    assert.equal(records.length, 1);
+    assert.equal(records[0].requestedDurationMs, 120000);
+    assert.ok(records[0].observedDurationMs >= 70000);
+    assert.match(records[0].outcome, /discarded/);
+    assert.equal(records[0].frameIntervals, undefined);
+    assert.equal(
+      records[0].jsHeapTimeline,
+      undefined,
+      'Interrupted memory is not a completed sample.',
+    );
+    assert.equal(h.doc.listeners.has('keydown'), false);
+    h.frame(120000);
+    assert.equal(h.records().filter((row) => row.action === 'Frame sample').length, 1);
+  }
+});
+
+test('five-minute observations retain late frame activity and bounded sampled heap peaks, not endpoint or leak claims', () => {
+  const memory = { usedJSHeapSize: 100, totalJSHeapSize: 1000, jsHeapSizeLimit: 2000 };
+  const h = harness('team', { memory });
+  h.frame();
+  h.frame();
+  h.outer.get('sample-duration').value = '300';
+  h.outer.get('sample-scope').value = 'active';
+  h.outer.get('sample').listeners.get('click')();
+  h.nodes.get('coop-play').hidden = false;
+  h.frame();
+  let elapsed = 0;
+  while (elapsed < 290000) {
+    memory.usedJSHeapSize = elapsed >= 100000 && elapsed < 110000 ? 900 : 100;
+    h.frame(16);
+    elapsed += 16;
+  }
+  h.nodes.get('coop-coverage').textContent = 'late-window-field';
+  memory.usedJSHeapSize = 200;
+  while (elapsed < 300000) {
+    h.frame(100);
+    elapsed += 100;
+  }
+  const sample = h.records().at(-1),
+    heap = sample.jsHeapTimeline;
+  assert.ok(sample.frameIntervals.count > 10000, 'Long samples must not silently stop at old cap.');
+  assert.equal(sample.frameIntervals.maxMs, 100);
+  assert.ok(sample.frameIntervals.over50ms > 0);
+  assert.equal(sample.activity.at(-1).hud['coop-coverage'], 'late-window-field');
+  assert.ok(sample.activity.at(-1).atMs > 290000);
+  assert.ok(sample.activity.length <= 120);
+  assert.equal(heap.supported, true);
+  assert.equal(heap.intervalMs, 5000);
+  assert.equal(heap.maxSnapshots, 62);
+  assert.ok(heap.samples.length >= 60 && heap.samples.length <= 62);
+  assert.equal(heap.samples[0].atMs, 0);
+  assert.equal(heap.samples.at(-1).atMs, sample.durationMs);
+  assert.equal(heap.samples.at(-1).usedBytes, 200);
+  assert.equal(heap.peakObservedUsedBytes, 900);
+  assert.match(heap.limits, /miss peaks/);
+  assert.match(heap.limits, /No forced GC.*leak conclusion/);
+});
+
+test('missing, invalid or inaccessible heap counters do not produce fabricated timeline values', () => {
+  for (const memory of [undefined, {}, { usedJSHeapSize: NaN }, { usedJSHeapSize: -1 }, 'throws']) {
+    const h = harness();
+    if (memory === 'throws')
+      Object.defineProperty(h.win.performance, 'memory', {
+        get() {
+          throw new Error('Counter unavailable');
+        },
+      });
+    else h.win.performance.memory = memory;
+    h.frame();
+    h.frame();
+    h.outer.get('sample').listeners.get('click')();
+    for (let i = 0; i < 300; i++) h.frame(100);
+    const sample = h.records().at(-1);
+    assert.deepEqual(sample.jsHeapTimeline, { supported: false });
+    assert.deepEqual(sample.browserAfter.jsHeap, { supported: false });
+  }
 });
 
 test('Team observes the actual canvas under its display:contents wrapper, not a paused overlay', () => {

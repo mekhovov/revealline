@@ -1,0 +1,219 @@
+{
+  "format": "revealline-team-duel-release-readiness.v1",
+  "observedAt": "2026-10-15T17:44:33.015Z",
+  "base": {
+    "sourceRevision": "859d5cfc927daff2a350318b2325486a58959648",
+    "sourceTree": "f24624082c594ea4bdd11d622b56eefb70411018"
+  },
+  "scope": "Capacity and release-contract investigation. Current shared-working-tree full build preparation uses sourceRevision null. No release, tag, upload, deployment, ZIP, native stage or final composed-source qualification.",
+  "completePreparation": {
+    "sourceRevision": null,
+    "version": "0.151.1",
+    "files": 3488,
+    "totalBytes": 1072014438,
+    "payloadBytesIncludingManifest": 1072533428,
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 518990,
+      "sha256": "6e93db98b9cefe687b64cefae0042f139852560e609953be1d1d4a208678c175"
+    },
+    "inspection": {
+      "path": ".cache/team-duel-release-readiness-20261015/complete-inspection.json",
+      "bytes": 673211,
+      "sha256": "c06ca14d728698dd8aa9902d28290f8927a8bd74652e1122e4b6c30ea5bc1372"
+    },
+    "projectedStoredZipBytes": 1073126732,
+    "zipActuallyProduced": false,
+    "nativeByteLimit": 805306368,
+    "nativeExcessBytes": 266708070,
+    "nativeFileLimit": 4096,
+    "nativeMemberByteLimit": 67108864,
+    "largestMember": {
+      "path": "game/content/packs/neon-mosaic-pack.json",
+      "bytes": 15623239,
+      "sha256": "b7835f71ad45e7a8fcaae4b81f30fe91cf7c3e7e0e215a8a675f521b8f438ef6"
+    },
+    "releaseZipLimit": 950000000,
+    "releaseZipExcessBytes": 123126732,
+    "largestGroups": {
+      "game/content-design/assets": 273267869,
+      "game/editions/assets": 151161476,
+      "game/content/packs": 119035083,
+      "authoring/library/four-worlds-chapters": 44479519,
+      "game/ui/art": 30213650,
+      "game/presentation/compiled": 23528279,
+      "authoring/library/sentinel-theme-art": 23124586,
+      "authoring/library/neon-mosaic": 16652972,
+      "authoring/library/neon-artwork": 16384713,
+      "authoring/industrial-art-review/environments-v1": 14206569,
+      "game/content-design/runtime": 13766848,
+      "authoring/library/fpv-route-choices": 11953226
+    }
+  },
+  "mainPagesPreparation": {
+    "status": "cancelled",
+    "reason": "Optional second preparation deliberately stopped by the parent to return CPU to scoped native performance work.",
+    "ownedProcessExitCode": 143,
+    "completedInspection": false,
+    "zipProduced": false,
+    "expandedSiteProduced": false,
+    "scope": "No current-source main-pages capacity verdict."
+  },
+  "sourceManifest": {
+    "sourceRevision": "859d5cfc927daff2a350318b2325486a58959648",
+    "sourceTree": "f24624082c594ea4bdd11d622b56eefb70411018",
+    "files": 40414,
+    "originalBytes": 3159483900,
+    "regularFileBytes": 3159483900,
+    "descriptor": {
+      "path": ".cache/team-duel-release-readiness-20261015/source-manifest.json",
+      "bytes": 9579681,
+      "sha256": "6754df5dfcfe380c900edd665a7422fe42742a04aaf037065bf2dd1485e20be1"
+    },
+    "createdAndVerifiedAgainstGit": true,
+    "sourceTarProduced": false,
+    "sourceTarUploadLimit": 2000000000,
+    "fastlineManifestAdmission": "Only v0.141.6 currently selects this format; no version admission changed."
+  },
+  "remoteState": {
+    "observedAt": "2026-10-15T17:39:09.257669+00:00",
+    "latestRelease": {
+      "id": 398753035,
+      "tag_name": "v0.142.3",
+      "target_commitish": "b5ab06e12542f72e33c45b973ba693a5e1509c1c",
+      "published_at": "2026-09-29T01:34:19Z",
+      "html_url": "https://github.com/mekhovov/revealline/releases/tag/v0.142.3",
+      "immutable": false,
+      "draft": false,
+      "prerelease": false
+    },
+    "assets": [
+      {
+        "name": "distribution.zip",
+        "size": 743263890,
+        "digest": "sha256:37eca33f66bf24339d8d75a0b0920340b678e287b9233ed9fe39567cfd05e224",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/distribution.zip"
+      },
+      {
+        "name": "distribution.zip.sha256",
+        "size": 83,
+        "digest": "sha256:9cf7df647e53ced515218b4887b915e9348ded8673aa5a30111a87728ab936b7",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/distribution.zip.sha256"
+      },
+      {
+        "name": "manifest.json",
+        "size": 324322,
+        "digest": "sha256:af97bf092f440e62e1d822d1b34f36cfce667e4a729e93e0b3182b7184c910d9",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/manifest.json"
+      },
+      {
+        "name": "qualification-evidence-record.json",
+        "size": 1989,
+        "digest": "sha256:dd9522892f41eaf2f6d1898ce2c32674471e8031e4f56ca6f18f8a427c24d00d",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/qualification-evidence-record.json"
+      },
+      {
+        "name": "release.json",
+        "size": 468,
+        "digest": "sha256:3ffb0beaae70b83c38e88aaa8f864dd63de424823d8ede5f3165e4e3bfea0428",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/release.json"
+      },
+      {
+        "name": "source-qualification-evidence.zip",
+        "size": 541059,
+        "digest": "sha256:396f0256e56fc7102f31d4204427888e2801107c14b6c957d410f69d2b22f1ec",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/source-qualification-evidence.zip"
+      },
+      {
+        "name": "source-qualification.json",
+        "size": 17114,
+        "digest": "sha256:5061dcae6c33427430dba9ae9b6179e0a6b80b378ca1fe258a5a87012561494e",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/source-qualification.json"
+      },
+      {
+        "name": "source.tar",
+        "size": 1885460480,
+        "digest": "sha256:2be6706c9825081121bdf3edd76ec76cd5c523a3c14d61a311dd3a6998b458b1",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/source.tar"
+      },
+      {
+        "name": "verification.json",
+        "size": 1919,
+        "digest": "sha256:99dde2f6a75b7e16692ddfb8a6606f3fa8591452b58a0f27cbe6398789acd5fc",
+        "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.142.3/verification.json"
+      }
+    ],
+    "nativeCapacityIssue": {
+      "number": 865,
+      "state": "open",
+      "url": "https://github.com/mekhovov/revealline/issues/865",
+      "updatedAt": "2026-09-30T17:29:13Z"
+    },
+    "activeReleaseWorkflows": [
+      {
+        "name": "Assemble full-test release evidence",
+        "path": ".github/workflows/assemble-full-release-evidence.yml",
+        "state": "active"
+      },
+      {
+        "name": "Assemble waived release evidence",
+        "path": ".github/workflows/assemble-waived-release-evidence.yml",
+        "state": "active"
+      },
+      {
+        "name": "Fastline release",
+        "path": ".github/workflows/fastline-release.yml",
+        "state": "active"
+      },
+      {
+        "name": "Publish GitHub Pages from main",
+        "path": ".github/workflows/publish-main-pages.yml",
+        "state": "active"
+      },
+      {
+        "name": "Qualify release source",
+        "path": ".github/workflows/qualify-release-source.yml",
+        "state": "active"
+      },
+      {
+        "name": "Upload reviewed release originals",
+        "path": ".github/workflows/upload-release-originals.yml",
+        "state": "active"
+      }
+    ]
+  },
+  "existingPublicEvidence": {
+    "receipt": {
+      "path": "docs/research/multiplayer-public-acceptance-dependencies-2026-10-15.json",
+      "bytes": 78270,
+      "sha256": "a975483342b7dd6a89aab15c39d02b240623bc9c564a038535b14220a0b18e58"
+    },
+    "sourceRevision": "3fe21888bfa4b406c51e1ab165c0782d5d936af0",
+    "passed": true,
+    "sourceStable": true,
+    "files": 357,
+    "verifiedBytes": 251341753,
+    "scope": "Exact public or packaged bytes and offline dependency ownership. Browser progression, cache upgrades, listening and devices require separate observations."
+  },
+  "controllerInventory": {
+    "initialReadOnlyOSObservations": 2,
+    "connectedGamepads": 0,
+    "knownDisconnectedGamepads": 2,
+    "subsequentParentBrowserObservation": "Two connected DualSense entries assigned separately to P1 and P2. Physical behavior qualification belongs to the parent native session."
+  },
+  "validation": {
+    "tests": 57,
+    "pass": 57,
+    "fail": 0,
+    "skipped": 0,
+    "files": [
+      "publishing/fastline-release-evidence.test.mjs",
+      "publishing/fastline-release-inputs.test.mjs",
+      "publishing/test-policy.test.mjs",
+      "publishing/focused-tests.test.mjs"
+    ],
+    "formatting": "passed",
+    "targetedLint": "passed",
+    "whitespace": "passed"
+  }
+}
