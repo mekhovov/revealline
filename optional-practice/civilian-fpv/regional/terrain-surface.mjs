@@ -11,20 +11,6 @@ export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   return Object.freeze({ style, quality });
 }
 
-/** Change only trusted procedural surface variants; geometry and owners stay untouched. */
-export function setRegionalSurfaceQuality(root, quality) {
-  const tiers = { low: 'performance', balanced: 'balanced', high: 'quality' };
-  if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
-  const materials = new Set();
-  root?.traverse((object) => {
-    for (const material of Array.isArray(object.material) ? object.material : [object.material])
-      if (typeof material?.userData?.setRegionalSurfaceQuality === 'function')
-        materials.add(material);
-  });
-  for (const material of materials) material.userData.setRegionalSurfaceQuality(tiers[quality]);
-  return materials.size;
-}
-
 // World-space colour avoids stretched UVs on cliffs and repeats at no cell boundary.
 // It is intentionally original procedural artwork: no third-party image or decoder.
 const noise = `

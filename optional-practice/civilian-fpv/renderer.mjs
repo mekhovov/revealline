@@ -1,5 +1,4 @@
 import * as THREE from './vendor/three.module.js';
-import { setRegionalSurfaceQuality } from './regional/terrain-surface.mjs';
 import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
@@ -46,6 +45,21 @@ import {
   simObjectiveLabelLayout,
   createSimGateCueFactory,
 } from './world-visuals.mjs';
+
+// The shared renderer also ships in legacy packages without regional factories.
+// Regional materials opt into quality changes through their owned callbacks.
+export function setRegionalSurfaceQuality(root, quality) {
+  const tiers = { low: 'performance', balanced: 'balanced', high: 'quality' };
+  if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
+  const materials = new Set();
+  root?.traverse((object) => {
+    for (const material of Array.isArray(object.material) ? object.material : [object.material])
+      if (typeof material?.userData?.setRegionalSurfaceQuality === 'function')
+        materials.add(material);
+  });
+  for (const material of materials) material.userData.setRegionalSurfaceQuality(tiers[quality]);
+  return materials.size;
+}
 
 const QUALITIES = Object.freeze({
   low: {
