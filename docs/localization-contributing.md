@@ -114,6 +114,12 @@ an English message's required values, adding plural requirements or removing key
 rechecks unchanged callers too; wording-only changes do not. Broad metadata,
 technical errors and uncertain strings remain advisory in the raw audit.
 
+Argument checks honor object/spread overwrite order. Without a count they check
+the base message; a known numeric count checks the forms selected in both
+English and Ukrainian. Differing requirements under an unresolved count, or
+unknown options that can alter message selection, remain manual-review evidence.
+Only requirements that are statically certain produce hard failures.
+
 An exceptional immutable literal may use a real adjacent comment:
 
 ```js

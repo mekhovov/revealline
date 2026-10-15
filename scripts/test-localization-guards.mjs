@@ -112,7 +112,7 @@ test('shadowed functions and unknown/mutated registries are not falsely certifie
   assert.equal(report.issues.length, 0);
   assert.deepEqual(
     report.unverified.map(({ kind }) => kind),
-    ['dynamic-key', 'dynamic-key', 'dynamic-arguments'],
+    ['dynamic-key', 'dynamic-key', 'dynamic-plural'],
   );
 });
 
@@ -132,10 +132,10 @@ test('missing arguments, count and nested fields fail only when statically prova
     report.issues.map(({ missing }) => missing),
     [['name'], ['name'], ['count'], ['user.name']],
   );
-  assert.equal(report.unverified.length, 2);
+  assert.equal(report.unverified.length, 3);
 });
 
-test('plural contracts include every variant even when a base message exists', () => {
+test('known singular counts require the singular arguments even when a base message exists', () => {
   const catalog = {
     en: {
       common: {
@@ -156,6 +156,92 @@ test('plural contracts include every variant even when a base message exists', (
     report.issues.map(({ missing }) => missing),
     [['name'], ['owner']],
   );
+});
+
+test('nested interpolation follows later object overwrites and uncertain spreads', () => {
+  const report = inspect(`
+    t('common:profile', {user: {name}, ...{user: {}}});
+    t('common:profile', {...{user: {name}}, user: {}});
+    t('common:profile', {...{user: {}}, user: {name}});
+    t('common:profile', {user: {name}, ...{other: {}}});
+    t('common:profile', {user: {name}, ...external});
+    t('common:profile', {user: {name}, [unknown]: {}});
+    t('common:profile', {...external, user: {name}});
+    t('common:profile', {...external, user: {}});
+  `);
+  assert.deepEqual(
+    report.issues.map(({ missing }) => missing),
+    [['user.name'], ['user.name']],
+  );
+  // A later explicit user can coexist with unknown locale/context options.
+  assert.deepEqual(
+    report.unverified.map(({ kind }) => kind),
+    ['dynamic-plural', 'dynamic-plural', 'dynamic-plural', 'dynamic-plural'],
+  );
+});
+
+test('base, numeric plural and unresolved count contracts have distinct requirements', () => {
+  const catalog = {
+    en: {
+      common: {
+        task: 'Task',
+        task_zero: 'No tasks for {{group}}',
+        task_one: '{{owner}} task',
+        task_other: '{{count}} tasks',
+      },
+    },
+  };
+  const inspect = (source) => inspectTranslationSource(source, 'game/a.mjs', catalog);
+  for (const source of [
+    "t('common:task');",
+    "t('common:task', {count: 2});",
+    "t('common:task', {count: 5});",
+    "t('common:task', {count: '1'});",
+    "t('common:task', {count: 1, owner});",
+  ]) {
+    const report = inspect(source);
+    assert.deepEqual(report.issues, [], source);
+    assert.deepEqual(report.unverified, [], source);
+  }
+  assert.deepEqual(
+    inspect("t('common:task', {count: 1}); t('common:task', {count: 0});").issues.map(
+      ({ missing }) => missing,
+    ),
+    [['owner'], ['group']],
+  );
+  const unresolved = inspect("t('common:task', {count: amount});");
+  assert.deepEqual(unresolved.issues, []);
+  assert.deepEqual(
+    unresolved.unverified.map(({ kind }) => kind),
+    ['dynamic-plural'],
+  );
+});
+
+test('known counts cover different English and Ukrainian selections with English-only contracts', () => {
+  const en = {
+    common: { task: 'Task', task_one: '{{owner}} task', task_other: '{{count}} tasks' },
+  };
+  const uk = {
+    common: {
+      task: 'Завдання',
+      task_one: 'Завдання {{owner}}',
+      task_few: '{{count}} завдання',
+      task_many: '{{count}} завдань',
+      task_other: '{{count}} завдання',
+    },
+  };
+  for (const catalog of [{ en }, { en, uk }]) {
+    const report = inspectTranslationSource(
+      "t('common:task', {count: 21}); t('common:task', {count: 22});",
+      'game/a.mjs',
+      catalog,
+    );
+    assert.deepEqual(
+      report.issues.map(({ missing }) => missing),
+      [['owner']],
+    );
+    assert.deepEqual(report.unverified, []);
+  }
 });
 
 test('destructured, rest, catch and block bindings do not impersonate the imported translator', () => {

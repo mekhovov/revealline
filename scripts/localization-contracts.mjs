@@ -280,23 +280,86 @@ export function inspectTranslationSource(source, file, resources) {
       missing,
       message: `Missing interpolation argument${missing.length === 1 ? '' : 's'} for ${key}: ${missing.join(', ')}`,
     });
-  function hasArgument(node, parts) {
+  function argument(node, name) {
     node = resolve(node);
-    if (!node) return false;
-    if (node.type === 'Literal' || node.type === 'ArrayExpression') return false;
-    if (node.type !== 'ObjectExpression') return null;
-    let unknown = false,
-      found;
+    if (!node || node.type === 'Literal' || node.type === 'ArrayExpression')
+      return { present: false };
+    if (node.type !== 'ObjectExpression') return { present: null };
+    let result = { present: false };
     for (const property of node.properties) {
       if (property.type === 'SpreadElement') {
-        const result = hasArgument(property.argument, parts);
-        if (result === true) found = true;
-        else if (result === null) unknown = true;
-      } else if (property.computed && property.key.type !== 'Literal') unknown = true;
-      else if ((property.key.name ?? property.key.value) === parts[0])
-        found = parts.length === 1 ? true : hasArgument(property.value, parts.slice(1));
+        const next = argument(property.argument, name);
+        if (next.present !== false) result = next;
+      } else if (property.computed && property.key.type !== 'Literal') result = { present: null };
+      else if ((property.key.name ?? property.key.value) === name)
+        result = { present: true, node: property.kind === 'init' ? property.value : null };
     }
-    return found === true ? true : unknown || found === null ? null : false;
+    return result;
+  }
+  function hasArgument(node, parts) {
+    const value = argument(node, parts[0]);
+    if (value.present !== true) return value.present;
+    if (!value.node) return null;
+    return parts.length === 1 ? true : hasArgument(value.node, parts.slice(1));
+  }
+  function messageArguments(namespace, name, args) {
+    const count = argument(args, 'count');
+    const value = resolve(count.node);
+    let number = value?.type === 'Literal' ? value.value : undefined;
+    if (value?.type === 'UnaryExpression' && ['+', '-'].includes(value.operator)) {
+      const operand = resolve(value.argument);
+      if (operand?.type === 'Literal' && typeof operand.value === 'number')
+        number = value.operator === '-' ? -operand.value : operand.value;
+    }
+    const noPlural =
+      count.present === false ||
+      typeof number === 'string' ||
+      (value?.type === 'Identifier' && value.name === 'undefined' && !binding(value));
+    const knownCount = typeof number === 'number' && Number.isFinite(number);
+    const customized = ['ordinal', 'context', 'lng', 'lngs'].some(
+      (option) => argument(args, option).present !== false,
+    );
+    const variants = (entries) =>
+      ['zero', 'one', 'two', 'few', 'many', 'other']
+        .map((suffix) => entries?.[`${name}_${suffix}`])
+        .filter((text) => typeof text === 'string');
+    const select = (locale, entries) => {
+      if (noPlural) return entries?.[name];
+      const suffix = new Intl.PluralRules(locale).select(number);
+      return (
+        (number === 0 ? entries?.[`${name}_zero`] : undefined) ??
+        entries?.[`${name}_${suffix}`] ??
+        // The change gate reads English contracts. Catalog validation requires
+        // Ukrainian few/many placeholders to match English other, and its
+        // matching base/one forms to retain their English placeholders.
+        (locale === 'uk' && !resources.uk && ['few', 'many'].includes(suffix)
+          ? entries?.[`${name}_other`]
+          : undefined) ??
+        entries?.[name]
+      );
+    };
+    const required = [],
+      possible = [];
+    for (const locale of unique(['en', 'uk', ...Object.keys(resources)])) {
+      const entries = (resources[locale] || resources.en)[namespace];
+      let texts;
+      if (!customized && (noPlural || knownCount)) {
+        const text = select(locale, entries) ?? select('en', resources.en[namespace]);
+        texts = typeof text === 'string' ? [text] : [];
+        if (noPlural && !texts.length && variants(entries).length) required.push('count');
+      } else
+        texts = [entries?.[name], ...variants(entries)].filter((text) => typeof text === 'string');
+      const choices = texts.map(interpolationArguments);
+      possible.push(...choices.flat());
+      // With an unresolved count only arguments shared by every possible
+      // selected message are certain. Locale-specific selected messages are
+      // all required, because a live switch can render either locale.
+      if (!customized && choices.length)
+        required.push(
+          ...choices[0].filter((arg) => choices.every((choice) => choice.includes(arg))),
+        );
+    }
+    return { required: unique(required), possible: unique(possible), customized };
   }
   function visit(node) {
     if (node.type === 'Literal' && isTranslationKeyLiteral(node.value, namespaces))
@@ -327,15 +390,8 @@ export function inspectTranslationSource(source, file, resources) {
           for (const key of selected) {
             add(key, node);
             const [namespace, name] = key.split(':');
-            const entries = resources.en[namespace];
-            const variants = ['zero', 'one', 'two', 'few', 'many', 'other']
-              .map((suffix) => entries?.[`${name}_${suffix}`])
-              .filter((text) => typeof text === 'string');
-            const texts = [entries?.[name], ...variants].filter((text) => typeof text === 'string');
-            if (!texts.length) continue;
-            const required = unique(texts.flatMap(interpolationArguments));
-            if (!entries[name] && variants.length) required.push('count');
             const args = wrapper && !wrapper.forwardsValues ? undefined : node.arguments[1];
+            const { required, possible, customized } = messageArguments(namespace, name, args);
             const missing = unique(
               required.filter((arg) => hasArgument(args, arg.split('.')) === false),
             );
@@ -347,6 +403,20 @@ export function inspectTranslationSource(source, file, resources) {
                 kind: 'dynamic-arguments',
                 key,
                 message: 'Dynamic interpolation values need runtime coverage.',
+              });
+            if (
+              customized ||
+              possible.some(
+                (arg) => !required.includes(arg) && hasArgument(args, arg.split('.')) !== true,
+              )
+            )
+              unverified.push({
+                file,
+                line: node.loc.start.line,
+                kind: 'dynamic-plural',
+                key,
+                message:
+                  'Unresolved message selection has differing argument requirements; verify runtime variants.',
               });
           }
       }
