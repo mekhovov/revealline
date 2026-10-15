@@ -69,3 +69,34 @@ Still open: cancellation while image decoding/import is pending; actual image-ge
 5. Finish the creator's remaining asynchronous cancellation cases. Then perform human route-variety review before making any further layout changes.
 
 No missing image or lost-level repair was justified by the audits. Unit-test expansion, Ukrainian translation, another level batch and hosted publishing remain deferred.
+
+## Saved flights and offline follow-up
+
+This later pass used isolated origins on ports 8786–8788. No existing player profile was cleared. It found an additional real defect: exporting a paused Current-rules Neon flight failed with **“Saved pictures require matching flight identity and explicit continuation.”** The simulator uses the projected execution identity while the exact picture pins correctly retain the original authored identity. Reload also could not reconstruct that projected execution from its installed original.
+
+### Correction and trust boundary
+
+Current-rules flights now use native `xonix-session.v7`. The bounded `pictureSource` records the original campaign and explicit Standard/Gentle difficulty. Restoring reconstructs the projection and requires it to equal the installed gameplay campaign, then verifies the replay, checkpoint, original picture identity catalog and any visual/actor pins. Source metadata is comparison data; it cannot install missing content. Old v1–v6 formats and replay/storage budgets are unchanged. The application resolves a saved projection from an already installed original, labels its difficulty correctly, and rebuilds the exact level URL after accepted restore. First-flight departure retention and full backups use the same verified context.
+
+| Check | Observed result |
+|---|---|
+| Engine save/export/import and continued movement | [216 cases](saved-flights.json), covering all 54 Neon levels × Standard/Gentle × grid-center/immediate. Exact checkpoint, picture pins and continuation preserved; the next 12 ordinary input ticks match an uninterrupted run. Maximum native save: 322,057 bytes. Seven malformed/mismatched context cases rejected. This uses explicit authored-picture fallback pins, not decoded browser artwork. |
+| Browser flight export → import → export | Neon FPV exported normally, restored paused through the file chooser, and exported again. Complete documents were deeply equal except `savedAt`. Native v7; original picture key `neon-mosaic/2/68f10772f1871b8b`; one picture choice. Download 313,978 bytes; second file SHA-256 `98b5eaffcfbe75001e4541f7b713de2000c2059ab1b7a6f2ba43c442903bdf5b`. |
+| Independent verification of actual downloaded flight | Real `prepareAttemptExport` accepted the browser download as `installed-campaign`, with its identity catalog and original picture choice. Checkpoint `aae6f4f6a93efa1e`. |
+| Full game-data export → import | Exported through the normal UI, imported that file, confirmed replacement only in the disposable profile. UI reported **Game data restored. Your saved flight is restored.** [Capture](current-rules-backup-import.png). No artwork or save payload is committed to the report. |
+| Reload → Continue | Reloaded after backup import, then explicitly activated Continue. Neon FPV resumed at the 75% target with the original exact current-rule URL restored. Paused it again. [Capture](current-rules-reload-resumed.png). This is an online source-origin check, not offline Resume. |
+| Packaged offline launch | Downloaded Solo Starter and both Neon packs through the normal installer on port 8786. Installer verified readiness. Stopped that origin’s local server, reloaded the exact FPV URL and launched it. Then opened Channels’ exact URL and activated Reference from the cached pack; it also launched at 75%. [FPV](offline-fpv-server-stopped.png), [Channels](offline-channels-server-stopped.png). This earlier packaged build contains the Restart/Retry fix, not the new v7 save correction. |
+
+The new production candidate has 3,491 files and SHA-256 `a7024b6f4d52b39080d321794baba879fa96ffb19269104f35a8a4db69443110`. Its [distribution audit](build-delivery.json) passes all 92 exact links and both offline package hashes. Mandatory core is 71,918,306 bytes. Its source revision is null because it is a local candidate. Syntax, formatting and lint pass; no local unit suite ran.
+
+Reproduce finite engine recovery checks with `node scripts/verify-neon-saved-flights.mjs --output=/tmp/neon-saved-flights.json`. These are integration receipts against shipped data, not a new unit-test suite.
+
+### Packaged v7 offline recovery
+
+On port 8788, downloaded Solo Starter and both Neon packs from the new production candidate. Paused the active download through its normal button; the UI reported **Download paused. Resume reuses verified files; only the interrupted file restarts.** Resumed it, and the installer verified the selected game ready offline. This qualifies user-initiated pause/resume, not connection-loss recovery.
+
+Stopped the origin's own HTTP server (confirmed process exit), then reloaded the game. **Load saved flight** initially reported that its matching chapter must be installed. Activated Neon FPV through the ordinary chooser; the matching pack loaded from the verified offline cache, with the server still stopped. Loaded the retained save again. The UI reported **Saved flight verified and restored. Press Resume to continue.** Explicit Resume advanced the flight clock, with three lives and the 75% target, then Pause stopped it again. The exact FPV current-rule URL was restored. The library shows **Saved flight: Neon FPV · Standard**, rather than archived/difficulty unavailable.
+
+[Verified restore](current-rules-offline-restored.png), [resumed then paused](current-rules-offline-resumed.png), [correct saved identity and difficulty](current-rules-offline-saved-label.png). This used ordinary UI/cache flows, not injected storage or replay state. It demonstrates recovery after matching chapter activation; it does not claim automatic chapter installation or an older-profile upgrade.
+
+Remaining: connection-loss interruption, older installed-profile upgrade/custom-art/progress preservation, all-picture in-game framing/contrast, async creator cancellation and the sharing matrix listed above. These observations do not assert public deployment or a completed offline lifecycle.
