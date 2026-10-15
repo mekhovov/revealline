@@ -1,5 +1,5 @@
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-const spatial = (run, point) => ({
+export const overflightAudioSpatial = (run, point) => ({
   board: 'overflight',
   pan: clamp(((point.x ?? run.player.x) - run.player.x) / 480, -1, 1),
   audible:
@@ -44,7 +44,8 @@ export function createOverflightWorldAudio(sound) {
       }
       const now = Number.isFinite(run.time) ? run.time : (run.tick ?? 0) / 60;
       const activeWarnings = new Set();
-      let charge = null;
+      let charge = null,
+        audibleWarning = false;
       for (const attack of run.priorityAttacks ?? []) {
         if (!attack.active || attack.stage === 'active' || !(attack.remaining > 0)) continue;
         activeWarnings.add(attack);
@@ -61,43 +62,41 @@ export function createOverflightWorldAudio(sound) {
           };
           warnings.set(attack, previous);
         }
+        const audible = overflightAudioSpatial(run, attack).audible;
+        audibleWarning ||= audible;
         const progress = clamp(1 - attack.remaining / previous.initial, 0, 1);
         const rung = progress >= 0.8 ? 2 : progress >= 0.5 ? 1 : 0;
-        if (rung > previous.rung && (!charge || progress > charge.progress))
+        if (audible && rung > previous.rung && (!charge || progress > charge.progress))
           charge = { attack, progress };
+        // Observe every rung, including suppressed/out-of-range ones. Returning
+        // to hearing range must not replay an obsolete charge.
         previous.rung = rung;
         previous.remaining = attack.remaining;
       }
       for (const attack of warnings.keys())
         if (!activeWarnings.has(attack)) warnings.delete(attack);
-      if (foreground || activeWarnings.size) {
+      if (foreground || audibleWarning) {
         quietUntil = now + 0.75;
         stopAmbience();
       }
       if (charge && !foreground)
         sound.encounter('warning-charge', {
-          ...spatial(run, charge.attack),
+          ...overflightAudioSpatial(run, charge.attack),
           progress: charge.progress,
         });
       for (const escort of run.riy?.escorts ?? []) {
         const previous = shots.get(escort) ?? escort.shots;
         shots.set(escort, escort.shots);
-        if (escort.shots > previous && !foreground && !activeWarnings.size && now >= nextEscort) {
+        if (escort.shots > previous && !foreground && !audibleWarning && now >= nextEscort) {
           sound.encounter('escort-shot', {
-            ...spatial(run, escort),
+            ...overflightAudioSpatial(run, escort),
             role: escort.role,
           });
           nextEscort = now + 0.65;
         }
       }
       const world = run.compiled?.presentation?.world;
-      if (
-        world &&
-        !foreground &&
-        !activeWarnings.size &&
-        now >= quietUntil &&
-        now >= nextAmbience
-      ) {
+      if (world && !foreground && !audibleWarning && now >= quietUntil && now >= nextAmbience) {
         sound.encounter('ambience', { board: 'overflight', world });
         nextAmbience = now + 1.25;
       }

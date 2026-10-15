@@ -1,3 +1,4 @@
+import { REGION_CELL_SIZES_MM } from "./region-manifest.mjs";
 /** Terrain-only authoring contract. No caves, overhangs, scenery or flight admission. */
 export const TERRAIN_FORMAT = "FPVRegionCollision.v1";
 export const TERRAIN_SAMPLES = 33;
@@ -40,7 +41,8 @@ export function validateTerrainCell(input) {
     "Invalid terrain cell coordinate",
   );
   fail(
-    cell.cellSizeMm === 128000 && cell.samples === TERRAIN_SAMPLES,
+    REGION_CELL_SIZES_MM.includes(cell.cellSizeMm) &&
+      cell.samples === TERRAIN_SAMPLES,
     "Unsupported terrain lattice",
   );
   fail(
@@ -63,6 +65,7 @@ export function validateTerrainSeams(inputs) {
     byCell = new Map(),
     ids = new Set();
   for (const cell of cells) {
+    fail(cell.cellSizeMm === cells[0].cellSizeMm, "Mixed terrain cell sizes");
     const key = `${cell.x},${cell.z}`;
     fail(
       !byCell.has(key) && !ids.has(cell.chunkId),
@@ -93,12 +96,16 @@ export function validateTerrainSeams(inputs) {
 /** One shared triangulation for the visible surface and Rapier. Coordinates local to cell corner, metres. */
 export function compileTerrainCell(input) {
   const cell = validateTerrainCell(input);
+  const spacing = cell.cellSizeMm / 32000;
   const positions = new Float32Array(COUNT * 3),
     indices = new Uint32Array(32 * 32 * 6);
   for (let z = 0; z < 33; z++)
     for (let x = 0; x < 33; x++) {
       const i = z * 33 + x;
-      positions.set([x * 4, cell.heightsMm[i] / 1000, z * 4], i * 3);
+      positions.set(
+        [x * spacing, cell.heightsMm[i] / 1000, z * spacing],
+        i * 3,
+      );
     }
   let offset = 0;
   for (let z = 0; z < 32; z++)
@@ -165,7 +172,7 @@ function encodeGlb(cell, positions, indices) {
         count: COUNT,
         type: "VEC3",
         min: [0, minHeight, 0],
-        max: [128, maxHeight, 128],
+        max: [cell.cellSizeMm / 1000, maxHeight, cell.cellSizeMm / 1000],
       },
       {
         bufferView: 1,

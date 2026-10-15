@@ -47,8 +47,16 @@ const railwayViews = [
   ['Station canopy', [166, 19, 64], [166, 19, 20], [166, 19, 88]],
   ['Cutting traverse', [192, 0, 180], [40, 2, 180], [240, 3, 180]],
 ];
+const canyonDistrictViews = [
+  ...canyonViews,
+  ['Red Mesa terraces', [565, 115, 190], [680, 170, 280], [565, 100, 180]],
+  ['Serpentine Gorge', [250, 34, 480], [250, 65, 430], [250, 25, 540]],
+  ['Twin Buttes crossing', [560, 125, 375], [705, 210, 505], [560, 110, 375]],
+  ['Split Ravine', [180, 34, 590], [235, 95, 550], [160, 24, 630]],
+  ['Sunset Shelf', [570, 125, 620], [720, 200, 760], [570, 112, 620]],
+];
 const views =
-  { canyon: canyonViews, railway: railwayViews }[
+  { canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews }[
     new URLSearchParams(location.search).get('views')
   ] ?? urbanViews;
 let window = null,

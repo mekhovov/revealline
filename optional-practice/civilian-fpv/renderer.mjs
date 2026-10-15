@@ -3477,14 +3477,19 @@ export function createFlightRenderer({
     clearSceneResources();
     world.userData = {};
     sceneGeneration++;
-    regional = { root: session.root, chunks: new Map(manifest.chunks.map((row) => [row.id, row])) };
+    regional = {
+      root: session.root,
+      cellSizeMm: manifest.grid.cellSizeMm,
+      chunks: new Map(manifest.chunks.map((row) => [row.id, row])),
+    };
     scene.add(session.root);
     scene.background = new THREE.Color(0xb5d3de);
     scene.fog = null;
     importedGroundFog = null;
     scene.environment = null;
     flightViewFrame.reset();
-    camera.far = 1000;
+    // Keep the full bounded resident window visible at either supported lattice size.
+    camera.far = 1000 * (manifest.grid.cellSizeMm / 128000);
     camera.updateProjectionMatrix();
     setDrone(droneKind);
     setQuality(quality);
@@ -3508,14 +3513,14 @@ export function createFlightRenderer({
     if (!loaded.length) return false;
     flightViewFrame.bounds = {
       min: {
-        x: Math.min(...loaded.map((row) => row.x)) * 128000,
+        x: Math.min(...loaded.map((row) => row.x)) * regional.cellSizeMm,
         y: 0,
-        z: Math.min(...loaded.map((row) => row.z)) * 128000,
+        z: Math.min(...loaded.map((row) => row.z)) * regional.cellSizeMm,
       },
       max: {
-        x: (Math.max(...loaded.map((row) => row.x)) + 1) * 128000,
+        x: (Math.max(...loaded.map((row) => row.x)) + 1) * regional.cellSizeMm,
         y: 0,
-        z: (Math.max(...loaded.map((row) => row.z)) + 1) * 128000,
+        z: (Math.max(...loaded.map((row) => row.z)) + 1) * regional.cellSizeMm,
       },
     };
     flightViewFrame.view = cameraMode;
