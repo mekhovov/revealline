@@ -5,6 +5,70 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 21:20 UTC — preserve a new bounded failure; qualify observer operation
+
+**No elapsed run or root renderer is active. No authored two-hour pass exists.**
+The following diagnostic observations do not relax the original acceptance rules,
+change production, or supersede earlier negative evidence.
+
+**P1 scheduling remains open.** The separate five-minute preparation-coverage
+observation on fresh 9207 started **21:00:50.317Z** and invalidated after
+**176.3321 real seconds /8,790 ticks** on a **516.9 ms** clock interval. It stayed
+visible/focused, with zero contacts and zero owned resources after disposal.
+This is an additional bounded diagnostic failure, not another full two-hour
+attempt. [Complete failed report](fpv-authored-urban-preparation-observer-invalid-20261015.json)
+and [native scope](fpv-authored-urban-preparation-observer-native-negative-20261015.json)
+remain preserved alongside all four prior full-attempt negatives.
+
+Authoring #1518 `ee79ef29` over unchanged qualified `da5df483` / `6a092df1` now
+captures the actual previously missing preparation lifecycle. Two native transitions
+settle in 92.8 and 48.3 ms of wrapper elapsed time; existing renderer receipts
+separately report asynchronous compile waits of 3.4/1.8 ms and synchronous upload
+submission wall times of 3.1/1.7 ms. These are not exclusive CPU or GPU completion.
+Started/settled are two; invalid/late observations zero. The enclosing synchronous
+callback maximum is 12.3 ms; flight-step phase is 3.5 ms versus the broader physics
+submission aggregate 8.1 ms, and renderer-draw phase 11.8 ms versus aggregate 11.9 ms.
+These observations do not explain the failing interval.
+
+There are 51 actual LoAF entries, with only the latest sixteen retained and 35
+explicitly overwritten. All retained preparation matches are zero; **no positive
+native preparation/LoAF association is claimed**. The terminal long-gap entry was
+not delivered before observer stop. Instrumentation capture/failure reporting is
+accepted narrowly, with 15/15 local and 81/81 exact cloud checks; normal protected
+publication remains separate from the failed elapsed/performance gate. The native
+Codex inspector was refused access; no bypass was attempted. Actual descendant,
+GC, driver or browser-scheduling cause remains unknown. Do not rerun just to obtain
+a green result, or turn correlation into a production fix.
+
+**P1 storage diagnosis has a usable passive observer, not a repaired connection.**
+Authoring #1517 `f3b34f4c` keeps e27 production / `bffea641` package unchanged and
+uses a separately disclosed diagnostic factory/window/bootstrap facade. Original
+9205 body-level access was inert behind native player dialogs; [that negative](fpv-idb-ownership-passive-modal-negative-20261015.json)
+remains frozen. The corrected event-driven modal-owned control works in fresh 9206,
+preserves player focus until explicitly selected, and refuses active flight with a
+visible Pause instruction. Normal Pause and compact EN→UK→EN settings/Library
+record navigation work.
+
+The observer captures five genuine trusted open events with sanitized source
+locations. Stop removes every owned database-event listener and pending request observer; afterward
+cached Roadworks still prepares Ready/Motors off with Arm available. [Native
+receipt](fpv-idb-ownership-passive-native-20261015.json) and [complete stopped
+capture](fpv-idb-ownership-passive-stopped-20261015.json). No actual abnormal-close
+or versionchange occurs. Explicit close calls are **unknown**, represented by null
+in passive mode; no native interception claim. The original 9196 closure is not
+reproduced or explained, and default-entry/offline/restart/eviction acceptance is
+not inferred. Source review and ten software groups pass; protected publication
+continues independently.
+
+**Next:** prioritize actual scheduling attribution and safe restart/offline/recovery
+journeys over another full attempt. Continue the representative station-approach
+source slice #1521 independently: grounded/braced existing structures, explicit
+new collision/support/route/tier checks, then matched native source views before
+immutable/player delivery. Failed and superseded art candidates remain preserved;
+source, full qualification and final art are not conflated. Later regions, broader
+D6, physical controls/devices and verified public launch remain open. Heavy work
+stays external/cloud, with original budgets and the stable 3 GiB local floor.
+
 ## 15 October, 20:32 UTC — native admissions, live-session preservation and retained attribution
 
 There is **no active elapsed run and no authored two-hour pass**. All four failed

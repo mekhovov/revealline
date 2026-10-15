@@ -5289,3 +5289,36 @@ route coverage false and **no authored two-hour pass**. The earlier four actual
 failures remain unchanged. JS descendants/GC/scheduling require causal observation,
 not a production guess. No active elapsed run or root renderer remains at this
 checkpoint. Storage, packages, failed artifacts and earlier editions are preserved.
+
+
+## 15 October, 21:20 UTC — bounded failure and passive connection capture
+
+Fresh 9207 actual preparation observation starts21:00:50.317Z, invalidates at
+176.3321 real seconds /8,790ticks on516.9ms interval while visible/focused, zero
+contacts and disposalZero. [Full failed report](fpv-authored-urban-preparation-observer-invalid-20261015.json)
+and [receipt](fpv-authored-urban-preparation-observer-native-negative-20261015.json)
+preserve the new bounded negative; all four earlier full-attempt failures remain.
+There is no active elapsed run and no two-hour pass. #1518 exactee79/qualifiedda5/6a
+captures two genuine settled preparation receipts and a bounded full synchronous
+callback span, but no cause for the interval. All latest sixteen LoAF preparation
+matches are zero and35 older rows are overwritten; no positive native association
+or terminal caller is claimed. Fifteen local/81 exact cloud tests pass; source/tool
+acceptance is separate from failed duration/performance qualification.
+
+#1517 correctedf3b34f4c freshpassive9206 passes native modal access and active-flight
+refusal, genuine normal Roadworks download, paused compact settings/Library records
+and EN→UK→EN. Five trusted native opens and sanitized ownership are captured;
+Stop leaves zero owned database-event listeners/pending request observers, and normal cached Fly
+still prepares disarmed. [Receipt](fpv-idb-ownership-passive-native-20261015.json) and
+[complete capture](fpv-idb-ownership-passive-stopped-20261015.json). The original
+[9205 authoring modal failure](fpv-idb-ownership-passive-modal-negative-20261015.json)
+and9196 connection failure are preserved. No abnormal/versionchange was observed;
+passive explicit-close counts remain null/unknown, not zero. No reconnect/data
+change or causal repair is claimed. Ten software groups and source review pass;
+protected publication remains its own gate.
+
+Station approach source #1521 continues independently through explicit new-solid
+collision/attachment/route/tier qualification and later native comparison. Earlier
+missing-field/attachment candidates remain preserved unaccepted. Physical-device,
+public, final-art, full offline/restart/eviction and broader D6 remain open. No
+root renderer or active observation remains; heavy work stays external/cloud.
