@@ -144,6 +144,7 @@ test('Legacy and unknown IDs import no candidate factories and never interpolate
     assert.deepEqual(result.output, { id: null });
     assert(!result.modules.some((url) => url.endsWith('-candidates.mjs')));
     assert(!has(result, 'whole-spatial-data.mjs'));
+    assert(!has(result, 'route-definition.mjs'));
   }
 });
 
@@ -573,6 +574,11 @@ test('all literal lazy imports and shared modules are in the actual game build i
   const source = await readFile(new URL(loaderURL), 'utf8');
   const imports = [...source.matchAll(/import\('(.+?)'\)/g)].map((m) => m[1]);
   assert.deepEqual(imports, [
+    './multiplayer-expansion.mjs',
+    './pursuit-campaign-candidates.mjs',
+    './pursuit-pilot-candidates.mjs',
+    './snake-hunt-candidates.mjs',
+    './hunt-training-candidates.mjs',
     './cooling-loop-erosion-candidates.mjs',
     './pressure-corridor-triptych-candidates.mjs',
     './contested-wall-triptych-candidates.mjs',
@@ -608,6 +614,7 @@ test('all literal lazy imports and shared modules are in the actual game build i
     './whole-journey-candidates.mjs',
     './horizon-candidates.mjs',
     './border-candidates.mjs',
+    './route-definition.mjs',
   ]);
   for (const path of [
     ...imports.map((s) => s.slice(2)),
