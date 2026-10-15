@@ -5984,7 +5984,7 @@ export function mountWorldApp({
     const timeout = win.setTimeout(() => {
       timedOut = true;
       preparationDeadline.abort(new DOMException('Regional preparation timed out', 'TimeoutError'));
-      selected.cancelPreparation();
+      if (owns()) selected.cancelPreparation();
     }, 30000);
     $('flight-status').textContent = txt(
       'Unscored · Loading area…',
