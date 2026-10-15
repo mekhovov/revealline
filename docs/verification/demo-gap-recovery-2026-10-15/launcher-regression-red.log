@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: translation-key scanning accepts complete keys and rejects concatenation prefixes
+ok 1 - translation-key scanning accepts complete keys and rejects concatenation prefixes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.528083
+  ...
+# Subtest: catalog validation checks Ukrainian-only plural forms and rejects orphan translations
+ok 2 - catalog validation checks Ukrainian-only plural forms and rejects orphan translations # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.05
+  ...
+# Subtest: compact classic catalogs reconstruct every original namespace and plural without filling missing values
+ok 3 - compact classic catalogs reconstruct every original namespace and plural without filling missing values # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0455
+  ...
+# Subtest: compact content registry preserves identity and original-text guards while sharing repeated records
+ok 4 - compact content registry preserves identity and original-text guards while sharing repeated records # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039583
+  ...
+# Subtest: the bundled catalog decoder is pinned, synchronous and isolated from host module registries
+ok 5 - the bundled catalog decoder is pinned, synchronous and isolated from host module registries # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042125
+  ...
+# Subtest: launcher includes complete JSON validation messages without treating prefixes as keys
+not ok 6 - launcher includes complete JSON validation messages without treating prefixes as keys
+  ---
+  duration_ms: 23.226083
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-localization-bundles.mjs:141:1'
+  failureType: 'testCodeFailure'
+  error: 'Launcher translation is missing: en/errors:dataJson.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    buildLauncherCatalog (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/offline-launcher.mjs:92:17)
+    async buildLauncherNavigationFiles (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/offline-launcher.mjs:126:34)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-localization-bundles.mjs:143:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 314.909667

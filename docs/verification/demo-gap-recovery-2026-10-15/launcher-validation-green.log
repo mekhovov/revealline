@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 1 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 2.216125
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 2 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.286125
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 3 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.283
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 4 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.108917
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 5 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.144208
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 6 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.136583
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 7 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 2.009083
+  ...
+# Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+ok 8 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+  ---
+  duration_ms: 14.971125
+  ...
+# Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+ok 9 - repeated text never gives mutable or caller-frozen objects validation authority
+  ---
+  duration_ms: 0.601708
+  ...
+# Subtest: repeated field names do not require per-field UTF-8 encoding
+ok 10 - repeated field names do not require per-field UTF-8 encoding
+  ---
+  duration_ms: 4.409875
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 11 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 70.569625
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 12 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.33825
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 13 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 0.820583
+  ...
+# Subtest: shared JSON boundary reports owned validation errors in the active locale
+ok 14 - shared JSON boundary reports owned validation errors in the active locale
+  ---
+  duration_ms: 1.089542
+  ...
+# Subtest: standalone planner loads without bootstrapping UI translations and retains validation errors
+ok 15 - standalone planner loads without bootstrapping UI translations and retains validation errors
+  ---
+  duration_ms: 40.839208
+  ...
+# Subtest: lightweight defaults stay identical to the English catalogue
+ok 16 - lightweight defaults stay identical to the English catalogue
+  ---
+  duration_ms: 2.854917
+  ...
+# Subtest: a booted validator follows live Ukrainian/English locale changes
+ok 17 - a booted validator follows live Ukrainian/English locale changes
+  ---
+  duration_ms: 163.035125
+  ...
+# Subtest: translation-key scanning accepts complete keys and rejects concatenation prefixes
+ok 18 - translation-key scanning accepts complete keys and rejects concatenation prefixes
+  ---
+  duration_ms: 0.621083
+  ...
+# Subtest: catalog validation checks Ukrainian-only plural forms and rejects orphan translations
+ok 19 - catalog validation checks Ukrainian-only plural forms and rejects orphan translations
+  ---
+  duration_ms: 0.521167
+  ...
+# Subtest: compact classic catalogs reconstruct every original namespace and plural without filling missing values
+ok 20 - compact classic catalogs reconstruct every original namespace and plural without filling missing values
+  ---
+  duration_ms: 1064.283
+  ...
+# Subtest: compact content registry preserves identity and original-text guards while sharing repeated records
+ok 21 - compact content registry preserves identity and original-text guards while sharing repeated records
+  ---
+  duration_ms: 2.059125
+  ...
+# Subtest: the bundled catalog decoder is pinned, synchronous and isolated from host module registries
+ok 22 - the bundled catalog decoder is pinned, synchronous and isolated from host module registries
+  ---
+  duration_ms: 7.1785
+  ...
+# Subtest: launcher includes complete JSON validation messages without treating prefixes as keys
+ok 23 - launcher includes complete JSON validation messages without treating prefixes as keys
+  ---
+  duration_ms: 67.686209
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1425.587375

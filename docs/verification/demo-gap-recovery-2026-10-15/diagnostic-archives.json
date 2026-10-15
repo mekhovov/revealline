@@ -1,0 +1,119 @@
+{
+  "scope": "Lossless diagnostic/raw-log archives. These are not release acceptance. Decompress to recover the exact original bytes.",
+  "files": [
+    {
+      "uncompressedBytes": 321074,
+      "sha256": "b95617abe317a75e8e7a40ec533c3a415555fa3d957f36e1dedbffe2451f86b6",
+      "archiveBytes": 40441,
+      "archiveSHA256": "913623e5026aa3dbe3af5f3729cb7d73b86a30f331b652b45280304914bc8eab"
+    },
+    {
+      "uncompressedBytes": 322366,
+      "sha256": "02111b1c54aa868fabfc354b188913c03c31afbb3e1e19b5d8db1f339bfde584",
+      "archiveBytes": 39944,
+      "archiveSHA256": "4399ad2cee86f45adbe25415b49bdf7263f0764643d829f35a43fa7b32011202"
+    },
+    {
+      "uncompressedBytes": 320717,
+      "sha256": "7fb2db5c3e7dad09596c923dc680c69a3c61864723fc2206f90ce2bfe6d9400e",
+      "archiveBytes": 40466,
+      "archiveSHA256": "846d3736880d598346d55fe24c284528baa0f8bfd131416c5fa22f6b7ea4df42"
+    },
+    {
+      "originalName": "droneaid-before.json",
+      "archive": "droneaid-before.json.gz",
+      "uncompressedBytes": 659550,
+      "sha256": "8313f985b3044c9dab218720c6e1a58ec798b2b26e16f1af64a943bb711f56da",
+      "archiveBytes": 83645,
+      "archiveSHA256": "2a3d3fdbaf2ed517a1ef847039fc41828e5f81bddba9cb1ed8dd4dc66a238dbb"
+    },
+    {
+      "originalName": "fallback-geometry.json",
+      "archive": "fallback-geometry.json.gz",
+      "uncompressedBytes": 214570,
+      "sha256": "cd9039c37989c002e9679c5cfce7b9ad20660fff014df4374fe83e7bab25d22b",
+      "archiveBytes": 8469,
+      "archiveSHA256": "75b4faaec856c26afeb71499891394565c09fb67812805139b95ef7c08b4c798"
+    },
+    {
+      "originalName": "first-relay-after-first-correction.json",
+      "archive": "first-relay-after-first-correction.json.gz",
+      "uncompressedBytes": 321812,
+      "sha256": "8816025245414e585e7b6343adb424ca98eb5cbc2f3999b4f3540800fc99658f",
+      "archiveBytes": 40235,
+      "archiveSHA256": "fd143ca9e9678c945be96e995a2420c6818ab1bf12e513f88a6ae4e7109cd998"
+    },
+    {
+      "originalName": "first-relay-after-safe-endpoint.json",
+      "archive": "first-relay-after-safe-endpoint.json.gz",
+      "uncompressedBytes": 322380,
+      "sha256": "e81d95410304791bf5b4eb6c084f5323643d2de153ccf47ea5b0054cca483dbf",
+      "archiveBytes": 40438,
+      "archiveSHA256": "aba59f23a32ee7e36d8b8d75bbe36ca04cc9bc9034a252a1cd078e5f458e5b79"
+    },
+    {
+      "originalName": "geometry-before.json",
+      "archive": "geometry-before.json.gz",
+      "uncompressedBytes": 411212,
+      "sha256": "650ca2c09ef7e36b3c9d4ef9615bbc1bda4d7bacba5db5a12d131f3eb581d39c",
+      "archiveBytes": 14148,
+      "archiveSHA256": "ebef7c4a2f1edeb7e9e32516510bee4a4386c1d9b239bdac13ac31c576ce3d66"
+    },
+    {
+      "originalName": "journey-before-probe.json",
+      "archive": "journey-before-probe.json.gz",
+      "uncompressedBytes": 1933198,
+      "sha256": "2db26e9dca907810df4562d162ef528b91c379059fb781d1859c076d2b1c48cb",
+      "archiveBytes": 243023,
+      "archiveSHA256": "933af58dbbbbed52683f3c15d62b17d35513aa17f8da90550e149b4243493aef"
+    },
+    {
+      "originalName": "journey-before.json",
+      "archive": "journey-before.json.gz",
+      "uncompressedBytes": 1931816,
+      "sha256": "d4aba4208a602e4f5154429051f0035665a3770d9ae3867d0cc455860b6e5c32",
+      "archiveBytes": 242353,
+      "archiveSHA256": "1065b4e16c1a4a4a534b8af2d3046edd2ba086db0298b7c88cc94ab034b32c98"
+    },
+    {
+      "originalName": "journey-fallback-diagnostic.json",
+      "archive": "journey-fallback-diagnostic.json.gz",
+      "uncompressedBytes": 635784,
+      "sha256": "6ebc80499507cd27efe40f46b6499a69ff1d476f73954ba09e18cc25ae1f2988",
+      "archiveBytes": 80738,
+      "archiveSHA256": "403f5571ec5cb0269540ee966f357fee4f42bc8c53743a9c8f7925f2d1405735"
+    },
+    {
+      "originalName": "journey-safe-escape-prototype.json",
+      "archive": "journey-safe-escape-prototype.json.gz",
+      "uncompressedBytes": 699552,
+      "sha256": "9570e93b68dd99769366dfb1946135a173dae4ec44b3843205c287c27d87933d",
+      "archiveBytes": 89906,
+      "archiveSHA256": "c7a629895f50d92b6351bb7c8e9c78732d9ccaccaddb515752459a9b156f3cb9"
+    },
+    {
+      "originalName": "hosted-candidate-before.log",
+      "archive": "hosted-candidate-before.log.gz",
+      "uncompressedBytes": 730899,
+      "sha256": "f89da496c2b85629f0b97f711d048f4fc12bcdbe60473b731e7fe99b3809c229",
+      "archiveBytes": 111448,
+      "archiveSHA256": "6796bf6cea21fa8d49c5b660e9ff7b80c21677946c80a0d3d640931f35e5017b"
+    },
+    {
+      "originalName": "hosted-focused-before.log",
+      "archive": "hosted-focused-before.log.gz",
+      "uncompressedBytes": 1011993,
+      "sha256": "6dfa34ca667536c97e59debaaa878811a90139ce59b11ebc416d4891c9ff7a58",
+      "archiveBytes": 140433,
+      "archiveSHA256": "18c129612056e8112a0f7e54b690b0d8b79907e2850a8a133414f234b541cfae"
+    },
+    {
+      "originalName": "worker-reset-red.log",
+      "archive": "worker-reset-red.log.gz",
+      "uncompressedBytes": 1773,
+      "sha256": "9f2b26570822b3fbc93c375d42f2ea430907ba1ebe4d705a33f7a3f1b1706c18",
+      "archiveBytes": 597,
+      "archiveSHA256": "22eadfad39177da1346c5178fb464b0e48698460253c2ea9e28420a0da532c43"
+    }
+  ]
+}

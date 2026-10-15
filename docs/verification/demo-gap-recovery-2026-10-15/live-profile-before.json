@@ -1,0 +1,131 @@
+{
+  "scope": "Instrumented copy, diagnostics only; not production timing qualification",
+  "rows": [
+    {
+      "level": "orchard-crossing",
+      "decision": 0,
+      "wallMs": 1335.256292,
+      "cpuMs": 1186.007,
+      "ok": true,
+      "metrics": {
+        "examined": 5,
+        "simulatedTicks": 3090,
+        "bends": 2,
+        "ticks": 1075,
+        "gainedCoverage": 0.08703071672354949
+      },
+      "timings": {
+        "geometryMs": 135.79399999999998,
+        "riskMs": 17.48659000000106,
+        "riskCalls": 8178,
+        "simulationMs": 1043.5102490000004,
+        "simulationCalls": 5
+      }
+    },
+    {
+      "level": "orchard-crossing",
+      "decision": 1,
+      "wallMs": 2324.833375,
+      "cpuMs": 1751.28,
+      "ok": true,
+      "metrics": {
+        "examined": 11,
+        "simulatedTicks": 6888,
+        "bends": 2,
+        "ticks": 1040,
+        "gainedCoverage": 0.08703071672354949
+      },
+      "timings": {
+        "geometryMs": 317.13095799999974,
+        "riskMs": 16.83294900000101,
+        "riskCalls": 7177,
+        "simulationMs": 1987.5645809999996,
+        "simulationCalls": 11
+      }
+    },
+    {
+      "level": "orchard-crossing",
+      "decision": 2,
+      "wallMs": 815.2294580000007,
+      "cpuMs": 782.192,
+      "ok": true,
+      "metrics": {
+        "examined": 5,
+        "simulatedTicks": 1837,
+        "bends": 1,
+        "ticks": 619,
+        "gainedCoverage": 0.06313993174061433
+      },
+      "timings": {
+        "geometryMs": 156.78295799999978,
+        "riskMs": 28.067129000018213,
+        "riskCalls": 5761,
+        "simulationMs": 624.6292490000005,
+        "simulationCalls": 5
+      }
+    },
+    {
+      "level": "courtyard-exits",
+      "decision": 0,
+      "wallMs": 1360.5857909999995,
+      "cpuMs": 893.696,
+      "ok": true,
+      "metrics": {
+        "examined": 4,
+        "simulatedTicks": 2269,
+        "bends": 1,
+        "ticks": 1072,
+        "gainedCoverage": 0.3373702422145329
+      },
+      "timings": {
+        "geometryMs": 568.5639579999997,
+        "riskMs": 81.12666400000853,
+        "riskCalls": 7348,
+        "simulationMs": 767.4935409999998,
+        "simulationCalls": 4
+      }
+    },
+    {
+      "level": "courtyard-exits",
+      "decision": 1,
+      "wallMs": 4406.953167,
+      "cpuMs": 819.267,
+      "ok": true,
+      "metrics": {
+        "examined": 12,
+        "simulatedTicks": 5563,
+        "bends": 2,
+        "ticks": 510,
+        "gainedCoverage": 0.05882352941176472
+      },
+      "timings": {
+        "geometryMs": 435.1900420000002,
+        "riskMs": 7.990224999995917,
+        "riskCalls": 7301,
+        "simulationMs": 3950.5915830000004,
+        "simulationCalls": 12
+      }
+    },
+    {
+      "level": "courtyard-exits",
+      "decision": 2,
+      "wallMs": 1617.9462079999994,
+      "cpuMs": 307.681,
+      "ok": true,
+      "metrics": {
+        "examined": 5,
+        "simulatedTicks": 2194,
+        "bends": 2,
+        "ticks": 569,
+        "gainedCoverage": 0.08823529411764702
+      },
+      "timings": {
+        "geometryMs": 694.9728749999995,
+        "riskMs": 31.31323199997496,
+        "riskCalls": 6663,
+        "simulationMs": 843.781167000001,
+        "simulationCalls": 5
+      }
+    }
+  ]
+}

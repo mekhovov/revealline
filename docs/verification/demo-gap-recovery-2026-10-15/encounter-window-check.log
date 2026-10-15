@@ -1,0 +1,43 @@
+# Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
+TAP version 13
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+ok 1 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.757875
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+ok 2 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.291375
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+ok 3 - journey/first-relay/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.353709
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+ok 4 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 6821.109166
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+ok 5 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.1165
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+ok 6 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042417
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+ok 7 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.10375
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+ok 8 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03525
+  ...
