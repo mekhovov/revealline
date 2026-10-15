@@ -340,6 +340,7 @@ export function createRegionalFlightPrototype({
   }
   return Object.freeze({
     snapshot,
+    collisionSnapshot: () => terrain.collisionSnapshot(),
     root,
     dronePose,
     cameraAnchor,
