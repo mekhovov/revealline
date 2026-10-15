@@ -22,6 +22,43 @@ observer-source snapshots. Capture-time absolute paths remain provenance.
 | `first-flight-attempt2-originals.tar.gz` | `1f419461f9f5adad5bcb8320a425cc1eeca2d496e5ebc723f4415e20761647eb` |
 | `first-flight-attempt3.json`             | `cf26ba90d2bc070f8ff03ba75b0d7e82c072664a037de8f36a7a0fa73596a0a8` |
 | `first-flight-attempt3-originals.tar.gz` | `167daa2a1b13f812ed9d7a6325e6b64642ee0b01cefaae839ea0bffc2fb43b98` |
+| `current-optional-packages.json`         | `60a579e6ec9e309841c875014c15143dea49892c2fe5546417e1bf66f3b3a09e` |
+| `current-candidate-verification.json`    | `b6543d14a3e58db26b3c6151b90d00df187ab9f749ff7cae51b2c43cb88aa66b` |
+| `current-first-flight.json`              | `e0cfdbc18e53576a5a5902f85a95b40c3121b5f2f9736f625101dc2319212446` |
+| `current-first-flight-originals.tar.gz`  | `d6401b1ac5035c606dcd30166a1fc682fd1532facf5b297f1d6ec2f13a15abe5` |
+| `current-cache-repair.json`              | `38b579c8b4667e1048dcad19deca700a8fc6e7ebe73104fe76179367f4fe5366` |
+| `current-cache-repair-originals.tar.gz`  | `164fa602d7649afdf9dc4dd95d4b716fb9cf0ade21810df50548040b7f5ea88e` |
+| `current-retained-world.png`             | `0aa226cd903a37a4e19d682d066e8e296fee73005ea6f179e11d46bfd1eeb93f` |
+| `quota-zero-attempt.json`                | `cb86eabaeb980717bcaa90a51f4b331d155845da4b3d8f16c7221fb2bbb0736e` |
+| `observer-tests.log`                     | `de795a6e628e47e612766a421450ac34223bdcf6573994e464b59b8333a2f2ca` |
+| `pointer-tests.log`                      | `2c3e462130f0004bf59c79725e9951e870a43961110bc2fe9835fc4891ae08b6` |
+| `regional-setup-failure.log`             | `845d137a0bcfc948db860f502303c66307c6f445665d561ffc6c34a255574629` |
+| `regional-tests.log`                     | `d15d7527f6959623c824ea44bfce86c1183a6988345b2cf725359fb4d6a872c3` |
+
+Additional final receipts:
+
+| File                                    | SHA-256                                                            |
+| --------------------------------------- | ------------------------------------------------------------------ |
+| `quota-positive-academy.json`           | `79dfedbdd58caa64ab7adc9003b5e5b58348923e869bd2b55da4d6d0b6a3fbec` |
+| `final-practice-tests.log`              | `54e3d4428f8354aaec244edb35971e1976f92665327e090b1d0c1ade8e05bd1f` |
+| `final-observer-tests.log`              | `b072cf36acba3989c30cab97a230c4dd6bb9b6eefbb26e204682d13904232bc4` |
+| `final-pointer-tests.log`               | `22067c2fdd75600404d0f49782a68e48e24dcb3c9e282a4ee1d4baff9d339df8` |
+| `first-flight-helper-reconstructed.mjs` | `b1e47bf44eced82128ae7eb51a374aebe944d41b97756fa2c05dfd0f21560bd8` |
+| `independent-audit.json`                | `62598e039c7b6144dbe161e66b3a368f1cd9a6173cc0c3de93ce648a10eff3ca` |
+
+Latest all-three receipts:
+
+| File                               | SHA-256                                                            |
+| ---------------------------------- | ------------------------------------------------------------------ |
+| `quota-all-attempt1.json`          | `d219d6be71ac0c35de705257e3a7f1e6b141b033d1a91d7076fe961dc2ef9a9d` |
+| `quota-all-attempt2.json`          | `7a17a1a2f19c5f8f0e55eb487a173fe9f7ac3823c72039ec2b90b2d6f82befc3` |
+| `all-practice-tests.log`           | `464155dba74613e18cc93b3d9d3c8027f63096ec84330bebaf78ae93fc59e3cf` |
+| `all-observer-tests.log`           | `8e6f62d42450c58f606e2ba624ae94e05547a42479f2293bf8a75049c8d74592` |
+| `all-pointer-tests.log`            | `c2ef75d54a7b42fb8546ac7f31b311501f5cfc65560a8cb88def618200bc67ba` |
+| `verified-practice-tests.log`      | `e94e7cce9e33f6988115e5576e519b036dbccecb68b9041a563a0aa2364e1e7c` |
+| `verified-observer-tests.log`      | `db5ab39b7630ae8f0c764ad799bfbf7368d0572a48d59072a45668abf15d6722` |
+| `verified-pointer-tests.log`       | `9481d213f68b51c8b084d2c3438390397f3f607e8b8cd46a686cb979fd06000a` |
+| `all-quota-independent-audit.json` | `8ba61632d844c3ebf26c251c126aa06ed496e6cb83a4d15dd7996c525dbcdb26` |
 
 Independently computed screenshot hashes (each fault pair shows the same UI):
 
@@ -39,3 +76,8 @@ project/revision through 18 checkpoints; their scope does not replace the v1
 empty-store limitation. First-flight attempts 1 and 2 are failed aggregate runs.
 Attempt 3 completed the declared four-case automated EN flow, not exercise or
 full release qualification; `qualified: false` is retained.
+The fresh `50b7612e8` candidate has separate `current-*` receipts; earlier receipts
+are not relabelled. `quota-zero-attempt.json` failed: the zero override was an
+ineffective denial control, not a product defect. The initial regional test log
+records missing dependency resolution; the unchanged retry uses the existing
+authoring dependency path and passes six tests. No packages were installed.
