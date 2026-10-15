@@ -23,9 +23,30 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
+  id: 'desert-expedition-study',
+  title: {
+    en: 'Desert Expedition — rock routes',
+    uk: 'Пустельна експедиція — маршрути серед скель',
+  },
+  description: {
+    en: '16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse.',
+    uk: '16,384 × 16,384 км · шість невеликих зон для практики серед скель · вільний політ без заліку. Маневруйте між каменями, пролітайте крізь природну арку, піднімайтеся між скельними ребрами й облітайте вершину плато. Раннє дослідження композиції; решта ландшафту ще малонаповнена.',
+  },
+  bytes: 48164518,
+  appearance: { terrain: 'desert' },
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json',
+    bytes: 329271,
+    sha256: 'fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
-  ...(REGION_CELL_SIZES_MM.includes(512000) ? [DESERT_EXPEDITION_LIBRARY_PIN] : []),
+  ...(REGION_CELL_SIZES_MM.includes(512000)
+    ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
+    : []),
   {
     id: 'tropical-coastal-districts',
     title: {
