@@ -5060,3 +5060,14 @@ Canal draft 3 source acceptance and Alpine contour preview correction. Exact
 package checks, immutable content admission, sustained qualification and final
 art remain separate gates. Earlier negative packages and saved revisions remain
 preserved. Queue waiting does not stop independent development.
+
+## 15 October — Canal admission and preserved interrupted elapsed review
+
+Coordinator `codex/fpv-library-admission-checkpoint-20261015`, base `3d272500`.
+Canal immutable #1442 merged; exact Library1446 native player checks passed.
+Storage guidance1444 and immediate lifecycle status1447 merged. Alpine corrected
+delivery1448 is merged while updated Library1427 awaits fresh combined admission.
+Lunar1452/1455 remain draft for camera/appearance corrections. The strict-focus
+Urban flight invalidated after1,036.314s on lost focus; its full negative report
+and zero-owned disposal are preserved, without a two-hour claim. Current evidence
+and remaining gates are in the newest large-worlds plan checkpoint.
