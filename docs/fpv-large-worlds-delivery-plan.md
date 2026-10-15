@@ -5,6 +5,37 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — wider regions and preserved locations
+
+This checkpoint supersedes the earlier status below; the complete roadmap remains
+open. Current root work is based on main `83fd6525`.
+
+- **Merged:** Railway admission and exact-package receipt (#1306/#1325), snapshot
+  reuse (#1321), bounded textured/cutout scenery (#1322), finite runtime positions
+  (#1324), Tropical coastal source (#1327), six-district Canyon source and immutable
+  delivery (#1326/#1331), conservative saved-location clearance (#1330), and optional
+  256 m terrain cells (#1329). Existing 128 m source bytes and budgets are retained.
+- **Native acceptance:** the 768 × 768 m Canyon source shows its distinct mesa,
+  gorge, butte, ravine and shelf areas through the actual renderer. Tropical's
+  384 × 384 m source passes all detail choices and resource release; normal Library
+  download, disarmed Fly, deliberate keyboard flight and reload were observed.
+  Larger-cell player review passes all three views, explicit arming and pause.
+  These observations do not turn source studies into qualified public releases.
+- **Publishing independently:** shared live quality, Urban review-r2 and original
+  Canyon Library admission remain in native stack #1292. Tropical Library #1328
+  includes its native receipt and reconciled concurrent changes. A distinct
+  six-district Canyon Library entry follows the existing Canyon entry, preserving
+  older saved revisions. Native stack tooling continues to own dependency bases.
+- **In progress:** exact-revision favourite places with safe disarmed restoration,
+  combined package/offline qualification, and expanded Tropical districts. Current
+  favourite-place storage checks use real IndexedDB and preserve corrupt/stale
+  records; source acceptance and final package qualification are separate gates.
+
+Priorities remain P1 reliability/Library delivery, P2 representative appearance,
+P3 larger authored districts, then P4/D6 sustained/device/release coverage. The
+256 m option reduces file count for broad terrain; it does not itself deliver an
+8 km world. The 4/8/16 km regions and remaining named worlds are still open.
+
 ## 15 October delivery checkpoint
 
 This checkpoint supersedes the older in-flight status below; historical evidence
