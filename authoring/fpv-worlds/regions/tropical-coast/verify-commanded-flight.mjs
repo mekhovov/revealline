@@ -14,7 +14,13 @@ import {
 
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide the exact Tropical coastal paired directory');
-const prep = JSON.parse(await readFile(new URL('./coastal-preparation.json', import.meta.url)));
+const prep = JSON.parse(
+  await readFile(
+    process.argv[3]
+      ? resolve(process.argv[3])
+      : new URL('./coastal-preparation.json', import.meta.url),
+  ),
+);
 const sourcePins = {
   terrain: prep.terrainManifestSHA256,
   scenery: prep.sceneryManifestSHA256,
@@ -222,7 +228,7 @@ for (const mode of ['self-level', 'acro']) {
     }
   }
 
-  for (const probe of [
+  for (const probe of prep.contactProbes ?? [
     { id: 'palm-trunk', from: [60, 7, 180.5], to: [69, 7, 180.5], maxX: 65 },
     { id: 'cargo-box', from: [182, 3.6, 292], to: [190, 3.6, 292], maxX: 186 },
     { id: 'covered-pier-roof', from: [76, 10, 102], falling: true, minY: 5.5 },

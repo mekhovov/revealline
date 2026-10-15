@@ -7,7 +7,13 @@ import validator from 'gltf-validator';
 import { createVerifiedMixedWindow } from '../verified-mixed-window.mjs';
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide prepared coastal source directory');
-const prep = JSON.parse(await readFile(new URL('./coastal-preparation.json', import.meta.url)));
+const prep = JSON.parse(
+  await readFile(
+    process.argv[3]
+      ? resolve(process.argv[3])
+      : new URL('./coastal-preparation.json', import.meta.url),
+  ),
+);
 const manifests = {},
   sources = {},
   originals = [];
@@ -61,7 +67,7 @@ const mm = (p) => ({
   y: Math.round(p[1] * 1000),
   z: Math.round(p[2] * 1000),
 });
-const probes = [
+const probes = prep.verificationProbes ?? [
   {
     id: 'covered-pier-open-bay',
     from: [65, 4.4, 102],
@@ -126,7 +132,7 @@ for (const quality of ['performance', 'balanced', 'quality']) {
     scenery: { manifest: manifests.scenery, source: sources.scenery },
   });
   try {
-    await owner.transition(mm([192, 20, 192]));
+    await owner.transition(mm([prep.sizeM[0] / 2, 60, prep.sizeM[1] / 2]));
     for (const probe of probes) {
       const hit = owner.sweep(mm(probe.from), mm(probe.to), 250);
       if (process.env.DIAG) console.error(probe.id, JSON.stringify(hit));
@@ -145,7 +151,7 @@ for (const quality of ['performance', 'balanced', 'quality']) {
       [64, 192],
       [192, 192],
     ]) {
-      await owner.transition(mm([x, 20, z]));
+      await owner.transition(mm([(x * prep.sizeM[0]) / 384, 60, (z * prep.sizeM[1]) / 384]));
       const snap = owner.snapshot();
       assert.equal(snap.state, 'ready');
       assert(snap.resourceBytes * 2 <= 8 * 1024 * 1024);
