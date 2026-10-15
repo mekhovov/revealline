@@ -5,6 +5,53 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — retained-flight diagnosis and source review gates
+
+This checkpoint supersedes the status below. The full roadmap remains **open**.
+Coordinator: `codex/fpv-regional-review-gates-20261015`, based on `6a6baac9`.
+
+- **Merged:** cancellation #1434, authored-region endurance tooling #1435,
+  courtyard Library #1436 and regional Overview height correction #1439.
+  Courtyard exact-package native checks cover download, both retained revisions,
+  restart at the elevated courtyard, explicit arm/pause, mode/view changes and
+  reload. They do not establish offline failure recovery or final art quality.
+- **Retained-flight slowdown diagnosed:** the frozen Desert baseline took
+  318 seconds to save a second revision behind the world chooser. Its subsequent
+  verification took 65.8 seconds; closing the chooser let the remaining files
+  finish in about 1.1 seconds. Both revisions survived. Covered paused rendering
+  was competing with asynchronous installation and verification work.
+- **Observer guard #1440:** skip drawing the paused, disarmed flight while an
+  opaque chooser/settings dialog covers it. Menu input, audio and preparation
+  continue. A same-origin comparison, retaining the old storage implementation,
+  verified both directions of revision switching in 395.9 and 407 ms. These are
+  scoped observations on one browser, not a device FPS benchmark. The unchanged
+  exact unchanged package now passes both 45 MiB downloads, retained switching
+  in both directions, correct revision titles, settings/keyboard return, explicit
+  arm/pause and reload retention. All required checks passed after one unchanged
+  local-UX deadline retry; the failed receipt is retained. Offline-origin recovery,
+  physical controllers and public launch remain separate gates.
+- **Canal source #1437 merged:** native draft 3 review accepts corrected arch spandrels,
+  grounded lock supports, clear warehouse/bridge openings and coherent masonry
+  and paving. Disposal reports no live scenery or collision. The previous failed
+  draft is preserved. This accepts a bounded 384 m source increment, not final
+  art: broad empty banks and sparse buildings remain. Immutable delivery and
+  normal-player admission follow independently; delivery #1442 belongs to native
+  stack #1443 and preserves the reviewed source.
+- **Alpine contours #1441 merged:** source checks preserve terrain/collision while
+  replacing stepped snow/scree edges with triangle-clipped boundaries. Initial
+  native comparison exposed depth interference in the authoring viewer and a
+  poorly aimed scree comparison. Corrected exact `381d151c` comparison now shows
+  smooth snow/scree boundaries against preserved stepped originals, without
+  interference. This accepts the bounded source correction. The older immutable
+  revision and failed viewer are preserved; new delivery and Library admission
+  remain held until a fresh integrated package passes.
+
+Priority remains: **P1** finish exact player/revision-safety gates; **P2** refine
+representative scenery and qualify the Alpine correction; **P3** deliver reviewed
+Canal content before later region batches; **P4/D6** complete actual authored
+region endurance, offline/restart recovery, device/controller checks and release
+qualification. Passing source checks or a PR merge does not prove public launch.
+
 ## 15 October — integrated world checks and measured reliability work
 
 This checkpoint supersedes the status below. The full roadmap remains **open**.
