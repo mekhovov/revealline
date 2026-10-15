@@ -49,18 +49,24 @@ const localBounds = {
   max: { x: 128000, y: 0, z: 128000 },
 };
 flightViewFrame.bounds = localBounds;
-let chunks = new Map();
+let chunks = new Map(),
+  cellSizeMm = 128000;
 function updateViewBounds(state) {
   const loaded =
     state?.terrain.provenance?.chunks
       ?.map((row) => chunks.get(row.chunkId))
       .filter(Boolean) ?? [];
   if (!loaded.length) return;
-  localBounds.min.x = Math.min(...loaded.map((row) => row.x)) * 128000;
-  localBounds.min.z = Math.min(...loaded.map((row) => row.z)) * 128000;
-  localBounds.max.x = (Math.max(...loaded.map((row) => row.x)) + 1) * 128000;
-  localBounds.max.z = (Math.max(...loaded.map((row) => row.z)) + 1) * 128000;
+  localBounds.min.x = Math.min(...loaded.map((row) => row.x)) * cellSizeMm;
+  localBounds.min.z = Math.min(...loaded.map((row) => row.z)) * cellSizeMm;
+  localBounds.max.x = (Math.max(...loaded.map((row) => row.x)) + 1) * cellSizeMm;
+  localBounds.max.z = (Math.max(...loaded.map((row) => row.z)) + 1) * cellSizeMm;
   flightViewFrame.bounds = localBounds;
+  const far = 900 * (cellSizeMm / 128000);
+  if (camera.far !== far) {
+    camera.far = far;
+    camera.updateProjectionMatrix();
+  }
 }
 let manifestController = null,
   flight = null,
@@ -172,6 +178,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     }
     if (token !== loadingGeneration || closed) return;
     clearTimeout(timeout);
+    cellSizeMm = manifest.grid.cellSizeMm;
     chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));
     const selectedSpawn = $("spawn").value;
     $("spawn").replaceChildren(

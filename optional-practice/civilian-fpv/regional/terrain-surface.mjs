@@ -54,6 +54,13 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
     terrainStratum: { value: new THREE.Color(0xb69572) },
   };
   material.name = `Canyon sediment · ${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateTerrainSurface(style, next);
+    if (next === quality) return;
+    quality = next;
+    material.name = `Canyon sediment · ${quality}`;
+    material.needsUpdate = true;
+  };
   material.customProgramCacheKey = () => `fpv-terrain-surface-v2-${quality}`;
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);

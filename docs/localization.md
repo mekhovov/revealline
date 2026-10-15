@@ -1,5 +1,11 @@
 # English and Ukrainian localization
 
+> **Current plan — 15 October 2026:** [completed work, remaining items and delivery priorities](localization-plan-2026-10-15.md).
+> The branch, queue and dated verification statements below are historical checkpoints;
+> use the current plan for status. The runtime conventions remain useful implementation guidance.
+
+## Historical migration checkpoint
+
 The localization migration is **in progress**, on `codex/english-ukrainian-localization`.
 Do not treat English fallback as completed Ukrainian coverage or publish this checkpoint.
 
@@ -458,7 +464,6 @@ still require presentation review; this is not a claim that every controller err
 translated. Distribution/native artifacts above predate the Collection and controller
 batches. A fresh fetch remains zero commits behind main `7c6f84a47`.
 
-
 ## Design Atlas studies and scroll continuity
 
 The Design Atlas now translates every preview template, study/state descriptor, palette,
@@ -515,7 +520,6 @@ ownership. Catalog checks pass with 7,465 messages / 6,026 referenced keys; targ
 and formatting pass. Full validation, lint and formatting pass for this playback checkpoint. Motion collection and
 ability metadata/messages still need translation; this batch does not certify whole-tool
 coverage. Distribution/native artifacts still predate these batches.
-
 
 ## Motion source identities and localized study data
 
@@ -582,7 +586,6 @@ selector/description/link labels, and distinct translated v10 prior cards. Cross
 Ukrainian → English → Ukrainian preserves the selected prior campaign and focused card.
 Studio still has older untranslated dynamic authoring diagnostics; this checkpoint does
 not certify whole-tool coverage. No gameplay was started or progress exported in this check.
-
 
 ## Offline catalog packaging and Motion mutation feedback
 
