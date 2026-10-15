@@ -18,17 +18,15 @@ populated world or claim hours of tested play.
 
 ## Safe capability and appearance gates
 
-This branch starts from main `7de653d8dee104a9cf04c88efab355a9301eebab`, whose
-runtime supports only 128 m and 256 m cells. The new row is included only when
-the runtime's existing `REGION_CELL_SIZES_MM` lists 512 m. Consequently this
-draft cannot advertise an unloadable map on the older runtime. The separately
-reviewed capability #1372 remains a prerequisite; its explicit grid/origin
-bounds must land before actual Desert Library qualification.
+This branch was rebased onto main `39b2eeee74f0ca3332fa2f8b047aba55e64c1382`,
+which includes merged capability #1372 and its explicit grid/origin bounds. The
+new row remains included only when the runtime's `REGION_CELL_SIZES_MM` lists
+512 m, so backports cannot advertise an unloadable map on an older runtime.
 
 The entry intentionally has no trusted appearance override. Exact and unknown
-revisions remain Plain until the opt-in Desert surface in #1390 passes native
-review and is integrated through the exact immutable id/hash mapping. Merely
-publishing the pin must not silently opt players into unreviewed artwork.
+revisions remain Plain until the opt-in Desert surface in #1390 is integrated through the exact immutable id/hash mapping. Parent native review accepted all six starts and three surface tiers at
+`6d817cef58ecc717ccae2ef107f6e76a738bc547` as a material foundation only; this
+main-based pin does not yet include that separate runtime change.
 
 All existing main catalogue rows remain unchanged. The parallel Hillside #1388
 and forthcoming Coaster rows are independent additions and must be retained when
@@ -54,7 +52,9 @@ check**, loading only the exact `region-manifest.mjs` from capability commit
 blob was checked as `ba7fc056d507cb4c8ea631a24914e97649a6be0d` before execution.
 That read-only composition verified all 2,051 responses and eligibility; it is
 not an exact package, native player launch or runtime integration receipt.
-See `library-verification.json` for both bounded results.
+The same full 2,051-response check subsequently passed without any loader or
+module substitution on coherent main `39b2eeee74f0ca3332fa2f8b047aba55e64c1382`.
+See `library-verification.json` for the historical and coherent-source results.
 
 Keep this PR Draft until the dependency is integrated and a fresh coherent
 package includes the capability, this row and the finally accepted appearance.

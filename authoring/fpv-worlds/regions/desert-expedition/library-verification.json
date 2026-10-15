@@ -22,5 +22,13 @@
   "appearance": "plain",
   "nativeVerified": false,
   "packageVerified": false,
-  "releaseReady": false
+  "releaseReady": false,
+  "coherentMainCheck": {
+    "main": "39b2eeee74f0ca3332fa2f8b047aba55e64c1382",
+    "cell512Supported": true,
+    "advertised": true,
+    "verifiedResponses": 2051,
+    "appearance": "plain",
+    "notAnExactPackage": true
+  }
 }
