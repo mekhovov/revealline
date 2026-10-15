@@ -61,6 +61,7 @@ GATE_STEP_NAMES = ['Validate source', 'Check motion lab syntax']
 WAIVER_FORMAT = 'revealline-source-qualification.v2'
 POLICY_PATH = 'publishing/test-policy.json'
 WAIVER_AUTHORIZATION = 'explicit-user-request-20260922'
+RESTORATION_AUTHORIZATION = 'explicit-user-request-20261004'
 
 
 def require(ok, why):
@@ -171,7 +172,9 @@ def test_policy(body):
     require(isinstance(policy, dict) and set(policy) == {
         'format', 'mode', 'authorization', 'scope', 'reason', 'restoration'}, 'Invalid test policy fields')
     require(policy['format'] == 'revealline-release-test-policy.v1' and
-            policy['mode'] in ['required', 'waived'] and policy['authorization'] == WAIVER_AUTHORIZATION and
+            policy['mode'] in ['required', 'waived'] and
+            (policy['authorization'] == WAIVER_AUTHORIZATION or
+             policy['mode'] == 'required' and policy['authorization'] == RESTORATION_AUTHORIZATION) and
             policy['scope'] == 'automated-test-suites' and
             all(isinstance(policy[k], str) and policy[k].strip() and len(policy[k]) <= 2000
                 for k in ['reason', 'restoration']), 'Invalid temporary test policy')
