@@ -112,6 +112,16 @@ export function regionalLibraryEntry(configuration, { sha256 } = {}) {
   return regionalReviewEntry(configuration, { installedIdentity: sha256 });
 }
 
+/** Select only an authored start in the currently verified regional configuration. */
+export function regionalStartingPoint(entry, spawnId) {
+  if (!entry?.regional || entry.course?.format !== 'FPVRegionalFlightPresentation.v1')
+    throw new TypeError('A current regional flight is required');
+  const manifest = validateRegionManifest(entry.configuration.manifest);
+  if (typeof spawnId !== 'string' || !manifest.spawns.some((spawn) => spawn.id === spawnId))
+    throw new TypeError('Unknown regional starting point');
+  return { ...entry, configuration: { ...entry.configuration, manifest, spawnId } };
+}
+
 /** The production host owns input, menus and arming; this adapter owns only regional state. */
 export function createRegionalSession(configuration) {
   const runtime = createRegionalFlightPrototype({ ...configuration, continuous: true });

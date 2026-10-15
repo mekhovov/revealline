@@ -5,6 +5,7 @@ import {
   loadRegionalReview,
   regionalReviewEntry,
   regionalLibraryEntry,
+  regionalStartingPoint,
   createRegionalSession,
 } from '../../../optional-practice/civilian-fpv/regional-session.mjs';
 
@@ -99,6 +100,24 @@ for (const mode of ['self-level', 'acro']) {
   await session.dispose();
   assert.equal(session.root.children.length, 0);
 }
+assert.throws(() => regionalStartingPoint(installedEntry, 'not-an-authored-start'), /Unknown/);
+assert.throws(
+  () => regionalStartingPoint({ ...installedEntry, regional: false }, 'mill-court'),
+  /regional/,
+);
+for (const spawn of configuration.manifest.spawns) {
+  const selected = regionalStartingPoint(installedEntry, spawn.id);
+  assert.equal(installedEntry.configuration.spawnId, undefined);
+  assert.equal(selected.packIdentity, installedEntry.packIdentity);
+  assert.equal(selected.configuration.spawnId, spawn.id);
+  const session = createRegionalSession({ ...selected.configuration, mode: 'acro' });
+  await session.prepare();
+  assert.deepEqual(session.snapshot().position, spawn.position);
+  assert.equal(session.snapshot().status, 'paused');
+  assert.equal(session.snapshot().ticks, 0);
+  assert.equal(session.snapshot().lastInput.throttle, 0);
+  await session.dispose();
+}
 console.log(
-  'PASS regional production session: real mixed assets; both modes; paused launch/retry/cancel; input adapter; disposal; source boundary',
+  'PASS regional production session: real mixed assets; both modes; paused launch/retry/cancel; input adapter; disposal; source boundary; authored starting points and invalid-ID rejection',
 );
