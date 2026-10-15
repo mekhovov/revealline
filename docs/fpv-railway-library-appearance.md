@@ -51,7 +51,30 @@ The three approved sessions contained the expected named Railway ground material
 the fallback did not. Wrong IDs, wrong hashes, malformed trusted styles and unknown
 quality values were also checked. Source files and collision are unchanged.
 
-This increment does not claim normal-Library native browser acceptance, packaged
-offline acceptance, device FPS, live material-tier updates, or finished realism.
-Those require their respective host integration and release checks. No module
-count, package byte ceiling, physics, scoring, source geometry or texture was added.
+### Native Library launch correction
+
+The exact `d33a1cc3c8` CI optional package reproduced a first-Fly failure after a
+successful verified Railway download. An isolated copy with diagnostic tracing
+located the cancellation in `advanceFrame`'s execution-gap guard: initial shader
+preparation took longer than the flight stall threshold and `pauseFlight` aborted
+the still-disarmed preparation. Explicit Restart succeeded because compilation
+was then warm. The original downloaded package remains unchanged.
+
+The host resets elapsed flight time for a delayed callback only when regional
+preparation is pending and the flight is already paused/disarmed. Explicit focus
+loss and menu cancellation still call the unchanged `pauseFlight`. The final
+integration retains #1314's stricter main implementation and five production
+callback tests unchanged, superseding the earlier two clock-boundary checks.
+These cover cold preparation, both clocks, active/inconsistent states, ordinary
+flight policy and explicit cancellation; all five pass on the combined source.
+
+Native browser verification used that exact package plus only this host change.
+First Fly reached Ready to arm, paused with zero input and the expected Railway
+surface. Reload retained the 5.4 MiB structure-r1 installation, and Fly reached
+Ready to arm again without Restart or another download. This is local integration
+evidence, not a claim that refreshed CI or final release-package checks passed.
+
+This increment does not claim packaged offline acceptance, device FPS, live
+material-tier updates, or finished realism. Those require their respective release
+checks. No module count, package byte ceiling, physics, scoring, source geometry
+or texture was added.

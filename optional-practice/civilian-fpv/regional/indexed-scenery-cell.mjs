@@ -1,3 +1,9 @@
+import {
+  RGBA_SCENERY_FORMAT,
+  validateRgbaSceneryCell,
+  compileRgbaSceneryCell,
+  rgbaTextureKey,
+} from './rgba-scenery-cell.mjs';
 /** Explicit indexed-palette extension; embedded verified texels only, no image URLs. */
 import {
   compileSceneryCell,
@@ -42,23 +48,33 @@ export function validateScenerySource(input) {
   )
     throw new TypeError('Scenery source exceeds decode allowance');
   const parsed = typeof input === 'string' ? JSON.parse(input) : input;
+  if (parsed?.format === RGBA_SCENERY_FORMAT) return validateRgbaSceneryCell(input);
   return parsed?.format === INDEXED_SCENERY_FORMAT
     ? validateIndexedSceneryCell(input)
     : validateSceneryCell(input);
 }
 
 export const scenerySourceCell = (source) =>
-  source.format === INDEXED_SCENERY_FORMAT ? source.cell : source;
+  [INDEXED_SCENERY_FORMAT, RGBA_SCENERY_FORMAT].includes(source.format) ? source.cell : source;
 
 export function scenerySourceResources(sources) {
   const textures = new Map();
   let geometryBytes = 0;
   for (const source of sources) {
     geometryBytes += sceneryGeometryBytes(scenerySourceCell(source));
-    if (source.format === INDEXED_SCENERY_FORMAT) {
+    if ([INDEXED_SCENERY_FORMAT, RGBA_SCENERY_FORMAT].includes(source.format)) {
       // Base geometry accounting already includes a normal for every position.
-      geometryBytes += source.bindings.reduce((sum, binding) => sum + binding.uvs.length * 4, 0);
-      for (const texture of source.textures) textures.set(indexedTextureKey(texture), texture);
+      geometryBytes += source.bindings.reduce(
+        (sum, binding) => sum + (binding.uvs.length + (binding.colors?.length || 0)) * 4,
+        0,
+      );
+      for (const texture of source.textures)
+        textures.set(
+          source.format === RGBA_SCENERY_FORMAT
+            ? rgbaTextureKey(texture)
+            : indexedTextureKey(texture),
+          texture,
+        );
     }
   }
   const textureBytes = [...textures.values()].reduce(
@@ -70,6 +86,7 @@ export function scenerySourceResources(sources) {
 }
 
 export function compileScenerySource(source) {
+  if (source.format === RGBA_SCENERY_FORMAT) return compileRgbaSceneryCell(source);
   if (source.format !== INDEXED_SCENERY_FORMAT) return compileSceneryCell(source);
   const compiled = compileIndexedSceneryCell(source);
   const textureKey = indexedTextureKey(compiled.source.textures[0]);

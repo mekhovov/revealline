@@ -221,6 +221,18 @@ function validatePair(descriptor, blobs) {
     validateRegionManifest(decode(blobs.get(ref.path))),
   );
   const [terrain, scenery] = manifests;
+  assert(
+    terrain.id === scenery.id && terrain.revision === scenery.revision,
+    'Regional layer identities do not match',
+  );
+  const sceneryChunks = new Map(scenery.chunks.map((chunk) => [chunk.id, chunk]));
+  assert(
+    terrain.chunks.every(
+      (chunk) =>
+        sceneryChunks.get(chunk.id)?.x === chunk.x && sceneryChunks.get(chunk.id)?.z === chunk.z,
+    ),
+    'Regional layer cell identities do not match',
+  );
   const ordered = (v) => JSON.stringify(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)));
   assert(ordered(terrain.grid) === ordered(scenery.grid), 'Regional layer grids do not match');
   const spawns = (m) =>

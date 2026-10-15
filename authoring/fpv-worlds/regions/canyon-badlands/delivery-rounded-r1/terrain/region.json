@@ -1,0 +1,239 @@
+{
+  "format": "FPVRegionManifest.v1",
+  "id": "canyon-arrival-landmarks-study",
+  "revision": "r2",
+  "title": {
+    "en": "Canyon arrival — rounded relief study",
+    "uk": "Вхід у каньйон — дослідження плавного рельєфу"
+  },
+  "grid": {
+    "cellSizeMm": 128000,
+    "minX": 0,
+    "minZ": 0,
+    "width": 3,
+    "depth": 3,
+    "floorMm": 0,
+    "ceilingMm": 350000
+  },
+  "assets": [
+    {
+      "id": "canyon-0-0-scene",
+      "path": "terrain/canyon-0-0.glb",
+      "sha256": "480143c75d4db05ea9b927cc1c476e24c8e1a2d3fd259c5e2eb05548a09be562",
+      "bytes": 38404,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-0-0-collision",
+      "path": "terrain/canyon-0-0.json",
+      "sha256": "c14fb5edf02119d11957ea9f7c64be63b2c09b78cd22375b98036a7cbe85c214",
+      "bytes": 11587,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-1-0-scene",
+      "path": "terrain/canyon-1-0.glb",
+      "sha256": "797272927010faf114610926c67999bf2faf9cf3f83c0b6bae1b5f7665337831",
+      "bytes": 38404,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-1-0-collision",
+      "path": "terrain/canyon-1-0.json",
+      "sha256": "84f4d51a433229097080c6c157a93c272a85cc47cfa2e54e9d97a463a5f9445c",
+      "bytes": 11311,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-2-0-scene",
+      "path": "terrain/canyon-2-0.glb",
+      "sha256": "bca1237a247fe30297e98219a62a832364560bd032776309827264eb1163a697",
+      "bytes": 38420,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-2-0-collision",
+      "path": "terrain/canyon-2-0.json",
+      "sha256": "3be173d86fab0790d16afe502b91b3c054c2e5e748dc612d3acf27a8a5088abe",
+      "bytes": 12081,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-0-1-scene",
+      "path": "terrain/canyon-0-1.glb",
+      "sha256": "66ed2e48663f06a990c40e82fe58840dc6ba0adba7d9a25ed8b7b06d7759a20c",
+      "bytes": 38388,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-0-1-collision",
+      "path": "terrain/canyon-0-1.json",
+      "sha256": "6a09f2f4aa693decfc177b565a199089944745dd9b8fb8907acc7c86ad4f7630",
+      "bytes": 11626,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-1-1-scene",
+      "path": "terrain/canyon-1-1.glb",
+      "sha256": "baa3cd9f214bb8b0a4406e128ec3f99f5d9bdb05e2767ab218fc7349ad3b4195",
+      "bytes": 38404,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-1-1-collision",
+      "path": "terrain/canyon-1-1.json",
+      "sha256": "12b719dbdfa3daedc215a6a78f70776b8861e266309abda16749eff0c41ffde1",
+      "bytes": 11350,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-2-1-scene",
+      "path": "terrain/canyon-2-1.glb",
+      "sha256": "25f58769d8d4a469e7b8317b0e3ef6b040b77ea530210140d013ce1f6d7214c3",
+      "bytes": 38420,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-2-1-collision",
+      "path": "terrain/canyon-2-1.json",
+      "sha256": "426dfb21c6fcdac8757fd892f97d37c80252fdcff248e3817027dd9b353a06a3",
+      "bytes": 12089,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-0-2-scene",
+      "path": "terrain/canyon-0-2.glb",
+      "sha256": "a61d982667181ed6413667e0b9602740c9ecfcc00addbd8d3e689632feabdfb2",
+      "bytes": 38404,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-0-2-collision",
+      "path": "terrain/canyon-0-2.json",
+      "sha256": "e9475924034bea626e77fb9eaa69d16de255c1f4b195903c3a2fe3480d7ef08c",
+      "bytes": 12128,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-1-2-scene",
+      "path": "terrain/canyon-1-2.glb",
+      "sha256": "c3aec6cd7609a55ef6de0a2c0511ae7ad1af0d4694d54c5799f8bf9392df2c84",
+      "bytes": 38420,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-1-2-collision",
+      "path": "terrain/canyon-1-2.json",
+      "sha256": "26bee06142cf8a09256686d86473174b4c70edf1904b5db490ef3d7a6ffb4d44",
+      "bytes": 12128,
+      "kind": "collision"
+    },
+    {
+      "id": "canyon-2-2-scene",
+      "path": "terrain/canyon-2-2.glb",
+      "sha256": "c3fe8d8ae582a2cfec057ceba86c24750e6ae93d859a99ab8fe4fddc8b129179",
+      "bytes": 38420,
+      "kind": "scene"
+    },
+    {
+      "id": "canyon-2-2-collision",
+      "path": "terrain/canyon-2-2.json",
+      "sha256": "893b28b76b54af2056ccd8683749114ca24096396c65b7bcd506a21e2e6f4c65",
+      "bytes": 12128,
+      "kind": "collision"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "canyon-0-0",
+      "x": 0,
+      "z": 0,
+      "assets": [
+        "canyon-0-0-scene",
+        "canyon-0-0-collision"
+      ]
+    },
+    {
+      "id": "canyon-1-0",
+      "x": 1,
+      "z": 0,
+      "assets": [
+        "canyon-1-0-scene",
+        "canyon-1-0-collision"
+      ]
+    },
+    {
+      "id": "canyon-2-0",
+      "x": 2,
+      "z": 0,
+      "assets": [
+        "canyon-2-0-scene",
+        "canyon-2-0-collision"
+      ]
+    },
+    {
+      "id": "canyon-0-1",
+      "x": 0,
+      "z": 1,
+      "assets": [
+        "canyon-0-1-scene",
+        "canyon-0-1-collision"
+      ]
+    },
+    {
+      "id": "canyon-1-1",
+      "x": 1,
+      "z": 1,
+      "assets": [
+        "canyon-1-1-scene",
+        "canyon-1-1-collision"
+      ]
+    },
+    {
+      "id": "canyon-2-1",
+      "x": 2,
+      "z": 1,
+      "assets": [
+        "canyon-2-1-scene",
+        "canyon-2-1-collision"
+      ]
+    },
+    {
+      "id": "canyon-0-2",
+      "x": 0,
+      "z": 2,
+      "assets": [
+        "canyon-0-2-scene",
+        "canyon-0-2-collision"
+      ]
+    },
+    {
+      "id": "canyon-1-2",
+      "x": 1,
+      "z": 2,
+      "assets": [
+        "canyon-1-2-scene",
+        "canyon-1-2-collision"
+      ]
+    },
+    {
+      "id": "canyon-2-2",
+      "x": 2,
+      "z": 2,
+      "assets": [
+        "canyon-2-2-scene",
+        "canyon-2-2-collision"
+      ]
+    }
+  ],
+  "spawns": [
+    {
+      "id": "basin",
+      "position": {
+        "x": 110000,
+        "y": 9000,
+        "z": 100000
+      }
+    }
+  ]
+}
