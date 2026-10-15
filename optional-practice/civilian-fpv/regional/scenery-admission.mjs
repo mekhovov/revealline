@@ -1,3 +1,4 @@
+import { createRestoreContainment } from './restore-containment.mjs';
 import { createRegionMotionQuery, createRegionFlightSupportQuery } from './region-motion-query.mjs';
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
@@ -147,12 +148,16 @@ export async function prepareSceneryWindow(
     byColor = new Map(),
     textures = new Map();
   const colliderIds = new Map();
+  const restoreMeshes = [];
+  const restoreContainment = createRestoreContainment(restoreMeshes);
   let disposed = false;
   function dispose() {
     if (disposed) return;
     disposed = true;
     group.removeFromParent();
     group.clear();
+    restoreContainment.dispose();
+    restoreMeshes.length = 0;
     for (const geometry of geometries) geometry.dispose();
     for (const material of materials) material.dispose();
     for (const texture of textures.values()) texture.dispose();
@@ -222,6 +227,7 @@ export async function prepareSceneryWindow(
         mesh.position.set(local.x, local.y, local.z);
         group.add(mesh);
         if (surface.collision === 'visual-only') continue;
+        restoreMeshes.push({ positions, indices, translation: local });
         const collider = world.createCollider(
           RAPIER.ColliderDesc.trimesh(positions, indices).setTranslation(local.x, local.y, local.z),
         );
@@ -252,6 +258,14 @@ export async function prepareSceneryWindow(
     return true;
   }
   return Object.freeze({
+    prepareRestoreProof: (assertCurrent) => { live(); return restoreContainment.prepare(assertCurrent); },
+    restoreClearance(positionMm, radiusMm = 220) {
+      live();
+      fail(finitePosition(positionMm) && Number.isSafeInteger(radiusMm) && radiusMm > 0 && radiusMm <= 2000, 'Invalid restore query');
+      if (!covers(positionMm, positionMm, radiusMm)) return { status: 'ambiguous', reason: 'unknown-cell' };
+      return restoreContainment.classify(local(positionMm));
+    },
+    restoreSnapshot: restoreContainment.snapshot,
     flightSupport: createRegionFlightSupportQuery({
       world,
       local,
