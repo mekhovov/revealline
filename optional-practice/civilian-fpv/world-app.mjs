@@ -106,7 +106,7 @@ import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
 import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
-import { mountRegionalLibrary } from './regional-library.mjs';
+import { mountRegionalLibrary, regionalPresentationOptions } from './regional-library.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -1751,7 +1751,10 @@ export function mountWorldApp({
         'Підготовка файлів для автономного запуску…',
       ],
       removing: ['Removing offline simulator files…', 'Прибирання автономних файлів симулятора…'],
-      ready: ['Offline runtime preparation completed.', 'Підготовку автономного запуску завершено.'],
+      ready: [
+        'Offline runtime preparation completed.',
+        'Підготовку автономного запуску завершено.',
+      ],
       removed: [
         'Offline simulator files removed. Installed worlds and flight records are kept.',
         'Автономні файли симулятора прибрано. Встановлені світи й записи польотів збережено.',
@@ -2891,54 +2894,54 @@ export function mountWorldApp({
         if (!libraryGroups.has(id)) libraryGroups.set(id, []);
         libraryGroups.get(id).push(entry);
       }
-    for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
-      if (!libraryGroups.has(old)) missionLibrary.remove(old);
-    const complete = completedKeys();
-    for (const [id, missions] of libraryGroups) {
-      const positions = new Map(),
-        sizes = new Map();
-      for (const entry of missions) {
-        const key = missionCampaign(entry).key;
-        positions.set(entry, sizes.get(key) ?? 0);
-        sizes.set(key, (sizes.get(key) ?? 0) + 1);
+      for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
+        if (!libraryGroups.has(old)) missionLibrary.remove(old);
+      const complete = completedKeys();
+      for (const [id, missions] of libraryGroups) {
+        const positions = new Map(),
+          sizes = new Map();
+        for (const entry of missions) {
+          const key = missionCampaign(entry).key;
+          positions.set(entry, sizes.get(key) ?? 0);
+          sizes.set(key, (sizes.get(key) ?? 0) + 1);
+        }
+        missionLibrary.register({
+          id,
+          editionId: id,
+          edition: 'FPV SIM · Worlds',
+          collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
+          entries: missions,
+          describe: (entry) => ({
+            id: keyOf(entry),
+            revision: entry.course.revision ?? '',
+            campaignKey: missionCampaign(entry).key,
+            campaignTitle: missionCampaign(entry).title,
+            name: label(entry),
+            levelIndex: positions.get(entry),
+            ...(!entry.projectId
+              ? {
+                  canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
+                  globalLevelNumber:
+                    [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
+                      (candidate) => keyOf(candidate) === keyOf(entry),
+                    ) + 1,
+                }
+              : {}),
+            campaignLevelCount: sizes.get(missionCampaign(entry).key),
+            modes: ['solo'],
+            tags: ['FPV', 'Practice'],
+            hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
+            rules: catalogueDetails(entry),
+          }),
+          availability: () => ({ state: 'ready' }),
+          card: (entry) => entry.course,
+          progressState: (entry) => ({
+            state: complete.has(keyOf(entry)) ? 'completed' : 'new',
+            bestStars: null,
+          }),
+          launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
+        });
       }
-      missionLibrary.register({
-        id,
-        editionId: id,
-        edition: 'FPV SIM · Worlds',
-        collection: id === 'worlds:builtin' ? 'Classic' : 'Custom',
-        entries: missions,
-        describe: (entry) => ({
-          id: keyOf(entry),
-          revision: entry.course.revision ?? '',
-          campaignKey: missionCampaign(entry).key,
-          campaignTitle: missionCampaign(entry).title,
-          name: label(entry),
-          levelIndex: positions.get(entry),
-          ...(!entry.projectId
-            ? {
-                canonicalLevelKey: `sim-worlds:${keyOf(entry)}`,
-                globalLevelNumber:
-                  [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].findIndex(
-                    (candidate) => keyOf(candidate) === keyOf(entry),
-                  ) + 1,
-              }
-            : {}),
-          campaignLevelCount: sizes.get(missionCampaign(entry).key),
-          modes: ['solo'],
-          tags: ['FPV', 'Practice'],
-          hook: entry.course.locales[locale]?.brief ?? entry.course.locales.en.brief,
-          rules: catalogueDetails(entry),
-        }),
-        availability: () => ({ state: 'ready' }),
-        card: (entry) => entry.course,
-        progressState: (entry) => ({
-          state: complete.has(keyOf(entry)) ? 'completed' : 'new',
-          bestStars: null,
-        }),
-        launch: (entry, { isCurrent }) => startFlight(entry, { isCurrent }),
-      });
-    }
       missionChooser?.refresh();
     }
     presentation.refresh();
@@ -3633,9 +3636,16 @@ export function mountWorldApp({
   async function flyInstalledWorld(record) {
     // Launch the verified installed revision, never a same-name replacement.
     const entry = catalogue.find(
-      (candidate) => candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
+      (candidate) =>
+        candidate.projectId === record.id && candidate.packIdentity === `fpv-pack:${record.sha256}`,
     );
-    if (!entry) throw new Error(txt('This world is no longer installed. Refresh the Library.', 'Цей світ більше не встановлено. Оновіть бібліотеку.'));
+    if (!entry)
+      throw new Error(
+        txt(
+          'This world is no longer installed. Refresh the Library.',
+          'Цей світ більше не встановлено. Оновіть бібліотеку.',
+        ),
+      );
     await startFlight(entry, { paused: true });
   }
   const worldLibrary = mountWorldLibrary({
@@ -3654,13 +3664,10 @@ export function mountWorldApp({
     window: win,
     fly: (configuration, record, { isCurrent }) => {
       const generation = ++missionLaunchGeneration;
-      return startRegionalFlight(
-        regionalLibraryEntry(configuration, { sha256: record.sha256 }),
-        {
-          canAdopt: isCurrent,
-          isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
-        },
-      );
+      return startRegionalFlight(regionalLibraryEntry(configuration, { sha256: record.sha256 }), {
+        canAdopt: isCurrent,
+        isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
+      });
     },
   });
   on(restorePackInput, 'change', async (event) => {
@@ -4476,14 +4483,16 @@ export function mountWorldApp({
     accumulator = 0;
     pausing = false;
     if (current) {
-      $('flight-status').textContent = current.regional ? txt('Unscored · Paused', 'Без заліку · Пауза') : txt(
-        replayProof
-          ? 'Playback paused. Resume to continue.'
-          : 'Paused. Arm deliberately to continue.',
-        replayProof
-          ? 'Відтворення на паузі. Натисніть «Продовжити».'
-          : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
-      );
+      $('flight-status').textContent = current.regional
+        ? txt('Unscored · Paused', 'Без заліку · Пауза')
+        : txt(
+            replayProof
+              ? 'Playback paused. Resume to continue.'
+              : 'Paused. Arm deliberately to continue.',
+            replayProof
+              ? 'Відтворення на паузі. Натисніть «Продовжити».'
+              : 'Пауза. Натисніть «Увімкнути», щоб продовжити.',
+          );
       if (!disposed) void saveRecovery().catch(reportError);
     }
   }
@@ -5675,10 +5684,7 @@ export function mountWorldApp({
     const selected = flight,
       token = flightToken;
     const timeout = win.setTimeout(() => selected.cancelPreparation(), 30000);
-    $('flight-status').textContent = txt(
-      'Unscored · Loading area…',
-      'Без заліку · Завантаження…',
-    );
+    $('flight-status').textContent = txt('Unscored · Loading area…', 'Без заліку · Завантаження…');
     const owns = () => !disposed && flight === selected && token === flightToken;
     const operation = (async () => {
       try {
@@ -5715,8 +5721,7 @@ export function mountWorldApp({
   }
   async function startRegionalFlight(entry, options = {}) {
     const token = ++flightToken;
-    const ownsLaunch = () =>
-      !disposed && token === flightToken && options.isCurrent?.() !== false;
+    const ownsLaunch = () => !disposed && token === flightToken && options.isCurrent?.() !== false;
     const canAdopt = () => ownsLaunch() && options.canAdopt?.() !== false;
     industrialPreparation?.abort();
     checkpointPreparation?.abort();
@@ -5728,7 +5733,7 @@ export function mountWorldApp({
     if (!canAdopt()) return;
     // Validate paired sources before releasing a usable previous flight.
     const nextFlight = createRegionalSession({
-      ...entry.configuration,
+      ...regionalPresentationOptions(entry.configuration, $('flight-quality').value),
       mode: options.mode ?? $('flight-mode').value,
       response,
       initialHeading: 'region-centre',
@@ -7214,7 +7219,7 @@ export function mountWorldApp({
     if (action === 'practice' || (action === 'try' && checkpointSession)) {
       if (!selected.section && !selected.fullPractice) return;
       const proof = selected.section
-        ? checkpointRequest?.proof ?? replayProof ?? demonstrationFor(entry, selected.mode)
+        ? (checkpointRequest?.proof ?? replayProof ?? demonstrationFor(entry, selected.mode))
         : null;
       options.checkpoint = {
         mode: selected.mode,

@@ -35,9 +35,9 @@ saved revisions. Downloaded metadata cannot request arbitrary styles or URLs.
 `regionalPresentationOptions` maps the player's `low`, `balanced`, or `high`
 selection to `performance`, `balanced`, or `quality` at launch/restart. It preserves
 the verified geometry, source loader, scenery and control configuration. This
-helper is prepared for the separate normal-host call site: until that integration
-lands, Railway uses the existing default Balanced surface tier. Changing quality
-during flight does not yet rebuild regional surface materials.
+helper is applied at the normal host's regional session launch, including restart,
+before its existing mode and input overrides. Changing quality during flight does
+not yet rebuild regional surface materials.
 
 ## Verification and limits
 
