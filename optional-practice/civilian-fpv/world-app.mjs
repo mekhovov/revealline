@@ -4726,6 +4726,7 @@ export function mountWorldApp({
           : state.status === 'active'
             ? 'playing'
             : state.status,
+      pauseOpensMenu: Boolean(current?.regional),
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status),
@@ -4766,6 +4767,13 @@ export function mountWorldApp({
       $('flight-dialog').dataset.immersiveControls !== 'true' &&
       !doc.querySelector('dialog[open]:not(#flight-dialog)');
     const activeHud = hudVisible && state.status === 'active';
+    // Ready and paused regional flight keep the same unobstructed viewport.
+    // This is presentation state only; arming and HUD progress remain unchanged.
+    $('flight-dialog').dataset.simFlightCompact = String(
+      Boolean(current.regional && hudVisible),
+    );
+    $('world-viewport').dataset.simFlightCompact =
+      $('flight-dialog').dataset.simFlightCompact;
     $('flight-dialog').dataset.simHudActive = String(activeHud);
     $('world-viewport').dataset.simHudActive = String(activeHud);
     $('world-viewport').dataset.simHudGuide = String(beginnerCoach.blocksArm());
@@ -6422,6 +6430,8 @@ export function mountWorldApp({
     $('flight-dialog').classList.remove('learning-replay');
     flightHud.setWorldCue(null);
     $('flight-dialog').dataset.simHudActive = 'false';
+    $('flight-dialog').dataset.simFlightCompact = 'false';
+    $('world-viewport').dataset.simFlightCompact = 'false';
     const closedLesson = current?.beginner;
     current = null;
     refreshEnemyGuide();
