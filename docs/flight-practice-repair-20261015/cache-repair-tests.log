@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: C7 plan pins all three packages and refuses credentials, scripts and unbounded input
+ok 1 - C7 plan pins all three packages and refuses credentials, scripts and unbounded input
+  ---
+  duration_ms: 2.229917
+  ...
+# Subtest: fault scopes require one known app, exact version and local server
+ok 2 - fault scopes require one known app, exact version and local server
+  ---
+  duration_ms: 11.680042
+  ...
+# Subtest: missing-dependency fault removes exactly one original owned entry for each app
+ok 3 - missing-dependency fault removes exactly one original owned entry for each app
+  ---
+  duration_ms: 59.739958
+  ...
+# Subtest: missing-worker fault never opens or alters cache bytes
+ok 4 - missing-worker fault never opens or alters cache bytes
+  ---
+  duration_ms: 2.32375
+  ...
+# Subtest: fault refuses foreign, malformed, redirected ownership or changed dependency before mutation
+ok 5 - fault refuses foreign, malformed, redirected ownership or changed dependency before mutation
+  ---
+  duration_ms: 12.6625
+  ...
+# Subtest: read-only state fingerprints exact cache contents and empty pointer without credentials
+ok 6 - read-only state fingerprints exact cache contents and empty pointer without credentials
+  ---
+  duration_ms: 18.772583
+  ...
+# Subtest: preservation permits target installation changes but rejects sibling pointer/cache/data changes
+ok 7 - preservation permits target installation changes but rejects sibling pointer/cache/data changes
+  ---
+  duration_ms: 5.484625
+  ...
+# Subtest: failed admission retains a failure report and refuses existing evidence output
+ok 8 - failed admission retains a failure report and refuses existing evidence output
+  ---
+  duration_ms: 49.950667
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1542.613291

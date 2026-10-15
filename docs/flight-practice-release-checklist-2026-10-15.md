@@ -2,6 +2,13 @@
 
 ## Decision boundary and current baseline
 
+**Recovery/test follow-up:** [repair and player-flow acceptance](flight-practice-repair-2026-10-15.md)
+retains the original 16-checkpoint cache/worker repair run and a separate
+18-checkpoint run preserving a nonempty, UI-authored World Studio template copy.
+It also records bounded status diagnostics, failed first-flight test attempts,
+346 practice regressions and the opt-in controlled quota-denial protocol.
+These bounded results do not close human/device, distinct-release or hosting gates.
+
 **Latest continuation:** [pointer and preparation verification](flight-practice-pointer-2026-10-15.md)
 records the clean rebase onto `95703ee32`, fixes frozen at `bf31260eb`, 345 practice
 tests and 10 observer tests. C3's selected Academy controls now pass a 24-case
