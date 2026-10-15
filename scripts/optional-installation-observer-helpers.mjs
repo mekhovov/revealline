@@ -107,6 +107,16 @@ export async function activateOfflineAction(page, { button, status, expected }) 
           );
         if (/failed|timed out|cancelled|denied|quota|not available|not supported/i.test(text))
           throw new Error(`Offline action failed: ${text}`);
+        // A fault control can be ineffective. Treat a fresh successful terminal
+        // status as an unexpected outcome, not a stalled transfer/deadline.
+        if (
+          /ready offline|ready for offline|prepared offline|offline runtime preparation completed/i.test(
+            text,
+          ) &&
+          !globalThis.document.querySelector(button)?.disabled &&
+          !globalThis.document.querySelector('[data-optional-offline-progress]')
+        )
+          throw new Error(`Unexpected offline action result: ${text}`);
         return false;
       },
       { button, status, expected: expected.source },
@@ -125,8 +135,8 @@ export async function activateOfflineAction(page, { button, status, expected }) 
 export async function revealFPVOffline(page, openHelp) {
   if (!(await page.locator('#help-dialog').isVisible())) await openHelp();
   const summary = page.locator('summary[data-sim-copy="workshopAndOffline"]');
-  // Exercise the native keyboard route. A first pointer press currently shifts
-  // this dialog before mouseup; do not misreport that separate pointer issue.
+  // Exercise the native keyboard route. Pointer stability has a separate
+  // qualification matrix; this observer cannot supply that evidence.
   if ((await summary.locator('..').getAttribute('open')) === null) await summary.press('Enter');
   await page.locator('#install-offline').waitFor({ state: 'visible' });
   await page.locator('#remove-offline').waitFor({ state: 'visible' });
