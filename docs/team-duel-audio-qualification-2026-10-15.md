@@ -82,8 +82,10 @@ old paused-title copy, the obsolete Team Help path outside Settings, and an
 unchanged Team picture-preparation timeout. The title now follows current
 `PAUSED` copy and Help follows Settings → Extras → Help → Audio. Each of those
 three cases passed its targeted recheck (one pass and 20 excluded cases per
-invocation). This is not represented as a fresh clean whole-file run; subsequent
-integrated CI remains its own gate. Changed runtime/tests pass targeted lint and format checks.
+invocation). A subsequent complete run of `couch-audio-master.test.mjs` and
+`team-discovery-host.test.mjs` at rebased source `697d59fdd3e452a5e5b385028cface32fdc952fc`
+passes all **37 test nodes**, with no failures, exclusions or cancellations.
+Integrated CI remains its own gate. Changed runtime/tests pass targeted lint and format checks.
 Model checks are not native decoding or listening evidence.
 
 ## Native digital-output probe

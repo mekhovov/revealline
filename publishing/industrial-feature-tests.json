@@ -182,7 +182,8 @@
         "game/test/overflight-survival-hud.test.mjs",
         "game/test/overflight-world-audio.test.mjs",
         "game/test/team-discovery-host.test.mjs",
-        "game/test/couch-audio-master.test.mjs"
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/coop-picture-landing-recovery.test.mjs"
       ]
     }
   ]
