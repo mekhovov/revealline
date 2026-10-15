@@ -1985,6 +1985,7 @@
   "studio.encounter.confirmRemove": "Confirm remove Sentinel",
   "studio.encounter.removeAgain": "Activate Remove again to remove the boss and encounter links. Objectives and map geometry remain. This may make a region auto-fill; preview again. Undo remains available.",
   "studio.preview.preparing": "{{label}}: preparing {{slot}}…",
+  "studio.preview.preparingMission": "Preparing the mission preview…",
   "studio.preview.loading": "Loading {{name}} · {{difficulty}}. Frozen candidate; later edits do not change this run.",
   "studio.preview.loadFailed": "{{message}} Close preview and retry. Your draft is intact.",
   "studio.preview.ready": "Engine ready. Practice only; no campaign awards. Close preview to return to your draft.",
@@ -3199,5 +3200,17 @@
   "studio.teamEnvironment.apply": "Validate & apply environment",
   "studio.teamEnvironment.help": "Edit relay objectives, current zones, warning emitters, perimeter patrols, erosion sources and ordered targets. Gates must fit existing wall cells; change the map geometry first when moving a gate. The complete recipe is validated before applying. Undo restores the previous environment.",
   "studio.teamEnvironment.unavailable": "Select a Team expedition mission with environmental mechanics. Other editions keep their own editors and rules.",
-  "studio.teamEnvironment.applied": "Team environment applied. The map preview and local checkpoint use the updated recipe."
+  "studio.teamEnvironment.applied": "Team environment applied. The map preview and local checkpoint use the updated recipe.",
+  "motionLab.overflightEffects.heading": "Overflight · shared effects",
+  "motionLab.overflightEffects.description": "Inspect the exact source motion profile used by native play. Warning timing and damage remain simulation-owned.",
+  "motionLab.overflightEffects.effect": "Effect",
+  "motionLab.overflightEffects.drop": "Payload impact",
+  "motionLab.overflightEffects.pulse": "Pulse",
+  "motionLab.overflightEffects.warning": "Warning",
+  "motionLab.overflightEffects.hostileImpact": "Hostile impact",
+  "motionLab.overflightEffects.slowField": "Slow field",
+  "motionLab.overflightEffects.chain": "Scanner chain",
+  "motionLab.overflightEffects.animationProgress": "Animation progress",
+  "motionLab.overflightEffects.reducedEffects": "Reduced effects",
+  "motionLab.overflightEffects.preview": "Shared effect preview"
 }
