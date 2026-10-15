@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+ok 1 - curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+  ---
+  duration_ms: 7005.54775
+  ...
+# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+ok 2 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+  ---
+  duration_ms: 67.989084
+  ...
+# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+ok 3 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+  ---
+  duration_ms: 15.456958
+  ...
+# Subtest: catalogue admits only matching installed content and local bundled replay URLs
+ok 4 - catalogue admits only matching installed content and local bundled replay URLs
+  ---
+  duration_ms: 26.103917
+  ...
+# Subtest: immediate: practice forks match all four core branches and own every mutable value
+ok 5 - immediate: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 1005.910458
+  ...
+# Subtest: grid-center: practice forks match all four core branches and own every mutable value
+ok 6 - grid-center: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 1296.743959
+  ...
+# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+ok 7 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+  ---
+  duration_ms: 163.0565
+  ...
+# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+ok 8 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+  ---
+  duration_ms: 76.757625
+  ...
+# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+ok 9 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+  ---
+  duration_ms: 76.233541
+  ...
+# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing
+ok 10 - a takeover retains both hangar loadouts, a live support field and impact recovery timing
+  ---
+  duration_ms: 119.964084
+  ...
+# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority
+ok 11 - immediate: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 205.792042
+  ...
+# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority
+ok 12 - grid-center: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 126.885084
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 13 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 7078.695125
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 14 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 61.215625
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 15 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 3554.826625
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 16 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 9239.916167
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 17 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 72.106958
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 18 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 575.817625
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 19 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 381.333125
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 20 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 22.499375
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 21 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 1.269875
+  ...
+# Subtest: a missing primary recording uses an available pinned variant without changing its inputs
+ok 22 - a missing primary recording uses an available pinned variant without changing its inputs
+  ---
+  duration_ms: 180.267375
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 23 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 600.791416
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 24 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 3090.89325
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 25 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 22.781417
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 26 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.420792
+  ...
+# Subtest: installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+ok 27 - installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+  ---
+  duration_ms: 722.722708
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37104.078333
