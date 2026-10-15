@@ -12,13 +12,21 @@ import {
   DEFAULT_RESPONSE,
 } from '../../../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { routes as clearanceRoutes } from './landmarks.mjs';
+import { routes as districtRoutes } from './districts.mjs';
 
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide the accepted rounded Canyon paired directory');
-const sourcePins = {
-  terrain: '9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239',
-  scenery: 'a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f',
-};
+const districtProfile = process.argv[3] === 'districts';
+assert(process.argv[3] === undefined || districtProfile, 'Unknown commanded-flight profile');
+const sourcePins = districtProfile
+  ? {
+      terrain: '219b438a19fdd7decd022cd48d145b1a45505198e86e9270cf818696894210a4',
+      scenery: '3b704a760c06c7ed066e11050cadcb1af27d5ad18ed87e63e2a66137507fcff6',
+    }
+  : {
+      terrain: '9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239',
+      scenery: 'a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f',
+    };
 for (const [layer, expected] of Object.entries(sourcePins)) {
   const bytes = await readFile(resolve(root, layer, 'region.json'));
   assert.equal(createHash('sha256').update(bytes).digest('hex'), expected);
@@ -35,13 +43,13 @@ const configuration = await loadRegionalReview({
   pageURL: 'https://canyon.invalid/sim',
   fetchImpl,
 });
-assert.equal(configuration.manifest.grid.width, 3);
-assert.equal(configuration.manifest.grid.depth, 3);
+assert.equal(configuration.manifest.grid.width, districtProfile ? 6 : 3);
+assert.equal(configuration.manifest.grid.depth, districtProfile ? 6 : 3);
 assert.equal(configuration.manifest.grid.cellSizeMm, 128000);
-assert.equal(configuration.manifest.chunks.length, 9);
+assert.equal(configuration.manifest.chunks.length, districtProfile ? 36 : 9);
 assert.deepEqual(configuration.manifest.grid, configuration.scenery.manifest.grid);
 const routes = [
-  ...clearanceRoutes,
+  ...(districtProfile ? districtRoutes : clearanceRoutes),
   {
     id: 'ridge-crown-opening',
     halfWidth: 1,
@@ -269,15 +277,16 @@ console.log(
   JSON.stringify(
     {
       passed: true,
-      actualExtentM: [384, 384],
+      actualExtentM: districtProfile ? [768, 768] : [384, 384],
       sourcePins,
       authoredStarts,
       actualCommandedRoutes: records.length,
       records,
       solidContacts: contacts,
       playerReady: false,
-      claim:
-        'Production controlled-command evidence for the accepted 384 m paired subset; not the separate 768 m terrain, native FPS or public admission.',
+      claim: districtProfile
+        ? 'Production controlled-command evidence for the 768 m authored district pair; not native FPS, final art or public admission.'
+        : 'Production controlled-command evidence for the accepted 384 m paired subset; not the separate 768 m terrain, native FPS or public admission.',
     },
     null,
     2,

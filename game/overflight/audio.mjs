@@ -3,7 +3,7 @@ import {
   HUMAN_REACTION_CUES,
   destructionCategory,
 } from '../ui/destruction-audio.mjs';
-import { createOverflightWorldAudio } from './world-audio.mjs';
+import { createOverflightWorldAudio, overflightAudioSpatial } from './world-audio.mjs';
 
 /** Events enter the existing mixer once per accepted simulation step. It owns
  * mute, priorities, sample fallback and voice limits; replay/prepare stay silent. */
@@ -119,18 +119,12 @@ export function createOverflightAudio(
         const key = category ? `catch:${category}` : cue;
         if (!cue || heard.has(key) || (terminal && cue !== 'catch')) continue;
         heard.add(key);
-        const pan = Number.isFinite(event.x)
-          ? Math.max(-1, Math.min(1, (event.x - run.player.x) / 480))
-          : 0;
+        const spatial = overflightAudioSpatial(run, event);
         sound.encounter(cue, {
-          board: 'overflight',
-          pan,
+          ...spatial,
           gainScale: cue === 'impact' ? 0.6 : cue === 'catch' ? 0.45 : 0.8,
           brutal,
           vocals: destruction?.vocals,
-          audible:
-            !Number.isFinite(event.x) ||
-            Math.hypot(event.x - run.player.x, (event.y ?? run.player.y) - run.player.y) <= 560,
           family: event.family,
           machine: event.machine,
           humanoid: event.humanoid,
@@ -148,10 +142,11 @@ export function createOverflightAudio(
         });
       }
       worldAudio.update(run, {
-        foreground: events.some((event) =>
-          ['warning', 'arrival', 'damage', 'hit', 'hunt-blocked', 'armor-break'].includes(
-            event.type,
-          ),
+        foreground: events.some(
+          (event) =>
+            ['warning', 'arrival', 'damage', 'hit', 'hunt-blocked', 'armor-break'].includes(
+              event.type,
+            ) && overflightAudioSpatial(run, event).audible,
         ),
       });
       if (terminal) {
