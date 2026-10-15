@@ -10,6 +10,7 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { ACTOR_STYLE_PREFERENCES_KEY } from '../actor-style-preferences.mjs';
 import { createCouchInstalledChapters } from '../couch/couch-installed-chapters.mjs';
 import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
+import { JPEGImage } from './helpers/jpeg-image.mjs';
 
 async function setup(t, { beforeRequest, classic = false, ...options } = {}) {
   const storage = memoryStorage();
@@ -271,6 +272,7 @@ test('installed actor owner exposes only an exact current prepared entry and pac
     indexedDB: f.indexedDB,
     storage: memoryStorage(),
     lockManager: f.locks,
+    ImageClass: JPEGImage,
   });
   t.after(() => reader.dispose());
   const rows = await reader.refresh();

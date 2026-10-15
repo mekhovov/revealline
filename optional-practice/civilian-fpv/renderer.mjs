@@ -296,6 +296,10 @@ export function createFlightRenderer({
     rimLight,
     rimLight.target,
   );
+  let regional = null;
+  const regionalPreparations = new Set();
+  let regionalPreparationReceipt = null,
+    regionalPreparationSequence = 0;
   let course = null,
     mode = 'self-level',
     view = 'fpv',
@@ -1485,6 +1489,11 @@ export function createFlightRenderer({
   }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed || renderer.getContext().isContextLost()) return;
+    regional?.root.removeFromParent();
+    regional = null;
+    flightViewFrame.originMm = null;
+    camera.far = 300;
+    camera.updateProjectionMatrix();
     const environment = resolveIndustrialEnvironment(options.industrialEnvironment ?? null);
     const retained = value.world?.themeProfile;
     if (
@@ -2539,6 +2548,7 @@ export function createFlightRenderer({
     if (!disposed && course) huntPresentation?.observe?.(state, machineryPresentationOptions());
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
+    if (regional) return drawRegional(state, { cameraMode, cameraFov, cameraTilt });
     if (disposed || !course || renderer.getContext().isContextLost()) return false;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
     huntPresentation?.update(state, {
@@ -3197,6 +3207,11 @@ export function createFlightRenderer({
     return { detach: () => editor?.detach() };
   }
   function clearSceneResources() {
+    for (const controller of regionalPreparations) controller.abort();
+    // The regional session owns verified geometry and its asynchronous disposal.
+    // Detach it before disposing renderer-owned aircraft/menu presentation.
+    regional?.root.removeFromParent();
+    regional = null;
     huntPresentation?.dispose();
     huntPresentation = null;
     if (editor) {
@@ -3253,10 +3268,277 @@ export function createFlightRenderer({
   canvas.addEventListener('webglcontextlost', lost);
   setQuality(quality);
   setDrone(droneKind);
+  async function prepareRegionalFrame(group, { signal } = {}) {
+    if (!regional || disposed || !group?.isObject3D || group.parent)
+      throw new Error('Regional frame must be detached before preparation');
+    const owner = regional,
+      generation = sceneGeneration,
+      presentation = presentationGeneration,
+      selectedQuality = quality,
+      controller = new AbortController(),
+      started = performance.now(),
+      sequence = ++regionalPreparationSequence;
+    regionalPreparations.add(controller);
+    const abort = () => controller.abort();
+    signal?.addEventListener('abort', abort, { once: true });
+    if (signal?.aborted) abort();
+    const timeout = win.setTimeout(abort, 30000);
+    const current = () => {
+      controller.signal.throwIfAborted();
+      if (
+        disposed ||
+        regional !== owner ||
+        generation !== sceneGeneration ||
+        presentation !== presentationGeneration ||
+        quality !== selectedQuality ||
+        renderer.getContext().isContextLost()
+      )
+        throw new DOMException('Regional graphics preparation replaced', 'AbortError');
+    };
+    const wait = (promise) =>
+      new Promise((resolve, reject) => {
+        const cancelled = () => reject(controller.signal.reason);
+        controller.signal.addEventListener('abort', cancelled, { once: true });
+        if (controller.signal.aborted) cancelled();
+        Promise.resolve(promise)
+          .then(resolve, reject)
+          .finally(() => controller.signal.removeEventListener('abort', cancelled));
+      });
+    const yieldFrame = () =>
+      new Promise((resolve, reject) => {
+        const cancelled = () => {
+            win.cancelAnimationFrame(id);
+            reject(controller.signal.reason);
+          },
+          id = win.requestAnimationFrame(() => {
+            controller.signal.removeEventListener('abort', cancelled);
+            resolve();
+          });
+        controller.signal.addEventListener('abort', cancelled, { once: true });
+        if (controller.signal.aborted) cancelled();
+      });
+    const target = new THREE.WebGLRenderTarget(1, 1),
+      uploadScene = new THREE.Scene(),
+      preparedCamera = camera.clone(),
+      objects = [];
+    target.texture.colorSpace = renderer.outputColorSpace;
+    let batches = 0,
+      submittedBytes = 0,
+      maxBatchBytes = 0,
+      compileWaitMs = 0,
+      uploadCpuMs = 0,
+      status = 'cancelled';
+    function rendererState() {
+      return {
+        target: renderer.getRenderTarget(),
+        face: renderer.getActiveCubeFace(),
+        mip: renderer.getActiveMipmapLevel(),
+        viewport: renderer.getViewport(new THREE.Vector4()),
+        scissor: renderer.getScissor(new THREE.Vector4()),
+        scissorTest: renderer.getScissorTest(),
+        autoClear: renderer.autoClear,
+        autoClearColor: renderer.autoClearColor,
+        autoClearDepth: renderer.autoClearDepth,
+        autoClearStencil: renderer.autoClearStencil,
+        shadowAuto: renderer.shadowMap.autoUpdate,
+        shadowNeeds: renderer.shadowMap.needsUpdate,
+      };
+    }
+    function restore(state) {
+      renderer.setRenderTarget(state.target, state.face, state.mip);
+      renderer.setViewport(state.viewport);
+      renderer.setScissor(state.scissor);
+      renderer.setScissorTest(state.scissorTest);
+      for (const key of ['autoClear', 'autoClearColor', 'autoClearDepth', 'autoClearStencil'])
+        renderer[key] = state[key];
+      renderer.shadowMap.autoUpdate = state.shadowAuto;
+      renderer.shadowMap.needsUpdate = state.shadowNeeds;
+    }
+    try {
+      current();
+      group.updateMatrixWorld(true);
+      group.traverse((object) => {
+        if (!object.geometry || !(object.isMesh || object.isLine || object.isPoints)) return;
+        const bytes =
+          Object.values(object.geometry.attributes).reduce(
+            (sum, a) => sum + (a.array?.byteLength ?? a.data?.array?.byteLength ?? 0),
+            0,
+          ) + (object.geometry.index?.array.byteLength ?? 0);
+        objects.push({ object, bytes });
+      });
+      for (let index = 0; index < objects.length; ) {
+        current();
+        const batch = new THREE.Group();
+        let bytes = 0;
+        while (index < objects.length && batch.children.length < 8) {
+          const item = objects[index];
+          if (batch.children.length && bytes + item.bytes > 512 * 1024) break;
+          const clone = item.object.clone(false);
+          clone.matrix.copy(item.object.matrixWorld);
+          clone.matrixAutoUpdate = false;
+          clone.frustumCulled = false;
+          clone.castShadow = false;
+          batch.add(clone);
+          bytes += item.bytes;
+          index++;
+        }
+        // The real framebuffer variant is compiled against the real lights/environment.
+        let before = performance.now();
+        await wait(renderer.compileAsync(batch, preparedCamera, scene));
+        current();
+        compileWaitMs += performance.now() - before;
+        uploadScene.clear();
+        uploadScene.environment = scene.environment;
+        uploadScene.fog = scene.fog;
+        for (const light of [hemisphere, sunlight, fillLight, rimLight]) {
+          const clone = light.clone();
+          if (light.target) {
+            clone.target = light.target.clone();
+            uploadScene.add(clone.target);
+          }
+          if (light.shadow) {
+            clone.shadow.map = light.shadow.map;
+            clone.shadow.matrix.copy(light.shadow.matrix);
+          }
+          uploadScene.add(clone);
+        }
+        uploadScene.add(batch);
+        // Offscreen output can require a separate shader variant. Restore state before waiting.
+        let compiled,
+          saved = rendererState();
+        before = performance.now();
+        try {
+          renderer.setRenderTarget(target);
+          compiled = renderer.compileAsync(batch, preparedCamera, scene);
+        } finally {
+          restore(saved);
+        }
+        await wait(compiled);
+        current();
+        compileWaitMs += performance.now() - before;
+        const gl = renderer.getContext();
+        if (
+          renderer.info.programs.some(
+            (p) => gl.getProgramParameter(p.program, gl.LINK_STATUS) === false,
+          )
+        )
+          throw new Error('Regional shader preparation failed');
+        saved = rendererState();
+        before = performance.now();
+        try {
+          renderer.setRenderTarget(target);
+          renderer.setViewport(0, 0, 1, 1);
+          renderer.setScissorTest(false);
+          renderer.autoClear = true;
+          renderer.autoClearColor = renderer.autoClearDepth = renderer.autoClearStencil = true;
+          // Reuse current shadow inputs without allocating/rendering another shadow map.
+          renderer.shadowMap.autoUpdate = false;
+          renderer.shadowMap.needsUpdate = false;
+          renderer.render(uploadScene, preparedCamera);
+        } finally {
+          restore(saved);
+        }
+        uploadCpuMs += performance.now() - before;
+        batches++;
+        submittedBytes += bytes;
+        maxBatchBytes = Math.max(maxBatchBytes, bytes);
+        uploadScene.clear();
+        batch.clear();
+        await yieldFrame();
+      }
+      current();
+      status = 'prepared';
+    } catch (error) {
+      if (error?.name !== 'AbortError') status = 'failed';
+      throw error;
+    } finally {
+      uploadScene.clear();
+      target.dispose();
+      win.clearTimeout(timeout);
+      signal?.removeEventListener('abort', abort);
+      regionalPreparations.delete(controller);
+      if (sequence === regionalPreparationSequence)
+        regionalPreparationReceipt = {
+          sequence,
+          status,
+          objects: objects.length,
+          batches,
+          submittedBytes,
+          maxBatchBytes,
+          compileWaitMs,
+          uploadCpuMs,
+          elapsedMs: performance.now() - started,
+          gpuCompletionMeasured: false,
+        };
+    }
+  }
+  function setRegional(session, manifest) {
+    if (disposed || renderer.getContext().isContextLost()) return;
+    clearSceneResources();
+    world.userData = {};
+    sceneGeneration++;
+    regional = { root: session.root, chunks: new Map(manifest.chunks.map((row) => [row.id, row])) };
+    scene.add(session.root);
+    scene.background = new THREE.Color(0xb5d3de);
+    scene.fog = null;
+    importedGroundFog = null;
+    scene.environment = null;
+    flightViewFrame.reset();
+    camera.far = 1000;
+    camera.updateProjectionMatrix();
+    setDrone(droneKind);
+    setQuality(quality);
+  }
+  function drawRegional(state, { cameraMode, cameraFov, cameraTilt }) {
+    if (disposed || renderer.getContext().isContextLost()) return false;
+    const rect = canvas.getBoundingClientRect(),
+      width = Math.max(1, Math.round(rect.width)),
+      height = Math.max(1, Math.round(rect.height));
+    if (width !== lastWidth || height !== lastHeight) {
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      lastWidth = width;
+      lastHeight = height;
+    }
+    const loaded =
+      state.terrain.provenance?.chunks
+        ?.map((row) => regional.chunks.get(row.chunkId))
+        .filter(Boolean) ?? [];
+    if (!loaded.length) return false;
+    flightViewFrame.bounds = {
+      min: {
+        x: Math.min(...loaded.map((row) => row.x)) * 128000,
+        y: 0,
+        z: Math.min(...loaded.map((row) => row.z)) * 128000,
+      },
+      max: {
+        x: (Math.max(...loaded.map((row) => row.x)) + 1) * 128000,
+        y: 0,
+        z: (Math.max(...loaded.map((row) => row.z)) + 1) * 128000,
+      },
+    };
+    flightViewFrame.view = cameraMode;
+    flightViewFrame.fov = cameraFov;
+    flightViewFrame.tilt = cameraTilt;
+    flightViewFrame.originMm = state.originMm;
+    flightViewFrame.radiusMm = 220;
+    flightViewFrame.reducedMotion = reducedMotion;
+    flightViewFrame.rotors = droneVisual.rotors;
+    flightViewFrame.draw(state);
+    const p = aircraft.position;
+    sunlight.position.set(p.x - 24, p.y + 36, p.z + 15);
+    sunlight.target.position.copy(p);
+    renderer.render(scene, camera);
+    return !renderer.getContext().isContextLost();
+  }
   return {
     available: true,
     observePresentation,
     setCourse,
+    setRegional,
+    prepareRegionalFrame,
+    regionalPreparation: () => regionalPreparationReceipt && { ...regionalPreparationReceipt },
     setPresentation,
     setQuality,
     setDrone,
@@ -3273,7 +3555,7 @@ export function createFlightRenderer({
       const generation = sceneGeneration,
         presentation = presentationGeneration;
       signal?.throwIfAborted();
-      if (disposed || !course || renderer.getContext().isContextLost()) return false;
+      if (disposed || (!course && !regional) || renderer.getContext().isContextLost()) return false;
       await renderer.compileAsync(scene, camera);
       signal?.throwIfAborted();
       if (

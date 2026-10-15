@@ -1,0 +1,1511 @@
+{
+  "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+  "indexSHA256": "1e32c1fc5476d83bf67355efdfdd55959c56170c79420b4ec03d60ada57c31ea",
+  "node": "v20.19.5",
+  "method": "Exact packaged production runtime in Node with embedded pinned Rapier; no browser, renderer, stores, recorder or host click simulation",
+  "runtimeBackend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+  "sources": {
+    "world-content.mjs": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b",
+    "world-model.mjs": "2e7d0b22c3f2177254460475035ebb50e8dc60a0ca9ba1b11df5c8533ca72ed4",
+    "world-collision.mjs": "827088d5c8f65a4965944149631f74838bc2e8e930332be559e48c96d6b3922f"
+  },
+  "courses": [
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-02",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-03",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-04",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-05",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-06",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-07",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-08",
+      "courseRevision": "r16",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-01",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-02",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-03",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-04",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-05",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-06",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-07",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "festival-grounds",
+      "packRevision": "r5",
+      "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-08",
+      "courseRevision": "r5",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-02",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-03",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-04",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-05",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-06",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-07",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-08",
+      "courseRevision": "r4",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-castle-court",
+      "packRevision": "r1",
+      "packSHA256": "ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0",
+      "course": "cc0-castle-court-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-city-plaza",
+      "packRevision": "r1",
+      "packSHA256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+      "course": "cc0-city-plaza-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-construction-site",
+      "packRevision": "r1",
+      "packSHA256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+      "course": "cc0-construction-site-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-frontier-camp",
+      "packRevision": "r1",
+      "packSHA256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+      "course": "cc0-frontier-camp-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-industrial-yard",
+      "packRevision": "r1",
+      "packSHA256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+      "course": "cc0-industrial-yard-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-orbital-workshop",
+      "packRevision": "r1",
+      "packSHA256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+      "course": "cc0-orbital-workshop-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-pine-clearing",
+      "packRevision": "r1",
+      "packSHA256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+      "course": "cc0-pine-clearing-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-platform-garden",
+      "packRevision": "r1",
+      "packSHA256": "019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0",
+      "course": "cc0-platform-garden-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-race-paddock",
+      "packRevision": "r1",
+      "packSHA256": "33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e",
+      "course": "cc0-race-paddock-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-road-lab",
+      "packRevision": "r1",
+      "packSHA256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+      "course": "cc0-road-lab-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-rock-grotto",
+      "packRevision": "r1",
+      "packSHA256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+      "course": "cc0-rock-grotto-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-ruined-halls",
+      "packRevision": "r1",
+      "packSHA256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+      "course": "cc0-ruined-halls-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-shipyard",
+      "packRevision": "r1",
+      "packSHA256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+      "course": "cc0-shipyard-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-skate-plaza",
+      "packRevision": "r1",
+      "packSHA256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+      "course": "cc0-skate-plaza-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-village-green",
+      "packRevision": "r1",
+      "packSHA256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+      "course": "cc0-village-green-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-woodland-camp",
+      "packRevision": "r1",
+      "packSHA256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+      "course": "cc0-woodland-camp-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    },
+    {
+      "world": "cc0-coaster-park",
+      "packRevision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "courseRevision": "r1",
+      "modes": [
+        {
+          "mode": "self-level",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        },
+        {
+          "mode": "acro",
+          "unscoredPractice": false,
+          "checks": [
+            "clear-spawn-construction",
+            "disarmed-initial-tick-zero",
+            "held-input-cannot-arm",
+            "explicit-arm-advances-one-tick",
+            "pause-freezes-input",
+            "reset-exact-initial-state"
+          ],
+          "status": "pass"
+        }
+      ],
+      "modeReplacement": "Each mode constructed independently at disarmed tick zero; host UI transition is source-audited separately, not exercised here"
+    }
+  ],
+  "failures": [],
+  "courseCount": 41,
+  "modeCount": 82,
+  "worldCount": 20,
+  "status": "passed-bounded-runtime-lifecycle",
+  "limitations": [
+    "Not mission completion or traversal",
+    "Not actual catalogue/direct-mission host click acceptance",
+    "Not browser/device/FPS or renderer verification",
+    "Mode switch represented by fresh production mode construction, not UI event execution"
+  ],
+  "auditScriptSHA256": "7325c400b26f363ca7820d185f1b48dc9f865932a8626ca3f9a670b8984ea4ab",
+  "nodeAdapter": "Packaged i18next UMD exports CommonJS in Node; its actual shipped export was assigned to globalThis.i18next before dynamic imports. No runtime/physics mock or replacement.",
+  "hostSourceEvidence": {
+    "path": "optional-practice/civilian-fpv/world-app.mjs",
+    "sha256": "df14851d572b57ac7e2d92ec651db5a3aaa31c1e849101770a1c72a698326f20",
+    "cataloguePlay": "flyInstalledWorld resolves exact projectId and fpv-pack SHA then startFlight(entry,{paused:true}); source lines3618-3624",
+    "deliberateMissionStart": "Fly mission buttons call startFlight(entry); final ready path invokes world-arm only for nonreplay, current, unpaused, nonpreview, nonrecovery, unchangedpauseRevision, visible/focused host; source lines2815 and6142-6153",
+    "modeChange": "flight-mode change launches a new mode attempt with paused:true across checkpoint/replay/live branches; source lines7067-7113",
+    "scope": "Read-only exact source inspection, not host click execution in this runtime audit. Prior native receipts cover representative actual clicks."
+  }
+}

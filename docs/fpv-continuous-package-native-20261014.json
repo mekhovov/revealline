@@ -1,0 +1,160 @@
+{
+  "sourceRevision": "f5411438367b5bf3cadefdad55a775e6a8f0c2c6",
+  "sourceTree": "b714b52dce239e3a653b193bd5b0a6c4c93d4f40",
+  "version": "v0.151.1",
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "revision": "81ae2dc1403c0b3f8309503c70fb644a23917d59308b198e02460063717debf8",
+  "cloudRun": 38642048693,
+  "githubArtifactId": 11929909579,
+  "topLevelChecksumsVerified": 15,
+  "worldsMembersVerified": 153,
+  "worldsBytes": 17280831,
+  "browserOfflineVerified": false,
+  "files": {
+    "github-artifact.zip": {
+      "bytes": 22993946,
+      "sha256": "bd889f437c2bd9d97b54000ff5bd81918f89c36131a5559eef69c81bd78f8372"
+    },
+    "distribution-optional-fpv-worlds.zip": {
+      "bytes": 17333889,
+      "sha256": "04aacc4dbb75859e9e1b7ca62718bc85139007f5ed955ab643a8b190910f69b3"
+    },
+    "manifest-optional-fpv-worlds.json": {
+      "bytes": 28192,
+      "sha256": "00eb11597c5d1f49fe06005c27755bb3939801be60c70b50cd4e228d10259079"
+    }
+  },
+  "archives": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 94,
+      "uncompressedBytes": 3738628,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3752312,
+      "archiveSHA256": "80884a3fddd240b0cd9b472a0b34bf729d566effe24c41939ffb0da738993006"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3772182,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3786202,
+      "archiveSHA256": "949cafc3d44f0105aa203c8df1a3c81fe8c31ea4200a49b4e687a48de8129ab0"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 101,
+      "uncompressedBytes": 6742838,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6757856,
+      "archiveSHA256": "d13cdc58545d665279df896cb77f3ce1cd9ba757ed7435ba7c9e4b3cc97229f2"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 103,
+      "uncompressedBytes": 6777902,
+      "limits": {
+        "files": 104,
+        "bytes": 8388608
+      },
+      "archiveBytes": 6793224,
+      "archiveSHA256": "bebf77097f487a2d41cbbf67e08a02bb213485ff5e9b5ac98a8ccfd04601c737"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 154,
+      "uncompressedBytes": 17309023,
+      "limits": {
+        "files": 156,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17333889,
+      "archiveSHA256": "04aacc4dbb75859e9e1b7ca62718bc85139007f5ed955ab643a8b190910f69b3"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 156,
+      "uncompressedBytes": 17351614,
+      "limits": {
+        "files": 156,
+        "bytes": 20971520
+      },
+      "archiveBytes": 17376784,
+      "archiveSHA256": "f6dbe24e7790f1d7cba4b0c658bbb16cc1c42ef92b4db0ffc420f1fb7f912492"
+    }
+  ],
+  "stage": {
+    "sourceRevision": "f5411438367b5bf3cadefdad55a775e6a8f0c2c6",
+    "revision": "81ae2dc1403c0b3f8309503c70fb644a23917d59308b198e02460063717debf8",
+    "origin": "http://127.0.0.1:9033",
+    "launcherURL": "http://127.0.0.1:9033/revealline/practice/fpv-worlds/app/?lang=en",
+    "entryURL": "http://127.0.0.1:9033/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
+    "regionalURL": "http://127.0.0.1:9033/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en&regionalReview=/region/terrain/region.json&regionalScenery=/region/scenery/region.json",
+    "regionalSourceRoot": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+    "boundary": "Frozen package bytes unchanged. Same-origin external regional review fixture is not packaged or installed. No normal catalogue admission claimed.",
+    "stageStatus": "prepared-native-review-pending"
+  },
+  "native": {
+    "onlineLifecycle": "passed-bounded-native-review",
+    "offlinePreparation": "first-attempt-aborted-manual-retry-ready-offline",
+    "offlineCause": "unproven",
+    "offlineReadyVerified": true,
+    "observations": [
+      "First canonical offline preparation failed immediately with ServiceWorker registration operation aborted. No Ready offline claim.",
+      "Actual Play available version link opened the packaged Home online.",
+      "Explicit regional entry rendered paused at3m,zero speed and zero throttle.",
+      "Deliberate arm and W1700ms plus Shift+Up2000ms produced visible flight at3.8m,+3.1m/s vertical,1.2m/s drift.",
+      "V switched to Chase; Space paused at the retained pose; P opened the shared menu.",
+      "Selecting Acro reset to3m,zero speed and throttle,then Ready to arm(disarmed). No error logs during online flight were observed.",
+      "2026-10-15: one manual retry on the same unchanged exact source/origin reached Ready offline; actual Open prepared practice link opened SIM Home. No storage cleanup, code change or browser restart. Original abort cause remains unknown."
+    ],
+    "serverEvidence": [
+      "Before the failure investigation, canonical HTML/app/context/current returned200/304 and no browser worker request appeared. Only favicon.ico was404.",
+      "Independent HTTP probes of canonical launcher worker and both immutable workers returned200 and exact archive length/hash.",
+      "No source/file transport mismatch found; low free storage was concurrent but not established as cause."
+    ],
+    "seamCrossingNativeClaim": false,
+    "externalRegionalOfflineClaim": false,
+    "browserStorageModifiedByHarness": false,
+    "screenshot": {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-continuous-package-ready.png",
+      "bytes": 51678,
+      "sha256": "08aff8bd354498187fde8d83eb1166774b563ea036acd0d3a6c9e1c6fc0fc0ea"
+    },
+    "retryScreenshot": {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/continuous-offline-ready-retry.png",
+      "bytes": 77332,
+      "sha256": "6abdfe48822867c4a86c59a135e2d77c35bcf4f413d6453f7d31300d84b12ba8"
+    }
+  },
+  "catalogueLifecycle": {
+    "worlds": 20,
+    "courses": 41,
+    "modeCases": 82,
+    "failures": 0,
+    "receipt": "fpv-package-lifecycle-followup-20261014.json"
+  },
+  "boundary": "Exact optional artifact, online native lifecycle and successful preparation retry. No stopped-origin reload for this candidate, external regional source offline installation, inferred seam crossing, catalogue admission or device performance claim.",
+  "cloudConclusion": {
+    "optionalPractice": "success",
+    "companyCandidate": "success",
+    "run": 38642048693
+  }
+}
