@@ -12,15 +12,35 @@ const here = path.dirname(fileURLToPath(import.meta.url)),
   output = path.resolve(process.argv[2]),
   python = process.argv[3] || 'python3';
 await fs.mkdir(output, { recursive: false });
+const visualFoliageMaterials = {
+  'beach-grass': ['BeachGrass01'],
+  'young-bamboo': ['YoungBamboo_01'],
+  palm: ['DriPalm02', 'Palm05_Old', 'Palm05_png'],
+};
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS),
   report = [];
-for (const id of ['palm', 'covered-jetty']) {
+const ids =
+  process.argv[4] === 'all'
+    ? [
+        'beach-grass',
+        'young-bamboo',
+        'crate',
+        'covered-jetty',
+        'open-jetty',
+        'jungle-hut',
+        'beach-rock',
+        'palm',
+      ]
+    : ['palm', 'covered-jetty'];
+if (process.argv[4] && process.argv[4] !== 'all')
+  throw Error('Only the explicit all-model intake selection is supported');
+for (const id of ids) {
   const input = await fs.readFile(path.join(here, 'intake-v1/models', id + '.glb')),
     doc = await io.readBinary(input),
     textureList = doc.getRoot().listTextures();
   if (textureList.length < 1 || textureList.length > 4)
     throw Error('Unsupported review texture count');
-  const dimension = textureList.length === 1 ? 256 : 128,
+  const dimension = 128,
     textures = [],
     raw = [];
   for (let i = 0; i < textureList.length; i++) {
@@ -106,7 +126,7 @@ for (const id of ['palm', 'covered-jetty']) {
     bindings = [];
   let omittedDegenerateTriangles = 0;
   for (const [i, g] of geometry.entries()) {
-    const positionsMm = g.points.flatMap((p) => [
+    let positionsMm = g.points.flatMap((p) => [
         Math.round((p.x - center.x + 64) * 1000),
         Math.round((p.y - bounds.min.y) * 1000),
         Math.round((p.z - center.z + 64) * 1000),
@@ -128,6 +148,33 @@ for (const id of ['palm', 'covered-jetty']) {
       indices.push(...g.indices.slice(j, j + 3));
     }
     if (!indices.length) continue;
+    // Exact tuple welding for world assembly preserves UV seams, hard normals and tints.
+    // The original two-model comparison stays byte-identical without the explicit all flag.
+    if (process.argv[4] === 'all') {
+      const unique = new Map(),
+        compact = { positions: [], normals: [], uvs: [], colors: [] },
+        remapped = [];
+      for (const vertex of indices) {
+        const position = positionsMm.slice(vertex * 3, vertex * 3 + 3),
+          normal = g.normals.slice(vertex * 3, vertex * 3 + 3),
+          uv = g.uvs.slice(vertex * 2, vertex * 2 + 2),
+          color = g.colors.length ? g.colors.slice(vertex * 4, vertex * 4 + 4) : [];
+        const key = JSON.stringify([position, normal, uv, color]);
+        if (!unique.has(key)) {
+          unique.set(key, compact.positions.length / 3);
+          compact.positions.push(...position);
+          compact.normals.push(...normal);
+          compact.uvs.push(...uv);
+          compact.colors.push(...color);
+        }
+        remapped.push(unique.get(key));
+      }
+      positionsMm = compact.positions;
+      indices = remapped;
+      g.normals = compact.normals;
+      g.uvs = compact.uvs;
+      g.colors = compact.colors;
+    }
     const material = g.primitive.getMaterial(),
       textureId = textureList.indexOf(material.getBaseColorTexture());
     if (textureId < 0) throw Error('Review requires authored base-colour texture');
@@ -149,12 +196,19 @@ for (const id of ['palm', 'covered-jetty']) {
       alphaMode,
       alphaCutoff: alphaMode === 'MASK' ? material.getAlphaCutoff() : 0,
       doubleSided: material.getDoubleSided(),
-      collision: alphaMode === 'MASK' ? 'visual-only' : 'solid',
+      collision: visualFoliageMaterials[id]?.includes(material.getName()) ? 'visual-only' : 'solid',
     });
   }
   const source = {
     format: 'FPVRegionRgbaScenery.v1',
-    cell: { format: 'FPVRegionScenery.v1', chunkId: id, x: 0, z: 0, cellSizeMm: 128000, surfaces },
+    cell: {
+      format: 'FPVRegionScenery.v1',
+      chunkId: id,
+      x: 0,
+      z: 0,
+      cellSizeMm: 128000,
+      surfaces,
+    },
     textures,
     bindings,
   };
@@ -170,12 +224,14 @@ for (const id of ['palm', 'covered-jetty']) {
     glbBytes: compiled.glb.length,
     glbSha256: crypto.createHash('sha256').update(compiled.glb).digest('hex'),
     inputTriangles,
+    outputVertices: surfaces.reduce((n, s) => n + s.positionsMm.length / 3, 0),
+    exactAttributeWelding: process.argv[4] === 'all',
     omittedDegenerateTriangles,
     compiledTriangles: surfaces.reduce((n, s) => n + s.indices.length / 3, 0),
     solidSurfaces: bindings.filter((b) => b.collision === 'solid').length,
     visualOnlySurfaces: bindings.filter((b) => b.collision === 'visual-only').length,
     derivation:
-      'Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; MASK surfaces explicitly visual-only in this material review, not a world collision design.',
+      'Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.',
     textures: raw,
   });
 }
