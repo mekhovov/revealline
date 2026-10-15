@@ -2,6 +2,32 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "multiplayer-delivery-acceptance",
+      "pathPatterns": [
+        "^game/(installed-app|downloads)\\.mjs$",
+        "^game/ui/(install-offline-panel|feedback-director|published-audio)\\.mjs$",
+        "^game/test/(multiplayer-offline-upgrade|team-duel-studio-audio|asset-studio-sound-transfer|content-studio-host)\\.test\\.mjs$",
+        "^game/couch/index\\.html$",
+        "^game/test/duel-result-continuation-host\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "multiplayer-delivery-acceptance",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/multiplayer-offline-upgrade.test.mjs",
+            "game/test/installed-app.test.mjs",
+            "game/test/install-offline-panel.test.mjs",
+            "game/test/team-duel-studio-audio.test.mjs",
+            "game/test/asset-studio-sound-transfer.test.mjs",
+            "game/test/content-studio-host.test.mjs",
+            "game/test/duel-result-continuation-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "official-download-retention",
       "pathPatterns": [
         "^game/official-downloads\\.mjs$",
@@ -239,6 +265,7 @@
             "publishing/focused-tests.test.mjs",
             "publishing/fastline-merge-controller.test.mjs",
             "publishing/fastline-release-inputs.test.mjs",
+            "publishing/fastline-release-evidence.test.mjs",
             "publishing/fastline-release-objects.test.mjs",
             "publishing/fastline-release-publisher.test.mjs",
             "publishing/source-workflow.test.mjs",
