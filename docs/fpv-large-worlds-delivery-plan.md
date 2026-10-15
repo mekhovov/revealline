@@ -5,6 +5,34 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 18:20 UTC — bounded-display full attempt still fails
+
+No elapsed run is active. The new full attempt actually started
+**18:15:01.428Z** and failed after **102.9565 real seconds /5,127 ticks**.
+The accepted clock records a 408.5 ms maximum interval; separate lifecycle
+sampling records 416.7 ms and a matching 417 ms long task. All exceed the unchanged
+250 ms gate. It remained visible and focused, with zero contacts and zero owned
+resources after disposal. [Full preserved negative report](fpv-authored-urban-bounded-invalid-framegap-20261015.json).
+
+The bounded display did not cure the failure. Maximum synchronous submissions
+were physics 300.2 ms, draw 191.5 ms, frame checks 8.3 ms, sample collection 49.5 ms
+and live display 1.3 ms. These maxima are not a function-level causal diagnosis.
+Investigate bounded phase/script attribution and production allocation hotspots
+before another full attempt. Keep every prior failure and all acceptance limits.
+
+Quiet Alpine timber source #1494 merged as `c217b5d4` after [same-camera native
+comparison](fpv-alpine-quiet-timber-native-20261015.json); repeating wall noise is
+reduced in the two inspected still views, with unchanged visible openings. This
+is bounded source acceptance, not all-angle/hardware or final-world art. Separate
+immutable delivery and player admission remain open.
+
+Frozen pre-integration Lunar `d6c0ac7f` passes [bounded dual-revision native
+checks](fpv-lunar-shelter-r3-d6-exact-player-native-20261015.json). Both revisions
+remain installed after reload; the older cached launch is observed **Paused**,
+not claimed Ready. #1490 integrated `b0625e6f` retains all twenty main offers plus
+new Lunar r3, but still needs its own exact package/native admission. Resume that
+and immutable art delivery independently while performance diagnosis continues.
+
 ## 15 October, 18:05 UTC — exact Alpine admission and observer gates closed
 
 No actual authored two-hour pass exists, and no elapsed segment is active at this

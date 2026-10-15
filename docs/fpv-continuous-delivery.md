@@ -5178,3 +5178,21 @@ is being reconciled normally with the Alpine Library addition so all twenty old
 offers survive alongside the new edition. Frozen earlier and integrated package
 native checks stay separate. Representative art, elapsed, integrated reliability,
 D6/device and public-launch acceptance remain incomplete.
+
+
+## 15 October, 18:20 UTC — preserve bounded-display elapsed failure
+
+Fresh #1485-tooling/unchanged-production authored Urban segment started
+18:15:01.428Z and failed at102.9565 real seconds /5,127ticks on a408.5ms clock
+interval. Lifecycle separately measured416.7ms/417ms long task. It stayed visible
+and focused; zero contacts and zero owned disposal. Full negative report is
+[fpv-authored-urban-bounded-invalid-framegap-20261015.json](fpv-authored-urban-bounded-invalid-framegap-20261015.json).
+No elapsed segment is active. The display optimization remains bounded/useful but
+is not a fix for the failure. Physics/draw/observer maxima require phase/script
+attribution; no causal or two-hour acceptance claim is made.
+
+#1494 quieter timber source merged `c217b5d4` after matched concourse/wall native
+comparison. New immutable and player editions remain separate. Frozen Lunar d6
+bounded native results remain tied to its pre-integration package; combined b062
+preserves twenty main offers plus new Lunar but still needs exact admission.
+Independent delivery work resumes without changing the frozen failed fixture.
