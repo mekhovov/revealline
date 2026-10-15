@@ -1,0 +1,700 @@
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
+import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { readEditionZip } from '../publishing/edition-zip.mjs';
+import {
+  practiceDirectoryHTML,
+  PRACTICE_DIRECTORY_SCRIPT,
+} from '../publishing/practice-directory.mjs';
+import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
+import { validateOptionalPracticeCatalog } from '../game/optional-practice-catalog.mjs';
+import { PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
+import { frozenSource, committedInputMap, verifyCommittedInputs } from './frozen-source.mjs';
+import {
+  loadFPVObservationArtifact,
+  validateFPVArtifactBinding,
+  fpvObservationDeadline as deadline,
+  closeFPVObservationResources,
+} from './fpv-observation-artifact.mjs';
+import { acquirePointerResource } from './observe-practice-pointer.mjs';
+import {
+  unlockObservedPage,
+  matchesLaunchedAppURL,
+} from './optional-installation-observer-helpers.mjs';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const pin = (name, bytes) => ({
+  path: name,
+  bytes: bytes.length,
+  sha256: sha(bytes),
+});
+export const DIRECTORY_JOURNEY_PROTOCOL = Object.freeze({
+  id: 'practice-directory-full-source-shell.v1',
+  caseMs: 90_000,
+  overallMs: 600_000,
+  actionMs: 10_000,
+  viewport: Object.freeze({ width: 1440, height: 900 }),
+});
+const SHELLS = Object.freeze({
+  'civilian-flight': 'gym-shell',
+  'civilian-fpv': 'academy-shell',
+  'fpv-worlds': 'worlds-shell',
+});
+export const DIRECTORY_JOURNEY_CASES = Object.freeze(
+  ['en', 'uk'].flatMap((locale) =>
+    Object.keys(SHELLS).map((id) =>
+      Object.freeze({
+        id: `${locale}-${id}`,
+        package: id,
+        locale,
+        shell: SHELLS[id],
+      }),
+    ),
+  ),
+);
+const AUTHORITY = [
+  'scripts/observe-practice-directory-journey.mjs',
+  'scripts/fpv-observation-artifact.mjs',
+  'scripts/observe-practice-pointer.mjs',
+  'scripts/optional-installation-observer-helpers.mjs',
+  'scripts/frozen-source.mjs',
+  'scripts/game-cli.mjs',
+  'publishing/practice-directory.mjs',
+  'publishing/edition-zip.mjs',
+  'publishing/optional-package-admission.mjs',
+  'publishing/optional-package-policy.mjs',
+];
+
+export function validateDirectoryJourneyPlan(input) {
+  const text = typeof input === 'string' ? input : JSON.stringify(input);
+  assert(text && Buffer.byteLength(text) <= 65536, 'Directory plan exceeds 64 KiB.');
+  const plan = JSON.parse(text);
+  const fields = [
+    'format',
+    'protocol',
+    'caseId',
+    'deviceLabel',
+    'quietWindow',
+    'cases',
+    'bundle',
+    'envelopeSha256',
+    'sourceRevision',
+    'sourceTree',
+    'packageRevision',
+    'shellRevision',
+    'shellTree',
+  ];
+  assert(plan && !Array.isArray(plan) && typeof plan === 'object');
+  assert.deepEqual(Object.keys(plan).sort(), fields.sort(), 'Unexpected directory plan fields.');
+  assert.equal(plan.format, 'revealline-practice-directory-journey-plan.v1');
+  assert.equal(plan.protocol, DIRECTORY_JOURNEY_PROTOCOL.id);
+  assert.match(plan.caseId, /^[a-z0-9-]{1,64}$/);
+  for (const key of ['shellRevision', 'shellTree']) assert.match(plan[key], /^[a-f0-9]{40}$/);
+  for (const [key, max] of [
+    ['deviceLabel', 256],
+    ['quietWindow', 2048],
+  ])
+    assert(typeof plan[key] === 'string' && plan[key].trim() && plan[key].length <= max);
+  assert.deepEqual(
+    plan.cases,
+    DIRECTORY_JOURNEY_CASES.map((c) => c.id),
+    'Declare all six ordered source-shell cases.',
+  );
+  validateFPVArtifactBinding(plan);
+  assert(path.isAbsolute(plan.bundle), 'Use an absolute admitted candidate path.');
+  return plan;
+}
+
+/** Local selection fixture only. Full envelope admission precedes this function;
+ * neither reviews nor publisher/selector state are created or changed. */
+export async function directoryJourneyOverlay(plan) {
+  const loaded = await loadFPVObservationArtifact(plan);
+  const envelopeBytes = await readFile(path.resolve(plan.bundle, 'optional-packages.json'));
+  assert.equal(sha(envelopeBytes), plan.envelopeSha256, 'Envelope changed after admission.');
+  const envelope = JSON.parse(envelopeBytes);
+  assert.deepEqual(envelope.packages.map((p) => p.id).sort(), Object.keys(SHELLS).sort());
+  const files = new Map(),
+    packages = [],
+    details = [];
+  const put = (name, bytes) => {
+    assert(!files.has(name));
+    files.set(name, Buffer.from(bytes));
+  };
+  for (const item of envelope.packages) {
+    const archive = await readFile(path.resolve(plan.bundle, item.distribution.path));
+    assert.equal(archive.length, item.distribution.bytes);
+    assert.equal(sha(archive), item.distribution.sha256);
+    const members = readEditionZip(archive),
+      base = `practice/${item.id}/`,
+      site = `${base}releases/${envelope.version}/site/`;
+    for (const [name, bytes] of members) {
+      put(site + name, bytes);
+      if (name.startsWith('launcher/')) put(base + 'app/' + name.slice(9), bytes);
+    }
+    put(
+      base + 'app/current.json',
+      JSON.stringify({
+        id: item.id,
+        version: envelope.version,
+        scope: `../releases/${envelope.version}/site/`,
+        entry: item.entry,
+      }),
+    );
+    const manifest = JSON.parse(members.get('optional-package.json'));
+    const description = validatePracticeDescription(
+      JSON.parse(members.get(`optional-practice/${item.id}/package-info.json`)),
+      item.id,
+    );
+    packages.push({
+      id: item.id,
+      name: JSON.parse(members.get('launcher/app.webmanifest')).name,
+      href: item.id + '/app/',
+      version: envelope.version,
+      revision: item.revision,
+    });
+    const packageBase = `${item.id}/releases/${envelope.version}/site/optional-practice/${item.id}/`;
+    details.push({
+      id: item.id,
+      revision: item.revision,
+      description,
+      preview: packageBase + 'preview.png',
+      guide: packageBase + 'guide.html',
+      downloadBytes: item.distribution.bytes,
+      offlineBytes: manifest.files.reduce((sum, file) => sum + file.bytes, 0),
+    });
+  }
+  validateOptionalPracticeCatalog(
+    { format: 'revealline-optional-package-launchers.v1', packages },
+    'http://localhost/revealline/practice/index.json',
+  );
+  put(
+    'practice/index.json',
+    JSON.stringify({
+      format: 'revealline-optional-package-launchers.v1',
+      packages,
+    }),
+  );
+  put(
+    'practice/details.json',
+    JSON.stringify({
+      format: 'revealline-practice-details.v1',
+      packages: details,
+    }),
+  );
+  put('practice/index.html', practiceDirectoryHTML(packages, details));
+  put('practice/directory.mjs', PRACTICE_DIRECTORY_SCRIPT);
+  return { loaded, files, packages, details };
+}
+
+export function directorySourcePath(raw) {
+  const pathname = decodeURIComponent(raw.split('?')[0]);
+  assert(pathname.startsWith('/revealline/'), 'Outside local fixture root.');
+  assert(!/[\\\x00-\x1f]/.test(pathname), 'Unsafe source path.');
+  const segments = pathname.slice(12).split('/');
+  assert(
+    segments.every((p) => !p.startsWith('.') && p !== '..'),
+    'Private source path.',
+  );
+  if (segments.at(-1) === '') segments[segments.length - 1] = 'index.html';
+  return segments.join('/');
+}
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.mjs': 'text/javascript',
+  '.js': 'text/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json',
+  '.png': 'image/png',
+  '.webp': 'image/webp',
+  '.jpg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
+  '.woff2': 'font/woff2',
+  '.woff': 'font/woff',
+  '.m4a': 'audio/mp4',
+  '.wav': 'audio/wav',
+  '.webmanifest': 'application/manifest+json',
+};
+async function sourceServer(overlay, tree, report) {
+  const served = new Map();
+  const server = createServer(async (req, res) => {
+    try {
+      if (!['GET', 'HEAD'].includes(req.method)) {
+        res.writeHead(405);
+        res.end();
+        return;
+      }
+      const name = directorySourcePath(req.url);
+      let bytes = overlay.get(name);
+      if (!bytes) {
+        assert(
+          /^(game|site|optional-practice|authoring|docs)\//.test(name),
+          'Not a public source file.',
+        );
+        assert(tree.get(name), 'Not a committed regular file.');
+        const target = path.join(ROOT, name);
+        bytes = await readFile(target);
+        verifyCommittedInputs(new Map([[name, bytes]]), tree);
+        if (!served.has(name)) {
+          const value = pin(name, bytes);
+          served.set(name, value);
+          report.servedSources.push(value);
+        }
+      }
+      res.writeHead(200, {
+        'content-type': MIME[path.extname(name)] ?? 'application/octet-stream',
+        'content-length': bytes.length,
+        'cache-control': 'no-store',
+        ...PREVIEW_SECURITY_HEADERS,
+      });
+      res.end(req.method === 'HEAD' ? undefined : bytes);
+    } catch (error) {
+      if (report.requestFailures.length < 100)
+        report.requestFailures.push({
+          path: String(req.url).split('?')[0],
+          message: error.message,
+        });
+      res.writeHead(404, {
+        'content-type': 'text/plain',
+        ...PREVIEW_SECURITY_HEADERS,
+      });
+      res.end('Not part of the source-shell fixture.');
+    }
+  });
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
+  });
+  return { server, url: `http://127.0.0.1:${server.address().port}/` };
+}
+const closeServer = ({ server }) =>
+  new Promise((resolve, reject) => {
+    server.close((e) => (e ? reject(e) : resolve()));
+    server.closeAllConnections?.();
+  });
+
+export function assertDirectoryLink(href, { origin, id, locale, play }) {
+  const url = new URL(href);
+  assert.equal(url.origin, origin);
+  assert(
+    !url.username && !url.password && !url.hash,
+    'Launcher must be a plain same-origin route.',
+  );
+  assert.equal(url.pathname, `/revealline/practice/${id}/app/`);
+  assert.equal(url.searchParams.get('lang'), locale);
+  assert.equal(url.searchParams.get('action'), play ? 'play' : null);
+  const keys = [...url.searchParams.keys()];
+  assert.equal(new Set(keys).size, keys.length);
+  assert(
+    keys.every((k) => ['lang', 'action', 'appearanceFamily', 'appearanceRevision'].includes(k)),
+  );
+  const family = url.searchParams.get('appearanceFamily'),
+    revision = url.searchParams.get('appearanceRevision');
+  if (family !== null || revision !== null) {
+    assert.match(family ?? '', /^[a-z][a-z0-9-]{0,63}$/);
+    assert.match(revision ?? '', /^r[1-9][0-9]{0,8}$/);
+  }
+  return {
+    href: url.href,
+    appearanceFamily: family,
+    appearanceRevision: revision,
+  };
+}
+
+export async function openDirectoryPopup(page, link) {
+  // Attach both rejection handlers before the click can settle. A late popup
+  // rejection after a failed click must not terminate evidence/cleanup.
+  const [popup] = await Promise.all([
+    page.waitForEvent('popup'),
+    Promise.resolve().then(() => link.click()),
+  ]);
+  return popup;
+}
+export function assertDirectoryPageCount(context, expected) {
+  assert.equal(context.pages().length, expected, 'Unexpected extra or missing browser tab.');
+}
+
+async function runJourney(page, spec, fixture, report, output, password) {
+  const result = {
+    ...spec,
+    passed: false,
+    actions: [],
+    errors: [],
+    access: [],
+  };
+  report.cases.push(result);
+  const runtimeRequests = [];
+  page.context().on('request', (request) => {
+    const pathname = new URL(request.url()).pathname;
+    if (/\/practice\/[^/]+\/releases\/[^/]+\/site\/.*\.(?:mjs|js)$/.test(pathname))
+      runtimeRequests.push(pathname);
+  });
+  const { url, packages, details, version } = fixture;
+  const root = new URL('revealline/', url),
+    main = new URL(`game/?lang=${spec.locale}`, root).href;
+  const observe = (value) =>
+    value.on('pageerror', (e) => {
+      if (result.errors.length < 20) result.errors.push(e.message);
+    });
+  observe(page);
+  const access = async (p, label) => {
+    const witness = await unlockObservedPage(p, password);
+    result.access.push({ surface: label, formSubmitted: witness });
+  };
+  const click = async (p, selector) => {
+    const target = p.locator(selector);
+    await target.waitFor({ state: 'visible' });
+    assert(await target.isEnabled());
+    result.actions.push({ selector, action: 'ordinary pointer click' });
+    await target.click();
+  };
+  const screenshot = async (p, name) => {
+    const bytes = await p.screenshot({ timeout: 5000 });
+    await writeFile(path.join(output, name), bytes, { flag: 'wx' });
+    (result.screenshots ??= []).push(pin(name, bytes));
+  };
+  try {
+    await page.goto(main, { waitUntil: 'domcontentloaded' });
+    await access(page, 'main game');
+    result.unlocked = true;
+    await page.locator('#shell-home[open]').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('html').getAttribute('lang'), spec.locale);
+    await click(page, '#shell-home-practice');
+    const dialog = page.locator('#optional-practice-dialog[open]');
+    await dialog.waitFor({ state: 'visible' });
+    const rows = dialog.locator('.optional-practice-packages > li');
+    await page.waitForFunction(
+      () =>
+        globalThis.document.querySelectorAll(
+          '#optional-practice-dialog .optional-practice-packages > li',
+        ).length === 3,
+    );
+    assert.equal(await rows.count(), 3);
+    for (let i = 0; i < packages.length; i++) {
+      const item = packages[i],
+        detail = details.find((d) => d.id === item.id),
+        row = rows.nth(i),
+        copy = detail.description.copy[spec.locale];
+      assert.equal((await row.locator('h3').innerText()).trim(), copy.name);
+      const paragraphs = await row.locator('p').allInnerTexts();
+      assert.deepEqual(
+        paragraphs,
+        ['description', 'purpose', 'inputs', 'requirements'].map((k) => copy[k]),
+      );
+      assert.equal(
+        (await row.locator('small').innerText()).trim(),
+        `${version} · ${(detail.downloadBytes / 1048576).toFixed(1)} MiB`,
+      );
+      const image = row.locator('img');
+      assert.equal(await image.count(), 1);
+      assert.equal(
+        await image.getAttribute('src'),
+        new URL(detail.preview, new URL('practice/', root)).href,
+      );
+      await image.scrollIntoViewIfNeeded();
+      await page.waitForFunction((i) => {
+        const image = globalThis.document.querySelectorAll(
+          '#optional-practice-dialog .optional-practice-packages > li img',
+        )[i];
+        return image?.complete && image.naturalWidth > 0;
+      }, i);
+      for (const [index, play] of [
+        [0, true],
+        [1, false],
+      ]) {
+        const link = row.locator('a').nth(index);
+        assert.equal(await link.getAttribute('target'), '_blank');
+        assert((await link.getAttribute('rel')).split(/\s+/).includes('noopener'));
+        assertDirectoryLink(await link.getAttribute('href'), {
+          origin: root.origin,
+          id: item.id,
+          locale: spec.locale,
+          play,
+        });
+      }
+    }
+    result.cardsVerified = 3;
+    result.runtimeRequestsBeforePlay = [...runtimeRequests];
+    assert.equal(runtimeRequests.length, 0, 'Browsing fetched optional executable modules.');
+    await screenshot(page, spec.id + '-directory.png');
+    const row = rows.nth(packages.findIndex((p) => p.id === spec.package)),
+      play = row.locator('a').nth(0);
+    result.playLink = assertDirectoryLink(await play.getAttribute('href'), {
+      origin: root.origin,
+      id: spec.package,
+      locale: spec.locale,
+      play: true,
+    });
+    const app = await openDirectoryPopup(page, play);
+    observe(app);
+    result.playActions = 1;
+    await access(app, 'practice launcher');
+    const expected = new URL(
+      `practice/${spec.package}/releases/${version}/site/optional-practice/${spec.package}/index.html`,
+      root,
+    ).href;
+    await app.waitForURL((u) => matchesLaunchedAppURL(u.href, expected, spec.locale));
+    await access(app, 'practice app');
+    await app.locator(`#${spec.shell}-home-dialog[open]`).waitFor({ state: 'visible' });
+    await app.locator(`#${spec.shell}-action-primary`).waitFor({ state: 'visible' });
+    assertDirectoryPageCount(page.context(), 2);
+    result.app = {
+      url: app.url(),
+      locale: await app.locator('html').getAttribute('lang'),
+      phase: await app.locator(`[data-mode-play-shell="${spec.shell}"]`).getAttribute('data-phase'),
+    };
+    assert.equal(result.app.locale, spec.locale);
+    assert(
+      ['ready', 'disarmed'].includes(result.app.phase),
+      'A directory Play action must not arm a flight.',
+    );
+    for (const key of ['appearanceFamily', 'appearanceRevision'])
+      assert.equal(
+        new URL(app.url()).searchParams.get(key),
+        new URL(result.playLink.href).searchParams.get(key),
+      );
+    await screenshot(app, spec.id + '-app-home.png');
+    await app.close();
+    assertDirectoryPageCount(page.context(), 1);
+    await page.bringToFront();
+    result.returnToGame = 'Closed practice tab; original main-game directory stays open.';
+    const detailLink = row.locator('a').nth(1);
+    const launcher = await openDirectoryPopup(page, detailLink);
+    observe(launcher);
+    await access(launcher, 'details launcher');
+    await launcher.locator('#guide').waitFor({ state: 'visible' });
+    const guideExpected = new URL(
+      `practice/${spec.package}/releases/${version}/site/optional-practice/${spec.package}/guide.html?lang=${spec.locale}`,
+      root,
+    ).href;
+    assert.equal(await launcher.locator('#guide').getAttribute('href'), guideExpected);
+    const directoryExpected = new URL(`practice/?lang=${spec.locale}`, root).href;
+    assert.equal(await launcher.locator('#directory').getAttribute('href'), directoryExpected);
+    await click(launcher, '#guide');
+    await launcher.waitForURL(guideExpected);
+    await access(launcher, 'player guide');
+    await launcher.locator(`section[lang="${spec.locale}"] h1`).waitFor({ state: 'visible' });
+    assertDirectoryPageCount(page.context(), 2);
+    assert.equal(await launcher.locator('html').getAttribute('lang'), spec.locale);
+    result.guide = {
+      url: launcher.url(),
+      heading: await launcher.locator(`section[lang="${spec.locale}"] h1`).innerText(),
+    };
+    await screenshot(launcher, spec.id + '-guide.png');
+    await click(launcher, '#directory');
+    await launcher.waitForURL(directoryExpected);
+    await launcher.locator('article').first().waitFor({ state: 'visible' });
+    assert.equal(await launcher.locator('article').count(), 3);
+    assert.equal(await launcher.locator('html').getAttribute('lang'), spec.locale);
+    result.standaloneDirectory = true;
+    const mainLink = launcher.locator('nav a[data-locale]').first();
+    assert.equal(await mainLink.getAttribute('href'), main);
+    await mainLink.click();
+    await launcher.waitForURL(main);
+    await access(launcher, 'main-game return');
+    await launcher.locator('#shell-home[open]').waitFor({ state: 'visible' });
+    assert.equal(await launcher.locator('html').getAttribute('lang'), spec.locale);
+    result.mainGameReturn = true;
+    result.passed = result.errors.length === 0;
+  } catch (error) {
+    result.failure = error.message;
+    if (result.unlocked)
+      await screenshot(page, spec.id + '-failure.png').catch(() => {
+        result.screenshotUnavailable = true;
+      });
+  }
+  return result;
+}
+
+export async function observePracticeDirectoryJourney({
+  planFile,
+  playwrightModule,
+  output,
+  password = process.env.OPTIONAL_INSTALLATION_PASSWORD,
+} = {}) {
+  assert(planFile && playwrightModule && output);
+  assert((await stat(planFile)).size <= 65536);
+  const planBytes = await readFile(planFile),
+    plan = validateDirectoryJourneyPlan(planBytes.toString());
+  await mkdir(output);
+  const scrub = (s) => (password ? String(s).split(password).join('[REDACTED]') : String(s));
+  const report = {
+    format: 'PracticeDirectoryJourneyObservation.v1',
+    plan,
+    protocol: DIRECTORY_JOURNEY_PROTOCOL,
+    createdAt: new Date().toISOString(),
+    completed: false,
+    qualified: false,
+    cases: [],
+    authority: [],
+    servedSources: [],
+    requestFailures: [],
+    resourceAcquisitions: [],
+    limitations: [
+      'Full unchanged committed main-game source shell, not a minimal panel host and not a completed production distribution build.',
+      'Missing documentation producer inputs still block full build collection. No build, hosting or release-review guard is weakened.',
+      'Locally admitted practice package bytes with an explicit unpublished catalogue/current.json fixture; not a reviewed selector or public release.',
+      'Six EN/UK one-Play start-screen and guide/navigation journeys only; no arming, exercise, installation, human learning or physical accessibility qualification.',
+      'Default validated appearance handoff only, not all appearance themes or physical inputs.',
+    ],
+  };
+  let server, browser;
+  try {
+    await writeFile(path.join(output, 'plan.json'), planBytes, { flag: 'wx' });
+    await mkdir(path.join(output, 'authority'));
+    for (const name of AUTHORITY) {
+      const bytes = await readFile(path.join(ROOT, name));
+      report.authority.push(pin(name, bytes));
+      await writeFile(path.join(output, 'authority', path.basename(name)), bytes, { flag: 'wx' });
+    }
+    assert.deepEqual(frozenSource(ROOT), {
+      sourceRevision: plan.shellRevision,
+      sourceTree: plan.shellTree,
+    });
+    const tree = committedInputMap(ROOT),
+      overlay = await deadline(
+        directoryJourneyOverlay(plan),
+        60_000,
+        'Directory package admission',
+      );
+    report.artifact = overlay.loaded.binding;
+    report.admission = overlay.loaded.admission;
+    report.overlay = [...overlay.files].map(([name, bytes]) => pin(name, bytes));
+    server = await acquirePointerResource(
+      report.resourceAcquisitions,
+      'server',
+      () => sourceServer(overlay.files, tree, report),
+      closeServer,
+    );
+    const { chromium } = await import(pathToFileURL(path.resolve(playwrightModule)).href);
+    browser = await acquirePointerResource(
+      report.resourceAcquisitions,
+      'browser',
+      () => chromium.launch({ channel: 'chrome', headless: true, timeout: 30_000 }),
+      (b) => b.close(),
+      35_000,
+    );
+    report.browser = browser.version();
+    const end = Date.now() + DIRECTORY_JOURNEY_PROTOCOL.overallMs;
+    for (const spec of DIRECTORY_JOURNEY_CASES) {
+      let context, pending;
+      try {
+        assert(Date.now() < end, 'Directory journey overall deadline exceeded.');
+        context = await acquirePointerResource(
+          report.resourceAcquisitions,
+          spec.id + '-context',
+          () =>
+            browser.newContext({
+              viewport: DIRECTORY_JOURNEY_PROTOCOL.viewport,
+              locale: spec.locale === 'uk' ? 'uk-UA' : 'en-US',
+            }),
+          (c) => c.close(),
+        );
+        const page = await acquirePointerResource(
+          report.resourceAcquisitions,
+          spec.id + '-page',
+          () => context.newPage(),
+          (p) => p.close(),
+        );
+        page.setDefaultTimeout(DIRECTORY_JOURNEY_PROTOCOL.actionMs);
+        page.setDefaultNavigationTimeout(30_000);
+        pending = runJourney(
+          page,
+          spec,
+          {
+            url: server.url,
+            packages: overlay.packages,
+            details: overlay.details,
+            version: overlay.loaded.binding.version,
+          },
+          report,
+          output,
+          password,
+        );
+        await deadline(
+          pending,
+          Math.min(DIRECTORY_JOURNEY_PROTOCOL.caseMs, end - Date.now()),
+          spec.id,
+        );
+      } catch (error) {
+        const result = report.cases.find((c) => c.id === spec.id) ?? {
+          ...spec,
+          passed: false,
+        };
+        if (!report.cases.includes(result)) report.cases.push(result);
+        result.failure = scrub(error.message);
+        result.passed = false;
+      } finally {
+        if (context) await deadline(context.close(), 10_000, 'Directory case cleanup');
+        if (pending)
+          await deadline(
+            pending.catch(() => {}),
+            10_000,
+            'Directory case termination',
+          );
+        const result = report.cases.find((c) => c.id === spec.id);
+        if (result?.failure) result.passed = false;
+        if (result)
+          await writeFile(
+            path.join(output, spec.id + '.json'),
+            scrub(JSON.stringify(result, null, 2)) + '\n',
+            { flag: 'wx' },
+          );
+      }
+    }
+    for (const source of [...report.authority, ...report.servedSources])
+      assert.equal(
+        sha(await readFile(path.join(ROOT, source.path))),
+        source.sha256,
+        'Source changed during journey.',
+      );
+    assert.deepEqual(frozenSource(ROOT), {
+      sourceRevision: plan.shellRevision,
+      sourceTree: plan.shellTree,
+    });
+    report.procedureComplete = true;
+  } catch (error) {
+    report.failure = scrub(error.message);
+  } finally {
+    report.cleanup = await closeFPVObservationResources([
+      ...(browser ? [['browser', () => browser.close()]] : []),
+      ...(server ? [['server', () => closeServer(server)]] : []),
+    ]);
+    if (report.resourceAcquisitions.some((r) => r.pending || (r.timedOut && !r.lateClosed)))
+      report.cleanup.completed = false;
+    report.completed = Boolean(
+      report.procedureComplete &&
+        !report.failure &&
+        report.cleanup.completed &&
+        report.cases.length === 6 &&
+        report.cases.every((c) => c.passed && !c.failure),
+    );
+    await writeFile(
+      path.join(output, 'observation.json'),
+      scrub(JSON.stringify(report, null, 2)) + '\n',
+      { flag: 'wx' },
+    );
+  }
+  return JSON.parse(scrub(JSON.stringify(report)));
+}
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const [planFile, playwrightModule, output, ...extra] = process.argv.slice(2);
+  assert.equal(extra.length, 0);
+  const result = await observePracticeDirectoryJourney({
+    planFile,
+    playwrightModule,
+    output,
+  });
+  console.log(
+    JSON.stringify({
+      completed: result.completed,
+      cases: result.cases.length,
+      qualified: false,
+    }),
+  );
+  if (!result.completed) process.exitCode = 1;
+}
