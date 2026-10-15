@@ -1,0 +1,293 @@
+{
+  "format": "revealline-release-zip-capacity-summary.v1",
+  "sourceRevision": "90616ad4453a2c31d29ea29e532e6ecefbf459a0",
+  "version": "0.151.1",
+  "publicationProfile": null,
+  "scope": "All complete prepared members plus their exact manifest; container feasibility only.",
+  "publicEligible": false,
+  "promotable": false,
+  "archiveProduced": false,
+  "expandedSiteProduced": false,
+  "productionCompressionSupportVerified": false,
+  "runtime": {
+    "node": "20.19.5",
+    "zlib": "1.3.1-470d3a2"
+  },
+  "compression": {
+    "format": "raw-deflate",
+    "level": 9,
+    "windowBits": 15,
+    "memLevel": 8,
+    "strategy": 0,
+    "selection": "smaller; stored on ties"
+  },
+  "layout": "ZIP32; UTF-8 names; 30-byte local and 46-byte central headers; 22-byte end; no extras/comments/descriptors",
+  "manifest": {
+    "path": "manifest.json",
+    "bytes": 519029,
+    "sha256": "ae2061427709aa0128efc524360bd9bccfadca54b052ba39fcf8316e5e8174e3"
+  },
+  "payloadMembers": 3488,
+  "archiveMembers": 3489,
+  "payloadBytes": 1072015513,
+  "payloadBytesIncludingManifest": 1072534542,
+  "verification": {
+    "manifestMatchedMembers": 3489,
+    "exactRoundTripMembers": 3489,
+    "repeatedCompressionMatchedMembers": 3489,
+    "completeBuildRepetitions": 0
+  },
+  "projections": {
+    "allStoredBytes": 1073127846,
+    "allDeflatedBytes": 909025201,
+    "chooseSmallerBytes": 908988197,
+    "bytesSaved": 164139649,
+    "storedMembers": 380,
+    "deflatedMembers": 3109
+  },
+  "limits": {
+    "releaseZipBytes": 950000000,
+    "releaseZipHeadroom": 41011803,
+    "releaseZipFits": true,
+    "nativeExtractedBytes": 805306368,
+    "nativeExtractedHeadroom": -266709145,
+    "nativeExtractedFits": false,
+    "note": "Existing limits are observations, not changed policies or publication admission."
+  },
+  "startedAt": "2026-10-15T18:44:27.273Z",
+  "completedAt": "2026-10-15T19:00:27.438Z",
+  "sourceTree": "9e66fa74d7a507b7e919ad130718dc9ce351f82e",
+  "includedInputs": {
+    "format": "revealline-default-build-inputs.v1",
+    "sourceRevision": "90616ad4453a2c31d29ea29e532e6ecefbf459a0",
+    "sourceTree": "9e66fa74d7a507b7e919ad130718dc9ce351f82e",
+    "files": 3305,
+    "bytes": 859763816,
+    "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+  },
+  "availableCommittedSources": {
+    "files": 40433,
+    "bytes": 3160371126,
+    "absentTrackedFiles": 0,
+    "inventorySha256": "8e0d4b50e372a66ad43ede938181dcafe1d4790f36a3215ad0fca92d9f95e8cf"
+  },
+  "sourceVerifiedBeforeAndAfter": true,
+  "preparationCount": 1,
+  "peakRssBytes": 2675867648,
+  "helper": {
+    "path": "scripts/measure-release-zip-capacity.mjs",
+    "sha256": "f627a95ce1956ff42ab3870d9526d388a9219cdafc4772ba9888acbc920d94e2",
+    "note": "Measurement used this exact cached helper. The retained scripts helper has formatting-only changes; its current descriptor is recorded separately."
+  },
+  "note": "Helper was run from ignored cache against clean source, then retained as an analysis script. No archive or expanded site written; buffers released on process exit. Historical 859d5c sizing is separate.",
+  "detailedLocalReport": {
+    "path": ".cache/team-duel-release-readiness-20261015/deflate-complete-90616ad44.json",
+    "bytes": 1378880,
+    "sha256": "6d2550a9c1ce4bdde07c9c4174b83f549075251a691206c88e7bd71f8c9d6b23"
+  },
+  "retainedHelper": {
+    "path": "scripts/measure-release-zip-capacity.mjs",
+    "bytes": 6515,
+    "sha256": "ec39cb742ef4358c4ad71daad4a849d147a1f57012d424e44dbf2717b74e2420"
+  },
+  "historicalBaseline": {
+    "receipt": "docs/research/team-duel-release-readiness-2026-10-15.json",
+    "baseRevision": "859d5cfc927daff2a350318b2325486a58959648",
+    "preparedSourceRevision": null,
+    "manifestSha256": "6e93db98b9cefe687b64cefae0042f139852560e609953be1d1d4a208678c175",
+    "payloadBytes": 1072014438,
+    "projectedStoredZipBytes": 1073126732,
+    "samePreparedBytesClaimed": false
+  },
+  "groupsBySavings": [
+    {
+      "extension": ".json",
+      "members": 599,
+      "originalBytes": 264433363,
+      "selectedBytes": 154431799,
+      "savedBytes": 110001564
+    },
+    {
+      "extension": ".mjs",
+      "members": 1518,
+      "originalBytes": 32316378,
+      "selectedBytes": 9922956,
+      "savedBytes": 22393422
+    },
+    {
+      "extension": ".rltheme",
+      "members": 16,
+      "originalBytes": 15861598,
+      "selectedBytes": 646436,
+      "savedBytes": 15215162
+    },
+    {
+      "extension": ".png",
+      "members": 546,
+      "originalBytes": 510752260,
+      "selectedBytes": 507159514,
+      "savedBytes": 3592746
+    },
+    {
+      "extension": ".js",
+      "members": 21,
+      "originalBytes": 4571712,
+      "selectedBytes": 1082559,
+      "savedBytes": 3489153
+    },
+    {
+      "extension": ".wav",
+      "members": 81,
+      "originalBytes": 5585928,
+      "selectedBytes": 2872998,
+      "savedBytes": 2712930
+    },
+    {
+      "extension": ".html",
+      "members": 70,
+      "originalBytes": 1655366,
+      "selectedBytes": 355675,
+      "savedBytes": 1299691
+    },
+    {
+      "extension": ".css",
+      "members": 109,
+      "originalBytes": 1627367,
+      "selectedBytes": 329757,
+      "savedBytes": 1297610
+    },
+    {
+      "extension": ".mp4",
+      "members": 4,
+      "originalBytes": 6089799,
+      "selectedBytes": 5323746,
+      "savedBytes": 766053
+    },
+    {
+      "extension": ".svg",
+      "members": 51,
+      "originalBytes": 878734,
+      "selectedBytes": 136148,
+      "savedBytes": 742586
+    },
+    {
+      "extension": ".rlmedia",
+      "members": 17,
+      "originalBytes": 130758600,
+      "selectedBytes": 130036790,
+      "savedBytes": 721810
+    },
+    {
+      "extension": ".md",
+      "members": 76,
+      "originalBytes": 869866,
+      "selectedBytes": 331133,
+      "savedBytes": 538733
+    },
+    {
+      "extension": ".rlpack",
+      "members": 1,
+      "originalBytes": 2988970,
+      "selectedBytes": 2585139,
+      "savedBytes": 403831
+    },
+    {
+      "extension": ".jpg",
+      "members": 222,
+      "originalBytes": 53449719,
+      "selectedBytes": 53167488,
+      "savedBytes": 282231
+    },
+    {
+      "extension": ".ttf",
+      "members": 3,
+      "originalBytes": 371600,
+      "selectedBytes": 146411,
+      "savedBytes": 225189
+    },
+    {
+      "extension": ".m4a",
+      "members": 64,
+      "originalBytes": 1211606,
+      "selectedBytes": 991491,
+      "savedBytes": 220115
+    },
+    {
+      "extension": ".mp3",
+      "members": 3,
+      "originalBytes": 11846679,
+      "selectedBytes": 11769718,
+      "savedBytes": 76961
+    },
+    {
+      "extension": ".txt",
+      "members": 25,
+      "originalBytes": 96550,
+      "selectedBytes": 39302,
+      "savedBytes": 57248
+    },
+    {
+      "extension": ".otf",
+      "members": 1,
+      "originalBytes": 84480,
+      "selectedBytes": 29401,
+      "savedBytes": 55079
+    },
+    {
+      "extension": ".rlstory",
+      "members": 1,
+      "originalBytes": 730651,
+      "selectedBytes": 706355,
+      "savedBytes": 24296
+    },
+    {
+      "extension": "(no extension)",
+      "members": 4,
+      "originalBytes": 20585,
+      "selectedBytes": 8073,
+      "savedBytes": 12512
+    },
+    {
+      "extension": ".webp",
+      "members": 36,
+      "originalBytes": 25817604,
+      "selectedBytes": 25809843,
+      "savedBytes": 7761
+    },
+    {
+      "extension": ".webmanifest",
+      "members": 4,
+      "originalBytes": 2287,
+      "selectedBytes": 1044,
+      "savedBytes": 1243
+    },
+    {
+      "extension": ".pb",
+      "members": 2,
+      "originalBytes": 1894,
+      "selectedBytes": 922,
+      "savedBytes": 972
+    },
+    {
+      "extension": ".vtt",
+      "members": 4,
+      "originalBytes": 1398,
+      "selectedBytes": 839,
+      "savedBytes": 559
+    },
+    {
+      "extension": ".woff2",
+      "members": 11,
+      "originalBytes": 509548,
+      "selectedBytes": 509356,
+      "savedBytes": 192
+    }
+  ],
+  "validation": {
+    "tests": 5,
+    "failed": 0,
+    "skipped": 0,
+    "command": "node --test scripts/test-measure-release-zip-capacity.mjs",
+    "productionZipOrReaderChanges": false
+  }
+}
