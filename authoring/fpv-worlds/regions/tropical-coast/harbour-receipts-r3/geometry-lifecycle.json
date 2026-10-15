@@ -1,0 +1,544 @@
+{
+  "passed": true,
+  "canonicalGLBs": 18,
+  "solid": 59,
+  "visualOnly": 47,
+  "results": [
+    {
+      "quality": "performance",
+      "id": "harbour-open-bay",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "harbour-below-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "harbour-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "palm-trunk",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "palm-leaves",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "hut-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "cargo-box",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "sea-visual-only",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "arrival-deck-solid",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "arrival-open-above-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "arrival-shoreline-clear",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "arrival-pile-solid",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "harbour-open-bay",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "harbour-below-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "harbour-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "palm-trunk",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "palm-leaves",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "hut-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "cargo-box",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "sea-visual-only",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "arrival-deck-solid",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "arrival-open-above-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "arrival-shoreline-clear",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "arrival-pile-solid",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "harbour-open-bay",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "harbour-below-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "harbour-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "palm-trunk",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "palm-leaves",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "hut-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "cargo-box",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "sea-visual-only",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "arrival-deck-solid",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "arrival-open-above-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "arrival-shoreline-clear",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "arrival-pile-solid",
+      "status": "terrain-hit"
+    }
+  ],
+  "windows": [
+    {
+      "quality": "performance",
+      "x": 128,
+      "z": 128,
+      "geometryBytes": 842784,
+      "textureBytes": 1835000,
+      "resourceBytes": 2677784,
+      "collision": {
+        "worlds": 2,
+        "colliders": 42,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 384,
+      "z": 128,
+      "geometryBytes": 1118536,
+      "textureBytes": 2140832,
+      "resourceBytes": 3259368,
+      "collision": {
+        "worlds": 2,
+        "colliders": 51,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 640,
+      "z": 128,
+      "geometryBytes": 700976,
+      "textureBytes": 1376252,
+      "resourceBytes": 2077228,
+      "collision": {
+        "worlds": 2,
+        "colliders": 37,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 640,
+      "z": 384,
+      "geometryBytes": 921296,
+      "textureBytes": 1682084,
+      "resourceBytes": 2603380,
+      "collision": {
+        "worlds": 2,
+        "colliders": 51,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 640,
+      "z": 640,
+      "geometryBytes": 618608,
+      "textureBytes": 1376244,
+      "resourceBytes": 1994852,
+      "collision": {
+        "worlds": 2,
+        "colliders": 40,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 384,
+      "z": 640,
+      "geometryBytes": 998848,
+      "textureBytes": 2293740,
+      "resourceBytes": 3292588,
+      "collision": {
+        "worlds": 2,
+        "colliders": 49,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 128,
+      "z": 640,
+      "geometryBytes": 736592,
+      "textureBytes": 1987908,
+      "resourceBytes": 2724500,
+      "collision": {
+        "worlds": 2,
+        "colliders": 40,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 128,
+      "z": 384,
+      "geometryBytes": 1078592,
+      "textureBytes": 2293748,
+      "resourceBytes": 3372340,
+      "collision": {
+        "worlds": 2,
+        "colliders": 55,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 384,
+      "z": 384,
+      "geometryBytes": 1473984,
+      "textureBytes": 2599580,
+      "resourceBytes": 4073564,
+      "collision": {
+        "worlds": 2,
+        "colliders": 68,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 128,
+      "z": 128,
+      "geometryBytes": 842784,
+      "textureBytes": 1835000,
+      "resourceBytes": 2677784,
+      "collision": {
+        "worlds": 2,
+        "colliders": 42,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 384,
+      "z": 128,
+      "geometryBytes": 1118536,
+      "textureBytes": 2140832,
+      "resourceBytes": 3259368,
+      "collision": {
+        "worlds": 2,
+        "colliders": 51,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 640,
+      "z": 128,
+      "geometryBytes": 700976,
+      "textureBytes": 1376252,
+      "resourceBytes": 2077228,
+      "collision": {
+        "worlds": 2,
+        "colliders": 37,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 640,
+      "z": 384,
+      "geometryBytes": 921296,
+      "textureBytes": 1682084,
+      "resourceBytes": 2603380,
+      "collision": {
+        "worlds": 2,
+        "colliders": 51,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 640,
+      "z": 640,
+      "geometryBytes": 618608,
+      "textureBytes": 1376244,
+      "resourceBytes": 1994852,
+      "collision": {
+        "worlds": 2,
+        "colliders": 40,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 384,
+      "z": 640,
+      "geometryBytes": 998848,
+      "textureBytes": 2293740,
+      "resourceBytes": 3292588,
+      "collision": {
+        "worlds": 2,
+        "colliders": 49,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 128,
+      "z": 640,
+      "geometryBytes": 736592,
+      "textureBytes": 1987908,
+      "resourceBytes": 2724500,
+      "collision": {
+        "worlds": 2,
+        "colliders": 40,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 128,
+      "z": 384,
+      "geometryBytes": 1078592,
+      "textureBytes": 2293748,
+      "resourceBytes": 3372340,
+      "collision": {
+        "worlds": 2,
+        "colliders": 55,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 384,
+      "z": 384,
+      "geometryBytes": 1473984,
+      "textureBytes": 2599580,
+      "resourceBytes": 4073564,
+      "collision": {
+        "worlds": 2,
+        "colliders": 68,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 128,
+      "z": 128,
+      "geometryBytes": 842784,
+      "textureBytes": 1835000,
+      "resourceBytes": 2677784,
+      "collision": {
+        "worlds": 2,
+        "colliders": 42,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 384,
+      "z": 128,
+      "geometryBytes": 1118536,
+      "textureBytes": 2140832,
+      "resourceBytes": 3259368,
+      "collision": {
+        "worlds": 2,
+        "colliders": 51,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 640,
+      "z": 128,
+      "geometryBytes": 700976,
+      "textureBytes": 1376252,
+      "resourceBytes": 2077228,
+      "collision": {
+        "worlds": 2,
+        "colliders": 37,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 640,
+      "z": 384,
+      "geometryBytes": 921296,
+      "textureBytes": 1682084,
+      "resourceBytes": 2603380,
+      "collision": {
+        "worlds": 2,
+        "colliders": 51,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 640,
+      "z": 640,
+      "geometryBytes": 618608,
+      "textureBytes": 1376244,
+      "resourceBytes": 1994852,
+      "collision": {
+        "worlds": 2,
+        "colliders": 40,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 384,
+      "z": 640,
+      "geometryBytes": 998848,
+      "textureBytes": 2293740,
+      "resourceBytes": 3292588,
+      "collision": {
+        "worlds": 2,
+        "colliders": 49,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 128,
+      "z": 640,
+      "geometryBytes": 736592,
+      "textureBytes": 1987908,
+      "resourceBytes": 2724500,
+      "collision": {
+        "worlds": 2,
+        "colliders": 40,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 128,
+      "z": 384,
+      "geometryBytes": 1078592,
+      "textureBytes": 2293748,
+      "resourceBytes": 3372340,
+      "collision": {
+        "worlds": 2,
+        "colliders": 55,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 384,
+      "z": 384,
+      "geometryBytes": 1473984,
+      "textureBytes": 2599580,
+      "resourceBytes": 4073564,
+      "collision": {
+        "worlds": 2,
+        "colliders": 68,
+        "rigidBodies": 0
+      }
+    }
+  ],
+  "sourceUnchanged": true,
+  "disposed": true,
+  "claim": "Real source/collision and replacement ownership at three material tiers; no native GPU, full world gameplay or default Library admission claim."
+}

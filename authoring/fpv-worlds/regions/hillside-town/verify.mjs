@@ -6,7 +6,11 @@ import { createHash } from 'node:crypto';
 import validator from 'gltf-validator';
 import { createVerifiedMixedWindow } from '../verified-mixed-window.mjs';
 import { loadBuildingModels } from './indexed-source.mjs';
-import { routes, probes, spawns, placements, roads, heightMm, roadTopMm } from './design.mjs';
+const variant = process.argv[3];
+assert(!variant || variant === 'courtyard-r3', 'Unknown Hillside verification variant');
+const { routes, probes, spawns, placements, roads, heightMm, roadTopMm } = await import(
+  variant ? './courtyard-r3/design.mjs' : './design.mjs'
+);
 const root = process.argv[2];
 assert(root, 'Provide exact hillside source');
 const prep = JSON.parse(await readFile(resolve(root, 'preparation.json'))),
