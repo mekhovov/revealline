@@ -34,6 +34,10 @@ const output = process.argv.find((arg) => arg.startsWith('--output='))?.slice(9)
 assert.ok(output?.endsWith('.json.gz') && !existsSync(output), 'Choose a fresh gzip output.');
 const seconds = Number(process.argv.find((arg) => arg.startsWith('--seconds='))?.slice(10) ?? 540);
 assert.ok(Number.isFinite(seconds) && seconds > 0 && seconds <= 720);
+const parkAt = Number(
+  process.argv.find((arg) => arg.startsWith('--park-at='))?.slice(10) ?? Infinity,
+);
+assert.ok(parkAt === Infinity || (Number.isFinite(parkAt) && parkAt >= 120 && parkAt <= 240));
 const sourceHashes = hashes();
 const crowdSeparation = process.argv.includes('--local-crowd') ? 'local-v1' : null;
 const mode = createOverflightRiyMode({
@@ -72,7 +76,7 @@ while (['playing', 'upgrade'].includes(run.phase) && run.time < seconds) {
     assert.ok(choice?.choiceId && core.chooseOverflightUpgrade(run, choice.choiceId));
     continue;
   }
-  mode.step(run, review.input(run, {}));
+  mode.step(run, run.time >= parkAt ? {} : review.input(run, {}));
   wall += 1000 / 60;
 }
 const report = {
@@ -84,6 +88,8 @@ const report = {
   sourceHashes,
   runtime: { node: process.version, v8: process.versions.v8, arch: process.arch },
   crowdSeparation,
+  inputPolicy:
+    parkAt === Infinity ? { kind: 'active' } : { kind: 'park-after-earned-prefix', parkAt },
   endHashes: hashes(),
   projectIdentity: compiled.projectIdentity,
   seed: run.seed,
