@@ -1,0 +1,398 @@
+{
+  "format": "revealline-practice-directory-browser.v1",
+  "publicEligible": false,
+  "sourceRevision": "da0b0108206a0270b4b870e747f2d1bc0e6695cb",
+  "sourceBinding": "Current production renderer/panel with an unpublished three-card metadata fixture; not an admitted package or public release.",
+  "startedAt": "2026-10-15T04:10:11.949Z",
+  "checkpoints": [
+    "All three cards render localized descriptions and safe same-origin Play/details links in EN/UK.",
+    "Nine consecutive keyboard stops have a visible 3px focus outline.",
+    "1280px, 375px single-column and 640px zoom-equivalent layouts fit without horizontal overflow; reduced motion has no running animations.",
+    "Browsing the directory loads no simulator entry module and registers no worker.",
+    "Empty directory retains FPV/main-game and player-guide navigation.",
+    "EN/UK in-game panel: polite status, close-button focus, dated cached catalogue after failure, bad-details basic cards, empty fallback links and Escape focus restoration.",
+    "Cold request failure retains retry/navigation; successful retry restores all three cards. Twelve Tab steps per locale keep page-focus stops inside the dialog with visible outlines; browser-chrome focus is allowed."
+  ],
+  "findings": [],
+  "screenshots": [
+    {
+      "path": "/tmp/practice-directory-browser-da0b010820-retry-20261015-desktop.png",
+      "sha256": "9cd43a2437c2e68afdb56e03b2da5dc3372cb38e5b39a5567eb696da01445d38"
+    },
+    {
+      "path": "/tmp/practice-directory-browser-da0b010820-retry-20261015-narrow.png",
+      "sha256": "326026a67a7b58a3438d8a26f62f812ca9ddf81eae2a6d0bf0e63378ec4dc7f3"
+    },
+    {
+      "path": "/tmp/practice-directory-browser-da0b010820-retry-20261015-zoom-equivalent.png",
+      "sha256": "223594002a8cf7725e9926c882f3e0f33825f8480a0152fccad05aad860faf9e"
+    },
+    {
+      "path": "/tmp/practice-directory-browser-da0b010820-retry-20261015-cached-en.png",
+      "sha256": "ac04bf37883cdcbced9607808ecf68f55b62a358c8ccec7e822b993d80acd99b"
+    },
+    {
+      "path": "/tmp/practice-directory-browser-da0b010820-retry-20261015-cached-uk.png",
+      "sha256": "45da380094e75cae68d45796d793102bdad1ccbb570e1b7afad072ee3f43a359"
+    },
+    {
+      "path": "/tmp/practice-directory-browser-da0b010820-retry-20261015-request-failed.png",
+      "sha256": "6808bec6df3d457c4756d4f9360ce3f44ea6aecff8c17486a2f21508c1468c05"
+    }
+  ],
+  "errors": [],
+  "cleanupErrors": [],
+  "dialogFocus": [
+    {
+      "locale": "en",
+      "step": 0,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 1,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 2,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 3,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 4,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 5,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 6,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 7,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 8,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "BUTTON",
+      "id": "optional-practice-refresh"
+    },
+    {
+      "locale": "en",
+      "step": 9,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "BUTTON",
+      "id": "optional-practice-close"
+    },
+    {
+      "locale": "en",
+      "step": 10,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "en",
+      "step": 11,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 0,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 1,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 2,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 3,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 4,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 5,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 6,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 7,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 8,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "BUTTON",
+      "id": "optional-practice-refresh"
+    },
+    {
+      "locale": "uk",
+      "step": 9,
+      "inDialog": false,
+      "hasPageFocus": false,
+      "tag": "BODY",
+      "id": ""
+    },
+    {
+      "locale": "uk",
+      "step": 10,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "BUTTON",
+      "id": "optional-practice-close"
+    },
+    {
+      "locale": "uk",
+      "step": 11,
+      "inDialog": true,
+      "hasPageFocus": true,
+      "tag": "A",
+      "id": ""
+    }
+  ],
+  "harnessSha256": "b1ec1a0bfdc4622bc4436db97951fe825d39244a58bed12a8c37cbe2df999dde",
+  "limitations": [
+    "No physical controller, touchscreen, screen reader or human usability qualification.",
+    "640 CSS-pixel viewport approximates 200% zoom reflow from 1280 CSS pixels; it is not native browser zoom.",
+    "Launcher destinations are inspected, not unlocked or played; sizes/version are synthetic fixture metadata."
+  ],
+  "sourceFiles": [
+    {
+      "path": "publishing/practice-directory.mjs",
+      "sha256": "81150ecfa08c3d4148cd50a2ec0790574915b281086999f53c8d09a3ddf733d3"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sha256": "41205c8b2a4ba2ae75c466e83ca3848c388b4010301b1ace5e386d26be393bda"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.css",
+      "sha256": "700745359dcdc5538b090467d1a6632065615e777c945ed013c5ef31c1249774"
+    },
+    {
+      "path": "optional-practice/navigation.mjs",
+      "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+    },
+    {
+      "path": "scripts/optional-installation-observer-helpers.mjs",
+      "sha256": "06dcf35bb585edf8a1d85a7aa70b83650fa7a70c11a758f6d0b453d6e257705d"
+    },
+    {
+      "path": "optional-practice/civilian-flight/package-info.json",
+      "sha256": "01b52a85d74440cb0d57ef1ea0999a4d2c4ec16abde3b46aef0d5a7ea566d6b0"
+    },
+    {
+      "path": "optional-practice/civilian-flight/preview.png",
+      "sha256": "caec5cce62757f3938ddb779f8b4d6a920db57624d6f4cd3d72f0460d72b5567"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/package-info.json",
+      "sha256": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/preview.png",
+      "sha256": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/package-info.json",
+      "sha256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/preview.png",
+      "sha256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/ui/art-review-navigation.mjs",
+      "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2"
+    },
+    {
+      "path": "game/optional-practice-catalog.mjs",
+      "sha256": "3225da4962907fd5cdbe2288002ec3406ce66be4b64b03f484542fc22028153b"
+    },
+    {
+      "path": "game/optional-practice-details.mjs",
+      "sha256": "6487bd845b3b96f0fea3e1ac4e7740e2a4dcb9f995798096db866a7b659362d5"
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "sha256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2"
+    },
+    {
+      "path": "game/optional-practice-preview.mjs",
+      "sha256": "35cb269770dec7b1234ac4858348b1ca6b17c8bfeaa7942b97b1d50c84f275cb"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "sha256": "f1ab57202233decee84e5c8378f85ac58b97e655af233594e5b407d7238d41f0"
+    }
+  ],
+  "result": "passed",
+  "browser": "155.0.8059.40",
+  "keyboardFocus": [
+    {
+      "tag": "SELECT",
+      "text": "EnglishУкраїнська",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Play ↗",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Details & guide ↗",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Play ↗",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Details & guide ↗",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Play ↗",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Details & guide ↗",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Main game / FPV shortcut",
+      "outline": "solid",
+      "width": "3px"
+    },
+    {
+      "tag": "A",
+      "text": "Player guide",
+      "outline": "solid",
+      "width": "3px"
+    }
+  ],
+  "sourceRecheck": {
+    "checked": 23,
+    "errors": []
+  },
+  "finishedAt": "2026-10-15T04:10:25.608Z"
+}

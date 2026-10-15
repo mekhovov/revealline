@@ -1,0 +1,435 @@
+{
+  "kind": "bounded-mistake-recovery-progress-not-completion-proof",
+  "rows": [
+    {
+      "mode": "team",
+      "missionId": "team-highland-reunion",
+      "difficulty": "standard",
+      "authoredIdentity": "9dec8a21619060c5",
+      "tunedIdentity": "3c103cb49b1d38c2",
+      "options": {
+        "seed": 17
+      },
+      "change": {
+        "index": 1,
+        "insertedNeutralTicks": 240
+      },
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 180
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 180
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        }
+      ],
+      "expectedStatus": "running",
+      "firstFailureCause": "line-impact"
+    },
+    {
+      "mode": "team",
+      "missionId": "team-expedition-homecoming",
+      "difficulty": "standard",
+      "authoredIdentity": "1b85cf9e58d854c1",
+      "tunedIdentity": "1ce236f5eaa38ee8",
+      "options": {
+        "seed": 17
+      },
+      "change": {
+        "index": 6,
+        "insertedNeutralTicks": 240
+      },
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 78
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 240
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 79
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        }
+      ],
+      "expectedStatus": "running",
+      "firstFailureCause": "line-impact"
+    },
+    {
+      "mode": "versus",
+      "missionId": "versus-archive-decider",
+      "difficulty": "standard",
+      "authoredIdentity": "a2335b61960dc1b6",
+      "tunedIdentity": "ba1f6c1ea614dbb5",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "change": {
+        "index": 0,
+        "insertedNeutralTicks": 240
+      },
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 74
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 75
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        }
+      ],
+      "expectedStatus": "running",
+      "firstFailureCause": "enemy-trail"
+    },
+    {
+      "mode": "versus",
+      "missionId": "versus-highland-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "236a8b2380584350",
+      "tunedIdentity": "85a46ecad74ddb68",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "change": {
+        "index": 0,
+        "insertedNeutralTicks": 240
+      },
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 74
+        },
+        {
+          "direction": null,
+          "ticks": 240
+        },
+        {
+          "direction": "up",
+          "ticks": 75
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        }
+      ],
+      "expectedStatus": "running",
+      "firstFailureCause": "enemy-trail"
+    }
+  ]
+}
