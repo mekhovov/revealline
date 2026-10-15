@@ -1,0 +1,170 @@
+{
+  "passed": true,
+  "claim": "Default town-r2 generator remains byte-identical after adding explicit courtyard-r3 variant",
+  "files": [
+    {
+      "path": "preparation.json",
+      "sha256": "faec02b44573ea986c2b77bdf25e0643cd9be11df1963eaccaeeaf9cf6a3c4d2"
+    },
+    {
+      "path": "source-provenance.json",
+      "sha256": "fe34bc7c5f3968c2cab25bf6e6aab9c14c0a0a59d751b90b741017d090e16822"
+    },
+    {
+      "path": "License.txt",
+      "sha256": "60a07f9108f5a3fc5f9429fd1faa5b168c05cc085354f78ed48180ef32ec6209"
+    },
+    {
+      "path": "scenery/town-1-0.glb",
+      "sha256": "d41c579b387280970ce4e8d146c6ddb26b1426fb171d4df448dcfa99bfcee622"
+    },
+    {
+      "path": "scenery/town-1-1.glb",
+      "sha256": "109bd054ca23bd82d2c804fe2ff683a6cfac93062bd49030d685527581aa3e82"
+    },
+    {
+      "path": "scenery/town-1-2.glb",
+      "sha256": "971996160cff99f2df2d22197f577d26ef66d7c180e5b1d8db3bc10c685ff8c4"
+    },
+    {
+      "path": "scenery/town-1-2.json",
+      "sha256": "4c5d33b01e8299a4317ee6b449e3b9e09e283767ee9cc824bec5a92febdc039f"
+    },
+    {
+      "path": "scenery/town-2-1.glb",
+      "sha256": "2a930138765b3a245fbbd337acbb730afe60274e2d04d3ae04906c7052a9e333"
+    },
+    {
+      "path": "scenery/town-2-0.json",
+      "sha256": "3f0be1e6dd5808df422b5a4dd04a69814ab5b74d37bb6e1ed1337df72c9b60fa"
+    },
+    {
+      "path": "scenery/town-0-2.glb",
+      "sha256": "9eb48ed462ba9bf952c7b07bc9ef771c944550f5195139488c95947acaf7420b"
+    },
+    {
+      "path": "scenery/town-2-0.glb",
+      "sha256": "e33b818fbdd414a9d6a76ae1f6fedf754f9d9bf1c712f80aea0365eb6d5e00c2"
+    },
+    {
+      "path": "scenery/town-0-1.json",
+      "sha256": "be385816055a5383d0be87328ce36eda0964604230fef8ff7cdd53438b21ae5d"
+    },
+    {
+      "path": "scenery/town-2-2.glb",
+      "sha256": "f34781187f7bedde76f7c5e0606505197aa1319808a2179ebf33e3ddf73cf6d2"
+    },
+    {
+      "path": "scenery/town-0-0.glb",
+      "sha256": "e007c7eb0d444140fa96f9a33a6ab543c33300cbae721412600cf0485dae5973"
+    },
+    {
+      "path": "scenery/town-0-1.glb",
+      "sha256": "25b281adbbd2270139bc457a22b25948b4f03b5528cbce7c4440497ad2b73c53"
+    },
+    {
+      "path": "scenery/town-0-0.json",
+      "sha256": "eb1c2b0ed7c2f6de91c3460eaf3a32e4c7b5dbfb89faf6682c839fa8d2040938"
+    },
+    {
+      "path": "scenery/town-2-1.json",
+      "sha256": "a322c4e11c43a52c9c100a03bb779fdc3dd8cf5c6c1e79b84a6f841110239e04"
+    },
+    {
+      "path": "scenery/town-2-2.json",
+      "sha256": "e64bffc8e52925e5d2bd249c00f99a1182cf0236f85145fab0d12902e206f33b"
+    },
+    {
+      "path": "scenery/town-0-2.json",
+      "sha256": "d1a9543a8ee2dc36f7fe7b51174b22710d202334ad62e2cd3c8ff5180a58806b"
+    },
+    {
+      "path": "scenery/town-1-1.json",
+      "sha256": "508aff9dad68e7abb8b0fcefdcdf38d9b42380017e61f05112a086a300ee0e36"
+    },
+    {
+      "path": "scenery/region.json",
+      "sha256": "0d2f74e20cae601bf79dbcc4a5fa4819aadf4ee14c08eac59d43454848ea358a"
+    },
+    {
+      "path": "scenery/town-1-0.json",
+      "sha256": "d49b694d8e2b098fe8b448412e30fa4553263122f98e199832f0409dd0747611"
+    },
+    {
+      "path": "terrain/town-1-0.glb",
+      "sha256": "2dfa00ce9e95e97fc2c4e04b4dd98eb92f0b80d0128a1fc7956d2c69daa0a8c3"
+    },
+    {
+      "path": "terrain/town-1-1.glb",
+      "sha256": "ce0452e75a3294ebbddc1608313c6458d8c713c9432addb5f479808416ae470d"
+    },
+    {
+      "path": "terrain/town-1-2.glb",
+      "sha256": "90ecde4162a3ac49ad8a47d561ee7ebecb839c1141ef2cea799e3d0f0d9d9355"
+    },
+    {
+      "path": "terrain/town-1-2.json",
+      "sha256": "10dc78736ad67738896a086d9b45c902ba87ce68cd78bd722d1b89c44b82bfae"
+    },
+    {
+      "path": "terrain/town-2-1.glb",
+      "sha256": "1c5065854c235dfbf5cdc542619ee390cdbe5637419fec2f2bcb80f0c3ee6702"
+    },
+    {
+      "path": "terrain/town-2-0.json",
+      "sha256": "9fbace2374e51879ec8855939f3a0a9d0f45c78f3c484e7a882095c058ddf99d"
+    },
+    {
+      "path": "terrain/town-0-2.glb",
+      "sha256": "8ef3cd292855936c5fd3c46a8925902bac2c6f302f5fcba5ef31ca971cfe99a5"
+    },
+    {
+      "path": "terrain/town-2-0.glb",
+      "sha256": "efb4d6eea1bab8e3c1f5790ba36a289cb8a03beaa4d8727ff6dd6c6e4a6a7f66"
+    },
+    {
+      "path": "terrain/town-0-1.json",
+      "sha256": "a6b598775a52cf82ae401a4e2783c034d8ed0f1e2951d9b1dc2b4eb2dacd7e07"
+    },
+    {
+      "path": "terrain/town-2-2.glb",
+      "sha256": "97e6b9e3d060cae8816416a170a03b02c75829b61600674db6e28060fff6e9c8"
+    },
+    {
+      "path": "terrain/town-0-0.glb",
+      "sha256": "060059784db2590a9c268742d7c0a3da1d097da3c861dab176bab6861a10af88"
+    },
+    {
+      "path": "terrain/town-0-1.glb",
+      "sha256": "b1208e567db72d0409e322f8fccf8807ee0d01acbef4210b88763fa514913502"
+    },
+    {
+      "path": "terrain/town-0-0.json",
+      "sha256": "05f8680c7b0fdc5ebabfce99e59efc4e700827d5b00f26b4264e9ec5e2672606"
+    },
+    {
+      "path": "terrain/town-2-1.json",
+      "sha256": "eedbbb64425dd8f29b109cf9ed4f9d762dc69503e12e5adc75e7ce65a0df0e09"
+    },
+    {
+      "path": "terrain/town-2-2.json",
+      "sha256": "41868ec760d208826436a0946f478acc3e0095946e8051ade3a75bb6c691d06b"
+    },
+    {
+      "path": "terrain/town-0-2.json",
+      "sha256": "2e7de41e8bb3bdbb48116d68d8b62e4afd73da898ce8b7a49d5a37484d4dd8b9"
+    },
+    {
+      "path": "terrain/town-1-1.json",
+      "sha256": "8b6682bf403b70f1eae6ca75bee107e5c81f8ad2bf0c03ff1f2e1971709c93c3"
+    },
+    {
+      "path": "terrain/region.json",
+      "sha256": "84d2e15d9931e6b71d11303d940bd67be8b12dd1c79cc6ed839e460596a34037"
+    },
+    {
+      "path": "terrain/town-1-0.json",
+      "sha256": "6513fb7324f6fe6a918c585d7cc43ec21d70e6e546aa6efba8393e87550a45f9"
+    }
+  ]
+}

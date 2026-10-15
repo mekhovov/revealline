@@ -1,0 +1,19 @@
+{
+  "baseRuntimeCommit": "abea3664af1e14d00237cac49a26e646acdc8212",
+  "runtimeChanges": false,
+  "authoringSHA256": {
+    "expanse-design.mjs": "a10aefa74ae7f26858580d66a2e8d87c503004d7b398d89e29122edca6b82c52",
+    "prepare-expanse.mjs": "ea6c2c9767b81405a538b450cda8038de4715ba737f847d60427b0eb7dbd9104",
+    "verify-expanse.mjs": "8a8797c8208845e1d25e9565264f059bf7e655885590a64d9fe829eac6595a8e",
+    "verify-expanse-flight.mjs": "a260d0d614a4a36128a8422e68d495d4230dca8f20d74d4dab744adc03b404ec"
+  },
+  "reproduction": {
+    "matchingPayloadFiles": 616,
+    "matchingManifests": 2,
+    "matchingPreparationReceipt": true
+  },
+  "priorFailedSourcePreserved": true,
+  "nativeVisualReview": false,
+  "libraryAdmission": false,
+  "packageQualification": false
+}

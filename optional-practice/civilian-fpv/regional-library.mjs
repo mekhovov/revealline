@@ -1,8 +1,67 @@
 import { openRegionalLibrary } from './regional-delivery.mjs';
 import { validateTerrainSurface } from './regional/terrain-surface.mjs';
+import { REGION_CELL_SIZES_MM } from './regional/region-manifest.mjs';
+
+// This immutable source needs the separately qualified 512 m natural-cell capability.
+// Older runtimes keep their current catalogue rather than offering an unloadable entry.
+export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
+  id: 'desert-expedition-study',
+  title: {
+    en: 'Desert Expedition — 16 km relief study',
+    uk: 'Пустельна експедиція — дослідження рельєфу 16 км',
+  },
+  description: {
+    en: '16.384 × 16.384 km · six landscapes and six starting points · unscored free flight. Explore broad dunes, a dry wash, salt basin, escarpment, mesa corridor and rocky plain. Early terrain study focused on broad relief.',
+    uk: '16,384 × 16,384 км · шість ландшафтів і шість стартових точок · вільний політ без заліку. Досліджуйте широкі дюни, сухе русло, соляну улоговину, уступ, прохід між плато та кам’янисту рівнину. Раннє дослідження великих форм рельєфу.',
+  },
+  bytes: 47883876,
+  appearance: { terrain: 'desert' },
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json',
+    bytes: 327361,
+    sha256: '6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d',
+  },
+});
 
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  ...(REGION_CELL_SIZES_MM.includes(512000) ? [DESERT_EXPEDITION_LIBRARY_PIN] : []),
+  {
+    id: 'hillside-town-study',
+    title: {
+      en: 'Hillside Town — terraces and courtyards',
+      uk: 'Містечко на схилі — тераси та подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.',
+      uk: '384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель.',
+    },
+    bytes: 8352486,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json',
+      bytes: 6558,
+      sha256: 'de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9',
+    },
+  },
+  {
+    id: 'tropical-coastal-districts',
+    title: {
+      en: 'Tropical coast — six flight districts',
+      uk: 'Тропічне узбережжя — шість районів польоту',
+    },
+    description: {
+      en: '768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.',
+      uk: '768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна.',
+    },
+    bytes: 7857157,
+    appearance: { terrain: 'tropical-settlement' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json',
+      bytes: 6609,
+      sha256: 'dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49',
+    },
+  },
   {
     id: 'canyon-expanse-study',
     title: {
@@ -126,7 +185,11 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(terrain))
+  if (
+    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
+      terrain,
+    )
+  )
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,

@@ -83,12 +83,18 @@ test('published regional review modules match the installed FPV source closure',
   );
   assert.equal(
     regional.length,
-    23,
-    'the reviewed regional source closure includes RGBA, restore admission and saved places',
+    25,
+    'the reviewed regional source closure includes RGBA, restore admission, saved places, Railway district and Hillside ground',
   );
   assert.ok(regional.includes('optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs'));
   assert.ok(regional.includes('optional-practice/civilian-fpv/regional/restore-containment.mjs'));
   assert.ok(regional.includes('optional-practice/civilian-fpv/regional-locations.mjs'));
+  assert.ok(
+    regional.includes('optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs'),
+  );
+  assert.ok(
+    regional.includes('optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs'),
+  );
   for (const name of regional) {
     assert.ok(config.include.includes(name), `main distribution must include ${name}`);
     assert.ok((await fs.stat(path.join(root, name))).isFile());

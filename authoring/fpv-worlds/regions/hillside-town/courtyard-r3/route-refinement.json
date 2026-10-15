@@ -1,0 +1,8 @@
+{
+  "originalAttempt": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r3a-20261015",
+  "failedRoute": "civic-marker-orbit",
+  "failure": "Production self-level controller left the initial 1 m authored corridor around short 10 m corners.",
+  "correction": "Redesigned the physically verified orbit to 16/18 m legs and a 2 m clear corridor, away from the tower and benches. No controller, acceptance threshold, existing route or runtime change.",
+  "acceptedAttempt": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r3b-20261015",
+  "bothModesPass": true
+}
