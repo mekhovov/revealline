@@ -5022,3 +5022,19 @@ Next independent implementation: optional revision-bound district/saved-place
 guidance using the bounded HUD, no autopilot/score/arming changes. Full-region art,
 network-wide offline/device qualification and D6 remain open. See the current
 large-worlds delivery plan checkpoint for priorities and evidence boundaries.
+
+## 15 October — optional guidance and safe version removal integrated
+
+Coordinator branch `codex/fpv-integrated-admission-review-20261015`, base
+`e5dc67c1`. #1419, #1421, #1423, #1425 and #1426 are merged; #1416 landmark
+Library also merged as `cecbd408`. Detailed scoped evidence and remaining gates
+are in the newest `fpv-large-worlds-delivery-plan.md` checkpoint. Normal player
+data, old regional revisions, frozen failed candidates and source work are retained.
+
+#1392 awaits a fresh integrated Coaster package with the Overview and Arm fixes;
+#1427 is separate Alpine Library admission. #1424 remains the Desert authored-start
+heading follow-up in native stack #1417; inspect current membership/heads before
+protected publication. Independent Hillside material refinement and Canal City
+source authoring continue while checks/merges run. The complete roadmap, final art
+standard, broader offline/device qualification and D6 remain open. No public launch
+is inferred from a merge or local check.
