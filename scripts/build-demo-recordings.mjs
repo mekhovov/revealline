@@ -153,6 +153,295 @@ const clips = [
   },
 ];
 
+// Frozen ordinary input routes selected from bounded planner authoring on
+// 15 October 2026. Playback does not need a Worker or rerun route search.
+const pressureRoutes = [
+  {
+    id: 'orchard-crossing-circuit',
+    levelId: 'orchard-crossing',
+    seed: 2,
+    segments: [
+      ['left', 435],
+      ['down', 109],
+      ['right', 327],
+      ['up', 103],
+      [null, 60],
+      ['up', 7],
+      ['left', 1],
+      ['right', 177],
+      ['down', 252],
+      ['right', 360],
+      ['up', 211],
+      [null, 60],
+      ['up', 7],
+      ['left', 368],
+      ['down', 469],
+      [null, 60],
+      ['down', 7],
+      ['right', 1],
+      ['left', 218],
+      ['up', 326],
+      ['right', 212],
+    ],
+  },
+  {
+    id: 'courtyard-exits-circuit',
+    levelId: 'courtyard-exits',
+    seed: 1,
+    segments: [
+      ['up', 231],
+      ['right', 326],
+      ['down', 455],
+      [null, 60],
+      ['down', 7],
+      ['left', 1],
+      ['right', 110],
+      ['up', 218],
+      ['left', 103],
+      [null, 60],
+      ['left', 7],
+      ['down', 1],
+      ['up', 28],
+      ['right', 218],
+      ['up', 224],
+      [null, 60],
+      ['up', 7],
+      ['left', 1],
+      ['down', 231],
+      ['left', 27],
+      ['down', 238],
+      [null, 60],
+      ['down', 7],
+      ['right', 41],
+      ['up', 163],
+      ['right', 401],
+      [null, 60],
+      ['right', 7],
+      ['down', 1],
+      ['left', 163],
+      ['up', 164],
+      ['right', 157],
+    ],
+  },
+];
+async function buildPressureRecordings() {
+  const pack = JSON.parse(
+    await readFile(new URL('game/content/packs/fpv-arcade-r5.json', root), 'utf8'),
+  );
+  const campaign = { ...pack.campaigns[0], classRecipes: pack.classRecipes };
+  const entry = { campaign, classRecipes: pack.classRecipes };
+  return pressureRoutes.map((route) => {
+    const authored = campaign.levels.find((level) => level.id === route.levelId);
+    const level = applyGameplayTuning(authored, resolveGameplayTuning('standard'));
+    const options = {
+      seed: route.seed,
+      turnPolicy: 'immediate',
+      classId: 'scout',
+      classRecipes: pack.classRecipes,
+    };
+    const run = createRun(level, options),
+      recorder = createRecorder(level, options, 'authored-pressure-demo.v1');
+    let closedCuts = 0,
+      bends = 0;
+    const events = {},
+      reverse = { up: 'down', down: 'up', left: 'right', right: 'left' };
+    for (const [direction, ticks] of route.segments)
+      for (let tick = 0; tick < ticks; tick++) {
+        const heading = run.player.direction,
+          cutting = run.player.cutting;
+        assert.equal(run.status, 'running', `${route.id}: inputs continue after the result.`);
+        if (cutting)
+          assert.notEqual(direction, reverse[heading], 'Never reverse along an exposed line.');
+        stepRun(run, { direction }, FIXED_DT);
+        recordInput(recorder, { direction });
+        if (cutting && run.player.cutting && heading !== run.player.direction) bends++;
+        for (const event of run.events) events[event.type] = (events[event.type] ?? 0) + 1;
+        closedCuts += run.events.filter((event) => event.type === 'cut.closed').length;
+        assert.equal(run.lives, 3, `${route.id}: route lost a life.`);
+      }
+    const replay = exportReplay(recorder, run);
+    assert.equal(run.status, 'won', `${route.id}: incomplete route.`);
+    assert.ok(closedCuts >= 3 && bends >= 3);
+    assert.ok(run.time >= 20 && run.time <= 60);
+    assert.equal(verifyReplay(replay).match, true);
+    return {
+      replay,
+      descriptor: {
+        ...demoDescriptor(replay, entry, { id: route.id, provenance: 'authored' }),
+        replayURL: `./demo-data/${route.id}.replay.json`,
+        replayVariants: [],
+        tags: ['capture', 'bent-cut', 'safe-ground', 'arcade'],
+      },
+      metrics: { closedCuts, bends, events },
+    };
+  });
+}
+
+// Full attempts with different routes after actual respawns. These inputs
+// never force damage or reverse along a live line. Hazards determine the loss.
+const recoveryRoutes = [
+  {
+    id: 'last-light-recovery',
+    levelId: 'signal-08',
+    segments: [
+      [null, 1, true],
+      [null, 48],
+      ['left', 109],
+      ['down', 109],
+      ['left', 217],
+      ['up', 109],
+      [null, 1, true],
+      [null, 48],
+      ['right', 326],
+      ['down', 272],
+      ['left', 23],
+      [null, 83],
+      [null, 1, true],
+      [null, 48],
+      ['right', 109],
+      ['down', 163],
+      ['right', 142],
+      [null, 84],
+      [null, 1, true],
+      [null, 48],
+      ['left', 55],
+      ['down', 55],
+      ['left', 108],
+      ['up', 55],
+      [null, 1, true],
+      [null, 48],
+      ['right', 218],
+      ['down', 109],
+      ['left', 218],
+      ['up', 109],
+      [null, 1, true],
+      [null, 48],
+      ['right', 326],
+      ['down', 163],
+      ['left', 153],
+    ],
+  },
+  {
+    id: 'supply-circuit-recovery',
+    levelId: 'signal-10',
+    segments: [
+      [null, 1, true],
+      [null, 48],
+      ['left', 109],
+      ['down', 109],
+      ['left', 217],
+      ['up', 109],
+      [null, 1, true],
+      [null, 48],
+      ['right', 326],
+      ['down', 272],
+      ['left', 255],
+      [null, 84],
+      [null, 1, true],
+      [null, 48],
+      ['down', 191],
+      ['left', 393],
+      ['up', 163],
+      [null, 1, true],
+      [null, 48],
+      ['right', 326],
+      ['down', 272],
+      ['left', 326],
+      ['up', 272],
+      [null, 1, true],
+      [null, 48],
+      ['right', 305],
+      [null, 84],
+      [null, 1, true],
+      [null, 48],
+      ['right', 109],
+      ['down', 109],
+      ['right', 203],
+      ['up', 109],
+      [null, 1, true],
+      [null, 48],
+      ['left', 312],
+      ['down', 326],
+      ['left', 326],
+      ['up', 326],
+      [null, 1, true],
+      [null, 48],
+      ['right', 331],
+    ],
+  },
+];
+function buildRecoveryRecordings(entry) {
+  return recoveryRoutes.map((route) => {
+    const authored = entry.campaign.levels.find((level) => level.id === route.levelId);
+    const level = applyGameplayTuning(authored, resolveGameplayTuning('standard'));
+    const options = {
+      seed: 1,
+      turnPolicy: 'immediate',
+      classId: 'scout',
+      classRecipes: entry.classRecipes,
+    };
+    const run = createRun(level, options),
+      recorder = createRecorder(level, options, 'authored-recovery-route.v1');
+    let closedCuts = 0,
+      bends = 0,
+      failures = 0,
+      exposedTicks = 0,
+      movingTicks = 0;
+    const events = {},
+      reverse = { up: 'down', down: 'up', left: 'right', right: 'left' };
+    for (const [direction, ticks, action = false] of route.segments)
+      for (let tick = 0; tick < ticks; tick++) {
+        assert.ok(!['won', 'lost'].includes(run.status), 'No input after a terminal result.');
+        const cutting = run.player.cutting,
+          heading = run.player.direction;
+        movingTicks = direction ? movingTicks + 1 : 0;
+        if (cutting) {
+          exposedTicks++;
+          if (direction)
+            assert.notEqual(direction, reverse[heading], 'Never reverse over an exposed line.');
+        }
+        stepRun(run, { direction, action }, FIXED_DT);
+        recordInput(recorder, { direction, action });
+        if (cutting && run.player.cutting && heading !== run.player.direction) bends++;
+        for (const event of run.events) {
+          events[event.type] = (events[event.type] ?? 0) + 1;
+          if (event.type === 'cut.closed') closedCuts++;
+          if (event.type === 'player.failed') {
+            failures++;
+            assert.ok(closedCuts > 0, 'Demonstrate a useful capture before a loss.');
+            assert.ok(
+              ['enemy-trail', 'enemy-player', 'boss-lane', 'combat-projectile'].includes(
+                event.cause,
+              ),
+            );
+            assert.ok(
+              exposedTicks >= 240 ||
+                (event.cause === 'enemy-player' && !cutting && movingTicks >= 240),
+              'A loss must follow a sustained cut or a sustained route intercepted by a real patrol.',
+            );
+          }
+        }
+        if (!run.player.cutting) exposedTicks = 0;
+      }
+    const replay = exportReplay(recorder, run);
+    assert.equal(run.status, 'lost');
+    assert.equal(run.lives, 0);
+    assert.equal(failures, 3);
+    assert.ok(closedCuts >= 3 && bends >= 3 && run.time >= 20 && run.time <= 60);
+    assert.equal(verifyReplay(replay).match, true);
+    return {
+      replay,
+      descriptor: {
+        ...demoDescriptor(replay, entry, { id: route.id, provenance: 'authored' }),
+        replayURL: `./demo-data/${route.id}.replay.json`,
+        replayVariants: [],
+        tags: ['capture', 'bent-cut', 'failure', 'recovery', 'scout'],
+      },
+      metrics: { closedCuts, bends, failures, events },
+    };
+  });
+}
+
 export async function buildDemoRecordings() {
   const [campaign, classRecipes, variantManifest] = await Promise.all([
     readFile(new URL('game/content/campaign.json', root), 'utf8').then(JSON.parse),
@@ -228,7 +517,7 @@ export async function buildDemoRecordings() {
   // examples; reviewed wins remain the majority of the catalogue.
   // Historical scripted reversal losses remain preserved as files, but are
   // no longer generated or admitted to the unattended complete-run rotation.
-  return reviewedWins;
+  return [...reviewedWins, ...(await buildPressureRecordings()), ...buildRecoveryRecordings(entry)];
 }
 
 const fileOperations = { readFile, writeFile, mkdir, rename, unlink };
