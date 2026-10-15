@@ -246,11 +246,13 @@ const benchmarkProtocol = benchmarkTrial
       ...(measureAt !== null ? { measureAt } : {}),
     }
   : {};
+const traceReview = !!reviewBuild && diagnostics && params.get('reviewTrace') === '1';
 const review = createOverflightReviewPlayback({
   build: reviewBuild,
   enabled: params.get('autoplay') === '1',
   stopAt: reviewStopAt,
   route: reviewControls.pilotArgument,
+  trace: traceReview,
   pilot: (run, route) => mode.pilot(run, route),
   selectCard: mode.selectCard,
 });
@@ -1276,6 +1278,7 @@ function measurement({ raw = false } = {}) {
     prototype: mode.prototype ?? null,
     review: reviewIdentity(),
     clipCaptureUsed,
+    reviewTrace: review.traceSnapshot(),
     viewport: {
       width: win.innerWidth,
       height: win.innerHeight,
@@ -1295,6 +1298,7 @@ function measurement({ raw = false } = {}) {
     renderer: rendererStats,
     resourceSamples,
     trialValid:
+      !traceReview &&
       !clipCaptureUsed &&
       !runtimeFailed &&
       clock.stats().droppedSeconds === 0 &&
@@ -1302,6 +1306,7 @@ function measurement({ raw = false } = {}) {
       rendererStats?.valid !== false,
     rawOverflow,
     invalidReasons: [
+      ...(traceReview ? ['review-input-trace-overhead'] : []),
       ...(clipCaptureUsed ? ['review-clip-recording-overhead'] : []),
       ...(runtimeFailed ? ['runtime-failure'] : []),
       ...(clock.stats().droppedSeconds > 0 ? ['dropped-catch-up-time'] : []),
@@ -1648,6 +1653,7 @@ if (reviewBuild) {
     'reviewBuild',
     'reviewStopAt',
     'reviewRoute',
+    'reviewTrace',
     'autoplay',
     'benchmark',
     'trial',
