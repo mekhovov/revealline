@@ -107,3 +107,22 @@ blockers are tracked in [release readiness](team-duel-release-readiness-2026-10-
   verification obligation.
 - `publishing/pages-controller/metadata.test.mjs`: legacy admission and strict
   optional marker compatibility, including the unchanged hosted capacity cap.
+
+### Hosted real-source continuation
+
+At source `9ff643731`, all industrial feature checks, the candidate, preview and
+optional-practice checks passed. The [focused run](https://github.com/mekhovov/revealline/actions/runs/38796339117)
+failed in the full real-source external-distribution test at an obsolete duplicate
+64 MiB core-cache assertion. The same test had already admitted that complete
+build under its 72 MiB target. Commit `85e8f4a78` established that test target when
+the builder and service worker adopted their existing 80 MiB hard limit.
+
+The follow-up consolidates the existing 72 MiB assertion into one unconditional
+check, including the 2,000-file target, and removes the contradictory 64 MiB
+duplicate. No producer, worker, content, archive or native limit changes. All 64
+offline runtime/budget cases pass locally with no skips, including oversized
+inventory rejection before fetch or body allocation. The full external build stays
+in the focused gate and must pass on the updated source; its earlier run is not
+relabeled as successful. Local free disk was about 2 GiB, insufficient for another
+complete loose site plus its ZIP with operating headroom, so that full rerun is
+left to hosted verification.
