@@ -91,8 +91,17 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '4.096 × 4.096 km · six starting points · unscored free flight. Refined snow and scree contours connect the glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Separate review-r2 study; the earlier revision remains available. Landscape and route detail are still being refined.',
       uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Уточнені межі снігу й осипів у льодовиковій долині, на серпантині, сніговій сідловині, біля верхньої станції, віадука та греблі. Окремий пробний варіант review-r2; попередня версія залишається доступною. Деталі місцевості та маршрутів ще вдосконалюються.',
     },
+    edition: { en: 'Refined contours', uk: 'Уточнені контури' },
     bytes: 21759827,
     appearance: { terrain: 'plain', scenery: 'alpine-overlays' },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json',
       bytes: 115311,
@@ -109,6 +118,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '4.096 × 4.096 km · six starting points · unscored free flight. Explore a glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Early landscape study; scenery and route detail are still being refined.',
       uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Досліджуйте льодовикову долину, перевал із серпантином, снігову сідловину, верхню станцію, ущелину з віадуком і греблю водосховища. Ранній варіант ландшафту; деталі місцевості та маршрутів ще вдосконалюються.',
     },
+    edition: { en: 'Original study', uk: 'Початковий варіант' },
     bytes: 21066886,
     appearance: {
       terrain: 'plain',
