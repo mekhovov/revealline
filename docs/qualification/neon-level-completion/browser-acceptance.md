@@ -38,6 +38,7 @@ The normal Playground loaded the 38-map Words & Symbols pack. The original FPV s
 | Re-import → export again | Both complete downloaded JSON documents were deeply equal, including artwork, layout, settings and enemies. Canonical download: 378,933 bytes, SHA-256 `3e198d9ad2b6099d55bb0cba3322fd26d53437afd9aa0f06eeced1d60dc02eb3`. |
 | Play configuration | Embedded practice opened the Cyrillic mission with the 75% reachable-route goal and three lives. Start reported **Picture ready**. This was a launch check, not a human win. |
 | Opaque PNG cross → Preview → Apply → Export | Generated `symbol-fb394716` with 2,176 counted cells and 192 excluded cells; original reveal picture retained. |
+| Image-generated map → coordinate edit → Export → Import → Export | After the final rebase, generated a fresh cross as `symbol-31d03512`, then added a 1 × 1 wall at column 20, row 6. The count changed from 2,176 to 2,175 reachable cells with 192 excluded cells. Both complete downloaded documents were deeply equal, including the wall, three enemies, artwork and settings. 376,008 bytes, SHA-256 `7b98d9b83ddbd037e200a6b8f9a44c44ccec269d0aff9bcb450e8eee7b4a029e`. [Restored edited map](creator-image-edited-roundtrip.png). |
 | Transparent PNG, inverted white PNG, JPEG, WebP | All produced the same cross silhouette and 2,176/192 coverage counts. Apply enabled. |
 | Blank, corrupt and oversized images | Rejected with actionable messages; Apply stayed disabled and the applied level stayed unchanged. |
 | Blank text, 17-character line, four lines | Rejected; Apply disabled. |
@@ -48,7 +49,7 @@ The normal Playground loaded the 38-map Words & Symbols pack. The original FPV s
 
 [Observed image/text results](creator-browser-fixtures.json) retain the UI messages and Apply states. Fixtures were a simple 600 × 240 cross on opaque/transparent backgrounds, not replacement game artwork. Full exported documents were compared locally; embedded picture data and browser credentials are not added to the report.
 
-Still open: image-generated level → manual geometry edit → complete export/import comparison; cancellation while image decoding/import is pending; actual image-generation artwork review. Preview success alone does not qualify those cases.
+Still open: cancellation while image decoding/import is pending; actual image-generation artwork review. Preview success alone does not qualify those cases.
 
 ## Rebase and distribution checks
 
@@ -57,7 +58,7 @@ Still open: image-generated level → manual geometry edit → complete export/i
 - Production build completed: 3,488 files, distribution `ff378f6727f302bde691b83b3cf4c0e81c8227fd8fdadf5de35a83252c1fc8d4`. The build contains the ownership fix and no temporary diagnostics.
 - [Distribution audit](build-delivery.json): all 92 exact gallery play links and linked files resolve; both offline package hashes match. Mandatory core is 71,907,808 bytes. This is not an offline installation claim.
 - Changed application file passed syntax, formatting and lint checks. No local unit suite was run.
-- The final rebase changed none of the Neon pack definitions, core/replay/difficulty code, Playground, application entry point, picture ownership/pin code or mission-library browser used above. Syntax, lint and formatting checks passed again after that rebase. The source inventory, route receipts, browser observations and distribution fingerprint above describe the earlier qualification candidate; the complete production build was not repeated for the later unrelated main changes.
+- The final rebase changed none of the Neon pack definitions, core/replay/difficulty code, Playground, application entry point, picture ownership/pin code or mission-library browser used above. Syntax, lint and formatting checks passed again after that rebase. The image edit/import round trip was checked after the final rebase. Other browser observations, the source inventory, route receipts and distribution fingerprint describe the earlier qualification candidate; the complete production build was not repeated for the later unrelated main changes.
 
 ## Remaining priorities
 
@@ -65,6 +66,6 @@ Still open: image-generated level → manual geometry edit → complete export/i
 2. Complete sharing acceptance: actual clipboard/fallback, Next after a win, independent recipient profile, optional and unavailable/retired identities. This catches wrong-map links and stale ownership before sharing is called fully accepted.
 3. Inspect all 77 paintings under partial reveal and completion reward framing. Static gallery approval does not prove actor contrast or final crop quality.
 4. Complete installed offline lifecycle checks using disposable profiles: interruption, restart without the server, older-version upgrade, saved-flight resume, custom art and progress retention. Online downloads and matching hashes do not prove that lifecycle.
-5. Finish the creator's remaining edit/import and asynchronous cancellation cases. Then perform human route-variety review before making any further layout changes.
+5. Finish the creator's remaining asynchronous cancellation cases. Then perform human route-variety review before making any further layout changes.
 
 No missing image or lost-level repair was justified by the audits. Unit-test expansion, Ukrainian translation, another level batch and hosted publishing remain deferred.
