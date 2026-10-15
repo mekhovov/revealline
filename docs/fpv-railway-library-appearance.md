@@ -60,11 +60,13 @@ preparation took longer than the flight stall threshold and `pauseFlight` aborte
 the still-disarmed preparation. Explicit Restart succeeded because compilation
 was then warm. The original downloaded package remains unchanged.
 
-The host now resets elapsed flight time while regional preparation is pending.
-The existing execution-gap guard resumes immediately afterward; explicit focus
-loss and menu cancellation still call the unchanged `pauseFlight`. A production
-clock-boundary regression test failed before this fix and passes afterward,
-including both execution-clock and queued-frame stalls after preparation.
+The host resets elapsed flight time for a delayed callback only when regional
+preparation is pending and the flight is already paused/disarmed. Explicit focus
+loss and menu cancellation still call the unchanged `pauseFlight`. The final
+integration retains #1314's stricter main implementation and five production
+callback tests unchanged, superseding the earlier two clock-boundary checks.
+These cover cold preparation, both clocks, active/inconsistent states, ordinary
+flight policy and explicit cancellation; all five pass on the combined source.
 
 Native browser verification used that exact package plus only this host change.
 First Fly reached Ready to arm, paused with zero input and the expected Railway
