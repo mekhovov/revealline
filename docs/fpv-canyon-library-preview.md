@@ -50,8 +50,7 @@ and pause. A reload retained the saved row. Its first subsequent launch returned
 to the Library without a surfaced reason; another explicit saved Fly reached the
 disarmed ready state. No deliberate focus change was observed, so the interruption
 is not attributed to blur or to Canyon content. This older source composition is
-not evidence of flawless repeated launch. The PR remains draft while the coherent
-latest-main interface is checked. Main's cold-preparation and controller-readiness
+not evidence of flawless repeated launch. Its cause remains unproven. Main's cold-preparation and controller-readiness
 regressions pass all eight cases after integration; explicit pause still cancels
 preparation and never arms the player.
 
@@ -59,3 +58,20 @@ Exact-package/offline and physical-device qualification remain separate.
 The stylized, visibly coarse landscape is a bounded preview, not finished realism
 or evidence of an unlimited world. Existing module, source, residency and offline
 budgets remain unchanged.
+
+## Coherent latest-interface native review
+
+On 15 October 2026, source commit `dafcd3173` on the isolated port 9055 host
+passed a fresh Library download and first Fly without Retry: Ready at 9 m,
+zero controls and disarmed. Explicit Arm, keyboard flight and Pause worked
+(8.4 m after the bounded flight). Reload retained the saved rounded-r1 row;
+the next saved Fly again reached Ready at 9 m with zero controls, without Retry.
+No launch errors were reported. The historical 9054 interruption was not
+reproduced; this does not establish its cause. Main includes the cold-preparation
+correction. The PR can leave draft, while exact-package/offline, public release
+and physical-device gates remain open.
+
+Evidence: `canyon-latest-ui-library-flight.png` in the external fpv-temp
+review evidence directory. The host serves frozen Git blobs; an optional
+read-only launch-event logger was enabled. This is source-composition evidence,
+not immutable package acceptance or a sustained-FPS measurement.
