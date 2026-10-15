@@ -4849,3 +4849,21 @@ package/offline qualification and multi-kilometre authored maps remain open.
 Do not describe these source checks as all-device, sustained FPS or public-release
 acceptance. Heavy outputs remain external; no player data or unpublished work was
 removed.
+
+## 15 October — cached flight and parallel large-region verification
+
+Root checkpoint is based on main `da0b0108`; exact-source evidence remains pinned.
+Saved places #1334 and renderer measurement #1336 are merged. Tropical qualification
+#1337 preserves the initial graphics deadline failure and subsequent same-package
+cached-flight pass with the origin stopped. No downloaded data was lost. A separate
+localized graphics failure/retry correction is in progress. The saved-place package
+passes blocked-location rejection, retained records, authored-start fallback, cached
+restore and deliberate flight; its independent detailed receipt follows.
+
+Coastal districts #1335 remain an early appearance study with composition work still
+needed. Canyon #1338 proves a new 8.192 km terrain source and representative routes,
+not a Library-ready or final-art region. The sparse-scene delivery contract and
+authoring overview-cell correction proceed independently of the art stack queue.
+No budgets, physics, old recordings or installed revisions are changed by this
+checkpoint. All-network offline, real elapsed long flights, physical controller/device
+coverage and final public deployment acceptance remain open.
