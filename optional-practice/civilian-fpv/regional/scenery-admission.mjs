@@ -2,7 +2,11 @@ import { createRestoreContainment } from './restore-containment.mjs';
 import { createRegionMotionQuery, createRegionFlightSupportQuery } from './region-motion-query.mjs';
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
-import { validateRegionManifest, SPARSE_SCENERY_FORMAT } from './region-manifest.mjs';
+import {
+  validateRegionManifest,
+  regionalOriginReachMm,
+  SPARSE_SCENERY_FORMAT,
+} from './region-manifest.mjs';
 import {
   validateScenerySource,
   scenerySourceCell,
@@ -130,8 +134,10 @@ export async function prepareSceneryWindow(
       'Scenery exceeds region vertical bounds',
     );
     fail(
-      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <= 640000 &&
-        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <= 640000 &&
+      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <=
+        regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <=
+          regionalOriginReachMm(manifest.grid.cellSizeMm) &&
         Math.abs(originMm.y) <= 2000000,
       'Scenery window must use a nearby origin',
     );
@@ -142,7 +148,9 @@ export async function prepareSceneryWindow(
     'Duplicate scenery cells',
   );
   fail(
-    requiredChunkIds.every((id) => suppliedIds.has(id) || (sparse && chunks.get(id)?.assets.length === 0)),
+    requiredChunkIds.every(
+      (id) => suppliedIds.has(id) || (sparse && chunks.get(id)?.assets.length === 0),
+    ),
     'Required scenery missing',
   );
   // Known-empty coverage comes only from this validated, hash-bound manifest.
@@ -151,10 +159,14 @@ export async function prepareSceneryWindow(
     const chunk = chunks.get(id);
     fail(chunk, 'Unknown required scenery cell');
     if (sparse && chunk.assets.length === 0) {
-      fail(Math.abs(chunk.x * manifest.grid.cellSizeMm - originMm.x) <= 640000 &&
-        Math.abs(chunk.z * manifest.grid.cellSizeMm - originMm.z) <= 640000 &&
-        Math.abs(originMm.y) <= 2000000,
-      'Scenery window must use a nearby origin');
+      fail(
+        Math.abs(chunk.x * manifest.grid.cellSizeMm - originMm.x) <=
+          regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+          Math.abs(chunk.z * manifest.grid.cellSizeMm - originMm.z) <=
+            regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+          Math.abs(originMm.y) <= 2000000,
+        'Scenery window must use a nearby origin',
+      );
       byCell.set(`${chunk.x},${chunk.z}`, chunk);
     }
   }
@@ -279,11 +291,21 @@ export async function prepareSceneryWindow(
     return true;
   }
   return Object.freeze({
-    prepareRestoreProof: (assertCurrent) => { live(); return restoreContainment.prepare(assertCurrent); },
+    prepareRestoreProof: (assertCurrent) => {
+      live();
+      return restoreContainment.prepare(assertCurrent);
+    },
     restoreClearance(positionMm, radiusMm = 220) {
       live();
-      fail(finitePosition(positionMm) && Number.isSafeInteger(radiusMm) && radiusMm > 0 && radiusMm <= 2000, 'Invalid restore query');
-      if (!covers(positionMm, positionMm, radiusMm)) return { status: 'ambiguous', reason: 'unknown-cell' };
+      fail(
+        finitePosition(positionMm) &&
+          Number.isSafeInteger(radiusMm) &&
+          radiusMm > 0 &&
+          radiusMm <= 2000,
+        'Invalid restore query',
+      );
+      if (!covers(positionMm, positionMm, radiusMm))
+        return { status: 'ambiguous', reason: 'unknown-cell' };
       return restoreContainment.classify(local(positionMm));
     },
     restoreSnapshot: restoreContainment.snapshot,

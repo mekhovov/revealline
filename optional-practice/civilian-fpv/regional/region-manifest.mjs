@@ -1,5 +1,10 @@
-/** Supported authoring lattices; 256 m keeps 33 samples at 8 m spacing. */
-export const REGION_CELL_SIZES_MM = Object.freeze([128000, 256000]);
+/** Opt-in lattices keep 33 samples at 4, 8 or 16 m; older canonical bytes stay unchanged. */
+export const REGION_CELL_SIZES_MM = Object.freeze([128000, 256000, 512000]);
+/** Keep older origin limits; coarse natural cells still admit at most a 5-cell window. */
+export function regionalOriginReachMm(cellSizeMm) {
+  if (!REGION_CELL_SIZES_MM.includes(cellSizeMm)) throw new TypeError("Unsupported cell size");
+  return cellSizeMm === 512000 ? 1280000 : 640000;
+}
 /** Authoring-only regional data contract. Not a player format or a physics adapter. */
 export const REGION_FORMAT = "FPVRegionManifest.v1";
 // Only this distinct profile can declare known-empty scenery cells. Terrain stays v1.
@@ -96,6 +101,13 @@ export function validateRegionManifest(input) {
       integer(grid[key], 1, REGION_LIMITS.cellsPerAxis),
     ),
     "Invalid grid extent",
+  );
+  fail(
+    [[grid.minX, grid.width], [grid.minZ, grid.depth]].every(
+      ([minimum, extent]) => minimum * grid.cellSizeMm >= -100000000 &&
+        (minimum + extent) * grid.cellSizeMm <= 100000000,
+    ),
+    "Grid exceeds global position bounds",
   );
   fail(
     integer(grid.floorMm, -2000000, 2000000) &&
