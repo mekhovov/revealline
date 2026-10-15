@@ -301,7 +301,7 @@ class OriginalFixtureTests(unittest.TestCase):
                 for name, body in files.items(): archive.writestr(name, body)
                 archive.writestr('manifest.json', manifest)
             if adaptive:
-                cli = (Path(__file__).resolve().parents[2] / 'scripts/game-cli.mjs').as_uri()
+                cli = (Path(__file__).resolve().parents[2] / 'scripts/distribution-zip.mjs').as_uri()
                 code = f"import {{createZip}} from {json.dumps(cli)}; let s=''; for await (const c of process.stdin) s+=c; process.stdout.write(createZip(Object.entries(JSON.parse(s)).map(([name,hex])=>({{name,bytes:Buffer.from(hex,'hex')}})),{{compression:'adaptive'}}));"
                 inner = io.BytesIO(subprocess.check_output(['node', '--input-type=module', '-e', code],
                     input=encoded({name: body.hex() for name, body in {**files, 'manifest.json': manifest}.items()})))
