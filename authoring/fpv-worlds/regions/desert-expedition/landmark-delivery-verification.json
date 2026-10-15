@@ -1,0 +1,108 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://desert.invalid/delivery.json",
+    "bytes": 329271,
+    "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+  },
+  "files": 2062,
+  "verifiedResponses": 2063,
+  "totalBytes": 47835247,
+  "totalWithDescriptor": 48164518,
+  "newPairedManifestRevision": true,
+  "unchangedTerrainAssets": true,
+  "sixPopulatedSceneryCells": true,
+  "sourceExtentM": [
+    16384,
+    16384
+  ],
+  "sceneryRequests": 24,
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "crescent-dunes",
+      "geometryBytes": 483336,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "dry-wash",
+      "geometryBytes": 481632,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "salt-basin",
+      "geometryBytes": 485184,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "sunrise-escarpment",
+      "geometryBytes": 485616,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "mesa-corridor",
+      "geometryBytes": 476040,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "rocky-plain",
+      "geometryBytes": 491616,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "crescent-dunes",
+      "geometryBytes": 483336,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "dry-wash",
+      "geometryBytes": 481632,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "salt-basin",
+      "geometryBytes": 485184,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "sunrise-escarpment",
+      "geometryBytes": 485616,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "mesa-corridor",
+      "geometryBytes": 476040,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "rocky-plain",
+      "geometryBytes": 491616,
+      "ticks": 200,
+      "contacts": 0
+    }
+  ],
+  "nativeStorageVerified": false,
+  "playerAdmission": false
+}
