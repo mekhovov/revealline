@@ -55,18 +55,31 @@ const canyonDistrictViews = [
   ['Split Ravine', [180, 34, 590], [235, 95, 550], [160, 24, 630]],
   ['Sunset Shelf', [570, 125, 620], [720, 200, 760], [570, 112, 620]],
 ];
+const railwayExpanseViews = [
+  ['Freight district', [640, 75, 640], [820, 170, 460], [640, 72, 640]],
+  ['Freight hall approach', [588, 72, 574], [588, 69, 558], [588, 70, 650]],
+  ['River viaduct', [2048, 40, 2048], [1920, 42, 1970], [2070, 46, 2080]],
+  ['Quarry conveyor', [3456, 75, 600], [3456, 72, 548], [3456, 80, 670]],
+  ['Station canopy', [640, 71, 3200], [640, 68, 3120], [640, 69, 3240]],
+  ['Foundry yard', [2048, 76, 3200], [1960, 78, 3090], [2070, 80, 3240]],
+  ['Timber sidings', [3456, 72, 3200], [3427, 69, 3110], [3427, 70, 3280]],
+];
 const coasterViews = [
-  ["Arrival gardens", [384, 14, 384], [285, 50, 485], [384, 13, 384]],
-  ["Loop meadow", [1280, 14, 384], [1330, 35, 485], [1408, 18, 448]],
-  ["Ridge station", [1664, 14, 640], [1565, 55, 745], [1664, 18, 640]],
-  ["Service courts", [1408, 14, 1408], [1300, 42, 1500], [1408, 15, 1408]],
-  ["Woodland promenade", [640, 14, 1664], [545, 35, 1760], [640, 13, 1664]],
-  ["River gardens", [384, 14, 1152], [285, 40, 1250], [384, 13, 1152]],
+  ['Arrival gardens', [384, 14, 384], [285, 50, 485], [384, 13, 384]],
+  ['Loop meadow', [1280, 14, 384], [1330, 35, 485], [1408, 18, 448]],
+  ['Ridge station', [1664, 14, 640], [1565, 55, 745], [1664, 18, 640]],
+  ['Service courts', [1408, 14, 1408], [1300, 42, 1500], [1408, 15, 1408]],
+  ['Woodland promenade', [640, 14, 1664], [545, 35, 1760], [640, 13, 1664]],
+  ['River gardens', [384, 14, 1152], [285, 40, 1250], [384, 13, 1152]],
 ];
 const views =
-  { "coaster-gardens": coasterViews, canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews }[
-    new URLSearchParams(location.search).get('views')
-  ] ?? urbanViews;
+  {
+    'coaster-gardens': coasterViews,
+    canyon: canyonViews,
+    'canyon-districts': canyonDistrictViews,
+    railway: railwayViews,
+    'railway-expanse': railwayExpanseViews,
+  }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
   closed = false,
@@ -175,8 +188,10 @@ document.querySelector('form').addEventListener('submit', async (event) => {
         })
       : createVerifiedSceneryWindow(manifest, scenerySource);
     controls(false);
-    const requestedView = new URLSearchParams(location.search).get("view");
-    const selected = views.find((row) => row[0].toLowerCase().replaceAll(" ", "-") === requestedView);
+    const requestedView = new URLSearchParams(location.search).get('view');
+    const selected = views.find(
+      (row) => row[0].toLowerCase().replaceAll(' ', '-') === requestedView,
+    );
     await view(selected ?? views[0]);
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;

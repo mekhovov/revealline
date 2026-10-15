@@ -1,6 +1,7 @@
 /** Original, bounded authoring surface study. Colour/roughness only; never moves vertices. */
 import * as THREE from '../vendor/three.module.js';
 import { createUrbanGroundSurface, createRailwayGroundSurface } from './urban-ground-surface.mjs';
+import { createRailwayExpanseGround } from './railway-expanse-ground.mjs';
 import { createHillsideGroundSurface } from './hillside-ground-surface.mjs';
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
@@ -11,6 +12,7 @@ export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
       'urban',
       'railway',
       'tropical',
+      'railway-expanse',
       'tropical-settlement',
       'desert',
       'hillside-town',
@@ -56,6 +58,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
     });
   if (style === 'desert') return createDesertGroundSurface({ quality, originMm });
   if (style === 'railway') return createRailwayGroundSurface({ quality, originMm });
+  if (style === 'railway-expanse') return createRailwayExpanseGround({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
     color: style === 'plain' ? 0x687647 : 0xffffff,
     roughness: 1,
