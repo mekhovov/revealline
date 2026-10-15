@@ -22,6 +22,26 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    id: 'canyon-expanse-study',
+    title: {
+      en: 'Canyon Expanse — broad relief study',
+      uk: 'Простори каньйону — дослідження рельєфу',
+    },
+    description: {
+      en: '8.192 × 8.192 km · six starting areas · unscored free flight. Broad terrain-only relief with basins, mesas and ridges; an early landscape study with sparse detail.',
+      uk: '8,192 × 8,192 км · шість місць старту · вільний політ без заліку. Відкритий рельєф з улоговинами, плато та хребтами; раннє дослідження ландшафту з невеликою кількістю деталей.',
+    },
+    bytes: 47975524,
+    appearance: {
+      terrain: 'canyon',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json',
+      bytes: 329372,
+      sha256: 'd2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003',
+    },
+  },
+  {
     id: 'tropical-coastal-study',
     title: {
       en: 'Tropical coast — bounded flight study',
