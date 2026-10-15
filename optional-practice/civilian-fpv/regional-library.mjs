@@ -1,5 +1,6 @@
 import { openRegionalLibrary } from './regional-delivery.mjs';
 import { validateTerrainSurface } from './regional/terrain-surface.mjs';
+import { validateScenerySurface } from './regional/scenery-surface.mjs';
 import { REGION_CELL_SIZES_MM } from './regional/region-manifest.mjs';
 
 // This immutable source needs the separately qualified 512 m natural-cell capability.
@@ -78,6 +79,45 @@ export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
 
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Refined snow and scree contours connect the glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Separate review-r2 study; the earlier revision remains available. Landscape and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Уточнені межі снігу й осипів у льодовиковій долині, на серпантині, сніговій сідловині, біля верхньої станції, віадука та греблі. Окремий пробний варіант review-r2; попередня версія залишається доступною. Деталі місцевості та маршрутів ще вдосконалюються.',
+    },
+    bytes: 21759827,
+    appearance: { terrain: 'plain', scenery: 'alpine-overlays' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json',
+      bytes: 115311,
+      sha256: 'a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Explore a glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Early landscape study; scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Досліджуйте льодовикову долину, перевал із серпантином, снігову сідловину, верхню станцію, ущелину з віадуком і греблю водосховища. Ранній варіант ландшафту; деталі місцевості та маршрутів ще вдосконалюються.',
+    },
+    bytes: 21066886,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json',
+      bytes: 114992,
+      sha256: '8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a',
+    },
+  },
   CANAL_CITY_LIBRARY_PIN,
   ...(REGION_CELL_SIZES_MM.includes(512000)
     ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
@@ -344,6 +384,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
+  const sceneryStyle = validateScenerySurface(approved?.appearance?.scenery ?? 'plain');
   const authoredStartHeadings = {};
   for (const [id, heading] of Object.entries(approved?.startHeadings ?? {})) {
     if (
@@ -360,6 +401,15 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     // Re-resolving an unknown or older pin clears any previous revision's hints.
     authoredStartHeadings: Object.freeze(authoredStartHeadings),
     source: { ...configuration.source, surfaceStyle: terrain },
+    ...(configuration.scenery &&
+    (sceneryStyle !== 'plain' || configuration.scenery.source?.surfaceStyle)
+      ? {
+          scenery: {
+            ...configuration.scenery,
+            source: { ...configuration.scenery.source, surfaceStyle: sceneryStyle },
+          },
+        }
+      : {}),
   };
 }
 
@@ -369,6 +419,10 @@ export function regionalPresentationOptions(configuration, quality) {
   if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
   const surface = validateTerrainSurface(
     configuration.source?.surfaceStyle ?? 'plain',
+    tiers[quality],
+  );
+  const sceneryStyle = validateScenerySurface(
+    configuration.scenery?.source?.surfaceStyle ?? 'plain',
     tiers[quality],
   );
   const spawnId = configuration.spawnId ?? configuration.manifest?.spawns?.[0]?.id;
@@ -385,6 +439,18 @@ export function regionalPresentationOptions(configuration, quality) {
       surfaceStyle: surface.style,
       surfaceQuality: surface.quality,
     },
+    ...(configuration.scenery && sceneryStyle !== 'plain'
+      ? {
+          scenery: {
+            ...configuration.scenery,
+            source: {
+              ...configuration.scenery.source,
+              surfaceStyle: sceneryStyle,
+              surfaceQuality: tiers[quality],
+            },
+          },
+        }
+      : {}),
   };
 }
 
