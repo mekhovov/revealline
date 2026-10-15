@@ -6,6 +6,20 @@ mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
 
+### Latest main-game directory continuation
+
+The [full-source-shell journey report](flight-practice-directory-journey-2026-10-15.md)
+records six passing EN/UK native Settings → Help & Extras → Flight practice →
+app-start-screen and guide/return journeys, using unchanged admitted package
+bytes. All cards, real previews, actual download sizes, one-Play/no-auto-arm and
+locale behavior are checked in the full source shell. The initial wrong-route
+attempt stays preserved. Both 352 practice and 68 observer tests pass.
+
+This is not a complete production-build or public-host journey: missing declared
+documentation inputs still block full build collection. Positive custom-appearance
+handoff, FPV beginner-exercise completion and the other named acceptance gates
+remain open. Hosting stays deferred and no review approval is fabricated.
+
 ### Latest localized player-flow continuation
 
 The [player-flow report](flight-practice-player-flow-2026-10-15.md) integrates
