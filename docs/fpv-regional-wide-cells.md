@@ -53,8 +53,24 @@ collision queries and flight stepping:
   the already-merged finite runtime-position contract; authored positions and
   origins remain integers. Normal fixtures now include their required cell size.
 
-These checks do not establish GPU appearance, device FPS, sustained real-time
-flight, a 4/8/16 km authored region, or qualification of a new player package.
-Native wide-cell camera/material review and an actual bounded large-region
-candidate remain the next acceptance steps. Current 128 m art and Library work
-can publish independently.
+## Native player evidence
+
+The Codex in-app browser, 1280 × 720 viewport, loaded the normal player on a
+read-only local host pinned to `55bd243481dd152b28eb0d479742c2928b65786d`.
+The optional verifier export supplied its six-cell negative-coordinate fixture;
+it is intentionally plain diagnostic geometry, not an authored world.
+
+- First launch was Ready to arm at 10 m with zero input and drift.
+- FPV → Chase → Overview → FPV changed view without arming. Overview framed
+  the loaded 512 × 256 m window, including the far-half roof/wall fixtures.
+- Explicit Arm, held keyboard throttle/pitch, then Pause produced a paused
+  snapshot at 1.8 m, +2.7 m/s vertical, 0.6 m/s drift and 63% throttle.
+- No browser warning/error messages were captured during this journey.
+
+The optional output argument to `verify-wide-cells.mjs` writes a fresh directory
+for repeatable native review and refuses to overwrite an existing candidate.
+
+These checks do not establish device FPS, sustained real-time flight, a
+4/8/16 km authored region, final material quality, or qualification of a new
+player package. An actual bounded large-region candidate and integrated release
+qualification remain. Current 128 m art and Library work can publish independently.

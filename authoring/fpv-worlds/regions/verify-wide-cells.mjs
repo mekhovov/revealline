@@ -1,6 +1,8 @@
 /** Real source/geometry/query/flight composition checks. No mocked collision or physics. */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import {
   compileTerrainCell,
   TERRAIN_FORMAT,
@@ -276,4 +278,20 @@ try {
   );
 } finally {
   await flight.dispose();
+}
+
+// Optional fresh source directory for native renderer/host review. Never overwrite a candidate.
+if (process.argv[2]) {
+  const root = resolve(process.argv[2]);
+  await mkdir(root);
+  for (const [kind, layer] of Object.entries(f)) {
+    const directory = resolve(root, kind);
+    await mkdir(directory);
+    await writeFile(resolve(directory, 'region.json'), JSON.stringify(layer.manifest));
+    for (const asset of layer.manifest.assets) {
+      const response = await layer.source.fetchImpl(new URL(asset.path, layer.source.baseURL), {});
+      await writeFile(resolve(directory, asset.path), new Uint8Array(await response.arrayBuffer()));
+    }
+  }
+  console.log(`Native review source exported to ${root}`);
 }
