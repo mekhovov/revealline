@@ -53,9 +53,16 @@ shared renderer. The follow-up keeps the callback dispatcher in the existing
 shared renderer instead, without adding a module or raising a package budget.
 The exact remote repair `71ef72fa97` passes optional-practice verification.
 
-Normal Library download succeeds and the scene can be deliberately armed after
-Restart, but initial Fly currently cancels preparation. That host-lifecycle issue
-remains an admission gate; this receipt does not claim the normal flow is fixed.
+The initial Library Fly cancellation observed during the original fixture review
+was repaired separately in #1306/#1314. Main `63f74dd38a4b51cb0df8fa5ddb0fd5cb5e11317d`
+now includes that disarmed-preparation guard and Railway Library integration.
+It was merged into this change at `02273ea7039a22396700d607867e3460831b240c`.
+On that combined tree, all 15 material transitions / three profiles, all five
+production preparation-clock tests, and the exact Railway Library preparation
+at Low/Balanced/High plus unknown-pin fallback pass. Every Library case retains
+geometry digest `3f9571a30dab78cd4a8ab9d016aea7f589e6835a8fa61dfa3d433e9ad6954e4b`,
+845,688 geometry bytes and 2,446,676 texture bytes. These are current combined-source
+checks, not a claim that refreshed CI or final package qualification has passed.
 The former 9026 server had a stale shared-game fallback and is not evidence for
 this production-renderer change. The coherent 9027 snapshot is the fixture source.
 Packaged/offline and device qualification remain separate.
