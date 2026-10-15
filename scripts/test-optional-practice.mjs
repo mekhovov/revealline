@@ -88,7 +88,19 @@ test('release-qualified practice retains the full shared menu stylesheet closure
     engineTree: 'b'.repeat(40),
     basePath: '/revealline/',
   });
-  assert.equal(built.entries.length, 94);
+  assert.equal(built.entries.length, 93);
+  const audio = built.entries.find(
+    ({ name }) => name === 'optional-practice/civilian-flight/audio.mjs',
+  );
+  assert.match(audio.bytes.toString(), /sim-presentation\.mjs/);
+  assert.ok(
+    built.entries.some(
+      ({ name }) => name === 'optional-practice/civilian-fpv/sim-presentation.mjs',
+    ),
+  );
+  assert.ok(
+    !built.entries.some(({ name }) => name === 'optional-practice/civilian-fpv/world-audio.mjs'),
+  );
   assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 96);
   for (const stylesheet of [
     'mode-play-shell.css',
