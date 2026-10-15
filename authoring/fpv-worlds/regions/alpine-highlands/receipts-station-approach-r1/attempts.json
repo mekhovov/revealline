@@ -1,0 +1,63 @@
+{
+  "format": "FPVAlpineStationApproachAttempts.v1",
+  "oldR5Preserved": true,
+  "nativeAccepted": false,
+  "playerReady": false,
+  "attempts": [
+    {
+      "candidate": "1",
+      "state": "Preparation rejected by strict material contract",
+      "cause": "New OPAQUE bindings omitted explicit alphaCutoff0. Added required field; gate unchanged.",
+      "accepted": false,
+      "raw": {
+        "name": "alpine-station-approach-preparation-20261015.stderr",
+        "bytes": 1013,
+        "sha256": "e25b8423fd7822bacca355c6e3e887d2dd54fa5e16eb4cc02acf42b6bf6679fd"
+      },
+      "preserved": "Original partial external output retained."
+    },
+    {
+      "candidate": "2",
+      "state": "Preparation complete; superseded after source attachment inspection",
+      "sourceBytes": 22698933,
+      "cause": "Upper knees stopped approximately0.0404m below the existing deck underside; changed endpoints to embed at599.2m and added independent attachment assertion.",
+      "accepted": false,
+      "formalVerification": "Explicitly stopped as superseded, exit143; no complete pass/report.",
+      "raw": {
+        "name": "alpine-station-approach-preparation-candidate2-20261015.json",
+        "bytes": 17458,
+        "sha256": "420e11db5638bea1095aed84de48c72544e25d468e8d90b59d4b4b5c86d785f9"
+      },
+      "preserved": "Complete candidate2 source and interrupted verification output retained."
+    },
+    {
+      "candidate": "3",
+      "state": "Preparation complete; strict deterministic source comparison failed",
+      "sourceBytes": 22698929,
+      "cause": "Computed normal -0 differed from canonical JSON +0. Generator now canonicalizes zero before source/GLB compilation; deterministic gate retained unchanged.",
+      "accepted": false,
+      "raw": {
+        "name": "alpine-station-approach-verification-candidate3-20261015.stderr",
+        "bytes": 47404,
+        "sha256": "493e86b1120531bfd9a7911a34b4f5a2ab6eed32126832377fdb8133cc0563fa"
+      },
+      "preserved": "Complete candidate3 source, preparation receipt and full negative stderr retained."
+    },
+    {
+      "candidate": "4",
+      "state": "Fresh preparation in progress; corrected generator preflight passed",
+      "completedPreflight": [
+        "Two cells validate and compile with zero GLB errors/warnings.",
+        "Raw source to JSON to canonical GLB roundtrip exact.",
+        "90 foundation contact samples.",
+        "Eight upper knee/deck attachments."
+      ],
+      "remaining": [
+        "Complete fresh preparation and full source/collision/route/tier/disposal qualification.",
+        "Matched native source review.",
+        "Distinct immutable/player gates if source is accepted."
+      ],
+      "accepted": false
+    }
+  ]
+}

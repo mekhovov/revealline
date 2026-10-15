@@ -140,7 +140,7 @@ export function stationApproachCell(source) {
       );
       group.normals.push(
         ...['getX', 'getY', 'getZ'].map(
-          (get) => Math.round(geometry.attributes.normal[get](i) * 1e6) / 1e6,
+          (get) => Math.round(geometry.attributes.normal[get](i) * 1e6) / 1e6 || 0,
         ),
       );
     }
