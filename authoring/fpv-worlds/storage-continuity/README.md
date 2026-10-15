@@ -3,7 +3,9 @@
 This authoring-only observer helps establish whether exact retained content survives
 an independently observed offline/restart journey. It does not implement or simulate
 that journey. It imports no simulator modules, creates no renderer and never creates,
-upgrades, repairs, activates, deletes or writes a player database. Use a dedicated
+upgrades, repairs, activates, deletes or writes a player database. Its shared appearance
+bootstrap is a read-only first-paint seed; this observer does not acquire a theme-host
+lease. Use a dedicated
 review origin/profile, leaving the player's normal storage untouched.
 
 ## What the snapshot proves
