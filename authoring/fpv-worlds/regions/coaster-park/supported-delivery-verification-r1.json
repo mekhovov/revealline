@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "sourceRecipe": "defcdc979165f4626eedbaec12404c03e1f00076",
+  "pin": {
+    "url": "https://coaster-delivery.invalid/delivery.json",
+    "bytes": 32824,
+    "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a"
+  },
+  "payloadFiles": 202,
+  "payloadBytes": 34181566,
+  "totalWithDescriptorBytes": 34214390,
+  "verifiedResponses": 203,
+  "productionSessionCases": [
+    {
+      "mode": "self-level",
+      "spawnId": "arrival-gardens",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1376440,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "loop-meadow",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1248712,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "ridge-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1337720,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "service-courts",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 870840,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "woodland-promenade",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1353208,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "river-gardens",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1178808,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "arrival-gardens",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1376440,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "loop-meadow",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1248712,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "ridge-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1337720,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "service-courts",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 870840,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "woodland-promenade",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1353208,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "river-gardens",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 1178808,
+      "textureBytes": 2446676
+    }
+  ],
+  "disposalZero": true,
+  "playerAdmission": false,
+  "limitations": [
+    "Filesystem-backed HTTP response fixture, not internet throughput",
+    "No native rendering, IndexedDB installation, Library selection or public admission",
+    "Short actual shared-flight commands, not whole-region endurance"
+  ]
+}
