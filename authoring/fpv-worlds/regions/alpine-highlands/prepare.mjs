@@ -25,7 +25,10 @@ import {
   landmarks,
   solidProbes,
 } from "./design.mjs";
+import { alpineSurfaceOverlays } from "./surface-overlays.mjs";
 const output = process.argv[2];
+assert(!process.argv[3] || process.argv[3] === "contours", "Unknown authoring variant");
+const contours = process.argv[3] === "contours";
 assert(output, "Provide a new external output directory");
 const json = (v) => Buffer.from(JSON.stringify(v) + "\n"),
   sha = (b) => createHash("sha256").update(b).digest("hex");
@@ -156,36 +159,10 @@ for (const p of pieces) {
 // Surface colours follow exact canonical terrain triangles. They are explicitly visual-only,
 // 3 mm above the collision lattice, never an invented support or a hidden obstacle.
 let overlayTriangles = 0;
-for (const cell of terrain)
-  for (let z = 0; z < 32; z++)
-    for (let x = 0; x < 32; x++) {
-      const worldX = cell.x * CELL_M + x * 8,
-        worldZ = cell.z * CELL_M + z * 8,
-        h = heightMm(worldX + 4, worldZ + 4) / 1000;
-      const snow = h > 480,
-        scree = h > 330,
-        meltwater =
-          Math.abs(worldX - 610 - 18 * Math.sin(worldZ / 70)) < 14 &&
-          worldZ > 420 &&
-          worldZ < 1000;
-      const road = Math.abs(worldX - 1700) < 94 && worldZ > 625 && worldZ < 735;
-      if (!snow && !scree && !meltwater && !road) continue;
-      const color = snow
-        ? [0.9, 0.94, 0.96, 1]
-        : scree
-          ? [0.48, 0.51, 0.52, 1]
-          : meltwater
-            ? [0.12, 0.42, 0.48, 1]
-            : [0.29, 0.29, 0.27, 1];
-      const p = (dx, dz) => [
-        worldX + dx,
-        heightMm(worldX + dx, worldZ + dz) / 1000 + 0.003,
-        worldZ + dz,
-      ];
-      addTriangle([p(0, 0), p(0, 8), p(8, 0)], color, "visual-only");
-      addTriangle([p(8, 0), p(0, 8), p(8, 8)], color, "visual-only");
-      overlayTriangles += 2;
-    }
+for (const { points, color } of alpineSurfaceOverlays({ contours })) {
+  addTriangle(points, color, "visual-only");
+  overlayTriangles++;
+}
 // Explicit visual water plane above the reservoir floor; aircraft collision remains terrain-only.
 for (const tri of [
   [
@@ -330,7 +307,7 @@ for (const [layer, sources, compile] of [
     format:
       layer === "terrain" ? "FPVRegionManifest.v1" : "FPVSceneryManifest.v1",
     id: "alpine-highlands-study",
-    revision: "relief-r1",
+    revision: contours ? "relief-r2-contours" : "relief-r1",
     title: {
       en: "Alpine Highlands — connected mountain study",
       uk: "Альпійське високогір’я — пробний гірський світ",
