@@ -28,6 +28,12 @@ STORE (method 0); ties use STORE. Compression parameters are level 9, window 15,
 memory level 8, and strategy 0. Reproducibility requires the same Node/zlib runtime;
 no cross-version compressed-byte guarantee is made.
 
+The shared production writer and path guard live in
+[`scripts/distribution-zip.mjs`](../scripts/distribution-zip.mjs), with Node
+built-ins only. The CLI retains its existing exports. Original-artifact utility
+tests use this same writer in their bounded sparse checkouts; they do not import
+the full game compiler or require its application dependencies.
+
 `maxExpandedBytes` counts every original payload byte **plus the exact manifest
 bytes**. The builder enforces it before replacing an existing output. The trusted
 inspector independently enforces the same bound and refuses a source ceiling above
