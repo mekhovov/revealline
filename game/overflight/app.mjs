@@ -2392,18 +2392,21 @@ listen($('record-review-clip'), 'click', () => {
     $('render-host').focus({ preventScroll: true });
   }
 });
-listen($('download-metrics'), 'click', () => {
+function downloadMeasurements({ current = false } = {}) {
   pause({ menu: false });
+  // A finished run must export its final state even after an earlier frozen
+  // inspector download. The separate inspector control retains that snapshot.
+  const json = current
+    ? JSON.stringify(measurement({ raw: true }))
+    : (rawPages?.json ?? JSON.stringify(completedMeasurement ?? measurement({ raw: true })));
   downloadBlob(
-    new Blob(
-      [rawPages?.json ?? JSON.stringify(completedMeasurement ?? measurement({ raw: true }))],
-      {
-        type: 'application/json',
-      },
-    ),
+    new Blob([json], { type: 'application/json' }),
     `overflight-${fixture ?? 'sortie'}-${seed}.json`,
   );
-});
+}
+listen($('download-metrics'), 'click', () => downloadMeasurements());
+listen($('result-download-metrics'), 'click', () => downloadMeasurements({ current: true }));
+
 function acknowledge(type, values = {}) {
   if (studio)
     win.parent.postMessage(
@@ -2502,6 +2505,7 @@ listen(win, 'pageshow', (event) => {
   }
 });
 $('overflight-diagnostics').hidden = !diagnostics;
+$('result-download-metrics').hidden = !diagnostics;
 $('review-clip-controls').hidden = !reviewBuild;
 $('overflight-shell').hidden = false;
 refreshCopy();
