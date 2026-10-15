@@ -32,10 +32,29 @@ Source #1326 independently verified 24 actual commanded routes, 123,566 ticks,
 formations. Native source review accepted the five new district views and resource
 release. These are bounded source/flight observations, not sustained device FPS.
 
-## Remaining admission
+## Native source review
 
-Native normal-player download, both revisions installed together, safe first Fly,
-starting-point selection, deliberate flight/pause and persistence are pending.
+On 15 October 2026, the actual browser at local port 9062 reviewed frozen source
+`f3f404abd9d016ecd4beb6c0db5005493a9a0eb6`. Downloading `districts-r1` and the
+preserved `rounded-r1` left both Library rows saved. The first new-region Fly
+reached Ready at 9 m with zero controls and no retry. The menu offered all six
+authored starts. Selecting Shelf and restarting reached Ready at 114.5 m with
+zero controls; explicit Arm, keyboard flight and Pause produced a paused flight
+at 113.9 m, +3.2 m/s vertical speed, 0.7 m/s drift and 64% throttle.
+
+Reload retained both saved revisions. New-region Fly again reached Ready at 9 m
+with zero controls and no retry. No browser errors or warnings were observed.
+The native screenshot is retained externally as
+`fpv-temp/canyon-districts-library-shelf-flight-20261015.png`.
+
+The published branch rebased onto preserved parent #1320 at
+`a8ba0ad4e981d7a8617301862121ca64463e03fa`; Library and host UI were unchanged
+by that parent update. Both new and original production-session appearance
+suites were rerun and passed on rebased source `232b9b0107459ac996396fbb54ff29476edce30f`.
+The native receipt remains attributed to its exact earlier source composition.
+
+## Remaining qualification
+
 Start-point label localization is a separate host UI increment; source IDs remain
 unchanged. Exact combined player-package/offline and physical-device qualification
 remain separate. The region is a stylized practice preview, not final realism or
