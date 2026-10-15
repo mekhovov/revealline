@@ -24,6 +24,7 @@ const config = {
   inventoryOnly: false,
   limit: Infinity,
   packs: [],
+  levels: [],
   edition: null,
   journey: false,
   report: '.cache/demo-availability.json',
@@ -36,6 +37,7 @@ for (let i = 0; i < args.length; i++) {
   else if (arg === '--without-worker') config.workers = false;
   else if (arg === '--inventory-only') config.inventoryOnly = true;
   else if (arg === '--pack' && args[i + 1]) config.packs.push(args[++i]);
+  else if (arg === '--level' && args[i + 1]) config.levels.push(args[++i]);
   else if (arg === '--report' && args[i + 1]) config.report = args[++i];
   else if (arg === '--limit' && args[i + 1]) config.limit = Number(args[++i]);
   else if (arg === '--policy' && args[i + 1]) config.policies = [args[++i]];
@@ -43,6 +45,8 @@ for (let i = 0; i < args.length; i++) {
 }
 if (!config.policies.every((p) => ['immediate', 'grid-center'].includes(p)) || !(config.limit > 0))
   throw new Error('Invalid audit policy or limit.');
+if (!config.levels.every((id) => /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(id)))
+  throw new Error('Invalid audit level ID.');
 if (config.edition && (config.journey || config.packs.length))
   throw new Error('An edition audit cannot include other communities or packs.');
 const inputFiles = new Set();
@@ -175,10 +179,11 @@ class AuditWorker {
     this.worker.postMessage(data);
   }
   terminate() {
-    if (!workers.delete(this)) return;
-    const pending = this.worker.terminate();
+    if (!workers.delete(this)) return this.shutdown;
+    const pending = (this.shutdown = this.worker.terminate());
     shutdowns.add(pending);
     pending.finally(() => shutdowns.delete(pending));
+    return pending;
   }
 }
 const fetchAsset = async (url, { signal } = {}) => {
@@ -213,22 +218,31 @@ const save = async () => {
 try {
   for (const turnPolicy of config.policies) {
     const discoveryStart = performance.now();
-    const sources = await loadDemoSources({
+    const registered = await loadDemoSources({
       entries,
       library: { list: async () => [] },
       turnPolicy,
       fetch: fetchAsset,
       WorkerClass: config.workers ? AuditWorker : null,
     });
+    const sources = config.levels.length
+      ? registered.filter((source) => config.levels.includes(source.levelId))
+      : registered;
+    for (const id of config.levels)
+      if (!sources.some((source) => source.levelId === id))
+        throw new Error(`Requested audit level is not registered: ${id}`);
     report.discovery.push({
       turnPolicy,
       elapsedMs: Math.round(performance.now() - discoveryStart),
       sources: sources.length,
+      registeredSources: registered.length,
     });
     for (const entry of entries.filter(
       (entry) => !entry.difficulty || entry.difficulty === 'standard',
     ))
-      for (const level of entry.campaign.levels)
+      for (const level of entry.campaign.levels.filter(
+        (level) => !config.levels.length || config.levels.includes(level.id),
+      ))
         report.levelCoverage.push({
           executionKey: entry.executionKey,
           levelId: level.id,

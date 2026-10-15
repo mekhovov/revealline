@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
+import { buildLauncherNavigationFiles } from './offline-launcher.mjs';
 import { readFile } from 'node:fs/promises';
 import {
   compactContentRegistry,
@@ -132,4 +134,20 @@ test('the bundled catalog decoder is pinned, synchronous and isolated from host 
   assert.equal(scope.module.exports, 'unchanged');
   assert.equal(scope.LZString, undefined);
   assert.match(bundle, /Copyright \(c\) 2013 pieroxy/);
+});
+
+// The real validator belongs to the frozen launcher. Its standalone fallback
+// must not introduce a translation-prefix token into that generated catalogue.
+test('launcher includes complete JSON validation messages without treating prefixes as keys', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const files = await buildLauncherNavigationFiles(root);
+  const scope = vm.createContext({});
+  vm.runInContext(files.get('i18n/catalogs.mjs').toString(), scope);
+  const canonical = await readCatalogs();
+  for (const language of ['en', 'uk']) {
+    const errors = scope.RevealLineTranslations[language].errors;
+    assert.equal(Object.hasOwn(errors, 'dataJson.'), false);
+    for (const [key, value] of Object.entries(canonical[language].errors))
+      if (key.startsWith('dataJson.')) assert.equal(errors[key], value, language + '/' + key);
+  }
 });

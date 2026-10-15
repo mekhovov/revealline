@@ -21,8 +21,17 @@ function workerTransport(WorkerClass, watchdogMs) {
     type: 'module',
   });
   let serial = 0,
-    stopped = false;
+    stopped = false,
+    terminated = false,
+    termination;
   const waiting = new Map();
+  function retire() {
+    if (!terminated) {
+      terminated = true;
+      termination = worker.terminate();
+    }
+    return termination;
+  }
   function finish(id, error, result) {
     const ticket = waiting.get(id);
     if (!ticket) return;
@@ -49,7 +58,7 @@ function workerTransport(WorkerClass, watchdogMs) {
         const timer = setTimeout(() => {
           finish(id, new Error('Autoplay planning deadline reached.'));
           // A stuck search must not retain a CPU owner after the watchdog fires.
-          worker.terminate();
+          retire();
           stopped = true;
         }, watchdogMs);
         waiting.set(id, { resolve, reject, timer });
@@ -65,7 +74,7 @@ function workerTransport(WorkerClass, watchdogMs) {
       worker.removeEventListener('message', message);
       worker.removeEventListener('error', error);
       for (const id of waiting.keys()) finish(id, abortError());
-      worker.terminate();
+      return retire();
     },
   };
 }
@@ -200,7 +209,7 @@ export async function prepareBotPlayer(
     checkAbort(signal);
     if (disposed) throw abortError();
     const version = ++generation;
-    transport?.dispose();
+    const retirement = transport?.dispose();
     phase = 'paused';
     ready = false;
     failure = null;
@@ -216,8 +225,13 @@ export async function prepareBotPlayer(
     decision = 0;
     state = createRun(sourceLevel, sourceOptions);
     recorder = createRecorder(sourceLevel, sourceOptions, 'revealline-live-demo.v1');
-    transport = workerTransport(WorkerClass, watchdogMs);
     try {
+      // Native browser termination is synchronous. Adapters with a retirement
+      // acknowledgement must finish before reset starts another CPU owner.
+      if (retirement && typeof retirement.then === 'function') await retirement;
+      checkAbort(signal);
+      if (disposed || generation !== version) throw abortError();
+      transport = workerTransport(WorkerClass, watchdogMs);
       const result = await transport.request(state, plannerSeed, decision);
       checkAbort(signal);
       if (disposed || generation !== version) throw abortError();
