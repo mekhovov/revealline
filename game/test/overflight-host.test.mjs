@@ -31,7 +31,7 @@ test('review provenance and pilot inputs share the selected route without changi
       const original = overflightReviewControls({ mode, build });
       assert.deepEqual(original, { route: 'tight', pilotArgument: 'tight' });
       assert.deepEqual(overflightReviewControls({ mode, build, route: 'unknown' }), original);
-      for (const route of ['tight', 'figure-eight']) {
+      for (const route of ['tight', 'figure-eight', 'lure-and-return']) {
         const controls = overflightReviewControls({ mode, build, route });
         assert.deepEqual(controls, { route, pilotArgument: route });
         const calls = [];
@@ -82,7 +82,7 @@ test('native entry forwards an explicit review route through both wrappers and r
   const identity = ast.body.find(
     (node) => node.type === 'FunctionDeclaration' && node.id.name === 'reviewIdentity',
   );
-  for (const route of ['tight', 'figure-eight']) {
+  for (const route of ['tight', 'figure-eight', 'lure-and-return']) {
     const calls = [];
     const nativePilot = runInNewContext(`(${source.slice(base.start, base.end)})`, {
       pilot: (run, received) => {
