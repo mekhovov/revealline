@@ -99,7 +99,8 @@ const views =
 let window = null,
   busy = false,
   closed = false,
-  controller = null;
+  controller = null,
+  includesTerrain = false;
 const mm = (p) => ({
   x: Math.round(p[0] * 1000),
   y: Math.round(p[1] * 1000),
@@ -135,7 +136,7 @@ async function view(v) {
     window.group.traverse((object) => {
       if (object.isMesh) meshCount++;
     });
-    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${meshCount} rendered meshes · ${result.geometryBytes} geometry bytes · no flight admission`;
+    status.textContent = `${v[0]} · ${includesTerrain ? 'terrain + scenery' : 'scenery only'} · ${result.provenance.chunks.length} verified cells · ${meshCount} rendered meshes · ${result.geometryBytes} geometry bytes · no flight admission`;
     draw();
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
@@ -182,7 +183,8 @@ document.querySelector('form').addEventListener('submit', async (event) => {
   controller = new AbortController();
   try {
     const url = new URL(input.value, location.href);
-    const companion = new URLSearchParams(location.search).get('companion');
+    const parameters = new URLSearchParams(location.search);
+    const companion = parameters.get('companion') || parameters.get('terrain');
     const companionURL = companion ? new URL(companion, location.href) : null;
     const [manifest, terrain] = await Promise.all([
       loadManifest(url, controller.signal),
@@ -204,6 +206,7 @@ document.querySelector('form').addEventListener('submit', async (event) => {
           scenery: { manifest, source: scenerySource },
         })
       : createVerifiedSceneryWindow(manifest, scenerySource);
+    includesTerrain = Boolean(terrain);
     controls(false);
     const requestedView = new URLSearchParams(location.search).get('view');
     const selected = views.find(
@@ -222,6 +225,7 @@ document.querySelector('#release').onclick = async () => {
   controls(true);
   await window?.dispose();
   window = null;
+  includesTerrain = false;
   lighting.release();
   status.textContent = 'Resources released; no live scenery or collision.';
   draw();
