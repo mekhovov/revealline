@@ -104,6 +104,15 @@ export function parseJSON(bytes, limit = 8_000_000) {
     throw new Error('Metadata exceeds its byte budget.');
   return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
 }
+function validDistributionArchive(value) {
+  return (
+    exact(value, ['format', 'maxExpandedBytes']) &&
+    value.format === 'revealline-distribution-zip.v2' &&
+    Number.isSafeInteger(value.maxExpandedBytes) &&
+    value.maxExpandedBytes > 0 &&
+    value.maxExpandedBytes <= 1024 * 1024 * 1024
+  );
+}
 export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pin }) {
   if (
     !exact(pin, [
@@ -128,6 +137,16 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
     throw new Error('Frozen metadata byte pin mismatch.');
   const record = parseJSON(recordBytes, 4096),
     manifest = parseJSON(manifestBytes);
+  const archiveMarked = Object.hasOwn(record, 'distributionArchive');
+  if (
+    archiveMarked !== Object.hasOwn(manifest, 'distributionArchive') ||
+    (archiveMarked &&
+      (!validDistributionArchive(record.distributionArchive) ||
+        !validDistributionArchive(manifest.distributionArchive) ||
+        record.distributionArchive.maxExpandedBytes !==
+          manifest.distributionArchive.maxExpandedBytes))
+  )
+    throw new Error('Frozen distribution archive contract mismatch.');
   if (
     !exact(record, [
       'formatVersion',
@@ -140,6 +159,7 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
       'manifestSha256',
       'play',
       'download',
+      ...(archiveMarked ? ['distributionArchive'] : []),
     ]) ||
     ![1, 2].includes(record.formatVersion) ||
     record.version !== pin.version ||
@@ -169,6 +189,7 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
       'entry',
       'totalBytes',
       'files',
+      ...(archiveMarked ? ['distributionArchive'] : []),
     ]) ||
     manifest.formatVersion !== 1 ||
     manifest.version !== pin.version ||
@@ -179,7 +200,9 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
     manifest.files.length > 20000 ||
     !Number.isSafeInteger(manifest.totalBytes) ||
     manifest.totalBytes < 0 ||
-    manifest.totalBytes > 800_000_000
+    manifest.totalBytes > 800_000_000 ||
+    (archiveMarked &&
+      manifest.totalBytes + manifestBytes.length > record.distributionArchive.maxExpandedBytes)
   )
     throw new Error('Invalid frozen manifest.');
   const seen = new Set();
@@ -228,7 +251,8 @@ export function metadataBridges(metadata, canonicalSite) {
     const downloadURL = `https://github.com/mekhovov/revealline/releases/download/${record.version}/distribution.zip`;
     const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reveal Line ${record.version} download</title></head><body><main><h1>Reveal Line ${record.version}</h1><p>This historical edition is available as its original ZIP. It is not hosted as a separate website.</p><p><a href="${downloadURL}">Download original ZIP</a> · <a href="${releaseURL}">Release details and checksums</a> · <a href="https://mekhovov.github.io/revealline/releases/">Release history</a></p><p>Your existing saved data and offline installation are not cleared or migrated.</p></main></body></html>\n`;
     // Normal activation only: never claim clients, delete caches, force navigation or alter saved data.
-    const worker = "self.addEventListener('activate', event => { event.waitUntil(self.registration.unregister()); });\n";
+    const worker =
+      "self.addEventListener('activate', event => { event.waitUntil(self.registration.unregister()); });\n";
     const files = new Map([
       ['manifest.json', Buffer.from(manifestBytes)],
       ['distribution.zip.sha256', Buffer.from(checksumBytes)],
