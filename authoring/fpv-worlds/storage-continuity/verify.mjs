@@ -192,6 +192,16 @@ assert.deepEqual(
     ]),
   ),
 );
+assert.notDeepEqual(
+  await fingerprintValue(new File(["same"], "first.glb", { lastModified: 1 })),
+  await fingerprintValue(new File(["same"], "second.glb", { lastModified: 1 })),
+);
+const alteredOrigin = structuredClone(before);
+alteredOrigin.origin = "https://different-review.invalid";
+await assert.rejects(
+  compareContinuitySnapshots(alteredOrigin, before),
+  /Invalid or altered/,
+);
 const cycle = {};
 cycle.self = cycle;
 await assert.rejects(fingerprintValue(cycle), /Cyclic/);
