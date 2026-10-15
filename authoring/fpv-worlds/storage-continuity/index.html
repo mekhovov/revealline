@@ -4,6 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>FPV storage continuity observation</title>
+    <script
+      src="../../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <style>
       :root {
         color-scheme: dark;
@@ -34,15 +44,14 @@
   <body>
     <h1>Storage continuity observation</h1>
     <p>
-      <strong>Use only the dedicated review origin.</strong> Pause flight and
-      close other writers before taking a snapshot. This page has no renderer
-      and never creates, upgrades, repairs, deletes or writes a player database.
+      <strong>Use only the dedicated review origin.</strong> Pause flight and close other writers
+      before taking a snapshot. This page has no renderer and never creates, upgrades, repairs,
+      deletes or writes a player database.
     </p>
     <p>
-      It fingerprints saved regional revisions and their actual Blob bytes,
-      saved places, World packs and flight records. Raw saved content is not
-      exported. Snapshot hashing can take time; do not run it during elapsed
-      endurance or a performance measurement.
+      It fingerprints saved regional revisions and their actual Blob bytes, saved places, World
+      packs and flight records. Raw saved content is not exported. Snapshot hashing can take time;
+      do not run it during elapsed endurance or a performance measurement.
     </p>
     <button id="capture">Read existing review-origin storage</button>
     <button id="export" disabled>Export snapshot</button>
@@ -54,11 +63,11 @@
     </p>
     <pre id="status" role="status">No storage opened.</pre>
     <p>
-      Exact stored bytes alone do not prove browser restart or offline flight. A
-      page reload, reopened database, stopped local server, mock transport or
-      browser-reported “offline” flag is not whole-network offline acceptance.
-      Follow <a href="./README.md">the qualification procedure</a> and preserve
-      the separate native observations.
+      Exact stored bytes alone do not prove browser restart or offline flight. A page reload,
+      reopened database, stopped local server, mock transport or browser-reported “offline” flag is
+      not whole-network offline acceptance. Follow
+      <a href="./README.md">the qualification procedure</a> and preserve the separate native
+      observations.
     </p>
     <script type="module" src="./page.mjs"></script>
   </body>
