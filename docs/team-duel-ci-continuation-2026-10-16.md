@@ -127,3 +127,21 @@ Next/retry/Studio flows and actual cross-version offline recovery. Sustained
 pressure with a matched performance baseline, natural complete custom-cue gameplay
 and acoustic listening remain separate work. Passing these CI repairs does not
 complete those acceptance items.
+
+## Hosted utility repair and current public delivery
+
+At source `743a43b774bf6605235833e7354414de658b22af`, the repaired
+[hosted utility job](https://github.com/mekhovov/revealline/actions/runs/38822653084)
+passes its actual complete discovery: **135 tests in 25.330 seconds, OK**.
+Assembly remains skipped. This is the utility suite, not a whole-repository or
+release-evidence pass. The full focused build and other current-source jobs were
+still running when this update was recorded.
+
+The separate [16 October public dependency receipt](verification/team-duel-public/public-delivery-2026-10-16.json)
+passes all **180 missions**, **357 dependency URLs** and **251,342,372 bytes**.
+The rolling site stayed on source `b11745223861c3973ad4bf440cc536198b8e0371`
+throughout the audit, with manifest SHA-256
+`41d5ae845b2f78df91634850fed6f6f45ece01459476bb3e811547a5e6d301da`.
+The receipt's UTC time, 15 October 23:21, is 16 October in Europe/Berlin.
+That public source does not include the unmerged continuation fixes, so this
+does not qualify their post-deployment Next, retry, Studio or update behavior.
