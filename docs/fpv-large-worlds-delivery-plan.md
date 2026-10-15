@@ -5,6 +5,29 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 17:31 UTC — source detail and saved-place coverage merged
+
+No authored elapsed run is active. The negative foreground report below is
+follow-up evidence after #1482 merged at its earlier `f30ba747` head; its later
+`8a31528f` commit remains preserved and is being published separately.
+
+- Lunar shelter/gallery source #1481 merged as `9e98c4fb`. Bounded native review
+  accepts the supported, open routes in Balanced, Performance and Quality, with
+  resource release confirmed. This is source appearance acceptance; a distinct
+  immutable composition-r3 delivery and Library admission remain next. The old
+  composition-r2 package and revision stay unchanged. Final representative art
+  remains open.
+- Saved-place D6 tests #1483 merged as `75bbcf57`: six focused cases cover
+  concurrent edits, revision isolation, returned-snapshot mutation, capacity and
+  rollback. Broader CI tails and real persistence/restart acceptance are separate.
+- Alpine station-r3 Library #1480 exact `d60dac54` passes its cloud package,
+  immutable download and archived-runtime checks. Serial native player review is
+  in progress on frozen port 9174.
+- Read-only continuity observer #1479 remains Draft at `311f66b7`, awaiting native
+  export/comparison. Its earlier appearance failure and the correcting ordinary
+  merge are preserved. A separate authoring-only change is reducing full-report
+  display work before a new elapsed attempt; the 250 ms gate stays unchanged.
+
 ## 15 October, 17:18 UTC — focused foreground attempt invalidated
 
 The new authored Urban attempt is **invalid**, and no elapsed run is currently
