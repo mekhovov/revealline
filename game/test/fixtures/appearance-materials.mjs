@@ -521,7 +521,15 @@ export function createMaterialCloseUp(document, container) {
     action('Choose mission', null, 'player-default'),
     action('Launch flight', 'primary', 'player-primary'),
   );
-  player.append(playerHeader, well, playerActions);
+  const playerSelect = element('select');
+  playerSelect.setAttribute('aria-label', 'Preview terrain detail');
+  playerSelect.dataset.closeUpControl = 'player-select';
+  for (const label of ['Balanced detail', 'Simple detail']) {
+    const option = element('option', label);
+    option.value = label;
+    playerSelect.append(option);
+  }
+  player.append(playerHeader, well, playerActions, playerSelect);
   const studioHeader = element('header', '', 'material-close-up-header');
   studioHeader.dataset.uiSurface = 'toolbar';
   studioHeader.append(

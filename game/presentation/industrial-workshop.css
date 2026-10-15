@@ -598,6 +598,21 @@
   box-sizing: border-box;
   padding: 6px 10px;
 }
+/* Safari's native menu bezel ignores the shared field height and padding.
+   Keep native select behavior, but paint the closed single-choice field here. */
+[data-theme-styled='true'] :where(select:not([multiple], [size])) {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-end: 36px;
+}
+[data-theme-styled='true']
+  :where(select:not([multiple], [size], :disabled, [aria-disabled='true'])) {
+  background:
+    linear-gradient(45deg, transparent 50%, currentColor 50%) right 18px center / 6px 6px no-repeat,
+    linear-gradient(135deg, currentColor 50%, transparent 50%) right 12px center / 6px 6px no-repeat,
+    var(--ui-inset-finish, none),
+    var(--iw-input, var(--iw-ink));
+}
 [data-theme-styled='true'] :where(input, textarea)::placeholder {
   color: var(--iw-muted);
   opacity: 1;
@@ -1064,8 +1079,10 @@
     border-color: ButtonText;
     forced-color-adjust: auto;
   }
-  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {
+  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'], select) {
     appearance: auto;
+    -webkit-appearance: auto;
+    background-image: none;
   }
   [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {
     display: none;
