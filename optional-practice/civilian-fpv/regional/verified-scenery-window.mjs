@@ -1,3 +1,4 @@
+import { requireRestoreClearance } from './restore-containment.mjs';
 import { regionalCollisionCounts } from './region-motion-query.mjs';
 import { validateScenerySurface } from './scenery-surface.mjs';
 import {
@@ -191,6 +192,7 @@ export function createVerifiedSceneryWindow(
       });
       preparing = staged;
       current(token);
+      if (supportPose?.requireClearRestore) await staged.prepareRestoreProof(() => current(token));
       if (frameTransaction?.prepare)
         await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token));
       supportPose = readFramePose(frameTransaction, supportPose, planner);
@@ -207,6 +209,10 @@ export function createVerifiedSceneryWindow(
             .status === 'scenery-clear',
           'Staged scenery intersects the required body pose',
         );
+      }
+      if (supportPose?.requireClearRestore) {
+        const { positionMm, radiusMm } = supportPose;
+        requireRestoreClearance(staged.restoreClearance({ ...positionMm, y: positionMm.y + radiusMm }, radiusMm));
       }
       const nextProvenance = {
         regionId: manifest.id,
@@ -247,6 +253,17 @@ export function createVerifiedSceneryWindow(
   }
   return Object.freeze({
     snapshot,
+    async prepareRestoreProof() {
+      if (!queryReady()) throw new Error('Scenery is unavailable for saved-location verification');
+      const owner = committed, token = generation;
+      await owner.prepareRestoreProof(() => current(token));
+      current(token);
+      if (owner !== committed) throw abortError();
+    },
+    restoreClearance(...args) {
+      return queryReady() ? committed.restoreClearance(...args) : { status: 'ambiguous', reason: 'unknown-cell' };
+    },
+    restoreSnapshot: () => committed?.restoreSnapshot() ?? { certificateBytes: 0, certified: false, preparing: false },
     collisionSnapshot: () =>
       regionalCollisionCounts(committed, preparing === committed ? null : preparing),
     get group() {
@@ -263,7 +280,7 @@ export function createVerifiedSceneryWindow(
         if (supportPoseInput !== null) {
           fail(
             supportPoseInput &&
-              Object.keys(supportPoseInput).length === 2 &&
+              Object.keys(supportPoseInput).length === (supportPoseInput.requireClearRestore === true ? 3 : 2) &&
               Object.hasOwn(supportPoseInput, 'positionMm') &&
               Object.hasOwn(supportPoseInput, 'radiusMm'),
             'Invalid support pose',
@@ -273,14 +290,14 @@ export function createVerifiedSceneryWindow(
           fail(
             p &&
               Object.keys(p).length === 3 &&
-              ['x', 'y', 'z'].every((key) => Number.isSafeInteger(p[key])) &&
+              ['x', 'y', 'z'].every((key) => Number.isFinite(p[key])) &&
               Number.isSafeInteger(radiusMm) &&
               radiusMm > 0 &&
               radiusMm <= 2000,
             'Invalid support pose',
           );
           planner(p);
-          supportPose = { positionMm: { ...p }, radiusMm };
+          supportPose = { positionMm: { ...p }, radiusMm, ...(supportPoseInput.requireClearRestore === true ? { requireClearRestore: true } : {}) };
         }
         plan = planner(point, { maxSourceBytes });
         if (plan.blocked) throw new Error(plan.blocked);

@@ -258,7 +258,7 @@ export function createVerifiedTerrainWindow(
         if (supportPoseInput !== null) {
           fail(
             supportPoseInput &&
-              Object.keys(supportPoseInput).length === 2 &&
+              Object.keys(supportPoseInput).length === (supportPoseInput.requireClearRestore === true ? 3 : 2) &&
               Object.hasOwn(supportPoseInput, "positionMm") &&
               Object.hasOwn(supportPoseInput, "radiusMm"),
             "Invalid support pose",
@@ -268,14 +268,14 @@ export function createVerifiedTerrainWindow(
           fail(
             p &&
               Object.keys(p).length === 3 &&
-              ["x", "y", "z"].every((key) => Number.isSafeInteger(p[key])) &&
+              ["x", "y", "z"].every((key) => Number.isFinite(p[key])) &&
               Number.isSafeInteger(radiusMm) &&
               radiusMm > 0 &&
               radiusMm <= 2000,
             "Invalid support pose",
           );
           planner(p);
-          supportPose = { positionMm: { ...p }, radiusMm };
+          supportPose = { positionMm: { ...p }, radiusMm, ...(supportPoseInput.requireClearRestore === true ? { requireClearRestore: true } : {}) };
         }
         plan = planner(point, { maxSourceBytes });
         if (plan.blocked) throw new Error(plan.blocked);
