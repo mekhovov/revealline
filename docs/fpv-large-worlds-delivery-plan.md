@@ -5,6 +5,46 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — parallel downloads, coastal composition and elapsed verification
+
+Latest coordinator checkpoint: main `a046fd67`. Earlier dated sections below are
+historical; this roadmap is still open.
+
+- **P1 delivery merged:** sparse scenery contract #1341 permits explicitly empty
+  verified cells without accepting missing cells. Concurrent downloads #1352 retain
+  ordered manifest validation, then allow four bounded payload requests, exact byte
+  and digest checks, cancellation settlement and atomic installation. The full
+  8.192 km source closure passes 2,051 responses / 47,646,152 payload bytes through
+  this downloader. This is source evidence, not network-speed or player-release proof.
+- **P1 recovery and packages:** saved-place package receipt #1342 is merged. Sparse
+  exact-package receipt #1353 is published. Graphics-timeout recovery #1339 passes
+  native EN/UK source checks: Pause retains the explanation; explicit restart at
+  Performance returns disarmed. Its unchanged cloud package is under qualification.
+  Exact #1352 package jobs remain queued; independent work continues.
+- **P2 coastal composition:** #1335 is merged. #1349 adds a street, five huts,
+  courtyards and a dune corridor within the existing combined ownership budget;
+  #1357 publishes its immutable source separately. Ground integration #1354 adds
+  paths and shoreline transitions without new geometry, collision or textures.
+  Native same-camera comparison and three-tier source views pass with zero owned
+  resources after disposal. Broad landscape density and water presentation remain
+  unfinished; this is not final representative-art acceptance.
+- **P3 large Canyon:** #1338 and its declared-cell overview correction are merged.
+  Six native viewpoints and deliberate keyboard flight pass on the frozen source.
+  Its 8.192 km terrain still needs immutable delivery, a distinct default Library
+  entry and exact ordinary-player package verification. Preserve smaller Canyon
+  entries and saved revisions. Large area does not establish varied finished art.
+- **P4 elapsed verification:** #1348 adds actual-wall-time measurement rather than
+  counting accelerated simulation ticks. Receipt #1355 records a final 10-second
+  native pass and correctly rejected explicit-stop and frame-gap segments. A
+  two-hour uninterrupted pass remains open; starting a run is not acceptance.
+
+Next independent lanes remain **P1** combined Library/recovery/package delivery,
+**P2** coherent representative artwork, **P3** one varied larger region at a time,
+and **P4/D6** sustained, responsive, physical-device, network-wide offline and final
+release coverage. Exact source hashes and receipts qualify their own candidates;
+merged changes are not automatically verified public availability. No source,
+player records, old revisions or budget limits were removed or relaxed.
+
 ## 15 October — cached flight, saved places and larger terrain
 
 This is the latest scoped checkpoint. The roadmap remains open; source verification,
