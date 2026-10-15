@@ -1,0 +1,138 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://canal.invalid/delivery.json",
+    "bytes": 6580,
+    "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87"
+  },
+  "files": 38,
+  "verifiedResponses": 39,
+  "totalBytes": 6765271,
+  "totalWithDescriptor": 6771851,
+  "originalSourceUnchanged": true,
+  "sourceRevision": "de84e356d517bd7815ae10c851737ef2236fd48e",
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "north-arch",
+      "preparedResources": 1439000,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "warehouse-passage",
+      "preparedResources": 1439000,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "highwalk",
+      "preparedResources": 1918308,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "lock-bend",
+      "preparedResources": 1561804,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "courtyard",
+      "preparedResources": 1400380,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "turning-basin",
+      "preparedResources": 1058732,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "north-arch",
+      "preparedResources": 1439000,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "warehouse-passage",
+      "preparedResources": 1439000,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "highwalk",
+      "preparedResources": 1918308,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "lock-bend",
+      "preparedResources": 1561804,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "courtyard",
+      "preparedResources": 1400380,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "turning-basin",
+      "preparedResources": 1058732,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    }
+  ],
+  "liveCollision": {
+    "worlds": 2,
+    "colliders": 142,
+    "rigidBodies": 0
+  },
+  "disposedCollision": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "allResourcesDisposed": true,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Exact bytes and production prepare/explicit-arm/pause/dispose only. Bounded source appearance accepted separately; Library admission, package/offline and sustained real-device flight remain pending."
+}
