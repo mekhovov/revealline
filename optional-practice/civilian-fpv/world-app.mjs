@@ -5969,6 +5969,17 @@ export function mountWorldApp({
     }
     if (state.status === 'active') presentation.pause();
     audio.update(state, { active: !replayProof && state.status === 'active' });
+    if (
+      sceneReady &&
+      ['paused', 'disarmed'].includes(state.status) &&
+      !terminal(state) &&
+      (missionChooser?.elements.dialog.open || $('sim-settings').open)
+    ) {
+      // These opaque dialogs cover the retained flight. Device/menu polling,
+      // audio and asynchronous source/graphics preparation keep their ownership;
+      // only covered scene/HUD observers wait until the dialog closes.
+      return;
+    }
     // Do not submit an intermediate scene while its assets or shaders are preparing.
     if (sceneReady) drawFlight(state);
     const cue =
