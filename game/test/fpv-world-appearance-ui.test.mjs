@@ -210,7 +210,10 @@ test('World random flight from the shared chooser follows displayed filters, pre
   }
   const expected = new Set(
     WORLD_CATALOGUE.filter(
-      (entry) => entry.theme === 'snake-hunt' && entry.activity === 'hunt' && entry.difficulty === 'beginner',
+      (entry) =>
+        entry.theme === 'snake-hunt' &&
+        entry.activity === 'hunt' &&
+        entry.difficulty === 'beginner',
     ).map((entry) => entry.id),
   );
   h.$('worlds-shell-action-missions').click();
@@ -1094,6 +1097,32 @@ test('World categories retain every authored preference and restore Home and Pau
   h.$('close-sim-settings').click();
   assert.equal(h.doc.activeElement, pauseSettings);
   assert.equal(h.app.snapshot().state.status, 'paused');
+});
+
+test('Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK', async (t) => {
+  for (const locale of ['en', 'uk']) {
+    const h = fixture(t, {
+      url: `https://example.test/optional-practice/fpv-worlds/index.html?lang=${locale}`,
+    });
+    await h.app.ready;
+    h.$('worlds-shell-action-settings').click();
+    h.$('worlds-settings-tab-accessibility').click();
+    const section = h.doc.querySelector('[data-sim-hud-preferences]');
+    assert.ok(section);
+    assert.equal(section.parentNode, h.$('worlds-settings-panel-accessibility'));
+    assert.equal(section.closest('[hidden],[inert]'), null);
+    assert.equal(h.doc.querySelectorAll('[data-sim-hud-preferences]').length, 1);
+    assert.equal(section.querySelectorAll('select').length, 3);
+    const mode = section.querySelector('[data-hud-preference="mode"]');
+    mode.value = 'detailed';
+    mode.emit('change');
+    assert.equal(h.doc.querySelector('[data-sim-hud="flight"]').dataset.hudMode, 'detailed');
+    assert.equal(h.$('sim-settings').open, true, 'Changing guidance must not leave Settings.');
+    assert.equal(
+      h.$('worlds-settings-tab-accessibility').textContent,
+      locale === 'uk' ? 'Доступність' : 'Accessibility',
+    );
+  }
 });
 
 test('World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener', async (t) => {

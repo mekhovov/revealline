@@ -8563,6 +8563,7 @@ export function mountWorldApp({
         flightControls.querySelector('.sim-appearance-controls'),
       ],
       accessibility: [
+        flightControls.querySelector('[data-sim-hud-preferences]'),
         settingLabel('sim-text-face'),
         settingLabel('sim-motion'),
         settingLabel('flight-stick-display'),

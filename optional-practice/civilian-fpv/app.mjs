@@ -2124,6 +2124,7 @@ export function mountFlightApp({
         shellSettings.querySelector('.sim-appearance-controls'),
       ],
       accessibility: [
+        shellSettings.querySelector('[data-sim-hud-preferences]'),
         settingLabel('academy-stick-display'),
         settingLabel('academy-drone-guide'),
         settingLabel('academy-guide-scale'),

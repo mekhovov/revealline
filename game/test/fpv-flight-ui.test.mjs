@@ -1424,6 +1424,37 @@ test('Academy native tool dialogs retain instructions across blur and focus', as
   }
 });
 
+test('Academy existing HUD guidance controls are reachable in Accessibility in EN and UK', async (t) => {
+  for (const locale of ['en', 'uk']) {
+    const f = await fixture(t, {
+      home: true,
+      url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+    });
+    f.$('academy-shell-action-settings').click();
+    f.$('academy-settings-tab-accessibility').click();
+    const section = f.doc.querySelector('[data-sim-hud-preferences]');
+    assert.ok(section);
+    assert.equal(section.parentNode, f.$('academy-settings-panel-accessibility'));
+    assert.equal(section.closest('[hidden],[inert]'), null);
+    assert.equal(f.doc.querySelectorAll('[data-sim-hud-preferences]').length, 1);
+    const controls = [...section.querySelectorAll('select')];
+    assert.equal(controls.length, 3);
+    const mode = section.querySelector('[data-hud-preference="mode"]');
+    mode.value = 'detailed';
+    mode.emit('change');
+    assert.equal(f.doc.querySelector('[data-sim-hud="flight"]').dataset.hudMode, 'detailed');
+    assert.equal(
+      f.view.snapshot().status,
+      'disarmed',
+      'Changing guidance must not start a flight.',
+    );
+    assert.equal(
+      f.$('academy-settings-tab-accessibility').textContent,
+      locale === 'uk' ? 'Доступність' : 'Accessibility',
+    );
+  }
+});
+
 test('Academy categories retain every authored preference control and restore nested dialog focus', async (t) => {
   const f = await fixture(t, { home: true });
   f.doc.defaultView.innerWidth = 390;
