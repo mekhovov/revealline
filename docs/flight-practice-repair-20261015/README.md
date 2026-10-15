@@ -60,6 +60,14 @@ Latest all-three receipts:
 | `verified-pointer-tests.log`       | `9481d213f68b51c8b084d2c3438390397f3f607e8b8cd46a686cb979fd06000a` |
 | `all-quota-independent-audit.json` | `8ba61632d844c3ebf26c251c126aa06ed496e6cb83a4d15dd7996c525dbcdb26` |
 
+Final rebase checks (no artifact/receipt relabelling):
+
+| File                                 | SHA-256                                                            |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| `final-rebase-input-check.json`      | `d7625901471d93cd8482a1ad39d17d1316419e2c15bc842d22fb1eecc254994d` |
+| `post-rebase-installation-tests.log` | `bdc56884b8b86ca3b4d0e2a6aa3ecdd68572dc741d38440b73cb623f1ea0a4a8` |
+| `post-rebase-observer-tests.log`     | `2fd15cb8f32b7d3c361da70fb8388ef4d8e3fdb6ca06d8514da9362dd3916ad5` |
+
 Independently computed screenshot hashes (each fault pair shows the same UI):
 
 | Prefix, each with `missing-dependency.png` and `missing-worker.png` | Bytes per file | SHA-256 per file                                                   |
