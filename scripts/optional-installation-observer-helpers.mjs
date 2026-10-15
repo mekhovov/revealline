@@ -57,6 +57,9 @@ export function resourceCleanupIssues(state) {
 }
 
 export async function activateOfflineAction(page, { button, status, expected }) {
+  // Locator.press itself can target hidden controls. Require the ordinary
+  // visible surface before witnessing a new user action.
+  await page.locator(button).waitFor({ state: 'visible' });
   // Observe DOM changes only; never clear app statuses or invoke app functions.
   // A previously displayed "Ready offline" must not satisfy a new operation.
   await page.evaluate(
