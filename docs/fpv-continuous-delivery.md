@@ -5071,3 +5071,23 @@ Lunar1452/1455 remain draft for camera/appearance corrections. The strict-focus
 Urban flight invalidated after1,036.314s on lost focus; its full negative report
 and zero-owned disposal are preserved, without a two-hour claim. Current evidence
 and remaining gates are in the newest large-worlds plan checkpoint.
+
+## 15 October — Alpine admitted; corrected source and sustained verification
+
+Coordinator `codex/fpv-regional-qualification-checkpoint-20261015`, base `d949d8c1`.
+Canal #1446 and Alpine #1427 merged after scoped exact-package native checks. Both
+Alpine revisions survive reload and corrected cached Fly stays disarmed. Heading
+#1468 is a separate follow-up; no frozen package was rewritten. Reliability #1454
+passed all checks; edition #1465 publication is continuing. Lunar #1460/#1462/#1464
+bounded native corrections pass across all three material tiers, with final art
+and exact immutable/Library admission still open. Preview #1463 merged; #1467
+extends its authoring tier forwarding separately.
+
+Strict-focus Urban endurance failure remains preserved. Observation #1461 merged
+with an explicit opt-in visible-commanded policy and ten-second smoke, which does
+not qualify endurance. A fresh two-hour real-time segment began 14:53:27.762Z on
+15 October, earliest finish 16:53:28Z; preserve the sole 9162 renderer and inspect
+its actual report before any completed claim. The current private handoff has exact
+identity and operational instructions. Latest large-worlds checkpoint and receipts
+record passed and remaining gates. Internal free space 1.8 GiB is below the 3 GiB
+floor; heavy work stays external/cloud, source and player data untouched.
