@@ -1,0 +1,9 @@
+# Alpine station apron: immutable station-r5 delivery
+
+Source [#1504](https://github.com/mekhovov/revealline/pull/1504) merged normally as `e51ff517ed7a870bf57736d9115dda781521f64c`. Exact reviewed source `a2361327dfae9d78e63b3c0e0d51071056359781` and receipt-only child `32f3405c28ffb55b9416e46f7ff5d881c08522d1` are preserved. Bounded native concourse/overview and three-tier concourse acceptance is retained in `receipts-station-apron-r1/native-review.json`. No full-world, all-angle, physical-device or final-art claim follows.
+
+This separate `delivery-station-r5/` namespace retains all old source, immutable delivery and player editions. Original r4 pin `02f2b140d06cc930d8d4dd6b01abcd860db75436` and r3 pin `ffb79b67479f9ed5c8104610695ac8b5cb04edc7` stay untouched. The 260 existing visual-only terrain triangles use the approved apron colour; positions, normals, UVs, texture pixels, solid collision, starts and openings remain exact.
+
+Descriptor 115,316 bytes, SHA-256 `32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa`; 722 payloads 22,584,529 bytes; complete 22,699,845 bytes within the unchanged 64 MiB delivery limit. Preparation reuses 716 original r4 Git blobs, uploading only the two new manifests and four changed cell representations plus descriptor. Changed-payload hashes and complete metadata closure pass; this initial preparation is not a new full downloaded-byte pass.
+
+Before Ready: all 723 immutable HTTPS responses/bytes/hashes, production downloader plus 36 start/mode/tier cases and zero owned disposal, old-r4/r3 Git-blob parity and normal required checks. Run `verify-station-apron-delivery.mjs <delivery directory>` against the exact downloaded source. Separate later gates are Library admission, exact cloud package and serial normal/cached player acceptance; current r4 #1501 remains independent. No elapsed endurance, whole-network offline/restart, device performance or public availability is claimed.
