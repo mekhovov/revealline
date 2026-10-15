@@ -299,6 +299,8 @@ function evaluate(
   budget,
   { allowHazardLoss = false, safeApproach = false } = {},
 ) {
+  if ((budget.candidates ?? 0) >= BOT_LIMITS.candidates) return null;
+  budget.candidates = (budget.candidates ?? 0) + 1;
   const state = structuredClone(original),
     segments = [];
   let localTicks = 0,
@@ -491,6 +493,8 @@ function settleBoundary(original, budget, retryEncounter = false) {
     !original.encounter.defeated &&
     ['warning', 'active'].includes(original.encounter.phase);
   if (!recovery && !isolated && !phaseWait) return null;
+  if ((budget.candidates ?? 0) >= BOT_LIMITS.candidates) return null;
+  budget.candidates = (budget.candidates ?? 0) + 1;
   const state = structuredClone(original),
     segments = [];
   for (
@@ -519,6 +523,51 @@ function settleBoundary(original, budget, retryEncounter = false) {
   return null;
 }
 
+/** A nearby patrol can make every immediate cut unsafe. Rehearse a short
+ * escape on already safe ground before trying another departure. Never turn
+ * over a live cable, retain a loss or pad a scene with ineffective movement. */
+function escapeOnSafeGround(original, budget) {
+  const clearance = (state) =>
+    Math.min(...state.enemies.map((enemy) => distance(state.player, enemy)));
+  const before = clearance(original);
+  if (before > 8) return null;
+  let best = null,
+    score = -Infinity;
+  for (const direction of DIRECTIONS) {
+    if ((budget.candidates ?? 0) >= BOT_LIMITS.candidates) break;
+    budget.candidates = (budget.candidates ?? 0) + 1;
+    const state = structuredClone(original),
+      segments = [];
+    let valid = true;
+    for (let tick = 0; tick < 90 && budget.ticks < BOT_LIMITS.totalTicks; tick++) {
+      budget.ticks++;
+      stepRun(state, { direction: direction.name }, FIXED_DT);
+      append(segments, direction.name);
+      if (
+        state.lives !== original.lives ||
+        state.player.cutting ||
+        state.events.some((event) => event.type === 'cut.started') ||
+        state.status !== 'running'
+      ) {
+        valid = false;
+        break;
+      }
+    }
+    const improvement = clearance(state) - before;
+    if (
+      valid &&
+      segments.reduce((ticks, segment) => ticks + segment.ticks, 0) === 90 &&
+      distance(state.player, original.player) >= 3 &&
+      improvement >= 1 &&
+      improvement > score
+    ) {
+      score = improvement;
+      best = { state, segments, bends: 0, ticks: 90, escape: true };
+    }
+  }
+  return best;
+}
+
 /** Prepare varied, purposeful recording inputs without widening live-bot
  * qualification. Every route reconnects geometrically; only a late encounter
  * with a real moving threat may be retained as a recoverable overreach. */
@@ -542,9 +591,14 @@ export async function planImprovMacro(
     settled = settleBoundary(original, budget, seekFrontier);
   check();
   if (settled) return settled;
-  if (seekFrontier) return approachObjective(original, budget);
+  if (seekFrontier) {
+    const approach = approachObjective(original, budget);
+    if (approach) return approach;
+    const escape = escapeOnSafeGround(original, budget);
+    if (escape) return escape;
+  }
   const random = randomFor((plannerSeed ^ Math.imul(decision + 1, 2654435761)) >>> 0),
-    { candidates, paths } = pathsFor(original, random, false),
+    { candidates, paths } = pathsFor(original, random, false, seekFrontier),
     safe = [],
     risky = [];
   for (const candidate of candidates) {

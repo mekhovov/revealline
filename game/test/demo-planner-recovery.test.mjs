@@ -49,7 +49,11 @@ async function ownerEntries(owner) {
   return owners.get(owner);
 }
 
-const cases = [['journey', 'fractured-grid', 'staggered-reserve', 'immediate'],
+const cases = [['journey', 'signal-gardens', 'neutral-ground', 'immediate'],
+['journey', 'signal-gardens', 'neutral-ground', 'grid-center'],
+['journey', 'livewire-foundry', 'crossbar-depot', 'immediate'],
+['journey', 'livewire-foundry', 'crossbar-depot', 'grid-center'],
+['journey', 'fractured-grid', 'staggered-reserve', 'immediate'],
 ['journey', 'fractured-grid', 'staggered-reserve', 'grid-center'],
 ['journey', 'sentinel-crown', 'first-relay', 'immediate'],
 ['journey', 'sentinel-crown', 'first-relay', 'grid-center'],
