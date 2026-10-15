@@ -127,7 +127,8 @@
         "game/test/terminal-recording-export.test.mjs",
         "game/test/recording-verification-navigation.test.mjs",
         "game/test/multiplayer-finale-strategies.test.mjs",
-        "game/test/multiplayer-finale-mistakes.test.mjs"
+        "game/test/multiplayer-finale-mistakes.test.mjs",
+        "game/test/fpv-world-record-archive.test.mjs"
       ]
     },
     {
@@ -184,7 +185,8 @@
         "game/test/overflight-world-audio.test.mjs",
         "game/test/team-discovery-host.test.mjs",
         "game/test/couch-audio-master.test.mjs",
-        "game/test/coop-picture-landing-recovery.test.mjs"
+        "game/test/coop-picture-landing-recovery.test.mjs",
+        "game/test/fpv-world-record-storage.test.mjs"
       ]
     }
   ]
