@@ -8,6 +8,7 @@ import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
+import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
 import {
   OBSERVED_PACKAGES,
   OPERATION_TIMEOUT_MS,
@@ -122,6 +123,10 @@ const statusDiagnosticsEnabled = process.env.OPTIONAL_INSTALLATION_DIAGNOSTICS =
 const statusDiagnostics = { events: [], dropped: 0 };
 const diagnosticURL = new URL('./optional-installation-diagnostics.mjs', import.meta.url);
 const diagnosticSha256 = statusDiagnosticsEnabled ? sha(await readFile(diagnosticURL)) : null;
+const quotaProbeEnabled = process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE === '1';
+const quotaProbeURL = new URL('./optional-installation-quota-probe.mjs', import.meta.url);
+const quotaProbeSha256 = quotaProbeEnabled ? sha(await readFile(quotaProbeURL)) : null;
+let quotaProbeReport = null;
 function recordStatusDiagnostic(event) {
   if (statusDiagnostics.events.length < 4096)
     statusDiagnostics.events.push({ step: currentStep, receivedAt: Date.now(), ...event });
@@ -643,6 +648,44 @@ try {
       assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
       assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
       assert.equal(upgraded.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
+      if (quotaProbeEnabled) {
+        // The pristine alternate path is not installed. Unlock it before quota
+        // denial, so authentication writes are not mistaken for install errors.
+        await open(fpv, failedFixture);
+        await revealFPVOffline(page, () => clickFPV('#help'));
+        currentStep = 'controlled origin quota denial during ordinary preparation';
+        quotaProbeReport = await withOptionalQuotaDeny({
+          cdp,
+          origin: new URL(served.url).origin,
+          run: async ({ signal }) => {
+            await activateOfflineAction(page, {
+              button: '#install-offline',
+              status: '#transfer-status',
+              expected: /failed|timed out|denied|quota|not available|not supported/i,
+            });
+            signal.throwIfAborted();
+            const denied = await inspect('controlled-quota-denial-preserves-all-pointers');
+            for (const id of packageIds)
+              assert.equal(denied.keys[keyFor(id)], upgraded.keys[keyFor(id)]);
+            assert.ok(
+              denied.caches.every((name) => !name.includes('/' + site(fpv, failedFixture))),
+              'Denied preparation must remove its incomplete staging cache.',
+            );
+            assert.ok(
+              denied.workers.every(
+                (worker) => !worker.scope.includes('/' + site(fpv, failedFixture)),
+              ),
+              'Denied preparation must not leave its worker registered.',
+            );
+          },
+        });
+        quotaProbeReport.status = await page.locator('#transfer-status').textContent();
+        assert.equal(quotaProbeReport.completed, true, 'Controlled quota probe or reset failed.');
+        await open(fpv);
+        assert.equal(await exportedProof(), savedProof);
+        assert.equal(await exportedProfiles(), savedProfiles);
+        await inspect('quota-reset-preserves-imported-proof-and-profile');
+      }
       const failureFile = site(fpv, failedFixture) + 'optional-practice/civilian-fpv/README.md';
       await put(failureFile, 'Truncated dependency fixture');
       await open(fpv, failedFixture);
@@ -693,6 +736,32 @@ try {
         afterGymRemoval.caches.filter((name) => name.includes('/practice/civilian-fpv/')),
         rolledBack.caches.filter((name) => name.includes('/practice/civilian-fpv/')),
       );
+      if (quotaProbeEnabled) {
+        // Retry only after ordinary rollback restored the prior-only pointer.
+        // Earlier success would replace the single retained-version slot and
+        // invalidate the existing rollback scenario. Never inject pointer data.
+        await stage(fpv, failedFixture);
+        await open(fpv, failedFixture);
+        await prepare(fpv);
+        const repaired = await inspect('quota-restored-pristine-retry-prepared');
+        assert.equal(installed(repaired, fpv).active.version, failedFixture);
+        assert.equal(installed(repaired, fpv).previous.version, priorVersion);
+        assert.equal(repaired.keys[keyFor(worlds)], afterGymRemoval.keys[keyFor(worlds)]);
+        assert.equal(repaired.keys[keyFor(gym)], afterGymRemoval.keys[keyFor(gym)]);
+        assert.equal(await exportedProof(), savedProof);
+        assert.equal(await exportedProfiles(), savedProfiles);
+        await revealFPVOffline(page, () => clickFPV('#help'));
+        await activateOfflineAction(page, {
+          button: '#remove-offline',
+          status: '#transfer-status',
+          expected: /removed/i,
+        });
+        const restored = await inspect('quota-retry-removal-restores-prior-installation');
+        assert.equal(restored.keys[keyFor(fpv)], afterGymRemoval.keys[keyFor(fpv)]);
+        assert.equal(restored.keys[keyFor(worlds)], afterGymRemoval.keys[keyFor(worlds)]);
+        assert.equal(restored.keys[keyFor(gym)], afterGymRemoval.keys[keyFor(gym)]);
+        quotaProbeReport.retryPreparedAndRemoved = true;
+      }
       const installedGym = osApps.find((item) => item.id === gym && item.installed);
       const installedFPV = osApps.find((item) => item.id === fpv && item.installed);
       if (installedGym && installedFPV) {
@@ -888,6 +957,20 @@ try {
     ...(cleanupErrors.length ? { retainedDirectory: work } : { temporaryProfileRemoved: true }),
   };
   report.passed &&= !cleanupErrors.length;
+  if (quotaProbeEnabled) {
+    report.quotaProbe = {
+      enabled: true,
+      sourceSha256: quotaProbeSha256,
+      sourceStable: quotaProbeSha256 === sha(await readFile(quotaProbeURL)),
+      result: quotaProbeReport,
+      scope:
+        'Academy only; isolated Chromium origin-wide CDP quota override. Not physical storage exhaustion, eviction or proof of the exact failing cache API. The retry uses a same-payload path fixture, not a distinct release.',
+    };
+    report.passed &&=
+      report.quotaProbe.sourceStable &&
+      quotaProbeReport?.completed === true &&
+      quotaProbeReport?.retryPreparedAndRemoved === true;
+  }
   if (statusDiagnosticsEnabled) {
     report.statusDiagnostics = {
       ...statusDiagnostics,

@@ -25,6 +25,9 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const pin = (name, bytes) => ({ path: name, bytes: bytes.length, sha256: hash(bytes) });
 export const CACHE_REPAIR_IDS = Object.freeze(Object.keys(OBSERVED_PACKAGES));
 export const CACHE_REPAIR_PROTOCOL = 'practice-cache-repair.v1';
+export const CACHE_REPAIR_SEEDED_PROTOCOL = 'practice-cache-repair.v2';
+const WORLD_SEED = 'worlds-template-copy';
+const WORLD_SEED_TITLE = 'C7 retained world';
 const LIMIT_MS = 900_000;
 const CONTINUITY = 'authoring/fpv-worlds/storage-continuity/observe.mjs';
 const AUTHORITY = [
@@ -44,6 +47,7 @@ export function validateCacheRepairPlan(input) {
   if (typeof encoded !== 'string' || Buffer.byteLength(encoded) > 65536)
     throw new Error('Cache repair plan exceeds 64 KiB.');
   const plan = JSON.parse(encoded);
+  const seeded = plan?.format === 'PracticeCacheRepairPlan.v2';
   const fields = [
     'format',
     'protocol',
@@ -53,6 +57,7 @@ export function validateCacheRepairPlan(input) {
     'sourceRevision',
     'sourceTree',
     'packages',
+    ...(seeded ? ['seed'] : []),
   ];
   if (
     !plan ||
@@ -60,8 +65,9 @@ export function validateCacheRepairPlan(input) {
     typeof plan !== 'object' ||
     Object.keys(plan).some((key) => !fields.includes(key)) ||
     fields.some((key) => !Object.hasOwn(plan, key)) ||
-    plan.format !== 'PracticeCacheRepairPlan.v1' ||
-    plan.protocol !== CACHE_REPAIR_PROTOCOL ||
+    (!seeded && plan.format !== 'PracticeCacheRepairPlan.v1') ||
+    plan.protocol !== (seeded ? CACHE_REPAIR_SEEDED_PROTOCOL : CACHE_REPAIR_PROTOCOL) ||
+    (seeded && plan.seed !== WORLD_SEED) ||
     typeof plan.caseId !== 'string' ||
     !/^[a-z0-9-]{1,64}$/.test(plan.caseId) ||
     typeof plan.bundle !== 'string' ||
@@ -80,6 +86,38 @@ export function validateCacheRepairPlan(input) {
   )
     throw new Error('An exact three-package cache repair plan is required.');
   return plan;
+}
+
+/** Read-only receipt assertion; empty stores never establish saved-world preservation. */
+export function assertCacheRepairWorldSeed(state, expectedCard) {
+  assert(
+    typeof state.card?.id === 'string' &&
+      state.card.id.length > 0 &&
+      state.card.id.length <= 256 &&
+      state.card.title === WORLD_SEED_TITLE,
+    'The visible saved world card must have its original identity and authored title.',
+  );
+  if (expectedCard) {
+    assert.equal(state.card.id, expectedCard.id, 'The original saved world must remain listed.');
+    assert.equal(state.card.title, expectedCard.title);
+  }
+  const database = state.records?.databases?.find((row) => row.name === 'revealline-fpv-worlds-v1');
+  assert(database && !database.missing, 'The saved World Studio database must exist.');
+  for (const name of ['projects', 'revisions']) {
+    const store = database.stores?.find((row) => row.name === name);
+    assert(
+      store &&
+        Number.isInteger(store.count) &&
+        store.count > 0 &&
+        store.rows?.length === store.count &&
+        /^[a-f0-9]{64}$/.test(store.sha256) &&
+        store.rows.every(
+          (row) => /^[a-f0-9]{64}$/.test(row.key) && /^[a-f0-9]{64}$/.test(row.sha256),
+        ),
+      `A fingerprinted nonempty World Studio ${name} store is required.`,
+    );
+  }
+  return database;
 }
 
 export async function admitCacheRepairBundle(plan, base) {
@@ -271,7 +309,7 @@ export async function observePracticeCacheRepair({
     password ? String(value).split(password).join('[redacted]') : String(value);
   const save = (name, data) => writeFile(path.join(output, name), data, { flag: 'wx' });
   const report = {
-    format: 'PracticeCacheRepairObservation.v1',
+    format: plan.seed ? 'PracticeCacheRepairObservation.v2' : 'PracticeCacheRepairObservation.v1',
     plan,
     createdAt: new Date().toISOString(),
     passed: false,
@@ -285,6 +323,11 @@ export async function observePracticeCacheRepair({
       'C7 modeled cache-entry loss and exact worker unregister in a fresh owned Chrome profile; ordinary keyboard-activated offline UI. No native eviction, real quota, physical device, first-pointer, human flight, process-restart or public deployment qualification. Empty stores are not nonempty content-preservation evidence. Data coverage is limited to the four existing FPV continuity databases and revealline.flight-profiles.v1. Gym records and other localStorage keys are not observed.',
     input: {
       offlineActions: 'Ordinary keyboard Enter via existing public controls',
+      ...(plan.seed
+        ? {
+            seed: 'Public Workshop copy, title field, Install pack; no storage or content injection',
+          }
+        : {}),
       faults:
         'Explicit CacheStorage.delete of one verified entry; exact ServiceWorkerRegistration.unregister',
     },
@@ -463,6 +506,32 @@ export async function observePracticeCacheRepair({
     const witnesses = async (target) => {
       for (const id of CACHE_REPAIR_IDS.filter((id) => id !== target)) await ready(id);
     };
+    const openWorldsTab = async (tab) => {
+      active();
+      assert(['creator', 'packs'].includes(tab));
+      await page.goto(specs['fpv-worlds'].entry + '?lang=en');
+      await unlockObservedPage(page, password);
+      await page.locator(OBSERVED_PACKAGES['fpv-worlds'].mounted).waitFor();
+      await page.locator('#worlds-shell-action-settings').press('Enter');
+      await page.locator('#worlds-settings-tab-content').press('Enter');
+      await page.locator(`[data-tab="${tab}"]`).press('Enter');
+      await page.locator(`#${tab}`).waitFor({ state: 'visible' });
+    };
+    const savedWorldCard = async () => {
+      const card = page.locator('#installed-packs [data-pack-id]').filter({
+        has: page.getByText(WORLD_SEED_TITLE, { exact: true }),
+      });
+      await card.waitFor({ state: 'visible' });
+      assert.equal(await card.count(), 1, 'Require one identifiable saved world card.');
+      const id = await card.getAttribute('data-pack-id');
+      assert(id && id.length <= 256, 'Saved world card has no bounded project identity.');
+      return { id, title: await card.locator('strong').innerText(), text: await card.innerText() };
+    };
+    const seedScreenshot = async (name) => {
+      active();
+      await page.screenshot({ path: path.join(output, name), fullPage: true });
+      return pin(name, await readFile(path.join(output, name)));
+    };
     const remove = async (id) => {
       active();
       await page.locator('#remove').press('Enter');
@@ -506,7 +575,43 @@ export async function observePracticeCacheRepair({
         await download(); // Also prepare the stable launcher through its public action.
         await ready(id);
       }
-      await checkpoint('all-three-prepared', await snapshot());
+      if (plan.seed) {
+        await openWorldsTab('creator');
+        const before = await snapshot();
+        const projects = before.records.databases
+          .find((row) => row.name === 'revealline-fpv-worlds-v1')
+          ?.stores?.find((row) => row.name === 'projects');
+        assert.equal(projects?.count ?? 0, 0, 'Seed requires a fresh, empty World Studio store.');
+        const template = await page.locator('#creator-template').evaluate((node) => ({
+          value: node.value,
+          label: node.selectedOptions[0]?.textContent ?? '',
+        }));
+        assert(template.value && template.label, 'The ordinary selected template must exist.');
+        await page.locator('#clone-challenge').press('Enter');
+        await page.locator('#creator-title').fill(WORLD_SEED_TITLE);
+        await page.locator('#creator-title').press('Tab');
+        await page.locator('#install-project').press('Enter');
+        await page.waitForFunction(
+          () =>
+            globalThis.document.querySelector('#studio-status')?.textContent ===
+            'World pack is ready to fly.',
+        );
+        await openWorldsTab('packs');
+        const card = await savedWorldCard(),
+          state = await snapshot();
+        assertCacheRepairWorldSeed({ ...state, card });
+        report.worldSeed = {
+          mode: plan.seed,
+          template,
+          card,
+          screenshot: await seedScreenshot('worlds-seeded-library.png'),
+          limitation:
+            'One UI-created template copy; no imported model assets, flight records, profile, regional content or .rlpack import/export qualification.',
+        };
+        await checkpoint('worlds-public-ui-seeded', { ...state, card });
+      }
+      const prepared = await snapshot();
+      await checkpoint('all-three-prepared', prepared);
       for (const id of CACHE_REPAIR_IDS) {
         const spec = specs[id];
         for (const kind of ['missing-dependency', 'missing-worker']) {
@@ -577,6 +682,20 @@ export async function observePracticeCacheRepair({
         await launcher(id);
         await download();
         await ready(id);
+      }
+      if (plan.seed) {
+        await openWorldsTab('packs');
+        const card = await savedWorldCard(),
+          state = await snapshot();
+        assertCacheRepairWorldSeed({ ...state, card }, report.worldSeed.card);
+        assert.deepEqual(
+          state.records,
+          prepared.records,
+          'Saved world records changed after the complete repair matrix.',
+        );
+        report.worldSeed.finalCard = card;
+        report.worldSeed.finalScreenshot = await seedScreenshot('worlds-retained-library.png');
+        await checkpoint('worlds-public-ui-retained', { ...state, card });
       }
       report.procedureComplete = true;
     })().finally(() => {
