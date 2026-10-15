@@ -149,7 +149,10 @@ export function createVerifiedSceneryWindow(
         const cell = scenerySourceCell(cellSource);
         cells.push(cellSource);
         fail(
-          cell.chunkId === chunk.id && cell.x === chunk.x && cell.z === chunk.z,
+          cell.chunkId === chunk.id &&
+            cell.x === chunk.x &&
+            cell.z === chunk.z &&
+            cell.cellSizeMm === manifest.grid.cellSizeMm,
           'Verified collision identity does not match its declared chunk',
         );
         requiredBytes = scenerySourceResources(cells).resourceBytes;
