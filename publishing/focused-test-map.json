@@ -2,6 +2,31 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "release-zip-capacity-analysis",
+      "pathPatterns": ["^scripts/(?:test-)?measure-release-zip-capacity\\.mjs$"],
+      "commands": [
+        {
+          "id": "release-zip-capacity-analysis",
+          "command": "node",
+          "args": ["--test", "scripts/test-measure-release-zip-capacity.mjs"]
+        }
+      ]
+    },
+    {
+      "id": "restored-studio-audio-observer",
+      "pathPatterns": ["^docs/verification/team-duel-desktop-audio/studio.*\\.(?:mjs|html)$"],
+      "commands": [
+        {
+          "id": "restored-studio-audio-observer",
+          "command": "node",
+          "args": [
+            "--test",
+            "docs/verification/team-duel-desktop-audio/studio-probe-model.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "multiplayer-delivery-acceptance",
       "pathPatterns": [
         "^game/(installed-app|downloads)\\.mjs$",
