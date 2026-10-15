@@ -33,6 +33,40 @@ const escape = (value) =>
 const number = (value) => Number(Number(value).toFixed(2));
 const choose = (locale, en, uk) => (locale === 'uk' ? uk : en);
 
+/** Reuse selected, already prepared appearance frames. Tiny PNG strips keep the
+ * existing SVG route/effect diagrams and need no renderer, RAF or blob owner. */
+export function createOverflightUpgradePreviewSprites(
+  document,
+  paintSprite,
+  reducedEffects = false,
+) {
+  if (typeof paintSprite !== 'function') return null;
+  const sprites = {};
+  for (const [kind, size, frames] of [
+    ['drone', 32, reducedEffects ? 1 : 4],
+    ['enemy', 20, 1],
+  ]) {
+    const canvas = document.createElement('canvas');
+    canvas.width = size * frames;
+    canvas.height = size;
+    try {
+      const context = canvas.getContext('2d');
+      if (!context) return null;
+      for (let frame = 0; frame < frames; frame++)
+        paintSprite(context, kind, frame * size + size / 2, size / 2, size, frame / 30);
+      const data = canvas.toDataURL('image/png');
+      if (!/^data:image\/png;base64,[A-Za-z0-9+/]+=*$/.test(data)) return null;
+      sprites[kind] = { data, size, frames };
+    } catch {
+      // A missing/tainted 2D surface must not prevent selecting a legal upgrade.
+      return null;
+    } finally {
+      canvas.width = canvas.height = 0;
+    }
+  }
+  return sprites;
+}
+
 export function overflightUpgradePreviewModel(
   offer,
   { build, player, rulesVersion = 2, riySettings } = {},
@@ -203,10 +237,10 @@ function caption(system, state, locale) {
   ];
 }
 
-const drone = (x, y, extra = '') =>
+const diagramDrone = (x, y, extra = '') =>
   `<g transform="translate(${x} ${y})" ${extra}><path d="M-8-7 8 7M-8 7 8-7" stroke="#81938c" stroke-width="3"/><path d="M-11-9h6v4h-6zm16 0h6v4H5zM-11 5h6v4h-6zm16 0h6v4H5z" fill="#98e6d5" stroke="#142c30"/><path d="M-4-5h8V5h-8z" fill="#eef3d8" stroke="#07171c" stroke-width="2"/><path d="m4-3 5 3-5 3" fill="#f4ce70"/></g>`;
 // The enemy silhouette has no animation: warnings and geometry remain legible.
-const soldier = (x, y) =>
+const diagramSoldier = (x, y) =>
   `<g transform="translate(${x} ${y})"><path d="M-2-6h4v4h3v6H2v3H0V4h-2v3h-2V1h-1v-3h3z" fill="#bd826f" stroke="#292d29" stroke-width="1"/></g>`;
 const circle = (x, y, radius, color, extra = '') =>
   `<circle cx="${x}" cy="${y}" r="${number(radius)}" fill="${color}" fill-opacity=".08" stroke="${color}" stroke-width="1.3" ${extra}/>`;
@@ -215,7 +249,7 @@ const arrow = (x1, y1, x2, y2, color = '#a0bdb8') =>
 const salvage = (x, y, opacity = 1) =>
   `<path d="m${x} ${y - 3} 3 3-3 3-3-3z" fill="#92e4be" opacity="${opacity}"/>`;
 
-function scene(model, state, id, reducedEffects) {
+function scene(model, state, id, reducedEffects, sprites) {
   const { system } = model;
   let body = '',
     styles = '';
@@ -224,6 +258,32 @@ function scene(model, state, id, reducedEffects) {
     const name = `${id}-${kind}`;
     styles += `@keyframes ${name}{${frames}}`;
     return `class="of-preview-animated" style="animation:${name} ${number(duration)}s linear infinite"`;
+  };
+  const native = (kind, x, y) => {
+    const sprite = sprites?.[kind];
+    if (!sprite) return kind === 'drone' ? diagramDrone(x, y) : diagramSoldier(x, y);
+    const { size, frames, data } = sprite;
+    let motion = 'style="image-rendering:pixelated"';
+    if (frames > 1 && !reducedEffects) {
+      const name = `${id}-native-${kind}`;
+      if (!styles.includes(`@keyframes ${name}{`))
+        styles += `@keyframes ${name}{to{transform:translateX(-${size * frames}px)}}`;
+      motion = `class="of-preview-animated" style="image-rendering:pixelated;animation:${name} ${frames / 30}s steps(${frames},end) infinite"`;
+    }
+    return `<svg x="${x - size / 2}" y="${y - size / 2}" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" overflow="hidden" aria-hidden="true"><image href="${data}" width="${size * frames}" height="${size}" ${motion}/></svg>`;
+  };
+  const drone = (x, y) => native('drone', x, y);
+  const soldier = (x, y) => native('enemy', x, y);
+  const collecting = (x, y, centreX, centreY, radius, suffix) => {
+    if (Math.hypot(x - centreX, y - centreY) > radius) return salvage(x, y);
+    const dx = number(centreX - x),
+      dy = number(centreY - y);
+    const motion = animate(
+      `salvage-${suffix}`,
+      2,
+      `0%,15%{transform:translate(0px,0px);opacity:1}70%,100%{transform:translate(${dx}px,${dy}px);opacity:0}`,
+    );
+    return `<path d="M${x} ${y}l${dx / 2} ${dy / 2}" stroke="#8df1c5" stroke-width="1" stroke-dasharray="2 2"/><g ${motion}>${salvage(x, y)}</g>`;
   };
   const flash = (x, y, radius, color, delay, cooldown, suffix = '') => {
     const percent = (seconds) => number(Math.min(99, (seconds / cooldown) * 100));
@@ -235,8 +295,9 @@ function scene(model, state, id, reducedEffects) {
     return circle(x, y, radius, color, `opacity=".28" ${animation}`);
   };
   if (system === 'primary') {
-    const scale = 0.2;
-    const centre = state.rearOffsets ? 106 - state.rearOffsets[0] * scale : 62;
+    const scale = 0.2,
+      releaseX = 72;
+    const centre = releaseX - (state.rearOffsets?.[0] ?? 28) * scale;
     for (let index = 0; index < state.count; index++) {
       const y = 66 + (index - (state.count - 1) / 2) * state.spacing * scale;
       body += circle(centre, y, state.radius * scale, '#efbd70');
@@ -253,14 +314,14 @@ function scene(model, state, id, reducedEffects) {
     }
     for (let index = 1; index <= state.echoes; index++) {
       body += circle(
-        state.rearOffsets ? 106 - state.rearOffsets[index] * scale : centre,
+        state.rearOffsets ? releaseX - state.rearOffsets[index] * scale : centre,
         66,
         (state.echoRadii?.[index] ?? state.radius + index * 27) * scale,
         '#ed9a7c',
         'stroke-dasharray="2 3"',
       );
       body += flash(
-        state.rearOffsets ? 106 - state.rearOffsets[index] * scale : centre,
+        state.rearOffsets ? releaseX - state.rearOffsets[index] * scale : centre,
         66,
         (state.echoRadii?.[index] ?? state.radius + index * 27) * scale,
         '#ffd5ab',
@@ -269,9 +330,9 @@ function scene(model, state, id, reducedEffects) {
         `echo${index}`,
       );
     }
-    body += soldier(37, 53) + soldier(41, 79) + arrow(76, 66, 117, 66);
-    body += `<g opacity=".3">${drone(67.6, 66)}</g>`;
-    body += `<g ${animate('flight', state.cooldown, `0%{transform:translateX(-29.4px)}100%{transform:translateX(${number(-29.4 + 36 * state.cooldown)}px)}`)}>${drone(97, 66)}</g>`;
+    body += soldier(37, 53) + soldier(41, 79) + arrow(86, 66, 126, 66);
+    body += `<g opacity=".3">${drone(releaseX, 66)}</g>`;
+    body += `<g ${animate('flight', state.cooldown, `0%{transform:translateX(0px)}100%{transform:translateX(${number(180 * scale * state.cooldown)}px)}`)}>${drone(releaseX, 66)}</g>`;
   } else if (system.startsWith('riy-')) {
     const rear = system === 'riy-sweeper';
     const startX = rear ? 91 : 54,
@@ -370,16 +431,15 @@ function scene(model, state, id, reducedEffects) {
   } else if (system === 'scanner') {
     const radius = (state.collectionRadius ?? 62) * 0.23;
     body += circle(59, 68, radius, '#86cdb6', 'stroke-dasharray="2 3"') + drone(59, 68);
-    body +=
-      salvage(39, 80) +
-      salvage(79, 85) +
-      salvage(87, 70) +
-      soldier(107, 45) +
-      soldier(125, 67) +
-      soldier(114, 90);
+    for (const [index, [x, y]] of [
+      [49.8, 74.9],
+      [73.72, 79.04],
+      [84.3, 68],
+    ].entries())
+      body += collecting(x, y, 59, 68, radius, index);
+    body += soldier(107, 45) + soldier(125, 67) + soldier(114, 90);
     if (state.rank) {
       body += `<path d="M99 43v-7h7m5 0h6v7m0 6v7h-6m-5 0h-7v-7" fill="none" stroke="#efda8e" stroke-width="2"/>`;
-      body += `<path d="m87 69-11 0m4-3-4 3 4 3M42 81l8-7" fill="none" stroke="#8df1c5" stroke-width="1.5"/>`;
       if (state.chainTargets)
         body += `<path d="m108 48 18 19-11 23" fill="none" stroke="#edc966" stroke-width="2" stroke-dasharray="3 2"/>`;
     }
@@ -411,9 +471,7 @@ function scene(model, state, id, reducedEffects) {
       [107, 53],
       [99, 90],
     ]) {
-      body += salvage(x, y);
-      if (state.rank)
-        body += `<path d="M${x} ${y}L${(x + 72) / 2} ${(y + 66) / 2}" stroke="#9ce6c7" stroke-dasharray="2 2"/>`;
+      body += collecting(x, y, 72, 66, state.collectionRadius * 0.145, x);
     }
     body += `<path d="m${state.rank ? 97 : 94} 61 7 5-7 5m6-10 7 5-7 5" fill="none" stroke="${state.rank ? '#ffe098' : '#60726d'}" stroke-width="2"/>`;
   } else {
@@ -430,7 +488,15 @@ function scene(model, state, id, reducedEffects) {
 
 export function overflightUpgradePreview(
   offer,
-  { locale = 'en', build, player, reducedEffects = false, rulesVersion = 2, riySettings } = {},
+  {
+    locale = 'en',
+    build,
+    player,
+    reducedEffects = false,
+    rulesVersion = 2,
+    riySettings,
+    sprites,
+  } = {},
 ) {
   const model = overflightUpgradePreviewModel(offer, {
     build,
@@ -445,7 +511,7 @@ export function overflightUpgradePreview(
   for (const [index, state] of [model.before, model.after].entries()) {
     const label = index ? choose(locale, 'NEXT', 'ДАЛІ') : choose(locale, 'NOW', 'ЗАРАЗ');
     const lines = caption(model.system, state, locale);
-    const picture = scene(model, state, `${scope}-${index}`, reducedEffects);
+    const picture = scene(model, state, `${scope}-${index}`, reducedEffects, sprites);
     styles += picture.styles;
     descriptions.push(`${label}: ${lines.join('; ')}`);
     panels += `<g transform="translate(${index * 164} 0)"><rect x="1" y="1" width="154" height="151" rx="3" fill="#111f25" stroke="${index ? '#658b7c' : '#34474b'}"/><path d="M12 43h12m100 53h15M30 102h7M100 29h13" stroke="#22343a" stroke-width="2"/><text x="12" y="18" fill="${index ? '#b9e7bd' : '#b0c5c5'}" font-size="12" font-weight="700">${label}</text>${picture.body}<text x="78" y="130" text-anchor="middle" font-size="12" fill="#edf1d9">${escape(lines[0])}</text><text x="78" y="144" text-anchor="middle" font-size="11.5" fill="#b7ceca">${escape(lines[1])}</text></g>`;
