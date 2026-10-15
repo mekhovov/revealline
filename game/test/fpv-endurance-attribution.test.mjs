@@ -185,3 +185,272 @@ test('stop drains available entries once, then freezes retained associations wit
   f.trace.stop();
   assert.deepEqual(f.trace.snapshot(), final);
 });
+
+const preparationReceipt = (extra = {}) => ({
+  sequence: 2,
+  status: 'prepared',
+  objects: 79,
+  batches: 10,
+  submittedBytes: 563724,
+  maxBatchBytes: 206880,
+  compileWaitMs: 40,
+  uploadCpuMs: 9,
+  elapsedMs: 123,
+  gpuCompletionMeasured: false,
+  ...extra,
+});
+
+test('preparation receipt offsets distinguish async lifecycle, completion observation and receipt time', () => {
+  const f = fixture();
+  f.time(1020);
+  const token = f.trace.beginPreparation();
+  f.span('prepare-renderer-submit', 1021, 1022);
+  f.time(1205);
+  assert.equal(
+    f.trace.endPreparation(token, {
+      endedAt: 1200,
+      outcome: 'fulfilled',
+      receipt: preparationReceipt(),
+    }),
+    true,
+  );
+  const row = f.trace.snapshot().preparationReceipts.last[0];
+  assert.equal(row.startElapsedMs, 20);
+  assert.equal(row.endElapsedMs, 200);
+  assert.equal(row.receivedAtElapsedMs, 205);
+  assert.equal(row.elapsedMs, 180);
+  assert.equal(row.outcome, 'fulfilled');
+  assert.equal(row.receipt.compileWaitMs, 40);
+  assert.equal(row.receipt.uploadCpuMs, 9);
+  assert.equal(row.receipt.gpuCompletionMeasured, false);
+  assert.equal(
+    f.trace.snapshot().phases.find(({ phase }) => phase === 'prepare-renderer-submit').maxMs,
+    1,
+  );
+});
+
+test('outer synchronous frame span exposes an unlabelled callback gap without treating an await as CPU', () => {
+  const f = fixture();
+  f.time(1020);
+  const frame = f.trace.begin('frame-callback');
+  f.time(1022);
+  const preparation = f.trace.beginPreparation();
+  f.span('prepare-renderer-submit', 1023, 1024);
+  f.time(1050);
+  assert.equal(f.trace.end(frame), true);
+  f.time(1250);
+  f.trace.endPreparation(preparation, {
+    endedAt: 1240,
+    outcome: 'fulfilled',
+    receipt: preparationReceipt(),
+  });
+  f.send([entry(1020, 240)]);
+  const state = f.trace.snapshot();
+  assert.equal(state.phases.find(({ phase }) => phase === 'frame-callback').maxMs, 30);
+  assert.equal(state.phases.find(({ phase }) => phase === 'prepare-renderer-submit').maxMs, 1);
+  assert.equal(state.preparationReceipts.last[0].elapsedMs, 218);
+  assert.equal(state.lastLongAnimationFrames[0].preparationOverlaps.entries.length, 1);
+  assert.equal(state.lastLongAnimationFrames[0].preparationOverlaps.entries[0].elapsedMs, 218);
+});
+
+test('preparation history stays bounded and discloses overwritten late completions', () => {
+  const f = fixture();
+  f.time(1020);
+  const old = f.trace.beginPreparation();
+  for (let i = 0; i < 20; i++) {
+    f.time(1030 + i * 2);
+    const token = f.trace.beginPreparation();
+    f.time(1031 + i * 2);
+    f.trace.endPreparation(token, {
+      endedAt: 1031 + i * 2,
+      outcome: 'fulfilled',
+      receipt: preparationReceipt({ sequence: i + 3 }),
+    });
+  }
+  f.time(1200);
+  assert.equal(
+    f.trace.endPreparation(old, {
+      endedAt: 1190,
+      outcome: 'fulfilled',
+      receipt: preparationReceipt(),
+    }),
+    false,
+  );
+  const state = f.trace.snapshot().preparationReceipts;
+  assert.equal(state.started, 21);
+  assert.equal(state.settled, 20);
+  assert.equal(state.last.length, 8);
+  assert.equal(state.overwritten, 13);
+  assert.equal(state.lateCompletions, 1);
+  assert.ok(state.last.every(({ id }) => id > old));
+});
+
+test('LoAF preparation associations freeze pending and completed receipts at receive time', () => {
+  const f = fixture();
+  f.time(1020);
+  const token = f.trace.beginPreparation();
+  f.time(1100);
+  f.send([entry(1020, 80)]);
+  const early = f.trace.snapshot().lastLongAnimationFrames[0];
+  assert.equal(early.preparationOverlaps.entries[0].outcome, 'pending');
+  assert.equal(early.preparationOverlaps.entries[0].endElapsedMs, null);
+  f.time(1200);
+  const receipt = preparationReceipt();
+  f.trace.endPreparation(token, { endedAt: 1190, outcome: 'fulfilled', receipt });
+  f.send([entry(1020, 180)]);
+  const later = f.trace.snapshot().lastLongAnimationFrames[1];
+  receipt.uploadCpuMs = 9999;
+  for (let i = 0; i < 12; i++) {
+    f.time(2000 + i);
+    f.trace.beginPreparation();
+  }
+  assert.deepEqual(f.trace.snapshot().lastLongAnimationFrames[0], early);
+  assert.deepEqual(f.trace.snapshot().lastLongAnimationFrames[1], later);
+  assert.equal(later.preparationOverlaps.entries[0].receipt.uploadCpuMs, 9);
+});
+
+test('preparation overlap caps disclose missing examples and discarded history', () => {
+  const f = fixture();
+  for (let i = 0; i < 12; i++) {
+    f.time(1020 + i);
+    f.trace.beginPreparation();
+  }
+  f.time(1200);
+  f.send([entry(1020, 100)]);
+  const row = f.trace.snapshot().lastLongAnimationFrames[0].preparationOverlaps;
+  assert.equal(row.matchingCount, 8);
+  assert.equal(row.entries.length, 2);
+  assert.equal(row.examplesDropped, 6);
+  assert.equal(row.countIsLowerBound, true);
+  assert.equal(row.overwrittenPreparationCount, 4);
+});
+
+test('receipt sanitization copies only finite known fields and never retains error or source text', () => {
+  const f = fixture();
+  f.time(1020);
+  const token = f.trace.beginPreparation();
+  f.time(1200);
+  assert.equal(
+    f.trace.endPreparation(token, {
+      endedAt: 1190,
+      outcome: 'rejected',
+      receipt: preparationReceipt({
+        compileWaitMs: Infinity,
+        uploadCpuMs: -1,
+        objects: 2.5,
+        status: 'https://private.invalid/?token=secret',
+        gpuCompletionMeasured: true,
+        secret: 'do not retain',
+      }),
+    }),
+    true,
+  );
+  const row = f.trace.snapshot().preparationReceipts.last[0];
+  assert.equal(row.outcome, 'rejected');
+  assert.equal(row.receipt.compileWaitMs, null);
+  assert.equal(row.receipt.uploadCpuMs, null);
+  assert.equal(row.receipt.objects, null);
+  assert.equal(row.receipt.status, null);
+  assert.equal(row.receipt.gpuCompletionMeasured, null);
+  assert.equal(JSON.stringify(row).includes('secret'), false);
+  const second = f.trace.beginPreparation();
+  f.time(1210);
+  assert.equal(
+    f.trace.endPreparation(second, {
+      endedAt: 1209,
+      outcome: 'cancelled',
+      receipt: {
+        get sequence() {
+          throw new Error('private');
+        },
+      },
+    }),
+    true,
+  );
+  assert.equal(f.trace.snapshot().preparationReceipts.last[1].receipt, null);
+});
+
+test('invalid offsets stay unknown and returned receipt snapshots cannot mutate retained state', () => {
+  const f = fixture();
+  f.time(1020);
+  const token = f.trace.beginPreparation();
+  f.time(1100);
+  assert.equal(
+    f.trace.endPreparation(token, {
+      endedAt: 1200,
+      outcome: 'fulfilled',
+      receipt: preparationReceipt(),
+    }),
+    false,
+  );
+  assert.equal(f.trace.snapshot().preparationReceipts.last[0].outcome, 'pending');
+  assert.equal(
+    f.trace.endPreparation(token, {
+      endedAt: 1090,
+      outcome: 'fulfilled',
+      receipt: preparationReceipt(),
+    }),
+    true,
+  );
+  const expected = f.trace.snapshot();
+  const edited = f.trace.snapshot();
+  edited.preparationReceipts.last[0].receipt.status = 'mutated';
+  edited.preparationReceipts.last[0].startElapsedMs = 999;
+  assert.deepEqual(f.trace.snapshot(), expected);
+});
+
+test('stop drains existing preparation associations and freezes late completion/cancellation', () => {
+  const f = fixture();
+  f.time(1020);
+  const token = f.trace.beginPreparation();
+  f.time(1200);
+  f.pending([entry()]);
+  f.trace.stop();
+  const final = f.trace.snapshot();
+  assert.equal(final.lastLongAnimationFrames[0].preparationOverlaps.entries[0].outcome, 'pending');
+  f.time(1300);
+  assert.equal(
+    f.trace.endPreparation(token, { endedAt: 1290, outcome: 'cancelled', receipt: null }),
+    false,
+  );
+  assert.equal(f.trace.beginPreparation(), null);
+  f.trace.stop();
+  assert.deepEqual(f.trace.snapshot(), final);
+});
+
+test('saturated preparation and script histories retain bounded private-free diagnostic payloads', () => {
+  const f = fixture(),
+    tokens = [];
+  for (let i = 0; i < 8; i++) {
+    f.time(1020 + i);
+    tokens.push(f.trace.beginPreparation());
+  }
+  f.time(1200);
+  for (const token of tokens)
+    f.trace.endPreparation(token, {
+      endedAt: 1190,
+      outcome: 'fulfilled',
+      receipt: preparationReceipt({ secret: 'private'.repeat(10000) }),
+    });
+  const scripts = Array.from({ length: 80 }, () => ({
+    startTime: 1030,
+    duration: 60,
+    sourceURL: 'https://review.invalid/authoring/fpv-worlds/regions/endurance.mjs?secret=private',
+    sourceFunctionName: 'frame',
+    invokerType: 'user-callback',
+    invoker: 'Window.requestAnimationFrame',
+  }));
+  f.send(Array.from({ length: 24 }, () => entry(1020, 200, { scripts })));
+  const state = f.trace.snapshot(),
+    payload = JSON.stringify(state);
+  assert.equal(state.lastLongAnimationFrames.length, 16);
+  assert.equal(state.preparationReceipts.last.length, 8);
+  assert.ok(
+    state.lastLongAnimationFrames.every(
+      (row) => row.preparationOverlaps.entries.length === 2 && row.scripts.length === 8,
+    ),
+  );
+  assert.equal(state.dropped.longAnimationFrames, 8);
+  assert.ok(payload.length < 128 * 1024);
+  assert.equal(payload.includes('private'), false);
+});
