@@ -9,6 +9,7 @@ import {
   overflightPreviewRequest,
   createOverflightReviewPlayback,
   overflightReviewStopAt,
+  overflightReviewControls,
   createOverflightKeyboardState,
   createOverflightJSONPages,
 } from '../overflight/host-loop.mjs';
@@ -23,6 +24,99 @@ import {
 import { DEFAULT_OVERFLIGHT_PROJECT, compileOverflightProject } from '../overflight/project.mjs';
 import { OVERFLIGHT_COPY } from '../overflight/copy.mjs';
 import { createOverflightReviewRecorder } from '../overflight/review-recorder.mjs';
+
+test('review provenance and pilot inputs share the selected route without changing prior defaults', () => {
+  for (const mode of ['overflight', 'overflight-riy']) {
+    for (const build of ['fan', 'echo', 'systems', 'echo-scanner']) {
+      const original = overflightReviewControls({ mode, build });
+      assert.deepEqual(original, { route: 'tight', pilotArgument: 'tight' });
+      assert.deepEqual(overflightReviewControls({ mode, build, route: 'unknown' }), original);
+      for (const route of ['tight', 'figure-eight']) {
+        const controls = overflightReviewControls({ mode, build, route });
+        assert.deepEqual(controls, { route, pilotArgument: route });
+        const calls = [];
+        const review = createOverflightReviewPlayback({
+          build,
+          route: controls.pilotArgument,
+          pilot: (run, received) => {
+            calls.push(received);
+            return { x: 1, y: 0, boost: false };
+          },
+          selectCard: () => null,
+        });
+        review.input({ tick: 0, time: 0 });
+        review.input({ tick: 5, time: 5 / 60 });
+        review.input({ tick: 6, time: 0.1 });
+        assert.deepEqual(calls, [controls.route, controls.route]);
+      }
+    }
+  }
+  assert.deepEqual(overflightReviewControls({ mode: 'overflight', build: null, route: 'tight' }), {
+    route: null,
+    pilotArgument: null,
+  });
+  assert.deepEqual(
+    overflightReviewControls({ mode: 'overflight-hunt', build: 'objectives', route: 'tight' }),
+    { route: 'objectives', pilotArgument: 'objectives' },
+  );
+  assert.deepEqual(
+    overflightReviewControls({ mode: 'overflight-hunt', build: 'breaker', route: 'figure-eight' }),
+    { route: 'packs', pilotArgument: 'breaker' },
+  );
+});
+
+test('native entry forwards an explicit review route through both wrappers and records that same route', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const variable = (name) =>
+    ast.body.flatMap((node) => node.declarations ?? []).find((node) => node.id.name === name);
+  const base = variable('mode').init.alternate.properties.find(
+    (node) => node.key.name === 'pilot',
+  ).value;
+  const forwarded = variable('review').init.arguments[0].properties.find(
+    (node) => node.key.name === 'pilot',
+  ).value;
+  const identity = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'reviewIdentity',
+  );
+  for (const route of ['tight', 'figure-eight']) {
+    const calls = [];
+    const nativePilot = runInNewContext(`(${source.slice(base.start, base.end)})`, {
+      pilot: (run, received) => {
+        calls.push(received);
+        return { x: 1, y: 0, boost: false };
+      },
+    });
+    const reviewControls = overflightReviewControls({
+      mode: 'overflight-riy',
+      build: 'echo',
+      route,
+    });
+    const forwarder = runInNewContext(`(${source.slice(forwarded.start, forwarded.end)})`, {
+      mode: { pilot: nativePilot },
+    });
+    const playback = createOverflightReviewPlayback({
+      build: 'echo',
+      route: reviewControls.pilotArgument,
+      pilot: forwarder,
+      selectCard: () => null,
+    });
+    playback.input({ tick: 0, time: 0 });
+    assert.deepEqual(
+      calls,
+      [route],
+      'neither native wrapper may silently replace the chosen route',
+    );
+    const report = runInNewContext(
+      `${source.slice(identity.start, identity.end)}; reviewIdentity()`,
+      { reviewBuild: 'echo', reviewStopAt: null, reviewControls },
+    );
+    assert.equal(report.route, calls[0]);
+  }
+});
 
 test('native variant mission picker queries progress only for supported installed projects', async () => {
   const { readFile } = await import('node:fs/promises');
