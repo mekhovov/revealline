@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer } from './game-cli.mjs';
+import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
 import {
   OBSERVED_PACKAGES,
   OPERATION_TIMEOUT_MS,
@@ -112,6 +113,15 @@ const entries = new Map(),
 let served, context, cdp, report;
 let currentStep = 'staging admitted packages';
 const acquiringResources = { pending: new Set(), errors: [] };
+const statusDiagnosticsEnabled = process.env.OPTIONAL_INSTALLATION_DIAGNOSTICS === '1';
+const statusDiagnostics = { events: [], dropped: 0 };
+const diagnosticURL = new URL('./optional-installation-diagnostics.mjs', import.meta.url);
+const diagnosticSha256 = statusDiagnosticsEnabled ? sha(await readFile(diagnosticURL)) : null;
+function recordStatusDiagnostic(event) {
+  if (statusDiagnostics.events.length < 4096)
+    statusDiagnostics.events.push({ step: currentStep, receivedAt: Date.now(), ...event });
+  else statusDiagnostics.dropped++;
+}
 const observationDeadline = Date.now() + OBSERVATION_TIMEOUT_MS;
 function requireObservationTime() {
   if (Date.now() >= observationDeadline)
@@ -137,6 +147,36 @@ async function launchBrowser(offline = false) {
   });
   context.setDefaultTimeout(OPERATION_TIMEOUT_MS);
   context.setDefaultNavigationTimeout(OPERATION_TIMEOUT_MS);
+  if (statusDiagnosticsEnabled) {
+    await context.exposeBinding('__optionalStatusDiagnostic', ({ frame }, event) => {
+      recordStatusDiagnostic({ documentURL: frame.url(), event });
+    });
+    await context.addInitScript(installOptionalStatusDiagnostics);
+    const diagnosticPage = context.pages()[0] ?? (await context.newPage());
+    const diagnosticSession = await context.newCDPSession(diagnosticPage);
+    diagnosticSession.on('ServiceWorker.workerErrorReported', ({ errorMessage }) => {
+      recordStatusDiagnostic({
+        workerError: {
+          versionId: errorMessage.versionId,
+          sourceURL: errorMessage.sourceURL,
+          errorMessage: errorMessage.errorMessage?.slice(0, 1000),
+          lineNumber: errorMessage.lineNumber,
+        },
+      });
+    });
+    diagnosticSession.on('ServiceWorker.workerVersionUpdated', ({ versions }) => {
+      for (const worker of versions)
+        recordStatusDiagnostic({
+          workerVersion: {
+            versionId: worker.versionId,
+            scriptURL: worker.scriptURL,
+            status: worker.status,
+            runningStatus: worker.runningStatus,
+          },
+        });
+    });
+    await diagnosticSession.send('ServiceWorker.enable');
+  }
   context.on('page', (newPage) => newPage.on('pageerror', (error) => errors.push(error.message)));
 }
 const relativeRoot = (id) => `revealline/practice/${id}/`;
@@ -838,6 +878,16 @@ try {
     ...(cleanupErrors.length ? { retainedDirectory: work } : { temporaryProfileRemoved: true }),
   };
   report.passed &&= !cleanupErrors.length;
+  if (statusDiagnosticsEnabled) {
+    report.statusDiagnostics = {
+      ...statusDiagnostics,
+      sourceSha256: diagnosticSha256,
+      sourceStable: diagnosticSha256 === sha(await readFile(diagnosticURL)),
+      limitation:
+        'Opt-in observer wrappers forward original message/registration calls and capture only offline-status events. Admitted package files are unchanged; API instrumentation can affect scheduling, so this is diagnostic evidence rather than an uninstrumented acceptance run.',
+    };
+    report.passed &&= report.statusDiagnostics.sourceStable;
+  }
   await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   console.log(
     JSON.stringify({
