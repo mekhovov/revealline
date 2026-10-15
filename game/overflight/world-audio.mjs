@@ -17,6 +17,7 @@ export function createOverflightWorldAudio(sound) {
     shots = new Map(),
     nextAmbience = 0,
     nextEscort = 0,
+    lastEscortRole = null,
     quietUntil = 0;
   const stopAmbience = () => {
     for (const voice of sound.voices ?? [])
@@ -28,6 +29,7 @@ export function createOverflightWorldAudio(sound) {
     warnings.clear();
     shots.clear();
     nextAmbience = nextEscort = quietUntil = 0;
+    lastEscortRole = null;
   }
   return {
     reset,
@@ -84,16 +86,29 @@ export function createOverflightWorldAudio(sound) {
           ...overflightAudioSpatial(run, charge.attack),
           progress: charge.progress,
         });
+      let escortCue = null;
       for (const escort of run.riy?.escorts ?? []) {
         const previous = shots.get(escort) ?? escort.shots;
         shots.set(escort, escort.shots);
-        if (escort.shots > previous && !foreground && !audibleWarning && now >= nextEscort) {
-          sound.encounter('escort-shot', {
-            ...overflightAudioSpatial(run, escort),
-            role: escort.role,
-          });
-          nextEscort = now + 0.65;
-        }
+        if (
+          escort.shots > previous &&
+          !foreground &&
+          !audibleWarning &&
+          now >= nextEscort &&
+          overflightAudioSpatial(run, escort).audible &&
+          (!escortCue || (escortCue.role === lastEscortRole && escort.role !== lastEscortRole))
+        )
+          escortCue = escort;
+      }
+      // Simultaneous shots share one slot. Rotate roles so array order cannot
+      // permanently hide Breaker's sound; distant/suppressed shots never queue.
+      if (escortCue) {
+        sound.encounter('escort-shot', {
+          ...overflightAudioSpatial(run, escortCue),
+          role: escortCue.role,
+        });
+        nextEscort = now + 0.65;
+        lastEscortRole = escortCue.role;
       }
       const world = run.compiled?.presentation?.world;
       if (world && !foreground && !audibleWarning && now >= quietUntil && now >= nextAmbience) {

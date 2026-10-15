@@ -1,0 +1,374 @@
+{
+  "source": "d40c8c6caa469224018514ffbff77e437438d7b9",
+  "expectedRegressionObserved": true,
+  "samples": [
+    {
+      "xM": 128,
+      "zM": 116,
+      "expectedHeightMm": 1600,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 1500
+    },
+    {
+      "xM": 128,
+      "zM": 116.5,
+      "expectedHeightMm": 1787.5,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 1312.5
+    },
+    {
+      "xM": 128,
+      "zM": 117,
+      "expectedHeightMm": 1975,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 1125
+    },
+    {
+      "xM": 128,
+      "zM": 118,
+      "expectedHeightMm": 2350,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 750
+    },
+    {
+      "xM": 128,
+      "zM": 119,
+      "expectedHeightMm": 2725,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 375
+    },
+    {
+      "xM": 128,
+      "zM": 119.5,
+      "expectedHeightMm": 2912.5,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 187.5
+    },
+    {
+      "xM": 128,
+      "zM": 120,
+      "expectedHeightMm": 3100,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 3100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 0
+    },
+    {
+      "xM": 128,
+      "zM": 123.5,
+      "expectedHeightMm": 4412.5,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "heightMm": 4312.500095367432,
+        "normal": {
+          "x": 0,
+          "y": 0.936329185962677,
+          "z": -0.3511234521865845
+        },
+        "layer": "terrain"
+      },
+      "absoluteErrorMm": 99.99990463256836
+    },
+    {
+      "xM": 128,
+      "zM": 124,
+      "expectedHeightMm": 4600,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 6100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 1500
+    },
+    {
+      "xM": 128,
+      "zM": 127.5,
+      "expectedHeightMm": 5912.5,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 6100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 187.5
+    },
+    {
+      "xM": 128,
+      "zM": 128,
+      "expectedHeightMm": 6100,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "heightMm": 6099.999523162842,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 0.000476837158203125
+    },
+    {
+      "xM": 128,
+      "zM": 131.5,
+      "expectedHeightMm": 7412.5,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-1",
+        "heightMm": 7312.499618530273,
+        "normal": {
+          "x": 0,
+          "y": 0.936329185962677,
+          "z": -0.3511234521865845
+        },
+        "layer": "terrain"
+      },
+      "absoluteErrorMm": 100.00038146972656
+    },
+    {
+      "xM": 128,
+      "zM": 132,
+      "expectedHeightMm": 7600,
+      "actual": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "heightMm": 9100,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "absoluteErrorMm": 1500
+    }
+  ],
+  "lowPasses": [
+    {
+      "z": 117.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0.4647020995616913,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 118,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 118.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 119,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 125.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0.4652579128742218,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 126,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 126.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 127,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 133.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0.464792400598526,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 134,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 134.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 135,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 141.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0.46456775069236755,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 142,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 142.5,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    },
+    {
+      "z": 143,
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0,
+        "layer": "scenery"
+      }
+    }
+  ],
+  "scope": "Old source preserved; flat slabs create up-to-1.5m mismatch and block a low pass."
+}
