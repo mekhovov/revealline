@@ -8,6 +8,7 @@ import {
 import { captureInstallPrompt, installInstructions } from '../ui/pwa-install.mjs';
 import { setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { INSTALLED_STATE_KEY } from '../installed-app.mjs';
 
 function setup(options = {}) {
   const document = new Document(),
@@ -263,3 +264,136 @@ test('untrusted frames, hidden pages and closed panels never suppress foreground
   assert.equal(losses, 3);
   h.panel.dispose();
 });
+
+for (const interruption of ['close', 'hidden', 'pagehide', 'dispose', 'request cancellation'])
+  test(`embedded edition activation cannot commit after ${interruption} while waiting for its switch lock`, async () => {
+    const h = setup({ canActivate: () => true });
+    const previous = {
+      version: '1.0.0',
+      scope: 'https://game.example/revealline/releases/v1.0.0/site/',
+      selection: ['base', 'team:harbors', 'versus:harbors'],
+      allGameplay: false,
+    };
+    const candidate = {
+      ...previous,
+      version: '2.0.0',
+      scope: new URL('../', h.window.location).href,
+    };
+    h.window.localStorage.setItem(
+      INSTALLED_STATE_KEY,
+      JSON.stringify({ active: previous, pending: candidate }),
+    );
+    const before = h.window.localStorage.getItem(INSTALLED_STATE_KEY);
+    let release;
+    h.window.navigator.locks = {
+      request: (_name, options, callback) =>
+        new Promise((resolve, reject) => {
+          release = () => Promise.resolve((callback || options)()).then(resolve, reject);
+        }),
+    };
+    h.panel.open();
+    const iframe = h.connect(),
+      results = [];
+    let finished;
+    const completion = new Promise((resolve) => {
+      finished = resolve;
+    });
+    const port = { postMessage: (value) => results.push(value), close: () => finished() };
+    h.send(iframe, { action: 'activate', candidate }, { ports: [port] });
+    assert.equal(typeof release, 'function');
+    if (interruption === 'close') h.panel.close();
+    if (interruption === 'hidden') {
+      h.document.hidden = true;
+      h.document.emit('visibilitychange');
+    }
+    if (interruption === 'pagehide') h.window.emit('pagehide', { persisted: true });
+    if (interruption === 'dispose') h.panel.dispose();
+    if (interruption === 'request cancellation')
+      port.onmessage({ data: { format: 'revealline.offline-panel.v1', action: 'cancel' } });
+    release();
+    await completion;
+    assert.equal(results.length, 1);
+    assert.equal(results[0].activated, false);
+    assert.match(results[0].message, /abort/i);
+    assert.equal(h.window.localStorage.getItem(INSTALLED_STATE_KEY), before);
+    assert.equal(port.onmessage, null, 'Settled requests release their cancellation listener.');
+    h.panel.dispose();
+  });
+
+for (const action of ['Back', 'Escape'])
+  test(`${action} cancels activation before the native queued close event can run`, async (t) => {
+    const h = setup({ canActivate: () => true });
+    const previous = {
+      version: '1.0.0',
+      scope: 'https://game.example/revealline/releases/v1.0.0/site/',
+      selection: ['base'],
+      allGameplay: false,
+    };
+    const candidate = {
+      ...previous,
+      version: '2.0.0',
+      scope: new URL('../', h.window.location).href,
+    };
+    const before = JSON.stringify({ active: previous, pending: candidate });
+    h.window.localStorage.setItem(INSTALLED_STATE_KEY, before);
+    let release, switchSignal, queuedClose;
+    h.window.navigator.locks = {
+      request: (_name, options, callback) => {
+        switchSignal = options.signal;
+        return new Promise((resolve, reject) => {
+          release = () =>
+            Promise.resolve()
+              .then(() => callback({}))
+              .then(resolve, reject);
+        });
+      },
+    };
+    h.panel.open();
+    const iframe = h.connect(),
+      dialog = h.panel.root(),
+      results = [];
+    const realClose = dialog.close.bind(dialog);
+    // Native close() removes open immediately but dispatches close in a later
+    // task. Retain every other finite DOM behavior and delay only that event.
+    const emit = dialog.emit.bind(dialog);
+    dialog.emit = (name, options) => {
+      if (name === 'close') {
+        queuedClose = () => emit(name, options);
+        return;
+      }
+      return emit(name, options);
+    };
+    dialog.close = realClose;
+    let finished;
+    const completion = new Promise((resolve) => {
+      finished = resolve;
+    });
+    t.after(() => {
+      h.panel.dispose();
+      release?.();
+      queuedClose?.();
+    });
+    h.send(
+      iframe,
+      { action: 'activate', candidate },
+      { ports: [{ postMessage: (value) => results.push(value), close: () => finished() }] },
+    );
+    assert.ok(switchSignal);
+    if (action === 'Back') h.panel.close();
+    else {
+      const event = dialog.emit('cancel', { cancelable: true, bubbles: false });
+      if (!event.defaultPrevented) dialog.close();
+    }
+    assert.equal(dialog.open, false);
+    assert.equal(
+      switchSignal.aborted,
+      true,
+      'Closing intent must retire activation before queued close dispatch',
+    );
+    release();
+    await completion;
+    assert.equal(results[0].activated, false);
+    assert.match(results[0].message, /abort/i);
+    assert.equal(h.window.localStorage.getItem(INSTALLED_STATE_KEY), before);
+    queuedClose();
+  });
