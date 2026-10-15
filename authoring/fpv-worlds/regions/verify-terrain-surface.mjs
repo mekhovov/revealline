@@ -32,6 +32,9 @@ for (const [surfaceStyle, surfaceQuality] of [
   ['tropical', 'performance'],
   ['tropical', 'balanced'],
   ['tropical', 'quality'],
+  ['tropical-settlement', 'performance'],
+  ['tropical-settlement', 'balanced'],
+  ['tropical-settlement', 'quality'],
 ]) {
   const window = await prepareTerrainWindow(manifest, cells, {
     requiredChunkIds: chunks.map((c) => c.id),
