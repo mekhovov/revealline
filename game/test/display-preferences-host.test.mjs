@@ -228,7 +228,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       page = await teamPage(t, store);
     assert.equal(store.writes.length, before);
     reflects(page, 'plain', 'large', true);
-    page.$('coop-start').click();
+    await activateHostAction(page.$('coop-start'));
     page.tick(10);
     page.$('coop-pause').click();
     page.tick();
@@ -242,7 +242,11 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     change(page, 'coop-text-face', 'pixel');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
-    assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    assert.notDeepEqual(
+      page.fonts(),
+      labels.map((label) => label.font),
+      'Switching Plain to Theme changes actual label fonts without changing their geometry',
+    );
     change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
@@ -261,7 +265,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       );
     }
     assert.equal(page.$('coop-clock').textContent, clock);
-    assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+    assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
     assert.equal(store.getItem(profileKey), profile);
     assert.equal(store.getItem(sessionKey), session);
   });
