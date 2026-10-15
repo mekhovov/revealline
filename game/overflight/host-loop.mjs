@@ -348,9 +348,13 @@ export function createOverflightReviewPlayback({
   stopAt = null,
   enabled = true,
   trace = false,
+  detailTick = null,
 }) {
   const traceSamples = [],
     traceCapacity = 7200;
+  const traceDetails = [];
+  const detailAt =
+    Number.isSafeInteger(detailTick) && detailTick >= 0 && detailTick <= 43200 ? detailTick : null;
   let traceDropped = 0;
   const stopSeconds = overflightReviewStopAt(stopAt, { build, diagnostics: true });
   let automatic = !!build && enabled;
@@ -368,6 +372,7 @@ export function createOverflightReviewPlayback({
             capacity: traceCapacity,
             dropped: traceDropped,
             samples: structuredClone(traceSamples),
+            details: structuredClone(traceDetails),
           }
         : null,
     active: () => automatic,
@@ -379,6 +384,7 @@ export function createOverflightReviewPlayback({
     },
     reset() {
       traceSamples.length = 0;
+      traceDetails.length = 0;
       traceDropped = 0;
       lastTick = null;
       input = { x: 0, y: 0, boost: false };
@@ -396,6 +402,43 @@ export function createOverflightReviewPlayback({
         if (trace) {
           if (traceSamples.length < traceCapacity) traceSamples.push(reviewTraceSample(run, input));
           else traceDropped++;
+          if (detailAt !== null && run.tick >= detailAt && traceDetails.length < 2) {
+            const keys = [
+              'id',
+              'family',
+              'role',
+              'x',
+              'y',
+              'hp',
+              'armor',
+              'radius',
+              'speed',
+              'heading',
+              'warning',
+              'attackWarning',
+              'exposureRemaining',
+              'steeringX',
+              'steeringY',
+              '_motionVX',
+              '_motionVY',
+              '_motionSeconds',
+              'movementPreset',
+              'movementPhase',
+              'movementRemaining',
+              'movementFacing',
+              'pattern',
+              'behaviorPhase',
+              'phaseRemaining',
+              'slowUntil',
+              'slowMultiplier',
+            ];
+            traceDetails.push({
+              tick: run.tick,
+              enemies: run.enemies
+                .filter((enemy) => enemy.active)
+                .map((enemy) => Object.fromEntries(keys.map((key) => [key, enemy[key] ?? null]))),
+            });
+          }
         }
       }
       return input;
