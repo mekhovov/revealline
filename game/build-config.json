@@ -291,6 +291,7 @@
     "optional-practice/civilian-fpv/regional/terrain-surface.mjs",
     "optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
     "optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+    "optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
     "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
     "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
     "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",

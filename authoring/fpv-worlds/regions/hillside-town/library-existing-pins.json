@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "base": "7de653d8dee104a9cf04c88efab355a9301eebab",
+  "oldPins": 5,
+  "newPins": 6,
+  "existingRowsIdentical": true,
+  "existingRowsSHA256": "b17f49705426a02804cf2dd542d90539a4c23b18395d2e8b6e86aa2b0e43462b"
+}

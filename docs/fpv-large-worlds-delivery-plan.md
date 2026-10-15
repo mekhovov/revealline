@@ -5,6 +5,28 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — regional release continuation
+
+This later checkpoint keeps the roadmap **open**. Native normal-player checks now
+pass on the fresh Canyon `f478723d` and Coastal `b886b732` packages: saved downloads,
+explicit arm, safe mode/start changes and retained downloads after reload. Canyon
+#1368 merged; Coastal's concurrent catalogue conflict is reconciled while retaining
+both Canyon revisions and every existing immutable identity. Older screenshot and
+package evidence keeps its original revision attribution.
+
+Optional 512 m cells #1372, Desert source #1378, delivery #1389 and materials #1390
+have merged. Its Library admission remains separate. Coastal water #1364 has also
+merged after exact source parity with its native review. Hillside's ground
+foundation #1397 and supported Coaster revision #1398 are focused drafts; old
+Coaster delivery/Library pins and the rejected floating-loop review are retained.
+
+Next independent source work is the Alpine Highlands **4.096 km bounded study**:
+six varied relief/landmark districts and connected routes. This does not fulfil
+the eventual 8 km natural-region target. It retains current byte, source and
+collision limits and requires native appearance review before Library admission.
+See `fpv-native-regional-release-20261015.md` for bounded observations. Continue
+P1 admission, P2 art, P3 source authoring and P4/D6 release work in parallel.
+
 ## 15 October — elapsed pass and native admission progression
 
 This checkpoint supersedes the historical entries below. The complete roadmap
