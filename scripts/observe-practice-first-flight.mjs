@@ -180,15 +180,62 @@ async function waitPhase(page, spec, accepted) {
     { spec, accepted },
   );
 }
-async function activate(page, selector, result) {
+export async function activateFirstFlightControl(page, selector, result, modality = 'keyboard') {
   const target = page.locator(selector);
   await target.waitFor({ state: 'visible' });
   await page.waitForFunction((selector) => {
     const node = globalThis.document.querySelector(selector);
     return node && !node.disabled && node.getAttribute('aria-disabled') !== 'true';
   }, selector);
-  result.actions.push({ selector, action: 'public-control Enter', at: Date.now() });
-  await target.press('Enter');
+  result.actions.push({
+    selector,
+    action: modality === 'pointer' ? 'public-control pointer click' : 'public-control Enter',
+    at: Date.now(),
+  });
+  if (modality === 'pointer') await target.click();
+  else await target.press('Enter');
+}
+const activate = activateFirstFlightControl;
+
+export async function returnFirstFlightHome(page, spec, result) {
+  const primary = page.locator(`#${spec.shell}-action-primary`);
+  const back = `#${spec.shell}-action-settings-back`;
+  const settings = page.locator(`#${spec.shell}-settings-dialog`);
+  // A mode change can reset the settings panel stack. Observe the public
+  // dialog's open state: Home can remain laid out behind this modal, so its
+  // isVisible() is not evidence that Settings has closed or Home is actionable.
+  for (let i = 0; i < 2 && (await settings.getAttribute('open')) !== null; i++) {
+    if (!(await page.locator(back).isVisible())) break;
+    await activate(page, back, result);
+  }
+  assert.equal(
+    await settings.getAttribute('open'),
+    null,
+    'Settings did not close after public Back.',
+  );
+  assert.notEqual(
+    await page.locator(`#${spec.shell}-home-dialog`).getAttribute('open'),
+    null,
+    'Home did not reopen after Settings.',
+  );
+  await primary.waitFor({ state: 'visible' });
+}
+
+export async function retryFirstFlight(page, spec, result) {
+  if (spec.package === 'civilian-flight')
+    return activate(page, `#${spec.shell}-action-pause-restart`, result);
+  const dialog = `#${spec.shell}-pause-dialog[open]`;
+  const retry = page.locator(dialog).getByRole('button', { name: 'Retry', exact: true });
+  await retry.waitFor({ state: 'visible' });
+  assert(await retry.isEnabled(), 'Public Retry is disabled.');
+  result.actions.push({
+    selector: dialog + ' role=button[name=Retry]',
+    id: await retry.getAttribute('id'),
+    practiceAction: await retry.getAttribute('data-practice-action'),
+    action: 'public-control Enter',
+    at: Date.now(),
+  });
+  await retry.press('Enter');
 }
 async function fly(page, spec, baseline, result, name) {
   await waitPhase(page, spec, ['active', 'playing']);
@@ -214,7 +261,10 @@ async function fly(page, spec, baseline, result, name) {
   }
 }
 async function pause(page, spec, result, name) {
-  await activate(page, `#${spec.shell}-action-pause`, result);
+  // Gym pauses on focus leaving its arena. A keyboard-focus+Enter on this
+  // toggle would resume it. Ordinary pointer activation preserves the button's
+  // press-time Pause intent using the shell's existing pointerdown handling.
+  await activate(page, `#${spec.shell}-action-pause`, result, 'pointer');
   await waitPhase(page, spec, ['paused']);
   const samples = [];
   result[name] = samples;
@@ -248,8 +298,7 @@ async function runCase(page, spec, { origin, version, password, result, output }
     await activate(page, '#academy-settings-tab-gameplay', result);
     await page.locator('#mode').selectOption(spec.mode);
     assert.equal(await page.locator('#mode').inputValue(), spec.mode);
-    await activate(page, '#academy-shell-action-settings-back', result);
-    await activate(page, '#academy-shell-action-settings-back', result);
+    await returnFirstFlightHome(page, spec, result);
   }
   await activate(page, `#${spec.shell}-action-primary`, result);
   await waitPhase(page, spec, ['active', 'playing']);
@@ -271,7 +320,7 @@ async function runCase(page, spec, { origin, version, password, result, output }
   }
   await fly(page, spec, result.initial, result, 'movement');
   await pause(page, spec, result, 'paused');
-  await activate(page, `#${spec.shell}-action-pause-restart`, result);
+  await retryFirstFlight(page, spec, result);
   await waitPhase(page, spec, ['ready', 'disarmed', 'paused', 'active', 'playing']);
   // World scene preparation is asynchronous. Require the public reset witness,
   // not merely the previous paused state that can survive until it finishes.
@@ -289,16 +338,22 @@ async function runCase(page, spec, { origin, version, password, result, output }
   } while (true);
   result.retryPhase = await phase(page, spec);
   assertFirstFlightReset(result.initial.values, result.retry.values);
-  // Retry is an explicit start action in these shared shells. Record the actual
-  // phase; never assert that an auto-starting Retry secretly stayed disarmed.
+  // Gym's generic Retry auto-starts. FPV's visible tutorial Retry leaves a new
+  // disarmed/paused attempt. Record the real phase and arm explicitly via the
+  // documented two-stick Space shortcut after scene readiness.
   if (['ready', 'disarmed', 'paused'].includes(result.retryPhase)) {
-    const selector =
-      spec.package === 'fpv-worlds'
-        ? '#world-arm'
-        : spec.package === 'civilian-fpv'
-          ? '#arm'
-          : '#start';
-    await activate(page, selector, result);
+    const arm = spec.package === 'fpv-worlds' ? '#world-arm' : '#arm';
+    await page.waitForFunction((selector) => {
+      const node = globalThis.document.querySelector(selector);
+      return node && !node.disabled;
+    }, arm);
+    await page.locator(spec.viewport).click();
+    result.actions.push({
+      selector: spec.viewport,
+      action: 'documented Space arm/resume',
+      at: Date.now(),
+    });
+    await page.keyboard.press('Space');
   }
   await fly(page, spec, result.retry, result, 'retryMovement');
   await pause(page, spec, result, 'retryPaused');
@@ -343,8 +398,8 @@ export async function observePracticeFirstFlight({
     authority: [],
     resourceAcquisitions: [],
     limitations: [
-      'Automated EN keyboard workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.',
-      'Controls use public Enter activation and a public viewport click, not a full Tab-navigation or first-pointer test.',
+      'Automated EN mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.',
+      'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
       'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
       'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
       'Motion uses visible rounded HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
