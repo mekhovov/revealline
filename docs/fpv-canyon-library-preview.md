@@ -1,0 +1,51 @@
+# Canyon regional Library preview
+
+The Library now offers the exact rounded Canyon arrival region qualified in #1317.
+It is a **384 × 384 m** unscored preview with basin, gorge, twin-spire and ridge
+routes. The separate 768 m terrain study is not included. Existing Railway and
+Urban downloads, including previously saved revisions, remain unchanged.
+
+The row points to the immutable source commit
+`5591a1ccbc9302665cc2e97c0cc13f96affae4e8`. Its strict v1 descriptor is 6,790 bytes,
+SHA-256 `5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0`.
+The complete descriptor/payload download is 1,180,140 bytes. All 39 remote responses
+were verified before the row was added. Source licenses and route/collision receipts
+remain alongside that immutable delivery; nothing is copied into the core player.
+
+Only this exact verified identity receives the existing Canyon sediment appearance.
+Unknown hashes or mismatched identities retain plain terrain. The existing quality
+preference selects Performance, Balanced or Quality without changing source vertices,
+normals, indices, collision or simulation rules.
+
+## Verification
+
+`verify-library-appearance.mjs <source-pair> canyon` prepares actual production
+regional sessions at all three tiers, checks the expected material and matching
+geometry digest, verifies disarmed zero-tick entry, and checks disposal. The
+unknown-pin case uses plain materials with the same geometry. The previous Railway
+invocation remains supported and passes unchanged.
+
+The Canyon initial resident area uses 288,216 geometry bytes and no texture bytes.
+Its position/normal/index digest is
+`45f313c3e9fb4ad1b1c5f4840f4e357931a0d5b691a8ba48ad10d6485900e3cf`
+at every tier and in the plain fallback. Focused formatting and lint pass.
+
+Native shared-renderer review of the exact delivery also passed: Balanced initial
+preparation produced 40 objects in five upload batches. Live Performance/Quality
+selection retained geometry; neighbour staging adopted 60 objects in eight batches,
+447,336 geometry bytes. Sixty-three visible frames were observed during that
+546.3 ms whole operation. Release returned geometry and reservations to zero.
+These are bounded preparation observations, not GPU or sustained-FPS measurements.
+
+## Delivery boundary
+
+This increment follows Urban row #1316 and the shared appearance hook #1310.
+Cold first-launch preparation requires the separate host correction #1314. The
+normal-player native review must identify that combined source explicitly; it does
+not qualify an earlier package that lacks the correction.
+
+Normal Library download, reload, deliberate flight and pause are still pending for
+this row. Exact-package/offline and physical-device qualification remain separate.
+The stylized, visibly coarse landscape is a bounded preview, not finished realism
+or evidence of an unlimited world. Existing module, source, residency and offline
+budgets remain unchanged.

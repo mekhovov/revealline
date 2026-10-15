@@ -4,6 +4,26 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'canyon-arrival-landmarks-study',
+    title: {
+      en: 'Canyon Badlands — regional preview',
+      uk: 'Каньйон — огляд регіону',
+    },
+    description: {
+      en: '384 × 384 m · basin, gorge and rock openings · unscored free flight. A stylized regional preview with twin spires, ridge passages and clear practice routes.',
+      uk: '384 × 384 м · улоговина, ущелина та отвори у скелях · вільний політ без заліку. Стилізований огляд регіону з парними шпилями, проходами на хребті й відкритими тренувальними маршрутами.',
+    },
+    bytes: 1180140,
+    appearance: {
+      terrain: 'canyon',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json',
+      bytes: 6790,
+      sha256: '5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0',
+    },
+  },
+  {
     id: 'railway-valley-study',
     title: {
       en: 'Railway Valley — regional preview',
