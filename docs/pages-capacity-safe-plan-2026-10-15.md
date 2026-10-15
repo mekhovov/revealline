@@ -1,5 +1,45 @@
 # Safe Pages capacity work — 2026-10-15
 
+## Current verified status and next implementation
+
+PR #1484 merged as `6bca80b42c788160c06aad60a7a7fdbc412880b6`.
+Checkpoints 1 and 2a subsequently passed on production. For example, successful
+publication run `38797214892` deployed `d6f93f71d889912832abeec74dc5efc3e626c857`
+and its build, deploy and verify jobs all succeeded. Its receipts report 3,422
+files, 963,235,849 staged bytes and an actual 966,215,680-byte archive. The
+inventory checksum was independently matched to both receipts. Archive headroom
+under the unchanged 980,000,000-byte guard was 13,784,320 bytes. Later main
+revisions require their own measurements; this is not a capacity reservation.
+
+The historical checkpoint sections below retain their original verification
+boundaries. Their then-pending production execution is now complete; durable
+recovery and capacity reduction are not.
+
+The next isolated branch starts from refreshed main
+`d452bda9e22acf705751f11584cdcd5b0a0d4640`. It adds a manual, main-only recovery
+workflow, separate from production deployment and Flight package publication.
+It requires a successful source-bound main publication with successful build,
+deploy and verify jobs and the matching current public deployment identity.
+It downloads the existing artifact, binds its GitHub artifact identity to the
+accepted archive receipt, validates every member and rehearses an exact restore
+into a fresh directory. Only then may it create a separate draft recovery
+release, redownload and checksum every asset, and publish it without changing
+the latest game release. Existing releases are never overwritten.
+
+This checkpoint does not change repository-wide release immutability. A
+checksum-verified durable release is not a claim of GitHub-enforced immutability,
+browser gameplay qualification or an executed production rollback. The latter
+boundaries remain explicit. Actual runner execution and a representative startup
+rehearsal must be recorded before any Pages removal.
+
+After recovery acceptance, add a parent-first pending-PR capacity forecast and
+review consumer-proven download-only reductions. First reach a measured 950 MB
+archive, then a 900 MB operating target. Consider 800 MB as a longer-term target,
+not a promised saving or authorization to remove shared content. Do not lower
+the working guard before reductions exist. Independent content-delivery or
+origin changes require separate approval; existing Studio/SIM and player storage
+boundaries remain unchanged.
+
 ## Reviewed scope and baseline
 
 The user approved starting the lower-risk plan after reviewing module splitting.
