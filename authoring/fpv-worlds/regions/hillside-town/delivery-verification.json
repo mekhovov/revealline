@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://hillside.invalid/delivery.json",
+    "bytes": 6558,
+    "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+  },
+  "files": 38,
+  "verifiedResponses": 39,
+  "totalBytes": 8352486,
+  "totalWithDescriptor": 8359044,
+  "originalSourceUnchanged": true,
+  "sourceRevision": "3dc619363d246f8cdc0ea8789e0692eb241159c3",
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "lower-square",
+      "preparedResources": 3333668,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "middle-courtyard",
+      "preparedResources": 3779324,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "upper-terrace",
+      "preparedResources": 3053988,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "elevated-pad",
+      "preparedResources": 3053988,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "lower-square",
+      "preparedResources": 3333668,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "middle-courtyard",
+      "preparedResources": 3779324,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "upper-terrace",
+      "preparedResources": 3053988,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "elevated-pad",
+      "preparedResources": 3053988,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    }
+  ],
+  "liveCollision": {
+    "worlds": 2,
+    "colliders": 185,
+    "rigidBodies": 0
+  },
+  "disposedCollision": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "allResourcesDisposed": true,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Exact bytes and production prepare/explicit-arm/pause/dispose only. Native source appearance, Library admission, package/offline and sustained real-device flight remain pending."
+}
