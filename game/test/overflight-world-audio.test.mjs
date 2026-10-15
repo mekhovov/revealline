@@ -280,6 +280,54 @@ test('squad shots are distinct but share a cadence cap and cannot backlog throug
   );
 });
 
+test('simultaneous squad shots alternate roles without increasing the shared cadence', () => {
+  const calls = [];
+  const audio = createOverflightWorldAudio({ encounter: (...args) => calls.push(args) });
+  const state = run();
+  delete state.compiled.presentation;
+  state.riy = { escorts: ['sweeper', 'breaker'].map((role) => ({ role, shots: 0, x: 0, y: 0 })) };
+  audio.update(state);
+  for (const time of [0, 0.2, 0.65, 0.9, 1.3]) {
+    state.time = time;
+    for (const escort of state.riy.escorts) escort.shots++;
+    audio.update(state);
+  }
+  assert.deepEqual(
+    calls.map(([, details]) => details.role),
+    ['sweeper', 'breaker', 'sweeper'],
+  );
+  state.time = 2;
+  audio.update(state);
+  assert.equal(calls.length, 3, 'cadence-suppressed shots are not replayed');
+  audio.reset();
+  audio.update(state);
+  for (const escort of state.riy.escorts) escort.shots++;
+  audio.update(state);
+  assert.equal(calls.at(-1)[1].role, 'sweeper', 'retry resets presentation history');
+});
+
+test('an inaudible escort cannot spend the local cue slot or replay its shot on return', () => {
+  const calls = [];
+  const audio = createOverflightWorldAudio({ encounter: (...args) => calls.push(args) });
+  const state = run();
+  delete state.compiled.presentation;
+  state.riy = {
+    escorts: [
+      { role: 'sweeper', shots: 0, x: 900, y: 0 },
+      { role: 'breaker', shots: 0, x: 0, y: 0 },
+    ],
+  };
+  audio.update(state);
+  for (const escort of state.riy.escorts) escort.shots++;
+  audio.update(state);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0][1].role, 'breaker');
+  state.riy.escorts[0].x = 0;
+  state.time = 1;
+  audio.update(state);
+  assert.equal(calls.length, 1);
+});
+
 test('shared mixer suppresses inaudible sources before cooldown admission in every board', async (t) => {
   const { soundscape: sound, sources } = audioHarness();
   t.after(() => sound.dispose());
