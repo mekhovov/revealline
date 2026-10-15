@@ -1,7 +1,7 @@
 /** Original fictional relief; existing terrestrial flight physics is unchanged. */
 import { readFileSync } from 'node:fs';
 export const design = JSON.parse(readFileSync(new URL('./design.json', import.meta.url)));
-export const revision = 'composition-r2';
+export const revision = 'composition-r3';
 const sq = (x) => x * x;
 const gauss = (x, z, cx, cz, sx, sz = sx) => Math.exp(-sq((x - cx) / sx) - sq((z - cz) / sz));
 const smooth = (a, b, x) => {
