@@ -5442,7 +5442,12 @@ export function mountWorldApp({
     lastExecutionTime = executedAt;
     // A queued rAF may retain a pre-stall timestamp. Freeze before polling
     // device actions or advancing flight, actors and projectiles in that callback.
-    if (
+    if (current?.regional && regionalPreparing) {
+      // Shader preparation is disarmed work, not elapsed flight time. Explicit
+      // focus/menu cancellation still goes through pauseFlight as before.
+      lastTime = null;
+      accumulator = 0;
+    } else if (
       flight &&
       $('flight-dialog').open &&
       (executionDelta > 250 || (lastTime !== null && now - lastTime > 250))
