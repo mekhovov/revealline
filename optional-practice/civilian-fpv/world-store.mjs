@@ -52,7 +52,9 @@ export async function openWorldStore({
     await done;
     return result;
   }
-  function install({ project, assets, sha256, expectedGeneration }) {
+  function install({ project, assets, sha256, expectedGeneration, repair = false }) {
+    if (repair && !Number.isSafeInteger(expectedGeneration))
+      return Promise.reject(fail('Repair requires the current library generation.'));
     if (!project?.id || !(assets instanceof Map) || !/^[a-f0-9]{64}$/.test(sha256))
       return Promise.reject(fail('Install requires a verified prepared pack.'));
     for (const blob of assets.values())
@@ -104,6 +106,10 @@ export async function openWorldStore({
           const readOld = projects.get(project.id);
           readOld.onsuccess = () => {
             const old = readOld.result;
+            if (repair && (!known || !old)) {
+              abort('The exact saved revision is no longer available for repair.');
+              return;
+            }
             const oldAssets = stored.index('project').getAll(project.id);
             oldAssets.onsuccess = () => {
               try {
@@ -141,10 +147,12 @@ export async function openWorldStore({
                 // The project-index read already captured every old key in this
                 // transaction. Queue their removal together instead of waiting
                 // for another cursor round trip for each regional source file.
-                for (const { path } of oldAssets.result) stored.delete([project.id, path]);
-                for (const [path, blob] of assets)
-                  stored.put({ projectId: project.id, path, blob });
-                projects.put(record);
+                if (!repair || old.sha256 === sha256) {
+                  for (const { path } of oldAssets.result) stored.delete([project.id, path]);
+                  for (const [path, blob] of assets)
+                    stored.put({ projectId: project.id, path, blob });
+                  projects.put(repair ? { ...old, project } : record);
+                }
                 meta.put(next, 'generation');
                 result = { project, generation: next, sha256 };
               } catch (cause) {
