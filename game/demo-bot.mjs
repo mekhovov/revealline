@@ -456,6 +456,12 @@ export function planDemoMacro(
       trial.ticks / 300 +
       candidate.jitter * 0.3;
     if (!best || score > best.score) best = { ...trial, score };
+    // A fully simulated useful move is enough; searching for a perfect cut
+    // spends the next maneuver's deadline on marginal improvements. Keep the
+    // remaining allowance for cases where these first choices are unsafe.
+    const gained = best.state.coverage - original.coverage;
+    if (best.state.status === 'won' || (examined >= 4 && gained >= (best.bends ? 0.04 : 0.08)))
+      break;
   }
   if (!best) return { ok: false, reason: 'no-safe-macro', examined, simulatedTicks: budget.ticks };
   return {
