@@ -4758,3 +4758,35 @@ Meanwhile #1287 (combined regional Library/textured source delivery), #1291
 recovery continue independently of art publication. Combined fixed-main package
 qualification runs from `c3368bb60da7002f157fc7e9cae2688a53fb546c` in run
 38658148642; optional-package checks passed, broader qualification is still running.
+
+## 15 October — combined-main native admission and continued parallel work
+
+The Railway immutable bundle #1303 merged at `31c0b54b668fa004be03f46f7ddcfa195ee734b3`.
+Its strict descriptor remains pinned to that commit. Native art stack #1292 retains
+#1298 → #1301 → #1302 → #1306 after route foundation #1290 merged. Independent UI
+stack #1305 contains compact regional flight controls #1296 → starting points #1304.
+No feature-base automatic merge or manual stack-member retarget was used here.
+
+Exact combined-main source `c3368bb60da7002f157fc7e9cae2688a53fb546c`, artifact
+11938251159, World revision
+`adccf16a6a972e03f38d7395788928f1a7cd2f6f5f06fc8802a4f4baeef3bba9`, passed
+first-attempt offline preparation and the ordinary Library download/play flow on
+fresh local origin 9045. After stopping only that origin server (connection refused),
+the cached player reopened, retained Urban review-r1, prepared disarmed at 3 m, and
+accepted deliberate keyboard flight. Origin was restored afterward. This is bounded
+origin-unavailable evidence, not a full network outage, browser restart or device FPS
+claim. Run 38658148642 subsequently completed successfully in both the optional-practice
+and broader company jobs.
+
+Actual WebGL loss/restoration on the prior exact package paused flight, disabled
+arming and preserved saved data. Explicit scene restart followed by deliberate Arm
+restored flying. The missing explanation and awkward menu path are addressed in a
+separate recovery follow-up; root native review found the new source menu still
+needs its regional setup labels populated after interruption. Do not mark that UX
+acceptance complete before the correction is reviewed.
+
+Source diagnostics from #1300 separately pass 360,000 accepted steps, 53 reversals
+and 269 recentres, with peak four physics query worlds / 18 colliders / zero rigid
+bodies and all zero after disposal. These are 7,200 simulated seconds, not elapsed
+hardware acceptance. Internal free space was 3.8 GiB at this check; heavy artifacts
+remain on external storage, with no source, commits or player storage deleted.
