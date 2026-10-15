@@ -1399,3 +1399,7 @@ named test browsers/devices and sustained observations; do not claim untested FP
 Verify 390×844, 844×390, 1280×800, desktop, EN/UK, focus and touch access. Require source
 receipts, import/export and flight checks, package admission and actual deployed
 launch before a new world is described as shipped.
+
+### Later public saved-map visibility negative — 16 October checkpoint
+
+After the public School closing-connection failure and normal reopen, the Library lists zero saved regional rows and no installed Worldpack cards. Refresh saved regions completes but the rows remain absent. No removal/reset/import/restore action occurred. Database identity and actual stored contents remain unobserved; do not assert data loss, a scope change or eviction. Earlier13+20 retention samples remain historical, and persistence is explicitly unqualified. The shared Records shortcut opens Progress & Collection but shows no record entries. [Visibility receipt](fpv-public-library-visibility-negative-20261016.json). Capacity512 approval/change does not claim to repair this separate failure.
