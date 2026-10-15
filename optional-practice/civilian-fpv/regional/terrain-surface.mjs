@@ -1,10 +1,11 @@
 /** Original, bounded authoring surface study. Colour/roughness only; never moves vertices. */
 import * as THREE from '../vendor/three.module.js';
 import { createUrbanGroundSurface, createRailwayGroundSurface } from './urban-ground-surface.mjs';
+import { createRailwayExpanseGround } from './railway-expanse-ground.mjs';
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(style) ||
+    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'railway-expanse'].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown regional terrain surface profile');
@@ -39,6 +40,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
   if (style === 'urban') return createUrbanGroundSurface({ quality, originMm });
   if (style === 'tropical') return createTropicalGroundSurface({ quality, originMm });
   if (style === 'railway') return createRailwayGroundSurface({ quality, originMm });
+  if (style === 'railway-expanse') return createRailwayExpanseGround({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
     color: style === 'plain' ? 0x687647 : 0xffffff,
     roughness: 1,
