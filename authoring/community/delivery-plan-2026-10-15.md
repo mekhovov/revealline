@@ -12,8 +12,10 @@ GitHub main revision confirmed at the start of work. The shared Team/Duel checko
 files were preserved. Implementation continues in a local managed worktree because the old media
 worktree's Git database lives on a mounted network drive. Before opening the PR, the branch was
 rebased again without conflicts onto fetched main `4244ece94c25c9e5fb23391e62c3db269a6c999e`.
-[PR #1347](https://github.com/mekhovov/revealline/pull/1347) is ready for review and uses the existing
-protected-main/Pages pipeline. No public deployment or immutable release is claimed yet.
+[PR #1347](https://github.com/mekhovov/revealline/pull/1347) merged as `d6b0cae9df77688f75992279f8cdc181f4f84bcd`.
+The existing Pages publication is running. The [browser acceptance record](creator-browser-acceptance-2026-10-15.md)
+now confirms actual upload, generation, installation, victory playback and separate-origin transfer.
+No successful public deployment or new immutable release is claimed yet.
 
 The current `.github/workflows/publish-main-pages.yml` already publishes protected main. Reuse it;
 do not add a second publisher or restore retired archive workflows. The retired Pages playbook is
@@ -34,7 +36,7 @@ See [GitHub's hosting definition](https://docs.github.com/en/pages/getting-start
 | Current access gate      | Directory/entry tests now assert the local password gate and deferred script types. Community host fixtures use the existing supported-raster inspector rather than a PNG-only decoder. No production authentication behavior is bypassed or changed.                                                                             |
 | Automated service checks | All 131 community service tests passed locally. This is not a real deployed PostgreSQL, mailbox or public-account acceptance result.                                                                                                                                                                                              |
 | Complete runtime cohort  | The broad run completed with 779 passing and 30 failing tests. After fixture repairs, all eight affected files passed together: 138 tests, zero failures/skips. The earlier broad run remains recorded as a failure; no fresh full-suite pass is claimed.                                                                         |
-| Actual browser journey   | Initial real file selection reproduced the video error. Latest-main browser continuation requires the normal site password unlock. No post-fix upload, win, physical sound or cross-profile result is claimed before that action.                                                                                                 |
+| Actual browser journey   | Password access is resolved. Paired intake, video-only poster capture, ordinary Solo completion, Replay/Skip, earned-poster reload and actual pack transfer/unfinished recovery passed in the built-in browser. Physical audio and a clean physical profile remain unverified.                                                    |
 
 The focused video/intake/access-entry cohort passed **44/44**. The broad run exposed obsolete
 fixture assumptions, a missing authoring dependency and changed document hashes. Two Coupa
@@ -54,7 +56,8 @@ container conversion, not native browser decoding or an installed campaign win.
 1. **Current creator journey:** finish ordinary single-image, paired image/video and video-only
    creation; actual download/import; install; unfinished recovery; legal completion; exact poster
    and video controls. Include Studio Back/Forward and a representative multiplayer case.
-   Use the normal password form. The unlocked browser is a prerequisite for these UI checks.
+   The normal password unlock and paired creation/play/transfer/recovery and video-only creation/play checks now passed.
+   Complete the remaining single-image, navigation, multiplayer and cross-browser cases.
 2. **Useful generated gameplay:** review a small sample for obstacle/enemy pressure and repetition.
    Six families and twelve bounded variants remain implemented. Automated routes establish exact
    feasibility; they cannot grant human enjoyment or balance approval. Scope additional variants
@@ -97,7 +100,7 @@ acceptance and time spent waiting for CI or access.
 
 | Work                                                  | Estimated hands-on effort                                    | Dependency / consequence if deferred                                                                                                                                       |
 | ----------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Current creator journey and generated-gameplay review | Half to one day on one fixed build                           | Unlock the normal site form; until then fresh upload/play/recovery and human balance approval remain unverified.                                                           |
+| Current creator journey and generated-gameplay review | Half to one day on one fixed build                           | Access is resolved and the video/transfer checks passed. Single-image refresh, Studio navigation, multiplayer and human balance review remain.                             |
 | Desktop browser matrix                                | One to two days for a bounded Chromium/Firefox/Safari matrix | Available desktop browser sessions and codecs; no broader support claim before the actual runs.                                                                            |
 | Large-video browser storage and recovery              | Half to one day                                              | Disposable browser profile and sufficient free space; the Node measurement alone cannot predict browser batch limits.                                                      |
 | Static release batch                                  | CI/deployment queue dependent                                | Protected-source checks and deployed identity verification; a merged PR is not a successful Pages deployment.                                                              |
