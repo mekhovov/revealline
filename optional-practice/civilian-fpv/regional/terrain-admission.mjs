@@ -4,7 +4,7 @@ import {
 } from "./region-motion-query.mjs";
 import * as THREE from "../vendor/three.module.js";
 import RAPIER from "../vendor/rapier/rapier.mjs";
-import { validateRegionManifest, REGION_FORMAT } from "./region-manifest.mjs";
+import { validateRegionManifest, regionalOriginReachMm, REGION_FORMAT } from "./region-manifest.mjs";
 import { compileTerrainCell, validateTerrainSeams } from "./terrain-cell.mjs";
 import {
   createTerrainSurface,
@@ -79,8 +79,8 @@ export async function prepareTerrainWindow(
       "Terrain exceeds region vertical bounds",
     );
     fail(
-      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <= 640000 &&
-        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <= 640000 &&
+      Math.abs(cell.x * cell.cellSizeMm - originMm.x) <= regionalOriginReachMm(manifest.grid.cellSizeMm) &&
+        Math.abs(cell.z * cell.cellSizeMm - originMm.z) <= regionalOriginReachMm(manifest.grid.cellSizeMm) &&
         Math.abs(originMm.y) <= 2000000,
       "Terrain window must use a nearby origin",
     );
