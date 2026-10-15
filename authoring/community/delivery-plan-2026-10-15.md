@@ -10,7 +10,10 @@ acceptance receipts or claim that every original phase is complete on the curren
 The media branch was rebased without conflicts onto `da0b0108206a0270b4b870e747f2d1bc0e6695cb`, the
 GitHub main revision confirmed at the start of work. The shared Team/Duel checkout and its local
 files were preserved. Implementation continues in a local managed worktree because the old media
-worktree's Git database lives on a mounted network drive.
+worktree's Git database lives on a mounted network drive. Before opening the PR, the branch was
+rebased again without conflicts onto fetched main `4244ece94c25c9e5fb23391e62c3db269a6c999e`.
+[PR #1347](https://github.com/mekhovov/revealline/pull/1347) is ready for review and uses the existing
+protected-main/Pages pipeline. No public deployment or immutable release is claimed yet.
 
 The current `.github/workflows/publish-main-pages.yml` already publishes protected main. Reuse it;
 do not add a second publisher or restore retired archive workflows. The retired Pages playbook is
@@ -30,13 +33,16 @@ See [GitHub's hosting definition](https://docs.github.com/en/pages/getting-start
 | Regression coverage      | Real owned AVC/AAC bytes now pass through the actual intake/conversion boundary. Additional checks cover absent and misleading MIME labels and invalid containers rejected before converter loading. Native poster decoding remains a separate browser check.                                                                     |
 | Current access gate      | Directory/entry tests now assert the local password gate and deferred script types. Community host fixtures use the existing supported-raster inspector rather than a PNG-only decoder. No production authentication behavior is bypassed or changed.                                                                             |
 | Automated service checks | All 131 community service tests passed locally. This is not a real deployed PostgreSQL, mailbox or public-account acceptance result.                                                                                                                                                                                              |
-| Complete runtime cohort  | In progress; final results belong in the accompanying acceptance record. No pass is inferred from earlier releases.                                                                                                                                                                                                               |
+| Complete runtime cohort  | The broad run completed with 779 passing and 30 failing tests. After fixture repairs, all eight affected files passed together: 138 tests, zero failures/skips. The earlier broad run remains recorded as a failure; no fresh full-suite pass is claimed.                                                                         |
 | Actual browser journey   | Initial real file selection reproduced the video error. Latest-main browser continuation requires the normal site password unlock. No post-fix upload, win, physical sound or cross-profile result is claimed before that action.                                                                                                 |
 
-The focused video/intake/access-entry cohort passed **44/44**, and the final community-host
-rerun passed **24/24** with unchanged timeouts. Two Coupa picture-preparation cases failed during
-the earlier broader run; the same cases passed in isolation. The larger run is retained as a
-failure, not relabeled as a pass. Its final totals and hosted checks remain release evidence.
+The focused video/intake/access-entry cohort passed **44/44**. The broad run exposed obsolete
+fixture assumptions, a missing authoring dependency and changed document hashes. Two Coupa
+picture-preparation cases also failed during that run, then passed without increased timeouts.
+After the repairs, all eight affected files passed together: **138/138** at concurrency two.
+The final guide-integrity rerun passed **31/31** after the documentation update. Full
+`npm run validate`, changed-file ESLint and formatting passed. These reruns retain the actual
+byte, hash, ownership and offline assertions; they do not relabel the earlier broad run as green.
 
 The baseline regression was independently reproduced from `da0b010820`: the 173,394-byte owned
 AVC/AAC fixture became an anonymous intake Blob and was rejected with “Choose an MP4 or WebM video
