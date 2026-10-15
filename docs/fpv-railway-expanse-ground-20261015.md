@@ -27,6 +27,9 @@ Live quality changes retain the same material owner and invalidate its shader on
 - Disposal leaves no groups or geometry/texture/reservation bytes.
 - Twenty live tier transitions across Canyon, Urban, original Railway and the new
   Railway profile pass the existing production-renderer verification.
+- Main and optional package policies explicitly include the new module. The
+  regional closure contains 24 modules (excluding its catalogue); the source-file
+  allowance changes 162→163 for this one file, with the byte budget unchanged.
 - Syntax, scoped lint and formatting checks pass.
 
 Raw evidence is in
@@ -43,3 +46,11 @@ actual player flight, Library admission tied to an exact descriptor, full packag
 closure and public launch remain open. CPU source verification cannot establish
 GPU correctness, finished artwork, target-device frame rates or full-world acceptance.
 The material is original procedural artwork, with no new asset license dependency.
+
+## Implementation references
+
+[Three.js material cache keys](https://threejs.org/docs/pages/Material.html)
+identify the three shader variants; repeated selection of the same tier does not
+invalidate a program. [Renderer preparation](https://threejs.org/docs/pages/WebGLRenderer)
+remains in the existing production preparation path, after scene lighting is set.
+These references guide implementation; they are not performance measurements.

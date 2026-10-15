@@ -629,7 +629,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         limits: Object.freeze({
           ...policy.limits,
-          // Regional review adds 23 exact modules to the reviewed 138-file source closure.
+          // Regional review and authored ground profiles use an explicit module closure.
           // Include launcher/templates; keep the 20 MiB budget and exact dependency boundary.
           files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 163 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
