@@ -9,12 +9,15 @@ export const ENDURANCE_PHASES = Object.freeze([
   'sample-collection',
   'live-display',
   'prepare-renderer-submit',
+  'frame-callback',
 ]);
 const SPANS = 128,
   FRAMES = 16,
   SCRIPTS = 8,
   OVERLAPS = 12,
-  SCAN_SCRIPTS = 64;
+  SCAN_SCRIPTS = 64,
+  PREPARATIONS = 8,
+  PREPARATION_OVERLAPS = 2;
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const optionalTime = (value, startedAt) =>
   finite(value) && value >= startedAt ? value - startedAt : null;
@@ -71,6 +74,28 @@ function ownedSource(script, pageURL) {
   }
 }
 
+function copyPreparationReceipt(input) {
+  if (!input || typeof input !== 'object') return null;
+  try {
+    const receipt = {};
+    for (const key of ['sequence', 'objects', 'batches', 'submittedBytes', 'maxBatchBytes']) {
+      const value = input[key];
+      receipt[key] = Number.isSafeInteger(value) && value >= 0 ? value : null;
+    }
+    for (const key of ['compileWaitMs', 'uploadCpuMs', 'elapsedMs']) {
+      const value = input[key];
+      receipt[key] = finite(value) ? value : null;
+    }
+    const status = input.status;
+    receipt.status = ['prepared', 'failed', 'cancelled'].includes(status) ? status : null;
+    // The existing renderer explicitly does not measure GPU completion.
+    receipt.gpuCompletionMeasured = input.gpuCompletionMeasured === false ? false : null;
+    return receipt;
+  } catch {
+    return null;
+  }
+}
+
 export function createEnduranceAttribution({
   startedAt,
   now = () => performance.now(),
@@ -80,6 +105,7 @@ export function createEnduranceAttribution({
   if (!finite(startedAt)) throw new TypeError('Invalid attribution start');
   const page = new URL(pageURL),
     rows = [],
+    preparations = [],
     ids = new Float64Array(SPANS),
     starts = new Float64Array(SPANS),
     ends = new Float64Array(SPANS),
@@ -98,8 +124,35 @@ export function createEnduranceAttribution({
     droppedScripts = 0,
     unscannedScripts = 0,
     malformed = 0,
-    readFailures = 0;
+    readFailures = 0,
+    preparationSerial = 0,
+    settledPreparations = 0,
+    latePreparationCompletions = 0,
+    invalidPreparationObservations = 0;
   const callbackCost = { count: 0, totalMs: 0, maxMs: 0 };
+  const capturePreparations = (start, duration, capturedAt) => {
+    const from = start - startedAt,
+      until = from + duration,
+      examples = [];
+    let matching = 0;
+    for (const row of preparations) {
+      if (row.startElapsedMs > until || (row.endElapsedMs !== null && row.endElapsedMs < from))
+        continue;
+      matching++;
+      examples.push(row);
+      if (examples.length > PREPARATION_OVERLAPS) examples.shift();
+    }
+    const overwritten = Math.max(0, preparationSerial - PREPARATIONS);
+    return {
+      capturedAtElapsedMs: optionalTime(capturedAt, startedAt),
+      matchingCount: matching,
+      entries: examples.map((row) => structuredClone(row)),
+      examplesDropped: Math.max(0, matching - examples.length),
+      countIsLowerBound: overwritten > 0,
+      retainedPreparationCount: preparations.length,
+      overwrittenPreparationCount: overwritten,
+    };
+  };
   const captureOverlaps = (start, duration, capturedAt) => {
     const first = Math.max(1, serial - SPANS + 1),
       overwritten = Math.max(0, serial - SPANS),
@@ -209,6 +262,7 @@ export function createEnduranceAttribution({
           reportedScriptCount: supplied.length,
           scripts: scripts.slice(0, SCRIPTS),
           ...captureOverlaps(entry.startTime, entry.duration, began),
+          preparationOverlaps: capturePreparations(entry.startTime, entry.duration, began),
         });
       }
     } catch {
@@ -245,6 +299,54 @@ export function createEnduranceAttribution({
     capability = 'unavailable';
   }
   return Object.freeze({
+    beginPreparation() {
+      if (stopped) return null;
+      const at = now();
+      if (!finite(at) || at < startedAt) return null;
+      const id = ++preparationSerial;
+      if (preparations.length === PREPARATIONS) preparations.shift();
+      preparations.push({
+        id,
+        startElapsedMs: at - startedAt,
+        endElapsedMs: null,
+        receivedAtElapsedMs: null,
+        elapsedMs: null,
+        outcome: 'pending',
+        receipt: null,
+      });
+      return id;
+    },
+    endPreparation(token, { endedAt, outcome, receipt } = {}) {
+      if (stopped) return false;
+      const receivedAt = now(),
+        row = preparations.find((entry) => entry.id === token);
+      if (
+        !Number.isSafeInteger(token) ||
+        token < 1 ||
+        !finite(receivedAt) ||
+        !finite(endedAt) ||
+        endedAt > receivedAt ||
+        !['fulfilled', 'rejected', 'cancelled'].includes(outcome)
+      ) {
+        invalidPreparationObservations++;
+        return false;
+      }
+      if (!row) {
+        latePreparationCompletions++;
+        return false;
+      }
+      if (row.outcome !== 'pending' || endedAt < row.startElapsedMs + startedAt) {
+        invalidPreparationObservations++;
+        return false;
+      }
+      row.endElapsedMs = endedAt - startedAt;
+      row.receivedAtElapsedMs = receivedAt - startedAt;
+      row.elapsedMs = row.endElapsedMs - row.startElapsedMs;
+      row.outcome = outcome;
+      row.receipt = copyPreparationReceipt(receipt);
+      settledPreparations++;
+      return true;
+    },
     frame() {
       if (!stopped) frame++;
     },
@@ -319,12 +421,24 @@ export function createEnduranceAttribution({
         })),
         lastSpans: spans,
         lastLongAnimationFrames: rows.map((row) => structuredClone(row)),
+        preparationReceipts: {
+          scope:
+            'Authoring wrapper lifecycle intervals and copies of existing renderer receipts. Start/end/receive offsets observe the wrapper, not individual internal continuations. elapsedMs and compileWaitMs include asynchronous wait; uploadCpuMs is synchronous upload-submission wall time, not GPU completion or exclusive CPU. Outcome describes wrapper settlement, not flight progress.',
+          started: preparationSerial,
+          settled: settledPreparations,
+          overwritten: Math.max(0, preparationSerial - PREPARATIONS),
+          lateCompletions: latePreparationCompletions,
+          invalidObservations: invalidPreparationObservations,
+          last: preparations.map((row) => structuredClone(row)),
+        },
         bounds: {
           spans: SPANS,
           longAnimationFrames: FRAMES,
           scriptsPerFrame: SCRIPTS,
           scriptsScannedPerFrame: SCAN_SCRIPTS,
           overlapExamplesPerFrame: OVERLAPS,
+          preparationReceipts: PREPARATIONS,
+          preparationExamplesPerFrame: PREPARATION_OVERLAPS,
         },
         dropped: {
           spans: Math.max(0, serial - SPANS),
@@ -340,6 +454,7 @@ export function createEnduranceAttribution({
           'LoAF observes same-origin main-thread entry points only; worker/extension/cross-origin work may be absent.',
           'The terminal frame may not have reached the observer queue at stop; takeRecords drains only entries already available.',
           'Nested or asynchronous work may share a frame. Phase durations are synchronous wall spans, not exclusive CPU.',
+          'Preparation intervals include asynchronous waiting; renderer receipt aggregates do not identify the timing of each internal continuation. Pending, overwritten or late completion remains unknown; later snapshots do not complete earlier associations.',
           'Overlap associations retain the phase window at observer receipt; discarded history makes counts lower bounds and unfinished overlaps remain unknown. Later snapshots do not reconstruct or complete earlier evidence.',
           'No raw invoker strings, foreign origins/paths, query/hash credentials or window references retained.',
         ],
