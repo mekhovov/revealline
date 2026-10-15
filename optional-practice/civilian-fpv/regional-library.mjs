@@ -22,6 +22,62 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    id: 'hillside-town-study',
+    title: {
+      en: 'Hillside Town — terraces and courtyards',
+      uk: 'Містечко на схилі — тераси та подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.',
+      uk: '384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель.',
+    },
+    bytes: 8352486,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json',
+      bytes: 6558,
+      sha256: 'de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9',
+    },
+  },
+  {
+    id: 'tropical-coastal-districts',
+    title: {
+      en: 'Tropical coast — six flight districts',
+      uk: 'Тропічне узбережжя — шість районів польоту',
+    },
+    description: {
+      en: '768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.',
+      uk: '768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна.',
+    },
+    bytes: 7857157,
+    appearance: { terrain: 'tropical-settlement' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json',
+      bytes: 6609,
+      sha256: 'dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49',
+    },
+  },
+  {
+    id: 'canyon-expanse-study',
+    title: {
+      en: 'Canyon Expanse — broad relief study',
+      uk: 'Простори каньйону — дослідження рельєфу',
+    },
+    description: {
+      en: '8.192 × 8.192 km · six starting areas · unscored free flight. Broad terrain-only relief with basins, mesas and ridges; an early landscape study with sparse detail.',
+      uk: '8,192 × 8,192 км · шість місць старту · вільний політ без заліку. Відкритий рельєф з улоговинами, плато та хребтами; раннє дослідження ландшафту з невеликою кількістю деталей.',
+    },
+    bytes: 47975524,
+    appearance: {
+      terrain: 'canyon',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json',
+      bytes: 329372,
+      sha256: 'd2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003',
+    },
+  },
+  {
     id: 'tropical-coastal-study',
     title: {
       en: 'Tropical coast — bounded flight study',
@@ -124,7 +180,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(terrain))
+  if (!['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement'].includes(terrain))
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,

@@ -5,6 +5,64 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — regional release continuation
+
+This later checkpoint keeps the roadmap **open**. Native normal-player checks now
+pass on the fresh Canyon `f478723d` and Coastal `b886b732` packages: saved downloads,
+explicit arm, safe mode/start changes and retained downloads after reload. Canyon
+#1368 merged; Coastal's concurrent catalogue conflict is reconciled while retaining
+both Canyon revisions and every existing immutable identity. Older screenshot and
+package evidence keeps its original revision attribution.
+
+Optional 512 m cells #1372, Desert source #1378, delivery #1389 and materials #1390
+have merged. Its Library admission remains separate. Coastal water #1364 has also
+merged after exact source parity with its native review. Hillside's ground
+foundation #1397 and supported Coaster revision #1398 are focused drafts; old
+Coaster delivery/Library pins and the rejected floating-loop review are retained.
+
+Next independent source work is the Alpine Highlands **4.096 km bounded study**:
+six varied relief/landmark districts and connected routes. This does not fulfil
+the eventual 8 km natural-region target. It retains current byte, source and
+collision limits and requires native appearance review before Library admission.
+See `fpv-native-regional-release-20261015.md` for bounded observations. Continue
+P1 admission, P2 art, P3 source authoring and P4/D6 release work in parallel.
+
+## 15 October — elapsed pass and native admission progression
+
+This checkpoint supersedes the historical entries below. The complete roadmap
+remains **open**; user-facing world quality and final release qualification are
+not inferred from source checks.
+
+- **P1 merged:** #1381 fixes false two-minute cancellation of progressing regional
+  downloads. It retains inactivity and total-duration ceilings, exact hashes,
+  atomic install ownership and all byte budgets. Eight native fixture cases and
+  the exact optional/company package checks pass. Virtual-clock transfer cases
+  are distinguished from real network timing.
+- **P4 elapsed case complete:** #1385 records an actual uninterrupted 7,200.0052 s
+  synthetic-corridor browser run: 360,000 physics ticks, 269 recentres and zero
+  contacts, with exact runtime/archive identity and bounded resource receipts.
+  This closes that workload only. Full-region sustained play, physical devices,
+  network-wide offline and final D6/release qualification remain open.
+- **P1 native admission:** the frozen graphics-recovery package passes normal
+  Library launch, explicit arm, Pause and disarmed restart. Coastal Districts'
+  qualified package passes Download → saved Fly, three camera views, safe mode
+  and district changes, saved revision after reload and 390 × 844 layout.
+  Newer reconciled PR heads must be compared and qualified separately before
+  publication. See `fpv-native-regional-admission-20261015.md`.
+- **P3 preserved drafts:** corrected Hillside source/delivery #1376 → #1383 use
+  native stack #1384; draft Library #1388 remains behind visual/package gates.
+  Coaster source/delivery #1382 → #1386 use stack #1387 and remain a 2.048 km
+  study, not the 4 km target. Desert delivery #1389 extends stack #1379 after
+  #1372 → #1378. It is a 16.384 km authored source pending player admission and
+  presentation acceptance; the new sand/salt/stone treatment is separate.
+
+Continue **P1** exact player/recovery admission, **P2** pilot-height art reviews
+and refinement, **P3** independent authored regions with immutable delivery, and
+**P4/D6** remaining integrated release coverage in parallel. Browser measurements
+and visual reviews run sequentially to avoid competing active rendering loads;
+engineering and protected publication need not wait for a merge queue. No budget,
+player data, old revisions or unfinished work is removed.
+
 ## 15 October — exact packages and independent larger-world sources
 
 Coordinator checkpoint: main `87dbcfda`. This section supersedes the historical

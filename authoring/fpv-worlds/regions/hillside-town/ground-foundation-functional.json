@@ -1,0 +1,680 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "terrain": "84d2e15d9931e6b71d11303d940bd67be8b12dd1c79cc6ed839e460596a34037",
+    "scenery": "0d2f74e20cae601bf79dbcc4a5fa4819aadf4ee14c08eac59d43454848ea358a"
+  },
+  "records": [
+    {
+      "quality": "plain",
+      "spawn": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "geometryBytes": 886992,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 99.99990463256836,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0.11739130318164825,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "geometryBytes": 1332648,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "heightMm": 12100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0.07714284956455231,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 24100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.057446785271167755,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 30299.999237060547,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.019417550414800644,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "geometryBytes": 886992,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 99.99990463256836,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0.11739130318164825,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "geometryBytes": 1332648,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "heightMm": 12100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0.07714284956455231,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 24100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.057446785271167755,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 30299.999237060547,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.019417550414800644,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "geometryBytes": 886992,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 99.99990463256836,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0.11739130318164825,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "geometryBytes": 1332648,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "heightMm": 12100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0.07714284956455231,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 24100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.057446785271167755,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 30299.999237060547,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.019417550414800644,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "geometryBytes": 886992,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "heightMm": 99.99990463256836,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-0",
+        "fraction": 0.11739130318164825,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "geometryBytes": 1332648,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "heightMm": 12100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-1-1",
+        "fraction": 0.07714284956455231,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 24100.000381469727,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.057446785271167755,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "geometryBytes": 607312,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "heightMm": 30299.999237060547,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.019417550414800644,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    }
+  ],
+  "openings": [
+    {
+      "quality": "plain",
+      "probe": "house-open-door",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "probe": "house-solid-side",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.1640634536743164,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "plain",
+      "probe": "house-solid-roof",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.4162508249282837,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "plain",
+      "probe": "courtyard-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "probe": "pad-solid",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.5450000762939453,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "plain",
+      "probe": "under-pad-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "probe": "graded-road-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "house-open-door",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "house-solid-side",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.1640634536743164,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "house-solid-roof",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.4162508249282837,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "courtyard-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "pad-solid",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.5450000762939453,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "under-pad-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "probe": "graded-road-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "house-open-door",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "house-solid-side",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.1640634536743164,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "house-solid-roof",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.4162508249282837,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "courtyard-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "pad-solid",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.5450000762939453,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "under-pad-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "probe": "graded-road-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "house-open-door",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "house-solid-side",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.1640634536743164,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "house-solid-roof",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-0-0",
+        "fraction": 0.4162508249282837,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "courtyard-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "pad-solid",
+      "result": {
+        "status": "terrain-hit",
+        "chunkId": "town-2-2",
+        "fraction": 0.5450000762939453,
+        "layer": "scenery"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "under-pad-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "probe": "graded-road-clear",
+      "result": {
+        "status": "terrain-clear"
+      }
+    }
+  ],
+  "scope": "16 exact-source material/window comparisons; native shader and appearance review remain required",
+  "geometryChanged": false,
+  "collisionChanged": false,
+  "texturesAdded": 0,
+  "disposalZero": true
+}
