@@ -115,7 +115,7 @@ function ray(state, origin, d) {
   }
   return { cells, end: null };
 }
-function pathsFor(state, random, preferBent) {
+function pathsFor(state, random, preferBent, compactCuts = false) {
   const paths = safePaths(state),
     result = [],
     seen = new Set();
@@ -197,6 +197,10 @@ function pathsFor(state, random, preferBent) {
       jitter: random(),
     });
   }
+  // Pressure Lines' pursuing enemies need short closure windows. Preserve the
+  // broader legacy routes instead of turning those performances into dozens
+  // of tiny captures.
+  const cutSpans = compactCuts ? [1, 2, 4, 8, 12, 16, 24] : [4, 8, 12, 16, 24];
   // Candidate geometry is bounded independently of simulation work.
   const origins = paths.queue.filter((i) => paths.lengths[i] <= 48);
   for (const origin of origins) {
@@ -205,14 +209,14 @@ function pathsFor(state, random, preferBent) {
       const first = ray(state, from, d);
       if (!first.cells.length) continue;
       if (first.end) add(origin, [first.end], first.cells.length * 4, 0);
-      for (const depth of [4, 8, 12, 16, 24]) {
+      for (const depth of cutSpans) {
         const elbow = first.cells[depth - 1];
         if (!elbow) continue;
         for (const side of DIRECTIONS.filter((p) => p.x * d.x + p.y * d.y === 0)) {
           const across = ray(state, elbow, side);
           if (across.end && across.cells.length)
             add(origin, [elbow, across.end], (depth * (across.cells.length + 1)) / 2, 1);
-          for (const width of [4, 8, 12, 16, 24]) {
+          for (const width of cutSpans) {
             const corner = across.cells[width - 1];
             if (!corner) continue;
             const back = ray(state, corner, { x: -d.x, y: -d.y });
@@ -227,7 +231,7 @@ function pathsFor(state, random, preferBent) {
   pool.sort((a, b) => b.advantage + b.jitter * 6 - (a.advantage + a.jitter * 6));
   // Reserve attempts for several exposed lengths instead of spending the
   // entire allowance on large cuts that share the same dangerous crossing.
-  const exposures = [24, 40, 60, Infinity];
+  const exposures = compactCuts ? [8, 24, 40, Infinity] : [24, 40, 60, Infinity];
   const shortlisted = [];
   // Adjacent starting cells often generate nearly identical large cuts. Spend
   // the finite simulation allowance on different locations and route shapes,
@@ -267,8 +271,9 @@ function waypointsFor(candidate, paths, state) {
   const points = indices.map((i) => point(i, state.width)),
     waypoints = [];
   if (distance(state.player, paths.anchor) > EPS) waypoints.push(paths.anchor);
-  const startCenter = point(paths.start, state.width);
-  if (distance(paths.anchor, startCenter) > EPS) waypoints.push(startCenter);
+  // Immediate steering can stop a fraction away from a cell center. Keep that
+  // real offset until the next purposeful turn rather than briefly reversing
+  // direction just to chase a nominal center.
   let previous = point(paths.start, state.width),
     prior = null;
   for (let i = 0; i < points.length; i++) {
@@ -281,7 +286,9 @@ function waypointsFor(candidate, paths, state) {
   return [...waypoints, ...candidate.vertices];
 }
 function directionTo(a, b) {
-  if (Math.abs(b.x - a.x) > EPS) return b.x > a.x ? 'right' : 'left';
+  // Follow the purposeful leg, not a sub-tick lateral offset left by the
+  // previous capture. The core retains the actual coordinates throughout.
+  if (Math.abs(b.x - a.x) > Math.abs(b.y - a.y)) return b.x > a.x ? 'right' : 'left';
   return b.y > a.y ? 'down' : 'up';
 }
 
@@ -360,7 +367,18 @@ function evaluate(original, vertices, budget, { allowHazardLoss = false } = {}) 
     // The authored stop-on-capture permits a short pause before a new gesture.
     // This is part of the evaluated input macro, not a claim that safe
     // terrain is invulnerable to contour patrols or claimed rovers.
-    for (let i = 0; i < 60; i++) if (!tick(null)) return null;
+    for (let i = 0; i < 60; i++) {
+      // A readable capture pause is optional. Leave time to depart before a
+      // patrol reaches this stop: safe ground is not an invulnerable waiting
+      // area. The next maneuver still requires full simulation validation.
+      if (
+        state.enemies.some(
+          (enemy) => Math.hypot(enemy.x - state.player.x, enemy.y - state.player.y) < 3,
+        )
+      )
+        break;
+      if (!tick(null)) return null;
+    }
   }
   return { state, segments, bends, ticks: localTicks };
 }
@@ -422,7 +440,7 @@ export function planDemoMacro(
     return { ok: false, reason: 'unsafe-planning-boundary' };
   const start = authoritativeCheckpoint(original),
     random = randomFor((plannerSeed ^ Math.imul(decision + 1, 2654435761)) >>> 0);
-  const { candidates, paths } = pathsFor(original, random, preferBent);
+  const { candidates, paths } = pathsFor(original, random, preferBent, true);
   const budget = { ticks: 0 };
   let best = null,
     examined = 0;
