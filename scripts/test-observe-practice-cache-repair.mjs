@@ -8,11 +8,13 @@ import path from 'node:path';
 import {
   CACHE_REPAIR_IDS,
   CACHE_REPAIR_PROTOCOL,
+  CACHE_REPAIR_SEEDED_PROTOCOL,
   validateCacheRepairPlan,
   cacheRepairSpec,
   injectCacheRepairFault,
   readCacheRepairState,
   assertCacheRepairPreservation,
+  assertCacheRepairWorldSeed,
   observePracticeCacheRepair,
 } from './observe-practice-cache-repair.mjs';
 
@@ -51,6 +53,89 @@ test('fault scopes require one known app, exact version and local server', () =>
   assert.throws(() => cacheRepairSpec('unknown', 'v1.2.3', 'http://127.0.0.1:9999'));
   assert.throws(() => cacheRepairSpec('civilian-fpv', '../bad', 'http://127.0.0.1:9999'));
   assert.throws(() => cacheRepairSpec('civilian-fpv', 'v1.2.3', 'https://example.com'));
+});
+test('v2 requires exactly the declared public-UI world seed without changing v1', () => {
+  const seeded = {
+    ...plan(),
+    format: 'PracticeCacheRepairPlan.v2',
+    protocol: CACHE_REPAIR_SEEDED_PROTOCOL,
+    seed: 'worlds-template-copy',
+  };
+  assert.deepEqual(validateCacheRepairPlan(seeded), seeded);
+  assert.deepEqual(validateCacheRepairPlan(plan()), plan());
+  for (const change of [
+    { format: 'PracticeCacheRepairPlan.v1' },
+    { protocol: CACHE_REPAIR_PROTOCOL },
+    { seed: undefined },
+    { seed: 'injected-record' },
+    { seed: { script: 'execute()' } },
+    { title: 'unreviewed input' },
+  ])
+    assert.throws(() => validateCacheRepairPlan({ ...seeded, ...change }));
+  assert.throws(() => validateCacheRepairPlan({ ...plan(), seed: 'worlds-template-copy' }));
+});
+test('seed evidence requires fingerprinted nonempty projects/revisions and exact retained card identity', () => {
+  const state = {
+    card: { id: 'studio-actual-ui-id', title: 'C7 retained world' },
+    records: {
+      databases: [
+        {
+          name: 'revealline-fpv-worlds-v1',
+          version: 2,
+          stores: ['projects', 'revisions'].map((name) => ({
+            name,
+            count: 1,
+            sha256: 'a'.repeat(64),
+            rows: [{ key: 'b'.repeat(64), sha256: 'c'.repeat(64) }],
+          })),
+        },
+      ],
+    },
+  };
+  assertCacheRepairWorldSeed(state);
+  assertCacheRepairWorldSeed(state, state.card);
+  for (const mutation of [
+    (value) => {
+      value.card.id = '';
+    },
+    (value) => {
+      value.card.title = 'Other title';
+    },
+    (value) => {
+      value.records.databases = [];
+    },
+    (value) => {
+      value.records.databases[0].missing = true;
+    },
+    (value) => {
+      value.records.databases[0].stores[0].count = 0;
+    },
+    (value) => {
+      value.records.databases[0].stores[1].count = 0;
+    },
+    (value) => {
+      value.records.databases[0].stores[0].rows = [];
+    },
+    (value) => {
+      value.records.databases[0].stores[0].rows[0].sha256 = 'invalid';
+    },
+  ]) {
+    const invalid = structuredClone(state);
+    mutation(invalid);
+    assert.throws(() => assertCacheRepairWorldSeed(invalid));
+  }
+  assert.throws(() => assertCacheRepairWorldSeed(state, { ...state.card, id: 'replacement-id' }));
+  assert.throws(() =>
+    assertCacheRepairWorldSeed(state, { ...state.card, title: 'replacement-title' }),
+  );
+  const before = {
+    apps: Object.fromEntries(CACHE_REPAIR_IDS.map((id) => [id, {}])),
+    records: state.records,
+  };
+  const after = structuredClone(before);
+  assertCacheRepairPreservation(before, after, 'fpv-worlds');
+  after.records.databases[0].stores[0].rows[0].sha256 = 'd'.repeat(64);
+  assert.throws(() => assertCacheRepairPreservation(before, after, 'fpv-worlds'));
 });
 function fixture(id = 'civilian-fpv') {
   const spec = cacheRepairSpec(id, 'v1.2.3', 'http://127.0.0.1:9999');
