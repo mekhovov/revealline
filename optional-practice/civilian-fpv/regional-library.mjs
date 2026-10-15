@@ -81,7 +81,7 @@ export const CANAL_CITY_LIBRARY_PIN = Object.freeze({
 
 export const LUNAR_BASIN_LIBRARY_PIN = Object.freeze({
   id: 'lunar-basin-study',
-  title: { en: 'Lunar Basin — survey routes', uk: 'Місячний басейн — дослідницькі маршрути' },
+  title: { en: 'Lunar Basin — flight study', uk: 'Місячна улоговина — тренувальна зона' },
   description: {
     en: '768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity.',
     uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття, розколоті скелі, звивисте русло, край кратера, кам’яні плити й антену на опорах. Раннє дослідження вигаданого ландшафту з малонаповненими околицями. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',

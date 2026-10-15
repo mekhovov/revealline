@@ -47,6 +47,7 @@ const prepared = await prepareRegionalDownload(pin, {
   },
 });
 const descriptor = prepared.descriptor;
+assert.deepEqual(libraryPin.title, descriptor.title, 'Offered and saved region titles must agree');
 assert.equal(descriptor.format, 'FPVRegionalDelivery.v2');
 assert.equal(descriptor.id, 'lunar-basin-study');
 assert.equal(descriptor.revision, 'composition-r2');

@@ -1,4 +1,4 @@
-# Lunar Basin — survey routes preview
+# Lunar Basin — flight study preview
 
 The normal Library offers the corrected 768 × 768 m composition-r2 as a small optional download. Its six named EN/UK starts face the first local landmark. The row explicitly describes an early fictional landscape using the simulator's Earth flight physics, not lunar gravity. Broad surroundings remain sparse; representative final art is unfinished.
 
@@ -23,3 +23,5 @@ The local Library check combines the unchanged qualified material runtime (2a9dd
 The new exact optional package must pass all checksum, archive, import closure and functional checks. Root must then verify normal Library download, first Fly, representative starts, FPV/Chase/Overview, modes, pause/restart, mobile layout, EN/UK labels, saved reload and controlled origin-unavailable launch where applicable. The PR remains Draft until its stated native admission gate is reviewed. Physical controllers/devices, all-network offline, full-region endurance and final representative art are not claimed.
 
 Source delivery #1470 preserves the reviewed data. Material #1462 and review-tier forwarding #1467 are merged prerequisites; no geometry, physics, scoring or core package ceiling is changed by this Library row.
+
+Native 66b318e7 review found that the offered title changed after installation. The follow-up uses the exact immutable EN/UK descriptor title and asserts offered/saved title equality. The frozen package remains unchanged for its other native checks.
