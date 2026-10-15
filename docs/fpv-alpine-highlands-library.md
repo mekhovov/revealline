@@ -27,3 +27,15 @@ That older package does not contain this Library entry. Its isolated source-view
 ## Remaining gates
 
 This Library PR stays draft until a new exact cloud package is qualified and the normal player download, first flight, camera/start selection, reload and cached-use journey is reviewed. Representative mountain art remains a separate unfinished work item. No physical-device/controller or hardware FPS claim is made.
+
+## Additive contour revision review-r2
+
+The new row offers the accepted contour correction while retaining review-r1 and every previously reconciled Library row unchanged. Both rows use the immutable descriptor title, so installing a revision does not change its displayed title. The new description identifies the refined snow and scree boundaries and retains the early-study qualification. No terrain heights, solid collision geometry, flight rules or runtime package limits change.
+
+The new descriptor is pinned to commit `1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a`, 115,311 bytes, SHA256 `a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec`. Its 722 payloads total21,644,516 bytes; the complete optional download is21,759,827 bytes. It is a distinct `review-r2` delivery with source revision `relief-r2-contours`; no previous immutable URL or saved revision is replaced.
+
+The frozen review-r1 package at d48229cb passed normal download, six disarmed starts and reload retention on9122, but its integrated Overview exposed sawtoothed snow boundaries. The later actual-height Overview correction was separately reviewed on9138. Exact source381d151c on9142 then showed smooth snow/scree boundaries against the unchanged legacy source at identical cameras, without depth interference; resource release completed. Those bounded source reviews do not qualify the new integrated Library package. Sparse prototype scenery and representative mountain art remain unfinished.
+
+`verify-contour-library.mjs` passed all 723 actual immutable HTTPS responses through the production downloader in 56.38 seconds in this run; this is not a download-speed guarantee. Every returned payload was rehashed, and all 16 prior complete Library rows remain identical. Thirty-six production cases cover six starting points, both flight modes and all three material tiers. They preserve exact geometry, prepare disarmed, require explicit arm, accept 100 commanded ticks without contact, pause without movement and dispose with zero owned geometry, textures and reservations. Scoped lint and syntax checks pass. The exact receipt is `receipts-contours-r1/library-verification.json`.
+
+A fresh exact cloud package and normal player journey remain required before this draft is admitted. This Node verification does not claim IndexedDB installation, native rendering, offline use, physical controller coverage or hardware performance.
