@@ -33,7 +33,10 @@
       "durationSeconds": 31.908333333333335,
       "turnPolicy": "grid-center",
       "replayURL": "./demo-data/first-signal-right.replay.json",
-      "replayVariants": ["./demo-data/first-signal-right.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/first-signal-right.chromium-macos.replay.json",
+        "./demo-data/first-signal-right.node20-linux-x64.replay.json"
+      ]
     },
     {
       "id": "relay-orchard-loop",
@@ -135,7 +138,10 @@
       "durationSeconds": 44.391666666666666,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/hidden-frequency-search.replay.json",
-      "replayVariants": ["./demo-data/hidden-frequency-search.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+        "./demo-data/hidden-frequency-search.node20-linux-x64.replay.json"
+      ]
     },
     {
       "id": "the-crossing-windows",
@@ -186,7 +192,7 @@
       "durationSeconds": 31.416666666666668,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/orchard-crossing-circuit.replay.json",
-      "replayVariants": []
+      "replayVariants": ["./demo-data/orchard-crossing-circuit.node20-linux-x64.replay.json"]
     },
     {
       "id": "courtyard-exits-circuit",
@@ -237,7 +243,7 @@
       "durationSeconds": 52.96666666666667,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/supply-circuit-recovery.replay.json",
-      "replayVariants": []
+      "replayVariants": ["./demo-data/supply-circuit-recovery.node20-linux-x64.replay.json"]
     }
   ]
 }

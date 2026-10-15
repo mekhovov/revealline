@@ -1,4 +1,4 @@
-import { t } from './i18n/index.mjs';
+import { dataJSONMessage as t } from './data-json-messages.mjs';
 
 /** Shared boundary for user-owned files. Does not invoke getters or toJSON. */
 export const plainObject = (value) =>
