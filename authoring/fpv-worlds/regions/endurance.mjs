@@ -3,6 +3,7 @@ import { createRegionalFlightPrototype } from '../../../optional-practice/civili
 import { createEnduranceFixture, createEndurancePilot, digest } from './endurance-fixture.mjs';
 import { createEnduranceClock } from './endurance-clock.mjs';
 import { createEnduranceObservation } from './endurance-observation.mjs';
+import { createEnduranceLifecycle } from './endurance-lifecycle.mjs';
 
 const $ = (id) => document.getElementById(id);
 const assert = (value, message) => {
@@ -153,6 +154,7 @@ function buildReport(segment, final = null) {
     mode: 'self-level',
     clock: segment.clock.snapshot(),
     observation: segment.observation.snapshot(),
+    lifecycleDiagnostics: segment.lifecycle.snapshot(),
     ...(authored
       ? { commandedRoute: segment.pilot.snapshot() }
       : { reversals: segment.pilot.reversals }),
@@ -216,6 +218,7 @@ async function release() {
 async function finish(reason = null) {
   if (!run) return;
   const segment = run;
+  segment.lifecycle.stop();
   if (reason) segment.clock.invalidate(reason);
   try {
     observe();
@@ -285,6 +288,7 @@ async function readSourceHashes() {
       'endurance.mjs',
       'endurance-clock.mjs',
       'endurance-observation.mjs',
+      'endurance-lifecycle.mjs',
       'authored-endurance-fixture.mjs',
     ]) {
       const response = await fetch(new URL(path, import.meta.url), {
@@ -428,6 +432,7 @@ $('start').onclick = () => {
         targetMs: Number($('duration').value),
       }),
       observation,
+      lifecycle: createEnduranceLifecycle({ startedAt }),
       label: $('label').value,
       quality: $('quality').value,
       startedUTC: new Date().toISOString(),
@@ -526,6 +531,7 @@ $('import').onchange = async () => {
 function frame() {
   if (closed) return;
   if (run) {
+    run.lifecycle.frame(performance.now());
     try {
       const observationFailure = run.observation.observe({
         at: performance.now(),
@@ -599,7 +605,8 @@ addEventListener('focus', () => observeWindow('focus', true));
 document.addEventListener('visibilitychange', () => observeWindow('visibilitychange'));
 addEventListener(
   'pagehide',
-  () => {
+  (event) => {
+    run?.lifecycle.pageExit(event);
     closed = true;
     generation++;
     preparationAbort?.abort(new DOMException('Review page left', 'AbortError'));
