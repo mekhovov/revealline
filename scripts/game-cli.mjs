@@ -9,6 +9,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { deflateRawSync } from 'node:zlib';
 import {
   readPackIndexes,
   packNavigationSummary,
@@ -26,6 +27,24 @@ import { isIncludedBundledMission } from '../game/mission-library/included-bundl
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
 const FORMAT_VERSION = 1;
+export const DISTRIBUTION_ARCHIVE_FORMAT = 'revealline-distribution-zip.v2';
+// Existing default frozen-distribution envelope; compressed transport does not
+// authorize an unlimited expanded payload or change native/hosted byte limits.
+export const MAX_DISTRIBUTION_EXPANDED_BYTES = 1024 * 1024 * 1024;
+export function validateDistributionArchive(value) {
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    Array.isArray(value) ||
+    Object.keys(value).sort().join(',') !== 'format,maxExpandedBytes' ||
+    value.format !== DISTRIBUTION_ARCHIVE_FORMAT ||
+    !Number.isSafeInteger(value.maxExpandedBytes) ||
+    value.maxExpandedBytes < 1 ||
+    value.maxExpandedBytes > MAX_DISTRIBUTION_EXPANDED_BYTES
+  )
+    fail('Invalid source-admitted distribution archive contract');
+  return { format: value.format, maxExpandedBytes: value.maxExpandedBytes };
+}
 export const PUBLIC_SECURITY_HEADERS = Object.freeze({
   'Content-Security-Policy':
     "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
@@ -156,9 +175,12 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
         'externalChapters',
         'optionalArtwork',
         'soundtrackAlbums',
+        'distributionArchive',
       ].includes(k),
   );
   if (unknown.length) fail(`Unknown build-config fields: ${unknown.join(', ')}`);
+  if (config.distributionArchive !== undefined)
+    validateDistributionArchive(config.distributionArchive);
   safeVersion(config.version);
   safeRelative(config.entry);
   if (!config.entry.endsWith('.html')) fail('Build entry must be an HTML file');
@@ -353,44 +375,59 @@ export function crc32(buffer) {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
-/** Deterministic, uncompressed ZIP: fixed 1980 date, UTF-8, no host metadata or clock. */
-export function createZip(entries) {
-  if (entries.length > 65535) fail('ZIP64 is not supported');
+/** Fixed 1980 date, UTF-8, no host metadata or clock. STORE remains the default
+ * for optional callers; source-admitted complete builds explicitly select
+ * adaptive raw deflate (level 9, window 15, memory 8, default strategy).
+ */
+export function createZip(entries, { compression = 'stored' } = {}) {
+  if (!['stored', 'adaptive'].includes(compression)) fail('Unknown ZIP compression contract');
+  if (entries.length >= 65535) fail('ZIP64 is not supported');
   const local = [],
     central = [];
   let offset = 0;
+  const names = new Set();
   for (const { name, bytes } of [...entries].sort((a, b) =>
     a.name < b.name ? -1 : a.name > b.name ? 1 : 0,
   )) {
     safeRelative(name);
+    if (names.has(name.toLowerCase())) fail('Duplicate or case-colliding ZIP member');
+    names.add(name.toLowerCase());
     const filename = Buffer.from(name),
-      data = Buffer.from(bytes),
+      data = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes),
       crc = crc32(data);
     if (filename.length > 65535 || data.length > 0xffffffff || offset > 0xffffffff)
       fail('ZIP64 is not supported');
+    const deflated =
+      compression === 'adaptive'
+        ? deflateRawSync(data, { level: 9, windowBits: 15, memLevel: 8, strategy: 0 })
+        : null;
+    const method = deflated && deflated.length < data.length ? 8 : 0;
+    const body = method === 8 ? deflated : data;
     const header = Buffer.alloc(30);
     header.writeUInt32LE(0x04034b50);
     header.writeUInt16LE(20, 4);
     header.writeUInt16LE(0x800, 6);
+    header.writeUInt16LE(method, 8);
     header.writeUInt16LE(33, 12);
     header.writeUInt32LE(crc, 14);
-    header.writeUInt32LE(data.length, 18);
+    header.writeUInt32LE(body.length, 18);
     header.writeUInt32LE(data.length, 22);
     header.writeUInt16LE(filename.length, 26);
-    local.push(header, filename, data);
+    local.push(header, filename, body);
     const directory = Buffer.alloc(46);
     directory.writeUInt32LE(0x02014b50);
     directory.writeUInt16LE(20, 4);
     directory.writeUInt16LE(20, 6);
     directory.writeUInt16LE(0x800, 8);
+    directory.writeUInt16LE(method, 10);
     directory.writeUInt16LE(33, 14);
     directory.writeUInt32LE(crc, 16);
-    directory.writeUInt32LE(data.length, 20);
+    directory.writeUInt32LE(body.length, 20);
     directory.writeUInt32LE(data.length, 24);
     directory.writeUInt16LE(filename.length, 28);
     directory.writeUInt32LE(offset, 42);
     central.push(directory, filename);
-    offset += header.length + filename.length + data.length;
+    offset += header.length + filename.length + body.length;
   }
   const centralSize = central.reduce((n, b) => n + b.length, 0);
   if (offset + centralSize > 0xffffffff) fail('ZIP64 is not supported');
@@ -1049,7 +1086,17 @@ export async function prepareBuildProject({
       fail('Spatial snapshot changed after validation; rebuild from stable source');
   }
   entries.push(...optionalEntries, ...externalEntries, ...soundtrackEntries);
-  const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
+  const distributionArchive =
+    config.distributionArchive === undefined
+      ? null
+      : validateDistributionArchive(config.distributionArchive);
+  const info = {
+    formatVersion: FORMAT_VERSION,
+    version,
+    sourceRevision,
+    entry: config.entry,
+    ...(distributionArchive ? { distributionArchive } : {}),
+  };
   const replace = (name, bytes) => {
     const found = entries.find((e) => e.name === name);
     if (found) found.bytes = Buffer.from(bytes);
@@ -1082,8 +1129,22 @@ export async function prepareBuildProject({
   // Generated transport metadata is losslessly compact; authored inputs remain
   // byte-exact and all descriptors still describe the final shipped bytes.
   const manifestBytes = Buffer.from(`${JSON.stringify(manifest)}\n`);
+  if (
+    distributionArchive &&
+    manifest.totalBytes + manifestBytes.length > distributionArchive.maxExpandedBytes
+  )
+    fail('Complete distribution exceeds its source-admitted expanded-byte bound');
   entries.push({ name: 'manifest.json', bytes: manifestBytes });
-  return { root, out, version, sourceRevision, entries, manifest, manifestBytes };
+  return {
+    root,
+    out,
+    version,
+    sourceRevision,
+    entries,
+    manifest,
+    manifestBytes,
+    distributionArchive,
+  };
 }
 
 /** Runs the same preparation and validation as a build, without allocating a
@@ -1140,7 +1201,9 @@ export async function buildProject({
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
   try {
-    const zip = createZip(entries);
+    const zip = createZip(entries, {
+      compression: prepared.distributionArchive ? 'adaptive' : 'stored',
+    });
     for (const entry of entries) {
       const target = path.join(staging, entry.name);
       await fs.mkdir(path.dirname(target), { recursive: true });
@@ -1465,6 +1528,7 @@ export async function releaseSnapshot({
     );
     const zip = await fs.readFile(path.join(staging, 'site/distribution.zip'));
     const manifest = await fs.readFile(path.join(staging, 'site/manifest.json'));
+    const distributionArchive = JSON.parse(manifest).distributionArchive;
     const release = {
       formatVersion: sourceFormat === 'manifest' ? 2 : FORMAT_VERSION,
       version,
@@ -1478,6 +1542,9 @@ export async function releaseSnapshot({
         : { sourceArchiveSha256 }),
       distributionSha256: sha256(zip),
       manifestSha256: sha256(manifest),
+      ...(distributionArchive === undefined
+        ? {}
+        : { distributionArchive: validateDistributionArchive(distributionArchive) }),
       play: `${version}/site/game/`,
       download: `${version}/site/distribution.zip`,
     };

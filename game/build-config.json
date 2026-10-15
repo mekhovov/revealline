@@ -1,5 +1,9 @@
 {
   "version": "0.151.1",
+  "distributionArchive": {
+    "format": "revealline-distribution-zip.v2",
+    "maxExpandedBytes": 1073741824
+  },
   "entry": "game/index.html",
   "include": [
     "game",

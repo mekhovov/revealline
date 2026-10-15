@@ -264,7 +264,7 @@ class OriginalFixtureTests(unittest.TestCase):
     def test_real_git_manifest_zip_offline_roundtrip_and_source_hash_rejection(self):
         self.source_contract_roundtrip(True)
 
-    def source_contract_roundtrip(self, manifest_source):
+    def source_contract_roundtrip(self, manifest_source, adaptive=False):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary); repo = root / 'repo'; repo.mkdir()
             def git(*args):
@@ -272,6 +272,10 @@ class OriginalFixtureTests(unittest.TestCase):
             git('init'); git('config', 'user.email', 'fixture@example.invalid'); git('config', 'user.name', 'Fixture')
             worker = repo / 'game/offline/service-worker.template.js'; worker.parent.mkdir(parents=True)
             worker.write_bytes(b'const config=__XONIX_OFFLINE_CONFIG__;\n')
+            archive_contract = {'format': inspector.ARCHIVE_FORMAT, 'maxExpandedBytes': 1024 * inspector.CHUNK}
+            archive_marker = {'distributionArchive': archive_contract} if adaptive else {}
+            if adaptive:
+                (repo / 'game/build-config.json').write_bytes(encoded(archive_marker))
             (repo / 'run.sh').write_bytes(b'#!/bin/sh\nexit 0\n'); (repo / 'run.sh').chmod(0o755)
             git('add', '.'); git('commit', '-m', 'local fixture')
             commit, tree = git('rev-parse', 'HEAD').decode(), git('rev-parse', 'HEAD^{tree}').decode()
@@ -279,7 +283,7 @@ class OriginalFixtureTests(unittest.TestCase):
             marker = {'format': 'revealline-offline.v1', 'version': version, 'buildId': build_id}
             index = b'<meta name="revealline-offline" content=\'' + encoded(marker) + b"'>"
             files = {'game/index.html': index, 'game/build-info.json': encoded({'formatVersion': 1,
-                     'version': version, 'sourceRevision': commit, 'entry': 'game/index.html'})}
+                     'version': version, 'sourceRevision': commit, 'entry': 'game/index.html', **archive_marker})}
             def rows(contents): return [{'path': n, 'bytes': len(b), 'sha256': utility.sha(b)} for n, b in contents.items()]
             optional = {'game/optional.html': b'<html><body>Final optional HTML</body></html>'}
             offline = {**marker, 'files': rows(files),
@@ -287,17 +291,25 @@ class OriginalFixtureTests(unittest.TestCase):
             files.update(optional)
             files['offline-cache.json'] = encoded(offline)
             files['service-worker.js'] = worker.read_bytes().replace(b'__XONIX_OFFLINE_CONFIG__', encoded(offline))
+            if adaptive:
+                files['game/build-config.json'] = (repo / 'game/build-config.json').read_bytes()
+                files['game/repeated.txt'] = b'All original payload bytes retained.\n' * 4000
             manifest = encoded({'formatVersion': 1, 'version': version, 'sourceRevision': commit,
-                       'entry': 'game/index.html', 'files': rows(files), 'totalBytes': sum(map(len, files.values()))})
+                       'entry': 'game/index.html', 'files': rows(files), 'totalBytes': sum(map(len, files.values())), **archive_marker})
             inner = io.BytesIO()
             with zipfile.ZipFile(inner, 'w') as archive:
                 for name, body in files.items(): archive.writestr(name, body)
                 archive.writestr('manifest.json', manifest)
+            if adaptive:
+                cli = (Path(__file__).resolve().parents[2] / 'scripts/game-cli.mjs').as_uri()
+                code = f"import {{createZip}} from {json.dumps(cli)}; let s=''; for await (const c of process.stdin) s+=c; process.stdout.write(createZip(Object.entries(JSON.parse(s)).map(([name,hex])=>({{name,bytes:Buffer.from(hex,'hex')}})),{{compression:'adaptive'}}));"
+                inner = io.BytesIO(subprocess.check_output(['node', '--input-type=module', '-e', code],
+                    input=encoded({name: body.hex() for name, body in {**files, 'manifest.json': manifest}.items()})))
             tar = subprocess.check_output(['git', '-C', str(repo), 'archive', '--format=tar', 'HEAD'])
             release = encoded({'formatVersion': 1, 'version': version, 'sourceRevision': commit,
                        'sourceArchiveSha256': utility.sha(tar), 'distributionSha256': utility.sha(inner.getvalue()),
                        'manifestSha256': utility.sha(manifest), 'play': version + '/site/game/',
-                       'download': version + '/site/distribution.zip'})
+                       'download': version + '/site/distribution.zip', **archive_marker})
             source_name, source_body = 'source.tar', tar
             if manifest_source:
                 source_name = 'source-manifest.json'
@@ -309,27 +321,31 @@ class OriginalFixtureTests(unittest.TestCase):
                               sourceManifestSha256=utility.sha(source_body))
                 release = encoded(record)
             base = root / 'out'; base.mkdir(); original = base / 'qualified-artifact-original.zip'
-            with zipfile.ZipFile(original, 'w') as archive:
+            with zipfile.ZipFile(original, 'w', compression=zipfile.ZIP_DEFLATED if adaptive else zipfile.ZIP_STORED) as archive:
                 for name, body in {'release.json': release, source_name: source_body, 'site/manifest.json': manifest,
                        'site/distribution.zip': inner.getvalue(),
                        'distribution.zip.sha256': (utility.sha(inner.getvalue()) + '  distribution.zip\n').encode()}.items():
                     archive.writestr(version + '/' + name, body)
             digest = utility.sha(original.read_bytes())
-            inspector = Path(utility.__file__).with_name('inspect_qualified_artifact.py')
+            inspector_path = Path(utility.__file__).with_name('inspect_qualified_artifact.py')
             verified = base / 'qualified-artifact-verified'
-            result = subprocess.run([sys.executable, str(inspector), str(original), '--repo', str(repo),
+            result = subprocess.run([sys.executable, str(inspector_path), str(original), '--repo', str(repo),
                        '--expected-commit', commit, '--expected-version', version, '--artifact-sha256', digest,
                        '--max-distribution-bytes', str(len(inner.getvalue())), '--out', str(verified)],
                        capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             inspection = json.loads((verified / 'inspection.json').read_text())
             self.assertTrue(inspection['distribution']['allManifestBytesVerified'])
+            if adaptive:
+                self.assertEqual(inspection['distribution']['distributionArchive'], archive_contract)
+                self.assertTrue(inspection['distribution']['strictZip32LayoutVerified'])
+                self.assertEqual(inspection['distribution']['expandedBytesVerified'], sum(map(len, files.values())) + len(manifest))
             self.assertFalse((verified / 'distribution.zip').exists())
             self.assertFalse((verified / 'source.tar').exists())
             download = base / 'qualified-artifact-original.download.json'
             utility.record(download, {'status': 'ORIGINAL_RECEIVED_VERIFIED', 'exitCode': 0,
                     'sourceRevision': commit, 'bytes': original.stat().st_size, 'sha256': digest, 'output': str(original)})
-            command = [sys.executable, str(inspector.with_name('verify_frozen_offline.py')), '--repo', str(repo),
+            command = [sys.executable, str(inspector_path.with_name('verify_frozen_offline.py')), '--repo', str(repo),
                     '--base', str(base), '--source', commit, '--tree', tree, '--version', version,
                     '--inspection-sha256', utility.pin(verified / 'inspection.json')['sha256'],
                     '--download-sha256', utility.pin(download)['sha256'], '--manifest-sha256', utility.sha(manifest)]
@@ -341,12 +357,12 @@ class OriginalFixtureTests(unittest.TestCase):
             self.assertTrue(offline_review['allDownloadRowsMatchFrozenManifest'])
             # Wrong immutable source and wrong original SHA must not produce a passing output.
             for option, value in [('--expected-commit', 'f' * 40), ('--artifact-sha256', 'f' * 64)]:
-                bad = [sys.executable, str(inspector), str(original), '--repo', str(repo), '--expected-commit', commit,
+                bad = [sys.executable, str(inspector_path), str(original), '--repo', str(repo), '--expected-commit', commit,
                        '--expected-version', version, '--artifact-sha256', digest, '--out', str(base / 'refused')]
                 bad[bad.index(option) + 1] = value
                 rejected = subprocess.run(bad, capture_output=True)
                 self.assertNotEqual(rejected.returncode, 0); self.assertFalse((base / 'refused/inspection.json').exists())
-            too_small = [sys.executable, str(inspector), str(original), '--repo', str(repo),
+            too_small = [sys.executable, str(inspector_path), str(original), '--repo', str(repo),
                          '--expected-commit', commit, '--expected-version', version, '--artifact-sha256', digest,
                          '--max-distribution-bytes', str(len(inner.getvalue()) - 1), '--out', str(base / 'refused')]
             rejected = subprocess.run(too_small, capture_output=True)
