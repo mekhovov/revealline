@@ -6,6 +6,24 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
     id: 'coaster-gardens-study',
     title: {
+      en: 'Coaster Gardens — connected park study',
+      uk: 'Сади атракціонів — дослідження парку зі сполученими доріжками',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move.',
+      uk: '2,048 × 2,048 км · шість стартових точок · вільний політ без заліку. Досліджуйте петлю на опорах, сполучені підходи, площі станцій і лісові маршрути. Ранній варіант парку; оформлення районів ще вдосконалюється, атракціони нерухомі.',
+    },
+    bytes: 34214390,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json',
+      bytes: 32824,
+      sha256: '935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a',
+    },
+  },
+  {
+    id: 'coaster-gardens-study',
+    title: {
       en: 'Coaster Gardens — 2 km study',
       uk: 'Сади атракціонів — пробний світ 2 км',
     },
