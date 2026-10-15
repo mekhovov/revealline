@@ -4746,6 +4746,10 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'lower-square': ['Lower square', 'Нижня площа'],
+        'middle-courtyard': ['Middle courtyard', 'Середнє подвір’я'],
+        'upper-terrace': ['Upper terrace', 'Верхня тераса'],
+        'elevated-pad': ['Elevated pad', 'Піднятий майданчик'],
         'braided-basin': ['Braided basin', 'Розгалужена улоговина'],
         'high-mesa': ['High mesa', 'Високе плато'],
         'red-escarpment': ['Red escarpment', 'Червоний уступ'],
