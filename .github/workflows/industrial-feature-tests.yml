@@ -38,6 +38,7 @@ jobs:
             local-ux,
             host-integration,
             host-navigation,
+            mission-library,
           ]
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5

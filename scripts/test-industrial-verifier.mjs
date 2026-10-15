@@ -27,6 +27,7 @@ test('the feature manifest selects every required stream and real test paths', a
       'local-ux',
       'host-integration',
       'host-navigation',
+      'mission-library',
     ],
   );
   for (const phase of phases) {
