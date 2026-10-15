@@ -1,0 +1,30 @@
+Input #0, matroska,webm, from 'docs/qualification/overflight/quality-followup-20261015/riy-effects-5dfb.webm':
+  Metadata:
+    encoder         : Chrome
+  Duration: N/A, start: 0.000000, bitrate: N/A
+  Stream #0:0(eng): Video: vp9 (Profile 0), yuv420p(tv, bt709), 960x540, SAR 1:1 DAR 16:9, 1k tbr, 1k tbn (default)
+    Metadata:
+      alpha_mode      : 1
+  Stream #0:1(eng): Audio: opus, 48000 Hz, stereo, fltp, start 0.033000 (default)
+[Parsed_volumedetect_0 @ 0x92500c600] n_samples: 0
+Stream mapping:
+  Stream #0:1 -> #0:0 (opus (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf63.1.102
+  Stream #0:0(eng): Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s (default)
+    Metadata:
+      encoder         : Lavc63.1.102 pcm_s16le
+[Parsed_volumedetect_0 @ 0x92500cb40] n_samples: 1918080
+[Parsed_volumedetect_0 @ 0x92500cb40] mean_volume: -47.8 dB
+[Parsed_volumedetect_0 @ 0x92500cb40] max_volume: -28.8 dB
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_28db: 2
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_29db: 16
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_30db: 73
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_31db: 211
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_32db: 419
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_33db: 1115
+[Parsed_volumedetect_0 @ 0x92500cb40] histogram_34db: 2253
+[out#0/null @ 0x92500c480] video:0KiB audio:3746KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:20.01 bitrate=N/A speed=90.8x elapsed=0:00:00.22    
