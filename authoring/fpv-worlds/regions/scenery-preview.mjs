@@ -197,6 +197,7 @@ document.querySelector('form').addEventListener('submit', async (event) => {
     const scenerySource = {
       baseURL: new URL('./', url).href,
       surfaceStyle: new URLSearchParams(location.search).get('surface') ?? 'plain',
+      surfaceQuality: new URLSearchParams(location.search).get('quality') ?? 'balanced',
     };
     window = terrain
       ? createVerifiedMixedWindow(terrain, {
