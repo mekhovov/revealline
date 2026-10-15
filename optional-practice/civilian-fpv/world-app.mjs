@@ -5523,6 +5523,18 @@ export function mountWorldApp({
       $('flight-dialog').open &&
       (executionDelta > 250 || (lastTime !== null && now - lastTime > 250))
     ) {
+      // Cold source/graphics preparation may delay a callback while flight is
+      // already disarmed. Discard that elapsed time without cancelling staging.
+      // Active flight and every explicit pause/blur/context-loss path still freeze.
+      if (
+        current?.regional &&
+        regionalPreparing &&
+        ['paused', 'disarmed'].includes(flight.snapshot().status)
+      ) {
+        lastTime = null;
+        accumulator = 0;
+        return;
+      }
       pauseFlight();
       return;
     }
