@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
 # Demo live recovery — 15 October 2026
 
 This record continues [the earlier follow-up](../demo-followup-2026-10-15/README.md). All earlier failed, preliminary and interrupted evidence remains historical evidence. The current candidate stays in draft PR [1356](https://github.com/mekhovov/revealline/pull/1356), with its release hold and existing planning milestone. No merge, version allocation or publication is part of this record.
@@ -39,7 +41,7 @@ The final conflict-free rebase incorporated main `4defb04b81d5fd191268a2d202f500
 | [Final package checks](offline-package-final-tests.log)                                                                                                                 | All 27 passed: optional app construction/update/rollback, frozen-source reproducibility, explicit FPV package runtime/source closure and offline core dependencies. The existing 96-file and byte limits remain intact; these are local source/package tests, not native-device or public delivery acceptance.                                                                                       |
 | [Localization](localization-check.log)                                                                                                                                  | English/Ukrainian catalog validation passes: 13,654 messages and 9,049 references.                                                                                                                                                                                                                                                                                                                   |
 
-The audit uses actual source creation and complete outcomes; recordings retain their authored steering policy. Complete playback coverage is distinct from every registered source passing. The audit covers base + Pressure Lines only. Wider Journey/company inventories from the earlier record remain inventories, not qualified playback.
+The audit uses actual source creation and complete outcomes; recordings retain their authored steering policy. Complete playback coverage is distinct from every registered source passing. The earlier audit covers base + Pressure Lines only. Wider owner playback is checked separately below; neither inventory counts nor source verification qualify visual presentation.
 
 ## Latest timing and endurance result — qualification still held
 
@@ -50,6 +52,22 @@ The single final [accelerated endurance attempt](worker-endurance-final.json) re
 All 16 created players were disposed. Final Worker owners, running threads and adapter listeners are zero; peak live players were one and **Node running Worker threads briefly peaked at two**. The overlap needs lifecycle review rather than a claim of a strictly single running thread. Forced-GC heap samples grow from 26,218,952 to 30,661,104 bytes; only initial/final samples exist, so this short run cannot establish stable long-term memory. All sampled soak source hashes remain unchanged.
 
 A [post-run load snapshot](post-run-host-load.json) records high host load (52.47 in the immediately preceding terminal observation on 14 logical CPUs, with swap in use; the saved snapshot contains its own exact later sample). This is context, not proof that load caused every timeout and not grounds to waive the watchdog. Unrelated processes were left alone. Remaining P0 work is timing/lifecycle profiling, including cold startup, the long-search tail and the preflight-to-live reset, followed by qualification under measured representative conditions. No additional rerun was used to replace the failed final result.
+
+## Wider owner playback audit
+
+
+| Owner / steering selection                 | Verified sources | Maps with complete playback | Real wins / losses | Evidence                                                                               |
+| ------------------------------------------ | ---------------- | --------------------------- | ------------------ | -------------------------------------------------------------------------------------- |
+| Journey plus Original Legacy / immediate   | 102/105          | 100/103                     | 92 / 10            | [Report](journey-immediate-playback.json), [log](journey-immediate-playback.log)       |
+| Journey plus Original Legacy / grid-center | 102/105          | 100/103                     | 92 / 10            | [Report](journey-grid-center-playback.json), [log](journey-grid-center-playback.log)   |
+| DroneAid / immediate                       | 41/42            | 41/42                       | 38 / 3             | [Report](droneaid-immediate-playback.json), [log](droneaid-immediate-playback.log)     |
+| DroneAid / grid-center                     | 41/42            | 41/42                       | 37 / 4             | [Report](droneaid-grid-center-playback.json), [log](droneaid-grid-center-playback.log) |
+
+
+Each failed source refuses with `No complete purposeful performance is available for this level.` Registration remains present, so the reports' `uncoveredLevels: 0` describes source registration, **not** successful playback. The `usableLevels` counts expose the actual gaps. Root cause within the maneuver/objective search remains unproven; do not remove the completion assertion or manufacture a death to fill them. Successful reports include genuine wins and hazard losses; no timed-out performance is counted as a complete level.
+
+
+The [hosted-check snapshot](ci-before-wide-evidence.json) belongs to documentation head `481562b73d8b79a1343550e1bd8747b3c80992d8` on the same production source. Gameplay, recordings, presentation, creator and optional-practice passed; other jobs were still pending/running at collection. Skipped broad jobs are not passes. Required current-head CI and release acceptance remain separate from these local audits.
 
 ## Browser and acceptance boundary
 
