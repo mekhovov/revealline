@@ -5434,6 +5434,7 @@ const FLIGHT_HUD_STYLE = `
   [data-sim-hud][data-hud-component] { --hud-ink: CanvasText; --hud-muted: CanvasText; --hud-bg: Canvas; --hud-accent: Highlight; forced-color-adjust: auto; }
 }
 [data-sim-hud='flight'][data-hud-component][data-hud-status-only='true'] [data-hud-part='card'] { height: auto; min-height: 32px; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+[data-sim-hud='flight'][data-hud-component] :is([data-hud-part='navigation-label'], [data-hud-part='navigation-hint']) { grid-column: 1; font-size: 12px; line-height: 15px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--hud-muted); }
 `;
 
 /** Observer-only flight feedback, shared by Academy and World Studio. */
@@ -5497,6 +5498,8 @@ export function mountFlightHud({
   root.hidden = true;
   const card = make('div', 'card', root),
     action = make('div', 'action', card),
+    navigationLabel = make('div', 'navigation-label', card),
+    navigationHint = make('div', 'navigation-hint', card),
     gauge = make('div', 'gauge', card),
     value = make('strong', 'value', gauge),
     gaugeName = make('span', 'gauge-name', gauge),
@@ -5737,7 +5740,12 @@ export function mountFlightHud({
       title = notice || copy(feedback.action) || copy(feedback.label) || t('Fly', 'Політ'),
       g = feedback.gauge;
     setText(action, title);
-    action.title = [copy(feedback.label), title].filter(Boolean).join(' · ');
+    navigationLabel.hidden = navigationHint.hidden = !options.navigation;
+    setText(navigationLabel, options.navigation?.label ?? '');
+    setText(navigationHint, options.navigation?.hint ?? '');
+    navigationLabel.title = options.navigation?.label ?? '';
+    navigationHint.title = options.navigation?.detail ?? '';
+    action.title = [copy(feedback.label), title, options.navigation?.label, options.navigation?.detail].filter(Boolean).join(' · ');
     setAttribute(card, 'aria-label', action.title);
     setAttribute(
       explain,
