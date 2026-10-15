@@ -1125,7 +1125,12 @@ export function mountRegionalLibrary({
               ? 'Не вдалося перевірити збережену місцевість. Виберіть «Відновити завантаження», щоб замінити лише файли цієї версії. Інші версії та збережені місця залишаться.'
               : 'Не вдалося перевірити збережену місцевість. Саме ця версія зараз недоступна для відновлення. Інші версії та збережені місця залишаться.',
           );
-        } else if (error?.name === 'QuotaExceededError')
+        } else if (error?.code === 'world-library-full')
+          show(
+            'The saved scenery library is full. Existing versions and saved places are kept. Keep flying a saved version, or review “Remove this version” for scenery you choose to replace, then retry.',
+            'Бібліотеку збереженої місцевості заповнено. Наявні версії та збережені місця залишаться. Літайте у збереженій версії або перегляньте «Вилучити цю версію» для місцевості, яку вирішите замінити, і повторіть спробу.',
+          );
+        else if (error?.name === 'QuotaExceededError')
           show(
             'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
             'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
