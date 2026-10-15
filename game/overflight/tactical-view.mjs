@@ -14,6 +14,45 @@ const layer = (frame, x, y, width, height, tint, alpha = 1, rotation = 0) => ({
   rotation,
 });
 
+/** Pending friendly impacts stay at their released positions, including echoes.
+ * These light footprints are below hostile warnings and never predict a hit. */
+export function overflightPendingPayloadLayers(payload) {
+  if (!payload.active || payload.remaining <= 0) return [];
+  const result = [];
+  const alpha = 0.18 + 0.18 * (1 - Math.min(1, payload.remaining / 0.85));
+  for (let index = 0; index < payload.count; index++) {
+    const offset = (index - (payload.count - 1) / 2) * payload.spacing;
+    const x = payload.x - Math.sin(payload.heading) * offset;
+    const y = payload.y + Math.cos(payload.heading) * offset;
+    result.push(layer('ring', x, y, payload.radius * 2, payload.radius * 2, GOLD, alpha));
+    result.push(layer('bar', x, y, 4, 4, GOLD, 0.6));
+  }
+  return result;
+}
+
+/** At most three actual links; reduced effects retains every affected target. */
+export function overflightEscortShotLayers(escort, reduced = false) {
+  if (escort.beamRemaining <= 0) return [];
+  const segments = escort.shotSegments
+    ? escort.shotSegments.slice(0, escort.shotSegmentCount)
+    : [escort];
+  const tint = escort.role === 'sweeper' ? 0x9aebda : GOLD;
+  return segments.map((segment) => {
+    const dx = segment.targetX - segment.x,
+      dy = segment.targetY - segment.y;
+    return layer(
+      'bar',
+      segment.x + dx / 2,
+      segment.y + dy / 2,
+      Math.hypot(dx, dy),
+      2,
+      tint,
+      reduced ? 0.45 : 0.8,
+      Math.atan2(dy, dx),
+    );
+  });
+}
+
 /** One persistent final objective, visually distinct from transient attack arrows. */
 export function overflightFinalTargetLayers(enemy, camera, frame) {
   if (!enemy.active) return [];
