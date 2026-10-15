@@ -3,6 +3,7 @@ import { createSceneryLighting } from './scenery-lighting.mjs';
 import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
 import { createVerifiedSceneryWindow } from './verified-scenery-window.mjs';
 import { validateRegionManifest, REGION_LIMITS } from './region-manifest.mjs';
+import { desertLandmarkViews } from './desert-expedition/landmark-views.mjs';
 const canvas = document.querySelector('canvas'),
   status = document.querySelector('#status'),
   input = document.querySelector('#manifest');
@@ -56,9 +57,12 @@ const canyonDistrictViews = [
   ['Sunset Shelf', [570, 125, 620], [720, 200, 760], [570, 112, 620]],
 ];
 const views =
-  { canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews }[
-    new URLSearchParams(location.search).get('views')
-  ] ?? urbanViews;
+  {
+    canyon: canyonViews,
+    'canyon-districts': canyonDistrictViews,
+    railway: railwayViews,
+    'desert-landmarks': desertLandmarkViews,
+  }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
   closed = false,

@@ -1,0 +1,902 @@
+{
+  "format": "FPVDesertLandmarkPreparation.v1",
+  "id": "desert-expedition-study",
+  "revision": "landmarks-r1",
+  "actualExtentM": [
+    16384,
+    16384
+  ],
+  "compositions": [
+    {
+      "id": "dune-windstones",
+      "district": "crescent-dunes",
+      "center": [
+        2800,
+        3240
+      ],
+      "color": [
+        0.64,
+        0.45,
+        0.25
+      ],
+      "purpose": "A low winding line between three unequal windstones; dunes remain open."
+    },
+    {
+      "id": "wash-sentinels",
+      "district": "dry-wash",
+      "center": [
+        6980,
+        5250
+      ],
+      "color": [
+        0.55,
+        0.27,
+        0.15
+      ],
+      "purpose": "A bank-side passage framed by unequal towers and low talus."
+    },
+    {
+      "id": "playa-window",
+      "district": "salt-basin",
+      "center": [
+        2910,
+        11120
+      ],
+      "color": [
+        0.78,
+        0.74,
+        0.62
+      ],
+      "purpose": "One isolated pale natural arch above the flat playa, with a clear approach."
+    },
+    {
+      "id": "scarp-ribs",
+      "district": "sunrise-escarpment",
+      "center": [
+        11420,
+        2890
+      ],
+      "color": [
+        0.4,
+        0.28,
+        0.2
+      ],
+      "purpose": "Staggered climbing ribs along the toe slope, with an open weaving line."
+    },
+    {
+      "id": "mesa-crown",
+      "district": "mesa-corridor",
+      "center": [
+        11920,
+        9050
+      ],
+      "color": [
+        0.65,
+        0.38,
+        0.23
+      ],
+      "purpose": "A broad broken crown for orbiting and elevation changes beside the main corridor."
+    },
+    {
+      "id": "plain-slalom",
+      "district": "rocky-plain",
+      "center": [
+        10360,
+        13560
+      ],
+      "color": [
+        0.33,
+        0.3,
+        0.28
+      ],
+      "purpose": "Four individually spaced tors form a close-range slalom beyond the broad terrain saddles."
+    }
+  ],
+  "objects": [
+    {
+      "id": "windstone-low",
+      "composition": "dune-windstones",
+      "sourceNode": "Rock_Formations_1",
+      "chunkId": "desert-5-6",
+      "center": [
+        2760,
+        3218
+      ],
+      "requestedWidthM": 22,
+      "requestedHeightM": 18,
+      "yawRadians": 0.3,
+      "baseMm": 123269,
+      "topMm": 141269,
+      "boundsMm": [
+        [
+          2748987,
+          2771091
+        ],
+        [
+          3206988,
+          3228944
+        ]
+      ],
+      "triangles": 192
+    },
+    {
+      "id": "windstone-tall",
+      "composition": "dune-windstones",
+      "sourceNode": "Rock_Formations_6",
+      "chunkId": "desert-5-6",
+      "center": [
+        2810,
+        3262
+      ],
+      "requestedWidthM": 20,
+      "requestedHeightM": 30,
+      "yawRadians": -0.3,
+      "baseMm": 124509,
+      "topMm": 154509,
+      "boundsMm": [
+        [
+          2799755,
+          2819180
+        ],
+        [
+          3252482,
+          3272445
+        ]
+      ],
+      "triangles": 164
+    },
+    {
+      "id": "windstone-broken",
+      "composition": "dune-windstones",
+      "sourceNode": "Rock_Formations_3",
+      "chunkId": "desert-5-6",
+      "center": [
+        2860,
+        3218
+      ],
+      "requestedWidthM": 24,
+      "requestedHeightM": 22,
+      "yawRadians": 0.7,
+      "baseMm": 125607,
+      "topMm": 147607,
+      "boundsMm": [
+        [
+          2848894,
+          2868729
+        ],
+        [
+          3208598,
+          3228930
+        ]
+      ],
+      "triangles": 384
+    },
+    {
+      "id": "windstone-foot",
+      "composition": "dune-windstones",
+      "sourceNode": "Rock_Boulders_4",
+      "chunkId": "desert-5-6",
+      "center": [
+        2828,
+        3272
+      ],
+      "requestedWidthM": 10,
+      "requestedHeightM": 5,
+      "yawRadians": 0.5,
+      "baseMm": 125225,
+      "topMm": 130225,
+      "boundsMm": [
+        [
+          2822988,
+          2832335
+        ],
+        [
+          3267126,
+          3276660
+        ]
+      ],
+      "triangles": 212
+    },
+    {
+      "id": "wash-west-tower",
+      "composition": "wash-sentinels",
+      "sourceNode": "Rock_Formations_6",
+      "chunkId": "desert-13-10",
+      "center": [
+        6953,
+        5250
+      ],
+      "requestedWidthM": 20,
+      "requestedHeightM": 42,
+      "yawRadians": 0.1,
+      "baseMm": 102029,
+      "topMm": 144029,
+      "boundsMm": [
+        [
+          6943989,
+          6961649
+        ],
+        [
+          5239743,
+          5259649
+        ]
+      ],
+      "triangles": 164
+    },
+    {
+      "id": "wash-east-tower",
+      "composition": "wash-sentinels",
+      "sourceNode": "Rock_Formations_12",
+      "chunkId": "desert-13-10",
+      "center": [
+        7007,
+        5260
+      ],
+      "requestedWidthM": 22,
+      "requestedHeightM": 29,
+      "yawRadians": -0.4,
+      "baseMm": 110179,
+      "topMm": 139179,
+      "boundsMm": [
+        [
+          6996964,
+          7016880
+        ],
+        [
+          5247956,
+          5269568
+        ]
+      ],
+      "triangles": 292
+    },
+    {
+      "id": "wash-upstream-talus",
+      "composition": "wash-sentinels",
+      "sourceNode": "Rock_Boulders_5",
+      "chunkId": "desert-13-10",
+      "center": [
+        6940,
+        5220
+      ],
+      "requestedWidthM": 14,
+      "requestedHeightM": 7,
+      "yawRadians": 0.2,
+      "baseMm": 100191,
+      "topMm": 107191,
+      "boundsMm": [
+        [
+          6932614,
+          6947658
+        ],
+        [
+          5212664,
+          5226203
+        ]
+      ],
+      "triangles": 216
+    },
+    {
+      "id": "wash-downstream-step",
+      "composition": "wash-sentinels",
+      "sourceNode": "Rock_Formations_1",
+      "chunkId": "desert-13-10",
+      "center": [
+        7015,
+        5300
+      ],
+      "requestedWidthM": 24,
+      "requestedHeightM": 12,
+      "yawRadians": 0.8,
+      "baseMm": 111850,
+      "topMm": 123850,
+      "boundsMm": [
+        [
+          7002165,
+          7027338
+        ],
+        [
+          5287493,
+          5312238
+        ]
+      ],
+      "triangles": 192
+    },
+    {
+      "id": "playa-natural-window",
+      "composition": "playa-window",
+      "sourceNode": "Rock_Formations_11",
+      "chunkId": "desert-5-21",
+      "center": [
+        2910,
+        11120
+      ],
+      "requestedWidthM": 70,
+      "requestedHeightM": 40,
+      "yawRadians": 0,
+      "baseMm": 36637,
+      "topMm": 76637,
+      "boundsMm": [
+        [
+          2875000,
+          2945000
+        ],
+        [
+          11105740,
+          11134260
+        ]
+      ],
+      "triangles": 532
+    },
+    {
+      "id": "playa-west-cairn",
+      "composition": "playa-window",
+      "sourceNode": "Rock_Boulders_3",
+      "chunkId": "desert-5-21",
+      "center": [
+        2855,
+        11145
+      ],
+      "requestedWidthM": 13,
+      "requestedHeightM": 9,
+      "yawRadians": 0.2,
+      "baseMm": 36636,
+      "topMm": 45636,
+      "boundsMm": [
+        [
+          2848149,
+          2861187
+        ],
+        [
+          11138501,
+          11151612
+        ]
+      ],
+      "triangles": 252
+    },
+    {
+      "id": "playa-east-cairn",
+      "composition": "playa-window",
+      "sourceNode": "Rock_Boulders_6",
+      "chunkId": "desert-5-21",
+      "center": [
+        2965,
+        11090
+      ],
+      "requestedWidthM": 10,
+      "requestedHeightM": 6,
+      "yawRadians": 0.7,
+      "baseMm": 36712,
+      "topMm": 42712,
+      "boundsMm": [
+        [
+          2961203,
+          2970139
+        ],
+        [
+          11085024,
+          11095477
+        ]
+      ],
+      "triangles": 216
+    },
+    {
+      "id": "scarp-low-rib",
+      "composition": "scarp-ribs",
+      "sourceNode": "Rock_Formations_3",
+      "chunkId": "desert-22-5",
+      "center": [
+        11360,
+        2860
+      ],
+      "requestedWidthM": 30,
+      "requestedHeightM": 24,
+      "yawRadians": 0.4,
+      "baseMm": 102445,
+      "topMm": 126445,
+      "boundsMm": [
+        [
+          11345026,
+          11372742
+        ],
+        [
+          2849446,
+          2872763
+        ]
+      ],
+      "triangles": 384
+    },
+    {
+      "id": "scarp-tall-rib",
+      "composition": "scarp-ribs",
+      "sourceNode": "Rock_Formations_7",
+      "chunkId": "desert-22-5",
+      "center": [
+        11420,
+        2920
+      ],
+      "requestedWidthM": 32,
+      "requestedHeightM": 46,
+      "yawRadians": 0.2,
+      "baseMm": 108252,
+      "topMm": 154252,
+      "boundsMm": [
+        [
+          11404941,
+          11435412
+        ],
+        [
+          2904483,
+          2935217
+        ]
+      ],
+      "triangles": 188
+    },
+    {
+      "id": "scarp-broken-rib",
+      "composition": "scarp-ribs",
+      "sourceNode": "Rock_Formations_9",
+      "chunkId": "desert-22-5",
+      "center": [
+        11480,
+        2860
+      ],
+      "requestedWidthM": 28,
+      "requestedHeightM": 34,
+      "yawRadians": -0.7,
+      "baseMm": 106914,
+      "topMm": 140914,
+      "boundsMm": [
+        [
+          11467940,
+          11495350
+        ],
+        [
+          2847443,
+          2872462
+        ]
+      ],
+      "triangles": 182
+    },
+    {
+      "id": "scarp-talus",
+      "composition": "scarp-ribs",
+      "sourceNode": "Rock_Boulders_2",
+      "chunkId": "desert-22-5",
+      "center": [
+        11450,
+        2935
+      ],
+      "requestedWidthM": 16,
+      "requestedHeightM": 9,
+      "yawRadians": 0.3,
+      "baseMm": 113014,
+      "topMm": 122014,
+      "boundsMm": [
+        [
+          11442863,
+          11457278
+        ],
+        [
+          2927362,
+          2942537
+        ]
+      ],
+      "triangles": 292
+    },
+    {
+      "id": "mesa-broken-crown",
+      "composition": "mesa-crown",
+      "sourceNode": "Rock_Formations_5",
+      "chunkId": "desert-23-17",
+      "center": [
+        11920,
+        9050
+      ],
+      "requestedWidthM": 60,
+      "requestedHeightM": 36,
+      "yawRadians": 0.15,
+      "baseMm": 156857,
+      "topMm": 192857,
+      "boundsMm": [
+        [
+          11890165,
+          11949266
+        ],
+        [
+          9035757,
+          9067835
+        ]
+      ],
+      "triangles": 256
+    },
+    {
+      "id": "mesa-outer-step",
+      "composition": "mesa-crown",
+      "sourceNode": "Rock_Formations_1",
+      "chunkId": "desert-23-17",
+      "center": [
+        11985,
+        9105
+      ],
+      "requestedWidthM": 26,
+      "requestedHeightM": 12,
+      "yawRadians": 0.4,
+      "baseMm": 157161,
+      "topMm": 169161,
+      "boundsMm": [
+        [
+          11971975,
+          11998180
+        ],
+        [
+          9091930,
+          9118016
+        ]
+      ],
+      "triangles": 192
+    },
+    {
+      "id": "mesa-crown-talus",
+      "composition": "mesa-crown",
+      "sourceNode": "Rock_Boulders_4",
+      "chunkId": "desert-23-17",
+      "center": [
+        11890,
+        9085
+      ],
+      "requestedWidthM": 15,
+      "requestedHeightM": 8,
+      "yawRadians": 0.7,
+      "baseMm": 157273,
+      "topMm": 165273,
+      "boundsMm": [
+        [
+          11882542,
+          11896597
+        ],
+        [
+          9077711,
+          9092381
+        ]
+      ],
+      "triangles": 212
+    },
+    {
+      "id": "plain-first-tor",
+      "composition": "plain-slalom",
+      "sourceNode": "Rock_Formations_6",
+      "chunkId": "desert-20-26",
+      "center": [
+        10295,
+        13535
+      ],
+      "requestedWidthM": 16,
+      "requestedHeightM": 24,
+      "yawRadians": 0.2,
+      "baseMm": 128798,
+      "topMm": 152798,
+      "boundsMm": [
+        [
+          10287787,
+          10301635
+        ],
+        [
+          13526671,
+          13542361
+        ]
+      ],
+      "triangles": 164
+    },
+    {
+      "id": "plain-second-tor",
+      "composition": "plain-slalom",
+      "sourceNode": "Rock_Formations_12",
+      "chunkId": "desert-20-26",
+      "center": [
+        10340,
+        13585
+      ],
+      "requestedWidthM": 18,
+      "requestedHeightM": 35,
+      "yawRadians": -0.6,
+      "baseMm": 127979,
+      "topMm": 162979,
+      "boundsMm": [
+        [
+          10331644,
+          10347668
+        ],
+        [
+          13574474,
+          13592704
+        ]
+      ],
+      "triangles": 292
+    },
+    {
+      "id": "plain-third-tor",
+      "composition": "plain-slalom",
+      "sourceNode": "Rock_Formations_3",
+      "chunkId": "desert-20-26",
+      "center": [
+        10390,
+        13535
+      ],
+      "requestedWidthM": 20,
+      "requestedHeightM": 18,
+      "yawRadians": 0.5,
+      "baseMm": 128757,
+      "topMm": 146757,
+      "boundsMm": [
+        [
+          10380163,
+          10397894
+        ],
+        [
+          13527770,
+          13543660
+        ]
+      ],
+      "triangles": 384
+    },
+    {
+      "id": "plain-last-tor",
+      "composition": "plain-slalom",
+      "sourceNode": "Rock_Formations_7",
+      "chunkId": "desert-20-26",
+      "center": [
+        10445,
+        13585
+      ],
+      "requestedWidthM": 18,
+      "requestedHeightM": 41,
+      "yawRadians": -0.2,
+      "baseMm": 128108,
+      "topMm": 169108,
+      "boundsMm": [
+        [
+          10435582,
+          10454137
+        ],
+        [
+          13577130,
+          13593046
+        ]
+      ],
+      "triangles": 188
+    },
+    {
+      "id": "plain-low-scree",
+      "composition": "plain-slalom",
+      "sourceNode": "Rock_Boulders_5",
+      "chunkId": "desert-20-26",
+      "center": [
+        10455,
+        13605
+      ],
+      "requestedWidthM": 12,
+      "requestedHeightM": 5,
+      "yawRadians": 0.4,
+      "baseMm": 128416,
+      "topMm": 133416,
+      "boundsMm": [
+        [
+          10448395,
+          10461866
+        ],
+        [
+          13598441,
+          13610239
+        ]
+      ],
+      "triangles": 216
+    }
+  ],
+  "parentTerrainManifestSHA256": "21c5b63e51a33c22ebd7ff22e05d92d6b91b00173fcc5d3c911bc530bb166468",
+  "terrainManifestSHA256": "e2e67f498c6b4e64d70e550952ebd9a13dd657488dad3e6c2fb545892023925e",
+  "sceneryManifestSHA256": "29a7d69d580ba363901c84c356f5f3166f0d94b43150d9352bd49429ffbbd2fc",
+  "byteIdenticalTerrainAssets": 2048,
+  "populatedSceneryCells": 6,
+  "emptySceneryCells": 1018,
+  "sourceBytes": 47835247,
+  "licensedSource": {
+    "format": "FPVCanyonSourceReceipt.v1",
+    "reviewed": "2026-10-14",
+    "sourceURL": "https://opengameart.org/content/canyon-terrain-asset",
+    "downloadURL": "https://opengameart.org/sites/default/files/canyonterrain_blend_fbx_glb.zip",
+    "author": "loafbrr_1 / loafbrr",
+    "license": "CC0-1.0",
+    "licenseEvidence": "README-upstream.txt from exact archive; publisher page also lists CC0",
+    "archiveBytes": 64599746,
+    "archiveSHA256": "90a59ca7d7cfcdd6b73b464c9ee8ed50fd1857a105c9a5e7ef2c85b562d5d00a",
+    "modelArchivePath": "glb/CanyonPlantsRocksTiles.glb",
+    "modelSHA256": "0b24bb22f0089767990d58401e516ec1853380eda6a33802036a377f8519d623",
+    "modelBytes": 945596,
+    "nodes": 160,
+    "meshes": 160,
+    "materials": 5,
+    "images": 0,
+    "requiredExtensions": [],
+    "inventory": {
+      ".blend": 1,
+      ".fbx": 174,
+      ".glb": 1,
+      ".png": 16,
+      ".dds": 4,
+      ".tga": 3,
+      ".txt": 1
+    },
+    "admission": "Authoring source only. No source model is referenced by the terrain manifest, player package, catalogue or runtime. Individual optimization, placement and collision checks remain before scenery admission. Godot addons and preview HDRI are not included."
+  },
+  "routes": [
+    {
+      "id": "windstone-weave",
+      "composition": "dune-windstones",
+      "halfWidthM": 3,
+      "clearanceM": 12,
+      "points": [
+        [
+          2725,
+          135.5294375,
+          3240
+        ],
+        [
+          2780,
+          137.475,
+          3242
+        ],
+        [
+          2830,
+          138.33712500000001,
+          3238
+        ],
+        [
+          2900,
+          139.19400000000002,
+          3240
+        ]
+      ]
+    },
+    {
+      "id": "wash-tower-passage",
+      "composition": "wash-sentinels",
+      "halfWidthM": 3,
+      "clearanceM": 14,
+      "points": [
+        [
+          6980,
+          121.90475,
+          5190
+        ],
+        [
+          6980,
+          124.421,
+          5250
+        ],
+        [
+          6980,
+          127.297875,
+          5330
+        ]
+      ]
+    },
+    {
+      "id": "playa-window-crossing",
+      "composition": "playa-window",
+      "halfWidthM": 2.5,
+      "clearanceM": 13,
+      "points": [
+        [
+          2910,
+          50.462625,
+          11065
+        ],
+        [
+          2910,
+          50.485125,
+          11120
+        ],
+        [
+          2910,
+          50.5071875,
+          11175
+        ]
+      ]
+    },
+    {
+      "id": "scarp-rib-weave",
+      "composition": "scarp-ribs",
+      "halfWidthM": 3,
+      "clearanceM": 15,
+      "points": [
+        [
+          11315,
+          121.377875,
+          2890
+        ],
+        [
+          11390,
+          123.38625,
+          2890
+        ],
+        [
+          11455,
+          127.7025625,
+          2890
+        ],
+        [
+          11520,
+          134.131,
+          2890
+        ]
+      ]
+    },
+    {
+      "id": "mesa-crown-orbit",
+      "composition": "mesa-crown",
+      "halfWidthM": 3,
+      "clearanceM": 18,
+      "points": [
+        [
+          11860,
+          175.9985,
+          9050
+        ],
+        [
+          11875,
+          175.6679375,
+          9005
+        ],
+        [
+          11920,
+          175.47975,
+          8990
+        ],
+        [
+          11965,
+          175.50225,
+          9005
+        ],
+        [
+          11980,
+          175.778,
+          9050
+        ]
+      ]
+    },
+    {
+      "id": "plain-tor-slalom",
+      "composition": "plain-slalom",
+      "halfWidthM": 3,
+      "clearanceM": 12,
+      "points": [
+        [
+          10260,
+          141.535,
+          13560
+        ],
+        [
+          10315,
+          141.4549375,
+          13560
+        ],
+        [
+          10365,
+          141.4288125,
+          13560
+        ],
+        [
+          10420,
+          141.49975,
+          13560
+        ],
+        [
+          10480,
+          141.7345,
+          13560
+        ]
+      ]
+    }
+  ],
+  "admission": "Source study only; no Library pin, scored mission or final environment quality claim."
+}
