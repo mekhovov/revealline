@@ -55,6 +55,15 @@ The same check exposed a cold-start input window; a source correction keeps inta
 fields disabled until their existing initialization owner is ready. That correction awaits its own
 PR/publication; Team win/Next and the other listed acceptance gaps remain open.
 
+The [installed Team results follow-up](creator-team-results-acceptance-2026-10-15.md) adds an
+ordinary-current-host media campaign journey on Standard/Full teamwork. It reproduced Next
+starting a successor without its supplied picture because the campaign media binding was dropped.
+The correction carries the exact accepted media into the same-pack successor. The regression checks
+both earned hashes, deliberate Next, its unearned initial checkpoint and completion after recreating
+the host. Finite host coverage does not close native browser victory/Next, Team video, other presets
+or human balance acceptance. PR #1519 merged; its own Pages job was superseded, so publication is
+followed through the current shared main queue.
+
 The current `.github/workflows/publish-main-pages.yml` already publishes protected main. Reuse it;
 do not add a second publisher or restore retired archive workflows. The retired Pages playbook is
 stale relative to that active workflow and the user's current hosting choice. A successful source
@@ -97,7 +106,8 @@ container conversion, not native browser decoding or an installed campaign win.
    The normal password unlock and paired creation/play/transfer/recovery and video-only creation/play checks now passed.
    Single-image Solo, both Duel seats/rematch and saved Studio Back/Forward now passed.
    Solo multi-mission Next/reload now passed. Team mission admission was fixed and start/control/
-   restart checked; complete Team victory/Next and cross-browser cases.
+   restart checked. The current-host Standard/Full media journey now covers victory/reward/Next
+   and a fresh host; finish native Team victory/Next, Team video, other presets and cross-browser cases.
 2. **Useful generated gameplay:** review a small sample for obstacle/enemy pressure and repetition.
    Six families and twelve bounded variants remain implemented; corrected Balanced variety now
    exercises all six in the ordinary twelve-image review. Automated routes establish exact
