@@ -117,7 +117,7 @@ The Actions run retains `practice-site-receipt-SOURCE_SHA` alongside the main-si
 ## Update, retirement and rollback
 
 - Ship changes under a new immutable release URL; retain the prior reviewed release in the selector. Never replace bytes under an existing version.
-- Launchers use only `action=play` and `lang=en|uk`. They validate same-origin package/version/entry paths; other parameters cannot choose executable destinations or arm a flight.
+- Launchers accept `action=play` and `lang=en|uk`, plus the SIM-owned appearance handoff: exactly one `appearanceFamily` matching `[a-z][a-z0-9-]{0,63}` and one `appearanceRevision` matching `r[1-9][0-9]{0,8}`. The pair is forwarded together only when valid; it selects appearance, not an executable destination. Keep this handoff compatible with SIM. Launchers still validate same-origin package/version/entry paths, and no query parameter arms a flight.
 - Players prepare a new version explicitly. Previous installations remain separately owned. No `skipWaiting` or forced reload replaces an active flight; close launcher tabs to activate a waiting launcher update.
 - Retire an app by removing its ID from `activePackageIds` in every selected release, after review. Keep `packageIds` and retained releases while old URLs must stay available. New site assembly removes its stable entry but retains immutable release files. Retiring is not remotely deleting a player’s cache or records.
 - Roll back an active pointer using existing tooling, then review/commit the selector:
@@ -157,5 +157,13 @@ The [all-three installation observer](optional-installation-observer.md) instead
 accepts admitted frozen candidates and an authorized test password when required.
 Never substitute a sample-fixture success for a real candidate's failed or blocked
 installation observation. Physical devices and human learning remain separate.
+
+When checking the player guides, follow the runtime menus rather than only the
+static HTML: the shared shell reparents input/offline controls into Settings.
+Compare English and Ukrainian labels after mounting, including Radio setup and
+the expanded Workshop & offline disclosure. Verify that an unfinished offline
+check asks the player to check again without deleting their copy; only confirmed
+missing files or an invalid owning worker warrant the repair path. Keep site
+credentials out of guide screenshots, reports, command arguments and receipts.
 
 See [verification report](flight-practice-verification.md), [English player guide](flight-practice-player.md) and [український посібник](flight-practice-player.uk.md). Phase 1 is **not complete** until the reviewed apps are actually selected on GitHub Pages and required device/human qualification is recorded.

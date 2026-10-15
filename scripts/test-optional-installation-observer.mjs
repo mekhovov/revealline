@@ -7,6 +7,7 @@ import {
   TRANSFER_TIMEOUT_MS,
   boundedOperation,
   closeAllPages,
+  closeBrowserForRestart,
   unlockObservedPage,
   matchesLaunchedAppURL,
   revealFPVOffline,
@@ -17,6 +18,53 @@ import {
   trackObservedResource,
   resourceCleanupIssues,
 } from './optional-installation-observer-helpers.mjs';
+
+test('browser restart requires all pages closed and a confirmed persistent-context shutdown', async () => {
+  let listener;
+  const actions = [];
+  let pages = [
+    {
+      close: async () => {
+        actions.push('page');
+        pages = [];
+      },
+    },
+  ];
+  const context = {
+    pages: () => pages,
+    once: (name, callback) => {
+      assert.equal(name, 'close');
+      listener = callback;
+    },
+    off: (name, callback) => {
+      assert.equal(callback, listener);
+      actions.push('off');
+    },
+    close: async () => {
+      actions.push('browser');
+      listener();
+    },
+  };
+  assert.deepEqual(await closeBrowserForRestart(context), {
+    closedPageCount: 1,
+    contextClosed: true,
+  });
+  assert.deepEqual(actions, ['page', 'browser', 'off']);
+  context.close = async () => {};
+  await assert.rejects(closeBrowserForRestart(context), /did not confirm closure/);
+  context.close = async () => {
+    throw new Error('Browser close failed');
+  };
+  await assert.rejects(closeBrowserForRestart(context), /Browser close failed/);
+  const source = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(source, /await closeBrowserForRestart\(context\)/);
+  assert.match(source, /await launchBrowser\(true\)/);
+  assert.match(source, /browserRestart\.passed &&/);
+  assert.match(source, /app\.restartedOfflineWindow\?\.standalone/);
+});
 
 test('timed-out startup retains resource ownership and a late close failure cannot imply cleanup', async () => {
   const state = { pending: new Set(), errors: [] };
@@ -45,6 +93,30 @@ test('timed-out startup retains resource ownership and a late close failure cann
   const clean = { pending: new Set(), errors: [] };
   assert.equal(await trackObservedResource(clean, 'Browser', async () => 42), 42);
   assert.deepEqual(resourceCleanupIssues(clean), []);
+});
+
+test('an expired restart cannot start browser acquisition after cleanup has begun', async () => {
+  const source = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  const functionSource = source.slice(
+    source.indexOf('async function launchBrowser('),
+    source.indexOf('\nconst relativeRoot'),
+  );
+  let acquired = false;
+  await assert.rejects(
+    runInNewContext(`(${functionSource})(true)`, {
+      requireObservationTime: () => {
+        throw new Error('Installation observation deadline exceeded.');
+      },
+      trackObservedResource: () => {
+        acquired = true;
+      },
+    }),
+    /deadline exceeded/,
+  );
+  assert.equal(acquired, false);
 });
 
 test('offline action requires fresh observable work, native Enter and a fresh terminal status', async () => {
