@@ -4947,3 +4947,38 @@ match their qualified archive; four harness files match their revision. The raw
 report, bounded minute/tail samples and independent closure receipts are retained.
 This closes the elapsed synthetic-corridor case only, not all-region or physical-
 device performance. See [the full receipt](fpv-elapsed-two-hour-20261015.md).
+
+
+### 15 October — native admission and preserved negative reviews
+
+Main7de653d8 includes the merged regional deadline correction1381 and elapsed
+receipt1385. Native normal-package launch/restart and Coastal saved download,
+cameras, mode/start changes, reload and portrait checks pass on their frozen
+candidates. The earlier Canyon package reproduces its old fixed120s cancellation;
+a fresh latest-main package is required. Standalone Library branches1362/1368
+are reconciled normally with recovery refs, preserving all existing rows.
+
+Hillside town-r2 passes bounded structural appearance/reload/disposal, including
+the repaired road. A reverse review-camera mistake was corrected without changing
+source and its negative is preserved. Coaster r3's unsupported loop and sparse
+park composition require refinement; its source, delivery and Library remain
+preserved drafts. See `fpv-native-regional-admission-20261015.md`. These checks do
+not close final art, physical devices, full-network offline or the whole roadmap.
+
+
+### 15 October — fresh regional player acceptance and further source work
+
+Coordinator branch `codex/fpv-regional-release-verification-20261015` rebased onto
+main `2281f3d5`, preserving all earlier work. Fresh Canyon and Coastal packages pass
+normal download, explicit flight, safe restart/mode changes and saved revision
+after reload; Canyon #1368 merged. The Coastal catalogue conflict is reconciled
+without replacing either existing Canyon revision. See
+`fpv-native-regional-release-20261015.md` for exact heads and limits.
+
+Desert source/delivery/materials #1378/#1389/#1390 and water #1364 merged through
+protected publication. Their source acceptance does not substitute for a default
+Library or deployed-launch gate. Hillside foundation #1397 and supported Coaster
+correction #1398 remain isolated drafts. The next source lane is a bounded
+4.096 km Alpine study; it must meet route, seam, collision, resource and native
+appearance checks before admission. P1–P4/D6 remain open; queue waiting does not
+stop independent engineering or art work.

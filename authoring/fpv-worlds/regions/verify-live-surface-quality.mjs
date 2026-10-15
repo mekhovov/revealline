@@ -24,7 +24,15 @@ function shaderOf(material) {
   return shader;
 }
 let transitions = 0;
-for (const style of ['canyon', 'urban', 'railway', 'tropical', 'tropical-settlement']) {
+for (const style of [
+  'canyon',
+  'urban',
+  'railway',
+  'tropical',
+  'tropical-settlement',
+  'desert',
+  'hillside-town',
+]) {
   const originMm = { x: 128000, y: 0, z: 256000 };
   const material = createTerrainSurface({ style, quality: 'balanced', originMm });
   const geometry = new THREE.BoxGeometry();
@@ -83,7 +91,7 @@ console.log(
   JSON.stringify({
     passed: true,
     transitions,
-    profiles: 5,
+    profiles: 7,
     geometryChanged: false,
     texturesAdded: 0,
   }),

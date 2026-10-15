@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "independentPreparations": 2,
+  "canonicalAssets": 2048,
+  "manifestSHA256": "21c5b63e51a33c22ebd7ff22e05d92d6b91b00173fcc5d3c911bc530bb166468",
+  "sparseManifestSHA256": "4a3209477eca0b4aed8c961f1f9c7a36d2074ac0529b368536764e772c8a411a",
+  "sourceTreeSHA256": "78ec83eded3b35e06dd12e7d773115da0364e1cd8402155f3f4964e1df3a544c",
+  "sourceBytes": 47556515,
+  "routesIdentical": true,
+  "windowSamplesIdentical": true,
+  "runtimeBase": "e99280927fcf0980f4090a46dc48750356dd454d",
+  "scope": "Identical terrain/scenery manifests and all asset hashes; explanatory landmark radius receipt corrected without geometry changes."
+}
