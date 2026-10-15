@@ -1067,3 +1067,59 @@ test('a selected demonstration remains manual until opt-in, and takeover stops a
   playback.reset();
   assert.equal(playback.active(), false, 'retry stays under manual control after takeover');
 });
+
+test('opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state', () => {
+  const run = createOverflightRun(compileOverflightProject(DEFAULT_OVERFLIGHT_PROJECT));
+  const initial = structuredClone(run.player);
+  const review = createOverflightReviewPlayback({
+    build: 'echo',
+    trace: true,
+    pilot: () => ({ x: 1, y: 0, boost: false, focus: true }),
+    selectCard: () => null,
+  });
+  review.input(run, {});
+  review.input(run, {});
+  const receipt = review.traceSnapshot();
+  assert.equal(receipt.samples.length, 1, 'cached control frames do not produce duplicate samples');
+  assert.equal(receipt.samples[0].tick, 0);
+  assert.deepEqual(receipt.samples[0].input, { x: 1, y: 0, boost: false, focus: true });
+  assert.deepEqual(receipt.samples[0].player, {
+    x: initial.x,
+    y: initial.y,
+    vx: initial.vx,
+    vy: initial.vy,
+    heading: initial.heading,
+    hull: initial.hull,
+    shield: initial.shield,
+    boostRemaining: initial.boostRemaining,
+    boostCooldown: initial.boostCooldown,
+  });
+  receipt.samples[0].input.x = -1;
+  assert.equal(review.traceSnapshot().samples[0].input.x, 1);
+  assert.deepEqual(run.player, initial);
+  for (let index = 1; index <= receipt.capacity; index++) {
+    run.tick = index * 6;
+    review.input(run, {});
+  }
+  assert.equal(review.traceSnapshot().samples.length, receipt.capacity);
+  assert.equal(review.traceSnapshot().dropped, 1);
+  review.reset();
+  assert.deepEqual(review.traceSnapshot().samples, []);
+  assert.equal(review.traceSnapshot().dropped, 0);
+  const manual = createOverflightReviewPlayback({
+    trace: true,
+    pilot: () => assert.fail(),
+    selectCard: () => null,
+  });
+  const input = { x: 0, y: 1 };
+  assert.equal(manual.input(run, input), input);
+  assert.deepEqual(manual.traceSnapshot().samples, []);
+  assert.equal(
+    createOverflightReviewPlayback({
+      build: 'echo',
+      pilot: () => ({}),
+      selectCard: () => null,
+    }).traceSnapshot(),
+    null,
+  );
+});
