@@ -145,3 +145,29 @@ throughout the audit, with manifest SHA-256
 The receipt's UTC time, 15 October 23:21, is 16 October in Europe/Berlin.
 That public source does not include the unmerged continuation fixes, so this
 does not qualify their post-deployment Next, retry, Studio or update behavior.
+
+## Later main integration
+
+Main advanced during the desktop comparison. The branch subsequently rebased
+onto `3e43dc1d73d7a6ba53b063ea1455f70900155e7b`. The only conflict was overlapping
+test insertions in `publishing/focused-tests.test.mjs`: main's Pages capacity
+regression and all archive/reader/observer registrations are retained. The
+eight-commit range comparison shows unchanged implementation changes; only those
+test insertion contexts moved. Incoming FPV delivery and capacity work remains
+intact. No current-source complete archive or native capacity claim follows from
+the historical container receipt.
+
+The [four native initial-scene observations](team-duel-initial-scene-comparison-2026-10-16.md)
+keep baseline `b11745223` and candidate `743a43b77`, the exact commits actually
+served. They are not relabeled as this later rebased source. The Team pair matches
+reported initial HUD/clock conditions; Duel's warning phases differ and its pair
+is not a fully matched benchmark. Sustained pressured play remains open.
+
+Post-rebase validation passes **114/114** top-level test nodes with no failures,
+cancellations or skips. This cohort includes focused routing, the unchanged
+observer, the real-Git transport wrapper (16 Python cases), incoming Pages
+capacity tooling, three sparse dependency checkouts and bounded Equipment
+Workshop/offline publication checks. The log is
+`.cache/multiplayer-desktop/post-rebase-3e43-scoped.log`. Scoped lint, formatting
+and whitespace checks also pass. These checks do not run the full real-source
+external build; final pushed-source hosted verification remains required.
