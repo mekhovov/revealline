@@ -273,7 +273,7 @@ export function createVerifiedSceneryWindow(
           fail(
             p &&
               Object.keys(p).length === 3 &&
-              ['x', 'y', 'z'].every((key) => Number.isSafeInteger(p[key])) &&
+              ['x', 'y', 'z'].every((key) => Number.isFinite(p[key])) &&
               Number.isSafeInteger(radiusMm) &&
               radiusMm > 0 &&
               radiusMm <= 2000,
