@@ -4868,12 +4868,15 @@ export function mountWorldApp({
         heading: ((state.attitude.yaw % 36000) + 36000) % 36000 }, owner.configuration.manifest);
       const store = await locationStore();
       if (disposed || current !== owner || flight !== selected || selected.snapshot().status !== 'paused') return;
-      await store.add(regionalLocationIdentity(owner), { label: c.label.value, pose },
+      const saved = await store.add(regionalLocationIdentity(owner), { label: c.label.value, pose },
         { expectedGeneration: c.generation });
       if (current === owner) {
         c.label.value = '';
         await refreshRegionalLocations(owner);
-        c.help.textContent = txt('Place saved on this device.', 'Місце збережено на цьому пристрої.');
+        if (current === owner) {
+          c.select.value = saved.location.id;
+          c.help.textContent = txt('Place saved on this device.', 'Місце збережено на цьому пристрої.');
+        }
       }
     } catch (error) { if (current === owner) c.help.textContent = savedLocationError(error); }
     finally { c.busy = false; paintRegionalLocations(); }

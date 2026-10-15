@@ -94,11 +94,11 @@ export function regionalReviewEntry(configuration, { installedIdentity = null } 
         ]),
       ),
       bounds: {
-        min: { x: grid.minX * 128000, y: grid.floorMm, z: grid.minZ * 128000 },
+        min: { x: grid.minX * grid.cellSizeMm, y: grid.floorMm, z: grid.minZ * grid.cellSizeMm },
         max: {
-          x: (grid.minX + grid.width) * 128000,
+          x: (grid.minX + grid.width) * grid.cellSizeMm,
           y: grid.ceilingMm,
-          z: (grid.minZ + grid.depth) * 128000,
+          z: (grid.minZ + grid.depth) * grid.cellSizeMm,
         },
       },
       steps: { acro: [], 'self-level': [] },

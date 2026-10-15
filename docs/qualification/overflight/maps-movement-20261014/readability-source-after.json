@@ -1,0 +1,153 @@
+{
+  "sourceRevision": "60b0c25ab2703371691d4d203df7d5067638ca14",
+  "afterRevision": "895431b744040688da4ec6ec78a5bf617222d253",
+  "changedTrackedPaths": [
+    "docs/fpv-corrected-package-20261014.md",
+    "docs/fpv-home-art-package-20261014.json",
+    "docs/fpv-home-art-package-20261014.md"
+  ],
+  "sourceTrees": {
+    "game": {
+      "before": "a101e93c6cd111e7dbc0fb363329fb17c19a5706",
+      "after": "a101e93c6cd111e7dbc0fb363329fb17c19a5706"
+    },
+    "scripts": {
+      "before": "7212951839c26b97b1f3bfde45230ec2bf49747a",
+      "after": "7212951839c26b97b1f3bfde45230ec2bf49747a"
+    },
+    "publishing": {
+      "before": "8d0b6253a85fc49ab7c09769ae9af3e020f4802a",
+      "after": "8d0b6253a85fc49ab7c09769ae9af3e020f4802a"
+    },
+    "authoring": {
+      "before": "cdcd5835ef664bb46b54d7070c5f6145e2dd88ac",
+      "after": "cdcd5835ef664bb46b54d7070c5f6145e2dd88ac"
+    },
+    "optional-practice": {
+      "before": "e330d06b4f1b4bbb34a746fa98d1edd8253f6ad7",
+      "after": "e330d06b4f1b4bbb34a746fa98d1edd8253f6ad7"
+    }
+  },
+  "testFileHashes": [
+    {
+      "file": "game/test/art-review-navigation.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/art-review-host-navigation.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/classic-snake-ui.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/hunt-host.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/coop-briefing-host.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/mode-play-shell.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/phase-briefing.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/civilian-practice-ui.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/fpv-flight-ui.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/workshop-return.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/content-studio-navigation.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/couch-departure.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/title-mode-departure-host.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/mode-choice-appearance.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/enemy-appearance-controls.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/military-level-directory.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/fpv-theme-family-controls.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/download-initialization.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/offline.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/classic-environment.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/capture-attempt-appearance-host.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/fpv-world-appearance-ui.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/industrial-environment-review.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/continuous-host.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/overflight-host.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/overflight-sortie.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/overflight-controller.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/overflight-upgrade-preview.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/overflight-upgrade-card.test.mjs",
+      "unchanged": true
+    },
+    {
+      "file": "game/test/overflight-review-audio.test.mjs",
+      "unchanged": true
+    }
+  ]
+}
