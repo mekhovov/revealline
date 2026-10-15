@@ -16,6 +16,15 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('capacity comparison tooling selects its regression suite without broad runtime fallback', () => {
+  for (const changed of ['scripts/pages-capacity-report.mjs', 'scripts/test-pages-capacity-report.mjs']) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-pages-capacity-report.mjs'));
+  }
+});
+
 test('the real company package script exposes all tests to exact focused deduplication', async () => {
   const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
   const prefix = 'node --test ';
