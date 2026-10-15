@@ -1,4 +1,5 @@
 import { neonRevealBackground } from './neon-reveal-artwork.mjs';
+import { neonReviewCatalog, neonReviewMission } from './neon-review-catalog.mjs';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { buildNeonChambers } from './build-neon-chambers.mjs';
@@ -488,11 +489,11 @@ function svgBoard({ cells, scenario }, width = 720, height = 360) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 36" width="${width}" height="${height}"><rect width="72" height="36" fill="#050911"/><rect x=".5" y=".5" width="71" height="35" fill="none" stroke="#397598" stroke-width=".16"/>${tiles.join('')}<path d="M36.5 34.9l.5.6-.5.5-.5-.5z" fill="#fff283"/></svg>`;
 }
 
-export function buildNeonMosaicGallery(sources) {
+export function buildNeonMosaicGallery(sources, missions = neonReviewCatalog()) {
   const cards = sources
     .map(
       ({ design }, i) =>
-        `<article data-ui-surface="panel"><a href="?level=${design.id}"><img src="${design.id}/preview.svg" alt="${design.title} level layout"/><span>${i + 1}. ${design.title}</span></a><button type="button" data-level="${design.id}">Play ${design.title}</button><a class="download" href="${design.id}/scenario.json" download>Editable level</a></article>`,
+        `<article data-ui-surface="panel"><a href="${neonReviewMission(missions, 'neon-mosaic-pack', `Neon ${design.title}`).href.replaceAll('&', '&amp;')}"><img src="${design.id}/preview.svg" alt="${design.title} level layout"/><span>${i + 1}. ${design.title}</span>Play in the main game</a><button type="button" data-level="${design.id}">Try editable copy</button><a class="download" href="${design.id}/scenario.json" download>Editable level</a></article>`,
     )
     .join('\n');
   return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><script src="../../../game/presentation/theme-bootstrap.mjs" data-theme-density="studio" data-theme-follow-context="true"></script>

@@ -4901,3 +4901,66 @@ a stopped 57.35-second segment and an earlier rejected frame gap. None is a two-
 pass. Heavy artifacts stay external/cloud; latest free-space observation is 7.0 GiB
 locally and 183 GiB externally, without deletion of player data or unpublished work.
 The complete roadmap, full-network offline and physical-device acceptance remain open.
+
+
+## 15 October — protected coastal merges and exact package progression
+
+Main checkpoint `87dbcfda`. Native stack bases remain GitHub-owned. Source #1349
+merged as `c8e2db2f`, ground #1354 as `36aa0971`; their dependent immutable/water
+work remains separately gated. New native stack #1370 is #1363 → #1369 for the
+4.096 km Railway source and immutable delivery. Draft #1367 holds its separate
+renderer treatment. Preserve its concurrent remote correction `952ae548`; a local
+duplicate one-line assertion correction was safely dropped during rebase, with a
+recovery ref retained. No force push or newer-work discard was needed.
+
+Exact Canyon Library #1368 stays draft with package receipt #1373. Coastal #1362
+has completed company/package checks but still needs native ordinary-player review.
+Railway ground receipt #1374 applies only to its frozen `83eda367` package; subsequent
+source/preview correction does not retroactively change that identity. Coarse-cell
+capability #1372 remains a source capability with separate native/package gates;
+Coaster intake #1375 is a verified original-asset preparation, not a playable map.
+
+Parallel authored Desert/Hillside/Coaster work may proceed while protected queues
+run. The uninterrupted browser measurement is still active at this checkpoint;
+its final elapsed acceptance and the queued native source/package views remain
+outstanding. Exact package proof is not public availability. Full-network offline,
+physical controller/device observations, representative final art and remaining
+regional design targets keep the complete roadmap open.
+
+### 15 October — continued large downloads without false cancellation
+
+A focused main-based Library correction replaces the blanket two-minute install
+cutoff with two-minute inactivity detection plus a ten-minute hard ceiling. Exact
+hashes, four-request bounds, atomic commits, saved revisions and all size ceilings
+remain. Existing non-install deadlines are unchanged. The 39-response committed
+Urban inventory verifies across 195 virtual seconds, and the existing five download
+concurrency groups pass. Native UI and exact-package qualification remain pending;
+the separate sustained browser run is uninterrupted. See
+[the scoped receipt](fpv-regional-download-deadline-20261015.md).
+
+### 15 October — uninterrupted two-hour regional corridor completed
+
+The exact frozen native workload completed 7,200.0052 seconds, 360,000 physics
+steps, 53 reversals and 269 origin recentres with zero contacts. Registered owned
+resources and physics allocations return to zero. All 159 frozen runtime files
+match their qualified archive; four harness files match their revision. The raw
+report, bounded minute/tail samples and independent closure receipts are retained.
+This closes the elapsed synthetic-corridor case only, not all-region or physical-
+device performance. See [the full receipt](fpv-elapsed-two-hour-20261015.md).
+
+
+### 15 October — native admission and preserved negative reviews
+
+Main7de653d8 includes the merged regional deadline correction1381 and elapsed
+receipt1385. Native normal-package launch/restart and Coastal saved download,
+cameras, mode/start changes, reload and portrait checks pass on their frozen
+candidates. The earlier Canyon package reproduces its old fixed120s cancellation;
+a fresh latest-main package is required. Standalone Library branches1362/1368
+are reconciled normally with recovery refs, preserving all existing rows.
+
+Hillside town-r2 passes bounded structural appearance/reload/disposal, including
+the repaired road. A reverse review-camera mistake was corrected without changing
+source and its negative is preserved. Coaster r3's unsupported loop and sparse
+park composition require refinement; its source, delivery and Library remain
+preserved drafts. See `fpv-native-regional-admission-20261015.md`. These checks do
+not close final art, physical devices, full-network offline or the whole roadmap.
