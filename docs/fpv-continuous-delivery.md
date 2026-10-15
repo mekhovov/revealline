@@ -4982,3 +4982,21 @@ correction #1398 remain isolated drafts. The next source lane is a bounded
 4.096 km Alpine study; it must meet route, seam, collision, resource and native
 appearance checks before admission. P1–P4/D6 remain open; queue waiting does not
 stop independent engineering or art work.
+
+## 15 October — parallel regional admission and art checkpoint
+
+See the newest entry in `fpv-large-worlds-delivery-plan.md`. The full roadmap stays
+open. Railway source/delivery merged through native stack #1370 (`e1f124d2`);
+independent Railway Library #1404 is based on main and awaits player admission.
+Harbor structure #1371, Hillside source/ground/Library, supported Coaster source
+and immutable corrected delivery #1401 have merged. Coaster Library #1392 remains
+a distinct admission stage, preserving the original revision. Desert Library
+#1396 merged as `ef1ff5a6` after exact package qualification and bounded normal-player
+plus stopped-origin evidence; the newer landmark source #1405 stays separate.
+
+Native structural/ground observations are recorded in
+`fpv-regional-art-follow-up-20261015.md` (#1403). Representative art is still open.
+Alpine #1407 and planted Hillside courtyard #1406 continue independently while
+publication runs. All new PR attachment attempts encounter the chat's existing
+100-attachment limit; PR URLs and evidence remain on GitHub. No old attachment or
+source has been removed to bypass that limit.
