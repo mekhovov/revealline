@@ -106,7 +106,7 @@ import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
 import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
-import { mountRegionalLibrary } from './regional-library.mjs';
+import { mountRegionalLibrary, regionalPresentationOptions } from './regional-library.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -5826,7 +5826,7 @@ export function mountWorldApp({
     if (!canAdopt()) return;
     // Validate paired sources before releasing a usable previous flight.
     const nextFlight = createRegionalSession({
-      ...entry.configuration,
+      ...regionalPresentationOptions(entry.configuration, $('flight-quality').value),
       mode: options.mode ?? $('flight-mode').value,
       response,
       initialHeading: 'region-centre',
