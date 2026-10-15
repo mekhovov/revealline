@@ -6,6 +6,43 @@ mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
 
+### 15 October execution boundary
+
+The owner approved proceeding with the remaining non-hosting work and explicitly
+deferred hosting. Do not provision a target, change deployment destinations, remove
+retained versions or raise the size guard. Hosting remains a deferred release
+dependency, not a waived acceptance criterion.
+
+The continuation rebased onto merged main
+`da0b0108206a0270b4b870e747f2d1bc0e6695cb` and froze all three real packages before
+editing their guides. The [candidate receipt](flight-practice-candidate-2026-10-15.md)
+records two identical builds, committed inputs and independent admission. Later
+guide changes require a new candidate before publication; earlier observations
+must keep their original source identities.
+
+Execution order: (1) reconcile candidate and historical SIM evidence; (2) extend
+and run the all-three observer through browser-process restart; (3) synchronize
+EN/UK help and regressions; (4) execute available checks and record precise
+remaining device/human gates; (5) submit verified changes without waiting on
+hosting or implying that the empty public catalogue has been populated.
+
+The minimum keyboard/controller, same-device performance and human-learning
+reviews remain release gates under the existing publisher. Broader device and
+usability exploration can follow later. Native SIM update/recovery evidence can
+be reused only for its actual source/scope, not automatically applied to every app.
+
+Completed in this continuation: all-three frozen builds/admission, current
+directory component checks, nine-checkpoint real-byte installation observation
+including closed-window and browser-process offline relaunch, exact FPV
+proof/profile retention, EN/UK help synchronization, and 323 passing practice
+tests. The observer's path update is still a same-payload fixture. Both initial
+browser failures and successful retries are retained; the intermittent hidden
+offline Open link is not claimed fixed. See the
+[observation report](flight-practice-observation-2026-10-15.md) and
+[executable remaining acceptance checklist](flight-practice-release-checklist-2026-10-15.md).
+Physical/human reviews and distinct-release/current-guide qualification remain
+open; no hosting or public selection was changed.
+
 PR #930 delivered the directory, descriptors, stable launchers, shared offline
 installation and guides. PR #1195 restores practice staging in the replacement
 main Pages workflow and verifies the deployed selection. It merged on 14 October
