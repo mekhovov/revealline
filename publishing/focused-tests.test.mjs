@@ -62,6 +62,25 @@ test('rolling metadata scripts retain their publishing regression gates', () => 
   }
 });
 
+test('archive writer and sparse workflow changes retain real-source and dependency-boundary checks', () => {
+  for (const file of [
+    'scripts/distribution-zip.mjs',
+    '.github/workflows/assemble-full-release-evidence.yml',
+    '.github/workflows/qualify-release-source.yml',
+    '.github/workflows/upload-release-originals.yml',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    const command = plan.commands.find(({ id }) => id === 'release-utility-checkout');
+    assert.ok(command.args.includes('publishing/utility-sparse-checkout.test.mjs'));
+  }
+  const plan = focusedTestPlan(['scripts/distribution-zip.mjs'], manifest);
+  const command = plan.commands.find(({ id }) => id === 'distribution-archive-format');
+  assert.ok(command.args.includes('scripts/test-external-distribution.mjs'));
+  assert.ok(command.args.includes('scripts/test-equipment-offline-ownership.mjs'));
+  assert.ok(command.args.includes('scripts/test-inspect-default-build.mjs'));
+  assert.ok(command.args.includes('scripts/test-soundtrack-distribution.mjs'));
+});
+
 test('release reader changes select frozen-consumer policy and original archive regressions', () => {
   for (const file of [
     'publishing/utility/assemble_full_qualification.py',
