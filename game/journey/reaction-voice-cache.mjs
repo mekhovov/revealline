@@ -1,3 +1,4 @@
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import { inspectRecordingContainer } from './reaction-recording-format.mjs';
 export const REACTION_VOICE_LIMITS = Object.freeze({
   bytes: 2 * 1024 * 1024,
@@ -80,6 +81,8 @@ export function createReactionVoiceCache({
   inspect = inspectReactionRecording,
   now = () => Date.now(),
 }) {
+  const preparation = sound.mediaPreparation ?? createMediaPreparation();
+  const ownsPreparation = !sound.mediaPreparation;
   const buffers = new Map(),
     pending = new Map(),
     failures = new Map();
@@ -99,7 +102,7 @@ export function createReactionVoiceCache({
     if (clear) clearBuffers();
     return Promise.allSettled([...pending.values()].map((request) => request.promise));
   }
-  async function load(lineId, locale) {
+  async function load(lineId, locale, { priority = 'demand' } = {}) {
     if (closed || !sound.context) return false;
     if (context !== sound.context) {
       context = sound.context;
@@ -115,10 +118,24 @@ export function createReactionVoiceCache({
     const abort = new AbortController(),
       timeout = setTimeout(() => abort.abort(), 10000),
       request = { abort, promise: null };
+    let cancelled = false;
+    const eligible = () =>
+      !closed &&
+      revision === generation &&
+      audioContext === sound.context &&
+      !sound.audioMaster?.muted &&
+      sound.audioMaster?.volume !== 0 &&
+      (priority !== 'background' ||
+        !['playing', 'suspended'].includes(preparation.snapshot().phase));
+    const admission = { signal: abort.signal, priority, eligible };
     request.promise = (async () => {
       try {
-        const recording = await library.resolve(lineId, locale, { signal: abort.signal });
-        if (!recording || closed || abort.signal.aborted || revision !== generation) return false;
+        const recording = await preparation.run(
+          'fetch',
+          () => library.resolve(lineId, locale, { signal: abort.signal }),
+          admission,
+        );
+        if (!recording || !eligible() || abort.signal.aborted) return false;
         if (
           !recording.bytes?.byteLength ||
           recording.bytes.byteLength > REACTION_VOICE_LIMITS.bytes
@@ -131,8 +148,12 @@ export function createReactionVoiceCache({
           },
         );
         if (closed || abort.signal.aborted || revision !== generation) return false;
-        admitReactionDecode(metadata, audioContext.sampleRate);
-        const buffer = await audioContext.decodeAudioData(recording.bytes.slice(0));
+        const reservedBytes = admitReactionDecode(metadata, audioContext.sampleRate);
+        const buffer = await preparation.run(
+          'decode',
+          () => audioContext.decodeAudioData(recording.bytes.slice(0)),
+          { ...admission, bytes: reservedBytes },
+        );
         if (
           closed ||
           abort.signal.aborted ||
@@ -163,12 +184,19 @@ export function createReactionVoiceCache({
         buffers.set(key, buffer);
         bytes += size;
         return true;
-      } catch {
+      } catch (error) {
+        cancelled = error?.name === 'AbortError';
         return false;
       } finally {
         clearTimeout(timeout);
         if (pending.get(key) === request) pending.delete(key);
-        if (!closed && !abort.signal.aborted && revision === generation && !buffers.has(key))
+        if (
+          !closed &&
+          !cancelled &&
+          !abort.signal.aborted &&
+          revision === generation &&
+          !buffers.has(key)
+        )
           failures.set(key, now() + 30000);
       }
     })();
@@ -198,6 +226,7 @@ export function createReactionVoiceCache({
       }),
     dispose() {
       closed = true;
+      if (ownsPreparation) preparation.close();
       void cancel({ clear: true });
     },
   });

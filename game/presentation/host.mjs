@@ -11,7 +11,7 @@ import { ASSET_SLOTS } from './catalog.mjs';
 import { OVERFLIGHT_WORLD_IMAGE_SLOTS } from './overflight-world-slots.mjs';
 import { OVERFLIGHT_ACTOR_SLOT_IDS } from './overflight-actor-slots.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
-import { inspectImageDataUrl } from '../content.mjs';
+import { inspectImageBytes } from '../content.mjs';
 import {
   FORMATS,
   LIMITS,
@@ -150,12 +150,6 @@ export function validateCompiledPresentation(source) {
 }
 const cancelled = (signal) => {
   if (signal?.aborted) throw new DOMException('Presentation load cancelled.', 'AbortError');
-};
-const dataURL = (bytes, mime) => {
-  let binary = '';
-  for (let i = 0; i < bytes.length; i += 16384)
-    binary += String.fromCharCode(...bytes.subarray(i, i + 16384));
-  return `data:${mime};base64,${btoa(binary)}`;
 };
 const browserDecode = async (blob) => {
   required(typeof globalThis.createImageBitmap === 'function', 'Bitmap decoding is unavailable.');
@@ -507,7 +501,7 @@ export function createPresentationHost({
           !closed && snapshot === current?.snapshot,
           'Picture release changed during download.',
         );
-        const header = inspectImageDataUrl(dataURL(bytes, file.mime));
+        const header = inspectImageBytes(bytes, file.mime);
         required(
           header.valid && header.width === file.width && header.height === file.height,
           'Picture original header disagrees with its release.',
@@ -661,9 +655,7 @@ export function createPresentationHost({
           let original = decoded.get(hash);
           if (!original) {
             report('decoding', localizedMessage('interface:presentation.openingArtwork'));
-            const header = inspectImageDataUrl(
-              dataURL(new Uint8Array(await blob.arrayBuffer()), file.mime),
-            );
+            const header = inspectImageBytes(new Uint8Array(await blob.arrayBuffer()), file.mime);
             required(
               header.valid && header.width === file.width && header.height === file.height,
               'Presentation image header disagrees with its dimensions.',

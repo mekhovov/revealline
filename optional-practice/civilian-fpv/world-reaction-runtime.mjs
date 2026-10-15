@@ -24,7 +24,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'78b0412a2a70d0d84e502d5240132c3b6324e80c9ae185121aeee353978f4d8a',
+'e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113',
 'game/ui/hunt-feedback-layout.mjs':
 '697525f452578880c62102b984da3ff51ec794913c3a2708187c62815c816de5',
 'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
@@ -47,7 +47,8 @@ const sourceHashes={
 'game/ui/art/reactions/sentinel-react.svg':
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
-'a9128e8139a965abc49e4327e56f8edb57fa3dab1c870caecc36292db0866496',
+'4c04fb38aa55822d3f09a8acfe49a6ae7579ac2a24a14d3c507269f861172de7',
+'game/ui/media-preparation.mjs':'77e64c25207831fe0ee35f66cbb70225c628247a5b463656d7b7b457a0cf1748',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
 'game/journey/reactions.mjs':'5a467624ad95e59b30f6a339bfa7f66f82a3060356925adb5c85f9c7db7c459d',
@@ -4255,6 +4256,128 @@ reactionCaptionText:reactionCaptionText,
 renderResultReactionCaption:renderResultReactionCaption,
 };
 })();
+modules['game/ui/media-preparation.mjs']=(()=>{
+const aborted=()=>new DOMException('Media preparation cancelled.','AbortError');
+const phases=new Set(['menu','preparing','playing','paused','suspended']);
+const priorities={required:0,demand:1,background:2};
+
+/** Admission only: callers retain validation, ownership and playback policy.
+ * A cancelled native decode still owns its slot until the native promise settles.
+ */
+function createMediaPreparation({fetches=2,decodes=1,decodeBytes=16*1024*1024}={}){
+const limits={fetch:fetches,decode:decodes,inspect:1,main:1};
+const active={fetch:0,decode:0,inspect:0,main:0};
+const queue=[];
+let phase='menu',
+closed=false,
+reservedBytes=0,
+sequence=0;
+function remove(task,error){
+const at=queue.indexOf(task);
+if(at>=0)queue.splice(at,1);
+task.signal?.removeEventListener('abort',task.cancel);
+task.reject(error);
+}
+function drain(){
+for(const task of[...queue])
+if(
+closed||
+task.signal?.aborted||
+!task.eligible()||
+(['playing','suspended'].includes(phase)&&task.priority==='background')
+)
+remove(task,aborted());
+queue.sort((a,b)=>priorities[a.priority]-priorities[b.priority]||a.sequence-b.sequence);
+for(const task of[...queue]){
+if(
+phase==='suspended'||
+active[task.kind]>=limits[task.kind]||
+(task.kind==='main'&&phase==='playing')
+)
+continue;
+if(task.kind==='decode'&&reservedBytes+task.bytes>decodeBytes)continue;
+queue.splice(queue.indexOf(task),1);
+task.signal?.removeEventListener('abort',task.cancel);
+active[task.kind]++;
+if(task.kind==='decode')reservedBytes+=task.bytes;
+Promise.resolve()
+.then(()=>{
+if(
+closed||
+phase==='suspended'||
+task.signal?.aborted||
+!task.eligible()||
+(phase==='playing'&&task.priority==='background')
+)
+throw aborted();
+return task.work();
+})
+.then((value)=>{
+if(closed||task.signal?.aborted|| !task.eligible())task.reject(aborted());
+else task.resolve(value);
+},task.reject)
+.finally(()=>{
+active[task.kind]--;
+if(task.kind==='decode')reservedBytes-=task.bytes;
+drain();
+});
+}
+}
+return Object.freeze({
+run(kind,work,{priority='demand',signal,bytes=0,eligible=()=>true}={}){
+if(
+!(kind in limits)||
+!(priority in priorities)||
+typeof work!=='function'||
+!Number.isFinite(bytes)||
+bytes<0
+)
+return Promise.reject(new TypeError('Invalid media preparation task.'));
+if(kind==='decode'&&bytes>decodeBytes)
+return Promise.reject(new RangeError('Media decode exceeds its memory budget.'));
+return new Promise((resolve,reject)=>{
+const task={
+kind,
+work,
+priority,
+signal,
+bytes,
+eligible,
+resolve,
+reject,
+sequence:sequence++,
+};
+task.cancel=()=>{
+remove(task,aborted());
+drain();
+};
+queue.push(task);
+signal?.addEventListener('abort',task.cancel,{once:true});
+drain();
+});
+},
+setPhase(value){
+if(!phases.has(value))throw new TypeError('Invalid media preparation phase.');
+phase=value;
+drain();
+},
+refresh:drain,
+snapshot:()=>
+Object.freeze({
+phase,
+queued:queue.length,
+active:{...active},
+reservedDecodeBytes:reservedBytes,
+}),
+close(){
+closed=true;
+drain();
+},
+});
+}
+
+return{createMediaPreparation:createMediaPreparation};
+})();
 modules['game/journey/reaction-recording-format.mjs']=(()=>{
 /** Conservative pre-decode admission for local speech. Unknown containers stay
  * untouched in storage and use captions until converted to an admitted format. */
@@ -4449,6 +4572,7 @@ Math.max(channels,declaredChannels),
 return{inspectRecordingContainer:inspectRecordingContainer};
 })();
 modules['game/journey/reaction-voice-cache.mjs']=(()=>{
+const createMediaPreparation=modules['game/ui/media-preparation.mjs']['createMediaPreparation'];
 const inspectRecordingContainer=
 modules['game/journey/reaction-recording-format.mjs']['inspectRecordingContainer'];
 const REACTION_VOICE_LIMITS=Object.freeze({
@@ -4529,6 +4653,8 @@ library,
 inspect=inspectReactionRecording,
 now=()=>Date.now(),
 }){
+const preparation=sound.mediaPreparation??createMediaPreparation();
+const ownsPreparation= !sound.mediaPreparation;
 const buffers=new Map(),
 pending=new Map(),
 failures=new Map();
@@ -4548,7 +4674,7 @@ failures.clear();
 if(clear)clearBuffers();
 return Promise.allSettled([...pending.values()].map((request)=>request.promise));
 }
-async function load(lineId,locale){
+async function load(lineId,locale,{priority='demand'}={}){
 if(closed|| !sound.context)return false;
 if(context!==sound.context){
 context=sound.context;
@@ -4563,10 +4689,23 @@ if(pending.size>=REACTION_VOICE_LIMITS.loads||now()<(failures.get(key)??0))retur
 const abort=new AbortController(),
 timeout=setTimeout(()=>abort.abort(),10000),
 request={abort,promise:null};
+let cancelled=false;
+const eligible=()=>
+!closed&&
+revision===generation&&
+audioContext===sound.context&&
+!sound.audioMaster?.muted&&
+sound.audioMaster?.volume!==0&&
+(priority!=='background'|| !['playing','suspended'].includes(preparation.snapshot().phase));
+const admission={signal:abort.signal,priority,eligible};
 request.promise=(async()=>{
 try{
-const recording=await library.resolve(lineId,locale,{signal:abort.signal});
-if(!recording||closed||abort.signal.aborted||revision!==generation)return false;
+const recording=await preparation.run(
+'fetch',
+()=>library.resolve(lineId,locale,{signal:abort.signal}),
+admission,
+);
+if(!recording|| !eligible()||abort.signal.aborted)return false;
 if(!recording.bytes?.byteLength||recording.bytes.byteLength>REACTION_VOICE_LIMITS.bytes)
 return false;
 const metadata=await inspect(
@@ -4576,8 +4715,12 @@ signal:abort.signal,
 },
 );
 if(closed||abort.signal.aborted||revision!==generation)return false;
-admitReactionDecode(metadata,audioContext.sampleRate);
-const buffer=await audioContext.decodeAudioData(recording.bytes.slice(0));
+const reservedBytes=admitReactionDecode(metadata,audioContext.sampleRate);
+const buffer=await preparation.run(
+'decode',
+()=>audioContext.decodeAudioData(recording.bytes.slice(0)),
+{...admission,bytes:reservedBytes},
+);
 if(closed||abort.signal.aborted||revision!==generation||audioContext!==sound.context)
 return false;
 const size=buffer.length*buffer.numberOfChannels*4;
@@ -4602,12 +4745,13 @@ buffers.delete(oldest);
 buffers.set(key,buffer);
 bytes+=size;
 return true;
-}catch{
+}catch(error){
+cancelled=error?.name==='AbortError';
 return false;
 }finally{
 clearTimeout(timeout);
 if(pending.get(key)===request)pending.delete(key);
-if(!closed&& !abort.signal.aborted&&revision===generation&& !buffers.has(key))
+if(!closed&& !cancelled&& !abort.signal.aborted&&revision===generation&& !buffers.has(key))
 failures.set(key,now()+30000);
 }
 })();
@@ -4637,6 +4781,7 @@ closed,
 }),
 dispose(){
 closed=true;
+if(ownsPreparation)preparation.close();
 void cancel({clear:true});
 },
 });
@@ -7583,6 +7728,9 @@ closed||
 !preferences.snapshot().enabled||
 !options.snapshot().speech||
 !sound.context||
+sound.audioMaster?.muted||
+sound.audioMaster?.volume===0||
+['playing','suspended'].includes(sound.mediaPreparation?.snapshot().phase)||
 doc.hidden
 )
 return;
@@ -7625,9 +7773,10 @@ generation===revision&&
 warmup===warmupRevision&&
 getLocale()===locale&&
 !doc.hidden&&
+!['playing','suspended'].includes(sound.mediaPreparation?.snapshot().phase)&&
 sound.context===context
 )
-await cache.load(ids[index++],locale);
+await cache.load(ids[index++],locale,{priority:'background'});
 };
 await Promise.all([warm(),warm()]);
 })

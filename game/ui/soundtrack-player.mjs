@@ -1,3 +1,5 @@
+import { createMP3Inspector } from './mp3-inspector.mjs';
+import { createMediaPreparation } from './media-preparation.mjs';
 import { t } from '../i18n/index.mjs';
 import { boundedJSON, canonicalJSON, required } from '../data-json.mjs';
 import {
@@ -13,7 +15,7 @@ import {
   soundtrackOrder,
 } from '../soundtrack.mjs';
 import { validateTrack } from './music.mjs';
-import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
+import { ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
 import {
   fetchOnlineSoundtrackCatalogue,
@@ -136,6 +138,9 @@ export function createSoundtrackPlayer({
     remoteWatchdog: null,
     remoteProgress: 0,
   }));
+  const preparationQueue = soundscape.mediaPreparation ?? createMediaPreparation();
+  const ownsPreparationQueue = !soundscape.mediaPreparation;
+  const mp3Inspector = createMP3Inspector({ preparation: preparationQueue });
   const remoteDeck = decks[0];
   let activeDeck = decks[0];
   activeDeck.weight = 1;
@@ -495,14 +500,18 @@ export function createSoundtrackPlayer({
       installDeckURL(deck, track, track.url, { owned: false });
       return true;
     }
-    const original =
-      track.kind === 'published'
-        ? await track.readBlob({ signal })
-        : await readAsset(track.asset.sha256, {
-            signal,
-            purpose: 'playback',
-            localOnly: localOnly || localPlayback,
-          });
+    const original = await preparationQueue.run(
+      'fetch',
+      () =>
+        track.kind === 'published'
+          ? track.readBlob({ signal })
+          : readAsset(track.asset.sha256, {
+              signal,
+              purpose: 'playback',
+              localOnly: localOnly || localPlayback,
+            }),
+      { signal, priority: token === null ? 'demand' : 'required' },
+    );
     throwIfSoundtrackAborted(signal);
     if (localOnly && original == null) return false;
     const blob = track.kind === 'published' ? original : ownSoundtrackBlob(original);
@@ -523,7 +532,7 @@ export function createSoundtrackPlayer({
         };
         emit();
       }
-      const actual = await inspectMP3(blob, { signal });
+      const actual = await mp3Inspector.inspect(blob, { signal });
       required(
         canonicalJSON(actual) === canonicalJSON(track.asset),
         t('interface:storedAudioBytesDoNotMatchThisTrack'),
@@ -1010,6 +1019,7 @@ export function createSoundtrackPlayer({
   /** Code-owned release fallback only; never enters the saved track library. */
   function setPublishedTrack(value) {
     if (disposed) return snapshot();
+    if (value === null && published === null) return snapshot();
     if (value !== null)
       required(
         value &&
@@ -1116,6 +1126,12 @@ export function createSoundtrackPlayer({
         ids.every((id) => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,127}$/.test(id)),
       'Invalid local soundtrack identities.',
     );
+    if (
+      cacheableCatalogue &&
+      ids.length === localRecordingIds.length &&
+      ids.every((id, index) => id === localRecordingIds[index])
+    )
+      return snapshot();
     localRecordingIds = [...ids];
     if (!current) dirty = true;
     baseSelection = null;
@@ -1664,6 +1680,8 @@ export function createSoundtrackPlayer({
     return snapshot();
   }
   function dispose() {
+    mp3Inspector.close();
+    if (ownsPreparationQueue) preparationQueue.close();
     if (disposed) return;
     disposed = true;
     unsubscribeMaster?.();
@@ -1723,5 +1741,9 @@ export function createSoundtrackPlayer({
     resume,
     dispose,
     snapshot,
+    preparationDiagnostics: () => ({
+      admission: preparationQueue.snapshot(),
+      inspection: mp3Inspector.snapshot(),
+    }),
   });
 }
