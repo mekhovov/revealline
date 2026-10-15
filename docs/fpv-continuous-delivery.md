@@ -5000,3 +5000,25 @@ Alpine #1407 and planted Hillside courtyard #1406 continue independently while
 publication runs. All new PR attachment attempts encounter the chat's existing
 100-attachment limit; PR URLs and evidence remain on GitHub. No old attachment or
 source has been removed to bypass that limit.
+
+## 15 October — exact admission and visual holds
+
+Coordinator base `56896945`; active branch
+`codex/fpv-regional-admission-checkpoint-20261015b`. Railway #1404, Harbour #1410,
+Hillside contact cue #1412 and short-screen Arm #1413 are merged. #1413 exact
+package follow-up is recorded in comment 6189835191; native focused CSS checks
+and final archive verification remain distinct. Harbour's two saved revisions
+select distinct hash-bound sources; shared title ambiguity is corrected separately
+in #1419. No public launch claim is made.
+
+Coaster #1392 normal download, restart, mode/view and reload checks pass on
+`856fefea`, but Overview ground interference keeps its visual gate held.
+Alpine #1407/#1415 retains the failed source appearance evidence; #1420 is a
+separate narrowly scoped overlay correction. Desert landmark source #1405 merged;
+#1414 → #1416 uses native stack #1417 for immutable delivery and Library admission.
+Exact current heads/checks must be inspected before protected publication.
+
+Next independent implementation: optional revision-bound district/saved-place
+guidance using the bounded HUD, no autopilot/score/arming changes. Full-region art,
+network-wide offline/device qualification and D6 remain open. See the current
+large-worlds delivery plan checkpoint for priorities and evidence boundaries.
