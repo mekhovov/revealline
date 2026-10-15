@@ -3665,7 +3665,7 @@ export function mountWorldApp({
     fly: (configuration, record, { isCurrent }) => {
       const generation = ++missionLaunchGeneration;
       return startRegionalFlight(
-        regionalLibraryEntry(configuration, { sha256: record.sha256 }),
+        regionalLibraryEntry(configuration, { sha256: record.sha256, descriptor: record.descriptor }),
         {
           canAdopt: isCurrent,
           isCurrent: () => !doc.hidden && generation === missionLaunchGeneration,
@@ -6135,7 +6135,7 @@ export function mountWorldApp({
     $('flight-title').textContent = label(entry);
     $('flight-collection').textContent = entry.regionalReview
       ? txt('REGIONAL REVIEW · UNSCORED', 'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ')
-      : txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ');
+      : [txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ'), entry.installedRevision].filter(Boolean).join(' · ');
     $('flight-brief').textContent = $('flight-menu-brief').textContent =
       entry.course.locales[locale].brief;
     $('flight-status').textContent = txt('Preparing region…', 'Підготовка регіону…');

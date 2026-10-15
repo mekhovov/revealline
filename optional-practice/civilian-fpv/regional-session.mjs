@@ -110,10 +110,22 @@ export function regionalReviewEntry(configuration, { installedIdentity = null } 
 }
 
 /** Only verified installed descriptor identities enter the ordinary regional Library. */
-export function regionalLibraryEntry(configuration, { sha256 } = {}) {
+export function regionalLibraryEntry(configuration, { sha256, descriptor = null } = {}) {
   if (typeof sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(sha256))
     throw new TypeError('Installed regional identity is required');
-  return regionalReviewEntry(configuration, { installedIdentity: sha256 });
+  const entry = regionalReviewEntry(configuration, { installedIdentity: sha256 });
+  if (descriptor) {
+    if (descriptor.id !== entry.course.id ||
+        typeof descriptor.revision !== 'string' || !/^[a-z][a-z0-9-]{0,63}$/.test(descriptor.revision) ||
+        !['en', 'uk'].every((locale) => typeof descriptor.title?.[locale] === 'string' &&
+          descriptor.title[locale].trim() && descriptor.title[locale].length <= 120))
+      throw new TypeError('Installed regional presentation identity is invalid');
+    // Delivery revisions may intentionally retain the older source manifest title.
+    // Keep the exact installed name/version visible without changing source authority.
+    entry.installedRevision = descriptor.revision;
+    for (const locale of ['en', 'uk']) entry.course.locales[locale].title = descriptor.title[locale];
+  }
+  return entry;
 }
 
 /** Select only an authored start in the currently verified regional configuration. */
