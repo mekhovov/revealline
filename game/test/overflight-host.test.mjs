@@ -1129,3 +1129,72 @@ test('opt-in review traces retain bounded ordinary inputs and snapshots without 
     null,
   );
 });
+
+test('finished review download captures terminal state instead of an older inspector snapshot', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { parse } = await import('acorn');
+  const { runInNewContext } = await import('node:vm');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const node = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'downloadMeasurements',
+  );
+  assert.ok(node, 'the final report needs an export callable from inside the results dialog');
+  let saved;
+  const pauses = [];
+  const context = {
+    rawPages: { json: JSON.stringify({ phase: 'paused', time: 40 }) },
+    completedMeasurement: { phase: 'paused', time: 120 },
+    measurement: (options) => {
+      assert.equal(options.raw, true);
+      return { phase: 'lost', time: 319, reviewTrace: { samples: [{ tick: 19140 }] } };
+    },
+    pause: (options) => pauses.push(options),
+    downloadBlob: (blob, name) => (saved = { blob, name }),
+    Blob,
+    JSON,
+    fixture: null,
+    seed: 202604,
+  };
+  const save = runInNewContext(
+    `${source.slice(node.start, node.end)}; downloadMeasurements`,
+    context,
+  );
+  save({ current: true });
+  assert.equal(JSON.parse(await saved.blob.text()).phase, 'lost');
+  assert.equal(saved.name, 'overflight-sortie-202604.json');
+  assert.equal(pauses.length, 1);
+  save();
+  assert.equal(
+    JSON.parse(await saved.blob.text()).time,
+    40,
+    'the separate frozen inspector download keeps its prior behavior',
+  );
+  const bindings = ast.body.filter(
+    (node) => node.type === 'ExpressionStatement' && node.expression.callee?.name === 'listen',
+  );
+  for (const [id, options] of [
+    ['result-download-metrics', { current: true }],
+    ['download-metrics', undefined],
+  ]) {
+    const binding = bindings.find(
+      (node) =>
+        node.expression.arguments[0].callee?.name === '$' &&
+        node.expression.arguments[0].arguments[0].value === id,
+    );
+    assert.ok(binding, id);
+    const callback = binding.expression.arguments[2];
+    let received;
+    runInNewContext(`(${source.slice(callback.start, callback.end)})`, {
+      downloadMeasurements: (value) => (received = value),
+    })({ current: true });
+    assert.equal(JSON.stringify(received), JSON.stringify(options));
+  }
+  for (const name of ['play.html', 'raid.html']) {
+    const html = await readFile(new URL(`../overflight/${name}`, import.meta.url), 'utf8');
+    assert.match(
+      html,
+      /<section id="overflight-results">[\s\S]*?id="result-download-metrics"[\s\S]*?<\/section>/,
+    );
+  }
+});
