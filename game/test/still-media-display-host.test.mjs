@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parse } from 'parse5';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { Events } from './helpers/couch-dom.mjs';
 import { pngBytes } from './helpers/media-fixtures.mjs';
@@ -37,9 +38,16 @@ async function setup(t, initial = { textFace: 'plain', textSize: 'large', reduce
   h.doc.defaultView = h.win;
   const htmlURL = new URL('../../authoring/still-media/index.html', import.meta.url),
     html = await readFile(htmlURL, 'utf8'),
-    entries = [...html.matchAll(/<script\s+type="module"\s+src="([^"]+)"/g)]
-      .map((match) => new URL(match[1], htmlURL))
-      .filter((url) => url.pathname.endsWith('/tool-display-entry.mjs'));
+    descendants = (node) => [node, ...(node.childNodes ?? []).flatMap(descendants)],
+    scripts = descendants(parse(html))
+      .filter((node) => node.tagName === 'script')
+      .map((node) => Object.fromEntries(node.attrs.map(({ name, value }) => [name, value]))),
+    display = scripts.filter((entry) => entry.src?.endsWith('/tool-display-entry.mjs'));
+  assert.equal(display.length, 1);
+  assert.equal(display[0].type, 'application/x-revealline-locked');
+  assert.equal(display[0]['data-access-type'], 'module');
+  // Model the already-unlocked module boundary; the site gate itself is not bypassed.
+  const entries = display.map((entry) => new URL(entry.src, htmlURL));
   // These file-local tests run sequentially. Give the real entry its browser
   // globals only during import; the mounted owner captures this document/host.
   const descriptors = ['document', 'window'].map((key) => [

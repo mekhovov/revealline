@@ -61,8 +61,8 @@ export const CREATOR_GUIDE_DOCUMENTS = Object.freeze(
     {
       id: 'overview',
       path: 'authoring/community/README.md',
-      bytes: 23414,
-      sha256: 'e31330d3b525eb2ad2bc0cafc6eec64dab31b12256d353209437a45ee4955671',
+      bytes: 23787,
+      sha256: 'c62203b15fe51174e5a970590febd2a158a79417d1ff6ff82a7402fdec39a787',
       titleKey: 'tools:presentationCheckpointsAndTeamTestExport',
     },
     {
