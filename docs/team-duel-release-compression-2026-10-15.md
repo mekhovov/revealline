@@ -1,6 +1,6 @@
 # Complete-release lossless container feasibility — 15 October 2026
 
-**A lossless complete-payload ZIP can fit the existing 950 MB limit.** The measured projection is **908,988,197 bytes**, leaving **41,011,803 bytes**. Native staging still fails its independent extracted-size limit.
+**The complete local production ZIP fits the existing 950 MB limit.** Integrated source `dda86d8c6` produces **909,001,885 bytes**, leaving **40,998,115 bytes**. Both readers verify every original member. Native staging still fails its independent extracted-size limit.
 
 This capacity experiment measures exact source `90616ad4453a2c31d29ea29e532e6ecefbf459a0`, tree `9e66fa74d7a507b7e919ad130718dc9ce351f82e`. Its measurement does not implement a new archive format. The subsequent implementation is recorded separately below. The [earlier release-readiness assessment](team-duel-release-readiness-2026-10-15.md) retains the historical working-tree sizing based on `859d5c…`; none of those older descriptors is relabeled as this source.
 
@@ -14,7 +14,7 @@ The [analysis helper](../scripts/measure-release-zip-capacity.mjs) measures ever
 
 The archive-size projection uses the existing writer's ZIP32 framing: 30-byte local and 46-byte central headers, both UTF-8 path names, and a 22-byte end record, with no extra fields, comments or data descriptors. This measures a potential mixed stored/deflate container. It does not create an archive, verify a compressed ZIP reader, or prove a second complete build. Repeated compression determinism is bounded to the recorded Node/zlib versions; cross-version reproducibility still requires qualification.
 
-## Result
+## Historical experiment result at 90616ad44
 
 | Measurement                                      |                     Bytes / count | Meaning                                        |
 | ------------------------------------------------ | --------------------------------: | ---------------------------------------------- |
@@ -37,11 +37,35 @@ The open [native capacity issue #865](https://github.com/mekhovov/revealline/iss
 
 ## Container implementation following the experiment
 
-The follow-up branch implements the [source-admitted v2 archive contract](distribution-archive.md). Complete builds select the smaller of stored bytes and fixed-parameter raw deflate for each member. Unmarked builds and optional callers retain stored ZIPs. The source config, manifest, build identity and release record carry the explicit format and the existing 1 GiB expanded envelope, including the manifest. The 950 MB archive and 768 MiB native limits remain unchanged.
+The follow-up branch implements the [source-admitted v2 archive contract](distribution-archive.md). Complete builds select the smaller of stored bytes and fixed-parameter raw deflate for each member. Unmarked builds and optional callers retain stored ZIPs. The source config, manifest, build identity and release record carry the explicit format and a separate explicit 1 GiB expanded envelope, including the manifest, derived from the existing default distribution envelope. The 950 MB archive and 768 MiB native limits remain unchanged.
 
 The frozen inspector binds admission to the exact committed source config and independently checks contiguous ZIP32 headers, paths, member sets, streamed expansion bounds, CRCs and every original hash. The local controller fixture has a bounded compatible reader; its injected controller events remain separate from physical controller evidence. The legacy Pages metadata reader accepts only matching, strictly validated v2 markers; its independent 800 MB contract still rejects the complete payload. It is not a delivery route for this candidate; the active rolling Pages builder is separate.
 
 These implementation checks do not turn the 90616ad44 capacity projection into a produced final-source archive. Final-source sizing, canonical qualification, independent frozen inspection and public consumer acceptance remain required before release.
+
+## Actual complete container at integrated source dda86d8c6
+
+After rebasing without conflicts onto main `e51ff517e`, one normal complete preparation and the production adaptive ZIP writer ran at source `dda86d8c64eaba178552b9d6b8d7d9a629d6d320`, tree `ba67d9215deaf0c9b57a33748fd1270d09d50a02`. The [committed receipt](research/team-duel-compressed-archive-2026-10-15.json) retains both reader results, source checks, runtime, archive/manifest hashes and precise boundaries.
+
+| Actual measurement                                  |                            Result |
+| --------------------------------------------------- | --------------------------------: |
+| Payload                                             | 1,072,048,549 bytes / 3,491 files |
+| Manifest / complete member count                    |     519,621 bytes / 3,492 members |
+| Production ZIP                                      |             **909,001,885 bytes** |
+| ZIP headroom below 950,000,000                      |              **40,998,115 bytes** |
+| Expanded archive including manifest                 |               1,072,568,170 bytes |
+| Headroom below the explicit 1 GiB expanded envelope |               **1,173,654 bytes** |
+| Native extracted excess above 768 MiB               |             **266,742,181 bytes** |
+
+ZIP SHA-256 is `4c9b4693ff31cdd574414be12b75467bb02138044009153e4491cb708ab8a45c`; manifest SHA-256 is `eb86aeca3df98b5b4453a5a2ff5230087d1a58e61fdd5ce71e09f0e96c50cdeb`. Node 20.19.5 / zlib 1.3.1-470d3a2 produced the container. The complete preparation took about 7 minutes 17 seconds; writing the ZIP followed, and source verification completed about 8 minutes 42 seconds after the initial check began. Peak RSS was 3,065,217,024 bytes. No expanded site was written.
+
+The production Python verifier independently checked the strict ZIP32 layout, bounded raw streams, every CRC/length/hash, exact manifest bytes and source-admitted marker. Archive hash and file identity stayed unchanged across inspection. The local JavaScript fixture reader then read all 3,491 payload files, plus the exact manifest, through its 64 MiB per-resource bound. Its largest resource was 15,623,239 bytes. All 32 external bodies / 130,442,755 bytes matched their exact source catalog pins and stayed outside the automatic core cache.
+
+Before and after preparation, checks verified all 3,308 included inputs / 859,794,179 bytes and 41,392 available committed sources / 3,197,432,388 bytes, with zero absent tracked sources. Both readers exited successfully. The task-owned 909 MB ZIP was then retired to recover disk space; its manifest and detailed local receipts remain in ignored cache, with exact identities retained in the committed receipt.
+
+The rebased archive/CLI/optional/metadata/registration cohort passes **155/155** with no skips; its Python wrapper invokes **39/39** independent new and legacy cases. A separate rebased Studio/media-host cohort passes **55/55** with no skips. These overlapping counts are not a whole-repository claim. The complete loose-site external-distribution test remains separate; this check verified its real archive bodies without creating that loose site.
+
+This closes local complete-container capacity and both implemented reader checks at the pinned integrated source. It is one preparation, not a second full-build reproducibility proof, a cross-zlib guarantee, an outer frozen qualification artifact, an immutable release, native staging or public browser acceptance. The final merged release source still requires the canonical source-preservation, required-suite, freezing and evidence workflow. Legacy 800 MB and native 768 MiB admission remain blocked independently.
 
 ## Original migration requirements
 
