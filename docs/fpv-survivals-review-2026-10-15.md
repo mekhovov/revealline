@@ -4,6 +4,8 @@
 
 ## Latest implementation follow-up
 
+The latest continuation integrates main `d6f93f71d`, adds brief shared-music attenuation for local priority cues, and introduces an explicit lure-and-return review route. [Flight and sound evidence](qualification/overflight/lure-mix-20261015/README.md) records **112/112** checks, two native built-in music/effects clips, a headless Riy Echo completion and a contradictory native loss. Build viability remains open: the actual native route/project were verified, but the first later divergence is not yet established. An isolated late-threshold hypothesis shortened measured draft gaps and enabled a Single Drone Echo completion; it is **data only, not released tuning**, pending broader active/unattended and native checks. The complete sound mix now has native built-in samples; subjective listening acceptance and a boss sample remain open.
+
 PR #1489 is merged at `4defb04b81`. The next continuation incorporates main `691351e1d`, adds final-tank armor/hull to native flight reports, and adds explicit native review routes while preserving the tight default. [Echo approach evidence](qualification/overflight/echo-approach-20261015/README.md) records a reproduced Receiver Gardens loss plus two isolated comparisons. All three lost; build viability is still open. The combined changed-flow/records/offline checks pass 72/72.
 
 PR #1344 is now merged at `51647de73d`. Its bounded performance and native cached-launch checks are complete. The next follow-up, runtime `f494367b7`, displays all pending Echo/Fan impacts and the actual accepted Riy chain path. See [attack-readability evidence](qualification/overflight/attack-readability-20261015/README.md). Combat tuning is unchanged; earlier build losses remain open.
@@ -133,7 +135,7 @@ PR1192, PR1215, PR1226, PR1248 and PR1319 are merged. Corrective runtime `60b0c2
 ## Suggested next batch
 
 1. Review and integrate the flight-report and explicit review-route follow-up; PR1319, PR1344 and PR1489 have merged.
-2. Review Riy Echo and the three intended build techniques; adjust only evidenced problems.
+2. Resolve matched native/headless playback differences, then review Riy Echo and the three intended build techniques. Expand the measured late-pacing proposal across active/unattended controls before changing defaults.
 3. Polish readability and the complete audio mix on those same runs.
 4. Calibrate replay targets, then choose further cross-mode polish.
 
