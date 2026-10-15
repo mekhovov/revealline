@@ -103,8 +103,24 @@ export const LUNAR_BASIN_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const LUNAR_SHELTER_LIBRARY_PIN = Object.freeze({
+  ...LUNAR_BASIN_LIBRARY_PIN,
+  edition: { en: 'Shelter detail', uk: 'Деталізовані укриття' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття з ребрами покрівлі й обладнанням на опорах, розколоті скелі, звивисте русло та антену. Окремий пробний варіант composition-r3; попередня версія залишається доступною. Малонаповнений вигаданий ландшафт. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 2093869,
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json',
+    bytes: 14759,
+    sha256: 'e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  LUNAR_SHELTER_LIBRARY_PIN,
   {
     id: 'alpine-highlands-study',
     title: {
