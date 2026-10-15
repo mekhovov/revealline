@@ -96,7 +96,7 @@ test('live whitelist pins actual standard maps, rules and roster while allowing 
 
 for (const level of maps)
   for (const policy of ['immediate', 'grid-center']) {
-    test(`${level.id}/${policy}: three qualified seeds make useful varied scenes within 60 seconds and exact recordings`, (t) => {
+    test(`${level.id}/${policy}: three qualified seeds finish varied no-loss performances with exact recordings`, (t) => {
       const signatures = new Set();
       for (const seed of [1, 2, 3]) {
         const setup = options(policy, seed),
@@ -106,9 +106,8 @@ for (const level of maps)
           decisions = 0,
           stopped = true,
           captures = 0,
-          maxPlanningMs = 0,
-          endReason = null;
-        while (state.status === 'running' && state.tick < 7200) {
+          maxPlanningMs = 0;
+        while (state.status === 'running' && decisions < 40) {
           const before = authoritativeCheckpoint(state);
           const started = performance.now();
           const macro = planDemoMacro(state, { plannerSeed: seed, decision: decisions++ });
@@ -118,21 +117,16 @@ for (const level of maps)
             before,
             'Lookahead never mutates the live run.',
           );
-          if (!macro.ok) {
-            assert.equal(macro.reason, 'no-safe-macro');
-            assert.ok(macro.examined <= BOT_LIMITS.candidates);
-            assert.ok(macro.simulatedTicks <= BOT_LIMITS.totalTicks);
-            assert.equal(state.player.cutting, false);
-            assert.equal(state.player.speed, 0);
-            endReason = macro.reason;
-            break;
-          }
+          assert.equal(
+            macro.ok,
+            true,
+            `${level.id}/${policy}/${seed} stopped before a result: ${macro.reason}`,
+          );
           assert.ok(macro.metrics.examined <= BOT_LIMITS.candidates);
           assert.ok(macro.metrics.simulatedTicks <= BOT_LIMITS.totalTicks);
           assert.ok(macro.metrics.ticks <= BOT_LIMITS.candidateTicks);
-          execution: for (const segment of macro.segments)
+          for (const segment of macro.segments)
             for (let tick = 0; tick < segment.ticks; tick++) {
-              if (state.tick === 7200) break execution;
               assert.equal(state.status, 'running');
               if (segment.input.direction === null)
                 assert.equal(stopped, true, 'Neutral input only follows a natural capture stop.');
@@ -151,10 +145,7 @@ for (const level of maps)
           if (state.tick === macro.endTick)
             assert.equal(authoritativeCheckpoint(state).hash, macro.endHash);
         }
-        assert.ok(
-          state.status === 'won' ||
-            (state.status === 'running' && (state.tick === 7200 || endReason === 'no-safe-macro')),
-        );
+        assert.equal(state.status, 'won', 'Useful partial progress is not a complete performance.');
         assert.ok(bends >= 2, 'A scene includes a real multi-turn capture.');
         assert.ok(captures >= 2, 'A scene demonstrates repeated completed captures.');
         assert.ok(state.coverage >= 0.2, 'A scene makes substantial real map progress.');
@@ -169,7 +160,6 @@ for (const level of maps)
             coverage: state.coverage,
             captures,
             bends,
-            endReason,
             maxPlanningMs: Math.round(maxPlanningMs),
           }),
         );
@@ -506,16 +496,8 @@ test('live playback crosses the old 60 second cutoff without claiming completion
   }
 });
 
-test('full live admission rejects an exhausted route before display and resets a completed seed', async () => {
-  await assert.rejects(
-    prepareCompleteBotPlayer(maps[0], options('immediate', 1), {
-      WorkerClass: ThreadWorker,
-      watchdogMs: 5000,
-    }),
-    /complete result/,
-  );
-  assert.equal(ThreadWorker.owners, 0);
-  const player = await prepareCompleteBotPlayer(maps[0], options('immediate', 2), {
+test('full live admission now finishes the formerly exhausted seed and resets before display', async () => {
+  const player = await prepareCompleteBotPlayer(maps[0], options('immediate', 1), {
     WorkerClass: ThreadWorker,
     watchdogMs: 5000,
   });

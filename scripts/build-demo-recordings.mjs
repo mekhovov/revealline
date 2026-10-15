@@ -443,10 +443,11 @@ function buildRecoveryRecordings(entry) {
 }
 
 export async function buildDemoRecordings() {
-  const [campaign, classRecipes, variantManifest] = await Promise.all([
+  const [campaign, classRecipes, variantManifest, ciVariants] = await Promise.all([
     readFile(new URL('game/content/campaign.json', root), 'utf8').then(JSON.parse),
     readFile(new URL('game/content/classes.json', root), 'utf8').then(JSON.parse),
     readFile(new URL('game/demo-data/variant-provenance.json', root), 'utf8').then(JSON.parse),
+    readFile(new URL('game/demo-data/ci-variant-provenance.json', root), 'utf8').then(JSON.parse),
   ]);
   campaign.classRecipes = classRecipes;
   const entry = { campaign, classRecipes };
@@ -517,7 +518,22 @@ export async function buildDemoRecordings() {
   // examples; reviewed wins remain the majority of the catalogue.
   // Historical scripted reversal losses remain preserved as files, but are
   // no longer generated or admitted to the unattended complete-run rotation.
-  return [...reviewedWins, ...(await buildPressureRecordings()), ...buildRecoveryRecordings(entry)];
+  return [
+    ...reviewedWins,
+    ...(await buildPressureRecordings()),
+    ...buildRecoveryRecordings(entry),
+  ].map((scene) => ({
+    ...scene,
+    descriptor: {
+      ...scene.descriptor,
+      replayVariants: [
+        ...scene.descriptor.replayVariants,
+        ...ciVariants.variants
+          .filter((variant) => variant.id === scene.descriptor.id)
+          .map((variant) => variant.replayURL),
+      ],
+    },
+  }));
 }
 
 const fileOperations = { readFile, writeFile, mkdir, rename, unlink };

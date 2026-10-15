@@ -102,6 +102,7 @@ const sourceFiles = [
   'game/campaign-contexts.mjs',
   'game/campaign-difficulty.mjs',
   'game/data-json.mjs',
+  'game/data-json-messages.mjs',
   'game/gameplay-tuning.mjs',
   'game/gameplay-tuning-v1.mjs',
   'game/gameplay-tuning-v2.mjs',

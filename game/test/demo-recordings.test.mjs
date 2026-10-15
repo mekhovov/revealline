@@ -93,7 +93,10 @@ test('curated complete routes reproduce current Standard tuning without scripted
     const candidates = verifiedCandidates.map(({ replay }) => replay);
     for (const candidate of candidates) {
       assert.equal(demoInputTraceIdentity(candidate), descriptor.inputTraceIdentity);
-      assert.deepEqual(candidate.summary, replay.summary);
+      // The exact selected runtime checkpoint is still verified below. Other
+      // frozen engines may differ in the last bits of swept-collision time.
+      assert.ok(Math.abs(candidate.summary.time - replay.summary.time) < 1e-10);
+      assert.deepEqual({ ...candidate.summary, time: replay.summary.time }, replay.summary);
     }
     const frozen = verifiedCandidates.find(({ verification }) => verification.match)?.replay;
     assert.ok(
@@ -217,7 +220,8 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
   assert.equal(provenance.format, 'revealline-demo-runtime-variants.v1');
   assert.equal(
     provenance.variants.length,
-    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0),
+    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0) -
+      (await json('../demo-data/ci-variant-provenance.json')).variants.length,
   );
   for (const id of [
     'first-signal-left',
@@ -251,6 +255,40 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
     for (const [section, hash] of Object.entries(original.checkpoint.sections))
       if (section !== 'enemies') assert.equal(replay.checkpoint.sections[section], hash);
     assert.notEqual(replay.checkpoint.sections.enemies, original.checkpoint.sections.enemies);
+  }
+});
+
+test('Linux variants pin independently observed checkpoints without changing reviewed inputs or results', async () => {
+  const provenance = await json('../demo-data/ci-variant-provenance.json');
+  assert.equal(provenance.runtime, 'v20.19.6/linux/x64');
+  for (const variant of provenance.variants) {
+    const clip = catalog.clips.find((entry) => entry.id === variant.id);
+    assert.ok(clip.replayVariants.includes(variant.replayURL));
+    const original = await json(`../${clip.replayURL.slice(2)}`);
+    const replay = await json(`../${variant.replayURL.slice(2)}`);
+    assert.equal(demoInputTraceIdentity(replay), clip.inputTraceIdentity);
+    assert.equal(replay.checkpoint.hash, variant.checkpoint);
+    assert.equal(original.checkpoint.hash, variant.sourceCheckpoint);
+    for (const key of [
+      'version',
+      'ruleset',
+      'level',
+      'options',
+      'segments',
+      'ticks',
+      'releaseAfter',
+    ])
+      assert.deepEqual(replay[key], original[key]);
+    assert.deepEqual(original.summary, variant.sourceSummary);
+    assert.deepEqual(replay.summary, variant.runtimeSummary);
+    assert.ok(Math.abs(replay.summary.time - original.summary.time) < 1e-10);
+    assert.deepEqual({ ...replay.summary, time: original.summary.time }, original.summary);
+    assert.deepEqual(
+      Object.keys(original.checkpoint.sections).filter(
+        (section) => replay.checkpoint.sections[section] !== original.checkpoint.sections[section],
+      ),
+      variant.changedSections,
+    );
   }
 });
 
