@@ -1,0 +1,35 @@
+# Coastal settlement composition study
+
+This follow-up preserves the 768 × 768 m, six-district terrain and adds a more coherent village street. Five huts replace the earlier two-building composition; a fifth palm marks the slalom return, and ten grass clusters define the dune passage. The twelve existing authored flight lines and six starting points remain intact. The original district revision and the first 384 m installed coast remain reproducible and unchanged.
+
+This is still an early composition study. Broad empty areas, flat visual water, limited architectural variety and the larger archipelago remain unresolved. Five huts are an incremental improvement, not a claim that the representative final world-quality standard is complete.
+
+## Budgets and rejected iterations
+
+No runtime, collision, texture or delivery limit changes. An initial eight-hut placement exceeded the existing 1 MiB source limit in its cell and was rejected. A subsequent extra-palm placement exceeded the existing 512 KiB generated scene allowance and was rejected. The accepted source uses five huts and five palms in their respective cells instead of widening either limit.
+
+The final exact source totals 7,857,157 bytes across 38 manifest/dependency files. Its complete region uses 4,025,228 resource bytes, conservatively 8,050,456 bytes for full retained and candidate windows, below the unchanged 8,388,608-byte ceiling. This leaves 338,152 bytes of resource headroom; further composition must respect that constraint. Textures remain shared resources, while mesh placements still contribute geometry and solid collider costs.
+
+## Verification
+
+Reproduce from the existing immutable, welded RGBA Tropical intake:
+
+```sh
+node authoring/fpv-worlds/regions/tropical-coast/prepare-coastal.mjs /path/to/rgba-assets /new/settlement settlement
+node authoring/fpv-worlds/regions/tropical-coast/verify-coastal.mjs /new/settlement /new/settlement/preparation.json
+node authoring/fpv-worlds/regions/tropical-coast/verify-commanded-flight.mjs /new/settlement /new/settlement/preparation.json
+```
+
+`settlement-preparation.json` pins both manifests. The receipts retain exact source identities and outcomes:
+
+- 18 canonical GLBs, no validator errors or warnings.
+- 24 existing quality-tier collision probes and 27 window replacements; all resource/collider ownership disposed to zero, source bytes unchanged.
+- 24 production-session routes across both flight modes, 96,020 fixed ticks in total; 12 disarmed authored starts and six negative contact scenarios. Every body movement after scenario initialization comes from stick commands, with no body teleporting or relaxed tolerances.
+
+Transparent foliage remains visual-only, while trunks, huts, piers and cargo remain solid. No physics, water interaction, runtime module, default Library row or package budget changes are included.
+
+## Provenance and pending admission
+
+The unchanged models/textures derive from Ron Kapaun / 3TD Studios' CC0 Tropical pack. The verified intake and prior district documentation retain upstream URLs, archive and source hashes, licenses and derivation details. Terrain, arrangement and routes are original project work.
+
+Native appearance acceptance, an immutable delivery descriptor/source publication, a trusted Library revision and package/offline qualification are separate gates. Source checks alone do not admit this revision to players, establish real-device performance, or complete the broader world-quality target.
