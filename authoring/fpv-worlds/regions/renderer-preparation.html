@@ -59,8 +59,26 @@
       </p>
       <label>Terrain manifest <input id="terrain" value="/region/terrain/region.json" /></label>
       <label>Scenery manifest <input id="scenery" value="/region/scenery/region.json" /></label>
+      <label
+        >Surface
+        <select id="surface">
+          <option value="plain">Plain</option>
+          <option value="canyon">Canyon</option>
+          <option value="urban">Urban</option>
+          <option value="railway">Railway</option>
+        </select></label
+      >
+      <label
+        >Quality
+        <select id="quality">
+          <option value="low">Performance</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">Quality</option>
+        </select></label
+      >
       <button id="load">Load verified area</button>
       <button id="stage" disabled>Stage neighbouring area</button>
+      <button id="stage-quality" disabled>Stage + change quality</button>
       <button id="cancel" disabled>Cancel preparation</button>
       <button id="release" disabled>Release resources</button>
       <p id="status" role="status">
