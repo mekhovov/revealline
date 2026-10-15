@@ -11,6 +11,9 @@ import {
   FIRST_FLIGHT_V2_CASES,
   GYM_EXERCISE_PROTOCOL,
   GYM_EXERCISE_CASES,
+  HUD_SETTINGS_PROTOCOL,
+  HUD_SETTINGS_CASES,
+  readVisibleFlightHUD,
   firstFlightArtifactPackage,
   firstFlightAuthority,
   completeFirstFlightGymExercise,
@@ -55,6 +58,58 @@ test('requires exact artifact binding and complete declared EN four-case matrix'
     { password: 'never-in-plan' },
   ])
     assert.throws(() => validateFirstFlightPlan({ ...plan(), ...patch }));
+});
+
+test('HUD settings protocol is a separate strict four-case bilingual matrix', () => {
+  const input = {
+    ...plan(),
+    format: 'revealline-practice-hud-settings-plan.v1',
+    protocol: HUD_SETTINGS_PROTOCOL.id,
+    cases: HUD_SETTINGS_CASES.map((row) => row.id),
+  };
+  assert.deepEqual(validateFirstFlightPlan(input), input);
+  assert.deepEqual(input.cases, [
+    'en-academy-self-level-hud-settings',
+    'en-worlds-self-level-hud-settings',
+    'uk-academy-self-level-hud-settings',
+    'uk-worlds-self-level-hud-settings',
+  ]);
+  assert.equal(firstFlightArtifactPackage(input), 'civilian-fpv');
+  for (const patch of [
+    { cases: input.cases.slice(0, 1) },
+    { cases: [...input.cases].reverse() },
+    { script: 'custom' },
+    { protocol: FIRST_FLIGHT_V2_PROTOCOL.id },
+  ])
+    assert.throws(() => validateFirstFlightPlan({ ...input, ...patch }));
+  assert.equal(firstFlightProtocol(input).caseMs, 90000);
+});
+
+test('maintained HUD witness requires visible localized Detailed height rather than hidden legacy telemetry', async () => {
+  for (const locale of ['en', 'uk']) {
+    const calls = [];
+    const text = locale === 'uk' ? 'Висота 0 м · 1,2–2,4 м' : 'Height 0 m · 1.2–2.4 m';
+    let visible = true,
+      reading = text;
+    const page = {
+      locator: (selector) => {
+        calls.push(selector);
+        assert.equal(selector, '[data-sim-hud="flight"] [data-hud-part="details"]');
+        return {
+          waitFor: async ({ state }) => assert.equal(state, 'visible'),
+          isVisible: async () => visible,
+          innerText: async () => reading,
+        };
+      },
+    };
+    assert.equal((await readVisibleFlightHUD(page, locale)).text, text);
+    visible = false;
+    await assert.rejects(readVisibleFlightHUD(page, locale), /must be visible/);
+    visible = true;
+    for (reading of ['Height 1.2 m · 1.2–2.4 m', 'Throttle 0% · ≤ 10%', 'Loading', 'x'.repeat(513)])
+      await assert.rejects(readVisibleFlightHUD(page, locale));
+    assert(calls.length > 0);
+  }
 });
 
 test('public HUD parsing ignores elapsed time for Worlds and includes Gym position', () => {
