@@ -44,6 +44,7 @@ export function createVerifiedFlightGeometry(
   };
   return Object.freeze({
     snapshot,
+    collisionSnapshot: () => owner.collisionSnapshot(),
     get group() {
       return owner.group;
     },
