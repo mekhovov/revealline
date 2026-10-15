@@ -1,8 +1,8 @@
 {
   "passed": true,
   "sourcePins": {
-    "terrain": "37cfa3e644aea1e7a6357aa649ab8ab0a3b5e8af56b01f72ba7fc6ef9878c207",
-    "scenery": "d12522d9826af94cd14df65d9c939f2fa393db09a5d5fcbb02091e6b40ae3eba"
+    "terrain": "14ae06c889238ea6fef4474197f3f685b634fb34d2534ea61b8a28d2b2051fab",
+    "scenery": "a0ce1ce5d9e5663268ee6abcc5af52f6c5988a5b687b1bf0c60a26e61d18fa2e"
   },
   "records": [
     {
@@ -12110,7 +12110,7 @@
       "route": "highland-shelf",
       "ticks": 15891,
       "contacts": 0,
-      "recentres": 4,
+      "recentres": 3,
       "commandSha256": "3841c0bca4542cafbbc77ae3a72cb45958b67d4ae2f6393c71a2fc95495621ba",
       "segments": [
         {
@@ -14790,7 +14790,7 @@
       "route": "observatory-circuit",
       "ticks": 22707,
       "contacts": 0,
-      "recentres": 16,
+      "recentres": 12,
       "commandSha256": "bf3c3c497f83be868e91651cece36604594148d862d8254c24c1fb0a03f3bc20",
       "segments": [
         {
@@ -33070,7 +33070,7 @@
       "route": "observatory-circuit",
       "ticks": 22640,
       "contacts": 0,
-      "recentres": 24,
+      "recentres": 16,
       "commandSha256": "c8ffad6005c27e3511031a903d2be7e7722bcc0a373fbf397e50fb027967e1fb",
       "segments": [
         {
