@@ -45,6 +45,24 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    id: 'railway-valley-expanse',
+    title: {
+      en: 'Railway Valley — six districts',
+      uk: 'Залізнична долина — шість районів',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts.',
+      uk: '4,096 × 4,096 км · шість місць старту · вільний політ без заліку. Досліджуйте вантажний цех, віадук, конвеєр кар’єру, навіс станції, ливарню й лісовий склад. Раннє дослідження ландшафту зі статичними потягами та невеликою кількістю деталей між районами.',
+    },
+    bytes: 17943638,
+    appearance: { terrain: 'railway' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json',
+      bytes: 98773,
+      sha256: '38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7',
+    },
+  },
+  {
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — terraces and courtyards',
