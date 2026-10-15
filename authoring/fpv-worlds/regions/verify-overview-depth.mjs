@@ -18,7 +18,7 @@ const baseline = process.argv[3]
   ? await readFile(process.argv[3], "utf8")
   : execFileSync("git", [
       "show",
-      "310b5091:optional-practice/civilian-fpv/renderer.mjs",
+      "310b509140ce15d830cb9f5f34af1f47c186db5f:optional-practice/civilian-fpv/renderer.mjs",
     ]).toString();
 const factory = (text) =>
   runInNewContext(
@@ -146,6 +146,11 @@ assert(
 );
 const root = resolve(process.argv[2]);
 const manifestBytes = await readFile(resolve(root, "scenery/region.json"));
+assert.equal(
+  createHash('sha256').update(manifestBytes).digest('hex'),
+  '6267731197ea142b0cf4a99380953108aca11ae01db69aabda866388029b037d',
+  'Preserved supported-r5 manifest identity',
+);
 const manifest = JSON.parse(manifestBytes);
 assert.equal(manifest.id, "coaster-gardens-study");
 assert.equal(manifest.revision, "composition-r2");
