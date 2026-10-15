@@ -13,8 +13,8 @@ import {
 import { validateRegionManifest } from '../region-manifest.mjs';
 import { loadBuildingModels } from './indexed-source.mjs';
 const variant = process.argv[3];
-assert(!variant || variant === 'courtyard-r3', 'Unknown Hillside source variant');
-const design = await import(variant ? './courtyard-r3/design.mjs' : './design.mjs');
+assert(!variant || ['courtyard-r3', 'courtyard-r4'].includes(variant), 'Unknown Hillside source variant');
+const design = await import(variant ? `./${variant}/design.mjs` : './design.mjs');
 const { architecture, placements, routes, spawns, probes, heightMm, sizeM, roads, roadTopMm } =
   design;
 const output = process.argv[2];
@@ -62,7 +62,15 @@ for (const box of boxes) {
       });
     const surface = cell.groups.get(key),
       offset = surface.positionsMm.length / 3;
-    const geometry = new THREE.BoxGeometry(...high.map((v, i) => v - low[i]));
+    const dimensions = high.map((v, i) => v - low[i]);
+    if (box.primitive)
+      assert.deepEqual([low, high], [min, max], 'Rounded art must not straddle cells');
+    const geometry =
+      box.primitive === 'crown'
+        ? new THREE.SphereGeometry(1, 8, 5).scale(...dimensions.map((v) => v / 2))
+        : box.primitive === 'trunk'
+          ? new THREE.CylinderGeometry(dimensions[0] / 2, dimensions[0] / 2, dimensions[1], 8)
+          : new THREE.BoxGeometry(...dimensions);
     geometry.translate(...high.map((v, i) => (v + low[i]) / 2));
     for (let i = 0; i < geometry.attributes.position.array.length; i++)
       surface.positionsMm.push(

@@ -1,0 +1,9 @@
+# Immutable connected harbour source delivery
+
+This 768 × 768 m `tropical-coastal-districts` / `harbour-r3` revision adds the reviewed connected arrival decks and shore approach to the existing six-district coastal study. The 38 descriptor-listed files are exact copies of the source accepted through #1371. The 6,617-byte descriptor SHA256 is `44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce`; verified payload is 7,952,305 bytes, below 64 MiB. Retained/candidate resources remain 8,147,128 bytes under the unchanged 8 MiB ceiling.
+
+The materials derive from Ron Kapaun / 3TD Studios' [CC0 Tropical Environment Pack](https://opengameart.org/content/3td-tropical-environment-pack-v20); `LICENSE.txt` and `provenance.json` retain the exact original intake provenance. Connected wooden structures and layout are original. Licensed textures, foliage/solid collision classification, old terrain and unrelated scenery are unchanged.
+
+Native source review covered Balanced original/connected arrival, Quality deck, live Performance cargo and complete resource/collision disposal. This is bounded structural improvement, not representative final art: broad coast remains sparse and the frozen water appearance is flat. Existing Tropical/Coastal cards, immutable source revisions and installed projects remain unchanged.
+
+`../verify-harbour-delivery.mjs` verifies every fetched byte through the production strict downloader, exact manifest hashes, twelve disarmed starts across both flight modes, explicit arm/climb/pause and resource/collision disposal. It uses isolated verified in-memory sources, never player storage. No installed Library row, native player, package/offline or physical-device qualification is claimed by this source publication. A later separate row must bind this exact immutable descriptor SHA and preserve old revisions.
