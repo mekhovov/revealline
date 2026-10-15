@@ -11,7 +11,7 @@ import {
 } from './indexed-scenery-cell.mjs';
 import { initWorldRuntime } from '../world-collision.mjs';
 
-import { createScenerySurface, validateScenerySurface } from './scenery-surface.mjs';
+import { createScenerySurface, validateScenerySurface, sceneryMaterialStyle } from './scenery-surface.mjs';
 
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
@@ -83,6 +83,7 @@ export async function prepareSceneryWindow(
     originMm = { x: 0, y: 0, z: 0 },
     maxGeometryBytes = 8 * 1024 * 1024,
     surfaceStyle = 'plain',
+    surfaceQuality = 'balanced',
   } = {},
 ) {
   const manifest = validateRegionManifest(manifestInput),
@@ -91,7 +92,7 @@ export async function prepareSceneryWindow(
     Array.isArray(cellsInput) && (cellsInput.length > 0 || sparse) && cellsInput.length <= 25,
     'Scenery needs 1–25 cells',
   );
-  validateScenerySurface(surfaceStyle);
+  validateScenerySurface(surfaceStyle, surfaceQuality);
   const sources = cellsInput.map(validateScenerySource),
     cells = sources.map(scenerySourceCell);
   fail(integerPosition(originMm), 'Invalid local origin');
@@ -197,7 +198,9 @@ export async function prepareSceneryWindow(
       for (const surface of compileScenerySource(source).surfaces) {
         const { positions, indices } = surface;
         const textureKey = surface.textureKey ?? '';
+        const materialStyle = sceneryMaterialStyle(surfaceStyle, surface);
         const key = JSON.stringify([
+          materialStyle,
           surface.color,
           textureKey,
           surface.alphaMode ?? 'OPAQUE',
@@ -208,7 +211,8 @@ export async function prepareSceneryWindow(
         let material = byColor.get(key);
         if (!material) {
           material = createScenerySurface({
-            style: surface.texture ? 'plain' : surfaceStyle,
+            style: materialStyle,
+            quality: surfaceQuality,
             color: surface.color,
             originMm,
           });
