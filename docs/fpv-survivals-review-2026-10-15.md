@@ -2,6 +2,26 @@
 
 15 October 2026. Checked against fetched main `33957174d7`, the current working branch and recorded qualification evidence. This is a decision document; implementation, automated checks and human acceptance are separate states.
 
+## Current-main integration and merge decision
+
+Main `33957174d7e02609220aeff99f185baae5f7ca34` was merged into this
+follow-up at `68d5523a55434ac609c634e35a5a99e0d01d76c8`. That integration
+has no Overflight runtime-file differences from the prior PR head; it retains the
+newer shared UI/input and other main changes. A single combined Node test run of
+the Riy cover, survival HUD, upgrade card/preview, renderer, world-audio and
+existing Riy regression suites passed **75/75**, zero failed or skipped.
+Initial sparse-checkout attempts lacked required source/package files and were
+not accepted as successful runs; the complete cohort above passed after those
+checkout dependencies were restored without changing application code.
+
+The user explicitly approved merging #1319 with the documented Riy Echo balance
+losses tracked as follow-up work, after refreshed exact-head checks and changed
+gameplay-flow checks pass. Those losses remain observed failures, not qualified
+balance. This decision does not waive data preservation, current-head CI or
+deployment safeguards, and does not relabel historical native/performance/offline
+evidence as qualification of this combined source. Final CI and combined-source
+native changed-flow review remain pending at this checkpoint.
+
 ## Recommendation
 
 Finish the corrective delivery, then prioritize balance/progression and combat readability. Keep audio review in the same polish cycle. Defer more maps, modes, upgrade families and character mechanics until the existing choices are demonstrably distinct and enjoyable. Eighteen maps already provide substantial content; more content will not by itself solve repetitive or unclear play.
