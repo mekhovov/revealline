@@ -97,19 +97,33 @@ export const GYM_EXERCISE_CASES = Object.freeze(
     }),
   ),
 );
+export const HUD_SETTINGS_PROTOCOL = Object.freeze({
+  ...FIRST_FLIGHT_PROTOCOL,
+  id: 'practice-hud-settings-public-ui.v1',
+});
+export const HUD_SETTINGS_CASES = Object.freeze(
+  FIRST_FLIGHT_V2_CASES.filter((row) => row.mode === 'self-level').map((row) =>
+    Object.freeze({ ...row, id: row.id + '-hud-settings', hudSettings: true }),
+  ),
+);
 export function firstFlightProtocol(plan) {
   assert(
-    [FIRST_FLIGHT_PROTOCOL.id, FIRST_FLIGHT_V2_PROTOCOL.id, GYM_EXERCISE_PROTOCOL.id].includes(
-      plan.protocol,
-    ),
+    [
+      FIRST_FLIGHT_PROTOCOL.id,
+      FIRST_FLIGHT_V2_PROTOCOL.id,
+      GYM_EXERCISE_PROTOCOL.id,
+      HUD_SETTINGS_PROTOCOL.id,
+    ].includes(plan.protocol),
     'Unknown first-flight protocol.',
   );
   if (plan.protocol === GYM_EXERCISE_PROTOCOL.id) return GYM_EXERCISE_PROTOCOL;
+  if (plan.protocol === HUD_SETTINGS_PROTOCOL.id) return HUD_SETTINGS_PROTOCOL;
   return plan.protocol === FIRST_FLIGHT_V2_PROTOCOL.id
     ? FIRST_FLIGHT_V2_PROTOCOL
     : FIRST_FLIGHT_PROTOCOL;
 }
 export function firstFlightCases(plan) {
+  if (firstFlightProtocol(plan).id === HUD_SETTINGS_PROTOCOL.id) return HUD_SETTINGS_CASES;
   if (firstFlightProtocol(plan).id === GYM_EXERCISE_PROTOCOL.id) return GYM_EXERCISE_CASES;
   return firstFlightProtocol(plan).id === FIRST_FLIGHT_V2_PROTOCOL.id
     ? FIRST_FLIGHT_V2_CASES
@@ -167,6 +181,7 @@ export function validateFirstFlightPlan(input) {
     'revealline-practice-first-flight-plan.v1': FIRST_FLIGHT_PROTOCOL.id,
     'revealline-practice-first-flight-plan.v2': FIRST_FLIGHT_V2_PROTOCOL.id,
     'revealline-practice-gym-exercise-plan.v1': GYM_EXERCISE_PROTOCOL.id,
+    'revealline-practice-hud-settings-plan.v1': HUD_SETTINGS_PROTOCOL.id,
   };
   assert(Object.hasOwn(formats, plan.format), 'Unsupported observation plan format.');
   assert.equal(plan.protocol, formats[plan.format]);
@@ -471,6 +486,92 @@ export async function completeFirstFlightGymExercise(page, spec, result, output,
   result.passed = result.errors.length === 0;
 }
 
+export async function readVisibleFlightHUD(page, locale) {
+  assert(['en', 'uk'].includes(locale));
+  const selector = '[data-sim-hud="flight"] [data-hud-part="details"]';
+  const details = page.locator(selector);
+  await details.waitFor({ state: 'visible' });
+  assert(await details.isVisible(), 'Maintained Detailed HUD must be visible.');
+  const text = (await details.innerText()).trim();
+  assert(text.length <= 512, 'Unbounded HUD text.');
+  assert.match(
+    text,
+    locale === 'uk' ? /^Висота 0 м · 1,2–2,4 м$/ : /^Height 0 m · 1\.2–2\.4 m$/,
+    'Expected visible first-flight height and band.',
+  );
+  return { selector, text, visible: true, at: Date.now() };
+}
+
+export async function observeFirstFlightHUDSettings(page, spec, result, { password, output }) {
+  const academy = spec.package === 'civilian-fpv';
+  assert(HUD_SETTINGS_CASES.some((row) => row.id === spec.id));
+  const prefix = academy ? 'academy' : 'worlds';
+  const panel = `#${prefix}-settings-panel-accessibility`;
+  const root = '[data-sim-hud="flight"]';
+  const controls = { mode: 'detailed', textSize: 'large', highContrast: 'true' };
+  const open = async () => {
+    await activate(page, `#${spec.shell}-action-settings`, result);
+    await activate(page, `#${prefix}-settings-tab-accessibility`, result);
+    const section = page.locator(panel + ' [data-sim-hud-preferences]');
+    await section.waitFor({ state: 'visible' });
+    assert.equal(await section.count(), 1);
+    assert.equal(await section.locator('select').count(), 3);
+  };
+  const initial = await phase(page, spec);
+  assert(['ready', 'disarmed'].includes(initial), 'Settings must start unarmed.');
+  await open();
+  result.hudSettings = {
+    initialPhase: initial,
+    preferences: controls,
+    controls: [],
+    reloadRetained: false,
+  };
+  for (const [key, value] of Object.entries(controls)) {
+    const selector = panel + ` [data-hud-preference="${key}"]`;
+    const control = page.locator(selector);
+    assert(await control.isVisible(), 'Preference must be a visible native control.');
+    await control.selectOption(value);
+    assert.equal(await control.inputValue(), value);
+    result.hudSettings.controls.push({ selector, value, visible: true });
+  }
+  const name = spec.id + '-accessibility.png';
+  const image = await page.screenshot({ timeout: 5000 });
+  await writeFile(path.join(output, name), image, { flag: 'wx' });
+  result.settingsScreenshot = pin(name, image);
+  await returnFirstFlightHome(page, spec, result);
+  assert.equal(await phase(page, spec), initial, 'Preferences must not arm/start a flight.');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await unlockObservedPage(page, password);
+  await page.locator(`#${spec.shell}-action-primary`).waitFor({ state: 'visible' });
+  assert(['ready', 'disarmed'].includes(await phase(page, spec)), 'Reload must remain unarmed.');
+  await observeFirstFlightLocale(page, spec);
+  await open();
+  for (const [key, value] of Object.entries(controls))
+    assert.equal(
+      await page.locator(panel + ` [data-hud-preference="${key}"]`).inputValue(),
+      value,
+      'Preference did not survive normal reload.',
+    );
+  result.hudSettings.reloadRetained = true;
+  await returnFirstFlightHome(page, spec, result);
+  await activate(page, `#${spec.shell}-action-primary`, result);
+  await waitPhase(page, spec, ['active']);
+  await page.locator(spec.viewport).click();
+  const hudRoot = page.locator(root);
+  assert.equal(await hudRoot.getAttribute('data-hud-mode'), 'detailed');
+  assert.equal(await hudRoot.getAttribute('data-hud-size'), 'large');
+  assert.equal(await hudRoot.getAttribute('data-hud-contrast'), 'high');
+  result.visibleHUD = await readVisibleFlightHUD(page, spec.locale);
+  const flightName = spec.id + '-visible-hud.png';
+  const flightImage = await page.screenshot({ timeout: 5000 });
+  await writeFile(path.join(output, flightName), flightImage, { flag: 'wx' });
+  result.screenshot = pin(flightName, flightImage);
+  await activate(page, `#${spec.shell}-action-pause`, result, 'pointer');
+  await waitPhase(page, spec, ['paused']);
+  result.finalPhase = await phase(page, spec);
+  result.passed = result.errors.length === 0;
+}
+
 async function runCase(page, spec, { origin, version, password, result, output, files, signal }) {
   const { launcher, expected, locale } = firstFlightRoute(spec, { origin, version });
   result.launcher = launcher;
@@ -485,6 +586,10 @@ async function runCase(page, spec, { origin, version, password, result, output, 
   if (spec.locale) result.localeWitness = await observeFirstFlightLocale(page, spec);
   if (spec.package === 'civilian-fpv' || (spec.locale && spec.package === 'fpv-worlds'))
     await selectFirstFlightMode(page, spec, result);
+  if (spec.hudSettings) {
+    await observeFirstFlightHUDSettings(page, spec, result, { password, output });
+    return;
+  }
   await activate(page, `#${spec.shell}-action-primary`, result);
   await waitPhase(page, spec, ['active', 'playing']);
   result.startPhase = await phase(page, spec);
@@ -575,15 +680,18 @@ export async function observePracticeFirstFlight({
   const protocol = firstFlightProtocol(plan),
     cases = firstFlightCases(plan);
   const exercise = protocol.id === GYM_EXERCISE_PROTOCOL.id;
+  const hudSettings = protocol.id === HUD_SETTINGS_PROTOCOL.id;
   await mkdir(output);
   const scrub = (value) =>
     password ? String(value).split(password).join('[REDACTED]') : String(value);
   const report = {
-    format: exercise
-      ? 'PracticeGymExerciseObservation.v1'
-      : protocol.id === FIRST_FLIGHT_PROTOCOL.id
-        ? 'PracticeFirstFlightObservation.v1'
-        : 'PracticeFirstFlightObservation.v2',
+    format: hudSettings
+      ? 'PracticeHUDSettingsObservation.v1'
+      : exercise
+        ? 'PracticeGymExerciseObservation.v1'
+        : protocol.id === FIRST_FLIGHT_PROTOCOL.id
+          ? 'PracticeFirstFlightObservation.v1'
+          : 'PracticeFirstFlightObservation.v2',
     plan,
     protocol,
     createdAt: new Date().toISOString(),
@@ -593,20 +701,27 @@ export async function observePracticeFirstFlight({
     cases: [],
     authority: [],
     resourceAcquisitions: [],
-    limitations: exercise
+    limitations: hudSettings
       ? [
-          'Automated EN/UK assisted Gym lift-and-land exercise through public HUD feedback and R/F keys; no FPV exercise, physical controller, human learning or campaign-win qualification.',
-          'Native completion/checkmark and actual public transcript export are observed; independentReplayVerified becomes true only after off-browser replay with the complete fixed model/catalogue dependency closure byte-matched to admitted Gym files. This is not human qualification.',
-          'Completion screenshot is captured before Settings/Data transcript export. No recorded-input injection, runtime hook or fabricated completion state.',
-          'Starts from the stable Gym launcher, not the main-game directory. Locally staged admitted bytes and current.json fixture are not public hosting or installation/offline qualification.',
+          'Normal EN/UK stable-launcher Settings/Accessibility choices and retained preferences after ordinary reload; four fresh contexts, no seeded preferences or hidden-control activation.',
+          'Only after deliberate Start, observe the maintained visible Detailed HUD at zero height. This is not motion, exercise completion, proof replay, human or accessibility qualification.',
+          'Exact admitted package bytes served locally; declared current.json fixture, not public hosting or installation/offline acceptance.',
         ]
-      : [
-          `Automated ${protocol.id === FIRST_FLIGHT_PROTOCOL.id ? 'EN' : 'EN/UK'} mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.`,
-          'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
-          'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
-          'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
-          'Motion uses visible rounded HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
-        ],
+      : exercise
+        ? [
+            'Automated EN/UK assisted Gym lift-and-land exercise through public HUD feedback and R/F keys; no FPV exercise, physical controller, human learning or campaign-win qualification.',
+            'Native completion/checkmark and actual public transcript export are observed; independentReplayVerified becomes true only after off-browser replay with the complete fixed model/catalogue dependency closure byte-matched to admitted Gym files. This is not human qualification.',
+            'Completion screenshot is captured before Settings/Data transcript export. No recorded-input injection, runtime hook or fabricated completion state.',
+            'Starts from the stable Gym launcher, not the main-game directory. Locally staged admitted bytes and current.json fixture are not public hosting or installation/offline qualification.',
+          ]
+        : [
+            `Automated ${protocol.id === FIRST_FLIGHT_PROTOCOL.id ? 'EN' : 'EN/UK'} mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.`,
+            'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
+            'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
+            'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
+            'Motion uses rounded DOM HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
+            'Correction: legacy FPV measurement nodes can be hidden by the maintained HUD. These historical-compatible v1/v2 protocols observe DOM telemetry without verifying its visibility; do not claim visible-FPV-HUD acceptance.',
+          ],
   };
   let work, served, browser;
   try {
