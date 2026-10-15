@@ -6,6 +6,7 @@ import { REGION_CELL_SIZES_MM } from './regional/region-manifest.mjs';
 // This immutable source needs the separately qualified 512 m natural-cell capability.
 // Older runtimes keep their current catalogue rather than offering an unloadable entry.
 export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
+  edition: { en: 'Open desert terrain', uk: 'Відкритий пустельний рельєф' },
   id: 'desert-expedition-study',
   title: {
     en: 'Desert Expedition — 16 km relief study',
@@ -25,6 +26,7 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
 });
 
 export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
+  edition: { en: 'Rock practice routes', uk: 'Маршрути серед скель' },
   id: 'desert-expedition-study',
   title: {
     en: 'Desert Expedition — rock routes',
@@ -123,6 +125,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     ? [DESERT_LANDMARKS_LIBRARY_PIN, DESERT_EXPEDITION_LIBRARY_PIN]
     : []),
   {
+    edition: { en: 'Connected harbour', uk: 'Сполучена гавань' },
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — connected harbour',
@@ -159,6 +162,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Connected park routes', uk: 'Сполучені паркові маршрути' },
     id: 'coaster-gardens-study',
     title: {
       en: 'Coaster Gardens — connected park study',
@@ -177,6 +181,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Original park study', uk: 'Початкове дослідження парку' },
     id: 'coaster-gardens-study',
     title: {
       en: 'Coaster Gardens — 2 km study',
@@ -195,6 +200,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Civic courtyard materials', uk: 'Матеріали міського подвір’я' },
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — civic court materials',
@@ -213,6 +219,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Terraces and courtyards', uk: 'Тераси та подвір’я' },
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — terraces and courtyards',
@@ -231,6 +238,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    edition: { en: 'Six coastal districts', uk: 'Шість прибережних районів' },
     id: 'tropical-coastal-districts',
     title: {
       en: 'Tropical coast — six flight districts',
@@ -611,14 +619,55 @@ export function mountRegionalLibrary({
           saved,
         })),
     ];
+    // Labels are presentation only. Identity and focus continue to use the full pin hash.
+    const rowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const edition = (row) => {
+      if (row.edition) return title(row.edition);
+      if (row.saved) return `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`;
+      return '';
+    };
+    const identitySuffix = (row, peers) => {
+      const hash = rowHash(row);
+      let length = 8;
+      while (
+        length < hash.length &&
+        peers.some(
+          (other) =>
+            other !== row &&
+            rowHash(other) !== hash &&
+            rowHash(other).slice(0, length) === hash.slice(0, length),
+        )
+      )
+        length++;
+      return hash.slice(0, length);
+    };
     for (const row of rows) {
       const saved = row.saved,
         hash = saved?.sha256 ?? row.pin.sha256,
         card = el('article', undefined, 'world-catalogue-card'),
         name = saved?.descriptor.title ?? row.title,
         buttons = el('div', undefined, 'button-row');
+      const peers = rows.filter((other) => other.id === row.id),
+        baseEdition = edition(row),
+        needsIdentity =
+          peers.length > 1 &&
+          (!baseEdition || peers.some((other) => other !== row && edition(other) === baseEdition)),
+        editionLabel = [
+          baseEdition || (needsIdentity ? txt('Edition', 'Варіант') : ''),
+          needsIdentity ? identitySuffix(row, peers) : '',
+        ]
+          .filter(Boolean)
+          .join(' · '),
+        revisionLabel =
+          saved && row.edition ? `${txt('Version', 'Версія')} ${saved.descriptor.revision}` : '',
+        actionName = [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · ');
       card.dataset.regionKey = hash;
       card.append(el('strong', title(name)));
+      if (editionLabel) {
+        const label = el('p', editionLabel);
+        label.dataset.regionEdition = '';
+        card.append(label);
+      }
       if (row.description) card.append(el('p', title(row.description)));
       card.append(
         el(
@@ -634,13 +683,17 @@ export function mountRegionalLibrary({
       if (saved) {
         const play = action(txt('Fly', 'Летіти'), () => run('fly', row), Boolean(operation));
         play.dataset.regionAction = 'fly';
-        play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${title(name)}`);
+        play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${actionName}`);
         const remove = action(
           txt('Remove this version', 'Вилучити цю версію'),
           () => run('review-remove', row),
           Boolean(operation),
         );
         remove.dataset.regionAction = 'remove';
+        remove.setAttribute(
+          'aria-label',
+          `${txt('Remove this version', 'Вилучити цю версію')}: ${actionName}`,
+        );
         buttons.append(play, remove);
         if (records.filter((record) => record.id === row.id).length > 1) {
           const removeAll = action(
@@ -658,7 +711,7 @@ export function mountRegionalLibrary({
           Boolean(operation),
         );
         download.dataset.regionAction = 'install';
-        download.setAttribute('aria-label', `${txt('Download', 'Завантажити')}: ${title(name)}`);
+        download.setAttribute('aria-label', `${txt('Download', 'Завантажити')}: ${actionName}`);
         buttons.append(download);
       }
       card.append(buttons);
