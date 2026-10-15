@@ -1,0 +1,256 @@
+TAP version 13
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 1 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 247.443208
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 2 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 153.485417
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 3 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 196.221
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 4 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 745.668583
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 5 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 4701.992875
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 6 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 263.811459
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 7 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 1214.20525
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 8 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 104.230042
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 9 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 1050.576625
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 10 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 198.411333
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 11 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 344.785208
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 12 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 230.607375
+  ...
+# Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+ok 13 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+  ---
+  duration_ms: 284.176792
+  ...
+# Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+ok 14 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+  ---
+  duration_ms: 230.023042
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 15 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.754167
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 16 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 1569.263542
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 17 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 749.791083
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 18 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 160.455417
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 19 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 1.5485
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 20 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 121.784458
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 21 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 1124.625208
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 22 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 271.242208
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 23 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 224.567083
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 24 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 333.744042
+  ...
+# Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+ok 25 - disposing Academy cancels an owned offline verification and releases its progress panel
+  ---
+  duration_ms: 132.970292
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 26 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 376.049416
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 27 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 118.391
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 28 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 214.169125
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 29 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 133.728875
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 30 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 122.489208
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 31 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 921.846875
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 32 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.441833
+  ...
+# Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+ok 33 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+  ---
+  duration_ms: 129.010417
+  ...
+# Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+ok 34 - Academy shell keeps menu input out of native flight and requires explicit Start
+  ---
+  duration_ms: 205.900125
+  ...
+# Subtest: Academy native tool dialogs retain instructions across blur and focus
+    # Subtest: help-dialog
+    ok 1 - help-dialog
+      ---
+      duration_ms: 147.577209
+      ...
+    # Subtest: notebook-dialog
+    ok 2 - notebook-dialog
+      ---
+      duration_ms: 194.304833
+      ...
+    1..2
+ok 35 - Academy native tool dialogs retain instructions across blur and focus
+  ---
+  duration_ms: 342.579375
+  ...
+# Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+ok 36 - Academy categories retain every authored preference control and restore nested dialog focus
+  ---
+  duration_ms: 254.778292
+  ...
+# Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+ok 37 - Academy global settings bind canonical records without startup writes or duplicate fields
+  ---
+  duration_ms: 308.059625
+  ...
+# Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+ok 38 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+  ---
+  duration_ms: 297.194042
+  ...
+# Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+ok 39 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+  ---
+  duration_ms: 143.690209
+  ...
+# Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+ok 40 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 119.981667
+  ...
+# Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+ok 41 - Academy result shortcuts choose once and launch a random prepared lesson directly
+  ---
+  duration_ms: 185.127375
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+ok 42 - Academy cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 3263.351167
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+ok 43 - Academy cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 2946.537042
+  ...
+# Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+ok 44 - Academy shared library shows every course, previews the selected flight mode, and launches once
+  ---
+  duration_ms: 127.247916
+  ...
+# Subtest: Academy mission library owns controller navigation and isolated pinned goals
+ok 45 - Academy mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 157.685958
+  ...
+# Subtest: SIM Settings keyboard navigates past select, confirms once and cancels edits
+ok 46 - SIM Settings keyboard navigates past select, confirms once and cancels edits
+  ---
+  duration_ms: 6.252667
+  ...
+# Subtest: SIM Settings keyboard navigates past range, confirms once and cancels edits
+ok 47 - SIM Settings keyboard navigates past range, confirms once and cancels edits
+  ---
+  duration_ms: 1.203458
+  ...
+1..47
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25754.660958
