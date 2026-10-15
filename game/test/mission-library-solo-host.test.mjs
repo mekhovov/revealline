@@ -161,9 +161,14 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   async function clear() {
     p.key('ArrowDown');
     p.key('ArrowDown', false);
-    for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
+    // Preserve native fixed steps while avoiding hundreds of redundant DOM paints.
+    for (let frame = 0; frame < 30 && p.rendered.run.status !== 'won'; frame++) p.frame(250);
     assert.equal(p.rendered.run.status, 'won');
-    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++) p.frame();
+    assert.equal(p.$('game-overlay').hidden, true);
+    p.$('skip-celebration').click();
+    assert.equal(p.$('show-result').hidden, false);
+    p.$('show-result').click();
+    p.frame(0);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('next-button').hidden, false);
   }
@@ -336,7 +341,8 @@ test('unified Solo downloads, validates and briefs the late Classic', async (t) 
   );
   assert.ok(card);
   assert.equal(card.dataset.availabilityState, 'download');
-  assert.equal(card.querySelector('.journey-card-action').hidden, false);
+  assert.equal(Boolean(card.querySelector('.journey-card-action').hidden), false);
+  assert.match(card.querySelector('.journey-card-action').textContent, /Download/);
   assert.equal(card.disabled, false);
   card.focus();
   card.click();
@@ -370,7 +376,8 @@ test('unified Solo failed chapter download retries inline and preserves the flig
       [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
   const card = selected();
   assert.equal(card.dataset.availabilityState, 'download');
-  assert.equal(card.querySelector('.journey-card-action').hidden, false);
+  assert.equal(Boolean(card.querySelector('.journey-card-action').hidden), false);
+  assert.match(card.querySelector('.journey-card-action').textContent, /Download/);
   assert.equal(card.disabled, false);
   card.focus();
   card.click();
