@@ -5,6 +5,62 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 17:13 UTC — Lunar admitted; surface and recovery increments merged
+
+This checkpoint supersedes older status below. The full roadmap remains **open**.
+
+- **Lunar Library #1474 is merged** at exact `65e92d12`, merge `c70d0158`.
+  Immutable composition-r2 #1470 merged separately. The fresh `f6059993` package
+  passes normal 1.9 MiB download, the same English title before/after installation,
+  Ukrainian title and all six start labels through shared Settings, reload retention
+  of both the download and locale, and cached FPV preparation while disarmed.
+  The earlier broader six-start, view/mode, explicit arm/pause and responsive checks
+  remain bound to frozen `66b318e7` on a separate origin; its old title mismatch is
+  preserved. [Exact title/reload receipt](fpv-lunar-library-title-exact-native-20261015.json).
+  The fictional 768 m study uses normal Earth flight physics. Sparse composition,
+  final art and the larger regional design target remain open.
+- **Alpine facade source #1475 merged** as `3fe21888`. Serial, same-camera native
+  comparison accepts opaque timber cladding, dark framed windows and roof seams
+  over the earlier plain station surfaces. The concourse remains visibly open;
+  windows do not imply fly-through openings. Both versions release their owned
+  scenery/collision resources. This is bounded source acceptance, not final art.
+  Immutable station-r3 #1478 has since merged as `9b416b2c`; separate Library
+  #1480 preserves the existing nineteen rows and both previous Alpine editions.
+  Its exact package and normal-player native gate remain pending.
+- **Repair and retention increments are merged:** #1471 refreshes a damaged retained
+  copy atomically without replacing other revisions or dates; #1473 exposes a
+  matching exact-pin **Repair download** action for typed local verification failures.
+  #1477 preserves three diverged source commits behind durable remote refs, with all
+  eighteen then-offered descriptor hashes independently re-read. Native isolated
+  repair UI and package checks pass, but do not prove real quota exhaustion,
+  cache eviction, network-wide offline or an application restart.
+- **Lifecycle diagnostics #1476 merged** as `9db62809`, without changing the
+  acceptance gates. A separate native smoke ran 10.0028 real seconds /500 ticks
+  on exact `da5df483` production modules, package `6a092df1`, authoring `56e99707`.
+  It records lifecycle events, bounded last-frame samples and long-task support;
+  owned resources release and there are zero contacts. Its route coverage is false:
+  [the full smoke report](fpv-authored-urban-lifecycle-smoke-20261015.json) is not
+  endurance. Independent HTTP inspection verifies the complete 68-file literal
+  import closure. Five launcher modules are archive-only and not used by this fixture.
+- **A fresh actual two-hour Urban segment is running**, started
+  **2026-10-15T17:08:17.178Z**, earliest finish **19:08:18Z**, on that same frozen
+  fixture with the explicit visible-commanded policy. It measures an automatic
+  test pilot, not player input. No result is claimed before completion; a frame gap
+  above 250 ms, hiding, resizing, clock discontinuity or contacts still invalidate it.
+  Both previous failed authored segments remain negative evidence. No smoke,
+  acceleration or imported history counts toward this segment.
+
+**Next priorities:** P1 finish the actual authored elapsed result and exact Alpine
+station-r3 player admission; P1/D6 qualify retained storage through actual offline
+and application-restart journeys. Authoring-only observer #1479 is separately under
+review and cannot itself prove either journey. P2 refine the Lunar shelter/gallery
+and a representative complete art slice before another region. P3 continues later
+named regions and expansion targets only through source, immutable delivery and
+player gates. Physical device/radio/controller observations, full regression and
+actual deployed launch remain required. Heavy builds stay external/cloud; the
+internal drive currently reports about 11 GiB, but no stable-floor requalification
+or new cleanup is claimed. All package budgets and preserved revisions remain.
+
 ## 15 October — preserved scheduling failure; sustained acceptance still open
 
 The fresh visible-commanded Urban segment started at 14:53:27.762Z but
