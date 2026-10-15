@@ -191,6 +191,15 @@ Earlier `50b7612e8` four-case EN evidence stays historical. This still does not
 cover the full main-game directory journey, representative FPV exercise
 completion, physical input or human-learning acceptance; retain those cases below.
 
+The later [full-source-shell report](flight-practice-directory-journey-2026-10-15.md)
+adds six passing EN/UK native main-game directory/card/guide/return cases. One
+Play reaches each unarmed app start screen, with correct metadata and no optional
+executable modules fetched while browsing. This closes the isolated-panel-only
+gap for the committed source shell, not the full production build: declared
+documentation inputs are still missing. Positive custom-appearance handoff and
+representative FPV exercise completion remain unobserved; default query absence
+is not a positive appearance test.
+
 1. In a clean authorized test context, open the complete staged game's Flight
    practice directory. Select EN, then UK. Check all three cards, supported input,
    requirements, sizes and guide destinations against their package descriptors.
