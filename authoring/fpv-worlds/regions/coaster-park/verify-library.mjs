@@ -17,7 +17,8 @@ import {
 const sha256 =
   "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5";
 const row = REGIONAL_LIBRARY_PINS.find(
-  (entry) => entry.id === "coaster-gardens-study",
+  (entry) =>
+    entry.id === "coaster-gardens-study" && entry.pin.sha256 === sha256,
 );
 assert(row);
 assert.equal(row.pin.sha256, sha256);
