@@ -14,6 +14,16 @@ import {
 } from '../../../optional-practice/civilian-fpv/regional-library.mjs';
 
 const variants = {
+  'canyon-districts': {
+    id: 'canyon-arrival-landmarks-study',
+    sha256: 'f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8',
+    material: 'Canyon sediment',
+    surface: 'canyon',
+    sourcePins: {
+      terrain: '219b438a19fdd7decd022cd48d145b1a45505198e86e9270cf818696894210a4',
+      scenery: '3b704a760c06c7ed066e11050cadcb1af27d5ad18ed87e63e2a66137507fcff6',
+    },
+  },
   railway: {
     id: 'railway-valley-study',
     sha256: '431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15',
@@ -34,7 +44,7 @@ const variants = {
   },
 };
 const style = process.argv[3] ?? 'railway';
-assert(Object.hasOwn(variants, style), 'Choose railway or canyon');
+assert(Object.hasOwn(variants, style), 'Choose railway, canyon or canyon-districts');
 const variant = variants[style];
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide the exact reviewed regional source pair');
@@ -65,7 +75,7 @@ for (const [layer, hash] of Object.entries(sourcePins))
     hash,
   );
 const bound = applyRegionalAppearance(configuration, identity);
-assert.equal(bound.source.surfaceStyle, style);
+assert.equal(bound.source.surfaceStyle, variant.surface ?? style);
 assert.equal(configuration.source.surfaceStyle, undefined, 'Do not mutate the verified input');
 assert.equal(bound.source.fetchImpl, fetchImpl);
 assert.equal(bound.scenery, configuration.scenery);
