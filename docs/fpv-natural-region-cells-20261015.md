@@ -40,6 +40,13 @@ commanded crossing records 4,013 ticks / three origin changes / zero contacts at
 256 m, and 7,636 ticks / three origin changes / zero contacts at 512 m. These are
 accelerated source checks, not elapsed endurance or device performance evidence.
 
+The full 3 × 3 explicit-empty scenery companion passes diagonal X/Z transitions,
+retained/staged cancellation and retry, and geometry/source rejection before extra
+fetches. Resident geometry is 456,408 B and retained plus staged is 912,816 B;
+scenery fetches remain zero. Camera bounds/depth checks pass all three cell sizes.
+Run `verify-coarse-window.mjs` and `verify-flight-preview-bounds.mjs` in the same
+authoring directory. Their JSON observations are retained with the crossing logs.
+
 The existing eleven terrain and seven sparse-scenery functional groups also pass.
 Native camera/flight review and exact package qualification remain required before
 this capability supports a newly admitted player region. The full roadmap remains
