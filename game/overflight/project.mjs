@@ -33,7 +33,8 @@ export const OVERFLIGHT_PROJECT_FORMAT_V3 = 'OverflightProjectV3';
 export const OVERFLIGHT_COMPILED_FORMAT_V3 = 'OverflightCompiledV3';
 export const OVERFLIGHT_PROJECT_FORMAT_V4 = 'OverflightProjectV4';
 export const OVERFLIGHT_COMPILED_FORMAT_V4 = 'OverflightCompiledV4';
-export const OVERFLIGHT_BALANCE_REVISION_V4 = 'overflight-balance.v4';
+export const OVERFLIGHT_BALANCE_REVISION_V4 = 'overflight-balance.v4.late-choice-1';
+const acceptedV4BalanceRevisions = ['overflight-balance.v4', OVERFLIGHT_BALANCE_REVISION_V4];
 export const OVERFLIGHT_BALANCE_REVISION = 'overflight-balance.v3';
 export const OVERFLIGHT_PROJECT_MAX_BYTES = 128 * 1024;
 export const OVERFLIGHT_SOLDIERS = Object.freeze([
@@ -271,9 +272,9 @@ export function createOverflightProject({
       OVERFLIGHT_BATTLEFIELDS.find((entry) => entry.world === (world ?? 'field-crossing'))?.id;
     required(chosen, 'Choose a known battlefield layout.');
     const result = applyOverflightBattlefield(project, chosen);
-    // New battlefield sorties retain the accepted world pacing. Keep this in the
-    // constructor: compiling, importing or changing an authored layout must not retune it.
-    result.upgrades.thresholds = [12, 45, 100, 180, 300, 480, 700, 1000, 1400, 1900];
+    // New sorties keep the opening and shorten only the last two choices.
+    // Compiling, importing or changing an authored layout must not retune it.
+    result.upgrades.thresholds = [12, 45, 100, 180, 300, 480, 700, 1000, 1250, 1550];
     result.presentation = createOverflightWorldPresentation(
       result.battlefield.world,
       result.arena,
@@ -355,8 +356,9 @@ export function validateOverflightProject(source) {
   const v2 = v3 || project.format === OVERFLIGHT_PROJECT_FORMAT_V2;
   if (v3)
     required(
-      project.balanceRevision ===
-        (v4 ? OVERFLIGHT_BALANCE_REVISION_V4 : OVERFLIGHT_BALANCE_REVISION),
+      v4
+        ? acceptedV4BalanceRevisions.includes(project.balanceRevision)
+        : project.balanceRevision === OVERFLIGHT_BALANCE_REVISION,
       'Unsupported balance revision.',
     );
   if (v2) {
