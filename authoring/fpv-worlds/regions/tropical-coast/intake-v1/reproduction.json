@@ -52,5 +52,27 @@
     "Normals and base-colour UVs present",
     "JavaScript syntax and scoped ESLint pass"
   ],
-  "nativeVisualReview": "Pending; not implied by conversion checks"
+  "nativeVisualReview": {
+    "method": "Native browser via CUA; manual Load/Next and opposite-side controls",
+    "viewport": [
+      1280,
+      800
+    ],
+    "modelsInspected": 8,
+    "observations": [
+      "Grass cutouts clean from both sides",
+      "Bamboo sparse but valid",
+      "Crate wood UV mapping intact",
+      "Covered/open jetties upright with supports and open bays",
+      "Hut planks/opening and reverse side intact",
+      "Beach rock textured",
+      "Palm silhouette and leaf cutouts intact"
+    ],
+    "result": "Authoring appearance acceptable",
+    "limits": [
+      "No collision or gameplay qualification",
+      "No regional format admission",
+      "No performance/device FPS claim"
+    ]
+  }
 }
