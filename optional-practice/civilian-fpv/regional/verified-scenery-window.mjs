@@ -8,7 +8,7 @@ import {
   prepareVerifiedFrame,
 } from './frame-transaction.mjs';
 /** Exact-source scenery preparation coordinator. Detached authoring resources, never live flight. */
-import { validateRegionManifest, createRegionPlanner } from './region-manifest.mjs';
+import { validateRegionManifest, createRegionPlanner, SPARSE_SCENERY_FORMAT } from './region-manifest.mjs';
 import { createRegionSourceWindow } from './source-window.mjs';
 import { SCENERY_LIMITS } from './scenery-cell.mjs';
 import {
@@ -57,12 +57,13 @@ export function createVerifiedSceneryWindow(
   );
   fail(
     Number.isSafeInteger(maxSourceBytes) &&
-      maxSourceBytes > 0 &&
+      (maxSourceBytes > 0 || (maxSourceBytes === 0 && manifest.format === SPARSE_SCENERY_FORMAT)) &&
       maxSourceBytes <= 32 * 1024 * 1024,
     'Invalid scenery source allowance',
   );
   for (const chunk of chunks.values()) {
     const selected = chunk.assets.map((id) => assets.get(id));
+    if (manifest.format === SPARSE_SCENERY_FORMAT && selected.length === 0) continue;
     fail(
       selected.length === 2 &&
         selected.filter((asset) => asset.kind === 'scene').length === 1 &&
@@ -139,6 +140,10 @@ export function createVerifiedSceneryWindow(
         current(token);
         const chunk = chunks.get(chunkId),
           declared = chunk.assets.map((id) => assets.get(id));
+        if (manifest.format === SPARSE_SCENERY_FORMAT && declared.length === 0) {
+          receipts.push({ chunkId, empty: true });
+          continue;
+        }
         const collision = declared.find((asset) => asset.kind === 'collision'),
           scene = declared.find((asset) => asset.kind === 'scene');
         // Copies are owned by this operation; no asset buffers or cell objects are exposed to callers.

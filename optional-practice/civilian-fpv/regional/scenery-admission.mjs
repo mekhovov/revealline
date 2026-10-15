@@ -2,7 +2,7 @@ import { createRestoreContainment } from './restore-containment.mjs';
 import { createRegionMotionQuery, createRegionFlightSupportQuery } from './region-motion-query.mjs';
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
-import { validateRegionManifest } from './region-manifest.mjs';
+import { validateRegionManifest, SPARSE_SCENERY_FORMAT } from './region-manifest.mjs';
 import {
   validateScenerySource,
   scenerySourceCell,
@@ -85,19 +85,20 @@ export async function prepareSceneryWindow(
     surfaceStyle = 'plain',
   } = {},
 ) {
+  const manifest = validateRegionManifest(manifestInput),
+    sparse = manifest.format === SPARSE_SCENERY_FORMAT;
   fail(
-    Array.isArray(cellsInput) && cellsInput.length > 0 && cellsInput.length <= 25,
+    Array.isArray(cellsInput) && (cellsInput.length > 0 || sparse) && cellsInput.length <= 25,
     'Scenery needs 1–25 cells',
   );
   validateScenerySurface(surfaceStyle);
-  const manifest = validateRegionManifest(manifestInput),
-    sources = cellsInput.map(validateScenerySource),
+  const sources = cellsInput.map(validateScenerySource),
     cells = sources.map(scenerySourceCell);
   fail(integerPosition(originMm), 'Invalid local origin');
   originMm = Object.freeze({ ...originMm });
   fail(
     Number.isSafeInteger(maxGeometryBytes) &&
-      maxGeometryBytes > 0 &&
+      (maxGeometryBytes > 0 || (sparse && maxGeometryBytes === 0)) &&
       maxGeometryBytes <= 8 * 1024 * 1024,
     'Invalid geometry allowance',
   );
@@ -114,6 +115,7 @@ export async function prepareSceneryWindow(
     const chunk = chunks.get(cell.chunkId);
     fail(
       chunk &&
+        (!sparse || chunk.assets.length > 0) &&
         chunk.x === cell.x &&
         chunk.z === cell.z &&
         cell.cellSizeMm === manifest.grid.cellSizeMm,
@@ -140,9 +142,22 @@ export async function prepareSceneryWindow(
     'Duplicate scenery cells',
   );
   fail(
-    requiredChunkIds.every((id) => suppliedIds.has(id)),
+    requiredChunkIds.every((id) => suppliedIds.has(id) || (sparse && chunks.get(id)?.assets.length === 0)),
     'Required scenery missing',
   );
+  // Known-empty coverage comes only from this validated, hash-bound manifest.
+  // No absent payload, missing required cell or caller-provided empty mesh can grant clearance.
+  for (const id of requiredChunkIds) {
+    const chunk = chunks.get(id);
+    fail(chunk, 'Unknown required scenery cell');
+    if (sparse && chunk.assets.length === 0) {
+      fail(Math.abs(chunk.x * manifest.grid.cellSizeMm - originMm.x) <= 640000 &&
+        Math.abs(chunk.z * manifest.grid.cellSizeMm - originMm.z) <= 640000 &&
+        Math.abs(originMm.y) <= 2000000,
+      'Scenery window must use a nearby origin');
+      byCell.set(`${chunk.x},${chunk.z}`, chunk);
+    }
+  }
   // Positions, indices and Three-generated normals; excludes engine internals and temporary GLB buffers.
   const { geometryBytes, textureBytes, resourceBytes } = scenerySourceResources(sources);
   fail(resourceBytes <= maxGeometryBytes, 'Scenery geometry/texture budget exceeded');
@@ -300,7 +315,7 @@ export async function prepareSceneryWindow(
       sceneryPrepared: !disposed,
       flightReady: false,
       disposed,
-      cells: disposed ? 0 : cells.length,
+      cells: disposed ? 0 : byCell.size,
       geometryBytes: disposed ? 0 : geometryBytes,
       textureBytes: disposed ? 0 : textureBytes,
       resourceBytes: disposed ? 0 : resourceBytes,

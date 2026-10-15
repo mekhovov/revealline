@@ -8,6 +8,7 @@ import {
 /** Exact-source terrain preparation coordinator. Detached authoring resources, never live flight. */
 import {
   REGION_LIMITS,
+  REGION_FORMAT,
   validateRegionManifest,
   createRegionPlanner,
 } from "./region-manifest.mjs";
@@ -46,6 +47,7 @@ export function createVerifiedTerrainWindow(
   fail(typeof retainCommitted === "boolean", "Invalid retained-frame option");
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
+  fail(manifest.format === REGION_FORMAT, 'Terrain requires the complete terrain manifest profile');
   validateTerrainSurface(surfaceStyle, surfaceQuality);
   const assets = new Map(manifest.assets.map((asset) => [asset.id, asset]));
   const chunks = new Map(manifest.chunks.map((chunk) => [chunk.id, chunk]));

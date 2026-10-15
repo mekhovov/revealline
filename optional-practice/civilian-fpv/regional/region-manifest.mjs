@@ -2,6 +2,8 @@
 export const REGION_CELL_SIZES_MM = Object.freeze([128000, 256000]);
 /** Authoring-only regional data contract. Not a player format or a physics adapter. */
 export const REGION_FORMAT = "FPVRegionManifest.v1";
+// Only this distinct profile can declare known-empty scenery cells. Terrain stays v1.
+export const SPARSE_SCENERY_FORMAT = "FPVSceneryManifest.v1";
 export const REGION_LIMITS = Object.freeze({
   jsonBytes: 8 * 1024 * 1024,
   cellsPerAxis: 128,
@@ -68,7 +70,7 @@ export function validateRegionManifest(input) {
     "Region",
   );
   fail(
-    value.format === REGION_FORMAT && id(value.id) && id(value.revision),
+    [REGION_FORMAT, SPARSE_SCENERY_FORMAT].includes(value.format) && id(value.id) && id(value.revision),
     "Invalid region identity",
   );
   keys(value.title, ["en", "uk"], "Title");
@@ -103,7 +105,7 @@ export function validateRegionManifest(input) {
   );
   fail(
     Array.isArray(value.assets) &&
-      value.assets.length > 0 &&
+      (value.assets.length > 0 || value.format === SPARSE_SCENERY_FORMAT) &&
       value.assets.length <= REGION_LIMITS.assets,
     "Invalid asset count",
   );
@@ -174,7 +176,7 @@ export function validateRegionManifest(input) {
     fail(!cells.has(cell), "Duplicate cell");
     fail(
       Array.isArray(chunk.assets) &&
-        chunk.assets.length >= 2 &&
+        (chunk.assets.length >= 2 || (value.format === SPARSE_SCENERY_FORMAT && chunk.assets.length === 0)) &&
         chunk.assets.length <= REGION_LIMITS.assetsPerChunk &&
         new Set(chunk.assets).size === chunk.assets.length,
       "Invalid chunk assets",
@@ -186,7 +188,7 @@ export function validateRegionManifest(input) {
       "Unresolved asset reference",
     );
     fail(
-      ["scene", "collision"].every((kind) =>
+      (value.format === SPARSE_SCENERY_FORMAT && chunk.assets.length === 0) || ["scene", "collision"].every((kind) =>
         chunk.assets.some((assetId) => assetMap.get(assetId).kind === kind),
       ),
       "Each cell needs explicit scene and collision declarations",
@@ -265,7 +267,7 @@ export function createRegionPlanner(input) {
       "Invalid resident chunk set",
     );
     fail(
-      integer(maxSourceBytes, 1, REGION_LIMITS.residentSourceBytes),
+      integer(maxSourceBytes, manifest.format === SPARSE_SCENERY_FORMAT ? 0 : 1, REGION_LIMITS.residentSourceBytes),
       "Invalid source byte budget",
     );
     // The closed outer edge belongs to the last cell, never a nonexistent neighbour.
