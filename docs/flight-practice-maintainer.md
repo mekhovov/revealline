@@ -122,7 +122,34 @@ failed runs and the exact observer authority, plan, original report, screenshots
 and exported transcript alongside any successful retry. `qualified` remains
 false; a motion smoke pass is not an exercise-completion pass.
 
-### Publish only after the existing review gates pass
+### Repeat visible HUD and native FPV exercise checks
+
+Use `observe-practice-first-flight.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT`
+with the same exact artifact-binding fields as the registered first-flight plans:
+
+- Format `revealline-practice-hud-settings-plan.v1`, protocol
+  `practice-hud-settings-public-ui.v1`, all four IDs from `HUD_SETTINGS_CASES`.
+  This observes reachable preferences, reload retention and visible stationary
+  Detailed HUD after deliberate Start; it does not qualify movement or exercises.
+- First use `revealline-practice-fpv-exercise-probe-plan.v1` /
+  `practice-exercise-public-ui.fpv-probe.v1`, the single ID from
+  `FPV_EXERCISE_PROBE_CASES`. Then use `revealline-practice-fpv-exercise-plan.v1` /
+  `practice-exercise-public-ui.fpv.v1`, all eight IDs from `FPV_EXERCISE_CASES`.
+  A successful probe is not the complete matrix. Both bind Academy's revision;
+  full-envelope admission and per-app original ZIPs bind Worlds' replay inputs.
+
+Keep credentials in protected normal-form access input, not plans or arguments.
+No arbitrary script/dependency/case override is supported. Keep the 90-second case
+and ten-minute overall bounds, use one owned browser and a safe disk margin, and
+retain every failed original output. The exercise case requires actual native
+completion, released keys, screenshot, ordinary UI export and off-browser frozen
+proof replay. Hidden course identity metadata is not a visible measurement;
+legacy hidden height/speed/progress nodes must not substitute for maintained HUD
+feedback. Never count imported demonstrations or synthetic unit proofs as native
+exercise completion. Corrected feedback remains unqualified until rerun; see the
+[HUD continuation](flight-practice-hud-qualification-2026-10-16.md).
+
+### Native directory check before publication
 
 Before publication, also repeat the native main-game directory journey:
 
@@ -149,6 +176,8 @@ not the production build or final deployed-site check; missing build inputs,
 positive appearance selection, physical input and full guide usability remain
 separate. Keep failed receipts, authority and screenshots alongside any retry.
 See the [source-shell report](flight-practice-directory-journey-2026-10-15.md).
+
+### Publish only after the existing review gates pass
 
 ```sh
 node scripts/publish-optional-packages.mjs verify \
