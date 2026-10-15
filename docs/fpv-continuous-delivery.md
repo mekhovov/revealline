@@ -5102,3 +5102,22 @@ negative and smoke reports remain intact. No elapsed segment is currently runnin
 Corrected Lunar source is merged; immutable delivery, material and Library admission
 remain separate. Native Alpine heading verification and retained-copy recovery
 continue independently while browser scheduling is investigated.
+
+## 15 October, 17:13 UTC — Lunar player gate and fresh authored observation
+
+Lunar immutable #1470 and Library #1474 are merged. Exact `65e92d12` title/reload
+follow-up passes normal download, EN/UK names, six Ukrainian starts, retained locale
+and disarmed cached launch; the earlier broader native checks stay bound to their
+frozen predecessor. Alpine facade #1475 and immutable station-r3 #1478 are merged;
+Library #1480 remains a separate exact-package/player gate. Retained repair #1471,
+explicit repair #1473, durable pin retention #1477 and authoring lifecycle diagnostics
+#1476 have merged through normal protections.
+
+The fresh actual authored Urban segment began **17:08:17.178Z**, earliest finish
+**19:08:18Z**, on package `6a092df1` / production `da5df483` / authoring `56e99707`.
+Its independent 10.0028-second smoke is retained separately and proves no route or
+two-hour acceptance. Preserve the sole renderer and any final result honestly;
+earlier strict-focus and frame-gap failures remain unchanged negative evidence.
+Full details and exact completed/open gates are in the newest large-worlds plan
+checkpoint. Final art, actual offline/application restart, physical devices and
+controllers, later region targets, D6 and public launch remain open.
