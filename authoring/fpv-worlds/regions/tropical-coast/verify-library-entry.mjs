@@ -15,12 +15,15 @@ import {
 
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide the exact Tropical coastal source pair');
-const settlement = process.argv[3] === 'settlement';
+const harbour = process.argv[3] === 'harbour';
+const settlement = process.argv[3] === 'settlement' || harbour;
 assert(!process.argv[3] || settlement, 'Unknown Tropical source fixture');
 const identity = settlement
   ? {
       id: 'tropical-coastal-districts',
-      sha256: 'dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49',
+      sha256: harbour
+        ? '44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce'
+        : 'dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49',
     }
   : {
       id: 'tropical-coastal-study',
@@ -49,8 +52,12 @@ const configuration = await loadRegionalReview({
 assert.equal(configuration.manifest.id, identity.id);
 const sourcePins = settlement
   ? {
-      terrain: '3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5',
-      scenery: 'ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9',
+      terrain: harbour
+        ? 'afd29e7dc274087cc3cae309942c6a4b64d4858fd1a86fa39fbcffff73b78b7a'
+        : '3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5',
+      scenery: harbour
+        ? '7e973e3651fea67852f7a235a33465364160398c31463f8efa54a07bcf1752fc'
+        : 'ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9',
     }
   : {
       terrain: '076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd',
