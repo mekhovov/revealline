@@ -120,6 +120,39 @@ export const LUNAR_SHELTER_LIBRARY_PIN = Object.freeze({
 
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. A restrained grey apron distinguishes the station’s open concourse and approaches beneath the quieter timber wings. Explore the same connected snow and scree landscape. Separate material study; earlier editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Стримане сіре покриття вирізняє відкритий прохід між корпусами та підходи до станції з дерев’яним облицюванням. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station concourse',
+      uk: 'Майданчик між корпусами',
+    },
+    bytes: 22699845,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json',
+      bytes: 115316,
+      sha256: '32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa',
+    },
+  },
   LUNAR_SHELTER_LIBRARY_PIN,
   {
     id: 'alpine-highlands-study',
