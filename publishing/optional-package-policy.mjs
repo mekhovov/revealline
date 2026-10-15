@@ -80,6 +80,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/ui/dialogue-channel.mjs',
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
+      'game/data-json-messages.mjs',
       'game/key-bindings.mjs',
       'game/i18n/index.mjs',
       'game/i18n/bootstrap.mjs',
@@ -240,6 +241,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     sharedFiles: Object.freeze([
       'optional-practice/install-context.mjs',
       'game/data-json.mjs',
+      'game/data-json-messages.mjs',
       'game/fpv-entry.mjs',
       // The renderer is shared with World Studio, including its optional hunt art.
       'game/hunt/actor-catalog.mjs',
