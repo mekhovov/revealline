@@ -36,7 +36,12 @@ function surfaceNames() {
 function changeQuality() {
   renderer.setQuality($('quality').value);
   $('receipt').textContent = JSON.stringify(
-    { ...receipt, quality: $('quality').value, surfaceNames: surfaceNames() },
+    {
+      ...receipt,
+      quality: $('quality').value,
+      surfaceNames: surfaceNames(),
+      resources: renderer.resources(),
+    },
     null,
     2,
   );
