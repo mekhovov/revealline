@@ -1394,6 +1394,36 @@ test('Academy shell keeps menu input out of native flight and requires explicit 
   assert.equal(hint.textContent, instructions);
 });
 
+test('Academy native tool dialogs retain instructions across blur and focus', async (t) => {
+  for (const [button, dialog, category] of [
+    ['help', 'help-dialog', 'extras'],
+    ['notebook-button', 'notebook-dialog', 'data'],
+  ]) {
+    await t.test(dialog, async (t) => {
+      const f = await fixture(t, { home: true });
+      f.$('academy-shell-action-settings').click();
+      f.$(`academy-settings-tab-${category}`).click();
+      f.$(button).click();
+      f.tick(2);
+      assert.equal(f.$(dialog).open, true);
+      const hint = f.$(dialog).querySelector('.sim-menu-hint');
+      assert.ok(hint, 'the current dialog owns its navigation instructions');
+      const instructions = hint.textContent;
+      assert.ok(instructions.length > 0);
+      f.doc.focused = false;
+      f.win.emit('blur');
+      f.tick(2);
+      assert.equal(hint.textContent, instructions, 'blur must not resize a native tool dialog');
+      assert.equal(hint.hidden, false);
+      f.doc.focused = true;
+      f.win.emit('focus');
+      f.tick(2);
+      assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+      assert.equal(f.view.snapshot().status, 'disarmed');
+    });
+  }
+});
+
 test('Academy categories retain every authored preference control and restore nested dialog focus', async (t) => {
   const f = await fixture(t, { home: true });
   f.doc.defaultView.innerWidth = 390;
