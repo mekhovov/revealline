@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { setTimeout as delay } from 'node:timers/promises';
+import { createFlight } from '../optional-practice/civilian-fpv/model.mjs';
+import { FLIGHT_COURSES } from '../optional-practice/civilian-fpv/catalogue.mjs';
+import { keyboardFlightValues } from '../optional-practice/civilian-fpv/input.mjs';
 import {
   FPV_EXERCISE_PROTOCOL,
   parsePublicFPVSnapshot,
@@ -421,6 +424,49 @@ test('deadline, abort and late input cannot leave a passing cleanup receipt', as
   settle();
   await delay(5);
   assert.deepEqual(latePage.events, ['up:w', 'up:w']);
+});
+
+test('synthetic ground-quantization regression: feedback must lift with retained keyboard throttle', () => {
+  // Unit model fixture ONLY, not browser, human, exported-proof or release evidence.
+  const course = FLIGHT_COURSES.find((row) => row.id === 'flight-01');
+  const stuck = createFlight({ course, mode: 'self-level' });
+  stuck.arm();
+  for (let tick = 0; tick < 250; tick++) stuck.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0.546 });
+  assert.equal(
+    stuck.snapshot().position.y,
+    0,
+    'Rounded displacement resets velocity at the floor.',
+  );
+  for (const mode of ['self-level', 'acro']) {
+    const flight = createFlight({ course, mode });
+    flight.arm();
+    const samples = [];
+    let throttle = 0,
+      keys = new Set();
+    for (let tick = 0; tick < 750 && flight.snapshot().position.y < 200; tick++) {
+      if (tick % 5 === 0) {
+        const state = flight.snapshot();
+        samples.push({
+          at: tick * 20,
+          height: Math.round(state.position.y / 100) / 10,
+          checkpoint: 0,
+          throttle,
+          complete: false,
+        });
+        const feedback = publicFPVFeedback(samples);
+        keys = new Set(
+          feedback.keys.map((key) => (key === 'w' ? 'KeyW' : key === 's' ? 'KeyS' : key)),
+        );
+      }
+      const input = keyboardFlightValues({ keys, preset: 'two-stick', throttle, seconds: 0.02 });
+      throttle = input.throttle;
+      flight.step(input);
+    }
+    assert(
+      flight.snapshot().position.y >= 200,
+      'Feedback never clears the quantized ground dead zone.',
+    );
+  }
 });
 
 test('invalid package, mode, locale and deadline reject without browser actions', async () => {
