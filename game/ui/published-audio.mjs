@@ -104,6 +104,8 @@ export function createPublishedCues({ sound, readAudio }) {
         rate = 1,
         maxDuration = null,
         humanReaction = false,
+        cueFamily = name,
+        replaceRoutine = false,
       } = {},
     ) {
       if (!cueNames.has(name) || !available(ui)) return false;
@@ -159,7 +161,7 @@ export function createPublishedCues({ sound, readAudio }) {
         board,
         feedback,
         humanReaction,
-        cueFamily: name,
+        cueFamily,
         priority,
         source,
         retire() {
@@ -194,6 +196,19 @@ export function createPublishedCues({ sound, readAudio }) {
         voice.stop();
         return false;
       }
+      // A handled budget rejection also returns true, so retirement belongs
+      // after successful playback, not in the caller. Preserve other boards
+      // and unrelated families; replace a native fallback tail only once the
+      // custom cue really starts.
+      if (feedback && replaceRoutine)
+        for (const predecessor of [...sound.voices])
+          if (
+            predecessor !== voice &&
+            predecessor.feedback &&
+            predecessor.board === board &&
+            predecessor.cueFamily === cueFamily
+          )
+            predecessor.retire();
       return true;
     },
     cancelPending,
