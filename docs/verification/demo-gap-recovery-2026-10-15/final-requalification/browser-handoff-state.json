@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "f0136c2b0f2916af142f6e27a86b3ed2141b844a",
+  "browserId": "2",
+  "tabId": "2",
+  "url": "http://127.0.0.1:8832/game/test/browser/demo-watch.html",
+  "status": "observing",
+  "lastObservedStatus": "Hashing served sources. The observation clock has not started.",
+  "serverSession": 89844,
+  "instruction": "Never press Start again, reload, navigate or edit served source while this observation is active.",
+  "startedAt": "2026-10-15T22:35:30.499Z",
+  "intendedDurationSeconds": 7200,
+  "lastCheckpoint": "2026-10-15T22:41:34.056Z",
+  "refreshPerformedBeforeStart": true,
+  "viewportOverride": {
+    "width": 1200,
+    "height": 900
+  },
+  "viewportOverrideReason": "The default browser had no drawable viewport. Applied during the same ongoing observation after about 194 seconds; reset it during final cleanup.",
+  "priorBrowserVisibility": false,
+  "browserVisibilityRestoredToPrior": true,
+  "uiChecks": {
+    "demoPauseWithMusicPlaying": "Observed Supply Circuit at 6s with Resume demo checked and audio playing, followed by resume.",
+    "musicPauseWhileDemoContinues": "Observed Play music/paused while Supply Circuit and then Orchard Crossing advanced; explicitly resumed music afterward.",
+    "physicalAudibility": "Not verified."
+  },
+  "initialInventoryFiles": 327,
+  "initialInventoryChangedAtCollection": [],
+  "startActionRecordedAt": "2026-10-15T22:35:45.960167+00:00",
+  "preliminaryCheckpoint": "browser-start-checkpoint.json"
+}

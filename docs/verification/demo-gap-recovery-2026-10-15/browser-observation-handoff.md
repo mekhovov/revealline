@@ -9,18 +9,19 @@
 - Final production/test source: **`f0136c2b0f2916af142f6e27a86b3ed2141b844a`**. Later evidence/docs commits do not change served code. No source edits or rebases during these checks.
 - Task-owned local server: `node scripts/game-cli.mjs serve --port 8832`, exec session **89844**. Preserve it until browser evidence is saved. Never change the user's ports 8779/8820, shared checkout or unrelated processes.
 - Existing in-app-browser: **browser 2, tab 2**, `http://127.0.0.1:8832/game/test/browser/demo-watch.html`, marked for handoff. Persistent CUA binding when available: `demoReviewTab`.
-- **No timed browser observation has started.** Current UI is the ordinary Flight library, holding the unlocked game away from home idle entry. Pressure Lines 5.0.0 is installed through the ordinary library. An extra Frontier Lines install was identified and removed during setup.
-- The currently loaded game predates the final planner correction. **After the entire audit batch finishes, reload this observer once before starting the first timed observation**, then use the ordinary game UI. Never reload after observation starts. The existing gate was unlocked with the user's supplied credential; no credential is stored in this record.
+- **The single timed observation is now running**, started **2026-10-15T22:35:30.499Z**. Read `final-requalification/browser-handoff-state.json` and the exposed DOM status first. Never press Start again. Pressure Lines 5.0.0 remains installed; recorded scenes and both qualified live maps have appeared.
+- The observer was refreshed once after the full audit completed, before its one Start action, so the loaded game uses the frozen final source. **Do not reload, navigate or edit served source now.** The existing gate was unlocked with the user's supplied credential; no credential is stored in this record.
+- A 1200×900 test viewport is active because the initial browser had no drawable native viewport. It was applied around 194 seconds into the same run. Reset this override during final cleanup, before finishing the finite task; preserve it while the active rendering observation continues. Browser presentation was temporarily shown, then restored to its prior false setting. Early canvas samples were not visible; all first 72 visibility/focus samples are still visible/focused, so no hidden/unfocused execution is established. Do not infer it from browser presentation settings.
+- Actual owned UI checks have sampled demo pause with music playing, resumed demo, music pause while demo advances, then explicit music resume. Sound was explicitly enabled, details closed, and no steering/takeover injected. This does not prove physical audibility.
 
-## Finish the audit first
+## Completed audit — retain all outcomes
 
 Inspect all four terminal JSON reports: exact source hashes/content, errors, preparation and actual terminal results, independent replay verification, both steering selections and cleanup. Derive usable-map intersections from `verifiedSourceIds`, not registration counts. Preserve all earlier reports, including negative results. The earlier `audit-summary.json` belongs to source e45a0731c, not this final source.
 
 Do not run another availability audit or concurrent heavy check. The only later heavy check is the single post-observation Worker run specified below. The previous live timing failures remain recorded. A better later outcome cannot erase them. These reports measure accelerated Node core/source execution, not browser wall time, rendered characters, physical audio or human viewing.
 
-If the batch is still running normally, preserve tab/server, mark the tab for handoff again and stay quiet. If it has been interrupted, preserve that limitation and stop the finite follow-up without inventing a pass.
 
-## Start exactly one browser observation
+## Original start procedure — already performed; do not repeat
 
 After the batch finishes, use only supported CUA browser APIs for UI actions and DOM reads. Reload the existing observer once, verify the unlocked game, then enter **Settings → Help & Extras → Watch demo** through actual controls. If home idle entry starts the demo first, use that established session. Do not repeatedly start/reload to obtain a preferred result. Verify Pressure Lines remains installed and the demo opens; a genuine unavailable/error result is evidence to report.
 
@@ -54,6 +55,6 @@ Keep its complete log beside the report. Do not change watchdogs, limits, source
 
 Update only evidence and qualification/plan documentation, with focused formatting/JSON/link checks. Before pushing, inspect the current remote PR head and preserve newer owner work. Use a normal fast-forward continuation only; never force-overwrite a newer branch or pull source changes into an active observation. Push completed evidence when safe, keeping the PR draft/held. No release claim.
 
-Once final evidence is saved, release only this observer tab and the verified task-owned port 8832 server. Confirm the exact listener/process before stopping it if the exec session is unavailable. Do not close another tab or kill another server.
+Once final evidence is saved, reset the temporary 1200×900 viewport and retain the prior browser presentation setting (false), then release only this observer tab and the verified task-owned port 8832 server. Confirm the exact listener/process before stopping it if the exec session is unavailable. Do not close another tab or kill another server.
 
 Report meaningful completion, a new failure or required user action only. Then **pause this finite heartbeat through automation_update**, preserving its fields. Stop its recurring work after the finite outcome or an unrecoverable limitation. Do not create another observation or retry until green.
