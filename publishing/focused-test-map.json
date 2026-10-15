@@ -2,6 +2,27 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "release-utility-checkout",
+      "pathPatterns": [
+        "^publishing/utility-sparse-checkout\\.test\\.mjs$",
+        "^scripts/distribution-zip\\.mjs$",
+        "^publishing/utility/test_release_artifact\\.py$",
+        "^\\.github/workflows/(assemble-full-release-evidence|qualify-release-source|upload-release-originals)\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "release-utility-checkout",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/utility-sparse-checkout.test.mjs",
+            "publishing/source-workflow.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
       "id": "release-evidence-compatibility",
       "pathPatterns": [
         "^publishing/release-evidence-compatibility\\.test\\.mjs$",
@@ -23,7 +44,7 @@
     {
       "id": "distribution-archive-format",
       "pathPatterns": [
-        "^scripts/(game-cli|test-game-cli|controller-confirm-browser-fixture|test-distribution-archive|test-external-distribution|test-optional-distribution)\\.mjs$",
+        "^scripts/(game-cli|distribution-zip|test-game-cli|test-inspect-default-build|test-soundtrack-distribution|controller-confirm-browser-fixture|test-distribution-archive|test-equipment-offline-ownership|test-external-distribution|test-optional-distribution)\\.mjs$",
         "^publishing/distribution-archive\\.test\\.mjs$",
         "^publishing/utility/(inspect_qualified_artifact|test_distribution_archive|test_release_artifact)\\.py$",
         "^publishing/pages-controller/metadata(?:\\.test)?\\.mjs$"
@@ -35,7 +56,10 @@
           "args": [
             "--test",
             "scripts/test-distribution-archive.mjs",
+            "scripts/test-equipment-offline-ownership.mjs",
             "scripts/test-game-cli.mjs",
+            "scripts/test-inspect-default-build.mjs",
+            "scripts/test-soundtrack-distribution.mjs",
             "publishing/distribution-archive.test.mjs",
             "publishing/pages-controller/metadata.test.mjs",
             "publishing/pages-controller/sync-release-metadata.test.mjs",

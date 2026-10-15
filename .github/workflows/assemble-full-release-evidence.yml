@@ -35,8 +35,17 @@ jobs:
           ref: ${{ github.workflow_sha }}
           persist-credentials: false
           sparse-checkout: |
-            publishing/utility
-            .github/workflows
+            .github/workflows/
+            publishing/utility/
+            publishing/test-policy.mjs
+            publishing/test-policy.json
+            scripts/distribution-zip.mjs
+          sparse-checkout-cone-mode: false
+      - name: Set up the bounded archive-test runtime
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: 20.19.x
       - name: Run bounded utility tests
         run: python3 -B -m unittest discover -s publishing/utility -p 'test_*.py'
 

@@ -14,6 +14,7 @@ import {
 } from './external-distribution.mjs';
 import { EXTERNAL_CATALOG } from '../game/external-chapter-catalog.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS } from '../game/external-chapter-source.mjs';
+import { downloadFiles } from '../game/download-catalogue.mjs';
 import {
   preparePack,
   emptyPackLibrary,
@@ -185,13 +186,42 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
     sha(await readFile(path.join(source, arcadePath))),
   );
   assert(offline.files.some((f) => f.path === option.catalog));
-  // The focused equipment fixture must not replace current-config inclusion coverage.
+  // The illustrated Workshop remains exact shipped content with explicit chapter
+  // download ownership; only small bundled packs belong in every core install.
   const equipmentPath = 'game/content/packs/equipment-workshop.json';
+  const equipmentBytes = await readFile(path.join(source, equipmentPath));
+  const equipmentPin = {
+    path: equipmentPath,
+    bytes: equipmentBytes.length,
+    sha256: sha(equipmentBytes),
+  };
+  assert.deepEqual(await readFile(path.join(out, equipmentPath)), equipmentBytes);
   assert.deepEqual(
-    await readFile(path.join(out, equipmentPath)),
-    await readFile(path.join(source, equipmentPath)),
+    manifest.files.filter((entry) => entry.path === equipmentPath),
+    [equipmentPin],
   );
-  assert(offline.files.some((entry) => entry.path === equipmentPath));
+  assert(!offline.files.some((entry) => entry.path === equipmentPath));
+  assert(!offline.optionalPacks.some((entry) => entry.path === equipmentPath));
+  assert.deepEqual(
+    offline.downloadFiles.filter((entry) => entry.path === equipmentPath),
+    [{ ...equipmentPin, kind: 'gameplay' }],
+  );
+  const catalogue = JSON.parse(await readFile(path.join(out, 'offline-content.json')));
+  const equipmentOwner = 'chapter:equipment-workshop';
+  const equipmentGroups = catalogue.groups.filter((group) => group.id === equipmentOwner);
+  assert.equal(equipmentGroups.length, 1);
+  assert.deepEqual(equipmentGroups[0].files, [equipmentPath]);
+  assert.deepEqual(equipmentGroups[0].requires, ['shared']);
+  assert(!downloadFiles(catalogue, ['shared']).some((entry) => entry.path === equipmentPath));
+  const equipmentMissions = catalogue.missions.filter((row) => row.packId === 'equipment-workshop');
+  assert.equal(equipmentMissions.length, 3);
+  for (const mission of equipmentMissions) {
+    assert.deepEqual(mission.groups, [equipmentOwner]);
+    assert.deepEqual(
+      downloadFiles(catalogue, mission.groups).filter((entry) => entry.path === equipmentPath),
+      [{ ...equipmentPin, kind: 'gameplay' }],
+    );
+  }
   assert(offline.files.some((entry) => entry.path === 'game/content/packs/index.json'));
   assert(
     !manifest.files.some((f) =>

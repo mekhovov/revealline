@@ -243,6 +243,7 @@ async function frozenSnapshotFixture(t, admitted = false) {
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
+    'scripts/distribution-zip.mjs',
     'game/data-json.mjs',
     'game/content-launch.mjs',
   ])
