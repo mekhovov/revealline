@@ -2,6 +2,14 @@
 
 ## Decision boundary and current baseline
 
+**Latest continuation:** [pointer and preparation verification](flight-practice-pointer-2026-10-15.md)
+records the clean rebase onto `95703ee32`, fixes frozen at `bf31260eb`, 345 practice
+tests and 10 observer tests. C3's selected Academy controls now pass a 24-case
+EN/UK pointer/keyboard fresh/reload matrix. Preserve the failed baseline and
+corrected cleanup-timeout attempt alongside the successful unchanged retry.
+This is partial C3 acceptance, not closure of first-flight, physical input,
+whole-window focus recovery or the Gym/Worlds native-pointer matrix.
+
 **Later continuation:** [recovery fixes and fresh evidence](flight-practice-recovery-2026-10-15.md)
 rebase on `859d5cfc9`, freeze corrected packages at `89537fe0b`, and record 334
 passing tests plus a new nine-checkpoint all-three browser restart observation.
