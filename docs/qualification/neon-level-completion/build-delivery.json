@@ -2,12 +2,12 @@
   "format": "revealline-neon-build-audit.v1",
   "scope": "Distribution files, exact links and offline descriptors; not browser installation or public deployment acceptance.",
   "version": "0.151.1",
-  "buildSourceRevision": null,
-  "distributionSHA256": "ee7e861da39f96c50ca82ad85a6194043d79899e1571df7d8d1f3afef79fdfa7",
+  "buildSourceRevision": "cb663b0a42acaf36e7a17b2b40b9bdb6c1e08d05",
+  "distributionSHA256": "dfdafbb37cd3d183196380e46c5bf7614ef20bc9634a59f48f16dcc14a6e7bbe",
   "distributionFiles": 3484,
-  "coreBytes": 71896127,
+  "coreBytes": 71896225,
   "reviewFilesOutsideCore": 141,
-  "reviewBytesOutsideCore": 33042138,
+  "reviewBytesOutsideCore": 33042827,
   "galleries": [
     {
       "path": "authoring/library/neon-artwork/index.html",
