@@ -19,13 +19,13 @@ Finish the corrective delivery, then prioritize balance/progression and combat r
 | Local performance | Recorded reference, opening, late Riy, controlled Raid and soak passes; fixed atlas accounting and reduced-effects comparison. | Measured on the available M4 Pro. Earlier failures are retained; no Iris Xe or Safari pass is claimed. |
 | Cross-mode reuse | Shared grounds, sounds/reactions and bounded presentation adapters across compatible modes. | A complete visual redesign of Solo/Team/Snake/SIM is not delivered or required by the bounded reuse pass. |
 
-PR1192, PR1215, PR1226 and PR1248 are merged. The latest corrective runtime is committed and saved on GitHub at `60b0c25ab`, but is not in main: final-target navigation; exact salvage shortfall; native upgrade-card sprites; cover-aware Riy firing/chains; audible-local warning selection. The current branch also preserves native screenshots and test reports for that follow-up.
+PR1192, PR1215, PR1226 and PR1248 are merged. The latest corrective runtime is committed and saved on GitHub at `60b0c25ab`, but is not in main: final-target navigation; exact salvage shortfall; native upgrade-card sprites; cover-aware Riy firing/chains; audible-local warning selection. These corrections and their native screenshots/test reports are preserved in [draft PR1319](https://github.com/mekhovov/revealline/pull/1319). All task changes are committed and pushed.
 
 ## Remaining work, in recommended order
 
 ### P0 — Integrate and qualify the corrective follow-up
 
-**Work:** Publish the bounded follow-up, reconcile it with current main, complete its CI and verify changed flows on the resulting candidate. Include a narrow native performance comparison for escort targeting/card preparation and a cached launch that proves the added HUD module is packaged. Do not repeat every historical long test unless a regression warrants it.
+**Work:** Finish draft PR1319: reconcile it with current main, complete its CI and verify changed flows on the resulting candidate. Include a narrow native performance comparison for escort targeting/card preparation and a cached launch that proves the added HUD module is packaged. Do not repeat every historical long test unless a regression warrants it.
 
 **Why / benefit:** These fixes remove misleading information and wasted escort attacks. The newer shared menu/input/style changes must work with them. One attributable candidate gives reviewers a reliable version to accept.
 
