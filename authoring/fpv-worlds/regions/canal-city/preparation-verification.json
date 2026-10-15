@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "glbs": 18,
+  "warnings": 0,
+  "routeSweeps": 1239,
+  "transitions": 22,
+  "peakResources": 1102920,
+  "actualSizeM": [384, 384],
+  "visualWaterOnly": true,
+  "playerReady": false
+}

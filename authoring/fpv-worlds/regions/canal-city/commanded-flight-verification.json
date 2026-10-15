@@ -1,0 +1,645 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "terrain": "07d6a702b50d770e8e559f9d5e32210ddde3b871318ec9c5c1249b730cb78635",
+    "scenery": "ae77d6f423e47adc9433a672df729e986edfdbd94d0adc6ab1d7278b98a44abf"
+  },
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "arch-canal",
+      "ticks": 2536,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "ff3674016f6db44bc086c9048d2eb82a48e1a8f9112eabfa83afd1406a243cc2",
+      "segments": [
+        {
+          "from": [128, 3, 12],
+          "to": [128, 3, 64],
+          "ticks": 1330,
+          "position": {
+            "x": 128000,
+            "y": 2916,
+            "z": 64529
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [128, 3, 64],
+          "to": [128, 3, 112],
+          "ticks": 1206,
+          "position": {
+            "x": 128000,
+            "y": 2908,
+            "z": 112521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000008
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "warehouse-through",
+      "ticks": 2456,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "e46e990e139ee8c4b76a1b3ec539e2ee231aa39675a92729c6e1f2d2de3811b9",
+      "segments": [
+        {
+          "from": [156, 7, 80],
+          "to": [184, 7, 80],
+          "ticks": 758,
+          "position": {
+            "x": 184517,
+            "y": 6916,
+            "z": 80000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [184, 7, 80],
+          "to": [224, 7, 80],
+          "ticks": 1016,
+          "position": {
+            "x": 224525,
+            "y": 6908,
+            "z": 80000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999964
+        },
+        {
+          "from": [224, 7, 80],
+          "to": [250, 7, 80],
+          "ticks": 682,
+          "position": {
+            "x": 250517,
+            "y": 6908,
+            "z": 80000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999964
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "highwalk-under",
+      "ticks": 1869,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "18a54ccf11f6d92c9433978ee79ce70ed7d18302dab8f9d10bca11dc3631c877",
+      "segments": [
+        {
+          "from": [128, 9, 136],
+          "to": [128, 9, 176],
+          "ticks": 1044,
+          "position": {
+            "x": 128000,
+            "y": 8916,
+            "z": 176522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [128, 9, 176],
+          "to": [128, 9, 208],
+          "ticks": 825,
+          "position": {
+            "x": 128000,
+            "y": 8908,
+            "z": 208522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000053
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "lock-through",
+      "ticks": 821,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "edc97816aff9059b6782aed0302f7be74dcfca9d38eba992bebb8127ead1ae24",
+      "segments": [
+        {
+          "from": [64, 3, 218],
+          "to": [64, 3, 232],
+          "ticks": 425,
+          "position": {
+            "x": 64000,
+            "y": 2916,
+            "z": 232523
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [64, 3, 232],
+          "to": [64, 3, 246],
+          "ticks": 396,
+          "position": {
+            "x": 64000,
+            "y": 2908,
+            "z": 246512
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000008
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "courtyard-return",
+      "ticks": 917,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "753df0ed84e6b6fddd2a116b5d81ca8d0d60deee8f6d911cb79956af294ad3c8",
+      "segments": [
+        {
+          "from": [200, 7, 288],
+          "to": [200, 7, 302],
+          "ticks": 425,
+          "position": {
+            "x": 200000,
+            "y": 6916,
+            "z": 302523
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [200, 7, 302],
+          "to": [200, 7, 320],
+          "ticks": 492,
+          "position": {
+            "x": 200000,
+            "y": 6908,
+            "z": 320526
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999964
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "basin-slalom",
+      "ticks": 2258,
+      "contacts": 0,
+      "recentres": 2,
+      "commandSha256": "e426f31825c2a5c9ec4e83e446c8b4668d848cd22293535b02e8096c8846bede",
+      "segments": [
+        {
+          "from": [304, 3, 248],
+          "to": [304, 3, 284],
+          "ticks": 949,
+          "position": {
+            "x": 304000,
+            "y": 2916,
+            "z": 284529
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [304, 3, 284],
+          "to": [296, 3, 308],
+          "ticks": 659,
+          "position": {
+            "x": 295805,
+            "y": 2907,
+            "z": 308512
+          },
+          "maxCrossTrackM": 0.2637339568580618,
+          "maxHeightErrorM": 0.09299999999999997
+        },
+        {
+          "from": [296, 3, 308],
+          "to": [312, 3, 326],
+          "ticks": 650,
+          "position": {
+            "x": 312367,
+            "y": 2893,
+            "z": 326372
+          },
+          "maxCrossTrackM": 0.7511463652770934,
+          "maxHeightErrorM": 0.1070000000000002
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "arch-canal",
+      "ticks": 2536,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "2bfed4680c71e433df695eea47f8952f0e42f0f26cfc86139b74c3ba1b53055a",
+      "segments": [
+        {
+          "from": [128, 3, 12],
+          "to": [128, 3, 64],
+          "ticks": 1330,
+          "position": {
+            "x": 128000,
+            "y": 2916,
+            "z": 64527
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [128, 3, 64],
+          "to": [128, 3, 112],
+          "ticks": 1206,
+          "position": {
+            "x": 128000,
+            "y": 2908,
+            "z": 112521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000008
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "warehouse-through",
+      "ticks": 2455,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "5f2a1297e664b274fda64ffbb778c92900f1903cf612562ed9db26fb65fc7f52",
+      "segments": [
+        {
+          "from": [156, 7, 80],
+          "to": [184, 7, 80],
+          "ticks": 758,
+          "position": {
+            "x": 184518,
+            "y": 6916,
+            "z": 80000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [184, 7, 80],
+          "to": [224, 7, 80],
+          "ticks": 1015,
+          "position": {
+            "x": 224514,
+            "y": 6908,
+            "z": 80000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999964
+        },
+        {
+          "from": [224, 7, 80],
+          "to": [250, 7, 80],
+          "ticks": 682,
+          "position": {
+            "x": 250519,
+            "y": 6908,
+            "z": 80000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999964
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "highwalk-under",
+      "ticks": 1869,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "22362223cfff6f41628338fc9d76d6c64f853776c39f7e5e14b9b789fff18684",
+      "segments": [
+        {
+          "from": [128, 9, 136],
+          "to": [128, 9, 176],
+          "ticks": 1044,
+          "position": {
+            "x": 128000,
+            "y": 8916,
+            "z": 176522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [128, 9, 176],
+          "to": [128, 9, 208],
+          "ticks": 825,
+          "position": {
+            "x": 128000,
+            "y": 8908,
+            "z": 208521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000053
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "lock-through",
+      "ticks": 822,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "952d79f20f14d1b2d211c159e24846827d88608382a8c18d7466705629b9105c",
+      "segments": [
+        {
+          "from": [64, 3, 218],
+          "to": [64, 3, 232],
+          "ticks": 425,
+          "position": {
+            "x": 64000,
+            "y": 2916,
+            "z": 232521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [64, 3, 232],
+          "to": [64, 3, 246],
+          "ticks": 397,
+          "position": {
+            "x": 64000,
+            "y": 2908,
+            "z": 246526
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000008
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "courtyard-return",
+      "ticks": 917,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "f536e81e9b83d232e22c2b7c5349c34783166c94171053571793d1fc7eee4b79",
+      "segments": [
+        {
+          "from": [200, 7, 288],
+          "to": [200, 7, 302],
+          "ticks": 425,
+          "position": {
+            "x": 200000,
+            "y": 6916,
+            "z": 302521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [200, 7, 302],
+          "to": [200, 7, 320],
+          "ticks": 492,
+          "position": {
+            "x": 200000,
+            "y": 6908,
+            "z": 320527
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09199999999999964
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "basin-slalom",
+      "ticks": 2257,
+      "contacts": 0,
+      "recentres": 2,
+      "commandSha256": "3dd523e10355d9c24fe03894b5acfc285a932142e4002a4b35d8f9e27a191d35",
+      "segments": [
+        {
+          "from": [304, 3, 248],
+          "to": [304, 3, 284],
+          "ticks": 949,
+          "position": {
+            "x": 304000,
+            "y": 2916,
+            "z": 284529
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [304, 3, 284],
+          "to": [296, 3, 308],
+          "ticks": 659,
+          "position": {
+            "x": 295807,
+            "y": 2907,
+            "z": 308522
+          },
+          "maxCrossTrackM": 0.26405018462407115,
+          "maxHeightErrorM": 0.09299999999999997
+        },
+        {
+          "from": [296, 3, 308],
+          "to": [312, 3, 326],
+          "ticks": 649,
+          "position": {
+            "x": 312373,
+            "y": 2892,
+            "z": 326359
+          },
+          "maxCrossTrackM": 0.7524750929547219,
+          "maxHeightErrorM": 0.1080000000000001
+        }
+      ]
+    }
+  ],
+  "authoredStarts": [
+    {
+      "mode": "self-level",
+      "id": "north-arch",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 24000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "warehouse-passage",
+      "position": {
+        "x": 156000,
+        "y": 7000,
+        "z": 80000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "highwalk",
+      "position": {
+        "x": 128000,
+        "y": 9000,
+        "z": 144000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "lock-bend",
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 220000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "courtyard",
+      "position": {
+        "x": 200000,
+        "y": 7000,
+        "z": 288000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "turning-basin",
+      "position": {
+        "x": 304000,
+        "y": 3000,
+        "z": 304000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "north-arch",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 24000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "warehouse-passage",
+      "position": {
+        "x": 156000,
+        "y": 7000,
+        "z": 80000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "highwalk",
+      "position": {
+        "x": 128000,
+        "y": 9000,
+        "z": 144000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "lock-bend",
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 220000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "courtyard",
+      "position": {
+        "x": 200000,
+        "y": 7000,
+        "z": 288000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "turning-basin",
+      "position": {
+        "x": 304000,
+        "y": 3000,
+        "z": 304000
+      }
+    }
+  ],
+  "contacts": [
+    {
+      "mode": "self-level",
+      "scenario": "quay-bank",
+      "ticks": 435,
+      "position": {
+        "x": 112222,
+        "y": 1916,
+        "z": 100000
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "self-level",
+      "scenario": "bridge-deck",
+      "ticks": 300,
+      "position": {
+        "x": 128000,
+        "y": 13802,
+        "z": 64000
+      },
+      "contacts": 259
+    },
+    {
+      "mode": "self-level",
+      "scenario": "canal-bed",
+      "ticks": 300,
+      "position": {
+        "x": 128000,
+        "y": -2998,
+        "z": 24000
+      },
+      "contacts": 254
+    },
+    {
+      "mode": "acro",
+      "scenario": "quay-bank",
+      "ticks": 435,
+      "position": {
+        "x": 112222,
+        "y": 1916,
+        "z": 100000
+      },
+      "contacts": 1
+    },
+    {
+      "mode": "acro",
+      "scenario": "bridge-deck",
+      "ticks": 300,
+      "position": {
+        "x": 128000,
+        "y": 13802,
+        "z": 64000
+      },
+      "contacts": 259
+    },
+    {
+      "mode": "acro",
+      "scenario": "canal-bed",
+      "ticks": 300,
+      "position": {
+        "x": 128000,
+        "y": -2998,
+        "z": 24000
+      },
+      "contacts": 254
+    }
+  ],
+  "playerReady": false,
+  "claim": "Production regional-session controlled command evidence; no native player/device FPS or default admission claim."
+}
