@@ -124,6 +124,32 @@ false; a motion smoke pass is not an exercise-completion pass.
 
 ### Publish only after the existing review gates pass
 
+Before publication, also repeat the native main-game directory journey:
+
+```sh
+node scripts/observe-practice-directory-journey.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT
+```
+
+Use format `revealline-practice-directory-journey-plan.v1`, protocol
+`practice-directory-full-source-shell.v1`, the common artifact-binding fields
+listed above, and **additional** exact `shellRevision`/`shellTree` fields for the
+clean committed checkout running the main-game source shell. Declare all six
+ordered case IDs from `DIRECTORY_JOURNEY_CASES`; the package revision field binds
+Academy, and `bundle` must be absolute. The shell and package source identities
+may differ and must not be relabelled as each other. Supply normal test access
+through the protected environment or silent input, never plan data/arguments.
+
+The observer follows Settings → Help & Extras → Flight practice, verifies real
+metadata/previews, opens each app with one Play action without arming, and follows
+the launcher guide back through the directory to the game in EN/UK. It serves
+unchanged committed source files with per-file Git-blob verification and uses an
+explicit unpublished catalogue/current-pointer fixture containing admitted
+packages. It never creates review approvals or selects a public release. This is
+not the production build or final deployed-site check; missing build inputs,
+positive appearance selection, physical input and full guide usability remain
+separate. Keep failed receipts, authority and screenshots alongside any retry.
+See the [source-shell report](flight-practice-directory-journey-2026-10-15.md).
+
 ```sh
 node scripts/publish-optional-packages.mjs verify \
   --bundle .cache/practice-candidate --review REVIEW.json
