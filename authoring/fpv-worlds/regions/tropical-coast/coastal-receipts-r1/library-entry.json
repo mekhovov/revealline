@@ -6,6 +6,7 @@
   },
   "records": [
     {
+      "liveMaterialUpdates": 9,
       "quality": "low",
       "terrain": "performance",
       "geometryBytes": 955344,
@@ -13,6 +14,7 @@
       "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
     },
     {
+      "liveMaterialUpdates": 9,
       "quality": "balanced",
       "terrain": "balanced",
       "geometryBytes": 955344,
@@ -20,6 +22,7 @@
       "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
     },
     {
+      "liveMaterialUpdates": 9,
       "quality": "high",
       "terrain": "quality",
       "geometryBytes": 955344,
@@ -27,6 +30,7 @@
       "geometryDigest": "b518e7eb8e9aba45d8688044a8a4c96545ba8943a63314694e201249efa4a26f"
     },
     {
+      "liveMaterialUpdates": 0,
       "quality": "unknown-pin",
       "terrain": "plain",
       "geometryBytes": 955344,
