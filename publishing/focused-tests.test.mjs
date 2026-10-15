@@ -25,6 +25,36 @@ test('capacity comparison tooling selects its regression suite without broad run
   }
 });
 
+test('release reader changes select frozen-consumer policy and original archive regressions', () => {
+  for (const file of [
+    'publishing/utility/assemble_full_qualification.py',
+    'publishing/utility/release_artifact.py',
+    'publishing/utility/test_assemble_full_qualification.py',
+    'publishing/utility/test_waived_qualification.py',
+    'publishing/release-evidence-compatibility.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'release-evidence-compatibility');
+    assert.ok(command.args.includes('publishing/release-evidence-compatibility.test.mjs'));
+    assert.ok(command.args.includes('publishing/distribution-archive.test.mjs'));
+  }
+});
+
+test('the separate codec observer retains capture and codec ownership coverage', () => {
+  const plan = focusedTestPlan(
+    ['docs/verification/team-duel-desktop-audio/studio-codecs.mjs'],
+    manifest,
+  );
+  const command = plan.commands.find(({ id }) => id === 'restored-studio-audio-observer');
+  assert.ok(
+    command.args.includes('docs/verification/team-duel-desktop-audio/studio-probe-model.test.mjs'),
+  );
+  assert.ok(
+    command.args.includes('docs/verification/team-duel-desktop-audio/studio-codecs-model.test.mjs'),
+  );
+});
+
 test('the real company package script exposes all tests to exact focused deduplication', async () => {
   const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
   const prefix = 'node --test ';
@@ -193,10 +223,10 @@ test('Solo result-continuation coverage runs directly without the unrelated Team
   const file = 'game/test/solo-result-continuation-host.test.mjs';
   const plan = focusedTestPlan([file], manifest);
   assert.ok(!plan.categories.includes('player-navigation-team'));
-  assert.deepEqual(plan.commands.map(({ id }) => id), [
-    'unknown-runtime-validate',
-    `changed-test:${file}`,
-  ]);
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ['unknown-runtime-validate', `changed-test:${file}`],
+  );
 });
 
 test('Versus runtime changes retain native controller Start ownership coverage once', () => {
@@ -408,13 +438,20 @@ test('focused command execution reports a timeout and stops the remaining queue'
         return { status: null, signal: 'SIGTERM', error: timeout };
       },
       stdout: { write() {} },
-      stderr: { write(message) { stderr.push(message); } },
+      stderr: {
+        write(message) {
+          stderr.push(message);
+        },
+      },
       timeoutMs: 1234,
     },
   );
   assert.deepEqual(calls, [['node', 'blocked', 4321, 'SIGTERM']]);
   assert.equal(summary.attempted, 1);
-  assert.deepEqual(summary.failures.map(({ id, timedOut }) => [id, timedOut]), [['blocked', true]]);
+  assert.deepEqual(
+    summary.failures.map(({ id, timedOut }) => [id, timedOut]),
+    [['blocked', true]],
+  );
   assert.equal(summary.exitCode, 124);
   assert.match(stderr.at(-1), /timed out after 4321ms/u);
 });
@@ -456,9 +493,10 @@ test('fallback validation receives its bounded thirty-minute budget without wide
     ['node', ['ordinary'], 600000, 'SIGTERM'],
   ]);
   assert.equal(summary.exitCode, 7);
-  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [
-    ['unknown-runtime-validate', 7],
-  ]);
+  assert.deepEqual(
+    summary.failures.map(({ id, status }) => [id, status]),
+    [['unknown-runtime-validate', 7]],
+  );
 });
 
 test('bounded parallel focused execution retains every command verdict', async () => {
@@ -487,14 +525,21 @@ test('bounded parallel focused execution retains every command verdict', async (
     },
   );
   assert.equal(summary.attempted, 3);
-  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [['failure', 9]]);
+  assert.deepEqual(
+    summary.failures.map(({ id, status }) => [id, status]),
+    [['failure', 9]],
+  );
   assert.equal(summary.exitCode, 9);
   assert.equal(maximumActive, 2, 'independent commands use the bounded worker pool');
 });
 
 test('parallel focused execution rejects invalid worker limits', async () => {
   await assert.rejects(
-    runFocusedCommandsParallel([], { concurrency: 0, stdout: { write() {} }, stderr: { write() {} } }),
+    runFocusedCommandsParallel([], {
+      concurrency: 0,
+      stdout: { write() {} },
+      stderr: { write() {} },
+    }),
     /concurrency/u,
   );
 });

@@ -1,0 +1,2182 @@
+[
+  {
+    "action": "Navigation timing",
+    "mode": "versus",
+    "outcome": "browser entries; no device qualification",
+    "browserAtFrameLoad": {
+      "navigation": {
+        "responseStartMs": 23.799999997019768,
+        "domInteractiveMs": 43.599999994039536,
+        "domContentLoadedMs": 69.79999999701977,
+        "loadEventEndMs": 628.6999999880791
+      },
+      "paint": {
+        "firstPaintMs": 116,
+        "firstContentfulPaintMs": 116
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 41867495,
+        "totalBytes": 72028611,
+        "limitBytes": 4395630592
+      }
+    },
+    "resourcesAtFrameLoad": 242
+  },
+  {
+    "action": "Load to playable menu",
+    "mode": "versus",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 8570.89999999106,
+    "mission": "candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard",
+    "trustedActivation": null,
+    "resourcesAtReady": 250,
+    "transferBytesAtReady": 19373,
+    "jsDecodedBytesAtReady": 5139343,
+    "cssDecodedBytesAtReady": 505033,
+    "zeroTransferEntries": 248,
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "browserAtReady": {
+      "navigation": {
+        "responseStartMs": 23.799999997019768,
+        "domInteractiveMs": 43.599999994039536,
+        "domContentLoadedMs": 69.79999999701977,
+        "loadEventEndMs": 628.6999999880791
+      },
+      "paint": {
+        "firstPaintMs": 116,
+        "firstContentfulPaintMs": 116
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 98338862,
+        "totalBytes": 174987658,
+        "limitBytes": 4395630592
+      }
+    },
+    "mediaAtReady": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "race-canvas-0",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "race-canvas-1",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12188252,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 18871680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    }
+  },
+  {
+    "action": "Choose mission",
+    "mode": "versus",
+    "outcome": "game focus left; sample discarded",
+    "ms": null,
+    "mission": "candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard",
+    "trustedActivation": true,
+    "focusAtActivation": {
+      "atMs": 46746.59999999404,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BUTTON"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 47482.19999998808,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": "race-picture-cancel",
+          "tag": "BUTTON"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": true,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": true,
+          "disabled": false,
+          "state": "busy",
+          "open": null
+        }
+      }
+    }
+  },
+  {
+    "action": "Start/rematch",
+    "mode": "versus",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 63.400000005960464,
+    "mission": "candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard",
+    "trustedActivation": true
+  },
+  {
+    "action": "Choose mission",
+    "mode": "versus",
+    "outcome": "timeout; not a passing sample",
+    "ms": null,
+    "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/standard",
+    "trustedActivation": true,
+    "focusAtActivation": {
+      "atMs": 479960.6999999881,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BUTTON"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 509964.5,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "race-canvas-0",
+          "tag": "CANVAS"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    }
+  },
+  {
+    "action": "Start/rematch",
+    "mode": "versus",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 41.1000000089407,
+    "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/standard",
+    "trustedActivation": true
+  },
+  {
+    "action": "Frame sample",
+    "mode": "versus",
+    "edition": "",
+    "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/standard",
+    "requestedMission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish",
+    "scope": "active",
+    "requestedDurationMs": 120000,
+    "outcome": "passive desktop sample; compare equivalent baseline before qualification",
+    "durationMs": 120012.5,
+    "frameIntervals": {
+      "count": 10732,
+      "medianMs": 9.700000002980232,
+      "p95Ms": 21.200000002980232,
+      "p99Ms": 25.19999998807907,
+      "maxMs": 202.90000000596046,
+      "over33ms": 28,
+      "over50ms": 5
+    },
+    "longTasks": {
+      "supported": true,
+      "count": 0,
+      "over50Ms": 0,
+      "maxMs": 0,
+      "omittedCount": 0
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "hardwareConcurrency": 14,
+      "pageUrl": "http://127.0.0.1:8791/game/couch/?journey=duel-expedition-v1&library-mission=%5B%22journey%3Aduel-expedition-v1%22%2C%22duel-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22versus-expedition-sentinel-pack%5C%22%2C%5C%22versus-expedition-sentinel%5C%22%5D%22%2C%22candidate%2Fversus-expedition-sentinel-pack%2Fversus-expedition-sentinel%2Fversus-crown-photo-finish%22%2C%22%22%5D&library-intent=select",
+      "buildVersion": "__REVEALLINE_VERSION__"
+    },
+    "inputs": {
+      "player1Keydowns": 6,
+      "player2Keydowns": 6,
+      "trustedKeydowns": 12,
+      "untrustedKeydowns": 0
+    },
+    "focusAtArm": {
+      "atMs": 511279.09999999404,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "sample",
+          "tag": "BUTTON"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 632029.799999997,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "race-canvas-0",
+          "tag": "CANVAS"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    },
+    "activity": [
+      {
+        "atMs": 0.5999999940395355,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 1001.4000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 2009.4000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 3011.4000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 4013.9000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 5016.5999999940395,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 6033.9000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 7040.4000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 8045.5999999940395,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 9050.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 10066.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 11075.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 12078.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 13089.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 14099.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 15101.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 16109.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 17113.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 18119,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 19122,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 20122.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 21124,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 22132.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 23134.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 24156.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 25157.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 3 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 26161.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "respawning",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 27166.29999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 28167.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 29175.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 30185.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 3 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 31189.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "respawning",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 32192.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 33194,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 34203.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 35204.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 36208.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 37215.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 38236.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 39242,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 40243.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 41252,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 42256.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 43260.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 44261,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 45261.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 46271.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 47275.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 48281.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 49289.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 50293.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 51312.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 52319.29999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 53319.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 54327.29999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 55332.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 56340.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 57347.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 58348.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 59351.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 60353.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 61357.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 62366,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 63376.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 64397.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 65404.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 66404.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 67411.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 68417,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 69421.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 70431.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 71438,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 72451.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 73456,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 74459.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 75468.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 76472.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 77477,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 78481.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 79481.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 80484.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 81494.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 82496.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 83502.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 84510.29999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 85519.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 86525.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 87534.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 88538,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 89543.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 90543.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 91547.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 92555.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 93560.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 94568.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 95582.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 96582.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 97594,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 98598.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 99607.59999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 100614.09999999404,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 101614.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 102617.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 103623.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 104628.29999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 105630.29999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 106637.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 107641.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 108645.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 109662.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 110663,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 111668.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 112670.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 113678,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 114678.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 115683.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 116688.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 117702.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 118711.79999999702,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 119721.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+          "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      }
+    ],
+    "hudBefore": {
+      "race-clock": "No countdown",
+      "racer-stats-0": "1: 0.0% / 70% · 3 lives · 0 points",
+      "racer-stats-1": "2: 0.0% / 70% · 3 lives · 0 points",
+      "racer-state-0": "running",
+      "racer-state-1": "running",
+      "series-score": "0 : 0"
+    },
+    "hudAfter": {
+      "race-clock": "No countdown",
+      "racer-stats-0": "1: 0.7% / 70% · 2 lives · 150 points",
+      "racer-stats-1": "2: 0.7% / 70% · 2 lives · 150 points",
+      "racer-state-0": "running",
+      "racer-state-1": "running",
+      "series-score": "0 : 0"
+    },
+    "browserBefore": {
+      "navigation": {
+        "responseStartMs": 23.799999997019768,
+        "domInteractiveMs": 43.599999994039536,
+        "domContentLoadedMs": 69.79999999701977,
+        "loadEventEndMs": 628.6999999880791
+      },
+      "paint": {
+        "firstPaintMs": 116,
+        "firstContentfulPaintMs": 116
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 92554939,
+        "totalBytes": 170569063,
+        "limitBytes": 4395630592
+      }
+    },
+    "browserAfter": {
+      "navigation": {
+        "responseStartMs": 23.799999997019768,
+        "domInteractiveMs": 43.599999994039536,
+        "domContentLoadedMs": 69.79999999701977,
+        "loadEventEndMs": 628.6999999880791
+      },
+      "paint": {
+        "firstPaintMs": 116,
+        "firstContentfulPaintMs": 116
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 112236033,
+        "totalBytes": 173171541,
+        "limitBytes": 4395630592
+      }
+    },
+    "jsHeapTimeline": {
+      "supported": true,
+      "intervalMs": 5000,
+      "maxSnapshots": 62,
+      "samples": [
+        {
+          "atMs": 0,
+          "usedBytes": 92554939,
+          "totalBytes": 170569063,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 5007.79999999702,
+          "usedBytes": 104219746,
+          "totalBytes": 171293762,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 10011.79999999702,
+          "usedBytes": 125079672,
+          "totalBytes": 172360176,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 15014.5,
+          "usedBytes": 108353055,
+          "totalBytes": 173830603,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 20021,
+          "usedBytes": 133408282,
+          "totalBytes": 174611318,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 25028,
+          "usedBytes": 101893179,
+          "totalBytes": 173722927,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 30036.29999999702,
+          "usedBytes": 104144793,
+          "totalBytes": 174687109,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 35044.70000000298,
+          "usedBytes": 127102423,
+          "totalBytes": 175610403,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 40046.5,
+          "usedBytes": 111325710,
+          "totalBytes": 173312838,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 45053.5,
+          "usedBytes": 108227227,
+          "totalBytes": 172761975,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 50061,
+          "usedBytes": 102273373,
+          "totalBytes": 172237961,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 55067.20000000298,
+          "usedBytes": 128235630,
+          "totalBytes": 172965078,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 60068,
+          "usedBytes": 98428046,
+          "totalBytes": 172474622,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 65075.90000000596,
+          "usedBytes": 105947408,
+          "totalBytes": 172371796,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 70082.20000000298,
+          "usedBytes": 126399041,
+          "totalBytes": 173020425,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 75091,
+          "usedBytes": 115947644,
+          "totalBytes": 172617256,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 80094,
+          "usedBytes": 114967404,
+          "totalBytes": 172700212,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 85102.5,
+          "usedBytes": 92272148,
+          "totalBytes": 172613996,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 90108,
+          "usedBytes": 116922561,
+          "totalBytes": 173348933,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 95119.20000000298,
+          "usedBytes": 118148439,
+          "totalBytes": 173331503,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 100130.90000000596,
+          "usedBytes": 102842427,
+          "totalBytes": 172790075,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 105137.40000000596,
+          "usedBytes": 127764835,
+          "totalBytes": 173523355,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 110137.59999999404,
+          "usedBytes": 109577283,
+          "totalBytes": 173571623,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 115137.59999999404,
+          "usedBytes": 120706367,
+          "totalBytes": 173393771,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 120012.40000000596,
+          "usedBytes": 112236033,
+          "totalBytes": 173171541,
+          "limitBytes": 4395630592
+        }
+      ],
+      "peakObservedUsedBytes": 133408282,
+      "limits": "Sampled non-standard JS heap counters can miss peaks and include shared heaps. No forced GC, retention attribution, complete media/GPU memory, or leak conclusion."
+    },
+    "mediaBefore": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "race-canvas-0",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "race-canvas-1",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 256,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 174080
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12182332,
+      "domImageCount": 2,
+      "domImageRGBAEstimateBytes": 12581568,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "mediaAfter": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "race-canvas-0",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "race-canvas-1",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 256,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 174080
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12182332,
+      "domImageCount": 2,
+      "domImageRGBAEstimateBytes": 12581568,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "newResourceEntries": 0
+  }
+]

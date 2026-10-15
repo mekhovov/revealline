@@ -1,0 +1,1172 @@
+{
+  "format": "revealline.studio-native-codecs-check.v1",
+  "startedAt": "2026-10-15T21:20:49.697Z",
+  "url": "http://127.0.0.1:8791/docs/verification/team-duel-desktop-audio/studio-codecs.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "file": {
+    "name": "revealline-fpv-r107.rltheme",
+    "bytes": 8818841,
+    "sha256": "4f7e20a0b7936d81b8160002addfddddbc08f5ee87ab3fecd19f85a3bbd563d0"
+  },
+  "themeRevision": 107,
+  "assets": {
+    "audio.failure": {
+      "description": "failure audio cue",
+      "file": {
+        "bytes": 38444,
+        "height": null,
+        "mime": "audio/wav",
+        "sha256": "574ed8153f407aff77e2ad5316ac1ca8d1b6aec95ddfc6b793e76bdc8f0e4a14",
+        "width": null
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "audio.failure.custom",
+      "kind": "audio",
+      "provenance": {
+        "creator": "RevealLine",
+        "license": "CC0 · original RevealLine procedural effect; retained game/audio/effects/licenses.html",
+        "parent": null,
+        "prompt": "",
+        "source": "game/audio/effects/loss.wav · existing procedural effect bank"
+      },
+      "quality": {
+        "evidence": [],
+        "stage": "produced"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    "audio.pickup": {
+      "description": "pickup audio cue",
+      "file": {
+        "bytes": 6941,
+        "height": null,
+        "mime": "audio/ogg",
+        "sha256": "c977fe249ff42d1c93a552b33abc13a8399df3879fa510475426e5c4bbac1da9",
+        "width": null
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "audio.pickup.custom",
+      "kind": "audio",
+      "provenance": {
+        "creator": "Kenney",
+        "license": "CC0 · retained Kenney Interface Sounds License.txt",
+        "parent": null,
+        "prompt": "",
+        "source": "Kenney Interface Sounds 1.0 · authoring/audio/revealline-v1/originals/interface/pluck_002.ogg"
+      },
+      "quality": {
+        "evidence": [],
+        "stage": "produced"
+      },
+      "recipe": null,
+      "revision": 1
+    },
+    "audio.victory": {
+      "description": "victory audio cue",
+      "file": {
+        "bytes": 32600,
+        "height": null,
+        "mime": "audio/mpeg",
+        "sha256": "cdee5b2980749d03f6c622c4438bbf068f7f24f2d7f4214835152929834ae891",
+        "width": null
+      },
+      "format": "revealline-asset-revision.v1",
+      "geometry": null,
+      "id": "audio.victory.custom",
+      "kind": "audio",
+      "provenance": {
+        "creator": "RevealLine qualification fixtures",
+        "license": "CC0 · original retained test signal; fixture README records encoder details",
+        "parent": null,
+        "prompt": "",
+        "source": "docs/verification/cross-mode/p02-a/fixtures/rising-chime.mp3 · existing digital test signal"
+      },
+      "quality": {
+        "evidence": [],
+        "stage": "produced"
+      },
+      "recipe": null,
+      "revision": 1
+    }
+  },
+  "scope": "Read-only production import of a normally exported Studio bundle; exact retained WAV, Vorbis OGG and MP3 fixtures; actual native decoding and game audio owners. Controlled event dispatch, delayed delivery and truncated-read fault injection. No subjective listening, physical speakers, natural gameplay, universal codec support or public edition certification.",
+  "checks": [
+    {
+      "name": "failure: retained original decodes and caches",
+      "pass": true,
+      "actual": {
+        "duration": 0.6,
+        "frames": 28800,
+        "channels": 1,
+        "sampleRate": 48000
+      }
+    },
+    {
+      "name": "failure: isolated exact buffer, no additional cue",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["isolated"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure: isolated digital and mono output",
+      "pass": true,
+      "actual": {
+        "rms": 0.007271601373433495,
+        "monoRms": 0.0072637681604639836,
+        "peak": 0.03230806067585945,
+        "windows": 59
+      }
+    },
+    {
+      "name": "failure: sampled headroom",
+      "pass": true,
+      "actual": 0.03230806067585945
+    },
+    {
+      "name": "failure: Team event owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure: both Duel boards own exact replacements",
+      "pass": true,
+      "actual": {
+        "exact": 2,
+        "owners": [0, 1],
+        "other": 0,
+        "total": 2,
+        "bufferStarts": 2
+      }
+    },
+    {
+      "name": "failure: Duel board endings schedule nothing",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "failure: single Duel host result owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["duel-result"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure: Team defeat owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure/mute: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "failure/mute: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "failure/mute: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 17
+      }
+    },
+    {
+      "name": "failure/mute: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure/zero-master: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "failure/zero-master: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "failure/zero-master: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "failure/zero-master: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure/gameplay-pause: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "failure/gameplay-pause: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "failure/gameplay-pause: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 17
+      }
+    },
+    {
+      "name": "failure/gameplay-pause: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure: cold event uses fallback without custom cue",
+      "pass": true,
+      "actual": {
+        "exact": 0,
+        "owners": [],
+        "other": 1,
+        "total": 1
+      }
+    },
+    {
+      "name": "failure/late-completion: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 28800,
+        "cached": false
+      }
+    },
+    {
+      "name": "failure: fallback finishes naturally before late delivery",
+      "pass": true,
+      "actual": {
+        "waitedMs": 260.3999999910593,
+        "remainingVoices": 0,
+        "generationBefore": 10,
+        "generationAfter": 10,
+        "bufferStarts": 0
+      }
+    },
+    {
+      "name": "failure/late-completion: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "failure/late-completion: exact cache ownership",
+      "pass": true,
+      "actual": true
+    },
+    {
+      "name": "failure: only fresh event uses late-ready buffer",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "failure/cancel-pending: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 28800,
+        "cached": false
+      }
+    },
+    {
+      "name": "failure/cancel-pending: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "failure/cancel-pending: exact cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "failure/close-owner: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 28800,
+        "cached": false
+      }
+    },
+    {
+      "name": "failure/close-owner: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "failure/close-owner: exact cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "failure: native decoder rejects nine-byte truncation",
+      "pass": true,
+      "actual": {
+        "attempts": 1,
+        "rejection": {
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        "cached": false,
+        "bufferStarts": 0
+      }
+    },
+    {
+      "name": "failure: rejected custom decode retains fallback",
+      "pass": true,
+      "actual": {
+        "exact": 0,
+        "owners": [],
+        "other": 1,
+        "total": 1
+      }
+    },
+    {
+      "name": "pickup: retained original decodes and caches",
+      "pass": true,
+      "actual": {
+        "duration": 0.16164583333333332,
+        "frames": 7759,
+        "channels": 2,
+        "sampleRate": 48000
+      }
+    },
+    {
+      "name": "pickup: isolated exact buffer, no additional cue",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["isolated"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup: isolated digital and mono output",
+      "pass": true,
+      "actual": {
+        "rms": 0.03431825076532488,
+        "monoRms": 0.03431825076532488,
+        "peak": 0.6495479345321655,
+        "windows": 25
+      }
+    },
+    {
+      "name": "pickup: sampled headroom",
+      "pass": true,
+      "actual": 0.6495479345321655
+    },
+    {
+      "name": "pickup: Team event owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup: both Duel boards own exact replacements",
+      "pass": true,
+      "actual": {
+        "exact": 2,
+        "owners": [0, 1],
+        "other": 0,
+        "total": 2,
+        "bufferStarts": 2
+      }
+    },
+    {
+      "name": "pickup: Team powerup owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup: powerup events preserve both Duel owners",
+      "pass": true,
+      "actual": {
+        "exact": 2,
+        "owners": [0, 1],
+        "other": 0,
+        "total": 2,
+        "bufferStarts": 2
+      }
+    },
+    {
+      "name": "pickup/mute: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "pickup/mute: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "pickup/mute: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "pickup/mute: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup/zero-master: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "pickup/zero-master: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "pickup/zero-master: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "pickup/zero-master: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup/gameplay-pause: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "pickup/gameplay-pause: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "pickup/gameplay-pause: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "pickup/gameplay-pause: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup: cold event uses fallback without custom cue",
+      "pass": true,
+      "actual": {
+        "exact": 0,
+        "owners": [],
+        "other": 1,
+        "total": 1
+      }
+    },
+    {
+      "name": "pickup/late-completion: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 7759,
+        "cached": false
+      }
+    },
+    {
+      "name": "pickup: fallback finishes naturally before late delivery",
+      "pass": true,
+      "actual": {
+        "waitedMs": 156.3999999910593,
+        "remainingVoices": 0,
+        "generationBefore": 25,
+        "generationAfter": 25,
+        "bufferStarts": 0
+      }
+    },
+    {
+      "name": "pickup/late-completion: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "pickup/late-completion: exact cache ownership",
+      "pass": true,
+      "actual": true
+    },
+    {
+      "name": "pickup: only fresh event uses late-ready buffer",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "pickup/cancel-pending: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 7759,
+        "cached": false
+      }
+    },
+    {
+      "name": "pickup/cancel-pending: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "pickup/cancel-pending: exact cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "pickup/close-owner: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 7759,
+        "cached": false
+      }
+    },
+    {
+      "name": "pickup/close-owner: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "pickup/close-owner: exact cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "pickup: native decoder rejects nine-byte truncation",
+      "pass": true,
+      "actual": {
+        "attempts": 1,
+        "rejection": {
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        "cached": false,
+        "bufferStarts": 0
+      }
+    },
+    {
+      "name": "pickup: rejected custom decode retains fallback",
+      "pass": true,
+      "actual": {
+        "exact": 0,
+        "owners": [],
+        "other": 1,
+        "total": 1
+      }
+    },
+    {
+      "name": "victory: retained original decodes and caches",
+      "pass": true,
+      "actual": {
+        "duration": 2.037541666666667,
+        "frames": 97802,
+        "channels": 1,
+        "sampleRate": 48000
+      }
+    },
+    {
+      "name": "victory: isolated exact buffer, no additional cue",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["isolated"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory: isolated digital and mono output",
+      "pass": true,
+      "actual": {
+        "rms": 0.07540687801975982,
+        "monoRms": 0.07540687801975982,
+        "peak": 0.11316106468439102,
+        "windows": 170
+      }
+    },
+    {
+      "name": "victory: sampled headroom",
+      "pass": true,
+      "actual": 0.11316106468439102
+    },
+    {
+      "name": "victory: Team event owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory: Duel board endings schedule nothing",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "victory: single Duel host result owns exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["duel-result"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory/mute: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "victory/mute: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "victory/mute: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "victory/mute: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory/zero-master: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "victory/zero-master: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "victory/zero-master: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "victory/zero-master: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory/gameplay-pause: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "victory/gameplay-pause: rejects fresh event",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "victory/gameplay-pause: restoration never replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "victory/gameplay-pause: fresh event recovers exact replacement",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory: cold event uses fallback without custom cue",
+      "pass": true,
+      "actual": {
+        "exact": 0,
+        "owners": [],
+        "other": 15,
+        "total": 15
+      }
+    },
+    {
+      "name": "victory/late-completion: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 97802,
+        "cached": false
+      }
+    },
+    {
+      "name": "victory: fallback finishes naturally before late delivery",
+      "pass": true,
+      "actual": {
+        "waitedMs": 2302.199999988079,
+        "remainingVoices": 0,
+        "generationBefore": 38,
+        "generationAfter": 38,
+        "bufferStarts": 0
+      }
+    },
+    {
+      "name": "victory/late-completion: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "victory/late-completion: exact cache ownership",
+      "pass": true,
+      "actual": true
+    },
+    {
+      "name": "victory: only fresh event uses late-ready buffer",
+      "pass": true,
+      "actual": {
+        "exact": 1,
+        "owners": ["team"],
+        "other": 0,
+        "total": 1,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "victory/cancel-pending: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 97802,
+        "cached": false
+      }
+    },
+    {
+      "name": "victory/cancel-pending: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "victory/cancel-pending: exact cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "victory/close-owner: native decode held before adoption",
+      "pass": true,
+      "actual": {
+        "frames": 97802,
+        "cached": false
+      }
+    },
+    {
+      "name": "victory/close-owner: no expired event replays",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "victory/close-owner: exact cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "victory: native decoder rejects nine-byte truncation",
+      "pass": true,
+      "actual": {
+        "attempts": 1,
+        "rejection": {
+          "name": "EncodingError",
+          "message": "Unable to decode audio data"
+        },
+        "cached": false,
+        "bufferStarts": 0
+      }
+    },
+    {
+      "name": "victory: rejected custom decode retains fallback",
+      "pass": true,
+      "actual": {
+        "exact": 0,
+        "owners": [],
+        "other": 15,
+        "total": 15
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "failure-isolated",
+      "rms": 0.007271601373433495,
+      "monoRms": 0.0072637681604639836,
+      "peak": 0.03230806067585945,
+      "windows": 59
+    },
+    {
+      "id": "pickup-isolated",
+      "rms": 0.03431825076532488,
+      "monoRms": 0.03431825076532488,
+      "peak": 0.6495479345321655,
+      "windows": 25
+    },
+    {
+      "id": "victory-isolated",
+      "rms": 0.07540687801975982,
+      "monoRms": 0.07540687801975982,
+      "peak": 0.11316106468439102,
+      "windows": 170
+    }
+  ],
+  "decoded": {
+    "failure": {
+      "duration": 0.6,
+      "frames": 28800,
+      "channels": 1,
+      "sampleRate": 48000
+    },
+    "pickup": {
+      "duration": 0.16164583333333332,
+      "frames": 7759,
+      "channels": 2,
+      "sampleRate": 48000
+    },
+    "victory": {
+      "duration": 2.037541666666667,
+      "frames": 97802,
+      "channels": 1,
+      "sampleRate": 48000
+    }
+  },
+  "sourcePins": {
+    "game/ui/audio.mjs": "e0925185418833b4d7e9e4910617f62466db8442a1dc7f0f6b746bcb9009c407",
+    "game/ui/audio-master.mjs": "6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8",
+    "game/ui/audio-output.mjs": "dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1",
+    "game/ui/feedback-director.mjs": "8381a6708e42fb650d954708942dc05a302e781dbeaf556a7fec538e392e202d",
+    "game/ui/feedback-cues.mjs": "80a7f9c1ac51e35ac2bb25de2611dbac515be84c818497ae617ecc694473b633",
+    "game/ui/published-audio.mjs": "420bca6644f845d63b51200a3b407028eff53578670c57ba082cb9d0da60e61f",
+    "game/couch/couch.mjs": "468d4c3e224de29440cfcfec167dd0067530dc44b25f306d4181229130845eb8",
+    "game/media-audio.mjs": "6d43c537a8c7010d755d469724f74985041f22a7a8becff90b8f1c327e968c84",
+    "game/presentation/bundle.mjs": "994be0696766d65c26a7542ecae7febc2dbbd31158bfec68be283db1ffeb0516",
+    "game/presentation/model.mjs": "7b6686b75c059c7b264164db5b061286df025174c7bd687c0a6e08dccdb1fa81",
+    "game/presentation/document-codec.mjs": "a55c12280b6a5ea4c6e718179d2ebad2857d3870dd4b0e26e47802d920f13b6b",
+    "studio-codecs.html": "d08bd80b51d2b226fb84bf6ebf730c54c96c6c5701bb031193160f33deb3aabc",
+    "studio-codecs.mjs": "af5f7168e484bc9881810256042be912f1f6862db426d8e88efd5312c753468f",
+    "studio-codecs-model.mjs": "50a3c19d16a17bbc31db1c899bd644829ea71b9a35164fb68f47189bb6a36e11",
+    "studio-probe-model.mjs": "ced08f9566b26e87cefabe44a1b404c3d5ec9baa2a2b6ba17b3d0687beb88b75"
+  },
+  "recordedBank": [
+    "attack",
+    "bell",
+    "cancel",
+    "ceramic",
+    "closure",
+    "confirm",
+    "confirm-1",
+    "confirm-2",
+    "contact-glass",
+    "contact-glass-1",
+    "contact-glass-2",
+    "contact-metal",
+    "contact-metal-1",
+    "contact-metal-2",
+    "contact-soft",
+    "contact-soft-1",
+    "contact-soft-2",
+    "contact-wood",
+    "contact-wood-1",
+    "contact-wood-2",
+    "deploy",
+    "destroy-armored",
+    "destroy-armored-1",
+    "destroy-armored-2",
+    "destroy-electronic",
+    "destroy-electronic-1",
+    "destroy-electronic-2",
+    "destroy-heavy",
+    "destroy-heavy-1",
+    "destroy-heavy-2",
+    "destroy-light",
+    "destroy-light-1",
+    "destroy-light-2",
+    "destroy-soft",
+    "destroy-soft-1",
+    "destroy-soft-2",
+    "erosion",
+    "esc-retry",
+    "esc-start",
+    "flow",
+    "focus",
+    "gate",
+    "grain",
+    "human-reaction-1",
+    "human-reaction-2",
+    "human-reaction-3",
+    "human-reaction-4",
+    "human-reaction-5",
+    "human-reaction-6",
+    "human-reaction-7",
+    "human-reaction-8",
+    "impact",
+    "interference",
+    "loss",
+    "motor",
+    "neutralized",
+    "paper",
+    "paper-1",
+    "paper-2",
+    "pickup",
+    "pickup-1",
+    "pickup-2",
+    "radio-armed-en",
+    "radio-armed-uk",
+    "ratchet",
+    "reactivated",
+    "respawn",
+    "retry",
+    "reveal-large",
+    "reveal-medium",
+    "reveal-small",
+    "rotor",
+    "start",
+    "switch",
+    "warning",
+    "wheels",
+    "win",
+    "wings",
+    "wood"
+  ],
+  "sampleRate": 48000,
+  "passed": true,
+  "contextStateAfterCleanup": "closed"
+}

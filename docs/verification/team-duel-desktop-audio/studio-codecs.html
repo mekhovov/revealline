@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — Studio WAV / OGG / MP3 check</title>
+    <style>
+      body {
+        background: #071527;
+        color: #f6f3e8;
+        font: 18px/1.5 system-ui;
+        max-width: 68rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      button,
+      input,
+      a {
+        min-height: 48px;
+        padding: 0.6rem 1rem;
+        font: inherit;
+      }
+      :focus-visible {
+        outline: 3px solid #ffd64a;
+        outline-offset: 3px;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font-size: 14px;
+      }
+      a {
+        color: #67aaff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Studio WAV / OGG / MP3 check</h1>
+    <p>
+      Choose a normal Studio export containing the retained failure WAV, pickup OGG and victory MP3
+      fixtures described in <a href="./STUDIO-CODECS.md">the setup notes</a>. This read-only check
+      uses the game's audio owners and native browser decoding. It checks Team and Duel dispatch,
+      final-result ownership, mute, pause, delayed delivery and rejected truncated input. Keep this
+      page visible for about 25 seconds after the recorded bank loads.
+    </p>
+    <p>
+      This is a digital signal check, not a listening review or a physical speaker test. File import
+      here is read only; it does not establish Studio storage recovery.
+    </p>
+    <label for="bundle">Exported Studio bundle</label>
+    <input id="bundle" type="file" accept=".rltheme" />
+    <button id="run" type="button" disabled>Run codec checks</button>
+    <button id="cancel" type="button" disabled>Cancel check</button>
+    <a id="download" hidden>Download report</a>
+    <p id="status" role="status">Choose a bundle. Audio starts only when you choose Run.</p>
+    <pre id="result" aria-label="Studio codec check report"></pre>
+    <script type="module" src="./studio-codecs.mjs"></script>
+  </body>
+</html>
