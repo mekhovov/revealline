@@ -840,7 +840,7 @@ try {
           academyProofTransfer: 'Native import/export button keyboard Enter',
           offlineActions: 'Native button keyboard Enter with fresh status/progress observation',
           limitation:
-            'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
+            'This observer uses the native keyboard route and does not qualify pointer interaction.',
         },
         proof: {
           input: 'first frozen demonstration frames under an explicit synthetic practice session',
@@ -908,7 +908,7 @@ try {
       academyProofTransfer: 'Native import/export button keyboard Enter',
       offlineActions: 'Native button keyboard Enter with fresh status/progress observation',
       limitation:
-        'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
+        'This observer uses the native keyboard route and does not qualify pointer interaction.',
     },
     failure: error.message,
     currentStep,
