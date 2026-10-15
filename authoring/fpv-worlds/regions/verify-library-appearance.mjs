@@ -14,6 +14,16 @@ import {
 } from '../../../optional-practice/civilian-fpv/regional-library.mjs';
 
 const variants = {
+  'canyon-expanse': {
+    id: 'canyon-expanse-study',
+    sha256: 'd2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003',
+    material: 'Canyon sediment',
+    surface: 'canyon',
+    sourcePins: {
+      terrain: '74fbf90c62eafc79e2ba25a4375f5e1d5da5ec25b758da4b3c78cf64c95067d6',
+      scenery: '688b6b655b584efb78438f4ab14f23b6b07971ef54c3f13cfed158afa1da4448',
+    },
+  },
   'canyon-districts': {
     id: 'canyon-arrival-landmarks-study',
     sha256: 'f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8',
@@ -44,7 +54,10 @@ const variants = {
   },
 };
 const style = process.argv[3] ?? 'railway';
-assert(Object.hasOwn(variants, style), 'Choose railway, canyon or canyon-districts');
+assert(
+  Object.hasOwn(variants, style),
+  'Choose railway, canyon, canyon-districts or canyon-expanse',
+);
 const variant = variants[style];
 const root = resolve(process.argv[2] ?? '');
 assert(process.argv[2], 'Provide the exact reviewed regional source pair');
