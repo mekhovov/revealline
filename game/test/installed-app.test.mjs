@@ -417,3 +417,77 @@ test('verified core preparation holds profile locks until activation and a failu
   assert.deepEqual(readInstalledState(h.storage).active, b);
   assert.equal(held.size, 0);
 });
+
+for (const boundary of ['queued switch', 'profile inspection', 'core preparation'])
+  test(`cancelled activation at ${boundary} keeps the selected edition and both progress profiles`, async () => {
+    const h = setup(),
+      controller = new AbortController();
+    await activateInstalledEdition(a, h);
+    h.storage.setItem(profile(a.version), 'saved earlier progress');
+    await stageInstalledEdition(b, h);
+    const review = await reviewInstalledMigration(a.version, b.version, h);
+    h.storage.setItem(profile(b.version), 'reviewed compatible copy');
+    await recordInstalledMigration(review, h);
+    const before = new Map(h.values);
+    let release, entered;
+    const reached = new Promise((resolve) => {
+      entered = resolve;
+    });
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    let prepared = 0;
+    const options = {
+      ...h,
+      signal: controller.signal,
+      locks: {
+        async request(name, configuration, callback) {
+          assert.ok(
+            !configuration?.ifAvailable || !('signal' in configuration),
+            'Native Web Locks forbids signal with ifAvailable.',
+          );
+          if (boundary === 'queued switch' && name === 'revealline.installed-app.switch') {
+            entered();
+            await gate;
+          }
+          // Deliberately permit a callback queued before abort: the production
+          // mutation boundary must fence it even if an adapter does not.
+          return (callback || configuration)({ name });
+        },
+      },
+      readAsset: async (key) => {
+        if (boundary === 'profile inspection') {
+          entered();
+          await gate;
+        }
+        return h.readAsset(key);
+      },
+      prepare: async () => {
+        prepared++;
+        if (boundary === 'core preparation') {
+          entered();
+          await gate;
+        }
+      },
+    };
+    const pending = activateInstalledEdition(b, options);
+    await reached;
+    controller.abort();
+    release();
+    await assert.rejects(pending, { name: 'AbortError' });
+    assert.deepEqual(
+      h.values,
+      before,
+      'Cancellation cannot select the candidate or rewrite saves.',
+    );
+    assert.equal(prepared, boundary === 'core preparation' ? 1 : 0);
+    assert.deepEqual(readInstalledState(h.storage).active, a);
+    assert.deepEqual(readInstalledState(h.storage).pending, b);
+    assert.equal(
+      (await activateInstalledEdition(b, h)).activated,
+      true,
+      'Fresh intent can recover.',
+    );
+    assert.equal(h.storage.getItem(profile(a.version)), 'saved earlier progress');
+    assert.equal(h.storage.getItem(profile(b.version)), 'reviewed compatible copy');
+  });
