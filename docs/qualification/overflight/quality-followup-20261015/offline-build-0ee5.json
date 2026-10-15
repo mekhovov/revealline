@@ -1,0 +1,77 @@
+{
+  "evidence": "Unmodified prepareBuildProject output served from memory. No handcrafted cache manifest, bypassed validation, ZIP or site staging. Browser qualification is separate and uses the ordinary installed-app UI. Origin-unavailable mode returns503 for every build resource; the control endpoint remains available only to this localhost test host.",
+  "createdAt": "2026-10-15T04:38:46.536Z",
+  "observedCommit": "0ee5d73c82bcb7a2904fd2a3f812c51aff20da47",
+  "sourceRevision": "0ee5d73c82bcb7a2904fd2a3f812c51aff20da47",
+  "sourceChanges": [""],
+  "version": "0.151.1",
+  "buildId": "62c6264f60c9bb3adb4f48c10601969db57b6cb9c5a12bedf30b1b103b89e9b2",
+  "offlineFiles": 1693,
+  "offlineBytes": 66694405,
+  "hostedFiles": 3266,
+  "hostedBytes": 929867825,
+  "manifestSha256": "e102c8b272184304a35990a3e5fe198f425a4c7cececf8e41fa331d2258cb91b",
+  "required": [
+    {
+      "path": "game/overflight/battlefields.mjs",
+      "bytes": 23483,
+      "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+    },
+    {
+      "path": "game/overflight/coordinated-movement.mjs",
+      "bytes": 10388,
+      "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+    },
+    {
+      "path": "game/overflight/motion.mjs",
+      "bytes": 2361,
+      "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "bytes": 17432,
+      "sha256": "9286ae9d6d9d714bc4aa56b3c642f20925a2c6db91a8daa1af1e2e04be1e146d"
+    },
+    {
+      "path": "game/overflight/raid-mode.mjs",
+      "bytes": 10024,
+      "sha256": "3c8ccf0643d7a7aebd5c46e6016d6a616ed3c12acf982205e102328cce043437"
+    },
+    {
+      "path": "game/overflight/raid-variants.mjs",
+      "bytes": 24767,
+      "sha256": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd"
+    },
+    {
+      "path": "game/overflight/raid.html",
+      "bytes": 18101,
+      "sha256": "7825ca5dbe8ff8480d0591bc407981b9849cd9fda43b7633f3b1286889e303e7"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "bytes": 8740,
+      "sha256": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+    },
+    {
+      "path": "game/overflight/survival-hud.mjs",
+      "bytes": 1545,
+      "sha256": "79b349f8d4a04a16324363cfb519cca27ea1c4d1bead81ed5e07922675af75ad"
+    },
+    {
+      "path": "game/overflight/upgrade-preview.mjs",
+      "bytes": 24464,
+      "sha256": "cd4fd309dde1aadedb7fe63d4e232bda6596f27e05a65b6efe7cc38a4579a5ac"
+    },
+    {
+      "path": "game/overflight/world-audio.mjs",
+      "bytes": 4385,
+      "sha256": "f77afd13e1af3a9a0dbb15b538898a3198487245ac10461b99385d7d574e383e"
+    },
+    {
+      "path": "game/presentation/overflight-world-art-v2.mjs",
+      "bytes": 19404,
+      "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+    }
+  ],
+  "url": "http://127.0.0.1:8951/game/overflight/play.html?lang=en"
+}

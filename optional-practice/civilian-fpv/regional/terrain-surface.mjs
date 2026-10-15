@@ -4,7 +4,9 @@ import { createUrbanGroundSurface, createRailwayGroundSurface } from './urban-gr
 
 export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'desert'].includes(style) ||
+    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
+      style,
+    ) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
     throw new TypeError('Unknown regional terrain surface profile');
@@ -37,7 +39,12 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
   )
     throw new TypeError('Terrain surface needs a bounded integer origin');
   if (style === 'urban') return createUrbanGroundSurface({ quality, originMm });
-  if (style === 'tropical') return createTropicalGroundSurface({ quality, originMm });
+  if (style === 'tropical' || style === 'tropical-settlement')
+    return createTropicalGroundSurface({
+      quality,
+      originMm,
+      settlement: style === 'tropical-settlement',
+    });
   if (style === 'desert') return createDesertGroundSurface({ quality, originMm });
   if (style === 'railway') return createRailwayGroundSurface({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
@@ -107,7 +114,6 @@ float terrainGrain = terrainNoise(vTerrainPoint * 2.5) - 0.5;
 terrainTint *= 0.94 + 0.12 * terrainDeposit + terrainGrain * terrainNear * 0.12;
 ${quality === 'quality' ? 'terrainTint *= 1.0 + (terrainNoise(vTerrainPoint * 7.0) - 0.5) * terrainNear * 0.09;' : ''}`
 }
-
 diffuseColor.rgb *= terrainTint;`,
     );
     shader.fragmentShader = shader.fragmentShader.replace(
@@ -119,22 +125,79 @@ roughnessFactor = clamp(roughnessFactor - terrainCliff * 0.08, 0.88, 1.0);`,
   return material;
 }
 
+// Authored for the separate districts-r2 study only. These are surface markings,
+// not collision or task hints; the existing tropical profile keeps its original layout.
+const settlementFunctions = `
+float coastSegment(vec2 p, vec2 a, vec2 b) {
+  vec2 ab = b - a;
+  return length(p - a - ab * clamp(dot(p-a, ab) / dot(ab, ab), 0.0, 1.0));
+}
+float coastCourt(vec2 p, vec2 c, vec2 h) {
+  vec2 d = abs(p - c) - h;
+  return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+}
+`;
+const settlementColour = `
+vec2 coastP = tp.xz;
+float coastStreet = coastSegment(coastP, vec2(382,302), vec2(382,440));
+coastStreet = min(coastStreet, coastSegment(coastP, vec2(350,355), vec2(400,355)));
+coastStreet = min(coastStreet, coastSegment(coastP, vec2(366,328), vec2(382,328)));
+coastStreet = min(coastStreet, coastSegment(coastP, vec2(366,414), vec2(382,414)));
+coastStreet = min(coastStreet, coastSegment(coastP, vec2(382,390), vec2(415,390)));
+float coastCourtyard = coastCourt(coastP, vec2(350,355), vec2(9,7));
+coastCourtyard = min(coastCourtyard, coastCourt(coastP, vec2(415,390), vec2(9,7)));
+coastCourtyard = min(coastCourtyard, coastCourt(coastP, vec2(366,328), vec2(9,7)));
+coastCourtyard = min(coastCourtyard, coastCourt(coastP, vec2(366,414), vec2(7,9)));
+coastCourtyard = min(coastCourtyard, coastCourt(coastP, vec2(400,355), vec2(9,7)));
+// Irregular feathered edges avoid a painted road or a false physical edge.
+float coastRoughEdge = (patches - 0.5) * 1.4;
+float coastPathMask = 1.0 - smoothstep(2.2, 5.2, coastStreet + coastRoughEdge);
+float coastCourtMask = 1.0 - smoothstep(-0.3, 2.3, coastCourtyard + coastRoughEdge);
+float coastPlateau = 1.0 - smoothstep(0.2, 1.2, abs(tp.y - 14.0));
+float coastWear = max(coastPathMask, coastCourtMask) * coastPlateau;
+vec3 coastDryGrass = mix(tropicalGrass, tropicalEarth, smoothstep(0.35,0.75,patches)*0.4);
+tropicalTint = mix(tropicalTint, coastDryGrass, vegetation * 0.55);
+vec3 coastPathTint = mix(tropicalEarth, tropicalSand, 0.22 + patches*0.12);
+tropicalTint = mix(tropicalTint, coastPathTint, coastWear);
+float coastWetSand = 1.0 - smoothstep(0.05,1.35,tp.y);
+tropicalTint *= 1.0 - coastWetSand*0.28;
+// Soft metre-scale ripples fade before becoming a distant moire pattern.
+float coastPixel = max(length(fwidth(coastP)), 0.001);
+float coastRipple = sin(tp.x*2.1 + tp.z*0.8 + patches*3.0);
+tropicalTint *= 1.0 + coastRipple * 0.035 * (1.0-vegetation)
+                      * (1.0-smoothstep(0.1,0.6,coastPixel));
+`;
+
 /** Original beach/dune colour treatment; exact source height and collision never move. */
-function createTropicalGroundSurface({ quality, originMm }) {
+function createTropicalGroundSurface({ quality, originMm, settlement = false }) {
   const material = new THREE.MeshStandardMaterial({
     color: 0xffffff,
     roughness: 1,
     metalness: 0,
   });
-  material.name = `Tropical sand and dune grass · ${quality}`;
-  material.customProgramCacheKey = () => `fpv-tropical-ground-v1-${quality}`;
-  material.onBeforeCompile = (shader) => {
-    shader.uniforms.tropicalOrigin = {
+  const label = settlement
+    ? 'Coastal settlement paths and shoreline'
+    : 'Tropical sand and dune grass';
+  const uniforms = {
+    tropicalOrigin: {
       value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
-    };
-    shader.uniforms.tropicalSand = { value: new THREE.Color(0xd4c69c) };
-    shader.uniforms.tropicalGrass = { value: new THREE.Color(0x53733b) };
-    shader.uniforms.tropicalEarth = { value: new THREE.Color(0x9b8961) };
+    },
+    tropicalSand: { value: new THREE.Color(0xd4c69c) },
+    tropicalGrass: { value: new THREE.Color(settlement ? 0x66764b : 0x53733b) },
+    tropicalEarth: { value: new THREE.Color(0x9b8961) },
+  };
+  material.name = `${label} · ${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateTerrainSurface(settlement ? 'tropical-settlement' : 'tropical', next);
+    if (next === quality) return;
+    quality = next;
+    material.name = `${label} · ${quality}`;
+    material.needsUpdate = true;
+  };
+  material.customProgramCacheKey = () =>
+    `fpv-tropical-${settlement ? 'settlement' : 'ground'}-v1-${quality}`;
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
       .replace(
         '#include <common>',
@@ -152,18 +215,20 @@ varying vec3 vTropicalNormal;
 uniform vec3 tropicalSand;
 uniform vec3 tropicalGrass;
 uniform vec3 tropicalEarth;
-${quality === 'performance' ? '' : noise}`,
+${quality === 'performance' ? '' : noise}
+${settlement ? settlementFunctions : ''}`,
     );
     shader.fragmentShader = shader.fragmentShader.replace(
       '#include <color_fragment>',
       `#include <color_fragment>
 vec3 tp = vTropicalPoint;
 float patches = ${quality === 'performance' ? '0.5 + 0.22 * sin(tp.x * 0.11) * sin(tp.z * 0.09)' : 'terrainNoise(tp * vec3(0.12, 0.08, 0.12))'};
-float vegetation = smoothstep(1.7, 3.5, tp.y + patches * 0.65);
+float vegetation = ${settlement ? 'smoothstep(2.2, 5.5, tp.y + patches * 1.2)' : 'smoothstep(1.7, 3.5, tp.y + patches * 0.65)'};
 float exposed = smoothstep(0.12, 0.42, 1.0 - abs(normalize(vTropicalNormal).y));
 vec3 tropicalTint = mix(tropicalSand, tropicalGrass, vegetation);
 tropicalTint = mix(tropicalTint, tropicalEarth, exposed * 0.7);
 tropicalTint *= 0.94 + patches * 0.12;
+${settlement ? settlementColour : ''}
 ${
   quality === 'performance'
     ? ''
