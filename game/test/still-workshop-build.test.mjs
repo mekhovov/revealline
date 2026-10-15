@@ -8,10 +8,19 @@ import { createHash, webcrypto } from 'node:crypto';
 import vm from 'node:vm';
 import { readBuildConfig, collectBuildFiles, buildProject } from '../../scripts/game-cli.mjs';
 import { planCurrentEntries } from '../../scripts/pages-current-entry.mjs';
+import { projectEditionModuleIndentation } from '../../scripts/edition-code-indentation.mjs';
+import {
+  LAUNCHER_APPEARANCE_FILES,
+  LAUNCHER_NAVIGATION_FILES,
+} from '../../scripts/offline-launcher.mjs';
 
 const sourceRoot = fileURLToPath(new URL('../../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fieldKitFiles = [
+  'game/access-gate.css',
+  'game/access-gate.mjs',
+  'game/presentation/theme-bootstrap.mjs',
+  'game/presentation/industrial-workshop.css',
   // HTML-selected reading entry; copy() follows its exact runtime imports.
   'game/ui/tool-display-entry.mjs',
   'game/ui/workshop-return-entry.mjs',
@@ -51,6 +60,8 @@ const localizationFiles = [
   'game/i18n/catalogs.mjs',
   'game/i18n/bootstrap.mjs',
   'game/vendor/i18next-26.4.2.min.js',
+  'game/vendor/lz-string-1.5.0.min.js',
+  'game/vendor/LZ-STRING-LICENSE.txt',
 ];
 const workshopEntries = [
   'authoring/still-media/index.html',
@@ -68,9 +79,52 @@ const teachingScenarios = [
   'tactical-borrowed-seconds',
   'tactical-quiet-crossing',
 ].map((id) => `authoring/library/tactical-teaching/scenarios/${id}.json`);
-// Explicit current source assets already admitted on main e39b4197; keep this
+// Explicit current source assets admitted through main 4244ece9; keep this
 // inventory separate from build-config so accidental source admission still fails.
 const establishedLibraryAssets = [
+  'authoring/library/classic-reveal-artwork/README.md',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-04.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/living-threads-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/living-threads-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/living-threads-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/night-shift-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/night-shift-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/night-shift-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg',
+  'authoring/library/classic-reveal-artwork/contact-sheet.jpg',
+  'authoring/library/classic-reveal-artwork/index.html',
+  'authoring/library/classic-reveal-artwork/manifest.json',
+  'authoring/library/classic-reveal-artwork/prompts.json',
+  'authoring/library/overflight-field-kit-v1/manifest.json',
+  'authoring/library/overflight-field-kit-v1/pickup-module-primary.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-proximity-pulse.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-scanner.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-shield.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-side-burst.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-slow-field.png',
+  'authoring/library/overflight-field-kit-v1/pickup-overflight-impact.png',
+  'authoring/library/overflight-field-kit-v1/pickup-overflight-warning.png',
+  'authoring/library/overflight-field-kit-v1/pickup-salvage-cluster.png',
+  'authoring/library/overflight-field-kit-v1/pickup-salvage-small.png',
+  'authoring/library/overflight-field-kit-v1/pickup-supply-case-closed.png',
+  'authoring/library/overflight-field-kit-v1/pickup-supply-case-open.png',
+  'authoring/library/overflight-field-kit-v1/pickup-support-marker.png',
+
   'authoring/library/1994-forever-art/originals/last-train-cassette.png',
   'authoring/library/1994-forever-art/originals/midnight-arcade.png',
   'authoring/library/1994-forever-art/originals/rainy-video-rental.png',
@@ -302,7 +356,8 @@ async function fixture(t) {
     const bytes = await fs.readFile(path.join(sourceRoot, name));
     originals.set(name, bytes);
     await put(name, bytes);
-    if (!/\.m?js$/.test(name)) return;
+    // Launcher template imports resolve after relocation into app/, not offline/.
+    if (!/\.m?js$/.test(name) || name === 'game/offline/app.mjs') return;
     for (const match of bytes
       .toString()
       .matchAll(
@@ -330,6 +385,18 @@ async function fixture(t) {
     'game/ui/still-media-panel.css',
     'game/offline.mjs',
     'game/offline/service-worker.template.js',
+    'game/offline/app.html',
+    'game/offline/app.mjs',
+    'game/offline/app-worker.template.js',
+    'game/offline/navigation.css',
+    'game/downloads.css',
+    ...LAUNCHER_APPEARANCE_FILES.map((file) => `game/${file}`),
+    ...LAUNCHER_NAVIGATION_FILES.map((file) => `game/${file}`),
+    ...['en', 'uk'].flatMap((language) =>
+      ['common', 'interface', 'gameplay', 'controllerEditor', 'errors'].map(
+        (namespace) => `game/locales/${language}/${namespace}.json`,
+      ),
+    ),
   ])
     await copy(name);
   await put(
@@ -399,7 +466,20 @@ for (const version of ['0.32.0', 'v0.32.0'])
       'game/build-info.json',
     ]) {
       const bytes = await fs.readFile(path.join(out, name));
-      if (f.originals.has(name)) assert.deepEqual(bytes, f.originals.get(name));
+      if (f.originals.has(name)) {
+        const original = f.originals.get(name);
+        // Current main compacts only whitespace in these four inspected modules.
+        // Everything else in this workshop assertion retains exact source bytes.
+        const expected = [
+          'game/story-media-store.mjs',
+          'game/ui/victory-story.mjs',
+          'game/video-poster.mjs',
+          'game/presentation/theme-bootstrap.mjs',
+        ].includes(name)
+          ? projectEditionModuleIndentation(name, original)
+          : original;
+        assert.equal(digest(bytes), digest(expected), name);
+      }
       for (const list of [manifest.files, offline.files]) {
         const entry = list.find((row) => row.path === name);
         assert.ok(entry, `${name} missing from inventory`);

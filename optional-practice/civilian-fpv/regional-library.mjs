@@ -36,6 +36,15 @@ export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
   },
   bytes: 48164518,
   appearance: { terrain: 'desert' },
+  // Exact reviewed landmark revision: face each nearby composition from its unchanged start.
+  startHeadings: Object.freeze({
+    'crescent-dunes': 14446,
+    'dry-wash': 15163,
+    'salt-basin': 17740,
+    'sunrise-escarpment': 12247,
+    'mesa-corridor': 10280,
+    'rocky-plain': 14839,
+  }),
   pin: {
     url: 'https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json',
     bytes: 329271,
@@ -103,6 +112,60 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json',
       bytes: 98773,
       sha256: '38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7',
+    },
+  },
+  {
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — connected park study',
+      uk: 'Сади атракціонів — дослідження парку зі сполученими доріжками',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move.',
+      uk: '2,048 × 2,048 км · шість стартових точок · вільний політ без заліку. Досліджуйте петлю на опорах, сполучені підходи, площі станцій і лісові маршрути. Ранній варіант парку; оформлення районів ще вдосконалюється, атракціони нерухомі.',
+    },
+    bytes: 34214390,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json',
+      bytes: 32824,
+      sha256: '935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a',
+    },
+  },
+  {
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — 2 km study',
+      uk: 'Сади атракціонів — пробний світ 2 км',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six park districts and six starting points · unscored free flight. Explore garden plazas, a looping landmark, station terraces, service halls and woodland paths. Early static park study; rides do not move.',
+      uk: '2,048 × 2,048 км · шість паркових районів і шість стартових точок · вільний політ без заліку. Досліджуйте садові площі, петлю атракціону, тераси станції, службові павільйони й лісові доріжки. Ранній варіант парку; атракціони нерухомі.',
+    },
+    bytes: 33908597,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json',
+      bytes: 29654,
+      sha256: '4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5',
+    },
+  },
+  {
+    id: 'hillside-town-study',
+    title: {
+      en: 'Hillside Town — civic court materials',
+      uk: 'Містечко на схилі — матеріали міського подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.',
+      uk: '384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною.',
+    },
+    bytes: 8660487,
+    appearance: { terrain: 'hillside-town' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json',
+      bytes: 6579,
+      sha256: 'f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573',
     },
   },
   {
@@ -265,14 +328,34 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
-      terrain,
-    )
+    ![
+      'plain',
+      'canyon',
+      'urban',
+      'railway',
+      'tropical',
+      'tropical-settlement',
+      'desert',
+      'hillside-town',
+    ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
   const sceneryStyle = validateScenerySurface(approved?.appearance?.scenery ?? 'plain');
+  const authoredStartHeadings = {};
+  for (const [id, heading] of Object.entries(approved?.startHeadings ?? {})) {
+    if (
+      !configuration.manifest.spawns.some((spawn) => spawn.id === id) ||
+      !Number.isSafeInteger(heading) ||
+      heading < 0 ||
+      heading >= 36000
+    )
+      throw new TypeError('Invalid trusted regional starting heading');
+    authoredStartHeadings[id] = heading;
+  }
   return {
     ...configuration,
+    // Re-resolving an unknown or older pin clears any previous revision's hints.
+    authoredStartHeadings: Object.freeze(authoredStartHeadings),
     source: { ...configuration.source, surfaceStyle: terrain },
     ...(configuration.scenery &&
     (sceneryStyle !== 'plain' || configuration.scenery.source?.surfaceStyle)
@@ -298,8 +381,15 @@ export function regionalPresentationOptions(configuration, quality) {
     configuration.scenery?.source?.surfaceStyle ?? 'plain',
     tiers[quality],
   );
+  const spawnId = configuration.spawnId ?? configuration.manifest?.spawns?.[0]?.id;
+  const headings = configuration.authoredStartHeadings ?? {};
+  const initialHeading =
+    !configuration.savedStart && Object.hasOwn(headings, spawnId)
+      ? headings[spawnId]
+      : 'region-centre';
   return {
     ...configuration,
+    initialHeading,
     source: {
       ...configuration.source,
       surfaceStyle: surface.style,
@@ -471,7 +561,11 @@ export function mountRegionalLibrary({
       })),
       ...records
         .filter((row) => !offered.has(row.sha256))
-        .map((saved) => ({ id: saved.id, title: saved.descriptor.title, saved })),
+        .map((saved) => ({
+          id: saved.id,
+          title: saved.descriptor.title,
+          saved,
+        })),
     ];
     for (const row of rows) {
       const saved = row.saved,
@@ -498,12 +592,21 @@ export function mountRegionalLibrary({
         play.dataset.regionAction = 'fly';
         play.setAttribute('aria-label', `${txt('Fly', 'Летіти')}: ${title(name)}`);
         const remove = action(
-          txt('Remove saved region', 'Вилучити збережений регіон'),
+          txt('Remove this version', 'Вилучити цю версію'),
           () => run('review-remove', row),
           Boolean(operation),
         );
         remove.dataset.regionAction = 'remove';
         buttons.append(play, remove);
+        if (records.filter((record) => record.id === row.id).length > 1) {
+          const removeAll = action(
+            txt('Remove all versions', 'Вилучити всі версії'),
+            () => run('review-remove-all', row),
+            Boolean(operation),
+          );
+          removeAll.dataset.regionAction = 'remove-all';
+          buttons.append(removeAll);
+        }
       } else {
         const download = action(
           txt('Download region', 'Завантажити регіон'),
@@ -519,14 +622,21 @@ export function mountRegionalLibrary({
         card.append(
           el(
             'p',
-            txt(
-              `Remove all ${removal.revisions.length} saved revision(s) of this region (${size(removal.bytes)})? You can download available revisions again.`,
-              `Вилучити всі збережені версії цього регіону (${removal.revisions.length}; ${size(removal.bytes)})? Доступні версії можна завантажити знову.`,
-            ),
+            removal.scope === 'revision'
+              ? txt(
+                  `Remove version ${removal.revision} (${size(removal.bytes)})? Other saved versions and saved places are kept. This version must be downloaded again before a new flight.`,
+                  `Вилучити версію ${removal.revision} (${size(removal.bytes)})? Інші збережені версії та місця залишаться. Для нового польоту цю версію потрібно буде завантажити знову.`,
+                )
+              : txt(
+                  `Remove all ${removal.revisions.length} saved revision(s) of this region (${size(removal.bytes)})? You can download available revisions again.`,
+                  `Вилучити всі збережені версії цього регіону (${removal.revisions.length}; ${size(removal.bytes)})? Доступні версії можна завантажити знову.`,
+                ),
           ),
         );
         const confirm = action(
-          txt('Remove these downloads', 'Вилучити ці завантаження'),
+          removal.scope === 'revision'
+            ? txt('Remove this download', 'Вилучити це завантаження')
+            : txt('Remove these downloads', 'Вилучити ці завантаження'),
           () => run('remove', row),
           Boolean(operation),
         );
@@ -613,7 +723,7 @@ export function mountRegionalLibrary({
       } else if (kind === 'fly') {
         show('Checking saved scenery…', 'Перевірка збереженої місцевості…');
         const configuration = await waitFor(
-          store.load(row.id, { sha256: row.saved.sha256 }),
+          store.load(row.id, { sha256: row.saved.sha256, signal }),
           signal,
         );
         signal.throwIfAborted();
@@ -621,24 +731,44 @@ export function mountRegionalLibrary({
           await fly(applyRegionalAppearance(configuration, row.saved, pins), row.saved, {
             isCurrent: () => requestEpoch === epoch && visible() && !signal.aborted,
           });
-      } else if (kind === 'review-remove') {
-        const reviewed = await waitFor(store.removalSnapshot(row.id), signal);
+      } else if (kind === 'review-remove' || kind === 'review-remove-all') {
+        const scope = kind === 'review-remove' ? 'revision' : 'all';
+        const reviewed = await waitFor(
+          store.removalSnapshot(row.id, scope === 'revision' ? { sha256: row.saved.sha256 } : {}),
+          signal,
+        );
         if (!reviewed) throw new Error('Regional revision is no longer installed');
-        removal = { ...reviewed, viewHash: row.saved.sha256 };
+        removal = { ...reviewed, scope, viewHash: row.saved.sha256 };
         signal.throwIfAborted();
       } else if (kind === 'remove') {
-        if (!removal || removal.id !== row.id) throw new Error('Review removal again');
+        if (!removal || removal.id !== row.id || removal.viewHash !== row.saved.sha256)
+          throw new Error('Review removal again');
         cancel.disabled = true;
-        await store.remove(row.id, { expectedGeneration: removal.generation });
+        const scope = removal.scope;
+        if (scope === 'revision')
+          await store.removeRevision(row.id, removal.sha256, {
+            expectedGeneration: removal.generation,
+          });
+        else
+          await store.remove(row.id, {
+            expectedGeneration: removal.generation,
+          });
         committed = true;
         removal = null;
         records = await waitFor(store.list({ includeRevisions: true }), signal);
-        show('Saved region removed.', 'Збережений регіон вилучено.');
+        show(
+          scope === 'revision'
+            ? 'Saved version removed. Other versions and saved places are kept.'
+            : 'Saved region removed.',
+          scope === 'revision'
+            ? 'Збережену версію вилучено. Інші версії та збережені місця залишилися.'
+            : 'Збережений регіон вилучено.',
+        );
       } else {
         records = await waitFor(store.list({ includeRevisions: true }), signal);
         removal = null;
       }
-    } catch {
+    } catch (error) {
       if (kind === 'remove') removal = null;
       if (!closed && requestEpoch === epoch) {
         if (committed)
@@ -655,6 +785,11 @@ export function mountRegionalLibrary({
           show(
             'Cancelled. Existing downloads are retained.',
             'Скасовано. Наявні завантаження збережено.',
+          );
+        else if (error?.name === 'QuotaExceededError')
+          show(
+            'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
+            'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
           );
         else
           show(
@@ -674,7 +809,7 @@ export function mountRegionalLibrary({
           const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
           (
             card?.querySelector(
-              kind === 'review-remove' ? '[data-region-action="confirm-remove"]' : 'button',
+              kind.startsWith('review-remove') ? '[data-region-action="confirm-remove"]' : 'button',
             ) ?? refresh
           ).focus();
         }

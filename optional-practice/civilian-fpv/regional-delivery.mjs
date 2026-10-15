@@ -358,22 +358,29 @@ export async function openRegionalLibrary({
         descriptor,
       };
     },
-    async load(id, { sha256 } = {}) {
+    async load(id, { sha256, signal } = {}) {
+      signal?.throwIfAborted();
       const record = await store.get(id, { sha256 });
+      signal?.throwIfAborted();
       assert(record, 'This exact regional revision is not installed');
       const descriptorBlob = record.assets.get('__descriptor.json');
       assert(descriptorBlob, 'Installed regional descriptor is missing');
-      const descriptorBytes = await verifiedBytes(new Response(descriptorBlob), {
-        bytes: record.project.pin.bytes,
-        sha256: record.sha256,
-      });
+      const descriptorBytes = await verifiedBytes(
+        new Response(descriptorBlob),
+        {
+          bytes: record.project.pin.bytes,
+          sha256: record.sha256,
+        },
+        signal,
+      );
       const descriptor = validateRegionalDescriptor(decode(descriptorBytes));
       assert(descriptor.id === id, 'Installed regional identity mismatch');
       const blobs = new Map();
       for (const item of descriptor.files) {
+        signal?.throwIfAborted();
         const blob = record.assets.get(item.path);
         assert(blob, 'Installed regional file is missing');
-        blobs.set(item.path, await verifiedBytes(new Response(blob), item));
+        blobs.set(item.path, await verifiedBytes(new Response(blob), item, signal));
       }
       const [manifest, sceneryManifest] = validatePair(descriptor, blobs);
       // A synthetic origin binds requests to this exact retained revision; no network fallback.
@@ -404,14 +411,32 @@ export async function openRegionalLibrary({
       };
     },
     activate: store.activate,
-    async removalSnapshot(id) {
+    async removalSnapshot(id, { sha256 } = {}) {
       const snapshot = await store.removalSnapshot(id);
       if (!snapshot) return null;
       const entries = (await store.list({ includeRevisions: true })).filter((row) => row.id === id);
+      if (sha256 !== undefined) {
+        assert(/^[a-f0-9]{64}$/.test(sha256), 'Review an exact regional revision');
+        const selected = entries.find((row) => row.sha256 === sha256);
+        assert(
+          selected && snapshot.revisions.some((row) => row.sha256 === sha256),
+          'This regional revision is no longer installed',
+        );
+        return {
+          ...snapshot,
+          sha256,
+          revision: selected.project.descriptor.revision,
+          bytes: selected.project.descriptor.totalBytes,
+        };
+      }
       return {
         ...snapshot,
         bytes: entries.reduce((n, row) => n + row.project.descriptor.totalBytes, 0),
       };
+    },
+    removeRevision(id, sha256, { expectedGeneration } = {}) {
+      assert(Number.isSafeInteger(expectedGeneration), 'Review regional removal before deleting');
+      return store.removeRevision(id, sha256, { expectedGeneration });
     },
     remove(id, { expectedGeneration } = {}) {
       assert(Number.isSafeInteger(expectedGeneration), 'Review regional removal before deleting');

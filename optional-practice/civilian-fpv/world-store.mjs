@@ -136,24 +136,15 @@ export async function openWorldStore({
                     installedAt: new Date().toISOString(),
                   };
                 if (!known) revisions.put({ ...record, assets, bytes: size });
-                const cursor = stored.index('project').openCursor(project.id);
-                cursor.onsuccess = () => {
-                  if (cursor.result) {
-                    cursor.result.delete();
-                    cursor.result.continue();
-                    return;
-                  }
-                  try {
-                    for (const [path, blob] of assets)
-                      stored.put({ projectId: project.id, path, blob });
-                    projects.put(record);
-                    meta.put(next, 'generation');
-                    result = { project, generation: next, sha256 };
-                  } catch (cause) {
-                    error = cause;
-                    tx.abort();
-                  }
-                };
+                // The project-index read already captured every old key in this
+                // transaction. Queue their removal together instead of waiting
+                // for another cursor round trip for each regional source file.
+                for (const { path } of oldAssets.result) stored.delete([project.id, path]);
+                for (const [path, blob] of assets)
+                  stored.put({ projectId: project.id, path, blob });
+                projects.put(record);
+                meta.put(next, 'generation');
+                result = { project, generation: next, sha256 };
               } catch (cause) {
                 error = cause;
                 tx.abort();

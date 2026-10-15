@@ -6,7 +6,6 @@ import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { attachEnemyGuide } from '../ui/enemy-guide.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { PNGImage } from './helpers/png-image.mjs';
 import { RasterImage } from './helpers/raster-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { COMMUNITY_ROUTES } from '../community-routes.mjs';
@@ -24,7 +23,7 @@ function friendlyPage(t, href, options = {}) {
     titleScreen: true,
     search: url.search,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: PNGImage },
+    pictures: { Image: RasterImage },
     browserSetup(context) {
       const { globals } = context;
       Object.assign(globals.location, {

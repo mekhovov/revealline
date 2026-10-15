@@ -2,14 +2,22 @@
 
 Start with the [beginner creator guide](index.html), the [single-picture walkthrough](image-campaign-guide.md), or the [batch campaign walkthrough](batch-image-campaign-guide.md). The picture campaign creator accepts one or many images and videos, generates bounded levels with enemies and collision obstacles, prepares exact posters and optional victory stories, and exports or installs reviewed `.rlpack` editions. The phase acceptance records preserve detailed evidence; the [combined acceptance record](combined-release-acceptance.md) and [delivery register](delivery-plan.md) identify the remaining release and production gates. The historical manual trials below retain their original scope and identities.
 
-The [combined creator feature acceptance record](combined-release-acceptance.md) is the current
-source and release authority for the consolidated implementation. Individual phase records remain
-supporting evidence and do not imply separate releases.
+The [current execution plan](delivery-plan-2026-10-15.md) records the desktop-first verification
+and GitHub Pages decision. The [combined creator feature acceptance record](combined-release-acceptance.md)
+retains the consolidated implementation history; individual phase records remain supporting
+evidence and do not imply separate releases or fresh acceptance of current main.
 
 Maintainers can rerun the creator, media, installed-play, community-client and self-hosted service
 cohort with `npm run test:creator-feature`. The command discovers the owned test families, requires
 the cross-boundary acceptance files and fails if either the browser/runtime cohort or service suite
-fails.
+fails. Install the locked root, authoring-fixture and service dependencies first:
+
+```sh
+npm ci --ignore-scripts
+npm ci --prefix authoring/fpv-worlds --ignore-scripts
+npm ci --prefix services/community --ignore-scripts
+npm run test:creator-feature
+```
 
 The [video campaign review guide](video-campaign-guide.md) documents the mixed-media review contract, exact pairing corrections, poster choices, playback ranges and optional post-win story behavior. The main creator flow persists those exact dependencies before approval; the [Phase 3 acceptance record](phase3-acceptance.md) preserves the focused implementation evidence.
 
