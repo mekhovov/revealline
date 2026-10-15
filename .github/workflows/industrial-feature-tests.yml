@@ -45,6 +45,9 @@ jobs:
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
       - name: Verify the phase runner and restored policy
         run: node --test scripts/test-industrial-verifier.mjs publishing/test-policy.test.mjs
+      - name: Verify multiplayer delivery and observation tools
+        if: matrix.phase == 'recordings'
+        run: node --test scripts/test-verify-multiplayer-delivery.mjs scripts/test-journey-performance-observer.mjs
       - name: Execute the feature phase on the exact PR head
         run: node scripts/verify-industrial-features.mjs --phase ${{ matrix.phase }}
       - name: Retain TAP and source-bound receipts

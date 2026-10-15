@@ -251,3 +251,7 @@ The user explicitly requested skipping human playtesting and proceeding with the
 ## Authorized follow-up after priority review
 
 The user authorized the remaining source work after reviewing R1–R12. [Follow-up verification](team-duel-expansion-followup-2026-10-14.md) records bounded recovery/support interactions, alternative strategies for all eight pilots, the 48-mission browser sample, full media recovery checks, the five baseline fixture/focus corrections, and six curated Hunt lessons per mode. R1 still depends on final-head hosted checks and normal integration. R8–R11 stay deferred to publication/device/listening work; R12 human playtesting remains waived. Do not interpret the local evidence as a public release or all-platform acceptance.
+
+## Desktop-first qualification continuation — 15 October 2026
+
+The user authorized the recommended items and selected the desktop browser on this Mac first. This supersedes the previous blanket R8–R11 deferral, within that target. The [current qualification report](team-duel-qualification-2026-10-15.md) tracks implementation separately from actual acceptance. The 24-finale strategy sample is implemented and verified; public dependency checks and audio output checks have concrete receipts. Physical controllers/mobile, acoustic listening, complete decoded/GPU memory, and an immutable published download must not be marked complete from browser/source checks. Human paired playtesting stays waived.
