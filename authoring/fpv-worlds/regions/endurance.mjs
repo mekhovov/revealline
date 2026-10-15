@@ -4,6 +4,7 @@ import { createEnduranceFixture, createEndurancePilot, digest } from './enduranc
 import { createEnduranceClock } from './endurance-clock.mjs';
 import { createEnduranceObservation } from './endurance-observation.mjs';
 import { createEnduranceLifecycle } from './endurance-lifecycle.mjs';
+import { createEnduranceReportDisplay } from './endurance-report-display.mjs';
 
 const $ = (id) => document.getElementById(id);
 const assert = (value, message) => {
@@ -64,7 +65,7 @@ function buttons() {
   $('stop').disabled = !run;
   $('release').disabled = authored ? !busy && !flight : busy || !flight;
   if (authored) $('release').textContent = busy ? 'Cancel preparation' : 'Release resources';
-  $('export').disabled = !report;
+  $('export').disabled = !report && !run;
   for (const name of ['label', 'duration', 'quality', 'import', 'focus-policy'])
     if ($(name)) $(name).disabled = busy || Boolean(run);
 }
@@ -113,26 +114,32 @@ function sample() {
 }
 function observe() {
   if (!run || !flight) return;
-  const row = sample();
-  for (const [key, value] of Object.entries({ ...row.owned, ...row.collision }))
-    run.peaks[key] = Math.max(run.peaks[key] ?? 0, value);
-  for (const key of ['geometries', 'textures', 'programs']) {
-    const value = row.renderer[key];
-    if (Number.isFinite(value))
-      run.peaks[`renderer${key}`] = Math.max(run.peaks[`renderer${key}`] ?? 0, value);
-  }
-  run.lastSample = row;
-  const second = Math.floor(row.elapsedMs / 1000),
-    minute = Math.floor(second / 60);
-  if (second !== run.lastSecond) {
-    run.lastSecond = second;
-    run.recent.push(row);
-    if (run.recent.length > 120) run.recent.shift();
-  }
-  if (minute !== run.lastMinute) {
-    run.lastMinute = minute;
-    run.minutes.push(row);
-    assert(run.minutes.length <= 121, 'Diagnostic history cap exceeded');
+  const segment = run,
+    started = performance.now();
+  try {
+    const row = sample();
+    for (const [key, value] of Object.entries({ ...row.owned, ...row.collision }))
+      run.peaks[key] = Math.max(run.peaks[key] ?? 0, value);
+    for (const key of ['geometries', 'textures', 'programs']) {
+      const value = row.renderer[key];
+      if (Number.isFinite(value))
+        run.peaks[`renderer${key}`] = Math.max(run.peaks[`renderer${key}`] ?? 0, value);
+    }
+    run.lastSample = row;
+    const second = Math.floor(row.elapsedMs / 1000),
+      minute = Math.floor(second / 60);
+    if (second !== run.lastSecond) {
+      run.lastSecond = second;
+      run.recent.push(row);
+      if (run.recent.length > 120) run.recent.shift();
+    }
+    if (minute !== run.lastMinute) {
+      run.lastMinute = minute;
+      run.minutes.push(row);
+      assert(run.minutes.length <= 121, 'Diagnostic history cap exceeded');
+    }
+  } finally {
+    record(segment.observerSamples, performance.now() - started);
   }
 }
 function buildReport(segment, final = null) {
@@ -164,6 +171,13 @@ function buildReport(segment, final = null) {
     frameIntervalsMs: { ...summarize(segment.intervals), histogramMs: segment.histogram },
     physicsSubmissionCPU: summarize(segment.physics),
     drawSubmissionCPU: summarize(segment.draw),
+    observerCPU: {
+      frameChecks: summarize(segment.observerChecks),
+      sampleCollection: summarize(segment.observerSamples),
+      liveDisplay: segment.display.snapshot(),
+      scope:
+        'Synchronous frame checks, sample collection and bounded live JSON/text submission only. Excludes asynchronous observer callbacks, final/export serialization, browser layout, GPU completion and garbage collection attribution.',
+    },
     preparation: {
       initial: preparation.initial,
       completedStages: preparation.completedStages,
@@ -289,6 +303,7 @@ async function readSourceHashes() {
       'endurance-clock.mjs',
       'endurance-observation.mjs',
       'endurance-lifecycle.mjs',
+      'endurance-report-display.mjs',
       'authored-endurance-fixture.mjs',
     ]) {
       const response = await fetch(new URL(path, import.meta.url), {
@@ -425,6 +440,7 @@ $('start').onclick = () => {
       });
       history = history.slice(-8);
     }
+    report = null;
     run = {
       clock: createEnduranceClock({
         startedAt,
@@ -444,6 +460,14 @@ $('start').onclick = () => {
       intervals: counters(),
       physics: counters(),
       draw: counters(),
+      observerChecks: counters(),
+      observerSamples: counters(),
+      display: createEnduranceReportDisplay({
+        write: (text) => {
+          $('result').textContent = text;
+        },
+      }),
+      observationPolicy: observation.snapshot().policy,
       histogram: Array(251).fill(0),
       peaks: {},
       recent: [],
@@ -453,6 +477,8 @@ $('start').onclick = () => {
       lastSample: null,
     };
     observe();
+    $('result').textContent =
+      'Live summary starts with the next observed second. Full raw samples remain retained for final report or explicit export.';
     buttons();
     $('status').textContent =
       `${authored ? 'Running commanded Urban circuit' : 'Running synthetic flight'} in real elapsed time. ` +
@@ -481,9 +507,10 @@ $('release').onclick = async () => {
   $('status').textContent = 'Resources released. Prepare to start another segment.';
 };
 $('export').onclick = () => {
-  if (!report) return;
+  if (!report && !run) return;
+  const exported = run ? { ...buildReport(run), provisional: true, accepted: false } : report;
   const url = URL.createObjectURL(
-    new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' }),
+    new Blob([JSON.stringify(exported, null, 2)], { type: 'application/json' }),
   );
   const link = document.createElement('a');
   link.href = url;
@@ -531,7 +558,8 @@ $('import').onchange = async () => {
 function frame() {
   if (closed) return;
   if (run) {
-    run.lifecycle.frame(performance.now());
+    const observerStarted = performance.now();
+    run.lifecycle.frame(observerStarted);
     try {
       const observationFailure = run.observation.observe({
         at: performance.now(),
@@ -544,6 +572,7 @@ function frame() {
         'Viewport or canvas changed',
       );
       const now = performance.now();
+      record(run.observerChecks, now - observerStarted);
       if (run.previous !== null) {
         const delta = now - run.previous;
         record(run.intervals, delta);
@@ -578,10 +607,19 @@ function frame() {
         void finish();
       } else if (Math.floor(clock.elapsedMs / 1000) !== run.lastSecond) {
         observe();
-        report = buildReport(run);
-        $('result').textContent = JSON.stringify(report, null, 2);
+        run.display.live({
+          elapsedMs: clock.elapsedMs,
+          targetMs: clock.targetMs,
+          ticks: clock.ticks,
+          frames: run.frames,
+          cellCrossings: run.cellCrossings,
+          recentres: run.lastSample.recentres,
+          routeProgress: authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals,
+          observationPolicy: run.observationPolicy,
+          maximumFrameIntervalMs: run.intervals.max,
+        });
         $('status').textContent =
-          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'} · ${run.observation.snapshot().policy}`;
+          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'} · ${run.observationPolicy}`;
         buttons();
       }
     } catch (error) {
