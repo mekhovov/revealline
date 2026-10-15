@@ -156,7 +156,7 @@ async function verifiedBytes(response, pin, signal, progress) {
 }
 export async function inspectRegionalDownload(
   pin,
-  { pageURL, fetchImpl = globalThis.fetch, signal } = {},
+  { pageURL, fetchImpl = globalThis.fetch, signal, onActivity } = {},
 ) {
   keys(pin, ['url', 'bytes', 'sha256']);
   assert(
@@ -175,6 +175,7 @@ export async function inspectRegionalDownload(
     }),
     pin,
     signal,
+    onActivity,
   );
   return {
     descriptor: validateRegionalDescriptor(decode(bytes)),

@@ -4926,3 +4926,24 @@ its final elapsed acceptance and the queued native source/package views remain
 outstanding. Exact package proof is not public availability. Full-network offline,
 physical controller/device observations, representative final art and remaining
 regional design targets keep the complete roadmap open.
+
+### 15 October — continued large downloads without false cancellation
+
+A focused main-based Library correction replaces the blanket two-minute install
+cutoff with two-minute inactivity detection plus a ten-minute hard ceiling. Exact
+hashes, four-request bounds, atomic commits, saved revisions and all size ceilings
+remain. Existing non-install deadlines are unchanged. The 39-response committed
+Urban inventory verifies across 195 virtual seconds, and the existing five download
+concurrency groups pass. Native UI and exact-package qualification remain pending;
+the separate sustained browser run is uninterrupted. See
+[the scoped receipt](fpv-regional-download-deadline-20261015.md).
+
+### 15 October — uninterrupted two-hour regional corridor completed
+
+The exact frozen native workload completed 7,200.0052 seconds, 360,000 physics
+steps, 53 reversals and 269 origin recentres with zero contacts. Registered owned
+resources and physics allocations return to zero. All 159 frozen runtime files
+match their qualified archive; four harness files match their revision. The raw
+report, bounded minute/tail samples and independent closure receipts are retained.
+This closes the elapsed synthetic-corridor case only, not all-region or physical-
+device performance. See [the full receipt](fpv-elapsed-two-hour-20261015.md).
