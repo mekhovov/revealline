@@ -5,6 +5,24 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 17:18 UTC — focused foreground attempt invalidated
+
+The new authored Urban attempt is **invalid**, and no elapsed run is currently
+active. It reached 290.7995 real seconds /14,527 ticks, three cell crossings and
+three accepted waypoints with zero contacts. A 257.1 ms frame interval exceeded
+the unchanged 250 ms gate. Unlike the earlier attempt, it remained visible and
+focused throughout. Bounded diagnostics recorded a matching 257 ms long task;
+this narrows the investigation but does not identify a responsible function.
+All owned resources released to zero. The [full negative report](fpv-authored-urban-lifecycle-invalid-framegap-20261015.json)
+is preserved, and no partial duration is counted as endurance.
+
+The authoring page currently rebuilds and inserts the full diagnostic JSON every
+second, even with its details closed. That is avoidable observer work; its cost
+and main-thread scheduling need investigation before another full attempt. A
+matching long-task entry alone cannot distinguish simulation, report generation,
+layout, garbage collection or host work. Keep exact frozen evidence and acceptance
+gates unchanged. Normal serial art/player gates and independent D6 checks resume.
+
 ## 15 October, 17:13 UTC — Lunar admitted; surface and recovery increments merged
 
 This checkpoint supersedes older status below. The full roadmap remains **open**.
