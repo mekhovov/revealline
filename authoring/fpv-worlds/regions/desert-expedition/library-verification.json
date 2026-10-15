@@ -18,8 +18,8 @@
     "advertised": true,
     "verifiedResponses": 2051
   },
-  "existingMainPinIdentitiesPreserved": 5,
-  "appearance": "plain",
+  "existingMainPinIdentitiesPreserved": 6,
+  "appearance": "desert",
   "nativeVerified": false,
   "packageVerified": false,
   "releaseReady": false,
@@ -29,6 +29,17 @@
     "advertised": true,
     "verifiedResponses": 2051,
     "appearance": "plain",
+    "notAnExactPackage": true
+  },
+  "integratedAppearanceCheck": {
+    "main": "740116d53ada0fecfd5398357e1df19801edf274",
+    "cell512Supported": true,
+    "advertised": true,
+    "verifiedResponses": 2051,
+    "appearance": "desert",
+    "unknownIdentityAppearance": "plain",
+    "qualityTiers": 3,
+    "existingMainPinIdentitiesPreserved": 6,
     "notAnExactPackage": true
   }
 }

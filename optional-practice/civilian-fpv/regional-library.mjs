@@ -15,6 +15,7 @@ export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
     uk: '16,384 × 16,384 км · шість ландшафтів і шість стартових точок · вільний політ без заліку. Досліджуйте широкі дюни, сухе русло, соляну улоговину, уступ, прохід між плато та кам’янисту рівнину. Раннє дослідження великих форм рельєфу.',
   },
   bytes: 47883876,
+  appearance: { terrain: 'desert' },
   pin: {
     url: 'https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json',
     bytes: 327361,
@@ -148,7 +149,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(terrain))
+  if (!['plain', 'canyon', 'urban', 'railway', 'tropical', 'desert'].includes(terrain))
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,
