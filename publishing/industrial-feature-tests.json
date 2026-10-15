@@ -123,6 +123,7 @@
     {
       "id": "recordings",
       "files": [
+        "game/test/fpv-endurance-attribution.test.mjs",
         "game/test/multiplayer-recording.test.mjs",
         "game/test/terminal-recording-export.test.mjs",
         "game/test/recording-verification-navigation.test.mjs",
