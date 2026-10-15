@@ -108,8 +108,9 @@ and mismatched package revisions fail admission. All original runtime and source
 archives are admitted even when the exercise protocol stages only Gym.
 
 The Gym observer uses visible measurements and ordinary R/F input, requires
-ordered checkpoints and a native replay-backed completion mark, then exports
-through Settings → Data. It independently replays that actual export with the
+ordered checkpoints and a native replay-backed completion mark, then returns
+through the result scene's Home action and exports through Settings → Data.
+It independently replays that actual export with the
 same native catalogue/model and byte-matched dependency closure outside the
 browser. Missing, changed or newly unpinned replay dependencies fail closed. The
 replay must not be used to drive a browser or manufacture an exercise result.

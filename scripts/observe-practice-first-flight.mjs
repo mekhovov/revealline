@@ -286,8 +286,13 @@ const activate = activateFirstFlightControl;
 
 export async function returnFirstFlightHome(page, spec, result) {
   const primary = page.locator(`#${spec.shell}-action-primary`);
-  const back = `#${spec.shell}-action-settings-back`;
-  const settings = page.locator(`#${spec.shell}-settings-dialog`);
+  const customWorldSettings = spec.package === 'fpv-worlds' && spec.locale !== undefined;
+  const back = customWorldSettings ? '#close-sim-settings' : `#${spec.shell}-action-settings-back`;
+  const settings = page.locator(
+    customWorldSettings ? '#sim-settings' : `#${spec.shell}-settings-dialog`,
+  );
+  // Worlds v2 opens its own modal; the shell's unused settings dialog stays
+  // closed and its underlying Home stays open but inert until this modal closes.
   // A mode change can reset the settings panel stack. Observe the public
   // dialog's open state: Home can remain laid out behind this modal, so its
   // isVisible() is not evidence that Settings has closed or Home is actionable.
