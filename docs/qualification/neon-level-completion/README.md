@@ -2,6 +2,8 @@
 
 This follow-up closes the missing distribution galleries and records complete moving-enemy wins for the existing 16 Reference and 38 Words & Symbols levels. It preserves all level geometry, enemy placements, artwork and mission identities. Local unit suites and Ukrainian translation remain deferred at the user's request.
 
+The follow-up [browser acceptance record](browser-acceptance.md) supersedes the earlier password-gate limitation below. Both galleries are now live, the creator round trip has browser evidence, and a real retained-picture restart defect is corrected in this branch.
+
 ## Delivered changes
 
 - The distribution includes the Neon artwork and Mosaic layout galleries, their images, editable scenarios and linked documentation.
@@ -58,15 +60,15 @@ Every supplied receipt is replayed; `--resume` does not trust an existing succes
 
 | Plan item | Status | Exact next acceptance |
 |---|---|---|
-| R1 — review galleries and links | Implemented; local build and source browser checked | After merge/publication, confirm both Pages galleries load and a fresh authorized profile opens the selected current mission. |
-| R2 — complete playable wins | Complete for the documented 216-run matrix | Human play/balance and broader seed/class/device sampling are explicitly outside these deterministic receipts. |
+| R1 — review galleries and links | Published galleries, Channels and FPV launch checked | Independent-recipient and mouse activation qualification remain in R5. |
+| R2 — complete playable wins | All 216 routes reverified after rebase; see [receipt](rebase-verification.json) | Human play/balance and broader seed/class/device sampling are explicitly outside these deterministic receipts. |
 | R3 — fidelity, symbols and pictures | Static review complete; in-game acceptance pending | Inspect partial reveals, completed reward crops and actor/trail contrast for all 77 paintings through the normal game UI. |
-| R4 — creator workflow | Existing implementation reviewed; browser round trip pending | Text and opaque/transparent/inverted image → preview → Apply → edit → play → export → re-import; compare geometry, enemies and reveal art. Exercise Undo, invalid/oversized files, delayed decoding, edits during import and Cyrillic text. |
-| R5 — sharing and discovery | Exact links and gallery discovery improved; browser matrix pending | Copy/fallback, refresh, retry/Next, fresh recipient, base/Neon/optional packs and unavailable/retired identity handling. The normal Journey remains separate from the Classic mission catalog. |
+| R4 — creator workflow | Cyrillic text round trip, Undo, play, image formats and rejection cases passed | Complete image-generated geometry edit/re-import and delayed decode/import cancellation. See [browser cases](browser-acceptance.md). |
+| R5 — sharing and discovery | Public launches and refresh checked; retained-picture restart/Retry defect fixed and locally verified | Merge/recheck the fix on Pages; actual clipboard/fallback, Next, independent recipient, broader pack/difficulty matrix and unavailable/retired identities remain. |
 | R6 — offline upgrades and preservation | Repeatable inventory and build descriptors checked; installed-profile acceptance pending | Install each pack online, restart offline, interrupt retrieval, update an older installed profile, resume saves and confirm custom art/progress survives. Never clear a user's existing profile to make a check pass. |
 | R7 — route variety | No evidence-backed geometry correction identified | Human route-variety review can flag specific repeated decisions; unique hashes and a winning bot route are not a substitute. |
 | R8 — optional/deferred work | Deferred as agreed | No unit-test expansion, Ukrainian translation, new level batch or hosted custom-level publishing in this follow-up. |
 
-The browser's ordinary password unlock is required for the pending in-game, creator and installed-profile checks. It was requested from the user; no credential or authenticated session was supplied during this pass. The gate was not disabled, bypassed or simulated. These items remain open rather than being described as completed.
+The earlier gallery-only pass stopped at the password gate. The user subsequently authorized the normal unlock, enabling the checks recorded in [browser acceptance](browser-acceptance.md). Credentials were not saved in this report. Offline upgrades, full in-game artwork review and the listed edge cases remain open.
 
-After this PR is merged, verify the Pages release marker contains the merged changes before reporting the gallery URLs as live. The inventory and visual ledger contain exact public play URLs for review; those URLs are not a claim of completed recipient acceptance.
+PR #1360 is merged and both galleries are verified live. The retained-picture correction in this follow-up still needs merge and public recheck. Exact URLs in the inventory remain useful review links; they do not imply that every recipient/offline case has passed.
