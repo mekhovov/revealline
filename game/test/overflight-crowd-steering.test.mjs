@@ -4,6 +4,7 @@ import {
   createOverflightGrid,
   rebuildOverflightGrid,
   overflightCrowdSeparation,
+  visitOverflightGrid,
 } from '../overflight/grid.mjs';
 import { createOverflightProject, compileOverflightProject } from '../overflight/project.mjs';
 import {
@@ -230,12 +231,17 @@ test('local broad phase matches every nearby body across rebuilds, radii and are
       if (frame === 1 && record.id % 19 === 0) record.active = !record.active;
     }
     rebuildOverflightGrid(grid, records);
+    const before = [];
+    visitOverflightGrid(grid, 256, 128, 600, (enemy) => before.push(enemy.id));
     for (let index = 0; index < records.length; index++) {
       const actual = overflightCrowdSeparation(grid, index, grid.maxRadius, scratch);
       const expected = records[index].active ? reference(records[index]) : { x: 0, y: 0 };
       close(actual.x, expected.x);
       close(actual.y, expected.y);
     }
+    const after = [];
+    visitOverflightGrid(grid, 256, 128, 600, (enemy) => after.push(enemy.id));
+    assert.deepEqual(after, before, 'local indexing preserves the exact-query candidate order');
   }
 });
 
