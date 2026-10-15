@@ -23,9 +23,9 @@ the native completion/result/checkmark, and released input keys. It captures
 completion before entering Settings → Data to export the actual transcript.
 The standalone runner independently replays that export with the exact native
 catalogue/model and byte-matched seven-file dependency closure from the admitted
-Gym package. Future unlisted imports fail closed. Run each frozen candidate in
-a fresh process; this verifier is not intended to span repository revisions
-through a long-lived Node module cache.
+Gym package. Future unlisted imports fail closed. The final verifier runs each
+replay in a fresh isolated Node process, not the browser or a long-lived module
+cache. This is process isolation, not a filesystem/network security sandbox.
 
 The whole envelope, including original runtime/source archives and inventories,
 is admitted before staging. Gym plans bind Gym's revision; the generic loader's
@@ -96,6 +96,42 @@ laid out behind the modal does not establish that Home is actionable. Observe
 and close the actual native modal with its public Back controls before Play.
 Keep v1's original workflow unchanged, and add a regression for v2's real modal.
 This is a test-navigation correction, not evidence of broken simulator controls.
+
+### Corrected ten-case matrix
+
+The [unchanged-candidate retry](flight-practice-player-flow-20261015/modes-completed.json)
+and [complete artifacts](flight-practice-player-flow-20261015/modes-completed-artifacts.tgz)
+pass all ten cases. Each has the expected actual document language and visible
+Settings label. Both FPV hosts retain the selected Self-level/Acro mode after
+Start. Visible movement, four paused samples over 600 ms, reset, second movement
+and second pause all pass. Screenshots and observer authorities are retained;
+owned browser/server/temporary-site cleanup passes. `qualified` remains false.
+
+### Second Gym attempt: export succeeded, replay assumption rejected
+
+The [second original report](flight-practice-player-flow-20261015/gym-incomplete-replay.json)
+and [complete artifacts](flight-practice-player-flow-20261015/gym-incomplete-replay-artifacts.tgz)
+show native completion and successful normal-UI export in both locales. Each
+actual transcript contains four commands and 75 ticks. Replay rejected the
+packaged `game/i18n/catalogs.mjs` because it is intentionally a generated locale
+subset, not the full repository catalogue. Both aggregate cases remain failed;
+their original reports are not rewritten after the verifier correction.
+
+The builder generates that JSON-only projection at
+`scripts/build-optional-practice.mjs:302`. The corrected verifier still requires
+all six executable model/catalogue/validation/i18n modules to match repository
+bytes and rejects unlisted imports. It validates the seventh module as the
+builder's exact JSON-only bilingual projection, then copies **all seven admitted
+files** unchanged into its own temporary directory. A fresh Node child replays
+the actual exported transcript with those bytes. A local `type: module` loader
+fixture is neither packaged nor served. The child inherits no environment,
+has a ten-second deadline and 64 KiB output limit, and its staged hashes are
+checked before cleanup. Cleanup failure cannot produce success. This replaces
+the invalid full-repository-catalogue comparison; it does not bypass admission.
+
+Independent review found no blocking issue. Regression checks also reject
+executable suffixes/IIFEs and incorrect locale roots in projected catalogues.
+The earlier snapshots retain the first verifier for auditability.
 
 ## Acceptance boundary
 
