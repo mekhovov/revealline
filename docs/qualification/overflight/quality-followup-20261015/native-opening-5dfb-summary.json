@@ -1,0 +1,778 @@
+{
+  "format": "OverflightMeasurementsV1",
+  "capturedAt": "2026-10-15T04:20:45.427Z",
+  "fixture": null,
+  "benchmarkTrial": "1",
+  "measureAt": null,
+  "prototype": null,
+  "review": {
+    "automated": true,
+    "build": "echo",
+    "stopAt": null,
+    "route": "tight",
+    "inputHz": 10,
+    "upgradeDelayMs": 1500
+  },
+  "clipCaptureUsed": false,
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "devicePixelRatio": 2
+  },
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "appearance": {
+    "projectIdentity": "ee9692692f3c3aa7",
+    "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+    "presentation": {
+      "id": "field-kit",
+      "revision": 104
+    },
+    "themeIdentity": "9670af00f1ea5378",
+    "familyId": "industrial-workshop",
+    "familyRevision": "r3",
+    "interfaceId": "industrial-workshop",
+    "interfaceRevision": "r3",
+    "arcade": {
+      "id": "industrial-workshop",
+      "revision": "r2"
+    },
+    "actorArtRevision": "industrial-roster-v3",
+    "equipment": {
+      "id": "overflight-field-kit",
+      "revision": 1
+    },
+    "materialStyle": "steel",
+    "materialVariant": "steel",
+    "characterId": "scout",
+    "playerSlot": "player.scout.detailed",
+    "cast": "authored",
+    "visualIdentity": "7991fdd94797933d"
+  },
+  "projectIdentity": "ee9692692f3c3aa7",
+  "seed": 17031991,
+  "summary": {
+    "flight": {
+      "id": "balanced",
+      "speed": 180,
+      "boostSpeed": 330,
+      "maxHull": 100
+    },
+    "format": "OverflightRunSummaryV1",
+    "projectId": "riy-survivor-relay-ruins-receiver-gardens",
+    "projectIdentity": "ee9692692f3c3aa7",
+    "seed": 17031991,
+    "phase": "playing",
+    "outcome": "incomplete",
+    "reason": null,
+    "fixture": null,
+    "fixtureWorkload": null,
+    "time": 139.23333333333332,
+    "tick": 8354,
+    "airframes": 3,
+    "airframesRemaining": 3,
+    "stats": {
+      "kills": 438,
+      "spawned": 590,
+      "enemiesAlive": 152,
+      "enemiesVisible": 66,
+      "peakAlive": 175,
+      "peakVisible": 110,
+      "heaviesAlive": 1,
+      "specialistsAlive": 6,
+      "priorityAttacks": 0,
+      "damageDealt": 17499.299999999992,
+      "damageTaken": 20,
+      "damageCauses": {
+        "contact": 20,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 0,
+      "xpEarned": 679,
+      "xpCollected": 536,
+      "xpOnGround": 143,
+      "pickupsAlive": 104,
+      "pickupMerges": 0,
+      "boostsUsed": 28,
+      "airframesLost": 0,
+      "upgradesChosen": 6,
+      "rerollsUsed": 0,
+      "droppedVisualEffects": 0,
+      "collisionCandidates": 36026,
+      "hits": 1754,
+      "retired": 0,
+      "spawnDeferred": 0,
+      "fixtureDefeats": 0,
+      "projectileDeferrals": 0,
+      "guardDamageBlocked": 0,
+      "armorSegmentsBroken": 62,
+      "warningDeferrals": 33,
+      "motionDeferrals": 25
+    },
+    "build": {
+      "primary": {
+        "rank": 4,
+        "branch": "double",
+        "evolved": true
+      },
+      "combat": [],
+      "support": null,
+      "reinforcement": 0,
+      "repair": 0
+    },
+    "upgrades": [
+      {
+        "id": "primary:double:2",
+        "time": 21.516666666666666,
+        "tick": 1291
+      },
+      {
+        "id": "riy-sweeper:trail:2",
+        "time": 35.166666666666664,
+        "tick": 2110
+      },
+      {
+        "id": "riy-breaker:burst:2",
+        "time": 51.916666666666664,
+        "tick": 3115
+      },
+      {
+        "id": "primary:double:3",
+        "time": 62.35,
+        "tick": 3741
+      },
+      {
+        "id": "primary:double:4",
+        "time": 88.45,
+        "tick": 5307
+      },
+      {
+        "id": "riy-sweeper:trail:3",
+        "time": 132.36666666666667,
+        "tick": 7942
+      }
+    ],
+    "goals": {
+      "eliteSpawned": true,
+      "eliteDefeated": false,
+      "finalSpawned": false,
+      "finalDefeated": false,
+      "finalId": null
+    },
+    "operation": "overflight-riy",
+    "escortCommands": 17,
+    "escortEngagements": 17,
+    "escortShots": [
+      {
+        "role": "sweeper",
+        "shots": 107
+      },
+      {
+        "role": "breaker",
+        "shots": 83
+      }
+    ],
+    "escortUpgrades": [
+      {
+        "role": "sweeper",
+        "rank": 3,
+        "branch": "trail"
+      },
+      {
+        "role": "breaker",
+        "rank": 2,
+        "branch": "burst"
+      }
+    ],
+    "appearance": {
+      "projectIdentity": "ee9692692f3c3aa7",
+      "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+      "presentation": {
+        "id": "field-kit",
+        "revision": 104
+      },
+      "themeIdentity": "9670af00f1ea5378",
+      "familyId": "industrial-workshop",
+      "familyRevision": "r3",
+      "interfaceId": "industrial-workshop",
+      "interfaceRevision": "r3",
+      "arcade": {
+        "id": "industrial-workshop",
+        "revision": "r2"
+      },
+      "actorArtRevision": "industrial-roster-v3",
+      "equipment": {
+        "id": "overflight-field-kit",
+        "revision": 1
+      },
+      "materialStyle": "steel",
+      "materialVariant": "steel",
+      "characterId": "scout",
+      "playerSlot": "player.scout.detailed",
+      "cast": "authored",
+      "visualIdentity": "7991fdd94797933d"
+    },
+    "review": {
+      "automated": true,
+      "build": "echo",
+      "stopAt": null,
+      "route": "tight",
+      "inputHz": 10,
+      "upgradeDelayMs": 1500
+    }
+  },
+  "feedback": {
+    "audioEnabled": true,
+    "contextState": "running",
+    "masterMuted": true,
+    "commentator": {
+      "cache": {
+        "buffers": 0,
+        "decodedBytes": 0,
+        "loading": 0,
+        "generation": 11,
+        "closed": false
+      },
+      "incidents": 1,
+      "suspended": false,
+      "speaking": false
+    }
+  },
+  "renderer": {
+    "renderer": "Phaser 4.2.1 WebGL",
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "backingWidth": 960,
+    "backingHeight": 540,
+    "atlas": {
+      "width": 2040,
+      "height": 1964,
+      "maxTextureSize": 2048,
+      "spriteRGBABytes": 16026240,
+      "pages": [
+        {
+          "index": 0,
+          "width": 2040,
+          "height": 1964,
+          "frameCount": 1327
+        }
+      ],
+      "textures": 7,
+      "worldRGBABytes": 12441600,
+      "worldTiles": [
+        {
+          "index": 0,
+          "x": 0,
+          "y": 0,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 1,
+          "x": 960,
+          "y": 0,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 2,
+          "x": 1920,
+          "y": 0,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 3,
+          "x": 0,
+          "y": 540,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 4,
+          "x": 960,
+          "y": 540,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "index": 5,
+          "x": 1920,
+          "y": 540,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "baseRGBABytes": 28467840,
+      "groundRGBABytes": 0,
+      "groundTileEdge": 256,
+      "retainedCanvasBytes": 28467840,
+      "preparationScratchBytes": 16384,
+      "customActorFrames": 0,
+      "acceptedActorOverrides": [],
+      "combatStateFrames": 420,
+      "escortFrames": 24,
+      "soldierFrames": 216,
+      "machineryFrames": 36,
+      "heroFrames": 12,
+      "equipmentFrames": 13,
+      "remainsFrames": 120,
+      "defeatFrames": 480,
+      "frameCount": 1327
+    },
+    "heroArtwork": {
+      "assetId": "player.scout.detailed.field-kit",
+      "playerSlot": "player.scout.detailed",
+      "rotorCount": 4,
+      "visibleDiameter": 34,
+      "bakedFrameSize": 64,
+      "rotorFrames": 12,
+      "rotorRadii": [
+        9.254350728498977,
+        9.254350728498977,
+        9.254350728498977,
+        9.254350728498977
+      ],
+      "paintedWidth": 44.06833680237608,
+      "paintedHeight": 44.06833680237608
+    },
+    "counts": {
+      "alive": 152,
+      "visible": 66,
+      "rendered": 69,
+      "effects": 2,
+      "pickups": 64,
+      "warnings": 0,
+      "behaviorCues": 27,
+      "remains": 320,
+      "defeats": 0,
+      "quads": 513
+    },
+    "allocatedSprites": 750,
+    "remains": {
+      "stored": 438,
+      "capacity": 1024,
+      "sequence": 438,
+      "evicted": 0,
+      "missed": 0,
+      "limits": {
+        "capacity": 1024,
+        "visible": 320,
+        "moving": 24,
+        "settleSeconds": 0.34
+      }
+    },
+    "destruction": {
+      "showRemains": true,
+      "brutal": false,
+      "blood": true
+    },
+    "fixture": null,
+    "reducedEffects": false,
+    "preparationMs": 68.80000000447035,
+    "contextLosses": 0,
+    "contextRestores": 0,
+    "contextRecoveryTests": 0,
+    "lost": false,
+    "failed": false,
+    "valid": true,
+    "invalidReasons": [],
+    "cadenceMs": {
+      "samples": 18005,
+      "p50": 8.199999995529652,
+      "p95": 9.900000005960464,
+      "p99": 15.700000002980232,
+      "worst": 149.70000000298023
+    },
+    "submissionMs": {
+      "samples": 18006,
+      "p50": 0.4000000059604645,
+      "p95": 1.1000000014901161,
+      "p99": 1.5,
+      "worst": 5.0999999940395355
+    },
+    "cadenceHz": 120.02805209903978,
+    "measuredIntervals": 18005,
+    "measuredSeconds": 150.0066000000015,
+    "retainedIntervals": 18005,
+    "sampleCapacity": 120000,
+    "submissionTotalMs": 9316.99999988079,
+    "over33Ms": 65,
+    "over50Ms": 24,
+    "over100Ms": 3,
+    "exclusions": {},
+    "highWater": {
+      "alive": 175,
+      "visible": 110,
+      "rendered": 118,
+      "effects": 34,
+      "pickups": 101
+    },
+    "protocol": {
+      "arrangement": "One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.",
+      "warmupSeconds": 30,
+      "measurementSeconds": 120,
+      "repetitions": 1,
+      "renderClock": "Foreground rendering continues through ordinary upgrade drafts; draft wall-time is included while the simulation is paused.",
+      "phaseAttribution": "Intervals are labelled by the run phase at completed render; transition intervals include work leading into that phase.",
+      "windows": [
+        {
+          "index": 1,
+          "complete": true,
+          "measuredSeconds": 120.00060000000148,
+          "phaseCoverage": {
+            "playing": {
+              "samples": 13523,
+              "seconds": 112.49769999999506
+            },
+            "upgrade": {
+              "samples": 846,
+              "seconds": 7.502900000005966
+            },
+            "other": {
+              "samples": 0,
+              "seconds": 0
+            }
+          },
+          "cadenceMs": {
+            "samples": 14369,
+            "p50": 8.199999995529652,
+            "p95": 10,
+            "p99": 16.100000001490116,
+            "worst": 149.70000000298023
+          },
+          "cadenceHz": 119.74106796132537,
+          "slowFraction": 0.003549307537058946,
+          "passes": true
+        }
+      ],
+      "acceptance": true,
+      "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+    }
+  },
+  "resourceSamples": [
+    {
+      "time": 0,
+      "alive": 0,
+      "visible": 0,
+      "rendered": 0,
+      "effects": 0,
+      "pickups": 0,
+      "warnings": 0,
+      "behaviorCues": 0,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 21,
+      "allocatedSprites": 15,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 48043140,
+      "heapTotalBytes": 57777752,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 15,
+      "alive": 22,
+      "visible": 17,
+      "rendered": 17,
+      "effects": 1,
+      "pickups": 0,
+      "warnings": 2,
+      "behaviorCues": 0,
+      "remains": {
+        "stored": 3,
+        "capacity": 1024,
+        "sequence": 3,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 47,
+      "allocatedSprites": 53,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 87501033,
+      "heapTotalBytes": 100399617,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 30,
+      "alive": 17,
+      "visible": 17,
+      "rendered": 17,
+      "effects": 1,
+      "pickups": 1,
+      "warnings": 1,
+      "behaviorCues": 0,
+      "remains": {
+        "stored": 37,
+        "capacity": 1024,
+        "sequence": 37,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 1,
+      "quads": 83,
+      "allocatedSprites": 124,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 89267847,
+      "heapTotalBytes": 102124415,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 45,
+      "alive": 27,
+      "visible": 20,
+      "rendered": 22,
+      "effects": 1,
+      "pickups": 0,
+      "warnings": 1,
+      "behaviorCues": 36,
+      "remains": {
+        "stored": 56,
+        "capacity": 1024,
+        "sequence": 56,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 153,
+      "allocatedSprites": 193,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 51999367,
+      "heapTotalBytes": 75217451,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 60,
+      "alive": 45,
+      "visible": 36,
+      "rendered": 41,
+      "effects": 9,
+      "pickups": 10,
+      "warnings": 2,
+      "behaviorCues": 57,
+      "remains": {
+        "stored": 102,
+        "capacity": 1024,
+        "sequence": 102,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 4,
+      "quads": 238,
+      "allocatedSprites": 285,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 53678385,
+      "heapTotalBytes": 76601389,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 75,
+      "alive": 39,
+      "visible": 27,
+      "rendered": 28,
+      "effects": 0,
+      "pickups": 2,
+      "warnings": 1,
+      "behaviorCues": 25,
+      "remains": {
+        "stored": 147,
+        "capacity": 1024,
+        "sequence": 147,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 170,
+      "allocatedSprites": 344,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 63471362,
+      "heapTotalBytes": 78995694,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 90,
+      "alive": 113,
+      "visible": 75,
+      "rendered": 78,
+      "effects": 12,
+      "pickups": 0,
+      "warnings": 2,
+      "behaviorCues": 124,
+      "remains": {
+        "stored": 171,
+        "capacity": 1024,
+        "sequence": 171,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 1,
+      "quads": 401,
+      "allocatedSprites": 462,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 54416992,
+      "heapTotalBytes": 72710212,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 105,
+      "alive": 115,
+      "visible": 71,
+      "rendered": 73,
+      "effects": 2,
+      "pickups": 19,
+      "warnings": 0,
+      "behaviorCues": 59,
+      "remains": {
+        "stored": 228,
+        "capacity": 1024,
+        "sequence": 228,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 376,
+      "allocatedSprites": 530,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 55623003,
+      "heapTotalBytes": 74058787,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 120,
+      "alive": 150,
+      "visible": 81,
+      "rendered": 89,
+      "effects": 3,
+      "pickups": 38,
+      "warnings": 1,
+      "behaviorCues": 60,
+      "remains": {
+        "stored": 296,
+        "capacity": 1024,
+        "sequence": 296,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 483,
+      "allocatedSprites": 642,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 61508159,
+      "heapTotalBytes": 90521147,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 135,
+      "alive": 167,
+      "visible": 79,
+      "rendered": 92,
+      "effects": 10,
+      "pickups": 88,
+      "warnings": 9,
+      "behaviorCues": 44,
+      "remains": {
+        "stored": 406,
+        "capacity": 1024,
+        "sequence": 406,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 3,
+      "quads": 606,
+      "allocatedSprites": 750,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 52615307,
+      "heapTotalBytes": 94466803,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    }
+  ],
+  "trialValid": true,
+  "rawOverflow": 0,
+  "invalidReasons": [],
+  "simulationSamples": 8216,
+  "clock": {
+    "steps": 8354,
+    "droppedSeconds": 0,
+    "accumulator": 0.015383333330353074
+  },
+  "longFrames": 20,
+  "frameSamples": 16976,
+  "rawPages": 16
+}
