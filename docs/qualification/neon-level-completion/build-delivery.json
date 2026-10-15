@@ -3,9 +3,9 @@
   "scope": "Distribution files, exact links and offline descriptors; not browser installation or public deployment acceptance.",
   "version": "0.151.1",
   "buildSourceRevision": null,
-  "distributionSHA256": "ff378f6727f302bde691b83b3cf4c0e81c8227fd8fdadf5de35a83252c1fc8d4",
-  "distributionFiles": 3488,
-  "coreBytes": 71907808,
+  "distributionSHA256": "a7024b6f4d52b39080d321794baba879fa96ffb19269104f35a8a4db69443110",
+  "distributionFiles": 3491,
+  "coreBytes": 71918306,
   "reviewFilesOutsideCore": 141,
   "reviewBytesOutsideCore": 33042827,
   "galleries": [
