@@ -621,7 +621,7 @@ export function mountRegionalLibrary({
       } else if (kind === 'fly') {
         show('Checking saved scenery…', 'Перевірка збереженої місцевості…');
         const configuration = await waitFor(
-          store.load(row.id, { sha256: row.saved.sha256 }),
+          store.load(row.id, { sha256: row.saved.sha256, signal }),
           signal,
         );
         signal.throwIfAborted();
