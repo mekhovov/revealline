@@ -545,6 +545,8 @@ export function mountRegionalLibrary({
   tools.append(refresh, cancel);
   root.append(heading, help, tools, message, cards);
   parent.before(home, root);
+  const failedLoads = new Set();
+  const failureKey = (row) => `${row.id}:${row.saved?.sha256 ?? row.pin?.sha256}`;
   let closed = false,
     operation = null,
     epoch = 0,
@@ -704,7 +706,21 @@ export function mountRegionalLibrary({
           'aria-label',
           `${txt('Remove this version', 'Вилучити цю версію')}: ${actionName}`,
         );
-        buttons.append(play, remove);
+        buttons.append(play);
+        if (row.pin && failedLoads.has(failureKey(row))) {
+          const repair = action(
+            txt('Repair download', 'Відновити завантаження'),
+            () => run('repair', row),
+            Boolean(operation),
+          );
+          repair.dataset.regionAction = 'repair';
+          repair.setAttribute(
+            'aria-label',
+            `${txt('Repair download', 'Відновити завантаження')}: ${actionName}`,
+          );
+          buttons.append(repair);
+        }
+        buttons.append(remove);
         if (records.filter((record) => record.id === row.id).length > 1) {
           const removeAll = action(
             txt('Remove all versions', 'Вилучити всі версії'),
@@ -792,13 +808,30 @@ export function mountRegionalLibrary({
     operation = controller;
     if (kind === 'refresh') show('', '');
     paint();
-    const deadline = regionalOperationDeadline(win, controller, kind);
-    let committed = false,
+    const deadline = regionalOperationDeadline(
+      win,
+      controller,
+      kind === 'repair' ? 'install' : kind,
+    );
+    let verifiedLoad = false,
+      committed = false,
       committedRefreshDeadline = null;
     try {
       const store = await waitFor(dbReady, signal);
       signal.throwIfAborted();
-      if (kind === 'install') {
+      if (kind === 'install' || kind === 'repair') {
+        if (
+          kind === 'repair' &&
+          (!row.saved ||
+            !failedLoads.has(failureKey(row)) ||
+            !pins.some(
+              (offered) =>
+                offered.id === row.id &&
+                offered.pin.sha256 === row.saved.sha256 &&
+                offered.pin === row.pin,
+            ))
+        )
+          throw new Error('Repair requires the exact offered saved revision');
         show('Checking regional download…', 'Перевірка завантаження регіону…');
         const options = {
           pageURL: win.location.href,
@@ -821,7 +854,9 @@ export function mountRegionalLibrary({
         if (inspected.descriptor.id !== row.id)
           throw new Error('Regional catalogue identity mismatch');
         signal.throwIfAborted();
-        await store.install(row.pin, options);
+        if (kind === 'repair') await store.repair(row.pin, { ...options, id: row.id });
+        else await store.install(row.pin, options);
+        failedLoads.delete(failureKey(row));
         committed = true;
         // The atomic save has finished. A metadata refresh must not retain the
         // transaction's uncancellable UI or wait forever after navigation.
@@ -844,6 +879,8 @@ export function mountRegionalLibrary({
           signal,
         );
         signal.throwIfAborted();
+        verifiedLoad = true;
+        failedLoads.delete(failureKey(row));
         if (requestEpoch === epoch && visible())
           await fly(applyRegionalAppearance(configuration, row.saved, pins), row.saved, {
             isCurrent: () => requestEpoch === epoch && visible() && !signal.aborted,
@@ -903,7 +940,17 @@ export function mountRegionalLibrary({
             'Cancelled. Existing downloads are retained.',
             'Скасовано. Наявні завантаження збережено.',
           );
-        else if (error?.name === 'QuotaExceededError')
+        else if (kind === 'fly' && !verifiedLoad && error?.code === 'regional-cache-invalid') {
+          failedLoads.add(failureKey(row));
+          show(
+            row.pin
+              ? 'Saved scenery could not be verified. Choose Repair download to replace only this version’s files. Other versions and saved places are kept.'
+              : 'Saved scenery could not be verified. This exact version is not currently offered for repair. Other versions and saved places are kept.',
+            row.pin
+              ? 'Не вдалося перевірити збережену місцевість. Виберіть «Відновити завантаження», щоб замінити лише файли цієї версії. Інші версії та збережені місця залишаться.'
+              : 'Не вдалося перевірити збережену місцевість. Саме ця версія зараз недоступна для відновлення. Інші версії та збережені місця залишаться.',
+          );
+        } else if (error?.name === 'QuotaExceededError')
           show(
             'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
             'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
@@ -927,7 +974,11 @@ export function mountRegionalLibrary({
           const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
           (
             card?.querySelector(
-              kind.startsWith('review-remove') ? '[data-region-action="confirm-remove"]' : 'button',
+              kind.startsWith('review-remove')
+                ? '[data-region-action="confirm-remove"]'
+                : failedLoads.has(failureKey(row)) && row.pin
+                  ? '[data-region-action="repair"]'
+                  : 'button',
             ) ?? refresh
           ).focus();
         }
