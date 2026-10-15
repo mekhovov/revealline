@@ -35,6 +35,40 @@ visual-only water passage; actual commanded routes in both flight modes; native
 pilot-height and overview review. No Library row or delivery is added by this source
 preparation. Broader artwork and moving subjects remain separate plan items.
 
-Automated source checks passed: all18 canonical GLBs match collision compilation and produce zero glTF validator warnings/errors; all nine terrain cells join at exact seams. There are1,239 sphere sweeps across declared route centre/edges,12 real commanded flights across both modes,12 disarmed start checks and6 actual structure/bed contacts. Visual-water crossing is clear while the bed remains solid. Peak loaded geometry plus textures is1,102,920B, bounded retained/staged composition2,205,840B. Two full regenerations produced41 byte-identical files.
+## Preserved rejection and draft 3 correction
 
-The geometry is a384m first district, not a completed city. Native overview and pilot-height review are pending; no delivery, default catalogue pin, physical-device result or finished realism claim is included.
+The first published source, `district-r1` (native draft 2), remains preserved.
+Native review found a lock deck floating above its walls and conspicuous gaps
+between the masonry arch, banks and deck. Warehouse doorways, supported basin
+piles, courtyard passage and disposal passed, but the composition was too sparse
+and the ground too uniformly tan. That source was not accepted for delivery.
+
+New `district-r2` (native draft 3) adds actual solid load paths: lock supports join
+wall tops at 5 m to the deck underside at 8.1 m; arch banks now meet the deck at
+13.2 m, and continuous spandrels connect the barrel to the deck. These are visible
+matching collision triangles, not painted-over gaps. The original openings and
+all six routes remain unchanged. A regression querying the old serialized draft
+rejects its missing bridge mass; the same queries pass the new source.
+
+One original 128 × 128 mortar/block texture adds restrained stone courses. It is
+reused at metre-derived scale on masonry, paving and lintel surfaces; no licensed
+palette texels change. Repeating UV coordinates are rebased by whole periods per
+triangle, preserving texture phase across cell boundaries while staying within
+the existing ±16 UV limit. Large box faces are subdivided before clipping to
+keep those UV spans bounded. The existing four-texture-per-cell maximum remains;
+no new decoder, shader, resource ceiling or generic PBR feature is introduced.
+Coping bands, pedestrian paving, contrasting public yards and grounded corner
+piers/plinths/top lintels add close-range structure outside door openings.
+
+All 18 canonical GLBs match exact source compilation with zero glTF validator
+warnings/errors; all nine terrain cells join at exact seams. The 1,239 centre/edge
+sphere sweeps, twelve commanded route/mode flights, twelve disarmed starts and
+six deliberate structure/bed contacts pass. Added serialized lock/spandrel contact
+queries and a paved-apron support query pass. Water remains visual-only above a
+solid bed. Loaded geometry plus textures peaks at 1,918,308 bytes; old plus staged
+composition is 3,836,616 bytes, under the unchanged 8 MiB cap. Two independent
+regenerations produced 41 byte-identical files. Payload files total 6,756,656 bytes.
+
+Draft 3 native comparison is pending. This remains a 384 m composition study,
+not a finished city or an accepted representative art standard. Immutable delivery,
+Library admission and all broader player/device/offline gates remain separate.

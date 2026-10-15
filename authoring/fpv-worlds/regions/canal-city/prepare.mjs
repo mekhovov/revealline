@@ -64,6 +64,36 @@ const white = {
   wrapS: 33071,
   wrapT: 33071,
 };
+// Original small repeating surfaces. Licensed wall pixels above remain untouched.
+// Texture density derives from world metres, including clipped cell boundaries.
+const originalTextures = new Map();
+for (const kind of ['stone']) {
+  const width = 128,
+    height = 128,
+    pixels = Buffer.alloc(width * height * 4);
+  for (let y = 0; y < height; y++)
+    for (let x = 0; x < width; x++) {
+      const rowHeight = kind === 'brick' ? 16 : kind === 'timber' ? 128 : 32;
+      const blockWidth = kind === 'brick' ? 40 : kind === 'timber' ? 16 : 64;
+      const row = Math.floor(y / rowHeight);
+      const sx = x + (row % 2 ? blockWidth / 2 : 0);
+      const joint = sx % blockWidth < 2 || (kind !== 'timber' && y % rowHeight < 2);
+      const variation = ((Math.floor(sx / blockWidth) * 17 + row * 23) % 11) - 5;
+      const grain = ((x * 13 + y * 7) % 7) - 3;
+      const base = joint ? 136 : 224 + variation + grain;
+      pixels.set([base, base, base, 255], (y * width + x) * 4);
+    }
+  originalTextures.set(kind, {
+    id: `original-canal-${kind}`,
+    width,
+    height,
+    rgbaBase64: pixels.toString('base64'),
+    magFilter: 9729,
+    minFilter: 9987,
+    wrapS: 10497,
+    wrapT: 10497,
+  });
+}
 const waterPixels = Buffer.alloc(32 * 32 * 4);
 for (let z = 0; z < 32; z++)
   for (let x = 0; x < 32; x++) {
@@ -119,10 +149,10 @@ function clip(polygon, axis, bound, positive) {
   }
   return out;
 }
-function solid(id, positions, indices, color) {
+function solid(id, positions, indices, color, style = 'plain') {
   for (const entry of cells) {
     const { x, z } = entry.cell,
-      key = color.join(',');
+      key = color.join(',') + ':' + style;
     for (let i = 0; i < indices.length; i += 3) {
       let polygon = indices.slice(i, i + 3).map((j) => positions.slice(j * 3, j * 3 + 3));
       for (const [axis, bound, positive] of [
@@ -139,6 +169,7 @@ function solid(id, positions, indices, color) {
           positionsMm: [],
           indices: [],
           color,
+          style,
         });
       const surface = entry.groups.get(key);
       for (let j = 1; j < polygon.length - 1; j++) {
@@ -159,9 +190,19 @@ function solid(id, positions, indices, color) {
   }
 }
 function addBox(box) {
-  const geometry = new THREE.BoxGeometry(...box.size);
+  // Bound each face span before cell clipping, so repeated UVs stay in the existing ±16 profile.
+  const geometry = new THREE.BoxGeometry(
+    ...box.size,
+    ...box.size.map((v) => Math.max(1, Math.ceil(v / 16))),
+  );
   geometry.translate(...box.center);
-  solid(box.id, [...geometry.attributes.position.array], [...geometry.index.array], box.color);
+  solid(
+    box.id,
+    [...geometry.attributes.position.array],
+    [...geometry.index.array],
+    box.color,
+    box.surface ?? 'stone',
+  );
   geometry.dispose();
 }
 for (const q of design.quays)
@@ -169,7 +210,8 @@ for (const q of design.quays)
     id: 'quay',
     center: [(q.min[0] + q.max[0]) / 2, 0.5, (q.min[1] + q.max[1]) / 2],
     size: [q.max[0] - q.min[0], 7, q.max[1] - q.min[1]],
-    color: [0.48, 0.46, 0.4],
+    color: [0.52, 0.53, 0.5],
+    surface: 'stone',
   });
 for (const box of design.boxes) addBox(box);
 for (const roof of design.gables) {
@@ -212,7 +254,18 @@ for (const arch of design.arches)
         [section[0], arch.thickness],
       ])
         positions.push(p[0], p[1] + extra, z);
-    solid(`${arch.id}-${i}`, positions, cubeFaces, arch.color);
+    solid(`${arch.id}-${i}`, positions, cubeFaces, arch.color, 'stone');
+    // Full spandrel above the arch barrel meets the deck; no unsupported floating slab.
+    const fill = [];
+    for (const z of [arch.center[2] - arch.depth / 2, arch.center[2] + arch.depth / 2])
+      for (const [p, upper] of [
+        [section[0], false],
+        [section[1], false],
+        [section[1], true],
+        [section[0], true],
+      ])
+        fill.push(p[0], upper ? 13.2 : p[1] + arch.thickness, z);
+    solid(`${arch.id}-spandrel-${i}`, fill, cubeFaces, arch.color, 'stone');
   }
 for (const placement of design.placements) {
   const { id, asset, x, y, z, scale, yaw } = placement,
@@ -258,20 +311,43 @@ for (const placement of design.placements) {
 }
 for (const entry of cells) {
   for (const surface of [...entry.groups.values()].filter((s) => s.indices.length)) {
-    entry.cell.surfaces.push(surface);
-    entry.textures.set(white.id, white);
-    const normals = [];
+    const { style, ...canonicalSurface } = surface;
+    entry.cell.surfaces.push(canonicalSurface);
+    const texture = ['stone', 'paving', 'brick'].includes(style)
+      ? originalTextures.get('stone')
+      : white;
+    entry.textures.set(texture.id, texture);
+    const normals = [],
+      uvs = [];
     for (let i = 0; i < surface.positionsMm.length; i += 9) {
       const p = surface.positionsMm;
       const n = new THREE.Vector3(p[i + 3] - p[i], p[i + 4] - p[i + 1], p[i + 5] - p[i + 2])
         .cross(new THREE.Vector3(p[i + 6] - p[i], p[i + 7] - p[i + 1], p[i + 8] - p[i + 2]))
         .normalize();
       normals.push(...n.toArray(), ...n.toArray(), ...n.toArray());
+      const axes = Math.abs(n.y) > 0.5 ? [0, 2] : Math.abs(n.x) > 0.5 ? [2, 1] : [0, 1];
+      const repeatM = style === 'brick' ? 2 : style === 'timber' ? 3 : 4;
+      const anchors = axes.map((axis) => {
+        const origin = axis === 0 ? entry.cell.x * 128000 : axis === 2 ? entry.cell.z * 128000 : 0;
+        return Math.floor(
+          (Math.min(...[0, 1, 2].map((v) => p[i + v * 3 + axis])) + origin) / (repeatM * 1000),
+        );
+      });
+      for (let v = 0; v < 3; v++)
+        for (const axis of axes) {
+          const origin =
+            axis === 0 ? entry.cell.x * 128000 : axis === 2 ? entry.cell.z * 128000 : 0;
+          uvs.push(
+            texture === white
+              ? 0.5
+              : (p[i + v * 3 + axis] + origin) / (repeatM * 1000) - anchors[axes.indexOf(axis)],
+          );
+        }
     }
     entry.bindings.push({
       surfaceId: surface.id,
-      textureId: white.id,
-      uvs: Array((surface.positionsMm.length / 3) * 2).fill(0.5),
+      textureId: texture.id,
+      uvs,
       normals,
       colors: [],
       alphaMode: 'OPAQUE',
