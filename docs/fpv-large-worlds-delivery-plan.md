@@ -5,6 +5,57 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — integrated world checks and measured reliability work
+
+This checkpoint supersedes the status below. The full roadmap remains **open**.
+Coordinator: `codex/fpv-admission-diagnostics-review-20261015`, based on `d97f9736`.
+
+- Coaster Library #1392 merged at exact `de3656ba`. Fresh package `07dd0c1b`
+  passes normal 32.6 MiB download, saved review-r2 launch, disarmed restart,
+  corrected Overview rendering, 844×390 Arm/HUD separation and retained download
+  after reload. Earlier failed visual packages remain preserved.
+- Courtyard material source #1431 and immutable delivery #1433 merged. Native
+  r4/r5 comparison shows clearer plaster, stone plinths and painted timber with
+  unchanged openings. Balanced, Quality roof and Performance passage views were
+  inspected; owned resources and colliders return to zero on disposal. This is an
+  incremental improvement, not the representative art standard: sparse surrounds
+  and simple floors remain. Separate Library #1436 preserves the old town revision
+  and awaits exact package/player admission.
+- Alpine #1427 remains draft despite passing automated checks. Exact `d48229cb`
+  package downloads 20.1 MiB and prepares all six starts disarmed at 114, 264, 424,
+  564, 214 and 174 metres; review-r1 remains saved after reload. Integrated Overview
+  exposes a strongly stair-stepped snow boundary and poor high-altitude framing.
+  Fix visual contour clipping and camera framing independently, preserving terrain
+  collision, frozen negative evidence and the older immutable revision.
+- Desert #1424 native heading checks place Mesa and Rocky Plain formations ahead;
+  restoring the saved Mesa place retains its heading. Both landmarks-r1 and
+  natural-r1 install together, but launching the retained natural-r1 timed out in
+  the full player. Both versions survived. This is an open reliability gate;
+  prepared launcher status alone does not establish cached launch or offline play.
+- Storage batching #1432 merged after existing content 12/12, removal 4/4,
+  independent packaged cross-project/rollback checks, 15 package hashes, six ZIP
+  inventories and three import closures. A single instrumented synthetic
+  replacement measured 1,233 ms before / 1,041 ms after; this is not a benchmark or
+  a fix for the Desert timeout. Baseline isolated hash verification took only
+  343–378 ms. Full-player phase diagnosis continues separately. Cancellation-only
+  #1434 stops load verification after cancellation without changing integrity or
+  install semantics; publication remains separately tracked.
+- Authored Urban endurance tool #1435 uses immutable real roads and courtyards.
+  Two accelerated circuits pass 62,753 ticks, twelve crossings and thirteen
+  recentres. Native ten-second smoke completed 10,003 ms / 500 ticks and released
+  owned resources; it crossed no cells and does not establish route endurance.
+  Explicit Stop correctly invalidates a segment. Full real-clock endurance remains.
+- Canal City source #1437 is a separate original 384 m district, with bridges,
+  quay passages and visual-only water. Automated geometry/flight checks pass;
+  native visual acceptance, immutable delivery and Library admission remain open.
+
+Continue in parallel: **P1** diagnose retained-version launch and close exact
+player gates; **P2** finish representative pilot-height art and Alpine corrections;
+**P3** review Canal before delivery and then later distinct authored regions;
+**P4/D6** complete real-region sustained play, broader offline/restart/device checks,
+coverage and deployed launch. Do not infer public availability, physical-controller
+acceptance, final art or whole-roadmap completion from a PR merge.
+
 ## 15 October — navigation and revision safety integrated
 
 This checkpoint supersedes the status immediately below. The full roadmap remains

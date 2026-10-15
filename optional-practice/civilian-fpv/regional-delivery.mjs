@@ -358,22 +358,29 @@ export async function openRegionalLibrary({
         descriptor,
       };
     },
-    async load(id, { sha256 } = {}) {
+    async load(id, { sha256, signal } = {}) {
+      signal?.throwIfAborted();
       const record = await store.get(id, { sha256 });
+      signal?.throwIfAborted();
       assert(record, 'This exact regional revision is not installed');
       const descriptorBlob = record.assets.get('__descriptor.json');
       assert(descriptorBlob, 'Installed regional descriptor is missing');
-      const descriptorBytes = await verifiedBytes(new Response(descriptorBlob), {
-        bytes: record.project.pin.bytes,
-        sha256: record.sha256,
-      });
+      const descriptorBytes = await verifiedBytes(
+        new Response(descriptorBlob),
+        {
+          bytes: record.project.pin.bytes,
+          sha256: record.sha256,
+        },
+        signal,
+      );
       const descriptor = validateRegionalDescriptor(decode(descriptorBytes));
       assert(descriptor.id === id, 'Installed regional identity mismatch');
       const blobs = new Map();
       for (const item of descriptor.files) {
+        signal?.throwIfAborted();
         const blob = record.assets.get(item.path);
         assert(blob, 'Installed regional file is missing');
-        blobs.set(item.path, await verifiedBytes(new Response(blob), item));
+        blobs.set(item.path, await verifiedBytes(new Response(blob), item, signal));
       }
       const [manifest, sceneryManifest] = validatePair(descriptor, blobs);
       // A synthetic origin binds requests to this exact retained revision; no network fallback.

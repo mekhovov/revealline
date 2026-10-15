@@ -84,6 +84,60 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
     },
   },
   {
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — connected park study',
+      uk: 'Сади атракціонів — дослідження парку зі сполученими доріжками',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move.',
+      uk: '2,048 × 2,048 км · шість стартових точок · вільний політ без заліку. Досліджуйте петлю на опорах, сполучені підходи, площі станцій і лісові маршрути. Ранній варіант парку; оформлення районів ще вдосконалюється, атракціони нерухомі.',
+    },
+    bytes: 34214390,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json',
+      bytes: 32824,
+      sha256: '935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a',
+    },
+  },
+  {
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — 2 km study',
+      uk: 'Сади атракціонів — пробний світ 2 км',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six park districts and six starting points · unscored free flight. Explore garden plazas, a looping landmark, station terraces, service halls and woodland paths. Early static park study; rides do not move.',
+      uk: '2,048 × 2,048 км · шість паркових районів і шість стартових точок · вільний політ без заліку. Досліджуйте садові площі, петлю атракціону, тераси станції, службові павільйони й лісові доріжки. Ранній варіант парку; атракціони нерухомі.',
+    },
+    bytes: 33908597,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json',
+      bytes: 29654,
+      sha256: '4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5',
+    },
+  },
+  {
+    id: 'hillside-town-study',
+    title: {
+      en: 'Hillside Town — civic court materials',
+      uk: 'Містечко на схилі — матеріали міського подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.',
+      uk: '384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною.',
+    },
+    bytes: 8660487,
+    appearance: { terrain: 'hillside-town' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json',
+      bytes: 6579,
+      sha256: 'f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573',
+    },
+  },
+  {
     id: 'hillside-town-study',
     title: {
       en: 'Hillside Town — terraces and courtyards',
@@ -243,9 +297,16 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
-      terrain,
-    )
+    ![
+      'plain',
+      'canyon',
+      'urban',
+      'railway',
+      'tropical',
+      'tropical-settlement',
+      'desert',
+      'hillside-town',
+    ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
@@ -585,7 +646,7 @@ export function mountRegionalLibrary({
       } else if (kind === 'fly') {
         show('Checking saved scenery…', 'Перевірка збереженої місцевості…');
         const configuration = await waitFor(
-          store.load(row.id, { sha256: row.saved.sha256 }),
+          store.load(row.id, { sha256: row.saved.sha256, signal }),
           signal,
         );
         signal.throwIfAborted();
