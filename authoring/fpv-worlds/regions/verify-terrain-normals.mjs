@@ -7,6 +7,7 @@ for (let z = -1; z <= 0; z++)
     cells.push({
       x,
       z,
+      cellSizeMm: 128000,
       heightsMm: Array.from({ length: 1089 }, (_, i) => {
         const gx = x * 32 + (i % 33),
           gz = z * 32 + Math.floor(i / 33);
@@ -34,7 +35,7 @@ const reordered = createTerrainNormals([...cells].reverse());
 for (let i = 0; i < cells.length; i++) assert.deepEqual(reordered(cells[i]), frames[i]);
 assert.equal(JSON.stringify(cells), before);
 console.log('PASS ordering-independent presentation and unchanged source heights');
-const flat = { x: 0, z: 0, heightsMm: Array(1089).fill(100) };
+const flat = { x: 0, z: 0, cellSizeMm: 128000, heightsMm: Array(1089).fill(100) };
 for (const value of createTerrainNormals([flat])(flat).values()) assert(Number.isFinite(value));
 assert.deepEqual(sample(createTerrainNormals([flat])(flat), 0, 0), [-0, 1, -0]);
 console.log('PASS isolated outer borders stay finite with one-sided differences');
