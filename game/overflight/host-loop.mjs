@@ -280,7 +280,7 @@ export function overflightReviewControls({ mode, build, route } = {}) {
   if (!build) return { route: null, pilotArgument: null };
   if (mode === 'overflight-hunt')
     return { route: build === 'objectives' ? 'objectives' : 'packs', pilotArgument: build };
-  const selected = ['tight', 'figure-eight'].includes(route) ? route : 'tight';
+  const selected = ['tight', 'figure-eight', 'lure-and-return'].includes(route) ? route : 'tight';
   return { route: selected, pilotArgument: selected };
 }
 
