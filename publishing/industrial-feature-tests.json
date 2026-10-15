@@ -206,7 +206,9 @@
         "game/test/ukraine-role-host.test.mjs",
         "game/test/enemy-stats.test.mjs",
         "game/test/enemy-stats-events.test.mjs",
-        "game/test/team-enemy-stats-ownership.test.mjs"
+        "game/test/team-enemy-stats-ownership.test.mjs",
+        "game/test/mission-library-solo-host.test.mjs",
+        "game/test/solo-result-continuation-host.test.mjs"
       ]
     }
   ]

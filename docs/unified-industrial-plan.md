@@ -22,6 +22,14 @@ Disk recovery uses a worktree-local sparse exclusion for `authoring/fpv-worlds/r
 
 The 15 October rebase includes main `75bbcf576e` and preserves the remote Team appearance regression update. The Team discovery regression now also requires no statistics write until a real defeat. Separate focused mission-library launch/image failures remain unresolved; passing targeted audio/package tests does not close P0 or public-release qualification.
 
+### Mission-library qualification follow-up · 15 October 2026
+
+The follow-up refreshes the native Solo host regressions for the current explicit briefing/Start flow, downloaded chapter classification, real image dimensions and expanded Versus/Team catalogue. The installed-pack fixture now separates named IndexedDB databases. It continues to assert exact mission identity, no unearned clears, failed-download preservation, explicit retries and authored continuation. The library and Solo result-continuation files join the required host-integration CI phase.
+
+Functional waits remain bounded. CI gets additional time for full original-image decoding, catalogue preparation and shared-runner scheduling; these deadlines are not performance acceptance criteria. The isolated installed-Custom launch and six history-picture cases passed locally. A broader local run was interrupted after renewed timeout failures during severe machine load and disk pressure; this is not a passing-suite receipt. Full exact-head CI and the remaining device/physical-audio checks are still required.
+
+The native-audio optional-package regression now follows the shared assisted-flight audio projection: 93 packaged files within the unchanged 96-file allowance, with explicit dependency-closure assertions. Its seven package tests passed locally, and the updated optional-practice CI check passed. P1 does not depend on increasing a package limit.
+
 ## Approval recorded · 4 October 2026
 
 The user explicitly approved the artwork and instructed production to proceed. Earlier entries below describing the art decision as pending are dated delivery history, not current blockers. This clears the treatment gate; it does not approve unrelated changed source slots, merge the stack, or establish device/network qualification.
