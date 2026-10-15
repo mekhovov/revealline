@@ -1,9 +1,7 @@
 import assert from 'node:assert/strict';
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
-import {
-  createTerrainSurface,
-  setRegionalSurfaceQuality,
-} from '../../../optional-practice/civilian-fpv/regional/terrain-surface.mjs';
+import { createTerrainSurface } from '../../../optional-practice/civilian-fpv/regional/terrain-surface.mjs';
+import { setRegionalSurfaceQuality } from '../../../optional-practice/civilian-fpv/renderer.mjs';
 
 function shaderOf(material) {
   const shader = {
