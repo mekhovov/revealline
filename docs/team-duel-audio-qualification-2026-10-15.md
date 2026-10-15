@@ -85,7 +85,10 @@ three cases passed its targeted recheck (one pass and 20 excluded cases per
 invocation). A subsequent complete run of `couch-audio-master.test.mjs` and
 `team-discovery-host.test.mjs` at rebased source `697d59fdd3e452a5e5b385028cface32fdc952fc`
 passes all **37 test nodes**, with no failures, exclusions or cancellations.
-Integrated CI remains its own gate. Changed runtime/tests pass targeted lint and format checks.
+After the landing-recovery change, the final combined host cohort at
+`2a29a9dcfe7c61333c68dd80676205e67809e56c` passes **39/39**, including both
+new recovery tests, with no failures, exclusions or cancellations. Integrated CI
+remains its own gate. Changed runtime/tests pass targeted lint and format checks.
 Model checks are not native decoding or listening evidence.
 
 ## Native digital-output probe
