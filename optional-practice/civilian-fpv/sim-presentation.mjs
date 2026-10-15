@@ -2193,8 +2193,9 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
   status.setAttribute('aria-live', 'polite');
   root.replaceChildren(heading, drawing, viewLabel, inputLabel, motion, detail, status);
   let disposed = false,
-    previousState = '',
-    candidateState = '',
+    previousContext = '',
+    announcedInverted,
+    candidateInverted,
     candidateSince = 0;
   const hide = () => onHide();
   close.addEventListener('click', hide);
@@ -2291,20 +2292,23 @@ export function mountDroneResponse({ root, window: win = globalThis.window, onHi
         'aria-label',
         `${t('Drone response', 'Реакція дрона')}. ${phaseText} ${inverted ? t('Inverted.', 'Догори дном.') : ''} ${travel}. ${motion.textContent}`,
       );
-      // Announce only stable discrete state changes; numeric telemetry is readable on demand.
-      const meaningful = `${locale}|${phase}|${unavailable}|${inverted}`;
+      // Lifecycle changes must agree with the visible controls immediately.
+      // Only inversion is debounced, so a brief roll cannot chatter in the live region.
+      const context = `${locale}|${phase}|${unavailable}`;
       const time = now(win);
-      if (candidateState !== meaningful) {
-        candidateState = meaningful;
+      if (candidateInverted !== inverted) {
+        candidateInverted = inverted;
         candidateSince = time;
       }
-      if (meaningful !== previousState && time - candidateSince >= 650) {
-        previousState = meaningful;
+      const inversionChanged = announcedInverted !== inverted && time - candidateSince >= 650;
+      if (announcedInverted === undefined || inversionChanged) announcedInverted = inverted;
+      if (context !== previousContext || inversionChanged) {
+        previousContext = context;
         set(
           status,
           [
             phaseText,
-            inverted
+            announcedInverted
               ? t('Drone inverted', 'Дрон догори дном')
               : t('Drone upright', 'Дрон у прямому положенні'),
           ]
