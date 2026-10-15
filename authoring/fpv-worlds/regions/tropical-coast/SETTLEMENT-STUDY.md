@@ -41,3 +41,7 @@ Root inspected exact `districts-r2` on isolated origin 9069 using the same froze
 This accepts the **scoped composition improvement only**. Native inspection still found visually sparse areas, broad flat green surfaces, isolated grass and flat water. It does not complete the representative final art standard. The next pass should integrate ground paths, courtyards and shoreline treatment and review the result from pilot eye level, rather than simply add more models or empty acreage.
 
 The exact source remains `terrain=3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5`, `scenery=ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9`. The preserved screenshot is `coastal-districts-r2-village-20261015.png`; native source acceptance does not change any Library entry or package/offline claim.
+
+## Immutable source publication
+
+The strict `FPVRegionalDelivery.v1` descriptor and exact 38-file closure are preserved under immutable source commit `9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c`, at `settlement-delivery-review-r2/delivery.json`. Descriptor size is 6,609 bytes and SHA-256 is `dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49`. The production delivery API fetched all 39 remote responses, verified both manifests and every dependency, and prepared the complete closure. The remote receipt states its scope explicitly: this is not native installation, a Library pin or package admission.
