@@ -6006,12 +6006,26 @@ try {
     journeySkipArmed = runId;
     journeySkipDestination = destination;
     localizedText($('journey-skip'), () => t('interface:confirmSkip'));
-    warning(
-      localizedMessage('interface:solo.universalSkipConfirm', {
-        mission: destination.name,
+    warning(() =>
+      t('interface:solo.universalSkipConfirm', {
+        mission: skipDestinationName(destination),
       }),
     );
     $('journey-skip').focus({ preventScroll: true });
+  }
+  function skipDestinationName(destination) {
+    if (destination.type === 'journey') return contentText(destination.mission, 'name');
+    const { library } = destination.host;
+    return library.find(destination.next.id) === destination.next
+      ? library.presentation(destination.next).name
+      : destination.next.name;
+  }
+  function reportMissionPreparationError(error) {
+    try {
+      console.warn('Mission preparation failed.', error);
+    } catch {
+      // Diagnostics must not interrupt recovery or replace its localized message.
+    }
   }
   function cancelSkipResolution({ restoreFocus = false, announce = true } = {}) {
     const operation = librarySkipResolution;
@@ -6019,7 +6033,7 @@ try {
     librarySkipResolution = null;
     operation.controller.abort();
     operation.feedback?.finish(
-      announce ? t('interface:solo.skipCancelledCurrentFlightKept') : '',
+      announce ? localizedMessage('interface:solo.skipCancelledCurrentFlightKept') : '',
       'cancelled',
     );
     preparationButtonBusy(operation.button, false);
@@ -6045,6 +6059,7 @@ try {
       true,
     );
     preparationButtonBusy(operation.button, true);
+    let failureMessage = localizedMessage('interface:solo.skipUnavailable');
     try {
       const host = await getUnifiedMissionLibrary();
       if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
@@ -6058,7 +6073,10 @@ try {
       }
       const current = currentSoloLibraryMission(host);
       const next = librarySuccessor(host.library, current, 'solo', { wrap: true });
-      if (!next) throw new Error(t('interface:solo.noOtherNormalMission'));
+      if (!next) {
+        failureMessage = localizedMessage('interface:solo.skipNoDestination');
+        throw new Error(t('interface:solo.noOtherNormalMission'));
+      }
       librarySkipResolution = null;
       operation.feedback.finish();
       preparationButtonBusy(operation.button, false);
@@ -6067,17 +6085,14 @@ try {
         host,
         current,
         next,
-        name: next.name,
         snapshot: operation.snapshot,
         skipped: journeySkipMission(),
       });
     } catch (error) {
+      reportMissionPreparationError(error);
       if (librarySkipResolution === operation && skipSnapshotCurrent(operation.snapshot)) {
         librarySkipResolution = null;
-        operation.feedback.finish(
-          localizedMessage('interface:solo.skipUnavailable', { error: error.message }),
-          'error',
-        );
+        operation.feedback.finish(failureMessage, 'error');
         preparationButtonBusy(operation.button, false);
         clearSkipConfirmation();
         operation.button.focus({ preventScroll: true });
@@ -6113,21 +6128,23 @@ try {
     packCommits.markIntent();
     contentSwitchBusy = true;
     refreshContentSelectors();
+    let failureMessage = localizedMessage('interface:solo.openNextFailed');
     try {
       owner.cancel = ({ restoreFocus = false } = {}) => {
         if (journeyLaunch !== owner) return;
         journeyLaunch = null;
         invalidateContentSwitch();
         owner.feedback?.finish(
-          t('interface:preparationCancelledYourCurrentFlightIsKept'),
+          localizedMessage('interface:preparationCancelledYourCurrentFlightIsKept'),
           'cancelled',
         );
         if (restoreFocus) controllerFocus()?.focus({ preventScroll: true });
       };
       owner.feedback = beginPreparation(
-        localizedMessage('interface:solo.preparingNextMission', {
-          mission: contentText(mission, 'name'),
-        }),
+        () =>
+          t('interface:solo.preparingNextMission', {
+            mission: contentText(mission, 'name'),
+          }),
         owner.cancel,
         'preparing',
         true,
@@ -6147,14 +6164,24 @@ try {
         (entry) =>
           entry.sourcePackId === mission.packId && entry.campaign.id === mission.campaignId,
       );
-      if (!authored) throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
-      if (!journeyAuthority.matches(authored))
+      if (!authored) {
+        failureMessage = localizedMessage('interface:thisMissionIsUnavailableInTheCurrentEdition');
+        throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
+      }
+      if (!journeyAuthority.matches(authored)) {
+        failureMessage = localizedMessage(
+          'interface:theInstalledCampaignDiffersFromThisJourneyEditionYourImported',
+        );
         throw new Error(
           t('interface:theInstalledCampaignDiffersFromThisJourneyEditionYourImported'),
         );
+      }
       const entry = executionForEntry(authored, library.preferences.campaignDifficulty);
       const index = entry.campaign.levels.findIndex((level) => level.id === mission.levelId);
-      if (index < 0) throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
+      if (index < 0) {
+        failureMessage = localizedMessage('interface:thisMissionIsUnavailableInTheCurrentEdition');
+        throw new Error(t('interface:thisMissionIsUnavailableInTheCurrentEdition'));
+      }
       contentSwitchBusy = false;
       refreshContentSelectors();
       owner.feedback.finish();
@@ -6167,6 +6194,7 @@ try {
         journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
       return adopted;
     } catch (error) {
+      reportMissionPreparationError(error);
       if (
         journeyLaunch === owner &&
         packLaunchGuard.current(operation, packs) &&
@@ -6174,12 +6202,13 @@ try {
         runId === owner.runId
       ) {
         owner.feedback?.finish(
-          localizedMessage('interface:solo.prepareNextFailed', {
-            mission: contentText(mission, 'name'),
-          }),
+          () =>
+            t('interface:solo.prepareNextFailed', {
+              mission: contentText(mission, 'name'),
+            }),
           'error',
         );
-        warning(localizedMessage('interface:solo.openNextFailed', { error: error.message }));
+        warning(failureMessage);
       }
       return false;
     } finally {
@@ -8930,7 +8959,7 @@ try {
     if (resultAttempt)
       finishResultAttempt(
         resultAttempt,
-        t('interface:preparationCancelledYourResultIsKept'),
+        localizedMessage('interface:preparationCancelledYourResultIsKept'),
         'cancelled',
         restoreFocus,
       );
@@ -8979,7 +9008,7 @@ try {
       controller.abort();
       preparationButtonBusy(button, false);
       feedback?.finish(
-        t('interface:preparationCancelledYourResultIsKeptChooseNextToRetry'),
+        localizedMessage('interface:preparationCancelledYourResultIsKeptChooseNextToRetry'),
         'cancelled',
       );
       if (
@@ -9002,7 +9031,7 @@ try {
     const windowBlur = guardInstallOfflineBlur(lostForeground);
     try {
       feedback = beginPreparation(
-        t('interface:findingTheNextMissionYourResultIsKept'),
+        localizedMessage('interface:findingTheNextMissionYourResultIsKept'),
         operation.cancel,
         'preparing',
         true,
@@ -9019,7 +9048,9 @@ try {
       const row = currentSoloLibraryMission(host);
       const next = librarySuccessor(host.library, row, 'solo');
       if (!next) {
-        feedback.finish(t('interface:endOfTheSoloMissionLibraryReplayOrChooseAnother'));
+        feedback.finish(
+          localizedMessage('interface:endOfTheSoloMissionLibraryReplayOrChooseAnother'),
+        );
         return;
       }
       feedback.update({
@@ -9063,9 +9094,12 @@ try {
         throw new Error(t('interface:theNextMissionCouldNotStart'));
       if (!controller.signal.aborted) feedback.finish();
     } catch (error) {
+      reportMissionPreparationError(error);
       if (run === previous && !controller.signal.aborted && !document.hidden) {
         feedback?.finish(
-          `Could not prepare the next mission: ${error.message} Your result is kept. Choose Next to retry.`,
+          error instanceof ReleasePictureWriteRequiredError
+            ? localizedMessage('errors:picture.writeRequired')
+            : localizedMessage('interface:solo.prepareResultNextFailed'),
           'error',
         );
       }
@@ -9118,7 +9152,7 @@ try {
       detach();
       controller.abort();
       preparationButtonBusy(button, false);
-      feedback?.finish(t('interface:solo.skipCancelledRetry'), 'cancelled');
+      feedback?.finish(localizedMessage('interface:solo.skipCancelledRetry'), 'cancelled');
       const canRestore = skipSnapshotCurrent(destination.snapshot);
       clearSkipConfirmation();
       if (restoreFocus && canRestore && !button.hidden) button.focus({ preventScroll: true });
@@ -9132,9 +9166,10 @@ try {
     }
     try {
       feedback = beginPreparation(
-        localizedMessage('interface:solo.preparingNextMission', {
-          mission: destination.next.name,
-        }),
+        () =>
+          t('interface:solo.preparingNextMission', {
+            mission: skipDestinationName(destination),
+          }),
         operation.cancel,
         'preparing',
         true,
@@ -9190,9 +9225,15 @@ try {
         throw new Error('The destination mission could not start.');
       if (!controller.signal.aborted) feedback.finish();
     } catch (error) {
+      reportMissionPreparationError(error);
       if (!transferred && skipSnapshotCurrent(destination.snapshot) && !controller.signal.aborted) {
         feedback?.finish(
-          `Could not prepare ${destination.next.name}: ${error.message} Your current flight is kept. Choose Skip mission to retry.`,
+          error instanceof ReleasePictureWriteRequiredError
+            ? localizedMessage('errors:picture.writeRequired')
+            : () =>
+                t('interface:solo.prepareSkipFailed', {
+                  mission: skipDestinationName(destination),
+                }),
           'error',
         );
         clearSkipConfirmation();
@@ -9273,10 +9314,10 @@ try {
     try {
       ticket.feedback = beginPreparation(
         kind === 'next'
-          ? t('interface:preparingTheNextMission')
+          ? localizedMessage('interface:preparingTheNextMission')
           : kind === 'skip'
-            ? t('interface:solo.preparingSkip')
-            : t('interface:preparingThisMissionAgain'),
+            ? localizedMessage('interface:solo.preparingSkip')
+            : localizedMessage('interface:preparingThisMissionAgain'),
         cancelResultAttempt,
         'preparing',
         true,
@@ -9536,8 +9577,8 @@ try {
         finishResultAttempt(
           ticket,
           cancelled
-            ? t('interface:preparationCancelledYourResultIsKept')
-            : t('interface:couldNotPrepareThisMissionYourResultIsKeptTry'),
+            ? localizedMessage('interface:preparationCancelledYourResultIsKept')
+            : localizedMessage('interface:couldNotPrepareThisMissionYourResultIsKeptTry'),
           cancelled ? 'cancelled' : 'error',
           ownedFocus,
         );
@@ -13016,7 +13057,6 @@ try {
       armSkip({
         type: 'journey',
         mission: next,
-        name: next.name,
         skipped: mission,
         snapshot: skipSnapshot(),
       });
@@ -13787,9 +13827,14 @@ try {
   startupEditionWriter?.release();
   startupEditionWriter = null;
   retireBootWorkshopInput();
-  globalThis.RevealLineBoot?.fail(error);
+  globalThis.RevealLineBoot?.fail({
+    // The classic boot owner reads this again when the language changes.
+    get message() {
+      return t('interface:solo.startupFailed');
+    },
+  });
   localizedText($('overlay-title'), () => t('interface:theGameCouldNotLoad'));
-  localizedText($('overlay-copy'), () => error.message);
+  localizedText($('overlay-copy'), localizedMessage('interface:solo.startupFailed'));
   show('start-button', false);
   localizedText($('run-message'), () =>
     new URLSearchParams(location.search).has('course')
