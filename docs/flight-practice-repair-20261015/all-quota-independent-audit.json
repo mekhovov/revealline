@@ -1,0 +1,55 @@
+{
+  "format": "PracticeIndependentQuotaEvidenceAudit.v1",
+  "report": "/tmp/practice-quota-current-20261015-all-run2.json",
+  "retainedReport": "docs/flight-practice-repair-20261015/quota-all-attempt2.json",
+  "reportBytes": 84893,
+  "reportSha256": "7a17a1a2f19c5f8f0e55eb487a173fe9f7ac3823c72039ec2b90b2d6f82befc3",
+  "retainedReportByteIdentical": true,
+  "artifactSourceRevision": "50b7612e8d170e2ab377e5eda117898dafc857cf",
+  "artifactSourceTree": "f3531120cf9add93ff7953eaabf4822f70593f86",
+  "envelopeSha256": "60a579e6ec9e309841c875014c15143dea49892c2fe5546417e1bf66f3b3a09e",
+  "candidateEnvelopeAndSixDistributionManifestPinsVerified": true,
+  "harnessBindings": {
+    "matchingCommit": "ff31c94f0",
+    "harnessSha256": "78ffa34d3c6d6138bac665c947c0508e7613746f02aef781964a0a65ba4617a3",
+    "helperSha256": "0401f406bf2fbdcb4b832893f1d4e10855dd003f5e06bc4ea3ddd507ab5295fc",
+    "quotaProbeSha256": "df25b954eb05f0f5c433e4c6e1fded80ed6554aba79b849b1eb55abf38308e0a",
+    "allThreeMatchCommittedBytes": true,
+    "reportHarnessAndProbeStable": true
+  },
+  "checkpoints": 21,
+  "selectedIDs": ["civilian-fpv", "civilian-flight", "fpv-worlds"],
+  "perPackageVerified": [
+    { "id": "civilian-fpv", "completed": true, "resetCompleted": true, "pendingOrTimedOutOperations": 0, "retryPreparedAndRemoved": true, "retryPreviousVersion": "v0.0.0" },
+    { "id": "civilian-flight", "completed": true, "resetCompleted": true, "pendingOrTimedOutOperations": 0, "retryPreparedAndRemoved": true, "retryPreviousVersion": null },
+    { "id": "fpv-worlds", "completed": true, "resetCompleted": true, "pendingOrTimedOutOperations": 0, "retryPreparedAndRemoved": true, "retryPreviousVersion": "v0.151.1" }
+  ],
+  "independentlyRecomputed": [
+    "Each override starts inactive, is active with quota equal to measured usage plus 1024 bytes, and ends inactive with the complete before usage/quota state restored.",
+    "All three installation pointer strings, cache-name lists and worker scope/state lists are exactly equal to the upgraded baseline during every denial and after every reset.",
+    "Each retry activates the v0.0.1 same-payload fixture and preserves sibling pointers; previous-version expectations differ correctly for Academy, removed Gym and installed Worlds.",
+    "After each retry removal, all three pointer strings, cache-name lists and worker scope/state lists exactly match the post-Gym-removal baseline.",
+    "The report has no page errors; cleanup reports no errors and removal of the owned temporary profile."
+  ],
+  "proofAndProfileScope": {
+    "inputs": "Frozen demonstration frames under a synthetic practice session, plus an imported synthetic unverified radio mapping/simulator response.",
+    "proofSha256": "5c7fe2b10e9d9dc7d2a95efa42ded4abacfc383619e5ff51deb0973870e374a6",
+    "profileSha256": "5ea6a02ba3a3aecd84779cdc30bdced5f0a15a00dafae19ce745f17cd0473a0d",
+    "verifiedScriptAssertions": "The hash-bound harness compares exported proof and profile bytes after all three quota resets. The retry loop compares them again for Academy only, before its removal; Gym/Worlds retry/remove phases do not perform another proof/profile export comparison.",
+    "qualification": "No human flight, physical radio verification or populated World/region-content retention claim. Raw checkpoint JSON contains installation state, not the original export payloads."
+  },
+  "failedAttemptRetained": {
+    "path": "docs/flight-practice-repair-20261015/quota-all-attempt1.json",
+    "sha256": "d219d6be71ac0c35de705257e3a7f1e6b141b033d1a91d7076fe961dc2ef9a9d",
+    "passed": false,
+    "checkpoints": 20,
+    "failure": "page.waitForFunction: Timeout 30000ms exceeded.",
+    "interpretation": "Worlds pristine retry had reached its prepared checkpoint; the next removal lacked a public Library navigation in the earlier harness. The reviewed harness-only correction navigates to Library and requires the removal button to be visible. This failed aggregate run is not app-failure or successful-removal evidence."
+  },
+  "limits": [
+    "Sequential controlled origin-wide Chrome quota overrides for all three apps, not real disk exhaustion, eviction or proof of a particular Cache.put exception.",
+    "Cache comparisons here establish cache names and worker scopes/states, not full cache-entry byte hashes; separate C7 evidence supplies that stronger content comparison.",
+    "Same-payload alternate paths do not qualify distinct-release upgrades or active-flight migration."
+  ],
+  "activity": "Read-only audit of retained reports, candidate files and committed harness sources. No browser launched, no shared source/doc edits, no prior audit overwritten."
+}
