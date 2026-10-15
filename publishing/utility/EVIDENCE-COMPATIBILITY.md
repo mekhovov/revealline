@@ -4,6 +4,11 @@ This bounded compatibility correction does **not** make the full-test release
 pipeline ready. It changes two readers, without modifying workflows, repository
 variables, production gate requirements, evidence records, or publication behavior.
 
+The later [16 October CI continuation](../../docs/team-duel-ci-continuation-2026-10-16.md)
+repairs verification-only sparse checkout dependencies and selects an explicit
+test runtime. That does not restore the missing production commands or qualify a
+real release. The reader correction's original scope remains as recorded here.
+
 ## Supported authority and policy
 
 The full assembler now accepts the historical `actions/checkout@v4` log contract
