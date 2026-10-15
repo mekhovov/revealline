@@ -24,7 +24,21 @@ Source qualification is recorded in #1311: fourteen commanded routes in both
 flight modes, four authored-start/mode combinations and four deliberate wall/roof
 contact cases. The copied immutable delivery produces the same route results.
 
-Normal-host download, launch, retained-old-revision and presentation checks are
-pending for this catalogue increment. Package, public deployment and physical
-device acceptance remain separate. This receipt must be updated with observed
-results before this increment is marked ready.
+The actual catalogue row passes immutable descriptor/payload preparation and
+all three presentation tiers. Each tier retains the same geometry hash
+`10abc94fb8878f2439f6d639e9257acd36fa9517009eed75f54617000ad322e3`;
+disposal releases all prepared geometry. The older descriptor still selects its
+plain presentation. These checks do not claim a browser migration test.
+
+Native browser review on the isolated 9051 source host passed the normal
+Download → Saved → Fly journey without a retry: Ready to arm at 3.0 m with zero
+input, then explicit Arm and keyboard flight, paused at 2.4 m with +3.0 m/s
+vertical speed and 0.7 m/s drift. A fresh player load retained the saved review-r2
+and the previously installed Railway revision. This review combines the corrected
+renderer from #1310 with the cold-preparation guard from #1314; the latter must
+merge before claiming reliable first launch. The review host is not a qualified
+package. Screenshot: `urban-r2-normal-library-flight.png` in the external archive.
+
+Package, public deployment, physical-device and browser old/new-Urban-revision
+coexistence acceptance remain separate. Source and delivery identity are
+preserved; the existing Library storage path is unchanged.
