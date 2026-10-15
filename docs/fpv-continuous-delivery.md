@@ -4737,3 +4737,24 @@ Large-region expansion and full P4/D6 qualification remain open. No byte limits
 were raised, user storage cleared, or unrelated local work removed. The latest
 space reading is 4.5 GiB internal and 187 GiB external; no cleanup was performed in
 this checkpoint and heavy work stays external until the internal floor is stable.
+
+## 15 October — Railway immutable structural delivery prepared
+
+Prepared the exact Railway structural source from #1301 (`3794177fe`) as a strict
+regional v1 bundle at
+`authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1`. It retains the
+Kenney CC0 license/provenance and source preparation receipt beside the payload.
+The descriptor is 6,661 bytes, SHA-256
+`431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15`;
+38 payload files total 5,684,606 bytes. Runtime preparation verified all declared
+bytes/hashes; the existing authoring integrity/failure matrix passed on this source.
+This is a 384×384 m structural preview, not a 4 km finished region. Default Library
+admission, normal-host art integration and public qualification remain separate.
+
+Meanwhile #1287 (combined regional Library/textured source delivery), #1291
+(paired identity/coordinates), #1297 (independent archive import closure) and #1300
+(explicit physics ownership diagnostics) merged. #1292 remains the native art stack:
+#1290 → #1298 → #1301 at this checkpoint. Starting-point selection and graphics-loss
+recovery continue independently of art publication. Combined fixed-main package
+qualification runs from `c3368bb60da7002f157fc7e9cae2688a53fb546c` in run
+38658148642; optional-package checks passed, broader qualification is still running.
