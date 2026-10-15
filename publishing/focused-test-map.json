@@ -2,6 +2,25 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "release-evidence-compatibility",
+      "pathPatterns": [
+        "^publishing/release-evidence-compatibility\\.test\\.mjs$",
+        "^publishing/utility/(assemble_full_qualification|release_artifact|test_assemble_full_qualification|test_waived_qualification)\\.py$"
+      ],
+      "commands": [
+        {
+          "id": "release-evidence-compatibility",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/release-evidence-compatibility.test.mjs",
+            "publishing/distribution-archive.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
       "id": "distribution-archive-format",
       "pathPatterns": [
         "^scripts/(game-cli|test-game-cli|controller-confirm-browser-fixture|test-distribution-archive|test-external-distribution|test-optional-distribution)\\.mjs$",
@@ -49,7 +68,8 @@
           "command": "node",
           "args": [
             "--test",
-            "docs/verification/team-duel-desktop-audio/studio-probe-model.test.mjs"
+            "docs/verification/team-duel-desktop-audio/studio-probe-model.test.mjs",
+            "docs/verification/team-duel-desktop-audio/studio-codecs-model.test.mjs"
           ]
         }
       ]
