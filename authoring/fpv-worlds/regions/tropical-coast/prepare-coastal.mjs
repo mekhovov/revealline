@@ -12,13 +12,18 @@ import { compileTerrainCell, validateTerrainSeams } from '../terrain-cell.mjs';
 import { validateRegionManifest } from '../region-manifest.mjs';
 import * as originalDesign from './coastal-design.mjs';
 const variant = process.argv[4];
-assert(!variant || ['districts', 'settlement'].includes(variant), 'Unknown coastal composition');
+assert(
+  !variant || ['districts', 'settlement', 'harbour'].includes(variant),
+  'Unknown coastal composition',
+);
 const design =
-  variant === 'settlement'
-    ? await import('./settlement-design.mjs')
-    : variant
-      ? await import('./district-design.mjs')
-      : originalDesign;
+  variant === 'harbour'
+    ? await import('./harbour-design.mjs')
+    : variant === 'settlement'
+      ? await import('./settlement-design.mjs')
+      : variant
+        ? await import('./district-design.mjs')
+        : originalDesign;
 const { coastalHeightMm, placements, startingPoints, flightRoutes } = design;
 const cellSizeMm = design.region?.cellSizeMm ?? 128000;
 const cellSizeM = cellSizeMm / 1000;
@@ -129,6 +134,10 @@ for (let z = 0; z < 3; z++)
           textureId: textureRef(model.textures.find((t) => t.id === b.textureId)),
         });
       }
+    }
+    for (const addition of design.extraSurfaces?.({ x, z, models }) ?? []) {
+      surfaces.push(addition.surface);
+      bindings.push({ ...addition.binding, textureId: textureRef(addition.texture) });
     }
     if (z === 0) {
       const textureId = textureRef({
