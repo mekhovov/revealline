@@ -1,3 +1,5 @@
+import { insideOverflightCamera } from './benchmark.mjs';
+
 const GOLD = 0xf4c765,
   OPEN = 0x9aebda,
   DANGER = 0xf9a275;
@@ -11,6 +13,49 @@ const layer = (frame, x, y, width, height, tint, alpha = 1, rotation = 0) => ({
   alpha,
   rotation,
 });
+
+/** One persistent final objective, visually distinct from transient attack arrows. */
+export function overflightFinalTargetLayers(enemy, camera, frame) {
+  if (!enemy.active) return [];
+  const offscreen = !insideOverflightCamera(enemy.x, enemy.y - 47, camera, -60);
+  const dx = enemy.x - camera.x,
+    dy = enemy.y - camera.y;
+  const amount = Math.min(
+    (camera.width / 2 - 48) / Math.max(Math.abs(dx), 0.01),
+    (camera.height / 2 - 80) / Math.max(Math.abs(dy), 0.01),
+  );
+  const x = offscreen ? camera.x + dx * amount : enemy.x;
+  const y = offscreen ? camera.y + dy * amount : enemy.y - 47;
+  const result = [];
+  if (offscreen) {
+    result.push(layer('bar', x, y, 28, 28, 0x09120f, 0.94, Math.PI / 4));
+    result.push(layer(frame, x, y, 23, 23, 0xffffff));
+    const angle = Math.atan2(dy, dx);
+    result.push(
+      layer('arrow', x + Math.cos(angle) * 29, y + Math.sin(angle) * 29, 17, 17, GOLD, 1, angle),
+    );
+  }
+  const radius = offscreen ? 18 : 7;
+  for (const [sx, sy] of [
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ])
+    result.push(
+      layer(
+        'bar',
+        x + (sx * radius) / 2,
+        y + (sy * radius) / 2,
+        radius * Math.SQRT2,
+        2,
+        GOLD,
+        1,
+        (-sx * sy * Math.PI) / 4,
+      ),
+    );
+  return result;
+}
 
 /** Shared V2 geometry. Rendering never infers damage from an appearance family. */
 export function overflightTacticalEnemyLayers(enemy, size = 24, player = null) {

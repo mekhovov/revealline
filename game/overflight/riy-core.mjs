@@ -260,8 +260,16 @@ function releaseFocus(state) {
   state.phase = 'returning';
 }
 
+function clearShot(run, origin, target) {
+  return (
+    target?.active &&
+    target.warning <= 0 &&
+    overflightTerrainClear(run.terrain, origin.x, origin.y, target.x, target.y)
+  );
+}
+
 function applyShot(run, escort, target, settings, burst = false) {
-  if (!target?.active || target.warning > 0) return;
+  if (run.phase !== 'playing' || !clearShot(run, escort, target)) return false;
   escort.heading = Math.atan2(target.y - escort.y, target.x - escort.x);
   escort.targetX = target.x;
   escort.targetY = target.y;
@@ -296,7 +304,8 @@ function applyShot(run, escort, target, settings, burst = false) {
           !enemy.active ||
           enemy.warning > 0 ||
           targets.includes(enemy) ||
-          separation > settings.chainRange
+          separation > settings.chainRange ||
+          !overflightTerrainClear(run.terrain, origin.x, origin.y, enemy.x, enemy.y)
         )
           return;
         if (separation < best || (separation === best && enemy.id < next.id)) {
@@ -310,7 +319,9 @@ function applyShot(run, escort, target, settings, burst = false) {
     const damage = settings.damage / targets.length;
     let origin = escort;
     for (const victim of targets) {
-      damageOverflightEnemy(run, victim, damage, origin);
+      // A rejected link cannot carry the remaining chain through cover or beyond
+      // the final enemy's death. Divide only among admitted, clear links above.
+      if (!damageOverflightEnemy(run, victim, damage, origin)) break;
       origin = { x: victim.x, y: victim.y };
     }
   } else {
@@ -322,6 +333,7 @@ function applyShot(run, escort, target, settings, burst = false) {
         damage: settings.damage,
       };
   }
+  return true;
 }
 
 function stepSquad(run, focus) {
@@ -421,11 +433,12 @@ function stepSquad(run, focus) {
         escort.pending = null;
       }
     }
+    if (escort.cooldown > 0) continue;
     let shotTarget = target;
     if (!shotTarget) {
       let best = Infinity;
       visitOverflightGrid(run._grid, escort.x, escort.y, settings.attackRange, (enemy) => {
-        if (!enemy.active || enemy.warning > 0 || !overflightRiyInFollowArc(escort, enemy)) return;
+        if (!overflightRiyInFollowArc(escort, enemy) || !clearShot(run, escort, enemy)) return;
         const score =
           escort.role === 'breaker' ? targetScore(enemy, escort) : distance(enemy, escort);
         if (score < best || (score === best && enemy.id < shotTarget.id)) {
@@ -434,14 +447,8 @@ function stepSquad(run, focus) {
         }
       });
     }
-    if (
-      !shotTarget?.active ||
-      escort.cooldown > 0 ||
-      distance(escort, shotTarget) > settings.attackRange
-    )
-      continue;
-    escort.cooldown = settings.interval;
-    applyShot(run, escort, shotTarget, settings);
+    if (!shotTarget?.active || distance(escort, shotTarget) > settings.attackRange) continue;
+    if (applyShot(run, escort, shotTarget, settings)) escort.cooldown = settings.interval;
   }
   if (!target && returned && state.phase === 'returning') state.phase = 'follow';
   for (const trail of state.trails) {
