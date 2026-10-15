@@ -11,14 +11,15 @@ This is a bounded original art increment, not the representative final-art stand
 - Fifty-seven canonical GLBs match their exact source/collision inputs with zero validator errors/warnings. Adjacent terrain edges agree. Twelve authored routes pass 2,724 centre/edge sphere sweeps. Peak prepared resources are 589,464 bytes; retained plus staged is 1,178,928 bytes, within the unchanged mixed-world ceiling.
 - Twenty-four production commanded flights pass 380,830 fixed ticks with zero route contacts, using both Self-level and Acro. All twelve authored start cases remain disarmed until explicit arming. Four deliberate ground/roof contact cases, paused-input isolation and zero-owned disposal also pass. Accelerated fixed ticks are not elapsed endurance.
 - The original thirteen review cameras remain unchanged. Two added interior approaches retain the existing 10 m minimum camera terrain clearance, 2 m sightline terrain clearance and resident-cell bounds. Actual new solid triangles do not block either detail sightline.
+- Post-format regeneration is byte-identical across all 117 source files. The separate seven connecting lines pass 1,535 swept segments and fourteen production command flights with zero route contacts. Their receipts retain their distinct scope.
 - Existing four dish supports and three receiver struts retain their verified contacts. No physics, collision algorithm, scoring, input or package budget changes.
 
-Receipts are under `receipts-shelter-r3/`. The earlier source, generated drafts and immutable composition-r2 remain preserved. Existing root-level composition-r2 receipts retain their original scope.
+Receipts and the new `source-preparation.json` are under `receipts-shelter-r3/`. The authoring root `preparation.json` deliberately retains composition-r2 metadata because the existing immutable delivery and Library verifiers consume it. New source checks read the generated directory metadata, so both identities remain valid. The earlier source, generated drafts and immutable composition-r2 remain preserved. Existing root-level composition-r2 receipts retain their original scope.
 
 ## Reproduce and remaining gates
 
 Generate with `prepare.mjs NEW_EXTERNAL_DIRECTORY`; existing output is refused. Run `verify-preparation.mjs`, `verify-commanded-flight.mjs`, `verify-cameras.mjs`, `verify-supports.mjs NEW_DIRECTORY PRESERVED_R2`, and `verify-shelter-detail.mjs NEW_DIRECTORY PRESERVED_R2`.
 
-Source Draft remains held for post-format byte-identical regeneration, the separate seven connection-line audit, and native pilot-height art review across quality tiers. A fresh frozen 9173 source preview will be queued after the sole active authored endurance renderer releases its slot. Do not open a second renderer during that segment.
+Source Draft remains held for native pilot-height art review across quality tiers. Post-format regeneration and the separate seven connection-line audit now pass. A fresh frozen 9173 source preview will be queued after the sole active authored endurance renderer releases its slot. Do not open a second renderer during that segment.
 
 No immutable composition-r3 delivery or Library upgrade is added here. Normal downloaded-player admission, offline/restart/device acceptance and representative art require their own later gates. No public availability or hours of engaging play is claimed from source checks.
