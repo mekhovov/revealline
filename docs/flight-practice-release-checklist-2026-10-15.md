@@ -84,8 +84,17 @@ loads. Both attempts cleaned up their owned apps/profile. See the
 
 The current non-hosting changes also passed **323 practice tests, zero failures or
 skips**; the [test log](flight-practice-qualification-20261015/practice-tests.log)
-is development evidence, not a signed publishing review. Changed guide bytes need
-a new committed-source candidate before release.
+is development evidence, not a signed publishing review.
+
+**E6 — final-guide candidate:** a new [committed-source build](flight-practice-final-candidate-2026-10-15.md)
+from `ff8bfbca35` includes the corrected guides and passed reproducibility/admission.
+Its [separate browser receipt](flight-practice-qualification-20261015/practice-real-restart-final-ff8bfbca35-20261015.json)
+passed all nine installation checkpoints, including browser restart and exact
+FPV proof/profile preservation, with no page or cleanup errors. All other runtime
+members and worker executable logic match E1; generated guide hashes/revisions
+changed. It retains E4's same-payload/keyboard/network-emulation limits and does
+not explain away E5. Full repository lint passed. Remaining device, human,
+distinct-release and public-site cases below remain pending.
 
 ## The eight actual publishing gates
 

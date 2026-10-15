@@ -1,6 +1,6 @@
 # Flight practice: completion plan and priority review
 
-Updated 14 October 2026. This refines the approved three-app plan; it does not
+Updated 15 October 2026. This refines the approved three-app plan; it does not
 authorize a new publisher, relaxed reviews, a different host, or changes to SIM
 mechanics. Implementation and public release are separate completion states.
 
@@ -40,8 +40,12 @@ browser failures and successful retries are retained; the intermittent hidden
 offline Open link is not claimed fixed. See the
 [observation report](flight-practice-observation-2026-10-15.md) and
 [executable remaining acceptance checklist](flight-practice-release-checklist-2026-10-15.md).
-Physical/human reviews and distinct-release/current-guide qualification remain
-open; no hosting or public selection was changed.
+The corrected-guide [final candidate](flight-practice-final-candidate-2026-10-15.md)
+was subsequently frozen at `ff8bfbca35`, reproduced and independently admitted;
+its separate nine-checkpoint browser restart observation passed too. Full lint
+passed. Physical/human reviews, first-flight/first-pointer acceptance and
+distinct-release qualification remain open; no hosting or public selection was
+changed. The fresh-player guide walkthrough is not replaced by an installer test.
 
 PR #930 delivered the directory, descriptors, stable launchers, shared offline
 installation and guides. PR #1195 restores practice staging in the replacement
