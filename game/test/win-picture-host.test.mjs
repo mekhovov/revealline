@@ -120,7 +120,8 @@ for (const reduced of [false, true])
     } else
       for (
         let i = 0;
-        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && !surface.frame.painter.celebrationStatus.finished;
+        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 &&
+        !surface.frame.painter.celebrationStatus.finished;
         i++
       )
         page.frame(100);
@@ -128,12 +129,20 @@ for (const reduced of [false, true])
     // The painter reaches its terminal frame before the host consumes that
     // status on the following update.
     page.frame(0);
-    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture fills the game after the celebration.');
+    assert.equal(
+      page.$('game-overlay').hidden,
+      true,
+      'The earned picture fills the game after the celebration.',
+    );
     assert.equal(page.$('show-result').hidden, false);
     assert.equal(page.doc.body.dataset.winPicture, 'settled');
     assert.equal(page.$('next-button').hidden, true, 'Next appears after the short picture hold.');
     for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
-    assert.equal(page.$('game-overlay').hidden, false, 'The result follows without requiring a click.');
+    assert.equal(
+      page.$('game-overlay').hidden,
+      false,
+      'The result follows without requiring a click.',
+    );
     assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('show-result').hidden, true);
     assert.equal(page.$('next-button').hidden, false);
