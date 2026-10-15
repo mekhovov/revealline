@@ -15,3 +15,18 @@ The native comparison at isolated origin 9070 freezes production dependency clos
 ## Limits
 
 This does not add water physics, animated water, architecture, new flight objectives or a larger world. It does not complete the final representative art standard. No GPU/frame-rate, real-device, package/offline or new default-Library claim is made. The existing 8 MiB retained/candidate resource ceiling and all source/scene limits remain unchanged.
+
+## Native review — 15 October 2026
+
+Root operated the isolated 9070 viewer through CUA against exact production source `c1e08bb7c6007b44f2f43771bb81945b55d08774`. Balanced Original/Integrated Street views used the same camera and lighting: the integrated paths and courtyards visibly connect the huts. Quality Integrated Shoreline rendered the sand transition. Performance Integrated Courtyard preserved the clear open under-hut approach. No warning/error console entries were observed.
+
+The source owner reported 4,025,228 resource bytes, two collision worlds and 67 colliders while loaded. Explicit Dispose returned every resource/reservation byte count, collision world and collider count to zero. No geometry, water physics or flight-path change was involved.
+
+| Preserved screenshot | SHA-256 |
+| --- | --- |
+| `coastal-ground-original-c1e08bb-20261015.png` | `f04f27f39e094637f952563df8076c609c22398d130dd8fb5e7a61475a44cd09` |
+| `coastal-ground-integrated-c1e08bb-20261015.png` | `5d2d315007c24ae492136689859f8dc3a7e72bbc77a56a3ed67eca6740a85f34` |
+| `coastal-ground-shore-c1e08bb-20261015.png` | `992ed98de69a30cb6a95734edcd5119546dd0010a1a72ded5727c0d19dbe562b` |
+| `coastal-ground-courtyard-c1e08bb-20261015.png` | `b83f39957fd262a10a7317d7a15655b2d959015ddf5ea20a27293ac5d075ad2d` |
+
+This accepts a bounded ground-composition improvement. Flat water and the sparse broader landscape remain explicit gaps; representative final art quality, normal player admission and exact package qualification remain unfinished. The native result is a shader/appearance and disposal observation, not sustained GPU or device-frame-rate evidence.
