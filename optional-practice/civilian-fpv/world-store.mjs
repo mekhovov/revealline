@@ -1,6 +1,11 @@
 /** Active pointers and retained exact revisions commit together with their Blobs. */
 const DEFAULT_NAME = 'revealline-fpv-worlds-v1';
 const fail = (message) => new Error(message);
+const projectBytes = (project) => new TextEncoder().encode(JSON.stringify(project)).length;
+const libraryFull = () =>
+  Object.assign(new Error('Retained world library is full. Existing downloads are kept.'), {
+    code: 'world-library-full',
+  });
 const request = (value) =>
   new Promise((resolve, reject) => {
     value.onsuccess = () => resolve(value.result);
@@ -16,7 +21,14 @@ function transactionDone(tx) {
 export async function openWorldStore({
   indexedDB = globalThis.indexedDB,
   name = DEFAULT_NAME,
+  maxRetainedBytes = 256 * 1024 * 1024,
 } = {}) {
+  if (
+    !Number.isSafeInteger(maxRetainedBytes) ||
+    maxRetainedBytes <= 0 ||
+    maxRetainedBytes > 512 * 1024 * 1024
+  )
+    throw new TypeError('Invalid retained world byte limit.');
   if (!indexedDB) throw fail('IndexedDB is unavailable. Export your world to keep it.');
   const opening = indexedDB.open(name, 2);
   opening.onupgradeneeded = () => {
@@ -52,6 +64,54 @@ export async function openWorldStore({
     await done;
     return result;
   }
+  /** Read-only early check; the later atomic install still owns race/capacity acceptance. */
+  async function checkInstallCapacity({ project, sha256, assetBytes }) {
+    if (
+      !project?.id ||
+      !/^[a-f0-9]{64}$/.test(sha256) ||
+      !Number.isSafeInteger(assetBytes) ||
+      assetBytes < 0
+    )
+      throw fail('Capacity check requires a verified prepared identity and byte total.');
+    const tx = db.transaction(['projects', 'assets', 'revisions'], 'readonly'),
+      done = transactionDone(tx),
+      readOld = tx.objectStore('projects').get(project.id);
+    let old,
+      oldRetained = false,
+      known = false,
+      count = 0,
+      retainedBytes = assetBytes + projectBytes(project);
+    readOld.onsuccess = () => {
+      old = readOld.result;
+    };
+    const cursor = tx.objectStore('revisions').openCursor();
+    cursor.onsuccess = () => {
+      const current = cursor.result;
+      if (current) {
+        const row = current.value;
+        count++;
+        if (row.id === project.id && row.sha256 === sha256) known = true;
+        else retainedBytes += row.bytes ?? 0;
+        if (old && row.id === old.id && row.sha256 === old.sha256) oldRetained = true;
+        current.continue();
+      } else if (old && !oldRetained && old.sha256 !== sha256) {
+        // A legacy active-only revision becomes retained when a different hash is installed.
+        count++;
+        retainedBytes += projectBytes(old.project);
+        const assets = tx.objectStore('assets').index('project').openCursor(project.id);
+        assets.onsuccess = () => {
+          if (assets.result) {
+            retainedBytes += assets.result.value.blob.size;
+            assets.result.continue();
+          }
+        };
+      }
+    };
+    await done;
+    const revisionCount = count + (known ? 0 : 1);
+    if (revisionCount > 256 || retainedBytes > maxRetainedBytes) throw libraryFull();
+    return { retainedBytes, revisionCount, limitBytes: maxRetainedBytes };
+  }
   function install({ project, assets, sha256, expectedGeneration, repair = false }) {
     if (repair && !Number.isSafeInteger(expectedGeneration))
       return Promise.reject(fail('Repair requires the current library generation.'));
@@ -72,8 +132,8 @@ export async function openWorldStore({
           error || tx.error || fail('World installation aborted; previous revision retained.'),
         );
       tx.onerror = () => {};
-      const abort = (message) => {
-        error = fail(message);
+      const abort = (cause) => {
+        error = cause instanceof Error ? cause : fail(cause);
         tx.abort();
       };
       const read = meta.get('generation');
@@ -89,18 +149,13 @@ export async function openWorldStore({
         readVersions.onsuccess = () => {
           const versions = readVersions.result,
             known = versions.find((v) => v.id === project.id && v.sha256 === sha256);
-          const size = [...assets.values()].reduce(
-            (n, b) => n + b.size,
-            new TextEncoder().encode(JSON.stringify(project)).length,
-          );
+          const size = [...assets.values()].reduce((n, b) => n + b.size, projectBytes(project));
           const retainedBytes = versions.reduce(
             (n, v) => n + (v === known ? 0 : (v.bytes ?? 0)),
             size,
           );
-          if ((!known && versions.length >= 256) || retainedBytes > 256 * 1024 * 1024) {
-            abort(
-              'Retained world library is full. Export and remove unused packs before installing another.',
-            );
+          if ((!known && versions.length >= 256) || retainedBytes > maxRetainedBytes) {
+            abort(libraryFull());
             return;
           }
           const readOld = projects.get(project.id);
@@ -113,16 +168,20 @@ export async function openWorldStore({
             const oldAssets = stored.index('project').getAll(project.id);
             oldAssets.onsuccess = () => {
               try {
-                if (old && !versions.some((v) => v.id === old.id && v.sha256 === old.sha256)) {
+                if (
+                  old &&
+                  old.sha256 !== sha256 &&
+                  !versions.some((v) => v.id === old.id && v.sha256 === old.sha256)
+                ) {
                   const oldSize = oldAssets.result.reduce(
                     (n, r) => n + r.blob.size,
-                    new TextEncoder().encode(JSON.stringify(old.project)).length,
+                    projectBytes(old.project),
                   );
                   if (
                     versions.length + (known ? 0 : 1) + 1 > 256 ||
-                    retainedBytes + oldSize > 256 * 1024 * 1024
+                    retainedBytes + oldSize > maxRetainedBytes
                   ) {
-                    abort('Retained world library is full. Export and remove unused packs first.');
+                    abort(libraryFull());
                     return;
                   }
                   const oldMap = new Map(oldAssets.result.map((r) => [r.path, r.blob]));
@@ -346,6 +405,7 @@ export async function openWorldStore({
   }
   return {
     generation,
+    checkInstallCapacity,
     install,
     get,
     list,
