@@ -5,6 +5,57 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 19:00 UTC — exact Lunar admission and populated continuity
+
+There is **no active elapsed segment and no authored two-hour pass**. Preserve
+all four earlier invalid attempts. The latest remains the 102.9565-second failure
+below; the new diagnostic smoke is separate evidence, not a replacement pass.
+
+- **Lunar shelter r3 Library #1490 merged** as `244e81c1` at unchanged reviewed
+  head `b0625e6f`. Exact cloud package `e1ab4a5e` passes its inventories, budgets,
+  import closure and preservation of all twenty prior offers plus new Lunar r3.
+  Fresh native origin 9183 passes normal r3/r2 downloads, both retained after
+  reload, EN/UK titles and six start labels, camera controls, paused Acro change,
+  Survey Dish preparation and explicit arm/pause. Initial r3 is Ready/disarmed;
+  its later cached return is **Paused**, with Arm available. The older r2 cached
+  launch is Ready/disarmed. 390×844 and 844×390 Ukrainian browser layouts have
+  no horizontal overflow and 44 px Menu targets. [Exact native receipt](fpv-lunar-shelter-r3-b062-native-20261015.json).
+  These are bounded browser observations, not physical-device, all-start, offline,
+  public-launch or final-art acceptance. Some broader CI tails were queued at merge.
+- **Nonempty four-channel storage continuity now passes a bounded native gate.**
+  Normal Roadworks installation and import of one unchanged published school
+  demonstration populate the World-pack and recording channels alongside the
+  existing Hillside revisions and named place. The normal import UI verifies
+  “Meet your drone” complete at 360 ticks; normal backup succeeds. After closing
+  and reopening the player, the read-only observer compares every stored row and
+  Blob byte exactly: `fb037942…3d63e1`. Earlier regional/place rows are unchanged.
+  [Receipt](fpv-storage-continuity-nonempty-native-20261015.json) and [full comparison](fpv-storage-continuity-nonempty-comparison-20261015.json).
+  The live-session store is still empty. Application restart, whole-network
+  offline, eviction/quota and interrupted live-session preservation remain open.
+- **Authoring attribution #1500 merged** as `03ee6df3`, with no production,
+  clock or acceptance change. Independent source review and a fresh strict-focus
+  smoke complete 10.0051 real seconds /500 ticks on unchanged `da5df483` production
+  and `6a092df1` package. There are zero contacts and zero owned resources after
+  disposal. The actual LoAF API is available but delivers **zero entries** in this
+  short observation; retained spans are bounded, with no malformed/read failures.
+  This establishes diagnostic operation, not caller/GC causality or sustained
+  performance. [Full smoke](fpv-authored-urban-attribution-smoke-20261015.json) and
+  [identity/scope receipt](fpv-authored-urban-attribution-native-20261015.json).
+- **Quiet Alpine timber immutable #1499 merged** as `691351e1`, retaining original
+  pin `02f2b140`. All 723 actual HTTPS responses and 36 production start/mode/tier
+  cases pass; old station-r3 bytes remain unchanged. Its separate Library #1501
+  still requires integrated latest-main preservation, an exact cloud package and
+  normal native admission. A separate hardstanding source study and a Library
+  records/recovery shortcut continue independently, with no final acceptance yet.
+
+**Next:** P1 diagnose actual costly intervals before another full authored attempt;
+finish exact Alpine player admission. P1/D6 close nonempty live-session,
+application-restart and whole-network offline/recovery journeys. P2 continue a
+grounded representative art slice; P3 later authored regions follow reviewed
+source/delivery/player gates. Broader D6, physical input/device and public launch
+remain open. Heavy work stays external/cloud; existing budgets and player data
+are unchanged.
+
 ## 15 October, 18:20 UTC — bounded-display full attempt still fails
 
 No elapsed run is active. The new full attempt actually started
