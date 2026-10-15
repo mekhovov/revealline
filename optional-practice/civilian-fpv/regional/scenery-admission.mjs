@@ -21,15 +21,20 @@ const integerPosition = (position) =>
     (axis) => Number.isSafeInteger(position[axis]) && Math.abs(position[axis]) <= 100000000,
   );
 
-function createIndexedTexture(source) {
-  const indices = atob(source.indicesBase64),
+function createSceneryTexture(source) {
+  let pixels;
+  if (Object.hasOwn(source, 'rgbaBase64')) {
+    pixels = Uint8Array.from(atob(source.rgbaBase64), (c) => c.charCodeAt(0));
+  } else {
+    const indices = atob(source.indicesBase64);
     pixels = new Uint8Array(indices.length * 4);
-  for (let i = 0; i < indices.length; i++) {
-    const palette = indices.charCodeAt(i) * 3;
-    pixels[i * 4] = source.paletteRgb[palette];
-    pixels[i * 4 + 1] = source.paletteRgb[palette + 1];
-    pixels[i * 4 + 2] = source.paletteRgb[palette + 2];
-    pixels[i * 4 + 3] = 255;
+    for (let i = 0; i < indices.length; i++) {
+      const palette = indices.charCodeAt(i) * 3;
+      pixels[i * 4] = source.paletteRgb[palette];
+      pixels[i * 4 + 1] = source.paletteRgb[palette + 1];
+      pixels[i * 4 + 2] = source.paletteRgb[palette + 2];
+      pixels[i * 4 + 3] = 255;
+    }
   }
   const texture = new THREE.DataTexture(
     pixels,
@@ -161,7 +166,14 @@ export async function prepareSceneryWindow(
       for (const surface of compileScenerySource(source).surfaces) {
         const { positions, indices } = surface;
         const textureKey = surface.textureKey ?? '';
-        const key = surface.color.join(',') + textureKey;
+        const key = JSON.stringify([
+          surface.color,
+          textureKey,
+          surface.alphaMode ?? 'OPAQUE',
+          surface.alphaCutoff ?? 0,
+          surface.doubleSided ?? true,
+          Boolean(surface.colors),
+        ]);
         let material = byColor.get(key);
         if (!material) {
           material = createScenerySurface({
@@ -169,11 +181,16 @@ export async function prepareSceneryWindow(
             color: surface.color,
             originMm,
           });
+          if (surface.alphaMode) {
+            material.alphaTest = surface.alphaMode === 'MASK' ? surface.alphaCutoff : 0;
+            material.side = surface.doubleSided ? THREE.DoubleSide : THREE.FrontSide;
+          }
+          material.vertexColors = Boolean(surface.colors);
           materials.push(material);
           if (surface.texture) {
             let texture = textures.get(textureKey);
             if (!texture) {
-              texture = createIndexedTexture(surface.texture);
+              texture = createSceneryTexture(surface.texture);
               textures.set(textureKey, texture);
             }
             material.map = texture;
@@ -188,6 +205,8 @@ export async function prepareSceneryWindow(
           geometry.setAttribute('normal', new THREE.BufferAttribute(surface.normals, 3));
         else geometry.computeVertexNormals();
         if (surface.uvs) geometry.setAttribute('uv', new THREE.BufferAttribute(surface.uvs, 2));
+        if (surface.colors)
+          geometry.setAttribute('color', new THREE.BufferAttribute(surface.colors, 4));
         const mesh = new THREE.Mesh(geometry, material);
         mesh.name = cell.chunkId;
         const local = {
@@ -197,6 +216,7 @@ export async function prepareSceneryWindow(
         };
         mesh.position.set(local.x, local.y, local.z);
         group.add(mesh);
+        if (surface.collision === 'visual-only') continue;
         const collider = world.createCollider(
           RAPIER.ColliderDesc.trimesh(positions, indices).setTranslation(local.x, local.y, local.z),
         );
