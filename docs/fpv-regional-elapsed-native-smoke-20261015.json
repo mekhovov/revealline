@@ -1,0 +1,1112 @@
+{
+  "format": "FPVRegionalElapsedReview.v1",
+  "scope": "Real elapsed-time synthetic corridor workload; production regional flight and renderer. No player input or game progress writes.",
+  "runtimeLabel": "2cfe7a25 · final tool aa01ebfe · Mac16,7 macOS26.7.1 Chrome155",
+  "runtimeLabelVerified": false,
+  "directSourceHashes": [
+    {
+      "path": "renderer.mjs",
+      "bytes": 151883,
+      "sha256": "7b9d8b941d4bd5eee32656495548608f0b9c7c3dbcc2c765db065d7bfa3a6fb9"
+    },
+    {
+      "path": "model.mjs",
+      "bytes": 20087,
+      "sha256": "0015640581f58a2fb86dca985cda5b9e519b78962c6a1ee816741d3ad21fb52c"
+    },
+    {
+      "path": "flight-contact.mjs",
+      "bytes": 2482,
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "flight-support.mjs",
+      "bytes": 1815,
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "regional/flight-prototype.mjs",
+      "bytes": 15458,
+      "sha256": "c65e6a34d858b92e4b38ed3490efe5eb93472139ce111a42af47699cdabb43cb"
+    },
+    {
+      "path": "regional/verified-mixed-window.mjs",
+      "bytes": 15481,
+      "sha256": "850369ff170337a3105ab92f2074e39e1c34db510bcfb77d28e5cf0aea17ed5c"
+    },
+    {
+      "path": "regional/terrain-admission.mjs",
+      "bytes": 8587,
+      "sha256": "7c8773f620583cffaaf93a381a10d6eec281a3b2f08e46856b7ae9cbc6e63633"
+    },
+    {
+      "path": "regional/scenery-admission.mjs",
+      "bytes": 13838,
+      "sha256": "f22b6e6572f4825a539ced58bdd974b3ba7619db2eba7024c1767c66382f98b5"
+    }
+  ],
+  "wholeRuntimeClosureVerified": false,
+  "fixture": {
+    "id": "mixed-check",
+    "revision": "r1",
+    "terrainManifestSHA256": "558d31fa52077cc79c657920de65c7d9719a111fc76e5b4af656de0c85c808df",
+    "sceneryManifestSHA256": "4a0f9b6bc99a53cda63776c4bdfe8101a77039720b21a231084a287c57845dfe",
+    "source": "Generated canonical six-cell corridor; deterministic reference workload"
+  },
+  "startedUTC": "2026-10-15T04:50:53.264Z",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "dimensions": {
+    "basis": "visualViewport",
+    "width": 1280,
+    "height": 720,
+    "dpr": 1,
+    "cssWidth": 1280,
+    "cssHeight": 417.59375,
+    "backingWidth": 1280,
+    "backingHeight": 418
+  },
+  "quality": "balanced",
+  "camera": "chase",
+  "mode": "self-level",
+  "clock": {
+    "status": "completed",
+    "reason": null,
+    "targetMs": 10000,
+    "elapsedMs": 10006.80000000447,
+    "wallElapsedMs": 10007,
+    "simulationMs": 10000,
+    "ticks": 500,
+    "remainingAccumulatorMs": 6.800000004470348
+  },
+  "reversals": 0,
+  "cellCrossings": 0,
+  "frames": 1201,
+  "collisionAndReservationPeaks": {
+    "geometryBytes": 101904,
+    "textureBytes": 0,
+    "sourceBytes": 84872,
+    "reservedGeometryBytes": 101904,
+    "reservedSourceBytes": 84872,
+    "worlds": 2,
+    "colliders": 6,
+    "rigidBodies": 0,
+    "renderergeometries": 41,
+    "renderertextures": 6,
+    "rendererprograms": 9
+  },
+  "frameIntervalsMs": {
+    "count": 1200,
+    "meanMs": 8.332916666666666,
+    "maxMs": 13.800000004470348,
+    "histogramMs": [
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      86,
+      258,
+      590,
+      187,
+      75,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "physicsSubmissionCPU": {
+    "count": 1201,
+    "meanMs": 0.15437135712044325,
+    "maxMs": 1.6000000014901161
+  },
+  "drawSubmissionCPU": {
+    "count": 1201,
+    "meanMs": 0.4282264781869222,
+    "maxMs": 2
+  },
+  "preparation": {
+    "initial": {
+      "sequence": 1,
+      "status": "prepared",
+      "objects": 6,
+      "batches": 1,
+      "submittedBytes": 101904,
+      "maxBatchBytes": 101904,
+      "compileWaitMs": 47.20000000298023,
+      "uploadCpuMs": 1.6000000014901161,
+      "elapsedMs": 52.5,
+      "gpuCompletionMeasured": false
+    },
+    "completedStages": 1,
+    "maximumElapsedMs": 52.5
+  },
+  "last120SecondSamples": [
+    {
+      "elapsedMs": 0,
+      "ticks": 0,
+      "position": {
+        "x": 64000,
+        "y": 10000,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 1007,
+      "ticks": 50,
+      "position": {
+        "x": 64344,
+        "y": 10532,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 81,
+        "triangles": 6368,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 2006.9000000059605,
+      "ticks": 100,
+      "position": {
+        "x": 65665,
+        "y": 11537,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 81,
+        "triangles": 6368,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 3007.10000000149,
+      "ticks": 150,
+      "position": {
+        "x": 67720,
+        "y": 12637,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 4007.10000000149,
+      "ticks": 200,
+      "position": {
+        "x": 70341,
+        "y": 13660,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 5006.80000000447,
+      "ticks": 250,
+      "position": {
+        "x": 73400,
+        "y": 14560,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 6007.10000000149,
+      "ticks": 300,
+      "position": {
+        "x": 76800,
+        "y": 15350,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8418,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 7006.80000000447,
+      "ticks": 350,
+      "position": {
+        "x": 80465,
+        "y": 16021,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8418,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 8007.20000000298,
+      "ticks": 400,
+      "position": {
+        "x": 84339,
+        "y": 16592,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8418,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 9005.30000000447,
+      "ticks": 450,
+      "position": {
+        "x": 88371,
+        "y": 17077,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8418,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    },
+    {
+      "elapsedMs": 10006.80000000447,
+      "ticks": 500,
+      "position": {
+        "x": 92526,
+        "y": 17512,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 83,
+        "triangles": 8418,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    }
+  ],
+  "minuteSamples": [
+    {
+      "elapsedMs": 0,
+      "ticks": 0,
+      "position": {
+        "x": 64000,
+        "y": 10000,
+        "z": 6000
+      },
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "recentres": 1,
+      "status": "active",
+      "reason": null,
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "owned": {
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "sourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "reservedSourceBytes": 84872
+      },
+      "collision": {
+        "worlds": 2,
+        "colliders": 6,
+        "rigidBodies": 0
+      },
+      "renderer": {
+        "calls": 82,
+        "triangles": 8416,
+        "geometries": 41,
+        "textures": 6,
+        "programs": 9,
+        "contextLost": false
+      }
+    }
+  ],
+  "final": {
+    "beforeDisposal": {
+      "position": {
+        "x": 92526,
+        "y": 17512,
+        "z": 6000
+      },
+      "velocity": {
+        "x": 4204,
+        "y": 410,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        0,
+        -57024,
+        998373
+      ],
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 500,
+      "grounded": false,
+      "support": null,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "mode": "self-level",
+      "status": "active",
+      "reason": null,
+      "contacts": 0,
+      "recentres": 1,
+      "originMm": {
+        "x": 64000,
+        "y": 0,
+        "z": 64000
+      },
+      "localPositionMm": {
+        "x": 28526,
+        "y": 17512,
+        "z": -58000
+      },
+      "pendingTargetMm": null,
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 101904,
+        "textureBytes": 0,
+        "resourceBytes": 101904,
+        "sourceBytes": 84872,
+        "reservedSourceBytes": 84872,
+        "reservedGeometryBytes": 101904,
+        "provenance": {
+          "regionId": "mixed-check",
+          "revision": "r1",
+          "positionMm": {
+            "x": 64000,
+            "y": 10000,
+            "z": 6000
+          },
+          "originMm": {
+            "x": 64000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "tile-0",
+              "terrain": {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://terrain.example/tile-0-collision.json",
+                  "bytes": 2290,
+                  "sha256": "e159c5153cadefc3ea379282ff8b162c257547dc1fc99133e6f3390a5637877f"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://terrain.example/tile-0-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "39d4c2a922e5efa0f85cb14f20dd013a9fb97ec9c24a728f5dc21f23bdccd6cb"
+                }
+              },
+              "scenery": {
+                "chunkId": "tile-0",
+                "collision": {
+                  "id": "tile-0-collision",
+                  "url": "https://scenery.example/tile-0-collision.json",
+                  "bytes": 386,
+                  "sha256": "66f4932ca216a926d50deb82d02ec2576f545ae5d9f05baa9b2a9d9b821b06a8"
+                },
+                "scene": {
+                  "id": "tile-0-scene",
+                  "url": "https://scenery.example/tile-0-scene.glb",
+                  "bytes": 1376,
+                  "sha256": "01a688aa98a4966e9eac5422be7f599f27ade42b6a1456b6a5232c0e92a95357"
+                }
+              }
+            },
+            {
+              "chunkId": "tile-1",
+              "terrain": {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://terrain.example/tile-1-collision.json",
+                  "bytes": 2290,
+                  "sha256": "32796396d3c5e276f3d4fee765a4a65df3867432d9971d4e5aa5ca2ee5d69703"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://terrain.example/tile-1-scene.glb",
+                  "bytes": 38384,
+                  "sha256": "c00d120ed1cdebf6989fcfebedb40bdb3f5ed0d667f4d693f40ff3577945d05a"
+                }
+              },
+              "scenery": {
+                "chunkId": "tile-1",
+                "collision": {
+                  "id": "tile-1-collision",
+                  "url": "https://scenery.example/tile-1-collision.json",
+                  "bytes": 386,
+                  "sha256": "99b0b0aa3902a81950ff767aa275af58bd9208ee49871fcf4d2d37b706cba758"
+                },
+                "scene": {
+                  "id": "tile-1-scene",
+                  "url": "https://scenery.example/tile-1-scene.glb",
+                  "bytes": 1376,
+                  "sha256": "6e758d3a590a2cc57b9985b6f65233ef00240ff56bf2183a559c875de698bd50"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      },
+      "geometryProfile": "terrain-scenery-v1",
+      "streaming": {
+        "enabled": true,
+        "pending": false,
+        "failure": null
+      },
+      "model": "regional-authoring-flight-prototype.v1",
+      "unscored": true,
+      "playerReady": false
+    },
+    "afterDisposal": {
+      "collision": {
+        "worlds": 0,
+        "colliders": 0,
+        "rigidBodies": 0
+      },
+      "geometryBytes": 0,
+      "reservedGeometryBytes": 0,
+      "reservedSourceBytes": 0,
+      "rootChildren": 0,
+      "renderer": {
+        "available": true,
+        "disposed": true,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 83,
+          "triangles": 8418,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      }
+    },
+    "disposalZero": true
+  },
+  "priorSegments": [],
+  "limitations": [
+    "Repeated synthetic six-cell corridor, not all maps or player behavior",
+    "CPU submission is not GPU completion or physical-device FPS",
+    "Resource counters exclude opaque engine/GPU allocations",
+    "Imported segments are unverified history and never extend an uninterrupted pass",
+    "No persistence, browser-restart or all-network-offline claim"
+  ],
+  "accepted": true
+}
