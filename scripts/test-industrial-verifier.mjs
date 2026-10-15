@@ -18,7 +18,17 @@ test('the feature manifest selects every required stream and real test paths', a
   const phases = selectIndustrialPhases(manifest);
   assert.deepEqual(
     phases.map((phase) => phase.id),
-    ['gameplay', 'creator', 'presentation', 'recordings', 'rooms', 'local-ux', 'host-integration'],
+    [
+      'gameplay',
+      'creator',
+      'presentation',
+      'recordings',
+      'rooms',
+      'local-ux',
+      'host-integration',
+      'host-navigation',
+      'mission-library',
+    ],
   );
   for (const phase of phases) {
     assert.deepEqual(selectIndustrialPhases(manifest, phase.id), [phase]);
@@ -31,9 +41,10 @@ test('the feature manifest selects every required stream and real test paths', a
     'utf8',
   );
   const matrix = workflow
-    .match(/phase: \[([^\]]+)\]/)?.[1]
+    .match(/phase:\s*\[([^\]]+)\]/)?.[1]
     .split(',')
-    .map((id) => id.trim());
+    .map((id) => id.trim())
+    .filter(Boolean);
   assert.deepEqual(
     matrix,
     phases.map((phase) => phase.id),
