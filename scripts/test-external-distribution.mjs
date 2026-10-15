@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { inflateRawSync } from 'node:zlib';
 import { JOURNEY_ART_CANDIDATES } from '../game/content-design/journey-art.mjs';
 import { buildProject, readBuildConfig } from './game-cli.mjs';
 import {
@@ -142,7 +143,9 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   const counts = new Map();
   let offset = 0;
   while (zip.readUInt32LE(offset) === 0x04034b50) {
-    assert.equal(zip.readUInt16LE(offset + 8), 0);
+    const method = zip.readUInt16LE(offset + 8);
+    assert.ok(method === 0 || method === 8);
+    const originalBytes = zip.readUInt32LE(offset + 22);
     const bytes = zip.readUInt32LE(offset + 18),
       n = zip.readUInt16LE(offset + 26),
       extra = zip.readUInt16LE(offset + 28),
@@ -150,7 +153,12 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
       name = zip.subarray(offset + 30, offset + 30 + n).toString();
     if (wanted.has(name)) {
       counts.set(name, (counts.get(name) || 0) + 1);
-      assert.equal(sha(zip.subarray(start, start + bytes)), wanted.get(name).sha256);
+      const compressed = zip.subarray(start, start + bytes);
+      const body =
+        method === 8 ? inflateRawSync(compressed, { maxOutputLength: originalBytes }) : compressed;
+      assert.equal(body.length, originalBytes);
+      assert.equal(body.length, wanted.get(name).bytes);
+      assert.equal(sha(body), wanted.get(name).sha256);
     }
     offset = start + bytes;
   }

@@ -2,6 +2,34 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "distribution-archive-format",
+      "pathPatterns": [
+        "^scripts/(game-cli|test-game-cli|controller-confirm-browser-fixture|test-distribution-archive|test-external-distribution|test-optional-distribution)\\.mjs$",
+        "^publishing/distribution-archive\\.test\\.mjs$",
+        "^publishing/utility/(inspect_qualified_artifact|test_distribution_archive|test_release_artifact)\\.py$",
+        "^publishing/pages-controller/metadata(?:\\.test)?\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "distribution-archive-format",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-distribution-archive.mjs",
+            "scripts/test-game-cli.mjs",
+            "publishing/distribution-archive.test.mjs",
+            "publishing/pages-controller/metadata.test.mjs",
+            "publishing/pages-controller/sync-release-metadata.test.mjs",
+            "publishing/pages-controller/assemble.test.mjs",
+            "scripts/test-external-distribution.mjs",
+            "scripts/test-optional-distribution.mjs",
+            "scripts/test-optional-practice.mjs"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
       "id": "release-zip-capacity-analysis",
       "pathPatterns": ["^scripts/(?:test-)?measure-release-zip-capacity\\.mjs$"],
       "commands": [
