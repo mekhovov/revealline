@@ -15,6 +15,10 @@ The live repository workflow inventory and release API were read on 15 October 2
 
 Older deployment documents still name `publish-frozen-pages.yml` and its 950 MB hosted limit. That workflow no longer exists in this checkout. Its historical selector remains at v0.142.3, but it does not establish the rolling channel's current identity. The separate frozen-release utility still enforces a **950,000,000-byte distribution ZIP limit**. These are different contracts; the newer rolling-channel limit does not authorize raising either release or native limits.
 
+## Current lossless-container continuation
+
+The [complete-source compression experiment](team-duel-release-compression-2026-10-15.md) separately measures committed source `90616ad4453a2c31d29ea29e532e6ecefbf459a0`: all 3,489 archive members round-trip exactly, with a choose-smaller stored/deflate projection of **908,988,197 bytes**, 41,011,803 below the existing ZIP limit. The extracted payload remains **1,072,015,513 bytes**, 266,709,145 over the unchanged native limit. These newer exact-source values do not replace the historical working-tree measurements below. A coordinated source-admitted format migration is required before the canonical writer/inspector can consume that compression; the feasibility report is not a produced release archive.
+
 ## Measured capacity
 
 The existing `inspectBuildProject` complete preparation finished without allocating a ZIP or writing an expanded site. It performs the normal content/reference preparation and returns the final generated manifest. The complete preparation has **3,488 manifest files / 1,072,014,438 payload bytes**. Its 518,990-byte manifest has SHA-256 `6e93db98b9cefe687b64cefae0042f139852560e609953be1d1d4a208678c175`.
@@ -64,7 +68,7 @@ After these decisions, the canonical publisher can qualify **one final merged so
 
 ## Physical controller availability
 
-Two read-only OS inventories initially found **zero connected gamepads and two paired, disconnected gamepads**; the USB inventory was empty. Only device kinds/counts are retained here, without addresses, serials or unrelated device names. After the user said they would connect both controllers, the parent task observed **two DualSense controllers in the public Team settings**, assigned one to each pilot, and retained a screenshot. The user then confirmed “both controllers work”. Independent numbered-seat attribution and disconnect/recovery were not separately observed. Pairing inventory or UI assignment alone does not certify those physical-input behaviors.
+Two read-only OS inventories initially found **zero connected gamepads and two paired, disconnected gamepads**; the USB inventory was empty. Only device kinds/counts are retained here, without addresses, serials or unrelated device names. After the user said they would connect both controllers, the parent task observed **two DualSense controllers in the public Team settings**, assigned one to each pilot, and retained a screenshot. The user then confirmed “both controllers work”. The later [native Team controller report](team-duel-controller-native-2026-10-15.md) records a controlled Player 2 loss, retained Player 1 seat, explicit rejoin, retained paused state and a controlled live automatic-pause observation. Pairing inventory or UI assignment alone does not certify those physical-input behaviors.
 
 ## Reproduction boundary
 
