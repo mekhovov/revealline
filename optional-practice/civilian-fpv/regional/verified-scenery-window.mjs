@@ -1,3 +1,4 @@
+import { regionalCollisionCounts } from './region-motion-query.mjs';
 import { validateScenerySurface } from './scenery-surface.mjs';
 import {
   validateFrameTransaction,
@@ -84,6 +85,7 @@ export function createVerifiedSceneryWindow(
   });
   const base = new URL(baseURL);
   let committed = null,
+    preparing = null,
     provenance = null,
     state = 'idle',
     failure = null,
@@ -187,6 +189,7 @@ export function createVerifiedSceneryWindow(
         maxGeometryBytes: requiredBytes,
         surfaceStyle,
       });
+      preparing = staged;
       current(token);
       if (frameTransaction?.prepare)
         await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token));
@@ -238,11 +241,14 @@ export function createVerifiedSceneryWindow(
       throw error;
     } finally {
       staged?.dispose();
+      preparing = null;
       reservedGeometryBytes = committedBytes();
     }
   }
   return Object.freeze({
     snapshot,
+    collisionSnapshot: () =>
+      regionalCollisionCounts(committed, preparing === committed ? null : preparing),
     get group() {
       return committed?.group ?? null;
     },

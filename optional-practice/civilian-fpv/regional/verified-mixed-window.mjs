@@ -1,3 +1,4 @@
+import { regionalCollisionCounts } from './region-motion-query.mjs';
 import { earlierFlightHit } from "../flight-contact.mjs";
 /** Atomic terrain/scenery composition for unscored authoring, never World.v1. */
 import { Group } from "../vendor/three.module.js";
@@ -307,6 +308,13 @@ export function createVerifiedMixedWindow(
   }
   return Object.freeze({
     snapshot,
+    collisionSnapshot: () =>
+      regionalCollisionCounts(
+        committed?.terrain,
+        committed?.scenery,
+        staging === committed ? null : staging?.terrain,
+        staging === committed ? null : staging?.scenery,
+      ),
     get group() {
       return committed?.group ?? null;
     },

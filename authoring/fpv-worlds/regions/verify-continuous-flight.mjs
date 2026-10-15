@@ -548,4 +548,79 @@ await check(
     }
   },
 );
+await check(
+  'actual query-world ownership stays bounded through 40 swaps and rejected stages',
+  async () => {
+    const owner = create(fixture(), { retainCommitted: true });
+    const empty = { worlds: 0, colliders: 0, rigidBodies: 0 };
+    assert.deepEqual(owner.collisionSnapshot(), empty);
+    let peak = 0;
+    try {
+      await owner.transition(point(0));
+      for (let i = 0; i < 40; i++) {
+        const target = i % 2 ? 0 : 3;
+        const nextColliders = (target === 0 ? 2 : 3) * 3;
+        const before = owner.collisionSnapshot();
+        assert.equal(before.worlds, 2);
+        assert.equal(before.rigidBodies, 0); // Static query worlds do not contain a drone rigid body.
+        await assert.rejects(
+          owner.transition(point(target), null, {
+            commit() {},
+            rollback() {},
+            prepare() {
+              const staged = owner.collisionSnapshot();
+              assert.deepEqual(staged, {
+                worlds: 4,
+                colliders: before.colliders + nextColliders,
+                rigidBodies: 0,
+              });
+              peak = Math.max(peak, staged.colliders);
+              throw new Error('deliberate-frame-rejection');
+            },
+          }),
+          /deliberate-frame-rejection/,
+        );
+        assert.deepEqual(owner.collisionSnapshot(), before);
+        assert.equal(owner.snapshot().terrainReady, true);
+        await owner.transition(point(target));
+        assert.deepEqual(owner.collisionSnapshot(), {
+          worlds: 2,
+          colliders: nextColliders,
+          rigidBodies: 0,
+        });
+        const copy = owner.collisionSnapshot();
+        copy.colliders = -1;
+        assert.equal(owner.collisionSnapshot().colliders, nextColliders);
+      }
+      assert.equal(peak, 15);
+      let release, entered;
+      const started = new Promise((resolve) => {
+        entered = resolve;
+      });
+      const held = owner.transition(point(3), null, {
+        commit() {},
+        rollback() {},
+        async prepare() {
+          entered();
+          await new Promise((resolve) => {
+            release = resolve;
+          });
+        },
+      });
+      const rejected = assert.rejects(held, { name: 'AbortError' });
+      await started;
+      assert.equal(owner.collisionSnapshot().worlds, 4);
+      const disposing = owner.dispose();
+      release();
+      await rejected;
+      await disposing;
+      assert.deepEqual(owner.collisionSnapshot(), empty);
+      await owner.dispose();
+      assert.deepEqual(owner.collisionSnapshot(), empty);
+    } finally {
+      await owner.dispose();
+    }
+  },
+);
+
 console.log(`PASS ${checks}/${checks} continuous regional checks`);

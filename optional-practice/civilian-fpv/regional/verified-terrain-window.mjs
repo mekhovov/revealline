@@ -1,3 +1,4 @@
+import { regionalCollisionCounts } from './region-motion-query.mjs';
 import {
   validateFrameTransaction,
   adoptVerifiedFrame,
@@ -78,6 +79,7 @@ export function createVerifiedTerrainWindow(
   });
   const base = new URL(baseURL);
   let committed = null,
+    preparing = null,
     provenance = null,
     state = "idle",
     failure = null,
@@ -178,6 +180,7 @@ export function createVerifiedTerrainWindow(
         surfaceStyle,
         surfaceQuality,
       });
+      preparing = staged;
       current(token);
       if (frameTransaction?.prepare)
         await prepareVerifiedFrame(frameTransaction, staged.group, () =>
@@ -228,11 +231,14 @@ export function createVerifiedTerrainWindow(
       throw error;
     } finally {
       staged?.dispose();
+      preparing = null;
       reservedGeometryBytes = committedBytes();
     }
   }
   return Object.freeze({
     snapshot,
+    collisionSnapshot: () =>
+      regionalCollisionCounts(committed, preparing === committed ? null : preparing),
     get group() {
       return committed?.group ?? null;
     },
