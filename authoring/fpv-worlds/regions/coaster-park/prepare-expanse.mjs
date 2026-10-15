@@ -146,6 +146,35 @@ for (const placement of placements) {
     ),
   );
   const y = surfaceMm(x, z);
+  if (name === "coaster-steel-looping.glb") {
+    // Each support crosshead must contain actual imported rim vertices. This is
+    // stronger than placing a visually nearby frame using an approximate circle.
+    for (const dz of [-11, 11]) {
+      const beam = pieces.find(
+        (piece) =>
+          piece.id === id.replace("-outer-feature", `-loop-rim-beam-${dz}`),
+      );
+      assert(beam, id);
+      let contacts = 0;
+      for (const surface of model.cell.surfaces) {
+        for (let i = 0; i < surface.positionsMm.length; i += 3) {
+          const point = [
+            surface.positionsMm[i] / 1000 + x - 64,
+            (surface.positionsMm[i + 1] + y - minY) / 1000,
+            surface.positionsMm[i + 2] / 1000 + z - 64,
+          ];
+          if (
+            point.every(
+              (value, axis) =>
+                Math.abs(value - beam.center[axis]) <= beam.size[axis] / 2,
+            )
+          )
+            contacts++;
+        }
+      }
+      assert(contacts > 0, `${id}: support ${dz} does not touch imported rim`);
+    }
+  }
   for (const [i, surface] of model.cell.surfaces.entries()) {
     const surfaceId = `${id}-${i}`;
     cell.surfaces.push({
@@ -242,7 +271,20 @@ for (const [kind, sources, compile] of [
       ids = [];
     if (source)
       for (const [type, bytes] of [
-        ["scene", Buffer.from(compile(source).glb)],
+        [
+          "scene",
+          Buffer.from(
+            (() => {
+              try {
+                return compile(source).glb;
+              } catch (error) {
+                throw new Error(`${kind} ${base.chunkId}: ${error.message}`, {
+                  cause: error,
+                });
+              }
+            })(),
+          ),
+        ],
         ["collision", json(source)],
       ]) {
         const id = `${base.chunkId}-${type}`,
@@ -264,7 +306,7 @@ for (const [kind, sources, compile] of [
     format:
       kind === "terrain" ? "FPVRegionManifest.v1" : "FPVSceneryManifest.v1",
     id: "coaster-gardens-study",
-    revision: "composition-r1",
+    revision: "composition-r2",
     title: {
       en: "Coaster Gardens — six connected park districts",
       uk: "Сади атракціонів — шість поєднаних паркових районів",

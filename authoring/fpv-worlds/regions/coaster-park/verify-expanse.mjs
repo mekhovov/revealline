@@ -18,6 +18,7 @@ import {
   heightMm,
   surfaceMm,
   routes,
+  compositionSupports,
   solidProbes,
   districts,
   landmarks,
@@ -168,6 +169,16 @@ try {
       "Authored placement must match canonical triangle support",
     );
   }
+  for (const probe of compositionSupports) {
+    await prepare(probe.position);
+    const hit = owner.support(mm(probe.position), 5000);
+    assert.equal(hit.status, "terrain-hit", probe.id);
+    assert.equal(hit.layer, "scenery", probe.id);
+    assert(
+      Math.abs(hit.heightMm - probe.height * 1000) < 2,
+      `${probe.id}: ${JSON.stringify(hit)}`,
+    );
+  }
   // All grid corners and each district are actually prepared, including explicit empty scenery.
   for (const [x, z] of [
     [64, 64],
@@ -212,6 +223,7 @@ try {
         districts: districts.length,
         landmarks: landmarks.length,
         clearProbes,
+        compositionSupportProbes: compositionSupports.length,
         solidHits,
         transitions,
         maxResourceBytes,
