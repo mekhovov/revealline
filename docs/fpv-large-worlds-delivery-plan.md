@@ -5,6 +5,61 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October delivery checkpoint
+
+This checkpoint supersedes the older in-flight status below; historical evidence
+and limits remain recorded. The full roadmap is **not complete**.
+
+- **Merged reliability:** compact flight controls and starting points (#1296/#1304),
+  graphics recovery (#1309), ambiguous-controller pause (#1313), cold preparation
+  (#1314), and exact-package recovery receipt (#1318). The last three reached main
+  through native stack #1305 at `62bf80d8`. Its actual main source retains the cold
+  preparation guard; explicit pause, blur and graphics-loss paths still freeze.
+- **Ready in native art stack #1292:** Railway Library #1306, shared live quality
+  #1310, and Urban review-r2 Library #1316. Urban's draft dependency on #1314 is
+  cleared. Normal source-host download, first disarmed Fly, deliberate keyboard
+  flight and reload passed. Both Urban review-r1 and review-r2 remain installed,
+  separately selectable and readable after reload; the newer map does not replace
+  a saved older revision. These source checks do not qualify a new release package.
+- **Canyon:** rounded-source flight proof and immutable bundle #1317 are merged.
+  Fourteen commanded paths cover both modes across 34,798 ticks; native shared
+  renderer inspection passed all detail choices and resource release. Library
+  admission #1320 follows #1316 and remains subject to normal-player verification.
+  It is a 384×384 m representative, not the larger target region.
+- **Tropical:** eight licensed original assets and authoring receipt #1315 are
+  merged. The bounded RGBA material contract is under publication. Native review
+  caught missing palm vertex colours; the correction preserves the original tint
+  and cutout foliage, and disposal returns owned resources to zero. The 128-pixel
+  runtime texture variants are explicitly downsampled, not lossless replacements.
+  No assembled Tropical region or default Library entry is claimed yet.
+- **Performance:** snapshot reuse #1321 is a separate main-based PR. It removes
+  redundant copies without changing accepted states: 1,212 comparisons pass.
+  Five alternating 2,000-step Node 20.19.5 rounds measured median workload time
+  923.36 ms before and 573.02 ms after. This is CPU workload evidence, not device FPS.
+
+### Next work, in parallel
+
+1. **P1 — Finish Library publication and integrated qualification.** Complete
+   Canyon's normal-player check; qualify a fresh combined package after the art
+   stack lands, including interrupted preparation, graphics recovery, saved older
+   revisions and offline launch. Verify the actual deployed player before calling
+   these updates live. Publication waiting must not stop the lanes below.
+2. **P1 — Performance and favourite places.** Finish snapshot reuse and add bounded,
+   exact-revision saved locations. Restore while paused with zero input and verify
+   support/bounds/overlap before allowing explicit arming. Keep old records usable.
+3. **P2/P3 — Representative quality and Tropical assembly.** Prepare a bounded
+   coastal region from the verified materials, with solid structures and visual-only
+   foliage, distinct routes and commanded flight/collision evidence. Continue Urban,
+   Canyon and Railway composition without treating their current small studies as
+   the promised multi-kilometre regions.
+4. **P3 — Expand authored regions.** Grow districts, landmarks and navigable route
+   variety within resource budgets, then deliver additional regions one at a time.
+   The 4/8/16 km design targets below remain targets, not present capability claims.
+5. **P4/D6 — Close release and sustained qualification.** Finish real elapsed long
+   flights, named-device/controller observations, all-network offline failure cases,
+   responsive/theme checks and applicable regression coverage. Current simulated
+   duration and local browser evidence cannot substitute for these observations.
+
 ## Current state and priorities
 
 - **Completed before this increment:** 19 optional Library worlds; sixteen CC0
