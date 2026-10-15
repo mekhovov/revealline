@@ -3666,3 +3666,17 @@ html body .shared-pause-menu[data-sim-practice='true'] [data-mode-action='pause-
 html body.sim-worlds #flight-dialog[data-sim-flight-compact='true'] > header:not(.mode-play-bar) {
   display: none !important;
 }
+
+/* Keep the paused action clear of both objective feedback and touch controls. */
+@media (max-width: 600px) {
+  html body.field-kit .handheld-flight-actions > .handheld-flight-resume {
+    top: calc(var(--flight-safe-top) + 48px);
+    bottom: auto;
+  }
+}
+@media (max-height: 480px) and (min-width: 500px) {
+  html body.field-kit .handheld-flight-actions > .handheld-flight-resume {
+    top: auto;
+    bottom: var(--flight-safe-bottom);
+  }
+}
