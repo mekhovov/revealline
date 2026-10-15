@@ -11,6 +11,7 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
     await page.locator(selector).click({ timeout: 5000 });
     check();
   };
+  check();
   if (academy) {
     await click('#academy-result-home');
     await click('#academy-shell-action-settings');

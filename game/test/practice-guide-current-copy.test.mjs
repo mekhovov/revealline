@@ -39,6 +39,22 @@ test('repository and shipped guides name the current rendered radio setup contro
   }
 });
 
+test('repository and shipped guides document the reachable maintained Detailed HUD in both locales', async () => {
+  for (const locale of ['en', 'uk'])
+    for (const guide of await localizedGuides(locale)) {
+      assert(
+        guide.includes(
+          locale === 'en'
+            ? 'Settings → Accessibility → Flight guidance'
+            : 'Налаштування → Доступність → Підказки польоту',
+        ),
+      );
+      assert(guide.includes(locale === 'en' ? 'Detailed' : 'Докладні'));
+      assert(guide.includes(locale === 'en' ? 'Text size' : 'Розмір тексту'));
+      assert(guide.includes(locale === 'en' ? 'HUD contrast' : 'Контраст приладів'));
+    }
+});
+
 test('both guide formats distinguish incomplete verification from confirmed repair', async () => {
   const launcher = await source('optional-practice/launcher-template.mjs');
   const checks = [...launcher.matchAll(/check: '([^']+)'/g)].map((match) => match[1]);

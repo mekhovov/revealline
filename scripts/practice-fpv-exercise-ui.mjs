@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { setTimeout as delay } from 'node:timers/promises';
 
 export const FPV_EXERCISE_PROTOCOL = Object.freeze({
-  id: 'practice-fpv-exercise-public-ui.prototype.v2',
+  id: 'practice-fpv-exercise-public-ui.prototype.v3',
   sourceReviewed: '1d8b9c076',
   maximumMs: 90000,
   operationMs: 1500,
@@ -14,6 +14,8 @@ export const FPV_EXERCISE_PROTOCOL = Object.freeze({
   maximumSampleGapMs: 750,
   targetHeight: 1.8,
   throttleHover: 0.5,
+  takeoffThrottle: 0.6,
+  groundClearanceHeight: 0.1,
   velocityGain: 0.12,
   heightGain: 0.6,
   maximumClimb: 0.45,
@@ -208,12 +210,17 @@ export function publicFPVFeedback(samples) {
           : FPV_EXERCISE_PROTOCOL.descent;
   const desiredThrottle = settledGround
     ? FPV_EXERCISE_PROTOCOL.groundedThrottle
-    : clamp(
-        FPV_EXERCISE_PROTOCOL.throttleHover +
-          FPV_EXERCISE_PROTOCOL.velocityGain * (desiredVelocity - velocity.value),
-        FPV_EXERCISE_PROTOCOL.minimumFlightThrottle,
-        FPV_EXERCISE_PROTOCOL.maximumFlightThrottle,
-      );
+    : // At ground, rounded per-tick displacement can be zero even above the
+      // mathematical 50% hover point, resetting vertical velocity on every tick.
+      // This observer-only takeoff command clears that fixed-model dead zone.
+      current.checkpoint === 0 && current.height < FPV_EXERCISE_PROTOCOL.groundClearanceHeight
+      ? FPV_EXERCISE_PROTOCOL.takeoffThrottle
+      : clamp(
+          FPV_EXERCISE_PROTOCOL.throttleHover +
+            FPV_EXERCISE_PROTOCOL.velocityGain * (desiredVelocity - velocity.value),
+          FPV_EXERCISE_PROTOCOL.minimumFlightThrottle,
+          FPV_EXERCISE_PROTOCOL.maximumFlightThrottle,
+        );
   const error = desiredThrottle - current.throttle;
   const direction =
     Math.abs(error) <= FPV_EXERCISE_PROTOCOL.throttleDeadband ? null : error > 0 ? 'w' : 's';
