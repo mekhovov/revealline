@@ -1,3 +1,4 @@
+import { canalViews } from './canal-city/views.mjs';
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { createSceneryLighting } from './scenery-lighting.mjs';
 import { createVerifiedMixedWindow } from './verified-mixed-window.mjs';
@@ -90,6 +91,7 @@ const views =
     'railway-expanse': railwayExpanseViews,
     alpine: alpineViews,
     'desert-landmarks': desertLandmarkViews,
+    'canal-city': canalViews,
   }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
@@ -129,7 +131,7 @@ async function view(v) {
     window.group.traverse((object) => {
       if (object.isMesh) meshCount++;
     });
-    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${meshCount} matching meshes/colliders · ${result.geometryBytes} geometry bytes · no flight admission`;
+    status.textContent = `${v[0]} · ${result.provenance.chunks.length} verified cells · ${meshCount} rendered meshes · ${result.geometryBytes} geometry bytes · no flight admission`;
     draw();
   } catch (error) {
     if (!closed) status.textContent = `Preparation stopped: ${error.message}`;
