@@ -4,7 +4,7 @@ import {
 } from "./region-motion-query.mjs";
 import * as THREE from "../vendor/three.module.js";
 import RAPIER from "../vendor/rapier/rapier.mjs";
-import { validateRegionManifest } from "./region-manifest.mjs";
+import { validateRegionManifest, REGION_FORMAT } from "./region-manifest.mjs";
 import { compileTerrainCell, validateTerrainSeams } from "./terrain-cell.mjs";
 import {
   createTerrainSurface,
@@ -44,6 +44,7 @@ export async function prepareTerrainWindow(
 ) {
   const manifest = validateRegionManifest(manifestInput),
     cells = validateTerrainSeams(cellsInput);
+  fail(manifest.format === REGION_FORMAT, 'Terrain requires the complete terrain manifest profile');
   const surface = validateTerrainSurface(surfaceStyle, surfaceQuality);
   fail(integerPosition(originMm), "Invalid local origin");
   originMm = Object.freeze({ ...originMm });
