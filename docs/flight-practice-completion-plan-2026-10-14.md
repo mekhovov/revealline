@@ -6,6 +6,16 @@ mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
 
+### Latest pointer/verification continuation
+
+The [pointer continuation](flight-practice-pointer-2026-10-15.md) rebases onto
+`95703ee32`, preserves native-dialog instructions in all three apps, and prevents
+inconclusive preparation checks from advising removal. Frozen source `bf31260eb`
+passes the 24-case Academy EN/UK pointer/keyboard matrix on an unchanged retry;
+the original 11 pointer failures and first corrected run's cleanup timeout remain
+recorded separately. Full first-flight, other apps' native pointer matrix,
+distinct-release, physical/human and hosting gates remain open.
+
 ### Later 15 October recovery continuation
 
 Rebased onto main `859d5cfc927daff2a350318b2325486a58959648` after PR #1345 merged.
