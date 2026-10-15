@@ -59,6 +59,7 @@
         "game/test/snake-studio-preview.test.mjs",
         "game/test/snake-studio-launch.test.mjs",
         "game/test/team-installed-host.test.mjs",
+        "game/test/team-installed-media-results-host.test.mjs",
         "game/test/asset-studio-return.test.mjs",
         "game/test/asset-studio-actor-animation.test.mjs",
         "game/test/asset-studio-preview-motion.test.mjs",
