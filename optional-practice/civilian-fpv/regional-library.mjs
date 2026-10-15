@@ -122,6 +122,24 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
     id: 'hillside-town-study',
     title: {
+      en: 'Hillside Town — civic court materials',
+      uk: 'Містечко на схилі — матеріали міського подвір’я',
+    },
+    description: {
+      en: '384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.',
+      uk: '384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною.',
+    },
+    bytes: 8660487,
+    appearance: { terrain: 'hillside-town' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json',
+      bytes: 6579,
+      sha256: 'f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573',
+    },
+  },
+  {
+    id: 'hillside-town-study',
+    title: {
       en: 'Hillside Town — terraces and courtyards',
       uk: 'Містечко на схилі — тераси та подвір’я',
     },
@@ -279,9 +297,16 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
   if (
-    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
-      terrain,
-    )
+    ![
+      'plain',
+      'canyon',
+      'urban',
+      'railway',
+      'tropical',
+      'tropical-settlement',
+      'desert',
+      'hillside-town',
+    ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
