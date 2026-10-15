@@ -4789,6 +4789,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'arrival-gardens': ['Arrival gardens', 'Вхідні сади'],
+        'loop-meadow': ['Loop meadow', 'Луг із петлею'],
+        'ridge-station': ['Ridge station', 'Станція на пагорбі'],
+        'service-courts': ['Service courts', 'Службові двори'],
+        'woodland-promenade': ['Woodland promenade', 'Лісова алея'],
+        'river-gardens': ['River gardens', 'Прибережні сади'],
         'mill-court': ['Mill court', 'Двір млина'],
         'tower-court': ['Tower court', 'Двір вежі'],
         'freight-hall': ['Freight hall', 'Вантажний цех'],
@@ -5969,6 +5975,17 @@ export function mountWorldApp({
     }
     if (state.status === 'active') presentation.pause();
     audio.update(state, { active: !replayProof && state.status === 'active' });
+    if (
+      sceneReady &&
+      ['paused', 'disarmed'].includes(state.status) &&
+      !terminal(state) &&
+      (missionChooser?.elements.dialog.open || $('sim-settings').open)
+    ) {
+      // These opaque dialogs cover the retained flight. Device/menu polling,
+      // audio and asynchronous source/graphics preparation keep their ownership;
+      // only covered scene/HUD observers wait until the dialog closes.
+      return;
+    }
     // Do not submit an intermediate scene while its assets or shaders are preparing.
     if (sceneReady) drawFlight(state);
     const cue =
@@ -6139,7 +6156,6 @@ export function mountWorldApp({
       ...regionalPresentationOptions(entry.configuration, $('flight-quality').value),
       mode: options.mode ?? $('flight-mode').value,
       response,
-      initialHeading: 'region-centre',
       prepareFrame: async (group, options) => {
         if (flight === nextFlight) regionalPreparationStage = 'graphics';
         await renderer.prepareRegionalFrame(group, options);
