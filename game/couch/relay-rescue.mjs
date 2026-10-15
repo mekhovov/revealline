@@ -4568,7 +4568,7 @@ export function bootCoop({
     if (!missionLibrary) {
       missionLibrary = createMissionLibrary();
       for (const source of supplementalTeamSources({
-        launch: launchRemoteTeamRow,
+        launch: launchRemoteLibraryMission,
         difficulty: libraryDifficulty,
         activeRouteId: libraryEdition,
       }))
@@ -4577,7 +4577,7 @@ export function bootCoop({
         registerTeamSource(
           teamExpeditionLibrarySource({
             difficulty: libraryDifficulty,
-            launch: launchRemoteTeamRow,
+            launch: launchRemoteLibraryMission,
           }),
           () => null,
         );
