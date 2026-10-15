@@ -1,3 +1,4 @@
+import { createMediaPreparation } from './media-preparation.mjs';
 import { createHumanReactionPolicy } from './human-reaction-policy.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../audio/dialogue-mix.mjs';
 import { encounterSoundRecipe } from './encounter-audio.mjs';
@@ -48,6 +49,7 @@ export class Soundscape {
     this.radioSettings = readRadioAudio();
     this.movementSettings = readMovementAudio();
     this.dialogueSettings = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
+    this.mediaPreparation = createMediaPreparation();
     this.feedbackDirector = new FeedbackDirector(this);
     this.humanReactions = createHumanReactionPolicy();
     this.persistentMusic = persistentMusic;
@@ -81,7 +83,14 @@ export class Soundscape {
         this.stopVoices('dialogue');
       }
       this.applyVolumes();
+      this.mediaPreparation.refresh();
     });
+  }
+  setPreparationPhase(phase) {
+    this.mediaPreparation.setPhase(phase);
+  }
+  prepareGameplayAudio(names) {
+    return this.feedbackDirector.prepare(names);
   }
   setPublishedAudio(readAudio) {
     this.publishedAudio?.close();
@@ -428,7 +437,6 @@ export class Soundscape {
     // Must happen before context creation/resume in the same user activation.
     requestPlaybackAudioSession();
     if (!this.setup()) return false;
-    this.feedbackDirector.prepare();
     if (this.persistentMusic && this.enabled && !this.paused && this.context.state === 'running') {
       this.gameplayPaused = false;
       return true;
@@ -540,6 +548,7 @@ export class Soundscape {
     this.disposed = true;
     this.releaseAudioMaster?.();
     this.feedbackDirector.close();
+    this.mediaPreparation.close();
     this.setPublishedAudio(null);
     this.cancelPreview();
     ++this.transition;

@@ -1,3 +1,4 @@
+import { createMediaPreparation } from './media-preparation.mjs';
 import { attachMenuAudioSettings } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
 import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from './destruction-audio.mjs';
@@ -13,17 +14,35 @@ const cueNames = new Set([
   ...DESTRUCTION_CUES,
   ...HUMAN_REACTION_CUES,
 ]);
+const CUE_CACHE_BYTES = 32 * 1024 * 1024;
 
 /** Read-only session cache. An unavailable cue uses its existing procedural
  * fallback; a late decode never replays an event that has already happened. */
 export function createPublishedCues({ sound, readAudio }) {
+  const preparation = sound.mediaPreparation ?? createMediaPreparation();
+  const ownsPreparation = !sound.mediaPreparation;
   const cache = new Map(),
     attenuation = new Map(),
     pending = new Set(),
     loads = new Map(),
     voices = new Set(),
     recent = new Map();
-  let closed = false;
+  let closed = false,
+    decodedBytes = 0;
+  const bufferBytes = (value) =>
+    value && typeof value === 'object' ? value.length * value.numberOfChannels * 4 : 0;
+  function retain(name, decoded) {
+    const size = bufferBytes(decoded);
+    for (const [key, value] of cache) {
+      if (decodedBytes + size <= CUE_CACHE_BYTES) break;
+      if (key === name || !bufferBytes(value)) continue;
+      decodedBytes -= bufferBytes(value);
+      cache.delete(key);
+      attenuation.delete(key);
+    }
+    cache.set(name, decoded ?? false);
+    decodedBytes += size;
+  }
   const cancelPending = () => {
     for (const controller of pending) controller.abort();
     pending.clear();
@@ -41,7 +60,7 @@ export function createPublishedCues({ sound, readAudio }) {
     sound.settings.master &&
     (ui ? sound.menuSettings?.enabled !== false : sound.settings.sfx) &&
     (ui || !sound.persistentMusic || !sound.gameplayPaused);
-  function load(name) {
+  function load(name, { priority = 'demand' } = {}) {
     if (cache.get(name) === 'loading') return loads.get(name);
     if (
       !cueNames.has(name) ||
@@ -49,14 +68,33 @@ export function createPublishedCues({ sound, readAudio }) {
       typeof sound.context?.decodeAudioData !== 'function'
     )
       return;
-    const controller = new AbortController();
+    const controller = new AbortController(),
+      context = sound.context;
+    const eligible = () =>
+      !closed &&
+      !controller.signal.aborted &&
+      sound.enabled &&
+      sound.context === context &&
+      !sound.audioMaster?.muted &&
+      sound.audioMaster?.volume !== 0;
+    const admission = { signal: controller.signal, priority, eligible };
     pending.add(controller);
     cache.set(name, 'loading');
-    const promise = Promise.resolve()
-      .then(() => readAudio(`audio.${name}`, { signal: controller.signal }))
+    const promise = preparation
+      .run('fetch', () => readAudio(`audio.${name}`, { signal: controller.signal }), admission)
       .then(async (result) => {
-        if (!result || controller.signal.aborted || closed || !sound.enabled) return null;
-        const decoded = await sound.context.decodeAudioData(await result.blob.arrayBuffer());
+        if (!result || !eligible()) return null;
+        const seconds = HUMAN_REACTION_CUES.includes(name)
+          ? 0.7
+          : DESTRUCTION_CUES.includes(name)
+            ? 1
+            : 15;
+        const reservation = Math.ceil(seconds * (context.sampleRate ?? 48000)) * 2 * 4;
+        const decoded = await preparation.run(
+          'decode',
+          async () => context.decodeAudioData(await result.blob.arrayBuffer()),
+          { ...admission, bytes: reservation },
+        );
         if (closed || controller.signal.aborted || !sound.enabled) return null;
         if (
           !Number.isFinite(decoded.duration) ||
@@ -71,10 +109,12 @@ export function createPublishedCues({ sound, readAudio }) {
         return decoded;
       })
       .then((decoded) => {
-        if (!closed && !controller.signal.aborted) cache.set(name, decoded ?? false);
+        if (!closed && !controller.signal.aborted) retain(name, decoded);
       })
-      .catch(() => {
-        if (!closed && !controller.signal.aborted) cache.set(name, false);
+      .catch((error) => {
+        if (error?.name === 'AbortError') {
+          if (!closed && loads.get(name) === promise) cache.delete(name);
+        } else if (!closed && !controller.signal.aborted) cache.set(name, false);
       })
       .finally(() => {
         pending.delete(controller);
@@ -90,7 +130,11 @@ export function createPublishedCues({ sound, readAudio }) {
     },
     prepare(names) {
       if (!available()) return Promise.resolve();
-      return Promise.all(names.filter((name) => cueNames.has(name)).map(load));
+      return Promise.all(
+        names
+          .filter((name) => cueNames.has(name))
+          .map((name) => load(name, { priority: 'background' })),
+      );
     },
     play(
       name,
@@ -199,9 +243,11 @@ export function createPublishedCues({ sound, readAudio }) {
     cancelPending,
     close() {
       closed = true;
+      if (ownsPreparation) preparation.close();
       for (const voice of [...voices]) voice.stop();
       cancelPending();
       cache.clear();
+      decodedBytes = 0;
       attenuation.clear();
       recent.clear();
     },
