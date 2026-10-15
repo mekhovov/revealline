@@ -1,5 +1,4 @@
 import * as THREE from './vendor/three.module.js';
-import { setRegionalSurfaceQuality } from './regional/terrain-surface.mjs';
 import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
@@ -237,6 +236,20 @@ export function createFlightViewFrame({ camera, aircraft }) {
 
 /** Presentation only. All world/actor positions are canonical millimetres.
  * Decorative structures remain outside the course; criteria are holograms. */
+/** Change trusted hooks without importing regional assets into the Academy package. */
+export function setRegionalSurfaceQuality(root, quality) {
+  const tiers = { low: 'performance', balanced: 'balanced', high: 'quality' };
+  if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
+  const materials = new Set();
+  root?.traverse((object) => {
+    for (const material of Array.isArray(object.material) ? object.material : [object.material])
+      if (typeof material?.userData?.setRegionalSurfaceQuality === 'function')
+        materials.add(material);
+  });
+  for (const material of materials) material.userData.setRegionalSurfaceQuality(tiers[quality]);
+  return materials.size;
+}
+
 export function createFlightRenderer({
   canvas,
   window: win = globalThis.window,
