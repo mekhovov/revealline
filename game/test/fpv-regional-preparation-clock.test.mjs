@@ -1,44 +1,143 @@
-import test from 'node:test';
 import assert from 'node:assert/strict';
+import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import vm from 'node:vm';
+import { parse } from 'acorn';
 
 const source = await readFile(
   new URL('../../optional-practice/civilian-fpv/world-app.mjs', import.meta.url),
   'utf8',
 );
-// Exercise the production clock admission boundary, stopping before device polling.
-const start = source.indexOf('  function advanceFrame(now) {');
-const end = source.indexOf('    pollGamepad(executedAt);', start);
-assert.ok(start > 0 && end > start);
-const boundary = `${source.slice(start, end)} } advanceFrame(600);`;
+const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+let frame, pause;
+function visit(node) {
+  if (!node || typeof node !== 'object') return;
+  if (node.type === 'FunctionDeclaration' && node.id.name === 'advanceFrame') frame = node;
+  if (node.type === 'FunctionDeclaration' && node.id.name === 'pauseFlight') pause = node;
+  for (const value of Object.values(node)) {
+    if (Array.isArray(value)) value.forEach(visit);
+    else if (value?.type) visit(value);
+  }
+}
+visit(ast);
+assert(frame, 'Execute the production callback, not a copied timing policy');
+const advance = new Function(
+  'state',
+  `with (state) { return (${source.slice(frame.start, frame.end)})(now); }`,
+);
+const explicitPause = new Function(
+  'state',
+  `with (state) { return (${source.slice(pause.start, pause.end)})(); }`,
+);
 
-function clock(regionalPreparing, lastTime = 100, executedAt = 600) {
-  const state = {
-    regionalPreparing,
-    current: { regional: true },
-    flight: {},
-    lastTime,
-    lastExecutionTime: 100,
-    accumulator: 123,
-    pauses: 0,
-    win: { performance: { now: () => executedAt } },
-    $: () => ({ open: true }),
-  };
-  state.pauseFlight = () => state.pauses++;
-  vm.runInNewContext(boundary, state);
-  return state;
+function fixture({
+  regional = true,
+  preparing = true,
+  status = 'paused',
+  execution = 420,
+  frameTime = 420,
+} = {}) {
+  const events = [],
+    state = {
+      now: frameTime,
+      win: { performance: { now: () => execution } },
+      lastExecutionTime: 20,
+      lastTime: 20,
+      accumulator: 17,
+      current: { regional },
+      regionalPreparing: preparing ? Promise.resolve() : null,
+      flight: { snapshot: () => ({ status }) },
+      $: (id) => {
+        assert.equal(id, 'flight-dialog');
+        return { open: true };
+      },
+      pauseFlight: () => {
+        events.push('pause');
+        if (state.regionalPreparing) events.push('cancel-preparation');
+      },
+      pollGamepad: () => {
+        throw new Error('Stalled callback must not poll flight input');
+      },
+    };
+  return { state, events };
 }
 
-test('disarmed regional preparation does not cancel itself after a slow shader frame', () => {
-  const state = clock(Promise.resolve());
-  assert.equal(state.pauses, 0);
-  assert.equal(state.lastTime, null);
-  assert.equal(state.accumulator, 0);
-  assert.equal(state.lastExecutionTime, 600);
+test('a cold preparation callback resets timing without cancelling disarmed regional work', () => {
+  for (const status of ['paused', 'disarmed']) {
+    const f = fixture({ status });
+    const pending = f.state.regionalPreparing;
+    advance(f.state);
+    assert.deepEqual(f.events, []);
+    assert.equal(f.state.regionalPreparing, pending);
+    assert.equal(f.state.lastTime, null);
+    assert.equal(f.state.accumulator, 0);
+    assert.equal(f.state.lastExecutionTime, 420);
+  }
 });
 
-test('completed preparation still freezes before polling after either clock stalls', () => {
-  assert.equal(clock(null).pauses, 1);
-  assert.equal(clock(null, 100, 110).pauses, 1);
+test('active flight still freezes before input, including an inconsistent active/preparing state', () => {
+  for (const preparing of [false, true]) {
+    const f = fixture({ status: 'active', preparing });
+    advance(f.state);
+    assert.deepEqual(f.events, preparing ? ['pause', 'cancel-preparation'] : ['pause']);
+  }
+});
+
+test('ordinary preparation and paused regional flight without a pending preparation retain the existing stall policy', () => {
+  for (const options of [{ regional: false }, { preparing: false }]) {
+    const f = fixture(options);
+    advance(f.state);
+    assert.equal(f.events[0], 'pause');
+  }
+});
+
+test('queued stale rAF timestamps and long frame gaps use the same preparation boundary', () => {
+  for (const options of [
+    { execution: 420, frameTime: 40 },
+    { execution: 40, frameTime: 420 },
+  ]) {
+    const f = fixture(options);
+    advance(f.state);
+    assert.deepEqual(f.events, []);
+    assert.equal(f.state.lastTime, null);
+    assert.equal(f.state.accumulator, 0);
+  }
+});
+
+test('explicit shared pause still cancels an already-disarmed preparation and clears ownership', () => {
+  const events = [],
+    noop = () => {},
+    state = {
+      continuousPlay: { cancel: noop },
+      regionalManifestRequest: null,
+      pausing: false,
+      pauseRevision: 0,
+      gamepad: { reset: noop },
+      stickTraces: [],
+      beginnerCoach: { pausePreview: noop },
+      fire: false,
+      fireReleaseRequired: false,
+      huntReactions: { suspend: noop },
+      audio: { pause: noop },
+      presentation: { resume: noop },
+      input: {
+        enable: (value) => events.push(['input', value]),
+        clear: () => events.push('clear'),
+      },
+      radio: { freeze: () => events.push('freeze-radio') },
+      regionalPreparing: Promise.resolve(),
+      current: { regional: true },
+      flight: { cancelPreparation: () => events.push('cancel'), pause: () => events.push('pause') },
+      lastTime: 20,
+      lastExecutionTime: 20,
+      accumulator: 17,
+      win: { performance: { now: () => 420 } },
+      $: () => ({}),
+      txt: (en) => en,
+      disposed: true,
+    };
+  explicitPause(state);
+  assert.deepEqual(events, [['input', false], 'clear', 'freeze-radio', 'cancel', 'pause']);
+  assert.equal(state.lastTime, null);
+  assert.equal(state.accumulator, 0);
+  assert.equal(state.pausing, false);
 });

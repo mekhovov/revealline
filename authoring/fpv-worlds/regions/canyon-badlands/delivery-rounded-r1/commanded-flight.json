@@ -1,0 +1,439 @@
+{
+  "passed": true,
+  "actualExtentM": [
+    384,
+    384
+  ],
+  "sourcePins": {
+    "terrain": "9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239",
+    "scenery": "a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f"
+  },
+  "authoredStarts": 2,
+  "actualCommandedRoutes": 14,
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "retained-basin-circuit",
+      "segments": [
+        {
+          "ticks": 1712,
+          "position": {
+            "x": 189940,
+            "y": 27875,
+            "z": 70000
+          }
+        },
+        {
+          "ticks": 1388,
+          "position": {
+            "x": 210039,
+            "y": 27887,
+            "z": 144924
+          }
+        },
+        {
+          "ticks": 1574,
+          "position": {
+            "x": 130077,
+            "y": 27887,
+            "z": 189992
+          }
+        },
+        {
+          "ticks": 2095,
+          "position": {
+            "x": 90030,
+            "y": 27886,
+            "z": 70068
+          }
+        }
+      ],
+      "ticks": 6769,
+      "contacts": 0,
+      "recentres": 7,
+      "inFlightRecentres": 6,
+      "maxCrossTrackM": 0.24665765749314292,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "self-level",
+      "route": "retained-gorge-approach",
+      "segments": [
+        {
+          "ticks": 1631,
+          "position": {
+            "x": 239959,
+            "y": 33877,
+            "z": 219942
+          }
+        },
+        {
+          "ticks": 1500,
+          "position": {
+            "x": 210041,
+            "y": 33886,
+            "z": 299928
+          }
+        },
+        {
+          "ticks": 1581,
+          "position": {
+            "x": 279968,
+            "y": 33886,
+            "z": 359951
+          }
+        }
+      ],
+      "ticks": 4712,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0.38764027951357916,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "self-level",
+      "route": "twin-spire-gap",
+      "segments": [
+        {
+          "ticks": 969,
+          "position": {
+            "x": 162000,
+            "y": 17875,
+            "z": 127942
+          }
+        },
+        {
+          "ticks": 689,
+          "position": {
+            "x": 170004,
+            "y": 21908,
+            "z": 154925
+          }
+        }
+      ],
+      "ticks": 1658,
+      "contacts": 0,
+      "recentres": 4,
+      "inFlightRecentres": 3,
+      "maxCrossTrackM": 0.20685181505654338,
+      "maxHeightErrorM": 0.3336645649432519
+    },
+    {
+      "mode": "self-level",
+      "route": "ridge-crown-opening",
+      "segments": [
+        {
+          "ticks": 998,
+          "position": {
+            "x": 345000,
+            "y": 84875,
+            "z": 89934
+          }
+        }
+      ],
+      "ticks": 998,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "ridge-skyline-approach",
+      "segments": [
+        {
+          "ticks": 1284,
+          "position": {
+            "x": 369937,
+            "y": 109875,
+            "z": 65000
+          }
+        }
+      ],
+      "ticks": 1284,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "needle-east-passage",
+      "segments": [
+        {
+          "ticks": 1141,
+          "position": {
+            "x": 210000,
+            "y": 33875,
+            "z": 329936
+          }
+        }
+      ],
+      "ticks": 1141,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "arrival-landmark-approach",
+      "segments": [
+        {
+          "ticks": 855,
+          "position": {
+            "x": 85000,
+            "y": 15875,
+            "z": 124937
+          }
+        }
+      ],
+      "ticks": 855,
+      "contacts": 0,
+      "recentres": 2,
+      "inFlightRecentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "retained-basin-circuit",
+      "segments": [
+        {
+          "ticks": 1712,
+          "position": {
+            "x": 189938,
+            "y": 27875,
+            "z": 70000
+          }
+        },
+        {
+          "ticks": 1376,
+          "position": {
+            "x": 210021,
+            "y": 27886,
+            "z": 144922
+          }
+        },
+        {
+          "ticks": 1573,
+          "position": {
+            "x": 130069,
+            "y": 27887,
+            "z": 189987
+          }
+        },
+        {
+          "ticks": 2072,
+          "position": {
+            "x": 90031,
+            "y": 27887,
+            "z": 70072
+          }
+        }
+      ],
+      "ticks": 6733,
+      "contacts": 0,
+      "recentres": 7,
+      "inFlightRecentres": 6,
+      "maxCrossTrackM": 0.242230468768904,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "acro",
+      "route": "retained-gorge-approach",
+      "segments": [
+        {
+          "ticks": 1631,
+          "position": {
+            "x": 239967,
+            "y": 33877,
+            "z": 219941
+          }
+        },
+        {
+          "ticks": 1500,
+          "position": {
+            "x": 210035,
+            "y": 33887,
+            "z": 299930
+          }
+        },
+        {
+          "ticks": 1581,
+          "position": {
+            "x": 279968,
+            "y": 33886,
+            "z": 359947
+          }
+        }
+      ],
+      "ticks": 4712,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0.38799140295515927,
+      "maxHeightErrorM": 0.1599999999999966
+    },
+    {
+      "mode": "acro",
+      "route": "twin-spire-gap",
+      "segments": [
+        {
+          "ticks": 969,
+          "position": {
+            "x": 162000,
+            "y": 17875,
+            "z": 127941
+          }
+        },
+        {
+          "ticks": 689,
+          "position": {
+            "x": 169996,
+            "y": 21908,
+            "z": 154923
+          }
+        }
+      ],
+      "ticks": 1658,
+      "contacts": 0,
+      "recentres": 4,
+      "inFlightRecentres": 3,
+      "maxCrossTrackM": 0.20656772672685064,
+      "maxHeightErrorM": 0.333528373266077
+    },
+    {
+      "mode": "acro",
+      "route": "ridge-crown-opening",
+      "segments": [
+        {
+          "ticks": 998,
+          "position": {
+            "x": 345000,
+            "y": 84875,
+            "z": 89936
+          }
+        }
+      ],
+      "ticks": 998,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "ridge-skyline-approach",
+      "segments": [
+        {
+          "ticks": 1284,
+          "position": {
+            "x": 369937,
+            "y": 109875,
+            "z": 65000
+          }
+        }
+      ],
+      "ticks": 1284,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "needle-east-passage",
+      "segments": [
+        {
+          "ticks": 1141,
+          "position": {
+            "x": 210000,
+            "y": 33875,
+            "z": 329937
+          }
+        }
+      ],
+      "ticks": 1141,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "arrival-landmark-approach",
+      "segments": [
+        {
+          "ticks": 855,
+          "position": {
+            "x": 85000,
+            "y": 15875,
+            "z": 124937
+          }
+        }
+      ],
+      "ticks": 855,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    }
+  ],
+  "solidContacts": [
+    {
+      "mode": "self-level",
+      "target": "twin-west-rock",
+      "ticks": 139,
+      "contacts": 1,
+      "position": {
+        "x": 142134,
+        "y": 17867,
+        "z": 104004
+      }
+    },
+    {
+      "mode": "self-level",
+      "target": "ridge-arch-solid-crown",
+      "ticks": 413,
+      "contacts": 1,
+      "position": {
+        "x": 345010,
+        "y": 88867,
+        "z": 64117
+      }
+    },
+    {
+      "mode": "acro",
+      "target": "twin-west-rock",
+      "ticks": 139,
+      "contacts": 1,
+      "position": {
+        "x": 142134,
+        "y": 17866,
+        "z": 104004
+      }
+    },
+    {
+      "mode": "acro",
+      "target": "ridge-arch-solid-crown",
+      "ticks": 413,
+      "contacts": 1,
+      "position": {
+        "x": 345010,
+        "y": 88867,
+        "z": 64117
+      }
+    }
+  ],
+  "playerReady": false,
+  "claim": "Production controlled-command evidence for the accepted 384 m paired subset; not the separate 768 m terrain, native FPS or public admission."
+}

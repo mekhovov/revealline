@@ -245,6 +245,12 @@ export async function prepareSceneryWindow(
       live,
     }),
     group,
+    // Read actual Rapier sets only on explicit diagnostic demand, never after free().
+    collisionSnapshot: () => ({
+      worlds: disposed ? 0 : 1,
+      colliders: disposed ? 0 : world.colliders.len(),
+      rigidBodies: disposed ? 0 : world.bodies.len(),
+    }),
     snapshot: () => ({
       sceneryPrepared: !disposed,
       flightReady: false,

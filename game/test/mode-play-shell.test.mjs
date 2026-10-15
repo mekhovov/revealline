@@ -817,3 +817,26 @@ test('completed runs keep the visible Results home action in the directional pat
   navigation.destroy();
   h.shell.dispose();
 });
+
+test('regional corner opens settings menu without arming from ready or paused flight', () => {
+  const h = fixture();
+  for (const phase of ['paused', 'disarmed']) {
+    h.shell.enterPlay();
+    h.shell.update({ phase, pauseOpensMenu: true, canResume: true });
+    assert.equal(h.shell.elements.buttons.pause.disabled, false);
+    assert.equal(h.shell.elements.buttons.pause.textContent, 'Menu');
+    h.shell.elements.buttons.pause.click();
+    assert.equal(h.shell.elements.dialogs.pause.open, true);
+    assert.equal(h.calls.includes('resume'), false);
+  }
+  h.shell.enterPlay();
+  h.shell.update({ phase: 'playing', pauseOpensMenu: true });
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.shell.elements.dialogs.pause.open, true);
+  assert.deepEqual(h.calls, ['pause']);
+  h.shell.enterPlay();
+  h.shell.update({ phase: 'paused', pauseOpensMenu: false });
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.calls.at(-1), 'resume');
+  h.shell.dispose();
+});
