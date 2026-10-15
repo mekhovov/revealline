@@ -5,6 +5,81 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 20:32 UTC — native admissions, live-session preservation and retained attribution
+
+There is **no active elapsed run and no authored two-hour pass**. All four failed
+full attempts and the earlier diagnostic reports remain unchanged. Source and
+qualification continue independently through protected PRs; no player data was
+cleared and every previous edition remains available.
+
+- **Alpine quieter station r4 #1501 merged** as `d6f93f71` at exact integrated
+  `e8a79844`. Package `a9b9eb0a` and fresh 9192 pass normal r4/r3 downloads,
+  retained coexistence after reload, Glacial/Summit preparation, cameras, paused
+  Acro change, explicit arm/pause, EN/UK starts/edition and three browser sizes.
+  Both cached editions are Ready with Arm available at 114 m.
+  [Exact native receipt](fpv-alpine-quiet-r4-e8-native-20261015.json).
+- **Alpine concourse r5 #1513 passes its separate exact native gate**, at
+  `40685bbc` / package `493dd96b` on fresh 9203. All 22 prior Library rows survive
+  alongside the new row. Actual r5/r4 downloads, reload and both cached launches
+  pass; Summit FPV/overview shows the grey apron and open passage. Mode change
+  remains disarmed; actual explicit arm/pause and EN/UK/390×844/844×390/1280×800
+  presentation are observed. [Receipt](fpv-alpine-station-r5-40685-native-20261015.json).
+  Protected publication is a separate status; this bounded material observation
+  is not final whole-region art or all-start/device acceptance.
+- **The live-session store is now nonempty and normal recovery preserves it.**
+  Normal installed Roadworks preparation, explicit arm at zero throttle, and Pause
+  create one genuine grounded live-session record. Normal close/reopen, then
+  Resume interrupted flight, returns the scene paused with Arm available. A second
+  normal close and read-only comparison preserve every database row/Blob byte:
+  `85ab302a…e2194`, with no differences. Existing installed worlds, revisions,
+  saved place and published demonstration remain unchanged. [Receipt](fpv-storage-continuity-live-session-native-20261015.json)
+  and [complete comparison](fpv-storage-continuity-live-session-comparison-20261015.json).
+  This closes the earlier empty-session gap only for normal grounded UI recovery;
+  moving-flight crash, actual application restart, network-wide offline and
+  eviction/quota journeys remain unqualified.
+- **Library records/recovery shortcut #1507 merged** as `4ed8d055` at unchanged
+  `e27e6e5d`. Exact package `bffea641`, desktop/compact keyboard focus and return,
+  EN/UK labels and paused access pass. Normal reopened Roadworks download and
+  cached Fly also pass before/after shortcut use; explicit arm is still required.
+  [Native scope](fpv-library-records-e27-native-20261015.json). The original
+  [closing-database negative](fpv-library-records-closing-db-negative-20261015.txt)
+  remains unresolved: two earlier attempts failed before download, followed by
+  both world/regional connection errors. Reopening recovered on the same package
+  and storage. This is not a diagnosed fix or a first-attempt reliability claim.
+  A separate bounded connection-lifecycle observer is the next causal step.
+  Required retry succeeds 645/645; its original 600-second incomplete timeout is
+  retained, not relabelled as a pass. Exact cloud package qualification also passes.
+- **Recording/archive D6 #1509 merged** as `68cb206b`: source review and exact
+  cloud 66/66 recording plus 650/650 local-UX suites pass. The meaningful tests
+  cover genuine published proof round-trip/trust resets and archive/storage
+  duplicate, pin, capacity, concurrent-connection, queued-abort and rollback cases.
+  No production runtime change or completion of all D6 is inferred.
+- **Attribution retention #1511 merged** as `b5b114c8`, unchanged `61106dee`.
+  Fresh 9202 completes **300.0047 real seconds /15,000 ticks**, starting
+  **20:09:30.834Z**, on unchanged qualified `da5df483` / `6a092df1`. Four crossings,
+  three accepted waypoints, zero circuits/contacts and zero owned disposal leave
+  route coverage false. [Complete actual report](fpv-authored-urban-retention-five-minute-20261015.json)
+  and [identity/scope receipt](fpv-authored-urban-retention-five-minute-native-20261015.json).
+  All seven actual LoAF rows retain receive-time phase associations despite being
+  older than the final 128-span window. Five retain the authoring frame entry
+  point; durations are 52.6–79.9 ms, while maximum accepted-clock interval is
+  71.4 ms. The twelve-example cap and lower-bound/history disclosures work.
+  Actual observer callback submission totals 1.3 ms across eight callbacks, max
+  0.5 ms; no malformed/read failures. Different viewport/workload observations
+  must not become a comparative FPS claim. Expensive JS descendants, GC and the
+  earlier >250 ms failures still need causal evidence. Next try a bounded native
+  Performance trace only if the actual SIM DevTools target can be verified;
+  profiling itself never counts as endurance. The unchanged 250 ms gate stands.
+
+**Priorities:** P1 diagnose the actual scheduling/JS cause before another full
+elapsed attempt, and diagnose the preserved native connection closure without
+reconnecting blindly. P1 finish exact r5 protected publication and continue
+application-restart/offline/recovery journeys. P2 improve the representative art
+slice and integrated D6; P3 deliver later authored regions one at a time. Physical
+input/device, final art and actual public launch remain open. Internal free space
+was 1.3 GiB at inspection; heavy work remains external/cloud and the stable 3 GiB
+local floor and all package budgets remain unchanged.
+
 ## 15 October, 19:30 UTC — bounded attribution reaches actual caller evidence
 
 There is no active elapsed run. The separate five-minute diagnostic on fresh
