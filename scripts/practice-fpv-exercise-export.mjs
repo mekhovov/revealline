@@ -6,11 +6,15 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
   assert(['en', 'uk'].includes(locale));
   const academy = packageId === 'civilian-fpv';
   const check = () => signal?.throwIfAborted();
-  const click = async (selector) => {
+  const activate = async (target) => {
     check();
-    await page.locator(selector).click({ timeout: 5000 });
+    await target.waitFor({ state: 'visible', timeout: 5000 });
+    assert(await target.isEnabled(), 'Native export control is disabled.');
+    check();
+    await target.press('Enter', { timeout: 5000 });
     check();
   };
+  const click = (selector) => activate(page.locator(selector));
   check();
   if (academy) {
     await click('#academy-result-home');
@@ -28,7 +32,7 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
     const end = Date.now() + 10000;
     do {
       check();
-      await button.click({ timeout: 3000 });
+      await activate(button);
       const json = await field.inputValue({ timeout: 3000 });
       assert(Buffer.byteLength(json) <= 2 * 1024 * 1024, 'Exercise export exceeds 2 MiB.');
       const value = JSON.parse(json);
@@ -48,10 +52,11 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
   }
   // The result's verification message is not sufficient: independent replay
   // below still must establish complete, the exact course, practice and mode.
-  await page
-    .locator('.continuous-result-actions')
-    .getByRole('button', { name: locale === 'uk' ? 'Додому' : 'Home', exact: true })
-    .click({ timeout: 5000 });
+  await activate(
+    page
+      .locator('.continuous-result-actions')
+      .getByRole('button', { name: locale === 'uk' ? 'Додому' : 'Home', exact: true }),
+  );
   await click('#worlds-shell-action-settings');
   await click('#worlds-settings-tab-data');
   const pending = page.waitForEvent('download', { timeout: 10000 });

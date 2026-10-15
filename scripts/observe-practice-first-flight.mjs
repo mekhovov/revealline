@@ -643,6 +643,7 @@ export async function completeFirstFlightFPVExercise(page, spec, result, output,
       const name = spec.id + '-completed.png';
       await writeFile(path.join(output, name), image, { flag: 'wx' });
       result.screenshot = pin(name, image);
+      result.completionScreenshot = result.screenshot;
     },
   });
   assert(

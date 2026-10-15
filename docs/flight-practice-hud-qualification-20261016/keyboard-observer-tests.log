@@ -1,0 +1,514 @@
+
+> revealline@0.151.1 practice:observer:test
+> node --test scripts/test-observe-practice-cache-repair.mjs scripts/test-observe-practice-first-flight.mjs scripts/test-optional-installation-diagnostics.mjs scripts/test-optional-installation-quota-probe.mjs scripts/test-practice-exercise-ui.mjs scripts/test-practice-exercise-replay.mjs scripts/test-observe-practice-directory-journey.mjs scripts/test-practice-fpv-exercise-ui.mjs scripts/test-practice-fpv-exercise-export.mjs scripts/test-practice-fpv-exercise-replay.mjs
+
+TAP version 13
+# Subtest: C7 plan pins all three packages and refuses credentials, scripts and unbounded input
+ok 1 - C7 plan pins all three packages and refuses credentials, scripts and unbounded input
+  ---
+  duration_ms: 1.192
+  ...
+# Subtest: fault scopes require one known app, exact version and local server
+ok 2 - fault scopes require one known app, exact version and local server
+  ---
+  duration_ms: 6.694291
+  ...
+# Subtest: v2 requires exactly the declared public-UI world seed without changing v1
+ok 3 - v2 requires exactly the declared public-UI world seed without changing v1
+  ---
+  duration_ms: 0.235792
+  ...
+# Subtest: seed evidence requires fingerprinted nonempty projects/revisions and exact retained card identity
+ok 4 - seed evidence requires fingerprinted nonempty projects/revisions and exact retained card identity
+  ---
+  duration_ms: 1.344416
+  ...
+# Subtest: missing-dependency fault removes exactly one original owned entry for each app
+ok 5 - missing-dependency fault removes exactly one original owned entry for each app
+  ---
+  duration_ms: 18.940792
+  ...
+# Subtest: missing-worker fault never opens or alters cache bytes
+ok 6 - missing-worker fault never opens or alters cache bytes
+  ---
+  duration_ms: 3.130375
+  ...
+# Subtest: fault refuses foreign, malformed, redirected ownership or changed dependency before mutation
+ok 7 - fault refuses foreign, malformed, redirected ownership or changed dependency before mutation
+  ---
+  duration_ms: 3.594208
+  ...
+# Subtest: read-only state fingerprints exact cache contents and empty pointer without credentials
+ok 8 - read-only state fingerprints exact cache contents and empty pointer without credentials
+  ---
+  duration_ms: 12.042416
+  ...
+# Subtest: preservation permits target installation changes but rejects sibling pointer/cache/data changes
+ok 9 - preservation permits target installation changes but rejects sibling pointer/cache/data changes
+  ---
+  duration_ms: 0.742458
+  ...
+# Subtest: failed admission retains a failure report and refuses existing evidence output
+ok 10 - failed admission retains a failure report and refuses existing evidence output
+  ---
+  duration_ms: 38.612542
+  ...
+# Subtest: popup click and late waiter failures stay owned without unhandled rejection
+ok 11 - popup click and late waiter failures stay owned without unhandled rejection
+  ---
+  duration_ms: 21.974292
+  ...
+# Subtest: main-game entry opens visible Settings and Help & Extras before practice
+ok 12 - main-game entry opens visible Settings and Help & Extras before practice
+  ---
+  duration_ms: 1.072875
+  ...
+# Subtest: one-action browser journey rejects extra or missing tabs
+ok 13 - one-action browser journey rejects extra or missing tabs
+  ---
+  duration_ms: 0.765542
+  ...
+# Subtest: directory protocol requires exact six-case EN/UK matrix and two independent source bindings
+ok 14 - directory protocol requires exact six-case EN/UK matrix and two independent source bindings
+  ---
+  duration_ms: 3.533667
+  ...
+# Subtest: read-only source router admits fixed root and rejects private/traversal/malformed paths
+ok 15 - read-only source router admits fixed root and rejects private/traversal/malformed paths
+  ---
+  duration_ms: 0.844208
+  ...
+# Subtest: public launch links require safe locale/play/appearance semantics, not arbitrary destinations
+ok 16 - public launch links require safe locale/play/appearance semantics, not arbitrary destinations
+  ---
+  duration_ms: 4.288625
+  ...
+# Subtest: failed source/admission still retains plan and authority and refuses evidence overwrite
+ok 17 - failed source/admission still retains plan and authority and refuses evidence overwrite
+  ---
+  duration_ms: 464.370125
+  ...
+# Subtest: requires exact artifact binding and complete declared EN four-case matrix
+ok 18 - requires exact artifact binding and complete declared EN four-case matrix
+  ---
+  duration_ms: 3.641792
+  ...
+# Subtest: HUD settings protocol is a separate strict four-case bilingual matrix
+ok 19 - HUD settings protocol is a separate strict four-case bilingual matrix
+  ---
+  duration_ms: 0.834208
+  ...
+# Subtest: maintained HUD witness requires visible localized Detailed height rather than hidden legacy telemetry
+ok 20 - maintained HUD witness requires visible localized Detailed height rather than hidden legacy telemetry
+  ---
+  duration_ms: 0.682792
+  ...
+# Subtest: FPV exercise probe and matrix are strict separate protocols with complete replay authority
+ok 21 - FPV exercise probe and matrix are strict separate protocols with complete replay authority
+  ---
+  duration_ms: 0.850833
+  ...
+# Subtest: public HUD parsing ignores elapsed time for Worlds and includes Gym position
+ok 22 - public HUD parsing ignores elapsed time for Worlds and includes Gym position
+  ---
+  duration_ms: 0.35925
+  ...
+# Subtest: v2 declares exactly ten EN/UK modes, preserving v1 and its fixed budgets
+ok 23 - v2 declares exactly ten EN/UK modes, preserving v1 and its fixed budgets
+  ---
+  duration_ms: 0.842584
+  ...
+# Subtest: all declared v2 launchers preserve exact locale and package destination
+ok 24 - all declared v2 launchers preserve exact locale and package destination
+  ---
+  duration_ms: 4.771542
+  ...
+# Subtest: Gym exercise is a distinct strict EN/UK assisted protocol with Gym artifact and extra authority
+ok 25 - Gym exercise is a distinct strict EN/UK assisted protocol with Gym artifact and extra authority
+  ---
+  duration_ms: 0.737291
+  ...
+# Subtest: Gym exercise integration captures completion before export, exclusively saves actual text and requires independent frozen replay
+ok 26 - Gym exercise integration captures completion before export, exclusively saves actual text and requires independent frozen replay
+  ---
+  duration_ms: 848.837833
+  ...
+# Subtest: strict localized HUD parser follows actual dot-decimal copy, not unrelated numbers
+ok 27 - strict localized HUD parser follows actual dot-decimal copy, not unrelated numbers
+  ---
+  duration_ms: 0.825458
+  ...
+# Subtest: v2 observes actual document and public Settings locale, not just query parameters
+ok 28 - v2 observes actual document and public Settings locale, not just query parameters
+  ---
+  duration_ms: 0.344333
+  ...
+# Subtest: v2 uses visible native Retry action with maintained Ukrainian label
+ok 29 - v2 uses visible native Retry action with maintained Ukrainian label
+  ---
+  duration_ms: 0.166584
+  ...
+# Subtest: v2 selects both FPV modes through visible Gameplay and closes the actual Settings dialog
+ok 30 - v2 selects both FPV modes through visible Gameplay and closes the actual Settings dialog
+  ---
+  duration_ms: 0.773
+  ...
+# Subtest: Worlds v2 closes the real custom modal before accepting the already-open background Home
+ok 31 - Worlds v2 closes the real custom modal before accepting the already-open background Home
+  ---
+  duration_ms: 0.332125
+  ...
+# Subtest: time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding
+ok 32 - time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding
+  ---
+  duration_ms: 0.066125
+  ...
+# Subtest: retry must restore launch height, position and zero FPV speed
+ok 33 - retry must restore launch height, position and zero FPV speed
+  ---
+  duration_ms: 0.273458
+  ...
+# Subtest: Pause uses an ordinary pointer click rather than a focus-and-Enter toggle
+ok 34 - Pause uses an ordinary pointer click rather than a focus-and-Enter toggle
+  ---
+  duration_ms: 0.118167
+  ...
+# Subtest: settings Back follows the visible stack and never presses a hidden second Back
+ok 35 - settings Back follows the visible stack and never presses a hidden second Back
+  ---
+  duration_ms: 0.218375
+  ...
+# Subtest: FPV Retry targets the visible tutorial action within the open pause dialog
+ok 36 - FPV Retry targets the visible tutorial action within the open pause dialog
+  ---
+  duration_ms: 0.111958
+  ...
+# Subtest: adapters correspond to native public source controls and keyboard mappings
+ok 37 - adapters correspond to native public source controls and keyboard mappings
+  ---
+  duration_ms: 13.376709
+  ...
+# Subtest: bad frozen envelope fails before browser launch and retains honest receipt
+ok 38 - bad frozen envelope fails before browser launch and retains honest receipt
+  ---
+  duration_ms: 22.371709
+  ...
+# Subtest: Gym failure receipt has its own format and snapshots both exercise authorities without claiming completion
+ok 39 - Gym failure receipt has its own format and snapshots both exercise authorities without claiming completion
+  ---
+  duration_ms: 14.537209
+  ...
+# Subtest: diagnostics preserve channel construction, native post arguments and port lifetime
+ok 40 - diagnostics preserve channel construction, native post arguments and port lifetime
+  ---
+  duration_ms: 1.566291
+  ...
+# Subtest: registration witness returns the exact original promise and records resolution/rejection
+ok 41 - registration witness returns the exact original promise and records resolution/rejection
+  ---
+  duration_ms: 1.063792
+  ...
+# Subtest: post exceptions are observed and rethrown unchanged; unrelated messages remain unrecorded
+ok 42 - post exceptions are observed and rethrown unchanged; unrelated messages remain unrecorded
+  ---
+  duration_ms: 0.362333
+  ...
+# Subtest: diagnostic failures and bounded event volume cannot alter native operations
+ok 43 - diagnostic failures and bounded event volume cannot alter native operations
+  ---
+  duration_ms: 8.177916
+  ...
+# Subtest: only exact explicit-port IPv4 loopback HTTP origins are eligible
+ok 44 - only exact explicit-port IPv4 loopback HTTP origins are eligible
+  ---
+  duration_ms: 2.748042
+  ...
+# Subtest: verified measured usage plus positive headroom surrounds callback and reset omits quotaSize
+ok 45 - verified measured usage plus positive headroom surrounds callback and reset omits quotaSize
+  ---
+  duration_ms: 2.663459
+  ...
+# Subtest: callback failure is retained and override still reset
+ok 46 - callback failure is retained and override still reset
+  ---
+  duration_ms: 2.424041
+  ...
+# Subtest: unsupported or ineffective override never executes callback but attempts reset
+ok 47 - unsupported or ineffective override never executes callback but attempts reset
+  ---
+  duration_ms: 1.918667
+  ...
+# Subtest: existing override is not replaced or cleared
+ok 48 - existing override is not replaced or cleared
+  ---
+  duration_ms: 0.2675
+  ...
+# Subtest: reset failure cannot report a completed probe
+ok 49 - reset failure cannot report a completed probe
+  ---
+  duration_ms: 1.838125
+  ...
+# Subtest: timed-out callback is aborted and never reclassifies late success
+ok 50 - timed-out callback is aborted and never reclassifies late success
+  ---
+  duration_ms: 12.356167
+  ...
+# Subtest: late bounded-quota response triggers another reset and stays unverified
+ok 51 - late bounded-quota response triggers another reset and stays unverified
+  ---
+  duration_ms: 16.429667
+  ...
+# Subtest: zero is never sent even on an unused origin
+ok 52 - zero is never sent even on an unused origin
+  ---
+  duration_ms: 0.728125
+  ...
+# Subtest: invalid or overflowing measured usage cannot trigger an override
+ok 53 - invalid or overflowing measured usage cannot trigger an override
+  ---
+  duration_ms: 1.343084
+  ...
+# Subtest: a different active quota is not accepted as the requested control
+ok 54 - a different active quota is not accepted as the requested control
+  ---
+  duration_ms: 0.796667
+  ...
+# Subtest: independent replay requires completed lift-and-land and all frozen dependency bytes
+ok 55 - independent replay requires completed lift-and-land and all frozen dependency bytes
+  ---
+  duration_ms: 138.526958
+  ...
+# Subtest: rejects missing or changed replay dependencies
+ok 56 - rejects missing or changed replay dependencies
+  ---
+  duration_ms: 263.537083
+  ...
+# Subtest: rejects incomplete, wrong-catalogue, extra-command and oversized transcripts
+ok 57 - rejects incomplete, wrong-catalogue, extra-command and oversized transcripts
+  ---
+  duration_ms: 251.990875
+  ...
+# Subtest: future unpinned static, dynamic, CommonJS and re-export dependencies fail closed
+ok 58 - future unpinned static, dynamic, CommonJS and re-export dependencies fail closed
+  ---
+  duration_ms: 2.048208
+  ...
+# Subtest: projected locales accept data only, not appended code or missing bilingual identity
+ok 59 - projected locales accept data only, not appended code or missing bilingual identity
+  ---
+  duration_ms: 39.222042
+  ...
+# Subtest: declared first Gym geometry and key bindings match native source
+ok 60 - declared first Gym geometry and key bindings match native source
+  ---
+  duration_ms: 10.156125
+  ...
+# Subtest: EN and UK parse actual measurement order and require native identity, focus and visible HUD
+ok 61 - EN and UK parse actual measurement order and require native identity, focus and visible HUD
+  ---
+  duration_ms: 2.417833
+  ...
+# Subtest: result text, a checkmark, partial progress or a lifted position cannot counterfeit completion
+ok 62 - result text, a checkmark, partial progress or a lifted position cannot counterfeit completion
+  ---
+  duration_ms: 3.489791
+  ...
+# Subtest: feedback holds in the inner lift band and descends only after actual checkpoint advance
+ok 63 - feedback holds in the inner lift band and descends only after actual checkpoint advance
+  ---
+  duration_ms: 0.2615
+  ...
+# Subtest: bounded public-controller unit journey requires ordered lift/land and always releases R/F
+ok 64 - bounded public-controller unit journey requires ordered lift/land and always releases R/F
+  ---
+  duration_ms: 813.938792
+  ...
+# Subtest: transcript export requires visible results Home before Settings Data and retains actual text
+ok 65 - transcript export requires visible results Home before Settings Data and retains actual text
+  ---
+  duration_ms: 0.572584
+  ...
+# Subtest: trusted completion capture precedes public export and its failure cannot qualify the run
+ok 66 - trusted completion capture precedes public export and its failure cannot qualify the run
+  ---
+  duration_ms: 406.640042
+  ...
+# Subtest: transcript identity/shape validation rejects counterfeit success flags and excessive payloads without claiming replay
+ok 67 - transcript identity/shape validation rejects counterfeit success flags and excessive payloads without claiming replay
+  ---
+  duration_ms: 1.282792
+  ...
+# Subtest: precompleted, skipped, paused and hidden observations fail closed and release owned input
+ok 68 - precompleted, skipped, paused and hidden observations fail closed and release owned input
+  ---
+  duration_ms: 304.499334
+  ...
+# Subtest: abort and deadline are bounded and input release does not inherit an already-aborted signal
+ok 69 - abort and deadline are bounded and input release does not inherit an already-aborted signal
+  ---
+  duration_ms: 31.192042
+  ...
+# Subtest: late key-down cannot report verified cleanup and gets a second release after settling
+ok 70 - late key-down cannot report verified cleanup and gets a second release after settling
+  ---
+  duration_ms: 31.464459
+  ...
+# Subtest: unsupported mode and extended deadline are rejected before any input
+ok 71 - unsupported mode and extended deadline are rejected before any input
+  ---
+  duration_ms: 0.367958
+  ...
+# Subtest: Academy export uses visible native keyboard controls and localized Notebook backup
+ok 72 - Academy export uses visible native keyboard controls and localized Notebook backup
+  ---
+  duration_ms: 2.867042
+  ...
+# Subtest: Worlds export owns keyboard activation/download together and preserves actual bytes
+ok 73 - Worlds export owns keyboard activation/download together and preserves actual bytes
+  ---
+  duration_ms: 27.385125
+  ...
+# Subtest: cancellation while awaiting a native control must not send Enter
+ok 74 - cancellation while awaiting a native control must not send Enter
+  ---
+  duration_ms: 2.197541
+  ...
+# Subtest: invalid specifications, pre-aborted requests and hidden/disabled controls cannot export
+ok 75 - invalid specifications, pre-aborted requests and hidden/disabled controls cannot export
+  ---
+  duration_ms: 10.618083
+  ...
+# Subtest: synthetic-only civilian-fpv self-level independently replays two sectors and ground
+ok 76 - synthetic-only civilian-fpv self-level independently replays two sectors and ground
+  ---
+  duration_ms: 458.524375
+  ...
+# Subtest: synthetic-only civilian-fpv acro independently replays two sectors and ground
+ok 77 - synthetic-only civilian-fpv acro independently replays two sectors and ground
+  ---
+  duration_ms: 178.439833
+  ...
+# Subtest: synthetic-only fpv-worlds self-level independently replays two sectors and ground
+ok 78 - synthetic-only fpv-worlds self-level independently replays two sectors and ground
+  ---
+  duration_ms: 191.297041
+  ...
+# Subtest: synthetic-only fpv-worlds acro independently replays two sectors and ground
+ok 79 - synthetic-only fpv-worlds acro independently replays two sectors and ground
+  ---
+  duration_ms: 210.574542
+  ...
+# Subtest: production appearance wrappers and v3 archive checks are supported
+ok 80 - production appearance wrappers and v3 archive checks are supported
+  ---
+  duration_ms: 317.575917
+  ...
+# Subtest: fixed executable bytes and complete dependency closure are mandatory
+ok 81 - fixed executable bytes and complete dependency closure are mandatory
+  ---
+  duration_ms: 77.817042
+  ...
+# Subtest: locale is JSON-only en/uk, never an executable projection
+ok 82 - locale is JSON-only en/uk, never an executable projection
+  ---
+  duration_ms: 9.146625
+  ...
+# Subtest: static dependency validator rejects dynamic, CommonJS, bare and unpinned imports
+ok 83 - static dependency validator rejects dynamic, CommonJS, bare and unpinned imports
+  ---
+  duration_ms: 0.499084
+  ...
+# Subtest: only one fresh practice proof with exact course/mode/model identities qualifies
+ok 84 - only one fresh practice proof with exact course/mode/model identities qualifies
+  ---
+  duration_ms: 1034.359958
+  ...
+# Subtest: partial, counterfeit terminal fields, and frames after terminal completion fail
+ok 85 - partial, counterfeit terminal fields, and frames after terminal completion fail
+  ---
+  duration_ms: 396.830334
+  ...
+# Subtest: archive transport identity, exact metadata and completed record status are checked
+ok 86 - archive transport identity, exact metadata and completed record status are checked
+  ---
+  duration_ms: 857.881166
+  ...
+# Subtest: unsupported packages/modes and excessive input are rejected before execution
+ok 87 - unsupported packages/modes and excessive input are rejected before execution
+  ---
+  duration_ms: 0.815208
+  ...
+# Subtest: native wrappers reject invalid appearance and unrecognized metadata
+ok 88 - native wrappers reject invalid appearance and unrecognized metadata
+  ---
+  duration_ms: 442.8175
+  ...
+# Subtest: all declared locales/modes/packages parse only their native first exercise and visible measurements
+ok 89 - all declared locales/modes/packages parse only their native first exercise and visible measurements
+  ---
+  duration_ms: 6.058084
+  ...
+# Subtest: Recording verified, result heading alone, expired flight and wrong exercise cannot counterfeit completion
+ok 90 - Recording verified, result heading alone, expired flight and wrong exercise cannot counterfeit completion
+  ---
+  duration_ms: 0.363333
+  ...
+# Subtest: velocity comes from recent measured height, rejecting stale/reversed samples and unsafe speed
+ok 91 - velocity comes from recent measured height, rejecting stale/reversed samples and unsafe speed
+  ---
+  duration_ms: 0.5035
+  ...
+# Subtest: feedback bounds throttle, uses only W/S/Shift and cuts power only after observed settled landing step
+ok 92 - feedback bounds throttle, uses only W/S/Shift and cuts power only after observed settled landing step
+  ---
+  duration_ms: 0.259875
+  ...
+# Subtest: Detailed HUD has strict localized target bands and an explicit semantic ground witness
+ok 93 - Detailed HUD has strict localized target bands and an explicit semantic ground witness
+  ---
+  duration_ms: 0.291917
+  ...
+# Subtest: DOM adapter reads maintained visible HUD and visible stick, never hidden legacy measurements
+ok 94 - DOM adapter reads maintained visible HUD and visible stick, never hidden legacy measurements
+  ---
+  duration_ms: 0.432458
+  ...
+# Subtest: ordered progress requires genuine lift, low-throttle ground return and terminal complete
+ok 95 - ordered progress requires genuine lift, low-throttle ground return and terminal complete
+  ---
+  duration_ms: 0.313125
+  ...
+# Subtest: mocked public UI journey remains unqualified and captures before returning, with owned keys released
+ok 96 - mocked public UI journey remains unqualified and captures before returning, with owned keys released
+  ---
+  duration_ms: 3243.80125
+  ...
+# Subtest: fresh-state, pause and skipped progress failures never become success
+ok 97 - fresh-state, pause and skipped progress failures never become success
+  ---
+  duration_ms: 203.670417
+  ...
+# Subtest: deadline, abort and late input cannot leave a passing cleanup receipt
+ok 98 - deadline, abort and late input cannot leave a passing cleanup receipt
+  ---
+  duration_ms: 59.075292
+  ...
+# Subtest: synthetic ground-quantization regression: feedback must lift with retained keyboard throttle
+ok 99 - synthetic ground-quantization regression: feedback must lift with retained keyboard throttle
+  ---
+  duration_ms: 19.312417
+  ...
+# Subtest: invalid package, mode, locale and deadline reject without browser actions
+ok 100 - invalid package, mode, locale and deadline reject without browser actions
+  ---
+  duration_ms: 0.71575
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 100
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4664.382958

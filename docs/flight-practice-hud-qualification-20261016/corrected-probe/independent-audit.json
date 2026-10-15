@@ -1,0 +1,30 @@
+{
+  "format": "PracticeFPVCorrectedProbeReadOnlyAudit.v1",
+  "reviewer": "/root/final_review",
+  "date": "2026-10-16",
+  "qualified": false,
+  "aggregatePassed": false,
+  "originalReceiptSha256": "4749a55e707733cab7f29a88f21df043009d6eede1c7e2b12f659c804e8a77a0",
+  "nativeCompletion": {
+    "observed": true,
+    "milliseconds": 13353,
+    "samples": 129,
+    "keysReleased": true
+  },
+  "actualExport": false,
+  "independentReplay": false,
+  "cleanupCompleted": false,
+  "browserCleanup": "timed out",
+  "stagedSiteRetained": true,
+  "verifiedReceiptPins": 12,
+  "completionScreenshot": {
+    "path": "native-completion.png",
+    "bytes": 535879,
+    "sha256": "09c21e3370376cc1eb525ee285aca177803613ad9e66951db867a25895169f77"
+  },
+  "limitations": [
+    "First-pointer layout-shift mechanism is strongly supported by source and screenshots; no actual down/up event trace was captured.",
+    "Later owned-process exit is a separate diagnostic, not a correction of failed native cleanup.",
+    "Prepared keyboard export route has unit tests but no native passing export/replay result."
+  ]
+}

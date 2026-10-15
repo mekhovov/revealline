@@ -146,7 +146,9 @@ completion, released keys, screenshot, ordinary UI export and off-browser frozen
 proof replay. Hidden course identity metadata is not a visible measurement;
 legacy hidden height/speed/progress nodes must not substitute for maintained HUD
 feedback. Never count imported demonstrations or synthetic unit proofs as native
-exercise completion. Corrected feedback remains unqualified until rerun; see the
+exercise completion. One corrected native exercise completed, but its export and
+browser cleanup failed. The prepared keyboard export and full matrix remain
+unverified; keyboard activation never qualifies the first-pointer path. See the
 [HUD continuation](flight-practice-hud-qualification-2026-10-16.md).
 
 ### Native directory check before publication
