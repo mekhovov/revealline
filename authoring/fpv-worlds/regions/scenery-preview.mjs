@@ -63,8 +63,16 @@ const coasterViews = [
   ["Woodland promenade", [640, 14, 1664], [545, 35, 1760], [640, 13, 1664]],
   ["River gardens", [384, 14, 1152], [285, 40, 1250], [384, 13, 1152]],
 ];
+const alpineViews = [
+  ['Glacial valley', [640, 120, 700], [750, 170, 840], [630, 114, 690]],
+  ['Switchback pass', [1700, 272, 665], [1880, 345, 800], [1700, 272, 675]],
+  ['Snow saddle', [3000, 434, 800], [3130, 495, 950], [3000, 441, 790]],
+  ['Summit station', [3400, 575, 3100], [3550, 655, 3260], [3400, 576, 3120]],
+  ['Viaduct gorge', [2400, 219, 3070], [2530, 285, 3220], [2400, 224, 3070]],
+  ['Reservoir dam', [800, 184, 2800], [970, 250, 2970], [800, 184, 2790]],
+];
 const views =
-  { "coaster-gardens": coasterViews, canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews }[
+  { "coaster-gardens": coasterViews, canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews, alpine: alpineViews }[
     new URLSearchParams(location.search).get('views')
   ] ?? urbanViews;
 let window = null,
