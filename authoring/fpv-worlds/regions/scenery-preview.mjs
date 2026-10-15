@@ -55,10 +55,22 @@ const canyonDistrictViews = [
   ['Split Ravine', [180, 34, 590], [235, 95, 550], [160, 24, 630]],
   ['Sunset Shelf', [570, 125, 620], [720, 200, 760], [570, 112, 620]],
 ];
+const railwayExpanseViews = [
+  ['Freight district', [640, 75, 640], [820, 170, 460], [640, 72, 640]],
+  ['Freight hall approach', [588, 72, 574], [588, 69, 558], [588, 70, 650]],
+  ['River viaduct', [2048, 40, 2048], [1920, 42, 1970], [2070, 46, 2080]],
+  ['Quarry conveyor', [3456, 75, 600], [3456, 72, 548], [3456, 80, 670]],
+  ['Station canopy', [640, 71, 3200], [640, 68, 3120], [640, 69, 3240]],
+  ['Foundry yard', [2048, 76, 3200], [1960, 78, 3090], [2070, 80, 3240]],
+  ['Timber sidings', [3456, 72, 3200], [3427, 69, 3110], [3427, 70, 3280]],
+];
 const views =
-  { canyon: canyonViews, 'canyon-districts': canyonDistrictViews, railway: railwayViews }[
-    new URLSearchParams(location.search).get('views')
-  ] ?? urbanViews;
+  {
+    canyon: canyonViews,
+    'canyon-districts': canyonDistrictViews,
+    railway: railwayViews,
+    'railway-expanse': railwayExpanseViews,
+  }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
   closed = false,
