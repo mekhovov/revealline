@@ -1603,8 +1603,7 @@ try {
     try {
       const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
         identityCatalog: flightPictures.identityCatalog,
-        campaignKey: campaignKey(campaign),
-        level: pictureLevelForRun(run, activeEntry),
+        ...pictureContextForRun(run, activeEntry),
         themeId: theme.id,
       });
       const pin = storyPinForTheme(pins, theme.id),
@@ -1695,6 +1694,15 @@ try {
     const level = levels.find((item) => item.id === nextRun.levelId);
     if (!level) throw new Error(t('interface:pictureMissionIsUnavailableInItsInstalledOriginal'));
     return level;
+  }
+  function pictureContextForRun(nextRun, entry) {
+    // Current rules and difficulty can change a flight's execution identity;
+    // retained pictures and stories still belong to the original authored map.
+    const pictureEntry = pictureExecutionForEntry(entry);
+    return {
+      campaignKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
+      level: pictureLevelForRun(nextRun, entry, pictureEntry),
+    };
   }
   function newFlightPictures({
     nextRun = run,
@@ -9403,8 +9411,7 @@ try {
         kind === 'retry' && !candidateAttempt && !ticket.owner.legacy
           ? retryFlightPresentationPins(ticket.owner.pins(), {
               identityCatalog: pictureIdentity(),
-              campaignKey: campaignKey(entry.campaign),
-              level,
+              ...pictureContextForRun(nextRun, entry),
               themeId: nextTheme.id,
             })
           : undefined;
@@ -9655,8 +9662,7 @@ try {
               retainedPins && !flightPictures.legacy
                 ? retryFlightPresentationPins(retainedPins, {
                     identityCatalog: pictureIdentity(),
-                    campaignKey: campaignKey(campaign),
-                    level: campaign.levels[levelIndex],
+                    ...pictureContextForRun(nextRun, activeEntry),
                     themeId: theme.id,
                   })
                 : retainedPins || undefined,

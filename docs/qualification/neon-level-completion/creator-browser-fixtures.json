@@ -1,0 +1,75 @@
+{
+  "imageChecks": [
+    {
+      "file": "transparent.png",
+      "invert": false,
+      "status": "Generated level ready. Review the preview, then apply it to the editor.",
+      "coverage": "2,176 reachable cells count toward the goal. 192 hazard or inaccessible cells are bonus reveal territory.",
+      "canApply": true
+    },
+    {
+      "file": "inverted.png",
+      "invert": true,
+      "status": "Generated level ready. Review the preview, then apply it to the editor.",
+      "coverage": "2,176 reachable cells count toward the goal. 192 hazard or inaccessible cells are bonus reveal territory.",
+      "canApply": true
+    },
+    {
+      "file": "opaque.jpg",
+      "invert": false,
+      "status": "Generated level ready. Review the preview, then apply it to the editor.",
+      "coverage": "2,176 reachable cells count toward the goal. 192 hazard or inaccessible cells are bonus reveal territory.",
+      "canApply": true
+    },
+    {
+      "file": "opaque.webp",
+      "invert": false,
+      "status": "Generated level ready. Review the preview, then apply it to the editor.",
+      "coverage": "2,176 reachable cells count toward the goal. 192 hazard or inaccessible cells are bonus reveal territory.",
+      "canApply": true
+    },
+    {
+      "file": "blank.png",
+      "invert": false,
+      "status": "The symbol is empty or too solid. Adjust contrast or invert the image.",
+      "coverage": "",
+      "canApply": false
+    },
+    {
+      "file": "corrupt.png",
+      "invert": false,
+      "status": "PNG signature or IHDR is invalid.",
+      "coverage": "",
+      "canApply": false
+    },
+    {
+      "file": "oversized.png",
+      "invert": false,
+      "status": "Choose a PNG, JPEG or WebP image up to 4 MB.",
+      "coverage": "",
+      "canApply": false
+    }
+  ],
+  "textChecks": [
+    {
+      "text": "",
+      "status": "Enter one to three non-empty lines, with up to 16 characters per line.",
+      "canApply": false
+    },
+    {
+      "text": "ABCDEFGHIJKLMNOPQ",
+      "status": "Enter one to three non-empty lines, with up to 16 characters per line.",
+      "canApply": false
+    },
+    {
+      "text": "ONE\nTWO\nTHREE\nFOUR",
+      "status": "Enter one to three non-empty lines, with up to 16 characters per line.",
+      "canApply": false
+    },
+    {
+      "text": "FPV\nDRONE AID\nУКРАЇНА",
+      "status": "Generated level ready. Review the preview, then apply it to the editor.",
+      "canApply": true
+    }
+  ]
+}
