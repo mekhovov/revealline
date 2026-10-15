@@ -16,6 +16,7 @@ import {
   resourceCleanupIssues,
   boundedOperation,
   closeAllPages,
+  closeBrowserForRestart,
   unlockObservedPage,
   matchesLaunchedAppURL,
   revealFPVOffline,
@@ -109,6 +110,7 @@ const entries = new Map(),
   errors = [],
   osApps = [];
 let served, context, cdp, report;
+let currentStep = 'staging admitted packages';
 const acquiringResources = { pending: new Set(), errors: [] };
 const observationDeadline = Date.now() + OBSERVATION_TIMEOUT_MS;
 function requireObservationTime() {
@@ -116,6 +118,27 @@ function requireObservationTime() {
     throw new Error('Installation observation deadline exceeded.');
 }
 const appWindows = new Map();
+const browserRestart = { attempted: false, passed: false };
+async function launchBrowser(offline = false) {
+  requireObservationTime();
+  await trackObservedResource(acquiringResources, 'Browser', async () => {
+    const launchedContext = await chromium.launchPersistentContext(profile, {
+      channel: 'chrome',
+      headless: true,
+      locale: 'en-US',
+      viewport: { width: 1280, height: 900 },
+      offline,
+    });
+    if (Date.now() >= observationDeadline) {
+      await boundedOperation('Late browser cleanup', () => launchedContext.close());
+      requireObservationTime();
+    }
+    context = launchedContext;
+  });
+  context.setDefaultTimeout(OPERATION_TIMEOUT_MS);
+  context.setDefaultNavigationTimeout(OPERATION_TIMEOUT_MS);
+  context.on('page', (newPage) => newPage.on('pageerror', (error) => errors.push(error.message)));
+}
 const relativeRoot = (id) => `revealline/practice/${id}/`;
 const site = (id, selected = version) => `${relativeRoot(id)}releases/${selected}/site/`;
 const entry = (id, selected = version) => site(id, selected) + `optional-practice/${id}/index.html`;
@@ -196,30 +219,38 @@ try {
           requireObservationTime();
         }
       });
-      await trackObservedResource(acquiringResources, 'Browser', async () => {
-        const launchedContext = await chromium.launchPersistentContext(profile, {
-          channel: 'chrome',
-          headless: true,
-          locale: 'en-US',
-          viewport: { width: 1280, height: 900 },
-        });
-        if (Date.now() >= observationDeadline) {
-          await boundedOperation('Late browser cleanup', () => launchedContext.close());
-          requireObservationTime();
-        }
-        context = launchedContext;
-      });
-      context.setDefaultTimeout(OPERATION_TIMEOUT_MS);
-      context.setDefaultNavigationTimeout(OPERATION_TIMEOUT_MS);
-      context.on('page', (newPage) =>
-        newPage.on('pageerror', (error) => errors.push(error.message)),
-      );
+      await launchBrowser();
       let page = context.pages()[0] ?? (await context.newPage());
       page.on('pageerror', (error) => errors.push(error.message));
       cdp = await context.newCDPSession(page);
       const send = (method, parameters) =>
         boundedOperation(method, () => cdp.send(method, parameters));
       const url = (name) => new URL(name, served.url).href;
+      async function openPrepared(target, id) {
+        currentStep = `offline launcher: ${id}`;
+        await target.goto(url(relativeRoot(id) + 'app/'));
+        const networkUnavailable = await target.evaluate(async () => {
+          try {
+            await globalThis.fetch('/offline-network-probe-unowned-by-any-worker', {
+              cache: 'no-store',
+            });
+            return false;
+          } catch {
+            return true;
+          }
+        });
+        assert.equal(
+          networkUnavailable,
+          true,
+          'An uncached network probe must fail during offline relaunch.',
+        );
+        await target.locator('#open').click();
+        await target.waitForURL((observed) =>
+          matchesLaunchedAppURL(observed, url(entry(id, id === fpv ? priorVersion : version))),
+        );
+        await unlockObservedPage(target, password);
+        await target.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+      }
       async function revealControl(id, selector, category = 'extras') {
         if (await page.locator(selector).isVisible()) return;
         const prefix = OBSERVED_PACKAGES[id].settingsPrefix;
@@ -233,6 +264,7 @@ try {
         await page.locator(selector).click();
       }
       async function open(id, selected = version) {
+        currentStep = `open ${id} ${selected}`;
         await page.goto(url(entry(id, selected)));
         await unlockObservedPage(page, password);
         const selector = OBSERVED_PACKAGES[id].mounted;
@@ -244,6 +276,7 @@ try {
         );
       }
       async function prepare(id) {
+        currentStep = `prepare ${id}`;
         const adapter = OBSERVED_PACKAGES[id];
         if (id === fpv) await revealFPVOffline(page, () => clickFPV('#help'));
         else {
@@ -438,6 +471,7 @@ try {
       page = await context.newPage();
       cdp = await context.newCDPSession(page);
       for (const id of packageIds) {
+        currentStep = `offline window relaunch: ${id}`;
         await page.goto(url(relativeRoot(id) + 'app/'));
         const networkUnavailable = await page.evaluate(async () => {
           try {
@@ -499,6 +533,46 @@ try {
       assert.equal(await exportedProof(), savedProof);
       assert.equal(await exportedProfiles(), savedProfiles);
       await inspect('all-three-open-offline');
+      // Persistent-context close exits its browser. Relaunch the same disk
+      // profile offline before navigating to any prepared application.
+      browserRestart.attempted = true;
+      Object.assign(browserRestart, await closeBrowserForRestart(context));
+      context = null;
+      cdp = null;
+      appWindows.clear();
+      await launchBrowser(true);
+      assert.ok(
+        context.pages().every((item) => item.url() === 'about:blank'),
+        'Restart must not restore application pages before observation.',
+      );
+      page = context.pages()[0] ?? (await context.newPage());
+      page.on('pageerror', (error) => errors.push(error.message));
+      cdp = await context.newCDPSession(page);
+      for (const id of packageIds) await openPrepared(page, id);
+      for (const app of osApps.filter((row) => row.installed)) {
+        const pendingWindow = context
+          .waitForEvent('page', { timeout: OPERATION_TIMEOUT_MS })
+          .catch(() => null);
+        app.restartLaunch = await send('PWA.launch', { manifestId: app.manifestId });
+        const appWindow = await pendingWindow;
+        assert.ok(appWindow, 'Restarted PWA.launch must create an installed window.');
+        appWindows.set(app.id, appWindow);
+        await openPrepared(appWindow, app.id);
+        app.restartedOfflineWindow = await appWindow.evaluate(() => ({
+          standalone: globalThis.matchMedia('(display-mode: standalone)').matches,
+          url: globalThis.location.href,
+        }));
+        assert.equal(app.restartedOfflineWindow.standalone, true);
+      }
+      await open(fpv, priorVersion);
+      assert.equal(await exportedProof(), savedProof);
+      assert.equal(await exportedProfiles(), savedProfiles);
+      Object.assign(browserRestart, {
+        passed: true,
+        packages: packageIds,
+        networkProbeFailed: true,
+      });
+      await inspect('all-three-offline-after-browser-process-restart');
       await context.setOffline(false);
       await stageLauncher(fpv);
       await pointer(fpv, version);
@@ -596,7 +670,10 @@ try {
         ? 'passed'
         : 'unverified';
       const standaloneWindowStatus = osApps.every(
-        (app) => app.window?.standalone && app.offlineWindow?.standalone,
+        (app) =>
+          app.window?.standalone &&
+          app.offlineWindow?.standalone &&
+          app.restartedOfflineWindow?.standalone,
       )
         ? 'passed'
         : 'unverified';
@@ -611,16 +688,18 @@ try {
           errors.length === 0 &&
           osInstallationStatus === 'passed' &&
           standaloneWindowStatus === 'passed' &&
+          browserRestart.passed &&
           harnessStable,
         browserPreparationPassed: true,
         osInstallationStatus,
         standaloneWindowStatus,
         closedTabsRelaunch,
+        browserRestart,
         harnessStable,
         createdAt: new Date().toISOString(),
         browser: context.browser()?.version() ?? 'Chrome persistent context',
         scope:
-          'All three apps in an isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. All tabs/windows close before offline launcher and standalone app reopening; the browser process is not restarted. ' +
+          'All three apps in an isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. All tabs/windows close before offline launcher and standalone app reopening; the persistent browser then closes and relaunches the same profile with browser-context offline enabled before app navigation. This is not an OS reboot or machine-wide airplane-mode claim. ' +
           (previous
             ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. '
             : 'v0.0.0 holds the same candidate payload at an alternate path. ') +
@@ -663,6 +742,34 @@ try {
     OBSERVATION_TIMEOUT_MS,
   );
 } catch (error) {
+  // Read only the isolated test pages' status/link state, never form values or
+  // storage credentials. Preserve the actual failure before owned cleanup.
+  const diagnostics = await Promise.all(
+    (context?.pages() ?? []).slice(0, 8).map(async (item) => {
+      try {
+        return await boundedOperation(
+          'Read failed page status',
+          () =>
+            item.evaluate(() => ({
+              url: globalThis.location.href,
+              access: globalThis.document.documentElement.dataset.accessState ?? null,
+              status: globalThis.document.querySelector('#status')?.textContent ?? null,
+              open: (() => {
+                const link = globalThis.document.querySelector('#open');
+                return link ? { hidden: link.hidden, href: link.href } : null;
+              })(),
+              check: (() => {
+                const button = globalThis.document.querySelector('#check');
+                return button ? { disabled: button.disabled, text: button.textContent } : null;
+              })(),
+            })),
+          3000,
+        );
+      } catch (diagnosticError) {
+        return { error: diagnosticError.message };
+      }
+    }),
+  );
   report = {
     format: 'OptionalInstallationObservation.v1',
     passed: false,
@@ -673,6 +780,7 @@ try {
     envelopeSha256: sha(envelopeBytes),
     artifacts: envelope.packages,
     transition,
+    browserRestart,
     harnessSha256,
     helperSha256,
     inputRoute: {
@@ -684,6 +792,8 @@ try {
         'A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction.',
     },
     failure: error.message,
+    currentStep,
+    diagnostics,
     osApps,
     checkpoints,
     errors,
