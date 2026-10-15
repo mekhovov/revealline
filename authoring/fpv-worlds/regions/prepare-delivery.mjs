@@ -58,7 +58,9 @@ export async function prepareRegionalDelivery({ source, output, id, revision, ti
     const relative = `${layer}/region.json`;
     reserve(relative);
     const item = await read(relative, 8 * 1024 * 1024);
-    const manifest = validateRegionManifest(item.bytes.toString('utf8'));
+    const manifest = validateRegionManifest(
+      new TextDecoder('utf-8', { fatal: true }).decode(item.bytes),
+    );
     for (const asset of manifest.assets) {
       const assetPath = `${layer}/${asset.path}`;
       reserve(assetPath);
@@ -70,10 +72,21 @@ export async function prepareRegionalDelivery({ source, output, id, revision, ti
     }
     layers[layer] = { ref: item.ref, manifest };
   }
+  const terrain = layers.terrain.manifest,
+    scenery = layers.scenery.manifest;
   fail(
-    canonical(layers.terrain.manifest.grid) === canonical(layers.scenery.manifest.grid),
-    'Terrain and scenery grids differ',
+    terrain.id === scenery.id && terrain.revision === scenery.revision,
+    'Terrain and scenery identities differ',
   );
+  const sceneryChunks = new Map(scenery.chunks.map((chunk) => [chunk.id, chunk]));
+  fail(
+    terrain.chunks.every(
+      (chunk) =>
+        sceneryChunks.get(chunk.id)?.x === chunk.x && sceneryChunks.get(chunk.id)?.z === chunk.z,
+    ),
+    'Terrain and scenery cell identities differ',
+  );
+  fail(canonical(terrain.grid) === canonical(scenery.grid), 'Terrain and scenery grids differ');
   const spawns = (manifest) =>
     canonical([...manifest.spawns].sort((a, b) => a.id.localeCompare(b.id)));
   fail(

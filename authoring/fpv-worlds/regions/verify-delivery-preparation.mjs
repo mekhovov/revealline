@@ -56,6 +56,63 @@ await assert.rejects(
   prepareRegionalDelivery({ ...options, source: altered, output: path.join(scratch, 'bad-path') }),
 );
 await writeFile(manifestPath, original);
+const invalidUtf8 = Buffer.from(original);
+const titleIndex = invalidUtf8.indexOf(Buffer.from(manifest.title.en));
+assert(titleIndex >= 0, 'Fixture has a manifest title');
+invalidUtf8[titleIndex] = 0xff;
+await writeFile(manifestPath, invalidUtf8);
+await assert.rejects(
+  prepareRegionalDelivery({ ...options, source: altered, output: path.join(scratch, 'bad-utf8') }),
+  /encoded data|encoding/i,
+);
+await assert.rejects(stat(path.join(scratch, 'bad-utf8')), /ENOENT/);
+await writeFile(manifestPath, original);
+for (const [name, mutate, reason] of [
+  [
+    'region-id',
+    (m) => {
+      m.id = 'another-region';
+    },
+    /identities differ/,
+  ],
+  [
+    'revision',
+    (m) => {
+      m.revision = 'another-revision';
+    },
+    /identities differ/,
+  ],
+  [
+    'cell-id',
+    (m) => {
+      m.chunks[0].id = 'another-cell';
+    },
+    /cell identities differ/,
+  ],
+  [
+    'cell-coordinate',
+    (m) => {
+      [m.chunks[0].x, m.chunks[0].z, m.chunks[1].x, m.chunks[1].z] = [
+        m.chunks[1].x,
+        m.chunks[1].z,
+        m.chunks[0].x,
+        m.chunks[0].z,
+      ];
+    },
+    /cell identities differ/,
+  ],
+]) {
+  const changed = JSON.parse(original);
+  mutate(changed);
+  await writeFile(manifestPath, JSON.stringify(changed));
+  const rejectedOutput = path.join(scratch, `bad-${name}`);
+  await assert.rejects(
+    prepareRegionalDelivery({ ...options, source: altered, output: rejectedOutput }),
+    reason,
+  );
+  await assert.rejects(stat(rejectedOutput), /ENOENT/);
+}
+await writeFile(manifestPath, original);
 const existing = path.join(scratch, 'existing');
 await mkdir(existing);
 await writeFile(path.join(existing, 'preserve.txt'), 'unfinished user work');
@@ -76,8 +133,10 @@ console.log(
         'unsafe identity rejected',
         'corrupt source rejected before output',
         'paired spawn mismatch rejected',
+        'paired ID/revision/cell-ID/cell-coordinate mismatches rejected before output',
         'traversal rejected',
         'unrelated output preserved',
+        'invalid UTF-8 rejected before output',
       ],
     },
     null,

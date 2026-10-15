@@ -469,6 +469,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'regional-library.mjs',
         'regional/flight-prototype.mjs',
         'regional/frame-transaction.mjs',
+        'regional/indexed-scenery-cell.mjs',
         'regional/region-manifest.mjs',
         'regional/region-motion-query.mjs',
         'regional/scenery-admission.mjs',
@@ -625,7 +626,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         limits: Object.freeze({
           ...policy.limits,
-          // Regional review adds 18 exact modules to the reviewed 138-file source closure.
+          // Regional review adds 20 exact modules to the reviewed 138-file source closure.
           // Include launcher/templates; keep the 20 MiB budget and exact dependency boundary.
           files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 159 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
