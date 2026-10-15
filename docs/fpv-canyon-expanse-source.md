@@ -71,7 +71,7 @@ route contacts. The greatest cross-track error was 0.474 m and vertical error
 Pause invariance and disposal were checked through the shared production session.
 The full receipt is `expanse-flight-verification.json`. These are controlled
 representative routes, not an uninterrupted traversal of the entire map.
-Native composition review remains pending.
+Native technical composition review passed on the corrected preview described below.
 
 ## Authoring camera compatibility
 
@@ -82,4 +82,17 @@ the validated manifest cell size for both. Production regional rendering already
 handled this distinction. An executable check invokes the actual preview bounds
 callback and shared camera code for both sizes, asserting that the admitted
 ground centre is centred and the resident corners survive depth clipping.
-Native re-inspection of this presentation-only correction remains pending.
+Native re-inspection on exact source `9abbccdf` passed on 15 October 2026.
+Loaded area showed terrain at all six starts: Balanced basin, confluence, hoodoo
+flats and amphitheatre; Quality high mesa; Performance red escarpment. All
+prepared disarmed at zero ticks/throttle with 456,408 geometry bytes. At the
+amphitheatre, explicit FPV arm and keyboard flight followed by pause reached
+807 ticks and zero throttle. No console errors or warnings were observed.
+The screenshot is `canyon-expanse-9abbccdf-overview-20261015.png` in the external
+review receipts. The earlier 9071 sky-only failure remains recorded above.
+
+This accepts the source and camera technically. The visible neighbourhoods remain
+broad smooth slopes with sparse rounded relief. The 18 analytic features are
+authored relief anchors, not finished scenery or a representative final-art
+standard. Native device performance, continuous whole-region traversal and
+installed/offline package qualification remain open.
