@@ -1,6 +1,7 @@
 /** Authoring source preparation only. Verified bytes do not establish collision readiness. */
 import {
   REGION_LIMITS,
+  SPARSE_SCENERY_FORMAT,
   validateRegionManifest,
   createRegionPlanner,
 } from "./region-manifest.mjs";
@@ -118,7 +119,7 @@ export function createRegionSourceWindow(
   );
   requireValue(
     Number.isSafeInteger(maxSourceBytes) &&
-      maxSourceBytes > 0 &&
+      (maxSourceBytes > 0 || (maxSourceBytes === 0 && manifest.format === SPARSE_SCENERY_FORMAT)) &&
       maxSourceBytes <= REGION_LIMITS.residentSourceBytes,
     "Invalid source byte budget",
   );
