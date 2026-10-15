@@ -12,8 +12,13 @@ import { compileTerrainCell, validateTerrainSeams } from '../terrain-cell.mjs';
 import { validateRegionManifest } from '../region-manifest.mjs';
 import * as originalDesign from './coastal-design.mjs';
 const variant = process.argv[4];
-assert(!variant || variant === 'districts', 'Unknown coastal composition');
-const design = variant ? await import('./district-design.mjs') : originalDesign;
+assert(!variant || ['districts', 'settlement'].includes(variant), 'Unknown coastal composition');
+const design =
+  variant === 'settlement'
+    ? await import('./settlement-design.mjs')
+    : variant
+      ? await import('./district-design.mjs')
+      : originalDesign;
 const { coastalHeightMm, placements, startingPoints, flightRoutes } = design;
 const cellSizeMm = design.region?.cellSizeMm ?? 128000;
 const cellSizeM = cellSizeMm / 1000;
