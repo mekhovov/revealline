@@ -4790,3 +4790,9 @@ and 269 recentres, with peak four physics query worlds / 18 colliders / zero rig
 bodies and all zero after disposal. These are 7,200 simulated seconds, not elapsed
 hardware acceptance. Internal free space was 3.8 GiB at this check; heavy artifacts
 remain on external storage, with no source, commits or player storage deleted.
+
+The recovery follow-up then passed a repeated native source check: real loss/restoration
+kept arming disabled; Menu showed populated Regional free flight, Retry and starting
+points while unavailable flight setup stayed hidden. Retry rebuilt the scene and kept
+the menu open with zero input. Deliberate Resume and keyboard flight worked, followed
+by a safe pause. This closes the observed source UI gap, not its later package gate.
