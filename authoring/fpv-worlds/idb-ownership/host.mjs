@@ -2,6 +2,7 @@ import {
   createIDBOwnershipObserver,
   windowWithObservedIDB,
 } from "./observe.mjs";
+import { mountDiagnosticAccess } from "./access.mjs";
 
 // Loaded ONLY by a separately generated authoring HTML, never by a player package.
 const marker = document.querySelector(
@@ -83,10 +84,15 @@ document.body.append(button, dialog);
 const show = () => {
   report.textContent = JSON.stringify(observer.snapshot(), null, 2);
 };
-button.addEventListener("click", () => {
-  show();
-  dialog.showModal();
-  back.focus();
+const access = mountDiagnosticAccess({
+  document,
+  button,
+  dialog,
+  onOpen() {
+    show();
+    dialog.showModal();
+    back.focus();
+  },
 });
 read.addEventListener("click", show);
 back.addEventListener("click", () => {
@@ -109,6 +115,13 @@ save.addEventListener("click", () => {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
-window.addEventListener("pagehide", () => observer.stop(), { once: true });
+window.addEventListener(
+  "pagehide",
+  () => {
+    access.destroy();
+    observer.stop();
+  },
+  { once: true },
+);
 // No interval, renderer, refresh, reconnect or automatic report serialization.
 void app.ready.catch(() => {}); // The normal host already reports its own readiness error.

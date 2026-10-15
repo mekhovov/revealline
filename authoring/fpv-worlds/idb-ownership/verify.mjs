@@ -11,6 +11,8 @@ import {
   windowWithObservedIDB,
 } from "./observe.mjs";
 import { prepareDiagnosticHost } from "./prepare.mjs";
+import { mountDiagnosticAccess } from "./access.mjs";
+import { Document } from "../../../game/test/helpers/couch-dom.mjs";
 const { IDBFactory, IDBDatabase, IDBVersionChangeEvent, forceCloseDatabase } =
   createRequire(new URL("../package.json", import.meta.url))("fake-indexeddb");
 const known = "revealline-fpv-worlds-v1";
@@ -361,7 +363,7 @@ test("separate host preparation preserves original bytes and refuses overwrite, 
   assert(html.includes(`<base href="${base}"`));
   assert(html.includes('src="/authoring/fpv-worlds/idb-ownership/host.mjs"'));
   assert(html.includes('data-access-type="module"'));
-  assert.equal(Object.keys(identity.modules).length, 3);
+  assert.equal(Object.keys(identity.modules).length, 4);
   await assert.rejects(
     prepareDiagnosticHost({ player, output, base }),
     /not be overwritten/,
@@ -390,5 +392,141 @@ test("separate host preparation preserves original bytes and refuses overwrite, 
       base,
     }),
     /untouched World/,
+  );
+});
+
+test("diagnostic access belongs to the current native modal, preserves player focus and refuses active or unknown ownership", () => {
+  const doc = new Document(),
+    button = doc.createElement("button"),
+    watched = [];
+  let watcherCallback,
+    disconnected = false,
+    reads = 0;
+  class Observer {
+    constructor(callback) {
+      watcherCallback = callback;
+    }
+    observe(node, options) {
+      watched.push({ node, options });
+    }
+    disconnect() {
+      disconnected = true;
+    }
+  }
+  function modal(id) {
+    const node = doc.createElement("dialog"),
+      focus = doc.createElement("button"),
+      original = node.matches.bind(node);
+    node.id = id;
+    node.matches = (selector) =>
+      selector === "dialog:modal"
+        ? doc.modalDialogs.includes(node)
+        : original(selector);
+    node.append(focus);
+    doc.body.append(node);
+    return { node, focus };
+  }
+  const flight = modal("flight-dialog"),
+    home = modal("worlds-shell-home-dialog"),
+    report = modal("idb-diagnostic-report"),
+    foreign = modal("unowned-import-dialog");
+  doc.body.append(button);
+  const canClick = () =>
+    !button.hidden &&
+    (!doc.modalDialogs.length || doc.modalDialogs.at(-1).contains(button));
+  flight.node.dataset.flightState = "disarmed";
+  flight.node.showModal();
+  assert.equal(
+    canClick(),
+    false,
+    "Original body sibling is inert under native modality",
+  );
+  const access = mountDiagnosticAccess({
+    document: doc,
+    button,
+    dialog: report.node,
+    MutationObserver: Observer,
+    onOpen() {
+      reads++;
+      report.node.showModal();
+    },
+  });
+  assert.equal(button.parentNode, flight.node);
+  assert.equal(canClick(), true);
+  assert.equal(
+    doc.activeElement,
+    flight.focus,
+    "Mount/reparent cannot steal player focus",
+  );
+  button.click();
+  assert.equal(reads, 1);
+  assert.equal(report.node.open, true);
+  assert.equal(
+    button.parentNode,
+    flight.node,
+    "Report keeps its separate Back owner",
+  );
+  foreign.node.showModal();
+  assert.equal(button.hidden, true);
+  button.click();
+  assert.equal(
+    reads,
+    1,
+    "An unknown modal above the report cannot trigger another read",
+  );
+  foreign.node.close();
+  watcherCallback();
+  button.click();
+  assert.equal(reads, 1, "The already-open report is not opened/read twice");
+  report.node.close();
+  watcherCallback();
+  home.node.showModal();
+  assert.equal(button.parentNode, home.node);
+  assert.equal(canClick(), true);
+  assert.equal(doc.activeElement, home.focus);
+  button.click();
+  assert.equal(reads, 2);
+  report.node.close();
+  home.node.close();
+  watcherCallback();
+  assert.equal(button.parentNode, flight.node);
+  flight.node.dataset.flightState = "active";
+  button.click();
+  assert.equal(reads, 2);
+  assert.equal(report.node.open, false);
+  assert.equal(
+    flight.node.dataset.flightState,
+    "active",
+    "Access cannot pause/resume/arm the player",
+  );
+  flight.node.dataset.flightState = "paused";
+  foreign.node.showModal();
+  assert.equal(button.hidden, true);
+  button.click();
+  assert.equal(reads, 2, "Unknown native top layer cannot be bypassed");
+  foreign.node.close();
+  watcherCallback();
+  assert.equal(canClick(), true);
+  button.click();
+  assert.equal(reads, 3);
+  report.node.close();
+  assert(
+    watched.every(
+      ({ options }) =>
+        options.attributes &&
+        options.attributeFilter.join() === "open" &&
+        !options.subtree,
+    ),
+  );
+  access.destroy();
+  assert.equal(disconnected, true);
+  button.click();
+  assert.equal(reads, 3);
+  flight.node.close();
+  watcherCallback();
+  assert.equal(
+    button.parentNode,
+    flight.node,
+    "Retired access cannot keep reparenting controls",
   );
 });
