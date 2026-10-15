@@ -1176,6 +1176,20 @@ export function bootCoop({
     document.body.dataset.coopTouch = visible ? 'visible' : 'hidden';
   }
   let pauseMenu = null;
+  function placePictureRecovery() {
+    const section = $('coop-picture-preparation'),
+      menu = $('coop-menu');
+    if (!section || !menu.classList.contains('native-landing')) return;
+    // Keep the original status/actions reachable while the landing cannot
+    // start. Settings retains them during its own visit; no move grants focus
+    // or revives preparation retired by a foreground boundary.
+    const blocked = !run && (pictureSelection?.state !== 'ready' || pictureOperation),
+      destination =
+        blocked && !settingsDialog.open
+          ? menu.querySelector('.native-menu-actions')
+          : $('coop-settings-panel-extras');
+    if (destination && section.parentNode !== destination) destination.append(section);
+  }
   function placeTools(paused) {
     const pausedAttempt = paused && run?.status === 'paused';
     if (!pausedAttempt) pauseMenu?.setActive(false);
@@ -1234,6 +1248,7 @@ export function bootCoop({
       $('coop-help').open = false;
     }
     if (tools.hidden || paused) $('coop-more').open = false;
+    placePictureRecovery();
     pauseMenu?.setActive(pausedAttempt);
     showTouch();
   }
@@ -1824,6 +1839,7 @@ export function bootCoop({
     }
     runningEnemyControls.refresh();
     settingsDialog.showModal();
+    placePictureRecovery();
     globalTools.refresh();
     const active = document.activeElement;
     if (
@@ -1866,6 +1882,7 @@ export function bootCoop({
       foreground();
     navigation.clear();
     router.clear();
+    placePictureRecovery();
     discoveryControls();
     if (!restore || !currentReturn() || !visibleAction(owner.opener) || !currentReturn()) return;
     const active = document.activeElement;
@@ -2584,6 +2601,7 @@ export function bootCoop({
           })
         : pictureMessage,
     );
+    placePictureRecovery();
     discoveryControls();
   }
   function retirePicture() {
