@@ -87,3 +87,11 @@ bounded payload, teardown and observer cost. If a gap occurs, compare the overla
 spans with a native sampled trace before selecting a production correction. If no
 gap occurs, report only the short observation; it does not establish two-hour
 stability. Preserve all prior negatives and player storage.
+
+The authored review offers an explicit **5-minute attribution review (not
+endurance)** between the one-minute review and two-hour endurance. It gives the
+existing bounded diagnostic a longer observation window without starting another
+full-duration qualification attempt. It uses the same real clock, production
+route, 250 ms frame-gap limit, focus policy and disposal rules. Save a failure
+honestly; a completed five-minute report still does not qualify the required two
+hours. Do not combine short reports or imported history into an endurance pass.

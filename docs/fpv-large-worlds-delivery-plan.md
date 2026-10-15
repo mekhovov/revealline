@@ -5,6 +5,43 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 19:30 UTC — bounded attribution reaches actual caller evidence
+
+There is no active elapsed run. The separate five-minute diagnostic on fresh
+origin 9198 completes **300.0005 real seconds /15,000 ticks**, starting
+**19:21:49.932Z**, under strict visible/focused observation. Production `da5df483`
+and package `6a092df1` remain unchanged; tool `219c3e92` adds only an explicit
+five-minute review option and its instructions. All 180 served dependency files
+match their recorded identities. The run has four cell crossings, three accepted
+waypoints, zero circuits/contacts and zero owned resources after disposal.
+Its route-coverage flag is false: **this is not two-hour acceptance**.
+[Full report](fpv-authored-urban-five-minute-attribution-20261015.json) and
+[source/scope receipt](fpv-authored-urban-five-minute-native-20261015.json).
+
+The real LoAF API now supplies four entries lasting 58–68.1 ms; three identify
+the authoring `frame` callback as their entry point. Maximum accepted-clock frame
+interval is 58.9 ms. These are different measurements, not an explanation of the
+earlier >250 ms failures or a slow-descendant/GC diagnosis. Actual observer
+callback submission totals 1 ms across five callbacks, excluding other work.
+
+This observation exposes a diagnostic retention gap: all early LoAF entries have
+empty phase associations because final reporting joins them only against the last
+128 spans, after earlier spans have been overwritten. Correct this by retaining
+bounded available phase facts when each observer entry arrives, with honest
+expired/incomplete coverage. A separate authoring-only correction is underway;
+native sampled JS/GC evidence remains necessary before a causal production fix.
+All four earlier failed full attempts are preserved and the 250 ms gate is unchanged.
+
+Grounding source #1504 merged as `e51ff517`, with a receipt-only child preserving
+reviewed `a2361327` geometry. Matched pilot-height/overview and three-tier native
+observations accept the restrained apron and visibly open concourse, followed by
+resource release. Separate immutable r5 #1508 merged as `2e86f5dc`, retaining pin
+`95b2f108`; all 723 HTTPS responses and 36 production cases pass, with old r3/r4
+bytes preserved. Library admission remains distinct. Alpine r4 #1501, the Library
+record-access shortcut #1507 and recording D6 #1509 continue their own exact
+package/check/native gates. No final-art, offline/restart, physical-device,
+public-launch or full-roadmap completion is claimed.
+
 ## 15 October, 19:00 UTC — exact Lunar admission and populated continuity
 
 There is **no active elapsed segment and no authored two-hour pass**. Preserve

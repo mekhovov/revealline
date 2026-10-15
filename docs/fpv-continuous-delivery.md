@@ -5226,3 +5226,23 @@ integrated player admission remains open. Representative grounding, discoverable
 Library record access and meaningful recording D6 coverage continue independently
 through protected PRs. All prior negative reports, frozen packages and player
 data remain preserved. The complete roadmap remains unfinished.
+
+## 15 October, 19:30 UTC — explicit five-minute diagnostic and a retention finding
+
+The authored review now offers an explicit five-minute attribution observation,
+separate from two-hour endurance. Fresh 9198 tool `219c3e92` with unchanged
+`da5df483` production / `6a092df1` package completes 300.0005 real seconds and
+15,000 ticks under strict focus, with zero contacts/owned disposal. Four crossings,
+three waypoints and zero circuits leave route coverage false. [Full report](fpv-authored-urban-five-minute-attribution-20261015.json).
+No elapsed run remains active and no two-hour pass is inferred.
+
+Four actual LoAF entries now retain three authoring frame-callback entry points,
+but no early phase associations survive final reporting: its join only sees the
+last 128 spans. A separate bounded receive-time association correction is needed.
+This is a diagnostic retention finding, not a production/GC cause. Earlier full
+failures and every acceptance gate stay unchanged. [Identity/scope receipt](fpv-authored-urban-five-minute-native-20261015.json).
+
+Alpine grounding source #1504 and immutable r5 #1508 merged normally, preserving
+earlier geometry/edition data; separate Library admission and final art remain.
+R4 #1501 exact integrated package/native, record-access #1507 package/native and
+recording archive/storage D6 #1509 exact cloud/review gates continue independently.
