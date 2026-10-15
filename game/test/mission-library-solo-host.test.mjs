@@ -157,8 +157,7 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     p.key('ArrowDown', false);
     for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
-    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++)
-      p.frame();
+    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++) p.frame();
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('next-button').hidden, false);
   }
