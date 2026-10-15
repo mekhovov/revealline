@@ -44,8 +44,18 @@ Cold first-launch preparation requires the separate host correction #1314. The
 normal-player native review must identify that combined source explicitly; it does
 not qualify an earlier package that lacks the correction.
 
-Normal Library download, reload, deliberate flight and pause are still pending for
-this row. Exact-package/offline and physical-device qualification remain separate.
+The isolated source host on port 9054 passed a fresh normal Library download,
+saved `rounded-r1` first launch at 9 m with zero motion, deliberate keyboard flight
+and pause. A reload retained the saved row. Its first subsequent launch returned
+to the Library without a surfaced reason; another explicit saved Fly reached the
+disarmed ready state. No deliberate focus change was observed, so the interruption
+is not attributed to blur or to Canyon content. This older source composition is
+not evidence of flawless repeated launch. The PR remains draft while the coherent
+latest-main interface is checked. Main's cold-preparation and controller-readiness
+regressions pass all eight cases after integration; explicit pause still cancels
+preparation and never arms the player.
+
+Exact-package/offline and physical-device qualification remain separate.
 The stylized, visibly coarse landscape is a bounded preview, not finished realism
 or evidence of an unlimited world. Existing module, source, residency and offline
 budgets remain unchanged.
