@@ -4740,6 +4740,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'braided-basin': ['Braided basin', 'Розгалужена улоговина'],
+        'high-mesa': ['High mesa', 'Високе плато'],
+        'red-escarpment': ['Red escarpment', 'Червоний уступ'],
+        confluence: ['Confluence', 'Злиття русел'],
+        'hoodoo-flats': ['Hoodoo flats', 'Рівнина кам’яних стовпів'],
+        amphitheatre: ['Amphitheatre', 'Амфітеатр'],
         basin: ['Basin', 'Улоговина'], mesa: ['Mesa', 'Плато'],
         gorge: ['Gorge', 'Ущелина'], buttes: ['Rock towers', 'Скельні вежі'],
         fork: ['Fork junction', 'Розгалуження'], shelf: ['Rock shelf', 'Скельний уступ'],
