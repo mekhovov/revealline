@@ -1,0 +1,130 @@
+{
+  "origin": "http://127.0.0.1:9030",
+  "status": "passed-native-controlled-integrity-rejection-old-data-preservation-valid-retry",
+  "baseline": {
+    "version": "v0.142.4",
+    "observations": [
+      "Initial worker registration aborted once; retry reached Ready offline without storage removal. Cause not asserted.",
+      "Open prepared practice launched old player. Select Mission > Library > Browse > Reservoir Download reported Pack saved.",
+      "Mountain Reservoir r16 retained eight challenges and digest prefix50ffbb0e5da7."
+    ]
+  },
+  "new": {
+    "choice": "new",
+    "id": "fpv-worlds",
+    "version": "v0.151.1",
+    "scope": "../releases/v0.151.1/site/",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae"
+  },
+  "fault": {
+    "phase": "fixture-only-pre-browser-probe",
+    "origin": "http://127.0.0.1:9030",
+    "path": "/revealline/practice/fpv-worlds/releases/v0.151.1/site/game/fpv-entry.mjs",
+    "status": 200,
+    "bytes": 8132,
+    "originalSHA256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+    "faultSHA256": "46ef4f366b759c557a9402e8ef8ced76336c9d96f6d93d7be8dd6bc05568017f",
+    "differentBytes": 1
+  },
+  "limits": "Controlled single-dependency integrity negative test followed by exact-byte retry, one isolated browser origin. Not real quota/eviction, browser restart, network-wide offline, hardware performance or mission completion.",
+  "rejectionObservations": [
+    "Native Download reported not completed / verification failed.",
+    "Open prepared action still targeted v0.142.4; actual click opened old home.",
+    "Old Select Mission > Library retained Reservoir eight challenges and digest50ffbb0e5da7.",
+    "No user storage cleared."
+  ],
+  "validResponseRestoredSHA256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+  "oldCandidate": {
+    "sourceRevision": "b309f8232ab38b27fe4081466d550f22c63673d3",
+    "sourceTree": "6309f853ae5db6697cdd3271d726898e4e84385c",
+    "version": "v0.142.4",
+    "revision": "923f391477e06ecba67b129fb83f47952c8b8fb958be349e6742bfc1e4a08199",
+    "cloudRun": 37455244806,
+    "githubArtifactId": 11409047096,
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 112,
+    "worldsBytes": 15822040,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 16048581,
+        "sha256": "5c6c7cbf5ba30ca09fe277e5455bfb3ff1b23fe40ef90d8738e03b575b1a0743"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 15839786,
+        "sha256": "26953687a9d700c456a151116b36a53e2a2582cbadfb6636cbbe98f9024522e3"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 20541,
+        "sha256": "7dd3b60aff57cf7c2e0cb2c1640fec89d4f929714a157c346b786d20b4f4f44c"
+      }
+    }
+  },
+  "newCandidate": {
+    "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+    "sourceTree": "71bf69c8df5ad02bc75cd46cc01c6893e40e9192",
+    "version": "v0.151.1",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "revision": "fff1c41f5e63e04848c3e20070383bece6834939e6b117446aa2931b3bcb518d",
+    "cloudRun": 38615162179,
+    "githubArtifactId": 11919610810,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 133,
+    "worldsBytes": 17132123,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 22914303,
+        "sha256": "23ba541d7d494b6df6eb13fc39e10836c1b606154edd6da5d2d21d354f4e29d3"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 17177382,
+        "sha256": "8b1cd5e2d143f594c85b9f9d96aa3fb2b6d9b7631a664147c4ad48c960494110"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 24295,
+        "sha256": "24b58c6b0300bc092255fdd77f4c4616b5276e3ed1da61e57eadb66a73b65038"
+      }
+    }
+  },
+  "harnessFiles": {
+    "activate.py": "12bc364e80b8f8a7ae94da7435569c45412b30633d39482517b75489bbac8cc2",
+    "server.py": "d494cfe23b37bc41576eb26cccbc701735b44bfc1cf8a050d53a78eaaff7d5e2",
+    "server-control.py": "5eaff6dc36bf1491c511d35cc50f269f5ddd981c46ded66c0dc5ea74135ef334",
+    "JOURNEY.md": "ca21e05cb796878a8675d699b51ff2cf7279ce79aa313b49b4a8742f929959eb"
+  },
+  "faultEvents": [
+    {
+      "event": "same-length-integrity-fault-response",
+      "path": "/revealline/practice/fpv-worlds/releases/v0.151.1/site/game/fpv-entry.mjs",
+      "bytes": 8132,
+      "originalSHA256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+      "responseSHA256": "46ef4f366b759c557a9402e8ef8ced76336c9d96f6d93d7be8dd6bc05568017f",
+      "offset": 2,
+      "time": 1792005964.647857
+    },
+    {
+      "event": "same-length-integrity-fault-response",
+      "path": "/revealline/practice/fpv-worlds/releases/v0.151.1/site/game/fpv-entry.mjs",
+      "bytes": 8132,
+      "originalSHA256": "53b594e3440257a8212c714f1df17abef80bccd3a36672c53128cc90b79136c2",
+      "responseSHA256": "46ef4f366b759c557a9402e8ef8ced76336c9d96f6d93d7be8dd6bc05568017f",
+      "offset": 2,
+      "time": 1792007618.984616
+    }
+  ],
+  "eventScope": "First event is pre-browser fixture probe; later event is native new-download dependency request",
+  "retryObservations": [
+    "After restoring exact response bytes, retry reported Ready offline with prepared v0.151.1 and previous v0.142.4 actions.",
+    "Actual new prepared action opened the home. The updated mutable launcher required the authorized password unlock.",
+    "New Explore worlds displayed Reservoir Installed and all eight campaign missions.",
+    "Catalogue Play Reservoir opened the scene ready and disarmed at0seconds, health100, throttle0."
+  ],
+  "evidenceMethod": "Parent native CUA UI/AX observations plus exact server response and transport logs. No screenshot acceptance claimed; attempted native screenshot had zero-sized surface."
+}

@@ -1,6 +1,6 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 14 October 2026; atomic regional ownership and native recovery continuation.
+Reviewed 15 October 2026; continuous regional flight, verified Library delivery and preserved asset textures.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
@@ -37,10 +37,48 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   appearance correction (#1227) is merged. Urban flight through the same verified
   visible/collision geometry merged in #1238; five commanded routes cover doors,
   walls, roofs, a shaft and a cross-cell road. Atomic geometry/body/camera adoption
-  and rollback merged in #1240. Combined terrain/scenery ownership is the next
-  prerequisite; single-profile support does not yet prove a coherent mixed world.
-  Next: integrate the actual player lifecycle and production collision contracts,
-  with atomic origin migration for every live world owner. Regional scenery
+  and rollback merged in #1240. Combined terrain/scenery ownership merged in #1245:
+  both verified layers stage within combined budgets and adopt together; failure
+  retains the previous pair. #1246 keeps failed/cancelled preparation controls
+  available. Native failed-manifest recovery retained the old scene and a corrected
+  retry returned disarmed. Cached preparation completed too quickly for a new native
+  cancellation observation; automated cancellation evidence remains separate.
+  #1253 now reuses the production swept-sphere movement/slide solver. All 154
+  historical World demonstrations retain identical states/paths across 312,948
+  ticks; 384 historical contact comparisons, 51 existing tests, 57 regional checks
+  and five Urban flight routes pass. #1257 merges shared production support/landing
+  response: 297 historical support queries and the same 154 demonstration replays
+  retain their outcomes. Actual player-host integration merged in #1267, with
+  normal input/camera/pause ownership and explicit unscored regional sessions.
+  Native keyboard/touch flight, camera and mode changes, portrait layout and
+  boundary Resume → Retry recovery were observed; retries remain disarmed.
+  Package qualification exposed stale count assertions and missing regional modules
+  in the main distribution builder. Correction #1269 is merged. Its unchanged cloud
+  artifact passes exact archive checks; native preparation, actual launcher/home,
+  regional arming, keyboard input, camera/mode changes and disarmed Retry now pass.
+  The regional source remains a separately identified same-origin test fixture,
+  not installed/offline content or default catalogue admission.
+  Continuous staging #1273 and renderer preparation #1282 are merged. Four
+  verified cell crossings retain conservative reference states. Staged shader
+  compilation and bounded GPU uploads precede adoption, with cancellation,
+  renderer-state restoration and a final live-pose guard. Native preparation,
+  neighbour staging, cancellation retaining the prior window, and release passed.
+  Normal prepared crossings stay active; unavailable required data pauses safely.
+  Immutable delivery authoring #1283 and atomic regional Library storage #1284
+  are merged. A 38-file, 1,455,090-byte Urban pair is pinned to an exact commit;
+  every payload is verified and installed revisions remain available for rollback.
+  Normal Library UI and preserved indexed textures merged in #1287. Native remote
+  Download → saved Fly, disarmed entry, keyboard flight, camera/reset/mode changes
+  and reload pass. EN/UK portrait layout has no horizontal overflow. Six interface
+  scenarios include navigation cancelling delayed launch. The exact combined-main
+  candidate `c3368bb` passes optional package checks and native Prepare → Ready
+  offline → Download → saved Fly. With its origin server stopped, the same player
+  reopens and flies the installed revision; this is not network-wide offline or
+  physical-device acceptance. The first card remains a 384×384 m architectural
+  preview. Compact ready/paused Menu/View controls (#1296) and direct paused-menu
+  starting-point selection (#1304) are published in separate native UI stack #1305.
+  Both have native portrait/landscape evidence; graphics-loss recovery follows.
+  Regional scenery
   admission, recovery and sustained qualification remain separate requirements.
   Existing World coordinates stop at ±100 m. Real regional flight additionally
   needs terrain/collision streaming, origin shifting, render preparation and recovery.
@@ -54,16 +92,70 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   study #1235 adds optional rock/sand shading and three detail tiers, with exact
   source/geometry/collision parity. Shared resident seam normals merged in #1237
   without changing source heights or collision. Authoring spawn, heading and terrain
-  appearance controls are published in #1241; all three detail choices loaded in the
+  appearance controls merged in #1241; all three detail choices loaded in the
   native browser and restarts remained disarmed. It is a foundation, not finished
   art; coarse silhouettes, unloaded outer borders, landmark composition and sustained
-  rendering measurements remain. Neither is admitted
+  rendering measurements remain. #1244 adds a matching Urban terrain/scenery source
+  pair with clear relief corridors. #1247 adds optional architectural surfaces;
+  #1250 adds bounded authoring lighting and shadows. Native warehouse, parking and
+  atrium views and release/reload passed. These changes establish visual depth and
+  material scale; they do not complete the quality standard. Loading-court
+  composition #1255 and optional ground surfaces #1258 are merged: blue/amber
+  landmarks, clear door lines, concrete aprons, gravel and asphalt. #1263 merges
+  authored ducts, hangers, roof trusses and entrance canopies. Native
+  interior/roof views and release/reload passed; existing surfaces remain unchanged,
+  with six new matching render/collision surfaces verified separately.
+  #1266 adds 27 licensed Canyon rock formations in a bounded 384×384 m subset,
+  with matching render/collision sources, 2,247 clear corridor sweeps and native
+  gap/gorge/ridge inspection. One buried crown formation was corrected before
+  acceptance. The terrain still needs silhouette and surface refinement; the
+  first broader drainage revision was rejected after native review because it
+  changed substantial relief without adequately fixing the jagged ridge. Targeted
+  original-drainage rounding merged in #1271; the repeating-band material correction
+  passes native three-preset inspection and release/reload, published in #1274.
+  Neither representative region is admitted
   to the default catalogue before collision, flight and package qualification.
+  Urban parking routes #1277 are merged: three ramps and a landing preserve
+  existing surfaces, with seven new matching collision surfaces and 490 route
+  queries. Native approach/upper views and release/reload passed. Canyon sediment
+  #1274 removes repeating surface bands across all three presets. These improve
+  source studies; the pinned player preview has not silently acquired them.
+- **P3 current increment:** Railway CC0 intake #1280 and exact indexed texture
+  contract #1285 are merged. Tank, straight track and flatbed preserve palette
+  pixels, UVs and normals. Three originals remain preserved but blocked by current
+  millimetre quantization; no triangles were silently discarded. Runtime texture
+  ownership merged in #1287, with native comparison and release/reload.
+  CPU texture buffers and GPU mip storage fit inside existing resource ceilings.
+  The bounded Railway route foundation #1290 is merged. Remaining dependent art
+  increments retain native stack #1292. Its 384×384 m slice contains freight lanes, a trestle
+  cutting, maintenance hall and canopy routes. Matching geometry passes 1,195
+  collision/support queries; native grounded-canopy, hall, freight and release/reload
+  inspection pass. Surface pass #1298 adds concrete, asphalt, edge lines and ballast
+  without changing collision. Structural detail #1301 adds readable trestle bracing,
+  hall roof ties and service furniture; native bridge/hall and release/reload pass.
+  Actual commanded-flight verification #1302 covers seven routes in both Self-level
+  and Acro, eight authored starts and deliberate solid-wall contacts. Immutable
+  source delivery #1303 is merged: 38 payload files, 5,684,606 bytes, strict v1
+  descriptor and retained CC0 provenance. Trusted Library pin/appearance #1306 is
+  published; normal-host native admission and release verification are still open.
+  Final composition, moving subjects and 4 km expansion remain. None is implied by
+  the bounded preview or a passed route check.
 - **P3:** Tropical Archipelago, Industrial Railway Valley, Coaster Park, Hillside Town;
   then Alpine Highlands, Desert Expedition, Canal City; then Lunar Basin, Castle
   Valley, Retro Metropolis. Expand Reservoir, Harbor and Festival with new revisions,
   keeping old courses and proofs. These are distinct authored regions, not recolours.
 - **P4:** catalogue-wide/offline/performance qualification and protected publication.
+  Independent archive import closure (#1297) and explicit physics ownership counts
+  (#1300) are merged. A 360,000-tick workload represents 7,200 simulated seconds,
+  with 53 reversals and 269 recentres; peak four query worlds / 18 colliders / zero
+  rigid bodies, and zero after disposal. This does not replace the planned elapsed
+  two-hour browser/device session. Exact combined-main package qualification runs
+  at fixed `c3368bb` in run38658148642; all six archive inventories/hashes/budgets
+  and three import graphs pass. Both optional and broader company jobs completed successfully.
+  Real WebGL loss/restoration pauses the frozen regional player and requires an
+  explicit restart before deliberate arming. Clear recovery guidance and a direct
+  menu path now pass native source review, including populated controls after loss.
+  Publication and exact-package qualification of that follow-up remain separate.
   #1228 verified all 20 exact published packs (15,605,575 bytes), compile/export and
   modeled storage boundaries. #1232 repaired an existing stale navigation fixture.
   Native v0.142.4 → v0.151.1 preparation preserved Reservoir r16 and both worker
@@ -73,25 +165,72 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
   with their origin server stopped (#1239). A separate update fixture retained the
   old player and installed world after a 30-second transfer stall and cancellation.
   Slow worker verification exposed a separate false repair warning; a tri-state
-  readiness correction is published in #1242. See [the native receipt](fpv-package-update-20261014.md).
+  readiness correction merged in #1242. Fresh unmodified cloud package qualification
+  is now recorded in #1251: the corrected launcher and both immutable workers
+  hash-verify ready, the actual previous-player link opens, and Reservoir retains
+  all eight challenges and its original digest. With the origin server stopped,
+  both players reopen and the new player runs the installed Reservoir mission.
+  The mutable launcher updates after its old controlled tabs close, as designed.
+  #1249 fixes a separate home artwork URL that escaped the immutable package.
+  Its fresh unchanged cloud artifact installed successfully; the native home artwork
+  remained visible after same-URL reload with its origin server stopped. This closes
+  that bounded artwork case, not all offline/device qualification.
+  #1256 records native static rendering of all 20 packs; #1260 checks all 41
+  courses in both flight modes (82 lifecycle cases). Disarmed catalogue admission,
+  deliberate mission start and paused mode changes remain distinct contracts.
+  #1261 records nine native rendering samples across Reservoir, Harbor and Coaster
+  at three quality tiers: 1280×800 viewport, 1280×520 canvas, DPR 1, 30 warmup and
+  120 measured frames. Callback CPU p95 was 0.6–1.2 ms; animation cadence p95
+  was 8.8–9.2 ms. These static disarmed observations exclude GPU completion and
+  do not establish sustained gameplay FPS or physical-device performance. An
+  initial zero-viewport sample was rejected. #1264 verifies rejection of a
+  same-length, one-byte-corrupted update response: the previous player and Reservoir
+  remain usable, then a valid retry opens the new player and the installed world
+  disarmed. Frozen package files were not modified.
+  #1270 records nine longer synthetic motion workloads on the same frozen source:
+  1,230 physics ticks and 1,200 measured render frames per run, with 400 frames
+  each in FPV, Chase and Overview. All final physics states match the independent
+  reference, with zero terminal resets. Combined model/draw CPU p95 was 0.6–1.1 ms;
+  registered graphics resources returned to zero after disposal. These deliberately
+  run one physics tick per rendered frame, not real time; they do not prove
+  sustained player FPS, GPU memory reclamation or physical-device performance.
+  Corrected regional host #1269 also passes bounded native exact-package review
+  recorded in merged #1272;
+  this does not qualify regional content distribution or offline source residency.
+  See [the native receipt](fpv-package-update-20261014.md).
   Direct mission Start intentionally begins flight after existing readiness gates;
-  catalogue download/Play and recovery remain distinct launch paths. Fresh corrected
-  package admission, network-wide offline, actual quota/eviction, full browser restart
+  catalogue download/Play and recovery remain distinct launch paths. Public admission,
+  network-wide offline, actual quota/eviction, full browser restart
   and device qualification remain open; the bounded cancellation observation does
   not close every interrupted-install scenario.
-  D6 extra unit coverage follows; each preceding increment retains functional checks.
+  Merged #1294 adds 48,000 accepted synthetic flight ticks, seven reversals and
+  37 origin recentres with bounded reported reservations and clean disposal. This
+  represents 960 simulated seconds at 50 Hz, not sustained elapsed-time gameplay.
+  Thirty integrity/recovery cycles also pass. Collider allocation, GPU and physical
+  device observations remain separate. D6 extra unit coverage follows; each preceding
+  increment retains functional checks.
 
 ## Next delivery order
 
-1. **P1 — Finish one coherent regional owner.** Stage terrain and scenery together,
-   validate combined budgets and collision support, then adopt both in one frame.
-   Any failure retains the complete previous region and pauses flight. Integrate
-   the production player lifecycle only after this boundary is verified. This avoids
-   visible buildings, collision or the drone origin disagreeing during streaming.
-2. **P4 — Finish honest recovery feedback in parallel.** Distinguish a failed hash
-   check from a verification that could not finish. Preserve usable old installations
-   during updates, then qualify freshly built corrected packages. Do not recommend
-   deleting a player's usable copy merely because a response timed out.
+1. **P1 — Finish regional Library admission and quiet flight presentation.**
+   Shared physics, collision/support, camera/input, continuous staging and renderer
+   preparation are merged. Publish Download → Fly, reconcile the exact module
+   closure with texture support, and qualify an unchanged package. Keep ready/paused
+   controls compact and prevent delayed navigation from taking over the screen.
+   Preserve preview labelling until representative art passes.
+2. **P4 — Complete package self-containment and broader recovery qualification.**
+   Tri-state readiness and exact corrected-package update/rollback are verified in
+   the bounded browser fixture. Package-local artwork and integrity-rejection
+   recovery are verified. Close actual quota/eviction, browser restart and
+   network-wide offline coverage; qualify the regional host package separately.
+   Preserve usable installations and player records through every scenario.
+   #1275 verifies company closure and 164 course/mode lifecycle cases across two
+   packages. #1278 records exact continuous-host launch; #1286 records successful
+   offline preparation retry after an earlier registration abort, retaining both
+   observations. Cause is unknown and stopped-origin coverage for that candidate
+   remains open. #1281 verifies isolated modeled quota failure, rollback and page
+   reload. Regional storage also passes corrupt-update rejection, retained revisions,
+   rollback, stale-removal rejection and page reload with real authored assets.
 3. **P2 — Compose the representative quality slice in parallel.** Combine authored
    relief and reachable architecture, refine materials and landmarks, and compare
    flight openings across quality tiers. The current Canyon and Urban studies prove
@@ -104,9 +243,10 @@ terrain is deferred. Twelve proposed regions are design targets, not shipped map
    observations precede a complete claim. Additional unit coverage follows the
    agreed functional-first order.
 
-The internal drive remains below the 3 GiB heavy-build floor. Source, unfinished
-work, frozen candidates and player storage are preserved; heavy preparation stays
-on the external volume or cloud. A queued PR does not block independent increments.
+The latest internal free-space observation is 4.5 GiB, above the 3 GiB heavy-build
+floor after earlier sub-floor readings. Stability has not been established; heavy
+preparation stays external/cloud. Source, unfinished work, frozen candidates and
+player storage are preserved. A queued PR does not block independent increments.
 
 Target dimensions: dense regions 4×4 km, natural regions 8×8 km, Desert Expedition
 16×16 km. These targets require verification; they are not present runtime claims.

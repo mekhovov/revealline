@@ -87,6 +87,9 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
 
 test('a Team mission card starts the exact arena with one activation', async (t) => {
   const f = await page(t, options);
+  const actions = f.$('coop-menu').querySelector('.native-menu-actions');
+  assert.equal(f.$('coop-discovery-cancel').parentNode, actions);
+  assert.equal(status(f).parentNode, actions);
   await open(f);
   enter(f, card(f, 'Relay Yard'));
   await prepared(f, 'Relay Yard');
@@ -208,6 +211,8 @@ test('cancelling held preparation keeps the paused attempt and exact picture ava
     },
   });
   pause(f);
+  assert.equal(f.$('coop-discovery-cancel').parentNode, f.$('coop-tools'));
+  assert.equal(status(f).parentNode, f.$('coop-tools'));
   const image = currentImage(f);
   const coverage = f.$('coop-coverage').textContent;
   await open(f, true);
@@ -287,12 +292,12 @@ test('an opened local Team pack stays discoverable after playing a built-in aren
   });
   await f.selectFile(JSON.stringify(pack));
   await open(f);
-  assert.equal(cards(f).length, 16);
+  assert.equal(cards(f).length, 118, '116 current missions and two local routes');
   enter(f, card(f, 'First Connection'));
   await started(f, 'First Connection');
   f.tap('Escape');
   await open(f, true);
-  assert.equal(cards(f).length, 16);
+  assert.equal(cards(f).length, 118, 'Playing a built-in arena retains both local routes');
   enter(f, card(f, 'Local route 2'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));

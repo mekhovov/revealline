@@ -101,6 +101,10 @@ import { libraryMissionId } from '../mission-library/library.mjs';
 import { librarySuccessor, retainedLibraryMission } from '../mission-library/continuous-next.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
+import {
+  duelExpeditionLibrarySources,
+  retainedJourneyFromExpeditions,
+} from '../mission-library/multiplayer-expeditions.mjs';
 import { combineJourneyLibrarySources } from '../mission-library/cross-mode-journey.mjs';
 import {
   journeyMissionDetails,
@@ -3033,7 +3037,9 @@ try {
     const heading = document.createElement('h2');
     heading.id = 'race-library-replace-title';
     dialog.setAttribute('aria-labelledby', heading.id);
-    localizedText(heading, () => title);
+    localizedText(heading, () =>
+      t('interface:couch.openLibrary', { library: typeof title === 'function' ? title() : title }),
+    );
     const copy = document.createElement('p');
     localizedText(copy, () => t('interface:stayKeepsBothPausedBoardsAndThisSeriesReplacePlay'));
     const stay = document.createElement('button'),
@@ -3097,7 +3103,7 @@ try {
       );
       href = destination.href;
     }
-    if (!(await confirmLibraryReplacement(context, `Open ${row.name}?`))) return false;
+    if (!(await confirmLibraryReplacement(context, () => contentText(row, 'name')))) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
     if (confirmInventory && !(await confirmInventory())) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
@@ -3124,7 +3130,8 @@ try {
           String(row.level.revision) === String(selection.levelRevision),
       );
       if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
-      if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
+      if (!(await confirmLibraryReplacement(context, () => contentText(entry.level, 'name'))))
+        return false;
       if (!context.isCurrent()) return false;
       const accepted = await startRace(entry, {
         rulesEdition: selection.rulesEdition,
@@ -3166,9 +3173,10 @@ try {
       // The explicit decision temporarily owns focus; afterwards confirmation
       // receives a new lease so a later toolbar action cannot start this race.
       focus.dispose();
-      const title =
-        missionLibrary.library.find(context.libraryMissionId)?.name || 'selected mission';
-      if (!(await confirmLibraryReplacement(context, `Play ${title}?`))) return false;
+      const title = () =>
+        contentText(missionLibrary.library.find(context.libraryMissionId), 'name') ||
+        t('interface:mission');
+      if (!(await confirmLibraryReplacement(context, title))) return false;
       focus = captureFocus();
       await staged.confirm();
       if (!current()) return false;
@@ -3416,7 +3424,8 @@ try {
           candidate.difficulty === browsingJourneyPreferences.snapshot().difficulty,
       );
     if (!entry) throw new Error('This exact creator mission is unavailable in Versus.');
-    if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`))) return false;
+    if (!(await confirmLibraryReplacement(context, () => contentText(mission, 'name'))))
+      return false;
     if (!context.isCurrent()) return false;
     const accepted = await startRace(entry, {
       libraryStart: context.continuousNext ? null : context,
@@ -3448,11 +3457,13 @@ try {
           optionalCampaignIds: route.optionalCampaignIds,
         });
       const { createCandidateSoloHost } = await import('../content-design/solo-host.mjs');
-      librarySoloPreview = createCandidateSoloHost(route.source, {
-        themes: libraryThemes,
-        corePackIds: route.corePackIds,
-        optionalCampaignIds: route.optionalCampaignIds,
-      });
+      librarySoloPreview = route.source.missions.some((mission) => mission.modes.includes('solo'))
+        ? createCandidateSoloHost(route.source, {
+            themes: libraryThemes,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+          })
+        : null;
       const profile = journeyProfile || createJourneyProfileStore({ profileKey: route.profileKey });
       if (!journeyProfile) await profile.load();
       const { createRemoteTeamLibrarySources } = await import('../mission-library/remote-team.mjs');
@@ -3536,7 +3547,9 @@ try {
                     mission,
                     journeyPreferences.snapshot().difficulty,
                   );
-                  if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
+                  if (
+                    !(await confirmLibraryReplacement(context, () => contentText(mission, 'name')))
+                  )
                     return false;
                   if (!context.isCurrent()) return false;
                   const accepted = await startRace(entry, {
@@ -3554,39 +3567,59 @@ try {
                 },
               }),
             },
-            {
-              mode: 'solo',
-              source: journeyLibrarySource({
-                editionId: route.id,
-                edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
-                catalog: librarySoloPreview.catalog,
-                profile,
-                details: (mission) =>
-                  journeyMissionDetails(
-                    librarySoloPreview
-                      .select(
-                        mission,
-                        (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
-                      )
-                      ?.manifests.find((item) => item.missionId === mission.levelId),
-                  ),
-                tags: (mission) =>
-                  authoredJourneyMissionTags(
-                    mission,
-                    librarySoloPreview
-                      .select(mission, 'standard')
-                      ?.manifests.find((item) => item.missionId === mission.levelId),
-                  ),
-                card: (mission) =>
-                  librarySoloPreview.card(
-                    mission,
-                    (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
-                  ),
-                launch: (_mission, context) => departLibraryMission(context),
-              }),
-            },
+            ...(librarySoloPreview
+              ? [
+                  {
+                    mode: 'solo',
+                    source: journeyLibrarySource({
+                      editionId: route.id,
+                      edition:
+                        route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
+                      catalog: librarySoloPreview.catalog,
+                      profile,
+                      details: (mission) =>
+                        journeyMissionDetails(
+                          librarySoloPreview
+                            .select(
+                              mission,
+                              (journeyPreferences || browsingJourneyPreferences).snapshot()
+                                .difficulty,
+                            )
+                            ?.manifests.find((item) => item.missionId === mission.levelId),
+                        ),
+                      tags: (mission) =>
+                        authoredJourneyMissionTags(
+                          mission,
+                          librarySoloPreview
+                            .select(mission, 'standard')
+                            ?.manifests.find((item) => item.missionId === mission.levelId),
+                        ),
+                      card: (mission) =>
+                        librarySoloPreview.card(
+                          mission,
+                          (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+                        ),
+                      launch: (_mission, context) => departLibraryMission(context),
+                    }),
+                  },
+                ]
+              : []),
           ]),
           ...spatialEditionOwner.sources,
+          ...(await retainedJourneyFromExpeditions({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            difficulty: () =>
+              (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+            launch: departLibraryMission,
+          })),
+          ...duelExpeditionLibrarySources({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            difficulty: () =>
+              (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+            launch: departLibraryMission,
+          }),
           ...teamSources,
         ],
         compatibility: ({ entry, level }) => {
@@ -5049,7 +5082,10 @@ try {
       returnRegion.hidden = !returnCaption || match.status === 'finished';
       huntStatuses[i * 2]?.render(run);
       huntStatuses[i * 2 + 1]?.render(run);
-      localizedText($(`racer-stats-${i}`), () => gameplayStatsLabel(run));
+      localizedText(
+        $(`racer-stats-${i}`),
+        () => `${i + 1}: ${gameplayStatsLabel(run, { showTarget: true })}`,
+      );
       localizedText($(`racer-state-${i}`), () =>
         gameplayStatusLabel(match.status === 'running' ? run.status : match.status),
       );

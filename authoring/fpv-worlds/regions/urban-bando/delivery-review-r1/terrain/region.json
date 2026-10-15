@@ -1,0 +1,247 @@
+{
+  "format": "FPVRegionManifest.v1",
+  "id": "urban-earthworks-study",
+  "revision": "mixed-r1",
+  "title": {
+    "en": "Urban earthworks — mixed geometry study",
+    "uk": "Міські земляні споруди — дослідження змішаної геометрії"
+  },
+  "grid": {
+    "cellSizeMm": 128000,
+    "minX": 0,
+    "minZ": 0,
+    "width": 3,
+    "depth": 3,
+    "floorMm": -1000,
+    "ceilingMm": 80000
+  },
+  "spawns": [
+    {
+      "id": "mill-court",
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 16000
+      }
+    },
+    {
+      "id": "tower-court",
+      "position": {
+        "x": 320000,
+        "y": 3000,
+        "z": 200000
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "urban-0-0-scene",
+      "path": "urban-0-0.glb",
+      "kind": "scene",
+      "bytes": 38404,
+      "sha256": "ef72d57cd102a17c63c8dd390b79a6369666741bc814c93a76830018d50cb82d"
+    },
+    {
+      "id": "urban-0-0-collision",
+      "path": "urban-0-0.json",
+      "kind": "collision",
+      "bytes": 7826,
+      "sha256": "5092461f2f7e5e1404c078b5ed09ecc7846a993f206562d4bcef5d35ad8e01e9"
+    },
+    {
+      "id": "urban-1-0-scene",
+      "path": "urban-1-0.glb",
+      "kind": "scene",
+      "bytes": 38404,
+      "sha256": "7b9ac0bb3725eec3fddb839700feb7270981c5bc11094043148f0e9264e74e13"
+    },
+    {
+      "id": "urban-1-0-collision",
+      "path": "urban-1-0.json",
+      "kind": "collision",
+      "bytes": 7775,
+      "sha256": "184d28f0bc7bd63f2e4661447f79708d158be579c42e90dcde18667d69cf652c"
+    },
+    {
+      "id": "urban-2-0-scene",
+      "path": "urban-2-0.glb",
+      "kind": "scene",
+      "bytes": 38404,
+      "sha256": "346950c01db4ad82e0c5027c6d5344cd07daf2eab8708402661b408797dff4de"
+    },
+    {
+      "id": "urban-2-0-collision",
+      "path": "urban-2-0.json",
+      "kind": "collision",
+      "bytes": 7882,
+      "sha256": "d8f36d38f1d83dd2d84450cd535ffdec892f3a17e035272eda0567b3b1bd8c86"
+    },
+    {
+      "id": "urban-0-1-scene",
+      "path": "urban-0-1.glb",
+      "kind": "scene",
+      "bytes": 38388,
+      "sha256": "c099282cf60bda2cb84e30051e675fd11656e1ac43dec362fde0ebcdf26ccdff"
+    },
+    {
+      "id": "urban-0-1-collision",
+      "path": "urban-0-1.json",
+      "kind": "collision",
+      "bytes": 8088,
+      "sha256": "fac844c2a8946b181af11881607bfdcebf404771db79e5e2330744a3778f7bda"
+    },
+    {
+      "id": "urban-1-1-scene",
+      "path": "urban-1-1.glb",
+      "kind": "scene",
+      "bytes": 38404,
+      "sha256": "fbef12c0f0eacb34d2b2f940fa8783890907ce1b0aa703e5b448cdb745aa8acc"
+    },
+    {
+      "id": "urban-1-1-collision",
+      "path": "urban-1-1.json",
+      "kind": "collision",
+      "bytes": 8021,
+      "sha256": "cdc8276a907dc303e981b5632a3e6c678b68903406694e28538ccc7bee531f84"
+    },
+    {
+      "id": "urban-2-1-scene",
+      "path": "urban-2-1.glb",
+      "kind": "scene",
+      "bytes": 38404,
+      "sha256": "a0261ec550bcf520930edd6f07e93dfcd5b70315bbc7b433fbd1be8ffc28fd64"
+    },
+    {
+      "id": "urban-2-1-collision",
+      "path": "urban-2-1.json",
+      "kind": "collision",
+      "bytes": 8208,
+      "sha256": "10d2c0278113a9aebbae5486d5f5bd7af8ab7072513d9ebb3d7450cee68e49c1"
+    },
+    {
+      "id": "urban-0-2-scene",
+      "path": "urban-0-2.glb",
+      "kind": "scene",
+      "bytes": 38388,
+      "sha256": "3cd9d2c0e3d8e1136da710dc7978a36c61885f1154329f54633959760c0625a4"
+    },
+    {
+      "id": "urban-0-2-collision",
+      "path": "urban-0-2.json",
+      "kind": "collision",
+      "bytes": 7771,
+      "sha256": "c68fc44b0b7c02deadbe69b78b2b582b6b1d12d941c5093c62879819f7ce6636"
+    },
+    {
+      "id": "urban-1-2-scene",
+      "path": "urban-1-2.glb",
+      "kind": "scene",
+      "bytes": 38388,
+      "sha256": "2595e7e01e03c52cc09af06de88674114fc676676b205b897fcb3ed7a8e54731"
+    },
+    {
+      "id": "urban-1-2-collision",
+      "path": "urban-1-2.json",
+      "kind": "collision",
+      "bytes": 7771,
+      "sha256": "2970a55598f8ccdc3fe1d1f93d47424eb6b327d9484c5fbf0d3bc54a516ca00e"
+    },
+    {
+      "id": "urban-2-2-scene",
+      "path": "urban-2-2.glb",
+      "kind": "scene",
+      "bytes": 38388,
+      "sha256": "256f31c06c760eabe7b29495a8720f7531af8a5f62d9da85cd301d6af80d6b99"
+    },
+    {
+      "id": "urban-2-2-collision",
+      "path": "urban-2-2.json",
+      "kind": "collision",
+      "bytes": 7771,
+      "sha256": "03ffee01ab31c6537f4fa38a1cfd084f878b62aebb807b1b02da7a50062eaaba"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "urban-0-0",
+      "x": 0,
+      "z": 0,
+      "assets": [
+        "urban-0-0-scene",
+        "urban-0-0-collision"
+      ]
+    },
+    {
+      "id": "urban-1-0",
+      "x": 1,
+      "z": 0,
+      "assets": [
+        "urban-1-0-scene",
+        "urban-1-0-collision"
+      ]
+    },
+    {
+      "id": "urban-2-0",
+      "x": 2,
+      "z": 0,
+      "assets": [
+        "urban-2-0-scene",
+        "urban-2-0-collision"
+      ]
+    },
+    {
+      "id": "urban-0-1",
+      "x": 0,
+      "z": 1,
+      "assets": [
+        "urban-0-1-scene",
+        "urban-0-1-collision"
+      ]
+    },
+    {
+      "id": "urban-1-1",
+      "x": 1,
+      "z": 1,
+      "assets": [
+        "urban-1-1-scene",
+        "urban-1-1-collision"
+      ]
+    },
+    {
+      "id": "urban-2-1",
+      "x": 2,
+      "z": 1,
+      "assets": [
+        "urban-2-1-scene",
+        "urban-2-1-collision"
+      ]
+    },
+    {
+      "id": "urban-0-2",
+      "x": 0,
+      "z": 2,
+      "assets": [
+        "urban-0-2-scene",
+        "urban-0-2-collision"
+      ]
+    },
+    {
+      "id": "urban-1-2",
+      "x": 1,
+      "z": 2,
+      "assets": [
+        "urban-1-2-scene",
+        "urban-1-2-collision"
+      ]
+    },
+    {
+      "id": "urban-2-2",
+      "x": 2,
+      "z": 2,
+      "assets": [
+        "urban-2-2-scene",
+        "urban-2-2-collision"
+      ]
+    }
+  ]
+}

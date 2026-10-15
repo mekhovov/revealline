@@ -677,6 +677,7 @@ export function mountFlightComfort({
   }
   function refresh() {
     if (disposed) return;
+    if (best) best.root.hidden = comparison.visible?.() === false;
     const uk = locale() === 'uk';
     const enabled = canChange();
     const selected =
@@ -853,13 +854,18 @@ export function mountFlightPractice({
       state.section,
       state.fullPractice,
       state.checkpoint,
+      state.regional,
       state.rate,
     ]);
     if (key !== last) {
       last = key;
-      title.textContent = uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
+      title.textContent = state.regional
+        ? uk ? 'Вільний політ у регіоні' : 'Regional free flight'
+        : uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
       description.textContent = state.title;
-      note.textContent = state.replay
+      note.textContent = state.regional
+        ? uk ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.' : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
+        : state.replay
         ? uk
           ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
           : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
@@ -8930,7 +8936,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: ae95dfe2089b140a16907a10c0f3ebaa8c5f119064851a8b852e329dd4fa62f5
+// Canonical source sha256: 0a1b36e832eec686895fdb10f4b43e32c451c7c1b7469f3bd53cddd6ea7b2705
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9792,6 +9798,10 @@ actions.pause?.();
 open('results');
 return;
 }
+if(state.pauseOpensMenu&&['playing','paused','disarmed'].includes(state.phase)){
+open('pause');
+return;
+}
 if(!['playing','paused'].includes(state.phase))return;
 if(phase==='playing')open('pause');
 else if(phase==='paused'&&state.phase==='paused')activate('resume');
@@ -10067,7 +10077,14 @@ else if(node===extraHomeAction)value=text(homeAction.label);
 else if(node===buttons.start)
 value=COPY[language][state.phase==='paused'?'resume':'start'];
 else if(node===buttons.pause)
-value=COPY[language][state.phase==='paused'?'resume':'pause'];
+value=
+COPY[language][
+state.pauseOpensMenu&&state.phase!=='playing'
+?'menu'
+:state.phase==='paused'
+?'resume'
+:'pause'
+];
 else if(node===buttons.sound||node===buttons['pause-sound'])
 value=`${COPY[language].sound}: ${COPY[language][state.muted?'off':'on']}`;
 else if(node===briefingTitle)value=text(state.missionName)||value;
@@ -10088,6 +10105,7 @@ put(
 buttons.pause,
 'disabled',
 !['playing','paused'].includes(state.phase)&&
+!(state.pauseOpensMenu&&state.phase==='disarmed')&&
 !(state.phase==='results'&&state.transitionActive),
 );
 attribute(buttons.sound,'aria-pressed',String(!state.muted));

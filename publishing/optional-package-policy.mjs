@@ -225,6 +225,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'rotation-table.mjs',
       'model.mjs',
       'flight-sectors.mjs',
+      'flight-contact.mjs',
+      'flight-support.mjs',
       'catalogue.mjs',
       'demonstrations.mjs',
       'attempts.mjs',
@@ -461,6 +463,29 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'vendor/addons/utils/SkeletonUtils.js',
         'vendor/addons/provenance.json',
         'world-app.mjs',
+        // Explicit unscored regional review closure; no catalogue or source assets.
+        'regional-session.mjs',
+        'regional-delivery.mjs',
+        'regional-library.mjs',
+        'regional/flight-prototype.mjs',
+        'regional/frame-transaction.mjs',
+        'regional/indexed-scenery-cell.mjs',
+        'regional/region-manifest.mjs',
+        'regional/region-motion-query.mjs',
+        'regional/scenery-admission.mjs',
+        'regional/scenery-cell.mjs',
+        'regional/indexed-scenery-cell.mjs',
+        'regional/scenery-surface.mjs',
+        'regional/source-window.mjs',
+        'regional/terrain-admission.mjs',
+        'regional/terrain-cell.mjs',
+        'regional/terrain-normals.mjs',
+        'regional/terrain-surface.mjs',
+        'regional/urban-ground-surface.mjs',
+        'regional/verified-flight-geometry.mjs',
+        'regional/verified-mixed-window.mjs',
+        'regional/verified-scenery-window.mjs',
+        'regional/verified-terrain-window.mjs',
         'industrial-environment.mjs',
         // Checked projection of shared reactions plus four canonical presentation utilities.
         // The bounded projection shares common utilities; native pursuit uses the reviewed 128-file / 20 MiB envelope.
@@ -475,6 +500,8 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'content-definitions.mjs',
         'world-catalogue.mjs',
         'world-collision.mjs',
+        'flight-contact.mjs',
+        'flight-support.mjs',
         'world-model.mjs',
         'snake-hunt.mjs',
         'snake-hunt-catalogue.mjs',
@@ -599,9 +626,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         ]),
         limits: Object.freeze({
           ...policy.limits,
-          // Eight exact shared battlefield modules extend each 3D package;
-          // existing byte budgets and the remaining dependency boundary stay fixed.
-          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 136 : policy.limits.files,
+          // Regional review adds 20 exact modules to the reviewed 138-file source closure.
+          // Include launcher/templates; keep the 20 MiB budget and exact dependency boundary.
+          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 159 : policy.limits.files,
           bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([

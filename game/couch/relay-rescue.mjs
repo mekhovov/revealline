@@ -1,3 +1,4 @@
+import { supplementalTeamSources } from '../mission-library/supplemental-hunt.mjs';
 import {
   acceptAttemptAppearance,
   restoreAttemptAppearance,
@@ -86,6 +87,7 @@ import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
 import { resolveJourneyRequest } from '../content-design/default-entry.mjs';
+import { teamExpeditionLibrarySource } from '../mission-library/multiplayer-expeditions.mjs';
 import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
 import { offlineAvailability } from '../offline.mjs';
 import {
@@ -826,7 +828,8 @@ export function bootCoop({
   let knockdowns = [null, null];
   const cueOverflowAttempts = new WeakSet();
   let cueOverflowRun = null,
-    cueOverflowKey = '';
+    cueOverflowKey = '',
+    cueDetailsOwner = null;
   function updateCueOverflow() {
     const active = !loopStopped && !!run && ['running', 'paused'].includes(run.status),
       overflow = active && hasCoopCueOverflow(painter.cueLayout),
@@ -889,20 +892,28 @@ export function bootCoop({
       loopStopped
     )
       return;
-    openSettings();
+    const owner = openSettings({ opener: $('coop-field-details') });
+    if (!owner || !settingsCurrent(owner) || !settingsDialog.open) return;
     settingsPanels?.select('coop-settings-tab-extras', { drill: true });
     $('coop-help').open = true;
     updateCueOverflow();
     controllerConfirmGuard.requireNeutral();
     const region = $('coop-help-reading');
     region.scrollTop = 0;
-    navigation.beginReading({
+    // The reader belongs to Settings. Its local entry stays inside that modal;
+    // the Settings visit owns the return to the original paused field action.
+    cueDetailsOwner = owner;
+    const entered = navigation.beginReading({
       region,
-      origin: $('coop-field-details'),
+      origin: $('coop-help-read'),
       exit: $('coop-help-reading-done'),
       label: t('interface:fieldDetails'),
       getLabel: () => t('interface:fieldDetails'),
     });
+    if (!entered) {
+      cueDetailsOwner = null;
+      return;
+    }
     region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }
   $('coop-field-details').onclick = openCueDetails;
@@ -1202,6 +1213,15 @@ export function bootCoop({
       } else {
         tools.append(help, settings, sound);
       }
+    }
+    // Native landing hides the legacy lobby tools. Admission must keep its
+    // cancel action visible and focusable after the mission chooser closes.
+    const discoveryDestination =
+      !paused && $('coop-menu').classList.contains('native-landing')
+        ? $('coop-menu').querySelector('.native-menu-actions')
+        : tools;
+    for (const id of ['coop-discovery-status', 'coop-discovery-cancel']) {
+      if ($(id).parentNode !== discoveryDestination) discoveryDestination.append($(id));
     }
     // Failed saves are operational recovery, so Pause and Results keep their
     // live actions visible. The lobby gives them a stable home under Data.
@@ -1530,7 +1550,19 @@ export function bootCoop({
         if (hint.textContent !== message) localizedText(hint, () => message);
       } else menuHint = message;
     },
-    onReadingChange: (state) => reading?.changed(state),
+    onReadingChange: (state, { restoreFocus = false, invalidated = false } = {}) => {
+      reading?.changed(state);
+      if (state || !cueDetailsOwner) return;
+      const owner = cueDetailsOwner;
+      cueDetailsOwner = null;
+      if (
+        restoreFocus &&
+        !invalidated &&
+        settingsCurrent(owner) &&
+        [$('coop-help-reading'), $('coop-help-reading-done')].includes(document.activeElement)
+      )
+        closeSettings();
+    },
   });
   reading = attachControllerReading({
     getNavigation: () => navigation,
@@ -1761,9 +1793,8 @@ export function bootCoop({
       void music.start().then(() => contextualReactions?.prepare());
     }
   }
-  function openSettings({ difficulty = false } = {}) {
+  function openSettings({ difficulty = false, opener = $('coop-settings-open') } = {}) {
     cancelNext();
-    const opener = $('coop-settings-open');
     if (
       disposed ||
       departure ||
@@ -1810,6 +1841,7 @@ export function bootCoop({
       if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
         target.focus({ preventScroll: true });
     }
+    return settingsCurrent(owner) && settingsDialog.open ? owner : null;
   }
   function closeSettings({ restore = true } = {}) {
     if (!settingsDialog.open) return;
@@ -2189,7 +2221,13 @@ export function bootCoop({
     const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
     const stronghold = strongholds.find((item) => !item.defeated);
     $('coop-objective').dataset.kind =
-      run.level.hunt?.mode === 'hunt' ? 'hunt' : stronghold ? 'stronghold' : 'coverage';
+      run.level.hunt?.mode === 'hunt'
+        ? 'hunt'
+        : stronghold
+          ? 'stronghold'
+          : run.environment?.relays.length || run.environment?.stages.length
+            ? 'expedition'
+            : 'coverage';
     localizedText($('coop-objective'), () => coopObjectiveLabel(run));
     const finished = run.status === 'won' || run.status === 'lost';
     const groundContext = coopGroundContext(run.level);
@@ -4529,6 +4567,20 @@ export function bootCoop({
   function getTeamLibrary() {
     if (!missionLibrary) {
       missionLibrary = createMissionLibrary();
+      for (const source of supplementalTeamSources({
+        launch: launchRemoteTeamRow,
+        difficulty: libraryDifficulty,
+        activeRouteId: libraryEdition,
+      }))
+        registerTeamSource(source, () => null);
+      if (libraryEdition !== 'team-expedition-v1')
+        registerTeamSource(
+          teamExpeditionLibrarySource({
+            difficulty: libraryDifficulty,
+            launch: launchRemoteTeamRow,
+          }),
+          () => null,
+        );
       if (candidateJourney)
         registerTeamSource(
           teamJourneyLibrarySource({
@@ -4589,7 +4641,8 @@ export function bootCoop({
     return missionLibrary;
   }
   async function includeCurrentTeamJourney() {
-    if (candidateJourney || libraryRemoteJourney) return;
+    if ((candidateJourney && libraryEdition !== 'team-expedition-v1') || libraryRemoteJourney)
+      return;
     libraryRemotePending ??= Promise.all([
       import('../content-design/team-host.mjs'),
       import('../content-design/team-cultural-specialist-v2-originals.mjs'),
@@ -5223,6 +5276,7 @@ export function bootCoop({
     );
     generation++;
     startCoop(run);
+    libraryStatus('');
     beginInstalledTeamAttempt(run, selection, briefing?.restored, {
       // Starting an already prepared core clears its held controls before its
       // save owners exist. Retain that same release in their initial journals.
@@ -5784,6 +5838,8 @@ export function bootCoop({
       actorFamilies: pursuitRoster(run.level).map((actor) => actor.family),
       board: 'team',
       danger:
+        run.environment?.emitters.some((source) => source.phase === 'warning') ||
+        run.environment?.erosion.some((source) => source.warning.length > 0) ||
         run.combatPatrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
         run.combatPatrols?.projectiles.length > 0 ||
         run.players.some((player) => player.status === 'downed') ||
@@ -5904,9 +5960,23 @@ export function bootCoop({
         announce(() => t('interface:team.bothCraftBack', { cause: cause ? `${cause} ` : '' }));
       }
       if (event.type === 'shield.disabled')
-        announce(t('interface:bothAnchorsSecuredNowCaptureTheExposedCoreInA'));
+        announce(
+          t(
+            run.environment
+              ? 'interface:expeditions.pathOpened'
+              : 'interface:bothAnchorsSecuredNowCaptureTheExposedCoreInA',
+          ),
+        );
       if (event.type === 'core.defeated')
-        announce(t('interface:strongholdDefeatedItsEmitterAndTravellingSparksAreGone'));
+        announce(
+          t(
+            run.environment
+              ? 'interface:expeditions.sourceDisabled'
+              : 'interface:strongholdDefeatedItsEmitterAndTravellingSparksAreGone',
+          ),
+        );
+      if (event.type === 'emitter.warning' && run.environment)
+        announce(t('interface:expeditions.warning'));
       if (event.type === 'support.pulse') {
         if (event.interceptedImpacts?.length)
           announce(() => t('interface:team.sparkIntercepted', { player: names()[event.player] }));
@@ -7355,6 +7425,7 @@ try {
   let candidateEntry;
   if (
     [
+      'team-expedition-v1',
       'humanoid-hunt-v1',
       'pursuit-pilots-v1',
       'pursuit-campaigns-v1',
@@ -7372,6 +7443,7 @@ try {
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
+      expedition: journeyRequest === 'team-expedition-v1',
       huntTraining: journeyRequest === 'humanoid-hunt-v1',
       pursuitPilots: journeyRequest === 'pursuit-pilots-v1',
       pursuitCampaigns: journeyRequest === 'pursuit-campaigns-v1',
