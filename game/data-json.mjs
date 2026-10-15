@@ -25,7 +25,7 @@ export const DATA_JSON_DEFAULT_MESSAGES = Object.freeze({
 function t(key, values = {}) {
   const translated = globalThis.RevealLineI18n?.t;
   if (translated) return translated(key, values);
-  const template = DATA_JSON_DEFAULT_MESSAGES[key.slice('errors:dataJson.'.length)];
+  const template = DATA_JSON_DEFAULT_MESSAGES[key.slice(key.indexOf('.') + 1)];
   return template.replace(/\{\{(\w+)\}\}/g, (_, name) => String(values[name] ?? ''));
 }
 

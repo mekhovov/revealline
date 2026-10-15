@@ -74,12 +74,13 @@ class SoakWorker {
     this.worker.postMessage(data);
   }
   terminate() {
-    if (this.stopped) return;
+    if (this.stopped) return this.shutdown;
     this.stopped = true;
     SoakWorker.owners--;
-    const shutdown = this.worker.terminate();
+    const shutdown = (this.shutdown = this.worker.terminate());
     SoakWorker.shutdowns.add(shutdown);
     shutdown.finally(() => SoakWorker.shutdowns.delete(shutdown));
+    return shutdown;
   }
 }
 

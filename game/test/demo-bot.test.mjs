@@ -60,10 +60,10 @@ class ThreadWorker {
     this.worker.postMessage(data);
   }
   terminate() {
-    if (this.stopped) return;
+    if (this.stopped) return this.shutdown;
     this.stopped = true;
     ThreadWorker.owners--;
-    this.worker.terminate();
+    return (this.shutdown = this.worker.terminate());
   }
 }
 
