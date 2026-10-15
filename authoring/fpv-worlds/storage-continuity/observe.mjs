@@ -30,6 +30,15 @@ export async function fingerprintValue(value, ancestors = new Set()) {
   if (ancestors.has(value))
     throw new Error("Cyclic stored value cannot be compared by this observer.");
   const nested = new Set(ancestors).add(value);
+  if (typeof File !== "undefined" && value instanceof File)
+    return [
+      "File",
+      value.name,
+      value.lastModified,
+      value.type,
+      value.size,
+      await hash(await value.arrayBuffer()),
+    ];
   if (value instanceof Blob)
     return [
       "Blob",
@@ -199,7 +208,11 @@ export async function observeStorageContinuity({
       flight: "not-measured",
     },
     databases,
-    sha256: await digest(databases),
+    sha256: await digest({
+      format: STORAGE_CONTINUITY_FORMAT,
+      origin,
+      databases,
+    }),
   };
 }
 
@@ -247,7 +260,15 @@ export async function validateContinuitySnapshot(value) {
       if (store.sha256 !== (await digest(store.rows))) fail();
     }
   }
-  if (value.sha256 !== (await digest(value.databases))) fail();
+  if (
+    value.sha256 !==
+    (await digest({
+      format: value.format,
+      origin: value.origin,
+      databases: value.databases,
+    }))
+  )
+    fail();
   return value;
 }
 

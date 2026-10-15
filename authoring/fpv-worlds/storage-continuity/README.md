@@ -94,9 +94,9 @@ Select the baseline file in the page after reading current storage, or run:
 node authoring/fpv-worlds/storage-continuity/compare.mjs BEFORE.json AFTER.json NEW_COMPARISON.json
 ```
 
-The output must be new; existing evidence is never overwritten. A whole-receipt hash
-validates the stored fingerprints against accidental edits, not provenance or a
-trusted signature. An operator can manufacture JSON; bind actual native actions and
+The output must be new; existing evidence is never overwritten. A content hash binds the format, origin and database fingerprints against accidental
+edits; observation timestamps and scope text are not part of that content hash. It
+does not validate provenance or provide a trusted signature. An operator can manufacture JSON; bind actual native actions and
 file hashes separately. Never infer real restart or offline acceptance from the tool.
 
 The functional verifier uses isolated fake IndexedDB only:
