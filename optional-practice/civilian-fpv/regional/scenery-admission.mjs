@@ -20,6 +20,11 @@ const integerPosition = (position) =>
   ['x', 'y', 'z'].every(
     (axis) => Number.isSafeInteger(position[axis]) && Math.abs(position[axis]) <= 100000000,
   );
+const finitePosition = (position) =>
+  position &&
+  ['x', 'y', 'z'].every(
+    (axis) => Number.isFinite(position[axis]) && Math.abs(position[axis]) <= 100000000,
+  );
 
 function createIndexedTexture(source) {
   const indices = atob(source.indicesBase64),
@@ -267,7 +272,7 @@ export async function prepareSceneryWindow(
     support(positionMm, maxDropMm = 10000) {
       live();
       fail(
-        integerPosition(positionMm) &&
+        finitePosition(positionMm) &&
           Number.isSafeInteger(maxDropMm) &&
           maxDropMm > 0 &&
           maxDropMm <= 4000000,
@@ -290,7 +295,7 @@ export async function prepareSceneryWindow(
     overlap(positionMm, radiusMm = 200) {
       live();
       fail(
-        integerPosition(positionMm) &&
+        finitePosition(positionMm) &&
           Number.isSafeInteger(radiusMm) &&
           radiusMm > 0 &&
           radiusMm <= 2000,
@@ -307,8 +312,8 @@ export async function prepareSceneryWindow(
     sweep(fromMm, toMm, radiusMm = 200) {
       live();
       fail(
-        integerPosition(fromMm) &&
-          integerPosition(toMm) &&
+        finitePosition(fromMm) &&
+          finitePosition(toMm) &&
           Number.isSafeInteger(radiusMm) &&
           radiusMm > 0 &&
           radiusMm <= 2000,

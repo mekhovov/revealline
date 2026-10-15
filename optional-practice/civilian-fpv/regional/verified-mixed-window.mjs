@@ -347,7 +347,7 @@ export function createVerifiedMixedWindow(
           fail(
             p &&
               Object.keys(p).length === 3 &&
-              ["x", "y", "z"].every((axis) => Number.isSafeInteger(p[axis])) &&
+              ["x", "y", "z"].every((axis) => Number.isFinite(p[axis])) &&
               Number.isSafeInteger(radiusMm) &&
               radiusMm > 0 &&
               radiusMm <= 2000,
