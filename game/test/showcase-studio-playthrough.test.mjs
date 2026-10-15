@@ -664,7 +664,11 @@ test(
         authoritativeCheckpoint(expected),
       );
       page.$('skip-celebration').onclick();
-      assert.equal(page.$('game-overlay').hidden, true, 'The earned picture appears before result actions.');
+      assert.equal(
+        page.$('game-overlay').hidden,
+        true,
+        'The earned picture appears before result actions.',
+      );
       assert.equal(page.$('show-result').hidden, false);
       page.$('show-result').click();
       assert.equal(page.$('next-button').disabled, false);
