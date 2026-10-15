@@ -152,6 +152,51 @@ export function regionalPresentationOptions(configuration, quality) {
   };
 }
 
+/** Bound a transfer by inactivity and total elapsed time, without penalizing steady progress. */
+export function regionalOperationDeadline(win, controller, kind) {
+  let received = 0,
+    idleTimer,
+    totalTimer,
+    stopped = false;
+  const stop = () => {
+    stopped = true;
+    win.clearTimeout(idleTimer);
+    win.clearTimeout(totalTimer);
+  };
+  const expire = () => {
+    stop();
+    controller.abort(new DOMException('Regional operation timed out', 'TimeoutError'));
+  };
+  const renew = () => {
+    win.clearTimeout(idleTimer);
+    idleTimer = win.setTimeout(expire, 120000);
+  };
+  renew();
+  if (kind === 'install') totalTimer = win.setTimeout(expire, 600000);
+  return {
+    // Descriptor reads happen twice (inspection, then verified installation).
+    // Their chunk activity is independent of the payload's cumulative byte count.
+    activity(bytes) {
+      if (stopped || controller.signal.aborted || kind !== 'install') return;
+      if (Number.isSafeInteger(bytes) && bytes > 0) renew();
+    },
+    progress(value) {
+      if (stopped || controller.signal.aborted || kind !== 'install') return;
+      // A commit already owns the atomic transaction. It must report its outcome
+      // even if navigation or cancellation arrives while storage is finishing.
+      if (value.phase === 'commit') {
+        stop();
+        return;
+      }
+      if (Number.isSafeInteger(value.loadedBytes) && value.loadedBytes > received) {
+        received = value.loadedBytes;
+        renew();
+      }
+    },
+    stop,
+  };
+}
+
 /** Regional installations stay separate from scored WorldPack courses. */
 export function mountRegionalLibrary({
   el,
@@ -362,7 +407,7 @@ export function mountRegionalLibrary({
     operation = controller;
     if (kind === 'refresh') show('', '');
     paint();
-    const timer = win.setTimeout(() => controller.abort(), 120000);
+    const deadline = regionalOperationDeadline(win, controller, kind);
     let committed = false;
     try {
       const store = await waitFor(dbReady, signal);
@@ -372,7 +417,9 @@ export function mountRegionalLibrary({
         const options = {
           pageURL: win.location.href,
           signal,
+          onActivity: deadline.activity,
           onProgress(value) {
+            deadline.progress(value);
             if (closed || requestEpoch !== epoch) return;
             if (value.phase === 'commit') {
               cancel.disabled = true;
@@ -431,6 +478,11 @@ export function mountRegionalLibrary({
             'Saved changes are retained. Refresh saved regions.',
             'Зміни збережено. Оновіть список регіонів.',
           );
+        else if (signal.reason?.name === 'TimeoutError')
+          show(
+            'This action took too long or stopped making progress. Existing downloads are retained. Please retry.',
+            'Дія тривала надто довго або зупинилася. Наявні завантаження збережено. Повторіть спробу.',
+          );
         else if (signal.aborted)
           show(
             'Cancelled. Existing downloads are retained.',
@@ -443,7 +495,7 @@ export function mountRegionalLibrary({
           );
       }
     } finally {
-      win.clearTimeout(timer);
+      deadline.stop();
       operation = null;
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
