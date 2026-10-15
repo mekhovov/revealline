@@ -34,3 +34,28 @@ canonical/seam checks, bounded production windows and representative commanded
 flight evidence are recorded alongside the source before publication. Source
 coverage alone does not establish sustained device FPS, final art quality,
 continuous traversal of the entire extent or a qualified player release.
+
+## First generated source measurements
+
+The first external preparation contains 1,024 cells and 2,048 source assets,
+47,596,480 bytes including the 431,878-byte manifest (about 45.4 MiB).
+Its manifest SHA-256 is
+`74fbf90c62eafc79e2ba25a4375f5e1d5da5ec25b758da4b3c78cf64c95067d6`.
+Generation checked 1,984 exact shared edges. Heights range from 12 m to
+414.479 m; the greatest adjacent-sample rise/run is 1.760875. The conservative
+nine-cell source sum is 415,521 bytes. These are source measurements, not
+resident GPU measurements or a complete installed-delivery size.
+
+The twelve prescribed centre lines total 12.089 km, sampled every 16 m or less
+for terrain-following checks. The controlled verifier limits requested vertical
+pace to 0.6 m/s on steep segments while preserving the same production flight
+model and 0.75 m vertical tracking tolerance. Its first faster 1.4 m/s control
+schedule exceeded that tracking tolerance; terrain and physics were not changed
+to conceal the result. The legacy mixed-profile texture counter is not present
+in the terrain-only owner; disposal is checked using actual owned geometry and
+the emptied render root.
+
+The independent canonical GLB check uses Khronos glTF Validator
+`2.0.0-dev.3.10` as an external authoring dependency; it is not bundled into the
+player. Complete canonical/source-window and commanded-flight receipts are
+pending at this checkpoint.
