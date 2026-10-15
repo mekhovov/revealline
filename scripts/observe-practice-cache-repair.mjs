@@ -523,6 +523,9 @@ export async function observePracticeCacheRepair({
       });
       await card.waitFor({ state: 'visible' });
       assert.equal(await card.count(), 1, 'Require one identifiable saved world card.');
+      // Layout visibility includes cards below the scroll viewport. Capture the
+      // ordinary scrolled UI as well as the retained DOM identity.
+      await card.scrollIntoViewIfNeeded();
       const id = await card.getAttribute('data-pack-id');
       assert(id && id.length <= 256, 'Saved world card has no bounded project identity.');
       return { id, title: await card.locator('strong').innerText(), text: await card.innerText() };
