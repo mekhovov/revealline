@@ -177,6 +177,38 @@ cases. Setup navigation itself uses keyboard activation. Keep the full output,
 including failed attempts and cleanup errors. Run its tooling regressions with
 `npm run practice:pointer:test`; these are not browser or device qualification.
 
+For repeatable recovery and player-flow observations, see the separate
+[repair protocol and original evidence](flight-practice-repair-2026-10-15.md):
+
+```sh
+npm run practice:observer:test
+node scripts/observe-practice-first-flight.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT_DIRECTORY
+node scripts/observe-practice-cache-repair.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT_DIRECTORY
+```
+
+Use each tool's own retained plan shape, not the pointer plan. Both pin an admitted
+envelope and immutable source. Cache-repair v2 additionally pins all three package
+revisions and requires `seed: "worlds-template-copy"`: it creates one ordinary
+Workshop project and checks its retained records/card through controlled cache
+and worker faults. It alters only its disposable test profile. V1 empty-store
+evidence cannot substitute for that populated case. First-flight v1 checks four
+EN movement/pause/retry flows; it does not certify a completed exercise, the
+main-game entry route, UK, physical controls or human learning.
+
+Keep the complete new output directory, source witnesses, screenshots, failures
+and cleanup result. Never reuse an existing output directory or relabel an older
+candidate receipt. Quota overrides and message tracing are opt-in diagnostics;
+read their stated boundaries and actual outcomes before making readiness claims.
+For the controlled all-three quota subcase, set both
+`OPTIONAL_INSTALLATION_QUOTA_PROBE=1` and
+`OPTIONAL_INSTALLATION_QUOTA_PACKAGES=all` on the installation observer. It uses
+Chromium's origin-wide allowance override, never fills the disk or clears site
+data, and restores it before retry. A reported zero limit is not a reliable
+denial control on the tested Chrome version; retain the v2 positive-headroom
+protocol and require every selected app's completed/reset/retry result. Worlds'
+in-app removal is in Content → World library, while preparation is directly in
+Content. The separate stable launcher also offers scoped removal.
+
 When checking the player guides, follow the runtime menus rather than only the
 static HTML: the shared shell reparents input/offline controls into Settings.
 Compare English and Ukrainian labels after mounting, including Radio setup and
