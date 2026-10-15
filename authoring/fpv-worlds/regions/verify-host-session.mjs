@@ -7,6 +7,7 @@ import {
   regionalLibraryEntry,
   regionalStartingPoint,
   createRegionalSession,
+  regionalPreparationFeedback,
 } from '../../../optional-practice/civilian-fpv/regional-session.mjs';
 
 const root = path.resolve(
@@ -120,4 +121,78 @@ for (const spawn of configuration.manifest.spawns) {
 }
 console.log(
   'PASS regional production session: real mixed assets; both modes; paused launch/retry/cancel; input adapter; disposal; source boundary; authored starting points and invalid-ID rejection',
+);
+
+// A verified source can still fail during rendering. Keep it disarmed and
+// distinguish this from source loss or an invalid saved restore location.
+let graphicsFailure = true;
+const graphicsSession = createRegionalSession({
+  ...configuration,
+  prepareFrame: async () => {
+    if (graphicsFailure) throw new DOMException('Fixture graphics deadline', 'TimeoutError');
+  },
+});
+await assert.rejects(graphicsSession.prepare(), { name: 'TimeoutError' });
+assert.equal(graphicsSession.snapshot().status, 'paused');
+assert.equal(graphicsSession.snapshot().ticks, 0);
+assert.equal(graphicsSession.arm(), false);
+const graphicsFeedback = regionalPreparationFeedback({
+  stage: 'graphics',
+  error: new DOMException('Driver detail', 'TimeoutError'),
+  savedStart: true,
+});
+assert.equal(graphicsFeedback.kind, 'graphics-timeout');
+assert.equal(graphicsFeedback.restoreUnavailable, false);
+assert.match(graphicsFeedback.en, /Performance graphics and Retry/);
+assert.match(graphicsFeedback.uk, /Швидкодія/);
+assert.doesNotMatch(graphicsFeedback.en, /Driver detail|place unavailable|Area unavailable/);
+assert.equal(
+  regionalPreparationFeedback({
+    stage: 'graphics',
+    timedOut: true,
+    error: new DOMException('Generic cancellation', 'AbortError'),
+  }).kind,
+  'graphics-timeout',
+);
+assert.equal(
+  regionalPreparationFeedback({ stage: 'source', timedOut: true }).kind,
+  'source-timeout',
+);
+assert.equal(
+  regionalPreparationFeedback({
+    stage: 'graphics',
+    error: new DOMException('Player cancelled', 'AbortError'),
+  }).kind,
+  'cancelled',
+);
+assert.equal(
+  regionalPreparationFeedback({
+    stage: 'graphics',
+    savedStart: true,
+    error: new Error('Shader link failure'),
+  }).kind,
+  'graphics-failed',
+);
+assert.equal(
+  regionalPreparationFeedback({ savedStart: true, error: new Error('Invalid restore support') })
+    .restoreUnavailable,
+  true,
+);
+assert.equal(
+  regionalPreparationFeedback({ error: new Error('Missing source') }).kind,
+  'source-failed',
+);
+graphicsFailure = false;
+await graphicsSession.prepare();
+assert.equal(graphicsSession.snapshot().reason, 'prepared');
+assert.equal(graphicsSession.snapshot().status, 'paused');
+assert.equal(graphicsSession.snapshot().ticks, 0);
+assert.equal(graphicsSession.arm(), true);
+graphicsSession.pause();
+await graphicsSession.dispose();
+console.log('PASS regional graphics deadline, localized feedback, disarmed retry and disposal');
+
+assert.equal(
+  regionalPreparationFeedback({ contextLost: true, timedOut: true, stage: 'graphics' }).kind,
+  'context-lost',
 );
