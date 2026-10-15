@@ -1,0 +1,151 @@
+{
+  "passed": true,
+  "cameras": [
+    {
+      "name": "Survey shelter",
+      "cameraClearance": 19.644,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        0,
+        256,
+        0,
+        384
+      ]
+    },
+    {
+      "name": "Landing berms",
+      "cameraClearance": 23.094,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        0,
+        384,
+        128,
+        512
+      ]
+    },
+    {
+      "name": "Split block",
+      "cameraClearance": 16.9635,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        128,
+        512,
+        0,
+        384
+      ]
+    },
+    {
+      "name": "Ejecta crescent",
+      "cameraClearance": 26.408,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        256,
+        640,
+        128,
+        512
+      ]
+    },
+    {
+      "name": "Rille elbow",
+      "cameraClearance": 20.2645,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        384,
+        768,
+        0,
+        384
+      ]
+    },
+    {
+      "name": "Survey crossing",
+      "cameraClearance": 32.741,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        512,
+        768,
+        128,
+        512
+      ]
+    },
+    {
+      "name": "Broken rim",
+      "cameraClearance": 13,
+      "minimumClearance": 2.4928224999999955,
+      "samples": 401,
+      "residentBoundsM": [
+        0,
+        384,
+        384,
+        768
+      ]
+    },
+    {
+      "name": "Central mound",
+      "cameraClearance": 10.000500000000002,
+      "minimumClearance": 5.999999999999999,
+      "samples": 401,
+      "residentBoundsM": [
+        0,
+        384,
+        384,
+        768
+      ]
+    },
+    {
+      "name": "Tilted slab",
+      "cameraClearance": 27.9345,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        128,
+        512,
+        384,
+        768
+      ]
+    },
+    {
+      "name": "Fracture fork",
+      "cameraClearance": 10,
+      "minimumClearance": 5.385359999999999,
+      "samples": 401,
+      "residentBoundsM": [
+        256,
+        640,
+        512,
+        768
+      ]
+    },
+    {
+      "name": "Survey dish",
+      "cameraClearance": 23.721500000000002,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        384,
+        768,
+        384,
+        768
+      ]
+    },
+    {
+      "name": "Service gallery",
+      "cameraClearance": 17.759,
+      "minimumClearance": 6,
+      "samples": 401,
+      "residentBoundsM": [
+        512,
+        768,
+        512,
+        768
+      ]
+    }
+  ],
+  "geometryChanged": false,
+  "nativeAccepted": false
+}
