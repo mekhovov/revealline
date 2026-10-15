@@ -77,10 +77,11 @@ test('published regional review modules match the installed FPV source closure',
   const regional = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sharedFiles.filter(
     (name) =>
       name.endsWith('/regional-session.mjs') ||
+      name.endsWith('/regional-locations.mjs') ||
       name.endsWith('/regional-delivery.mjs') ||
       name.includes('/civilian-fpv/regional/'),
   );
-  assert.equal(regional.length, 22, 'the reviewed regional source closure is exact');
+  assert.equal(regional.length, 23, 'the reviewed regional source closure is exact');
   for (const name of regional) {
     assert.ok(config.include.includes(name), `main distribution must include ${name}`);
     assert.ok((await fs.stat(path.join(root, name))).isFile());

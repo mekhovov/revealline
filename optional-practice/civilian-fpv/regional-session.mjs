@@ -2,6 +2,10 @@ import { attitude } from './math.mjs';
 import { quantizeFlightInput } from './model.mjs';
 import { createRegionalFlightPrototype } from './regional/flight-prototype.mjs';
 import { validateRegionManifest } from './regional/region-manifest.mjs';
+import {
+  validateRegionalLocationStart,
+  validateSavedRegionalLocation,
+} from './regional-locations.mjs';
 
 /** Explicit review input. This is not a World.v1 course or a catalogue admission. */
 export async function loadRegionalReview({
@@ -119,7 +123,31 @@ export function regionalStartingPoint(entry, spawnId) {
   const manifest = validateRegionManifest(entry.configuration.manifest);
   if (typeof spawnId !== 'string' || !manifest.spawns.some((spawn) => spawn.id === spawnId))
     throw new TypeError('Unknown regional starting point');
-  return { ...entry, configuration: { ...entry.configuration, manifest, spawnId } };
+  const configuration = { ...entry.configuration };
+  delete configuration.savedStart;
+  return { ...entry, configuration: { ...configuration, manifest, spawnId } };
+}
+
+/** Bookmarks belong to one exact installed descriptor, never a similarly named revision. */
+export function regionalLocationIdentity(entry) {
+  if (
+    !entry?.regional ||
+    entry.regionalReview ||
+    !/^regional-installed:[a-f0-9]{64}$/.test(entry.packIdentity)
+  )
+    throw new TypeError('Installed regional flight is required');
+  const manifest = validateRegionManifest(entry.configuration.manifest);
+  return {
+    regionId: manifest.id,
+    revision: manifest.revision,
+    sha256: entry.packIdentity.slice(19),
+  };
+}
+
+export function regionalSavedLocation(entry, value) {
+  const location = validateSavedRegionalLocation(value, regionalLocationIdentity(entry));
+  const savedStart = validateRegionalLocationStart(location.pose, entry.configuration.manifest);
+  return { ...entry, configuration: { ...entry.configuration, savedStart } };
 }
 
 /** The production host owns input, menus and arming; this adapter owns only regional state. */
