@@ -6,6 +6,17 @@ mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
 
+### Latest repair/player-flow continuation
+
+The [repair report](flight-practice-repair-2026-10-15.md) records the clean rebase
+onto `e51ff517e`, a fresh reproducible/admitted three-app candidate at `50b7612e8`,
+four public-control EN movement/pause/retry cases, 18 repair checkpoints with
+a populated UI-authored World project retained, and 21 all-three controlled
+quota-denial/reset/retry/removal checkpoints. Failed earlier attempts and an
+ineffective zero-quota control stay preserved. Full exercises, broader locale/
+input coverage, distinct-release migration, hardware/human reviews and hosting
+remain open; a functional smoke test is not complete Phase 1 acceptance.
+
 ### Latest pointer/verification continuation
 
 The [pointer continuation](flight-practice-pointer-2026-10-15.md) rebases onto
