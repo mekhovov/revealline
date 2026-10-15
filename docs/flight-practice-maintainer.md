@@ -83,6 +83,46 @@ When SIM is changing concurrently, build from a recorded, merged commit in an is
 
 Complete every existing review gate with real, source-bound evidence: automated validation; content accuracy; assets/licenses; keyboard/controller accessibility; installed isolation; update/rollback; same-device performance; human learning/pacing. Record browser/device, source SHA, package hashes, steps, screenshots, results and limitations. A synthetic fixture’s review is never release evidence.
 
+### Repeat player-flow observations locally
+
+Use `scripts/observe-practice-first-flight.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT`
+with an external Playwright installation and a new evidence directory. Supply any
+approved test access through a protected environment or silent input, never plan
+fields or command arguments. The observer uses the normal access form and does
+not alter application bytes, install demonstrations or inject progress.
+
+The strict plan formats are intentionally separate:
+
+| Plan / protocol                                                                   | What it tests                                                                                        | Package revision field |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------- |
+| `revealline-practice-first-flight-plan.v1` / `practice-first-flight-public-ui.v1` | Legacy four-case EN launch, motion, pause and retry                                                  | Academy                |
+| `revealline-practice-first-flight-plan.v2` / `practice-first-flight-public-ui.v2` | Ten EN/UK cases: Gym plus both FPV modes in Academy and Worlds                                       | Academy                |
+| `revealline-practice-gym-exercise-plan.v1` / `practice-exercise-public-ui.gym.v1` | Two EN/UK native Gym lift-and-land exercises, completion screenshots and actual exported transcripts | Gym                    |
+
+Every plan declares exactly `format`, `protocol`, `caseId`, `deviceLabel`,
+`quietWindow`, `cases`, `bundle`, `envelopeSha256`, `sourceRevision`, `sourceTree`
+and `packageRevision`. Use the candidate's original envelope/source/revision
+values, not a branch name or `latest`. Obtain the exact ordered case IDs from the
+exported protocol constants and validator tests. Unknown fields, partial matrices
+and mismatched package revisions fail admission. All original runtime and source
+archives are admitted even when the exercise protocol stages only Gym.
+
+The Gym observer uses visible measurements and ordinary R/F input, requires
+ordered checkpoints and a native replay-backed completion mark, then exports
+through Settings → Data. It independently replays that actual export with the
+same native catalogue/model and byte-matched dependency closure outside the
+browser. Missing, changed or newly unpinned replay dependencies fail closed. The
+replay must not be used to drive a browser or manufacture an exercise result.
+
+These are automated local development observations, not public release, novice
+learning, physical-input or accessibility approval. They start at stable app
+launchers; they do not replace the full main-game directory journey. Preserve
+failed runs and the exact observer authority, plan, original report, screenshots
+and exported transcript alongside any successful retry. `qualified` remains
+false; a motion smoke pass is not an exercise-completion pass.
+
+### Publish only after the existing review gates pass
+
 ```sh
 node scripts/publish-optional-packages.mjs verify \
   --bundle .cache/practice-candidate --review REVIEW.json
