@@ -72,7 +72,15 @@
       >Frame sample
       <select id="sample-scope">
         <option value="visible">Visible scene (includes menus)</option>
-        <option value="active">Next 30 seconds of foreground play</option>
+        <option value="active">Next foreground play</option>
+      </select>
+    </label>
+    <label
+      >Duration
+      <select id="sample-duration">
+        <option value="30">30 seconds</option>
+        <option value="120">120 seconds</option>
+        <option value="300">300 seconds</option>
       </select>
     </label>
     <button id="sample" type="button" disabled>Observe 30 seconds</button>
@@ -85,17 +93,22 @@
       observations. Navigation and paint entries come from the embedded page. Heap values are
       recorded only when that browser exposes its non-standard performance memory counters; an
       unsupported result is evidence of unavailability, not zero memory use. These observations
-      include the observer's own overhead and are not cross-device benchmarks. The optional
-      30-second sample records animation-frame intervals and browser-reported long tasks, without
-      logging during the sample. Keep this page visible; a hidden page or navigation discards the
-      sample. Active samples arm until the player starts or resumes through the game, then discard
-      on pause, result, focus loss, mission change or navigation. No input is generated. Keyboard
-      counts record only gameplay keys; HUD snapshots describe the observed activity. Canvas and
-      DOM-image pixel estimates are not complete decoded-media or GPU memory measurements. Compare
-      the same scene, viewport, device, browser and input sequence against the selected baseline
-      commit. Frame intervals include browser scheduling and are not CPU render duration. Long tasks
-      are page-wide and cannot identify a reward renderer by themselves. Unsupported browser
-      counters remain unavailable, never a zero result.
+      include the observer's own overhead and are not cross-device benchmarks. The optional 30-,
+      120- or 300-second sample records animation-frame intervals and browser-reported long tasks,
+      without logging during the sample. Keep this page visible; a hidden page or navigation
+      discards the sample. Active samples arm until the player starts or resumes through the game,
+      then discard on pause, result, focus loss, mission change or navigation. No input is
+      generated. Keyboard counts record only gameplay keys; HUD snapshots describe the observed
+      activity. Canvas and DOM-image pixel estimates are not complete decoded-media or GPU memory
+      measurements. Compare the same scene, viewport, device, browser and input sequence against the
+      selected baseline commit. Frame intervals include browser scheduling and are not CPU render
+      duration. Long tasks are page-wide and cannot identify a reward renderer by themselves.
+      Unsupported browser counters remain unavailable, never a zero result. Supported JavaScript
+      heap counters are sampled every five seconds and at the endpoints, with at most 62 readings.
+      Their peak is only the highest observed value; sampling can miss short peaks. Neither a rising
+      endpoint nor this bounded timeline establishes a memory leak, retained-object ownership, or
+      complete decoded-media/GPU usage. Frame storage is capped at 120,000 intervals; exceeding it
+      discards the sample. HUD observations stay bounded at 120 and cover the requested window.
     </p>
     <p id="status" role="status">Ready to observe the current default Journey.</p>
     <details>
