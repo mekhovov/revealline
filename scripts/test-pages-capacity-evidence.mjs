@@ -145,7 +145,7 @@ test('receipt upload survives failure while Pages upload and deploy remain succe
   assert.match(upload, /main-pages-inventory\.json/);
   const pages = workflow
     .split('      - name: Upload the exact Pages artifact\n')[1]
-    .split('\n  deploy:')[0];
+    .split('\n      - name:')[0];
   assert.doesNotMatch(pages, /always\(|continue-on-error|if:/);
   assert.match(workflow, /deploy:\n    needs: build\n/);
   assert.match(workflow, /MAX_PUBLISHED_BYTES: 980000000/);
