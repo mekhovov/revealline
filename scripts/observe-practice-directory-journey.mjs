@@ -317,6 +317,12 @@ export async function openDirectoryPopup(page, link) {
 export function assertDirectoryPageCount(context, expected) {
   assert.equal(context.pages().length, expected, 'Unexpected extra or missing browser tab.');
 }
+export async function openMainGamePractice(page, activate) {
+  await activate(page, '#shell-options');
+  await page.locator('#settings-dialog[open]').waitFor({ state: 'visible' });
+  await activate(page, '#settings-tab-extras');
+  await activate(page, '#shell-home-practice');
+}
 
 async function runJourney(page, spec, fixture, report, output, password) {
   const result = {
@@ -363,7 +369,7 @@ async function runJourney(page, spec, fixture, report, output, password) {
     result.unlocked = true;
     await page.locator('#shell-home[open]').waitFor({ state: 'visible' });
     assert.equal(await page.locator('html').getAttribute('lang'), spec.locale);
-    await click(page, '#shell-home-practice');
+    await openMainGamePractice(page, click);
     const dialog = page.locator('#optional-practice-dialog[open]');
     await dialog.waitFor({ state: 'visible' });
     const rows = dialog.locator('.optional-practice-packages > li');
