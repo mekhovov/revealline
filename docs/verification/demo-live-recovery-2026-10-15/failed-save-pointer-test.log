@@ -1,0 +1,118 @@
+TAP version 13
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 1 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.531583
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 2 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.046959
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 3 - actual idle home entry resets on activity and does not write game data # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06925
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 4 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033583
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 5 - leaving a Journey demo restores exactly one truthful title action without saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037917
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 6 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0295
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 7 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.087
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 8 - controller gameplay action takes over while preserving one hardware read per frame # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031958
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 9 - a single remaining source prepares a new painter on repetition without reusing disposed media # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.474083
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 10 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.132042
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 11 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0495
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 12 - a replay fork completing after blur cannot arm hidden practice or replace its current owner # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041125
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 13 - locked Fresh handoff cancelled by blur remains paused until another explicit choice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0345
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 14 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.082166
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+not ok 15 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 54966.757
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-host.test.mjs:473:1'
+  failureType: 'testCodeFailure'
+  error: 'Failed-save handoff must remain behind the ordinary checked replacement review.{"savedWriteAttempted":false,"demoOpen":true,"freshDisabled":false,"demoStatus":"0% captured · 3 lives · 0s","replaceOpen":false,"confirmDisabled":false,"replacementStatus":"","errors":[]}'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/helpers/wait-for.mjs:15:12)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-host.test.mjs:507:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 16 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.772709
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 17 - demo control hints show the saved keyboard bindings in the actual app # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.190375
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 18 - spectator information and play invitation stay visible while details remain optional # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.056042
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 19 - demo guide respects the shared character-reactions preference without hiding teaching captions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032417
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 18
+# todo 0
+# duration_ms 55517.879542

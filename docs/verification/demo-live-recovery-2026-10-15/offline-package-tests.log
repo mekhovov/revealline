@@ -1,0 +1,203 @@
+TAP version 13
+# Subtest: sparse publication checkouts include the full admitted directory import closure
+ok 1 - sparse publication checkouts include the full admitted directory import closure
+  ---
+  duration_ms: 443.274
+  ...
+# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+not ok 2 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+  ---
+  duration_ms: 12129.567583
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-bundle-optional-practice.mjs:58:1'
+  failureType: 'testCodeFailure'
+  error: 'Complete optional source output exceeds package limits: sample-flight has 97/96 files and 3781990/8388608 bytes.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    createOptionalPackageCandidate (file:///private/tmp/practice-fourth-app-BY8WuI/publishing/optional-package-candidate.mjs:79:11)
+    optionalPackageFixture (file:///private/tmp/practice-fourth-app-BY8WuI/publishing/optional-package-fixture.mjs:20:21)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-bundle-optional-practice.mjs:180:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+not ok 3 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+  ---
+  duration_ms: 5053.964875
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-bundle-optional-practice.mjs:288:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: /Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/bundle-optional-practice.mjs --out .cache/first
+    Complete optional source output exceeds package limits: civilian-flight has 97/96 files and 2717564/8388608 bytes.
+    
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    genericNodeError (node:internal/errors:984:15)
+    wrappedFn (node:internal/errors:538:14)
+    checkExecSyncError (node:child_process:891:11)
+    execFileSync (node:child_process:927:15)
+    run (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-bundle-optional-practice.mjs:324:7)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-bundle-optional-practice.mjs:334:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 4 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 143.369
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 5 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 130.132042
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 6 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 132.335167
+  ...
+# Subtest: actual native menu imports and styles remain in each mode offline closure
+ok 7 - actual native menu imports and styles remain in each mode offline closure
+  ---
+  duration_ms: 192.811458
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 8 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 70.146667
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 9 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 68.724459
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 10 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 100.258875
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 11 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 0.964458
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 12 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.196208
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 13 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 0.405542
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 14 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 0.396666
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 15 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 0.12525
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 16 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 0.12075
+  ...
+# Subtest: Riy operation keeps its dynamic runtime and authored package graph in offline core
+ok 17 - Riy operation keeps its dynamic runtime and authored package graph in offline core
+  ---
+  duration_ms: 50.87575
+  ...
+# Subtest: six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+ok 18 - six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+  ---
+  duration_ms: 56.304791
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 19 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 3739.452959
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 20 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 662.124084
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+not ok 21 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+  ---
+  duration_ms: 1085.7935
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-optional-fpv-package.mjs:215:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    102 !== 101
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 101
+  actual: 102
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-optional-fpv-package.mjs:225:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+not ok 22 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 684.784708
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-optional-fpv-package.mjs:256:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    102 !== 101
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 101
+  actual: 102
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/test-optional-fpv-package.mjs:263:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 23 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 357.042084
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 24 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 491.648166
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 25 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.656291
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 26 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 433.802708
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 27 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 0.592041
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 23
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 27086.998709
