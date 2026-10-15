@@ -77,8 +77,8 @@ const alpineViews = [
   ['Glacial valley', [640, 120, 700], [750, 170, 840], [630, 114, 690]],
   ['Switchback pass', [1700, 272, 665], [1880, 345, 800], [1700, 272, 675]],
   ['Snow saddle', [3000, 434, 800], [3130, 495, 950], [3000, 441, 790]],
-  ['Snow contour overview', [3000, 434, 800], [3400, 1120, 1400], [2944, 500, 896]],
-  ['Scree contour overview', [1700, 272, 665], [2130, 820, 1150], [1664, 330, 640]],
+  ['Snow contour overview', [3400, 575, 3100], [3900, 1260, 3650], [3456, 470, 3200], 2000],
+  ['Scree contour overview', [1700, 272, 665], [2130, 820, 1150], [1664, 330, 640], 2000],
   ['Summit station', [3400, 575, 3100], [3550, 655, 3260], [3400, 576, 3120]],
   ['Viaduct gorge', [2400, 219, 3070], [2530, 285, 3220], [2400, 224, 3070]],
   ['Reservoir dam', [800, 184, 2800], [970, 250, 2970], [800, 184, 2790]],
@@ -124,6 +124,7 @@ async function view(v) {
     scene.add(window.group);
     const origin = result.provenance.originMm;
     const local = (p) => [p[0] - origin.x / 1000, p[1] - origin.y / 1000, p[2] - origin.z / 1000];
+    camera.far = v[4] ?? 1400;
     camera.position.fromArray(local(v[2]));
     camera.lookAt(...local(v[3]));
     lighting.focus(window.group, local(v[3]), v === views[0]);
