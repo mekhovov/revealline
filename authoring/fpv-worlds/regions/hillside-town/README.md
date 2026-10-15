@@ -19,7 +19,13 @@ The Building Kit is modular, not a complete town. Original opaque plaster/wood p
 - Production window replacement and disposal checks verify geometry/texture/source/reservation and collider owners release to zero.
 - Two fresh builds reproduce every generated source/scene/manifest byte.
 
-The region uses 749,520 geometry bytes plus one shared 2,446,676-byte palette allocation. Including terrain and a full retained plus candidate window, the conservative total is **7,305,208 / 8,388,608 bytes**. The closed terrain/scenery asset payload is **8,107,907 bytes**. Existing source, geometry, residency and package budgets are unchanged. No runtime module, Library row or accepted world revision changes.
+The corrected `town-r2` region uses 876,240 geometry bytes plus one shared 2,446,676-byte palette allocation. Including terrain and a full retained plus candidate window, the conservative total is **7,558,648 / 8,388,608 bytes**. The closed terrain/scenery asset payload is **8,344,201 bytes**. Existing source, geometry, residency and package budgets are unchanged. No runtime module, Library row or accepted world revision changes.
+
+## Road correction before native review
+
+The first `town-r1` used horizontal 8 m road boxes sampled at each slab centre. Inspection identified up to 1.5 m floating/buried road edges on the 12 m / 32 m slopes. Its 5 m-high flight routes did not detect this presentation and low-flight defect. The original source and receipts remain preserved; `receipts-r2/original-road-regression.json` demonstrates the old support mismatch and low-pass contacts.
+
+`town-r2` replaces roads and courtyards with closed ribbons whose top and bottom vertices follow the exact 4 m terrain lattice, including ramp breaks and cell boundaries. Every road top is 100 mm above terrain, with the base 20 mm below it; junctions share the same top height. Low-level production checks now sample both slopes and the courtyard edges at 0.5 m intervals in all three quality tiers: 2,994 support queries remain within 0.501 mm of the expected top, and 2,952 swept passes at 0.5 m above the road with 0.25 m radius remain clear. All original 14 commanded routes and eight authored starts still pass, as do solid roof/pad contacts and zero-owner disposal. The same corrected source is rebuilt twice byte-for-byte. Native review remains pending.
 
 ## Reproduce
 
@@ -31,7 +37,7 @@ node authoring/fpv-worlds/regions/hillside-town/verify.mjs NEW_EXTERNAL_DIRECTOR
 node authoring/fpv-worlds/regions/hillside-town/verify-commanded-flight.mjs NEW_EXTERNAL_DIRECTORY
 ```
 
-`verify-commanded-flight.mjs` reuses the established bounded command controller; it selects controlled scenario starts only, then advances real production physics without teleporting the body. Exact manifests and command hashes are in `receipts-r1`.
+`verify-commanded-flight.mjs` reuses the established bounded command controller; it selects controlled scenario starts only, then advances real production physics without teleporting the body. Exact current manifests and command hashes are in `receipts-r2`; `receipts-r1` preserves the earlier source evidence.
 
 ## Remaining gates
 

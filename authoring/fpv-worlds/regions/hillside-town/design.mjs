@@ -31,26 +31,16 @@ for (let row = 0; row < 3; row++)
     }
   }
 export { houses };
-// Original platforms, retaining edges and roads use solid geometry; openings are authored gaps.
+// Original platforms and retaining edges use solid geometry; openings are authored gaps.
 export function architecture() {
   const boxes = [];
   const box = (id, center, size, color) => boxes.push({ id, center, size, color });
   for (let row = 0; row < 3; row++) {
     const z = 64 + row * 128,
       y = row * 12;
-    box(`terrace-${row}-cross-street`, [192, y + 0.04, z], [368, 0.08, 12], [0.37, 0.35, 0.31]);
-    box(`terrace-${row}-courtyard`, [192, y + 0.05, z + 36], [38, 0.1, 30], [0.58, 0.54, 0.44]);
     for (const x of [24, 360])
       box(`retaining-${row}-${x}`, [x, y - 2, z + 40], [3, 4, 48], [0.44, 0.43, 0.39]);
   }
-  for (const x of [128, 256])
-    for (let z = 8; z < 376; z += 8)
-      box(
-        `graded-street-${x}-${z}`,
-        [x, heightMm(x, z) / 1000 + 0.05, z],
-        [12, 0.1, 8],
-        [0.37, 0.35, 0.31],
-      );
   box('elevated-pad', [320, 30, 288], [16, 0.6, 16], [0.68, 0.64, 0.49]);
   for (const x of [313, 327])
     for (const z of [281, 295])
@@ -60,6 +50,32 @@ export function architecture() {
     box(`pad-edge-${x}`, [x, 30.8, 288], [0.3, 1, 16], [0.72, 0.68, 0.54]);
   return boxes;
 }
+// Road tops follow the exact terrain lattice and every slope breakpoint.
+// Uniform 100 mm surfacing avoids steps at intersections and cell boundaries.
+export const roadTopMm = 100;
+export const roads = [
+  ...[0, 1, 2].flatMap((row) => [
+    {
+      id: `terrace-${row}-cross-street`,
+      min: [8, 58 + row * 128],
+      max: [376, 70 + row * 128],
+      color: [0.37, 0.35, 0.31],
+    },
+    {
+      id: `terrace-${row}-courtyard`,
+      min: [173, 85 + row * 128],
+      max: [211, 115 + row * 128],
+      color: [0.58, 0.54, 0.44],
+    },
+  ]),
+  ...[128, 256].map((x) => ({
+    id: `graded-street-${x}`,
+    min: [x - 6, 4],
+    max: [x + 6, 372],
+    color: [0.37, 0.35, 0.31],
+  })),
+];
+
 export const spawns = [
   { id: 'lower-square', position: { x: 128000, y: 3000, z: 64000 } },
   { id: 'middle-courtyard', position: { x: 192000, y: 15000, z: 228000 } },

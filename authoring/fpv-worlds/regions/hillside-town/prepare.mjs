@@ -12,7 +12,17 @@ import {
 } from '../indexed-scenery-cell.mjs';
 import { validateRegionManifest } from '../region-manifest.mjs';
 import { loadBuildingModels } from './indexed-source.mjs';
-import { architecture, placements, routes, spawns, probes, heightMm, sizeM } from './design.mjs';
+import {
+  architecture,
+  placements,
+  routes,
+  spawns,
+  probes,
+  heightMm,
+  sizeM,
+  roads,
+  roadTopMm,
+} from './design.mjs';
 const output = process.argv[2];
 assert(output, 'Provide a new external output directory');
 const json = (value) => Buffer.from(JSON.stringify(value) + '\n');
@@ -70,6 +80,66 @@ for (const box of boxes) {
   }
 }
 for (const cell of cells) cell.surfaces.push(...cell.groups.values());
+// Explicit watertight road ribbons, clipped at cells and sampled on the terrain's
+// 4 m lattice. Bottoms are 20 mm below terrain; tops share one 100 mm offset.
+const lattice = (lo, hi) => [
+  lo,
+  ...Array.from(
+    { length: Math.max(0, Math.ceil(hi / 4) - Math.floor(lo / 4) - 1) },
+    (_, i) => (Math.floor(lo / 4) + i + 1) * 4,
+  ),
+  hi,
+];
+for (const cell of cells)
+  for (const road of roads) {
+    const lo = [Math.max(road.min[0], cell.x * 128), Math.max(road.min[1], cell.z * 128)],
+      hi = [Math.min(road.max[0], (cell.x + 1) * 128), Math.min(road.max[1], (cell.z + 1) * 128)];
+    if (lo[0] >= hi[0] || lo[1] >= hi[1]) continue;
+    const xs = lattice(lo[0], hi[0]),
+      zs = lattice(lo[1], hi[1]),
+      count = xs.length * zs.length;
+    const surface = { id: road.id, color: road.color, positionsMm: [], indices: [] };
+    for (const offset of [roadTopMm, -20])
+      for (const z of zs)
+        for (const x of xs)
+          surface.positionsMm.push(
+            Math.round(x * 1000) - cell.x * 128000,
+            heightMm(x, z) + offset,
+            Math.round(z * 1000) - cell.z * 128000,
+          );
+    for (let z = 0; z < zs.length - 1; z++)
+      for (let x = 0; x < xs.length - 1; x++) {
+        const a = z * xs.length + x,
+          b = a + 1,
+          c = a + xs.length,
+          d = c + 1;
+        surface.indices.push(
+          a,
+          c,
+          b,
+          b,
+          c,
+          d,
+          a + count,
+          b + count,
+          c + count,
+          b + count,
+          d + count,
+          c + count,
+        );
+      }
+    const edge = (a, b) => surface.indices.push(a, b, a + count, b, b + count, a + count);
+    for (let x = 0; x < xs.length - 1; x++) {
+      edge(x, x + 1);
+      edge(count - 1 - x, count - 2 - x);
+    }
+    for (let z = 0; z < zs.length - 1; z++) {
+      edge((z + 1) * xs.length, z * xs.length);
+      edge((z + 1) * xs.length - 1, (z + 2) * xs.length - 1);
+    }
+    cell.surfaces.push(surface);
+  }
+
 for (const item of placements) {
   const { id, asset, x, y, z, scale, yaw } = item,
     model = models.get(asset),
@@ -139,7 +209,7 @@ for (const [kind, sources, compile] of [
   const manifest = {
     format: 'FPVRegionManifest.v1',
     id: 'hillside-town-study',
-    revision: 'town-r1',
+    revision: 'town-r2',
     title: {
       en: 'Hillside Town — terraces and courtyards',
       uk: 'Містечко на схилі — тераси та подвір’я',
@@ -182,6 +252,9 @@ const receipt = {
   sceneryManifestSHA256: hash(json(manifests.scenery)),
   licensedPlacements: placements.length,
   originalArchitecturePieces: boxes.length,
+  terrainConformingRoads: roads.length,
+  roadLatticeM: 4,
+  roadTopMm,
   geometryBytes: resources.geometryBytes,
   textureBytes: resources.textureBytes,
   resourceBytes: resources.resourceBytes,
