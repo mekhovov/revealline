@@ -2,6 +2,14 @@
 
 ## Decision boundary and current baseline
 
+**Later continuation:** [recovery fixes and fresh evidence](flight-practice-recovery-2026-10-15.md)
+rebase on `859d5cfc9`, freeze corrected packages at `89537fe0b`, and record 334
+passing tests plus a new nine-checkpoint all-three browser restart observation.
+Two reproduced readiness problems are corrected; the exact cause of the historical
+uninstrumented timeout remains unproven. The baseline ledger below retains its
+original identities. Distinct-release, full first-flight/first-pointer, device and
+human acceptance cases remain open, and hosting remains deferred.
+
 Hosting/capacity work is **deferred at the user's request**. Public publication
 remains gated by unresolved capacity and qualification requirements, not by an
 assumed separate instruction to defer every release action.
