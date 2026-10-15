@@ -1,6 +1,20 @@
 # FPV Survivals maps and movement — implementation status
 
 
+## 16 October — late-choice pacing correction
+
+The [late-pacing comparison](qualification/overflight/late-pacing-20261016/README.md)
+implements 1,250 / 1,550 salvage for choices nine/ten in new V4 Survival/Riy
+sorties, preserving the first eight and all combat parameters. Six paired active
+configurations improve from 3/6 to 4/6 completions; all twelve earned no-input
+branches lose. The two systems configurations still lose and remain open. The
+new named balance revision preserves exact previous authored identities and
+separate mixed-profile records; content and integration cohorts pass 24/24 each.
+Native review and boss audio evidence are being added separately. Local crowd
+spacing remains experimental; this correction does not mark the full plan complete.
+
+
+
 ## 16 October — local spacing capacity follow-up
 
 The [spacing performance follow-up](qualification/overflight/spacing-performance-20261016/README.md)
