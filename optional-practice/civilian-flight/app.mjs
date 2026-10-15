@@ -898,7 +898,9 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
-      if (!value && context?.root.dataset.modeSurface) return;
+      // Input suspension must not collapse instructions in an open menu or
+      // native dialog and move a control between pointer press and release.
+      if (!value && context) return;
       menuHint.hidden = !context;
       const parent =
         context?.root === playShell.elements.dialogs.settings

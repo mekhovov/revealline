@@ -190,6 +190,82 @@ test('readiness accepts legacy replies but never certifies inconclusive, contrad
   assert.equal(f.values.size, 0, 'Inspection never rewrites installation records');
 });
 
+for (const packageId of ['civilian-flight', 'civilian-fpv', 'fpv-worlds']) {
+  for (const stage of ['initial', 'final']) {
+    test(`${packageId} ${stage} inconclusive preparation preserves previous records until a verified retry`, async () => {
+      const f = fixture(packageId);
+      recordOptionalInstallation({
+        ...f.options,
+        location: { href: f.location.href.replace('/v1.2.3/', '/v1.2.2/') },
+      });
+      f.storage.setItem('practice-records', 'retained personal progress');
+      const before = [...f.values.entries()];
+      if (stage === 'initial') f.activate();
+      const pending = prepareOptionalOffline(f.options);
+      const rejected = assert.rejects(pending, (error) => {
+        assert.match(error.message, /Offline verification could not finish/);
+        assert.match(error.message, /Retry without removing your saved copy/);
+        assert.doesNotMatch(error.message, /Needs repair|files are missing|download again/);
+        return true;
+      });
+      if (stage === 'final') {
+        await waitFor(() => f.messages.includes('practice-progress'));
+        f.activate();
+      }
+      await waitFor(() => f.ports.length === 1);
+      f.ports.shift().postMessage({
+        type: 'practice-status',
+        scope: f.base.href,
+        ready: false,
+        status: 'unknown',
+      });
+      await rejected;
+      assert.deepEqual(
+        [...f.values.entries()],
+        before,
+        'Unknown cannot advance or delete saved installation/records',
+      );
+      assert.equal(f.registrations(), stage === 'initial' ? 0 : 1);
+      assert.equal(f.unregisters(), 0);
+      assert.equal(
+        f.messages.includes('practice-cancel'),
+        false,
+        'Keep the owning worker and downloaded copy',
+      );
+      const retry = prepareOptionalOffline(f.options);
+      await waitFor(() => f.ports.length === 1);
+      f.reply();
+      assert.equal(await retry, true);
+      const installation = JSON.parse(
+        f.storage.getItem(optionalInstallationKey(packageId, f.root)),
+      );
+      assert.equal(installation.active.version, 'v1.2.3');
+      assert.equal(installation.previous.version, 'v1.2.2');
+      assert.equal(f.storage.getItem('practice-records'), 'retained personal progress');
+      assert.equal(
+        f.registrations(),
+        stage === 'initial' ? 0 : 1,
+        'Retry verifies the existing worker instead of replacing it',
+      );
+      assert.equal(f.unregisters(), 0);
+    });
+  }
+}
+
+test('inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure', async () => {
+  const f = fixture();
+  f.navigator.serviceWorker.getRegistration = async () => {
+    throw new Error('Temporary storage service failure');
+  };
+  await assert.rejects(
+    prepareOptionalOffline({ ...f.options, document: { documentElement: { lang: 'uk' } } }),
+    /Не вдалося завершити офлайн-перевірку.*не видаляючи збережену копію/,
+  );
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0);
+});
+
 test('cancelling initial verification never records a late successful installation', async () => {
   const f = fixture(),
     abort = new AbortController();
