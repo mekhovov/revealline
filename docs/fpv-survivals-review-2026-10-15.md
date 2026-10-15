@@ -1,8 +1,14 @@
 # FPV Survivals — delivery review and proposed priorities
 
-15 October 2026. Checked against fetched main `33957174d7`, the current working branch and recorded qualification evidence. This is a decision document; implementation, automated checks and human acceptance are separate states.
+15 October 2026. Latest follow-up rebased onto fetched main `da0b010820`; earlier checkpoints below retain their original source boundaries. This is a decision document; implementation, automated checks and human acceptance are separate states.
 
-## Current-main integration and merge decision
+## Latest implementation follow-up
+
+PR #1319 is merged at `47c3e26e25`. The local checkout safely rebased onto main `da0b010820`, preserving all pushed work. [PR #1344](https://github.com/mekhovov/revealline/pull/1344) fixes overlapping squad/review controls, rotates audible escort feedback without increasing its cadence, and explicitly guards corrective-module offline inclusion. Native desktop/narrow screenshots, a passing local opening frame-time trial, focused checks and fixed-seed build comparisons are recorded in the [follow-up report](qualification/overflight/quality-followup-20261015/README.md).
+
+These are concrete implementation and integration advances, not acceptance of every build, the complete sound mix or medal calibration. Read the report's completion boundaries before using historical evidence as a current pass.
+
+## Earlier integration and merge decision
 
 Main `33957174d7e02609220aeff99f185baae5f7ca34` was merged into this
 follow-up at `68d5523a55434ac609c634e35a5a99e0d01d76c8`. That integration
@@ -39,17 +45,17 @@ Finish the corrective delivery, then prioritize balance/progression and combat r
 | Local performance | Recorded reference, opening, late Riy, controlled Raid and soak passes; fixed atlas accounting and reduced-effects comparison. | Measured on the available M4 Pro. Earlier failures are retained; no Iris Xe or Safari pass is claimed. |
 | Cross-mode reuse | Shared grounds, sounds/reactions and bounded presentation adapters across compatible modes. | A complete visual redesign of Solo/Team/Snake/SIM is not delivered or required by the bounded reuse pass. |
 
-PR1192, PR1215, PR1226 and PR1248 are merged. The latest corrective runtime is committed and saved on GitHub at `60b0c25ab`, but is not in main: final-target navigation; exact salvage shortfall; native upgrade-card sprites; cover-aware Riy firing/chains; audible-local warning selection. These corrections and their native screenshots/test reports are preserved in [draft PR1319](https://github.com/mekhovov/revealline/pull/1319). All task changes are committed and pushed.
+PR1192, PR1215, PR1226, PR1248 and PR1319 are merged. Corrective runtime `60b0c25ab` is now in main: final-target navigation; exact salvage shortfall; native upgrade-card sprites; cover-aware Riy firing/chains; audible-local warning selection. The newer bounded presentation follow-up is tracked in PR1344.
 
 ## Remaining work, in recommended order
 
 ### P0 — Integrate and qualify the corrective follow-up
 
-**Work:** Finish draft PR1319: reconcile it with current main, complete its CI and verify changed flows on the resulting candidate. Include a narrow native performance comparison for escort targeting/card preparation and a cached launch that proves the added HUD module is packaged. Do not repeat every historical long test unless a regression warrants it.
+**Work:** PR1319 integration is complete. Finish the bounded current-source qualification and follow-up PR1344. Include a narrow native performance comparison for escort targeting/card preparation and a cached launch that proves the added HUD module is packaged. Do not repeat every historical long test unless a regression warrants it.
 
 **Why / benefit:** These fixes remove misleading information and wasted escort attacks. The newer shared menu/input/style changes must work with them. One attributable candidate gives reviewers a reliable version to accept.
 
-**If deferred:** Main retains the known defects, and the older performance/offline reports do not establish the behavior of the final combined release.
+**If deferred:** The new presentation fixes remain outside main, and older performance/offline reports do not establish the behavior of the final combined release.
 
 **Done when:** Follow-up is merged, changed-flow checks are green, and the tested commit/settings are recorded. This is release integration, not a new gameplay feature.
 
@@ -122,7 +128,7 @@ PR1192, PR1215, PR1226 and PR1248 are merged. The latest corrective runtime is c
 
 ## Suggested next batch
 
-1. Finish the corrective PR and changed-flow integration.
+1. Complete PR1344 qualification and review; PR1319 has merged.
 2. Review Riy Echo and the three intended build techniques; adjust only evidenced problems.
 3. Polish readability and the complete audio mix on those same runs.
 4. Calibrate replay targets, then choose further cross-mode polish.

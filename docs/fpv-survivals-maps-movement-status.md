@@ -1,5 +1,8 @@
 # FPV Survivals maps and movement — implementation status
 
+Latest 15 October continuation: safely rebased onto main `da0b010820`; PR1319 is merged. PR1344 contains the next control-layout/audio corrections. See [current-source evidence and remaining acceptance](qualification/overflight/quality-followup-20261015/README.md). Historical receipts below retain their own tested commits.
+
+
 **15 October decision review:** See [completed work, remaining items and recommended priorities](fpv-survivals-review-2026-10-15.md). Main was freshly checked at `33957174d7`; the corrective follow-up is published as [draft PR1319](https://github.com/mekhovov/revealline/pull/1319) and is not yet merged.
 
 **Latest continuation:** PR1248 has merged at `c337b5d06`. A subsequent review found and fixed final-target guidance, collected-salvage readouts, native upgrade art, Riy shots blocked by cover, and local warning-audio admission. Runtime `60b0c25ab` passes 121 focused tests; one bounded earned Riy Echo case retains five unattended defeats and its active loss. Main `add8c95a1` is integrated at `895431b744` with a documentation-only merge. See [the follow-up report](qualification/overflight/maps-movement-20261014/CONTINUATION-FIXES.md). Earlier qualification below retains its original sources; it is not automatically qualification of this subsequent targeting correction.
