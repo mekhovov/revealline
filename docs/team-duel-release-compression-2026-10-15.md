@@ -2,7 +2,7 @@
 
 **A lossless complete-payload ZIP can fit the existing 950 MB limit.** The measured projection is **908,988,197 bytes**, leaving **41,011,803 bytes**. Native staging still fails its independent extracted-size limit.
 
-This is a capacity experiment for exact source `90616ad4453a2c31d29ea29e532e6ecefbf459a0`, tree `9e66fa74d7a507b7e919ad130718dc9ce351f82e`. It does not authorize or implement a new archive format. The [earlier release-readiness assessment](team-duel-release-readiness-2026-10-15.md) separately retains the historical working-tree sizing based on `859d5c…`; none of those older descriptors is relabeled as this source.
+This capacity experiment measures exact source `90616ad4453a2c31d29ea29e532e6ecefbf459a0`, tree `9e66fa74d7a507b7e919ad130718dc9ce351f82e`. Its measurement does not implement a new archive format. The subsequent implementation is recorded separately below. The [earlier release-readiness assessment](team-duel-release-readiness-2026-10-15.md) retains the historical working-tree sizing based on `859d5c…`; none of those older descriptors is relabeled as this source.
 
 ## Method and preservation
 
@@ -35,9 +35,17 @@ Both [native source verification](../scripts/native-cli.mjs) and the [desktop re
 
 The open [native capacity issue #865](https://github.com/mekhovov/revealline/issues/865) therefore remains independent of the release ZIP result. A justified native scope/policy decision and real staging/resource verification remain necessary. This experiment supplies no evidence for silently dropping assets or increasing the bound.
 
-## Required next step
+## Container implementation following the experiment
 
-If the measured fit is adopted, review a coordinated **container-format** change before producing a release candidate. The [current writer](../scripts/game-cli.mjs) stores every member. The [frozen artifact inspector](../publishing/utility/inspect_qualified_artifact.py) explicitly requires stored inner members and assumes `manifest.totalBytes <= archive file size`; both assumptions reject a useful compressed container. Replace the latter only with explicit bounded uncompressed-byte accounting, while preserving safe/unique paths, exact member-set equality, lengths, hashes, CRC verification, source binding and original-artifact identity. Exercise malformed compressed streams, declared-size mismatches, duplicate/overlapping entries, excessive inflation and deterministic reproduction. Also qualify each actual distribution consumer that relies on the stored format; a capacity fit is not consumer compatibility.
+The follow-up branch implements the [source-admitted v2 archive contract](distribution-archive.md). Complete builds select the smaller of stored bytes and fixed-parameter raw deflate for each member. Unmarked builds and optional callers retain stored ZIPs. The source config, manifest, build identity and release record carry the explicit format and the existing 1 GiB expanded envelope, including the manifest. The 950 MB archive and 768 MiB native limits remain unchanged.
+
+The frozen inspector binds admission to the exact committed source config and independently checks contiguous ZIP32 headers, paths, member sets, streamed expansion bounds, CRCs and every original hash. The local controller fixture has a bounded compatible reader; its injected controller events remain separate from physical controller evidence. The legacy Pages metadata reader accepts only matching, strictly validated v2 markers; its independent 800 MB contract still rejects the complete payload. It is not a delivery route for this candidate; the active rolling Pages builder is separate.
+
+These implementation checks do not turn the 90616ad44 capacity projection into a produced final-source archive. Final-source sizing, canonical qualification, independent frozen inspection and public consumer acceptance remain required before release.
+
+## Original migration requirements
+
+At experiment source 90616ad44, the writer stored every member, and the frozen inspector required stored inner members with `manifest.totalBytes <= archive file size`. Both assumptions rejected a useful compressed container. The coordinated migration must preserve safe/unique paths, exact member-set equality, lengths, hashes, CRC verification, source binding and original-artifact identity while adding explicit bounded uncompressed-byte accounting. Its negative cases must exercise malformed compressed streams, declared-size mismatches, duplicate/overlapping entries, excessive inflation and deterministic reproduction. Each actual delivery consumer still needs acceptance; a capacity fit is not consumer compatibility.
 
 The earlier source-preservation and required-evidence adapter blockers remain. Compression does not produce the large source archive, change the narrowly admitted source-manifest path, restore required full-suite evidence, or reconcile the actual PR/manual/inspection run topology. Final release admission must still use one reviewed merged source and the canonical independent inspection/evidence workflow.
 
@@ -49,4 +57,4 @@ The exact manifest SHA-256 is `ae2061427709aa0128efc524360bd9bccfadca54b052ba39f
 
 The helper was loaded from ignored cache to keep the measured checkout clean. Its retained script has formatting-only changes, with both hashes recorded in the receipt. Run `node --test scripts/test-measure-release-zip-capacity.mjs` for the five bounded checks. To repeat complete sizing on a future clean source, reuse `inspectDefaultBuildInputs` and `verifyAvailableCommittedSources` before and after one `prepareBuildProject({ root, sourceRevision, publicationProfile: null })`, pass the returned object to `measureReleaseZipCapacity`, reject any source change, and retain only the returned metadata. Do not use `buildProject`, which writes both an archive and expanded site.
 
-The bounded analysis tests cover generated output from normal preparation, byte/member preservation including originals/licenses/external content, mixed stored/deflate selection, UTF-8 ZIP overhead against the current writer, deterministic reordering, empty files, and refusal of corrupt/incomplete/duplicate/unsafe/ZIP64 inputs. No production ZIP reader/writer, workflow, content, capacity policy, tag, release or deployment changed.
+The five bounded analysis tests cover generated output from normal preparation, byte/member preservation including originals/licenses/external content, mixed stored/deflate selection, UTF-8 ZIP overhead against the stored writer, deterministic reordering, empty files, and refusal of corrupt/incomplete/duplicate/unsafe/ZIP64 inputs. This experiment changed no production reader/writer; the subsequent implementation above has its own compatibility and malformed-archive tests. No content, capacity limit, version, tag, release or deployment is changed by that implementation.
