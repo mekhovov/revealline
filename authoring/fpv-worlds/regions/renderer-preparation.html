@@ -59,6 +59,29 @@
       </p>
       <label>Terrain manifest <input id="terrain" value="/region/terrain/region.json" /></label>
       <label>Scenery manifest <input id="scenery" value="/region/scenery/region.json" /></label>
+      <label
+        >Detail
+        <select id="quality">
+          <option value="low">Performance</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">Quality</option>
+        </select></label
+      >
+      <label
+        >View
+        <select id="view">
+          <option value="overview">Overview</option>
+          <option value="fpv">FPV</option>
+          <option value="chase">Chase</option>
+        </select></label
+      >
+      <button id="measure" disabled>Measure 30 seconds</button>
+      <p>
+        Fixed-pose renderer study. Two-second warm-up; visible-tab frame intervals and CPU draw
+        cost, not GPU time or complete gameplay FPS. Keep this tab visible. Changing the view, size
+        or visibility invalidates a sample.
+      </p>
+      <pre id="measurement">No measurement yet.</pre>
       <button id="load">Load verified area</button>
       <button id="stage" disabled>Stage neighbouring area</button>
       <button id="cancel" disabled>Cancel preparation</button>
