@@ -1,0 +1,15 @@
+{
+  "format": "PracticeRebaseInputComparison.v1",
+  "headAtCheck": "87fbda30472297c0f14c2c9de6fe5cf3f2800da1",
+  "main": "a201b3789b21b74340e752108b650633cc73d4c4",
+  "mergedRecoveryPR": 1487,
+  "candidateSource": "50b7612e8d170e2ab377e5eda117898dafc857cf",
+  "candidateEnvelopeSha256": "60a579e6ec9e309841c875014c15143dea49892c2fe5546417e1bf66f3b3a09e",
+  "method": "Read each original source-inventory inputs entry and compare current file SHA-256 to the admitted input pin; no artifact or historical receipt was changed.",
+  "packages": [
+    { "id": "civilian-flight", "inputs": 87, "changed": [] },
+    { "id": "civilian-fpv", "inputs": 94, "changed": [] },
+    { "id": "fpv-worlds", "inputs": 155, "changed": [] }
+  ],
+  "limitations": "Input comparison only. This does not regenerate an artifact or relabel earlier browser acceptance as a new source identity. Observer commit hashes in original reports remain pre-rebase provenance."
+}
