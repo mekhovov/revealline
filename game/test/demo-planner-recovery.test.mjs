@@ -50,6 +50,12 @@ async function ownerEntries(owner) {
 }
 
 const cases = [
+  ['journey', 'signal-gardens', 'neutral-ground', 'immediate'],
+  ['journey', 'signal-gardens', 'neutral-ground', 'grid-center'],
+  ['journey', 'livewire-foundry', 'crossbar-depot', 'immediate'],
+  ['journey', 'livewire-foundry', 'crossbar-depot', 'grid-center'],
+  ['coupa-all', 'coupa-developer-integration', 'coupa-developer-integration-03', 'immediate'],
+  ['coupa-all', 'coupa-developer-integration', 'coupa-developer-integration-03', 'grid-center'],
   ['journey', 'fractured-grid', 'staggered-reserve', 'immediate'],
   ['journey', 'fractured-grid', 'staggered-reserve', 'grid-center'],
   ['journey', 'sentinel-crown', 'first-relay', 'immediate'],
