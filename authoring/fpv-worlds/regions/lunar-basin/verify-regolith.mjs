@@ -75,6 +75,14 @@ for (const start of manifests.terrain.spawns) {
       assert.equal(material.map, null);
       assert.equal(material.displacementMap, null);
     });
+    if (quality !== 'plain') {
+      assert.ok([...materials].some((material) => material.name === `Lunar regolith · ${quality}`));
+      assert.ok([...materials].some((material) => material.name.startsWith('Lunar rock')));
+      for (const material of materials) {
+        assert.ok(material.name.startsWith('Lunar '));
+        shaderOf(material);
+      }
+    }
     const actual = {
       geometry: geometry.digest('hex'),
       bytes: snapshot.geometryBytes,
