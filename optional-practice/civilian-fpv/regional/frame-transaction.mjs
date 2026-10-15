@@ -56,7 +56,7 @@ export function readFramePose(transaction, fallback, planner) {
   )
     throw new TypeError("Invalid live frame support pose");
   planner(point);
-  return { positionMm: { ...point }, radiusMm: value.radiusMm };
+  return { positionMm: { ...point }, radiusMm: value.radiusMm, ...(fallback?.requireClearRestore ? { requireClearRestore: true } : {}) };
 }
 
 export function adoptVerifiedFrame(transaction, candidate, current) {
