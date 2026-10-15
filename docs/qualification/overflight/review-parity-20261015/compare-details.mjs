@@ -1,7 +1,7 @@
 /** Find actor differences in two normal downloaded diagnostic artifacts. */
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
+import { gunzipSync, gzipSync } from 'node:zlib';
 const [leftPath, rightPath, output] = process.argv.slice(2);
 assert.ok(leftPath && rightPath && output && !existsSync(output));
 const read = (path) =>
@@ -47,14 +47,14 @@ for (const row of left.reviewTrace.details) {
     changes,
   });
 }
-writeFileSync(
-  output,
+const serialized =
   JSON.stringify(
     { format: 'OverflightActorDetailComparisonV1', leftPath, rightPath, report },
     null,
     2,
-  ) + '\n',
-);
+  ) + '\n';
+writeFileSync(output, output.endsWith('.gz') ? gzipSync(serialized) : serialized);
+
 console.log(
   JSON.stringify(
     report.map(({ time, actors, changed, changes }) => ({

@@ -8,9 +8,11 @@ locates the first different pilot decision at 272.2 seconds and demonstrates a
 cell-boundary discontinuity in the original crowd separation. An explicitly authored
 **Local spacing · experimental** option now shares native and Studio rules; old
 projects and game defaults retain their original behavior. Results can export fresh
-final diagnostics. The first headless candidate still loses at 323.08 seconds, and
-packed-crowd CPU cost remains material. Movement and Echo balance therefore remain
-open qualification items; the late-threshold hypothesis is still not default tuning.
+final diagnostics. The native candidate completes at 8:55, while the headless candidate loses at
+323.08 seconds. The native timing trial is invalid and its final draft gap is
+156.53 seconds; packed-crowd CPU cost remains material. Movement and Echo balance
+therefore remain open qualification items; the late-threshold hypothesis is still
+not default tuning.
 
 
 15 October 2026. Latest follow-up rebased onto fetched main `859d5cfc9`; earlier checkpoints below retain their original source boundaries. This is a decision document; implementation, automated checks and human acceptance are separate states.
