@@ -9,7 +9,9 @@ vm.runInNewContext(
   await readFile(new URL('../../../game/vendor/i18next-26.4.2.min.js', import.meta.url), 'utf8'),
   { globalThis },
 );
-const { setRegionalSurfaceQuality } = await import('../../../optional-practice/civilian-fpv/renderer.mjs');
+const { setRegionalSurfaceQuality } = await import(
+  '../../../optional-practice/civilian-fpv/renderer.mjs'
+);
 
 function shaderOf(material) {
   const shader = {
