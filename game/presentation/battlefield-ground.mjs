@@ -115,9 +115,33 @@ export function battlefieldGroundAllowed({ environmentPin, presentation, overrid
  * No world collision, RNG, simulation clock or revealed picture is replaced. */
 export function createBattlefieldGroundSurface({
   canvasFactory = () => globalThis.document?.createElement('canvas'),
+  onContextLoss = () => {},
+  onContextRestored = () => {},
 } = {}) {
   let canvas = null,
+    key = '',
+    lost = false;
+  const contextLost = () => {
+    lost = true;
+    onContextLoss({ source: 'battlefield-ground', owner: canvas });
+  };
+  const contextRestored = () => {
+    const owner = canvas;
+    lost = false;
+    clear();
+    onContextRestored({ source: 'battlefield-ground', owner });
+  };
+  function clear() {
+    const owner = canvas,
+      wasLost = lost;
+    canvas = null;
     key = '';
+    lost = false;
+    owner?.removeEventListener?.('contextlost', contextLost);
+    owner?.removeEventListener?.('contextrestored', contextRestored);
+    if (owner) owner.width = owner.height = 0;
+    if (wasLost) onContextRestored({ source: 'battlefield-ground', owner, retired: true });
+  }
   return {
     prepare(world, width, height, allowed = true) {
       if (!allowed || world === 'authored' || !valid(world)) {
@@ -130,6 +154,7 @@ export function createBattlefieldGroundSurface({
         w = Math.max(1, Math.round(width * factor)),
         h = Math.max(1, Math.round(height * factor)),
         next = `${world}:${w}:${h}`;
+      if (lost && next === key) return null;
       if (canvas && next === key) return canvas;
       this.clear();
       canvas = canvasFactory();
@@ -140,6 +165,8 @@ export function createBattlefieldGroundSurface({
       }
       canvas.width = w;
       canvas.height = h;
+      canvas.addEventListener?.('contextlost', contextLost);
+      canvas.addEventListener?.('contextrestored', contextRestored);
       const arena = { width: 2880, height: 1080 },
         source = createOverflightGroundPresentation(world, arena);
       ctx.save();
@@ -149,14 +176,7 @@ export function createBattlefieldGroundSurface({
       key = next;
       return canvas;
     },
-    clear() {
-      if (canvas) {
-        canvas.width = 0;
-        canvas.height = 0;
-      }
-      canvas = null;
-      key = '';
-    },
+    clear,
   };
 }
 

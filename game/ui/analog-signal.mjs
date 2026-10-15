@@ -84,3 +84,89 @@ export function applyAnalogSignalNoise(
   }
   return output;
 }
+
+/** A small prepared monochrome atlas. Animation only composites existing pixels;
+ * it never reads the displayed picture or loops over full-size image pixels. */
+export function createSignalNoiseAtlas({
+  canvasFactory = () => document.createElement('canvas'),
+  onContextLoss = () => {},
+  onContextRestored = () => {},
+} = {}) {
+  let canvas = null,
+    failed = false,
+    lost = false;
+  const contextLost = () => {
+    lost = true;
+    onContextLoss({ source: 'signal-noise', owner: canvas });
+  };
+  const contextRestored = () => {
+    const owner = canvas;
+    lost = false;
+    clear();
+    onContextRestored({ source: 'signal-noise', owner });
+  };
+  const size = 64,
+    frames = 4;
+  function clear() {
+    const wasLost = lost,
+      owner = canvas;
+    lost = false;
+    canvas?.removeEventListener?.('contextlost', contextLost);
+    canvas?.removeEventListener?.('contextrestored', contextRestored);
+    if (canvas) canvas.width = canvas.height = 0;
+    canvas = null;
+    failed = lost = false;
+    if (wasLost) onContextRestored({ source: 'signal-noise', owner, retired: true });
+  }
+  function prepare() {
+    if (lost) return null;
+    if (canvas || failed) return canvas;
+    try {
+      canvas = canvasFactory();
+      canvas.width = size * frames;
+      canvas.height = size;
+      canvas.addEventListener?.('contextlost', contextLost);
+      canvas.addEventListener?.('contextrestored', contextRestored);
+      const ctx = canvas.getContext('2d');
+      const base = new Uint8ClampedArray(size * size * 4).fill(128);
+      for (let i = 3; i < base.length; i += 4) base[i] = 255;
+      const pixels = ctx.createImageData(size, size);
+      for (let frame = 0; frame < frames; frame++) {
+        applyAnalogSignalNoise(base, size, size, frame, pixels.data, { seed: 0x9137bcad });
+        ctx.putImageData(pixels, frame * size, 0);
+      }
+      return canvas;
+    } catch {
+      clear();
+      failed = true;
+      return null;
+    }
+  }
+  return Object.freeze({
+    prepare,
+    clear,
+    draw(ctx, width, height, frame, strength) {
+      const atlas = prepare();
+      if (!atlas || !(strength > 0)) return;
+      ctx.save();
+      try {
+        ctx.globalCompositeOperation = 'soft-light';
+        ctx.globalAlpha *= strength;
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(
+          atlas,
+          (Math.max(0, frame) % frames) * size,
+          0,
+          size,
+          size,
+          0,
+          0,
+          width,
+          height,
+        );
+      } finally {
+        ctx.restore();
+      }
+    },
+  });
+}
