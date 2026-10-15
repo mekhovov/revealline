@@ -14,6 +14,10 @@ import {
   HUD_SETTINGS_PROTOCOL,
   HUD_SETTINGS_CASES,
   readVisibleFlightHUD,
+  FPV_EXERCISE_PROTOCOL,
+  FPV_EXERCISE_PROBE_PROTOCOL,
+  FPV_EXERCISE_CASES,
+  FPV_EXERCISE_PROBE_CASES,
   firstFlightArtifactPackage,
   firstFlightAuthority,
   completeFirstFlightGymExercise,
@@ -110,6 +114,39 @@ test('maintained HUD witness requires visible localized Detailed height rather t
       await assert.rejects(readVisibleFlightHUD(page, locale));
     assert(calls.length > 0);
   }
+});
+
+test('FPV exercise probe and matrix are strict separate protocols with complete replay authority', () => {
+  for (const [format, protocol, cases] of [
+    ['revealline-practice-fpv-exercise-plan.v1', FPV_EXERCISE_PROTOCOL, FPV_EXERCISE_CASES],
+    [
+      'revealline-practice-fpv-exercise-probe-plan.v1',
+      FPV_EXERCISE_PROBE_PROTOCOL,
+      FPV_EXERCISE_PROBE_CASES,
+    ],
+  ]) {
+    const input = { ...plan(), format, protocol: protocol.id, cases: cases.map((row) => row.id) };
+    assert.deepEqual(validateFirstFlightPlan(input), input);
+    assert.equal(firstFlightArtifactPackage(input), 'civilian-fpv');
+    for (const name of [
+      'practice-fpv-exercise-ui.mjs',
+      'practice-fpv-exercise-export.mjs',
+      'practice-fpv-exercise-replay.mjs',
+    ])
+      assert(firstFlightAuthority(input).includes('scripts/' + name));
+    for (const patch of [
+      { cases: [] },
+      { cases: [...input.cases, input.cases[0]] },
+      { script: 'custom' },
+      { protocol: GYM_EXERCISE_PROTOCOL.id },
+    ])
+      assert.throws(() => validateFirstFlightPlan({ ...input, ...patch }));
+    assert.equal(firstFlightProtocol(input).caseMs, 90000);
+    assert.equal(firstFlightProtocol(input).overallMs, 600000);
+  }
+  assert.equal(FPV_EXERCISE_PROBE_CASES.length, 1);
+  assert.equal(FPV_EXERCISE_CASES.length, 8);
+  assert(FPV_EXERCISE_CASES.every((row) => row.exercise === 'flight-01'));
 });
 
 test('public HUD parsing ignores elapsed time for Worlds and includes Gym position', () => {

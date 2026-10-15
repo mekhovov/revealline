@@ -106,6 +106,22 @@ export const HUD_SETTINGS_CASES = Object.freeze(
     Object.freeze({ ...row, id: row.id + '-hud-settings', hudSettings: true }),
   ),
 );
+export const FPV_EXERCISE_PROTOCOL = Object.freeze({
+  ...FIRST_FLIGHT_PROTOCOL,
+  id: 'practice-exercise-public-ui.fpv.v1',
+});
+export const FPV_EXERCISE_PROBE_PROTOCOL = Object.freeze({
+  ...FIRST_FLIGHT_PROTOCOL,
+  id: 'practice-exercise-public-ui.fpv-probe.v1',
+});
+export const FPV_EXERCISE_CASES = Object.freeze(
+  FIRST_FLIGHT_V2_CASES.filter((row) => row.package !== 'civilian-flight').map((row) =>
+    Object.freeze({ ...row, id: row.id + '-lift-and-land', exercise: 'flight-01' }),
+  ),
+);
+export const FPV_EXERCISE_PROBE_CASES = Object.freeze([FPV_EXERCISE_CASES[0]]);
+const fpvExerciseProtocol = (plan) =>
+  [FPV_EXERCISE_PROTOCOL.id, FPV_EXERCISE_PROBE_PROTOCOL.id].includes(plan.protocol);
 export function firstFlightProtocol(plan) {
   assert(
     [
@@ -113,16 +129,23 @@ export function firstFlightProtocol(plan) {
       FIRST_FLIGHT_V2_PROTOCOL.id,
       GYM_EXERCISE_PROTOCOL.id,
       HUD_SETTINGS_PROTOCOL.id,
+      FPV_EXERCISE_PROTOCOL.id,
+      FPV_EXERCISE_PROBE_PROTOCOL.id,
     ].includes(plan.protocol),
     'Unknown first-flight protocol.',
   );
   if (plan.protocol === GYM_EXERCISE_PROTOCOL.id) return GYM_EXERCISE_PROTOCOL;
   if (plan.protocol === HUD_SETTINGS_PROTOCOL.id) return HUD_SETTINGS_PROTOCOL;
+  if (plan.protocol === FPV_EXERCISE_PROTOCOL.id) return FPV_EXERCISE_PROTOCOL;
+  if (plan.protocol === FPV_EXERCISE_PROBE_PROTOCOL.id) return FPV_EXERCISE_PROBE_PROTOCOL;
   return plan.protocol === FIRST_FLIGHT_V2_PROTOCOL.id
     ? FIRST_FLIGHT_V2_PROTOCOL
     : FIRST_FLIGHT_PROTOCOL;
 }
 export function firstFlightCases(plan) {
+  if (firstFlightProtocol(plan).id === FPV_EXERCISE_PROTOCOL.id) return FPV_EXERCISE_CASES;
+  if (firstFlightProtocol(plan).id === FPV_EXERCISE_PROBE_PROTOCOL.id)
+    return FPV_EXERCISE_PROBE_CASES;
   if (firstFlightProtocol(plan).id === HUD_SETTINGS_PROTOCOL.id) return HUD_SETTINGS_CASES;
   if (firstFlightProtocol(plan).id === GYM_EXERCISE_PROTOCOL.id) return GYM_EXERCISE_CASES;
   return firstFlightProtocol(plan).id === FIRST_FLIGHT_V2_PROTOCOL.id
@@ -149,6 +172,13 @@ export function firstFlightAuthority(plan) {
     ...AUTHORITY,
     ...(firstFlightProtocol(plan).id === GYM_EXERCISE_PROTOCOL.id
       ? ['scripts/practice-exercise-ui.mjs', 'scripts/practice-exercise-replay.mjs']
+      : []),
+    ...(fpvExerciseProtocol(plan)
+      ? [
+          'scripts/practice-fpv-exercise-ui.mjs',
+          'scripts/practice-fpv-exercise-export.mjs',
+          'scripts/practice-fpv-exercise-replay.mjs',
+        ]
       : []),
   ];
 }
@@ -182,6 +212,8 @@ export function validateFirstFlightPlan(input) {
     'revealline-practice-first-flight-plan.v2': FIRST_FLIGHT_V2_PROTOCOL.id,
     'revealline-practice-gym-exercise-plan.v1': GYM_EXERCISE_PROTOCOL.id,
     'revealline-practice-hud-settings-plan.v1': HUD_SETTINGS_PROTOCOL.id,
+    'revealline-practice-fpv-exercise-plan.v1': FPV_EXERCISE_PROTOCOL.id,
+    'revealline-practice-fpv-exercise-probe-plan.v1': FPV_EXERCISE_PROBE_PROTOCOL.id,
   };
   assert(Object.hasOwn(formats, plan.format), 'Unsupported observation plan format.');
   assert.equal(plan.protocol, formats[plan.format]);
@@ -572,6 +604,79 @@ export async function observeFirstFlightHUDSettings(page, spec, result, { passwo
   result.passed = result.errors.length === 0;
 }
 
+export async function prepareFPVExerciseHUD(page, spec, result) {
+  assert(FPV_EXERCISE_CASES.some((row) => row.id === spec.id));
+  const prefix = spec.package === 'civilian-fpv' ? 'academy' : 'worlds';
+  await activate(page, `#${spec.shell}-action-settings`, result);
+  await activate(page, `#${prefix}-settings-tab-accessibility`, result);
+  const selector = `#${prefix}-settings-panel-accessibility [data-hud-preference="mode"]`;
+  await page.locator(selector).waitFor({ state: 'visible' });
+  await page.locator(selector).selectOption('detailed');
+  assert.equal(await page.locator(selector).inputValue(), 'detailed');
+  if (spec.package === 'fpv-worlds') {
+    const stick = page.locator('#flight-stick-display');
+    await stick.waitFor({ state: 'visible' });
+    await stick.selectOption('compact');
+    assert.equal(await stick.inputValue(), 'compact');
+  }
+  result.actions.push({
+    selector,
+    action: 'public Accessibility Detailed HUD selection',
+    at: Date.now(),
+  });
+  await returnFirstFlightHome(page, spec, result);
+}
+
+export async function completeFirstFlightFPVExercise(page, spec, result, output, files, signal) {
+  assert(FPV_EXERCISE_CASES.some((row) => row.id === spec.id));
+  assert(files instanceof Map);
+  result.independentReplayVerified = false;
+  const { runPublicFPVExercise } = await import('./practice-fpv-exercise-ui.mjs');
+  await page.locator(spec.viewport).click();
+  result.exercise = await runPublicFPVExercise(page, {
+    packageId: spec.package,
+    mode: spec.mode,
+    locale: spec.locale,
+    signal,
+    onComplete: async () => {
+      const image = await page.screenshot({ timeout: 5000 });
+      const name = spec.id + '-completed.png';
+      await writeFile(path.join(output, name), image, { flag: 'wx' });
+      result.screenshot = pin(name, image);
+    },
+  });
+  assert(
+    result.exercise.nativeCompleted && !result.exercise.error,
+    result.exercise.error ?? 'Native FPV exercise did not complete.',
+  );
+  assert(
+    result.exercise.cleanup.keysReleased && result.exercise.cleanup.errors.length === 0,
+    'Exercise key cleanup failed.',
+  );
+  assert(result.screenshot, 'Native completion capture is required.');
+  const { exportPublicFPVExercise } = await import('./practice-fpv-exercise-export.mjs');
+  const { json, ...metadata } = await exportPublicFPVExercise(page, {
+    packageId: spec.package,
+    locale: spec.locale,
+    signal,
+  });
+  assert(typeof json === 'string' && Buffer.byteLength(json) <= 2 * 1024 * 1024);
+  const bytes = Buffer.from(json),
+    name = spec.id + '-actual-export.json';
+  await writeFile(path.join(output, name), bytes, { flag: 'wx' });
+  result.export = { ...metadata, file: pin(name, bytes), independentReplayVerified: false };
+  const { verifyFrozenFPVExercise } = await import('./practice-fpv-exercise-replay.mjs');
+  result.independentReplay = await verifyFrozenFPVExercise(files, json, {
+    packageId: spec.package,
+    mode: spec.mode,
+  });
+  assert.equal(result.independentReplay.verified, true);
+  assert.equal(result.independentReplay.exportSha256, result.export.file.sha256);
+  result.export.independentReplayVerified = true;
+  result.independentReplayVerified = true;
+  result.passed = result.errors.length === 0;
+}
+
 async function runCase(page, spec, { origin, version, password, result, output, files, signal }) {
   const { launcher, expected, locale } = firstFlightRoute(spec, { origin, version });
   result.launcher = launcher;
@@ -590,9 +695,14 @@ async function runCase(page, spec, { origin, version, password, result, output, 
     await observeFirstFlightHUDSettings(page, spec, result, { password, output });
     return;
   }
+  if (spec.exercise === 'flight-01') await prepareFPVExerciseHUD(page, spec, result);
   await activate(page, `#${spec.shell}-action-primary`, result);
   await waitPhase(page, spec, ['active', 'playing']);
   result.startPhase = await phase(page, spec);
+  if (spec.exercise === 'flight-01') {
+    await completeFirstFlightFPVExercise(page, spec, result, output, files, signal);
+    return;
+  }
   result.initial = await hud(page, spec);
   if (spec.exercise) {
     await completeFirstFlightGymExercise(page, spec, result, output, files, signal);
@@ -680,18 +790,21 @@ export async function observePracticeFirstFlight({
   const protocol = firstFlightProtocol(plan),
     cases = firstFlightCases(plan);
   const exercise = protocol.id === GYM_EXERCISE_PROTOCOL.id;
+  const fpvExercise = fpvExerciseProtocol(plan);
   const hudSettings = protocol.id === HUD_SETTINGS_PROTOCOL.id;
   await mkdir(output);
   const scrub = (value) =>
     password ? String(value).split(password).join('[REDACTED]') : String(value);
   const report = {
-    format: hudSettings
-      ? 'PracticeHUDSettingsObservation.v1'
-      : exercise
-        ? 'PracticeGymExerciseObservation.v1'
-        : protocol.id === FIRST_FLIGHT_PROTOCOL.id
-          ? 'PracticeFirstFlightObservation.v1'
-          : 'PracticeFirstFlightObservation.v2',
+    format: fpvExercise
+      ? 'PracticeFPVExerciseObservation.v1'
+      : hudSettings
+        ? 'PracticeHUDSettingsObservation.v1'
+        : exercise
+          ? 'PracticeGymExerciseObservation.v1'
+          : protocol.id === FIRST_FLIGHT_PROTOCOL.id
+            ? 'PracticeFirstFlightObservation.v1'
+            : 'PracticeFirstFlightObservation.v2',
     plan,
     protocol,
     createdAt: new Date().toISOString(),
@@ -701,27 +814,37 @@ export async function observePracticeFirstFlight({
     cases: [],
     authority: [],
     resourceAcquisitions: [],
-    limitations: hudSettings
+    limitations: fpvExercise
       ? [
-          'Normal EN/UK stable-launcher Settings/Accessibility choices and retained preferences after ordinary reload; four fresh contexts, no seeded preferences or hidden-control activation.',
-          'Only after deliberate Start, observe the maintained visible Detailed HUD at zero height. This is not motion, exercise completion, proof replay, human or accessibility qualification.',
-          'Exact admitted package bytes served locally; declared current.json fixture, not public hosting or installation/offline acceptance.',
+          'Automated native flight-01 exercise through visible maintained Detailed HUD and W/S/Shift keys; DOM course/mode identity metadata is not a visible measurement. Final actual UI export and independent replay bind the course and mode.',
+          'Prototype feedback gains, not physical controller, human learning, rotational Acro proficiency, accessibility or campaign-win qualification.',
+          'Only native completion with no helper error, successful owned-key cleanup, completion screenshot, actual UI backup export and successful exact-package off-browser replay can pass a case. No injected commands, demonstrations or runtime hooks.',
+          'Starts from stable launchers and locally staged admitted bytes/current.json fixtures; no main-game directory, installation/offline or hosting acceptance.',
+          ...(protocol.id === FPV_EXERCISE_PROBE_PROTOCOL.id
+            ? ['Single EN Academy Self-level probe, not the complete eight-case FPV matrix.']
+            : []),
         ]
-      : exercise
+      : hudSettings
         ? [
-            'Automated EN/UK assisted Gym lift-and-land exercise through public HUD feedback and R/F keys; no FPV exercise, physical controller, human learning or campaign-win qualification.',
-            'Native completion/checkmark and actual public transcript export are observed; independentReplayVerified becomes true only after off-browser replay with the complete fixed model/catalogue dependency closure byte-matched to admitted Gym files. This is not human qualification.',
-            'Completion screenshot is captured before Settings/Data transcript export. No recorded-input injection, runtime hook or fabricated completion state.',
-            'Starts from the stable Gym launcher, not the main-game directory. Locally staged admitted bytes and current.json fixture are not public hosting or installation/offline qualification.',
+            'Normal EN/UK stable-launcher Settings/Accessibility choices and retained preferences after ordinary reload; four fresh contexts, no seeded preferences or hidden-control activation.',
+            'Only after deliberate Start, observe the maintained visible Detailed HUD at zero height. This is not motion, exercise completion, proof replay, human or accessibility qualification.',
+            'Exact admitted package bytes served locally; declared current.json fixture, not public hosting or installation/offline acceptance.',
           ]
-        : [
-            `Automated ${protocol.id === FIRST_FLIGHT_PROTOCOL.id ? 'EN' : 'EN/UK'} mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.`,
-            'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
-            'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
-            'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
-            'Motion uses rounded DOM HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
-            'Correction: legacy FPV measurement nodes can be hidden by the maintained HUD. These historical-compatible v1/v2 protocols observe DOM telemetry without verifying its visibility; do not claim visible-FPV-HUD acceptance.',
-          ],
+        : exercise
+          ? [
+              'Automated EN/UK assisted Gym lift-and-land exercise through public HUD feedback and R/F keys; no FPV exercise, physical controller, human learning or campaign-win qualification.',
+              'Native completion/checkmark and actual public transcript export are observed; independentReplayVerified becomes true only after off-browser replay with the complete fixed model/catalogue dependency closure byte-matched to admitted Gym files. This is not human qualification.',
+              'Completion screenshot is captured before Settings/Data transcript export. No recorded-input injection, runtime hook or fabricated completion state.',
+              'Starts from the stable Gym launcher, not the main-game directory. Locally staged admitted bytes and current.json fixture are not public hosting or installation/offline qualification.',
+            ]
+          : [
+              `Automated ${protocol.id === FIRST_FLIGHT_PROTOCOL.id ? 'EN' : 'EN/UK'} mixed keyboard/pointer workflow only; no human learning, completed exercise, verified proof, physical controller, touch or accessibility qualification.`,
+              'Mixed input: public Enter activation, ordinary pointer Pause/viewport clicks and documented Space arming; not a full Tab-navigation or first-pointer test.',
+              'Unchanged admitted package bytes served locally at release-shaped paths; current.json is a declared local selector fixture, not a published release.',
+              'Starts from each stable launcher, not the main-game directory. No installation/offline or public-host claim.',
+              'Motion uses rounded DOM HUD values; paused stability is a 600ms observation, not internal physics instrumentation.',
+              'Correction: legacy FPV measurement nodes can be hidden by the maintained HUD. These historical-compatible v1/v2 protocols observe DOM telemetry without verifying its visibility; do not claim visible-FPV-HUD acceptance.',
+            ],
   };
   let work, served, browser;
   try {
@@ -755,6 +878,7 @@ export async function observePracticeFirstFlight({
       await writeFile(file, bytes, { flag: 'wx' });
     };
     report.staged = [];
+    const runtimeByPackage = new Map();
     for (const id of new Set(cases.map((row) => row.package))) {
       const item = envelope.packages.find((row) => row.id === id);
       assert(item, `Missing ${id}.`);
@@ -763,7 +887,9 @@ export async function observePracticeFirstFlight({
       assert.equal(sha(archive), item.distribution.sha256);
       const base = `revealline/practice/${id}/`,
         version = envelope.version;
-      for (const [name, bytes] of readEditionZip(archive)) {
+      const members = readEditionZip(archive);
+      runtimeByPackage.set(id, members);
+      for (const [name, bytes] of members) {
         const runtimePath = base + `releases/${version}/site/` + name;
         await put(runtimePath, bytes);
         report.staged.push(pin(runtimePath, bytes));
@@ -831,7 +957,7 @@ export async function observePracticeFirstFlight({
           result,
           output,
           signal: controller.signal,
-          files: loaded.files,
+          files: fpvExercise ? runtimeByPackage.get(spec.package) : loaded.files,
         });
         await deadline(pending, Math.min(protocol.caseMs, end - Date.now()), spec.id);
       } catch (error) {
