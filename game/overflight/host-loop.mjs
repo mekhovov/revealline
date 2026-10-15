@@ -480,3 +480,12 @@ export function createOverflightReviewPlayback({
     },
   };
 }
+
+/** An explicit diagnostic-only override; authored play continues using project rules. */
+export function overflightReviewCrowdSeparation(params, { mode, build = null, fixture = null }) {
+  return ['overflight', 'overflight-riy'].includes(mode) &&
+    (build || ['reference', 'stress'].includes(fixture)) &&
+    params.get('reviewCrowd') === 'local'
+    ? 'local-v1'
+    : null;
+}
