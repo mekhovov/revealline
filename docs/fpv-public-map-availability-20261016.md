@@ -1,0 +1,114 @@
+# Public FPV map availability — 16 October 2026 checkpoint
+
+Players can enter [SIM on GitHub Pages](https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs) directly, or use the main game's **More → SIM**. The latter route was actually followed in the public browser. **Pause → Choose** opens the mission catalogue and regional map offers. Library downloads remain optional.
+
+**Completed public launch coverage:** all 14 built-in environments, all 20 downloadable Worldpacks (one course each), and 13 of 23 regional editions covering all 10 authored families. This does not establish completion of every mission, clearance of every start or physical-device performance.
+
+**Remaining public launch coverage:** ten older regional editions. The Alpine refined-contour install failed after thirteen editions had been retained. A source-derived reconstruction exceeds the public regional store's 256 MiB cap by 500,465 bytes. The original native exception was not captured, and low OS disk space is not proven causal. Existing downloads remain intact. The owner explicitly approved raising **only the regional store** to 512 MiB; implementation, exact package/native qualification and public rollout are pending in a separate focused change. Worldpack and core offline limits remain unchanged.
+
+**New independent reliability negative:** after the public Acro tilt demonstration completed, returning to practice and changing mode/input exposed a closing-database error in the HUD. The flight paused with Arm available; warning/error console entries were empty. The exact connection owner and trigger remain unknown. This is preserved as a failure, not hidden by the successful launch samples. See the [native negative receipt](fpv-public-school-storage-negative-20261016.json).
+
+The actual public Acro tilt demonstration reached **Demonstration complete** without the teaching HUD covering its results. All 178 bundled recordings independently complete in the separate software audit: 58 School, 24 Academy and 96 other originals. All 58 School recommended examples are callable. This does not mean all 178 were watched natively; 86 ordinary catalogue entries lack bundled examples (30 Adventure use a separate archive; 56 Hunt/pursuit have no bundled proof).
+
+**Not yet public:** Alpine R6 approach supports are source-only in Draft [#1521](https://github.com/mekhovov/revealline/pull/1521); bounded native source appearance is now accepted; protected source publication, immutable delivery and Library admission remain separate gates. Later authored regions, final representative art, physical controls/devices, recovery/offline/eviction qualification, broader D6 and actual two-hour endurance remain open. All earlier failed elapsed runs remain negative evidence. The direct rolling SIM launch above does not promote the separate empty immutable optional-package selector.
+
+The per-offer table below is frozen at its stated timestamp. Its HTTP integrity, installed state and bounded launch columns are distinct. See the [machine-readable item matrix](fpv-public-map-availability-20261016.json), [public source receipt](fpv-public-source-integrity-20261016.json) and [software recording audit](fpv-public-school-replay-20261016.json).
+
+---
+
+## Frozen per-offer public audit
+
+Captured 2026-10-15T22:52:30.380255+00:00. Public rolling source **`b11745223861c3973ad4bf440cc536198b8e0371`** and both #1528 modules match reviewed bytes exactly. The public UI label fix also passed root normal close/reopen; thirteen regional saves and twenty Worldpacks remained visible/retained.
+
+**23 regional edition offers (13 IDs / 10 authored families), 20 downloadable Worldpacks and 14 built-in environments. These categories and editions overlap; this is not 57 unique landscapes.**
+
+All 23 pinned regional descriptors and 11,492 dependent files matched their expected bytes/hashes in the independent HTTP audit. All 20 Worldpacks matched their pinned bytes and all 41 course definitions passed production validation. Those integrity checks are distinct from playing a course.
+
+## Regional editions
+
+| # | Player-facing offer / edition | Revision / advertised extent | Actual public native status |
+| --- | --- | --- | --- |
+| 0 | [Alpine Highlands — connected mountain study · Station concourse](https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json) | station-r5; 4.096 × 4.096 km | Installed; prepared disarmed; explicit Arm/Pause; Overview, FPV; Glacial valley + Summit station sampled |
+| 1 | [Lunar Basin — flight study · Shelter detail](https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json) | composition-r3; 768 × 768 m | Installed; prepared disarmed; explicit Arm/Pause; FPV |
+| 2 | [Alpine Highlands — connected mountain study · Quieter station surfaces](https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json) | station-r4; 4.096 × 4.096 km | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview (cached launch after b117 reload) |
+| 3 | [Alpine Highlands — connected mountain study · Station surface details](https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json) | station-r3; 4.096 × 4.096 km | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview (cached launch after b117 reload) |
+| 4 | [Lunar Basin — flight study](https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json) | composition-r2; 768 × 768 m | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview (cached launch after b117 reload) |
+| 5 | [Alpine Highlands — connected mountain study · Refined contours](https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json) | review-r2; 4.096 × 4.096 km | Normal install failed in preserved profile; retained-capacity boundary reconstructed. No native flight. |
+| 6 | [Alpine Highlands — connected mountain study · Original study](https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json) | review-r1; 4.096 × 4.096 km | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 7 | [Canal City — bridges and courtyards](https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json) | district-r2; 384 × 384 m | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 8 | [Desert Expedition — rock routes · Rock practice routes](https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json) | landmarks-r1; 16.384 × 16.384 km | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 9 | [Desert Expedition — 16 km relief study · Open desert terrain](https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json) | natural-r1; 16.384 × 16.384 km | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 10 | [Tropical coast — connected harbour · Connected harbour](https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json) | harbour-r3; 768 × 768 m | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 11 | [Railway Valley — six districts](https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json) | review-r1; 4.096 × 4.096 km | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 12 | [Coaster Gardens — connected park study · Connected park routes](https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json) | review-r2; 2.048 × 2.048 km | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 13 | [Coaster Gardens — 2 km study · Original park study](https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json) | review-r1; 2.048 × 2.048 km | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 14 | [Hillside Town — civic court materials · Civic courtyard materials](https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json) | courtyard-r5; 384 × 384 m | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 15 | [Hillside Town — terraces and courtyards · Terraces and courtyards](https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json) | town-r2; 384 × 384 m | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 16 | [Tropical coast — six flight districts · Six coastal districts](https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json) | review-r2; 768 × 768 m | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 17 | [Canyon Expanse — broad relief study](https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json) | relief-r1; 8.192 × 8.192 km | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+| 18 | [Tropical coast — bounded flight study](https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json) | review-r1; 384 × 384 m | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 19 | [Canyon Badlands — six districts](https://raw.githubusercontent.com/mekhovov/revealline/dbfa4cef92866938ce05815ee9beb4830d935647/authoring/fpv-worlds/regions/canyon-badlands/delivery-districts-r1/delivery.json) | districts-r1; 768 × 768 m | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 20 | [Canyon Badlands — regional preview](https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json) | rounded-r1; 384 × 384 m | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 21 | [Railway Valley — regional preview](https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json) | structure-r1; 384 × 384 m | Offered; descriptor and all assets verified by HTTP. Not installed/launched in this review. |
+| 22 | [Urban earthworks — regional preview](https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json) | review-r2; 384 × 384 m | Installed; prepared disarmed; explicit Arm/Pause; FPV, Chase, Overview |
+
+**Regional result: 13/23 bounded native launches; 10 editions uninstalled/unflown in this review**, including the preserved Alpine review-r2 installation negative. All remain offered and HTTP-valid. Do not extrapolate current-profile refusal to an individually broken map.
+
+The retained-capacity reconstruction is **247,085,009 + 21,850,912 = 268,935,921 bytes**, exceeding the existing **268,435,456-byte (256 MiB)** limit by **500,465 bytes**. The exact native thrown cause was not captured. No budget was raised and no saved content was removed. Installing every edition simultaneously would exceed the existing retained budget.
+
+Regional scenery remains early unscored study/preview content. Camera and short-launch observations do not establish every starting point, complete map clearance, route quality or final representative art.
+
+## Downloadable Worldpacks
+
+| Worldpack | Revision / course definitions | Actual public native status |
+| --- | --- | --- |
+| [Mountain Reservoir](https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack) | r16; 8 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV; one launch sampled, not all 8 courses |
+| [Festival Grounds](https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack) | r5; 8 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV; one launch sampled, not all 8 courses |
+| [Harbor Docks](https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack) | r4; 8 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV; one launch sampled, not all 8 courses |
+| [Castle Courtyard](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-castle-court/cc0-castle-court.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [City Plaza](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-city-plaza/cc0-city-plaza.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [House Construction Site](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-construction-site/cc0-construction-site.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Frontier Camp](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-frontier-camp/cc0-frontier-camp.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Industrial Service Yard](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-industrial-yard/cc0-industrial-yard.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Orbital Workshop](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-orbital-workshop/cc0-orbital-workshop.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Pine Clearing](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-pine-clearing/cc0-pine-clearing.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Platform Garden](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-platform-garden/cc0-platform-garden.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Race Paddock](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-race-paddock/cc0-race-paddock.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Roadworks Practice Park](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-road-lab/cc0-road-lab.r1.rlpack) | r1; 1 | Normal download; Paused/disarmed preparation; explicit Arm/Pause; FPV |
+| [Rock Grotto](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-rock-grotto/cc0-rock-grotto.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Ruined Halls](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-ruined-halls/cc0-ruined-halls.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Dry-dock Shipyard](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-shipyard/cc0-shipyard.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Skate Plaza](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-skate-plaza/cc0-skate-plaza.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Village Green](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-village-green/cc0-village-green.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Woodland Camp](https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-woodland-camp/cc0-woodland-camp.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+| [Coaster Practice Park](https://raw.githubusercontent.com/mekhovov/revealline/f1b6373996a53c84bca77b485e73630ffe6b00c7/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-coaster-park/cc0-coaster-park.r1.rlpack) | r1; 1 | Normal download; Ready/disarmed preparation; explicit Arm/Pause; FPV |
+
+All 20 Worldpacks received bounded public launch checks. All 41 course definitions validated; no claim that all challenges were individually flown or completed. Roadworks was actually prepared **Paused/disarmed**, not Ready.
+
+## Built-in environments
+
+| Environment | Actual public native status |
+| --- | --- |
+| Coastal airfield / Прибережний аеродром (`coast`) | Selected map launched active FPV; Pause worked |
+| Amber quarry / Бурштиновий кар’єр (`quarry`) | Selected map launched active FPV; Pause worked |
+| Skyline campus / Кампус на дахах (`rooftops`) | Selected map launched active FPV; Pause worked |
+| Harvest orchard / Осінній сад (`orchard`) | Selected map launched active FPV; Pause worked |
+| Solar research park / Сонячний дослідний парк (`solar-farm`) | Selected map launched active FPV; Pause worked |
+| Railworks / Залізничне депо (`rail-depot`) | Selected map launched active FPV; Pause worked |
+| Training hangar / Навчальний ангар (`gym`) | Selected map launched active FPV; Pause worked |
+| Open meadow / Відкрита лука (`field`) | Selected map launched active FPV; Pause worked |
+| Woodland park / Лісопарк (`woodland`) | Selected map launched active FPV; Pause worked |
+| Ukrainian courtyard / Українське подвір’я (`courtyard`) | Selected map launched active FPV; Pause worked |
+| Pixel warehouse / Піксельний склад (`warehouse`) | Selected map launched active FPV; Pause worked |
+| Circuit stadium / Гоночний стадіон (`stadium`) | Selected map launched active FPV; Pause worked |
+| Container yard / Контейнерний двір (`container-yard`) | Selected map launched active FPV; Pause worked |
+| Parking garage / Паркінг (`garage`) | Selected map launched active FPV; Pause worked |
+
+All 14 built-in environments received bounded public launch/pause checks. Selection in this path starts flight directly; these checks do not establish an initial disarmed/Ready state or physical-controller behavior.
+
+## Scope and remaining gates
+
+- Existing public launch samples before the b117 reload remain identified separately from the three cached edition launches afterward. Their immutable scenery pins are unchanged by #1528.
+- Complete native installation/flight coverage of the ten remaining regional editions needs a separate data-preserving qualification plan; no silent deletion or budget increase.
+- Every start, every challenge, physical devices/controllers, full-network offline/app restart, elapsed endurance, final art and separate immutable optional promotion remain open.
+- Exact public module/marker receipt and the full EN/UK per-offer IDs, immutable URLs/hashes and evidence hashes are in the companion JSON. Root owns all browser observations; this synthesis opens no browser or player store.
