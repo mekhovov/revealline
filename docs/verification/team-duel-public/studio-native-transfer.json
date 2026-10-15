@@ -1,0 +1,61 @@
+{
+  "source": "90616ad4453a2c31d29ea29e532e6ecefbf459a0",
+  "transport": "native Studio upload, stage, Undo/Redo, save and browser download",
+  "documentRevision": 105,
+  "bundleBytes": 8745057,
+  "bundleSHA256": "9bed2b093e745e9268b9b4760d2f5ab652b5b5f357618a4db7493d7dec211787",
+  "captureAsset": {
+    "description": "capture audio cue",
+    "file": {
+      "bytes": 5864,
+      "height": null,
+      "mime": "audio/wav",
+      "sha256": "52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1",
+      "width": null
+    },
+    "format": "revealline-asset-revision.v1",
+    "geometry": null,
+    "id": "audio.capture.custom",
+    "kind": "audio",
+    "provenance": {
+      "creator": "Kenney / RevealLine",
+      "license": "CC0-1.0; existing project sound credits. Local transfer verification.",
+      "parent": null,
+      "prompt": "",
+      "source": "game/audio/effects/confirm.wav; retained project original"
+    },
+    "quality": {
+      "evidence": [],
+      "stage": "produced"
+    },
+    "recipe": null,
+    "revision": 1
+  },
+  "originalBytes": 5864,
+  "originalSHA256": "52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1",
+  "exactOriginal": true,
+  "limits": [
+    "Local source UI; no public adoption",
+    "Artifact comparison verifies hashes/metadata; image decoding disabled in the Node reader",
+    "No listening or gameplay audition inferred"
+  ],
+  "independentRestore": {
+    "fromOrigin": "http://127.0.0.1:8791",
+    "toOrigin": "http://127.0.0.1:8792",
+    "nativeSteps": [
+      "baseline r104/local save 1",
+      "normal file chooser import stages r105/local save 1 without adoption",
+      "explicit Save",
+      "full page reload reports saved r105/local save 2",
+      "native export"
+    ],
+    "documentRevision": 105,
+    "bundleBytes": 8779210,
+    "bundleSHA256": "55c4bd86994d26d5494f805733144c6f5795531496ddad1484b22ad59bcb88b5",
+    "captureOriginalId": "audio.capture.custom",
+    "captureImportedId": "import-105-2686",
+    "captureRetainedExceptImportNamespace": true,
+    "allIncomingOriginalsByteIdentical": 133,
+    "retainedOriginals": 133
+  }
+}
