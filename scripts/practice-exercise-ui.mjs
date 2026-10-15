@@ -132,6 +132,13 @@ export function describeGymTranscript(json) {
 }
 
 export async function exportGymExerciseTranscript(page, operation = (run) => run()) {
+  // The native result scene hides Settings. Its Home action preserves the
+  // recorded attempt and cancels automatic advancement without resetting it.
+  const home = page.locator('.continuous-result-actions').getByRole('button', {
+    name: /^(?:Home|Додому)$/,
+  });
+  await operation(() => home.waitFor({ state: 'visible' }));
+  await operation(() => home.press('Enter'));
   for (const selector of ['#gym-shell-action-settings', '#gym-settings-tab-data']) {
     await operation(() => page.locator(selector).waitFor({ state: 'visible' }));
     await operation(() => page.locator(selector).press('Enter'));

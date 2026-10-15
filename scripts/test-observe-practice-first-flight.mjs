@@ -248,10 +248,18 @@ test('Gym exercise integration captures completion before export, exclusively sa
         press: async () => events.push(selector),
         inputValue: async () => json,
         locator: () => ({ getAttribute: async () => '' }),
+        getByRole: (role, { name }) => {
+          assert.equal(selector, '.continuous-result-actions');
+          assert.equal(role, 'button');
+          assert(name.test('Home'));
+          return { waitFor: async () => {}, press: async () => events.push('results Home') };
+        },
       }),
     };
     await completeFirstFlightGymExercise(page, spec, result, work, files);
     assert.equal(events[0], 'focus arena');
+    assert(events.indexOf('screenshot') < events.indexOf('results Home'));
+    assert(events.indexOf('results Home') < events.indexOf('#gym-shell-action-settings'));
     assert(events.indexOf('screenshot') < events.indexOf('#export-trace'));
     assert.equal(result.passed, true);
     assert.equal(result.independentReplayVerified, true);
@@ -375,11 +383,18 @@ test('v2 selects both FPV modes through visible Gameplay and closes the actual S
       locator: (target) => ({
         waitFor: async () => {},
         isVisible: async () => true,
-        getAttribute: async () => (target.endsWith('-settings-dialog') ? (open ? '' : null) : ''),
+        getAttribute: async () => {
+          if (spec.package === 'fpv-worlds' && target.endsWith('-settings-dialog')) return null;
+          return target === '#sim-settings' || target.endsWith('-settings-dialog')
+            ? open
+              ? ''
+              : null
+            : '';
+        },
         press: async () => {
           calls.push(target);
           if (target.endsWith('-action-settings')) open = true;
-          if (target.endsWith('-settings-back')) open = false;
+          if (target.endsWith('-settings-back') || target === '#close-sim-settings') open = false;
         },
         selectOption: async (value) => {
           assert.equal(target, selector);
@@ -393,6 +408,44 @@ test('v2 selects both FPV modes through visible Gameplay and closes the actual S
     assert.equal(mode, spec.mode);
     assert.equal(open, false);
     assert(calls.some((c) => c.endsWith('-settings-tab-gameplay')));
+  }
+});
+
+test('Worlds v2 closes the real custom modal before accepting the already-open background Home', async () => {
+  for (const required of [1, 2]) {
+    let presses = 0;
+    const result = { actions: [] };
+    const page = {
+      waitForFunction: async () => {},
+      locator: (selector) => {
+        if (selector === '#sim-settings')
+          return { getAttribute: async () => (presses < required ? '' : null) };
+        if (selector === '#worlds-shell-settings-dialog') return { getAttribute: async () => null };
+        if (selector === '#worlds-shell-home-dialog') return { getAttribute: async () => '' };
+        if (selector === '#worlds-shell-action-primary')
+          return {
+            isVisible: async () => true,
+            waitFor: async () =>
+              assert.equal(presses, required, 'Underlying Home cannot bypass the custom modal.'),
+          };
+        assert.equal(selector, '#close-sim-settings');
+        return {
+          isVisible: async () => presses < required,
+          waitFor: async () => assert(presses < required),
+          press: async () => {
+            assert(presses < required);
+            presses++;
+          },
+        };
+      },
+    };
+    await returnFirstFlightHome(
+      page,
+      FIRST_FLIGHT_V2_CASES.find((c) => c.id === 'uk-worlds-acro'),
+      result,
+    );
+    assert.equal(presses, required);
+    assert(result.actions.every((action) => action.selector === '#close-sim-settings'));
   }
 });
 
