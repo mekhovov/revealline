@@ -6150,7 +6150,6 @@ export function mountWorldApp({
       ...regionalPresentationOptions(entry.configuration, $('flight-quality').value),
       mode: options.mode ?? $('flight-mode').value,
       response,
-      initialHeading: 'region-centre',
       prepareFrame: async (group, options) => {
         if (flight === nextFlight) regionalPreparationStage = 'graphics';
         await renderer.prepareRegionalFrame(group, options);
