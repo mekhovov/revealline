@@ -5488,11 +5488,14 @@ export function mountWorldApp({
       'Відтворення завершено. Спробуйте завдання, коли будете готові.',
     );
   }
-  function drawFlight(state) {
+  function refreshFlightMenus() {
     cameraControls?.refresh();
     flightSetup?.refresh();
     flightComfort?.refresh();
     practiceFlow?.refresh();
+  }
+  function drawFlight(state) {
+    refreshFlightMenus();
     return renderer?.draw?.(state, {
       cameraMode: $('flight-camera').value,
       cameraFov: Number($('world-fov').value),
@@ -5741,6 +5744,16 @@ export function mountWorldApp({
     );
   let regionalPreparing = null;
   let regionalManifestRequest = null;
+  function handleGraphicsContextLoss() {
+    sceneReady = false;
+    qualityPreparing = false;
+    pauseFlight();
+    $('flight-status').textContent = txt(
+      'Graphics interrupted. Open Menu and Retry after graphics recover.',
+      'Графіку перервано. Відкрийте меню й повторіть політ після її відновлення.',
+    );
+    if (flight && !disposed) updateHUD(flight.snapshot());
+  }
   async function prepareRegionalFlight() {
     if (regionalPreparing || !current?.regional || !flight) return regionalPreparing;
     pauseFlight();
@@ -5865,10 +5878,7 @@ export function mountWorldApp({
     renderer ??= rendererFactory({
       canvas: $('world-canvas'),
       window: win,
-      onContextLost: () => {
-        sceneReady = false;
-        pauseFlight();
-      },
+      onContextLost: handleGraphicsContextLoss,
       reducedMotion: win.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
       createHuntPresentation: (options) =>
         createSnakeHuntPresentation({
@@ -6169,15 +6179,7 @@ export function mountWorldApp({
       renderer = rendererFactory({
         canvas: $('world-canvas'),
         window: win,
-        onContextLost: () => {
-          sceneReady = false;
-          qualityPreparing = false;
-          pauseFlight();
-          $('flight-status').textContent = txt(
-            'Graphics context lost. Retry after graphics recover.',
-            'Графічний контекст втрачено. Спробуйте знову після відновлення графіки.',
-          );
-        },
+        onContextLost: handleGraphicsContextLoss,
         reducedMotion: win.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
         createHuntPresentation: (options) =>
           createSnakeHuntPresentation({
@@ -7956,6 +7958,8 @@ export function mountWorldApp({
       },
     },
     initial: 'home',
+    // Recovery menus must render even when a lost graphics context stops drawing.
+    onSurfaceChange: refreshFlightMenus,
     focusPlay: () => $('world-viewport').focus(),
   });
   cameraControls = mountFlightCameraControls({
