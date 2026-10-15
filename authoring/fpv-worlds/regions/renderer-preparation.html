@@ -54,13 +54,28 @@
     <main>
       <h1>Regional renderer preparation</h1>
       <p>
-        Authoring verification only. Shared production renderer; no flight, scoring or catalogue
-        admission.
+        Authoring verification only. Shared production renderer; no flight,
+        scoring or catalogue admission.
       </p>
-      <label>Terrain manifest <input id="terrain" value="/region/terrain/region.json" /></label>
-      <label>Scenery manifest <input id="scenery" value="/region/scenery/region.json" /></label>
       <label
-        >Detail
+        >Terrain manifest
+        <input id="terrain" value="/region/terrain/region.json"
+      /></label>
+      <label
+        >Scenery manifest
+        <input id="scenery" value="/region/scenery/region.json"
+      /></label>
+      <label
+        >Surface
+        <select id="surface">
+          <option value="plain">Plain</option>
+          <option value="canyon">Canyon</option>
+          <option value="urban">Urban</option>
+          <option value="railway">Railway</option>
+        </select></label
+      >
+      <label
+        >Quality
         <select id="quality">
           <option value="low">Performance</option>
           <option value="balanced" selected>Balanced</option>
@@ -77,13 +92,15 @@
       >
       <button id="measure" disabled>Measure 30 seconds</button>
       <p>
-        Fixed-pose renderer study. Two-second warm-up; visible-tab frame intervals and CPU draw
-        cost, not GPU time or complete gameplay FPS. Keep this tab visible. Changing the view, size
-        or visibility invalidates a sample.
+        Fixed-pose renderer study. Two-second warm-up; visible-tab frame
+        intervals and CPU draw cost, not GPU time or complete gameplay FPS. Keep
+        this tab visible. Changing the view, size or visibility invalidates a
+        sample.
       </p>
       <pre id="measurement">No measurement yet.</pre>
       <button id="load">Load verified area</button>
       <button id="stage" disabled>Stage neighbouring area</button>
+      <button id="stage-quality" disabled>Stage + change quality</button>
       <button id="cancel" disabled>Cancel preparation</button>
       <button id="release" disabled>Release resources</button>
       <p id="status" role="status">
@@ -93,7 +110,10 @@
       <p id="frames">Visible frames: 0</p>
       <pre id="receipt">No preparation yet.</pre>
     </main>
-    <script type="module" src="../../../game/presentation/theme-entry.mjs"></script>
+    <script
+      type="module"
+      src="../../../game/presentation/theme-entry.mjs"
+    ></script>
     <script type="module" src="./renderer-preparation.mjs"></script>
   </body>
 </html>

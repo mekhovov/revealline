@@ -81,7 +81,14 @@ test('published regional review modules match the installed FPV source closure',
       name.endsWith('/regional-delivery.mjs') ||
       name.includes('/civilian-fpv/regional/'),
   );
-  assert.equal(regional.length, 23, 'the reviewed regional source closure is exact');
+  assert.equal(
+    regional.length,
+    23,
+    'the reviewed regional source closure includes RGBA, restore admission and saved places',
+  );
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs'));
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional/restore-containment.mjs'));
+  assert.ok(regional.includes('optional-practice/civilian-fpv/regional-locations.mjs'));
   for (const name of regional) {
     assert.ok(config.include.includes(name), `main distribution must include ${name}`);
     assert.ok((await fs.stat(path.join(root, name))).isFile());

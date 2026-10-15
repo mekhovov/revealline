@@ -46,6 +46,21 @@ import {
   createSimGateCueFactory,
 } from './world-visuals.mjs';
 
+// The shared renderer also ships in legacy packages without regional factories.
+// Regional materials opt into quality changes through their owned callbacks.
+export function setRegionalSurfaceQuality(root, quality) {
+  const tiers = { low: 'performance', balanced: 'balanced', high: 'quality' };
+  if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
+  const materials = new Set();
+  root?.traverse((object) => {
+    for (const material of Array.isArray(object.material) ? object.material : [object.material])
+      if (typeof material?.userData?.setRegionalSurfaceQuality === 'function')
+        materials.add(material);
+  });
+  for (const material of materials) material.userData.setRegionalSurfaceQuality(tiers[quality]);
+  return materials.size;
+}
+
 const QUALITIES = Object.freeze({
   low: {
     ratio: 1,
@@ -525,6 +540,7 @@ export function createFlightRenderer({
     const changed = value !== quality;
     if (changed) presentationGeneration++;
     quality = value;
+    if (regional) setRegionalSurfaceQuality(regional.root, quality);
     const selected = QUALITIES[value];
     renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, selected.ratio));
     renderer.shadowMap.enabled = selected.shadows;
@@ -3356,6 +3372,7 @@ export function createFlightRenderer({
     }
     try {
       current();
+      setRegionalSurfaceQuality(group, selectedQuality);
       group.updateMatrixWorld(true);
       group.traverse((object) => {
         if (!object.geometry || !(object.isMesh || object.isLine || object.isPoints)) return;
