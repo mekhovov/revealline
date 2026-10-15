@@ -1,0 +1,41 @@
+- main:
+  - button "Menu"
+  - generic: FPV Survivals
+  - button "Resume"
+  - region "FPV Survivals battlefield":
+    - progressbar "Salvage toward next upgrade"
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:07
+    - generic: Level 1
+    - generic: 3 Cleared
+    - generic "Fly through dropped salvage to earn the next upgrade.": 12 salvage to upgrade
+    - complementary:
+      - strong: Riy · Drone Squad
+      - generic: Sweeper · rear cover / Breaker · forward strikes
+      - generic: Escorts following
+      - button "F · Focus target" [disabled]
+    - generic: Overflight payload 1
+    - generic: Sweeper 1
+    - generic: Breaker 1
+    - generic: Boost Ready
+    - generic: FPV Survivals · Survival · Riy · Drone Squad
+    - status: Paused · use Resume
+  - text: ⌃
+  - dialog "Pause":
+    - heading "Pause" [level=1]
+    - paragraph: FPV Survivals · Survival · Riy · Drone Squad
+    - button "Resume" [active]
+    - heading "Missions" [level=3]
+    - button "Restart"
+    - button "Choose"
+    - heading "Sound" [level=3]
+    - 'button "Sound: off"'
+    - heading "Settings" [level=3]
+    - button "Settings"
+    - button "Enter fullscreen": Full screen
+    - button "Home"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +
