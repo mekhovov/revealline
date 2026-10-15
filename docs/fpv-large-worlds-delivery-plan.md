@@ -5,6 +5,56 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — Canal player admission and preserved endurance interruption
+
+The full roadmap remains **open**. Coordinator:
+`codex/fpv-library-admission-checkpoint-20261015`, based on `3d272500`.
+
+- **Canal delivery #1442 merged; Library #1446 player gate passed.** Exact
+  `3f5968a8` package installs the 6.5 MiB district-r2 from the normal interface,
+  prepares disarmed flight, and preserves its download across reload/cached Fly.
+  Native checks cover arch/warehouse FPV openings, four representative starts,
+  explicit arm/pause, Overview, Acro selection, six EN/UK labels and 844×390
+  separation of controls. Sparse banks and visual-only water are still stated in
+  the catalogue. Source geometry checks and player observations are separate.
+- **Flight-status #1447 merged.** Exact `d7cc2443` player shows Pause, Arm and
+  Retry lifecycle status without the earlier stale pause text. Both archived hosts
+  pass functional checks; the native observation covers Worlds. Inversion retains
+  its deliberate debounce. Storage-full guidance #1444 also merged with passing
+  package, native isolated-interface and required CI checks.
+- **Post-commit metadata recovery #1454:** isolated production UI reproduced a
+  saved download retaining disabled controls if its subsequent metadata read
+  stalls. The fix bounds/cancels that read after the atomic save, preserves the
+  committed result and ignores stale late reads. Source checks and native isolated
+  interface 10/10 pass; exact archive qualification/publication are tracked
+  separately. No normal player database was altered by that fixture.
+- **Actual Urban endurance remains open.** The strict-focus segment ended invalid
+  after 1,036.314 real seconds / 51,815 ticks because the window lost focus.
+  It recorded eleven cell crossings, twelve recentres, one completed circuit and
+  zero contacts; its owned resources/cache disposed to zero. This is an interrupted
+  observation, not the required two-hour result. The complete negative report is
+  preserved in `fpv-authored-urban-interrupted-focus-20261015.json`. A separately
+  labelled visible-but-unfocused observation mode is being evaluated for the
+  commanded test pilot; strict focus remains the default and older results retain
+  their original meaning.
+- **Alpine:** corrected immutable review-r2 delivery #1448 merged. Updated Draft
+  #1427 exact `8cfd240f` retains all sixteen prior complete catalogue rows and the
+  review-r1 revision. Its 723 actual delivery responses and 36 production
+  start/mode/quality cases pass. A fresh combined package/native gate is pending.
+- **Lunar source #1452 and connections #1455 remain draft.** Original 768 m source
+  and seven transit lines pass bounded geometry/commanded-flight checks. Mixed
+  native review finds grounded shelter/gallery and open routes, but green ground,
+  primitive material cues and the Broken rim camera keep the visual gate held.
+  Correct preview links use `companion=`; `terrain=` alone does not load the mixed
+  companion. Preserve frozen 9151 and its negative screenshots. Materials and
+  camera correction proceed independently; no Library admission yet.
+
+Next: finish Alpine and reliability package admission; correct Lunar appearance
+and cameras; continue representative pilot-height art and repeat actual authored
+elapsed verification. Broader offline/restart, physical-device/controller, D6 and
+public-launch qualification remain open. Do not begin another region before the
+current appearance work makes progress.
+
 ## 15 October — retained-flight diagnosis and source review gates
 
 This checkpoint supersedes the status below. The full roadmap remains **open**.
@@ -25,7 +75,7 @@ Coordinator: `codex/fpv-regional-review-gates-20261015`, based on `6a6baac9`.
   continue. A same-origin comparison, retaining the old storage implementation,
   verified both directions of revision switching in 395.9 and 407 ms. These are
   scoped observations on one browser, not a device FPS benchmark. The unchanged
-  exact unchanged package now passes both 45 MiB downloads, retained switching
+  package now passes both 45 MiB downloads, retained switching
   in both directions, correct revision titles, settings/keyboard return, explicit
   arm/pause and reload retention. All required checks passed after one unchanged
   local-UX deadline retry; the failed receipt is retained. Offline-origin recovery,
