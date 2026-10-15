@@ -151,7 +151,9 @@ for (const quality of ['performance', 'balanced', 'quality']) {
       [64, 192],
       [192, 192],
     ]) {
-      await owner.transition(mm([(x * prep.sizeM[0]) / 384, 60, (z * prep.sizeM[1]) / 384]));
+      const worldX = (x * prep.sizeM[0]) / 384;
+      const worldZ = (z * prep.sizeM[1]) / 384;
+      await owner.transition(mm([worldX, 60, worldZ]));
       const snap = owner.snapshot();
       assert.equal(snap.state, 'ready');
       assert(snap.resourceBytes * 2 <= 8 * 1024 * 1024);
@@ -159,8 +161,8 @@ for (const quality of ['performance', 'balanced', 'quality']) {
       assert(snap.reservedSourceBytes <= 16 * 1024 * 1024);
       windows.push({
         quality,
-        x,
-        z,
+        x: worldX,
+        z: worldZ,
         geometryBytes: snap.geometryBytes,
         textureBytes: snap.textureBytes,
         resourceBytes: snap.resourceBytes,
