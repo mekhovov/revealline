@@ -257,7 +257,9 @@ test('launcher keeps missing-file repair and removal visible after checking an a
         offlineReady: async (base) => {
           reads++;
           if (failedPrevious && base.href.includes('/v1.2.2/')) return false;
-          return hold ? new Promise((resolve) => (release = resolve)) : true;
+          return hold && base.href.includes('/v1.2.3/')
+            ? new Promise((resolve) => (release = resolve))
+            : true;
         },
       },
     );
@@ -357,6 +359,172 @@ test('launcher distinguishes unfinished verification from missing files without 
       saved,
       'Verification does not mutate saved versions',
     );
+  }
+});
+
+test('verified app actions do not wait for unrelated retained-version or launcher checks', async () => {
+  for (const delayed of ['previous', 'launcher']) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    let finish;
+    const f = launcher(
+      async () => {
+        throw new Error('Offline');
+      },
+      '',
+      {
+        storage,
+        offlineReady: async (base) => {
+          if (delayed === 'previous' ? base.href.includes('/v1.2.2/') : base.href.endsWith('/app/'))
+            return new Promise((resolve) => {
+              finish = resolve;
+            });
+          return { status: 'ready' };
+        },
+      },
+    );
+    await waitFor(() => finish);
+    await new Promise((resolve) => setImmediate(resolve));
+    try {
+      assert.equal(f.elements.open.hidden, false, `${delayed} check cannot hide a verified app`);
+      assert.match(f.elements.open.href, /\/v1\.2\.3\//);
+      assert.match(f.elements.status.textContent, /Checking prepared/);
+      assert.equal(f.elements.check.disabled, true);
+    } finally {
+      finish({ status: 'unknown' });
+      await f.ready;
+    }
+    assert.equal(f.elements.open.hidden, false);
+    assert.match(f.elements.status.textContent, /Offline verification could not finish/);
+  }
+});
+
+test('retained ready copy stays reachable while active verification stalls, including locale changes', async () => {
+  const storage = memory();
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+  let finish;
+  const f = launcher(
+    async () => {
+      throw new Error('Offline');
+    },
+    '',
+    {
+      storage,
+      offlineReady: (base) =>
+        base.href.includes('/v1.2.3/')
+          ? new Promise((resolve) => {
+              finish = resolve;
+            })
+          : { status: 'ready' },
+    },
+  );
+  await waitFor(() => finish);
+  await new Promise((resolve) => setImmediate(resolve));
+  try {
+    assert.equal(f.elements.open.hidden, true, 'No saved pointer alone certifies active readiness');
+    assert.equal(f.elements.previous.hidden, false);
+    assert.match(f.elements.previous.href, /\/v1\.2\.2\//);
+    f.elements.locale.value = 'uk';
+    f.elements.locale.onchange();
+    assert.equal(new URL(f.elements.previous.href).searchParams.get('lang'), 'uk');
+  } finally {
+    finish({ status: 'unavailable' });
+    await f.ready;
+  }
+  assert.equal(f.elements.previous.hidden, false);
+  assert.equal(f.elements.open.hidden, true);
+  assert.match(f.elements.status.textContent, /Потрібне відновлення/);
+});
+
+test('invalid retained metadata cannot blank a separately verified active app', async () => {
+  const storage = memory();
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+  const key = optionalInstallationKey(packageId, root),
+    saved = JSON.parse(storage.getItem(key));
+  saved.previous = { ...saved.active, scope: 'https://untrusted.example/' };
+  storage.setItem(key, JSON.stringify(saved));
+  const checked = [];
+  const f = launcher(
+    async () => {
+      throw new Error('Offline');
+    },
+    '',
+    {
+      storage,
+      offlineReady: (base) => {
+        checked.push(base.href);
+        return { status: 'ready' };
+      },
+    },
+  );
+  await f.ready;
+  assert.equal(f.elements.open.hidden, false);
+  assert.equal(f.elements.previous.hidden, true);
+  assert.equal(checked.length, 2);
+  assert.ok(checked.every((url) => url.startsWith('https://example.test/')));
+  assert.equal(storage.getItem(key), JSON.stringify(saved), 'Inspection never rewrites pointers');
+});
+
+test('leaving during readiness checks cancels publication and play intent even after pageshow', async () => {
+  for (const returnToPage of [false, true]) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    const pending = [];
+    let requests = 0;
+    const f = launcher(
+      async () => {
+        requests++;
+        throw new Error('Offline');
+      },
+      '?action=play',
+      {
+        storage,
+        offlineReady: () => new Promise((resolve) => pending.push(resolve)),
+      },
+    );
+    await waitFor(() => pending.length === 2);
+    f.events.get('pagehide')();
+    if (returnToPage) f.events.get('pageshow')();
+    for (const finish of pending) finish({ status: 'ready' });
+    await f.ready;
+    assert.equal(f.elements.open.hidden, true);
+    assert.equal(requests, 0);
+    assert.deepEqual(f.locations, []);
+    assert.equal(f.elements.check.disabled, false);
+  }
+});
+
+test('abandoned fetch cannot replay play intent after pageshow, but a live timeout can fall back offline', async () => {
+  for (const abandoned of [true, false]) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    let fail, signal;
+    const f = launcher(
+      (_url, options) => {
+        signal = options.signal;
+        return new Promise((_resolve, reject) => {
+          fail = reject;
+        });
+      },
+      '?action=play',
+      { storage, offlineReady: true },
+    );
+    await waitFor(() => fail);
+    if (abandoned) {
+      f.events.get('pagehide')();
+      f.events.get('pageshow')();
+    } else {
+      assert.equal(f.timers.size, 1);
+      [...f.timers.values()][0]();
+    }
+    assert.equal(signal.aborted, true);
+    fail(new Error('Aborted'));
+    await f.ready;
+    assert.equal(f.locations.length, abandoned ? 0 : 1);
+    assert.equal(f.elements.open.hidden, false, 'Verified manual Open stays available');
+    assert.equal(f.timers.size, 0);
   }
 });
 

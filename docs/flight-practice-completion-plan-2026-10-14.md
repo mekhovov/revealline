@@ -6,6 +6,14 @@ mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
 
+### Later 15 October recovery continuation
+
+Rebased onto main `859d5cfc927daff2a350318b2325486a58959648` after PR #1345 merged.
+The [recovery continuation](flight-practice-recovery-2026-10-15.md) records two
+deterministically reproduced launcher/inspection problems and their corrections,
+accepted SIM changes, and fresh verification boundaries. Earlier frozen-package
+receipts remain historical; hosting stays deferred.
+
 ### 15 October execution boundary
 
 The owner approved proceeding with the remaining non-hosting work and explicitly
