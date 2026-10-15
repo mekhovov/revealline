@@ -41,9 +41,10 @@ export function createVerifiedSceneryWindow(
     timeoutMs = 120000,
     maxGeometryBytes = 8 * 1024 * 1024,
     surfaceStyle = 'plain',
+    surfaceQuality = 'balanced',
   } = {},
 ) {
-  validateScenerySurface(surfaceStyle);
+  validateScenerySurface(surfaceStyle, surfaceQuality);
   fail(typeof retainCommitted === 'boolean', 'Invalid retained-frame option');
   const manifest = validateRegionManifest(input),
     planner = createRegionPlanner(manifest);
@@ -197,6 +198,7 @@ export function createVerifiedSceneryWindow(
         originMm: plan.origin,
         maxGeometryBytes: requiredBytes,
         surfaceStyle,
+        surfaceQuality,
       });
       preparing = staged;
       current(token);
