@@ -78,7 +78,14 @@ prefetch qualification. These are current-contract limits, not a claim that an
 
 ## Remaining acceptance
 
-Native six-district composition/release review is pending. No new delivery or
+Native source review on 15 October 2026 passed all five new district views at
+frozen source `99ce59078`. Each prepared nine verified cells: Mesa 535,464 geometry
+bytes; Gorge 584,928; Twin Buttes 535,560; Split Ravine 539,640; Sunset Shelf 538,176.
+The broad mesa, winding gorge, two-hill crossing, fork and shelf routes were visibly
+distinct. No warnings or errors were reported; Release reported no live scenery or
+collision. Evidence: `canyon-districts-gorge-20261015.png` in the external fpv-temp
+review directory. This accepts bounded source composition, not final realism,
+kilometer-scale delivery or device-performance qualification. No new delivery or
 Library pin is published here. Player admission, exact package/offline checks,
 physical-device performance, broader art quality and eventual kilometer-scale
 composition remain separate gates.
