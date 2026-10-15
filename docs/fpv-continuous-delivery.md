@@ -5196,3 +5196,53 @@ comparison. New immutable and player editions remain separate. Frozen Lunar d6
 bounded native results remain tied to its pre-integration package; combined b062
 preserves twenty main offers plus new Lunar but still needs exact admission.
 Independent delivery work resumes without changing the frozen failed fixture.
+
+## 15 October, 19:00 UTC — exact admission and populated preservation
+
+#1490 merged `244e81c1` at unchanged `b0625e6f`, preserving twenty old Library
+offers and adding Lunar r3. Exact `e1ab4a5e` cloud package and fresh native 9183
+normal downloads, dual-revision reload, EN/UK labels, camera/mode/arm/pause and
+two responsive layouts pass. [Native receipt](fpv-lunar-shelter-r3-b062-native-20261015.json)
+distinguishes initial Ready from later cached Paused. Broader CI tails were still
+queued at merge; no hardware, public, offline or final-art claim.
+
+Normal Roadworks installation and genuine unchanged published example import now
+populate all four observed storage channels. Native import verifies the example
+complete at 360 ticks; normal backup and player close/reopen preserve exact stored
+bytes, alongside the two Hillside revisions and named place. [Receipt](fpv-storage-continuity-nonempty-native-20261015.json)
+and [full comparison](fpv-storage-continuity-nonempty-comparison-20261015.json)
+close that narrow previous empty-content gap. The session store remains empty;
+this does not establish application restart, whole-network offline or eviction.
+
+Authoring-only attribution #1500 merged `03ee6df3`. Independent source review and
+strict-focus 10.0051-second/500-tick native smoke preserve the full report, zero
+contacts and zero owned disposal. Actual LoAF support produces zero caller entries
+in this observation, so no native caller/GC cause is established. Source spans and
+retention work without changing production or the unchanged 250 ms gate. There
+is no active elapsed run and no authored two-hour pass. [Full report](fpv-authored-urban-attribution-smoke-20261015.json).
+
+Quiet timber immutable #1499 merged `691351e1`; separate Alpine #1501 exact
+integrated player admission remains open. Representative grounding, discoverable
+Library record access and meaningful recording D6 coverage continue independently
+through protected PRs. All prior negative reports, frozen packages and player
+data remain preserved. The complete roadmap remains unfinished.
+
+## 15 October, 19:30 UTC — explicit five-minute diagnostic and a retention finding
+
+The authored review now offers an explicit five-minute attribution observation,
+separate from two-hour endurance. Fresh 9198 tool `219c3e92` with unchanged
+`da5df483` production / `6a092df1` package completes 300.0005 real seconds and
+15,000 ticks under strict focus, with zero contacts/owned disposal. Four crossings,
+three waypoints and zero circuits leave route coverage false. [Full report](fpv-authored-urban-five-minute-attribution-20261015.json).
+No elapsed run remains active and no two-hour pass is inferred.
+
+Four actual LoAF entries now retain three authoring frame-callback entry points,
+but no early phase associations survive final reporting: its join only sees the
+last 128 spans. A separate bounded receive-time association correction is needed.
+This is a diagnostic retention finding, not a production/GC cause. Earlier full
+failures and every acceptance gate stay unchanged. [Identity/scope receipt](fpv-authored-urban-five-minute-native-20261015.json).
+
+Alpine grounding source #1504 and immutable r5 #1508 merged normally, preserving
+earlier geometry/edition data; separate Library admission and final art remain.
+R4 #1501 exact integrated package/native, record-access #1507 package/native and
+recording archive/storage D6 #1509 exact cloud/review gates continue independently.

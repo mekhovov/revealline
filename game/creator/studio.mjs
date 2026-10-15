@@ -1,4 +1,8 @@
-import { CREATOR_TEMPLATES, generateCreatorProject } from './templates.mjs';
+import {
+  CREATOR_TEMPLATES,
+  generateCreatorProject,
+  selectCreatorBatchTemplate,
+} from './templates.mjs';
 import { prepareCreatorImage } from './image.mjs';
 import {
   prepareCreatorBundle,
@@ -195,15 +199,12 @@ const batch = createBatchCreatorController({
       { signal: context.signal },
     );
     const seed = (batchSeed + context.index + context.generation * 65537) >>> 0;
-    const families = CREATOR_TEMPLATES.map(({ id: templateId }) => templateId);
-    const templateId =
-      context.settings.pacing === 'gentle-first' && context.index < Math.ceil(context.total / 3)
-        ? families[0]
-        : context.settings.pacing === 'steady'
-          ? families[2]
-          : context.settings.pacing === 'balanced'
-            ? families[(seed + context.index) % families.length]
-            : undefined;
+    const templateId = selectCreatorBatchTemplate({
+      seed,
+      index: context.index,
+      total: context.total,
+      pacing: context.settings.pacing,
+    });
     const generated = generateCreatorProject({
       id: `${id}-${item.id}`,
       name: context.settings.collectionName,
