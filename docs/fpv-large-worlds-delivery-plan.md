@@ -5,6 +5,118 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October, 18:20 UTC — bounded-display full attempt still fails
+
+No elapsed run is active. The new full attempt actually started
+**18:15:01.428Z** and failed after **102.9565 real seconds /5,127 ticks**.
+The accepted clock records a 408.5 ms maximum interval; separate lifecycle
+sampling records 416.7 ms and a matching 417 ms long task. All exceed the unchanged
+250 ms gate. It remained visible and focused, with zero contacts and zero owned
+resources after disposal. [Full preserved negative report](fpv-authored-urban-bounded-invalid-framegap-20261015.json).
+
+The bounded display did not cure the failure. Maximum synchronous submissions
+were physics 300.2 ms, draw 191.5 ms, frame checks 8.3 ms, sample collection 49.5 ms
+and live display 1.3 ms. These maxima are not a function-level causal diagnosis.
+Investigate bounded phase/script attribution and production allocation hotspots
+before another full attempt. Keep every prior failure and all acceptance limits.
+
+Quiet Alpine timber source #1494 merged as `c217b5d4` after [same-camera native
+comparison](fpv-alpine-quiet-timber-native-20261015.json); repeating wall noise is
+reduced in the two inspected still views, with unchanged visible openings. This
+is bounded source acceptance, not all-angle/hardware or final-world art. Separate
+immutable delivery and player admission remain open.
+
+Frozen pre-integration Lunar `d6c0ac7f` passes [bounded dual-revision native
+checks](fpv-lunar-shelter-r3-d6-exact-player-native-20261015.json). Both revisions
+remain installed after reload; the older cached launch is observed **Paused**,
+not claimed Ready. #1490 integrated `b0625e6f` retains all twenty main offers plus
+new Lunar r3, but still needs its own exact package/native admission. Resume that
+and immutable art delivery independently while performance diagnosis continues.
+
+## 15 October, 18:05 UTC — exact Alpine admission and observer gates closed
+
+No actual authored two-hour pass exists, and no elapsed segment is active at this
+checkpoint. Earlier starts/failures remain historical evidence.
+
+- **Alpine station-r3 Library #1480 merged** as `e5e5562f`. The exact `d60dac54`
+  package passes recovered normal download, cached reload, Glacial/Summit disarmed
+  preparation, camera changes, explicit arm/pause, Acro and EN/UK controls, plus
+  390×844 / 844×390 browser layouts. The initial generic download failure remains
+  preserved; unchanged Refresh/retry succeeded, with no diagnosed cause or first-
+  attempt reliability claim. Earlier editions remain offered. See the [bounded
+  native receipt](fpv-alpine-station-r3-native-20261015.json). Minified timber
+  pattern and broader representative art remain open in a separate refinement.
+- **Read-only continuity observer #1479 merged** as `95703ee3`. Native normal
+  installs retain two Hillside revisions and a named place. Two exports and a
+  later player close/reopen compare exactly. Altered, empty and different-origin
+  baselines are distinguished and a valid baseline recovers. [Native receipt](fpv-storage-continuity-native-20261015.json).
+  World-pack and recording stores were empty, so their content is unqualified.
+  This does not prove full application restart, network-wide offline or eviction.
+- **Bounded authoring display #1485 merged** as `51f5af07`, with unchanged
+  production modules, clock, samples and acceptance limits. Separate native
+  [10-second smoke](fpv-authored-urban-bounded-smoke-20261015.json) and
+  [one-minute review](fpv-authored-urban-bounded-minute-20261015.json) complete
+  with zero contacts/owned disposal. The live summary is 430 characters; explicit
+  running export correctly reports provisional/accepted-false. Mean synchronous
+  live display submission is 0.0678 ms in the minute review, excluding layout,
+  asynchronous callbacks, final serialization and GPU work. Both route-coverage
+  flags are false: neither observation counts as authored endurance or establishes
+  the cause of previous gaps. A fresh full segment is next after serial reviews.
+- **Lunar source #1481 and immutable r3 #1488 are merged**. [Bounded source
+  appearance receipt](fpv-lunar-shelter-r3-native-20261015.json) accepts supported
+  shelter/gallery routes. Draft #1490 receives a normal main merge to preserve
+  all twenty existing offers, including Alpine station-r3, plus the new Lunar
+  edition. Its frozen older exact package and forthcoming integrated package are
+  separate native gates; no public admission claim yet.
+- **Saved-place D6 #1483** is merged and all reported CI tails are now green.
+
+Continue P1 actual authored elapsed qualification and integrated Lunar admission;
+P1/D6 nonempty content persistence, whole-network offline and application restart;
+P2 representative pilot-height art; then remaining authored districts and broader
+D6/device/public-launch gates. Physical acceptance, final art and the complete
+roadmap remain open. Budgets and player data are unchanged.
+
+## 15 October, 17:31 UTC — source detail and saved-place coverage merged
+
+No authored elapsed run is active. The negative foreground report below is
+follow-up evidence after #1482 merged at its earlier `f30ba747` head; its later
+`8a31528f` commit remains preserved and is being published separately.
+
+- Lunar shelter/gallery source #1481 merged as `9e98c4fb`. Bounded native review
+  accepts the supported, open routes in Balanced, Performance and Quality, with
+  resource release confirmed. This is source appearance acceptance; a distinct
+  immutable composition-r3 delivery and Library admission remain next. The old
+  composition-r2 package and revision stay unchanged. Final representative art
+  remains open.
+- Saved-place D6 tests #1483 merged as `75bbcf57`: six focused cases cover
+  concurrent edits, revision isolation, returned-snapshot mutation, capacity and
+  rollback. Broader CI tails and real persistence/restart acceptance are separate.
+- Alpine station-r3 Library #1480 exact `d60dac54` passes its cloud package,
+  immutable download and archived-runtime checks. Serial native player review is
+  in progress on frozen port 9174.
+- Read-only continuity observer #1479 remains Draft at `311f66b7`, awaiting native
+  export/comparison. Its earlier appearance failure and the correcting ordinary
+  merge are preserved. A separate authoring-only change is reducing full-report
+  display work before a new elapsed attempt; the 250 ms gate stays unchanged.
+
+## 15 October, 17:18 UTC — focused foreground attempt invalidated
+
+The new authored Urban attempt is **invalid**, and no elapsed run is currently
+active. It reached 290.7995 real seconds /14,527 ticks, three cell crossings and
+three accepted waypoints with zero contacts. A 257.1 ms frame interval exceeded
+the unchanged 250 ms gate. Unlike the earlier attempt, it remained visible and
+focused throughout. Bounded diagnostics recorded a matching 257 ms long task;
+this narrows the investigation but does not identify a responsible function.
+All owned resources released to zero. The [full negative report](fpv-authored-urban-lifecycle-invalid-framegap-20261015.json)
+is preserved, and no partial duration is counted as endurance.
+
+The authoring page currently rebuilds and inserts the full diagnostic JSON every
+second, even with its details closed. That is avoidable observer work; its cost
+and main-thread scheduling need investigation before another full attempt. A
+matching long-task entry alone cannot distinguish simulation, report generation,
+layout, garbage collection or host work. Keep exact frozen evidence and acceptance
+gates unchanged. Normal serial art/player gates and independent D6 checks resume.
+
 ## 15 October, 17:13 UTC — Lunar admitted; surface and recovery increments merged
 
 This checkpoint supersedes older status below. The full roadmap remains **open**.
