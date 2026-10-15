@@ -1,0 +1,25 @@
+{
+  "pin": {
+    "url": "https://urban.invalid/delivery.json",
+    "bytes": 6603,
+    "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+  },
+  "files": 38,
+  "assetBlobs": 39,
+  "contentBytes": 2268846,
+  "requests": 39,
+  "strictPairedManifestAndAssetVerification": true,
+  "playerStoreChanged": false,
+  "runtimeSource": "28527bd6a0699aba0c4892fedfaf2776aefe7639",
+  "sourceManifestHashes": {
+    "terrain": "66ef229f0812c31432bb8b3daac6f16e3dcaea19f44be00395a614bfa587afd7",
+    "scenery": "9ae41033e9a73261eeee3ff2339ceaa0e2f6b47367b212fc1f2de470ca8dacb6"
+  },
+  "repositoryCopyMatchesAllPinnedFiles": true,
+  "defaultLibraryChanged": false,
+  "commandedFlightMatchesQualifiedSource": true,
+  "commandedRoutes": 14,
+  "authoredStartModeChecks": 4,
+  "actualContactScenarios": 4,
+  "commandReceiptSHA256": "d0841cfea0a9e0a329b7cbd1247b503f1c14b3c5e478180cafd6bddbb700d0bf"
+}
