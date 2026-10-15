@@ -5,7 +5,11 @@ const hash = 'a'.repeat(64),
     revision: 'r1',
     title: { en: 'Fixture region', uk: 'Тестовий регіон' },
   };
-const pin = { url: 'https://example.invalid/delivery.json', bytes: 100, sha256: hash };
+const pin = {
+  url: 'https://example.invalid/delivery.json',
+  bytes: 100,
+  sha256: hash,
+};
 const row = { id: descriptor.id, title: descriptor.title, pin };
 const record = {
   id: descriptor.id,
@@ -42,7 +46,8 @@ document.getElementById('run').onclick = async () => {
     delayedCommit = null,
     delayedTransfer = null,
     locale = 'en',
-    removedGeneration = null;
+    removedGeneration = null,
+    rejectRemoval = false;
   const el = (tag, text, className) => {
     const node = document.createElement(tag);
     if (text !== undefined) node.textContent = text;
@@ -109,13 +114,21 @@ document.getElementById('run').onclick = async () => {
       if (delayedLoad) await delayedLoad.promise;
       return { verifiedFixture: true };
     },
-    removalSnapshot: async () => ({
+    removalSnapshot: async (id, { sha256 } = {}) => ({
       id: descriptor.id,
       title: descriptor.title,
       generation: 7,
-      revisions: [record],
-      bytes: 1000,
+      revisions: [...stored],
+      sha256,
+      revision: descriptor.revision,
+      bytes: sha256 ? 1000 : stored.length * 1000,
     }),
+    async removeRevision(id, sha256, { expectedGeneration }) {
+      assert(id === descriptor.id && sha256 === hash, 'Removal must match reviewed version');
+      if (rejectRemoval) throw new Error('Generation changed');
+      removedGeneration = expectedGeneration;
+      stored = stored.filter((item) => item.sha256 !== sha256);
+    },
     async remove(id, { expectedGeneration }) {
       removedGeneration = expectedGeneration;
       stored = [];
@@ -173,12 +186,64 @@ document.getElementById('run').onclick = async () => {
     lines.push('PASS navigation invalidates an asynchronous host preparation lease');
     ui.open();
     await settled();
+    stored.push({
+      ...record,
+      sha256: 'b'.repeat(64),
+      descriptor: { ...descriptor, revision: 'r2' },
+    });
+    ui.open();
+    await settled();
+    click('remove');
+    await settled();
+    assert(
+      fixture.textContent.includes('Remove version r1') &&
+        fixture.textContent.includes('Other saved versions and saved places are kept'),
+      'Default confirmation names one version and retention',
+    );
+    ui.deactivate();
+    ui.open();
+    await settled();
+    assert(
+      !fixture.querySelector('[data-region-action="confirm-remove"]') && stored.length === 2,
+      'Leaving the confirmation never deletes a revision',
+    );
+    click('remove');
+    await settled();
+    rejectRemoval = true;
+    click('confirm-remove');
+    await settled();
+    rejectRemoval = false;
+    assert(
+      stored.length === 2 && fixture.textContent.includes('Existing downloads are retained'),
+      'Stale review failure preserves both revisions and exposes retry',
+    );
     click('remove');
     await settled();
     click('confirm-remove');
     await settled();
+    assert(
+      stored.length === 1 && stored[0].sha256 === 'b'.repeat(64),
+      'Default removal preserves other revision',
+    );
+    assert(
+      fixture.querySelector('[data-region-action="fly"]'),
+      'Retained revision remains flyable',
+    );
+    stored.push(record);
+    ui.open();
+    await settled();
+    click('remove-all');
+    await settled();
+    assert(
+      fixture.textContent.includes('Remove all 2'),
+      'All-version removal has its own explicit confirmation',
+    );
+    click('confirm-remove');
+    await settled();
     assert(removedGeneration === 7 && stored.length === 0, 'Removal must use reviewed generation');
-    lines.push('PASS reviewed, generation-guarded removal');
+    lines.push(
+      'PASS exact-version default preserves another revision; separate guarded all-version confirmation',
+    );
     delayedCommit = deferred();
     click('install');
     await settled();
@@ -211,7 +276,11 @@ document.getElementById('run').onclick = async () => {
     await settled();
     for (let i = 1; i <= 4; i++) {
       advance(60000);
-      delayedTransfer.progress({ phase: 'download', loadedBytes: i * 100, totalBytes: 1000 });
+      delayedTransfer.progress({
+        phase: 'download',
+        loadedBytes: i * 100,
+        totalBytes: 1000,
+      });
       await settled();
     }
     assert(
