@@ -13,16 +13,36 @@ import {
   REGIONAL_LIBRARY_PINS,
 } from '../../../optional-practice/civilian-fpv/regional-library.mjs';
 
-const root = resolve(process.argv[2] ?? '');
-assert(process.argv[2], 'Provide the exact Railway structural source pair');
-const identity = {
-  id: 'railway-valley-study',
-  sha256: '431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15',
+const variants = {
+  railway: {
+    id: 'railway-valley-study',
+    sha256: '431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15',
+    material: 'Railway yards and cutting',
+    sourcePins: {
+      terrain: 'ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c',
+      scenery: '1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d',
+    },
+  },
+  canyon: {
+    id: 'canyon-arrival-landmarks-study',
+    sha256: '5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0',
+    material: 'Canyon sediment',
+    sourcePins: {
+      terrain: '9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239',
+      scenery: 'a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f',
+    },
+  },
 };
+const style = process.argv[3] ?? 'railway';
+assert(Object.hasOwn(variants, style), 'Choose railway or canyon');
+const variant = variants[style];
+const root = resolve(process.argv[2] ?? '');
+assert(process.argv[2], 'Provide the exact reviewed regional source pair');
+const identity = { id: variant.id, sha256: variant.sha256 };
 const pin = REGIONAL_LIBRARY_PINS.find(
   (row) => row.id === identity.id && row.pin.sha256 === identity.sha256,
 );
-assert(pin, 'The exact reviewed Railway pin must be present');
+assert(pin, 'The exact reviewed regional pin must be present');
 const fetchImpl = async (url, { signal } = {}) => {
   signal?.throwIfAborted();
   const file = resolve(root, '.' + new URL(url).pathname);
@@ -36,10 +56,7 @@ const configuration = await loadRegionalReview({
   fetchImpl,
 });
 assert.equal(configuration.manifest.id, identity.id);
-const sourcePins = {
-  terrain: 'ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c',
-  scenery: '1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d',
-};
+const sourcePins = variant.sourcePins;
 for (const [layer, hash] of Object.entries(sourcePins))
   assert.equal(
     createHash('sha256')
@@ -48,7 +65,7 @@ for (const [layer, hash] of Object.entries(sourcePins))
     hash,
   );
 const bound = applyRegionalAppearance(configuration, identity);
-assert.equal(bound.source.surfaceStyle, 'railway');
+assert.equal(bound.source.surfaceStyle, style);
 assert.equal(configuration.source.surfaceStyle, undefined, 'Do not mutate the verified input');
 assert.equal(bound.source.fetchImpl, fetchImpl);
 assert.equal(bound.scenery, configuration.scenery);
@@ -118,8 +135,9 @@ for (const [quality, expected] of [
     const digest = hash.digest('hex');
     geometryDigest ??= digest;
     assert.equal(digest, geometryDigest, 'Presentation choices cannot change geometry');
-    if (expected === 'plain') assert([...names].every((name) => !name.startsWith('Railway yards')));
-    else assert(names.has(`Railway yards and cutting · ${expected}`));
+    if (expected === 'plain')
+      assert([...names].every((name) => !name.startsWith(variant.material)));
+    else assert(names.has(`${variant.material} · ${expected}`));
     records.push({
       quality,
       terrain: expected,

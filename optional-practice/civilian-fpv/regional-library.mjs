@@ -4,6 +4,26 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'canyon-arrival-landmarks-study',
+    title: {
+      en: 'Canyon Badlands — regional preview',
+      uk: 'Каньйон — огляд регіону',
+    },
+    description: {
+      en: '384 × 384 m · basin, gorge and rock openings · unscored free flight. A stylized regional preview with twin spires, ridge passages and clear practice routes.',
+      uk: '384 × 384 м · улоговина, ущелина та отвори у скелях · вільний політ без заліку. Стилізований огляд регіону з парними шпилями, проходами на хребті й відкритими тренувальними маршрутами.',
+    },
+    bytes: 1180140,
+    appearance: {
+      terrain: 'canyon',
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json',
+      bytes: 6790,
+      sha256: '5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0',
+    },
+  },
+  {
     id: 'railway-valley-study',
     title: {
       en: 'Railway Valley — regional preview',
@@ -28,14 +48,15 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       uk: 'Міські земляні споруди — огляд регіону',
     },
     description: {
-      en: '384 × 384 m · original architectural blockout · unscored free flight. An early regional preview, with buildings, passages and open ground.',
-      uk: '384 × 384 м · авторський макет забудови · вільний політ без заліку. Ранній огляд регіону з будівлями, проходами та відкритою місцевістю.',
+      en: '384 × 384 m · loading court, open workshop and connected parking ramps · unscored free flight. A regional preview with marked roads, building openings and rooftop passages.',
+      uk: '384 × 384 м · вантажний двір, відкритий цех і сполучені пандуси паркінгу · вільний політ без заліку. Огляд регіону з розміченими дорогами, отворами будівель і проходами на дахах.',
     },
-    bytes: 1455090,
+    bytes: 2275449,
+    appearance: { terrain: 'urban' },
     pin: {
-      url: 'https://raw.githubusercontent.com/mekhovov/revealline/9d97e70c18729c3f399b90610380274e50d7d0df/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1/delivery.json',
-      bytes: 6615,
-      sha256: '1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c',
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json',
+      bytes: 6603,
+      sha256: '9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a',
     },
   },
 ]);
