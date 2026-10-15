@@ -1,0 +1,163 @@
+TAP version 13
+# Subtest: curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+not ok 1 - curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+  ---
+  duration_ms: 4430.652667
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-recordings.test.mjs:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(
+        metrics.fullLoss ? player.state.status === 'lost' : player.state.status === 'running',
+      )
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-recordings.test.mjs:119:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+ok 2 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+  ---
+  duration_ms: 43.946625
+  ...
+# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+ok 3 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+  ---
+  duration_ms: 8.249
+  ...
+# Subtest: catalogue admits only matching installed content and local bundled replay URLs
+ok 4 - catalogue admits only matching installed content and local bundled replay URLs
+  ---
+  duration_ms: 21.595459
+  ...
+# Subtest: immediate: practice forks match all four core branches and own every mutable value
+ok 5 - immediate: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 668.337875
+  ...
+# Subtest: grid-center: practice forks match all four core branches and own every mutable value
+ok 6 - grid-center: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 783.271
+  ...
+# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+ok 7 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+  ---
+  duration_ms: 76.67425
+  ...
+# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+ok 8 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+  ---
+  duration_ms: 41.127916
+  ...
+# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+ok 9 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+  ---
+  duration_ms: 38.364625
+  ...
+# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing
+ok 10 - a takeover retains both hangar loadouts, a live support field and impact recovery timing
+  ---
+  duration_ms: 48.1135
+  ...
+# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority
+ok 11 - immediate: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 64.300833
+  ...
+# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority
+ok 12 - grid-center: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 70.129958
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 13 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 1269.260459
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 14 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 46.752584
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 15 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 3516.429
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 16 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 3475.646667
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 17 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 32.514125
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 18 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 106.832792
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 19 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 179.278625
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 20 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 17.459208
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 21 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.369292
+  ...
+# Subtest: a missing primary recording uses an available pinned variant without changing its inputs
+ok 22 - a missing primary recording uses an available pinned variant without changing its inputs
+  ---
+  duration_ms: 162.631084
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 23 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 452.764625
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 24 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 551.428334
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 25 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 9.923917
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 26 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.420125
+  ...
+# Subtest: installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+ok 27 - installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+  ---
+  duration_ms: 417.691708
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 26
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17204.908125

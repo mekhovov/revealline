@@ -1,0 +1,155 @@
+TAP version 13
+# Subtest: idle countdown counts only contiguous eligible foreground frames
+ok 1 - idle countdown counts only contiguous eligible foreground frames
+  ---
+  duration_ms: 6.637709
+  ...
+# Subtest: reduced-motion default is manual; malformed preferences fail safely
+ok 2 - reduced-motion default is manual; malformed preferences fail safely
+  ---
+  duration_ms: 0.639209
+  ...
+# Subtest: demo sound preference is opt-in and preserves existing v1 settings
+ok 3 - demo sound preference is opt-in and preserves existing v1 settings
+  ---
+  duration_ms: 0.145875
+  ...
+# Subtest: demo picture privacy is opt-in and survives existing v1 settings
+ok 4 - demo picture privacy is opt-in and survives existing v1 settings
+  ---
+  duration_ms: 0.782375
+  ...
+# Subtest: clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+ok 5 - clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+  ---
+  duration_ms: 5.58175
+  ...
+# Subtest: malformed clear-picture preferences fail closed without coercion
+ok 6 - malformed clear-picture preferences fail closed without coercion
+  ---
+  duration_ms: 0.5585
+  ...
+# Subtest: practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+ok 7 - practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+  ---
+  duration_ms: 15.989375
+  ...
+# Subtest: direct takeover applies its initiating action once at the first real tick without inventing steering
+ok 8 - direct takeover applies its initiating action once at the first real tick without inventing steering
+  ---
+  duration_ms: 315.223959
+  ...
+# Subtest: captions use emitted core events and maintain a six-second reading interval
+ok 9 - captions use emitted core events and maintain a six-second reading interval
+  ---
+  duration_ms: 0.672167
+  ...
+# Subtest: captions distinguish a real scan from other equipment without claiming a revealed objective
+ok 10 - captions distinguish a real scan from other equipment without claiming a revealed objective
+  ---
+  duration_ms: 4.332167
+  ...
+# Subtest: same-tick real cut and relay capture keep distinct captions in order until scene reset
+ok 11 - same-tick real cut and relay capture keep distinct captions in order until scene reset
+  ---
+  duration_ms: 22.705917
+  ...
+# Subtest: signal captions require an actual slowing or blocked-equipment event
+ok 12 - signal captions require an actual slowing or blocked-equipment event
+  ---
+  duration_ms: 8.204333
+  ...
+# Subtest: signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+ok 13 - signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+  ---
+  duration_ms: 173.855542
+  ...
+# Subtest: guide gives lessons priority, reacts to a real recovery, and limits scene chatter
+ok 14 - guide gives lessons priority, reacts to a real recovery, and limits scene chatter
+  ---
+  duration_ms: 13.403
+  ...
+# Subtest: guide drops stale, hidden and disabled reactions without dropping teaching captions
+ok 15 - guide drops stale, hidden and disabled reactions without dropping teaching captions
+  ---
+  duration_ms: 0.320333
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 16 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 6891.081708
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 17 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 936.421792
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 18 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 75228.438208
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 19 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 78721.088917
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 20 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 704.38825
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 21 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 1459.905459
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 22 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 1281.349667
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 23 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 274.597416
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 24 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.592041
+  ...
+# Subtest: a missing primary recording uses an available pinned variant without changing its inputs
+ok 25 - a missing primary recording uses an available pinned variant without changing its inputs
+  ---
+  duration_ms: 2273.438
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 26 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 6566.737792
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 27 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 16008.779625
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 28 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 142.73875
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 29 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 4.908958
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 199850.146125

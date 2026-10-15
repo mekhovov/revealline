@@ -1,0 +1,78 @@
+{
+  "qualification": "One main-thread diagnostic; not the Worker watchdog qualification. Times are sampled self time.",
+  "planElapsedMs": 1502.825083,
+  "hotspots": [
+    {
+      "frame": "(garbage collector) :-1",
+      "milliseconds": 337
+    },
+    {
+      "frame": "_decompress i18n/catalogs.mjs:26",
+      "milliseconds": 256
+    },
+    {
+      "frame": "world core/classic-step.mjs:270",
+      "milliseconds": 241
+    },
+    {
+      "frame": "planClassicEnemy core/classic-motion.mjs:189",
+      "milliseconds": 142
+    },
+    {
+      "frame": "nextLineImpactSeed core/line-impact.mjs:49",
+      "milliseconds": 118
+    },
+    {
+      "frame": " core/line-impact.mjs:78",
+      "milliseconds": 96
+    },
+    {
+      "frame": "(idle) :-1",
+      "milliseconds": 81
+    },
+    {
+      "frame": "stepClassic core/classic-step.mjs:486",
+      "milliseconds": 74
+    },
+    {
+      "frame": "boxTime core/geometry.mjs:43",
+      "milliseconds": 59
+    },
+    {
+      "frame": "planClassicPlayer core/classic-motion.mjs:33",
+      "milliseconds": 46
+    },
+    {
+      "frame": "linearInterval core/geometry.mjs:32",
+      "milliseconds": 35
+    },
+    {
+      "frame": "ownershipSpans core/movement.mjs:241",
+      "milliseconds": 32
+    },
+    {
+      "frame": "structuredClone :-1",
+      "milliseconds": 32
+    },
+    {
+      "frame": "updateSignal core/systems.mjs:71",
+      "milliseconds": 31
+    },
+    {
+      "frame": "t i18n/catalogs.mjs:26",
+      "milliseconds": 29
+    },
+    {
+      "frame": "pathsFor game/demo-bot.mjs:117",
+      "milliseconds": 27
+    },
+    {
+      "frame": "enemyContact core/contacts.mjs:20",
+      "milliseconds": 26
+    },
+    {
+      "frame": "compileSourceTextModule esm/utils:343",
+      "milliseconds": 23
+    }
+  ]
+}

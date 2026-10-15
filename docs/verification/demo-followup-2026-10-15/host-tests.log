@@ -1,0 +1,853 @@
+TAP version 13
+# Subtest: actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+ok 1 - actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+  ---
+  duration_ms: 4755.78525
+  ...
+# Subtest: actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+ok 2 - actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+  ---
+  duration_ms: 6469.578083
+  ...
+# Subtest: demo and takeover use current ordinary gore, remains, grid and font settings
+ok 3 - demo and takeover use current ordinary gore, remains, grid and font settings
+  ---
+  duration_ms: 2966.583875
+  ...
+# Subtest: Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 4 - Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 3619.543209
+  ...
+# Subtest: Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 5 - Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 6121.244833
+  ...
+# Subtest: the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+    # Subtest: save from Settings
+    ok 1 - save from Settings
+      ---
+      duration_ms: 1373.1965
+      ...
+    # Subtest: restore in the next app instance
+    ok 2 - restore in the next app instance
+      ---
+      duration_ms: 2051.442667
+      ...
+    1..2
+ok 6 - the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+  ---
+  duration_ms: 3425.005125
+  ...
+# Subtest: visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+ok 7 - visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+  ---
+  duration_ms: 1.706625
+  ...
+# Subtest: withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+ok 8 - withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+  ---
+  duration_ms: 2.024959
+  ...
+# Subtest: frame wins the visible wake once and retires its queued sibling
+ok 9 - frame wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.212709
+  ...
+# Subtest: timer wins the visible wake once and retires its queued sibling
+ok 10 - timer wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.078541
+  ...
+# Subtest: visible timer recovery preserves explicit pause and pumps audio without stale effects
+ok 11 - visible timer recovery preserves explicit pause and pumps audio without stale effects
+  ---
+  duration_ms: 0.186833
+  ...
+# Subtest: reset invalidates both pending visible callbacks
+ok 12 - reset invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.141833
+  ...
+# Subtest: visibilitychange invalidates both pending visible callbacks
+ok 13 - visibilitychange invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.138542
+  ...
+# Subtest: freeze invalidates both pending visible callbacks
+ok 14 - freeze invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.0645
+  ...
+# Subtest: stop invalidates both pending visible callbacks
+ok 15 - stop invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.135167
+  ...
+# Subtest: destroy invalidates both pending visible callbacks
+ok 16 - destroy invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.062625
+  ...
+# Subtest: 1000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 17 - 1000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.194792
+  ...
+# Subtest: 60000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 18 - 60000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.12425
+  ...
+# Subtest: visibility switches invalidate stale RAF and message callbacks without double stepping
+ok 19 - visibility switches invalidate stale RAF and message callbacks without double stepping
+  ---
+  duration_ms: 0.12725
+  ...
+# Subtest: explicit pause stops catch-up while audio and visible painting continue until close
+ok 20 - explicit pause stops catch-up while audio and visible painting continue until close
+  ---
+  duration_ms: 0.105667
+  ...
+# Subtest: loading and freeze discard debt; resume preserves paused intent and resets timestamps
+ok 21 - loading and freeze discard debt; resume preserves paused intent and resets timestamps
+  ---
+  duration_ms: 0.07175
+  ...
+# Subtest: planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+ok 22 - planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+  ---
+  duration_ms: 0.064333
+  ...
+# Subtest: fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+ok 23 - fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+  ---
+  duration_ms: 0.053875
+  ...
+# Subtest: close during an advance cancels the remaining burst and does not schedule another owner
+ok 24 - close during an advance cancels the remaining burst and does not schedule another owner
+  ---
+  duration_ms: 0.142458
+  ...
+# Subtest: clock samples never move its elapsed origin backward
+ok 25 - clock samples never move its elapsed origin backward
+  ---
+  duration_ms: 0.287042
+  ...
+# Subtest: two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+ok 26 - two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+  ---
+  duration_ms: 13.7345
+  ...
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 27 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 1.834125
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 28 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 0.863458
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 29 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.274042
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 30 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.289875
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 31 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.108458
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 32 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 1.098042
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 33 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.262541
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 34 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 3.033166
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 35 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.267166
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 36 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.311583
+  ...
+# (node:7780) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 37 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 623.044791
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 38 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 0.257625
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 39 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.21575
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 40 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.180709
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 41 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.145917
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 42 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.199
+  ...
+# Subtest: mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+    # Subtest: ordinary Ready materializes the release still without an assignment
+    ok 1 - ordinary Ready materializes the release still without an assignment
+      ---
+      duration_ms: 1717.504375
+      ...
+    # Subtest: standard host: earned original stays clear during takeover and completed playback
+    ok 2 - standard host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 12655.267167
+      ...
+    # Subtest: gentle host: earned original stays clear during takeover and completed playback
+    ok 3 - gentle host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 12578.190958
+      ...
+    # Subtest: picture privacy replaces an earned original only inside demo and practice
+    ok 4 - picture privacy replaces an earned original only inside demo and practice
+      ---
+      duration_ms: 2527.441
+      ...
+    # Subtest: another unearned level stays obscured in fresh practice despite the existing receipt
+    ok 5 - another unearned level stays obscured in fresh practice despite the existing receipt
+      ---
+      duration_ms: 3139.671584
+      ...
+    1..5
+ok 43 - mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+  ---
+  duration_ms: 32728.208625
+  ...
+# Subtest: idle countdown counts only contiguous eligible foreground frames
+ok 44 - idle countdown counts only contiguous eligible foreground frames
+  ---
+  duration_ms: 0.771917
+  ...
+# Subtest: reduced-motion default is manual; malformed preferences fail safely
+ok 45 - reduced-motion default is manual; malformed preferences fail safely
+  ---
+  duration_ms: 0.430875
+  ...
+# Subtest: demo sound preference is opt-in and preserves existing v1 settings
+ok 46 - demo sound preference is opt-in and preserves existing v1 settings
+  ---
+  duration_ms: 0.093708
+  ...
+# Subtest: demo picture privacy is opt-in and survives existing v1 settings
+ok 47 - demo picture privacy is opt-in and survives existing v1 settings
+  ---
+  duration_ms: 0.06525
+  ...
+# Subtest: clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+ok 48 - clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+  ---
+  duration_ms: 0.148167
+  ...
+# Subtest: malformed clear-picture preferences fail closed without coercion
+ok 49 - malformed clear-picture preferences fail closed without coercion
+  ---
+  duration_ms: 0.181292
+  ...
+# Subtest: practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+ok 50 - practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+  ---
+  duration_ms: 8.807208
+  ...
+# Subtest: direct takeover applies its initiating action once at the first real tick without inventing steering
+ok 51 - direct takeover applies its initiating action once at the first real tick without inventing steering
+  ---
+  duration_ms: 15.585542
+  ...
+# Subtest: captions use emitted core events and maintain a six-second reading interval
+ok 52 - captions use emitted core events and maintain a six-second reading interval
+  ---
+  duration_ms: 0.406458
+  ...
+# Subtest: captions distinguish a real scan from other equipment without claiming a revealed objective
+ok 53 - captions distinguish a real scan from other equipment without claiming a revealed objective
+  ---
+  duration_ms: 0.798417
+  ...
+# Subtest: same-tick real cut and relay capture keep distinct captions in order until scene reset
+ok 54 - same-tick real cut and relay capture keep distinct captions in order until scene reset
+  ---
+  duration_ms: 10.550791
+  ...
+# Subtest: signal captions require an actual slowing or blocked-equipment event
+ok 55 - signal captions require an actual slowing or blocked-equipment event
+  ---
+  duration_ms: 2.137792
+  ...
+# Subtest: signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+ok 56 - signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+  ---
+  duration_ms: 2.781625
+  ...
+# Subtest: guide gives lessons priority, reacts to a real recovery, and limits scene chatter
+ok 57 - guide gives lessons priority, reacts to a real recovery, and limits scene chatter
+  ---
+  duration_ms: 0.22575
+  ...
+# Subtest: guide drops stale, hidden and disabled reactions without dropping teaching captions
+ok 58 - guide drops stale, hidden and disabled reactions without dropping teaching captions
+  ---
+  duration_ms: 0.134708
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 59 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 20264.289
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 60 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 20772.419791
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 61 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 8062.658792
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 62 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 16135.226833
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 63 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 6951.980875
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 64 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 4068.783
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 65 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 9047.381375
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 66 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 3891.223916
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 67 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 5690.366917
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 68 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 75256.977625
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 69 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 13456.606417
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 70 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 4888.183917
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 71 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 3027.006083
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 72 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 3070.286875
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 73 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 16948.675375
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+not ok 74 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 17394.284292
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-host.test.mjs:512:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'checkpoint')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-host.test.mjs:563:33)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 75 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 3179.52225
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 76 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 3514.876625
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 77 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 2836.195583
+  ...
+# Subtest: practice handoff requires every observed keyboard key to become neutral before fresh steering
+ok 78 - practice handoff requires every observed keyboard key to become neutral before fresh steering
+  ---
+  duration_ms: 2.334583
+  ...
+# Subtest: blur: an unobservable outside key release cannot permanently block practice
+ok 79 - blur: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.470125
+  ...
+# Subtest: hidden: an unobservable outside key release cannot permanently block practice
+ok 80 - hidden: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.857083
+  ...
+# Subtest: ability: a quick keyboard or pointer impulse survives release until consumed once
+ok 81 - ability: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.512125
+  ...
+# Subtest: pickup: a quick keyboard or pointer impulse survives release until consumed once
+ok 82 - pickup: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.313542
+  ...
+# Subtest: releasing either Boost key or a separate touch cannot release another physical Boost owner
+ok 83 - releasing either Boost key or a separate touch cannot release another physical Boost owner
+  ---
+  duration_ms: 0.185292
+  ...
+# Subtest: tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+ok 84 - tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+  ---
+  duration_ms: 0.561042
+  ...
+# Subtest: click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+ok 85 - click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+  ---
+  duration_ms: 0.584208
+  ...
+# Subtest: cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+ok 86 - cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+  ---
+  duration_ms: 0.252291
+  ...
+# Subtest: stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 87 - stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.531792
+  ...
+# Subtest: swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 88 - swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.205208
+  ...
+# Subtest: deliberate clear retires a captured steering finger before late capture notifications
+ok 89 - deliberate clear retires a captured steering finger before late capture notifications
+  ---
+  duration_ms: 0.236041
+  ...
+# Subtest: a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+ok 90 - a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+  ---
+  duration_ms: 1.221833
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+ok 91 - Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+  ---
+  duration_ms: 0.174833
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+ok 92 - Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+  ---
+  duration_ms: 0.156167
+  ...
+# Subtest: Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+ok 93 - Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.152875
+  ...
+# Subtest: Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+ok 94 - Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.088792
+  ...
+# Subtest: Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+ok 95 - Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.127833
+  ...
+# Subtest: Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 96 - Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.151833
+  ...
+# Subtest: Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 97 - Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.081
+  ...
+# Subtest: Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 98 - Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.083583
+  ...
+# Subtest: Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+ok 99 - Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.1195
+  ...
+# Subtest: Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+ok 100 - Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.076583
+  ...
+# Subtest: Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+ok 101 - Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.155
+  ...
+# Subtest: Back reports only an actual fresh unmodified native activation to the Confirm owner
+ok 102 - Back reports only an actual fresh unmodified native activation to the Confirm owner
+  ---
+  duration_ms: 0.104875
+  ...
+# Subtest: teardown removes keyboard, pointer and lifecycle observers
+ok 103 - teardown removes keyboard, pointer and lifecycle observers
+  ---
+  duration_ms: 0.09325
+  ...
+# Subtest: PointerEvent click: another finger cannot duplicate the first play action
+ok 104 - PointerEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.123208
+  ...
+# Subtest: MouseEvent click: another finger cannot duplicate the first play action
+ok 105 - MouseEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.134
+  ...
+# Subtest: fresh keyboard ability takes over with exactly one retained semantic action
+ok 106 - fresh keyboard ability takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.112834
+  ...
+# Subtest: fresh keyboard pickup takes over with exactly one retained semantic action
+ok 107 - fresh keyboard pickup takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.080917
+  ...
+# Subtest: fresh keyboard boost takes over with exactly one retained semantic action
+ok 108 - fresh keyboard boost takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.0865
+  ...
+# Subtest: fresh keyboard hangar takes over with exactly one retained semantic action
+ok 109 - fresh keyboard hangar takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.089
+  ...
+# Subtest: keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+ok 110 - keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+  ---
+  duration_ms: 0.231958
+  ...
+# Subtest: stick: watch touch waits for a recognized direction and forwards it once
+ok 111 - stick: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.225
+  ...
+# Subtest: swipe: watch touch waits for a recognized direction and forwards it once
+ok 112 - swipe: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.6605
+  ...
+# Subtest: a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+ok 113 - a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+  ---
+  duration_ms: 0.466125
+  ...
+# Subtest: pointer: explicit movement and action buttons take over once
+ok 114 - pointer: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.127334
+  ...
+# Subtest: assistive: explicit movement and action buttons take over once
+ok 115 - assistive: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.068292
+  ...
+# Subtest: fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+ok 116 - fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+  ---
+  duration_ms: 0.340916
+  ...
+# Subtest: KeyP opens the watching menu while Escape exits
+ok 117 - KeyP opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.329084
+  ...
+# Subtest: KeyX opens the watching menu while Escape exits
+ok 118 - KeyX opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.108
+  ...
+# Subtest: controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+ok 119 - controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+  ---
+  duration_ms: 0.15225
+  ...
+# Subtest: real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+ok 120 - real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 2.95375
+  ...
+# Subtest: real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+ok 121 - real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.565792
+  ...
+# Subtest: real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+ok 122 - real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.560083
+  ...
+# Subtest: real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+ok 123 - real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.457791
+  ...
+# Subtest: real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+ok 124 - real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.58875
+  ...
+# Subtest: real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+ok 125 - real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.354667
+  ...
+# Subtest: controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+ok 126 - controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+  ---
+  duration_ms: 0.12575
+  ...
+# Subtest: spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+ok 127 - spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+  ---
+  duration_ms: 0.158083
+  ...
+# Subtest: watching: audio controls and source links keep native activation and editing
+ok 128 - watching: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 0.268792
+  ...
+# Subtest: practice: audio controls and source links keep native activation and editing
+ok 129 - practice: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 0.161291
+  ...
+# Subtest: focused audio UI owns controller navigation until a new gameplay edge after leaving it
+ok 130 - focused audio UI owns controller navigation until a new gameplay edge after leaving it
+  ---
+  duration_ms: 0.096459
+  ...
+# Subtest: practice audio focus retires held keyboard and multi-touch actions before the next frame
+ok 131 - practice audio focus retires held keyboard and multi-touch actions before the next frame
+  ---
+  duration_ms: 0.153292
+  ...
+# Subtest: audio ownership clears queued practice impulses even before a focus or controller event
+ok 132 - audio ownership clears queued practice impulses even before a focus or controller event
+  ---
+  duration_ms: 0.074875
+  ...
+# Subtest: touching audio UI retires a held practice action even when the browser keeps canvas focus
+ok 133 - touching audio UI retires a held practice action even when the browser keeps canvas focus
+  ---
+  duration_ms: 0.088708
+  ...
+# Subtest: held controller boost cannot return from audio navigation as a practice action
+ok 134 - held controller boost cannot return from audio navigation as a practice action
+  ---
+  duration_ms: 0.085375
+  ...
+# Subtest: spectator router preserves configured back with flight input and no duplicate gameplay action
+ok 135 - spectator router preserves configured back with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 1.478833
+  ...
+# Subtest: spectator router preserves configured menu with flight input and no duplicate gameplay action
+ok 136 - spectator router preserves configured menu with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 0.446083
+  ...
+# Subtest: spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+ok 137 - spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+  ---
+  duration_ms: 0.7625
+  ...
+# Subtest: spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 138 - spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 1.1515
+  ...
+# Subtest: spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 139 - spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 0.53075
+  ...
+# Subtest: information fits only in unused image margins across map and viewport shapes
+ok 140 - information fits only in unused image margins across map and viewport shapes
+  ---
+  duration_ms: 0.848708
+  ...
+# Subtest: resize, scene changes and details update layout; disposal releases both observers
+ok 141 - resize, scene changes and details update layout; disposal releases both observers
+  ---
+  duration_ms: 0.227667
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 142 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 3620.300375
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 143 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 3077.176
+  ...
+# Subtest: catalogue fetch which ignores abort still has a finite total loading deadline
+ok 144 - catalogue fetch which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 1.346583
+  ...
+# Subtest: catalogue body which ignores abort still has a finite total loading deadline
+ok 145 - catalogue body which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 0.174625
+  ...
+# Subtest: fetch and body share a budget; success retires timers and caller listeners
+ok 146 - fetch and body share a budget; success retires timers and caller listeners
+  ---
+  duration_ms: 0.442167
+  ...
+# Subtest: replay body timeout and parent cancellation settle before an uncooperative body returns
+ok 147 - replay body timeout and parent cancellation settle before an uncooperative body returns
+  ---
+  duration_ms: 0.554542
+  ...
+# Subtest: cancelled late fetch cancels its body without starting text parsing
+ok 148 - cancelled late fetch cancels its body without starting text parsing
+  ---
+  duration_ms: 0.219958
+  ...
+# Subtest: loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+ok 149 - loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+  ---
+  duration_ms: 0.294584
+  ...
+# Subtest: slow fetch cannot restart the body deadline and all cancellation listeners are retired
+ok 150 - slow fetch cannot restart the body deadline and all cancellation listeners are retired
+  ---
+  duration_ms: 0.283042
+  ...
+# Subtest: mounted ordinary restored win is kept manually without enabling automatic collection
+ok 151 - mounted ordinary restored win is kept manually without enabling automatic collection
+  ---
+  duration_ms: 23125.876958
+  ...
+# Subtest: mounted ordinary restored win is retained automatically only after the real Settings opt-in
+not ok 152 - mounted ordinary restored win is retained automatically only after the real Settings opt-in
+  ---
+  duration_ms: 11721.152292
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-retention-host.test.mjs:219:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Actual host must finish its initial picture choice before synchronous input tests.
+    {"phase":"Actual host must finish its initial picture choice before synchronous input tests.","timeoutMs":5000,"pack":"","pictureState":"pending","packStatus":"","runMessage":"Your first route: fly down from the marked start to the opposite border.","start":"Start mission ↗","errors":[]}
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/helpers/wait-for.mjs:15:12)
+    runNextTicks (node:internal/process/task_queues:60:5)
+    process.processTimers (node:internal/timers:516:9)
+    async initialReady (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/helpers/solo-dom.mjs:542:7)
+    async soloPage (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/helpers/solo-dom.mjs:572:5)
+    async mountedFlight (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-retention-host.test.mjs:75:16)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-retention-host.test.mjs:220:13)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: loading fades only the displayed frame and holds darkness until a prepared scene arrives
+ok 153 - loading fades only the displayed frame and holds darkness until a prepared scene arrives
+  ---
+  duration_ms: 0.834083
+  ...
+# Subtest: fast scene loading still finishes departure; privacy clearing discards the snapshot
+ok 154 - fast scene loading still finishes departure; privacy clearing discards the snapshot
+  ---
+  duration_ms: 0.081
+  ...
+# Subtest: Next during arrival preserves its dimming and accepts the displayed reward frame
+ok 155 - Next during arrival preserves its dimming and accepts the displayed reward frame
+  ---
+  duration_ms: 0.072417
+  ...
+1..155
+# tests 162
+# suites 0
+# pass 160
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 376955.016292
