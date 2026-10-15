@@ -1,8 +1,13 @@
 import { openWorldStore } from './world-store.mjs';
-import { validateRegionManifest } from './regional/region-manifest.mjs';
+import {
+  validateRegionManifest,
+  REGION_FORMAT,
+  SPARSE_SCENERY_FORMAT,
+} from './regional/region-manifest.mjs';
 
 // Regional installs deliberately use a separate database and format from scored WorldPacks.
 export const REGIONAL_DELIVERY_FORMAT = 'FPVRegionalDelivery.v1';
+export const SPARSE_REGIONAL_DELIVERY_FORMAT = 'FPVRegionalDelivery.v2';
 export const REGIONAL_DELIVERY_LIMITS = Object.freeze({
   descriptorBytes: 1024 * 1024,
   manifestBytes: 8 * 1024 * 1024,
@@ -54,7 +59,7 @@ export function validateRegionalDescriptor(input) {
   const v = JSON.parse(text);
   keys(v, ['format', 'id', 'revision', 'title', 'terrain', 'scenery', 'files', 'totalBytes']);
   assert(
-    v.format === REGIONAL_DELIVERY_FORMAT &&
+    [REGIONAL_DELIVERY_FORMAT, SPARSE_REGIONAL_DELIVERY_FORMAT].includes(v.format) &&
       typeof v.id === 'string' &&
       slug.test(v.id) &&
       typeof v.revision === 'string' &&
@@ -125,6 +130,7 @@ async function verifiedBytes(response, pin, signal, progress) {
     while (true) {
       signal?.throwIfAborted();
       const { done, value } = await reader.read();
+      signal?.throwIfAborted();
       if (done) break;
       size += value.length;
       assert(size <= pin.bytes, 'Regional file exceeds pinned size');
@@ -189,38 +195,71 @@ export async function prepareRegionalDownload(pin, options = {}) {
       loadedBytes: loaded,
       totalBytes: descriptor.totalBytes,
     });
-  // Validate the paired manifests and their complete closure before acquiring large assets.
-  const manifestPaths = new Set([descriptor.terrain.path, descriptor.scenery.path]);
-  const files = [
-    descriptor.terrain,
-    descriptor.scenery,
-    ...descriptor.files.filter((item) => !manifestPaths.has(item.path)),
-  ];
-  for (const item of files) {
-    options.signal?.throwIfAborted();
+  // Four verified requests at a time bound connection/buffer pressure. The descriptor
+  // already bounds the entire inventory; no payload starts before both manifests agree.
+  const controller = new AbortController(),
+    signal = controller.signal,
+    cancel = () => controller.abort(options.signal.reason);
+  options.signal?.addEventListener('abort', cancel, { once: true });
+  if (options.signal?.aborted) cancel();
+  const acquire = async (item) => {
+    signal.throwIfAborted();
     const response = await (options.fetchImpl ?? globalThis.fetch)(new URL(item.path, base).href, {
-      signal: options.signal,
+      signal,
       credentials: 'omit',
       redirect: 'error',
     });
-    const data = await verifiedBytes(response, item, options.signal, (n) => {
+    const data = await verifiedBytes(response, item, signal, (n) => {
       loaded += n;
       notify('download');
     });
     blobs.set(item.path, data);
-    if (blobs.size === 2) validatePair(descriptor, blobs);
+  };
+  try {
+    await acquire(descriptor.terrain);
+    await acquire(descriptor.scenery);
+    validatePair(descriptor, blobs);
+    const manifestPaths = new Set([descriptor.terrain.path, descriptor.scenery.path]),
+      files = descriptor.files.filter((item) => !manifestPaths.has(item.path));
+    let next = 0;
+    const worker = async () => {
+      try {
+        while (next < files.length) {
+          signal.throwIfAborted();
+          await acquire(files[next++]);
+        }
+      } catch (error) {
+        // Preserve the first failure, abort peers and wait for every worker to settle
+        // before rejecting. No progress or later file may escape into a new attempt.
+        controller.abort(error);
+      }
+    };
+    await Promise.all(Array.from({ length: Math.min(4, files.length) }, worker));
+    signal.throwIfAborted();
+    notify('verify');
+    signal.throwIfAborted();
+    // Completion order is deliberately not the stored inventory order.
+    const assets = new Map(descriptor.files.map(({ path }) => [path, new Blob([blobs.get(path)])]));
+    assets.set('__descriptor.json', new Blob([bytes]));
+    return { ...checked, assets };
+  } finally {
+    options.signal?.removeEventListener('abort', cancel);
   }
-  notify('verify');
-  options.signal?.throwIfAborted();
-  const assets = new Map([...blobs].map(([path, data]) => [path, new Blob([data])]));
-  assets.set('__descriptor.json', new Blob([bytes]));
-  return { ...checked, assets };
 }
+
 function validatePair(descriptor, blobs) {
   const manifests = [descriptor.terrain, descriptor.scenery].map((ref) =>
     validateRegionManifest(decode(blobs.get(ref.path))),
   );
   const [terrain, scenery] = manifests;
+  assert(terrain.format === REGION_FORMAT, 'Regional terrain profile must be complete');
+  assert(
+    scenery.format ===
+      (descriptor.format === SPARSE_REGIONAL_DELIVERY_FORMAT
+        ? SPARSE_SCENERY_FORMAT
+        : REGION_FORMAT),
+    'Regional delivery does not admit this scenery profile',
+  );
   assert(
     terrain.id === scenery.id && terrain.revision === scenery.revision,
     'Regional layer identities do not match',
@@ -303,7 +342,7 @@ export async function openRegionalLibrary({
         project: {
           id: descriptor.id,
           title: descriptor.title.en,
-          format: REGIONAL_DELIVERY_FORMAT,
+          format: descriptor.format,
           descriptor,
           pin: checked.pin,
         },

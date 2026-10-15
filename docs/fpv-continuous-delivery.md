@@ -4826,3 +4826,44 @@ qualification. Parallel lanes own Tropical materials/coastal composition and
 performance/favourite locations. The multi-kilometre worlds, sustained device
 qualification and D6 remain open. Preserve source, recovery refs, frozen candidates
 and browser storage; heavy outputs remain external/cloud.
+
+## 15 October 2026 — wider cells and independent content publication
+
+Root branch `codex/fpv-regional-progress-20261015-b` now follows main `83fd6525`.
+Wide-cell capability #1329 merged after native normal-player camera/arming checks
+and 4,013 production flight ticks across two boundaries. Source-only diagnostic
+fixture export is repeatable and refuses to overwrite a prior output. Existing
+128 m bytes, fixed source limits and memory budgets remain unchanged.
+
+Canyon district source #1326 and immutable delivery #1331 merged independently.
+Its 768 m region retains the old arrival geometry, adds six districts and passed
+24 commanded routes/123,566 ticks plus bounded native renderer inspection.
+Its separate Library entry is still under review; preserve the old 384 m row.
+Tropical source #1327 merged; Library #1328 is separately qualified against its
+exact source and current main. Frozen native sources and earlier saved entries
+remain preserved. Concurrent remote edits were merged without force or retargeting.
+
+Safe saved-location containment #1330 is merged. Favourite-place storage and UI
+continue separately; no restore may arm or overwrite a failed bookmark. Integrated
+package/offline qualification and multi-kilometre authored maps remain open.
+Do not describe these source checks as all-device, sustained FPS or public-release
+acceptance. Heavy outputs remain external; no player data or unpublished work was
+removed.
+
+## 15 October — cached flight and parallel large-region verification
+
+Root checkpoint is based on main `da0b0108`; exact-source evidence remains pinned.
+Saved places #1334 and renderer measurement #1336 are merged. Tropical qualification
+#1337 preserves the initial graphics deadline failure and subsequent same-package
+cached-flight pass with the origin stopped. No downloaded data was lost. A separate
+localized graphics failure/retry correction is in progress. The saved-place package
+passes blocked-location rejection, retained records, authored-start fallback, cached
+restore and deliberate flight; its independent detailed receipt follows.
+
+Coastal districts #1335 remain an early appearance study with composition work still
+needed. Canyon #1338 proves a new 8.192 km terrain source and representative routes,
+not a Library-ready or final-art region. The sparse-scene delivery contract and
+authoring overview-cell correction proceed independently of the art stack queue.
+No budgets, physics, old recordings or installed revisions are changed by this
+checkpoint. All-network offline, real elapsed long flights, physical controller/device
+coverage and final public deployment acceptance remain open.
