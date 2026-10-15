@@ -94,6 +94,8 @@ no native package was built for this UI revision.
 
 ## Recommended next work, in priority order
 
+**15 October follow-up:** bounded guide reactions, a contextual loss invitation and two complete Pressure Lines recordings are implemented. See the [current plan and qualification gaps](../demo-plan-status-2026-10-15.md). Physical iPhone and first-time-viewer checks are deferred by the user. The recommendations below remain the rationale for that work.
+
 1. **Qualify this layout on an actual iPhone.** Check Safari bars, rotation,
    fullscreen availability, audio disclosure and fresh touch takeover. The browser
    specimen proves layout geometry, not platform gestures or real device behavior.

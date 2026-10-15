@@ -134,7 +134,12 @@ export function createDemoCaptions() {
   let clock = 0,
     until = 0,
     key = 'demo:tipStart',
-    pending = [];
+    pending = [],
+    lastLesson = key,
+    reaction = null,
+    reactionsShown = 0,
+    lastReactionAt = -Infinity,
+    recovering = false;
   const seen = new Set();
   const cues = {
     'cut.started': 'demo:tipCut',
@@ -169,10 +174,37 @@ export function createDemoCaptions() {
       key = 'demo:tipStart';
       pending = [];
       seen.clear();
+      lastLesson = key;
+      reaction = null;
+      reactionsShown = 0;
+      lastReactionAt = -Infinity;
+      recovering = false;
     },
-    advance(seconds, events = []) {
+    get reacting() {
+      return key.startsWith('demo:reaction');
+    },
+    advance(seconds, events = [], { reactions = false, fresh = true } = {}) {
       clock += Math.min(0.25, Math.max(0, seconds));
+      // Personality never competes with a new lesson or replays delayed events.
+      // Only one recent reaction can wait; at most two appear in a scene.
+      if (!reactions || !fresh) {
+        reaction = null;
+        recovering = false;
+        if (key.startsWith('demo:reaction')) key = lastLesson;
+      }
       for (const event of events) {
+        if (reactions && fresh) {
+          let response = null;
+          if (event.type === 'player.failed') recovering = true;
+          if (event.type === 'cut.closed' && recovering) {
+            response = 'demo:reactionRecovery';
+            recovering = false;
+          }
+          if (event.type === 'shield.absorbed') response = 'demo:reactionShield';
+          if (event.type === 'objective.captured') response = 'demo:reactionObjective';
+          if (response && reactionsShown < 2 && clock >= 12 && clock - lastReactionAt >= 24)
+            reaction = { key: response, expires: clock + 8 };
+        }
         const next = cue(event);
         // The finite cue vocabulary bounds this queue. Keep each lesson once,
         // including same-tick capture/objective events, in its observed order.
@@ -181,8 +213,18 @@ export function createDemoCaptions() {
       if (pending.length && clock >= until) {
         key = pending.shift();
         seen.add(key);
+        lastLesson = key;
         until = clock + 6;
+      } else if (clock >= until) {
+        if (reaction && reaction.expires >= clock) {
+          key = reaction.key;
+          reaction = null;
+          reactionsShown++;
+          lastReactionAt = clock;
+          until = clock + 6;
+        } else key = lastLesson;
       }
+      if (reaction && reaction.expires < clock) reaction = null;
       return key;
     },
   };

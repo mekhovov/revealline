@@ -57,11 +57,11 @@ export async function loadDemoSources({
       // Only a complete strict verification can select it; never replace outcomes.
       const candidates = [clip.replayURL, ...(clip.replayVariants ?? [])];
       for (let index = 0; index < candidates.length; index++) {
-        const replay = await loadDemoRecording(
-          { ...clip, replayURL: candidates[index] },
-          { ...loading, fetch: fetcher, signal },
-        );
         try {
+          const replay = await loadDemoRecording(
+            { ...clip, replayURL: candidates[index] },
+            { ...loading, fetch: fetcher, signal },
+          );
           const isLastCandidate = index === candidates.length - 1;
           const player = await (isLastCandidate && clip.source !== 'local'
             ? prepareReviewedReplayPlayer(replay, { signal })
@@ -73,7 +73,7 @@ export async function loadDemoSources({
           return player;
         } catch (error) {
           if (
-            error.name !== 'ReplayVerificationError' ||
+            (error.name !== 'ReplayVerificationError' && error.code !== 'demo-asset-unavailable') ||
             signal?.aborted ||
             index === candidates.length - 1
           )
