@@ -1,0 +1,13 @@
+# Alpine station: quieter timber study
+
+The admitted station-r3 FPV view shows a strong wavy/repeating timber pattern as the narrow high-contrast boards recede along the wall. The original 25 cm boards and pixel grain are plausible contributors under minification with the existing linear filter. The screenshot does not establish a GPU or filtering defect, and this change does not add a runtime filter capability or claim to eliminate aliasing.
+
+This separate source study uses boards approximately 44–56 cm wide, softer lower-contrast seams, subtle per-board colour and slowly varying grain. All texture dimensions, sampling parameters, UVs, meshes, normals, collisions, starts and budgets stay unchanged. The 9,976 original masonry, opaque backed-panel/frame and eave pixels remain exact. Roof artwork and every earlier source, delivery pin and player package are preserved. Original new artwork remains CC0-1.0 RevealLine contributor work, with no external imagery.
+
+`verify-station-timber-art.mjs` checks the exact retained pixel contract, protected pixels, opacity and determinism. In a 5,100-pixel lower-wall comparison, mean adjacent red-channel contrast falls from 19.9841 to 1.9959 (about 10% of the original). That is a source-art metric, not a native aliasing, frame-rate or full-region appearance result.
+
+`prepare-station-timber.mjs <exact station-r3 source> <new external output>` refuses an existing output and requires exact accepted r3 manifests. It prepares a separate `relief-r4-quiet-timber` revision. Reuse `verify-station-materials.mjs` against the old/new complete sources for triangle/normal/collision, canonical GLB, three-tier owner and lifecycle checks; additionally compare the two affected source cells with textures excluded to prove every non-texture field remains exact.
+
+The completed source is 22,578,804 bytes, ten fewer than r3. Existing full-source verification passes all 104 cells, two canonical GLBs with zero validator errors/warnings, Performance/Balanced/Quality ownership and both disarmed modes, with zero disposal ownership. Each tier still uses 767,476 geometry bytes and 458,760 texture bytes at the station. The conservative 2,992,680-byte retained-plus-staged maximum remains unchanged. A separate two-cell comparison confirms all non-texture fields/UVs and original roof/white textures are exact. Receipts are in `receipts-quiet-timber-r1/`.
+
+Native same-camera before/after appearance remains a separate gate. No r4 delivery or Library admission follows from the pixel metric. Current r3 admission stays independent; broader Alpine art, offline/device qualification and elapsed endurance remain open.
