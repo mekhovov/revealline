@@ -52,3 +52,7 @@ node authoring/fpv-worlds/regions/coaster-park/verify-expanse-flight.mjs /absolu
 Generation uses the same pinned glTF-transform dependencies as the accepted intake; validation also needs `gltf-validator`. The generator refuses to overwrite output. Final external output is preserved at `/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261015/coaster-gardens-r3`, with independent repeat `coaster-gardens-r4`. Earlier exploratory outputs remain separate and are not relabelled as this revision.
 
 Remaining: native scene/shader and art review, refinement of density and route variety from that review, a complete pinned immutable delivery, a separate normal Library row, exact combined package installation/offline checks and physical device/controller acceptance. No browser tab was changed during the concurrent endurance run.
+
+## Reproducible authoring review
+
+The shared scenery inspection entry accepts `views=coaster-gardens` and a `view` slug matching any district ID above. Supply the scenery manifest through `manifest` and the terrain manifest through `companion`. Each link prepares only its verified local window. The existing shared flight preview accepts `profile=terrain-scenery-v1`, terrain `manifest` and `scenery`; choose one of the six authored starts and arm explicitly. These are authoring tools, not Library admission.
