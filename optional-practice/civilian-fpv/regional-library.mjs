@@ -664,7 +664,8 @@ export function mountRegionalLibrary({
     if (kind === 'refresh') show('', '');
     paint();
     const deadline = regionalOperationDeadline(win, controller, kind);
-    let committed = false;
+    let committed = false,
+      committedRefreshDeadline = null;
     try {
       const store = await waitFor(dbReady, signal);
       signal.throwIfAborted();
@@ -693,7 +694,16 @@ export function mountRegionalLibrary({
         signal.throwIfAborted();
         await store.install(row.pin, options);
         committed = true;
-        records = await store.list({ includeRevisions: true });
+        // The atomic save has finished. A metadata refresh must not retain the
+        // transaction's uncancellable UI or wait forever after navigation.
+        deadline.stop();
+        cancel.disabled = false;
+        committedRefreshDeadline = regionalOperationDeadline(win, controller, 'refresh');
+        show(
+          'Region saved. Refreshing saved regions…',
+          'Регіон збережено. Оновлення списку регіонів…',
+        );
+        records = await waitFor(store.list({ includeRevisions: true }), signal);
         show(
           'Region saved. Choose Fly when you are ready.',
           'Регіон збережено. Виберіть «Летіти», коли будете готові.',
@@ -777,6 +787,7 @@ export function mountRegionalLibrary({
       }
     } finally {
       deadline.stop();
+      committedRefreshDeadline?.stop();
       operation = null;
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
