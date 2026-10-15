@@ -415,6 +415,7 @@ const audioPreferences = createAudioPreferences({ audioMaster, window: win });
 const sound = new Soundscape({ audioMaster, persistentMusic: true });
 sound.configure({ master: 1, sfx: 0.7 });
 const audio = createOverflightAudio(sound, {
+  acquireGain: (settings) => music?.player.acquireGain(settings),
   getDestruction: () => encounterDisplay.snapshot(),
   presentation: {
     async readAudio(slot, settings) {
