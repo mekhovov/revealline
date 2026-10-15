@@ -4,6 +4,24 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'coaster-gardens-study',
+    title: {
+      en: 'Coaster Gardens — 2 km study',
+      uk: 'Сади атракціонів — пробний світ 2 км',
+    },
+    description: {
+      en: '2.048 × 2.048 km · six park districts and six starting points · unscored free flight. Explore garden plazas, a looping landmark, station terraces, service halls and woodland paths. Early static park study; rides do not move.',
+      uk: '2,048 × 2,048 км · шість паркових районів і шість стартових точок · вільний політ без заліку. Досліджуйте садові площі, петлю атракціону, тераси станції, службові павільйони й лісові доріжки. Ранній варіант парку; атракціони нерухомі.',
+    },
+    bytes: 33908597,
+    appearance: { terrain: 'plain' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json',
+      bytes: 29654,
+      sha256: '4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5',
+    },
+  },
+  {
     id: 'tropical-coastal-study',
     title: {
       en: 'Tropical coast — bounded flight study',
