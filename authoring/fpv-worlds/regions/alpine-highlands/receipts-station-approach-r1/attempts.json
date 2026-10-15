@@ -45,7 +45,7 @@
     },
     {
       "candidate": "4",
-      "state": "Fresh preparation in progress; corrected generator preflight passed",
+      "state": "Fresh preparation and full automated source qualification pass; native source gate open",
       "completedPreflight": [
         "Two cells validate and compile with zero GLB errors/warnings.",
         "Raw source to JSON to canonical GLB roundtrip exact.",
@@ -53,11 +53,17 @@
         "Eight upper knee/deck attachments."
       ],
       "remaining": [
-        "Complete fresh preparation and full source/collision/route/tier/disposal qualification.",
-        "Matched native source review.",
+        "Matched native source art/footprint/contact review.",
         "Distinct immutable/player gates if source is accepted."
       ],
-      "accepted": false
+      "accepted": false,
+      "sourceBytes": 22698929,
+      "fullSourceQualificationPassed": true,
+      "verification": {
+        "name": "alpine-station-approach-verification-candidate4-20261015.json",
+        "bytes": 20460,
+        "sha256": "f09c00b1fa859c606601d755bb978cf17232be5fc061f13e302acc01b1a0895c"
+      }
     }
   ]
 }
