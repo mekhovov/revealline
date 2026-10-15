@@ -56,6 +56,7 @@ const review = createOverflightReviewPlayback({
   build: 'echo',
   route: 'lure-and-return',
   trace: true,
+  detailTick: Number(process.argv.find((arg) => arg.startsWith('--detail-tick='))?.slice(14) ?? -1),
   pilot: mode.pilot,
   selectCard: mode.selectCard,
 });

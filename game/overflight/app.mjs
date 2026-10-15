@@ -253,6 +253,8 @@ const review = createOverflightReviewPlayback({
   stopAt: reviewStopAt,
   route: reviewControls.pilotArgument,
   trace: traceReview,
+  detailTick:
+    traceReview && params.has('reviewTraceAt') ? Number(params.get('reviewTraceAt')) : null,
   pilot: (run, route) => mode.pilot(run, route),
   selectCard: mode.selectCard,
 });
@@ -1654,6 +1656,7 @@ if (reviewBuild) {
     'reviewStopAt',
     'reviewRoute',
     'reviewTrace',
+    'reviewTraceAt',
     'autoplay',
     'benchmark',
     'trial',
