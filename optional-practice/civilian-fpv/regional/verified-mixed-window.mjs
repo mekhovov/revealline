@@ -1,3 +1,4 @@
+import { requireRestoreClearance } from './restore-containment.mjs';
 import { regionalCollisionCounts } from './region-motion-query.mjs';
 import { earlierFlightHit } from "../flight-contact.mjs";
 /** Atomic terrain/scenery composition for unscored authoring, never World.v1. */
@@ -240,6 +241,8 @@ export function createVerifiedMixedWindow(
         ),
         "Mixed local origins disagree",
       );
+      if (supportPose?.requireClearRestore) await pair.scenery.prepareRestoreProof();
+      current(token);
       pair.group.add(pair.terrain.group, pair.scenery.group);
       if (transaction?.prepare)
         await prepareVerifiedFrame(transaction, pair.group, () =>
@@ -261,6 +264,10 @@ export function createVerifiedMixedWindow(
             "scenery-clear",
           "Mixed scenery intersects required body pose",
         );
+      }
+      if (supportPose?.requireClearRestore) {
+        const { positionMm, radiusMm } = supportPose;
+        requireRestoreClearance(pair.scenery.restoreClearance({ ...positionMm, y: positionMm.y + radiusMm }, radiusMm));
       }
       const buildingReceipts = new Map(
         buildings.provenance.chunks.map((chunk) => [chunk.chunkId, chunk]),
@@ -337,7 +344,7 @@ export function createVerifiedMixedWindow(
         if (supportPoseInput !== null) {
           fail(
             supportPoseInput &&
-              Object.keys(supportPoseInput).length === 2 &&
+              Object.keys(supportPoseInput).length === (supportPoseInput.requireClearRestore === true ? 3 : 2) &&
               Object.hasOwn(supportPoseInput, "positionMm") &&
               Object.hasOwn(supportPoseInput, "radiusMm"),
             "Invalid mixed support pose",
@@ -354,7 +361,7 @@ export function createVerifiedMixedWindow(
             "Invalid mixed support pose",
           );
           terrainPlan(p);
-          supportPose = { positionMm: pointCopy(p), radiusMm };
+          supportPose = { positionMm: pointCopy(p), radiusMm, ...(supportPoseInput.requireClearRestore === true ? { requireClearRestore: true } : {}) };
         }
       } catch (error) {
         return Promise.reject(error);
