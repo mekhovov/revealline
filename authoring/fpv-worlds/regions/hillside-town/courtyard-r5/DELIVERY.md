@@ -16,3 +16,5 @@ node authoring/fpv-worlds/regions/hillside-town/verify-courtyard-delivery.mjs
 ```
 
 The adjacent original license and provenance preserve the CC0 Kenney Building Kit attribution; derived original patterns do not replace the licensed source files. This is source publication, not Library admission. Native player installation/selection, exact packaged runtime and offline qualification remain separate. The accepted comparison is an incremental courtyard material improvement; sparse surroundings and white floors remain and representative final-art quality is still open.
+
+The immutable remote source is commit `ce13f7955d30d3f6417458c7f44b01e047d345e5`. The production downloader verified all 39 actual HTTP responses against the exact descriptor and payload hashes; `remote-delivery-verification.json` records that bounded download proof.

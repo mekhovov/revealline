@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json",
+    "bytes": 6579,
+    "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573"
+  },
+  "responses": 39,
+  "files": 38,
+  "totalBytes": 8660487,
+  "revision": "courtyard-r5",
+  "scope": "Actual immutable HTTP closure verified; no browser installation, player or offline claim."
+}
