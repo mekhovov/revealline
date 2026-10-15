@@ -691,7 +691,7 @@ export function mountRegionalLibrary({
         records = await waitFor(store.list({ includeRevisions: true }), signal);
         removal = null;
       }
-    } catch {
+    } catch (error) {
       if (kind === 'remove') removal = null;
       if (!closed && requestEpoch === epoch) {
         if (committed)
@@ -708,6 +708,11 @@ export function mountRegionalLibrary({
           show(
             'Cancelled. Existing downloads are retained.',
             'Скасовано. Наявні завантаження збережено.',
+          );
+        else if (error?.name === 'QuotaExceededError')
+          show(
+            'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
+            'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
           );
         else
           show(
