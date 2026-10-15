@@ -48,6 +48,10 @@ The check covers:
   launchers offline. An uncached network probe must fail before each launch.
 - Reopening three new installed standalone windows while still offline, then
   reaching each app's mounted start screen through the public launcher action.
+- Closing the persistent browser context, requiring its close event, and launching
+  a new browser on the same disk profile with offline enabled before application
+  navigation. All three stable launchers and installed windows must reopen again;
+  the uncached network probe and unchanged profile/proof exports are rechecked.
 - Offline startup and byte-identical exported FPV flight proofs and profile settings.
 - Installation over the admitted previous candidate or the declared path fixture.
 - A truncated dependency rejected without advancing installation pointers.
@@ -91,10 +95,21 @@ Bundle admission happens before that deadline. The unit regression is
 `node --test scripts/test-optional-installation-observer.mjs`.
 
 The receipt's `closedTabsRelaunch` identifies the zero-surviving-page transition;
-each installed app also records its new `offlineWindow`. This is an offline
-**window** relaunch in the same isolated persistent browser process, not an OS
-reboot or browser-process restart. Those remain separate qualification steps.
+each installed app also records its new `offlineWindow`. The new `browserRestart`
+field separately records attempted/passed process restart, confirmed context
+closure, and each app's `restartedOfflineWindow`. An overall pass now requires
+both transitions. Failure receipts retain the attempted/passed distinction.
+Browser-context offline emulation and a failed uncached probe are not an OS
+reboot, physical airplane-mode test or proof that every external origin was
+unreachable. Those remain separate qualification steps. Historical receipts
+without these restart fields only establish their original window-relaunch scope.
 Both observer and helper hashes are recorded and rechecked before declaring a pass.
+
+The [15 October observation](flight-practice-observation-2026-10-15.md) passed nine
+checkpoints on unchanged candidate runtime bytes from `da0b010820`, using authorized
+normal-form access. It includes the new browser restart, while retaining a prior
+hidden-Open-link timeout. Its update remains a same-payload path fixture, not a
+distinct-release migration. Current reports must retain those separate boundaries.
 
 The October 14 three-app extension has helper/contract regressions, but its first
 source-bound attempt against `8718babd1827383a22596c5a0156b280a594929d`

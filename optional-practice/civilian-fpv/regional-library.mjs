@@ -24,6 +24,24 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
     id: 'canyon-arrival-landmarks-study',
     title: {
+      en: 'Canyon Badlands — six districts',
+      uk: 'Каньйон — шість районів',
+    },
+    description: {
+      en: '768 × 768 m · six districts and six starting points. Explore the basin, mesa, winding gorge, twin buttes, split ravine and sunset shelf in a stylized region for unscored free flight.',
+      uk: '768 × 768 м · шість районів і шість стартових точок. Досліджуйте улоговину, плато, звивисту ущелину, парні скелі, роздвоєну балку й терасу у стилізованому регіоні для вільного польоту без заліку.',
+    },
+    bytes: 3404577,
+    appearance: { terrain: 'canyon' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/dbfa4cef92866938ce05815ee9beb4830d935647/authoring/fpv-worlds/regions/canyon-badlands/delivery-districts-r1/delivery.json',
+      bytes: 24279,
+      sha256: 'f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8',
+    },
+  },
+  {
+    id: 'canyon-arrival-landmarks-study',
+    title: {
       en: 'Canyon Badlands — regional preview',
       uk: 'Каньйон — огляд регіону',
     },
