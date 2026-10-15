@@ -202,7 +202,10 @@
         "game/test/settings-assists-host.test.mjs",
         "game/test/text-face-host.test.mjs",
         "game/test/text-size-host.test.mjs",
-        "game/test/ukraine-role-host.test.mjs"
+        "game/test/ukraine-role-host.test.mjs",
+        "game/test/enemy-stats.test.mjs",
+        "game/test/enemy-stats-events.test.mjs",
+        "game/test/team-enemy-stats-ownership.test.mjs"
       ]
     }
   ]
