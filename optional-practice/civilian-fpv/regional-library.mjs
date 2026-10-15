@@ -35,6 +35,15 @@ export const DESERT_LANDMARKS_LIBRARY_PIN = Object.freeze({
   },
   bytes: 48164518,
   appearance: { terrain: 'desert' },
+  // Exact reviewed landmark revision: face each nearby composition from its unchanged start.
+  startHeadings: Object.freeze({
+    'crescent-dunes': 14446,
+    'dry-wash': 15163,
+    'salt-basin': 17740,
+    'sunrise-escarpment': 12247,
+    'mesa-corridor': 10280,
+    'rocky-plain': 14839,
+  }),
   pin: {
     url: 'https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json',
     bytes: 329271,
@@ -335,8 +344,21 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     ].includes(terrain)
   )
     throw new TypeError('Unknown trusted regional terrain appearance');
+  const authoredStartHeadings = {};
+  for (const [id, heading] of Object.entries(approved?.startHeadings ?? {})) {
+    if (
+      !configuration.manifest.spawns.some((spawn) => spawn.id === id) ||
+      !Number.isSafeInteger(heading) ||
+      heading < 0 ||
+      heading >= 36000
+    )
+      throw new TypeError('Invalid trusted regional starting heading');
+    authoredStartHeadings[id] = heading;
+  }
   return {
     ...configuration,
+    // Re-resolving an unknown or older pin clears any previous revision's hints.
+    authoredStartHeadings: Object.freeze(authoredStartHeadings),
     source: { ...configuration.source, surfaceStyle: terrain },
   };
 }
@@ -349,8 +371,15 @@ export function regionalPresentationOptions(configuration, quality) {
     configuration.source?.surfaceStyle ?? 'plain',
     tiers[quality],
   );
+  const spawnId = configuration.spawnId ?? configuration.manifest?.spawns?.[0]?.id;
+  const headings = configuration.authoredStartHeadings ?? {};
+  const initialHeading =
+    !configuration.savedStart && Object.hasOwn(headings, spawnId)
+      ? headings[spawnId]
+      : 'region-centre';
   return {
     ...configuration,
+    initialHeading,
     source: {
       ...configuration.source,
       surfaceStyle: surface.style,
