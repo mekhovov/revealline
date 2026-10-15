@@ -72,3 +72,14 @@ Pause invariance and disposal were checked through the shared production session
 The full receipt is `expanse-flight-verification.json`. These are controlled
 representative routes, not an uninterrupted traversal of the entire map.
 Native composition review remains pending.
+
+## Authoring camera compatibility
+
+The first native inspection showed visible terrain in FPV/Chase but sky in
+Loaded area. The authoring preview still calculated chunk bounds at 128 m and
+used a fixed 900 m far plane, despite accepting the new 256 m grid. It now uses
+the validated manifest cell size for both. Production regional rendering already
+handled this distinction. An executable check invokes the actual preview bounds
+callback and shared camera code for both sizes, asserting that the admitted
+ground centre is centred and the resident corners survive depth clipping.
+Native re-inspection of this presentation-only correction remains pending.
