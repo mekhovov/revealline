@@ -4,6 +4,24 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'tropical-coastal-study',
+    title: {
+      en: 'Tropical coast — bounded flight study',
+      uk: 'Тропічне узбережжя — дослідження польоту',
+    },
+    description: {
+      en: '384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.',
+      uk: '384 × 384 м · два пірси, хатина на палях, пальми й дюни · вільний політ без заліку. Тренуйте проходи, низький політ та маршрут уздовж берега. Ранній огляд узбережжя; вода лише візуальна.',
+    },
+    bytes: 5982641,
+    appearance: { terrain: 'tropical' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json',
+      bytes: 6602,
+      sha256: 'ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443',
+    },
+  },
+  {
     id: 'canyon-arrival-landmarks-study',
     title: {
       en: 'Canyon Badlands — six districts',
@@ -88,7 +106,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway'].includes(terrain))
+  if (!['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(terrain))
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,
