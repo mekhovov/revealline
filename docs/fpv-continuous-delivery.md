@@ -5246,3 +5246,44 @@ Alpine grounding source #1504 and immutable r5 #1508 merged normally, preserving
 earlier geometry/edition data; separate Library admission and final art remain.
 R4 #1501 exact integrated package/native, record-access #1507 package/native and
 recording archive/storage D6 #1509 exact cloud/review gates continue independently.
+
+
+## 15 October, 20:32 UTC — close bounded gates and preserve independent failures
+
+Alpine r4 #1501 merged `d6f93f71`; exact `e8a79844` / `a9b9eb0a` native 9192
+passes normal dual-edition download/cache, representative starts, cameras/mode,
+explicit arm/pause, EN/UK and responsive browser checks. [Receipt](fpv-alpine-quiet-r4-e8-native-20261015.json).
+R5 #1513 `40685bbc` / `493dd96b` independently passes its cloud and fresh 9203
+native gate, preserving all 22 prior offers plus new concourse materials. Both
+r5/r4 survive reload and prepare cached, disarmed at 114 m. Summit apron/open
+passage, FPV/Overview/Chase, Acro/reset/explicit arm/pause, EN/UK and three viewport
+sizes are observed. [Separate receipt](fpv-alpine-station-r5-40685-native-20261015.json).
+Publication status and final representative art are distinct from this bounded gate.
+
+A genuine normal grounded live attempt now populates session storage. Explicit
+Pause→normal tab close/reopen→Resume interrupted flight restores paused with Arm
+available. Every stored byte remains identical after recovery/close, including
+previous installed worlds/revisions/place/published example; [full comparison](fpv-storage-continuity-live-session-comparison-20261015.json)
+and [receipt](fpv-storage-continuity-live-session-native-20261015.json). Actual
+application restart, moving-flight crash, whole-network offline and eviction are
+still separate open journeys.
+
+Library records shortcut #1507 merged `4ed8d055`, unchanged exact e27. Canonical
+single controls, keyboard/compact focus return, EN/UK and paused access pass.
+Fresh normal download/cached Fly after shortcut also succeeds, with explicit arm
+required. The original native [closing-IDB failure](fpv-library-records-closing-db-negative-20261015.txt)
+is preserved and unresolved; normal reopen recovery is not its cause/fix. [Scope](fpv-library-records-e27-native-20261015.json).
+Original 600-second local-UX timeout remains incomplete evidence; required normal
+retry passes 645/645. D6 archive/storage #1509 merged `68cb206b`, exact cloud
+66/66 recordings and 650/650 local-UX pass, with broader D6 still open.
+
+Attribution receive-time retention #1511 merged `b5b114c8`; unchanged production
+on fresh 9202 completes 300.0047 actual seconds /15,000 ticks under strict focus.
+All seven LoAF rows retain early phase facts despite the final window advancing;
+bounds/lower-bound disclosure work and malformed/read failures are zero. [Full
+report](fpv-authored-urban-retention-five-minute-20261015.json) and [receipt](fpv-authored-urban-retention-five-minute-native-20261015.json).
+Zero contacts/owned disposal, but only four crossings/three waypoints/zero circuits:
+route coverage false and **no authored two-hour pass**. The earlier four actual
+failures remain unchanged. JS descendants/GC/scheduling require causal observation,
+not a production guess. No active elapsed run or root renderer remains at this
+checkpoint. Storage, packages, failed artifacts and earlier editions are preserved.
