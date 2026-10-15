@@ -5,6 +5,42 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — elapsed pass and native admission progression
+
+This checkpoint supersedes the historical entries below. The complete roadmap
+remains **open**; user-facing world quality and final release qualification are
+not inferred from source checks.
+
+- **P1 merged:** #1381 fixes false two-minute cancellation of progressing regional
+  downloads. It retains inactivity and total-duration ceilings, exact hashes,
+  atomic install ownership and all byte budgets. Eight native fixture cases and
+  the exact optional/company package checks pass. Virtual-clock transfer cases
+  are distinguished from real network timing.
+- **P4 elapsed case complete:** #1385 records an actual uninterrupted 7,200.0052 s
+  synthetic-corridor browser run: 360,000 physics ticks, 269 recentres and zero
+  contacts, with exact runtime/archive identity and bounded resource receipts.
+  This closes that workload only. Full-region sustained play, physical devices,
+  network-wide offline and final D6/release qualification remain open.
+- **P1 native admission:** the frozen graphics-recovery package passes normal
+  Library launch, explicit arm, Pause and disarmed restart. Coastal Districts'
+  qualified package passes Download → saved Fly, three camera views, safe mode
+  and district changes, saved revision after reload and 390 × 844 layout.
+  Newer reconciled PR heads must be compared and qualified separately before
+  publication. See `fpv-native-regional-admission-20261015.md`.
+- **P3 preserved drafts:** corrected Hillside source/delivery #1376 → #1383 use
+  native stack #1384; draft Library #1388 remains behind visual/package gates.
+  Coaster source/delivery #1382 → #1386 use stack #1387 and remain a 2.048 km
+  study, not the 4 km target. Desert delivery #1389 extends stack #1379 after
+  #1372 → #1378. It is a 16.384 km authored source pending player admission and
+  presentation acceptance; the new sand/salt/stone treatment is separate.
+
+Continue **P1** exact player/recovery admission, **P2** pilot-height art reviews
+and refinement, **P3** independent authored regions with immutable delivery, and
+**P4/D6** remaining integrated release coverage in parallel. Browser measurements
+and visual reviews run sequentially to avoid competing active rendering loads;
+engineering and protected publication need not wait for a merge queue. No budget,
+player data, old revisions or unfinished work is removed.
+
 ## 15 October — exact packages and independent larger-world sources
 
 Coordinator checkpoint: main `87dbcfda`. This section supersedes the historical

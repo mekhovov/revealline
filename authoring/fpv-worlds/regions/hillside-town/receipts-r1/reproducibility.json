@@ -1,0 +1,211 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "path": "preparation.json",
+      "bytes": 5127,
+      "sha256": "2f930bc519741f2416ba5368384cfdea30a3f62c8f9a7899354771c6e1daf976"
+    },
+    {
+      "path": "source-provenance.json",
+      "bytes": 2578,
+      "sha256": "fe34bc7c5f3968c2cab25bf6e6aab9c14c0a0a59d751b90b741017d090e16822"
+    },
+    {
+      "path": "License.txt",
+      "bytes": 715,
+      "sha256": "60a07f9108f5a3fc5f9429fd1faa5b168c05cc085354f78ed48180ef32ec6209"
+    },
+    {
+      "path": "scenery/town-1-0.glb",
+      "bytes": 359104,
+      "sha256": "c36bdf4fa8be44a7fa02deb4d9cb36c433d8d88c3233e44a25258dcef9746a4d"
+    },
+    {
+      "path": "scenery/town-1-1.glb",
+      "bytes": 360000,
+      "sha256": "9af5cced14c6eb89c63b1d3926168d93be396f1a4a1c6228c1edfcd87482c1b6"
+    },
+    {
+      "path": "scenery/town-1-2.glb",
+      "bytes": 358272,
+      "sha256": "128da2b86aba4bfed0734b603a329d1d4d5f4f1b13fbddcb18a0bf4d2e3f1d3f"
+    },
+    {
+      "path": "scenery/town-1-2.json",
+      "bytes": 508073,
+      "sha256": "808796ff5ef94e539114b7bf54158599bb0e5fc2956de2f7307aba944588cdc0"
+    },
+    {
+      "path": "scenery/town-2-1.glb",
+      "bytes": 352640,
+      "sha256": "49c273b0bd171502fd05f955461e68a4e4453af3fa63ff5181a0ca2229d87b16"
+    },
+    {
+      "path": "scenery/town-2-0.json",
+      "bytes": 495537,
+      "sha256": "693b609b4ce35ec06d7c469c0cce789c8ce9829f04041b777419244388901fea"
+    },
+    {
+      "path": "scenery/town-0-2.glb",
+      "bytes": 351776,
+      "sha256": "438c3cc1dfd1456950f4f101abc6b91cb91148c3db54ad8993e50690a180d2a7"
+    },
+    {
+      "path": "scenery/town-2-0.glb",
+      "bytes": 352176,
+      "sha256": "78d2ad25ac9062b2dcdb23e32932cefb7cb47eac22c240091869ead5813c85f5"
+    },
+    {
+      "path": "scenery/town-0-1.json",
+      "bytes": 501569,
+      "sha256": "44ec78e7909de62e8b48d2c950a429bf5598575722ebeb3fd6ca50ef8906a177"
+    },
+    {
+      "path": "scenery/town-2-2.glb",
+      "bytes": 355928,
+      "sha256": "877fd4a73562ff4ee7a831c040c5fc6720206a4e57d2252bacfedfbb36c63d3a"
+    },
+    {
+      "path": "scenery/town-0-0.glb",
+      "bytes": 352176,
+      "sha256": "91736eebc1c6eeced952d04609096ccd555066c71ea66c41b10f9d6122d8596d"
+    },
+    {
+      "path": "scenery/town-0-1.glb",
+      "bytes": 352640,
+      "sha256": "9e5250a470d9f4bb3b5e5cef962b5fb28c2e6e91d4f950ed7d97b93042aa0ce2"
+    },
+    {
+      "path": "scenery/town-0-0.json",
+      "bytes": 496893,
+      "sha256": "ed7883564cf57e3e4be5db682a76720c00f61af1288afeea5128655c9dde9c4d"
+    },
+    {
+      "path": "scenery/town-2-1.json",
+      "bytes": 500129,
+      "sha256": "2ca0f1576ab462490433a7956dbde557e159c79d75f2a633ea79c676c1dc5c3a"
+    },
+    {
+      "path": "scenery/town-2-2.json",
+      "bytes": 503035,
+      "sha256": "7baa94b192baed5ce914d70c350ddf0d7aed6226227fed4feb11eb7c60247732"
+    },
+    {
+      "path": "scenery/town-0-2.json",
+      "bytes": 500381,
+      "sha256": "a199b6da3d8311938f5f289020204e8867dc1056efcbbe9c5b64040346c7c625"
+    },
+    {
+      "path": "scenery/town-1-1.json",
+      "bytes": 510305,
+      "sha256": "426097327c37907c7f6536c88a3af0dc140d24ce10434d1dedf391ea4b087926"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 4156,
+      "sha256": "fd4e19599ab8b87f71cbbffdf58b350d1b638ace6c7de74dd613526409e72571"
+    },
+    {
+      "path": "scenery/town-1-0.json",
+      "bytes": 504129,
+      "sha256": "8c4c7cddfd35c5a245d60ae64d772e65c3be4f3b8ad7356322f663f9a9d1c430"
+    },
+    {
+      "path": "terrain/town-1-0.glb",
+      "bytes": 38384,
+      "sha256": "2dfa00ce9e95e97fc2c4e04b4dd98eb92f0b80d0128a1fc7956d2c69daa0a8c3"
+    },
+    {
+      "path": "terrain/town-1-1.glb",
+      "bytes": 38388,
+      "sha256": "ce0452e75a3294ebbddc1608313c6458d8c713c9432addb5f479808416ae470d"
+    },
+    {
+      "path": "terrain/town-1-2.glb",
+      "bytes": 38388,
+      "sha256": "90ecde4162a3ac49ad8a47d561ee7ebecb839c1141ef2cea799e3d0f0d9d9355"
+    },
+    {
+      "path": "terrain/town-1-2.json",
+      "bytes": 6649,
+      "sha256": "10dc78736ad67738896a086d9b45c902ba87ce68cd78bd722d1b89c44b82bfae"
+    },
+    {
+      "path": "terrain/town-2-1.glb",
+      "bytes": 38388,
+      "sha256": "1c5065854c235dfbf5cdc542619ee390cdbe5637419fec2f2bcb80f0c3ee6702"
+    },
+    {
+      "path": "terrain/town-2-0.json",
+      "bytes": 2689,
+      "sha256": "9fbace2374e51879ec8855939f3a0a9d0f45c78f3c484e7a882095c058ddf99d"
+    },
+    {
+      "path": "terrain/town-0-2.glb",
+      "bytes": 38388,
+      "sha256": "8ef3cd292855936c5fd3c46a8925902bac2c6f302f5fcba5ef31ca971cfe99a5"
+    },
+    {
+      "path": "terrain/town-2-0.glb",
+      "bytes": 38384,
+      "sha256": "efb4d6eea1bab8e3c1f5790ba36a289cb8a03beaa4d8727ff6dd6c6e4a6a7f66"
+    },
+    {
+      "path": "terrain/town-0-1.json",
+      "bytes": 6550,
+      "sha256": "a6b598775a52cf82ae401a4e2783c034d8ed0f1e2951d9b1dc2b4eb2dacd7e07"
+    },
+    {
+      "path": "terrain/town-2-2.glb",
+      "bytes": 38388,
+      "sha256": "97e6b9e3d060cae8816416a170a03b02c75829b61600674db6e28060fff6e9c8"
+    },
+    {
+      "path": "terrain/town-0-0.glb",
+      "bytes": 38384,
+      "sha256": "060059784db2590a9c268742d7c0a3da1d097da3c861dab176bab6861a10af88"
+    },
+    {
+      "path": "terrain/town-0-1.glb",
+      "bytes": 38388,
+      "sha256": "b1208e567db72d0409e322f8fccf8807ee0d01acbef4210b88763fa514913502"
+    },
+    {
+      "path": "terrain/town-0-0.json",
+      "bytes": 2689,
+      "sha256": "05f8680c7b0fdc5ebabfce99e59efc4e700827d5b00f26b4264e9ec5e2672606"
+    },
+    {
+      "path": "terrain/town-2-1.json",
+      "bytes": 6550,
+      "sha256": "eedbbb64425dd8f29b109cf9ed4f9d762dc69503e12e5adc75e7ce65a0df0e09"
+    },
+    {
+      "path": "terrain/town-2-2.json",
+      "bytes": 6649,
+      "sha256": "41868ec760d208826436a0946f478acc3e0095946e8051ade3a75bb6c691d06b"
+    },
+    {
+      "path": "terrain/town-0-2.json",
+      "bytes": 6649,
+      "sha256": "2e7de41e8bb3bdbb48116d68d8b62e4afd73da898ce8b7a49d5a37484d4dd8b9"
+    },
+    {
+      "path": "terrain/town-1-1.json",
+      "bytes": 6550,
+      "sha256": "8b6682bf403b70f1eae6ca75bee107e5c81f8ad2bf0c03ff1f2e1971709c93c3"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 4129,
+      "sha256": "8f5015ec55dcf6836fdd12b2c3ddcd8cf1bc912b0637f1c969d0f6a7c87cab45"
+    },
+    {
+      "path": "terrain/town-1-0.json",
+      "bytes": 2689,
+      "sha256": "6513fb7324f6fe6a918c585d7cc43ec21d70e6e546aa6efba8393e87550a45f9"
+    }
+  ],
+  "scope": "Two fresh source builds; no runtime package or native appearance claim."
+}
