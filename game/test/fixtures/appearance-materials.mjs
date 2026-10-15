@@ -447,6 +447,37 @@ export function evaluateControlStateSemantics(
   return { status: checks.every((check) => check.passed) ? 'passed' : 'failed', checks };
 }
 
+/** Check captured geometry without treating scrollable input values as clipped labels. */
+export function evaluateCloseUpLayout(samples, viewportWidth) {
+  if (!samples.length) return { status: 'skipped', checks: [] };
+  const checks = samples.flatMap((sample) => {
+    const { rectangle: rect, minTarget, id } = sample;
+    return [
+      {
+        id: `${id}.within-viewport`,
+        passed: rect.x >= -1 && rect.width > 0 && rect.x + rect.width <= viewportWidth + 1,
+      },
+      {
+        id: `${id}.target-size`,
+        passed:
+          minTarget === null ||
+          (Number.isFinite(minTarget) &&
+            minTarget > 0 &&
+            rect.width >= minTarget - 0.5 &&
+            rect.height >= minTarget - 0.5),
+      },
+      {
+        id: `${id}.content-fits`,
+        passed:
+          sample.scrollableValue ||
+          (sample.scrollWidth <= sample.clientWidth + 1 &&
+            sample.scrollHeight <= sample.clientHeight + 1),
+      },
+    ];
+  });
+  return { status: checks.every((check) => check.passed) ? 'passed' : 'failed', checks };
+}
+
 /** Native-size composition. Only layout is supplied by the fixture stylesheet. */
 export function createMaterialCloseUp(document, container) {
   const element = (tag, text, className) => {
@@ -750,6 +781,34 @@ function mount(document, window) {
     ].includes('failed')
       ? 'failed'
       : semantics.status;
+    const closeUpLayout = evaluateCloseUpLayout(
+      closeUp.hidden
+        ? []
+        : [...closeUp.querySelectorAll('[data-close-up-control], [data-close-up-surface]')].map(
+            (node) => {
+              const rect = node.getBoundingClientRect();
+              return {
+                id: node.dataset.closeUpControl ?? node.dataset.closeUpSurface,
+                rectangle: { x: rect.x, width: rect.width, height: rect.height },
+                minTarget: node.dataset.closeUpControl
+                  ? parseFloat(window.getComputedStyle(node).getPropertyValue('--iw-target'))
+                  : null,
+                scrollableValue: node.matches('input, textarea, select'),
+                scrollWidth: node.scrollWidth,
+                clientWidth: node.clientWidth,
+                scrollHeight: node.scrollHeight,
+                clientHeight: node.clientHeight,
+              };
+            },
+          ),
+      window.innerWidth,
+    );
+    control('layout-status').textContent =
+      `Close-up layout: ${closeUpLayout.status} · Viewport: ${window.innerWidth} CSS px` +
+      closeUpLayout.checks
+        .filter((check) => !check.passed)
+        .map((check) => ` · ${check.id}`)
+        .join('');
     control('measurements').textContent = JSON.stringify(
       {
         family: family.value,
@@ -760,6 +819,7 @@ function mount(document, window) {
         forcedColors,
         semantics,
         controlSemantics,
+        closeUpLayout,
         viewport: {
           width: window.innerWidth,
           height: window.innerHeight,
