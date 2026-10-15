@@ -126,8 +126,7 @@ export function regionalStartingPoint(entry, spawnId) {
 export function createRegionalSession(configuration) {
   const runtime = createRegionalFlightPrototype({ ...configuration, continuous: true });
   let lastInput = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
-  const snapshot = () => {
-    const state = runtime.snapshot();
+  const present = (state) => {
     return {
       ...state,
       attitude: attitude(state.orientation),
@@ -143,7 +142,7 @@ export function createRegionalSession(configuration) {
   };
   return Object.freeze({
     root: runtime.root,
-    snapshot,
+    snapshot: () => present(runtime.snapshot()),
     prepare: runtime.prepare,
     cancelPreparation: runtime.cancelPreparation,
     arm: runtime.arm,
@@ -154,9 +153,9 @@ export function createRegionalSession(configuration) {
         ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, input[key]]),
       );
       const before = runtime.snapshot().ticks;
-      runtime.step(axes);
-      if (runtime.snapshot().ticks > before) lastInput = quantizeFlightInput(axes);
-      return snapshot();
+      const state = runtime.step(axes);
+      if (state.ticks > before) lastInput = quantizeFlightInput(axes);
+      return present(state);
     },
   });
 }
