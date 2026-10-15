@@ -1,0 +1,212 @@
+{
+  "format": "FPVRegionalDelivery.v1",
+  "id": "canal-city-study",
+  "revision": "district-r2",
+  "title": {
+    "en": "Canal City — bridges and courtyards",
+    "uk": "Місто каналів — мости й подвір’я"
+  },
+  "terrain": {
+    "path": "terrain/region.json",
+    "bytes": 4294,
+    "sha256": "d5f4d8be1ff3da5ce65e56075282794bb18cf31de28c5cfe76962ded50fcac11"
+  },
+  "scenery": {
+    "path": "scenery/region.json",
+    "bytes": 4321,
+    "sha256": "e2ee7fff225123d15fe03cb189560b5431d4144f78899a4d15fed7f3c9af41a8"
+  },
+  "files": [
+    {
+      "path": "scenery/canal-0-0.glb",
+      "bytes": 383168,
+      "sha256": "32c1a6a359a0f0dd2eac6ded3e1ebeac169faec981676db66c56c8a3212079c7"
+    },
+    {
+      "path": "scenery/canal-0-0.json",
+      "bytes": 547004,
+      "sha256": "e455cbd8d44b8644a9a8737b6959a8c9f947ffa9dd96ba361feead6bebbb69a1"
+    },
+    {
+      "path": "scenery/canal-0-1.glb",
+      "bytes": 359392,
+      "sha256": "18325fb68b5d2530783cad704d58fe9e1e6fdd871e561faa14a511fefc399f49"
+    },
+    {
+      "path": "scenery/canal-0-1.json",
+      "bytes": 480009,
+      "sha256": "34a1b43026328f73e706ad94edea915f67a52ae18ebfdbceed09564da61c6c95"
+    },
+    {
+      "path": "scenery/canal-0-2.glb",
+      "bytes": 317836,
+      "sha256": "335ca169b6a4b3e84123830f88331e29fe5c5b0203f0d3770f027458789bbbc7"
+    },
+    {
+      "path": "scenery/canal-0-2.json",
+      "bytes": 447626,
+      "sha256": "b39b8dcbadae8f8425b97fde27d5ddaa5eca9ffd6d844e0480832da2e6ff3da5"
+    },
+    {
+      "path": "scenery/canal-1-0.glb",
+      "bytes": 394144,
+      "sha256": "fafc1343ee56d4d65830b5d3e06d2cc6c3dfd00af8bbb3d9aada732b7346c58e"
+    },
+    {
+      "path": "scenery/canal-1-0.json",
+      "bytes": 561871,
+      "sha256": "614389aa934876381b1793a336f254c29ca095cca9ad055ac69456dffffd25e3"
+    },
+    {
+      "path": "scenery/canal-1-1.glb",
+      "bytes": 167944,
+      "sha256": "712ca875b398bd4aceb8c33295584619e4ff9cff27a714e63cbf0521545bb206"
+    },
+    {
+      "path": "scenery/canal-1-1.json",
+      "bytes": 212574,
+      "sha256": "e5b76e152492d436ccfb84e283118fb0adf3dc032b501b11784d043a12bd6e72"
+    },
+    {
+      "path": "scenery/canal-1-2.glb",
+      "bytes": 355836,
+      "sha256": "5f45ecf32ae09783a65aafcd9defd0173efd8c22d067747115d9ef1bd0cda2d8"
+    },
+    {
+      "path": "scenery/canal-1-2.json",
+      "bytes": 501993,
+      "sha256": "6b411d1944be0221f01d84f1f5869e2216ba5109dfa7428ce1a97309fe5ae962"
+    },
+    {
+      "path": "scenery/canal-2-0.glb",
+      "bytes": 105288,
+      "sha256": "2bfe9734ef9507184e6e9170de1b9ed7e4da094e42a62c63687348b70b389b25"
+    },
+    {
+      "path": "scenery/canal-2-0.json",
+      "bytes": 133953,
+      "sha256": "e23566e079c926ec9f669570398350307aa63135b02f975d0af13c120f3268f1"
+    },
+    {
+      "path": "scenery/canal-2-1.glb",
+      "bytes": 286396,
+      "sha256": "1c6368ed7275411cc11a2c0cb0bfdef8cca6ae6c6cfe74fd137fcb4f3978a1a7"
+    },
+    {
+      "path": "scenery/canal-2-1.json",
+      "bytes": 382558,
+      "sha256": "5737d8ba4eca4a5ea72110e983ad0db9a05f98bbfb98a699104a8bc5a4782ef2"
+    },
+    {
+      "path": "scenery/canal-2-2.glb",
+      "bytes": 308892,
+      "sha256": "b47159fa0ea8f1fb1f1d8164c52103affd4748408d73426f5e9c1b748ea994a6"
+    },
+    {
+      "path": "scenery/canal-2-2.json",
+      "bytes": 412082,
+      "sha256": "8b178f08253c85bb77690b84da7408026090d37cbd66fd6abdcd76490fbe8e60"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 4321,
+      "sha256": "e2ee7fff225123d15fe03cb189560b5431d4144f78899a4d15fed7f3c9af41a8"
+    },
+    {
+      "path": "terrain/canal-0-0.glb",
+      "bytes": 38404,
+      "sha256": "c7eae5c7b1b3e23f34bb4be342850d6a2fd3a7f58244df79e4018046cf643649"
+    },
+    {
+      "path": "terrain/canal-0-0.json",
+      "bytes": 5726,
+      "sha256": "bf10cea92f51ff3c059afb6e22e107e835b66a81720c48b84f0ecb71d3572a17"
+    },
+    {
+      "path": "terrain/canal-0-1.glb",
+      "bytes": 38404,
+      "sha256": "745477bfbb780644bd6d6c09948c333b09136ddfea3650c298c9e654843559b5"
+    },
+    {
+      "path": "terrain/canal-0-1.json",
+      "bytes": 5978,
+      "sha256": "489672a0021eb8a50a62c049bb671149b4e90c10ccc7498d6cfef76b5d87a1c3"
+    },
+    {
+      "path": "terrain/canal-0-2.glb",
+      "bytes": 38404,
+      "sha256": "c8b347b17d1aadd4981cf53e20fae4499466b2b3d24de307d0466709af2bf89e"
+    },
+    {
+      "path": "terrain/canal-0-2.json",
+      "bytes": 5726,
+      "sha256": "1a0c3d01621ec648902bc1975ceec1d694156ae4180c9e877dd97141405149a5"
+    },
+    {
+      "path": "terrain/canal-1-0.glb",
+      "bytes": 38404,
+      "sha256": "eb6958e9a64a9656ec245dfe888d03bcfeb12de106eb5c41ad1785e10b2fd3c3"
+    },
+    {
+      "path": "terrain/canal-1-0.json",
+      "bytes": 5726,
+      "sha256": "d92cbf949905e148b8a84ff34144b547129a4831a987111d005bb92333d35782"
+    },
+    {
+      "path": "terrain/canal-1-1.glb",
+      "bytes": 38404,
+      "sha256": "ea5b67ea5491dc151e6aba109cbe34a51c120a1482795c54cd758cab0caf4dff"
+    },
+    {
+      "path": "terrain/canal-1-1.json",
+      "bytes": 5980,
+      "sha256": "769c5dfb4c05be1fb84c02240d26f888c2246c0d1c8993d92412015ca48d04f6"
+    },
+    {
+      "path": "terrain/canal-1-2.glb",
+      "bytes": 38404,
+      "sha256": "f5ae37e6a959ed84e9086156981c12d46253fea20150a6cb2057c28b826517c4"
+    },
+    {
+      "path": "terrain/canal-1-2.json",
+      "bytes": 5747,
+      "sha256": "86f5cbf69c7ceda79348b683c44e15244a8ce89d4b5699c6f0a143dacf56f743"
+    },
+    {
+      "path": "terrain/canal-2-0.glb",
+      "bytes": 38420,
+      "sha256": "fb41448a8edbb92ed42b3bee2d7857436755816387984e8e37999191996f064e"
+    },
+    {
+      "path": "terrain/canal-2-0.json",
+      "bytes": 5561,
+      "sha256": "c2e48b620c899cef5362e7d0f42733b9b4f95b6c6644d3bdc81eeece9773effd"
+    },
+    {
+      "path": "terrain/canal-2-1.glb",
+      "bytes": 38404,
+      "sha256": "36c4eb16034d28865ea5d9d566087d68d7e3e2f2a77bf61dff827c9c5f51e2c5"
+    },
+    {
+      "path": "terrain/canal-2-1.json",
+      "bytes": 5908,
+      "sha256": "c8831a4be44dcd15fd04e57549505c1b3dea5e2a95dc74cbdafbe4d8c43ba3fd"
+    },
+    {
+      "path": "terrain/canal-2-2.glb",
+      "bytes": 38404,
+      "sha256": "f19caf0f825cbbc1b8d78e0e583c1e1b11bca4e34f6b49c4d23e2267b413fdfe"
+    },
+    {
+      "path": "terrain/canal-2-2.json",
+      "bytes": 6086,
+      "sha256": "423eb2c4a1fd878a31168acb9ba04f3223c977054e6cd79b6014b9c2ed93445b"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 4294,
+      "sha256": "d5f4d8be1ff3da5ce65e56075282794bb18cf31de28c5cfe76962ded50fcac11"
+    }
+  ],
+  "totalBytes": 6765271
+}
