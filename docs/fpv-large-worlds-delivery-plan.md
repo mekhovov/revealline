@@ -5,6 +5,49 @@ The user selected default catalogue visibility, download on Play, optional offli
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
+## 15 October — larger regions admitted; art continues independently
+
+This checkpoint supersedes the older status sections below. The full roadmap is
+**open**. Main now includes the 8.192 km Canyon, Coastal Districts, Hillside Town
+and 16.384 km Desert Library increments. Desert #1396 passed exact package checks,
+normal download/launch, safe start/mode/view changes and cached flight with the
+owned origin server stopped. That last observation is deliberately narrower than
+network-wide offline or physical-device qualification.
+
+Railway source/delivery #1363/#1369 and its ground treatment #1367 have merged.
+The separate 4.096 km Railway Library PR #1404 passes exact package integrity,
+import closure and trusted-presentation checks; its normal-player review is in
+progress. The old 384 m Railway row remains available. Coaster support correction
+#1398 and immutable corrected delivery #1401 have merged; its Library update
+retains the old revision and remains independently gated.
+
+Harbor's continuous beach-to-pier structure #1371 passed the bounded native
+comparison and merged. Hillside ground #1397 and civic courtyard #1402 merged;
+planted courtyard #1406 adds a richer local composition. Native review still finds
+sparse surrounding terrain and insufficient contact/ambient grounding. These
+are useful art increments, not the finished representative quality standard.
+Alpine #1407 is a 4.096 km source study with 258 route/mode cases and exact
+render/collision checks; six-view native review and player admission are pending.
+Desert landmark companion #1405 remains separate from the admitted natural-r1.
+
+Continue in parallel:
+
+1. **P1:** finish Railway and corrected Coaster normal-player admission; publish
+   connected Harbor and improved town revisions without replacing saved identities.
+2. **P2:** improve recognizable, grounded and varied pilot-height composition.
+   Preserve clear flight openings; do not equate a larger area or extra props with
+   final beauty. Review Alpine and Desert landmarks before their delivery stages.
+3. **P3:** extend only reviewed regional sources through immutable download and
+   Library gates. Alpine is not yet the eventual 8 km natural-region target;
+   Coaster is still a 2.048 km static study, not a finished 4 km theme park.
+4. **P4/D6:** retain the completed two-hour synthetic workload and close remaining
+   full-region, recovery, network-wide offline, responsive and device qualification.
+   Physical hardware and final public launch claims require their own evidence.
+
+Current local free space is about 6.2 GiB; heavy preparation remains external or
+in CI. All budget limits, old sources, failed prototypes, frozen packages and
+player records are retained. Source/PR merge does not imply public deployment.
+
 ## 15 October — regional release continuation
 
 This later checkpoint keeps the roadmap **open**. Native normal-player checks now

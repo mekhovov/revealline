@@ -1,0 +1,444 @@
+{
+  "format": "FPVHillsideTownPreparation.v1",
+  "actualSizeM": [
+    384,
+    384
+  ],
+  "futureDesignTargetM": null,
+  "terrainCells": 9,
+  "sceneryCells": 9,
+  "sourceBytes": 8648655,
+  "terrainManifestSHA256": "79dc45fc1e45a58c84ce8f1e46f5513b254f8d8ba2c2142577411adc3c844ec0",
+  "sceneryManifestSHA256": "e1d00292e1e98b9e99d325b398ec6ac7d07b2fcad73dc78417b305938c99e4b9",
+  "licensedPlacements": 152,
+  "originalArchitecturePieces": 152,
+  "terrainConformingRoads": 8,
+  "roadLatticeM": 4,
+  "roadTopMm": 100,
+  "geometryBytes": 1043888,
+  "textureBytes": 2446676,
+  "resourceBytes": 3490564,
+  "retainedAndCandidateBytes": 7893944,
+  "routes": [
+    {
+      "id": "lower-main-street",
+      "halfWidth": 4,
+      "points": [
+        [
+          20,
+          4,
+          64
+        ],
+        [
+          192,
+          4,
+          64
+        ],
+        [
+          360,
+          4,
+          64
+        ]
+      ]
+    },
+    {
+      "id": "graded-ascent",
+      "halfWidth": 4,
+      "points": [
+        [
+          128,
+          5,
+          96
+        ],
+        [
+          128,
+          5,
+          112
+        ],
+        [
+          128,
+          17,
+          144
+        ],
+        [
+          128,
+          17,
+          240
+        ],
+        [
+          128,
+          29,
+          272
+        ],
+        [
+          128,
+          29,
+          348
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-turn",
+      "halfWidth": 4,
+      "points": [
+        [
+          160,
+          16,
+          192
+        ],
+        [
+          192,
+          16,
+          192
+        ],
+        [
+          192,
+          16,
+          228
+        ],
+        [
+          222,
+          16,
+          228
+        ]
+      ]
+    },
+    {
+      "id": "upper-switchback",
+      "halfWidth": 4,
+      "points": [
+        [
+          256,
+          29,
+          280
+        ],
+        [
+          256,
+          29,
+          320
+        ],
+        [
+          328,
+          29,
+          320
+        ],
+        [
+          328,
+          29,
+          350
+        ],
+        [
+          280,
+          29,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "house-open-pass",
+      "halfWidth": 1.2,
+      "points": [
+        [
+          35,
+          3,
+          48
+        ],
+        [
+          61,
+          3,
+          48
+        ]
+      ]
+    },
+    {
+      "id": "pad-approach",
+      "halfWidth": 2,
+      "points": [
+        [
+          320,
+          33,
+          268
+        ],
+        [
+          320,
+          33,
+          288
+        ]
+      ]
+    },
+    {
+      "id": "under-pad",
+      "halfWidth": 2,
+      "points": [
+        [
+          320,
+          27,
+          268
+        ],
+        [
+          320,
+          27,
+          308
+        ]
+      ]
+    },
+    {
+      "id": "market-open-arcade",
+      "halfWidth": 0.65,
+      "points": [
+        [
+          176,
+          14.5,
+          222
+        ],
+        [
+          176,
+          14.5,
+          235
+        ]
+      ]
+    },
+    {
+      "id": "civic-marker-orbit",
+      "halfWidth": 2,
+      "points": [
+        [
+          198,
+          18,
+          231
+        ],
+        [
+          198,
+          18,
+          247
+        ],
+        [
+          216,
+          18,
+          247
+        ],
+        [
+          216,
+          18,
+          231
+        ]
+      ]
+    }
+  ],
+  "verificationProbes": [
+    {
+      "id": "house-open-door",
+      "from": [
+        35,
+        3,
+        48
+      ],
+      "to": [
+        61,
+        3,
+        48
+      ],
+      "clear": true
+    },
+    {
+      "id": "house-solid-side",
+      "from": [
+        48,
+        3,
+        40
+      ],
+      "to": [
+        48,
+        3,
+        56
+      ],
+      "clear": false
+    },
+    {
+      "id": "house-solid-roof",
+      "from": [
+        48,
+        10,
+        48
+      ],
+      "to": [
+        48,
+        2,
+        48
+      ],
+      "clear": false
+    },
+    {
+      "id": "courtyard-clear",
+      "from": [
+        176,
+        16,
+        218
+      ],
+      "to": [
+        208,
+        16,
+        228
+      ],
+      "clear": true
+    },
+    {
+      "id": "pad-solid",
+      "from": [
+        320,
+        36,
+        288
+      ],
+      "to": [
+        320,
+        26,
+        288
+      ],
+      "clear": false
+    },
+    {
+      "id": "under-pad-clear",
+      "from": [
+        320,
+        27,
+        268
+      ],
+      "to": [
+        320,
+        27,
+        308
+      ],
+      "clear": true
+    },
+    {
+      "id": "graded-road-clear",
+      "from": [
+        128,
+        5,
+        112
+      ],
+      "to": [
+        128,
+        17,
+        144
+      ],
+      "clear": true
+    },
+    {
+      "id": "market-aisle-clear",
+      "from": [
+        176,
+        14.5,
+        225
+      ],
+      "to": [
+        176,
+        14.5,
+        234
+      ],
+      "clear": true
+    },
+    {
+      "id": "market-canopy-solid",
+      "from": [
+        176,
+        20,
+        230
+      ],
+      "to": [
+        176,
+        14,
+        230
+      ],
+      "clear": false
+    },
+    {
+      "id": "market-column-solid",
+      "from": [
+        172,
+        14,
+        228
+      ],
+      "to": [
+        175,
+        14,
+        228
+      ],
+      "clear": false
+    },
+    {
+      "id": "civic-marker-solid",
+      "from": [
+        203,
+        20,
+        238
+      ],
+      "to": [
+        211,
+        20,
+        238
+      ],
+      "clear": false
+    }
+  ],
+  "contactProbes": [
+    {
+      "id": "house-roof",
+      "from": [
+        48,
+        10,
+        48
+      ],
+      "falling": true,
+      "minY": 6
+    },
+    {
+      "id": "elevated-pad",
+      "from": [
+        320,
+        35,
+        288
+      ],
+      "falling": true,
+      "minY": 30
+    }
+  ],
+  "spawns": [
+    {
+      "id": "lower-square",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 64000
+      }
+    },
+    {
+      "id": "middle-courtyard",
+      "position": {
+        "x": 192000,
+        "y": 15000,
+        "z": 228000
+      }
+    },
+    {
+      "id": "upper-terrace",
+      "position": {
+        "x": 256000,
+        "y": 27000,
+        "z": 320000
+      }
+    },
+    {
+      "id": "elevated-pad",
+      "position": {
+        "x": 320000,
+        "y": 31500,
+        "z": 288000
+      }
+    }
+  ],
+  "sourceReceiptSHA256": "fe34bc7c5f3968c2cab25bf6e6aab9c14c0a0a59d751b90b741017d090e16822",
+  "licenseSHA256": "60a07f9108f5a3fc5f9429fd1faa5b168c05cc085354f78ed48180ef32ec6209",
+  "playerReady": false,
+  "movingSubjects": false
+}
