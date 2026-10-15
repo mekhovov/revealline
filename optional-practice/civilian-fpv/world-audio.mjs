@@ -1,6 +1,6 @@
 import { createHumanReactionPolicy } from '../../game/ui/human-reaction-policy.mjs';
-import { HUMAN_REACTION_BANK } from '../../game/audio/human-reactions/portable.mjs';
-import { destructionBufferGain } from '../../game/ui/destruction-level.mjs';
+import { createPublishedCues } from '../../game/ui/published-cues.mjs';
+import { readPortableDestructionAudio } from '../../game/presentation/portable-destruction-audio.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../../game/audio/dialogue-mix.mjs';
 import {
   createGameAudioContext,
@@ -10,12 +10,17 @@ import {
 } from '../../game/ui/audio-output.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
-import { destructionCategory } from '../../game/ui/destruction-audio.mjs';
+import {
+  destructionCategory,
+  DESTRUCTION_CUES,
+  HUMAN_REACTION_CUES,
+} from '../../game/ui/destruction-audio.mjs';
 import { encounterSoundRecipe, actorPhaseSound } from '../../game/ui/encounter-audio.mjs';
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
 import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
 
-/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
+/** Native flight uses the shared published-cue cache and mixer. Accepted package
+ * recordings decode on activation; no network reads or gameplay clocks. */
 const PREFERENCE = 'revealline.fpv.world-audio.v1';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const AMBIENCES = {
@@ -54,10 +59,9 @@ export function createWorldAudio(options = {}) {
   let gateStyle = 'chime';
   let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
   let dialogueVoice = null;
+  let recorded = null;
   const effects = new Set();
   const humanReactions = createHumanReactionPolicy();
-  const humanBuffers = new Map();
-  let preparingHumans = false;
   const audioMaster = options.audioMaster ?? createAudioMaster();
   const preferences =
     options.audioPreferences ??
@@ -117,27 +121,44 @@ export function createWorldAudio(options = {}) {
     effects.clear();
   }
 
-  function prepareHumans() {
-    if (
-      preparingHumans ||
-      !context?.decodeAudioData ||
-      options.getDestruction?.()?.vocals === false
-    )
-      return;
-    preparingHumans = true;
-    for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
-      const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
-      void context
-        .decodeAudioData(bytes.buffer)
-        .then((buffer) => {
-          if (!disposed)
-            humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
-        })
-        .catch(() => {});
-    }
+  recorded = createPublishedCues({
+    sound: {
+      get enabled() {
+        return enabled;
+      },
+      get paused() {
+        return !wanted;
+      },
+      get disposed() {
+        return disposed;
+      },
+      get context() {
+        return context;
+      },
+      get audioMaster() {
+        return masterState;
+      },
+      get sfxBus() {
+        return graph?.buses.interface;
+      },
+      get settings() {
+        return { master: enabled, sfx: levels.interface > 0 };
+      },
+      voices: effects,
+    },
+    readAudio: options.readAudio ?? readPortableDestructionAudio,
+    maxVoices: 12,
+    maxFeedbackVoices: 10,
+    maxDecodedSamples: 2 * 1024 * 1024,
+  });
+  function prepareRecordings() {
+    void recorded.prepare([
+      ...DESTRUCTION_CUES,
+      ...(options.getDestruction?.()?.vocals === false ? [] : HUMAN_REACTION_CUES),
+    ]);
   }
   function humanReaction(details) {
-    prepareHumans();
+    prepareRecordings();
     if (
       !graph ||
       !enabled ||
@@ -156,38 +177,18 @@ export function createWorldAudio(options = {}) {
       details,
       [...effects].filter((effect) => effect.humanReaction).length,
     );
-    const clip = name && humanBuffers.get(name);
-    if (!clip) return;
-    const source = context.createBufferSource(),
-      volume = context.createGain(),
-      now = context.currentTime;
-    const duration = Math.min(0.7, clip.buffer.duration);
-    source.buffer = clip.buffer;
-    volume.gain.setValueAtTime(0.45 * clip.gain, now);
-    volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
-    volume.gain.linearRampToValueAtTime(0, now + duration);
-    source.connect(volume).connect(graph.buses.interface);
-    let stopped = false;
-    const voice = {
-      humanReaction: true,
-      priority: 2,
-      stop() {
-        if (stopped) return;
-        stopped = true;
-        try {
-          source.stop();
-        } catch {}
-        source.disconnect();
-        volume.disconnect();
-        effects.delete(voice);
-      },
-    };
-    effects.add(voice);
-    source.onended = voice.stop;
-    source.start(now);
-    source.stop(now + duration);
+    if (name)
+      recorded.play(name, {
+        gain: 0.45,
+        maxDuration: 0.7,
+        humanReaction: true,
+        feedback: true,
+        priority: 2,
+        board: 'flight',
+      });
   }
   function silence() {
+    recorded?.cancelPending();
     dialogueVoice?.stop();
     if (!graph || context.state === 'closed') return;
     for (const node of [graph.motor, graph.vehicleGain, graph.wind, graph.humGain]) {
@@ -439,7 +440,20 @@ export function createWorldAudio(options = {}) {
       humanReactions.interrupt(now);
       for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
     }
-    if (kind === 'catch') humanReaction(details);
+    if (kind === 'catch') {
+      humanReaction(details);
+      if (
+        recorded.play(recipe.name, {
+          gain: recipe.gain,
+          rate: recipe.rate,
+          maxDuration: recipe.maxDuration,
+          priority: recipe.priority,
+          feedback: true,
+          board: 'flight',
+        })
+      )
+        return;
+    }
     if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
     const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
     if (recipe.movement) voice.gain *= levels.interface;
@@ -462,7 +476,7 @@ export function createWorldAudio(options = {}) {
         if (context.state !== 'closed') await context.suspend();
         return false;
       }
-      prepareHumans();
+      prepareRecordings();
       return epoch === transition && context.state === 'running';
     } catch {
       return false;
@@ -635,6 +649,7 @@ export function createWorldAudio(options = {}) {
       lastFootstep = -Infinity;
       actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
       stopEffects();
+      recorded.cancelPending();
       if (graph && context.state !== 'closed') {
         ramp(graph.windFilter.frequency, ambience.filter);
         ramp(graph.hum.frequency, ambience.hum);
@@ -773,7 +788,7 @@ export function createWorldAudio(options = {}) {
     dispose() {
       if (disposed) return;
       disposed = true;
-      humanBuffers.clear();
+      recorded.close();
       pause();
       releaseMaster();
       host.removeEventListener?.('storage', changed);
