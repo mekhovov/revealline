@@ -47,6 +47,7 @@ maximum altitude error is 0.334 m. Pause holds the entire snapshot and disposal
 leaves no geometry/texture ownership. These controlled commands are automated
 proof, not a human skill assessment or sustained rendering measurement.
 
+The unchanged legacy arrival profile also passes its 14 routes / 34,798 ticks.
 Deterministic regeneration matches all 149 files. Rejected draft outputs remain
 preserved externally: the first figure-eight leg cut across the south butte and
 was rerouted around its actual slope; a deeply buried gorge rock was relocated
