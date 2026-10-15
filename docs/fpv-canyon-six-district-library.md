@@ -28,7 +28,7 @@ Canyon scenery lose its trusted material. Regional Library actions address the
 exact descriptor hash, even when two revisions share a region ID.
 
 Source #1326 independently verified 24 actual commanded routes, 123,566 ticks,
-72 in-flight recentres, 12 authored starts, all60 terrain seams and all54 grounded
+72 in-flight recentres, 12 authored starts, all 60 terrain seams and all 54 grounded
 formations. Native source review accepted the five new district views and resource
 release. These are bounded source/flight observations, not sustained device FPS.
 
@@ -39,4 +39,4 @@ starting-point selection, deliberate flight/pause and persistence are pending.
 Start-point label localization is a separate host UI increment; source IDs remain
 unchanged. Exact combined player-package/offline and physical-device qualification
 remain separate. The region is a stylized practice preview, not final realism or
-an8 km world.
+an 8 km world.
