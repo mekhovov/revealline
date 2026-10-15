@@ -5,8 +5,10 @@ makes the existing guidance controls reachable in both FPV apps and verifies fou
 EN/UK settings/reload/visible stationary-HUD journeys. Matching guides are updated.
 The first genuine FPV exercise probe failed at the unchanged deadline; its
 observer-only ground-clearance correction passes a reproduced model regression,
-but corrected native completion/export/replay remains unrun. Local free disk is
-below 1 GiB, so additional browser batches need a safe space margin. No hosting
+then a corrected probe genuinely completed in 13.353 seconds but failed its
+pointer-based export and browser-cleanup timeout. The prepared keyboard export,
+actual backup/replay, clean shutdown and full eight-case matrix remain unverified.
+Disk pressure briefly paused native work; future batches need a safe margin. No hosting
 or review gate is waived. Historical FPV DOM telemetry is not visible-HUD proof.
 
 Visibility audit correction: the historical ten-case first-flight matrix uses

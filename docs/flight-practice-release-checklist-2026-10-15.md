@@ -6,9 +6,11 @@
 records four genuine EN/UK Academy/Worlds Settings/Accessibility/reload/visible
 stationary-HUD passes on separately reproduced/admitted `6b420b1a2` packages.
 The first FPV exercise probe failed with 844 ground-only readings. Its observer
-correction has model-regression proof, not a successful native rerun or completed
-exercise. Guides now explain the existing reachable preferences. Browser work
-needs a safe disk margin; historical evidence, human/review gates and hosting
+correction has model-regression proof; a second probe genuinely completed the
+exercise in 13.353 seconds but failed pointer export and browser cleanup. No
+actual backup/replay exists. The separate keyboard export route remains native-
+unverified. Guides explain the reachable preferences. Browser work needs a safe
+disk margin; historical evidence, human/review gates and hosting
 deferral remain unchanged.
 
 **Recovery/test follow-up:** [repair and player-flow acceptance](flight-practice-repair-2026-10-15.md)
