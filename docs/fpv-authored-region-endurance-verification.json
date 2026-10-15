@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "scope": "Accelerated actual authored route preflight plus separately measured 1-second Node smoke; no renderer or sustained elapsed claim",
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+    "bytes": 6603,
+    "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+  },
+  "verifiedResponses": 39,
+  "route": {
+    "target": "container-road",
+    "acceptedWaypoints": 13,
+    "completedCircuits": 2,
+    "visits": [
+      3,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  "ticks": 62753,
+  "recentres": 13,
+  "crossings": 12,
+  "peaks": {
+    "worlds": 2,
+    "colliders": 124,
+    "rigidBodies": 0,
+    "geometryBytes": 1124640,
+    "textureBytes": 0,
+    "sourceBytes": 2257275,
+    "reservedGeometryBytes": 9817520,
+    "reservedSourceBytes": 3613170
+  },
+  "realElapsedSmoke": {
+    "status": "completed",
+    "reason": null,
+    "targetMs": 1000,
+    "elapsedMs": 1005.5807500000001,
+    "wallElapsedMs": 1006,
+    "simulationMs": 1000,
+    "ticks": 50,
+    "remainingAccumulatorMs": 5.58075000000008
+  },
+  "cacheBeforeDisposal": {
+    "files": 38,
+    "bytes": 2268846,
+    "reads": 296,
+    "released": false
+  },
+  "disposalZero": true,
+  "corruptSourceRejected": true,
+  "abortedSourceRejected": true,
+  "cacheAfterDisposal": {
+    "files": 0,
+    "bytes": 0,
+    "reads": 296,
+    "released": true
+  }
+}

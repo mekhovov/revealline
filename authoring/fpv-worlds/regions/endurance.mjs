@@ -7,12 +7,14 @@ const $ = (id) => document.getElementById(id);
 const assert = (value, message) => {
   if (!value) throw new Error(message);
 };
-const format = 'FPVRegionalElapsedReview.v1';
+const authored = document.body.dataset.enduranceWorkload === 'urban-review-r2';
+const format = authored ? 'FPVAuthoredRegionalElapsedReview.v1' : 'FPVRegionalElapsedReview.v1';
 let flight = null,
   renderer = null,
   fixture = null,
   run = null,
   report = null;
+let preparationAbort = null;
 let busy = false,
   closed = false,
   frameId = 0,
@@ -58,7 +60,8 @@ function buttons() {
   $('prepare').disabled = busy || Boolean(run) || closed;
   $('start').disabled = busy || !flight || Boolean(run) || closed;
   $('stop').disabled = !run;
-  $('release').disabled = busy || !flight;
+  $('release').disabled = authored ? !busy && !flight : busy || !flight;
+  if (authored) $('release').textContent = busy ? 'Cancel preparation' : 'Release resources';
   $('export').disabled = !report;
   for (const name of ['label', 'duration', 'quality', 'import'])
     $(name).disabled = busy || Boolean(run);
@@ -81,8 +84,10 @@ function sample() {
   );
   assert(owned.reservedSourceBytes <= 32 * 1024 * 1024, 'Combined source reservation exceeded');
   assert(
-    collision.worlds <= 4 && collision.colliders <= 18 && collision.rigidBodies === 0,
-    'Fixture collision ownership exceeded',
+    collision.worlds <= 4 &&
+      collision.colliders <= (authored ? fixture.identity.colliderUpperBound : 18) &&
+      collision.rigidBodies === 0,
+    'Regional collision ownership exceeded',
   );
   for (const key of ['x', 'y', 'z'])
     assert(
@@ -101,6 +106,7 @@ function sample() {
     owned,
     collision,
     renderer: renderer.resources().renderer,
+    ...(authored ? { verifiedCache: fixture.cacheSnapshot() } : {}),
   };
 }
 function observe() {
@@ -130,8 +136,9 @@ function observe() {
 function buildReport(segment, final = null) {
   return {
     format,
-    scope:
-      'Real elapsed-time synthetic corridor workload; production regional flight and renderer. No player input or game progress writes.',
+    scope: authored
+      ? 'Real elapsed-time immutable Urban road/court workload; production regional flight and renderer. Commanded test pilot, no player input or game progress writes.'
+      : 'Real elapsed-time synthetic corridor workload; production regional flight and renderer. No player input or game progress writes.',
     runtimeLabel: segment.label,
     runtimeLabelVerified: false,
     directSourceHashes: sourceHashes,
@@ -144,7 +151,9 @@ function buildReport(segment, final = null) {
     camera: 'chase',
     mode: 'self-level',
     clock: segment.clock.snapshot(),
-    reversals: segment.pilot.reversals,
+    ...(authored
+      ? { commandedRoute: segment.pilot.snapshot() }
+      : { reversals: segment.pilot.reversals }),
     cellCrossings: segment.cellCrossings,
     frames: segment.frames,
     collisionAndReservationPeaks: segment.peaks,
@@ -161,16 +170,23 @@ function buildReport(segment, final = null) {
     final,
     priorSegments: history,
     limitations: [
-      'Repeated synthetic six-cell corridor, not all maps or player behavior',
+      authored
+        ? 'Repeated authored Urban road/court circuit, not all worlds, indoor routes or player behavior'
+        : 'Repeated synthetic six-cell corridor, not all maps or player behavior',
       'CPU submission is not GPU completion or physical-device FPS',
       'Resource counters exclude opaque engine/GPU allocations',
       'Imported segments are unverified history and never extend an uninterrupted pass',
       'No persistence, browser-restart or all-network-offline claim',
+      ...(authored
+        ? [
+            'Source payload is fully verified before timing; no network latency is exercised during the measured segment',
+          ]
+        : []),
     ],
   };
 }
 async function release() {
-  if (!flight && !renderer) return null;
+  if (!flight && !renderer && !fixture) return null;
   const currentFlight = flight,
     currentRenderer = renderer;
   flight = null;
@@ -182,6 +198,9 @@ async function release() {
   const collision = currentFlight?.collisionSnapshot() ?? null;
   const state = currentFlight?.snapshot() ?? null;
   currentRenderer?.dispose();
+  fixture?.dispose?.();
+  const verifiedCache = fixture?.cacheSnapshot?.() ?? null;
+  fixture = null;
   return {
     collision,
     geometryBytes: state?.terrain.geometryBytes ?? 0,
@@ -189,6 +208,7 @@ async function release() {
     reservedSourceBytes: state?.terrain.reservedSourceBytes ?? 0,
     rootChildren: currentFlight?.root.children.length ?? 0,
     renderer: currentRenderer?.resources() ?? null,
+    ...(authored ? { verifiedCache } : {}),
   };
 }
 async function finish(reason = null) {
@@ -213,18 +233,25 @@ async function finish(reason = null) {
     disposed.geometryBytes === 0 &&
     disposed.reservedGeometryBytes === 0 &&
     disposed.reservedSourceBytes === 0 &&
-    disposed.rootChildren === 0;
+    disposed.rootChildren === 0 &&
+    (!authored || (disposed.verifiedCache?.files === 0 && disposed.verifiedCache?.bytes === 0));
   report = buildReport(segment, {
     beforeDisposal: before,
     afterDisposal: disposed,
     disposalZero: zero,
   });
   if (!zero) report.disposalFailure = true;
-  report.accepted = segment.clock.snapshot().status === 'completed' && zero;
+  const routeCoverage =
+    !authored || (segment.pilot.snapshot().completedCircuits >= 2 && segment.cellCrossings >= 12);
+  if (authored) report.routeCoverageQualified = routeCoverage;
+  report.accepted =
+    segment.clock.snapshot().status === 'completed' &&
+    zero &&
+    (!authored || segment.clock.snapshot().targetMs < 600000 || routeCoverage);
   $('result').textContent = JSON.stringify(report, null, 2);
   $('status').textContent = report.accepted
     ? `Completed ${segment.clock.snapshot().elapsedMs / 1000} real seconds; resources released. Export the report.`
-    : `Invalid segment: ${segment.clock.snapshot().reason ?? 'resource disposal failed'}. Start a new segment; prior time does not count.`;
+    : `Invalid segment: ${segment.clock.snapshot().reason ?? (!zero ? 'resource disposal failed' : 'authored circuit coverage incomplete')}. Start a new segment; prior time does not count.`;
   busy = false;
   buttons();
 }
@@ -251,6 +278,17 @@ async function readSourceHashes() {
     const bytes = new Uint8Array(await response.arrayBuffer());
     rows.push({ path, bytes: bytes.length, sha256: await digest(bytes) });
   }
+  if (authored)
+    for (const path of ['endurance.mjs', 'endurance-clock.mjs', 'authored-endurance-fixture.mjs']) {
+      const response = await fetch(new URL(path, import.meta.url), {
+        cache: 'no-store',
+        credentials: 'omit',
+        redirect: 'error',
+      });
+      assert(response.ok, `Workload identity unavailable: ${path}`);
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      rows.push({ path: `authoring/${path}`, bytes: bytes.length, sha256: await digest(bytes) });
+    }
   return rows;
 }
 $('prepare').onclick = async () => {
@@ -258,11 +296,19 @@ $('prepare').onclick = async () => {
   busy = true;
   buttons();
   const token = ++generation;
+  preparationAbort = new AbortController();
   $('status').textContent = 'Preparing verified fixture and production renderer; still disarmed.';
   try {
     await release();
     sourceHashes = await readSourceHashes();
-    fixture = await createEnduranceFixture();
+    fixture = authored
+      ? await (
+          await import('./authored-endurance-fixture.mjs')
+        ).createAuthoredEnduranceFixture({
+          signal: AbortSignal.any([preparationAbort.signal, AbortSignal.timeout(180000)]),
+        })
+      : await createEnduranceFixture();
+    assert(token === generation && !closed, 'Preparation superseded');
     const replacement = document.createElement('canvas');
     replacement.setAttribute('aria-label', 'Production regional flight renderer');
     document.querySelector('canvas').replaceWith(replacement);
@@ -280,21 +326,36 @@ $('prepare').onclick = async () => {
       initial: null,
       completedStages: 0,
       maximumElapsedMs: 0,
-      fixture: {
-        id: fixture.terrain.manifest.id,
-        revision: fixture.terrain.manifest.revision,
-        terrainManifestSHA256: await digest(
-          new TextEncoder().encode(JSON.stringify(fixture.terrain.manifest)),
-        ),
-        sceneryManifestSHA256: await digest(
-          new TextEncoder().encode(JSON.stringify(fixture.scenery.manifest)),
-        ),
-        source: 'Generated canonical six-cell corridor; deterministic reference workload',
-      },
+      fixture: authored
+        ? {
+            ...fixture.identity,
+            id: fixture.terrain.manifest.id,
+            revision: fixture.terrain.manifest.revision,
+          }
+        : {
+            id: fixture.terrain.manifest.id,
+            revision: fixture.terrain.manifest.revision,
+            terrainManifestSHA256: await digest(
+              new TextEncoder().encode(JSON.stringify(fixture.terrain.manifest)),
+            ),
+            sceneryManifestSHA256: await digest(
+              new TextEncoder().encode(JSON.stringify(fixture.scenery.manifest)),
+            ),
+            source: 'Generated canonical six-cell corridor; deterministic reference workload',
+          },
     };
     flight = createRegionalFlightPrototype({
       manifest: fixture.terrain.manifest,
-      source: fixture.terrain.source,
+      source: {
+        ...fixture.terrain.source,
+        ...(authored
+          ? {
+              surfaceQuality: { low: 'performance', balanced: 'balanced', high: 'quality' }[
+                $('quality').value
+              ],
+            }
+          : {}),
+      },
       scenery: { manifest: fixture.scenery.manifest, source: fixture.scenery.source },
       geometryProfile: 'terrain-scenery-v1',
       continuous: true,
@@ -320,6 +381,7 @@ $('prepare').onclick = async () => {
     await release();
     $('status').textContent = `Preparation failed: ${error.message}`;
   } finally {
+    preparationAbort = null;
     busy = false;
     buttons();
   }
@@ -353,7 +415,7 @@ $('start').onclick = () => {
       quality: $('quality').value,
       startedUTC: new Date().toISOString(),
       dimensions: measuredDimensions,
-      pilot: createEndurancePilot(),
+      pilot: fixture.createPilot?.() ?? createEndurancePilot(),
       frames: 0,
       cellCrossings: 0,
       previous: null,
@@ -370,8 +432,9 @@ $('start').onclick = () => {
     };
     observe();
     buttons();
-    $('status').textContent =
-      'Running synthetic flight in real elapsed time. Keep this tab focused.';
+    $('status').textContent = authored
+      ? 'Running commanded Urban circuit in real elapsed time. Keep this tab focused.'
+      : 'Running synthetic flight in real elapsed time. Keep this tab focused.';
   } catch (error) {
     flight.pause();
     $('status').textContent = error.message;
@@ -379,6 +442,12 @@ $('start').onclick = () => {
 };
 $('stop').onclick = () => void finish('Stopped by reviewer');
 $('release').onclick = async () => {
+  if (authored && busy) {
+    generation++;
+    preparationAbort?.abort(new DOMException('Preparation cancelled by reviewer', 'AbortError'));
+    flight?.cancelPreparation();
+    return;
+  }
   if (run) return void finish('Released by reviewer');
   busy = true;
   buttons();
@@ -457,6 +526,7 @@ function frame() {
         () => {
           const before = flight.snapshot(),
             state = flight.step(run.pilot.command(before));
+          if (authored) assert(state.contacts === 0, 'Unexpected contact on authored review route');
           const size = fixture.terrain.manifest.grid.cellSizeMm;
           if (
             ['x', 'z'].some(
@@ -481,7 +551,7 @@ function frame() {
         report = buildReport(run);
         $('result').textContent = JSON.stringify(report, null, 2);
         $('status').textContent =
-          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${run.pilot.reversals} turns`;
+          `${(clock.elapsedMs / 1000).toFixed(1)} / ${clock.targetMs / 1000} real seconds · ${clock.ticks} ticks · ${run.lastSample.recentres} recentres · ${authored ? run.pilot.snapshot().acceptedWaypoints : run.pilot.reversals} ${authored ? 'accepted waypoints' : 'turns'}`;
         buttons();
       }
     } catch (error) {
@@ -501,6 +571,7 @@ addEventListener(
   () => {
     closed = true;
     generation++;
+    preparationAbort?.abort(new DOMException('Review page left', 'AbortError'));
     cancelAnimationFrame(frameId);
     if (run) void finish('Page left');
     else void release();
