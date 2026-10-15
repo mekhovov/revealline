@@ -4789,6 +4789,12 @@ export function mountWorldApp({
       );
       controls.select.replaceChildren();
       const names = {
+        'mare-apron': ['Survey shelter', 'Дослідницьке укриття'],
+        'ejecta-fan': ['Split rocks', 'Розколоті скелі'],
+        'sinuous-rille': ['Winding channel', 'Звивисте русло'],
+        'terraced-crater': ['Crater rim', 'Край кратера'],
+        'fractured-highland': ['Fractured highland', 'Розколоте нагір’я'],
+        'observatory-ridge': ['Survey dish', 'Дослідницька антена'],
         'arrival-gardens': ['Arrival gardens', 'Вхідні сади'],
         'loop-meadow': ['Loop meadow', 'Луг із петлею'],
         'ridge-station': ['Ridge station', 'Станція на пагорбі'],
