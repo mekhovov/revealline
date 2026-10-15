@@ -1,6 +1,6 @@
 # Tropical Library exact package qualification — 15 October 2026
 
-This receipt records archive and native checks for the first 384 m Tropical coast Library increment at an exact immutable candidate. The origin-unavailable flight check failed safely; this candidate is not qualified for offline regional flight. It does not qualify the later 768 m district source, wide-cell physics, live renderer-quality integration or a different main revision.
+This receipt records archive and native checks for the first 384 m Tropical coast Library increment at an exact immutable candidate. The first origin-unavailable flight attempt failed safely during graphics preparation; a later attempt on the same exact package passed after completed review canvases were closed. Both observations are retained below. It does not qualify the later 768 m district source, wide-cell physics, live renderer-quality integration or a different main revision.
 
 ## Identity and archive evidence
 
@@ -35,3 +35,11 @@ With only the owned 9065 origin server stopped and transport refusal confirmed, 
 A separate read-only diagnostic using the exact packaged Library and production session APIs verified all saved source bytes and prepared a disarmed session in 888.1 ms (36 cached reads, no failure). Adding the exact production renderer/prewarm path reproduced a 30-second preparation timeout: 79 objects, three completed batches, 607,232 submitted geometry bytes, 28,676.3 ms accumulated shader wait and 309.7 ms upload CPU; the overall attempt took 31,515.9 ms. Thus verified source preparation succeeds while graphics preparation exceeded its existing deadline. Multiple paused review contexts were open; the underlying driver/context-pressure cause is not yet established.
 
 These diagnostics create and dispose ephemeral sessions; they do not install, remove, activate or modify saved player data. No browser process was restarted, quota induced, or real-device FPS asserted. Origin unavailability is not a full-network-offline test. Frozen package bytes remain unchanged.
+
+## Controlled retry and bounded acceptance
+
+After closing ten completed owned review tabs (their evidence was retained), the same renderer diagnostic completed in 654.7 ms. Prewarm completed all 79 objects/ten batches/955,344 submitted geometry bytes in 160.9 ms, with 105.1 ms shader wait and 10.7 ms upload CPU. The session remained paused and prepared. This is an observed difference consistent with context pressure, not proof of a specific GPU/driver cause. No package, source, saved region, timeout or graphics setting was changed for this retry.
+
+The restored origin server was stopped again and transport refusal confirmed. The same exact packaged player URL reloaded cached Home/Explore, retained the Saved 5.7 MiB Tropical region and opened Fly at 16 m with zero input and deliberate Arm available. Explicit arm/input followed by pause rendered at 3.6 m, +1.5 m/s vertical, 0.7 m/s drift and 64% throttle. The owned server was then restored. This supplies a successful **same-browser, stopped-origin cached regional-flight retry**, while preserving the earlier graphics timeout as a separate reliability issue. It is not all-network-offline, browser-process-restart, arbitrary-load or real-device acceptance.
+
+The follow-up graphics feedback correction is separate from this immutable package receipt and must not be attributed to these frozen bytes.
