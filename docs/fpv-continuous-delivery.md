@@ -5150,3 +5150,49 @@ Alpine #1480 exact package qualification passes; native 9174 player review is in
 progress. Continuity observer #1479 remains Draft awaiting read-only native
 exports/comparison. A separate authoring display-cost correction is under review
 without changing production physics, timing or acceptance limits.
+
+
+## 15 October, 18:05 UTC — native admission and observer increments
+
+#1480 station-r3 admission merged `e5e5562f`; exact native report is
+[fpv-alpine-station-r3-native-20261015.json](fpv-alpine-station-r3-native-20261015.json).
+The first generic download failure is preserved; unchanged refresh/retry and later
+cached launch succeed. Limited starts, camera/mode/arm/pause, EN/UK and two browser
+layouts pass. This is not all-start hardware, first-attempt reliability or final art.
+
+#1479 read-only continuity observer merged `95703ee3` after native export/import,
+refusal/recovery and exact stored-byte comparison around normal player reopening.
+[The receipt](fpv-storage-continuity-native-20261015.json) distinguishes actual
+regional assets/revisions and a saved place from the empty World/record stores.
+Whole-network offline, full application restart, eviction and nonempty recording
+preservation remain open. #1483 saved-place focused and broader CI are all green.
+
+#1485 bounded authoring summary merged `51f5af07`. Separate actual 10.0059-second
+and 60.0018-second runs preserve full reports and disposal evidence. The summary
+uses 430 characters, and a native running export is provisional and accepted-false.
+Neither smoke/minute run has route coverage or counts as the required two hours.
+No acceptance gate, simulation clock or production module changed.
+
+Lunar source/detail #1481 and immutable r3 #1488 are merged. Its additive #1490
+is being reconciled normally with the Alpine Library addition so all twenty old
+offers survive alongside the new edition. Frozen earlier and integrated package
+native checks stay separate. Representative art, elapsed, integrated reliability,
+D6/device and public-launch acceptance remain incomplete.
+
+
+## 15 October, 18:20 UTC — preserve bounded-display elapsed failure
+
+Fresh #1485-tooling/unchanged-production authored Urban segment started
+18:15:01.428Z and failed at102.9565 real seconds /5,127ticks on a408.5ms clock
+interval. Lifecycle separately measured416.7ms/417ms long task. It stayed visible
+and focused; zero contacts and zero owned disposal. Full negative report is
+[fpv-authored-urban-bounded-invalid-framegap-20261015.json](fpv-authored-urban-bounded-invalid-framegap-20261015.json).
+No elapsed segment is active. The display optimization remains bounded/useful but
+is not a fix for the failure. Physics/draw/observer maxima require phase/script
+attribution; no causal or two-hour acceptance claim is made.
+
+#1494 quieter timber source merged `c217b5d4` after matched concourse/wall native
+comparison. New immutable and player editions remain separate. Frozen Lunar d6
+bounded native results remain tied to its pre-integration package; combined b062
+preserves twenty main offers plus new Lunar but still needs exact admission.
+Independent delivery work resumes without changing the frozen failed fixture.
