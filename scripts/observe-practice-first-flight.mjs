@@ -408,8 +408,12 @@ export async function observePracticeFirstFlight({
   let work, served, browser;
   try {
     await writeFile(path.join(output, 'plan.json'), planBytes, { flag: 'wx' });
-    for (const name of AUTHORITY)
-      report.authority.push(pin(name, await readFile(path.join(ROOT, name))));
+    await mkdir(path.join(output, 'authority'));
+    for (const name of AUTHORITY) {
+      const bytes = await readFile(path.join(ROOT, name));
+      report.authority.push(pin(name, bytes));
+      await writeFile(path.join(output, 'authority', path.basename(name)), bytes, { flag: 'wx' });
+    }
     const loaded = await deadline(
       loadFPVObservationArtifact(plan, { base: path.dirname(path.resolve(planFile)) }),
       60_000,
