@@ -1,4 +1,5 @@
 import { canalViews } from './canal-city/views.mjs';
+import { lunarViews } from './lunar-basin/views.mjs';
 import * as THREE from '../../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { configureSceneryPreviewDepth } from "./preview-depth.mjs";
 import { createSceneryLighting } from './scenery-lighting.mjs';
@@ -95,6 +96,7 @@ const views =
     alpine: alpineViews,
     'desert-landmarks': desertLandmarkViews,
     'canal-city': canalViews,
+    'lunar-basin': lunarViews,
   }[new URLSearchParams(location.search).get('views')] ?? urbanViews;
 let window = null,
   busy = false,
