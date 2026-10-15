@@ -16,6 +16,7 @@ export function validateTerrainSurface(style = 'plain', quality = 'balanced') {
       'tropical-settlement',
       'desert',
       'hillside-town',
+      'lunar-regolith',
     ].includes(style) ||
     !['performance', 'balanced', 'quality'].includes(quality)
   )
@@ -57,6 +58,7 @@ export function createTerrainSurface({ style = 'plain', quality = 'balanced', or
       settlement: style === 'tropical-settlement',
     });
   if (style === 'desert') return createDesertGroundSurface({ quality, originMm });
+  if (style === 'lunar-regolith') return createLunarRegolith({ quality, originMm });
   if (style === 'railway') return createRailwayGroundSurface({ quality, originMm });
   if (style === 'railway-expanse') return createRailwayExpanseGround({ quality, originMm });
   const material = new THREE.MeshStandardMaterial({
@@ -353,6 +355,84 @@ diffuseColor.rgb *= mix(desertAlluvium, desertTint, desertBounds);`,
       '#include <roughnessmap_fragment>',
       `#include <roughnessmap_fragment>
 roughnessFactor = clamp(1.0 - desertStone * 0.08, 0.9, 1.0);`,
+    );
+  };
+  return material;
+}
+
+/** Original fictional regolith. Metre-scaled colour only, no relief or lunar physics. */
+function createLunarRegolith({ quality, originMm }) {
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, metalness: 0 });
+  const uniforms = {
+    lunarOrigin: {
+      value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
+    },
+    lunarMare: { value: new THREE.Color(0x74777b) },
+    lunarUpland: { value: new THREE.Color(0xb2b0a7) },
+    lunarRock: { value: new THREE.Color(0x64696e) },
+    lunarDust: { value: new THREE.Color(0xc6c3b9) },
+  };
+  material.name = `Lunar regolith · ${quality}`;
+  material.userData.setRegionalSurfaceQuality = (next) => {
+    validateTerrainSurface('lunar-regolith', next);
+    if (quality === next) return;
+    quality = next;
+    material.name = `Lunar regolith · ${quality}`;
+    material.needsUpdate = true;
+  };
+  material.customProgramCacheKey = () => `fpv-lunar-regolith-v1-${quality}`;
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace(
+        '#include <common>',
+        '#include <common>\nuniform vec3 lunarOrigin;\nvarying vec3 vLunarPoint;\nvarying vec3 vLunarNormal;',
+      )
+      .replace(
+        '#include <begin_vertex>',
+        '#include <begin_vertex>\nvLunarPoint = (modelMatrix * vec4(transformed, 1.0)).xyz + lunarOrigin;\nvLunarNormal = normalize(mat3(modelMatrix) * normal);',
+      );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <common>',
+      `#include <common>
+varying vec3 vLunarPoint;
+varying vec3 vLunarNormal;
+uniform vec3 lunarMare;
+uniform vec3 lunarUpland;
+uniform vec3 lunarRock;
+uniform vec3 lunarDust;
+${quality === 'performance' ? '' : noise}`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <color_fragment>',
+      `#include <color_fragment>
+vec3 lp = vLunarPoint;
+float lunarSlope = 1.0 - abs(normalize(vLunarNormal).y);
+// Broad districts follow the original composition-r1 relief. No cell-local phase reset.
+float lunarPatch = ${quality === 'performance' ? '0.5 + 0.17*sin(lp.x*0.031 + lp.z*0.017)*sin(lp.z*0.023 - lp.x*0.011)' : 'terrainNoise(lp * vec3(0.025,0.018,0.025))'};
+float lunarMareMask = 1.0 - smoothstep(0.45, 1.35, length((lp.xz-vec2(150,155))/vec2(255,245)));
+float lunarHighland = smoothstep(24.0, 43.0, lp.y + (lunarPatch-0.5)*5.0);
+float lunarCraterRadius = length((lp.xz-vec2(151,591))*vec2(1.0,1.08));
+float lunarEjecta = (1.0-smoothstep(17.0,54.0,abs(lunarCraterRadius-117.0))) * 0.35;
+vec3 lunarTint = mix(lunarMare, lunarUpland, max(1.0-lunarMareMask, lunarHighland)*0.78);
+lunarTint = mix(lunarTint, lunarDust, lunarEjecta + lunarHighland*0.12);
+lunarTint = mix(lunarTint, lunarRock, smoothstep(0.08,0.44,lunarSlope)*0.6);
+lunarTint *= 0.91 + lunarPatch*0.18;
+${
+  quality === 'performance'
+    ? ''
+    : `
+// Dust mottling at ~0.8 m, then ~0.18 m grain; fade before distant aliasing.
+float lunarFootprint = length(fwidth(lp));
+float lunarDetail = 1.0-smoothstep(0.08,0.6,lunarFootprint);
+lunarTint *= 1.0 + (terrainNoise(lp*1.25)-0.5)*0.13*lunarDetail;
+${quality === 'quality' ? 'lunarTint *= 1.0 + (terrainNoise(lp*5.5)-0.5)*0.07*(1.0-smoothstep(0.025,0.18,lunarFootprint));' : ''}`
+}
+diffuseColor.rgb *= lunarTint;`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <roughnessmap_fragment>',
+      '#include <roughnessmap_fragment>\nroughnessFactor = 0.98;',
     );
   };
   return material;
