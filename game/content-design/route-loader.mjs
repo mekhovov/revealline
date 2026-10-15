@@ -1,5 +1,4 @@
 import { isAuthoredJourneyRouteId } from './mode-href.mjs';
-import { createAuthoredJourneyRouteDefinition } from './route-definition.mjs';
 import { loadRouteSnapshot } from './route-snapshot.mjs';
 
 // Replaced only in a newly built distribution. Historical source routes stay exact.
@@ -94,5 +93,7 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
     const [first, second] = await Promise.all([opening, border]);
     factories = { ...first, ...second };
   }
+  // Published snapshots do not need historical source construction code.
+  const { createAuthoredJourneyRouteDefinition } = await import('./route-definition.mjs');
   return createAuthoredJourneyRouteDefinition(id, factories);
 }
