@@ -30,6 +30,10 @@ HEX = re.compile(r'[0-9a-f]{40}')
 TIMESTAMP = re.compile(r'^\d{4}-\d\d-\d\dT\S+ ')
 ANSI = re.compile(r'\x1b\[[0-9;]*m')
 MAX_LOG = 16 * 1024**2
+# Retain the historical v4 log contract and admit only the reviewed immutable v5
+# action used by the current workflow. A moving v5 tag or arbitrary SHA is not authority.
+CHECKOUT_ACTIONS = frozenset(('actions/checkout@v4',
+                              'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09'))
 require, parse, encoded, sha, pin = common.require, common.parse, common.encoded, common.sha, common.pin
 
 
@@ -129,15 +133,19 @@ def checkout_authority(body, commit, tree, role, workflow_commit=None, source_co
         rows = lines(body)
         found = []
         for start, row in enumerate(rows):
-            if row != '##[group]Run actions/checkout@v4':
+            if not row.startswith('##[group]Run actions/checkout@'):
                 continue
             close = next((i for i in range(start + 1, len(rows)) if rows[i] == '##[endgroup]'), None)
             require(close is not None, 'Truncated checkout inputs')
             metadata = rows[start + 1:close]
-            if not any(r in metadata for r in ('  path: automation', '  path: .source-gate-automation')):
+            paths = [r.removeprefix('  path: ') for r in metadata if r.startswith('  path: ')]
+            if not any(p in ('automation', '.source-gate-automation') for p in paths):
                 continue
+            require(row.removeprefix('##[group]Run ') in CHECKOUT_ACTIONS and len(paths) == 1,
+                    'Unsupported PR automation checkout action or path')
             end = next((i for i in range(close + 1, len(rows)) if rows[i].startswith('##[group]Run ')), len(rows))
-            require(('  ref: ' + workflow_commit) in metadata and workflow_commit in rows[close + 1:end],
+            refs = [r.removeprefix('  ref: ') for r in metadata if r.startswith('  ref: ')]
+            require(refs == [workflow_commit] and workflow_commit in rows[close + 1:end],
                     'Specific PR automation checkout differs')
             found.append(start)
         require(len(found) == 1, 'One actual PR automation checkout required')
