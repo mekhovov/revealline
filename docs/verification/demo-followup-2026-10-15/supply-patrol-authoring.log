@@ -1,0 +1,1 @@
+{"level":"signal-10","status":"lost","cuts":4,"bends":6,"seconds":47.464705882350906,"failures":[{"cause":"enemy-trail","exposure":520,"moving":853,"cuts":1,"tick":1495},{"cause":"enemy-player","exposure":0,"moving":305,"cuts":3,"tick":3974},{"cause":"enemy-trail","exposure":231,"moving":564,"cuts":4,"tick":5696}],"invalid":"unreadable loss","verified":true}
