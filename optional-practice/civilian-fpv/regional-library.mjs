@@ -1,8 +1,49 @@
 import { openRegionalLibrary } from './regional-delivery.mjs';
 import { validateTerrainSurface } from './regional/terrain-surface.mjs';
+import { REGION_CELL_SIZES_MM } from './regional/region-manifest.mjs';
+
+// This immutable source needs the separately qualified 512 m natural-cell capability.
+// Older runtimes keep their current catalogue rather than offering an unloadable entry.
+export const DESERT_EXPEDITION_LIBRARY_PIN = Object.freeze({
+  id: 'desert-expedition-study',
+  title: {
+    en: 'Desert Expedition — 16 km relief study',
+    uk: 'Пустельна експедиція — дослідження рельєфу 16 км',
+  },
+  description: {
+    en: '16.384 × 16.384 km · six landscapes and six starting points · unscored free flight. Explore broad dunes, a dry wash, salt basin, escarpment, mesa corridor and rocky plain. Early terrain study focused on broad relief.',
+    uk: '16,384 × 16,384 км · шість ландшафтів і шість стартових точок · вільний політ без заліку. Досліджуйте широкі дюни, сухе русло, соляну улоговину, уступ, прохід між плато та кам’янисту рівнину. Раннє дослідження великих форм рельєфу.',
+  },
+  bytes: 47883876,
+  appearance: { terrain: 'desert' },
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json',
+    bytes: 327361,
+    sha256: '6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d',
+  },
+});
 
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  ...(REGION_CELL_SIZES_MM.includes(512000) ? [DESERT_EXPEDITION_LIBRARY_PIN] : []),
+  {
+    id: 'railway-valley-expanse',
+    title: {
+      en: 'Railway Valley — six districts',
+      uk: 'Залізнична долина — шість районів',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts.',
+      uk: '4,096 × 4,096 км · шість місць старту · вільний політ без заліку. Досліджуйте вантажний цех, віадук, конвеєр кар’єру, навіс станції, ливарню й лісовий склад. Раннє дослідження ландшафту зі статичними потягами та невеликою кількістю деталей між районами.',
+    },
+    bytes: 17943638,
+    appearance: { terrain: 'railway' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json',
+      bytes: 98773,
+      sha256: '38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7',
+    },
+  },
   {
     id: 'coaster-gardens-study',
     title: {
@@ -198,7 +239,11 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement'].includes(terrain))
+  if (
+    !['plain', 'canyon', 'urban', 'railway', 'tropical', 'tropical-settlement', 'desert'].includes(
+      terrain,
+    )
+  )
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,
