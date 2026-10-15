@@ -1,0 +1,542 @@
+{
+  "format": "revealline.studio-restored-native-cue-check.v1",
+  "startedAt": "2026-10-15T19:05:08.256Z",
+  "url": "http://127.0.0.1:8791/docs/verification/team-duel-desktop-audio/studio.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "file": {
+    "name": "revealline-fpv-r105 (2).rltheme",
+    "bytes": 8779210,
+    "sha256": "55c4bd86994d26d5494f805733144c6f5795531496ddad1484b22ad59bcb88b5"
+  },
+  "themeRevision": 105,
+  "capture": {
+    "description": "capture audio cue",
+    "file": {
+      "bytes": 5864,
+      "height": null,
+      "mime": "audio/wav",
+      "sha256": "52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1",
+      "width": null
+    },
+    "format": "revealline-asset-revision.v1",
+    "geometry": null,
+    "id": "import-105-2686",
+    "kind": "audio",
+    "provenance": {
+      "creator": "Kenney / RevealLine",
+      "license": "CC0-1.0; existing project sound credits. Local transfer verification.",
+      "parent": null,
+      "prompt": "",
+      "source": "game/audio/effects/confirm.wav; retained project original"
+    },
+    "quality": {
+      "evidence": [],
+      "stage": "produced"
+    },
+    "recipe": null,
+    "revision": 1
+  },
+  "scope": "Read-only production .rltheme import; native AudioContext decoding; actual Soundscape, PublishedCues and FeedbackDirector. Controlled delay holds the real decoder result. No Studio persistence, listening, physical speaker or public edition certification.",
+  "checks": [
+    {
+      "name": "Imported capture decoded and cached",
+      "pass": true,
+      "actual": {
+        "duration": 0.0909375,
+        "frames": 4365,
+        "channels": 1,
+        "sampleRate": 48000
+      }
+    },
+    {
+      "name": "Isolated capture: exact buffer is the only scheduled cue",
+      "pass": true,
+      "actual": {
+        "custom": 1,
+        "owners": [
+          "probe-isolated"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0,
+        "bufferStarts": 1
+      }
+    },
+    {
+      "name": "Isolated capture: digital and mono output present",
+      "pass": true,
+      "actual": {
+        "rms": 0.004932491802225843,
+        "monoRms": 0.00490666057269652,
+        "peak": 0.04464675858616829,
+        "windows": 27
+      }
+    },
+    {
+      "name": "Isolated capture: sampled headroom",
+      "pass": true,
+      "actual": 0.04464675858616829
+    },
+    {
+      "name": "Team: exact restored buffer and owners",
+      "pass": true,
+      "actual": {
+        "custom": 1,
+        "owners": [
+          "team"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      }
+    },
+    {
+      "name": "Team: no recorded capture duplicate",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "Team: digital and mono output present",
+      "pass": true,
+      "actual": {
+        "rms": 0.0026407674444593747,
+        "monoRms": 0.0026326762798730835,
+        "peak": 0.02563677541911602,
+        "windows": 27
+      }
+    },
+    {
+      "name": "Team: sampled headroom",
+      "pass": true,
+      "actual": 0.02563677541911602
+    },
+    {
+      "name": "Duel: exact restored buffer and owners",
+      "pass": true,
+      "actual": {
+        "custom": 2,
+        "owners": [
+          0,
+          1
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      }
+    },
+    {
+      "name": "Duel: no recorded capture duplicate",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "Duel: digital and mono output present",
+      "pass": true,
+      "actual": {
+        "rms": 0.005348951234992436,
+        "monoRms": 0.005345195573363318,
+        "peak": 0.05308777466416359,
+        "windows": 28
+      }
+    },
+    {
+      "name": "Duel: sampled headroom",
+      "pass": true,
+      "actual": 0.05308777466416359
+    },
+    {
+      "name": "mute: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "mute: rejects fresh cue after cooldown",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "mute: restoration does not replay",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "mute: fresh event still uses restored cue",
+      "pass": true,
+      "actual": {
+        "custom": 1,
+        "owners": [
+          "team"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      }
+    },
+    {
+      "name": "zero-master: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "zero-master: rejects fresh cue after cooldown",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "zero-master: restoration does not replay",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 17
+      }
+    },
+    {
+      "name": "zero-master: fresh event still uses restored cue",
+      "pass": true,
+      "actual": {
+        "custom": 1,
+        "owners": [
+          "team"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      }
+    },
+    {
+      "name": "gameplay-pause: retires active cue",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "gameplay-pause: rejects fresh cue after cooldown",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "activeVoices": 0
+      }
+    },
+    {
+      "name": "gameplay-pause: restoration does not replay",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "gameplay-pause: fresh event still uses restored cue",
+      "pass": true,
+      "actual": {
+        "custom": 1,
+        "owners": [
+          "team"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      }
+    },
+    {
+      "name": "Cold capture uses ready recorded fallback once",
+      "pass": true,
+      "actual": {
+        "custom": 0,
+        "owners": [],
+        "exactDecodedBuffer": false,
+        "nativeReveal": 1
+      }
+    },
+    {
+      "name": "late-completion: actual native decode completed while delivery held",
+      "pass": true,
+      "actual": {
+        "frames": 4365,
+        "cached": false
+      }
+    },
+    {
+      "name": "late-completion: no late replay",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "late-completion: cache ownership",
+      "pass": true,
+      "actual": true
+    },
+    {
+      "name": "After late readiness only a fresh event uses custom capture",
+      "pass": true,
+      "actual": {
+        "custom": 1,
+        "owners": [
+          "team"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      }
+    },
+    {
+      "name": "cancel-pending: actual native decode completed while delivery held",
+      "pass": true,
+      "actual": {
+        "frames": 4365,
+        "cached": false
+      }
+    },
+    {
+      "name": "cancel-pending: no late replay",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "cancel-pending: cache ownership",
+      "pass": true,
+      "actual": false
+    },
+    {
+      "name": "close-owner: actual native decode completed while delivery held",
+      "pass": true,
+      "actual": {
+        "frames": 4365,
+        "cached": false
+      }
+    },
+    {
+      "name": "close-owner: no late replay",
+      "pass": true,
+      "actual": {
+        "bufferStarts": 0,
+        "rms": 0,
+        "monoRms": 0,
+        "peak": 0,
+        "windows": 18
+      }
+    },
+    {
+      "name": "close-owner: cache ownership",
+      "pass": true,
+      "actual": false
+    }
+  ],
+  "observations": [
+    {
+      "id": "capture-isolated",
+      "rms": 0.004932491802225843,
+      "monoRms": 0.00490666057269652,
+      "peak": 0.04464675858616829,
+      "windows": 27
+    },
+    {
+      "id": "Team",
+      "voices": {
+        "custom": 1,
+        "owners": [
+          "team"
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      },
+      "rms": 0.0026407674444593747,
+      "monoRms": 0.0026326762798730835,
+      "peak": 0.02563677541911602,
+      "windows": 27
+    },
+    {
+      "id": "Duel",
+      "voices": {
+        "custom": 2,
+        "owners": [
+          0,
+          1
+        ],
+        "exactDecodedBuffer": true,
+        "nativeReveal": 0
+      },
+      "rms": 0.005348951234992436,
+      "monoRms": 0.005345195573363318,
+      "peak": 0.05308777466416359,
+      "windows": 28
+    },
+    {
+      "id": "mute-restored",
+      "bufferStarts": 0,
+      "rms": 0,
+      "monoRms": 0,
+      "peak": 0,
+      "windows": 18
+    },
+    {
+      "id": "zero-master-restored",
+      "bufferStarts": 0,
+      "rms": 0,
+      "monoRms": 0,
+      "peak": 0,
+      "windows": 17
+    },
+    {
+      "id": "gameplay-pause-restored",
+      "bufferStarts": 0,
+      "rms": 0,
+      "monoRms": 0,
+      "peak": 0,
+      "windows": 18
+    },
+    {
+      "id": "late-completion",
+      "cached": true,
+      "bufferStarts": 0,
+      "rms": 0,
+      "monoRms": 0,
+      "peak": 0,
+      "windows": 18
+    },
+    {
+      "id": "cancel-pending",
+      "cached": false,
+      "bufferStarts": 0,
+      "rms": 0,
+      "monoRms": 0,
+      "peak": 0,
+      "windows": 18
+    },
+    {
+      "id": "close-owner",
+      "cached": false,
+      "bufferStarts": 0,
+      "rms": 0,
+      "monoRms": 0,
+      "peak": 0,
+      "windows": 18
+    }
+  ],
+  "sourcePins": {
+    "game/ui/audio.mjs": "e0925185418833b4d7e9e4910617f62466db8442a1dc7f0f6b746bcb9009c407",
+    "game/ui/audio-master.mjs": "6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8",
+    "game/ui/audio-output.mjs": "dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1",
+    "game/ui/feedback-director.mjs": "8381a6708e42fb650d954708942dc05a302e781dbeaf556a7fec538e392e202d",
+    "game/ui/feedback-cues.mjs": "80a7f9c1ac51e35ac2bb25de2611dbac515be84c818497ae617ecc694473b633",
+    "game/ui/published-audio.mjs": "420bca6644f845d63b51200a3b407028eff53578670c57ba082cb9d0da60e61f",
+    "game/presentation/bundle.mjs": "994be0696766d65c26a7542ecae7febc2dbbd31158bfec68be283db1ffeb0516",
+    "game/presentation/model.mjs": "7b6686b75c059c7b264164db5b061286df025174c7bd687c0a6e08dccdb1fa81",
+    "game/presentation/document-codec.mjs": "a55c12280b6a5ea4c6e718179d2ebad2857d3870dd4b0e26e47802d920f13b6b",
+    "studio.html": "ba6be43f70e198c674089fab25cbdeb728df20ca142cb2c48ffe8abe6a6ac45f",
+    "studio-probe.mjs": "15b718ffede720e35b9b439ec0664781b4f46546a0debeead9dc740657eb0ff8",
+    "studio-probe-model.mjs": "ced08f9566b26e87cefabe44a1b404c3d5ec9baa2a2b6ba17b3d0687beb88b75"
+  },
+  "recordedBank": [
+    "attack",
+    "bell",
+    "cancel",
+    "ceramic",
+    "closure",
+    "confirm",
+    "confirm-1",
+    "confirm-2",
+    "contact-glass",
+    "contact-glass-1",
+    "contact-glass-2",
+    "contact-metal",
+    "contact-metal-1",
+    "contact-metal-2",
+    "contact-soft",
+    "contact-soft-1",
+    "contact-soft-2",
+    "contact-wood",
+    "contact-wood-1",
+    "contact-wood-2",
+    "deploy",
+    "destroy-armored",
+    "destroy-armored-1",
+    "destroy-armored-2",
+    "destroy-electronic",
+    "destroy-electronic-1",
+    "destroy-electronic-2",
+    "destroy-heavy",
+    "destroy-heavy-1",
+    "destroy-heavy-2",
+    "destroy-light",
+    "destroy-light-1",
+    "destroy-light-2",
+    "destroy-soft",
+    "destroy-soft-1",
+    "destroy-soft-2",
+    "erosion",
+    "esc-retry",
+    "esc-start",
+    "flow",
+    "focus",
+    "gate",
+    "grain",
+    "human-reaction-1",
+    "human-reaction-2",
+    "human-reaction-3",
+    "human-reaction-4",
+    "human-reaction-5",
+    "human-reaction-6",
+    "human-reaction-7",
+    "human-reaction-8",
+    "impact",
+    "interference",
+    "loss",
+    "motor",
+    "neutralized",
+    "paper",
+    "paper-1",
+    "paper-2",
+    "pickup",
+    "pickup-1",
+    "pickup-2",
+    "radio-armed-en",
+    "radio-armed-uk",
+    "ratchet",
+    "reactivated",
+    "respawn",
+    "retry",
+    "reveal-large",
+    "reveal-medium",
+    "reveal-small",
+    "rotor",
+    "start",
+    "switch",
+    "warning",
+    "wheels",
+    "win",
+    "wings",
+    "wood"
+  ],
+  "sampleRate": 48000,
+  "decodedCapture": {
+    "duration": 0.0909375,
+    "frames": 4365,
+    "channels": 1,
+    "sampleRate": 48000
+  },
+  "passed": true,
+  "contextStateAfterCleanup": "closed"
+}
