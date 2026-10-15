@@ -1,4 +1,16 @@
 {
+  "imageEditRoundTrip": {
+    "levelId": "symbol-31d03512",
+    "baseRevision": "691351e1d757276eea7e94cc08fca07f6a16021f",
+    "edit": { "type": "wall", "x": 20, "y": 6, "w": 1, "h": 1 },
+    "countedCellsBefore": 2176,
+    "countedCellsAfter": 2175,
+    "excludedCells": 192,
+    "completeDocumentsDeepEqual": true,
+    "exportBytes": 376008,
+    "exportSHA256": "7b98d9b83ddbd037e200a6b8f9a44c44ccec269d0aff9bcb450e8eee7b4a029e",
+    "screenshot": "creator-image-edited-roundtrip.png"
+  },
   "imageChecks": [
     {
       "file": "transparent.png",
