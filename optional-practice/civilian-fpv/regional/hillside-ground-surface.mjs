@@ -1,6 +1,13 @@
 /** Original town-r2 ground study. Static surface colour only; no physical curb or displacement. */
 import * as THREE from '../vendor/three.module.js';
 
+// Derived from the exact town-r2 wall/floor source; authoring verification binds all 18 houses.
+// Two repeated 128 m cell templates avoid per-object shader traversal or extra textures.
+export const HILLSIDE_CONTACT_FOOTPRINTS = Object.freeze([
+  Object.freeze([48, 48, 5.25, 5.125]),
+  Object.freeze([90, 82, 5.25, 5.125]),
+]);
+
 export function createHillsideGroundSurface({ quality, originMm }) {
   const valid = (value) => {
     if (!['performance', 'balanced', 'quality'].includes(value))
@@ -12,6 +19,8 @@ export function createHillsideGroundSurface({ quality, originMm }) {
     hillsideOrigin: {
       value: new THREE.Vector3(originMm.x / 1000, originMm.y / 1000, originMm.z / 1000),
     },
+    hillsideContactA: { value: new THREE.Vector4(...HILLSIDE_CONTACT_FOOTPRINTS[0]) },
+    hillsideContactB: { value: new THREE.Vector4(...HILLSIDE_CONTACT_FOOTPRINTS[1]) },
     hillsideGrass: { value: new THREE.Color(0x647253) },
     hillsideSoil: { value: new THREE.Color(0x8b7962) },
     hillsideStone: { value: new THREE.Color(0xb6ad98) },
@@ -25,7 +34,7 @@ export function createHillsideGroundSurface({ quality, originMm }) {
     material.name = name();
     material.needsUpdate = true;
   };
-  material.customProgramCacheKey = () => `fpv-hillside-ground-study-v1-${quality}`;
+  material.customProgramCacheKey = () => `fpv-hillside-ground-contact-v2-${quality}`;
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader = shader.vertexShader
@@ -47,6 +56,8 @@ vHillsideNormal = normalize(mat3(modelMatrix) * normal);`,
       `#include <common>
 varying vec3 vHillsidePoint;
 varying vec3 vHillsideNormal;
+uniform vec4 hillsideContactA;
+uniform vec4 hillsideContactB;
 uniform vec3 hillsideGrass;
 uniform vec3 hillsideSoil;
 uniform vec3 hillsideStone;
@@ -105,6 +116,13 @@ ${quality === 'quality' ? 'paving *= 1.0+grain*nearDetail*0.035;' : ''}`
 tint = mix(tint,paving,paved);
 float slope = smoothstep(0.12,0.55,1.0-abs(normalize(vHillsideNormal).y));
 tint = mix(tint,hillsideSoil*(0.9+broad*0.12),slope*0.35);
+// Static local grounding cue on the authored terrace plane, not a projected shadow.
+float edgeA = abs(hillBox(local,hillsideContactA.xy,hillsideContactA.zw));
+float edgeB = abs(hillBox(local,hillsideContactB.xy,hillsideContactB.zw));
+float contactBand = 1.0-smoothstep(0.0,0.8,min(edgeA,edgeB));
+float groundPlane = 1.0-smoothstep(0.03,0.35,abs(hp.y-floor(p.y/128.0)*12.0));
+float horizontal = smoothstep(0.85,0.98,abs(normalize(vHillsideNormal).y));
+tint *= 1.0-0.22*contactBand*groundPlane*horizontal;
 diffuseColor.rgb *= tint;`,
     );
   };
