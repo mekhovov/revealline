@@ -34,6 +34,17 @@ Direct old/new distribution-member comparison found changes only to generated
 `civilian-fpv/regional-library.mjs`. Generated bindings are new identities, not
 evidence that the older receipt tested the later package.
 
+Before submitting review, recovery PR #1487 merged. A final clean rebase onto
+main `a201b3789` removed the already-applied prerequisite commits. The
+[input comparison](flight-practice-repair-20261015/final-rebase-input-check.json)
+verified every original candidate input against this rebased checkout:
+87 Gym, 94 Academy and 155 Worlds input files, **zero changed hashes**.
+No optional-package input changed in that main update. Original package and
+observer receipt identities above remain unchanged; this comparison is not a
+new artifact build or a relabelled browser run.
+Post-rebase tooling checks passed 34 observer and 19 installation-observer tests;
+scoped lint and whitespace checks passed again.
+
 ## Verification exchange diagnostics
 
 The earlier [failed installation run](flight-practice-pointer-20261015/installation-unverified.json)
