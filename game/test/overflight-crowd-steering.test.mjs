@@ -190,3 +190,88 @@ test('Raid does not advertise or silently accept the Survivor-only movement expe
   project.combat.crowdSeparation = 'local-v1';
   assert.throws(() => compileOverflightHuntProject(project));
 });
+
+test('local broad phase matches every nearby body across rebuilds, radii and arena edges', () => {
+  const records = Array.from({ length: 240 }, (_, index) => ({
+    id: index + 1,
+    active: index % 17 !== 0,
+    radius: [8, 15, 28][index % 3],
+    x: (index * 79.125) % 512,
+    y: (index * 31.875) % 256,
+  }));
+  const grid = createOverflightGrid(512, 256, records.length),
+    scratch = {};
+  function reference(source) {
+    let x = 0,
+      y = 0;
+    for (const other of records) {
+      if (!other.active || other.id === source.id) continue;
+      const dx = source.x - other.x,
+        dy = source.y - other.y,
+        d = Math.hypot(dx, dy),
+        cutoff = source.radius + other.radius + 8;
+      if (d > 0 && d < cutoff) {
+        const weight = (1 - d / cutoff) / d;
+        x += dx * weight;
+        y += dy * weight;
+      }
+    }
+    const length = Math.hypot(x, y);
+    if (length > 0.65) {
+      x *= 0.65 / length;
+      y *= 0.65 / length;
+    }
+    return { x, y };
+  }
+  for (let frame = 0; frame < 3; frame++) {
+    for (const record of records) {
+      record.x = (record.x + 13.5) % 512;
+      record.y = (record.y + 7.25) % 256;
+      if (frame === 1 && record.id % 19 === 0) record.active = !record.active;
+    }
+    rebuildOverflightGrid(grid, records);
+    for (let index = 0; index < records.length; index++) {
+      const actual = overflightCrowdSeparation(grid, index, grid.maxRadius, scratch);
+      const expected = records[index].active ? reference(records[index]) : { x: 0, y: 0 };
+      close(actual.x, expected.x);
+      close(actual.y, expected.y);
+    }
+  }
+});
+
+test('local spacing freezes coordinates before its first query and allocates its fine index only on demand', () => {
+  const { grid, records } = scene(64);
+  assert.equal(grid.local, null);
+  const reference = overflightCrowdSeparation(scene(64).grid, 0, 28, {});
+  records[1].x = 400;
+  const actual = overflightCrowdSeparation(grid, 0, 28, {});
+  close(actual.x, reference.x);
+  close(actual.y, reference.y);
+  assert.ok(grid.local.heads.byteLength + grid.local.next.byteLength <= 60 * 1024);
+});
+test('diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid', async () => {
+  const { overflightReviewCrowdSeparation } = await import('../overflight/host-loop.mjs');
+  const params = new URLSearchParams('reviewCrowd=local');
+  for (const mode of ['overflight', 'overflight-riy']) {
+    assert.equal(overflightReviewCrowdSeparation(params, { mode, build: 'echo' }), 'local-v1');
+    for (const fixture of ['reference', 'stress'])
+      assert.equal(overflightReviewCrowdSeparation(params, { mode, fixture }), 'local-v1');
+    assert.equal(overflightReviewCrowdSeparation(params, { mode }), null);
+    assert.equal(overflightReviewCrowdSeparation(params, { mode, fixture: 'invalid' }), null);
+  }
+  assert.equal(
+    overflightReviewCrowdSeparation(params, {
+      mode: 'overflight-hunt',
+      build: 'objectives',
+      fixture: 'reference',
+    }),
+    null,
+  );
+  assert.equal(
+    overflightReviewCrowdSeparation(new URLSearchParams('reviewCrowd=unknown'), {
+      mode: 'overflight',
+      fixture: 'reference',
+    }),
+    null,
+  );
+});

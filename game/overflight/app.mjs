@@ -112,6 +112,7 @@ import {
   createOverflightKeyboardState,
   createOverflightJSONPages,
   overflightSortieProject,
+  overflightReviewCrowdSeparation,
 } from './host-loop.mjs';
 import { createOverflightAudio, overflightMusicContext } from './audio.mjs';
 import { createOverflightTouch } from './touch.mjs';
@@ -298,10 +299,13 @@ const persistOptions = () => {
 };
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = mode.defaultProject.seed;
+const reviewCrowd = overflightReviewCrowdSeparation(params, {
+  mode: mode.id,
+  build: reviewBuild,
+  fixture,
+});
 let project = mode.createProject({
-  ...(reviewBuild && mode.id !== 'overflight-hunt' && params.get('reviewCrowd') === 'local'
-    ? { crowdSeparation: 'local-v1' }
-    : {}),
+  ...(reviewCrowd ? { crowdSeparation: reviewCrowd } : {}),
   seed,
   difficulty: options.difficulty,
   ...(params.get('layout') ? { layout: params.get('layout') } : {}),
@@ -1292,6 +1296,7 @@ function measurement({ raw = false } = {}) {
     browser: win.navigator.userAgent,
     appearance: preparationIdentity,
     projectIdentity: compiled.projectIdentity,
+    crowdSeparation: compiled.combat?.crowdSeparation ?? null,
     seed,
     summary: sortieSummary(),
     feedback: {
