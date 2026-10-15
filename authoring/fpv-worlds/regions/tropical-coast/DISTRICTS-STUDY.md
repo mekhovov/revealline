@@ -30,3 +30,9 @@ The complete nine-cell terrain and scenery resources total **3,849,932 bytes**. 
 The sea remains a visual surface at zero altitude above the solid seabed. It has no buoyancy, drowning or water-damage model. Transparent foliage is visual-only; trunks, hut surfaces, piers and cargo remain solid. The source preserves the original intake, licenses and provenance: Ron Kapaun / 3TD Studios, CC0-1.0, [upstream Tropical pack](https://opengameart.org/content/3td-tropical-environment-pack-v20). Terrain, composition and routes are original project work.
 
 Functional and native receipts must be read at their stated scope. A static native view does not establish completed gameplay, sustained device performance, default Library admission or package/offline availability.
+
+## Native source review — 15 October 2026
+
+The exact immutable delivery authored at `384957a84cd2ccff02fe7a8e79d35487e064e419` was reviewed with production runtime `83fd65256336da0fb892bec3c12678ce537576c3` on the isolated 9064 source viewer. Balanced overview/Harbour, Quality Village and Performance Palms rendered visible textures and foliage cutouts without warning/error console entries. Explicit Dispose returned geometry, texture, source and reservation accounting plus collision worlds/colliders to zero. The preserved Quality Village screenshot has SHA-256 `98cd38d524d002df972433cf842ee936be9f9d9d51bf4ba7c27283d36c24a0fd`.
+
+**The source is technically accepted as an early study, not as the representative final art standard.** Native inspection found broad empty green areas and flat water; two isolated huts do not yet read as a village. The next composition pass needs denser coherent landmarks and useful flight lines using bounded shared resources, rather than merely more empty area. The first coast remains the normal Library revision; this larger source review does not change player admission or imply package/offline acceptance.
