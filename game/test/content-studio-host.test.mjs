@@ -10,6 +10,7 @@ import { compileContentProject } from '../content-design/project.mjs';
 import { editContentActor } from '../content-design/actors.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { createMultiplayerExpansionCandidates } from '../content-design/multiplayer-expansion.mjs';
 
 const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
 const themes = JSON.parse(
@@ -25,7 +26,17 @@ const settle = async () => {
 async function fixture(t, { controller = false } = {}) {
   const doc = new Document(),
     win = doc.defaultView,
-    memory = managedIndexedDB();
+    databases = new Map(),
+    memory = {
+      indexedDB: {
+        open(name, version) {
+          // The host also opens its candidate library. Native IndexedDB owns
+          // separate stores per database; the finite model represents one.
+          if (!databases.has(name)) databases.set(name, managedIndexedDB());
+          return databases.get(name).indexedDB.open(name, version);
+        },
+      },
+    };
   doc.parentNode = win;
   const frames = new Map(),
     timers = new Map(),
@@ -565,6 +576,58 @@ test('actual Studio canceled import and late imported bytes preserve a newer sou
   assert.equal(h.$('source').value, '{"newer":');
   assert.equal(h.$('apply').disabled, true);
 });
+
+for (const mode of ['team', 'versus'])
+  test(`${mode}: actual Studio edits an advanced chapter, restores Undo/Redo and exports a recoverable checkpoint`, async (t) => {
+    const h = await fixture(t);
+    const source = structuredClone(
+      createMultiplayerExpansionCandidates({ mode, chapterId: 'aurora' }),
+    );
+    const final = source.missions.at(-1);
+    final.name += ' · creator revision';
+    source.name += ' · creator revision';
+    source.revision += '-studio-acceptance';
+    h.edit(source);
+    await h.click('validate');
+    assert.equal(h.$('apply').disabled, false, h.$('status').textContent);
+    await h.click('apply');
+    assert.deepEqual(JSON.parse(h.$('source').value), source);
+    const edited = structuredClone(source);
+    edited.missions.at(-1).name += ' · second edit';
+    h.edit(edited);
+    await h.click('validate');
+    await h.click('apply');
+    await h.click('undo');
+    assert.deepEqual(JSON.parse(h.$('source').value), source);
+    await h.click('redo');
+    assert.deepEqual(JSON.parse(h.$('source').value), edited);
+    await h.click('save');
+    const backend = createContentDraftBackend(h.memory);
+    assert.deepEqual((await backend.read(source.id)).project, edited);
+    await h.click('export');
+    const download = h.downloads.at(-1),
+      blob = h.blobs.get(download.href);
+    const portable = await blob.text();
+    assert.deepEqual(compileContentProject(portable), compileContentProject(edited));
+    h.edit(source);
+    await h.click('validate');
+    await h.click('apply');
+    h.$('import').files = [blob];
+    h.$('import').emit('change');
+    await settle();
+    assert.deepEqual(JSON.parse(h.$('source').value), edited);
+    assert.equal(
+      h.$('project-name').textContent,
+      source.name,
+      'Import remains a candidate until Apply',
+    );
+    await h.click('apply');
+    await h.click('save');
+    await h.click('load');
+    await h.click('apply');
+    assert.deepEqual(JSON.parse(h.$('source').value), edited);
+    assert.deepEqual((await backend.read(source.id)).project, edited);
+  });
 
 test('actual Studio discard approval rejects a changed form snapshot and preserves both drafts', async (t) => {
   const h = await fixture(t, { controller: true });
