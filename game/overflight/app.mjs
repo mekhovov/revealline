@@ -1616,9 +1616,16 @@ if (reviewBuild) {
       start({ retainRun: true });
     });
   }
-  for (const parent of [$('overflight-game'), $('upgrade-dialog')?.querySelector('footer')]) {
+  for (const parent of [
+    $('overflight-review-controls'),
+    $('upgrade-dialog')?.querySelector('footer'),
+  ]) {
     if (!parent) continue;
-    const take = el('button', '', parent === $('overflight-game') ? 'overflight-take-control' : '');
+    const take = el(
+      'button',
+      '',
+      parent === $('overflight-review-controls') ? 'overflight-take-control' : '',
+    );
     take.type = 'button';
     take.dataset.copy = 'takeControl';
     take.dataset.reviewAction = 'take';
@@ -1778,6 +1785,12 @@ const disposeModeActions = mode.installActions?.({
     !doc.hidden,
 });
 if (typeof disposeModeActions === 'function') cleanup.push(disposeModeActions);
+// Keep controls in flow below the measured HUD, including wrapped translations.
+// Review tools and squad controls must not obscure progress or one another.
+const fieldControls = $('overflight-field-controls');
+const squadControls = $('overflight-game').querySelector('.overflight-riy-controls');
+if (squadControls) fieldControls.prepend(squadControls);
+$('overflight-review-controls').append($('overflight-diagnostics'));
 if ($('survivor-same-seed')) {
   listen($('survivor-same-seed'), 'click', () => {
     void prepare({ launch: true }).catch(() => {});

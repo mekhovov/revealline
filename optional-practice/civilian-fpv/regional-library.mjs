@@ -4,6 +4,24 @@ import { validateTerrainSurface } from './regional/terrain-surface.mjs';
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
   {
+    id: 'tropical-coastal-study',
+    title: {
+      en: 'Tropical coast — bounded flight study',
+      uk: 'Тропічне узбережжя — дослідження польоту',
+    },
+    description: {
+      en: '384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.',
+      uk: '384 × 384 м · два пірси, хатина на палях, пальми й дюни · вільний політ без заліку. Тренуйте проходи, низький політ та маршрут уздовж берега. Ранній огляд узбережжя; вода лише візуальна.',
+    },
+    bytes: 5982641,
+    appearance: { terrain: 'tropical' },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json',
+      bytes: 6602,
+      sha256: 'ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443',
+    },
+  },
+  {
     id: 'canyon-arrival-landmarks-study',
     title: {
       en: 'Canyon Badlands — six districts',
@@ -88,7 +106,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
       row.pin.sha256 === identity?.sha256,
   );
   const terrain = approved?.appearance?.terrain ?? 'plain';
-  if (!['plain', 'canyon', 'urban', 'railway'].includes(terrain))
+  if (!['plain', 'canyon', 'urban', 'railway', 'tropical'].includes(terrain))
     throw new TypeError('Unknown trusted regional terrain appearance');
   return {
     ...configuration,
@@ -111,6 +129,51 @@ export function regionalPresentationOptions(configuration, quality) {
       surfaceStyle: surface.style,
       surfaceQuality: surface.quality,
     },
+  };
+}
+
+/** Bound a transfer by inactivity and total elapsed time, without penalizing steady progress. */
+export function regionalOperationDeadline(win, controller, kind) {
+  let received = 0,
+    idleTimer,
+    totalTimer,
+    stopped = false;
+  const stop = () => {
+    stopped = true;
+    win.clearTimeout(idleTimer);
+    win.clearTimeout(totalTimer);
+  };
+  const expire = () => {
+    stop();
+    controller.abort(new DOMException('Regional operation timed out', 'TimeoutError'));
+  };
+  const renew = () => {
+    win.clearTimeout(idleTimer);
+    idleTimer = win.setTimeout(expire, 120000);
+  };
+  renew();
+  if (kind === 'install') totalTimer = win.setTimeout(expire, 600000);
+  return {
+    // Descriptor reads happen twice (inspection, then verified installation).
+    // Their chunk activity is independent of the payload's cumulative byte count.
+    activity(bytes) {
+      if (stopped || controller.signal.aborted || kind !== 'install') return;
+      if (Number.isSafeInteger(bytes) && bytes > 0) renew();
+    },
+    progress(value) {
+      if (stopped || controller.signal.aborted || kind !== 'install') return;
+      // A commit already owns the atomic transaction. It must report its outcome
+      // even if navigation or cancellation arrives while storage is finishing.
+      if (value.phase === 'commit') {
+        stop();
+        return;
+      }
+      if (Number.isSafeInteger(value.loadedBytes) && value.loadedBytes > received) {
+        received = value.loadedBytes;
+        renew();
+      }
+    },
+    stop,
   };
 }
 
@@ -324,7 +387,7 @@ export function mountRegionalLibrary({
     operation = controller;
     if (kind === 'refresh') show('', '');
     paint();
-    const timer = win.setTimeout(() => controller.abort(), 120000);
+    const deadline = regionalOperationDeadline(win, controller, kind);
     let committed = false;
     try {
       const store = await waitFor(dbReady, signal);
@@ -334,7 +397,9 @@ export function mountRegionalLibrary({
         const options = {
           pageURL: win.location.href,
           signal,
+          onActivity: deadline.activity,
           onProgress(value) {
+            deadline.progress(value);
             if (closed || requestEpoch !== epoch) return;
             if (value.phase === 'commit') {
               cancel.disabled = true;
@@ -393,6 +458,11 @@ export function mountRegionalLibrary({
             'Saved changes are retained. Refresh saved regions.',
             'Зміни збережено. Оновіть список регіонів.',
           );
+        else if (signal.reason?.name === 'TimeoutError')
+          show(
+            'This action took too long or stopped making progress. Existing downloads are retained. Please retry.',
+            'Дія тривала надто довго або зупинилася. Наявні завантаження збережено. Повторіть спробу.',
+          );
         else if (signal.aborted)
           show(
             'Cancelled. Existing downloads are retained.',
@@ -405,7 +475,7 @@ export function mountRegionalLibrary({
           );
       }
     } finally {
-      win.clearTimeout(timer);
+      deadline.stop();
       operation = null;
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
