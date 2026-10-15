@@ -12,6 +12,7 @@ import {
   observePracticeDirectoryJourney,
   openDirectoryPopup,
   assertDirectoryPageCount,
+  openMainGamePractice,
 } from './observe-practice-directory-journey.mjs';
 
 test('popup click and late waiter failures stay owned without unhandled rejection', async () => {
@@ -53,6 +54,33 @@ const plan = () => ({
   packageRevision: 'd'.repeat(64),
   shellRevision: 'e'.repeat(40),
   shellTree: 'f'.repeat(40),
+});
+test('main-game entry opens visible Settings and Help & Extras before practice', async () => {
+  const actions = [];
+  let settings = false,
+    extras = false;
+  const page = {
+    locator: (selector) => ({
+      waitFor: async ({ state }) => {
+        assert.equal(selector, '#settings-dialog[open]');
+        assert.equal(state, 'visible');
+        assert(settings);
+      },
+    }),
+  };
+  await openMainGamePractice(page, async (owner, selector) => {
+    assert.equal(owner, page);
+    if (selector === '#shell-options') settings = true;
+    else if (selector === '#settings-tab-extras') {
+      assert(settings);
+      extras = true;
+    } else {
+      assert.equal(selector, '#shell-home-practice');
+      assert(extras, 'Practice remains hidden outside Extras.');
+    }
+    actions.push(selector);
+  });
+  assert.deepEqual(actions, ['#shell-options', '#settings-tab-extras', '#shell-home-practice']);
 });
 test('one-action browser journey rejects extra or missing tabs', () => {
   assertDirectoryPageCount({ pages: () => [{}, {}] }, 2);
