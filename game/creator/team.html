@@ -214,6 +214,40 @@
         <p id="team-play-help" class="muted" hidden></p>
       </section>
     </main>
+    <aside
+      class="creator-retention"
+      aria-label="Download retention"
+      data-i18n-aria-label="interface:downloadRetention"
+    >
+      <details id="creator-retention" class="panel">
+        <summary data-i18n="interface:downloadRetention">Download retention</summary>
+        <p
+          id="creator-retention-help"
+          data-i18n="interface:askThisBrowserToProtectThisSiteSSavedData"
+        >
+          Ask this browser to protect this site's saved data from automatic removal. This does not
+          download files or replace backups.
+        </p>
+        <button
+          id="creator-retention-button"
+          type="button"
+          disabled
+          aria-describedby="creator-retention-help creator-retention-status"
+          data-i18n="interface:keepDownloadsOnThisDevice"
+        >
+          Keep downloads on this device
+        </button>
+        <p
+          id="creator-retention-status"
+          role="status"
+          aria-live="polite"
+          data-i18n="interface:retentionHasNotBeenChecked"
+        >
+          Retention has not been checked.
+        </p>
+      </details>
+    </aside>
+
     <script
       src="../ui/authoring-input-entry.mjs"
       type="application/x-revealline-locked"
