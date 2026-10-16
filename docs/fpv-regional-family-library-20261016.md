@@ -35,8 +35,8 @@ back after the player has navigated away.
 
 ## Software verification completed
 
-Node 20.19.5: seventeen new family/UI/navigation groups and six existing title/identity
-regressions pass (23 total). The coverage includes:
+Node 20.19.5: eighteen new family/UI/navigation groups and six existing title/identity
+regressions pass (24 total). The coverage includes:
 
 - All 24 exact offers in ten families, catalogue order and unchanged pin objects.
 - Active older saved defaults, unoffered revisions, unfamiliar IDs, and full
@@ -63,6 +63,15 @@ cases model pre-existing focus becoming body focus while controls are disabled.
 The regression first failed on the prior source with a disconnected active node,
 then passed after exact focus ownership and refresh-only restoration were added.
 Explicit install/remove focus behavior retains its separate existing coverage.
+
+Root native component review of the prior `81c0d658` package then exposed a
+separate host-reopen path: `open()` reinserted an already-placed subtree before
+refresh captured focus. The original `9213` fixture/package and native negative
+remain preserved. The follow-up avoids only redundant placement; it still moves
+the root into a new host, to the end when a sibling follows, or back home when
+needed. A focused boundary regression first failed on the prior source, then
+passed with all 24 groups. It models native move-induced blur on individual test
+instances; actual follow-up DOM acceptance remains open.
 
 ## Gates still open
 

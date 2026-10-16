@@ -493,6 +493,78 @@ test('a deferred saved-region refresh preserves the exact focused Fly edition ac
   }
 });
 
+test('idempotent Library reopen keeps focus before refresh while genuinely required host moves remain intact', async () => {
+  const old = saved(desert.at(-1), true),
+    next = saved(desert[0]),
+    f = await fixture({ records: [old, next] });
+  let release;
+  f.store.list = () =>
+    new Promise((resolve) => {
+      release = resolve;
+    });
+  try {
+    const root = f.root(),
+      home = root.previousElementSibling,
+      after = home.after.bind(home),
+      host = f.doc.createElement('div');
+    f.doc.body.append(host);
+    let moves = 0;
+    // The observed native negative lost focus when an already-placed subtree
+    // was reinserted before run('refresh') captured intent. Model that DOM
+    // boundary on these instances only; no browser/global behavior is patched.
+    const moving = (nodes) => {
+      moves++;
+      if (nodes.some((node) => node.contains(f.doc.activeElement))) f.doc.body.focus();
+    };
+    home.after = (...nodes) => {
+      moving(nodes);
+      after(...nodes);
+    };
+    const append = host.append.bind(host);
+    host.append = (...nodes) => {
+      moving(nodes);
+      append(...nodes);
+    };
+    f.family().querySelector('[data-region-primary] button').focus();
+    f.ui.open();
+    await settle();
+    assert.equal(moves, 0, 'An already-adjacent root must not be reinserted before focus capture');
+    f.doc.body.focus(); // Temporarily disabled native controls can blur later.
+    release([
+      { ...old, active: false },
+      { ...next, active: true },
+    ]);
+    await settle();
+    assert.equal(f.doc.activeElement.closest('[data-region-key]')?.dataset.regionKey, old.sha256);
+    f.store.list = async () => [
+      { ...old, active: false },
+      { ...next, active: true },
+    ];
+    f.ui.open(host);
+    await settle();
+    assert.equal(root.parentNode, host);
+    assert.equal(moves, 1, 'A new host still requires reparenting');
+    f.ui.open(host);
+    await settle();
+    assert.equal(moves, 1, 'An already-last root must not be reinserted');
+    const tail = f.doc.createElement('p');
+    host.append(tail);
+    f.ui.open(host);
+    await settle();
+    assert.equal(host.lastElementChild, root);
+    assert.equal(moves, 3, 'A following sibling still requires moving the root to the end');
+    f.ui.open();
+    await settle();
+    assert.equal(home.nextSibling, root);
+    assert.equal(moves, 4, 'Returning to the home position still requires moving');
+    assert.deepEqual(f.flights, []);
+    assert.deepEqual(mutations(f), []);
+  } finally {
+    release?.([]);
+    f.ui.dispose();
+  }
+});
+
 test('refresh keeps a pre-existing radio focus lease through body blur, with full world ID plus hash identity', async () => {
   const pins = REGIONAL_LIBRARY_PINS.filter((row) =>
       ['railway-valley-expanse', 'railway-valley-study'].includes(row.id),

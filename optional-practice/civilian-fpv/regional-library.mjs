@@ -1393,8 +1393,11 @@ export function mountRegionalLibrary({
   return {
     open(container = null) {
       if (closed) return;
-      if (container) container.append(root);
-      else home.after(root);
+      // Re-inserting an already-placed subtree can blur its focused control
+      // before refresh captures the player's intended edition and action.
+      if (container) {
+        if (root.parentNode !== container || root.nextSibling) container.append(root);
+      } else if (home.nextSibling !== root) home.after(root);
       if (operation) pendingRefresh = true;
       else void run('refresh');
     },
