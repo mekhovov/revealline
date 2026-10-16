@@ -7,6 +7,7 @@ import { PNGImage } from './helpers/png-image.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { FIXED_DT, stepRun } from '../core/index.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
+import { audioHarness } from './helpers/soundtrack-audio.mjs';
 const pictures = { Image: PNGImage };
 const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
@@ -34,6 +35,39 @@ async function start(page) {
   }
   page.frame(0);
 }
+test('manual diagnostics expose separate retained PCM and declared reservations without starting audio', async (t) => {
+  const audio = audioHarness();
+  let contexts = 0;
+  const page = await soloPage(t, {
+    pictures,
+    fetchResponse,
+    audio,
+    search: '?journey=opening&performance=1',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    browserSetup: ({ globals }) => {
+      globals.innerWidth = 1280;
+      globals.innerHeight = 720;
+      globals.AudioContext = function () {
+        contexts++;
+        return audio.context;
+      };
+    },
+  });
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(contexts, 0);
+  const report = page.win.RevealLineSoloPerformance.export();
+  assert.equal(report.resources.pcm.effects.decodedBytes, 0);
+  assert.equal(report.resources.pcm.effects.decodedBytesLimit, 32 * 1024 * 1024);
+  assert.equal(report.resources.pcm.reactions.decodedBytes, 0);
+  assert.equal(report.resources.pcm.reactions.decodedBytesLimit, 12 * 1024 * 1024);
+  assert.equal(report.resources.pcm.proceduralNoise.decodedBytes, 0);
+  assert.match(report.resources.pcm.accounting, /retain evicted buffers/);
+  assert.match(report.resources.media.reservationAccounting, /not measured native allocation/);
+  assert.equal(contexts, 0);
+  assert.equal(audio.sources.length, 0);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
 test('direct Start prepares a paused board without browsing other mission owners; repeated resume retains the run', async (t) => {
   const requests = [];
   const page = await soloPage(t, {

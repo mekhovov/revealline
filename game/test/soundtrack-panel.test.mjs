@@ -1,5 +1,6 @@
 import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-albums.mjs';
 import test from 'node:test';
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { setLocale } from '../i18n/index.mjs';
@@ -4991,3 +4992,87 @@ test('audition creator follows the playing original rather than a different edit
   assert.equal(links().length, 0);
   assert.equal(app.node('audition-sources').hidden, true);
 });
+
+for (const retire of [false, true])
+  test(`admitted soundtrack settings defer late local and source adoption${retire ? ' and cancel on disposal' : ''}`, async (t) => {
+    const preparation = createMediaPreparation();
+    t.after(() => preparation.close());
+    let releaseLibrary,
+      releaseSources,
+      fetches = 0;
+    const app = await setup(t, {
+      open: false,
+      settings: true,
+      store: {
+        read: () =>
+          new Promise((resolve) => {
+            releaseLibrary = resolve;
+          }),
+        commit: async () => {
+          throw new Error('No save expected');
+        },
+      },
+      sourceStore: {
+        read: () =>
+          new Promise((resolve) => {
+            releaseSources = resolve;
+          }),
+        commit: async () => {
+          throw new Error('No source save expected');
+        },
+      },
+      callbacks: {
+        catalogue: emptyCatalogue,
+        onlineCatalogueDownload: {
+          preparation,
+          fetch: async (url) => {
+            fetches++;
+            return onlineCatalogueResponse(sourceCatalogueFixture(), url);
+          },
+        },
+      },
+    });
+    assert.equal(typeof releaseLibrary, 'function');
+    assert.equal(typeof releaseSources, 'function');
+    let created = 0;
+    const createElement = app.doc.createElement;
+    app.doc.createElement = (...args) => {
+      created++;
+      return createElement(...args);
+    };
+    preparation.setPhase('playing');
+    releaseLibrary({
+      generation: 0,
+      library: upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+      assets: [],
+    });
+    releaseSources({
+      generation: 0,
+      sources: [{ url: ONLINE_SOUNDTRACK_CATALOGUE_URL, enabled: true }],
+    });
+    await settleOnlineCatalogue(
+      () => preparation.snapshot().queued >= 2,
+      'late IDB adoption queued',
+    );
+    assert.equal(created, 0, 'Late startup reads cannot rebuild music controls during gameplay');
+    assert.equal(fetches, 0, 'Undelivered source preferences cannot launch catalogue discovery');
+    if (retire) {
+      app.panel.dispose();
+      preparation.setPhase('paused');
+      await settleOnlineCatalogue(
+        () => preparation.snapshot().queued === 0,
+        'disposed publications cancelled',
+      );
+      assert.equal(created, 0);
+      assert.equal(fetches, 0);
+    } else {
+      preparation.setPhase('paused');
+      await settleOnlineCatalogue(
+        () => app.node('online-results').children.length === 2,
+        'safe phase catalogue publication',
+      );
+      assert.ok(created > 0);
+      assert.equal(fetches, 1);
+      assert.equal(app.node('source-add').disabled, false);
+    }
+  });

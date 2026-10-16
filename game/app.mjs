@@ -2119,161 +2119,178 @@ try {
       if (typeof audioElement.play !== 'function')
         throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
-      soundtrackPlayer = createSoundtrackPlayer({
-        localPlayback: installedPresentation(),
-        localRecordingIds: await localOfficialRecordingIds(catalogue),
-        catalogue,
-        bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
-        audioMaster,
-        soundscape: sound,
-        audioElement,
-        readAsset: source.readAsset,
-        onChange: (state) => {
-          soundtrackPanel?.update(state);
-          quickMusicControls?.render();
-          notifyDemoAudio();
-          musicPreviewState = state;
+      const localRecordingIds = await localOfficialRecordingIds(catalogue);
+      await sound.mediaPreparation.run(
+        'main',
+        () => {
+          soundtrackPlayer = createSoundtrackPlayer({
+            localPlayback: installedPresentation(),
+            localRecordingIds,
+            onlineCatalogueDownload: { preparation: sound.mediaPreparation },
+            catalogue,
+            bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
+            audioMaster,
+            soundscape: sound,
+            audioElement,
+            readAsset: source.readAsset,
+            onChange: (state) => {
+              soundtrackPanel?.update(state);
+              quickMusicControls?.render();
+              notifyDemoAudio();
+              musicPreviewState = state;
+              renderMusicPreview();
+              if (soundtrackLoading) return;
+              const playbackMessage = state.error || state.notice;
+              soundtrackStatus(
+                playbackMessage
+                  ? () => soundtrackErrorText(playbackMessage)
+                  : state.preparation?.message ||
+                      (state.track
+                        ? `${state.track.title} · ${state.status}`
+                        : t('interface:chooseAPlaylistOrImportMp3Songs')),
+                state.preparation,
+                playbackMessage || state.preparation?.message ? null : state.track,
+              );
+            },
+          });
+          quickMusicControls = attachQuickMusicControls({
+            document,
+            prefix: 'solo',
+            // The landing owns passive song metadata; transport lives in Audio.
+            settingsRoot: $('settings-panel-audio'),
+            snapshot: () => soundtrackPlayer?.snapshot(),
+            getMaster: () => audioMaster.snapshot(),
+            active: () =>
+              !soundtrackDisposed && !enemyGuide?.practiceActive && !soundtrackPanel?.isOpen(),
+            conflicts: (event) =>
+              !!actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), event),
+            play: () => {
+              cancelDemoAudio();
+              soundtrackMenuGesture = true;
+              const waking = soundtrackPlayer.wake();
+              const playing = activateAudio({ explicit: true });
+              return Promise.all([waking, playing]).then(([, result]) => result);
+            },
+            pause: () => {
+              cancelDemoAudio();
+              soundtrackMenuGesture = true;
+              soundtrackPlayer.pause();
+            },
+            previous: () => {
+              soundtrackMenuGesture = true;
+              return soundtrackPlayer.previous();
+            },
+            next: () => {
+              cancelDemoAudio();
+              soundtrackMenuGesture = true;
+              return soundtrackPlayer.next();
+            },
+            onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
+          });
           renderMusicPreview();
-          if (soundtrackLoading) return;
-          const playbackMessage = state.error || state.notice;
-          soundtrackStatus(
-            playbackMessage
-              ? () => soundtrackErrorText(playbackMessage)
-              : state.preparation?.message ||
-                  (state.track
-                    ? `${state.track.title} · ${state.status}`
-                    : t('interface:chooseAPlaylistOrImportMp3Songs')),
-            state.preparation,
-            playbackMessage || state.preparation?.message ? null : state.track,
-          );
+          soundtrackPlayer.setAuthoredTrack(authoredMusic);
+          soundtrackPlayer.setContext(soundtrackContext());
+          publishedAudio.setPlayer(soundtrackPlayer);
+          if (soundtrackSuspended) soundtrackPlayer.suspend();
+          soundtrackPanel = attachSoundtrackPanel({
+            onlineCatalogueDownload: { preparation: sound.mediaPreparation },
+            audioMaster,
+            onMasterMuted: setMasterMuted,
+            onMasterVolume: setMasterVolume,
+            document,
+            store: soundtrackStore,
+            player: soundtrackPlayer,
+            catalogue,
+            availableStyles: availableCommunitySoundtrackStyles(
+              runtimeContent?.selection.brand.id ?? null,
+            ),
+            bundled: SOUNDTRACK_BUNDLED_ASSETS,
+            readAsset: source.readAsset,
+            getContext: soundtrackContext,
+            onLibrary: (_library, snapshot) => {
+              if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
+              soundtrackGeneration = snapshot.generation;
+              soundtrackLibrary = _library;
+              soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+            },
+            onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
+            onOpen: () => {
+              pause(true);
+              clearInput();
+              $('settings-dialog').close();
+            },
+            onClose: () => {
+              clearInput();
+              $('settings-dialog').showModal();
+              void storageRetention.refresh();
+              $('soundtrack-open').focus();
+            },
+            onVolume: (value) => {
+              $('music-volume').value = value;
+              preferences({ musicVolume: value });
+            },
+            onPlayback: () => {
+              soundtrackMenuGesture = true;
+            },
+            beforeAudio: () => {
+              if (soundtrackSuspended) {
+                soundtrackSuspended = false;
+                return soundtrackPlayer.wake();
+              }
+            },
+            settingsRoot: $('settings-panel-audio'),
+          });
+          // The studio owns persisted playlist selection. Keep the legacy genre selector
+          // only for browsers that cannot attach the file-audio transport.
+          $('music-select').closest('label').hidden = true;
+          localizedText($('music-preview'), () => t('interface:playSelectedPlaylist'));
+          $('soundtrack-open').disabled = false;
+          $('soundtrack-open').onclick = () => soundtrackPanel.open();
         },
-      });
-      quickMusicControls = attachQuickMusicControls({
-        document,
-        prefix: 'solo',
-        // The landing owns passive song metadata; transport lives in Audio.
-        settingsRoot: $('settings-panel-audio'),
-        snapshot: () => soundtrackPlayer?.snapshot(),
-        getMaster: () => audioMaster.snapshot(),
-        active: () =>
-          !soundtrackDisposed && !enemyGuide?.practiceActive && !soundtrackPanel?.isOpen(),
-        conflicts: (event) =>
-          !!actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), event),
-        play: () => {
-          cancelDemoAudio();
-          soundtrackMenuGesture = true;
-          const waking = soundtrackPlayer.wake();
-          const playing = activateAudio({ explicit: true });
-          return Promise.all([waking, playing]).then(([, result]) => result);
-        },
-        pause: () => {
-          cancelDemoAudio();
-          soundtrackMenuGesture = true;
-          soundtrackPlayer.pause();
-        },
-        previous: () => {
-          soundtrackMenuGesture = true;
-          return soundtrackPlayer.previous();
-        },
-        next: () => {
-          cancelDemoAudio();
-          soundtrackMenuGesture = true;
-          return soundtrackPlayer.next();
-        },
-        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
-      });
-      renderMusicPreview();
-      soundtrackPlayer.setAuthoredTrack(authoredMusic);
-      soundtrackPlayer.setContext(soundtrackContext());
-      publishedAudio.setPlayer(soundtrackPlayer);
-      if (soundtrackSuspended) soundtrackPlayer.suspend();
-      soundtrackPanel = attachSoundtrackPanel({
-        audioMaster,
-        onMasterMuted: setMasterMuted,
-        onMasterVolume: setMasterVolume,
-        document,
-        store: soundtrackStore,
-        player: soundtrackPlayer,
-        catalogue,
-        availableStyles: availableCommunitySoundtrackStyles(
-          runtimeContent?.selection.brand.id ?? null,
-        ),
-        bundled: SOUNDTRACK_BUNDLED_ASSETS,
-        readAsset: source.readAsset,
-        getContext: soundtrackContext,
-        onLibrary: (_library, snapshot) => {
-          if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
-          soundtrackGeneration = snapshot.generation;
-          soundtrackLibrary = _library;
-          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
-        },
-        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
-        onOpen: () => {
-          pause(true);
-          clearInput();
-          $('settings-dialog').close();
-        },
-        onClose: () => {
-          clearInput();
-          $('settings-dialog').showModal();
-          void storageRetention.refresh();
-          $('soundtrack-open').focus();
-        },
-        onVolume: (value) => {
-          $('music-volume').value = value;
-          preferences({ musicVolume: value });
-        },
-        onPlayback: () => {
-          soundtrackMenuGesture = true;
-        },
-        beforeAudio: () => {
-          if (soundtrackSuspended) {
-            soundtrackSuspended = false;
-            return soundtrackPlayer.wake();
-          }
-        },
-        settingsRoot: $('settings-panel-audio'),
-      });
-      // The studio owns persisted playlist selection. Keep the legacy genre selector
-      // only for browsers that cannot attach the file-audio transport.
-      $('music-select').closest('label').hidden = true;
-      localizedText($('music-preview'), () => t('interface:playSelectedPlaylist'));
-      $('soundtrack-open').disabled = false;
-      $('soundtrack-open').onclick = () => soundtrackPanel.open();
+        { signal: soundtrackLoad.signal, eligible: () => !soundtrackDisposed },
+      );
       try {
         const snapshot = await soundtrackStore.read({ signal: soundtrackLoad.signal });
-        soundtrackLoading = false;
-        if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
-          soundtrackGeneration = snapshot.generation;
-          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
-          soundtrackLibrary = setCatalogueTracks(
-            upgradeSoundtrackLibrary(snapshot.library),
-            catalogue.tracks,
-          );
-          soundtrackPlayer.setLibrary(soundtrackLibrary, { publicStyles: snapshot.publicStyles });
-          if (
-            usesOpeningThemeDefault(soundtrackLibrary, {
-              fresh: snapshot.generation === 0,
-            })
-          ) {
-            // The exact core recording is allowed to load without blocking the
-            // menu. Playback still waits for the first eligible browser gesture.
-            void prepareOpeningTheme(soundtrackPlayer, soundtrackLibrary, { fresh: true });
-          } else {
-            // This does not play audio. It only makes a selected local MP3 ready
-            // before the player taps Start or Play, which iOS requires.
-            void soundtrackPlayer.prepare({ allowNetwork: false });
-          }
-        } else if (!soundtrackDisposed) {
-          const state = soundtrackPlayer.snapshot();
-          soundtrackStatus(
-            state.preparation?.message ||
-              (state.error
-                ? () => soundtrackErrorText(state.error)
-                : t('interface:musicLibraryReady')),
-            state.preparation,
-          );
-        }
+        await sound.mediaPreparation.run(
+          'main',
+          () => {
+            soundtrackLoading = false;
+            if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
+              soundtrackGeneration = snapshot.generation;
+              soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+              soundtrackLibrary = setCatalogueTracks(
+                upgradeSoundtrackLibrary(snapshot.library),
+                catalogue.tracks,
+              );
+              soundtrackPlayer.setLibrary(soundtrackLibrary, {
+                publicStyles: snapshot.publicStyles,
+              });
+              if (
+                usesOpeningThemeDefault(soundtrackLibrary, {
+                  fresh: snapshot.generation === 0,
+                })
+              ) {
+                // The exact core recording is allowed to load without blocking the
+                // menu. Playback still waits for the first eligible browser gesture.
+                void prepareOpeningTheme(soundtrackPlayer, soundtrackLibrary, { fresh: true });
+              } else {
+                // This does not play audio. It only makes a selected local MP3 ready
+                // before the player taps Start or Play, which iOS requires.
+                void soundtrackPlayer.prepare({ allowNetwork: false });
+              }
+            } else if (!soundtrackDisposed) {
+              const state = soundtrackPlayer.snapshot();
+              soundtrackStatus(
+                state.preparation?.message ||
+                  (state.error
+                    ? () => soundtrackErrorText(state.error)
+                    : t('interface:musicLibraryReady')),
+                state.preparation,
+              );
+            }
+          },
+          { signal: soundtrackLoad.signal, eligible: () => !soundtrackDisposed },
+        );
       } catch (error) {
         soundtrackLoading = false;
         if (!soundtrackDisposed)
@@ -2284,6 +2301,7 @@ try {
           );
       }
     } catch (error) {
+      if (soundtrackDisposed || soundtrackLoad.signal.aborted) return;
       soundtrackLoading = false;
       quickMusicControls?.dispose();
       quickMusicControls = null;
@@ -3163,7 +3181,15 @@ try {
             renderer: painter.resourceSnapshot(),
             phaser: fieldScene?.resourceSnapshot() ?? null,
             sharedPresentationImages: sharedImageResources(),
-            media: sound.mediaPreparation.snapshot(),
+            pcm: {
+              ...sound.resourceSnapshot(),
+              reactions: contextualReactions?.diagnostics().cache ?? null,
+            },
+            media: {
+              ...sound.mediaPreparation.snapshot(),
+              reservationAccounting:
+                'reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory.',
+            },
             soundtrack: soundtrackPlayer?.preparationDiagnostics(),
           },
           canvas: fieldScene?.boardTexture.context.getContextAttributes?.() ?? null,

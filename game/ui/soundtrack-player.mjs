@@ -1350,7 +1350,7 @@ export function createSoundtrackPlayer({
       try {
         Promise.resolve(soundscape.enable()).catch(() => {});
         const catalogue = sourceManager
-          ? await sourceManager.refresh({ signal: request.controller.signal })
+          ? await sourceManager.refresh({ signal: request.controller.signal, preferCached: true })
           : await fetchOnlineSoundtrackCatalogue({
               ...onlineCatalogueDownload,
               signal: request.controller.signal,
