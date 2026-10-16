@@ -1,0 +1,4459 @@
+{
+  "kind": "bounded-finale-spatial-strategies-not-human-review",
+  "rows": [
+    {
+      "mode": "team",
+      "chapter": "team-expedition-harbors-pack",
+      "missionId": "team-harbor-homecoming",
+      "difficulty": "standard",
+      "authoredIdentity": "84db5d5de2efb755",
+      "tunedIdentity": "5fb53b54ca29885a",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 700
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 699
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 237
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 700
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 699
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 247
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 237
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        }
+      ],
+      "change": {
+        "index": 14,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 5547,
+        "alternativeTicks": 5427,
+        "primaryClosures": [9, 5],
+        "alternativeClosures": [9, 5],
+        "differentCaptures": 5,
+        "maxChangedCells": 182,
+        "maxChangedTrailCells": 64
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-gardens-pack",
+      "missionId": "team-garden-reunion",
+      "difficulty": "standard",
+      "authoredIdentity": "b6d9ac14085860cf",
+      "tunedIdentity": "fec777ec8790b4ff",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 801
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 442
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 285
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 760
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 394
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 801
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 442
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 285
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 640
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 394
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        }
+      ],
+      "change": {
+        "index": 12,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 4786,
+        "alternativeTicks": 4666,
+        "primaryClosures": [7, 7],
+        "alternativeClosures": [7, 6],
+        "differentCaptures": 6,
+        "maxChangedCells": 388,
+        "maxChangedTrailCells": 25
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-switchyards-pack",
+      "missionId": "team-night-junction",
+      "difficulty": "standard",
+      "authoredIdentity": "06352f24d5db46c2",
+      "tunedIdentity": "be08921688fa3e5f",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 306
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 204
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 222
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 306
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        }
+      ],
+      "change": {
+        "index": 2,
+        "delta": -240
+      },
+      "observations": {
+        "primaryTicks": 3639,
+        "alternativeTicks": 2487,
+        "primaryClosures": [9, 2],
+        "alternativeClosures": [6, 1],
+        "differentCaptures": 10,
+        "maxChangedCells": 1364,
+        "maxChangedTrailCells": 44
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-docks-pack",
+      "missionId": "team-all-hands-home",
+      "difficulty": "standard",
+      "authoredIdentity": "5b75e08782fc59aa",
+      "tunedIdentity": "bf7b6142ef75f529",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 740
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 740
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 740
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 740
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 247
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        }
+      ],
+      "change": {
+        "index": 11,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 4526,
+        "alternativeTicks": 4406,
+        "primaryClosures": [4, 8],
+        "alternativeClosures": [4, 7],
+        "differentCaptures": 5,
+        "maxChangedCells": 929,
+        "maxChangedTrailCells": 61
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-phaseworks-pack",
+      "missionId": "team-observatory-accord",
+      "difficulty": "standard",
+      "authoredIdentity": "6a9716ea6cd57dfd",
+      "tunedIdentity": "208cc3c5c069f4db",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 328
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 847
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 353
+        }
+      ],
+      "change": {
+        "index": 6,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 5807,
+        "alternativeTicks": 5558,
+        "primaryClosures": [8, 5],
+        "alternativeClosures": [7, 5],
+        "differentCaptures": 3,
+        "maxChangedCells": 807,
+        "maxChangedTrailCells": 24
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-livewire-pack",
+      "missionId": "team-foundry-handshake",
+      "difficulty": "standard",
+      "authoredIdentity": "68bfd999ead18f43",
+      "tunedIdentity": "fe95f02d0bf75f0a",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 387
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 170
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 476
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 358
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 387
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 170
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 468
+        }
+      ],
+      "change": {
+        "index": 1,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 4595,
+        "alternativeTicks": 3790,
+        "primaryClosures": [6, 5],
+        "alternativeClosures": [5, 4],
+        "differentCaptures": 3,
+        "maxChangedCells": 1013,
+        "maxChangedTrailCells": 34
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-crosswind-pack",
+      "missionId": "team-highland-reunion",
+      "difficulty": "standard",
+      "authoredIdentity": "9dec8a21619060c5",
+      "tunedIdentity": "3c103cb49b1d38c2",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 727
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 842
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 408
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 351
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 177
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 369
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 369
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        }
+      ],
+      "change": {
+        "source": "expert",
+        "replayedDifficulty": "standard"
+      },
+      "observations": {
+        "primaryTicks": 585,
+        "alternativeTicks": 6910,
+        "primaryClosures": [1, 1],
+        "alternativeClosures": [6, 7],
+        "differentCaptures": 12,
+        "maxChangedCells": 1925,
+        "maxChangedTrailCells": 53
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-fracture-pack",
+      "missionId": "team-coastal-repair-pact",
+      "difficulty": "standard",
+      "authoredIdentity": "9135007b91c4a051",
+      "tunedIdentity": "b445d63708a269f8",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 700
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 301
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 700
+        }
+      ],
+      "change": {
+        "index": 8,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 4883,
+        "alternativeTicks": 4763,
+        "primaryClosures": [10, 3],
+        "alternativeClosures": [9, 3],
+        "differentCaptures": 7,
+        "maxChangedCells": 533,
+        "maxChangedTrailCells": 44
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-sentinel-pack",
+      "missionId": "team-citadel-shared-crown",
+      "difficulty": "standard",
+      "authoredIdentity": "834745a81bd324aa",
+      "tunedIdentity": "116ba7b77b2857e5",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 49
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 95
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 170
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 342
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": "left",
+          "b": "up",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 49
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 129
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 333
+        }
+      ],
+      "change": {
+        "index": 2,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 4906,
+        "alternativeTicks": 4147,
+        "primaryClosures": [8, 5],
+        "alternativeClosures": [7, 4],
+        "differentCaptures": 12,
+        "maxChangedCells": 1050,
+        "maxChangedTrailCells": 43
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-aurora-pack",
+      "missionId": "team-expedition-homecoming",
+      "difficulty": "standard",
+      "authoredIdentity": "1b85cf9e58d854c1",
+      "tunedIdentity": "1ce236f5eaa38ee8",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 191
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 122
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "left",
+          "ticks": 428
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 143
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 591
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 747
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 585
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 408
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 163
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        }
+      ],
+      "change": {
+        "index": 8,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 10411,
+        "alternativeTicks": 3568,
+        "primaryClosures": [10, 12],
+        "alternativeClosures": [6, 5],
+        "differentCaptures": 16,
+        "maxChangedCells": 509,
+        "maxChangedTrailCells": 36
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-relay-pack",
+      "missionId": "team-archive-home-route",
+      "difficulty": "standard",
+      "authoredIdentity": "4b18f83006b8e6d8",
+      "tunedIdentity": "6c9b29820150ddce",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 115
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 95
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 367
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 157
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 115
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 201
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 374
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 95
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 109
+        }
+      ],
+      "change": {
+        "index": 8,
+        "delta": -30
+      },
+      "observations": {
+        "primaryTicks": 3712,
+        "alternativeTicks": 3424,
+        "primaryClosures": [8, 2],
+        "alternativeClosures": [6, 2],
+        "differentCaptures": 4,
+        "maxChangedCells": 1283,
+        "maxChangedTrailCells": 16
+      }
+    },
+    {
+      "mode": "team",
+      "chapter": "team-expedition-border-pack",
+      "missionId": "team-watchtower-accord",
+      "difficulty": "standard",
+      "authoredIdentity": "8b8f6e256b7ff3e5",
+      "tunedIdentity": "f2256ac708733775",
+      "options": {
+        "seed": 17
+      },
+      "primary": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 88
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 68
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 456
+        }
+      ],
+      "alternative": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 88
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 22
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 68
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 456
+        }
+      ],
+      "change": {
+        "index": 20,
+        "delta": -60
+      },
+      "observations": {
+        "primaryTicks": 4761,
+        "alternativeTicks": 4701,
+        "primaryClosures": [8, 6],
+        "alternativeClosures": [8, 5],
+        "differentCaptures": 3,
+        "maxChangedCells": 455,
+        "maxChangedTrailCells": 38
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-harbors-pack",
+      "missionId": "versus-horizon-photo-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "124b7647fc193e35",
+      "tunedIdentity": "ad82b350d97783f3",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "down",
+          "ticks": 238
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 462
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 720
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 421
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 672
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 625
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "down",
+          "ticks": 312
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "down",
+          "ticks": 238
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 462
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 720
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 421
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 672
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 625
+        },
+        {
+          "direction": "down",
+          "ticks": 161
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "down",
+          "ticks": 192
+        }
+      ],
+      "change": {
+        "index": 16,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 5545,
+        "alternativeTicks": 5545,
+        "primaryClosures": [12, 0],
+        "alternativeClosures": [12, 0],
+        "differentCaptures": 2,
+        "maxChangedCells": 412,
+        "maxChangedTrailCells": 60
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-gardens-pack",
+      "missionId": "versus-signal-sprint-finale",
+      "difficulty": "standard",
+      "authoredIdentity": "de18f75ab22da54f",
+      "tunedIdentity": "0cd2ab3e9d205897",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 598
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 611
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 421
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 408
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 589
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 598
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 611
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 421
+        }
+      ],
+      "change": {
+        "index": 1,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 4989,
+        "alternativeTicks": 3212,
+        "primaryClosures": [11, 0],
+        "alternativeClosures": [6, 0],
+        "differentCaptures": 6,
+        "maxChangedCells": 1157,
+        "maxChangedTrailCells": 35
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-docks-pack",
+      "missionId": "versus-dockyard-decider",
+      "difficulty": "standard",
+      "authoredIdentity": "078dea6319100fbe",
+      "tunedIdentity": "fb6d20b5262901d1",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 313
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 571
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 428
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 415
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 469
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 415
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 313
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 150
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 576
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 571
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 428
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 415
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 349
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 296
+        }
+      ],
+      "change": {
+        "index": 17,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 5371,
+        "alternativeTicks": 5132,
+        "primaryClosures": [13, 0],
+        "alternativeClosures": [12, 0],
+        "differentCaptures": 2,
+        "maxChangedCells": 90,
+        "maxChangedTrailCells": 32
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-phaseworks-pack",
+      "missionId": "versus-prism-photo-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "75e6bdf03ce8829c",
+      "tunedIdentity": "0045a344fea55cd3",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 720
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 462
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 407
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 1
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 1
+        },
+        {
+          "direction": "right",
+          "ticks": 584
+        },
+        {
+          "direction": "up",
+          "ticks": 21
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 652
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 374
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 286
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 286
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 349
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 720
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 462
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 407
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 1
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 1
+        },
+        {
+          "direction": "right",
+          "ticks": 584
+        },
+        {
+          "direction": "up",
+          "ticks": 21
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 652
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 374
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 286
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 286
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 116
+        }
+      ],
+      "change": {
+        "index": 1,
+        "delta": -120
+      },
+      "observations": {
+        "primaryTicks": 7534,
+        "alternativeTicks": 6755,
+        "primaryClosures": [19, 0],
+        "alternativeClosures": [8, 0],
+        "differentCaptures": 18,
+        "maxChangedCells": 1654,
+        "maxChangedTrailCells": 81
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-livewire-pack",
+      "missionId": "versus-afterglow-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "064abff43ad14738",
+      "tunedIdentity": "5e2cb5a698174c28",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "down",
+          "ticks": 374
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 1
+        },
+        {
+          "direction": "down",
+          "ticks": 147
+        },
+        {
+          "direction": "left",
+          "ticks": 103
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 147
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 326
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 314
+        },
+        {
+          "direction": "right",
+          "ticks": 625
+        },
+        {
+          "direction": "down",
+          "ticks": 360
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 129
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 123
+        },
+        {
+          "direction": "up",
+          "ticks": 341
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "down",
+          "ticks": 374
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 1
+        },
+        {
+          "direction": "down",
+          "ticks": 147
+        },
+        {
+          "direction": "left",
+          "ticks": 103
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 147
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 326
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 314
+        },
+        {
+          "direction": "right",
+          "ticks": 625
+        },
+        {
+          "direction": "down",
+          "ticks": 360
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 42
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 129
+        },
+        {
+          "direction": "right",
+          "ticks": 139
+        },
+        {
+          "direction": "down",
+          "ticks": 123
+        },
+        {
+          "direction": "up",
+          "ticks": 341
+        }
+      ],
+      "change": {
+        "index": 21,
+        "delta": 30
+      },
+      "observations": {
+        "primaryTicks": 4828,
+        "alternativeTicks": 4858,
+        "primaryClosures": [15, 0],
+        "alternativeClosures": [15, 0],
+        "differentCaptures": 3,
+        "maxChangedCells": 33,
+        "maxChangedTrailCells": 19
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-relay-pack",
+      "missionId": "versus-archive-decider",
+      "difficulty": "standard",
+      "authoredIdentity": "a2335b61960dc1b6",
+      "tunedIdentity": "ba1f6c1ea614dbb5",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 89
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 123
+        },
+        {
+          "direction": "left",
+          "ticks": 103
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        }
+      ],
+      "change": {
+        "index": 0,
+        "delta": 60
+      },
+      "observations": {
+        "primaryTicks": 900,
+        "alternativeTicks": 618,
+        "primaryClosures": [3, 0],
+        "alternativeClosures": [2, 0],
+        "differentCaptures": 2,
+        "maxChangedCells": 1845,
+        "maxChangedTrailCells": 16
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-crosswind-pack",
+      "missionId": "versus-highland-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "236a8b2380584350",
+      "tunedIdentity": "85a46ecad74ddb68",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 89
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "right",
+          "ticks": 211
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 149
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        }
+      ],
+      "change": {
+        "index": 0,
+        "delta": 60
+      },
+      "observations": {
+        "primaryTicks": 851,
+        "alternativeTicks": 618,
+        "primaryClosures": [3, 0],
+        "alternativeClosures": [2, 0],
+        "differentCaptures": 2,
+        "maxChangedCells": 1848,
+        "maxChangedTrailCells": 15
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-border-pack",
+      "missionId": "versus-watch-line-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "e2cbc437700d48e5",
+      "tunedIdentity": "1c2b290981bd950a",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 211
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 463
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 590
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 211
+        },
+        {
+          "direction": "down",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 139
+        },
+        {
+          "direction": "down",
+          "ticks": 463
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 560
+        }
+      ],
+      "change": {
+        "index": 4,
+        "delta": 30
+      },
+      "observations": {
+        "primaryTicks": 2461,
+        "alternativeTicks": 2461,
+        "primaryClosures": [6, 0],
+        "alternativeClosures": [6, 0],
+        "differentCaptures": 3,
+        "maxChangedCells": 56,
+        "maxChangedTrailCells": 50
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-fracture-pack",
+      "missionId": "versus-unbroken-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "c22e791d45d71510",
+      "tunedIdentity": "bcebf4f108e85e15",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 163
+        },
+        {
+          "direction": "right",
+          "ticks": 964
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 299
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 434
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "right",
+          "ticks": 407
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 299
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 543
+        },
+        {
+          "direction": "down",
+          "ticks": 340
+        },
+        {
+          "direction": "left",
+          "ticks": 156
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 163
+        },
+        {
+          "direction": "right",
+          "ticks": 964
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 299
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 434
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "right",
+          "ticks": 407
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 299
+        },
+        {
+          "direction": "right",
+          "ticks": 161
+        },
+        {
+          "direction": "up",
+          "ticks": 312
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 543
+        },
+        {
+          "direction": "down",
+          "ticks": 340
+        },
+        {
+          "direction": "left",
+          "ticks": 113
+        }
+      ],
+      "change": {
+        "index": 15,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 5489,
+        "alternativeTicks": 5566,
+        "primaryClosures": [14, 0],
+        "alternativeClosures": [14, 0],
+        "differentCaptures": 4,
+        "maxChangedCells": 751,
+        "maxChangedTrailCells": 58
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-sentinel-pack",
+      "missionId": "versus-crown-photo-finish",
+      "difficulty": "standard",
+      "authoredIdentity": "bbed10f7f0eb9f07",
+      "tunedIdentity": "820eaba7ed1149f6",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 327
+        },
+        {
+          "direction": "up",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 272
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 145
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 447
+        },
+        {
+          "direction": "up",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 272
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 145
+        }
+      ],
+      "change": {
+        "index": 3,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 2231,
+        "alternativeTicks": 2351,
+        "primaryClosures": [5, 0],
+        "alternativeClosures": [5, 0],
+        "differentCaptures": 3,
+        "maxChangedCells": 38,
+        "maxChangedTrailCells": 39
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-aurora-pack",
+      "missionId": "versus-expedition-decider",
+      "difficulty": "standard",
+      "authoredIdentity": "91288c5f488ccf67",
+      "tunedIdentity": "94a8513a23c0a119",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 327
+        },
+        {
+          "direction": "up",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 272
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 145
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 447
+        },
+        {
+          "direction": "up",
+          "ticks": 270
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 272
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 145
+        }
+      ],
+      "change": {
+        "index": 3,
+        "delta": 120
+      },
+      "observations": {
+        "primaryTicks": 2231,
+        "alternativeTicks": 2351,
+        "primaryClosures": [5, 0],
+        "alternativeClosures": [5, 0],
+        "differentCaptures": 3,
+        "maxChangedCells": 38,
+        "maxChangedTrailCells": 39
+      }
+    },
+    {
+      "mode": "versus",
+      "chapter": "versus-expedition-switchyards-pack",
+      "missionId": "versus-neon-switch-final",
+      "difficulty": "standard",
+      "authoredIdentity": "bc4828249addbc2e",
+      "tunedIdentity": "3c3d8a690949d905",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "immediate"
+      },
+      "primary": [
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 727
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 319
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 475
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 394
+        }
+      ],
+      "alternative": [
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 169
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 727
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 319
+        },
+        {
+          "direction": "down",
+          "ticks": 96
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        }
+      ],
+      "change": {
+        "index": 2,
+        "delta": 60
+      },
+      "observations": {
+        "primaryTicks": 3296,
+        "alternativeTicks": 2915,
+        "primaryClosures": [7, 0],
+        "alternativeClosures": [6, 0],
+        "differentCaptures": 3,
+        "maxChangedCells": 108,
+        "maxChangedTrailCells": 68
+      }
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Overflight · upgrade visual review</title>
+    <script
+      src="/game/presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+    ></script>
+    <link rel="stylesheet" href="/game/presentation/industrial-workshop.css" />
+    <link rel="stylesheet" href="/game/ui/mode-play-shell.css" />
+    <link rel="stylesheet" href="/game/overflight/style.css" />
+    <style>
+      body {
+        padding: 24px;
+      }
+      .review-toolbar {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .review-toolbar label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .overflight-upgrade {
+        margin: auto;
+        max-width: 100%;
+      }
+      .overflight-upgrade-cards {
+        overflow: visible;
+      }
+      .review-note {
+        font-size: 14px;
+        margin: 16px 24px;
+      }
+      h1 {
+        margin: 0;
+      }
+      #review-state {
+        min-height: 24px;
+      }
+    </style>
+  </head>
+  <body class="field-kit overflight-player">
+    <div class="review-toolbar">
+      <a href="/game/overflight/play.html">Play Overflight</a
+      ><label
+        >Cards<select id="group">
+          <option value="opening">Opening choices</option>
+          <option value="proximity-pulse">Proximity pulse</option>
+          <option value="slow-field">Slow field</option>
+          <option value="side-burst">Side burst</option>
+          <option value="scanner">Scanner</option>
+          <option value="shield">Shield</option>
+          <option value="wide">Wide Fan</option>
+          <option value="double">Double Pulse</option>
+          <option value="utilities">Utilities</option>
+        </select></label
+      ><label
+        >Language<select id="locale">
+          <option value="en">English</option>
+          <option value="uk">Українська</option>
+        </select></label
+      ><label><input id="reduced" type="checkbox" />Reduced effects</label>
+    </div>
+    <section class="overflight-upgrade">
+      <header>
+        <h1>Choose an upgrade</h1>
+        <p>Now → Next · native upgrade cards</p>
+      </header>
+      <div id="cards" class="overflight-upgrade-cards"></div>
+      <p class="review-note">
+        Visual review sheet. These are the same cards used in a paused sortie.
+      </p>
+      <p id="review-state" class="review-note" role="status"></p>
+    </section>
+    <script type="module">
+      import { createOverflightUpgradeCard } from '/game/overflight/upgrade-card.mjs';
+      import {
+        createOverflightBuild,
+        legalOverflightUpgrades,
+        applyOverflightUpgrade,
+        draftOverflightUpgrades,
+      } from '/game/overflight/upgrades.mjs';
+      const modules = [
+        'primary',
+        'slow-field',
+        'proximity-pulse',
+        'side-burst',
+        'scanner',
+        'shield',
+      ];
+      const $ = (id) => document.getElementById(id);
+      function sequence(system, branch) {
+        let build = createOverflightBuild();
+        const rows = [];
+        for (
+          let rank = system === 'primary' ? 2 : 1;
+          rank <= (system === 'primary' ? 4 : 3);
+          rank++
+        ) {
+          const offer = legalOverflightUpgrades(build, modules).find(
+            (o) => o.system === system && (!branch || o.branch === branch),
+          );
+          rows.push({ offer, build: structuredClone(build) });
+          applyOverflightUpgrade(build, offer, modules);
+        }
+        return rows;
+      }
+      function render() {
+        const key = $('group').value;
+        let rows;
+        if (key === 'opening')
+          rows = [
+            sequence('primary', 'wide')[0],
+            sequence('primary', 'double')[0],
+            sequence('proximity-pulse')[0],
+          ];
+        else if (key === 'wide' || key === 'double') rows = sequence('primary', key);
+        else if (key === 'utilities') {
+          const build = createOverflightBuild();
+          build.primary = { rank: 4, branch: 'wide', evolved: true };
+          rows = draftOverflightUpgrades(build, ['primary'], () => 0.5).map((offer) => ({
+            offer,
+            build,
+          }));
+        } else rows = sequence(key);
+        $('cards').replaceChildren(
+          ...rows.map(({ offer, build }) =>
+            createOverflightUpgradeCard({
+              document,
+              offer,
+              build,
+              player: { hull: 55, maxHull: 100, boostCooldown: 2 },
+              locale: $('locale').value,
+              reducedEffects: $('reduced').checked,
+              moduleIcon(id) {
+                const image = document.createElement('img');
+                image.className = 'overflight-module-icon';
+                image.alt = '';
+                image.src = `/authoring/library/overflight-field-kit-v1/pickup-module-${modules.includes(id) ? id : 'primary'}.png`;
+                return image;
+              },
+              onChoose(id) {
+                $('review-state').textContent = `Selected ${id} · review only`;
+              },
+            }),
+          ),
+        );
+      }
+      for (const id of ['group', 'locale', 'reduced']) $(id).addEventListener('change', render);
+      render();
+    </script>
+  </body>
+</html>

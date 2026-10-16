@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { boundedJSON, canonicalJSON, required, stableId } from '../data-json.mjs';
 import { throwIfSoundtrackAborted } from '../mp3.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
@@ -13,7 +14,7 @@ function context(campaignKey, level, themeId) {
   resolveSoundtrackSelection(emptySoundtrackLibrary(), value);
   required(
     typeof campaignKey === 'string' && typeof themeId === 'string',
-    'An accepted campaign and theme are required.',
+    t('interface:anAcceptedCampaignAndThemeAreRequired'),
   );
   return Object.freeze(value);
 }
@@ -27,7 +28,7 @@ export function soloCompatibleMusicContext({ campaignKey, level, themeId }) {
       typeof level.revision === 'string' &&
       level.revision.trim() &&
       level.revision.length <= 80,
-    'An accepted Solo level ID and revision are required.',
+    t('interface:anAcceptedSoloLevelIdAndRevisionAreRequired'),
   );
   return context(campaignKey, level, themeId);
 }
@@ -55,7 +56,7 @@ export async function prepareTeamMusicContext({ pack, level, themeId, signal }) 
   });
   required(
     source.levels.some((candidate) => canonicalJSON(candidate) === canonicalJSON(current)),
-    'The music level does not match the accepted pack.',
+    t('interface:theMusicLevelDoesNotMatchTheAcceptedPack'),
   );
   const hash = await hashPresentationBytes(new TextEncoder().encode(canonicalJSON(source)));
   throwIfSoundtrackAborted(signal);

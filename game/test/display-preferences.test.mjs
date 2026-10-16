@@ -253,6 +253,7 @@ test('practice mode changes memory with a warning and protects unsaved intent', 
     reducedEffects: true,
   });
   assert.match(f.preferences.getWarning(), /only to this session/);
+  assert.equal(f.preferences.getWarningKey(), 'common:preferences.displaySessionOnly');
   assert.deepEqual(f.writes, []);
 });
 
@@ -263,9 +264,11 @@ test('quota failures preserve memory, and a later successful save restores shari
   f.event(encode());
   assert.equal(f.preferences.snapshot().textSize, 'large');
   assert.match(f.preferences.getWarning(), /could not be saved/);
+  assert.equal(f.preferences.getWarningKey(), 'common:preferences.displaySaveFailed');
   f.failSave(null);
   f.preferences.set({ textFace: 'plain' });
   assert.equal(f.preferences.getWarning(), '');
+  assert.equal(f.preferences.getWarningKey(), '');
   f.data.set(DISPLAY_PREFERENCES_KEY, encode({ reducedEffects: true }));
   f.event(f.data.get(DISPLAY_PREFERENCES_KEY));
   assert.deepEqual(rawState(f.preferences), { ...defaults, reducedEffects: true });

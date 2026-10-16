@@ -1,0 +1,338 @@
+{
+  "date": "2026-10-04",
+  "timezone": "Europe/Berlin",
+  "scope": "Manual native Snake DOM geometry; desktop pointer, not physical-device or completion qualification",
+  "observations": [
+    {
+      "canvas": [
+        {
+          "height": 258,
+          "width": 344,
+          "x": 8,
+          "y": 241.09375
+        }
+      ],
+      "controls": [
+        {
+          "height": 56,
+          "label": "Player 1: Up",
+          "width": 56,
+          "x": 152,
+          "y": 618
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Left",
+          "width": 56,
+          "x": 92,
+          "y": 678
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Down",
+          "width": 56,
+          "x": 152,
+          "y": 678
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Right",
+          "width": 56,
+          "x": 212,
+          "y": 678
+        }
+      ],
+      "scrollWidth": 360,
+      "viewport": {
+        "height": 740,
+        "width": 360
+      }
+    },
+    {
+      "canvas": [
+        {
+          "height": 280.5,
+          "width": 374,
+          "x": 8,
+          "y": 281.84375
+        }
+      ],
+      "controls": [
+        {
+          "height": 56,
+          "label": "Player 1: Up",
+          "width": 56,
+          "x": 167,
+          "y": 722
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Left",
+          "width": 56,
+          "x": 107,
+          "y": 782
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Down",
+          "width": 56,
+          "x": 167,
+          "y": 782
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Right",
+          "width": 56,
+          "x": 227,
+          "y": 782
+        }
+      ],
+      "scrollWidth": 390,
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "arrangement": "stacked",
+      "canvas": [
+        {
+          "height": 184.828125,
+          "width": 246.4375,
+          "x": 36.78125,
+          "y": 153.1875
+        },
+        {
+          "height": 184.828125,
+          "width": 246.4375,
+          "x": 36.78125,
+          "y": 408.015625
+        }
+      ],
+      "controls": [
+        {
+          "height": 45.328125,
+          "label": "Player 1: Up",
+          "width": 45.328125,
+          "x": 61.34375,
+          "y": 619.34375
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 1: Left",
+          "width": 45.328125,
+          "x": 12.015625,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 1: Down",
+          "width": 45.328125,
+          "x": 61.34375,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 1: Right",
+          "width": 45.328125,
+          "x": 110.671875,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Up",
+          "width": 45.328125,
+          "x": 213.328125,
+          "y": 619.34375
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Left",
+          "width": 45.328125,
+          "x": 164,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Down",
+          "width": 45.328125,
+          "x": 213.328125,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Right",
+          "width": 45.328125,
+          "x": 262.65625,
+          "y": 668.671875
+        }
+      ],
+      "mode": "versus",
+      "scrollWidth": 320,
+      "viewport": {
+        "height": 720,
+        "width": 320
+      }
+    },
+    {
+      "canvas": [
+        {
+          "height": 228,
+          "width": 304,
+          "x": 8,
+          "y": 247.515625
+        }
+      ],
+      "controls": [
+        {
+          "height": 45.328125,
+          "label": "Player 1: Up",
+          "width": 45.328125,
+          "x": 61.34375,
+          "y": 619.34375
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 1: Left",
+          "width": 45.328125,
+          "x": 12.015625,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 1: Down",
+          "width": 45.328125,
+          "x": 61.34375,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 1: Right",
+          "width": 45.328125,
+          "x": 110.671875,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Up",
+          "width": 45.328125,
+          "x": 213.328125,
+          "y": 619.34375
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Left",
+          "width": 45.328125,
+          "x": 164,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Down",
+          "width": 45.328125,
+          "x": 213.328125,
+          "y": 668.671875
+        },
+        {
+          "height": 45.328125,
+          "label": "Player 2: Right",
+          "width": 45.328125,
+          "x": 262.65625,
+          "y": 668.671875
+        }
+      ],
+      "mode": "team",
+      "scrollWidth": 320,
+      "viewport": {
+        "height": 720,
+        "width": 320
+      }
+    },
+    {
+      "controls": [
+        {
+          "height": 56,
+          "label": "Гравець 1: Поворот ліворуч",
+          "width": 56,
+          "x": 40,
+          "y": 658
+        },
+        {
+          "height": 56,
+          "label": "Гравець 1: Поворот праворуч",
+          "width": 56,
+          "x": 100,
+          "y": 658
+        },
+        {
+          "height": 56,
+          "label": "Гравець 2: Поворот ліворуч",
+          "width": 56,
+          "x": 164,
+          "y": 658
+        },
+        {
+          "height": 56,
+          "label": "Гравець 2: Поворот праворуч",
+          "width": 56,
+          "x": 224,
+          "y": 658
+        }
+      ],
+      "language": "uk",
+      "mode": "team",
+      "scrollWidth": 320,
+      "viewport": {
+        "height": 720,
+        "width": 320
+      }
+    },
+    {
+      "canvas": [
+        {
+          "height": 228,
+          "width": 304,
+          "x": 8,
+          "y": 246.09375
+        }
+      ],
+      "controls": [
+        {
+          "height": 56,
+          "label": "Player 1: Up",
+          "width": 56,
+          "x": 132,
+          "y": 598
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Left",
+          "width": 56,
+          "x": 72,
+          "y": 658
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Down",
+          "width": 56,
+          "x": 132,
+          "y": 658
+        },
+        {
+          "height": 56,
+          "label": "Player 1: Right",
+          "width": 56,
+          "x": 192,
+          "y": 658
+        }
+      ],
+      "language": "en",
+      "mode": "solo",
+      "scrollWidth": 320,
+      "viewport": {
+        "height": 720,
+        "width": 320
+      }
+    }
+  ]
+}

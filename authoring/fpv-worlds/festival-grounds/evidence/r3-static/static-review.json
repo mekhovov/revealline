@@ -1,0 +1,893 @@
+{
+  "format": "FPVFestivalGroundsStaticViews.v2",
+  "fixture": "3b1561c2ae9ea71fcd82d62cc8b48ed95cdc453805da150c871f2a5c3577a351",
+  "sourceCommit": "a2c0c006e11b304296492a2110ec1647e6497f7c",
+  "baselinePlayer": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "observations": [
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "entry",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        0,
+        4.2,
+        36
+      ],
+      "targetMetres": [
+        0,
+        3,
+        -23
+      ],
+      "pixelSHA256": "e3a758dc3789514a8bf6d9d9c02e37262d1e07fea3c7210911da2f6a7dd48084",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 217,
+          "triangles": 29640,
+          "geometries": 161,
+          "textures": 22,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "before",
+      "revision": "r2",
+      "pose": "picnic",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -31.8,
+        2.5,
+        21
+      ],
+      "targetMetres": [
+        -36.1,
+        0.8,
+        16
+      ],
+      "pixelSHA256": "6937cb51ef13df2636804f134283126ac2fe0ae3e3aeef03fdaa9be02ebc0a7e",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 239,
+          "materials": 273,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 118,
+          "triangles": 26236,
+          "geometries": 101,
+          "textures": 14,
+          "programs": 11,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "picnic",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -31.8,
+        2.5,
+        21
+      ],
+      "targetMetres": [
+        -36.1,
+        0.8,
+        16
+      ],
+      "pixelSHA256": "4a46c04a632dda20933af7d1aa8075aa249969b344e5b6da580a44513996ec66",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 127,
+          "triangles": 26532,
+          "geometries": 107,
+          "textures": 14,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "lane",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -33.3,
+        0.52,
+        18.8
+      ],
+      "targetMetres": [
+        -35.7,
+        0.5,
+        16
+      ],
+      "pixelSHA256": "5cc0333c2bef0d59e85184276f04e858ce3fa875a34fd601d61b5add786aba38",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 127,
+          "triangles": 26532,
+          "geometries": 107,
+          "textures": 14,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "before",
+      "revision": "r2",
+      "pose": "court",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -10,
+        5.7,
+        20
+      ],
+      "targetMetres": [
+        -21,
+        1.9,
+        9
+      ],
+      "pixelSHA256": "ddc6ef0118757c182a32afb15a0b62d69591bc59d51456c6e5e56d740c8d2623",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 239,
+          "materials": 273,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 158,
+          "triangles": 27628,
+          "geometries": 122,
+          "textures": 16,
+          "programs": 11,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "court",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -10,
+        5.7,
+        20
+      ],
+      "targetMetres": [
+        -21,
+        1.9,
+        9
+      ],
+      "pixelSHA256": "6d313a4a158e69ea93159f7e114ee0c3753cf43dbd39c22ffd100d65eac6c5f1",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 167,
+          "triangles": 27924,
+          "geometries": 128,
+          "textures": 16,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "wide",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "high",
+      "appearance": "authored",
+      "positionMetres": [
+        -36,
+        20,
+        35
+      ],
+      "targetMetres": [
+        1,
+        2,
+        -8
+      ],
+      "pixelSHA256": "635c35bbd497e53a13cc021132d65a4823c96e9d4a4f3293cb05d61f350e30ef",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 256,
+          "materials": 288,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 263,
+          "triangles": 29910,
+          "geometries": 193,
+          "textures": 23,
+          "programs": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "wide",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "low",
+      "appearance": "authored",
+      "positionMetres": [
+        -36,
+        20,
+        35
+      ],
+      "targetMetres": [
+        1,
+        2,
+        -8
+      ],
+      "pixelSHA256": "90aacbd2e49db309020e44976f3033394140e2c5164fa57d851d74737a6bb4f0",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 172,
+          "triangles": 16694,
+          "geometries": 165,
+          "textures": 21,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "picnic",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "low",
+      "appearance": "pixel",
+      "positionMetres": [
+        -31.8,
+        2.5,
+        21
+      ],
+      "targetMetres": [
+        -36.1,
+        0.8,
+        16
+      ],
+      "pixelSHA256": "edf395b709d2b38e41f1c4cafe022f2b717c78c37fcd5c875ca13196672cd184",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "pixel",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 54,
+          "triangles": 12336,
+          "geometries": 54,
+          "textures": 11,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "picnic",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "positionMetres": [
+        -31.8,
+        2.5,
+        21
+      ],
+      "targetMetres": [
+        -36.1,
+        0.8,
+        16
+      ],
+      "pixelSHA256": "8ff166a2039151ab1dd3b49d15eab9ac0bc830036ea502dc1a91f2a9a657b665",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 248,
+          "materials": 283,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 127,
+          "triangles": 26532,
+          "geometries": 107,
+          "textures": 11,
+          "programs": 11,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "revision": "r3",
+      "pose": "stage",
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "quality": "low",
+      "appearance": "authored",
+      "positionMetres": [
+        7,
+        3.1,
+        -12
+      ],
+      "targetMetres": [
+        0,
+        4,
+        -27
+      ],
+      "pixelSHA256": "ead165a418b7bef38b804ad73c02d2a1eac8ab65cec63f039c7c1a3598135812",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 18
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 245,
+          "materials": 282,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 74,
+          "triangles": 14622,
+          "geometries": 74,
+          "textures": 14,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "disposal": {
+    "before": {
+      "available": true,
+      "disposed": false,
+      "quality": "low",
+      "drone": "racer",
+      "presentation": {
+        "collectionId": "authored",
+        "revision": "r1",
+        "profileId": "ukrainian",
+        "actors": [],
+        "actorGoals": [],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 18
+      },
+      "effects": {
+        "playerPulse": 9233635,
+        "hostilePulse": 16232561,
+        "ghost": 9824751,
+        "ghostEmissive": 2390144,
+        "trail": 9824751,
+        "goalOutline": 9169660,
+        "goalActive": 15266215,
+        "goalComplete": 9808542,
+        "goalInactive": 8366516,
+        "goalGlow": 11069917,
+        "goalGlowInactive": 9030085,
+        "goalEmissive": 8577493,
+        "goalBadge": 10872788,
+        "directionArrow": 15264432
+      },
+      "hunt": null,
+      "importedMaterialBindings": {
+        "applied": 0,
+        "diagnostics": [],
+        "diagnosticsTruncated": 0
+      },
+      "registered": {
+        "geometries": 245,
+        "materials": 282,
+        "textures": 23
+      },
+      "renderer": {
+        "calls": 74,
+        "triangles": 14622,
+        "geometries": 74,
+        "textures": 14,
+        "programs": 10,
+        "contextLost": false
+      }
+    },
+    "after": {
+      "available": true,
+      "disposed": true,
+      "quality": "low",
+      "drone": "racer",
+      "presentation": {
+        "collectionId": "authored",
+        "revision": "r1",
+        "profileId": null,
+        "actors": [],
+        "actorGoals": [],
+        "projectileBatches": 0,
+        "activeProjectiles": 0,
+        "surfaceDetailGroups": 0
+      },
+      "effects": {
+        "playerPulse": 9233635,
+        "hostilePulse": 16232561,
+        "ghost": 9824751,
+        "ghostEmissive": 2390144,
+        "trail": 9824751,
+        "goalOutline": 9169660,
+        "goalActive": 15266215,
+        "goalComplete": 9808542,
+        "goalInactive": 8366516,
+        "goalGlow": 11069917,
+        "goalGlowInactive": 9030085,
+        "goalEmissive": 8577493,
+        "goalBadge": 10872788,
+        "directionArrow": 15264432
+      },
+      "hunt": null,
+      "importedMaterialBindings": {
+        "applied": 0,
+        "diagnostics": []
+      },
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "renderer": {
+        "calls": 74,
+        "triangles": 14622,
+        "geometries": 0,
+        "textures": 1,
+        "programs": 0,
+        "contextLost": true
+      }
+    }
+  }
+}

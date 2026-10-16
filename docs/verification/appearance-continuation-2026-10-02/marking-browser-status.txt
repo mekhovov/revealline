@@ -1,0 +1,1 @@
+Verified industrial-gate-pad@r1. Khronos: 0 errors, 0 warnings. Runtime GLTFLoader decoded the model and its embedded PNG.

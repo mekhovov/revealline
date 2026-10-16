@@ -98,7 +98,8 @@ async function harness(t, { heldProfileRead = false } = {}) {
         if (heldProfileRead) return 0;
         throw new Error('No explicit Find requested.');
       },
-      getItem() {
+      getItem(key) {
+        if (key === 'revealline.locale.v1') return null;
         storeReads++;
         throw new Error('No explicit Find requested.');
       },
@@ -244,6 +245,7 @@ test('failed startup keeps controller Reload reachable and retains one router th
   assert.equal(h.doc.activeElement, h.$('reload'));
   h.neutral();
   h.press(0);
+  h.neutral();
   await until(() => h.requests.length === 2, 'Controller Reload started one replacement read.');
   assert.equal(h.requests[0].signal.aborted, true);
   assert.equal(h.frames.size, 1);
@@ -253,7 +255,11 @@ test('failed startup keeps controller Reload reachable and retains one router th
   assert.equal(h.doc.activeElement, h.$('find'));
   assert.equal(h.frames.size, 1);
   assert.equal(h.win.listeners.get('gamepaddisconnected').size, 1);
-  assert.equal(h.doc.captureListeners.get('keydown').size, 1);
+  assert.equal(
+    h.doc.captureListeners.get('keydown').size,
+    2,
+    'one navigator and one Confirm guard',
+  );
   h.neutral();
   h.press(1);
   await until(
@@ -270,6 +276,7 @@ test('Reload during a held catalog retires its late completion without replacing
   h.join();
   h.$('reload').focus();
   h.press(0);
+  h.neutral();
   await until(
     () => h.requests.length === 3,
     'Explicit controller Reload begins another generation.',
@@ -297,6 +304,7 @@ test('timed-out startup keeps Reload active and late failed work cannot replace 
   h.join();
   h.$('reload').focus();
   h.press(0);
+  h.neutral();
   await until(() => h.requests.length === 2, 'Reload retries after timeout.');
   await h.ready(1);
   h.requests[0].gate.resolve(new Response('late failure', { status: 500 }));
@@ -493,7 +501,11 @@ for (const readyBeforeBack of [false, true]) {
       'Return begins a fresh startup read.',
     );
     assert.equal(h.win.listeners.get('gamepaddisconnected').size, 1);
-    assert.equal(h.doc.captureListeners.get('keydown').size, 1);
+    assert.equal(
+      h.doc.captureListeners.get('keydown').size,
+      2,
+      'one navigator and one Confirm guard',
+    );
     h.tick();
     assert.equal(h.locations.length, 1, 'A Back held through the cached visit is not fresh input.');
     if (!readyBeforeBack) {
@@ -538,5 +550,23 @@ test('completed Back followed by terminal departure cannot revive on stale persi
   assert.equal(h.win.listeners.get('gamepaddisconnected').size, 0);
   assert.equal(h.doc.captureListeners.get('keydown').size, 0);
   assert.equal(h.$('find').disabled, true);
+  assert.equal(h.storeReads(), 0);
+});
+
+test('Recovery native Confirm commits one Reload between frames and drains its compatibility click', async (t) => {
+  const h = await harness(t);
+  h.join();
+  const reload = h.$('reload');
+  reload.focus();
+  h.pad.buttons[0].pressed = true;
+  assert.equal(reload.emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.requests.length, 1, 'the held press does not restart the read');
+  h.pad.buttons[0].pressed = false;
+  reload.emit('keyup', { key: 'Enter', isTrusted: true });
+  await until(() => h.requests.length === 2, 'release started exactly one replacement read');
+  reload.emit('click', { isTrusted: true });
+  h.tick();
+  await settle();
+  assert.equal(h.requests.length, 2, 'compatibility click does not replace the newer read');
   assert.equal(h.storeReads(), 0);
 });

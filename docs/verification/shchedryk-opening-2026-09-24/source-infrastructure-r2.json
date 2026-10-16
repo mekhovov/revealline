@@ -1,0 +1,67 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "revision": 2,
+  "checkedAt": "2026-09-24T03:37:52.213Z",
+  "baseRevision": "c0d2bd72176c04a3e53edd5e4dcab41004d75412",
+  "supersedes": "source-infrastructure.json",
+  "reviewCorrections": [
+    "Restored strict localOnly semantics: bundled registration does not authorize any acquisition request during silent preparation. Only an owned local original or null is returned.",
+    "Require explicit allowed redistribution permission in addition to playback and offline-cache permission before code-owned core registration. Denied and unknown permissions are both rejected."
+  ],
+  "sourceFiles": [
+    {
+      "path": "game/soundtrack-bundled.mjs",
+      "bytes": 1856,
+      "sha256": "a4efd3839f10d6e15e961f2be16e9f4e03f41c12d7a593ba98971f67a7a85387"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4608,
+      "sha256": "ce8518de9719d9d827f14ba130e93bd67bce030334e5a58ed2f0c33f5829b6a5"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 10078,
+      "sha256": "4763cf983f9dac87e08c562977e754e8140ee1be3e78701b6f8c09361958ff6e"
+    }
+  ],
+  "checks": {
+    "node": "20.19.5",
+    "sourceSuite": {
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "skip": 0,
+      "method": "node:test through an in-memory vm.SourceTextModule graph; tracked modules and synthetic MP3 fixture read from git without a working-tree write",
+      "outputSha256": "9299a2d38853ad2a616a84a87f8f2ce2d32974e56e8621c5936837dcff7f06f5",
+      "standardHostedRun": "pending"
+    },
+    "prettier": {
+      "version": "3.6.2",
+      "status": "formatted in memory with repository configuration"
+    },
+    "eslint": {
+      "status": "not run",
+      "reason": "Unavailable in the small dependency checkout; dependency installation blocked by required disk reserve"
+    },
+    "build": {
+      "status": "not run",
+      "reason": "Hosted qualification required; local reserve remains below 1 GiB"
+    }
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "defaultChanged": false,
+    "bundledRegistrationsActivated": 0,
+    "mp3Downloaded": false,
+    "listeningApprovalClaimed": false
+  },
+  "remaining": [
+    "Independent review of revision 2 and all required hosted checks",
+    "Recording admission, hosted exact MP3 packaging and core precache integration",
+    "Shared-budget single accounting and installation/removal semantics",
+    "Fresh-profile and once-per-visit startup behavior preserving saved explicit preferences",
+    "Musical, Ukrainian, device, public and cold-offline acceptance"
+  ]
+}

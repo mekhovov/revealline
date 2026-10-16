@@ -1,0 +1,7242 @@
+{
+  "format": "FPVWoodlandSurfacesBrowserEvidence.v1",
+  "createdAt": "2026-10-02T20:53:48.392Z",
+  "baseline": "e48adf3185dc7536555d142fe3d1165de31c05f9",
+  "candidate": "dist/fpv-woodland-surfaces-packaged",
+  "sourceFiles": {
+    "before": {
+      "optional-practice/civilian-fpv/world-visuals.mjs": "95ab637bd5b50c20dd15ec8fd6d0886b4f142a1102857ae804aee7d54a9fbdae",
+      "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "optional-practice/civilian-fpv/world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+      "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "game/i18n/catalogs.mjs": "b52e2866154d722fde608d2eb65d0e25e6b94b127eac47e7561318a38e7f357b",
+      "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+      "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+      "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+      "optional-practice/civilian-fpv/renderer.mjs": "207cb6068ea24a527365433cdea30b4797799065b0abf0e05b823c3fe4ee12be",
+      "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+    },
+    "after": {
+      "optional-practice/civilian-fpv/world-visuals.mjs": "a724e26f05ab59d24a0fb5493eacabdd6b38690bfc0b90ddee7ae8c8117c31a1",
+      "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+      "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+      "optional-practice/civilian-fpv/world-themes.mjs": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+      "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "game/i18n/catalogs.mjs": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+      "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+      "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "optional-practice/civilian-fpv/world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+      "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+      "optional-practice/civilian-fpv/renderer.mjs": "f16d9170e59a06976f1780d0ca4e55d8c8046fcfdb5a92a313053b2c32f1d1eb",
+      "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+      "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+      "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+      "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+    }
+  },
+  "checks": [
+    {
+      "name": "Frozen source and harness hashes verified",
+      "passed": true
+    },
+    {
+      "name": "All authored courses, collisions, objectives and rules remain exact",
+      "passed": true
+    },
+    {
+      "name": "world-assets.mjs stays byte-identical to baseline",
+      "passed": true
+    },
+    {
+      "name": "world-model.mjs stays byte-identical to baseline",
+      "passed": true
+    },
+    {
+      "name": "model.mjs stays byte-identical to baseline",
+      "passed": true
+    },
+    {
+      "name": "world-collision.mjs stays byte-identical to baseline",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low loads identical actual woodland GLB scenery",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low exact non-UV geometry, shadow flags, opaque surfaces and 112 sightline rays",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low all six bark surfaces retain opaque exact collision faces",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low actual trunk side/root/cap UVs match the root-anchored atlas contract",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low replaces existing color/normal/roughness maps for bark and forest floor",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low no additional registered geometry/material/texture ownership",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low surface resolution and linear mip filters follow preset",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/fpv/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/fpv/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/fpv/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/fpv/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/chase/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/chase/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/chase/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/chase/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/overview/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/trail objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/low/rear objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced loads identical actual woodland GLB scenery",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced exact non-UV geometry, shadow flags, opaque surfaces and 112 sightline rays",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced all six bark surfaces retain opaque exact collision faces",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced actual trunk side/root/cap UVs match the root-anchored atlas contract",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced replaces existing color/normal/roughness maps for bark and forest floor",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced no additional registered geometry/material/texture ownership",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced surface resolution and linear mip filters follow preset",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/fpv/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/fpv/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/fpv/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/fpv/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/chase/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/chase/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/chase/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/chase/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/overview/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/trail objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/balanced/rear objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high loads identical actual woodland GLB scenery",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high exact non-UV geometry, shadow flags, opaque surfaces and 112 sightline rays",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high all six bark surfaces retain opaque exact collision faces",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high actual trunk side/root/cap UVs match the root-anchored atlas contract",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high replaces existing color/normal/roughness maps for bark and forest floor",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high no additional registered geometry/material/texture ownership",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high surface resolution and linear mip filters follow preset",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/fpv/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/fpv/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/fpv/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/fpv/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/chase/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/chase/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/chase/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/chase/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/overview/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/trail objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "woodland-06/high/rear objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low loads identical actual woodland GLB scenery",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low exact non-UV geometry, shadow flags, opaque surfaces and 109 sightline rays",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low all six bark surfaces retain opaque exact collision faces",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low actual trunk side/root/cap UVs match the root-anchored atlas contract",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low replaces existing color/normal/roughness maps for bark and forest floor",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low no additional registered geometry/material/texture ownership",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low surface resolution and linear mip filters follow preset",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/fpv/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/fpv/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/fpv/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/fpv/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/chase/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/chase/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/chase/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/chase/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/overview/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/trail objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/low/rear objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced loads identical actual woodland GLB scenery",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced exact non-UV geometry, shadow flags, opaque surfaces and 109 sightline rays",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced all six bark surfaces retain opaque exact collision faces",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced actual trunk side/root/cap UVs match the root-anchored atlas contract",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced replaces existing color/normal/roughness maps for bark and forest floor",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced no additional registered geometry/material/texture ownership",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced surface resolution and linear mip filters follow preset",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/fpv/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/fpv/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/fpv/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/fpv/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/chase/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/chase/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/chase/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/chase/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/overview/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/trail objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/balanced/rear objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high loads identical actual woodland GLB scenery",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high exact non-UV geometry, shadow flags, opaque surfaces and 109 sightline rays",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high all six bark surfaces retain opaque exact collision faces",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high actual trunk side/root/cap UVs match the root-anchored atlas contract",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high replaces existing color/normal/roughness maps for bark and forest floor",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high no additional registered geometry/material/texture ownership",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high surface resolution and linear mip filters follow preset",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/fpv/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/fpv/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/fpv/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/fpv/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/chase/1.5m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/chase/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/chase/6m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/chase/9m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/overview/3m actual surface pixels change in populated WebGL buffers",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/trail objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "beginner-31/high/rear objective and actor approach remains rendered",
+      "passed": true
+    },
+    {
+      "name": "Pixel woodland keeps64px nearest filtering and anisotropy1",
+      "passed": true
+    },
+    {
+      "name": "coast/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "coast/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "coast/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "coast/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "coast actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "coast/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "coast/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "quarry/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "quarry/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "quarry/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "quarry/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "quarry actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "quarry/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "quarry/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "rooftops/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "rooftops/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "rooftops/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "rooftops/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "rooftops actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "rooftops/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "rooftops/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "orchard/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "orchard/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "orchard/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "orchard/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "orchard actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "orchard/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "orchard/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "solar-farm/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "solar-farm/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "solar-farm/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "solar-farm/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "solar-farm actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "solar-farm/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "solar-farm/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "rail-depot/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "rail-depot/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "rail-depot/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "rail-depot/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "rail-depot actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "rail-depot/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "rail-depot/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "gym/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "gym/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "gym/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "gym/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "gym actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "gym/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "gym/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "field/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "field/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "field/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "field/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "field actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "field/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "field/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "courtyard/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "courtyard/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "courtyard/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "courtyard/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "courtyard actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "courtyard/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "courtyard/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "warehouse/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "warehouse/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "warehouse/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "warehouse/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "warehouse actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "warehouse/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "warehouse/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "stadium/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "stadium/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "stadium/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "stadium/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "stadium actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "stadium/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "stadium/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "container-yard/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "container-yard/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "container-yard/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "container-yard/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "container-yard actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "container-yard/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "container-yard/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "garage/low prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "garage/low exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "garage/balanced prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "garage/balanced exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "garage actual geometry, UVs, materials, maps and rays unchanged",
+      "passed": true
+    },
+    {
+      "name": "garage/high prepared GLB bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "garage/high exact pixel regression",
+      "passed": true
+    },
+    {
+      "name": "Regression matrix includes all13 other environments including meadow and courtyard",
+      "passed": true
+    },
+    {
+      "name": "Geometry/material/texture/program counts plateau after repeated course and quality reloads",
+      "passed": true
+    },
+    {
+      "name": "Both renderers release all registered resources",
+      "passed": true
+    },
+    {
+      "name": "No browser errors, unexpected context loss or GL errors",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "Frozen sources and harness remain exact after execution",
+      "passed": true
+    }
+  ],
+  "samples": [
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "5d8c5f97f20dd3de1601a22fe072dd74efcac034a7a99bb70fa0fcf491783e8c",
+      "afterHash": "943ec641f69a651b3bb38bb219a7898656e9c3461a0873dcacb75254a861e85b",
+      "changedPixels": 122173,
+      "changedFraction": 0.5302647569444444,
+      "meanChannelDifference": 10.71716869212963,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        58,
+        58
+      ],
+      "triangles": [
+        3252,
+        3252
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "a986ee1b2bb6561e9719d284aa14ebabd289eadb868d47acc91b21e253f6e6aa",
+      "afterHash": "152f93ad55d8a9aaa1894f0f5aa6319137f9d84f982054e64a4ca13b7f20e26e",
+      "changedPixels": 117985,
+      "changedFraction": 0.5120876736111111,
+      "meanChannelDifference": 10.554673032407408,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        58,
+        58
+      ],
+      "triangles": [
+        3252,
+        3252
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 6,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "355d30ddcfdc489ffac66c5f9dc4324e83d59cd5216855512381385c4d447e4d",
+      "afterHash": "9934b9c34495c5d1bd06637db9a9d7b80513a1dc0a507cde8ce1a0df35440657",
+      "changedPixels": 105318,
+      "changedFraction": 0.457109375,
+      "meanChannelDifference": 9.312883391203703,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        58,
+        58
+      ],
+      "triangles": [
+        3252,
+        3252
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 9,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "9cb45f0445b9b1ec360f1c1d0457423d7014636a7b1855d04ab3f146aef422a8",
+      "afterHash": "5f534a73b2d311c05e9afb60edb02b4d066a26d7cea7af11c9dd5d8f5995ff99",
+      "changedPixels": 149582,
+      "changedFraction": 0.6492274305555555,
+      "meanChannelDifference": 13.474243344907407,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        59,
+        59
+      ],
+      "triangles": [
+        3254,
+        3254
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "chase",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "8392d2aa29429b6ac79278521211bc6bfc0ed0bac49b8d1536f8536975a6a209",
+      "afterHash": "f7f1550cf542b8e54e7167a4dd7473c2a2936fdc47f6740dc789799b3c8699d3",
+      "changedPixels": 168118,
+      "changedFraction": 0.7296788194444445,
+      "meanChannelDifference": 15.703514178240741,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        109,
+        109
+      ],
+      "triangles": [
+        4518,
+        4518
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "chase",
+      "height": 3,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "b8d80134077b8077ec77793444085dd8809c3adbe592ad5646b73c0fd892d3c3",
+      "afterHash": "06206f839d8e4ec93a5b05be7cd6853e74016d1b2d1adb58e3691cea2400df72",
+      "changedPixels": 163969,
+      "changedFraction": 0.7116710069444444,
+      "meanChannelDifference": 14.455512152777779,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        112,
+        112
+      ],
+      "triangles": [
+        4594,
+        4594
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "chase",
+      "height": 6,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "0a10fab1d1eb0f799aeeea80f8552d972b754ed5b91d08d679c753627111a67d",
+      "afterHash": "5d8e3bb27d1cd3f4f7fceb7f6ee0fd7ca19b8ec7099a62d9bd83e5570abb81cb",
+      "changedPixels": 153502,
+      "changedFraction": 0.6662413194444444,
+      "meanChannelDifference": 13.317378472222222,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        113,
+        113
+      ],
+      "triangles": [
+        4596,
+        4596
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "chase",
+      "height": 9,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "f9bcfed04a1b2898ed28fc77e4d8e8c1cd4906d3fb834b4c48bec51e43f31808",
+      "afterHash": "e2dc1142f7470b0a1f83ec1b14993b847fa4bc5d59ce9730dfe6a6749ca86a93",
+      "changedPixels": 209821,
+      "changedFraction": 0.9106814236111112,
+      "meanChannelDifference": 18.907884837962964,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        115,
+        115
+      ],
+      "triangles": [
+        4846,
+        4846
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "overview",
+      "height": 3,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "da13390595dddbe8bd936b6de2b9c9ed2007f0c6fd28ec4099ddb2bd2ee8af59",
+      "afterHash": "bf5bc14f0d5c77c76b861098f0b48da083f334e11ac55d4aab04a22c546361ed",
+      "changedPixels": 144061,
+      "changedFraction": 0.6252647569444445,
+      "meanChannelDifference": 12.102029803240741,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        225,
+        225
+      ],
+      "triangles": [
+        9168,
+        9168
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "52e854f53ebd39b798661a0e5720bae12f644caa2ba7dd86244a3c0e9be23fb0",
+      "afterHash": "06e0003af98081d426b24a39f21b662916944b8c6a327111e2ca43ed89717af0",
+      "changedPixels": 113016,
+      "changedFraction": 0.49052083333333335,
+      "meanChannelDifference": 10.416044560185185,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        69,
+        69
+      ],
+      "triangles": [
+        3886,
+        3886
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "rear",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "4babd124a12017e66785891be043a61ffa1d558abd9d49726081ecf56d3ef6c8",
+      "afterHash": "13487266bea4c2550011697b0327550680e4e8e1c404639f382a40b93134b9c3",
+      "changedPixels": 106666,
+      "changedFraction": 0.46296006944444446,
+      "meanChannelDifference": 9.359184027777777,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        69,
+        69
+      ],
+      "triangles": [
+        4950,
+        4950
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "f3406bc24be2e41e8a4ea7dfbbf6e67bd5debbdfc5d706949fc926d3a5dd0664",
+      "afterHash": "8b5211d7554eb9276e3ccd04ad5730d53401a55e68cc303d3161df9da029a8fb",
+      "changedPixels": 274064,
+      "changedFraction": 0.5286728395061728,
+      "meanChannelDifference": 11.21152199074074,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        193,
+        193
+      ],
+      "triangles": [
+        8036,
+        8036
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "64a03ec7e6a678c744df801c0cad251b74e105616aa786a4bc4db6ab31094e71",
+      "afterHash": "176e7ec2690cbd6bc9dda7f922556047bb6f456b35cf82f100db9f07c12f370d",
+      "changedPixels": 264441,
+      "changedFraction": 0.5101099537037037,
+      "meanChannelDifference": 11.047253729423868,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        193,
+        193
+      ],
+      "triangles": [
+        8036,
+        8036
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 6,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "4ed76862e1785084aa53fe983a5bde07d17238bbeff9098e50e46eeaccd0bdce",
+      "afterHash": "3dbf8aa44aade77f563b7f6d6e9685b41490e967f2a72d333022d8cf6e96838a",
+      "changedPixels": 235357,
+      "changedFraction": 0.4540065586419753,
+      "meanChannelDifference": 9.73063850308642,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        193,
+        193
+      ],
+      "triangles": [
+        8036,
+        8036
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 9,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "2a66938c3c1c801d58500675c2ff8e80fd0bd2ed05dc2581c9b6d4106b2ca2af",
+      "afterHash": "7cc816303507076de2f0574b54337f7102b7c3b5bf6ea6cdd7422a74137a61d4",
+      "changedPixels": 335102,
+      "changedFraction": 0.6464158950617284,
+      "meanChannelDifference": 14.041253215020577,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        194,
+        194
+      ],
+      "triangles": [
+        8038,
+        8038
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "b2d88e2c9f1622dd025ffa8834c085272539b4d5fdd3a39c6ca291747fa155fb",
+      "afterHash": "7b277100d16fa3da869f136bdcef4a439769969c43c4717985285a16a72148e5",
+      "changedPixels": 377515,
+      "changedFraction": 0.7282310956790123,
+      "meanChannelDifference": 16.30284593621399,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        277,
+        277
+      ],
+      "triangles": [
+        10410,
+        10410
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 3,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "f68d8ae2b4aaaaadd022808bcc4a4524581c6f9b45d898afaa7a5b54f7020b84",
+      "afterHash": "bb72bf7d3f3651a6bed8749e2a774b14543cd04859cfc44a0e2fdf67d140b471",
+      "changedPixels": 367856,
+      "changedFraction": 0.7095987654320988,
+      "meanChannelDifference": 15.05864904835391,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        280,
+        280
+      ],
+      "triangles": [
+        10486,
+        10486
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 6,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "f1c160d5a7381fc6db3c6146e4ffdaeb30705fccdde7d077cf89da9c3d988161",
+      "afterHash": "4dba111d64889d14476816ab75aa243cb31bcd2247a0c2fe8a36a5a4cbb68d3f",
+      "changedPixels": 344332,
+      "changedFraction": 0.6642206790123457,
+      "meanChannelDifference": 13.864959490740741,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        281,
+        281
+      ],
+      "triangles": [
+        10488,
+        10488
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 9,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "b6de7a2469713a2c6c35538eeb954a4f4959f1ea3b20508c86a3ab8be9d885dd",
+      "afterHash": "4798e8e32d376aa4622268cb3dab4ac9219ee37ee1226e2202917df630f15dce",
+      "changedPixels": 470455,
+      "changedFraction": 0.9075135030864198,
+      "meanChannelDifference": 19.681579218106997,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        283,
+        283
+      ],
+      "triangles": [
+        10738,
+        10738
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "overview",
+      "height": 3,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "4c09173f5b5fa7ed9b8ba9bb8e53ecd38d3b177a7077061be7266d5336a01d0a",
+      "afterHash": "44e0b7d864a15c8f24bb0386b9d888280db31b1e270bbf74d407b204449d486a",
+      "changedPixels": 322721,
+      "changedFraction": 0.6225327932098765,
+      "meanChannelDifference": 12.641339377572017,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        395,
+        395
+      ],
+      "triangles": [
+        15196,
+        15196
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "7356c4241e64a414ce90251f0dc519599beca3230fa4011bfd3d00450f77cd61",
+      "afterHash": "fe7815a7ddbf938318716830d3f458db58ec56405d1cfe6cb03014954c0ff76b",
+      "changedPixels": 253791,
+      "changedFraction": 0.4895659722222222,
+      "meanChannelDifference": 10.776246784979424,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        204,
+        204
+      ],
+      "triangles": [
+        8670,
+        8670
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "rear",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "b437b0f4589477d9a11a22dd8549f65cc3b05c747af4e225126f1ebebd79e7a1",
+      "afterHash": "ce37031342d20153d3a702eca346fc91161815108db385f40f261bb5a3617769",
+      "changedPixels": 239842,
+      "changedFraction": 0.4626581790123457,
+      "meanChannelDifference": 9.645044367283951,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        206,
+        206
+      ],
+      "triangles": [
+        9870,
+        9870
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "33238122e083d8388b0cdf8909c6bc980b43fe70faff89a11bc0ffabf600804d",
+      "afterHash": "b605df6474401638e3146809b618fe11b977d7fb9e924148a721c451a98fb0cd",
+      "changedPixels": 487042,
+      "changedFraction": 0.5284743923611112,
+      "meanChannelDifference": 10.747926070601851,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        197,
+        197
+      ],
+      "triangles": [
+        8132,
+        8132
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "78dd4e37b47a94fa08220e323a0dfc7346576ccc5113e7256292c000f864a555",
+      "afterHash": "c832c1afe9611f140ed1bcf8dddf159fdfaee318d3b34b15a3358c434773bc04",
+      "changedPixels": 469280,
+      "changedFraction": 0.5092013888888889,
+      "meanChannelDifference": 10.69577437789352,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        197,
+        197
+      ],
+      "triangles": [
+        8132,
+        8132
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 6,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "4783a7a16c9d744abd17951254c1607c363564ae400f211fb4b6999062cea47f",
+      "afterHash": "84032f96dca245b7ff1480d1244fec490ce8624a3158d363ecb6e531e514d25f",
+      "changedPixels": 418020,
+      "changedFraction": 0.45358072916666664,
+      "meanChannelDifference": 9.430422815393518,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        197,
+        197
+      ],
+      "triangles": [
+        8132,
+        8132
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 9,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "abf24f6078f3e854e35057cb7a3f58e568d5fa99ef71148c327ec20f96107d54",
+      "afterHash": "d7c7ae6051bb6fa7ab11e0d67ebc90904c3ae365f07925a87811e965560cb68e",
+      "changedPixels": 593829,
+      "changedFraction": 0.644345703125,
+      "meanChannelDifference": 13.64775462962963,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        198,
+        198
+      ],
+      "triangles": [
+        8134,
+        8134
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "chase",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "84eb3c10f79540bfe5043b013f3a2a471b7464ad13a46f59df929b5c6e449997",
+      "afterHash": "2a30dd5642bd27ec49ed7cf68795b2b05ccde5337a715cfafc8dcd8b68a6b852",
+      "changedPixels": 670878,
+      "changedFraction": 0.72794921875,
+      "meanChannelDifference": 15.645112847222222,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        365,
+        365
+      ],
+      "triangles": [
+        12706,
+        12706
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "chase",
+      "height": 3,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "eb441494bb6b20a9e076de0a8150072d6434ba68194faeb0c6a54c67161331a1",
+      "afterHash": "1702a65aebea3a0583c94db7fc38eb324bd2b782a1c1455ec8128d258ee46211",
+      "changedPixels": 652351,
+      "changedFraction": 0.7078461371527778,
+      "meanChannelDifference": 14.513135127314815,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        368,
+        368
+      ],
+      "triangles": [
+        12782,
+        12782
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "chase",
+      "height": 6,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "057867fe9587f2d9660205f829f9bb51736e3ac486ad5933955fba239ba49c7e",
+      "afterHash": "be63a82345381963b26e38fbc7ce4ee19db9926848166614570b1653c7b491a5",
+      "changedPixels": 610569,
+      "changedFraction": 0.662509765625,
+      "meanChannelDifference": 13.398753616898148,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        369,
+        369
+      ],
+      "triangles": [
+        12784,
+        12784
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "chase",
+      "height": 9,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "75adb538462ce85d98379e890ba4d0dac83a0fe268425b832f679c0ac4a3b691",
+      "afterHash": "f4755977b3f1a7c9554b9e9b74deabb3cb909f1aaa62653297eef8ba01e6d61e",
+      "changedPixels": 835501,
+      "changedFraction": 0.9065766059027778,
+      "meanChannelDifference": 19.123008174189813,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        371,
+        371
+      ],
+      "triangles": [
+        13034,
+        13034
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "overview",
+      "height": 3,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "88a46e64dfca6714ace7852c489e088b9010e0ee31566575eed75e0d688554b6",
+      "afterHash": "e25d2c25607873c603ececc9d9c100ef7bc16b91635e89f0c3fc2a859d374d4b",
+      "changedPixels": 571764,
+      "changedFraction": 0.6204036458333333,
+      "meanChannelDifference": 12.38572193287037,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        487,
+        487
+      ],
+      "triangles": [
+        17588,
+        17588
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "0e4359b3af50eaf04f6f6d69483028749f2447e9e17da5f3ca82980b4712bf8d",
+      "afterHash": "8d39de2d966ab3855f221f97a35be4d331b24dd170722fdf9af1f711cf848caf",
+      "changedPixels": 450250,
+      "changedFraction": 0.4885525173611111,
+      "meanChannelDifference": 10.25048900462963,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        208,
+        208
+      ],
+      "triangles": [
+        8766,
+        8766
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "rear",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "4904bace596c80a0a51cc26da4f41981c627e3298c8e3868ffb935d7fe441b0a",
+      "afterHash": "d137f3d952f971a35d477ec7b1d5b68f2a3027a7942f41ea0aa3e1dc8c5201f9",
+      "changedPixels": 425814,
+      "changedFraction": 0.46203776041666667,
+      "meanChannelDifference": 9.315428602430556,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        214,
+        214
+      ],
+      "triangles": [
+        10062,
+        10062
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "8b65e0fe71712ec7450bacf2aaa7fce5ae40c56ac24c5e392017244827c40212",
+      "afterHash": "c8ddbaac195e591e8248f3f301946c0a324da468b4fe10d9d8da41f9a31978d8",
+      "changedPixels": 123000,
+      "changedFraction": 0.5338541666666666,
+      "meanChannelDifference": 10.654651331018519,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        71,
+        71
+      ],
+      "triangles": [
+        3296,
+        3296
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "aa879f92cfe34ca5d8b9b0a1bd34359acbf9bec895f7cb4fcdccca01c4a9ed6d",
+      "afterHash": "41bc3361ce32ac3541c6337985556fdcb21d5093be41ede94d47ffd751abb956",
+      "changedPixels": 119422,
+      "changedFraction": 0.5183246527777777,
+      "meanChannelDifference": 10.577177372685185,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        71,
+        71
+      ],
+      "triangles": [
+        3296,
+        3296
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 6,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "fa7fa3fad86cef96aecb48bc785f7cc9955108f454d46207dd472a9ae28c0ba7",
+      "afterHash": "fb9df2d5e2f17e30440e051d022f3d1f11653a00d6acc507ac6620d8390a9b15",
+      "changedPixels": 107865,
+      "changedFraction": 0.4681640625,
+      "meanChannelDifference": 9.592698206018518,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        71,
+        71
+      ],
+      "triangles": [
+        3296,
+        3296
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 9,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "4c0f5ce48d656ffa6485edc812abbe81aface3c6b17b4f4d244f199f198fde5a",
+      "afterHash": "9c6aa60c6817793d50a7f0f388329da8aa7636485b0bed88f2d822ab73c571ba",
+      "changedPixels": 152608,
+      "changedFraction": 0.6623611111111111,
+      "meanChannelDifference": 13.957858796296296,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        72,
+        72
+      ],
+      "triangles": [
+        3298,
+        3298
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "chase",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "8f0bd0ea5d51b26b32a91d55811741474f23f9a75d3044d6b6cb8dc26db77be3",
+      "afterHash": "8be6fbd0b2a84ee407f9003e09a2bc6eda8d388ca188c3f0a32eef95556a774d",
+      "changedPixels": 169554,
+      "changedFraction": 0.7359114583333334,
+      "meanChannelDifference": 15.646769386574075,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        125,
+        125
+      ],
+      "triangles": [
+        4576,
+        4576
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "chase",
+      "height": 3,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "fc2d7746905406d1f57eb1c2956c5c0a29475414f33adddc7f93779971f450a6",
+      "afterHash": "724ab450a43d000336dd32a8c5f9d3521f4c74d3e141c3975609deaa921279f1",
+      "changedPixels": 165777,
+      "changedFraction": 0.7195182291666666,
+      "meanChannelDifference": 14.893952546296296,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        125,
+        125
+      ],
+      "triangles": [
+        4576,
+        4576
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "chase",
+      "height": 6,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "00b40b0750d13de7edf9209793fe955df0cab2bbe0e0ccd2c0526272fa250a41",
+      "afterHash": "b100578a7c3b951b1e103974aea003491af89bb6f9f8e2092f80eebbd5f6c503",
+      "changedPixels": 156121,
+      "changedFraction": 0.6776085069444444,
+      "meanChannelDifference": 13.670143229166667,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        129,
+        129
+      ],
+      "triangles": [
+        4664,
+        4664
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "chase",
+      "height": 9,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "215e912664efcfebfa81da65a8532132307903db686b397af39f4159e9ddb602",
+      "afterHash": "d0729451ce3d66282671394a7937f2e7d9b325a6d849371f7f67ed9007720062",
+      "changedPixels": 215401,
+      "changedFraction": 0.9349001736111111,
+      "meanChannelDifference": 19.26271412037037,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        137,
+        137
+      ],
+      "triangles": [
+        4962,
+        4962
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "overview",
+      "height": 3,
+      "pose": "trunk",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "7d58e22ad8b7dc9d4a62d1df850662a46146758df04b49971455c1f057af0821",
+      "afterHash": "185872411a769627765dc8f10042987a7cca6d254e4b8bd7b9dcbc8f9beb96c1",
+      "changedPixels": 146295,
+      "changedFraction": 0.6349609375,
+      "meanChannelDifference": 11.792459490740741,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        246,
+        246
+      ],
+      "triangles": [
+        8552,
+        8552
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "fec03d092256f29c62bf1606b1dacfc99bda21e7a07f272dbb536915740168bb",
+      "afterHash": "16953dc17b64f183f42910ffa9fcac42e2481f5a30f866deb8b0e6a88f36bff2",
+      "changedPixels": 113735,
+      "changedFraction": 0.49364149305555555,
+      "meanChannelDifference": 10.40111545138889,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        106,
+        106
+      ],
+      "triangles": [
+        3884,
+        3884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "rear",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "9b07a0204412ffeb02f19ea02fabae2416e3f06bca4afcf53a1c068b59045780",
+      "afterHash": "86f9d1ffd217dd7be62586bb18308a756c8c051eb503c603cfcb87d77b02496c",
+      "changedPixels": 108507,
+      "changedFraction": 0.47095052083333333,
+      "meanChannelDifference": 9.417437789351851,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        58,
+        58
+      ],
+      "triangles": [
+        3556,
+        3556
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "eae2a6fe768e8d14263f729ba404fdd9cfe7caf0f70da62bb4a61383eeb193e2",
+      "afterHash": "65f46eded13917e54b68f56e8603032fee034584efc6624497bb1f1ca2bf1483",
+      "changedPixels": 275824,
+      "changedFraction": 0.5320679012345679,
+      "meanChannelDifference": 11.129713863168725,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        184,
+        184
+      ],
+      "triangles": [
+        6884,
+        6884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "5d33a6a30fdbd0b708aabf30d139d207d827b28bc09e86c4bcc3f66f62657bc5",
+      "afterHash": "c90ef72f9557dde70deba47eb1a53e08e9db725929fdeffc4e82e437311879fc",
+      "changedPixels": 267484,
+      "changedFraction": 0.5159799382716049,
+      "meanChannelDifference": 11.075219907407407,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        184,
+        184
+      ],
+      "triangles": [
+        6884,
+        6884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 6,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "e457978821179169a664e634689bfd70e8ce431af88d4bd572ba3272866f2d63",
+      "afterHash": "776c9238ad9a1f1f8345d0b2c14f0cfe6985d0428f0fdaec997ed9a96a200b54",
+      "changedPixels": 240603,
+      "changedFraction": 0.4641261574074074,
+      "meanChannelDifference": 10.024941486625515,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        184,
+        184
+      ],
+      "triangles": [
+        6884,
+        6884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 9,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "cc15597f4601e3a8d8461acb0b25a7f6d1e91d6d36a04e3dfd03a4a034f95380",
+      "afterHash": "796c387d26d4a5c10d4acb9a050b27b732c975a4e85a5f21d98cd3dcd9396429",
+      "changedPixels": 341398,
+      "changedFraction": 0.6585609567901235,
+      "meanChannelDifference": 14.548425925925926,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        185,
+        185
+      ],
+      "triangles": [
+        6886,
+        6886
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "fca520c9b4953f22a3b6409676877fe8ddd3a2760b432be2bcf1c27e2c98fddb",
+      "afterHash": "03e5829f943a9b9722315b28434976f17357cf3a5b1e02a00cb9e978fe2f7cd0",
+      "changedPixels": 380496,
+      "changedFraction": 0.7339814814814815,
+      "meanChannelDifference": 16.224615483539093,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        271,
+        271
+      ],
+      "triangles": [
+        9272,
+        9272
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 3,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "8d6669bbb24591db28531dfbcdbf511b92f86e534aa7c3dc5ca84193995bde28",
+      "afterHash": "e0388e614cb864083f60a4ef461608402e44977c8064da77cad83bb46a6dfff6",
+      "changedPixels": 371768,
+      "changedFraction": 0.7171450617283951,
+      "meanChannelDifference": 15.4978125,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        271,
+        271
+      ],
+      "triangles": [
+        9272,
+        9272
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 6,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "1bdb8f0cb5ad15ec304613a9dab6f38abc7edb64b428233b4573b0c76036664b",
+      "afterHash": "22820af7aa75d77d64cba66391f91b429a2a21d13805db8f706fb967494ef0b2",
+      "changedPixels": 350367,
+      "changedFraction": 0.6758622685185185,
+      "meanChannelDifference": 14.237005529835391,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        275,
+        275
+      ],
+      "triangles": [
+        9360,
+        9360
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "chase",
+      "height": 9,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "fe6bb5d37265e350dff0e1c3e760770a5df85019e2e2e64952a4aa44e6be8d8f",
+      "afterHash": "54ec7a83cbf932ad8b8016c9498336d985af27e68f2810f038008e14fa079f1c",
+      "changedPixels": 482376,
+      "changedFraction": 0.9305092592592593,
+      "meanChannelDifference": 20.101972736625516,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        283,
+        283
+      ],
+      "triangles": [
+        9658,
+        9658
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "overview",
+      "height": 3,
+      "pose": "trunk",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "1d5c16a51f9ebca69bcb89a31b01d29c53e2bf0ac0efe68d496d7b1598401e1a",
+      "afterHash": "72432d0de4e99e6fd7c9c266050cbe64518433d68c789434b564614fad73a0a0",
+      "changedPixels": 327794,
+      "changedFraction": 0.6323186728395062,
+      "meanChannelDifference": 12.342099408436214,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        392,
+        392
+      ],
+      "triangles": [
+        13248,
+        13248
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "e45f0d6ac01cb9893507083c4405f3a5aed00bb34f2a22a7c8ab09b221bcf2bf",
+      "afterHash": "8cf61a45b7762b164a1806a19f9cc45705fd224815fcee983b0370bdf2a0fada",
+      "changedPixels": 255333,
+      "changedFraction": 0.49254050925925924,
+      "meanChannelDifference": 10.795851980452674,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        219,
+        219
+      ],
+      "triangles": [
+        7472,
+        7472
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "rear",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "e360564c6b0299a4560126f10e69e0b7d1a58d37150f8c7108b98b119fe0befd",
+      "afterHash": "96b9bb3c884ffb94c2f0c1760df416160d7f786987d5b73d4e2152332773bf61",
+      "changedPixels": 243706,
+      "changedFraction": 0.47011188271604937,
+      "meanChannelDifference": 9.717130272633744,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        171,
+        171
+      ],
+      "triangles": [
+        7144,
+        7144
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "2b138e6d12b0e5d72a7ca814c21fb80532181a2c4e7c6d9e61a8649e346deb7b",
+      "afterHash": "1b118c7cb44e31c8a45190876615665907e6f809299d2ae8e406b32a48686ed1",
+      "changedPixels": 490310,
+      "changedFraction": 0.5320203993055556,
+      "meanChannelDifference": 10.681164641203704,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        184,
+        184
+      ],
+      "triangles": [
+        6884,
+        6884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "0a4eb983cdbc14c64c7908c6ba3bb59acae48761bf6d64eead0af2387ecd5d95",
+      "afterHash": "a469fa9d541b115af4bb1beda3ec624868040c0c231700d194636f8adfb9e914",
+      "changedPixels": 475332,
+      "changedFraction": 0.5157682291666666,
+      "meanChannelDifference": 10.712850839120371,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        184,
+        184
+      ],
+      "triangles": [
+        6884,
+        6884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 6,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "900460c2589d8d00c3b35cdf35b2352ad29450d231afa7bc7fe81f07b7c8f80c",
+      "afterHash": "1858ff5c7d69c0ec5ba9ea716219d0d5564de8683ca90987fcdfdb4330d8e738",
+      "changedPixels": 426896,
+      "changedFraction": 0.4632118055555556,
+      "meanChannelDifference": 9.685800419560184,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        184,
+        184
+      ],
+      "triangles": [
+        6884,
+        6884
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 9,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "55bca7030e9e60d2591c5c01dd8cf042e4b2ecfcebaabe3b8eb5c4ace9acbb42",
+      "afterHash": "43d71bc1c69d447e8ff6ac1ab618989cdaa75b87df74bb7cb1799d4d3ea4e00b",
+      "changedPixels": 606851,
+      "changedFraction": 0.6584754774305556,
+      "meanChannelDifference": 14.088411096643519,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        185,
+        185
+      ],
+      "triangles": [
+        6886,
+        6886
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "chase",
+      "height": 1.5,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "3188336c6374c563ff21408b2739cf87f1b186de254a1b8009607f3505ad5a8a",
+      "afterHash": "d455dc194de42b90adeef8a1933907d518bfbf3b54942f00b4568d1f3b07652a",
+      "changedPixels": 675930,
+      "changedFraction": 0.7334309895833333,
+      "meanChannelDifference": 15.563053023726852,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        355,
+        355
+      ],
+      "triangles": [
+        11472,
+        11472
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "chase",
+      "height": 3,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "2e7acfe831ae6c3891414c7406f8795d2d2e333fee50b2d9f64e3d8cf009b025",
+      "afterHash": "9e23d531422dc71df7efb7712d83650cb4746adbef391d78783dc378884a3cf9",
+      "changedPixels": 660431,
+      "changedFraction": 0.7166134982638889,
+      "meanChannelDifference": 14.891233723958333,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        355,
+        355
+      ],
+      "triangles": [
+        11472,
+        11472
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "chase",
+      "height": 6,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "a4f280f819d5bda50923a588446fa8a8d738df4c1b56fa16688420903402c1fe",
+      "afterHash": "63d256cf43bccdfbed130cea5240530a7c328c7903bfaa5da2feac59fa6d976a",
+      "changedPixels": 620715,
+      "changedFraction": 0.6735188802083333,
+      "meanChannelDifference": 13.719803602430556,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        359,
+        359
+      ],
+      "triangles": [
+        11560,
+        11560
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "chase",
+      "height": 9,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "569303904628fa5725c2bc17a7246103852100a2c48779d6e5a67b9f8134d195",
+      "afterHash": "d824b3725ee9266475a82760f1af6ead831205b0a1f589a6f7866c285872fe39",
+      "changedPixels": 855642,
+      "changedFraction": 0.9284309895833334,
+      "meanChannelDifference": 19.449232494212964,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        367,
+        367
+      ],
+      "triangles": [
+        11858,
+        11858
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "overview",
+      "height": 3,
+      "pose": "trunk",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "e2b126c34e4bf084b5717f68a44c1a017bf127f1777888b3e83cdb65563a9449",
+      "afterHash": "22cd5e9fd1640a39d898b27d64bde74b401805ecd3982062cac1b45fae681530",
+      "changedPixels": 581243,
+      "changedFraction": 0.6306890190972222,
+      "meanChannelDifference": 12.101358868634259,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        476,
+        476
+      ],
+      "triangles": [
+        15448,
+        15448
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "a252b63eab682a22a307e37aafe41531adf8459e8f8d330a063bb9ac2f6d6133",
+      "afterHash": "5f72b0e5d58cb786303ddf5d3e6421cd218561565eda7ddf24a429243d6cb4d1",
+      "changedPixels": 453522,
+      "changedFraction": 0.49210286458333335,
+      "meanChannelDifference": 10.291450014467593,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        219,
+        219
+      ],
+      "triangles": [
+        7472,
+        7472
+      ]
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "rear",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "b99859065377850e63ca8c03178e4b66bfa1d53608d02a6920d81a7273288ae4",
+      "afterHash": "575bdaed214ef0234e55a9c3a7048cd0e038fcc18654222889c6f6b443a79a4c",
+      "changedPixels": 433240,
+      "changedFraction": 0.4700954861111111,
+      "meanChannelDifference": 9.384752242476852,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        171,
+        171
+      ],
+      "triangles": [
+        7144,
+        7144
+      ]
+    },
+    {
+      "id": "adventure-coast-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "ec7a93627c67c4aa50d53f70f4a9d865ad7e9c095b4dde86e32581fe61eb24f4",
+      "afterHash": "ec7a93627c67c4aa50d53f70f4a9d865ad7e9c095b4dde86e32581fe61eb24f4",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        29,
+        29
+      ],
+      "triangles": [
+        502,
+        502
+      ]
+    },
+    {
+      "id": "adventure-coast-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "e3243fc76480731de805fd09c05e162ae5e9a7a19538a552540ae8e33932f932",
+      "afterHash": "e3243fc76480731de805fd09c05e162ae5e9a7a19538a552540ae8e33932f932",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        47,
+        47
+      ],
+      "triangles": [
+        1110,
+        1110
+      ]
+    },
+    {
+      "id": "adventure-coast-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "577fd11071b3a99a5d01e6347291d1ba837878f9078e89df8f9bba74fb1f7bfe",
+      "afterHash": "577fd11071b3a99a5d01e6347291d1ba837878f9078e89df8f9bba74fb1f7bfe",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        53,
+        53
+      ],
+      "triangles": [
+        6974,
+        6974
+      ]
+    },
+    {
+      "id": "adventure-quarry-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "7d7f1e5129d5269368dc8215acfb5824be4d8370f6222e7c5b5b2a4d242c465e",
+      "afterHash": "7d7f1e5129d5269368dc8215acfb5824be4d8370f6222e7c5b5b2a4d242c465e",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        27,
+        27
+      ],
+      "triangles": [
+        904,
+        904
+      ]
+    },
+    {
+      "id": "adventure-quarry-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "2abab481fa5bc0ada5d866483c199a574a6c8680a7eee3a95f833962e55fda66",
+      "afterHash": "2abab481fa5bc0ada5d866483c199a574a6c8680a7eee3a95f833962e55fda66",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        50,
+        50
+      ],
+      "triangles": [
+        1388,
+        1388
+      ]
+    },
+    {
+      "id": "adventure-quarry-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "d326a2244ffc8ded9bb0bb6864ccd7bc0ac8ab7fa99f0173d6db2a7e0d7006a2",
+      "afterHash": "d326a2244ffc8ded9bb0bb6864ccd7bc0ac8ab7fa99f0173d6db2a7e0d7006a2",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        60,
+        60
+      ],
+      "triangles": [
+        7332,
+        7332
+      ]
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "f00d8ba4afddacda4f73fbc4f7607d6cf89b25c50079077dc360cfa2044f5295",
+      "afterHash": "f00d8ba4afddacda4f73fbc4f7607d6cf89b25c50079077dc360cfa2044f5295",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        20,
+        20
+      ],
+      "triangles": [
+        2124,
+        2124
+      ]
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "726e73a2f1b67e9442a5cfc2a24cd2d77699bcb86926f55cb1c0afde7e046ce9",
+      "afterHash": "726e73a2f1b67e9442a5cfc2a24cd2d77699bcb86926f55cb1c0afde7e046ce9",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        62,
+        62
+      ],
+      "triangles": [
+        3088,
+        3088
+      ]
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "6ae30f29aa65116054f4fd4cc616e7e2270e473d6b414e31f4d1d581e407bcbe",
+      "afterHash": "6ae30f29aa65116054f4fd4cc616e7e2270e473d6b414e31f4d1d581e407bcbe",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        65,
+        65
+      ],
+      "triangles": [
+        8864,
+        8864
+      ]
+    },
+    {
+      "id": "adventure-orchard-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "9cccaf0fbe44cb812a88b9ef7c33b3166326fe21af67474677d2aeb2b12961d5",
+      "afterHash": "9cccaf0fbe44cb812a88b9ef7c33b3166326fe21af67474677d2aeb2b12961d5",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        41,
+        41
+      ],
+      "triangles": [
+        2798,
+        2798
+      ]
+    },
+    {
+      "id": "adventure-orchard-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "1f50f995187223ca90ca38710d3194577a1ba1c69de4a262a701d2e89bd2ed6e",
+      "afterHash": "1f50f995187223ca90ca38710d3194577a1ba1c69de4a262a701d2e89bd2ed6e",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        85,
+        85
+      ],
+      "triangles": [
+        3654,
+        3654
+      ]
+    },
+    {
+      "id": "adventure-orchard-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "95622545b5431f1617e9b07a55879cd93db63bf73e9c0fb36024fcdb37620a94",
+      "afterHash": "95622545b5431f1617e9b07a55879cd93db63bf73e9c0fb36024fcdb37620a94",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        90,
+        90
+      ],
+      "triangles": [
+        3758,
+        3758
+      ]
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "1376bd7832b23a30769139a3ca7678f40163102e4ce3063ca6c734e9e199cfc2",
+      "afterHash": "1376bd7832b23a30769139a3ca7678f40163102e4ce3063ca6c734e9e199cfc2",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        35,
+        35
+      ],
+      "triangles": [
+        1100,
+        1100
+      ]
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "bf24cb86dc9fc549042b73d9e1ee288414940de8e60c2b2600caeb9d0bdf96ed",
+      "afterHash": "bf24cb86dc9fc549042b73d9e1ee288414940de8e60c2b2600caeb9d0bdf96ed",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        83,
+        83
+      ],
+      "triangles": [
+        1884,
+        1884
+      ]
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "0288667cf82443a2a60c0816a44a2bb9607681fc0529234083fc27fd6bd400a9",
+      "afterHash": "0288667cf82443a2a60c0816a44a2bb9607681fc0529234083fc27fd6bd400a9",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        93,
+        93
+      ],
+      "triangles": [
+        7828,
+        7828
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "25c6e823efe9adbccc94ae8177bba187672f55d05d8daf56ff2ce80b637857da",
+      "afterHash": "25c6e823efe9adbccc94ae8177bba187672f55d05d8daf56ff2ce80b637857da",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230010,
+      "drawCalls": [
+        32,
+        32
+      ],
+      "triangles": [
+        600,
+        600
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "4bf80062248b706c725b6d08e0842dd2bce0e7ba2490a941251a4a63df6e1ba7",
+      "afterHash": "4bf80062248b706c725b6d08e0842dd2bce0e7ba2490a941251a4a63df6e1ba7",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        64,
+        64
+      ],
+      "triangles": [
+        1252,
+        1252
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "a908d5d405a67bbefadacd0fc2f5402ec4450cd406d6d6cf73d20ed38853b4f4",
+      "afterHash": "a908d5d405a67bbefadacd0fc2f5402ec4450cd406d6d6cf73d20ed38853b4f4",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        81,
+        81
+      ],
+      "triangles": [
+        7252,
+        7252
+      ]
+    },
+    {
+      "id": "flight-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "4216267fd94fa9b3eef44bcf140b99cce15a864b9817495cd5d75cf5c1b350f0",
+      "afterHash": "4216267fd94fa9b3eef44bcf140b99cce15a864b9817495cd5d75cf5c1b350f0",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        36,
+        36
+      ],
+      "triangles": [
+        538,
+        538
+      ]
+    },
+    {
+      "id": "flight-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "88235fb1823d28f6ee91a28785c22c549654c2aa9f76f50d5c25d61dbd55bad2",
+      "afterHash": "88235fb1823d28f6ee91a28785c22c549654c2aa9f76f50d5c25d61dbd55bad2",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        76,
+        76
+      ],
+      "triangles": [
+        1018,
+        1018
+      ]
+    },
+    {
+      "id": "flight-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "76dfc38565aa5c9bd72b046635a229942cdf35fd44dd4325ef4b5140379f9c79",
+      "afterHash": "76dfc38565aa5c9bd72b046635a229942cdf35fd44dd4325ef4b5140379f9c79",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        77,
+        77
+      ],
+      "triangles": [
+        3178,
+        3178
+      ]
+    },
+    {
+      "id": "flight-05",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "9680eb9be1db136e18d6abbd6e13e06714a9b104bfeda98e86d405295b2fda77",
+      "afterHash": "9680eb9be1db136e18d6abbd6e13e06714a9b104bfeda98e86d405295b2fda77",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        38,
+        38
+      ],
+      "triangles": [
+        2270,
+        2270
+      ]
+    },
+    {
+      "id": "flight-05",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "8cbfa212af6b208075d62287862245173189ab124a4f82d82b443de887170ea5",
+      "afterHash": "8cbfa212af6b208075d62287862245173189ab124a4f82d82b443de887170ea5",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        45,
+        45
+      ],
+      "triangles": [
+        2388,
+        2388
+      ]
+    },
+    {
+      "id": "flight-05",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "e653884f4855298d793654fcadeb179a17596a02d5bd24a64aa07cce5d7adbf7",
+      "afterHash": "e653884f4855298d793654fcadeb179a17596a02d5bd24a64aa07cce5d7adbf7",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        45,
+        45
+      ],
+      "triangles": [
+        2388,
+        2388
+      ]
+    },
+    {
+      "id": "courtyard-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "613769b532b4aab6596a89d062012151a71dda64ea3362b6637384cb6adae62f",
+      "afterHash": "613769b532b4aab6596a89d062012151a71dda64ea3362b6637384cb6adae62f",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        82,
+        82
+      ],
+      "triangles": [
+        3554,
+        3554
+      ]
+    },
+    {
+      "id": "courtyard-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "961aa95357be6c9515e76e514dcc11b3d450dce486f7fa214558495817cd5b04",
+      "afterHash": "961aa95357be6c9515e76e514dcc11b3d450dce486f7fa214558495817cd5b04",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        201,
+        201
+      ],
+      "triangles": [
+        9226,
+        9226
+      ]
+    },
+    {
+      "id": "courtyard-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "3fcfbfdee1c782f55db27426eadadf3a8c6f46d539abbb5b9dff4bf64f395abe",
+      "afterHash": "3fcfbfdee1c782f55db27426eadadf3a8c6f46d539abbb5b9dff4bf64f395abe",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        208,
+        208
+      ],
+      "triangles": [
+        12938,
+        12938
+      ]
+    },
+    {
+      "id": "warehouse-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "e4450ce7d17145ab393b9ba9322c251bbbcca2481458c0cbd236a5b503700b00",
+      "afterHash": "e4450ce7d17145ab393b9ba9322c251bbbcca2481458c0cbd236a5b503700b00",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 229362,
+      "drawCalls": [
+        96,
+        96
+      ],
+      "triangles": [
+        8340,
+        8340
+      ]
+    },
+    {
+      "id": "warehouse-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "c04568c9c79bcf8b2de4615d2bc78ce36d74ae355d9fffb830339e78342fc13c",
+      "afterHash": "c04568c9c79bcf8b2de4615d2bc78ce36d74ae355d9fffb830339e78342fc13c",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        237,
+        237
+      ],
+      "triangles": [
+        18662,
+        18662
+      ]
+    },
+    {
+      "id": "warehouse-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "132e9f8357ae3771b52b8a8457626c22f46beee0bdd5bb3c25890e96238ad19f",
+      "afterHash": "132e9f8357ae3771b52b8a8457626c22f46beee0bdd5bb3c25890e96238ad19f",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        240,
+        240
+      ],
+      "triangles": [
+        22278,
+        22278
+      ]
+    },
+    {
+      "id": "stadium-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "77c6fc0b71fc21d1fc165b8bc06903e0e4269ab6beae00dd5d2a18ca1e33cae5",
+      "afterHash": "77c6fc0b71fc21d1fc165b8bc06903e0e4269ab6beae00dd5d2a18ca1e33cae5",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        41,
+        41
+      ],
+      "triangles": [
+        1612,
+        1612
+      ]
+    },
+    {
+      "id": "stadium-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "ce9a92eb144752af5234e3cb5afdc17a6c55f0168cd8c8c125495752c94bf66f",
+      "afterHash": "ce9a92eb144752af5234e3cb5afdc17a6c55f0168cd8c8c125495752c94bf66f",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        70,
+        70
+      ],
+      "triangles": [
+        3052,
+        3052
+      ]
+    },
+    {
+      "id": "stadium-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "d4d4aca73048ceca29d71bd3ba1ac1f0626cba03a48cbb8eb758b625f5c34e33",
+      "afterHash": "d4d4aca73048ceca29d71bd3ba1ac1f0626cba03a48cbb8eb758b625f5c34e33",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        72,
+        72
+      ],
+      "triangles": [
+        6660,
+        6660
+      ]
+    },
+    {
+      "id": "container-yard-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "951a50f1aae92759c982903a9c09604e424a1807e743a9f00133c2625c4718fd",
+      "afterHash": "951a50f1aae92759c982903a9c09604e424a1807e743a9f00133c2625c4718fd",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        32,
+        32
+      ],
+      "triangles": [
+        15960,
+        15960
+      ]
+    },
+    {
+      "id": "container-yard-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "f78488cef79a6646fa3c2c921bc0cad4b3e01774edb958417f3b11fd16db1be3",
+      "afterHash": "f78488cef79a6646fa3c2c921bc0cad4b3e01774edb958417f3b11fd16db1be3",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        82,
+        82
+      ],
+      "triangles": [
+        45388,
+        45388
+      ]
+    },
+    {
+      "id": "container-yard-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "da4c80a22bc083db86be17923967dff9e2464265306823304cae81dd44e28a43",
+      "afterHash": "da4c80a22bc083db86be17923967dff9e2464265306823304cae81dd44e28a43",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        85,
+        85
+      ],
+      "triangles": [
+        49004,
+        49004
+      ]
+    },
+    {
+      "id": "garage-01",
+      "quality": "low",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 640,
+      "heightPixels": 360,
+      "beforeHash": "bc4475c1bc46cf79cff9fcc80e4d16cd872e9753f6644fbc88ca831a7ff28a98",
+      "afterHash": "bc4475c1bc46cf79cff9fcc80e4d16cd872e9753f6644fbc88ca831a7ff28a98",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 230400,
+      "drawCalls": [
+        98,
+        98
+      ],
+      "triangles": [
+        4502,
+        4502
+      ]
+    },
+    {
+      "id": "garage-01",
+      "quality": "balanced",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 960,
+      "heightPixels": 540,
+      "beforeHash": "2afdb1ce83507b8349e659cd7ea4fcf1093fe0dc33ce41e17565349e13422c0d",
+      "afterHash": "2afdb1ce83507b8349e659cd7ea4fcf1093fe0dc33ce41e17565349e13422c0d",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 518400,
+      "drawCalls": [
+        218,
+        218
+      ],
+      "triangles": [
+        9148,
+        9148
+      ]
+    },
+    {
+      "id": "garage-01",
+      "quality": "high",
+      "camera": "fpv",
+      "height": 3,
+      "pose": "trail",
+      "width": 1280,
+      "heightPixels": 720,
+      "beforeHash": "2641975c603cc4d5f4215de61036e6c9adfa6aa19e71148666f3a602eb5faf5e",
+      "afterHash": "2641975c603cc4d5f4215de61036e6c9adfa6aa19e71148666f3a602eb5faf5e",
+      "changedPixels": 0,
+      "changedFraction": 0,
+      "meanChannelDifference": 0,
+      "nonBlackPixels": 921600,
+      "drawCalls": [
+        221,
+        221
+      ],
+      "triangles": [
+        12764,
+        12764
+      ]
+    }
+  ],
+  "inspections": [
+    {
+      "id": "woodland-06",
+      "quality": "low",
+      "before": {
+        "geometryHash": "630a94715612872aa89ca8192cf998646d28aae41c1b0de6647d062d94612a2c",
+        "uvHash": "dd126805ce4137ecc8c7f98f7c1d9718b62dbc48d381aaf6dbeb32a564f462ee",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "536cfea8a658ddd5e3c9cc41b032d23ab34ecd5c076ef6a447f098ac37aefab5",
+        "mapHash": "e3ddeb20e87fedfddd88ffd7cb69d24f1fb7bdd969d633c96a33999a389a9b94",
+        "rayHash": "26de67a6fab9016bd49823359216de48e34036fa57e652219d8e8345c33136a6",
+        "rayCount": 112,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "grass",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "1b3d5bc0001975322a7fa2ac4ba9a5b7d40365f5c1cfb763ae46972e9ad34de8"
+          },
+          {
+            "index": 1,
+            "kind": "grass",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "1255a6e395782f06ef2c2e3beb4bc5c24d54bc6bdf99527fd758cd8f6079af77"
+          },
+          {
+            "index": 2,
+            "kind": "grass",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "9ed5a9080e34518395be6caf619ea36af417fbf99cb73b60dfcebc67e4e4828d"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "wood",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5fa97f0b37932866a708dd2119f982a70a4be63fca5fc6ffc90d1ba8f8a8d434"
+          },
+          {
+            "index": 8,
+            "kind": "wood",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "848dc0524bff2b0ac01a4e5e52459595720f249226553c5daad4ce67b05719fd"
+          },
+          {
+            "index": 9,
+            "kind": "wood",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "aefb73b49d3b8d29bcecb1aa7a983951672c500e4edafd3edfe37b2721360d5e"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "630a94715612872aa89ca8192cf998646d28aae41c1b0de6647d062d94612a2c",
+        "uvHash": "acdba48f75b70be27c1a7a28724f242e161ecf0cf15b878c9592a0b329ffd3d9",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "dbebdd5abd2211d1521102f2a5d1c535953c50851b23d816ed625997353fbee5",
+        "mapHash": "ae24e0769651d7b425ed398d040cb9043757dadaa66fbc36262c94a7fcb08cae",
+        "rayHash": "26de67a6fab9016bd49823359216de48e34036fa57e652219d8e8345c33136a6",
+        "rayCount": 112,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "forest-floor",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "95ce27c0c9f9648c1008d623ca564cd00453c92fdbfe8b2a6e0afbf5255606ca"
+          },
+          {
+            "index": 1,
+            "kind": "forest-floor",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "53124ca6334173a46a4dc51b4346676e49ff57d6138a4c14e7018087ee027924"
+          },
+          {
+            "index": 2,
+            "kind": "forest-floor",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ea7aeaf2863547ab0d0c1ccf1b742f13e313ba82043828b51150725ae719e0a8"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "bark",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "21e1a12b1f811c1f727632dd55796e50907744633e8b4da61b13557244d4a3e1"
+          },
+          {
+            "index": 8,
+            "kind": "bark",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "88cc0a3c02f582214fe4377183f16ffb5e7601a2a434b3bb27d6521d7df67d12"
+          },
+          {
+            "index": 9,
+            "kind": "bark",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "edbf99cce599a8405557b99c4199e3daa284eef09a6d18be9c57a0d13ea13ddf"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "woodland-06",
+      "quality": "balanced",
+      "before": {
+        "geometryHash": "630a94715612872aa89ca8192cf998646d28aae41c1b0de6647d062d94612a2c",
+        "uvHash": "dd126805ce4137ecc8c7f98f7c1d9718b62dbc48d381aaf6dbeb32a564f462ee",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "536cfea8a658ddd5e3c9cc41b032d23ab34ecd5c076ef6a447f098ac37aefab5",
+        "mapHash": "b716ed420d1f160846badcba623f3f3b0e2a8cf980088579bdd4813bbe2a2915",
+        "rayHash": "26de67a6fab9016bd49823359216de48e34036fa57e652219d8e8345c33136a6",
+        "rayCount": 112,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "grass",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "fbe402b09be0962e89067fdf6f89e00cde456dfdb44f808a34288a608e60e4fd"
+          },
+          {
+            "index": 1,
+            "kind": "grass",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "325a4ee2bfc35510ec111a136f6b52cc482e9f4ff4fddbbe48e98867672dfa5d"
+          },
+          {
+            "index": 2,
+            "kind": "grass",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "83689cbe161bf5b0db5d6b29189c78bc6b979f8b39a116ae51e756fa1c9d33ec"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "wood",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8f1caf09575d34024a6eacacc56ce51666d06c2f474452a9b26428c55cf26151"
+          },
+          {
+            "index": 8,
+            "kind": "wood",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "08221d6f3b9adabc88543d719442eb7fef13781d7fd750b8e3a4e8944aa6e1d3"
+          },
+          {
+            "index": 9,
+            "kind": "wood",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "13c5a260b86080cfec13db37a168fdae2f581440713b93edfc89ecfc3ab970fa"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "630a94715612872aa89ca8192cf998646d28aae41c1b0de6647d062d94612a2c",
+        "uvHash": "acdba48f75b70be27c1a7a28724f242e161ecf0cf15b878c9592a0b329ffd3d9",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "dbebdd5abd2211d1521102f2a5d1c535953c50851b23d816ed625997353fbee5",
+        "mapHash": "f3ed302d08aee1ab4c179d822c40ffa1c6d44414c659901682f85e1c46b8e2f1",
+        "rayHash": "26de67a6fab9016bd49823359216de48e34036fa57e652219d8e8345c33136a6",
+        "rayCount": 112,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "forest-floor",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "e6e11d74dca2f628a49a45cd515a699c4d69e92ec6385628edf63f75937721b7"
+          },
+          {
+            "index": 1,
+            "kind": "forest-floor",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "295c6268d5615740bf55a0bc7e785127e28f879e233e17bfefa5c83571df8e93"
+          },
+          {
+            "index": 2,
+            "kind": "forest-floor",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ab12c36d07c99e603ddffde1171e6d8d8b94234a2177c48715a308b5c13bced7"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "bark",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "526498a12fb2465a72a98a8df69d5b3d088c38dea29af4638eed7fa37cd7d116"
+          },
+          {
+            "index": 8,
+            "kind": "bark",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "e46981d7f988b14b0e16aa43fdaea4d1b8a1e2e8fb9c9acfd513ec2e836defdd"
+          },
+          {
+            "index": 9,
+            "kind": "bark",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "80549c7f183c5d212153aff4e21347e01a5508d36dcaf11c7acba8b6c2faa225"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "woodland-06",
+      "quality": "high",
+      "before": {
+        "geometryHash": "72136d24cfcb3634cab1ad887ff48c6dd9dde4a8473e0e976970d75b0736786f",
+        "uvHash": "dd126805ce4137ecc8c7f98f7c1d9718b62dbc48d381aaf6dbeb32a564f462ee",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "536cfea8a658ddd5e3c9cc41b032d23ab34ecd5c076ef6a447f098ac37aefab5",
+        "mapHash": "d7818d14254e8dc168773ce90ede8be645eaa73c3d5591c8637985b1e922245e",
+        "rayHash": "26de67a6fab9016bd49823359216de48e34036fa57e652219d8e8345c33136a6",
+        "rayCount": 112,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "grass",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "d57cab60fd58e03aa35d41c86e174e6e46c0df8945975cd0cadd6b8a5ffd6209"
+          },
+          {
+            "index": 1,
+            "kind": "grass",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "8bccdc7bbf4ccf6a73d221e1e45cdcaa1e8b9261ff03ee166013f3817e70c27f"
+          },
+          {
+            "index": 2,
+            "kind": "grass",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              14.666666666666666,
+              14.166666666666666
+            ],
+            "mipmaps": true,
+            "hash": "3a9d92653161a2dfc5479d353eb65cb5176441802950730fd909a5e3f0240b17"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "wood",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "f4d8469c288d2d2027ae745f30c4074e04a4663c48575465675b616f4502b6f1"
+          },
+          {
+            "index": 8,
+            "kind": "wood",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c3bb72dbfeb91be943503052f665a3864293d1fcf4f893cb64a1425744fb50cf"
+          },
+          {
+            "index": 9,
+            "kind": "wood",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "fa9e704c7f1b8b4a8aa993d6f775513795c4f48e690fa48942ceb1e872055a43"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "72136d24cfcb3634cab1ad887ff48c6dd9dde4a8473e0e976970d75b0736786f",
+        "uvHash": "acdba48f75b70be27c1a7a28724f242e161ecf0cf15b878c9592a0b329ffd3d9",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "dbebdd5abd2211d1521102f2a5d1c535953c50851b23d816ed625997353fbee5",
+        "mapHash": "733bd56a9ae0057877f6499f80f4721a88d4325764fe81a9f84311e79640ede2",
+        "rayHash": "26de67a6fab9016bd49823359216de48e34036fa57e652219d8e8345c33136a6",
+        "rayCount": 112,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "forest-floor",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "39563601a5db6d4eac211f856580c6f0ed813d6a82a46fba7badfa392568b6a8"
+          },
+          {
+            "index": 1,
+            "kind": "forest-floor",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "459f34cceb96dd8c8b7b44195d01bc138d95aa4deb182c4d16983ae45229c167"
+          },
+          {
+            "index": 2,
+            "kind": "forest-floor",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              29.333333333333332,
+              28.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ed055ae568f95e8039165234d2d6e0b2ad328ad2e92a89935dc2ae588bce8adc"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "bark",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b1bae17979eaec696515574c3ada72eeb9838ddec9de7901725870a295b3cbc7"
+          },
+          {
+            "index": 8,
+            "kind": "bark",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "99551a5123c231cc83bc91c213efa17b5c369e6c8506edbad0ec5ff539cb175b"
+          },
+          {
+            "index": 9,
+            "kind": "bark",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "30a7f5674a3900e0ca99ef07cee118356a9928d40363ea363ee1bd8419b08b26"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "beginner-31",
+      "quality": "low",
+      "before": {
+        "geometryHash": "f61e726606a343ffdc55e4b69217ac62536e6927af88ed55b06b7046a78ae8f4",
+        "uvHash": "dd126805ce4137ecc8c7f98f7c1d9718b62dbc48d381aaf6dbeb32a564f462ee",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "536cfea8a658ddd5e3c9cc41b032d23ab34ecd5c076ef6a447f098ac37aefab5",
+        "mapHash": "c33e872e295fe3e70aefe3abbc5c4b2db12d1feed7ef1e10392b622e3d78ec51",
+        "rayHash": "093b552c3cf0ae4c2d9e3c685ed28e1693b3230fed282135bf1df08add9e62f1",
+        "rayCount": 109,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "grass",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "1b3d5bc0001975322a7fa2ac4ba9a5b7d40365f5c1cfb763ae46972e9ad34de8"
+          },
+          {
+            "index": 1,
+            "kind": "grass",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "1255a6e395782f06ef2c2e3beb4bc5c24d54bc6bdf99527fd758cd8f6079af77"
+          },
+          {
+            "index": 2,
+            "kind": "grass",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "9ed5a9080e34518395be6caf619ea36af417fbf99cb73b60dfcebc67e4e4828d"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "wood",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "5fa97f0b37932866a708dd2119f982a70a4be63fca5fc6ffc90d1ba8f8a8d434"
+          },
+          {
+            "index": 8,
+            "kind": "wood",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "848dc0524bff2b0ac01a4e5e52459595720f249226553c5daad4ce67b05719fd"
+          },
+          {
+            "index": 9,
+            "kind": "wood",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "aefb73b49d3b8d29bcecb1aa7a983951672c500e4edafd3edfe37b2721360d5e"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "f61e726606a343ffdc55e4b69217ac62536e6927af88ed55b06b7046a78ae8f4",
+        "uvHash": "acdba48f75b70be27c1a7a28724f242e161ecf0cf15b878c9592a0b329ffd3d9",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "dbebdd5abd2211d1521102f2a5d1c535953c50851b23d816ed625997353fbee5",
+        "mapHash": "d37ba31c0933f23ee5614fdea053aebc27ee258f623db03d00a2fafb60779835",
+        "rayHash": "093b552c3cf0ae4c2d9e3c685ed28e1693b3230fed282135bf1df08add9e62f1",
+        "rayCount": 109,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "forest-floor",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "95ce27c0c9f9648c1008d623ca564cd00453c92fdbfe8b2a6e0afbf5255606ca"
+          },
+          {
+            "index": 1,
+            "kind": "forest-floor",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "53124ca6334173a46a4dc51b4346676e49ff57d6138a4c14e7018087ee027924"
+          },
+          {
+            "index": 2,
+            "kind": "forest-floor",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ea7aeaf2863547ab0d0c1ccf1b742f13e313ba82043828b51150725ae719e0a8"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "bark",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "21e1a12b1f811c1f727632dd55796e50907744633e8b4da61b13557244d4a3e1"
+          },
+          {
+            "index": 8,
+            "kind": "bark",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "88cc0a3c02f582214fe4377183f16ffb5e7601a2a434b3bb27d6521d7df67d12"
+          },
+          {
+            "index": 9,
+            "kind": "bark",
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "edbf99cce599a8405557b99c4199e3daa284eef09a6d18be9c57a0d13ea13ddf"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "beginner-31",
+      "quality": "balanced",
+      "before": {
+        "geometryHash": "f61e726606a343ffdc55e4b69217ac62536e6927af88ed55b06b7046a78ae8f4",
+        "uvHash": "dd126805ce4137ecc8c7f98f7c1d9718b62dbc48d381aaf6dbeb32a564f462ee",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "536cfea8a658ddd5e3c9cc41b032d23ab34ecd5c076ef6a447f098ac37aefab5",
+        "mapHash": "01e798862d0b1529d28c83e3cbfc65bafc3e679378dae2f3762da8a05930c26f",
+        "rayHash": "093b552c3cf0ae4c2d9e3c685ed28e1693b3230fed282135bf1df08add9e62f1",
+        "rayCount": 109,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "grass",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "fbe402b09be0962e89067fdf6f89e00cde456dfdb44f808a34288a608e60e4fd"
+          },
+          {
+            "index": 1,
+            "kind": "grass",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "325a4ee2bfc35510ec111a136f6b52cc482e9f4ff4fddbbe48e98867672dfa5d"
+          },
+          {
+            "index": 2,
+            "kind": "grass",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "83689cbe161bf5b0db5d6b29189c78bc6b979f8b39a116ae51e756fa1c9d33ec"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "wood",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "8f1caf09575d34024a6eacacc56ce51666d06c2f474452a9b26428c55cf26151"
+          },
+          {
+            "index": 8,
+            "kind": "wood",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "08221d6f3b9adabc88543d719442eb7fef13781d7fd750b8e3a4e8944aa6e1d3"
+          },
+          {
+            "index": 9,
+            "kind": "wood",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "13c5a260b86080cfec13db37a168fdae2f581440713b93edfc89ecfc3ab970fa"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "f61e726606a343ffdc55e4b69217ac62536e6927af88ed55b06b7046a78ae8f4",
+        "uvHash": "acdba48f75b70be27c1a7a28724f242e161ecf0cf15b878c9592a0b329ffd3d9",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "dbebdd5abd2211d1521102f2a5d1c535953c50851b23d816ed625997353fbee5",
+        "mapHash": "21b952426e8bc51486e113f7c5e2c8f2b956302e270d45c8e1f9c1d5e02f9b22",
+        "rayHash": "093b552c3cf0ae4c2d9e3c685ed28e1693b3230fed282135bf1df08add9e62f1",
+        "rayCount": 109,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "forest-floor",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "e6e11d74dca2f628a49a45cd515a699c4d69e92ec6385628edf63f75937721b7"
+          },
+          {
+            "index": 1,
+            "kind": "forest-floor",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "295c6268d5615740bf55a0bc7e785127e28f879e233e17bfefa5c83571df8e93"
+          },
+          {
+            "index": 2,
+            "kind": "forest-floor",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ab12c36d07c99e603ddffde1171e6d8d8b94234a2177c48715a308b5c13bced7"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "bark",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "526498a12fb2465a72a98a8df69d5b3d088c38dea29af4638eed7fa37cd7d116"
+          },
+          {
+            "index": 8,
+            "kind": "bark",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "e46981d7f988b14b0e16aa43fdaea4d1b8a1e2e8fb9c9acfd513ec2e836defdd"
+          },
+          {
+            "index": 9,
+            "kind": "bark",
+            "size": [
+              256,
+              256
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 4,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "80549c7f183c5d212153aff4e21347e01a5508d36dcaf11c7acba8b6c2faa225"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "beginner-31",
+      "quality": "high",
+      "before": {
+        "geometryHash": "a8eff9aa8a82000ae80b21d629398464c0a601b85fb3322a7488663d6cb50e5b",
+        "uvHash": "dd126805ce4137ecc8c7f98f7c1d9718b62dbc48d381aaf6dbeb32a564f462ee",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "536cfea8a658ddd5e3c9cc41b032d23ab34ecd5c076ef6a447f098ac37aefab5",
+        "mapHash": "cbffd5b7de1ec341738c066ca6b82a85bb5a21ce80782005bb8cde0c9a5ab033",
+        "rayHash": "093b552c3cf0ae4c2d9e3c685ed28e1693b3230fed282135bf1df08add9e62f1",
+        "rayCount": 109,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "grass",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "d57cab60fd58e03aa35d41c86e174e6e46c0df8945975cd0cadd6b8a5ffd6209"
+          },
+          {
+            "index": 1,
+            "kind": "grass",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "8bccdc7bbf4ccf6a73d221e1e45cdcaa1e8b9261ff03ee166013f3817e70c27f"
+          },
+          {
+            "index": 2,
+            "kind": "grass",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              15.666666666666666,
+              15.666666666666666
+            ],
+            "mipmaps": true,
+            "hash": "3a9d92653161a2dfc5479d353eb65cb5176441802950730fd909a5e3f0240b17"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "wood",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "f4d8469c288d2d2027ae745f30c4074e04a4663c48575465675b616f4502b6f1"
+          },
+          {
+            "index": 8,
+            "kind": "wood",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "c3bb72dbfeb91be943503052f665a3864293d1fcf4f893cb64a1425744fb50cf"
+          },
+          {
+            "index": 9,
+            "kind": "wood",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "fa9e704c7f1b8b4a8aa993d6f775513795c4f48e690fa48942ceb1e872055a43"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      },
+      "after": {
+        "geometryHash": "a8eff9aa8a82000ae80b21d629398464c0a601b85fb3322a7488663d6cb50e5b",
+        "uvHash": "acdba48f75b70be27c1a7a28724f242e161ecf0cf15b878c9592a0b329ffd3d9",
+        "opacityHash": "d1ad9967465bec8769f8357e08a49a402148be62d8c9a49226ee15c558e89d45",
+        "materialHash": "dbebdd5abd2211d1521102f2a5d1c535953c50851b23d816ed625997353fbee5",
+        "mapHash": "026299ecc041ab0f3ff64622d3092a026e93ae8089ae99f4cb9f1945537856de",
+        "rayHash": "093b552c3cf0ae4c2d9e3c685ed28e1693b3230fed282135bf1df08add9e62f1",
+        "rayCount": 109,
+        "nodes": 418,
+        "maps": [
+          {
+            "index": 0,
+            "kind": "forest-floor",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "39563601a5db6d4eac211f856580c6f0ed813d6a82a46fba7badfa392568b6a8"
+          },
+          {
+            "index": 1,
+            "kind": "forest-floor",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "459f34cceb96dd8c8b7b44195d01bc138d95aa4deb182c4d16983ae45229c167"
+          },
+          {
+            "index": 2,
+            "kind": "forest-floor",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              31.333333333333332,
+              31.333333333333332
+            ],
+            "mipmaps": true,
+            "hash": "ed055ae568f95e8039165234d2d6e0b2ad328ad2e92a89935dc2ae588bce8adc"
+          },
+          {
+            "index": 3,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 4,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 5,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 6,
+            "kind": null,
+            "size": [
+              128,
+              128
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 7,
+            "kind": "bark",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "b1bae17979eaec696515574c3ada72eeb9838ddec9de7901725870a295b3cbc7"
+          },
+          {
+            "index": 8,
+            "kind": "bark",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "99551a5123c231cc83bc91c213efa17b5c369e6c8506edbad0ec5ff539cb175b"
+          },
+          {
+            "index": 9,
+            "kind": "bark",
+            "size": [
+              512,
+              512
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 8,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": "30a7f5674a3900e0ca99ef07cee118356a9928d40363ea363ee1bd8419b08b26"
+          },
+          {
+            "index": 10,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 11,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 12,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 13,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 14,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          },
+          {
+            "index": 15,
+            "kind": null,
+            "size": [
+              64,
+              64
+            ],
+            "mag": 1006,
+            "min": 1008,
+            "anisotropy": 1,
+            "repeat": [
+              1,
+              1
+            ],
+            "mipmaps": true,
+            "hash": null
+          }
+        ]
+      }
+    }
+  ],
+  "resourceCycles": [
+    {
+      "courtyard-01/low": [
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        }
+      ],
+      "courtyard-01/balanced": [
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "courtyard-01/high": [
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "woodland-06/low": [
+        {
+          "registered": {
+            "geometries": 232,
+            "materials": 125,
+            "textures": 26
+          },
+          "geometries": 23,
+          "textures": 15,
+          "programs": 10
+        },
+        {
+          "registered": {
+            "geometries": 232,
+            "materials": 125,
+            "textures": 26
+          },
+          "geometries": 23,
+          "textures": 15,
+          "programs": 10
+        }
+      ],
+      "woodland-06/balanced": [
+        {
+          "registered": {
+            "geometries": 234,
+            "materials": 131,
+            "textures": 29
+          },
+          "geometries": 39,
+          "textures": 17,
+          "programs": 13
+        },
+        {
+          "registered": {
+            "geometries": 234,
+            "materials": 131,
+            "textures": 29
+          },
+          "geometries": 39,
+          "textures": 17,
+          "programs": 13
+        }
+      ],
+      "woodland-06/high": [
+        {
+          "registered": {
+            "geometries": 280,
+            "materials": 137,
+            "textures": 29
+          },
+          "geometries": 43,
+          "textures": 17,
+          "programs": 13
+        },
+        {
+          "registered": {
+            "geometries": 280,
+            "materials": 137,
+            "textures": 29
+          },
+          "geometries": 43,
+          "textures": 17,
+          "programs": 13
+        }
+      ]
+    },
+    {
+      "courtyard-01/low": [
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        }
+      ],
+      "courtyard-01/balanced": [
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "courtyard-01/high": [
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "woodland-06/low": [
+        {
+          "registered": {
+            "geometries": 232,
+            "materials": 125,
+            "textures": 26
+          },
+          "geometries": 23,
+          "textures": 15,
+          "programs": 10
+        },
+        {
+          "registered": {
+            "geometries": 232,
+            "materials": 125,
+            "textures": 26
+          },
+          "geometries": 23,
+          "textures": 15,
+          "programs": 10
+        }
+      ],
+      "woodland-06/balanced": [
+        {
+          "registered": {
+            "geometries": 234,
+            "materials": 131,
+            "textures": 29
+          },
+          "geometries": 39,
+          "textures": 17,
+          "programs": 13
+        },
+        {
+          "registered": {
+            "geometries": 234,
+            "materials": 131,
+            "textures": 29
+          },
+          "geometries": 39,
+          "textures": 17,
+          "programs": 13
+        }
+      ],
+      "woodland-06/high": [
+        {
+          "registered": {
+            "geometries": 280,
+            "materials": 137,
+            "textures": 29
+          },
+          "geometries": 43,
+          "textures": 17,
+          "programs": 13
+        },
+        {
+          "registered": {
+            "geometries": 280,
+            "materials": 137,
+            "textures": 29
+          },
+          "geometries": 43,
+          "textures": 17,
+          "programs": 13
+        }
+      ]
+    },
+    {
+      "courtyard-01/low": [
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        },
+        {
+          "registered": {
+            "geometries": 197,
+            "materials": 130,
+            "textures": 34
+          },
+          "geometries": 40,
+          "textures": 26,
+          "programs": 12
+        }
+      ],
+      "courtyard-01/balanced": [
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 199,
+            "materials": 132,
+            "textures": 37
+          },
+          "geometries": 52,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "courtyard-01/high": [
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        },
+        {
+          "registered": {
+            "geometries": 245,
+            "materials": 138,
+            "textures": 37
+          },
+          "geometries": 59,
+          "textures": 28,
+          "programs": 15
+        }
+      ],
+      "woodland-06/low": [
+        {
+          "registered": {
+            "geometries": 232,
+            "materials": 125,
+            "textures": 26
+          },
+          "geometries": 23,
+          "textures": 15,
+          "programs": 10
+        },
+        {
+          "registered": {
+            "geometries": 232,
+            "materials": 125,
+            "textures": 26
+          },
+          "geometries": 23,
+          "textures": 15,
+          "programs": 10
+        }
+      ],
+      "woodland-06/balanced": [
+        {
+          "registered": {
+            "geometries": 234,
+            "materials": 131,
+            "textures": 29
+          },
+          "geometries": 39,
+          "textures": 17,
+          "programs": 13
+        },
+        {
+          "registered": {
+            "geometries": 234,
+            "materials": 131,
+            "textures": 29
+          },
+          "geometries": 39,
+          "textures": 17,
+          "programs": 13
+        }
+      ],
+      "woodland-06/high": [
+        {
+          "registered": {
+            "geometries": 280,
+            "materials": 137,
+            "textures": 29
+          },
+          "geometries": 43,
+          "textures": 17,
+          "programs": 13
+        },
+        {
+          "registered": {
+            "geometries": 280,
+            "materials": 137,
+            "textures": 29
+          },
+          "geometries": 43,
+          "textures": 17,
+          "programs": 13
+        }
+      ]
+    }
+  ],
+  "contextLosses": [],
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "dpr": 2,
+    "canvasCss": [
+      640,
+      360
+    ]
+  },
+  "limitations": [
+    "Same-browser frozen-source pixel comparisons; not cross-device goldens.",
+    "Static observer poses are not scored attempts or demonstration commands.",
+    "No FPS, sustained performance, physical-device or human art acceptance claim.",
+    "Disposal asserts registered ownership is empty, not zero driver memory; Three.js may retain internal lookup allocations until context release.",
+    "Sightline rays compare visible opaque mesh triangles; they do not resolve alpha-texture holes or certify human readability of rendered objective cues.",
+    "No additional unit-test coverage. Production scene observation restores the original method immediately after renderer creation."
+  ],
+  "disposal": [
+    {
+      "side": "before",
+      "resources": {
+        "available": true,
+        "disposed": true,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true,
+          "calls": 197,
+          "triangles": 8132
+        }
+      }
+    },
+    {
+      "side": "after",
+      "resources": {
+        "available": true,
+        "disposed": true,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true,
+          "calls": 197,
+          "triangles": 8132
+        }
+      }
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,485 @@
+{
+  "id": "droneaid-nl-makers-together",
+  "levels": [
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 11, "y": 15 },
+        { "h": 4, "w": 9, "x": 47, "y": 15 },
+        { "h": 3, "w": 8, "x": 30, "y": 20 }
+      ],
+      "goal": { "coverage": 0.5660000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 16.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-01",
+      "name": "A Friendly Welcome",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 16.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 5, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 12, "y": 15 },
+        { "h": 4, "w": 9, "x": 46, "y": 16 },
+        { "h": 3, "w": 8, "x": 30, "y": 21 }
+      ],
+      "goal": { "coverage": 0.6160000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 18.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-02",
+      "name": "Watch and Try",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 18.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 6, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 13, "y": 15 },
+        { "h": 4, "w": 9, "x": 45, "y": 15 },
+        { "h": 3, "w": 8, "x": 30, "y": 22 }
+      ],
+      "goal": { "coverage": 0.6460000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 20.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-03",
+      "name": "Pass It On",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 20.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 5, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 14.5, "y": 15.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 13, "y": 15 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 14, "y": 15 },
+        { "h": 4, "w": 9, "x": 44, "y": 16 },
+        { "h": 3, "w": 8, "x": 30, "y": 20 }
+      ],
+      "goal": { "coverage": 0.666 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 22.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-04",
+      "name": "Room for Every Maker",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 22.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 6, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 15.5, "y": 15.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": false,
+          "edge": { "side": "east", "x": 14, "y": 15 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 15, "y": 15 },
+        { "h": 4, "w": 9, "x": 43, "y": 15 },
+        { "h": 3, "w": 8, "x": 30, "y": 21 }
+      ],
+      "goal": { "coverage": 0.686 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 24.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-05",
+      "name": "Many Hands",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 24.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 5, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    },
+    {
+      "classic": {
+        "arcadeActions": { "version": "arcade-actions.v1" },
+        "lineImpact": { "speed": 24, "version": "line-impact.v1" },
+        "powerups": [{ "id": "steady-return", "kind": "extra-life", "x": 16.5, "y": 15.5 }],
+        "terrain": [],
+        "version": "classic.v1"
+      },
+      "encounter": null,
+      "enemies": [
+        {
+          "id": "paper-drifter",
+          "type": "bouncer",
+          "vx": -2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "id": "sleeping-backlog",
+          "type": "claimed-rover",
+          "vx": 0,
+          "vy": 2.2399999999999998,
+          "x": 35.5,
+          "y": 9.5
+        },
+        {
+          "id": "rework-drift",
+          "type": "eroder",
+          "vx": 2.3758787847867993,
+          "vy": -2.3758787847867993,
+          "x": 15.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 15, "y": 15 },
+          "id": "moving-boundary",
+          "speed": 2.52,
+          "type": "contour-patrol"
+        }
+      ],
+      "foundations": [
+        { "h": 4, "w": 9, "x": 16, "y": 15 },
+        { "h": 4, "w": 9, "x": 42, "y": 16 },
+        { "h": 3, "w": 8, "x": 30, "y": 22 }
+      ],
+      "goal": { "coverage": 0.7260000000000001 },
+      "hangars": [{ "id": "home-hangar", "radius": 2, "x": 26.5, "y": 0.5 }],
+      "height": 36,
+      "id": "droneaid-nl-makers-together-06",
+      "name": "A New Instructor",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "revision": "2",
+      "rules": {
+        "boostMultiplier": 1.5,
+        "cutTimeLimitSeconds": 0,
+        "graceSeconds": 1,
+        "lives": 3,
+        "maxTrailCells": 0,
+        "moveSpeed": 10,
+        "objectivePoints": 500,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "respawnSeconds": 0.65,
+        "stopOnCapture": true,
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "timeMedals": [90, 150]
+      },
+      "signalZones": [],
+      "spawn": { "x": 26.5, "y": 0.5 },
+      "supplies": [],
+      "version": "xonix-level.v5",
+      "walls": [
+        { "h": 6, "w": 2, "x": 32, "y": 7 },
+        { "h": 4, "w": 2, "x": 37, "y": 25 }
+      ],
+      "width": 72
+    }
+  ],
+  "revision": "2",
+  "title": "Makers Together",
+  "version": "xonix-campaign.v1"
+}

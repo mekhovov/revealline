@@ -1,0 +1,45 @@
+{
+  "format": "FPVWorldLibraryLocalChecks.v1",
+  "sourceRevision": "f33d01d62c2050a5f44f3f00d1204937874644e5",
+  "manualBoundaryChecks": {
+    "passed": 86,
+    "failed": 0,
+    "scope": "Canonical and generated index parsers; empty/valid four-row catalogs, strict ids/revisions/commit/digest/path/title/byte/course bounds, duplicate/extra keys, malformed UTF-8 and oversized index; exact native starter inspection."
+  },
+  "generator": {
+    "modules": 26,
+    "recordings": 24,
+    "bytes": 845191,
+    "status": "verified-byte-identical"
+  },
+  "checks": [
+    "Scoped ESLint passed for runtime adapter/canonical module/manual fixture",
+    "JavaScript syntax and git diff --check passed"
+  ],
+  "sourceInventory": {
+    "inputs": 95,
+    "total": 16775790,
+    "limit": 16777216,
+    "reserve": 1426,
+    "parentAdmittedSource": "248b8d9af1b082c283a2cbd9501ea8d906f83374",
+    "changed": [
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "oldBytes": 260571,
+        "bytes": 261281,
+        "sha256": "f89d291881ce5fe3eb796d3ebff9d4ad557a93ab2d4f22217f7d094a1ce2645c"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "oldBytes": 838737,
+        "bytes": 845191,
+        "sha256": "e6d229399249358b59bebbecf029e3509f7c924643ee262956e1b1a36ef14c63"
+      }
+    ]
+  },
+  "limits": [
+    "No new unit coverage",
+    "Discovery browser and fresh combined admission pending",
+    "Separate draw-readiness increment would consume 116 more bytes"
+  ]
+}

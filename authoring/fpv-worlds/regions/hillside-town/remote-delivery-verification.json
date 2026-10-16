@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "sourcePublication": "0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1",
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json",
+    "bytes": 6558,
+    "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+  },
+  "verifiedResponses": 39,
+  "files": 38,
+  "totalBytes": 8352486,
+  "elapsedMs": 5141,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Actual immutable remote HTTP descriptor and complete hash-verified payload; no browser/storage or network-speed claim"
+}

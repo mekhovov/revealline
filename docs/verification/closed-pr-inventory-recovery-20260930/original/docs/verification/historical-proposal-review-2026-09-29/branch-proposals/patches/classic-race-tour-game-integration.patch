@@ -1,0 +1,1923 @@
+diff --git a/game/couch/couch-installed-chapters.mjs b/game/couch/couch-installed-chapters.mjs
+index 6ff62ed4baecf6ff40ab72ad589afd2728274072..5dca8983ad1db57c712e1f00bdf2065b91697f69 100644
+--- a/game/couch/couch-installed-chapters.mjs
++++ b/game/couch/couch-installed-chapters.mjs
+@@ -215,6 +215,10 @@ export function createCouchInstalledChapters({
+         for (const entry of next.executionCatalog.entries) {
+           if (!entry.sourcePackId || entry.difficulty !== 'standard') continue;
+           const external = next.index.chapters.some((item) => item.id === entry.sourcePackId);
++          const campaign = Object.freeze({
++            key: `installed/${entry.executionKey}`,
++            name: entry.campaign.title,
++          });
+           for (const level of entry.campaign.levels) {
+             const visuals = {
+               ...entry.visualOverrides,
+@@ -222,6 +226,7 @@ export function createCouchInstalledChapters({
+             };
+             const row = Object.freeze({
+               key: `installed/${entry.executionKey}/${level.id}`,
++              campaign,
+               chapter: `${SOURCE_EXTERNAL_EDITIONS.find((edition) => edition.descriptor.id === entry.sourcePackId)?.name || entry.campaign.title} · Installed`,
+               level,
+               classes: entry.classRecipes,
+diff --git a/game/couch/couch-progression.mjs b/game/couch/couch-progression.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..49ea64d77a6409944654806b40a251a8f7bd90d4
+--- /dev/null
++++ b/game/couch/couch-progression.mjs
+@@ -0,0 +1,144 @@
++export const COUCH_RACE_FORMATS = Object.freeze(['one-race', 'first-to-two', 'campaign-tour']);
++
++const required = (condition, message) => {
++  if (!condition) throw new TypeError(message);
++};
++const text = (value) => typeof value === 'string' && value.trim().length > 0;
++const validRound = (value) => Number.isSafeInteger(value) && value > 0;
++
++/** Session navigation and display totals only. The host alone supplies an
++ * accepted terminal duel; this owner never steps a game or persists an award.
++ */
++export function createCouchProgression({
++  format = 'one-race',
++  campaignKey,
++  campaignName,
++  missions,
++  initialKey = missions?.[0]?.key,
++  roundId,
++}) {
++  required(COUCH_RACE_FORMATS.includes(format), 'Unknown race format.');
++  required(text(campaignKey) && text(campaignName), 'An exact named campaign is required.');
++  required(Array.isArray(missions) && missions.length > 0, 'A campaign needs missions.');
++  required(validRound(roundId), 'A positive safe round identity is required.');
++  const keys = new Set(),
++    levels = new Set(),
++    order = Object.freeze(
++      Array.from(missions, (mission, index) => {
++        required(
++          mission && text(mission.key) && text(mission.levelId) && text(mission.name),
++          'Every mission needs an exact key, level and name.',
++        );
++        required(
++          !keys.has(mission.key) && !levels.has(mission.levelId),
++          'Mission identities must be unique within the campaign.',
++        );
++        keys.add(mission.key);
++        levels.add(mission.levelId);
++        return Object.freeze({
++          key: mission.key,
++          levelId: mission.levelId,
++          name: mission.name,
++          index,
++        });
++      }),
++    );
++  let index = order.findIndex((mission) => mission.key === initialKey);
++  required(index >= 0, 'The initial mission must belong to this campaign.');
++  required(format !== 'campaign-tour' || index === 0, 'A new tour starts at its first mission.');
++  let activeRound = roundId,
++    terminal = false,
++    winner = null,
++    wins = [0, 0],
++    pending = null,
++    disposed = false;
++  const results = new Map(),
++    campaign = Object.freeze({ key: campaignKey, name: campaignName });
++
++  function nextIndex() {
++    if (!terminal || disposed) return null;
++    if (format === 'first-to-two' && !wins.some((count) => count >= 2)) return index;
++    if (format === 'campaign-tour' && index + 1 < order.length) return index + 1;
++    return null;
++  }
++  function canRematch() {
++    return terminal && !disposed && (format !== 'first-to-two' || wins.some((count) => count >= 2));
++  }
++  function snapshot() {
++    const records = Object.freeze(order.flatMap((mission) => results.get(mission.key) ?? [])),
++      points = format === 'campaign-tour' ? [0, 0] : [...wins],
++      next = nextIndex();
++    if (format === 'campaign-tour')
++      for (const result of records) if (result.winner !== null) points[result.winner]++;
++    return Object.freeze({
++      format,
++      campaign,
++      mission: order[index],
++      missionCount: order.length,
++      roundId: activeRound,
++      terminal,
++      winner,
++      seriesWins: Object.freeze([...wins]),
++      points: Object.freeze(points),
++      records,
++      completed: records.length,
++      seriesComplete: format === 'first-to-two' && wins.some((count) => count >= 2),
++      tourComplete: format === 'campaign-tour' && terminal && records.length === order.length,
++      next: next === null ? null : order[next],
++      rematch: canRematch() ? order[index] : null,
++      disposed,
++    });
++  }
++  function settle({ roundId, winner: result }) {
++    required(validRound(roundId), 'A positive safe round identity is required.');
++    required(result === null || result === 0 || result === 1, 'A winner is player 0, 1 or a draw.');
++    if (disposed || terminal || roundId !== activeRound) return false;
++    terminal = true;
++    winner = result;
++    if (format === 'campaign-tour')
++      results.set(
++        order[index].key,
++        Object.freeze({ missionKey: order[index].key, roundId, winner: result }),
++      );
++    else if (result !== null) wins[result]++;
++    return true;
++  }
++  function plan(action) {
++    required(action === 'next' || action === 'rematch', 'Unknown progression action.');
++    if (disposed || !terminal) return null;
++    if (pending) return pending.action === action ? pending : null;
++    const target = action === 'next' ? nextIndex() : canRematch() ? index : null;
++    if (target === null) return null;
++    pending = Object.freeze({
++      action,
++      campaignKey,
++      fromRoundId: activeRound,
++      target: order[target],
++      resetWins: action === 'rematch' && format !== 'campaign-tour',
++    });
++    return pending;
++  }
++  const current = (plan) => !disposed && terminal && pending !== null && plan === pending;
++  function commit(plan, newRoundId) {
++    required(validRound(newRoundId), 'A positive safe round identity is required.');
++    if (!current(plan) || newRoundId <= activeRound) return false;
++    // Plain owned publication only: no external code runs between these writes.
++    index = plan.target.index;
++    activeRound = newRoundId;
++    if (plan.resetWins) wins = [0, 0];
++    terminal = false;
++    winner = null;
++    pending = null;
++    return true;
++  }
++  function cancel(plan) {
++    if (!current(plan)) return false;
++    pending = null;
++    return true;
++  }
++  function dispose() {
++    disposed = true;
++    pending = null;
++  }
++  return Object.freeze({ snapshot, settle, plan, current, commit, cancel, dispose });
++}
+diff --git a/game/couch/couch-shell.mjs b/game/couch/couch-shell.mjs
+index 4e5846bdb8fb42e82aca2be20a5ca8ebdc8b783a..9aef7c33a58ff1579d668fdd769313821fc4668c 100644
+--- a/game/couch/couch-shell.mjs
++++ b/game/couch/couch-shell.mjs
+@@ -373,7 +373,14 @@ export function createCouchShell({
+     const seat = arena?.closest('.racer');
+     if (seat) observe(Number(seat.dataset.player), 'touch');
+   });
+-  function update({ match, summary, won, contentBusy = false, focusTransition = true }) {
++  function update({
++    match,
++    summary,
++    won,
++    progression = null,
++    contentBusy = false,
++    focusTransition = true,
++  }) {
+     if (destroyed) return;
+     const previous = status;
+     status = match.status;
+@@ -392,9 +399,8 @@ export function createCouchShell({
+         : status === 'paused'
+           ? 'Both boards paused.'
+           : status === 'finished'
+-            ? won.some((n) => n >= 2)
+-              ? 'Match complete.'
+-              : 'Round complete.'
++            ? progression?.title ||
++              (won.some((n) => n >= 2) ? 'Match complete.' : 'Round complete.')
+             : 'Two boards. One race.',
+     );
+     $('race-review').hidden = status !== 'finished';
+@@ -403,7 +409,7 @@ export function createCouchShell({
+     $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
+     $('race-class-field').hidden = !equipment[0].action;
+     $('race-class').disabled = !equipment[0].action || status !== 'ready';
+-    for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time'])
++    for (const id of ['race-format', 'race-level', 'race-theme', 'race-turn', 'race-time'])
+       $(id).disabled = status !== 'ready';
+     $('race-tap-field').hidden = !equipment.some((e) => e.boost);
+     $('race-tap').disabled = !equipment.some((e) => e.boost);
+@@ -425,7 +431,7 @@ export function createCouchShell({
+       $(`race-result-${i}`).hidden = status !== 'finished';
+       setText(
+         `race-result-${i}`,
+-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points · ${won[i]} round wins`,
++        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points · ${won[i]} ${progression?.scoreLabel || 'round wins'}`,
+       );
+     }
+     renderPads();
+diff --git a/game/couch/couch.mjs b/game/couch/couch.mjs
+index 28d2727143d56680313d2e1763ac84b857243427..b8e59eeaf58d4e9fc72327ec448180cc830b0bc7 100644
+--- a/game/couch/couch.mjs
++++ b/game/couch/couch.mjs
+@@ -4,6 +4,7 @@ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
+ import { prepareCouchChapter } from './couch-chapter.mjs';
+ import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
+ import { createCouchStaticPictures } from './couch-static-pictures.mjs';
++import { createCouchProgression } from './couch-progression.mjs';
+ import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
+ import { onNativeInactive } from '../platform.mjs';
+ import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
+@@ -174,8 +175,10 @@ try {
+     music: [],
+     sourcePackId: null,
+   };
++  const baseCampaign = Object.freeze({ key: `base/${campaign.id}`, name: campaign.title });
+   const maps = campaign.levels.map((level) => ({
+     key: level.id,
++    campaign: baseCampaign,
+     chapter: campaign.title,
+     level,
+     classes: registry,
+@@ -203,9 +206,14 @@ try {
+     });
+     featured = await prepareCouchChapter(featuredSource, { signal: artworkLifetime.signal });
+     const featuredCampaign = featured.resolved.campaign;
++    const featuredIdentity = Object.freeze({
++      key: `shipped/${featured.pack.id}/${featuredCampaign.id}`,
++      name: featuredCampaign.title,
++    });
+     maps.unshift(
+       ...featuredCampaign.levels.map((level) => ({
+         key: `shipped/${featured.pack.id}/${featuredCampaign.id}/${level.id}`,
++        campaign: featuredIdentity,
+         chapter: featuredCampaign.title,
+         level,
+         classes: featured.resolved.classRecipes,
+@@ -263,6 +271,7 @@ try {
+   }
+   if (artworkLifetime.signal.aborted)
+     throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
++  let currentMapRows = new Set(maps);
+   const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
+   function showMaps() {
+     $('race-level').replaceChildren(
+@@ -321,6 +330,9 @@ try {
+     accumulator = 0,
+     last = 0,
+     won = [0, 0],
++    progression = null,
++    campaignEntries = Object.freeze([]),
++    campaignAvailable = false,
+     finished = false,
+     generation = 0,
+     raceSequence = 0,
+@@ -365,10 +377,13 @@ try {
+       startedHere = document.activeElement === origin && foreground(),
+       scope = shell.scope();
+     let moved = false,
+-      shifting = false,
++      shifting = null,
+       pendingTarget = null;
+     const observe = (event) => {
+-      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
++      if (
++        event.target !== shifting &&
++        ![origin, document.body, document.documentElement].includes(event.target)
++      )
+         moved = true;
+     };
+     const hidden = () => {
+@@ -403,7 +418,15 @@ try {
+     const restore = (target, current, { retain = false } = {}) => {
+       if (!retain) close();
+       try {
+-        if (owns(current) && available(target)) target.focus({ preventScroll: true });
++        if (owns(current) && available(target)) {
++          if (retain) pendingTarget = target;
++          shifting = target;
++          try {
++            target.focus({ preventScroll: true });
++          } finally {
++            shifting = null;
++          }
++        }
+       } catch (error) {
+         close();
+         throw error;
+@@ -415,11 +438,11 @@ try {
+       // This transfer belongs to the action, not to a new user choice. Later
+       // navigation or foreground loss still relinquishes completion focus.
+       pendingTarget = target;
+-      shifting = true;
++      shifting = target;
+       try {
+         target.focus({ preventScroll: true });
+       } finally {
+-        shifting = false;
++        shifting = null;
+       }
+     };
+     restore.current = owns;
+@@ -442,7 +465,7 @@ try {
+     contentBusy = false;
+     contentReady = retainedResult;
+     contentError = retainedResult
+-      ? 'Next picture loading cancelled. Results are kept. Choose Next when you are ready.'
++      ? `Picture loading cancelled. Results are kept. Choose ${nextAttempt.action === 'rematch' ? 'Rematch' : 'Next'} when you are ready.`
+       : 'Picture loading cancelled. Retry when you are ready.';
+     if (installedStatus === 'Checking installed chapters…')
+       installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
+@@ -453,11 +476,14 @@ try {
+     const restoreFocus = actionFocus($('race-picture-cancel'));
+     cancelContent();
+     restoreFocus(
+-      match.status === 'finished' ? $('race-start') : $('race-chapter-retry'),
++      match.status === 'finished'
++        ? nextAttempt?.origin || $('race-start')
++        : $('race-chapter-retry'),
+       !!contentError,
+     );
+   };
+   function prepare() {
++    progression?.dispose();
+     nextAttempt?.lease?.cancel();
+     nextAttempt = null;
+     preparedFocusMatch = null;
+@@ -472,7 +498,20 @@ try {
+     contentBusy = false;
+     contentReady = false;
+     clear({ resetDirection: true });
+-    const entry = maps.find((m) => m.key === $('race-level').value);
++    let entry = maps.find((m) => m.key === $('race-level').value);
++    const format = $('race-format').value;
++    // These exact row objects retain their checked campaign and authored order.
++    // A title or a position in the combined map menu cannot select a successor.
++    campaignAvailable = currentMapRows.has(entry);
++    // A missing selection may remain in the menu as an unavailable placeholder.
++    // It never becomes an authored tour from the current checked catalogue.
++    campaignEntries = Object.freeze(
++      campaignAvailable
++        ? maps.filter((row) => currentMapRows.has(row) && row.campaign === entry.campaign)
++        : [entry],
++    );
++    if (format === 'campaign-tour') entry = campaignEntries[0];
++    $('race-level').value = entry.key;
+     const classId = entry.classes.some((c) => c.id === $('race-class').value)
+       ? $('race-class').value
+       : entry.classes[0].id;
+@@ -496,11 +535,54 @@ try {
+     };
+     match = createRound(roundRecipe);
+     generation = ++raceSequence;
++    progression = createCouchProgression({
++      format,
++      campaignKey: entry.campaign.key,
++      campaignName: entry.campaign.name,
++      missions: campaignEntries.map((row) => ({
++        key: row.key,
++        levelId: row.level.id,
++        name: row.level.name,
++      })),
++      initialKey: entry.key,
++      roundId: generation,
++    });
++    won = progression.snapshot().points;
+     paintRound(roundRecipe);
+     finished = false;
+-    $('race-start').textContent = 'Start round ↗';
+     return loadPreparedPicture(entry);
+   }
++  function progressionView() {
++    const state = progression.snapshot(),
++      tour = state.format === 'campaign-tour',
++      firstToTwo = state.format === 'first-to-two',
++      mission = state.mission.name;
++    return {
++      ...state,
++      primaryAction: state.next ? 'next' : state.rematch ? 'rematch' : null,
++      chooseCampaign: tour && state.tourComplete,
++      primaryLabel:
++        match.status === 'paused'
++          ? 'Resume round →'
++          : match.status !== 'finished'
++            ? tour && state.completed === 0
++              ? `Start tour · ${state.campaign.name} · ${state.missionCount} missions`
++              : `Start · ${mission}`
++            : tour && state.tourComplete
++              ? 'Choose campaign'
++              : state.next
++                ? `${tour ? 'Next' : 'Next round'} · ${state.next.name}`
++                : `${firstToTwo ? 'Rematch match' : 'Rematch'} · ${mission}`,
++      title:
++        tour && state.tourComplete
++          ? `Tour complete · ${state.campaign.name}`
++          : firstToTwo && state.seriesComplete
++            ? 'Match complete.'
++            : 'Race complete.',
++      scoreLabel: tour ? 'tour points' : firstToTwo ? 'round wins' : 'race wins',
++      formatSummary: `${tour ? `Campaign tour · ${state.completed}/${state.missionCount} missions complete` : firstToTwo ? 'First to two · draws do not count' : 'One race'}. Couch races do not change your solo progress.`,
++    };
++  }
+   function createRound(recipe) {
+     return createDuel(
+       recipe.entry.level,
+@@ -591,19 +673,51 @@ try {
+       }
+     })();
+   }
+-  async function prepareNext() {
+-    if (!nextAttempt || nextAttempt.previous !== match || nextAttempt.recipe !== roundRecipe) {
++  async function prepareNext(action, origin) {
++    if (!campaignAvailable) return null;
++    if (
++      !nextAttempt ||
++      nextAttempt.previous !== match ||
++      nextAttempt.previousRecipe !== roundRecipe ||
++      nextAttempt.action !== action
++    ) {
++      if (nextAttempt) {
++        progression.cancel(nextAttempt.plan);
++        nextAttempt.lease?.cancel();
++      }
++      const plan = progression.plan(action);
++      if (!plan) return null;
++      const entry = campaignEntries.find((row) => row.key === plan.target.key);
++      if (!entry || entry.level.id !== plan.target.levelId) {
++        progression.cancel(plan);
++        return null;
++      }
++      const recipe = {
++        ...roundRecipe,
++        entry,
++        classId: entry.classes.some((row) => row.id === roundRecipe.classId)
++          ? roundRecipe.classId
++          : entry.classes[0].id,
++        theme:
++          entry === roundRecipe.entry
++            ? roundRecipe.theme
++            : entry.themes.find((row) => row.id === entry.defaultThemeId) || entry.themes[0],
++      };
+       nextAttempt = {
+         previous: match,
+         previousGeneration: generation,
+-        recipe: roundRecipe,
+-        match: createRound(roundRecipe),
++        previousRecipe: roundRecipe,
++        progression,
++        plan,
++        action,
++        origin,
++        recipe,
++        match: createRound(recipe),
+         raceId: ++raceSequence,
+-        resetWins: won.some((n) => n >= 2),
+         lease: null,
+       };
+     }
+-    const restoreFocus = actionFocus($('race-start')),
++    const restoreFocus = actionFocus(origin),
+       attempt = nextAttempt,
+       { entry } = attempt.recipe,
+       isStatic = shippedMaps.includes(entry),
+@@ -619,7 +733,9 @@ try {
+       !controller.signal.aborted &&
+       contentController === controller &&
+       nextAttempt === attempt &&
+-      roundRecipe === attempt.recipe &&
++      progression === attempt.progression &&
++      progression.current(attempt.plan) &&
++      roundRecipe === attempt.previousRecipe &&
+       match === attempt.previous &&
+       generation === attempt.previousGeneration;
+     const display = preparationStatus.begin({
+@@ -645,12 +761,16 @@ try {
+       if (!current()) return null;
+       const retirePrevious = lease.commit();
+       // Publish only plain references before cleanup can call back into the page.
++      progression.commit(attempt.plan, attempt.raceId);
+       match = attempt.match;
+       preparedFocusMatch = match;
+       backdrop = lease.picture;
+       generation = attempt.raceId;
++      roundRecipe = attempt.recipe;
++      selectedMapKey = entry.key;
++      theme = attempt.recipe.theme;
+       finished = false;
+-      if (attempt.resetWins) won = [0, 0];
++      won = progression.snapshot().points;
+       nextAttempt = null;
+       retirePrevious();
+       if (
+@@ -661,8 +781,21 @@ try {
+       )
+         return null;
+       clear({ resetDirection: true });
++      if (
++        disposed ||
++        controller.signal.aborted ||
++        controller !== contentController ||
++        match !== attempt.match ||
++        progression !== attempt.progression ||
++        generation !== attempt.raceId
++      )
++        return null;
++      $('race-level').value = entry.key;
++      $('race-class').replaceChildren(...entry.classes.map((row) => new Option(row.label, row.id)));
++      $('race-class').value = attempt.recipe.classId;
++      $('race-theme').replaceChildren(...entry.themes.map((row) => new Option(row.name, row.id)));
++      $('race-theme').value = theme.id;
+       paintRound(attempt.recipe);
+-      $('race-start').textContent = 'Start round ↗';
+       $('race-message').textContent = [
+         lease.picture?.notice,
+         'Both boards use the prepared next picture. Start when you are ready.',
+@@ -681,8 +814,7 @@ try {
+       return prepared;
+     } catch (error) {
+       if (current()) {
+-        contentError =
+-          'The next picture could not be prepared. Results are kept. Choose Next to retry.';
++        contentError = `The next picture could not be prepared. Results are kept. Choose ${action === 'rematch' ? 'Rematch' : 'Next'} to retry.`;
+         $('race-message').textContent = contentError;
+         display.finish({ state: 'error', message: '' });
+         console.warn('Next picture preparation failed.', error);
+@@ -696,7 +828,7 @@ try {
+         updateMenu();
+       }
+       restoreFocus(
+-        $('race-start'),
++        prepared ? $('race-start') : origin,
+         !disposed && controller === contentController && !controller.signal.aborted,
+         { retain: !!prepared },
+       );
+@@ -716,7 +848,7 @@ try {
+     }
+     updateMenu();
+   }
+-  $('race-start').onclick = async () => {
++  async function startAction(origin, action = null) {
+     if (
+       disposed ||
+       contentBusy ||
+@@ -727,13 +859,18 @@ try {
+       shell.scope() !== 'main'
+     )
+       return;
++    const state = progressionView();
++    if (match.status === 'finished' && !action && state.chooseCampaign) {
++      shell.setup();
++      return;
++    }
+     const intent = ++startIntentEpoch,
+       ownsStartIntent = () =>
+         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
+     let nextConfirmed = false,
+       nextFocus = null;
+     if (match.status === 'finished') {
+-      const prepared = await prepareNext();
++      const prepared = await prepareNext(action || state.primaryAction, origin);
+       // Preparation may finish after blur, but only the original foreground
+       // shipped Next gesture may start it. Installed chapters keep fresh Start.
+       if (
+@@ -853,7 +990,9 @@ try {
+     } finally {
+       nextFocus?.releaseFocus();
+     }
+-  };
++  }
++  $('race-start').onclick = () => startAction($('race-start'));
++  $('race-rematch').onclick = () => startAction($('race-rematch'), 'rematch');
+ 
+   $('race-chapter-retry').onclick = async () => {
+     if (disposed || contentBusy || match.status !== 'ready') return;
+@@ -908,6 +1047,7 @@ try {
+       });
+       if (disposed || controller.signal.aborted || controller !== contentController) return;
+       maps.splice(0, maps.length, ...shippedMaps, ...rows);
++      currentMapRows = new Set(maps);
+       // Preserve a missing selection as unavailable; never silently switch its owner.
+       if (!maps.some((row) => row.key === oldKey)) maps.push(oldEntry);
+       showMaps();
+@@ -948,10 +1088,9 @@ try {
+       if (!disposed)
+         $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+     });
+-  for (const id of ['race-level', 'race-class', 'race-turn', 'race-time'])
++  for (const id of ['race-format', 'race-level', 'race-class', 'race-turn', 'race-time'])
+     $(id).onchange = () => {
+       if (match?.status !== 'ready' || disposed) return;
+-      won = [0, 0];
+       return prepare();
+     };
+   $('race-theme').onchange = () => {
+@@ -994,7 +1133,6 @@ try {
+     },
+     onNewMatch: () => {
+       if (match?.status === 'running' || disposed) return;
+-      won = [0, 0];
+       prepare();
+       contentScope = 'setup';
+     },
+@@ -1062,9 +1200,22 @@ try {
+   function updateMenu() {
+     if (!match || disposed) return;
+     const running = match.status === 'running';
++    const progress = progressionView();
+     $('race-message').hidden = contentBusy;
+     $('race-installed-status').hidden = contentBusy;
+     $('race-start').disabled = running || contentBusy || !contentReady;
++    $('race-start').textContent = progress.primaryLabel;
++    $('race-rematch').hidden = match.status !== 'finished' || progress.format !== 'campaign-tour';
++    $('race-rematch').disabled = contentBusy || !contentReady;
++    $('race-rematch').textContent = `Rematch · ${progress.mission.name}`;
++    $('race-format-summary').textContent = progress.formatSummary;
++    $('race-format-note').textContent = !campaignAvailable
++      ? 'This previous selection is unavailable. Refresh installed chapters or choose a current map.'
++      : progress.format === 'campaign-tour'
++        ? `Start tour · ${progress.campaign.name} · ${progress.missionCount} missions. First: ${campaignEntries[0].level.name}. Choose any map in a campaign to select that campaign's full tour.`
++        : progress.format === 'first-to-two'
++          ? 'Race this map until a player earns two wins. Draws do not add wins.'
++          : 'One completed race, then an explicit rematch or a new setup.';
+     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
+     $('race-chapter-retry').disabled = contentBusy;
+     $('race-picture-cancel').hidden = !contentBusy;
+@@ -1083,6 +1234,7 @@ try {
+     shell?.update({
+       match,
+       won,
++      progression: progress,
+       contentBusy,
+       focusTransition,
+       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+@@ -1097,6 +1249,7 @@ try {
+   const menuIds = new Set([
+     'race-coop',
+     'race-start',
++    'race-rematch',
+     'race-chapter-retry',
+     'race-picture-cancel',
+     'race-installed-refresh',
+@@ -1105,6 +1258,7 @@ try {
+     'race-help',
+     'race-solo-return',
+     'race-level',
++    'race-format',
+     'race-theme',
+     'race-class',
+     'race-turn',
+@@ -1240,6 +1394,7 @@ try {
+     if (event.persisted) return;
+     contentController?.abort();
+     disposed = true;
++    progression?.dispose();
+     preparationStatus.dispose();
+     input.destroy();
+     menuRouter.destroy();
+@@ -1313,24 +1468,32 @@ try {
+       }
+     }
+     if (match.status === 'finished' && !finished) {
++      const terminalMatch = match,
++        terminalGeneration = generation,
++        terminalProgression = progression;
+       finished = true;
++      progression.settle({ roundId: generation, winner: match.winner });
++      const progress = progressionView();
++      won = progress.points;
+       clear();
+-      if (match.winner !== null) won[match.winner]++;
+-      const name =
+-        match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
+-      $('race-message').textContent =
+-        `${match.winner === null ? 'Draw' : `${name} wins the round`}. ${match.reason}.${won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
+-      $('race-start').textContent = won.some((n) => n >= 2)
+-        ? 'Play another match ↗'
+-        : 'Next round ↗';
+-      painters.forEach((p, i) => {
+-        if (match.runs[i].status === 'won')
+-          p.startCelebration?.({
+-            levelId: match.runs[i].levelId,
+-            seed: 2026,
+-            reduced: displayPreferences.snapshot().effectiveReducedEffects,
+-          });
+-      });
++      if (
++        match === terminalMatch &&
++        generation === terminalGeneration &&
++        progression === terminalProgression
++      ) {
++        const name =
++          match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
++        $('race-message').textContent =
++          `${match.winner === null ? 'Draw' : `${name} wins the round`}. ${match.reason}.${progress.seriesComplete ? ` ${name} wins the match!` : ''}${progress.tourComplete ? ` Tour complete · ${progress.campaign.name}.` : ''}`;
++        painters.forEach((p, i) => {
++          if (match.runs[i].status === 'won')
++            p.startCelebration?.({
++              levelId: match.runs[i].levelId,
++              seed: 2026,
++              reduced: displayPreferences.snapshot().effectiveReducedEffects,
++            });
++        });
++      }
+     }
+     $('series-score').textContent = `${won[0]} : ${won[1]}`;
+     const left = Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
+diff --git a/game/couch/index.html b/game/couch/index.html
+index 6974a5a57cb6c2d4b22328d9e40da299ffaf88e6..ae45669c95d1549d451f4102bae33036cb730fd6 100644
+--- a/game/couch/index.html
++++ b/game/couch/index.html
+@@ -152,6 +152,7 @@
+               >Relay Rescue · team up</a
+             >
+             <button id="race-start" class="race-primary" type="button">Start round</button>
++            <button id="race-rematch" type="button" hidden>Rematch this mission</button>
+             <button id="race-chapter-retry" type="button" hidden>Retry picture</button>
+             <button id="race-picture-cancel" type="button" hidden>Cancel picture loading</button>
+             <button id="race-focus" type="button">Race setup</button>
+@@ -160,8 +161,8 @@
+             <button id="race-review" type="button" hidden>View both boards</button>
+             <a id="race-solo-return" href="../">Return to solo</a>
+           </div>
+-          <p class="race-footnote">
+-            First to two rounds. Couch races do not change your solo progress.
++          <p id="race-format-summary" class="race-footnote">
++            One race. Couch races do not change your solo progress.
+           </p>
+         </section>
+         <section
+@@ -175,6 +176,13 @@
+           <h1 id="race-setup-title">Race setup</h1>
+           <p>Choose together. Each player starts with the same map, craft and time.</p>
+           <div class="race-fields">
++            <label
++              >Format<select id="race-format">
++                <option value="one-race" selected>One race</option>
++                <option value="first-to-two">First to two</option>
++                <option value="campaign-tour">Campaign tour</option>
++              </select></label
++            >
+             <label>Map<select id="race-level"></select></label>
+             <label>World<select id="race-theme"></select></label>
+             <label id="race-class-field">Craft<select id="race-class"></select></label>
+@@ -192,6 +200,7 @@
+               </select></label
+             >
+           </div>
++          <p id="race-format-note" class="race-summary"></p>
+           <p id="race-loadout" class="race-summary"></p>
+           <p id="race-installed-status" role="status"></p>
+           <button id="race-installed-refresh" type="button">Refresh installed chapters</button>
+@@ -313,7 +322,9 @@
+             </p>
+             <p>
+               First clear wins the round. At the time limit: coverage, then lives, then score
+-              decide. First to two round wins takes the match.
++              decide. One race is the default. First to two counts wins, not draws. A campaign tour
++              plays one race per mission in order; a rematch replaces that mission's result. Tour
++              points stay on this page and never change Solo progress.
+             </p>
+           </div>
+           <button id="race-help-back" type="button">Back</button>
+diff --git a/game/test/couch-installed-chapters.test.mjs b/game/test/couch-installed-chapters.test.mjs
+index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47a84b6e22 100644
+--- a/game/test/couch-installed-chapters.test.mjs
++++ b/game/test/couch-installed-chapters.test.mjs
+@@ -90,7 +90,7 @@ function pictures() {
+   };
+   return model;
+ }
+-async function fixture(t, { embedded = false, chapter = pilot } = {}) {
++async function fixture(t, { embedded = false, chapter = pilot, additionalChapters = [] } = {}) {
+   const assets = managedIndexedDB(),
+     media = managedIndexedDB(),
+     locks = new Locks();
+@@ -120,7 +120,7 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
+     lockManager: locks,
+     writer,
+     registeredEntries: [],
+-    knownDescriptors: [chapter.descriptor],
++    knownDescriptors: [chapter, ...additionalChapters].map((entry) => entry.descriptor),
+     getManagedStore: () => manager,
+     decodeImage,
+   });
+@@ -129,7 +129,9 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
+     await installer.commitMutation(
+       await installer.prepareMutation(current, installPack(current.packs, chapter.prior)),
+     );
+-  } else await installer.install(chapter.prepared);
++  } else {
++    for (const entry of [chapter, ...additionalChapters]) await installer.install(entry.prepared);
++  }
+   installer.close();
+   writer.release();
+   const model = pictures();
+@@ -407,6 +409,35 @@ test('installed couch reader authenticates the same three originals without acqu
+   );
+ });
+ 
++test('installed campaign grouping preserves each exact owner and authored mission order across refresh', async (t) => {
++  const other = await buildCountercurrentTheme('coupa');
++  const f = await fixture(t, { additionalChapters: [other] }),
++    before = f.writes();
++  const rows = await f.reader.refresh();
++  assert.equal(rows.length, 6);
++  const owners = new Set(rows.map((row) => row.campaign));
++  assert.equal(owners.size, 2, 'Two installed editions cannot become one tour.');
++  for (const chapter of [pilot, other]) {
++    const expected = chapter.descriptor.originals.map((original) => original.levelId);
++    const group = rows.filter((row) => expected.includes(row.level.id));
++    assert.deepEqual(
++      group.map((row) => row.level.id),
++      expected,
++    );
++    assert.equal(new Set(group.map((row) => row.campaign)).size, 1);
++    assert.equal(Object.isFrozen(group[0].campaign), true);
++    assert.ok(group.every((row) => row.key.startsWith(group[0].campaign.key + '/')));
++  }
++  const refreshed = await f.reader.refresh();
++  assert.deepEqual(
++    refreshed.map((row) => row.key),
++    rows.map((row) => row.key),
++  );
++  assert.ok(refreshed.every((row, index) => row.campaign !== rows[index].campaign));
++  await assert.rejects(f.reader.select(rows[0], { raceId: 1 }), /current installed/);
++  assert.deepEqual(f.writes(), before);
++});
++
+ test('publication rejects a changed original generation after actual decode and a changed pointer before Start', async (t) => {
+   const f = await fixture(t),
+     rows = await f.reader.refresh();
+@@ -914,7 +945,7 @@ for (const [name, build] of [
+ // These cases finish the actual installed race through its input and clock.
+ // The boundary models delay decoding/lock delivery; they do not edit a run,
+ // fabricate a result or certify browser pixels.
+-async function completedInstalledRound(t) {
++async function completedInstalledRound(t, { format = 'first-to-two', selectedIndex = 0 } = {}) {
+   const f = await fixture(t),
+     before = f.writes();
+   f.reader.dispose();
+@@ -926,17 +957,22 @@ async function completedInstalledRound(t) {
+     lockManager: f.locks,
+     URLImpl: f.model.URLImpl,
+   });
+-  const choice = page
++  const installedChoices = page
+     .$('race-level')
+-    .options.find((option) => option.value.startsWith('installed/'));
++    .options.filter((option) => option.value.startsWith('installed/'));
++  const choice = installedChoices[selectedIndex];
+   assert.ok(choice);
+   page.$('race-focus').click();
+   page.$('race-level').value = choice.value;
+   await action(page.$('race-level'), 'change');
++  page.$('race-format').value = format;
++  await action(page.$('race-format'), 'change');
+   await settle(
+     () => !page.$('race-start').disabled,
+     'The installed first round never became ready.',
+   );
++  if (format === 'campaign-tour')
++    assert.equal(page.$('race-level').value, installedChoices[0].value);
+   page.$('race-setup-back').click();
+   await action(page.$('race-start'));
+   page.frame(0);
+@@ -958,7 +994,7 @@ async function completedInstalledRound(t) {
+   assert.equal(sha(completed.picture.image.bytes), completed.picture.pin.sha256);
+   assert.equal(completed.picture === page.drawOptions[1].backdrop, true);
+   assert.deepEqual(f.writes(), before);
+-  return { f, page, before, completed };
++  return { f, page, before, completed, installedChoices };
+ }
+ function assertCompletedInstalled(page, completed) {
+   page.frame(0);
+@@ -982,6 +1018,93 @@ function assertCompletedInstalled(page, completed) {
+   assert.equal(page.$('race-review').hidden, false);
+ }
+ 
++test('installed tour starts at its authored first mission and advances to the exact second original in Ready', async (t) => {
++  const { f, page, before, completed, installedChoices } = await completedInstalledRound(t, {
++    format: 'campaign-tour',
++    selectedIndex: 2,
++  });
++  assert.equal(completed.selection, installedChoices[0].value);
++  assert.equal(completed.picture.pin.identity.levelId, pilot.descriptor.originals[0].levelId);
++  assert.match(page.$('race-format-summary').textContent, /1\/3 missions complete/);
++  assert.match(page.$('race-start').textContent, /^Next · /);
++  page.$('race-start').focus();
++  await action(page.$('race-start'));
++  page.frame(0);
++  assert.equal(page.state(), 'ready');
++  assert.equal(page.$('race-level').value, installedChoices[1].value);
++  const next = page.drawOptions[0].backdrop,
++    original = pilot.descriptor.originals[1];
++  assert.equal(next === page.drawOptions[1].backdrop, true);
++  assert.equal(next.pin.identity.baseCampaignKey, pilot.descriptor.campaignKey);
++  assert.equal(next.pin.identity.levelId, original.levelId);
++  assert.equal(sha(next.image.bytes), original.sha256);
++  assert.notEqual(next.pin.sha256, completed.picture.pin.sha256);
++  assert.equal(completed.picture.image.released, 1);
++  assert.equal(page.$('series-score').textContent, completed.wins);
++  assert.match(page.$('race-format-summary').textContent, /1\/3 missions complete/);
++  assert.equal(
++    page.renders.every((run) => run.level.id === original.levelId && run.tick === 0),
++    true,
++  );
++  const ready = page.checkpoint();
++  page.frames(20);
++  assert.deepEqual(page.checkpoint(), ready, 'Adoption alone cannot begin an installed mission.');
++  await action(page.$('race-start'));
++  page.frame(0);
++  assert.equal(page.state(), 'running');
++  assert.equal(page.drawOptions[0].backdrop, next);
++  assert.deepEqual(f.writes(), before);
++});
++
++test('a removed installed tour owner refuses Next, preserves earned Results, then remains unavailable after refresh', async (t) => {
++  const diagnostics = [];
++  t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
++  const { f, page, completed } = await completedInstalledRound(t, { format: 'campaign-tour' });
++  // Model an independently committed removal through the actual pointer
++  // transaction. This test does not claim a player-facing uninstall workflow.
++  await f.pointer.compareAndSwap(await f.pointer.snapshot(), {
++    packs: null,
++    index: null,
++    journal: null,
++  });
++  const afterExternalRemoval = f.writes();
++  page.$('race-start').focus();
++  await action(page.$('race-start'));
++  assertCompletedInstalled(page, completed);
++  assert.equal(page.$('race-start').disabled, false, 'The failed target remains retryable.');
++  assert.equal(page.doc.activeElement, page.$('race-start'));
++  assert.match(page.$('race-message').textContent, /Results are kept/);
++  assert.match(diagnostics[0][1].message, /snapshot changed/);
++  assert.equal(page.$('race-level').value, completed.selection);
++  assert.deepEqual(
++    f.writes(),
++    afterExternalRemoval,
++    'A refused Next cannot restore removed content.',
++  );
++  page.$('race-focus').click();
++  page.$('race-confirm-reset').click();
++  await settle(
++    () => !page.$('race-installed-refresh').disabled,
++    'Reset did not finish refusing the removed owner.',
++  );
++  await action(page.$('race-installed-refresh'));
++  page.frame(0);
++  assert.equal(page.state(), 'ready');
++  assert.equal(
++    page.$('race-level').value,
++    completed.selection,
++    'Keep the missing selection; never switch to a shipped map.',
++  );
++  assert.equal(page.$('race-start').disabled, true);
++  assert.match(page.$('race-format-note').textContent, /previous selection is unavailable/);
++  assert.match(page.$('race-installed-status').textContent, /No installed chapters/);
++  assert.equal(
++    page.drawOptions.every((options) => options.backdrop === null),
++    true,
++  );
++  assert.deepEqual(f.writes(), afterExternalRemoval);
++});
++
+ test('installed failed Next decode keeps completed Results, wins and the original available to View', async (t) => {
+   const diagnostics = [];
+   t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
+diff --git a/game/test/couch-navigation.test.mjs b/game/test/couch-navigation.test.mjs
+index 618f44b698e75126881177725c1cdaa03f2cc6de..a849d3a6c13df146f271166cad363625fb0c0cb3 100644
+--- a/game/test/couch-navigation.test.mjs
++++ b/game/test/couch-navigation.test.mjs
+@@ -270,7 +270,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
+   f.key('Escape');
+   f.frame();
+   assert.equal(f.state(), 'ready');
+-  assert.match(f.$('race-start').textContent, /Start round/);
++  assert.match(f.$('race-start').textContent, /^Start · First Signal$/);
+   f.$('race-focus').click();
+   f.frame();
+   f.focus('race-level');
+@@ -310,7 +310,14 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
+ 
+ for (const turnPolicy of ['immediate', 'grid-center']) {
+   test(`${turnPolicy}: actual Sentinel round win and best-of-three rematch retain legal core route results`, async (t) => {
+-    const f = await page(t, { campaign: sentinel.campaigns[0], turnPolicy, pads: [pad(0)] });
++    const f = await page(t, {
++      campaign: sentinel.campaigns[0],
++      turnPolicy,
++      pads: [pad(0)],
++      beforeImport({ document }) {
++        document.getElementById('race-format').value = 'first-to-two';
++      },
++    });
+     f.join(0);
+     const route = sentinelRoutes.routes.find(
+       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
+@@ -354,14 +361,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
+       f.pulse(0, 1);
+       assert.equal(f.state(), 'finished');
+     }
+-    assert.match(f.$('race-start').textContent, /Play another match/);
++    assert.match(f.$('race-start').textContent, /^Rematch match · /);
+     await nextAction(f, () => f.pulse(0, 0));
+     assert.equal(f.state(), 'running');
+     assert.equal(f.$('series-score').textContent, '0 : 0');
+   });
+ }
+ 
+-test('one lost craft does not expose shared menu; both ended draws retain explicit Next', async (t) => {
++test('one lost craft does not expose shared menu; both ended draws retain explicit rematch', async (t) => {
+   const { level } = retryFixture('self-contact');
+   const f = await page(t, {
+     campaign: { ...base, briefs: [], levels: [level] },
+@@ -514,7 +521,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
+   });
+ }
+ 
+-test('timeout draw keeps series at zero and needs a fresh explicit Next gesture', async (t) => {
++test('timeout draw keeps wins at zero and needs a fresh explicit rematch gesture', async (t) => {
+   const f = await page(t, { pads: [pad(0), pad(1), pad(2)] });
+   f.frame();
+   f.pulse(2, 0);
+diff --git a/game/test/couch-progression-host.test.mjs b/game/test/couch-progression-host.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ad0362bc967085a43a0d981a8c8e46112326af3
+--- /dev/null
++++ b/game/test/couch-progression-host.test.mjs
+@@ -0,0 +1,502 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFile } from 'node:fs/promises';
++import { createExecutionCatalog } from '../campaign-contexts.mjs';
++import {
++  createMediaIdentityCatalog,
++  MEDIA_LIBRARY_FORMAT,
++  MEDIA_PRESENTATION_FORMAT,
++} from '../media-library.mjs';
++import { createManagedMediaStore, MANAGED_MEDIA_DATABASE } from '../managed-media-store.mjs';
++import { createStillMediaStore } from '../media-store.mjs';
++import { prepareStillAsset } from '../media-still.mjs';
++import { couchPage } from './helpers/couch-host.mjs';
++import { managedIndexedDB } from './helpers/managed-idb.mjs';
++import { deferred } from './helpers/media-fixtures.mjs';
++
++const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
++const [base, classes, themes] = await Promise.all([
++  json('../content/campaign.json'),
++  json('../content/classes.json'),
++  json('../content/themes.json'),
++]);
++// Explicit test campaign, not modified delivered campaign authority. The three
++// new identities use legal First Signal geometry. Bravo shifts its
++// spawn/bouncer/supply two cells right while retaining this campaign's 48×36
++// simulation version. Actual input and duel ticks earn every result; no run
++// state is assigned. The two tiny saved originals are explicit test media.
++const campaign = {
++  version: base.version,
++  id: 'tour-host-fixture',
++  revision: '1',
++  title: 'Three mission host fixture',
++  levels: ['Alpha', 'Bravo', 'Charlie'].map((name, index) => ({
++    ...structuredClone(base.levels[0]),
++    id: `tour-fixture-${index + 1}`,
++    name: `Fixture ${name}`,
++    ...(index === 1
++      ? {
++          spawn: { ...base.levels[0].spawn, x: base.levels[0].spawn.x + 2 },
++          enemies: base.levels[0].enemies.map((enemy) => ({ ...enemy, x: enemy.x + 2 })),
++          supplies: base.levels[0].supplies.map((supply) => ({ ...supply, x: supply.x + 2 })),
++        }
++      : {}),
++  })),
++};
++const catalog = createExecutionCatalog([
++  {
++    campaign: { ...campaign, classRecipes: classes },
++    classRecipes: classes,
++    themes: themes.themes,
++  },
++]);
++const entry = catalog.entries.find((row) => row.difficulty === 'standard');
++const identities = createMediaIdentityCatalog(catalog);
++const originals = [
++  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=',
++  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
++].map((value) => Buffer.from(value, 'base64'));
++const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
++
++async function action(p, id, type = 'click') {
++  const target = p.$(id),
++    original = target[`on${type}`];
++  let result;
++  target[`on${type}`] = (event) => (result = original?.(event));
++  try {
++    target.emit(type);
++    await result;
++  } finally {
++    target[`on${type}`] = original;
++  }
++  p.frame();
++}
++async function fixture(t) {
++  const memory = managedIndexedDB(),
++    assets = managedIndexedDB();
++  const manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
++  const store = createStillMediaStore({ managedStore: manager, decodeImage });
++  const prepared = await Promise.all(
++    originals.map((bytes, index) =>
++      prepareStillAsset(
++        new Blob([bytes], { type: 'image/png' }),
++        {
++          id: `tour-picture-${index + 1}`,
++          provenance: {
++            kind: 'original',
++            credit: 'Test fixture',
++            source: 'Explicit one-pixel host-test media, not production art.',
++          },
++        },
++        { decodeImage },
++      ),
++    ),
++  );
++  const library = {
++    format: MEDIA_LIBRARY_FORMAT,
++    assets: prepared.map((x) => x.asset),
++    presentations: [],
++    assignments: [],
++  };
++  for (const [index, level] of entry.campaign.levels.entries()) {
++    const identity = identities.resolve({
++      executionKey: entry.executionKey,
++      levelId: level.id,
++      levelRevision: level.revision,
++      themeId: 'fpv',
++    });
++    const id = `tour-presentation-${index + 1}`;
++    library.presentations.push({
++      format: MEDIA_PRESENTATION_FORMAT,
++      id,
++      revision: 1,
++      identity,
++      poster: { assetId: prepared[index % 2].asset.id, fit: 'contain', sampling: 'nearest' },
++      story: null,
++      description: `Injected mission ${index + 1} picture.`,
++    });
++    library.assignments.push({ identity, presentationId: id, revision: 1 });
++  }
++  await store.commit(
++    await store.prepare(
++      library,
++      prepared.map((x) => ({ sha256: x.asset.sha256, blob: x.blob })),
++      { executionCatalog: catalog },
++    ),
++    { expectedGeneration: 0 },
++  );
++  const beforeWrites = [...memory.allPuts];
++  const blobs = new Map(),
++    images = [],
++    revoked = [];
++  let ordinal = 0;
++  const media = { onDecode: null, onRelease: null, fail: false, images, revoked };
++  class URLImpl extends URL {
++    static createObjectURL(blob) {
++      const id = `blob:tour-${++ordinal}`;
++      blobs.set(id, blob);
++      return id;
++    }
++    static revokeObjectURL(id) {
++      revoked.push(id);
++      blobs.delete(id);
++    }
++  }
++  class ImageClass {
++    constructor() {
++      images.push(this);
++    }
++    set src(value) {
++      this.source = value;
++      Promise.resolve()
++        .then(async () => {
++          this.bytes = value.startsWith('data:')
++            ? Buffer.from(value.split(',')[1], 'base64')
++            : Buffer.from(await blobs.get(value).arrayBuffer());
++          this.width = this.naturalWidth = this.bytes.readUInt32BE(16);
++          this.height = this.naturalHeight = this.bytes.readUInt32BE(20);
++          this.onload?.();
++        })
++        .catch((error) => this.onerror?.(error));
++    }
++    async decode() {
++      await media.onDecode?.(this);
++      if (media.fail) {
++        media.fail = false;
++        throw new Error('Tour candidate decode refused.');
++      }
++    }
++    removeAttribute(name) {
++      assert.equal(name, 'src');
++      this.releases = (this.releases || 0) + 1;
++      media.onRelease?.(this);
++    }
++  }
++  const p = await couchPage(t, {
++    campaign,
++    initialLevel: null,
++    ImageClass,
++    URLImpl,
++    assetDatabase: {
++      open(name, ...args) {
++        return (name === MANAGED_MEDIA_DATABASE ? memory : assets).indexedDB.open(name, ...args);
++      },
++    },
++    storage: {
++      getItem: () => null,
++      setItem() {
++        assert.fail('Tour must not write player preferences or progress.');
++      },
++    },
++    fetchResponse(path) {
++      if (path === '../content/packs/fpv-arcade-r5.json') return { ok: false };
++    },
++  });
++  t.after(() => {
++    store.close();
++    manager.close();
++  });
++  return {
++    p,
++    media,
++    originals: prepared,
++    assertNoWrites() {
++      assert.deepEqual(memory.allPuts, beforeWrites);
++      assert.deepEqual(assets.allPuts, []);
++    },
++  };
++}
++async function format(p, value, selected = 'tour-fixture-1') {
++  await action(p, 'race-focus');
++  p.$('race-level').value = selected;
++  await action(p, 'race-level', 'change');
++  p.$('race-format').value = value;
++  await action(p, 'race-format', 'change');
++  await action(p, 'race-setup-back');
++}
++async function start(p, id = 'race-start') {
++  p.$(id).focus();
++  await action(p, id);
++  assert.equal(p.state(), 'running');
++}
++function finish(p, winner = 0) {
++  assert.equal(p.state(), 'running');
++  const keys = winner === null ? ['KeyS', 'ArrowDown'] : [winner === 0 ? 'KeyS' : 'ArrowDown'];
++  for (const key of keys) p.key(key);
++  for (let frame = 0; frame < 2000 && p.state() === 'running'; frame++) p.frame();
++  for (const key of keys) p.key(key, false);
++  assert.equal(
++    p.state(),
++    'finished',
++    'Legal First Signal geometry finishes by an actual downward cut.',
++  );
++  assert.equal(p.renders.filter((run) => run.status === 'won').length, winner === null ? 2 : 1);
++}
++function result(p) {
++  assert.equal(p.state(), 'finished');
++  return {
++    runs: [...p.renders],
++    checkpoint: p.checkpoint(),
++    picture: p.drawOptions[0].backdrop,
++    scores: p.$('series-score').textContent,
++    rows: [0, 1].map((i) => p.$(`race-result-${i}`).textContent),
++    selected: p.$('race-level').value,
++    next: p.$('race-start').textContent,
++    summary: p.$('race-format-summary').textContent,
++  };
++}
++function retained(p, before) {
++  assert.equal(p.state(), 'finished');
++  assert.equal(
++    p.renders.every((run, i) => run === before.runs[i]),
++    true,
++  );
++  assert.deepEqual(p.checkpoint(), before.checkpoint);
++  assert.equal(
++    p.drawOptions.every((x) => x.backdrop === before.picture),
++    true,
++  );
++  assert.equal(before.picture.image.releases || 0, 0);
++  assert.equal(p.$('series-score').textContent, before.scores);
++  assert.deepEqual(
++    [0, 1].map((i) => p.$(`race-result-${i}`).textContent),
++    before.rows,
++  );
++  assert.equal(p.$('race-level').value, before.selected);
++  assert.equal(p.$('race-start').textContent, before.next);
++  assert.equal(p.$('race-format-summary').textContent, before.summary);
++  assert.equal(p.$('race-review').hidden, false);
++}
++
++test('default one race ends with an explicit same-mission rematch and never increments twice', async (t) => {
++  const f = await fixture(t),
++    { p } = f;
++  assert.equal(p.$('race-format').value, 'one-race');
++  await start(p);
++  finish(p);
++  assert.match(p.$('race-start').textContent, /^Rematch · Fixture Alpha$/);
++  assert.equal(p.$('race-rematch').hidden, true);
++  assert.equal(p.$('series-score').textContent, '1 : 0');
++  const before = result(p);
++  p.frames(50);
++  retained(p, before);
++  await start(p);
++  assert.equal(p.renders[0].levelId, 'tour-fixture-1');
++  assert.equal(p.$('series-score').textContent, '0 : 0');
++  finish(p, null);
++  assert.equal(p.$('series-score').textContent, '0 : 0');
++  f.assertNoWrites();
++});
++
++test('explicit first-to-two retains wins through a draw and resets only accepted match rematch', async (t) => {
++  const f = await fixture(t),
++    { p } = f;
++  await format(p, 'first-to-two');
++  await start(p);
++  finish(p);
++  assert.match(p.$('race-start').textContent, /^Next round · Fixture Alpha$/);
++  await start(p);
++  finish(p, null);
++  assert.equal(p.$('series-score').textContent, '1 : 0');
++  await start(p);
++  finish(p);
++  assert.equal(p.$('series-score').textContent, '2 : 0');
++  assert.match(p.$('race-start').textContent, /^Rematch match · Fixture Alpha$/);
++  const before = result(p);
++  f.media.fail = true;
++  await action(p, 'race-start');
++  retained(p, before);
++  await start(p);
++  assert.equal(p.$('series-score').textContent, '0 : 0');
++  f.assertNoWrites();
++});
++
++test('tour selects authored first mission, advances exact distinct pictures, and ends without wrapping', async (t) => {
++  const f = await fixture(t),
++    { p } = f;
++  await format(p, 'campaign-tour', 'tour-fixture-3');
++  assert.equal(p.$('race-level').value, 'tour-fixture-1');
++  assert.match(p.$('race-format-note').textContent, /3 missions.*First: Fixture Alpha/);
++  assert.match(p.$('race-start').textContent, /^Start tour/);
++  await start(p);
++  finish(p);
++  const first = p.drawOptions[0].backdrop;
++  assert.equal(p.$('race-canvas-0').width, 768);
++  assert.deepEqual(first.image.bytes, originals[0]);
++  assert.match(p.$('race-start').textContent, /^Next · Fixture Bravo$/);
++  assert.equal(p.$('race-rematch').hidden, false);
++  await start(p);
++  assert.equal(p.renders[0].levelId, 'tour-fixture-2');
++  assert.equal(p.renders[0].level.width, 48);
++  assert.equal(p.renders[0].level.spawn.x, campaign.levels[1].spawn.x);
++  assert.notEqual(p.renders[0].level.spawn.x, campaign.levels[0].spawn.x);
++  assert.equal(p.$('race-canvas-0').width, 768);
++  assert.equal(p.$('race-canvas-1').width, 768);
++  assert.equal(p.$('race-level').value, 'tour-fixture-2');
++  assert.deepEqual(p.drawOptions[0].backdrop.image.bytes, originals[1]);
++  assert.equal(p.drawOptions[0].backdrop === p.drawOptions[1].backdrop, true);
++  assert.equal(first.image.releases, 1);
++  finish(p, 1);
++  assert.equal(p.$('series-score').textContent, '1 : 1');
++  assert.match(p.$('race-start').textContent, /^Next · Fixture Charlie$/);
++  await start(p);
++  finish(p, null);
++  assert.equal(p.$('race-start').textContent, 'Choose campaign');
++  assert.match(p.$('race-format-summary').textContent, /3\/3 missions complete/);
++  assert.equal(p.$('series-score').textContent, '1 : 1');
++  const before = result(p);
++  await action(p, 'race-start');
++  assert.equal(p.$('race-confirm').hidden, false);
++  assert.equal(
++    p.renders.every((run, i) => run === before.runs[i]),
++    true,
++  );
++  await action(p, 'race-confirm-back');
++  retained(p, before);
++  f.assertNoWrites();
++});
++
++test('tour rematch retains previous point while pending and running, then replaces it with a draw', async (t) => {
++  const f = await fixture(t),
++    { p } = f;
++  await format(p, 'campaign-tour');
++  await start(p);
++  finish(p);
++  const before = result(p),
++    entered = deferred(),
++    gate = deferred();
++  f.media.onDecode = async () => {
++    entered.resolve();
++    await gate.promise;
++  };
++  p.$('race-rematch').focus();
++  const pending = action(p, 'race-rematch');
++  await entered.promise;
++  retained(p, before);
++  gate.resolve();
++  await pending;
++  assert.equal(
++    p.state(),
++    'running',
++    'Still-owned secondary Rematch can transfer focus and start shipped content.',
++  );
++  assert.equal(p.renders[0].levelId, 'tour-fixture-1');
++  assert.equal(p.$('series-score').textContent, '1 : 0');
++  finish(p, null);
++  assert.equal(p.$('series-score').textContent, '0 : 0');
++  assert.match(p.$('race-format-summary').textContent, /1\/3 missions complete/);
++  assert.match(p.$('race-start').textContent, /^Next · Fixture Bravo$/);
++  f.assertNoWrites();
++});
++
++test('failed different-mission Next preserves result/cursor/art and retry publishes the captured mission before retirement', async (t) => {
++  const f = await fixture(t),
++    { p } = f;
++  await format(p, 'campaign-tour');
++  await start(p);
++  finish(p);
++  const before = result(p);
++  f.media.fail = true;
++  p.$('race-start').focus();
++  await action(p, 'race-start');
++  retained(p, before);
++  assert.match(p.$('race-message').textContent, /Results are kept.*Next/);
++  let observed;
++  f.media.onRelease = (image) => {
++    if (image !== before.picture.image) return;
++    p.frame(0);
++    observed = {
++      state: p.state(),
++      level: p.renders[0].levelId,
++      selected: p.$('race-level').value,
++      points: p.$('series-score').textContent,
++      summary: p.$('race-format-summary').textContent,
++      newRuns: p.renders.every((run, i) => run !== before.runs[i]),
++      bytes: p.drawOptions[0].backdrop.image.bytes,
++    };
++  };
++  await start(p);
++  assert.equal(observed.state, 'ready');
++  assert.equal(observed.level, 'tour-fixture-2');
++  assert.equal(observed.newRuns, true);
++  assert.equal(observed.points, '1 : 0');
++  assert.match(observed.summary, /1\/3 missions complete/);
++  assert.deepEqual(observed.bytes, originals[1]);
++  assert.equal(p.$('race-level').value, 'tour-fixture-2');
++  assert.equal(before.picture.image.releases, 1);
++  f.assertNoWrites();
++});
++
++for (const origin of ['race-start', 'race-rematch'])
++  test(`tour ${origin} Cancel retains results and ignores late decode before explicit retry`, async (t) => {
++    const f = await fixture(t),
++      { p } = f;
++    await format(p, 'campaign-tour');
++    await start(p);
++    finish(p);
++    const before = result(p),
++      entered = deferred(),
++      gate = deferred();
++    f.media.onDecode = async () => {
++      entered.resolve();
++      await gate.promise;
++    };
++    p.$(origin).focus();
++    const pending = action(p, origin);
++    await entered.promise;
++    assert.equal(p.doc.activeElement === p.$('race-picture-cancel'), true);
++    await action(p, 'race-picture-cancel');
++    assert.equal(p.doc.activeElement === p.$(origin), true);
++    retained(p, before);
++    gate.resolve();
++    await pending;
++    retained(p, before);
++    f.media.onDecode = null;
++    await start(p, origin);
++    assert.equal(
++      p.renders[0].levelId,
++      origin === 'race-start' ? 'tour-fixture-2' : 'tour-fixture-1',
++    );
++    assert.equal(p.$('series-score').textContent, '1 : 0');
++    f.assertNoWrites();
++  });
++
++for (const interruption of ['foreign-focus', 'blur', 'restore-reentry'])
++  test(`secondary tour Rematch preserves credit and requires fresh Start after ${interruption}`, async (t) => {
++    const f = await fixture(t),
++      { p } = f;
++    await format(p, 'campaign-tour');
++    await start(p);
++    finish(p);
++    const entered = deferred(),
++      gate = deferred();
++    f.media.onDecode = async () => {
++      entered.resolve();
++      await gate.promise;
++    };
++    p.$('race-rematch').focus();
++    const pending = action(p, 'race-rematch');
++    await entered.promise;
++    if (interruption === 'foreign-focus') p.$('race-help').focus();
++    if (interruption === 'blur') p.win.emit('blur');
++    if (interruption === 'restore-reentry') {
++      const target = p.$('race-start'),
++        focus = target.focus.bind(target);
++      target.focus = (...args) => {
++        focus(...args);
++        p.$('race-help').focus();
++        p.doc.body.focus();
++      };
++    }
++    gate.resolve();
++    await pending;
++    assert.equal(p.state(), 'ready');
++    assert.equal(p.$('series-score').textContent, '1 : 0');
++    assert.equal(p.renders[0].levelId, 'tour-fixture-1');
++    if (interruption === 'foreign-focus')
++      assert.equal(p.doc.activeElement === p.$('race-help'), true);
++    p.frames(20);
++    assert.equal(p.state(), 'ready');
++    await start(p);
++    f.assertNoWrites();
++  });
+diff --git a/game/test/couch-progression.test.mjs b/game/test/couch-progression.test.mjs
+new file mode 100644
+index 0000000000000000000000000000000000000000..9eda513ed62b1a7488a89073cff9d942fe994ac1
+--- /dev/null
++++ b/game/test/couch-progression.test.mjs
+@@ -0,0 +1,319 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { COUCH_RACE_FORMATS, createCouchProgression } from '../couch/couch-progression.mjs';
++
++const missions = () => [
++  { key: 'base/exact-campaign/one', levelId: 'one', name: 'First mission' },
++  { key: 'base/exact-campaign/two', levelId: 'two', name: 'Second mission' },
++  { key: 'base/exact-campaign/three', levelId: 'three', name: 'Final mission' },
++];
++const create = (options = {}) =>
++  createCouchProgression({
++    campaignKey: 'campaign/revision/content-identity',
++    campaignName: 'Named campaign',
++    missions: missions(),
++    roundId: 10,
++    ...options,
++  });
++function finish(owner, winner) {
++  assert.equal(owner.settle({ roundId: owner.snapshot().roundId, winner }), true);
++}
++function adopt(owner, action) {
++  const plan = owner.plan(action);
++  assert.ok(plan);
++  assert.equal(owner.commit(plan, owner.snapshot().roundId + 1), true);
++  return plan;
++}
++
++test('default one-race ends in a named rematch and resets only when that rematch commits', () => {
++  const owner = create();
++  assert.equal(owner.snapshot().format, 'one-race');
++  assert.equal(owner.plan('next'), null);
++  assert.equal(owner.plan('rematch'), null);
++  finish(owner, 1);
++  const completed = owner.snapshot();
++  assert.deepEqual(completed.points, [0, 1]);
++  assert.equal(completed.next, null);
++  assert.equal(completed.rematch.name, 'First mission');
++  const plan = owner.plan('rematch');
++  assert.deepEqual(owner.snapshot(), completed);
++  assert.equal(owner.commit(plan, 11), true);
++  assert.equal(owner.snapshot().mission.key, completed.mission.key);
++  assert.deepEqual(owner.snapshot().points, [0, 0]);
++  assert.equal(owner.snapshot().terminal, false);
++});
++
++test('a drawn one-race result has no point and remains explicitly rematchable', () => {
++  const owner = create();
++  finish(owner, null);
++  assert.deepEqual(owner.snapshot().points, [0, 0]);
++  assert.equal(owner.snapshot().terminal, true);
++  assert.equal(owner.snapshot().winner, null);
++  assert.equal(owner.snapshot().next, null);
++  assert.ok(owner.plan('rematch'));
++});
++
++test('first-to-two counts wins rather than draws and ends only after the second win', () => {
++  const owner = create({ format: 'first-to-two' });
++  finish(owner, null);
++  assert.deepEqual(owner.snapshot().points, [0, 0]);
++  assert.equal(owner.snapshot().rematch, null);
++  assert.equal(owner.snapshot().next.name, 'First mission');
++  adopt(owner, 'next');
++  finish(owner, 0);
++  assert.deepEqual(owner.snapshot().points, [1, 0]);
++  assert.equal(owner.snapshot().seriesComplete, false);
++  adopt(owner, 'next');
++  finish(owner, null);
++  assert.deepEqual(owner.snapshot().points, [1, 0]);
++  adopt(owner, 'next');
++  finish(owner, 1);
++  assert.deepEqual(owner.snapshot().points, [1, 1]);
++  adopt(owner, 'next');
++  finish(owner, 0);
++  assert.deepEqual(owner.snapshot().points, [2, 1]);
++  assert.equal(owner.snapshot().seriesComplete, true);
++  assert.equal(owner.snapshot().next, null);
++  assert.equal(owner.plan('next'), null);
++  const rematch = owner.plan('rematch');
++  assert.deepEqual(owner.snapshot().points, [2, 1]);
++  assert.equal(owner.commit(rematch, 20), true);
++  assert.deepEqual(owner.snapshot().points, [0, 0]);
++  assert.equal(owner.snapshot().seriesComplete, false);
++});
++
++test('terminal delivery is idempotent and obsolete rounds cannot award another result', () => {
++  const owner = create({ format: 'first-to-two' });
++  assert.equal(owner.settle({ roundId: 9, winner: 1 }), false);
++  assert.equal(owner.settle({ roundId: 11, winner: 1 }), false);
++  finish(owner, 0);
++  const settled = owner.snapshot();
++  assert.equal(owner.settle({ roundId: 10, winner: 0 }), false);
++  assert.equal(owner.settle({ roundId: 10, winner: 1 }), false);
++  assert.deepEqual(owner.snapshot(), settled);
++  adopt(owner, 'next');
++  const active = owner.snapshot();
++  assert.equal(owner.settle({ roundId: 10, winner: 1 }), false);
++  assert.deepEqual(owner.snapshot(), active);
++});
++
++test('a tour advances in captured authored order and completes without an implicit wrap', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 0);
++  assert.equal(owner.snapshot().next.name, 'Second mission');
++  adopt(owner, 'next');
++  assert.equal(owner.snapshot().mission.levelId, 'two');
++  finish(owner, null);
++  assert.equal(owner.snapshot().completed, 2);
++  assert.deepEqual(owner.snapshot().points, [1, 0]);
++  adopt(owner, 'next');
++  assert.equal(owner.snapshot().mission.levelId, 'three');
++  finish(owner, 1);
++  const final = owner.snapshot();
++  assert.equal(final.tourComplete, true);
++  assert.equal(final.completed, 3);
++  assert.deepEqual(final.points, [1, 1]);
++  assert.equal(final.next, null);
++  assert.equal(owner.plan('next'), null);
++  assert.equal(final.rematch.name, 'Final mission');
++  assert.deepEqual(
++    final.records.map((r) => r.missionKey),
++    missions().map((m) => m.key),
++  );
++});
++
++test('a pending or running rematch preserves its earlier tour point until replacement settles', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 0);
++  const before = owner.snapshot(),
++    rematch = owner.plan('rematch');
++  assert.deepEqual(owner.snapshot(), before);
++  assert.equal(owner.commit(rematch, 11), true);
++  assert.deepEqual(owner.snapshot().records, before.records);
++  assert.deepEqual(owner.snapshot().points, [1, 0]);
++  assert.equal(owner.settle({ roundId: 10, winner: 1 }), false);
++  finish(owner, 1);
++  assert.deepEqual(owner.snapshot().points, [0, 1]);
++  assert.equal(owner.snapshot().records.length, 1);
++  assert.equal(owner.snapshot().records[0].roundId, 11);
++  adopt(owner, 'rematch');
++  assert.deepEqual(owner.snapshot().points, [0, 1]);
++  finish(owner, null);
++  assert.deepEqual(owner.snapshot().points, [0, 0]);
++  assert.equal(owner.snapshot().records.length, 1);
++  assert.equal(owner.snapshot().records[0].winner, null);
++});
++
++test('rematching a later mission cannot change another mission credit', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 0);
++  adopt(owner, 'next');
++  finish(owner, 1);
++  const first = owner.snapshot().records[0];
++  adopt(owner, 'rematch');
++  finish(owner, 0);
++  assert.deepEqual(owner.snapshot().points, [2, 0]);
++  assert.equal(owner.snapshot().records[0], first);
++  assert.equal(owner.snapshot().completed, 2);
++});
++
++test('a one-mission tour ends after a draw and retains its result while rematching', () => {
++  const owner = create({ format: 'campaign-tour', missions: missions().slice(0, 1) });
++  finish(owner, null);
++  assert.equal(owner.snapshot().tourComplete, true);
++  assert.equal(owner.plan('next'), null);
++  assert.deepEqual(owner.snapshot().points, [0, 0]);
++  adopt(owner, 'rematch');
++  assert.equal(owner.snapshot().tourComplete, false);
++  assert.equal(owner.snapshot().completed, 1);
++  finish(owner, 1);
++  assert.equal(owner.snapshot().tourComplete, true);
++  assert.deepEqual(owner.snapshot().points, [0, 1]);
++});
++
++test('failed preparation can reuse its exact pending plan without moving the cursor', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 1);
++  const completed = owner.snapshot(),
++    planned = owner.plan('next');
++  assert.equal(owner.plan('next'), planned);
++  assert.equal(owner.current(planned), true);
++  assert.equal(owner.plan('rematch'), null, 'Another action cannot overwrite a pending target.');
++  assert.deepEqual(owner.snapshot(), completed);
++  assert.equal(owner.commit(planned, 11), true);
++  assert.equal(owner.snapshot().mission.key, planned.target.key);
++  assert.deepEqual(owner.snapshot().points, [0, 1]);
++  assert.equal(owner.commit(planned, 12), false);
++});
++
++test('Cancel retires only its plan; a late failed/cancelled rematch cannot erase tour points', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 0);
++  const completed = owner.snapshot(),
++    cancelled = owner.plan('rematch');
++  assert.equal(owner.cancel(cancelled), true);
++  assert.equal(owner.current(cancelled), false);
++  assert.deepEqual(owner.snapshot(), completed);
++  const retry = owner.plan('rematch');
++  assert.notEqual(retry, cancelled);
++  assert.equal(owner.cancel(cancelled), false);
++  assert.equal(owner.current(retry), true);
++  assert.equal(owner.commit(cancelled, 11), false);
++  assert.deepEqual(owner.snapshot(), completed);
++  assert.equal(owner.commit(retry, 12), true);
++  assert.deepEqual(owner.snapshot().points, [1, 0]);
++});
++
++test('plans cannot cross owners or be reconstructed from their public fields', () => {
++  const first = create({ format: 'campaign-tour' }),
++    replacement = create({ format: 'campaign-tour' });
++  finish(first, 0);
++  finish(replacement, 1);
++  const plan = first.plan('next'),
++    current = replacement.plan('next'),
++    before = replacement.snapshot();
++  assert.equal(first.current({ ...plan }), false);
++  assert.equal(first.commit({ ...plan }, 11), false);
++  assert.equal(replacement.commit(plan, 11), false);
++  assert.equal(replacement.cancel(plan), false);
++  assert.equal(replacement.current(current), true);
++  assert.deepEqual(replacement.snapshot(), before);
++});
++
++test('an adopted round must have a strictly newer identity, with no partial commit on refusal', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 0);
++  const plan = owner.plan('next'),
++    before = owner.snapshot();
++  for (const id of [9, 10]) assert.equal(owner.commit(plan, id), false);
++  for (const id of [0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1])
++    assert.throws(() => owner.commit(plan, id), /round identity/);
++  assert.equal(owner.current(plan), true);
++  assert.deepEqual(owner.snapshot(), before);
++  assert.equal(owner.commit(plan, 100), true, 'Cancelled candidate IDs may leave gaps.');
++});
++
++test('disposal invalidates outstanding work without altering retained results', () => {
++  const owner = create({ format: 'campaign-tour' });
++  finish(owner, 0);
++  const plan = owner.plan('next'),
++    before = owner.snapshot();
++  owner.dispose();
++  owner.dispose();
++  assert.deepEqual(owner.snapshot().records, before.records);
++  assert.deepEqual(owner.snapshot().points, before.points);
++  assert.equal(owner.snapshot().disposed, true);
++  assert.equal(owner.current(plan), false);
++  assert.equal(owner.commit(plan, 11), false);
++  assert.equal(owner.cancel(plan), false);
++  assert.equal(owner.plan('rematch'), null);
++  assert.equal(owner.settle({ roundId: 10, winner: 1 }), false);
++});
++
++test('owned identity/order and exposed result projections cannot be mutated by their callers', () => {
++  const supplied = missions(),
++    owner = create({ format: 'campaign-tour', missions: supplied });
++  supplied[0].name = 'Changed later';
++  supplied.reverse();
++  finish(owner, 1);
++  const view = owner.snapshot(),
++    plan = owner.plan('next');
++  assert.equal(view.mission.name, 'First mission');
++  assert.equal(plan.target.name, 'Second mission');
++  for (const write of [
++    () => view.points.push(5),
++    () => {
++      view.records[0].winner = 0;
++    },
++    () => {
++      view.mission.key = 'different';
++    },
++    () => {
++      view.campaign.key = 'different';
++    },
++    () => {
++      plan.target.index = 2;
++    },
++    () => {
++      plan.resetWins = true;
++    },
++    () => COUCH_RACE_FORMATS.push('other'),
++  ])
++    assert.throws(write, TypeError);
++  assert.deepEqual(owner.snapshot().points, [0, 1]);
++  assert.equal(owner.commit(plan, 11), true);
++  assert.equal(owner.snapshot().mission.levelId, 'two');
++});
++
++test('a new tour refuses a later starting point while standalone formats preserve selected identity', () => {
++  const initialKey = missions()[1].key;
++  assert.throws(() => create({ format: 'campaign-tour', initialKey }), /first mission/);
++  for (const format of ['one-race', 'first-to-two']) {
++    const owner = create({ format, initialKey });
++    assert.equal(owner.snapshot().mission.levelId, 'two');
++    finish(owner, 0);
++    assert.equal((owner.snapshot().next ?? owner.snapshot().rematch).levelId, 'two');
++  }
++});
++
++test('invalid campaign identities, missions and result values reject without manufacturing progress', () => {
++  for (const options of [
++    { format: 'tour-ish' },
++    { campaignKey: '' },
++    { campaignName: ' ' },
++    { missions: [] },
++    { missions: [undefined] },
++    { missions: [{ key: 'one', levelId: 'one' }] },
++    { missions: [missions()[0], missions()[0]] },
++    { missions: [missions()[0], { ...missions()[1], levelId: 'one' }] },
++    { initialKey: 'another-campaign/one' },
++    { roundId: 0 },
++  ])
++    assert.throws(() => create(options), TypeError);
++  const owner = create(),
++    before = owner.snapshot();
++  for (const winner of [undefined, -1, 2, '0', false, NaN])
++    assert.throws(() => owner.settle({ roundId: 10, winner }), /winner/);
++  assert.throws(() => owner.plan('skip-campaign'), /action/);
++  assert.deepEqual(owner.snapshot(), before);
++});
+diff --git a/game/test/couch-shell.test.mjs b/game/test/couch-shell.test.mjs
+index 3bea4cfa2eadd2956db405ae0039cde3ab248148..cde0f40459861fe65e060169776217e969da6d7f 100644
+--- a/game/test/couch-shell.test.mjs
++++ b/game/test/couch-shell.test.mjs
+@@ -389,13 +389,13 @@ test('a real finished draw exposes both frozen boards, Results returns without a
+   assert.equal(f.state(), 'finished');
+   const before = f.checkpoint();
+   const score = f.$('series-score').textContent;
+-  assert.match(f.$('race-title').textContent, /Round complete/);
++  assert.equal(f.$('race-title').textContent, 'Race complete.');
+   assert.equal(f.$('race-result-0').hidden, false);
+   assert.equal(f.$('race-result-1').hidden, false);
+   assert.deepEqual(firstResultsReveal, [
+     {
+       options: { block: 'nearest', inline: 'nearest', behavior: 'auto' },
+-      title: 'Round complete.',
++      title: 'Race complete.',
+       rows: [0, 1].map((i) => ({ hidden: false, text: f.$(`race-result-${i}`).textContent })),
+     },
+   ]);
+diff --git a/game/test/couch-static-picture-host.test.mjs b/game/test/couch-static-picture-host.test.mjs
+index 532615f8d3f94349828a93dadd4548ee6ee137c2..0554bf4575bccf14c3e9e35b4f9ed31887f7bdca 100644
+--- a/game/test/couch-static-picture-host.test.mjs
++++ b/game/test/couch-static-picture-host.test.mjs
+@@ -134,6 +134,9 @@ async function fixture(
+         return { ok: false };
+     },
+     beforeImport({ document, window }) {
++      // These retained Next/series contracts explicitly choose the existing
++      // first-to-two format. The default one-race has its own full-host cases.
++      document.getElementById('race-format').value = 'first-to-two';
+       onMount?.({ document, window });
+       lease = mountPresentationPage({
+         document,
+@@ -736,7 +739,7 @@ test('completed match wins reset only when an explicitly retried Next commits',
+   await action(p, 'race-start');
+   retainedResult(p, before);
+   assert.equal(p.$('series-score').textContent, '2 : 0');
+-  assert.match(p.$('race-start').textContent, /another match/);
++  assert.match(p.$('race-start').textContent, /^Rematch match · First Signal$/);
+   await action(p, 'race-start');
+   assert.equal(p.state(), 'running');
+   assert.equal(p.$('series-score').textContent, '0 : 0');

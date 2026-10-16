@@ -1,0 +1,328 @@
+{
+  "scope": "Verified descriptor metadata only; no assets, commands, progress, runtime or playback fixture. Snapshot current main206 catalogue; immutable pins must stay unchanged.",
+  "sourceRevision": "206ccd8b53180c061d394069037678de1b33761b",
+  "rows": [
+    {
+      "id": "alpine-highlands-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json",
+        "bytes": 115316,
+        "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa"
+      },
+      "revision": "station-r5",
+      "descriptorTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "filesBytes": 22584529
+    },
+    {
+      "id": "lunar-basin-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json",
+        "bytes": 14759,
+        "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65"
+      },
+      "revision": "composition-r3",
+      "descriptorTitle": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "filesBytes": 2079110
+    },
+    {
+      "id": "alpine-highlands-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json",
+        "bytes": 115316,
+        "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f"
+      },
+      "revision": "station-r4",
+      "descriptorTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "filesBytes": 22578804
+    },
+    {
+      "id": "alpine-highlands-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json",
+        "bytes": 115316,
+        "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d"
+      },
+      "revision": "station-r3",
+      "descriptorTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "filesBytes": 22578814
+    },
+    {
+      "id": "lunar-basin-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json",
+        "bytes": 18790,
+        "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a"
+      },
+      "revision": "composition-r2",
+      "descriptorTitle": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "filesBytes": 1963042
+    },
+    {
+      "id": "alpine-highlands-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json",
+        "bytes": 115311,
+        "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec"
+      },
+      "revision": "review-r2",
+      "descriptorTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "filesBytes": 21644516
+    },
+    {
+      "id": "alpine-highlands-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json",
+        "bytes": 114992,
+        "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a"
+      },
+      "revision": "review-r1",
+      "descriptorTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "filesBytes": 20951894
+    },
+    {
+      "id": "canal-city-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json",
+        "bytes": 6580,
+        "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87"
+      },
+      "revision": "district-r2",
+      "descriptorTitle": {
+        "en": "Canal City — bridges and courtyards",
+        "uk": "Місто каналів — мости й подвір’я"
+      },
+      "filesBytes": 6765271
+    },
+    {
+      "id": "desert-expedition-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json",
+        "bytes": 329271,
+        "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+      },
+      "revision": "landmarks-r1",
+      "descriptorTitle": {
+        "en": "Desert Expedition — six rock compositions",
+        "uk": "Пустельна експедиція — шість скельних композицій"
+      },
+      "filesBytes": 47835247
+    },
+    {
+      "id": "desert-expedition-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json",
+        "bytes": 327361,
+        "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d"
+      },
+      "revision": "natural-r1",
+      "descriptorTitle": {
+        "en": "Desert Expedition — natural terrain study",
+        "uk": "Пустельна експедиція — дослідження природного рельєфу"
+      },
+      "filesBytes": 47556515
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json",
+        "bytes": 6617,
+        "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce"
+      },
+      "revision": "harbour-r3",
+      "descriptorTitle": {
+        "en": "Tropical coast — connected harbour arrival",
+        "uk": "Тропічне узбережжя — сполучені пірси гавані"
+      },
+      "filesBytes": 7952305
+    },
+    {
+      "id": "railway-valley-expanse",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json",
+        "bytes": 98773,
+        "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7"
+      },
+      "revision": "review-r1",
+      "descriptorTitle": {
+        "en": "Railway Valley — six industrial districts",
+        "uk": "Залізнична долина — шість промислових районів"
+      },
+      "filesBytes": 17844865
+    },
+    {
+      "id": "coaster-gardens-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json",
+        "bytes": 32824,
+        "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a"
+      },
+      "revision": "review-r2",
+      "descriptorTitle": {
+        "en": "Coaster Gardens — six connected park districts",
+        "uk": "Сади атракціонів — шість поєднаних паркових районів"
+      },
+      "filesBytes": 34181566
+    },
+    {
+      "id": "coaster-gardens-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json",
+        "bytes": 29654,
+        "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5"
+      },
+      "revision": "review-r1",
+      "descriptorTitle": {
+        "en": "Coaster Gardens — six connected park districts",
+        "uk": "Сади атракціонів — шість поєднаних паркових районів"
+      },
+      "filesBytes": 33878943
+    },
+    {
+      "id": "hillside-town-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json",
+        "bytes": 6579,
+        "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573"
+      },
+      "revision": "courtyard-r5",
+      "descriptorTitle": {
+        "en": "Hillside Town — civic court materials",
+        "uk": "Містечко на схилі — матеріали міського подвір’я"
+      },
+      "filesBytes": 8660487
+    },
+    {
+      "id": "hillside-town-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json",
+        "bytes": 6558,
+        "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+      },
+      "revision": "town-r2",
+      "descriptorTitle": {
+        "en": "Hillside Town — terraces and courtyards",
+        "uk": "Містечко на схилі — тераси та подвір’я"
+      },
+      "filesBytes": 8352486
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json",
+        "bytes": 6609,
+        "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49"
+      },
+      "revision": "review-r2",
+      "descriptorTitle": {
+        "en": "Tropical coast — six flight districts",
+        "uk": "Тропічне узбережжя — шість районів польоту"
+      },
+      "filesBytes": 7857157
+    },
+    {
+      "id": "canyon-expanse-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json",
+        "bytes": 329372,
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "revision": "relief-r1",
+      "descriptorTitle": {
+        "en": "Canyon Expanse — broad relief study",
+        "uk": "Простори каньйону — дослідження рельєфу"
+      },
+      "filesBytes": 47646152
+    },
+    {
+      "id": "tropical-coastal-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json",
+        "bytes": 6602,
+        "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443"
+      },
+      "revision": "review-r1",
+      "descriptorTitle": {
+        "en": "Tropical coast — bounded flight study",
+        "uk": "Тропічне узбережжя — дослідження польоту"
+      },
+      "filesBytes": 5982641
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/dbfa4cef92866938ce05815ee9beb4830d935647/authoring/fpv-worlds/regions/canyon-badlands/delivery-districts-r1/delivery.json",
+        "bytes": 24279,
+        "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8"
+      },
+      "revision": "districts-r1",
+      "descriptorTitle": {
+        "en": "Canyon Badlands — six districts",
+        "uk": "Каньйон — шість районів"
+      },
+      "filesBytes": 3380298
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json",
+        "bytes": 6790,
+        "sha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0"
+      },
+      "revision": "rounded-r1",
+      "descriptorTitle": {
+        "en": "Canyon arrival — rounded relief study",
+        "uk": "Вхід у каньйон — дослідження плавного рельєфу"
+      },
+      "filesBytes": 1173350
+    },
+    {
+      "id": "railway-valley-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json",
+        "bytes": 6661,
+        "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15"
+      },
+      "revision": "structure-r1",
+      "descriptorTitle": {
+        "en": "Railway Valley — structural study",
+        "uk": "Залізнична долина — дослідження конструкцій"
+      },
+      "filesBytes": 5684606
+    },
+    {
+      "id": "urban-earthworks-study",
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+        "bytes": 6603,
+        "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+      },
+      "revision": "review-r2",
+      "descriptorTitle": {
+        "en": "Urban Bando: loading halls and parking ramps",
+        "uk": "Міське бандо: вантажні зали й пандуси паркінгу"
+      },
+      "filesBytes": 2268846
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: mode RT default applies only when shared controller bindings are absent
+ok 1 - mode RT default applies only when shared controller bindings are absent
+  ---
+  duration_ms: 4.501333
+  ...
+# Subtest: saved axes, inversions, dead-zone hysteresis and button directions preserve 2D analog flight
+ok 2 - saved axes, inversions, dead-zone hysteresis and button directions preserve 2D analog flight
+  ---
+  duration_ms: 1.400166
+  ...
+# Subtest: mapped menu confirm is a paired press/release and cannot boost through a modal transition
+ok 3 - mapped menu confirm is a paired press/release and cannot boost through a modal transition
+  ---
+  duration_ms: 1.385875
+  ...
+# Subtest: pause remapping, disconnect and same-slot identity replacement require fresh neutral
+ok 4 - pause remapping, disconnect and same-slot identity replacement require fresh neutral
+  ---
+  duration_ms: 1.103958
+  ...
+# Subtest: unknown raw devices never steer or block keyboard; exact saved radio profile keeps analog calibration
+ok 5 - unknown raw devices never steer or block keyboard; exact saved radio profile keeps analog calibration
+  ---
+  duration_ms: 2.860833
+  ...
+# Subtest: preference loading uses the native release/edition key without writes and rejects corrupt settings
+ok 6 - preference loading uses the native release/edition key without writes and rejects corrupt settings
+  ---
+  duration_ms: 1.768709
+  ...
+# Subtest: adopting changed preferences and clearing input do not turn held controls into actions; disposal releases listeners
+ok 7 - adopting changed preferences and clearing input do not turn held controls into actions; disposal releases listeners
+  ---
+  duration_ms: 0.928708
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 197.931375

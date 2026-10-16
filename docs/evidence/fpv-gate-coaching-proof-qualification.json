@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "name": "self-level slower attempt completes by ordinary recorded controls",
+      "passed": true
+    },
+    {
+      "name": "self-level longest completed section and greatest positive loss are authored gates",
+      "passed": true,
+      "longest": {
+        "index": 3,
+        "ticks": 2667,
+        "endTick": 6515
+      },
+      "loss": {
+        "index": 3,
+        "ticks": 2306
+      }
+    },
+    {
+      "name": "self-level prefix is an independently replayed nonterminal practice flight",
+      "passed": true
+    },
+    {
+      "name": "acro slower attempt completes by ordinary recorded controls",
+      "passed": true
+    },
+    {
+      "name": "acro longest completed section and greatest positive loss are authored gates",
+      "passed": true,
+      "longest": {
+        "index": 3,
+        "ticks": 2667,
+        "endTick": 6516
+      },
+      "loss": {
+        "index": 3,
+        "ticks": 2305
+      }
+    },
+    {
+      "name": "acro prefix is an independently replayed nonterminal practice flight",
+      "passed": true
+    },
+    {
+      "name": "woodland-01 / self-level final ordinary neutral tick completes",
+      "passed": true
+    },
+    {
+      "name": "beginner-24 / self-level final ordinary neutral tick completes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02 / self-level final ordinary neutral tick completes",
+      "passed": true
+    },
+    {
+      "name": "beginner-24 / acro final ordinary neutral tick completes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02 / acro final ordinary neutral tick completes",
+      "passed": true
+    }
+  ],
+  "rows": [
+    {
+      "mode": "self-level",
+      "ticks": 7883,
+      "longest": {
+        "index": 3,
+        "ticks": 2667,
+        "endTick": 6515
+      },
+      "loss": {
+        "index": 3,
+        "ticks": 2306
+      }
+    },
+    {
+      "mode": "acro",
+      "ticks": 7895,
+      "longest": {
+        "index": 3,
+        "ticks": 2667,
+        "endTick": 6516
+      },
+      "loss": {
+        "index": 3,
+        "ticks": 2305
+      }
+    }
+  ],
+  "bytes": 650292,
+  "sha256": "6a4b289be5e10bd96535e8ee563482062cd17af6ffb3cea9144e52b234cef087"
+}

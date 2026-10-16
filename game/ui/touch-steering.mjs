@@ -7,17 +7,19 @@ export function attachTouchSteering({
   pad,
   surface,
   indicator,
+  window: win = globalThis.window,
   getSettings,
   active,
-  onDirection,
+  onDirection = () => {},
+  onVector = () => {},
   onRelease = () => {},
   onCancel = () => {},
 }) {
   let gesture = null;
   const listeners = [];
-  const listen = (target, type, fn) => {
-    target?.addEventListener(type, fn);
-    listeners.push(() => target?.removeEventListener(type, fn));
+  const listen = (target, type, fn, options) => {
+    target?.addEventListener(type, fn, options);
+    listeners.push(() => target?.removeEventListener(type, fn, options));
   };
   const paint = (x = 0, y = 0) => {
     if (!indicator) return;
@@ -36,6 +38,7 @@ export function attachTouchSteering({
     gesture = null;
     paint();
     if (!old) return;
+    onVector({ x: 0, y: 0 }, old.id);
     onRelease(old.id);
     try {
       if (old.element.hasPointerCapture(old.id)) old.element.releasePointerCapture(old.id);
@@ -65,6 +68,23 @@ export function attachTouchSteering({
       if (gesture !== current) return;
       gesture.direction = direction;
     }
+    const current = gesture;
+    if (gesture.mode === 'stick') {
+      // Match the floating anchor's full travel. Cardinal hosts retain their
+      // existing turn callbacks; continuous flight can keep diagonal intent.
+      const scale = 1 / Math.max(56, Math.hypot(x, y));
+      onVector(direction ? { x: x * scale, y: y * scale } : { x: 0, y: 0 }, gesture.id);
+    } else {
+      const heading = gesture.mode === 'swipe' ? gesture.direction : direction;
+      onVector(
+        {
+          x: heading === 'left' ? -1 : heading === 'right' ? 1 : 0,
+          y: heading === 'up' ? -1 : heading === 'down' ? 1 : 0,
+        },
+        gesture.id,
+      );
+    }
+    if (gesture !== current) return;
     paint(x, y);
     if (gesture.mode === 'swipe' && direction) {
       gesture.x = event.clientX;
@@ -77,6 +97,16 @@ export function attachTouchSteering({
       }
     }
   };
+  const end = (event) => {
+    // A deliberate clear retires ownership before releasing capture. Late
+    // notifications and another finger's release cannot interrupt a new owner.
+    if (!gesture || gesture.id !== event.pointerId) return;
+    if (event.type === 'pointerup') clear();
+    else cancel();
+  };
+  // Capture can be unavailable. Observe matching releases outside the surface,
+  // including when another control stops propagation, so the next finger works.
+  for (const type of ['pointerup', 'pointercancel']) listen(win, type, end, true);
   for (const element of [arena, pad, surface].filter(Boolean)) {
     listen(element, 'pointerdown', (event) => {
       if (gesture || !active() || (event.button !== undefined && event.button !== 0)) return;
@@ -99,17 +129,11 @@ export function attachTouchSteering({
       } catch {}
       paint();
       if (mode === 'dpad') move(event);
+      else onVector({ x: 0, y: 0 }, gesture.id);
     });
     listen(element, 'pointermove', move);
     for (const type of ['pointerup', 'pointercancel', 'lostpointercapture'])
-      listen(element, type, (event) => {
-        // A deliberate clear releases capture after retiring its gesture.
-        // Late or incomplete capture-loss events cannot cancel the new owner.
-        if (gesture && gesture.id === event.pointerId) {
-          if (type === 'pointerup') clear();
-          else cancel();
-        }
-      });
+      listen(element, type, end);
   }
   return {
     clear,

@@ -1,4 +1,6 @@
+import { t } from '../i18n/index.mjs';
 import { attachTouchSteering } from '../ui/touch-steering.mjs';
+import { attachPlayfieldContextMenu } from '../ui/playfield-context-menu.mjs';
 import { gamepadCommand } from '../ui/input.mjs';
 import { neutralCommand } from '../multiplayer.mjs';
 
@@ -39,6 +41,7 @@ export function attachCouchInput({
   heldActions = [],
   steeringEdges = false,
   initialSlots = [null, null],
+  controllerSession = null,
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
@@ -50,21 +53,24 @@ export function attachCouchInput({
     !Array.isArray(heldActions) ||
     heldActions.some((kind) => !['action', 'pickup'].includes(kind))
   )
-    throw new TypeError('Held actions must name supported equipment actions.');
+    throw new TypeError(t('interface:heldActionsMustNameSupportedEquipmentActions'));
   const heldEquipment = new Set(heldActions);
-  if (typeof steeringEdges !== 'boolean') throw new TypeError('Steering edges must be boolean.');
+  if (typeof steeringEdges !== 'boolean')
+    throw new TypeError(t('interface:steeringEdgesMustBeBoolean'));
   if (typeof onAcceptedInput !== 'function')
     throw new TypeError('onAcceptedInput must be a function.');
   if (
     !Array.isArray(initialSlots) ||
     initialSlots.length !== 2 ||
     initialSlots.some(
-      (slot) => slot !== null && (!Number.isInteger(slot) || slot < 0 || slot > 255),
+      (slot) =>
+        slot !== null &&
+        (!Number.isInteger(slot) || slot < 0 || (slot > 255 && slot < 1024) || slot > 3071),
     ) ||
     new Set(initialSlots.filter((slot) => slot !== null)).size !==
       initialSlots.filter((slot) => slot !== null).length
   )
-    throw new TypeError('Initial controller seats need two unique bounded indexes or null.');
+    throw new TypeError(t('interface:initialControllerSeatsNeedTwoUniqueBoundedIndexesOrNull'));
   let pendingInitialSlots = [...initialSlots];
   const accepted = (player, source) => {
     // Optional display notification: a broken observer cannot reject an input.
@@ -104,6 +110,12 @@ export function attachCouchInput({
   );
   let order = 0,
     destroyed = false;
+  const detachPlayfieldContextMenu = attachPlayfieldContextMenu({
+    // Versus owns two boards; Team supplies its one explicit coop-canvas.
+    // Do not include artwork/discovery previews elsewhere in either document.
+    roots: [arena, arena?.id === 'race-canvas-0' ? doc.getElementById('race-canvas-1') : null],
+    active,
+  });
   const continuous = () => continuousSteering() === true;
   const listen = (target, type, fn, options) => {
     target.addEventListener(type, fn, options);
@@ -209,7 +221,7 @@ export function attachCouchInput({
       }
   }
   function requirePlayer(player) {
-    if (player !== 0 && player !== 1) throw new TypeError('Player must be 0 or 1.');
+    if (player !== 0 && player !== 1) throw new TypeError(t('interface:playerMustBe0Or1'));
   }
   function clearPlayer(player) {
     requirePlayer(player);
@@ -227,9 +239,9 @@ export function attachCouchInput({
   function restoreDirection(player, direction) {
     requirePlayer(player);
     if (direction !== null && !directions.includes(direction))
-      throw new TypeError('Saved direction must be a cardinal direction or null.');
+      throw new TypeError(t('interface:savedDirectionMustBeACardinalDirectionOrNull'));
     if (destroyed || !continuous())
-      throw new Error('Restoring direction requires active continuous steering.');
+      throw new Error(t('interface:restoringDirectionRequiresActiveContinuousSteering'));
     resetPlayer(player, true);
     players[player].direction = direction;
     sync();
@@ -402,6 +414,7 @@ export function attachCouchInput({
     for (const pad of doc.querySelectorAll('.race-pad')) {
       const player = Number(pad.dataset.player);
       touchInputs[player] = attachTouchSteering({
+        window: win,
         pad: pad.querySelector('.race-cross'),
         surface: pad.querySelector('.touch-surface'),
         indicator: pad.querySelector('.touch-indicator'),
@@ -421,12 +434,20 @@ export function attachCouchInput({
   function poll() {
     if (destroyed) return players.map(neutralCommand);
     let pads = [];
+    const controllerFrame = controllerSession?.frame();
     try {
-      pads = [...getGamepads()]
+      pads = [...(controllerFrame?.pads || getGamepads())]
         .filter((p) => p?.connected && p.mapping === 'standard')
         .sort((a, b) => a.index - b.index);
     } catch {}
     const indexes = new Set(pads.map((p) => p.index));
+    if (controllerFrame) {
+      players.forEach((player, i) => {
+        if (player.slot !== controllerFrame.slots[i]) player.blocked = true;
+        player.slot = controllerFrame.slots[i];
+      });
+      pendingInitialSlots = null;
+    }
     if (pendingInitialSlots) {
       for (const [seat, slot] of pendingInitialSlots.entries())
         if (slot !== null && indexes.has(slot)) players[seat].slot = slot;
@@ -438,7 +459,7 @@ export function attachCouchInput({
         player.slot = null;
         disconnected = true;
       }
-    for (const pad of pads)
+    for (const pad of controllerFrame ? [] : pads)
       if (!players.some((p) => p.slot === pad.index)) {
         const available = players.find((p) => p.slot === null);
         if (!available) break;
@@ -530,6 +551,7 @@ export function attachCouchInput({
     clear();
     destroyed = true;
     touchInputs.forEach((touch) => touch.destroy());
+    detachPlayfieldContextMenu();
     for (const remove of listeners) remove();
     for (const button of buttons) {
       clearTimeout(button.keyTimer);

@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Imported world examples · actual host qualification</title>
+  <style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 16px;
+    }
+    button {
+      font: inherit;
+      min-height: 44px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      height: 800px;
+    }
+    textarea {
+      width: 100%;
+      height: 240px;
+    }
+    p {
+      max-width: 100ch;
+    }
+  </style>
+  <h1>Imported world examples</h1>
+  <p>
+    Frozen admitted player closure; the manifest identifies source or admitted-package comparison.
+    Actual File inputs, native IndexedDB, catalogue Watch and two full rendered replays. Private
+    storage and controlled RAF timestamps; performance clock and production pause guards stay
+    unchanged. Keep this window visible and focused. No FPS or offline claim.
+  </p>
+  <button id="run">Run bounded imported-world qualification</button>
+  <p id="status" role="status">Ready</p>
+  <pre id="summary"></pre>
+  <textarea id="receipt" readonly aria-label="Complete imported example receipt"></textarea>
+  <iframe id="sim" title="Actual FPV World player"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim'),
+      wait = (ms) => new Promise((r) => setTimeout(r, ms)),
+      plain = (x) => JSON.parse(JSON.stringify(x)),
+      stable = (x) =>
+        JSON.stringify(x, (_, v) =>
+          v && typeof v === 'object' && !Array.isArray(v)
+            ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)))
+            : v,
+        );
+    let running = false;
+    async function execute() {
+      const checks = [],
+        errors = [],
+        playback = [],
+        phases = [],
+        focusEvents = [],
+        names = new Set(),
+        started = performance.now(),
+        prefix = 'fpv-imported-examples-' + Date.now() + ':',
+        memory = new Map([
+          [
+            'revealline.fpv.world-settings.v1',
+            JSON.stringify({
+              'world-language': 'en',
+              'flight-mode': 'self-level',
+              'flight-source': 'keyboard',
+              'flight-quality': 'low',
+              'flight-camera': 'fpv',
+              'sim-motion': 'reduced',
+            }),
+          ],
+        ]);
+      let w,
+        d,
+        app,
+        store,
+        manifest,
+        prep,
+        valid,
+        unavailable,
+        failure,
+        sequence = 0;
+      window.fixtureStorage = {
+        getItem: (k) => memory.get(k) ?? null,
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureRegisterDB = (name) => {
+        if (!name.startsWith(prefix)) throw Error('Unexpected database');
+        names.add(name);
+      };
+      const check = (name, pass, detail = {}) => {
+          checks.push({ name, passed: !!pass, ...detail });
+          if (!pass) throw Error(name);
+        },
+        equal = (name, a, b) => check(name, stable(a) === stable(b));
+      const progress = (label) => {
+        phases.push({ label, ms: performance.now() - started });
+        $('status').textContent = label;
+      };
+      const observe = (kind) => {
+        if (focusEvents.length < 128)
+          focusEvents.push({
+            kind,
+            ms: performance.now() - started,
+            visibility: document.visibilityState,
+            focused: document.hasFocus(),
+            frameVisibility: d?.visibilityState,
+            frameFocused: d?.hasFocus(),
+          });
+      };
+      const outerVisibility = () => observe('outer-visibility');
+      document.addEventListener('visibilitychange', outerVisibility);
+      const click = (node) => {
+        if (!node || node.disabled) throw Error('Missing/disabled UI control');
+        node.click();
+      };
+      const button = (parent, re) =>
+        [...parent.querySelectorAll('button')].find((n) => re.test(n.textContent));
+      function set(id, value) {
+        const n = d.getElementById(id);
+        n.value = value;
+        n.dispatchEvent(new w.Event('change', { bubbles: true }));
+      }
+      async function pulse(delta = 0) {
+        w.fixtureRAF.deliver(delta);
+        await wait(0);
+      }
+      async function until(fn, label, limit = 60000) {
+        const start = performance.now();
+        while (!fn()) {
+          if (performance.now() - start > limit)
+            throw Error(
+              'Timeout ' +
+                label +
+                '; ' +
+                d?.getElementById('studio-status')?.textContent +
+                '; ' +
+                d?.getElementById('flight-status')?.textContent,
+            );
+          await wait(15);
+          w?.fixtureRAF?.deliver(0);
+        }
+      }
+      async function mount(variant) {
+        if (app) {
+          errors.push(...w.fixtureErrors);
+          store.close();
+          app = null;
+        }
+        w = null;
+        d = null;
+        const url = new URL('./player.html', location.href);
+        url.searchParams.set('variant', variant);
+        url.searchParams.set('database', prefix);
+        url.searchParams.set('reload', String(++sequence));
+        const loaded = new Promise((resolve) =>
+          frame.addEventListener('load', resolve, { once: true }),
+        );
+        frame.src = url.href;
+        await loaded;
+        await until(() => frame.contentWindow?.fixtureApp, 'host mount');
+        w = frame.contentWindow;
+        d = w.document;
+        app = w.fixtureApp;
+        store = w.fixtureRecords;
+        await app.ready;
+        w.addEventListener('blur', () => observe('frame-blur'));
+        w.addEventListener('focus', () => observe('frame-focus'));
+        d.addEventListener('visibilitychange', () => observe('frame-visibility'));
+        w.focus();
+        await pulse();
+        click(d.querySelector('[data-tab="explore"]'));
+        observe('mounted-' + variant);
+      }
+      async function input(id, name, bytes) {
+        click(d.querySelector('[data-tab="packs"]'));
+        const field = d.getElementById(id),
+          transfer = new w.DataTransfer();
+        transfer.items.add(
+          new w.File([bytes], name, {
+            type: name.endsWith('.json') ? 'application/json' : 'application/octet-stream',
+          }),
+        );
+        field.files = transfer.files;
+        d.getElementById('studio-status').textContent = '';
+        field.dispatchEvent(new w.Event('change', { bubbles: true }));
+        await until(
+          () =>
+            id === 'import-proofs'
+              ? /^Imported /.test(d.getElementById('studio-status').textContent)
+              : /^Exact pack installed\./.test(d.getElementById('studio-status').textContent),
+          name + ' import',
+        );
+        check(name + ' actual input completed', field.value === '', {
+          status: d.getElementById('studio-status').textContent,
+        });
+      }
+      const fetchBytes = async (name) => {
+        const r = await fetch('./data/' + name);
+        if (!r.ok) throw Error('Missing data ' + name);
+        return r.arrayBuffer();
+      };
+      async function pack(name) {
+        await input('import-pack', name, await fetchBytes(name));
+      }
+      async function examples(name) {
+        await input('import-proofs', name, await fetchBytes(name));
+      }
+      function rows(title, mode) {
+        click(d.querySelector('[data-tab="explore"]'));
+        set('flight-mode', mode);
+        const search = d.getElementById('search');
+        search.value = title;
+        search.dispatchEvent(new w.Event('input', { bubbles: true }));
+        return [...d.querySelectorAll('.challenge-row')].filter(
+          (n) => n.querySelector('strong')?.textContent.replace(/^✓ /, '') === title,
+        );
+      }
+      function watch(record) {
+        const row = rows(record.course.locales.en.title, record.proof.mode).at(-1);
+        if (!row) throw Error('Missing actual course row ' + record.course.id);
+        return row.querySelector('.watch-example');
+      }
+      async function protectedData() {
+        const data = {};
+        for (const name of [...names].filter((n) => !/world-records|fpv-worlds/.test(n)).sort()) {
+          const db = await new Promise((resolve, reject) => {
+            const r = indexedDB.open(name);
+            r.onsuccess = () => resolve(r.result);
+            r.onerror = () => reject(r.error);
+          });
+          try {
+            data[name.slice(prefix.length)] = {};
+            for (const key of db.objectStoreNames)
+              data[name.slice(prefix.length)][key] = await new Promise((resolve, reject) => {
+                const tx = db.transaction(key, 'readonly'),
+                  r = tx.objectStore(key).getAll();
+                let value;
+                r.onsuccess = () => (value = r.result);
+                tx.oncomplete = () => resolve(value);
+                tx.onabort = () => reject(tx.error);
+              });
+          } finally {
+            db.close();
+          }
+        }
+        return data;
+      }
+      async function closeFlight() {
+        if (d.getElementById('flight-dialog').open) {
+          click(d.getElementById('leave-flight'));
+          await until(() => !d.getElementById('flight-dialog').open, 'close flight');
+        }
+        await pulse();
+      }
+      async function play(record) {
+        click(watch(record));
+        await until(
+          () =>
+            w.fixtureRenderedCourse === record.course.id &&
+            w.fixtureDrawState &&
+            !d.getElementById('world-arm').disabled,
+          'ready demonstration',
+        );
+        click(d.getElementById('world-pause'));
+        await pulse();
+        const paused = app.snapshot();
+        check(
+          record.proof.mode + ' exact selected replay',
+          paused.course === record.course.id &&
+            paused.replay?.kind === 'demonstration' &&
+            paused.replay.mode === record.proof.mode &&
+            paused.state.ticks === 0,
+        );
+        set('world-replay-rate', '1');
+        d.getElementById('world-viewport').focus();
+        let steady = 0;
+        const warmup = [];
+        for (let i = 0; i < 10 && steady < 2; i++) {
+          const start = performance.now();
+          await pulse();
+          const ms = performance.now() - start;
+          warmup.push(ms);
+          check(
+            'paused preparation remains at tick zero',
+            w.fixtureDrawState.ticks === 0 &&
+              /^Playback paused/.test(d.getElementById('flight-status').textContent),
+          );
+          steady = ms <= 250 ? steady + 1 : 0;
+        }
+        check('two bounded paused frames', steady === 2);
+        click(d.getElementById('world-arm'));
+        const start = performance.now(),
+          maximum = Math.ceil(record.proof.frames.length / 10) + 30;
+        let maxGap = 0,
+          last = performance.now(),
+          previous = -1,
+          stalled = 0,
+          pulses = 0;
+        while (d.getElementById('result-panel').hidden && pulses < maximum) {
+          if (d.visibilityState !== 'visible' || !d.hasFocus())
+            throw Error('Playback lost visibility/focus; no automatic resume');
+          if (!/^Playback active/.test(d.getElementById('flight-status').textContent))
+            throw Error('Production paused: ' + d.getElementById('flight-status').textContent);
+          if (performance.now() - start > 120000) throw Error('Playback wall bound');
+          await pulse(200);
+          pulses++;
+          const now = performance.now();
+          maxGap = Math.max(maxGap, now - last);
+          last = now;
+          const ticks = w.fixtureDrawState.ticks;
+          stalled = ticks === previous ? stalled + 1 : 0;
+          previous = ticks;
+          if (stalled >= 5) throw Error('No progress in five delivered pulses');
+          if (pulses % 25 === 0)
+            $('status').textContent =
+              'Watch ' + record.proof.mode + ' ' + ticks + '/' + record.proof.frames.length;
+        }
+        const final = app.snapshot();
+        check(
+          record.proof.mode + ' actual rendered completion',
+          final.replay?.finished &&
+            final.state.status === 'complete' &&
+            final.state.ticks === record.proof.frames.length &&
+            w.fixtureWorldStateIdentity(final.state) === record.proof.finalStateIdentity &&
+            w.fixtureWorldStateIdentity(w.fixtureDrawState) === record.proof.finalStateIdentity,
+        );
+        playback.push({
+          mode: record.proof.mode,
+          ticks: final.state.ticks,
+          finalStateIdentity: record.proof.finalStateIdentity,
+          pulses,
+          maxGapMs: maxGap,
+          wallMs: performance.now() - start,
+          warmup,
+        });
+        await closeFlight();
+      }
+      try {
+        manifest = await (await fetch('./manifest.json')).json();
+        prep = await (await fetch('./data/preparation.json')).json();
+        valid = await (await fetch('./data/valid-examples.json')).json();
+        unavailable = await (await fetch('./data/unavailable-examples.json')).json();
+        check(
+          'visible focused prerequisite',
+          document.visibilityState === 'visible' && document.hasFocus(),
+        );
+        progress('Baseline native import and known lookup boundaries');
+        await mount('before');
+        await pack('original.rlpack');
+        await examples('valid-examples.json');
+        for (const r of valid.records)
+          check('baseline excludes imported ' + r.proof.mode, !watch(r));
+        await pack('copied-builtin.rlpack');
+        const builtTitle = prep.builtinControl.title;
+        const copiedRows = rows(builtTitle, 'self-level');
+        check(
+          'baseline copied built-in borrows bundled proof',
+          copiedRows.length === 2 && copiedRows.every((n) => n.querySelector('.watch-example')),
+        );
+        const retained = plain(await store.list());
+        progress('Candidate native HTTP reload retains exact imported examples');
+        await mount('after');
+        equal('reload retains recording bytes', await store.list(), retained);
+        const rewardBaseline = await protectedData();
+        for (const r of valid.records)
+          check('candidate exact external ' + r.proof.mode + ' Watch available', Boolean(watch(r)));
+        const candidateRows = rows(builtTitle, 'self-level');
+        check(
+          'built-in Watch retained and copied project excluded',
+          candidateRows.length === 2 &&
+            Boolean(candidateRows[0].querySelector('.watch-example')) &&
+            !candidateRows[1].querySelector('.watch-example'),
+        );
+        progress('Proof removal/import invalidates lookup cache');
+        click(d.querySelector('[data-tab="packs"]'));
+        const self = valid.records[0];
+        click(button(d.querySelector('[data-record-id="' + self.id + '"]'), /^Remove$/));
+        await until(() => !d.querySelector('[data-record-id="' + self.id + '"]'), 'remove proof');
+        check('removed proof no longer offered', !watch(self));
+        await examples('unavailable-examples.json');
+        const invalidRows = plain(await store.list());
+        check(
+          'invalid response preserved',
+          invalidRows.find((r) => r.id === unavailable.records[0].id)?.status === 'invalid',
+        );
+        check(
+          'wrong pack preserved missing',
+          invalidRows.find((r) => r.id === unavailable.records[1].id)?.status ===
+            'missing-dependency',
+        );
+        check('invalid proof does not enable Watch', !watch(self));
+        await examples('valid-examples.json');
+        for (const r of valid.records)
+          check('reimport refreshes ' + r.proof.mode, Boolean(watch(r)));
+        const rawBeforeRevision = plain(await store.list());
+        progress('Same course under a different pack SHA cannot borrow examples');
+        await pack('revision-b.rlpack');
+        for (const r of valid.records)
+          check('active different SHA excludes ' + r.proof.mode, !watch(r));
+        equal('revision change retains all proof bytes', await store.list(), rawBeforeRevision);
+        click(d.querySelector('[data-tab="packs"]'));
+        const installed = d.querySelector('[data-pack-id="' + prep.projectId + '"]');
+        click(button(installed, /^Restore revision/));
+        await until(
+          () =>
+            !d.getElementById('import-pack').value &&
+            d
+              .querySelector('[data-pack-id="' + prep.projectId + '"]')
+              ?.querySelector('small')
+              ?.textContent.includes(prep.packIdentity.slice(9, 21)),
+          'restore exact revision',
+        );
+        for (const r of valid.records)
+          check('restored exact SHA enables ' + r.proof.mode, Boolean(watch(r)));
+        progress('Real pack removal keeps unavailable proofs and exact reinstall restores lookup');
+        click(d.querySelector('[data-tab="packs"]'));
+        click(d.querySelector('[data-remove-pack="' + prep.projectId + '"]'));
+        await until(
+          () =>
+            d.getElementById('pack-removal-confirm') &&
+            !d.getElementById('pack-removal-confirm').disabled,
+          'removal review',
+        );
+        click(d.getElementById('pack-removal-confirm'));
+        await until(
+          () => !d.querySelector('[data-pack-id="' + prep.projectId + '"]'),
+          'removed pack',
+        );
+        equal('pack removal preserves recording bytes', await store.list(), rawBeforeRevision);
+        for (const r of valid.records)
+          check(
+            r.proof.mode + ' missing dependency shown',
+            d.querySelector('[data-record-id="' + r.id + '"]')?.dataset.dependency === 'missing',
+          );
+        await pack('original.rlpack');
+        for (const r of valid.records)
+          check('exact reinstallation restores ' + r.proof.mode, Boolean(watch(r)));
+        await mount('after');
+        for (const r of valid.records)
+          check('reinstalled exact examples persist ' + r.proof.mode, Boolean(watch(r)));
+        progress('Both actual catalogue Watch replays');
+        for (const r of valid.records) await play(r);
+        equal('demonstrations preserve notebook/rewards', await protectedData(), rewardBaseline);
+        const finalRecords = plain(await store.list());
+        for (const raw of unavailable.records) {
+          const retained = finalRecords.find((r) => r.id === raw.id);
+          equal(
+            'unavailable proof bytes retained ' + raw.id,
+            { course: retained.course, proof: retained.proof, packIdentity: retained.packIdentity },
+            { course: raw.course, proof: raw.proof, packIdentity: raw.packIdentity },
+          );
+        }
+        errors.push(...w.fixtureErrors);
+        check('no runtime errors', errors.length === 0);
+      } catch (error) {
+        failure = {
+          message: error.message,
+          stack: error.stack,
+          status: d?.getElementById('studio-status')?.textContent,
+          flight: d?.getElementById('flight-status')?.textContent,
+        };
+        errors.push(...(w?.fixtureErrors ?? []));
+      } finally {
+        try {
+          if (app) {
+            await closeFlight();
+            await app.dispose();
+            store.close();
+          }
+          frame.src = 'about:blank';
+          await wait(30);
+          for (const name of names)
+            await new Promise((resolve, reject) => {
+              const r = indexedDB.deleteDatabase(name);
+              r.onsuccess = () => resolve();
+              r.onerror = () => reject(r.error);
+              r.onblocked = () => reject(Error('Private DB cleanup blocked'));
+            });
+        } catch (error) {
+          failure ??= { message: 'cleanup: ' + error.message };
+          errors.push(String(error));
+        }
+        document.removeEventListener('visibilitychange', outerVisibility);
+      }
+      const receipt = {
+        format: 'FPVImportedExamplesBrowserReceipt.v1',
+        passed: !failure && checks.every((c) => c.passed) && !errors.length,
+        manifest,
+        checks,
+        phases,
+        playback,
+        focusEvents,
+        errors,
+        failure,
+        elapsedMs: performance.now() - started,
+        limitations: [
+          manifest?.kind === 'package'
+            ? 'Exact admitted candidate host and player; static comparison import paths rewritten'
+            : 'Source host overlay, not final candidate package admission',
+          'Controlled RAF timestamps; real performance clock and pause guards preserved',
+          'No hardware FPS, offline, audible perception or Reservoir content qualification',
+        ],
+      };
+      $('receipt').value = JSON.stringify(receipt, null, 2);
+      $('summary').textContent = JSON.stringify(
+        {
+          passed: receipt.passed,
+          checks: checks.length,
+          playback: playback.map((r) => ({ mode: r.mode, ticks: r.ticks })),
+          errors,
+          failure,
+        },
+        null,
+        2,
+      );
+      $('status').textContent = receipt.passed ? 'PASS' : 'FAIL';
+    }
+    $('run').onclick = async () => {
+      if (running) return;
+      running = true;
+      $('run').disabled = true;
+      try {
+        await execute();
+      } finally {
+        running = false;
+        $('run').disabled = false;
+      }
+    };
+  </script>
+</html>

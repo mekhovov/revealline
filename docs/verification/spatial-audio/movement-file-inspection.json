@@ -1,0 +1,53 @@
+{
+  "method": "Sample inspection of softer broadband movement loops; no subjective approval claim.",
+  "files": [
+    {
+      "file": "motor.wav",
+      "sha256": "3e0df10d7f43e10c3be236b416a604e3c16c12b64fe7f0093bed7fcb7e259223",
+      "duration": 3.92,
+      "rmsDbfs": -25.000265084023976,
+      "peak": 0.220428466796875,
+      "boundaryStep": 0.0325927734375
+    },
+    {
+      "file": "rotor.wav",
+      "sha256": "b2b2947e18e5fb90a23944dd654e26514e20dffe89213480025c3a4abc1cd54f",
+      "duration": 3.92,
+      "rmsDbfs": -25.00026855804078,
+      "peak": 0.207733154296875,
+      "boundaryStep": 0.03326416015625
+    },
+    {
+      "file": "wings.wav",
+      "sha256": "6506d32df102d333e510951809b6cfad49451c29cc62b2f1212a0f56bd2465ef",
+      "duration": 3.92,
+      "rmsDbfs": -25.00026768734395,
+      "peak": 0.221923828125,
+      "boundaryStep": 0.032470703125
+    },
+    {
+      "file": "wheels.wav",
+      "sha256": "cd9583cda01c5cc7eced4494297b4692fa12e8b5336d4da73eb03858390f8983",
+      "duration": 3.92,
+      "rmsDbfs": -25.000263187116612,
+      "peak": 0.22576904296875,
+      "boundaryStep": 0.0316162109375
+    },
+    {
+      "file": "grain.wav",
+      "sha256": "436eccdfafab0d01cdbadbf0ca635a24b9a5630814aec6a1286c7f11e4ef390c",
+      "duration": 3.92,
+      "rmsDbfs": -29.00026722590475,
+      "peak": 0.134735107421875,
+      "boundaryStep": 0.02081298828125
+    },
+    {
+      "file": "flow.wav",
+      "sha256": "cbef5a45bd7f85bc781f9e1acb8b39a43724029c6d08fc0ae0b0a0a835cf7fe6",
+      "duration": 3.92,
+      "rmsDbfs": -29.000265336780153,
+      "peak": 0.142120361328125,
+      "boundaryStep": 0.0201416015625
+    }
+  ]
+}
