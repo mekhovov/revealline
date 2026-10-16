@@ -1,11 +1,41 @@
 # Large authored FPV regions — active delivery plan
 
-Reviewed 15 October 2026; continuous regional flight, verified Library delivery and preserved asset textures.
+Reviewed 16 October 2026; continuous regional flight, verified Library delivery and preserved asset textures.
 The user selected default catalogue visibility, download on Play, optional offline
 storage, and authored regions first. Generation assists authoring; endless runtime
 terrain is deferred. Twelve proposed regions are design targets, not shipped maps.
 
-## 16 October — actual public map audit; preserve storage blockers
+## Current priorities — 16 October research and delivery review
+
+The [current review and priority plan](fpv-plan-review-20261016.md) supersedes the
+historical status/order sections below. It explains remaining work, player benefit,
+impact if skipped, evidence required and new official-reference research.
+
+**Order:** P0 saved-map/connection reliability and actual public availability;
+P1 measured performance, simpler Library/setup and School/HUD qualification;
+P2 Reservoir's representative art, then Festival → Harbor → Canals and bounded
+replayable activities; P3 later authored regions. Integrated recovery and D6 proceed
+in parallel. Existing package, recording, physics and protected-publication contracts
+remain in force; no runtime change is made by this planning update.
+
+Main `aac03bf0` includes merged Alpine R6 Library admission #1535 at reviewed
+`39a80bdd`, with exact original package and bounded local native gates accepted.
+The public `aac03bf0` marker, canonical 24-offer catalogue/capability and R6
+descriptor are now independently verified after Pages run 38830488894. The last
+completed public launch ledger still covers 13 of the prior 23 regional editions,
+plus 14 built-ins and 20 Worldpacks sampled
+one course each. R6 actual public UI flight and ten older edition flights are
+separate unfinished gates. The approved regional-only 512 MiB limit is merged and
+publicly byte-verified; Worldpack 256 MiB/core 72 MiB and other ceilings stay intact.
+Actual all-24 retention above 256 MiB is not yet observed.
+
+The public closing-database error and later zero-visible-saved-map observation remain
+unresolved. Earlier retained-map observations are history, not a repaired persistence
+claim. No authored two-hour pass, physical-device acceptance or final representative
+art is claimed. Internal free space remains below the stable 3 GiB floor; heavy work
+continues external/cloud. Preserve all original failures, source and player data.
+
+## Historical checkpoint — 16 October public map audit; storage blockers
 
 The [per-item public report](fpv-public-map-availability-20261016.md) records actual GitHub Pages launch checks for14builtins,20Worldpacks(onecourseeach) and13/23regionaleditions/all10families. All23descriptors/11492supportingfiles and20packpins/41coursedefinitions pass independent HTTP integrity/production validation. Main game More→SIM and one full Acro tilt demo completed in the public browser. #1528 is deployed atb1174522 with exact reviewed canonical bytes; normal close/reopen retains13regionaleditions+20Worldpacks and consistent names.
 
@@ -1076,7 +1106,7 @@ and limits remain recorded. The full roadmap is **not complete**.
    responsive/theme checks and applicable regression coverage. Current simulated
    duration and local browser evidence cannot substitute for these observations.
 
-## Current state and priorities
+## Historical state and priorities — superseded by 16 October review
 
 - **Completed before this increment:** 19 optional Library worlds; sixteen CC0
   practice layouts plus Reservoir, Festival and Harbor. Camera access, shared paused
@@ -1281,7 +1311,7 @@ and limits remain recorded. The full roadmap is **not complete**.
   device observations remain separate. D6 extra unit coverage follows; each preceding
   increment retains functional checks.
 
-## Next delivery order
+## Historical delivery order — superseded by 16 October review
 
 1. **P1 — Finish regional Library admission and quiet flight presentation.**
    Shared physics, collision/support, camera/input, continuous staging and renderer
