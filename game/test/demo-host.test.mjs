@@ -308,6 +308,7 @@ test('a single remaining source prepares a new painter on repetition without reu
   const canvas = page.$('demo-canvas');
   canvas.clientWidth = 1600;
   canvas.clientHeight = 300;
+  page.win.emit('resize');
   page.frame(0);
   assert.equal(
     page.demoFrame.options.displayCSSWidth,
@@ -315,6 +316,7 @@ test('a single remaining source prepares a new painter on repetition without reu
     'Height-limited fullscreen scales readable game pieces to the contained board width.',
   );
   canvas.clientHeight = undefined;
+  page.win.emit('resize');
   page.frame(0);
   assert.equal(
     page.demoFrame.options.displayCSSWidth,

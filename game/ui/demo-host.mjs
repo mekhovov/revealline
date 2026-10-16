@@ -64,6 +64,8 @@ export function attachDemoHost({
   audio = null,
   audioMaster = null,
   onPreparationPhase = () => {},
+  onQualityFrame = null,
+  onQualityTransition = () => {},
   prepareActors = async () => null,
   preparePresentation = async () => null,
 }) {
@@ -110,6 +112,7 @@ export function attachDemoHost({
     transitionAge = 0,
     lastPaint = null,
     displayRevision = 0,
+    displayCSSWidth = null,
     displayLost = false,
     paintOwner = null,
     recoveryPaintTicket = 0,
@@ -167,6 +170,7 @@ export function attachDemoHost({
         return;
       context = null;
       displayRevision++;
+      displayCSSWidth = null;
       paint(0);
     });
   }
@@ -227,6 +231,7 @@ export function attachDemoHost({
     const portrait =
       REACTION_PORTRAITS.guide[
         !current.reduced &&
+        (current.quality ?? 'full') === 'full' &&
         !interrupted &&
         !loading &&
         ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
@@ -390,6 +395,7 @@ export function attachDemoHost({
   const invalidateDisplay = () => {
     if (!active) return;
     displayRevision++;
+    displayCSSWidth = null;
     if (lifecycleSuspended && !renderingLost()) repaintRecovered();
   };
   listen(doc.defaultView, 'resize', invalidateDisplay);
@@ -439,6 +445,7 @@ export function attachDemoHost({
   function interrupt({ focus = true } = {}) {
     if (!active) return;
     interrupted = true;
+    onQualityTransition();
     reward.pause();
     clock.reset();
     armed = false;
@@ -461,6 +468,7 @@ export function attachDemoHost({
     handoffGeneration++;
     handoffPending = false;
     clock.stop();
+    onQualityTransition();
     busy = false;
     interrupted = true;
     lifecycleSuspended = true;
@@ -473,6 +481,8 @@ export function attachDemoHost({
   function close({ handoff = false } = {}) {
     if (!active) return;
     active = false;
+    onQualityTransition();
+    displayCSSWidth = null;
     publishedPreparationPhase = null;
     detailsOpen = false;
     sceneTransition.clear();
@@ -653,6 +663,8 @@ export function attachDemoHost({
       const size = boardPaintSizeForRun(snapshot.player.state);
       canvas.width = size.width;
       canvas.height = size.height;
+      displayCSSWidth = null;
+      onQualityTransition();
       sceneTransition.ready();
       captions.reset();
       caption = 'demo:tipStart';
@@ -675,6 +687,8 @@ export function attachDemoHost({
     if (disposed || active || !canOpen()) return false;
     origin = doc.activeElement;
     onEnter();
+    onQualityTransition();
+    displayCSSWidth = null;
     clear();
     active = true;
     interrupted = displayLost;
@@ -727,6 +741,8 @@ export function attachDemoHost({
     switchClass = null;
     clock.stop();
     practice = createDemoPractice(run);
+    displayCSSWidth = null;
+    onQualityTransition();
     director.pause();
     interrupted = true;
     armed = true;
@@ -877,12 +893,14 @@ export function attachDemoHost({
   listen($('demo-fresh'), 'click', () => void fresh());
   listen($('demo-details-toggle'), 'click', () => {
     detailsOpen = !detailsOpen;
+    displayCSSWidth = null;
     renderControls();
     if (detailsOpen && !interrupted && !practice)
       $('demo-details-close').focus({ preventScroll: true });
   });
   listen($('demo-details-close'), 'click', () => {
     detailsOpen = false;
+    displayCSSWidth = null;
     if (interrupted || practice) return;
     renderControls();
     $('demo-details-toggle').focus();
@@ -904,6 +922,7 @@ export function attachDemoHost({
   });
   function resumeWatching() {
     if (renderingLost()) return;
+    onQualityTransition();
     clear();
     error = '';
     lifecycleSuspended = false;
@@ -919,6 +938,7 @@ export function attachDemoHost({
   listen($('demo-resume'), 'click', resumeWatching);
   listen($('demo-return'), 'click', () => {
     if (renderingLost()) return;
+    onQualityTransition();
     practice = null;
     armed = false;
     interrupted = false;
@@ -1023,14 +1043,15 @@ export function attachDemoHost({
     if (!doc.hidden) refreshReadout();
     if (!practice && !interrupted && director.phase === 'complete') {
       dwell += Math.min(seconds, 0.25);
+      const presentation = getContext();
       const holding = reward.update({
         won: state.status === 'won',
         age: rewardAge,
         allowed: pictureVisibility() === 'clear',
         pin: picture?.storyPin,
         paused: interrupted || !foreground(),
-        reduced: getContext().reduced,
-        volume: getContext().library.cinematicVolume ?? 0.7,
+        reduced: presentation.reduced || (presentation.quality ?? 'full') !== 'full',
+        volume: presentation.library.cinematicVolume ?? 0.7,
         muted: !settings.gameSounds,
       });
       if (!holding && (foreground() ? rewardAge : dwell) >= REWARD_STORY_SECONDS)
@@ -1047,8 +1068,14 @@ export function attachDemoHost({
     if (!active || doc.hidden || renderingLost()) return;
     const state = currentRun();
     const current = getContext();
-    if (lastPaint && lastPaint.reduced !== current.reduced) renderControls();
-    sceneTransition.paint(seconds, current.reduced);
+    if (
+      lastPaint &&
+      (lastPaint.reduced !== current.reduced || lastPaint.quality !== (current.quality ?? 'full'))
+    )
+      renderControls();
+    const quality = current.quality ?? 'full',
+      reduced = current.reduced || quality !== 'full';
+    sceneTransition.paint(seconds, reduced);
     if (!painter || !state) return;
     const options = current.renderOptions ?? {},
       paused = practice ? practice.phase !== 'playing' : director.phase !== 'playing',
@@ -1072,6 +1099,7 @@ export function attachDemoHost({
       lastPaint.interrupted === interrupted &&
       lastPaint.detailsOpen === detailsOpen &&
       lastPaint.reduced === current.reduced &&
+      lastPaint.quality === quality &&
       lastPaint.visibility === visibility &&
       lastPaint.textFace === options.textFace &&
       lastPaint.showGrid === options.showGrid &&
@@ -1086,10 +1114,20 @@ export function attachDemoHost({
     if (expanded && dialog.dataset.reward !== 'expanded') {
       const from = canvas.getBoundingClientRect();
       dialog.dataset.reward = 'expanded';
-      animateRewardArrival(canvas, from, current.reduced);
-    } else if (!expanded) delete dialog.dataset.reward;
+      animateRewardArrival(canvas, from, reduced);
+      displayCSSWidth = null;
+    } else if (!expanded && dialog.dataset.reward) {
+      delete dialog.dataset.reward;
+      displayCSSWidth = null;
+    }
     context ??= canvas.getContext('2d');
     if (context) {
+      if (displayCSSWidth === null) {
+        const height = canvas.clientHeight,
+          width = canvas.clientWidth;
+        displayCSSWidth =
+          height > 0 ? Math.min(width, (height * canvas.width) / canvas.height) : width;
+      }
       painter.draw(context, state, Math.min(seconds, 0.1), {
         ...options,
         actorAppearance: owners.get(director.player)?.actors
@@ -1098,10 +1136,8 @@ export function attachDemoHost({
               snapshot: owners.get(director.player).actors.snapshot,
             }
           : null,
-        displayCSSWidth:
-          canvas.clientHeight > 0
-            ? Math.min(canvas.clientWidth, (canvas.clientHeight * canvas.width) / canvas.height)
-            : canvas.clientWidth,
+        displayCSSWidth,
+        quality,
         paused,
         reduced: current.reduced,
         fullReveal: state.status === 'won',
@@ -1116,7 +1152,7 @@ export function attachDemoHost({
           !interrupted &&
           (state.status === 'lost' ||
             (practice ? practice.phase === 'playing' : director.phase === 'playing')),
-        demoTransition: current.reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
+        demoTransition: reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
       });
       lastPaint ??= {};
       lastPaint.state = state;
@@ -1129,6 +1165,7 @@ export function attachDemoHost({
       lastPaint.interrupted = interrupted;
       lastPaint.detailsOpen = detailsOpen;
       lastPaint.reduced = current.reduced;
+      lastPaint.quality = quality;
       lastPaint.visibility = visibility;
       lastPaint.textFace = options.textFace;
       lastPaint.showGrid = options.showGrid;
@@ -1151,6 +1188,9 @@ export function attachDemoHost({
   }
   const clock = attachDemoClock({
     document: doc,
+    observeFrame: onQualityFrame,
+    getFrameOwner: () => (watching() && foreground() ? (director?.player ?? null) : null),
+    frameBoundary: onQualityTransition,
     getPlaybackState: () => ({
       phase:
         !active || practice
@@ -1184,6 +1224,19 @@ export function attachDemoHost({
   return {
     get active() {
       return active;
+    },
+    // Identity only: the parent observes practice at its existing POST_RENDER
+    // boundary, including controller and submission work, without a second clock.
+    get qualityPracticeOwner() {
+      return active &&
+        foreground() &&
+        !busy &&
+        !lifecycleSuspended &&
+        !renderingLost() &&
+        armed &&
+        practice?.phase === 'playing'
+        ? practice.state
+        : null;
     },
     get preparationPhase() {
       return preparationPhase();
