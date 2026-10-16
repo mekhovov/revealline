@@ -284,6 +284,12 @@ own issue/evidence and SIM/UI ownership, not a hidden observer workaround.
 
 ### C4 — Three-app preparation, closed windows, process restart and full-network offline
 
+Latest: [real imported-model offline flight](flight-practice-continuation-20261016/imported-offline-flight-passed.json)
+passes on candidate `b8aec0821`: five exact populated model/project/revision
+witnesses and both restarted Worlds launcher/standalone flights. Original pack
+and GLB independently match the asset fingerprint. Gym/Academy offline flight,
+whole-machine network loss and OS reboot remain separate gaps.
+
 Progress: the `90d8443b2` candidate passes the existing nine-checkpoint
 installation/recovery journey with five additional exact nonempty World project,
 revision, metadata and card witnesses through offline browser/standalone restarts.
@@ -324,9 +330,13 @@ Gym and Worlds now have genuine distinct-payload upgrade/offline rollback eviden
 not just isolation checks. Runtime and retained launcher hashes, actual active
 launcher revision, sibling ownership, proofs/profiles and nonempty World
 projects/revisions/cards remain exact. Imported assets and running-flight
-protection are not covered. Three historical active-session attempts remain
-failed before update; an isolated visible-window retry is next. Do not mark all
-of C5 closed.
+protection are not covered by that migration lane. Four installed-window
+active-session attempts remain failed before update. The
+[separate ordinary-browser run](flight-practice-continuation-20261016/ordinary-update-continuity-passed.json)
+now passes real motion, focus-loss pause, genuine update, document identity,
+paused return, explicit resume and cleanup. Ordinary run 5's cleanup failure is
+retained. Installed-PWA continuity and all-app active-flight coverage remain open;
+do not mark all of C5 closed.
 
 Progress: the [genuine historical Academy observation](flight-practice-historical-upgrade-2026-10-16.md)
 passes old/current launcher and runtime upgrade, exact proof/profile preservation,
@@ -355,6 +365,14 @@ Version-schema incompatibility is a result to record and resolve, not permission
 to omit fields from comparisons.
 
 ### C6 — Slow/stalled/cancelled/denied preparation
+
+Latest: [all-three final verification response cancellation](flight-practice-continuation-20261016/final-verification-cancel-passed.json)
+passes 22 checkpoints on `b8aec0821`, with original dependency hashes, unchanged
+pointers/seeded records and public retry/removal. This is controlled latency of
+an unchanged original ready reply after hashing, not hash-in-progress interruption.
+English native cancellation is qualified narrowly; Ukrainian cancellation and
+actual browser eviction remain separate gaps. Earlier five-minute passes retain
+their original pre-feedback candidate identities.
 
 Latest [integrated-main continuation](flight-practice-continuation-2026-10-16.md):
 all six real 30-second idle/native download-cancel cases pass on the unchanged
