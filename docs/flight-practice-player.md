@@ -55,6 +55,7 @@ Apps own separate caches but share this origin’s quota with other games on the
 
 ## When something is missing
 
+- **Download stalled / exceeded five minutes:** check your connection and retry online. Cancelled means that attempt stopped, not that a previous copy was removed. A combined download or verification failure does not identify a single cause: check connection and browser storage, then retry. Permission errors do not necessarily mean storage is full. Check saved copies in the launcher before relying on them offline.
 - **Empty catalogue:** no reviewed packages have been selected for the host. Use the existing FPV shortcut and guide in the main game.
 - **Request failed:** retry. A dated cached catalogue is not a fresh availability check.
 - **Offline verification could not finish:** choose **Check available practice** again. This is not proof that files are missing; keep the saved copy while verification is incomplete. Previously verified actions can remain available. Use removal/re-download only when the launcher reports **Needs repair**, not just an unfinished check.
