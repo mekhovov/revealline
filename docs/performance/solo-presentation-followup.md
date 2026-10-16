@@ -29,3 +29,36 @@ The pre-change `d1fa4cb62` control retains its **27/28** result: an existing chi
 The final complete group passes **38/38** (30 guide-panel and eight body-asset tests), with no failures, skips, cancellations, guard stops or surviving processes. Scoped lint, formatting, syntax and diff checks pass; formatting leaves the tested bytes unchanged. Final green receipt: `93533756f32d50a990e90362e7f9086b2ccb1584704b6c74ca3d8d144f203f85`. The machine-readable evidence retains all four attempts and their TAP hashes. The production preview gate adds both complete files and their source/test triggers, increasing its declared cohort from 61 to 63 files.
 
 The preceding **245/245 across nine files** remains evidence for the earlier policy/audio source only. Guide correctness is separate; successor packaging and affected native observations remain pending. No frame-cost, power or heat reduction is established.
+
+## Demo quality and display geometry
+
+The Demo spectator clock previously bypassed the main quality observer, and
+Demo did not pass the quality tier to its painter. Both spectator and practice
+now share the existing policy. Only ordinary focused spectator callbacks feed
+cost and cadence; timer recovery, hidden transport and catch-up retain their
+existing behavior. Practice is observed once at the existing full parent render
+boundary, with the same live run required before and after the update. Demo
+callbacks cannot calibrate the main lightweight preparation cadence. Pause,
+Resume, takeover, owner changes and renderer recovery reset observation windows.
+
+The painter receives the tier while the explicit Reduced Effects preference
+remains authoritative. Decorative transitions and reactions use the same tier.
+Display dimensions are read once until a resize, fullscreen, preference, owner,
+reward layout or recovery change invalidates them. Actor geometry, controls,
+playback timing and authoritative checkpoints remain unchanged.
+
+The final eight complete files pass **91/91**, with no skips or cancellations.
+Tests verify exact recorded input prefixes, the paused parent checkpoint,
+practice overload-window separation, cheap steady 30 Hz behavior, immediate
+Reduced Effects preference and dimension-cache invalidation. Scoped lint,
+formatting and diff checks pass. The production gate includes all three changed
+complete test files, increasing its cohort from 65 to 68 files.
+
+The corrected red fixture retains six expected product failures. An interim
+90/91 run exposed a modeled geometry change without its resize event; two
+explicit resize notifications preserve both original width assertions. Final
+receipt SHA-256 is `c5d9e2d53b3b412cc19375685a30b2d7ea45a6a7dfe7ff8918499ddc3cc8b01c`;
+handoff SHA-256 is `3f3b56f02460a948fd64e951b61521c968bec350b74e416a491160f9d450b2ca`.
+Every attempt remains under `.cache/solo-followup/demo-adaptive-quality-01/`.
+This is modeled correctness evidence; a new exact production package and native
+observations are required, and no physical heat reduction is claimed.

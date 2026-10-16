@@ -12725,6 +12725,7 @@ try {
         timed &&
         !started &&
         !pictureResume &&
+        !demoHost?.active &&
         foreground &&
         workMs < 3 &&
         this.frameRawMs >= 4 &&
@@ -12740,7 +12741,11 @@ try {
         }
       }
       if (timed) {
-        if (this.frameActive) qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs);
+        if (
+          (this.frameActive && !demoHost?.active) ||
+          (this.frameDemoPractice && this.frameDemoPractice === demoHost?.qualityPracticeOwner)
+        )
+          qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs);
         performanceSession?.recordFrame(
           this.frameNow,
           this.frameUpdateMs,
@@ -12896,6 +12901,9 @@ try {
       let updateMs = 0,
         drawMs = 0;
       const foreground = !document.hidden && document.hasFocus();
+      const demoPractice = demoHost?.qualityPracticeOwner ?? null;
+      if (foreground)
+        qualityPolicy.setReducedPreference(displayPreferences.snapshot().effectiveReducedEffects);
       const active = foreground && started && !paused && !dialogOpen() && !rendererLost.size;
       const time = sceneClock.sample(now, active);
       const rawMs = time.rawElapsedMs;
@@ -12937,7 +12945,6 @@ try {
           this.lastInterfaceAt = now;
           editionUI?.refresh();
         }
-        qualityPolicy.setReducedPreference(displayPreferences.snapshot().effectiveReducedEffects);
         titleCharacter?.update(Math.min(dt, 0.1), {
           visible: controllerDialog() === $('shell-home'),
           reduced: qualityPolicy.snapshot().reduced,
@@ -12990,6 +12997,7 @@ try {
         this.frameNow = now;
         this.frameRawMs = rawMs;
         this.frameActive = active;
+        this.frameDemoPractice = demoPractice;
         this.frameUpdateMs = updateMs;
         this.frameDrawMs = drawMs;
         this.frameHudMs = hudWorkMs;
@@ -14352,6 +14360,8 @@ try {
     audio: demoAudio,
     audioMaster,
     onPreparationPhase: setMediaPreparationPhase,
+    onQualityFrame: (now, interval, work) => qualityPolicy.observe(now, interval, work),
+    onQualityTransition: () => qualityPolicy.safeTransition(performance.now()),
     prepareActors: (entry, level, themeId, options) =>
       prepareAttemptActors(entry, level, themeId, options),
     preparePresentation: async (demoPainter, entry, level, themeId, options) => {
@@ -14370,6 +14380,7 @@ try {
       preferences: library.preferences,
       themeId: theme.id,
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      quality: qualityPolicy.snapshot().tier,
       renderOptions: {
         textFace: displayPreferences.snapshot().textFace,
         showGrid: library.preferences.showGrid,
