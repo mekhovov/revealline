@@ -189,9 +189,10 @@ durable preservation, not GitHub-enforced release immutability.
   network-idle wait timed out; the subsequent ready main-menu state was observed
   directly, so that wait is not recorded as a passing test.
 - No flight, full gameplay, offline/device qualification, production rollback,
-  cache clearing, save migration or user-settings change is claimed. A second
-  external-drive directory restoration is supplemental and was still running
-  when this record was written; it is not represented as completed.
+  cache clearing, save migration or user-settings change is claimed. The second,
+  supplemental external-drive restoration subsequently completed: all 3,423
+  restored files and 963,249,020 bytes matched the preserved inventory. Browser
+  startup above still refers to the verified archive server, not that directory.
 
 ## Capacity comparison checkpoint and remaining gates
 
@@ -228,3 +229,28 @@ Proceed in this order, verifying each checkpoint before advancing:
 5. Reach measured 950 MB, then pursue 900 MB operating headroom; only then consider
    tightening guards. If safe candidates are insufficient, report the gap for a
    human decision rather than removing shared gameplay or changing origins.
+
+## Shared evidence extraction — verification in progress
+
+The comparison foundation merged in #1529 as
+`0f0d4e152195901e59f211f3294203aff0b8e192`; publication `38825001991`
+passed build, deploy and public verification. Its archive remained 966,236,160
+bytes, with 3,424 inventoried files and 963,255,988 raw bytes. No savings occurred.
+
+The next isolated branch starts from refreshed main
+`2490636aca847ce3891b2260925f8b07dbcd0cee`. This small sub-checkpoint extracts
+only the two production Python evidence blocks into shared files. Their exact
+pre-extraction body hashes are frozen in regression tests; existing tiny positive
+and negative fixtures now execute those files. Workflow environment, step order,
+permissions, action pins, receipts, success dependencies and the 980 MB guard are
+unchanged. Rolling metadata extraction and the manual independent candidate
+measurement remain subsequent work, not completed by this change.
+
+Local extraction, workflow-policy and focused-routing tests passed 73 cases,
+zero failures or skips. Scoped lint and whitespace checks passed. Independent
+read-only review confirmed both frozen-base bodies are byte-identical and found
+no concrete blocker; actual runner execution remains pending.
+The external SMB volume does not support the hard-link fixture, so the unchanged
+tiny fixtures were rerun on the local filesystem without skipping that safeguard.
+No full local build, candidate measurement, production execution of the extracted
+scripts, content removal or merge authorization is claimed here.
