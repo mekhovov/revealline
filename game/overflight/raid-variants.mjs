@@ -499,9 +499,9 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
         run: { ...run, review: true },
       });
       const $ = (id) => document.getElementById(id);
-      const stat = (label, value) => {
+      const stat = (label, value, { detail = false } = {}) => {
         const row = document.createElement('div');
-        row.className = 'overflight-result-stat';
+        row.className = `overflight-result-stat${detail ? ' overflight-result-detail' : ''}`;
         const name = document.createElement('dt'),
           amount = document.createElement('dd');
         name.textContent = label;
@@ -555,6 +555,7 @@ export function createOverflightRaidVariant(base, { variant } = {}) {
           stat(
             document.documentElement.lang === 'uk' ? 'Наступний контракт' : 'Next contract',
             overflightMarathonNextContract(run, document.documentElement.lang),
+            { detail: true },
           );
       }
       if (actions) {
