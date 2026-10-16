@@ -167,40 +167,101 @@ export function validateAdvancedAircraft(source = 'freestyle') {
   return value;
 }
 
-/** Curve preferences affect replay identity; they are deliberately absent from
- * comparison class. Throttle shaping/limits remain performance constraints. */
-export function advancedFlightIdentities({
-  aircraft: source,
-  controller,
-  frequency = ADVANCED_DEFAULT_HZ,
-  rates = null,
-  throttle = null,
-  world = null,
-  rules = null,
-  assists = null,
-  conditions = null,
-} = {}) {
-  const airframe = validateAdvancedAircraft(source);
-  delete airframe.id;
-  const portableRates = rates ? clone(rates) : null;
-  if (portableRates)
-    for (const key of ['id', 'name', 'revision', 'createdAt', 'updatedAt'])
-      delete portableRates[key];
-  const comparison = {
-    backend: ADVANCED_BACKEND,
-    collision: WORLD_COLLISION_BACKEND,
-    frequency,
-    aircraft: airframe,
-    controller: validateAdvancedTune(controller ?? createAdvancedAircraftTune(source)),
-    throttle,
-    world,
-    rules,
-    assists,
-    conditions,
-  };
+/** Derive comparison policy from the actual frozen runtime configuration, never
+ * independent UI defaults. Integrity identities keep their published meaning. */
+export function advancedFlightIdentities(source, { terrainIdentity = null } = {}) {
+  const config = boundedJSON(source, {
+    maxBytes: 256 * 1024,
+    maxNodes: 20000,
+    maxArray: 4096,
+    maxDepth: 16,
+  });
+  const regional = config.backend === ADVANCED_REGIONAL_BACKEND;
+  required(
+    [ADVANCED_BACKEND, ADVANCED_REGIONAL_BACKEND].includes(config.backend) &&
+      config.collision === WORLD_COLLISION_BACKEND &&
+      [...ADVANCED_FREQUENCIES, 2000].includes(config.frequency) &&
+      (regional ? /^[a-f0-9]{16}$/.test(terrainIdentity) : terrainIdentity === null),
+    'Unsupported Advanced comparison configuration',
+  );
+  const comparison = clone(config);
+  comparison.aircraft = validateAdvancedAircraft(config.aircraft);
+  delete comparison.aircraft.id;
+  comparison.controller = validateAdvancedTune(config.controller);
+  const preferences = comparison.configuration;
+  if (preferences && typeof preferences === 'object' && !Array.isArray(preferences)) {
+    for (const key of [
+      'camera',
+      'profileId',
+      'profileRevision',
+      'setupId',
+      'simulationIdentity',
+      'id',
+      'name',
+      'revision',
+      'createdAt',
+      'updatedAt',
+    ])
+      delete preferences[key];
+    // Personal axis curves are excluded; every represented throttle setting is
+    // retained, including nested rate-profile throttle and older rates.throttle.
+    for (const key of ['rateProfile', 'rates']) {
+      if (!Object.hasOwn(preferences, key)) continue;
+      const rates = preferences[key];
+      if (key === 'rateProfile') validateRateProfile(rates);
+      if (rates && typeof rates === 'object' && Object.hasOwn(rates, 'throttle'))
+        preferences[key] = { throttle: clone(rates.throttle) };
+      else delete preferences[key];
+    }
+  }
+  return deepFreeze({
+    format: 'AdvancedComparison.v1',
+    comparisonClass: dataIdentity({ configuration: comparison, terrainIdentity }),
+    simulationIdentity: regional
+      ? dataIdentity({ configuration: configurationIdentity(config), terrain: terrainIdentity })
+      : configurationIdentity(config),
+    terrainIdentity,
+    scored: false,
+  });
+}
+
+function recordingComparison(record) {
+  const comparison = advancedFlightIdentities(record.config, {
+    terrainIdentity:
+      record.config.backend === ADVANCED_REGIONAL_BACKEND ? terrainHistoryIdentity(record) : null,
+  });
+  if (Object.hasOwn(record, 'comparison')) {
+    exactKeys(record.comparison, Object.keys(comparison), 'Advanced comparison metadata');
+    required(
+      dataIdentity(record.comparison) === dataIdentity(comparison),
+      'Advanced comparison metadata changed',
+    );
+  }
+  return comparison;
+}
+
+// Only complete replay results produced in this module can establish compatible
+// diagnostic runs. A parsed report saying verified:true is not replay evidence.
+const verifiedComparisons = new WeakMap();
+export function advancedComparisonEligibility(reference, candidate) {
+  const a = verifiedComparisons.get(reference),
+    b = verifiedComparisons.get(candidate);
+  const reason =
+    !a || !b
+      ? 'unverified-recording'
+      : !a.complete || !b.complete
+        ? 'partial-replay'
+        : a.customEvaluator || b.customEvaluator
+          ? 'custom-rate-evaluator'
+          : a.comparison.comparisonClass !== b.comparison.comparisonClass
+            ? 'comparison-class-mismatch'
+            : 'compatible-unscored-practice';
   return {
-    simulationIdentity: dataIdentity({ ...comparison, rates: portableRates }),
-    comparisonClass: dataIdentity(comparison),
+    eligible: reason === 'compatible-unscored-practice',
+    reason,
+    scored: false,
+    referenceClass: a?.comparison.comparisonClass ?? null,
+    candidateClass: b?.comparison.comparisonClass ?? null,
   };
 }
 
@@ -528,7 +589,9 @@ export function createAdvancedSimulation(options = {}) {
             }
           : {}),
       },
-      ...(includeRecording ? { recording: clone(record) } : {}),
+      ...(includeRecording
+        ? { recording: { ...clone(record), comparison: recordingComparison(record) } }
+        : {}),
     };
   }
   function restoreInternal(saved, includeRecording = false, terrainFrame = null) {
@@ -560,8 +623,12 @@ export function createAdvancedSimulation(options = {}) {
     state = clone(saved.state);
     if (terrainEnabled) terrainState = clone(saved.terrain);
     pending = clone(saved.pending);
-    if (includeRecording) record = clone(saved.recording);
-    else for (const key of recordArrays) record[key].length = saved.recorderLengths[key];
+    if (includeRecording) {
+      record = clone(saved.recording);
+      // Metadata is derived at export/capture so later terrain adoption cannot
+      // retain a class computed for an earlier history.
+      delete record.comparison;
+    } else for (const key of recordArrays) record[key].length = saved.recorderLengths[key];
     record.missionTicks = state.missionTick;
   }
   function stageTerrainFrame(source) {
@@ -690,7 +757,14 @@ export function createAdvancedSimulation(options = {}) {
     terrainState.impactSpeed = Math.max(terrainState.impactSpeed, impact);
   }
   function validateSavedTerrain(saved) {
-    exactKeys(saved.recording, Object.keys(record), 'Regional snapshot recording');
+    exactKeys(
+      saved.recording,
+      [
+        ...Object.keys(record),
+        ...(Object.hasOwn(saved.recording, 'comparison') ? ['comparison'] : []),
+      ],
+      'Regional snapshot recording',
+    );
     required(
       new TextEncoder().encode(JSON.stringify(saved.recording)).byteLength <=
         ADVANCED_RECORDING_BYTES,
@@ -1201,6 +1275,7 @@ export function createAdvancedSimulation(options = {}) {
   return {
     identity,
     configuration: () => clone(config),
+    comparison: () => recordingComparison(record),
     qualification: () => clone(ADVANCED_QUALIFICATION),
     controllerCapabilities: controller.capabilities,
     enqueueInput,
@@ -1338,6 +1413,7 @@ export function createAdvancedSimulation(options = {}) {
         'Incomplete Advanced snapshot recording',
       );
       const savedFrame = terrainEnabled ? validateSavedTerrain(saved) : null;
+      recordingComparison(saved.recording);
       restoreInternal(saved, true, savedFrame);
       return telemetry();
     },
@@ -1377,6 +1453,7 @@ export function createAdvancedSimulation(options = {}) {
       return boundedJSON(
         {
           ...record,
+          comparison: recordingComparison(record),
           finalHash: stateHash(),
           ...(terrainEnabled
             ? {
@@ -1412,7 +1489,15 @@ export function createAdvancedSimulation(options = {}) {
 
 /** Replays the recorded consumed samples, never a player's current library.
  * Supply the evaluator appropriate for the recording's frozen configuration. */
-export async function replayAdvancedRecording(source, { rateEvaluator, throughMission } = {}) {
+export async function replayAdvancedRecording(
+  source,
+  { rateEvaluator, throughMission, includeTelemetry = false, onMissionTelemetry } = {},
+) {
+  required(typeof includeTelemetry === 'boolean', 'Invalid replay telemetry option');
+  required(
+    onMissionTelemetry === undefined || typeof onMissionTelemetry === 'function',
+    'Invalid replay telemetry observer',
+  );
   const record = boundedJSON(source, {
     maxBytes: ADVANCED_RECORDING_BYTES,
     maxNodes: 2000000,
@@ -1461,6 +1546,7 @@ export async function replayAdvancedRecording(source, { rateEvaluator, throughMi
           dataIdentity({ configuration: record.identity, terrain: record.terrainIdentity }),
       'Recorded terrain identity changed',
     );
+  const comparison = recordingComparison(record);
   await initAdvancedRuntime();
   const sim = createAdvancedSimulation({
     ...record.config,
@@ -1494,6 +1580,12 @@ export async function replayAdvancedRecording(source, { rateEvaluator, throughMi
       record.missionTicks,
       Math.ceil(until / ADVANCED_MISSION_HZ) * ADVANCED_MISSION_HZ,
     );
+    // Diagnostic samples are returned only after verification succeeds. Their
+    // cadence is the mission rate, not the faster controller/physics frequency.
+    const telemetrySamples = includeTelemetry ? [sim.telemetry()] : null;
+    // Observer values are detached, provisional diagnostics. Callers must not
+    // publish a collected path until complete replay verification succeeds.
+    onMissionTelemetry?.(sim.telemetry());
     let recovered = until === 0 ? { telemetry: sim.telemetry(), snapshot: sim.snapshot() } : null;
     for (let mission = 0; mission < verificationMission; mission++) {
       const end = ((mission + 1) * record.config.frequency) / ADVANCED_MISSION_HZ;
@@ -1526,6 +1618,8 @@ export async function replayAdvancedRecording(source, { rateEvaluator, throughMi
       // Mission hashes precede frame publication at the same boundary. Recovery
       // adopts every published frame before allowing the next mission to run.
       applyTerrain(end);
+      if (includeTelemetry && mission + 1 <= until) telemetrySamples.push(sim.telemetry());
+      if (mission + 1 <= until) onMissionTelemetry?.(sim.telemetry());
       if (mission + 1 === until)
         recovered = { telemetry: sim.telemetry(), snapshot: sim.snapshot() };
     }
@@ -1538,14 +1632,22 @@ export async function replayAdvancedRecording(source, { rateEvaluator, throughMi
       );
       required(sim.stateHash() === record.finalHash, 'Advanced final replay verification failed');
     }
-    return {
+    const result = {
       verified: true,
       verificationScope: verificationMission === record.missionTicks ? 'complete' : 'prefix',
       verifiedThroughMission: verificationMission,
       experimental: true,
       scored: false,
+      comparison,
+      ...(includeTelemetry ? { telemetryHz: ADVANCED_MISSION_HZ, telemetrySamples } : {}),
       ...recovered,
     };
+    verifiedComparisons.set(result, {
+      comparison,
+      complete: until === record.missionTicks && verificationMission === record.missionTicks,
+      customEvaluator: rateEvaluator !== undefined,
+    });
+    return result;
   } finally {
     sim.dispose();
   }

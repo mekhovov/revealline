@@ -581,3 +581,102 @@ test('effective configuration fingerprints include Advanced physical tuning and 
   assert.equal(cosmetic.advanced.aircraft.id, 'custom-label');
   assert.equal(original.advanced.aircraft.id, 'racing');
 });
+
+test('import receipts survive rename, duplication, revision restore and backup without changing flight identity', async () => {
+  const { previewBetaflightImport } = await import(
+    '../../optional-practice/civilian-fpv/betaflight-import.mjs'
+  );
+  const { profile, provenance } = await previewBetaflightImport(
+    'set yaw_srate = 82\nset p_roll = 80',
+    { kind: 'diff', sourceVersion: '2026.6.2' },
+  );
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  const response = createTunedResponse(profile);
+  await store.createProfile({ id: 'imported', name: 'Imported', response, provenance });
+  await store.createProfile({ id: 'plain', name: 'Same rates', response });
+  await store.setDefault('imported');
+  const frozen = store.effective();
+  await store.setDefault('plain');
+  assert.equal(store.effective().simulationIdentity, frozen.simulationIdentity);
+  assert.equal(Object.hasOwn(frozen, 'provenance'), false);
+  await store.saveProfile('imported', { name: 'Renamed' });
+  await store.duplicateProfile('imported', 'copy', 'Copy');
+  assert.deepEqual(store.snapshot().profiles.find((p) => p.id === 'copy').provenance, provenance);
+  const changed = createTunedResponse(createRateProfile({ axes: { yaw: { rate: 90 } } }));
+  await store.saveProfile('imported', { response: changed });
+  let saved = store.snapshot().profiles.find((p) => p.id === 'imported');
+  assert.equal(saved.provenance, undefined);
+  assert.deepEqual(saved.history[1].provenance, provenance);
+  await store.revertProfile('imported', 1);
+  saved = store.snapshot().profiles.find((p) => p.id === 'imported');
+  assert.deepEqual(saved.provenance, provenance);
+  const backup = store.export();
+  const restored = createTuningLibraryStore({ storage: memory() });
+  await restored.restore(backup);
+  assert.deepEqual(restored.snapshot().profiles, store.snapshot().profiles);
+  assert.deepEqual(createTuningLibraryStore({ storage }).snapshot(), store.snapshot());
+});
+
+test('mismatched or future import receipts fail atomically and never enable ignored controller settings', async () => {
+  const { previewBetaflightImport } = await import(
+    '../../optional-practice/civilian-fpv/betaflight-import.mjs'
+  );
+  const { profile, provenance } = await previewBetaflightImport(
+    'set yaw_srate = 82\nset p_roll = 80',
+    { kind: 'diff', sourceVersion: '2026.6.2' },
+  );
+  const storage = memory(),
+    store = createTuningLibraryStore({ storage });
+  await store.createProfile({
+    id: 'imported',
+    name: 'Imported',
+    response: createTunedResponse(profile),
+    provenance,
+  });
+  const before = store.export(),
+    writes = storage.writes.length;
+  await assert.rejects(
+    store.createProfile({
+      id: 'mismatch',
+      name: 'Mismatch',
+      response: createTunedResponse(),
+      provenance,
+    }),
+    /does not describe/,
+  );
+  const corrupt = JSON.parse(before);
+  corrupt.profiles[1].provenance.activePid = { p_roll: 80 };
+  assert.throws(() => store.restore(corrupt), /not supported/);
+  assert.equal(store.export(), before);
+  assert.equal(storage.writes.length, writes);
+  assert.equal(store.effective().advanced, undefined);
+});
+
+test('queued provenance creation owns its receipt before waiting for a lock', async () => {
+  const { previewNativeRateImport, exportNativeRateProfile } = await import(
+    '../../optional-practice/civilian-fpv/betaflight-import.mjs'
+  );
+  const result = await previewNativeRateImport(exportNativeRateProfile(createRateProfile()));
+  let release;
+  const store = createTuningLibraryStore({
+    storage: memory(),
+    locks: {
+      request: (_key, fn) =>
+        new Promise((resolve) => {
+          release = () => resolve(fn());
+        }),
+    },
+  });
+  const expected = structuredClone(result.provenance);
+  const pending = store.createProfile({
+    id: 'imported',
+    name: 'Imported',
+    response: createTunedResponse(result.profile),
+    provenance: result.provenance,
+  });
+  result.provenance.source.sha256 = 'a'.repeat(64);
+  release();
+  await pending;
+  assert.deepEqual(store.snapshot().profiles[1].provenance, expected);
+});
