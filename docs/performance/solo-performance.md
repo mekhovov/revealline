@@ -2,7 +2,7 @@
 
 Base: `b11745223861c3973ad4bf440cc536198b8e0371` (`origin/main`, freshly fetched before implementation). This immutable hash identifies the baseline even if another checkout subsequently updates the shared remote-tracking ref.
 Implementation branch: `codex/solo-performance`, in a separate checkout. The existing FPV branch and its unfinished edits were not rebased or edited. The implementation checkout is `/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test`.
-Current runtime revision: `e0252ff8f6b7f5ac84721fd5994c74e8469fb271`. Historical artifact and timing sections below refer to `1c505dcd038ed908c9f0ede696143d4f6d59251e` unless explicitly stated. Later runtime corrections and their separate qualification are recorded in the follow-up plan; historical results retain their original source identities.
+The [follow-up plan](solo-performance-followup-plan.md) identifies the latest verified package and remaining source changes. The separately measured `e0252ff8f6b7f5ac84721fd5994c74e8469fb271` cohorts retain that revision. Historical artifact and timing sections below refer to `1c505dcd038ed908c9f0ede696143d4f6d59251e` unless explicitly stated; later corrections do not change their source identities.
 
 The branch implements the timing, preparation, rendering and recovery changes from phases 0–4. Measurement limits and incomplete qualification are listed below; this report does not label the candidate release-qualified.
 
