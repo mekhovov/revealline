@@ -1,6 +1,6 @@
 {
   "sourceCommit": "1dc0320462cd6dd14a4538b001da03218e86dd29",
-  "phase": "running; do not Start/reload",
+  "phase": "finite browser and single Worker outcomes complete; recurring work ends",
   "recordedAt": "2026-10-16T04:40:15.593990+00:00",
   "startPressedOnce": true,
   "browserId": "2",
@@ -1683,21 +1683,12 @@
   },
   "ownedControlChecks": {
     "demoPauseWithMusicPlaying": {
-      "samplesElapsedSeconds": [
-        92.3409,
-        102.5039
-      ],
+      "samplesElapsedSeconds": [92.3409, 102.5039],
       "gameTimerSeconds": 2
     },
     "musicPauseWithDemoAdvancing": {
-      "samplesElapsedSeconds": [
-        123.0474,
-        133.2559
-      ],
-      "gameTimerSeconds": [
-        17,
-        27
-      ]
+      "samplesElapsedSeconds": [123.0474, 133.2559],
+      "gameTimerSeconds": [17, 27]
     },
     "restored": "Demo and music resumed through actual UI; details closed",
     "initialSoundIntent": "already on and playing; no unmute on entry",
@@ -1707,13 +1698,21 @@
     "temporaryBlankTab": "2/3",
     "closed": true,
     "presentation": false,
-    "measuredVisibilityPairs": [
-      "visible/visible"
-    ],
-    "measuredFocusPairs": [
-      "true/false",
-      "true/true"
-    ],
+    "measuredVisibilityPairs": ["visible/visible"],
+    "measuredFocusPairs": ["true/false", "true/true"],
     "browserBackgroundExecutionEstablished": false
-  }
+  },
+  "finishedAt": "2026-10-16T06:40:18.200Z",
+  "finalReport": "browser-observation-final.json",
+  "finalReportSHA256": "44bbe549164fe116ae43b59c840259189c79663235368ca6a46e65a4fda29333",
+  "cleanup": {
+    "observerTabClosed": true,
+    "viewportReset": true,
+    "verifiedServerReleased": true,
+    "port": 8834,
+    "otherTabsRetained": true
+  },
+  "workerState": "worker-final-state.json",
+  "workerExitCode": 0,
+  "workerSummary": "worker-final-summary.json"
 }
