@@ -313,6 +313,124 @@ test('unscored draft test returns to the same numeric and camera draft, then rev
   assert.equal(f.store.export(), before);
 });
 
+test('drone drafts survive rate-profile changes, reopening and independent setup selection', async (t) => {
+  const f = fixture(t);
+  await f.click('New Actual profile');
+  const profileId = f.find('Rate profile', 'select').value;
+  const original = f.store.snapshot().selectedSetupId;
+  f.edit('Drone name', 'My pending drone');
+  f.edit('Camera tilt (degrees)', 35);
+  f.edit('Rates used by this drone', profileId, { tag: 'select', event: 'change' });
+  f.edit('Rate profile', 'legacy-feel', { tag: 'select', event: 'change' });
+  assert.equal(f.find('Drone name').value, 'My pending drone');
+  assert.equal(f.find('Camera tilt (degrees)').value, '35');
+  assert.equal(f.find('Rates used by this drone', 'select').value, profileId);
+  await f.click('Close');
+  f.ui.open();
+  assert.equal(f.find('Camera tilt (degrees)').value, '35');
+  f.edit('Rate profile', profileId, { tag: 'select', event: 'change' });
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().camera.tilt, 35);
+  f.edit('Camera tilt (degrees)', 42);
+  await f.click('Duplicate drone setup');
+  const copy = f.store.snapshot().selectedSetupId;
+  f.edit('Camera tilt (degrees)', 21);
+  f.edit('Drone setup', original, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Camera tilt (degrees)').value, '42');
+  await f.click('Revert draft');
+  assert.equal(f.find('Camera tilt (degrees)').value, '35');
+  f.edit('Drone setup', copy, { tag: 'select', event: 'change' });
+  await settle();
+  assert.equal(f.find('Camera tilt (degrees)').value, '21');
+  await f.click('Save drone assignment & camera');
+  assert.equal(f.store.effective().camera.tilt, 21);
+  assert.equal(f.store.snapshot().setups.find((setup) => setup.id === original).camera.tilt, 35);
+});
+
+test('a retained drone draft cannot overwrite another tab and explicit refresh discards it', async (t) => {
+  const f = fixture(t);
+  f.edit('Camera tilt (degrees)', 35);
+  await f.click('Close');
+  const other = createTuningLibraryStore({ storage: f.storage });
+  await other.saveSetup({ ...other.snapshot().setups[0], camera: { tilt: 45, verticalFov: 90 } });
+  f.ui.open();
+  assert.equal(f.find('Camera tilt (degrees)').value, '35');
+  await f.click('Save drone assignment & camera');
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /changed|predates/);
+  assert.equal(other.effective().camera.tilt, 45);
+  await f.click('Refresh library');
+  assert.equal(f.find('Camera tilt (degrees)').value, '45');
+});
+
+for (const [algorithm, label, typed, normalized, field, stored] of [
+  ['actual', 'Maximum rate (°/s)', '895', '900', 'rate', 90],
+  ['quick', 'Maximum rate (°/s)', '895', '900', 'rate', 90],
+  ['betaflight', 'RC rate', '1.235', '1.24', 'rcRate', 124],
+])
+  test(`${algorithm} numeric editing keeps partial text and commits representable units`, async (t) => {
+    const f = fixture(t);
+    f.edit('Rate algorithm', algorithm, { tag: 'select', event: 'change' });
+    const scope = f.axis('Roll');
+    const input = f.find(label, 'input', scope, 'number');
+    for (const value of ['', typed.slice(0, 1), typed]) {
+      input.value = value;
+      input.emit('input');
+      assert.equal(input.value, value, 'Typing is not rounded before committing the number');
+    }
+    input.emit('change');
+    assert.equal(input.value, normalized);
+    assert.equal(f.find(label, 'input', scope, 'range').value, normalized);
+    assert.equal(input.getAttribute('aria-invalid'), null);
+    await f.click('Save for next flight');
+    assert.equal(f.store.effective().response.rates.axes.roll[field], stored);
+  });
+
+test('Save and Test commit pending numeric text, while blank values block stale-value saves', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', '895', { scope: f.axis('Roll'), type: 'number' });
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].response.rates.axes.roll.rate, 90);
+  f.ui.open({ keepDraft: true });
+  f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
+  const revision = f.store.snapshot().revision;
+  await f.click('Save for next flight');
+  assert.equal(f.store.snapshot().revision, revision);
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /enter a value/);
+  f.edit('Maximum rate (°/s)', '920', { scope: f.axis('Roll'), type: 'number' });
+  assert.equal(f.ui.root.querySelector('[role="status"]').textContent, '');
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().response.rates.axes.roll.rate, 92);
+});
+
+test('committing untouched linked axes preserves unequal rates and a pending pitch edit wins', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', 710, { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Maximum rate (°/s)', 830, { scope: f.axis('Pitch'), type: 'number' });
+  f.find('Link roll and pitch edits').checked = true;
+  const exported = await f.draft();
+  assert.equal(exported.axes.roll.rate, 71);
+  assert.equal(exported.axes.pitch.rate, 83);
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().response.rates.axes.roll.rate, 71);
+  assert.equal(f.store.effective().response.rates.axes.pitch.rate, 83);
+  f.edit('Maximum rate (°/s)', '900', { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Maximum rate (°/s)', '830', { scope: f.axis('Pitch'), type: 'number' });
+  const returned = await f.draft();
+  assert.equal(
+    returned.axes.roll.rate,
+    83,
+    'Returning the peer to its old value is a real linked edit',
+  );
+  assert.equal(returned.axes.pitch.rate, 83);
+  f.edit('Maximum rate (°/s)', '895', { scope: f.axis('Pitch'), type: 'number' });
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].response.rates.axes.roll.rate, 90);
+  assert.equal(f.tested[0].response.rates.axes.pitch.rate, 90);
+});
+
 test('import preview creates a new profile only on save and assignment remains explicit', async (t) => {
   const f = fixture(t),
     before = f.store.export();
@@ -837,3 +955,65 @@ for (const interruption of ['edit', 'reopen'])
       /Preview the import first/,
     );
   });
+
+test('saving an import rejects changed preview rates instead of replacing visible edits', async (t) => {
+  const f = fixture(t),
+    initialCount = f.store.snapshot().profiles.length;
+  f.edit(
+    'Paste CLI or a SIM rate profile',
+    exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 80 } } })),
+    { tag: 'textarea' },
+  );
+  await f.click('Preview import');
+  f.edit('Maximum rate (°/s)', 990, { scope: f.axis('Roll'), type: 'number' });
+  await f.click('Save import as new profile');
+  assert.equal(f.store.snapshot().profiles.length, initialCount);
+  assert.match(
+    f.ui.root.querySelector('[role="status"]').textContent,
+    /Rates changed after the import preview/,
+  );
+  assert.equal((await f.draft()).axes.roll.rate, 99);
+});
+
+test('firmware-default patch preview accepts a verified file header without a manual version', async (t) => {
+  const f = fixture(t);
+  f.edit('Camera tilt (degrees)', 35);
+  f.edit('Patch baseline', 'defaults', { tag: 'select', event: 'change' });
+  f.edit('Paste CLI or a SIM rate profile', '# Betaflight 4.5.2\nset roll_srate = 81', {
+    tag: 'textarea',
+  });
+  await f.click('Preview import');
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Preview only/);
+  await f.click('Save import as new profile');
+  const imported = f.store.snapshot().profiles.at(-1);
+  assert.equal(imported.response.rates.axes.roll.rate, 81);
+  assert.equal(imported.response.rates.throttle.model, 'betaflight-4.5');
+  assert.deepEqual(imported.provenance.firmware, { version: '4.5.2', origin: 'header' });
+  assert.equal(imported.provenance.baseline.kind, 'firmware-defaults');
+  assert.equal(
+    f.find('Camera tilt (degrees)').value,
+    '35',
+    'Creating the imported profile retains the independent drone draft',
+  );
+});
+
+test('rotation-only CLI export crosses throttle versions only after an explicit choice', async (t) => {
+  const f = fixture(t);
+  await f.click('New Actual profile');
+  const before = await f.draft();
+  f.edit('Source / export firmware version', '4.5.2', { tag: 'select', event: 'change' });
+  await f.click('Export rate-only CLI');
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /different throttle curve/);
+  const include = f.find('Include throttle settings in CLI export');
+  assert.equal(include.checked, true);
+  include.checked = false;
+  include.emit('change');
+  await f.click('Export rate-only CLI');
+  const exported = f.find('Paste CLI or a SIM rate profile', 'textarea').value;
+  assert.match(exported, /# Betaflight 4\.5\.2/);
+  assert.match(exported, /set rates_type = ACTUAL/);
+  assert.doesNotMatch(exported, /set (?:thr_|throttle_)/);
+  assert.match(exported, /throttle settings are omitted/);
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /rotation rates only/);
+  assert.deepEqual(await f.draft(), before);
+});

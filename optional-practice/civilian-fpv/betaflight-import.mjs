@@ -159,10 +159,20 @@ export function parseBetaflightConfiguration(
     'baseline-required',
     'Choose the rate profile to use as the patch baseline.',
   );
-  const original = baseline
-    ? validateRateProfile(baseline)
-    : betaflightDefaultRateProfile(sourceVersion);
   const defaultProfile = sourceVersion ? betaflightDefaultRateProfile(sourceVersion) : null;
+  // Resolve the explicit defaults baseline only after the same header/version
+  // checks used for the assignments. Never infer defaults from an unverified tag.
+  need(
+    baseline !== 'firmware-defaults' || defaultProfile,
+    'source-version-required',
+    'This file has no firmware header. Choose its source firmware version.',
+  );
+  const original =
+    baseline === 'firmware-defaults'
+      ? defaultProfile
+      : baseline
+        ? validateRateProfile(baseline)
+        : defaultProfile;
   let rateIndex = 0,
     pidIndex = 0;
   const profiles = new Map();
@@ -597,7 +607,9 @@ export async function previewBetaflightImport(text, options = {}) {
   } = options;
   const result = parseBetaflightConfiguration(text, parseOptions);
   const baseline = validateRateProfile(
-    parseOptions.baseline ?? betaflightDefaultRateProfile(result.sourceVersion),
+    parseOptions.baseline && parseOptions.baseline !== 'firmware-defaults'
+      ? parseOptions.baseline
+      : betaflightDefaultRateProfile(result.sourceVersion),
   );
   const identity =
     baselineIdentity === null
@@ -678,7 +690,11 @@ export async function previewBetaflightImport(text, options = {}) {
     operation: result.kind,
     sourceProfile: result.selectedProfile,
     baseline: {
-      kind: baselineKind ?? (parseOptions.baseline ? 'provided' : 'firmware-defaults'),
+      kind:
+        baselineKind ??
+        (parseOptions.baseline && parseOptions.baseline !== 'firmware-defaults'
+          ? 'provided'
+          : 'firmware-defaults'),
       sha256: await sha256(canonicalJSON(baseline)),
       profileId: identity?.profileId ?? null,
       revision: identity?.revision ?? null,
@@ -790,7 +806,9 @@ export function exportBetaflightRates(
   if (modelForVersion(targetVersion) === 'betaflight-4.5') delete values.thr_hover;
   const lines = [
     `# Betaflight ${targetVersion}`,
-    '# SIM rotation rates and supported throttle settings; review before applying.',
+    includeThrottle
+      ? '# SIM rotation rates and supported throttle settings; review before applying.'
+      : '# SIM rotation rates only; throttle settings are omitted. Review before applying.',
   ];
   if (profileIndex !== null) lines.push(`rateprofile ${profileIndex}`);
   for (const [key, value] of Object.entries(values)) {

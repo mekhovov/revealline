@@ -123,7 +123,7 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
       'Fresh locked gate verified. Then a disposable local browser profile uses the same remembered-unlock fixture as access-gate tests. Production HTML, scripts, and verifier are unchanged; no real-password acceptance is claimed.',
     limits: [
       'Chrome on one local host, HTTP localhost secure context; not a public HTTPS deployment test.',
-      'Offline preparation uses the production installation API; this is not an installer button/accessibility acceptance test.',
+      'Offline installation is activated through the visible host controls using keyboard focus and Enter/Space. Screen-reader behavior and browser application-install prompts are not qualified.',
       'Each package has an isolated browser context. Offline reload/re-entry is tested; browser-process restart and storage eviction are not.',
       'The declared lazy main-game tools extension is outside optional offline packages; its exact unavailable request and user-facing fallback are checked separately.',
       'Advanced remains experimental and unscored; no performance, device, Regional scene, or competition qualification is inferred.',
@@ -228,6 +228,7 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
       await page.addInitScript(() => {
         window.pagesClickEvents = [];
         window.pagesPointerEvents = [];
+        window.pagesInstallerActivations = [];
         for (const type of ['pointerdown', 'pointerup'])
           document.addEventListener(
             type,
@@ -251,6 +252,13 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
         document.addEventListener(
           'click',
           (event) => {
+            if (['install-offline', 'prepare-runtime'].includes(event.target.id))
+              window.pagesInstallerActivations.push({
+                id: event.target.id,
+                detail: event.detail,
+                trusted: event.isTrusted,
+                focused: event.target === document.activeElement,
+              });
             window.pagesClickEvents.push({
               text: event.target.textContent?.slice(0, 150),
               tag: event.target.tagName,
@@ -296,11 +304,72 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
         .filter({ visible: true })
         .click();
       await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
-      await page.getByText(/^Raw input:/).waitFor();
+      await page.getByText(/^Input source:/).waitFor();
+      assert.match(await page.getByText(/^Input source:/).textContent(), /Raw input:/);
       await page.evaluate(async () => {
         await document.fonts.ready;
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       });
+    };
+    const keyboardActivate = async (target, key) => {
+      await target.waitFor({ state: 'visible' });
+      assert.equal(await target.isEnabled(), true, 'Keyboard target is disabled');
+      let tabs = 0;
+      while (!(await target.evaluate((node) => node === document.activeElement)) && tabs < 100) {
+        await page.keyboard.press('Tab');
+        tabs++;
+      }
+      assert.equal(
+        await target.evaluate((node) => node === document.activeElement),
+        true,
+        'The visible installer route cannot be reached with Tab',
+      );
+      await page.keyboard.press(key);
+      return tabs;
+    };
+    const prepareOfflineThroughUI = async (packageId) => {
+      await page.locator('[data-mode-action="settings"]:visible').click();
+      const academy = packageId === 'civilian-fpv';
+      await page
+        .getByRole('tab', { name: academy ? 'Help & Extras' : 'Content & Offline', exact: true })
+        .click();
+      const route = [];
+      if (academy) {
+        route.push({
+          control: 'Flight guide',
+          key: 'Enter',
+          tabs: await keyboardActivate(page.locator('#help'), 'Enter'),
+        });
+        const help = page.locator('#help-dialog');
+        await help.waitFor({ state: 'visible' });
+        const summary = help.locator('summary').filter({ hasText: /^Workshop & offline$/ });
+        assert.equal(await summary.evaluate((node) => node.parentElement.open), false);
+        route.push({
+          control: 'Workshop & offline',
+          key: 'Space',
+          tabs: await keyboardActivate(summary, 'Space'),
+        });
+        assert.equal(await summary.evaluate((node) => node.parentElement.open), true);
+      }
+      const label = academy ? 'Prepare offline package' : 'Prepare simulator offline';
+      const button = page.getByRole('button', { name: label, exact: true });
+      const buttonId = academy ? 'install-offline' : 'prepare-runtime';
+      assert.equal(await button.getAttribute('id'), buttonId);
+      const status = page.locator(
+        academy ? '#transfer-status' : '#settings-runtime-offline-status',
+      );
+      assert.equal(await status.getAttribute('role'), 'status');
+      const key = academy ? 'Enter' : 'Space';
+      route.push({ control: label, key, tabs: await keyboardActivate(button, key) });
+      const readyText = academy
+        ? 'This exact optional package is ready offline.'
+        : 'Offline runtime preparation completed.';
+      await status.filter({ hasText: readyText }).waitFor({ state: 'visible', timeout: 120000 });
+      assert.equal((await status.textContent()).trim(), readyText);
+      assert.equal(await button.isEnabled(), true, 'Installer did not leave its pending state');
+      const activations = await page.evaluate(() => window.pagesInstallerActivations);
+      assert.deepEqual(activations, [{ id: buttonId, detail: 0, trusted: true, focused: true }]);
+      return { route, activations, statusRole: 'status', completion: readyText };
     };
     const advanced = async (packageId) => {
       await page
@@ -448,11 +517,8 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
           !document.documentElement.dataset.modeShellPending &&
           document.querySelector('[data-mode-action="settings"]'),
       );
-      result.preparedOffline = await page.evaluate(async (packageId) => {
-        const { prepareOptionalOffline } = await import('../install-context.mjs');
-        return prepareOptionalOffline({ packageId, onProgress: () => {} });
-      }, id);
-      assert.equal(result.preparedOffline, true);
+      result.offlineInstallation = await prepareOfflineThroughUI(id);
+      result.preparedOffline = true;
       await page.reload();
       await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
       result.workerScope = await page.evaluate(
