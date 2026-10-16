@@ -90,6 +90,53 @@ The 75-minute helper and all row deadlines stay fixed. The job allows separate
 setup and upload steps (139 minutes of declared step caps inside 145 minutes),
 including the additional baseline upload; this does not extend gameplay windows.
 
+## Third attempt: eight correctness checks passed
+
+[Run 38978329593](https://github.com/mekhovov/revealline/actions/runs/38978329593)
+used tooling `d569ce092db47d14f974da24063f82f4a280a19a`, the same exact
+`2ec605eb` candidate and original `b1174522` baseline. All eight browser rows
+passed their correctness requirements. All four first-30-second observations
+passed strict replay in their observed engine; the separately retained Node
+portability mismatch does not replace those checks. Every observed command
+closed cleanly. The original-main normal build passed independent archive,
+source, worker-contract, offline-resource and CSP verification.
+
+This cohort is explicitly **excluded from timing qualification**. Raw combined
+statuses remain baseline Chromium failed, candidate Chromium inconclusive,
+baseline WebKit failed, and candidate WebKit failed. The candidate's internal
+pre-play cadence collected only 15/30 and 12/30 eligible callbacks respectively.
+Its default 60 Hz estimate is not a measured baseline. The independent blank
+reference measured 16.7 ms and 16 ms; it is not silently substituted for the
+missing internal calibration. The title-ready observation had long callback
+gaps despite low Phaser work, and WebKit retains a 227 ms interval attributed
+to the preceding playing phase. These signals require separate attribution.
+
+Artifact `12080518438` contains 70 fully read-back members. Its 603,136-byte
+archive SHA-256 is `f6e7d037e053c3075d7c80f5810806f24af995747ee4fa8015fc8eb231998d43`;
+the summary SHA-256 is `e9127024581f3f8b7cc53265736c6569d034bb91081a7a4928253fa0a1beae06`.
+The reports, clean closures and analysis remain under
+`.cache/solo-followup/remote-d569-monitor-01/`.
+
+The successful producer also published baseline artifact `12080662080`, exact
+normal-build ZIP SHA-256 `1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290`.
+Prospective consumers pin its actual run, source/tree, outer archive and positive
+readiness proof, then verify every archive member and the source/CSP contract
+again before use. Local admission retained the small publication proof and
+GitHub metadata; the large baseline archive was not downloaded locally.
+Missing or mismatched reuse evidence fails admission without a rebuild fallback.
+
+The subsequent exact-source Appearance package for `d569ce092` succeeded in
+[run 38978329616](https://github.com/mekhovov/revealline/actions/runs/38978329616),
+including all 68 declared focused files. Its five-member compact metadata
+artifact was independently read back and agrees with the original upload API.
+Original artifact `12081585270` has outer SHA-256
+`f7d71b126e6076622fdfa1d7eeccdff0e8dbf594fb45304773c470f66ae6e6ca`
+and inner ZIP SHA-256
+`1d5ce94afe14c0419f26d160986567d54a05c11b7edd6e055871f4de41b866b5`.
+This is successful packaging plus verified small metadata, not full local
+archive verification or native qualification of the newer Demo runtime.
+The first eight passing rows still used `2ec605eb`.
+
 ## Other CI evidence
 
 The optional-practice integration job in

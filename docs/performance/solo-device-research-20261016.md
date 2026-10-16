@@ -67,3 +67,34 @@ runs. Keep default rendering and strict initial-draw comparisons intact. No
 source found in this follow-up establishes that the game's one-channel-value
 history-dependent difference is a color conversion, a driver issue or a hidden
 picture leak; neither a forced color-space change nor a tolerance waiver follows.
+
+## Further rendering and power review
+
+The Canvas specification explicitly permits information loss when finite-precision
+color values are converted to and from premultiplied alpha. That explains why
+8-bit readback cannot expose every internal rendering distinction; it does not
+explain the retained identical-input first-draw discrepancy or justify relaxing
+its strict gate. [Canvas alpha representation](https://html.spec.whatwg.org/multipage/canvas.html#premultiplied-alpha-and-the-2d-rendering-context).
+
+Safari 27 beta notes include additional linear color spaces and fixes involving
+unnecessary Canvas2D compositing layers and observer performance. A separate
+WebKit GLib Display P3 issue was fixed in August 2026. These establish that
+backend/version details matter, not that a particular fix is present in the
+installed desktop WebKit or explains iPhone Safari. The next raster diagnostic
+records actual context attributes after the fixed draws, separately from an
+unchanged control; it changes neither context options nor pixel tolerances.
+[Safari 27 beta notes](https://webkit.org/blog/17967/news-from-wwdc26-webkit-in-safari-27-beta/),
+[GLib color-space issue](https://bugs.webkit.org/show_bug.cgi?id=321596).
+
+The new Linux correctness reports retain severe title callback gaps while the
+measured Phaser frame work is low. Source review found a separately scheduled
+menu artwork WebGL renderer and CSS/SVG animation outside that measurement
+boundary. This is a concrete attribution target, not proof of causation.
+Inspect its actual rendering and callbacks in a separate instrumented run;
+do not warm the title until it looks healthy or redefine loaded cadence as B.
+WebKit's power guidance covers both GPU work and painting outside JavaScript,
+and its CPU timeline separates script, layout and rendering. Chrome's paint
+flashing can identify unexpectedly large repaint regions. These diagnostics
+remain separate from low-overhead qualification. [Power guidance](https://webkit.org/blog/8970/how-web-content-can-affect-power-usage/),
+[CPU timeline](https://webkit.org/blog/8993/cpu-timeline-in-web-inspector/),
+[Rendering diagnostics](https://developer.chrome.com/docs/devtools/rendering/performance).
