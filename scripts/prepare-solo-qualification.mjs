@@ -782,7 +782,12 @@ const audioSettings = [
   ...publicSettings,
   // The clip is pinned in English. This is the visible public language control,
   // not a preference/storage injection or an assumption about the host locale.
-  { type: 'select', selector: '#settings-dialog [data-language-select]', value: 'en' },
+  { type: 'click', selector: '#settings-tab-display' },
+  {
+    type: 'select',
+    selector: '#settings-panel-display [data-language-select]:visible',
+    value: 'en',
+  },
   { type: 'click', selector: '#settings-tab-audio' },
   { type: 'click', selector: '#settings-master-mute' },
 ];
