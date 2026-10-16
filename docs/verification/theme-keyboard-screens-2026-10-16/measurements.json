@@ -1,0 +1,75 @@
+{
+  "reviewedAt": "2026-10-16",
+  "sourceRevision": "2258be78a10b3181037da12c8d4ce0e114f5f132",
+  "desktopViewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "familyActivationSamples": [
+    {
+      "dialogWidth": 1076,
+      "focused": "true",
+      "name": "Signal Blue"
+    },
+    {
+      "dialogWidth": 1076,
+      "focused": "true",
+      "name": "Dnipro Porcelain"
+    },
+    {
+      "dialogWidth": 1076,
+      "focused": "true",
+      "name": "Neon Ruins"
+    },
+    {
+      "focused": "true",
+      "name": "Pocket LCD"
+    },
+    {
+      "focused": "true",
+      "name": "Copper Observatory"
+    },
+    {
+      "focused": "true",
+      "name": "Sakura Station"
+    },
+    {
+      "focused": "true",
+      "name": "Copper Observatory"
+    },
+    {
+      "focused": "true",
+      "name": "Obsidian Reliquary"
+    },
+    {
+      "focused": "true",
+      "name": "Deep Space"
+    },
+    {
+      "focused": "true",
+      "name": "Moonlit Grove"
+    }
+  ],
+  "narrowDnipro": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "locale": "uk",
+    "text": "Plain/Large",
+    "clientHeight": 375,
+    "clientWidth": 322,
+    "focused": true,
+    "scrollHeight": 375,
+    "scrollWidth": 322
+  },
+  "keyboard": {
+    "categoryDown": "Display & Language → Accessibility",
+    "categoryUp": "Accessibility → Display & Language",
+    "cardTab": "Dnipro Porcelain → Tryzub; decorative samples skipped",
+    "cardActivation": "Enter and Space applied theme",
+    "settingsEscape": "Settings closed; Settings opener focused",
+    "missionBriefEscape": "Paused flight retained; Mission brief opener focused",
+    "compactEscape": "Accessibility panel → category list"
+  }
+}
