@@ -4,6 +4,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { arch, release, loadavg } from 'node:os';
+import { createObservationStop } from './solo-observation-lifecycle.mjs';
 
 // Timing observations use public UI, not simulation state mutation. Keep traces,
 // screenshots and allocation profilers in separate runs. Playwright is supplied
@@ -11,7 +12,7 @@ import { arch, release, loadavg } from 'node:os';
 const [address, output, ...flags] = process.argv.slice(2);
 if (!address || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> [CHROME_EXECUTABLE=<path>] node scripts/observe-solo-performance.mjs <Solo URL> <report.json> [--browser=webkit] [--runs=3] [--duration=30000] [--cpu=1] [--fixture-access] [--warm] [--inputs] [--diagnostics=0] [--work-probe] [--source-revision=<commit>]',
+    'Usage: PLAYWRIGHT_MODULE=<path> [CHROME_EXECUTABLE=<path>] node scripts/observe-solo-performance.mjs <Solo URL> <report.json> [--browser=webkit] [--runs=3] [--duration=30000] [--cpu=1] [--fixture-access|--server-fixture-access] [--warm] [--inputs|--input-probe] [--diagnostics=0] [--work-probe] [--quality-probe] [--source-revision=<commit>]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.split('=')[1] ?? fallback;
@@ -32,25 +33,41 @@ if (
 )
   throw new Error('Invalid observation options.');
 const fixtureAccess = flags.includes('--fixture-access');
+const serverFixtureAccess = flags.includes('--server-fixture-access');
+const qualityProbe = flags.includes('--quality-probe');
+if (qualityProbe && !flags.includes('--work-probe'))
+  throw new Error('The quality witness requires the independent work probe.');
+if (fixtureAccess && serverFixtureAccess) throw new Error('Choose one access fixture owner.');
 const url = new URL(address);
 if (
   flags.includes('--input-probe') &&
   (flags.includes('--inputs') || url.searchParams.get('journey') !== 'opening')
 )
   throw new Error('The input probe requires the opening route and excludes capture inputs.');
-if (fixtureAccess && !['localhost', '127.0.0.1'].includes(url.hostname))
+if ((fixtureAccess || serverFixtureAccess) && !['localhost', '127.0.0.1'].includes(url.hostname))
   throw new Error('The explicit access fixture is restricted to local test servers.');
 url.searchParams.set('performance', option('diagnostics', '1'));
 const playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
 const results = [];
+const stop = createObservationStop();
+const sigterm = () => stop.request('SIGTERM');
+const sigint = () => stop.request('SIGINT');
+process.on('SIGTERM', sigterm);
+process.on('SIGINT', sigint);
 await mkdir(dirname(resolve(output)), { recursive: true });
 let browser;
 try {
   browser = await playwright[engine].launch({
     ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),
     headless: true,
+    // This observer owns graceful signal handling so existing samples can be
+    // exported before close. Playwright otherwise closes the browser on either
+    // signal: https://playwright.dev/docs/api/class-browsertype#browser-type-launch
+    handleSIGINT: false,
+    handleSIGTERM: false,
   });
   for (let pass = 0; pass < runs; pass++) {
+    stop.throwIfRequested();
     const observedAt = new Date().toISOString(),
       initialHostLoad = loadavg();
     const context = await browser.newContext({
@@ -83,7 +100,7 @@ try {
         await route.fulfill({ response, body });
       });
     await page.addInitScript(
-      ({ workProbe }) => {
+      ({ workProbe, qualityProbe }) => {
         const names = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
         const bounds = [8.34, 10, 16.8, 20, 25, 33.34, 40, 50, 100, 250, Infinity];
         // Phase x (count, total, maximum, thresholds, histogram). Recent samples
@@ -94,6 +111,8 @@ try {
         const workWidth = 3 + workBounds.length;
         const workTotals = new Float64Array(names.length * workWidth);
         const workSamples = new Float64Array(5000 * 2);
+        const qualitySamples = [];
+        let droppedQualitySamples = 0;
         let observedGame,
           workStarted,
           workCount = 0,
@@ -168,6 +187,22 @@ try {
             }
           }).observe({ type: 'longtask', buffered: true });
         window.soloTimingProbe = {
+          sampleQuality(label) {
+            if (!qualityProbe) return;
+            if (qualitySamples.length >= 1024) {
+              droppedQualitySamples++;
+              return;
+            }
+            // Read the already submitted presentation record; do not call
+            // drawOptions, lease.pin or any runtime/simulation method.
+            const scene = observedGame?.scene?.scenes?.find((scene) => scene.lastPaint);
+            qualitySamples.push({
+              label,
+              at: performance.now(),
+              flight: document.body.dataset.flightState,
+              quality: scene?.lastPaint?.quality ?? null,
+            });
+          },
           startWorkProbe() {
             if (!workProbe || workSubscribed) return;
             if (!observedGame) throw new Error('Phaser game was not observed.');
@@ -202,6 +237,9 @@ try {
             recent: Array.from(samples.subarray(0, Math.min(count, 1800) * 3)),
             taskCount,
             tasks: Array.from(tasks.subarray(0, Math.min(taskCount, 256) * 3)),
+            qualityProbe: qualityProbe
+              ? { samples: qualitySamples, dropped: droppedQualitySamples }
+              : null,
             workProbe: workProbe
               ? {
                   bounds: workBounds,
@@ -214,12 +252,13 @@ try {
           }),
         };
       },
-      { workProbe: flags.includes('--work-probe') },
+      { workProbe: flags.includes('--work-probe'), qualityProbe },
     );
     let failure = null,
       launchAt = null,
       firstActiveAt = null,
       beforePause = null,
+      interruptionCleanupFailure = null,
       evidence = null;
     try {
       if (engine === 'chromium' && cpu !== 1) {
@@ -228,7 +267,10 @@ try {
       }
       const open = async () => {
         await page.goto(url.href);
-        if (fixtureAccess && (await page.locator('input[name=password]').isVisible())) {
+        if (
+          (fixtureAccess || serverFixtureAccess) &&
+          (await page.locator('input[name=password]').isVisible())
+        ) {
           await page.locator('input[name=password]').fill('fixture-password');
           await page.getByRole('button', { name: 'Unlock', exact: true }).click();
         }
@@ -239,46 +281,77 @@ try {
         );
       };
       await open();
+      stop.throwIfRequested();
       if (flags.includes('--warm')) await open();
-      await page.waitForTimeout(1500);
+      await stop.wait(1500);
+      stop.throwIfRequested();
       if (flags.includes('--work-probe'))
         await page.evaluate(() => window.soloTimingProbe.startWorkProbe());
+      if (qualityProbe)
+        await page.evaluate(() => window.soloTimingProbe.sampleQuality('before-start'));
       launchAt = await page.evaluate(() => performance.now());
       await page.locator('#shell-featured').click();
       await page.waitForFunction(() => document.body.dataset.flightState === 'running', null, {
         timeout: 60000,
       });
       firstActiveAt = await page.evaluate(() => performance.now());
-      if (flags.includes('--inputs')) {
+      if (qualityProbe)
+        await page.evaluate(() => window.soloTimingProbe.sampleQuality('active-start'));
+      console.log(JSON.stringify({ pass, phase: 'running', firstActiveAt }));
+      if (flags.includes('--inputs') && !stop.requested) {
         // First-return's legal opening: public directional edges create a long
         // cut and capture. Wall time intentionally does not spoof simulation ticks.
         await page.keyboard.press('ArrowRight');
-        await page.waitForTimeout(1358);
-        await page.keyboard.press('ArrowDown');
+        if (await stop.wait(1358)) await page.keyboard.press('ArrowDown');
       }
-      if (flags.includes('--input-probe')) {
+      if (flags.includes('--input-probe') || qualityProbe) {
         // First-return starts on its revealed top edge. Repeated horizontal
         // direction edges exercise input-to-submission without making a cut.
-        const until = performance.now() + duration;
+        const until = performance.now() + duration - (flags.includes('--inputs') ? 1358 : 0);
         let edge = 0;
-        while (performance.now() < until) {
-          await page.keyboard.press(edge++ % 2 ? 'ArrowRight' : 'ArrowLeft');
-          await page.waitForTimeout(Math.min(250, Math.max(0, until - performance.now())));
+        while (!stop.requested && performance.now() < until) {
+          if (flags.includes('--input-probe'))
+            await page.keyboard.press(edge++ % 2 ? 'ArrowRight' : 'ArrowLeft');
+          if (qualityProbe)
+            await page.evaluate(() => window.soloTimingProbe.sampleQuality('active'));
+          await stop.wait(Math.min(250, Math.max(0, until - performance.now())));
         }
       } else {
-        await page.waitForTimeout(Math.max(0, duration - (flags.includes('--inputs') ? 1358 : 0)));
+        await stop.wait(Math.max(0, duration - (flags.includes('--inputs') ? 1358 : 0)));
       }
       beforePause = await page.evaluate(() => ({
         flight: document.body.dataset.flightState,
         time: document.getElementById('time').textContent,
         warning: document.getElementById('run-message').textContent,
       }));
+      if (qualityProbe)
+        await page.evaluate(() => window.soloTimingProbe.sampleQuality('before-pause'));
       if (beforePause.flight !== 'running' && !flags.includes('--inputs'))
         failure = `Active observation interrupted: ${beforePause.flight}`;
-      if (beforePause.flight === 'running') await page.locator('#pause-button').click();
-      await page.waitForTimeout(100);
+      if (beforePause.flight === 'running')
+        await page.locator('#pause-button').click({ timeout: 1000 });
+      await stop.wait(100);
     } catch (error) {
       failure = error.message;
+    }
+    if (stop.requested) {
+      failure ??= stop.message;
+      process.exitCode = 1;
+      try {
+        // A signal may arrive between an action and its normal Pause boundary.
+        // Recheck the public phase once, then export only after a best-effort
+        // Pause; a hung browser remains bounded by the parent's hard kill.
+        const current = await page.evaluate(() => ({
+          flight: document.body.dataset.flightState,
+          time: document.getElementById('time')?.textContent,
+          warning: document.getElementById('run-message')?.textContent,
+        }));
+        beforePause ??= current;
+        if (current.flight === 'running')
+          await page.locator('#pause-button').click({ timeout: 1000 });
+      } catch (error) {
+        interruptionCleanupFailure = error.message;
+      }
     }
     try {
       evidence = await page.evaluate(() => ({
@@ -301,12 +374,16 @@ try {
         note: option('note', 'unspecified'),
       },
       pass,
+      status: stop.requested ? 'interrupted' : failure ? 'failed' : 'observed',
+      interruption: stop.interruption,
+      interruptionCleanupFailure,
       address: url.href,
       sourceRevision: option('source-revision', null),
       browser: `${engine} ${browser.version()}`,
       viewport: { width: 1280, height: 800 },
       diagnostics: option('diagnostics', '1') === '1',
       independentWorkProbe: flags.includes('--work-probe'),
+      qualityProbe,
       cpuRate: cpu,
       cpuCalibration: 'requested desktop stress factor; not a physical-device equivalent',
       profile: flags.includes('--warm') ? 'fresh profile, second navigation' : 'fresh profile',
@@ -315,6 +392,7 @@ try {
         : 'controlled by browser and server headers',
       audio: 'default preferences',
       fixtureAccess,
+      serverFixtureAccess,
       requestedActiveMs: duration,
       inputs: flags.includes('--inputs')
         ? 'right, 1358ms, down'
@@ -342,14 +420,17 @@ try {
     results.push({
       pass: results.length,
       status: 'not-observed',
+      interruption: stop.interruption,
       observedAt: null,
       address: url.href,
       sourceRevision: option('source-revision', null),
       browser: `${engine} ${browser?.version() ?? 'not launched'}`,
       diagnostics: option('diagnostics', '1') === '1',
       independentWorkProbe: flags.includes('--work-probe'),
+      qualityProbe,
       cpuRate: cpu,
       fixtureAccess,
+      serverFixtureAccess,
       requestedActiveMs: duration,
       failure,
       application: null,
@@ -360,4 +441,6 @@ try {
   process.exitCode = 1;
 } finally {
   await browser?.close();
+  process.off('SIGTERM', sigterm);
+  process.off('SIGINT', sigint);
 }
