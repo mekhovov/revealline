@@ -1394,6 +1394,67 @@ test('Academy shell keeps menu input out of native flight and requires explicit 
   assert.equal(hint.textContent, instructions);
 });
 
+test('Academy native tool dialogs retain instructions across blur and focus', async (t) => {
+  for (const [button, dialog, category] of [
+    ['help', 'help-dialog', 'extras'],
+    ['notebook-button', 'notebook-dialog', 'data'],
+  ]) {
+    await t.test(dialog, async (t) => {
+      const f = await fixture(t, { home: true });
+      f.$('academy-shell-action-settings').click();
+      f.$(`academy-settings-tab-${category}`).click();
+      f.$(button).click();
+      f.tick(2);
+      assert.equal(f.$(dialog).open, true);
+      const hint = f.$(dialog).querySelector('.sim-menu-hint');
+      assert.ok(hint, 'the current dialog owns its navigation instructions');
+      const instructions = hint.textContent;
+      assert.ok(instructions.length > 0);
+      f.doc.focused = false;
+      f.win.emit('blur');
+      f.tick(2);
+      assert.equal(hint.textContent, instructions, 'blur must not resize a native tool dialog');
+      assert.equal(hint.hidden, false);
+      f.doc.focused = true;
+      f.win.emit('focus');
+      f.tick(2);
+      assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+      assert.equal(f.view.snapshot().status, 'disarmed');
+    });
+  }
+});
+
+test('Academy existing HUD guidance controls are reachable in Accessibility in EN and UK', async (t) => {
+  for (const locale of ['en', 'uk']) {
+    const f = await fixture(t, {
+      home: true,
+      url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+    });
+    f.$('academy-shell-action-settings').click();
+    f.$('academy-settings-tab-accessibility').click();
+    const section = f.doc.querySelector('[data-sim-hud-preferences]');
+    assert.ok(section);
+    assert.equal(section.parentNode, f.$('academy-settings-panel-accessibility'));
+    assert.equal(section.closest('[hidden],[inert]'), null);
+    assert.equal(f.doc.querySelectorAll('[data-sim-hud-preferences]').length, 1);
+    const controls = [...section.querySelectorAll('select')];
+    assert.equal(controls.length, 3);
+    const mode = section.querySelector('[data-hud-preference="mode"]');
+    mode.value = 'detailed';
+    mode.emit('change');
+    assert.equal(f.doc.querySelector('[data-sim-hud="flight"]').dataset.hudMode, 'detailed');
+    assert.equal(
+      f.view.snapshot().status,
+      'disarmed',
+      'Changing guidance must not start a flight.',
+    );
+    assert.equal(
+      f.$('academy-settings-tab-accessibility').textContent,
+      locale === 'uk' ? 'Доступність' : 'Accessibility',
+    );
+  }
+});
+
 test('Academy categories retain every authored preference control and restore nested dialog focus', async (t) => {
   const f = await fixture(t, { home: true });
   f.doc.defaultView.innerWidth = 390;
@@ -1621,7 +1682,8 @@ for (const clock of ['animation timestamp', 'callback execution']) {
       'A stalled frame must not load the next lesson.',
     );
     assert.deepEqual(f.view.exportAttempt(), proof);
-    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.style.visibility, 'hidden', 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
 

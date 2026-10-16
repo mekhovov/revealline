@@ -146,6 +146,10 @@ test('shared loader admits complete frozen runtime and source bytes and rejects 
   assert(admitted.binding.members.some((item) => item.path === 'optional-package.json'));
   assert.equal(admitted.binding.envelope.sha256, selected.envelopeSha256);
   await assert.rejects(
+    loadFPVObservationArtifact(selected, { base: directory, packageId: 'civilian-flight' }),
+    /exact civilian-flight package is absent/,
+  );
+  await assert.rejects(
     loadFPVObservationArtifact(
       { ...selected, packageRevision: 'e'.repeat(64) },
       { base: directory },
@@ -158,6 +162,55 @@ test('shared loader admits complete frozen runtime and source bytes and rejects 
     loadFPVObservationArtifact(selected, { base: directory }),
     /artifact bytes differ/,
   );
+});
+
+test('selected Gym admission pins its own revision; unsupported IDs fail before artifact access', async (t) => {
+  const fixture = await optionalFPVSourceFixture(t);
+  const built = await buildOptionalPractice(fixture.root, {
+    packageId: 'civilian-flight',
+    engineCommit: binding.sourceRevision,
+    engineTree: binding.sourceTree,
+    basePath: '/revealline/',
+  });
+  const candidate = createOptionalPackageCandidate({ built, ...binding });
+  const envelope = Buffer.from(
+    JSON.stringify({
+      format: 'revealline-optional-packages.v1',
+      ...binding,
+      packages: [candidate.package],
+    }),
+  );
+  const directory = await temporary(t);
+  for (const [name, bytes] of candidate.files) await writeFile(path.join(directory, name), bytes);
+  await writeFile(path.join(directory, 'optional-packages.json'), envelope);
+  const selected = {
+    ...plan('runtime'),
+    envelopeSha256: hash(envelope),
+    packageRevision: candidate.package.revision,
+  };
+  const admitted = await loadFPVObservationArtifact(selected, {
+    base: directory,
+    packageId: 'civilian-flight',
+  });
+  assert.equal(admitted.binding.package.id, 'civilian-flight');
+  assert.equal(admitted.binding.package.revision, selected.packageRevision);
+  assert.deepEqual(admitted.files, new Map(built.entries.map((item) => [item.name, item.bytes])));
+  await assert.rejects(
+    loadFPVObservationArtifact(selected, { base: directory }),
+    /exact civilian-fpv package is absent/,
+  );
+  await assert.rejects(
+    loadFPVObservationArtifact(
+      { ...selected, packageRevision: 'e'.repeat(64) },
+      { base: directory, packageId: 'civilian-flight' },
+    ),
+    /exact civilian-flight package is absent/,
+  );
+  for (const packageId of ['other', '../civilian-flight', '', null])
+    await assert.rejects(
+      loadFPVObservationArtifact({ ...selected, bundle: '/does-not-exist' }, { packageId }),
+      /registered practice application/,
+    );
 });
 
 test('cleanup records a failure while still closing every other owned resource', async () => {
