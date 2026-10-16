@@ -87,8 +87,24 @@ movement and explicit pause/resume. An initially disarmed Start is retained; the
 observer waits for the public Arm control's enabled state rather than hidden
 renderer state. No completed course/proof is manufactured.
 
-Foregrounding the separate update tab naturally pauses the historical flight.
-Only then does the real current package prepare and advance active/previous
+Do not infer natural blur from Playwright's `bringToFront`: this installed
+automation runtime enables focus emulation, and the first native attempt failed
+before update because both separate windows remained logically focused. The
+failed receipt and plain-page probes are preserved. A visible-browser probe with
+the same override is not independent natural-focus proof either.
+
+For the separate minimized-window diagnostic, additionally set
+`OPTIONAL_INSTALLATION_ACTIVE_WINDOW=owned-window-minimize-98ad851`. The observer
+hash-pins the installed Playwright focus-default implementation, acquires only
+the isolated context's exact A/B target sessions, and removes its focus emulation
+on those targets. Native window minimization then produces actual browser blur;
+no DOM event, hidden application state or historical package byte is synthesized.
+Both original normal window geometry and automation defaults are restored, and
+sessions detach independently. Native bounds alone never substitute for the
+application's paused/focus/visible-HUD witness. Ordinary cross-window switching
+and physical-device behavior remain unqualified.
+
+Only after the observed pause does the real current package prepare and advance active/previous
 pointers. The old window must retain its immutable URL, document identity and time
 origin, remain paused with stable visible height after focus returns, and move
 again only after explicit resume. The whole helper, including update, has one
@@ -97,7 +113,35 @@ the parent also requires actual B preparation and exact record retention.
 An original paused screenshot and source hash are retained. This is historical
 Academy session continuity, not uninterrupted background flight, exact simulation
 tick continuity, all-app migration or a human/physical-input review. Native results
-must be recorded separately from its synthetic unit tests.
+must be recorded separately from its synthetic unit tests. Upward movement must
+be positive, not a fall/reset to ground. A failed focus transfer retains its last
+bounded public snapshot and stops after 1.5 seconds inside the unchanged shared
+30-second deadline.
+
+## Separate all-three historical migration lane
+
+Set `OPTIONAL_INSTALLATION_MIGRATION=all-three-98ad851`, the pinned historical
+admission and the same saved-world seed. Download, quota and active-session/window
+flags must be absent. This lane has its own
+`OptionalInstallationHistoricalMigrationObservation.v1` report and
+`optional-installation-all-three-historical.v1` protocol; omitted OS-installation
+and process-restart checks cannot pass under the default protocol's name.
+
+All three original historical runtimes/launchers are prepared. The historical
+World project is created through Missions → Workshop and installed normally.
+Each app upgrades to genuinely different admitted current bytes, then returns to
+its retained historical runtime through ordinary current-shell removal and an
+offline stable launcher. Ordinary online Play visits prepare/update launchers;
+workers must activate normally after the old launcher client leaves. There is
+no forced activation, unregister or manual cache deletion.
+
+Seven ordered checkpoints require exact active/previous pointers, every admitted
+runtime **and launcher** response hash, no extra/missing cache/worker scopes,
+unchanged sibling ownership, exact shared synthetic proof/profile exports, and
+the full nonempty historical World project/revision/card fingerprints. Gym has
+no persistent flight-record store to populate. This lane does not qualify
+populated assets/recordings, flights, hardware, OS installation, process restart,
+human reviews or public release. Native execution is required after unit tests.
 
 ## Default journey and evidence boundaries
 

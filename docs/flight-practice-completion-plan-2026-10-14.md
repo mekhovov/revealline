@@ -35,12 +35,18 @@ Current continuation: six personal-appearance source-shell journeys and all six
 native 30-second idle/download-cancel cases pass; the temporary fourth-app recipe
 also passes. See the [integrated-main report](flight-practice-continuation-2026-10-16.md)
 for original failures, exact sources, preserved records and remaining scope.
-Separate active-session and real five-minute observers are implemented but their
-native execution remains pending. The full build's second attempt was cancelled
+All three separate real five-minute cases now pass with exact cache/data
+preservation, pristine retry/removal and independent evidence audit. The first
+active-session attempt fails before update because default automation focus
+emulation prevents genuine blur; a separately reviewed owned-window minimization
+diagnostic and all-three genuine migration lane await native execution.
+The full build's second attempt was cancelled
 at a cross-volume file-cloning bottleneck, not accepted as a distribution pass.
 A narrow same-device writer guard preserves exact-byte checks and fallbacks.
-Next: retry the full production build/player journey and run those separate
-historical active-session/overall-timeout lanes. Real hardware is
+The third build has prepared its immutable bytes and is writing the original
+artifact. Next: finish its production player journey and run the separate
+historical active-session/all-three migration lanes; improve safe localized
+failure reasons exposed by the long-run results. Real hardware is
 deferred at the owner's subsequent request; hosting remains deferred. SIM flight
 mechanics, lessons and rendering remain outside this workstream.
 
