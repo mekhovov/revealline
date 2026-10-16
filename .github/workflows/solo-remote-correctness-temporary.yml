@@ -27,11 +27,15 @@ jobs:
       SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
       SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
       SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
-      SOLO_PLAYWRIGHT_MODULE: ${{ runner.temp }}/solo-browser-tools/node_modules/playwright/index.mjs
-      PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/solo-browser-binaries
       PYTHONDONTWRITEBYTECODE: 1
-      OUTPUT: ${{ runner.temp }}/solo-linux-correctness
     steps:
+      - name: Initialize paths after the runner is assigned
+        shell: bash
+        run: |
+          printf '%s\n' \
+            "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
+            "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
+            "OUTPUT=$RUNNER_TEMP/solo-linux-correctness" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
