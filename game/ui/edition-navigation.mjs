@@ -1,4 +1,7 @@
 import { localizedText } from '../i18n/index.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from '../studio-preview-session.mjs';
+import { editionPublicSlug } from '../edition-context.mjs';
+import { gameDocumentURL } from '../community-routes.mjs';
 
 const onlineRoot = 'https://mekhovov.github.io/revealline/';
 
@@ -16,7 +19,7 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
   for (const label of doc.querySelectorAll('[data-i18n="interface:revealLineMenu"]'))
     localizedText(label, () => `${provider.selection.brand.name} / Menu`);
   for (const link of doc.querySelectorAll('a[href]')) {
-    const target = new URL(link.getAttribute('href') || link.href, href);
+    const target = new URL(link.getAttribute('href') || link.href, gameDocumentURL(href));
     if (target.origin !== root.origin || !target.pathname.startsWith(root.pathname)) continue;
     const relative = target.pathname.slice(root.pathname.length);
     if (/^game\/couch(?:\/|$)/.test(relative)) {
@@ -47,15 +50,16 @@ export function mountEditionNavigation({ provider, document: doc, href }) {
     }
     if (['game/', 'game/index.html', 'game/company.html'].includes(relative)) {
       const destination = new URL(game.href);
-      destination.search = target.search;
-      destination.searchParams.set('edition', provider.editionId);
+      for (const [key, value] of target.searchParams)
+        if (!['edition', 'presentation'].includes(key)) destination.searchParams.set(key, value);
+      if (isStudioPreview(href)) destination.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       if (provider.retainedPresentationId)
         destination.searchParams.set('presentation', provider.retainedPresentationId);
       else destination.searchParams.delete('presentation');
       destination.hash = target.hash;
       link.href = destination.href;
     } else if (/^game\/(?:controller-lab|replay-theater)(?:\/|$)/.test(relative)) {
-      target.searchParams.set('edition', provider.editionId);
+      target.searchParams.set('edition', editionPublicSlug(provider.editionId));
       if (provider.retainedPresentationId)
         target.searchParams.set('presentation', provider.retainedPresentationId);
       else target.searchParams.delete('presentation');

@@ -621,7 +621,7 @@
   "content.textBudget": "{{path}} exceeds the 4096-character text budget.",
   "content.plainJson": "{{path}} must contain plain JSON data.",
   "content.cycle": "{{path}} must not contain a cycle.",
-  "content.arrayBudget": "{{path}} exceeds the 256-item array budget.",
+  "content.arrayBudget": "{{path}} exceeds the {{limit}}-item array budget.",
   "content.fieldBudget": "{{path}} has too many fields.",
   "content.symbolKeys": "{{path}} must not contain symbol keys.",
   "content.arrayProperties": "{{path}} must not contain custom array properties.",
@@ -843,5 +843,7 @@
   "controller.confirmTrace.aliasEchoTiming": "Controller Confirm alias echo timing is out of bounds.",
   "controller.confirmTrace.limit": "Controller trace limit is out of bounds.",
   "studio.source.unknownEdition": "This Journey edition is not registered. Choose a listed edition; your draft is unchanged.",
-  "studio.image.bundledFailed": "The bundled reference could not be verified. Your existing picture and map are unchanged. Try again or upload a local image."
+  "studio.image.bundledFailed": "The bundled reference could not be verified. Your existing picture and map are unchanged. Try again or upload a local image.",
+  "studio.teamEnvironment.stale": "The mission or map changed. Inspect the environment again.",
+  "studio.teamEnvironment.unavailable": "Select an expedition Team environment first."
 }

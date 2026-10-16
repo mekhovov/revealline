@@ -1,0 +1,678 @@
+{
+  "format": "OverflightEarnedLateNativeSummaryV1",
+  "populationScope": "Ranges from periodic resource samples inside the measured gameplay interval; not exact peaks or sustained counts.",
+  "runs": [
+    {
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-trial-1.json.gz",
+      "sha256Raw": "c14feb1f10acc5298339747814b472df342d6c4d94dedd6a37b0856ebe69091b",
+      "trial": 1,
+      "capturedAt": "2026-10-14T17:32:58.115Z",
+      "result": "pass",
+      "valid": true,
+      "invalidReasons": [],
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "endGameplaySeconds": 328.18333333333334,
+      "seed": 202604,
+      "projectIdentity": "08200dc0e73fe617",
+      "reducedEffects": false,
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.999,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14175,
+            "seconds": 118.49300000000038
+          },
+          "upgrade": {
+            "samples": 177,
+            "seconds": 1.5060000000000002
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14352,
+          "p50": 8.300000000745058,
+          "p95": 10.800000000745058,
+          "p99": 13,
+          "worst": 67.40000000037253
+        },
+        "cadenceHz": 119.6009966749723,
+        "slowFraction": 0.0002787068004459309,
+        "passes": true
+      },
+      "sampledWorkload": {
+        "count": 8,
+        "gameplayRange": [
+          210,
+          315
+        ],
+        "alive": [
+          139,
+          973
+        ],
+        "visible": [
+          93,
+          348
+        ],
+        "rendered": [
+          94,
+          384
+        ],
+        "effects": [
+          0,
+          60
+        ],
+        "pickups": [
+          16,
+          179
+        ],
+        "quads": [
+          488,
+          1254
+        ],
+        "atlasBytes": [
+          28467840,
+          28467840
+        ],
+        "allocatedSprites": [
+          833,
+          1843
+        ],
+        "canvasCount": [
+          1,
+          1
+        ],
+        "remainsStored": [
+          1015,
+          1024
+        ]
+      },
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": false,
+        "finalId": 3003
+      },
+      "upgrades": [
+        {
+          "id": "primary:wide:2",
+          "time": 21.65,
+          "tick": 1299
+        },
+        {
+          "id": "riy-sweeper:broad:2",
+          "time": 32.28333333333333,
+          "tick": 1937
+        },
+        {
+          "id": "riy-breaker:burst:2",
+          "time": 60.28333333333333,
+          "tick": 3617
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 77.46666666666667,
+          "tick": 4648
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 91.81666666666666,
+          "tick": 5509
+        },
+        {
+          "id": "shield:1",
+          "time": 114.88333333333334,
+          "tick": 6893
+        },
+        {
+          "id": "riy-sweeper:broad:3",
+          "time": 134.36666666666667,
+          "tick": 8062
+        },
+        {
+          "id": "riy-breaker:burst:3",
+          "time": 151.3,
+          "tick": 9078
+        },
+        {
+          "id": "shield:2",
+          "time": 172.63333333333333,
+          "tick": 10358
+        },
+        {
+          "id": "shield:3",
+          "time": 232.91666666666666,
+          "tick": 13975
+        }
+      ],
+      "airframesRemaining": 2,
+      "clock": {
+        "steps": 19691,
+        "droppedSeconds": 0,
+        "accumulator": 0.016183333332963994
+      },
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rawOverflow": 0,
+      "clipCaptureUsed": false
+    },
+    {
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-trial-2.json.gz",
+      "sha256Raw": "3609f80f4ca4db4c44ed839a91a2cf227e6948dc626b8906437da9a7573851d9",
+      "trial": 2,
+      "capturedAt": "2026-10-14T17:39:33.469Z",
+      "result": "pass",
+      "valid": true,
+      "invalidReasons": [],
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "endGameplaySeconds": 328.2,
+      "seed": 202604,
+      "projectIdentity": "08200dc0e73fe617",
+      "reducedEffects": false,
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.9965,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13718,
+            "seconds": 118.49690000000054
+          },
+          "upgrade": {
+            "samples": 179,
+            "seconds": 1.499599999999628
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 13897,
+          "p50": 8.399999998509884,
+          "p95": 12.099999999627471,
+          "p99": 18.09999999962747,
+          "worst": 92
+        },
+        "cadenceHz": 115.81171117490926,
+        "slowFraction": 0.0008634957185003957,
+        "passes": true
+      },
+      "sampledWorkload": {
+        "count": 8,
+        "gameplayRange": [
+          210,
+          315
+        ],
+        "alive": [
+          139,
+          973
+        ],
+        "visible": [
+          93,
+          348
+        ],
+        "rendered": [
+          94,
+          384
+        ],
+        "effects": [
+          0,
+          60
+        ],
+        "pickups": [
+          16,
+          179
+        ],
+        "quads": [
+          488,
+          1254
+        ],
+        "atlasBytes": [
+          28467840,
+          28467840
+        ],
+        "allocatedSprites": [
+          833,
+          1843
+        ],
+        "canvasCount": [
+          1,
+          1
+        ],
+        "remainsStored": [
+          1015,
+          1024
+        ]
+      },
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": false,
+        "finalId": 3003
+      },
+      "upgrades": [
+        {
+          "id": "primary:wide:2",
+          "time": 21.65,
+          "tick": 1299
+        },
+        {
+          "id": "riy-sweeper:broad:2",
+          "time": 32.28333333333333,
+          "tick": 1937
+        },
+        {
+          "id": "riy-breaker:burst:2",
+          "time": 60.28333333333333,
+          "tick": 3617
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 77.46666666666667,
+          "tick": 4648
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 91.81666666666666,
+          "tick": 5509
+        },
+        {
+          "id": "shield:1",
+          "time": 114.88333333333334,
+          "tick": 6893
+        },
+        {
+          "id": "riy-sweeper:broad:3",
+          "time": 134.36666666666667,
+          "tick": 8062
+        },
+        {
+          "id": "riy-breaker:burst:3",
+          "time": 151.3,
+          "tick": 9078
+        },
+        {
+          "id": "shield:2",
+          "time": 172.63333333333333,
+          "tick": 10358
+        },
+        {
+          "id": "shield:3",
+          "time": 232.91666666666666,
+          "tick": 13975
+        }
+      ],
+      "airframesRemaining": 2,
+      "clock": {
+        "steps": 19692,
+        "droppedSeconds": 0,
+        "accumulator": 0.011616666667786345
+      },
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rawOverflow": 0,
+      "clipCaptureUsed": false
+    },
+    {
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-trial-3.json.gz",
+      "sha256Raw": "3d43068d4674c86d5ba2bc3e44e07d1e75e6272703fc92f45171b666dd96772e",
+      "trial": 3,
+      "capturedAt": "2026-10-14T17:46:10.711Z",
+      "result": "pass",
+      "valid": true,
+      "invalidReasons": [],
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "endGameplaySeconds": 328.2,
+      "seed": 202604,
+      "projectIdentity": "08200dc0e73fe617",
+      "reducedEffects": false,
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99329999999888,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14215,
+            "seconds": 118.49169999999918
+          },
+          "upgrade": {
+            "samples": 180,
+            "seconds": 1.501599999999627
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14395,
+          "p50": 8.300000000745058,
+          "p95": 10.199999999254942,
+          "p99": 11.099999999627471,
+          "worst": 26.300000000745058
+        },
+        "cadenceHz": 119.96503138091988,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "sampledWorkload": {
+        "count": 8,
+        "gameplayRange": [
+          210,
+          315
+        ],
+        "alive": [
+          139,
+          973
+        ],
+        "visible": [
+          93,
+          348
+        ],
+        "rendered": [
+          94,
+          384
+        ],
+        "effects": [
+          0,
+          60
+        ],
+        "pickups": [
+          16,
+          179
+        ],
+        "quads": [
+          488,
+          1254
+        ],
+        "atlasBytes": [
+          28467840,
+          28467840
+        ],
+        "allocatedSprites": [
+          833,
+          1843
+        ],
+        "canvasCount": [
+          1,
+          1
+        ],
+        "remainsStored": [
+          1015,
+          1024
+        ]
+      },
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": false,
+        "finalId": 3003
+      },
+      "upgrades": [
+        {
+          "id": "primary:wide:2",
+          "time": 21.65,
+          "tick": 1299
+        },
+        {
+          "id": "riy-sweeper:broad:2",
+          "time": 32.28333333333333,
+          "tick": 1937
+        },
+        {
+          "id": "riy-breaker:burst:2",
+          "time": 60.28333333333333,
+          "tick": 3617
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 77.46666666666667,
+          "tick": 4648
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 91.81666666666666,
+          "tick": 5509
+        },
+        {
+          "id": "shield:1",
+          "time": 114.88333333333334,
+          "tick": 6893
+        },
+        {
+          "id": "riy-sweeper:broad:3",
+          "time": 134.36666666666667,
+          "tick": 8062
+        },
+        {
+          "id": "riy-breaker:burst:3",
+          "time": 151.3,
+          "tick": 9078
+        },
+        {
+          "id": "shield:2",
+          "time": 172.63333333333333,
+          "tick": 10358
+        },
+        {
+          "id": "shield:3",
+          "time": 232.91666666666666,
+          "tick": 13975
+        }
+      ],
+      "airframesRemaining": 2,
+      "clock": {
+        "steps": 19692,
+        "droppedSeconds": 0,
+        "accumulator": 0.0037166666674157793
+      },
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rawOverflow": 0,
+      "clipCaptureUsed": false
+    },
+    {
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-reduced-trial-1.json.gz",
+      "sha256Raw": "2681ca83fcf92304967af58bfa5c469d31fe77c07329bdc2428b89dcfdb40855",
+      "trial": 1,
+      "capturedAt": "2026-10-14T17:53:23.070Z",
+      "result": "pass",
+      "valid": true,
+      "invalidReasons": [],
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "endGameplaySeconds": 328.2,
+      "seed": 202604,
+      "projectIdentity": "08200dc0e73fe617",
+      "reducedEffects": true,
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99239999999851,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14211,
+            "seconds": 118.49039999999826
+          },
+          "upgrade": {
+            "samples": 180,
+            "seconds": 1.5020000000000007
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14391,
+          "p50": 8.300000000745058,
+          "p95": 10.300000000745058,
+          "p99": 11.299999997019768,
+          "worst": 18.399999998509884
+        },
+        "cadenceHz": 119.93259573106445,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "sampledWorkload": {
+        "count": 8,
+        "gameplayRange": [
+          210,
+          315
+        ],
+        "alive": [
+          139,
+          973
+        ],
+        "visible": [
+          93,
+          348
+        ],
+        "rendered": [
+          94,
+          384
+        ],
+        "effects": [
+          0,
+          32
+        ],
+        "pickups": [
+          16,
+          179
+        ],
+        "quads": [
+          483,
+          1254
+        ],
+        "atlasBytes": [
+          28467840,
+          28467840
+        ],
+        "allocatedSprites": [
+          761,
+          1740
+        ],
+        "canvasCount": [
+          1,
+          1
+        ],
+        "remainsStored": [
+          1015,
+          1024
+        ]
+      },
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": false,
+        "finalId": 3003
+      },
+      "upgrades": [
+        {
+          "id": "primary:wide:2",
+          "time": 21.65,
+          "tick": 1299
+        },
+        {
+          "id": "riy-sweeper:broad:2",
+          "time": 32.28333333333333,
+          "tick": 1937
+        },
+        {
+          "id": "riy-breaker:burst:2",
+          "time": 60.28333333333333,
+          "tick": 3617
+        },
+        {
+          "id": "primary:wide:3",
+          "time": 77.46666666666667,
+          "tick": 4648
+        },
+        {
+          "id": "primary:wide:4",
+          "time": 91.81666666666666,
+          "tick": 5509
+        },
+        {
+          "id": "shield:1",
+          "time": 114.88333333333334,
+          "tick": 6893
+        },
+        {
+          "id": "riy-sweeper:broad:3",
+          "time": 134.36666666666667,
+          "tick": 8062
+        },
+        {
+          "id": "riy-breaker:burst:3",
+          "time": 151.3,
+          "tick": 9078
+        },
+        {
+          "id": "shield:2",
+          "time": 172.63333333333333,
+          "tick": 10358
+        },
+        {
+          "id": "shield:3",
+          "time": 232.91666666666666,
+          "tick": 13975
+        }
+      ],
+      "airframesRemaining": 2,
+      "clock": {
+        "steps": 19692,
+        "droppedSeconds": 0,
+        "accumulator": 0.0067166666636877675
+      },
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rawOverflow": 0,
+      "clipCaptureUsed": false
+    }
+  ]
+}

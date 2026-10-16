@@ -1,0 +1,5922 @@
+{
+  "format": "FPVStepBoundaryBrowserEvidence.v1",
+  "createdAt": "2026-10-02T04:51:32.579Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "beginner-01 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 360,
+      "finalStateIdentity": "9c5c44ff0f549053",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 40,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 148,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-01 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 40,
+          "throttle": 0
+        },
+        {
+          "step": 2,
+          "tick": 148,
+          "throttle": 0.493
+        }
+      ]
+    },
+    {
+      "name": "beginner-02 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 564,
+      "finalStateIdentity": "f79e1ebe9e9f5a3b",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 126,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 278,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 494,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-02 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 126,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 278,
+          "throttle": 0.494
+        }
+      ]
+    },
+    {
+      "name": "beginner-03 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 561,
+      "finalStateIdentity": "df7c0c7ddcbe98f8",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 299,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 498,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-03 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 299,
+          "throttle": 0.498
+        }
+      ]
+    },
+    {
+      "name": "beginner-04 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 696,
+      "finalStateIdentity": "2b02d54e3f436aa4",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 237,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 25,
+            "throttle": 497,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 346,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -26,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 434,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 25,
+            "throttle": 499,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-04 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 237,
+          "throttle": 0.497
+        },
+        {
+          "step": 3,
+          "tick": 346,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 434,
+          "throttle": 0.499
+        }
+      ]
+    },
+    {
+      "name": "beginner-05 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 654,
+      "finalStateIdentity": "7b57e5174cee28c4",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "command": {
+            "roll": 0,
+            "pitch": -77,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 393,
+          "command": {
+            "roll": 0,
+            "pitch": -50,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-05 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 393,
+          "throttle": 0.499
+        }
+      ]
+    },
+    {
+      "name": "beginner-06 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 828,
+      "finalStateIdentity": "e2cdac9d77db8835",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 311,
+          "command": {
+            "roll": -52,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 566,
+          "command": {
+            "roll": 48,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-06 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 311,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 566,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-07 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 948,
+      "finalStateIdentity": "52ca8f0f6d942fda",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 294,
+          "command": {
+            "roll": 0,
+            "pitch": -73,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 478,
+          "command": {
+            "roll": 0,
+            "pitch": -24,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 686,
+          "command": {
+            "roll": 0,
+            "pitch": 33,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-07 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 294,
+          "throttle": 0.5
+        },
+        {
+          "step": 3,
+          "tick": 478,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 686,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-08 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 830,
+      "finalStateIdentity": "502bfd5fba0dd1fa",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 362,
+          "command": {
+            "roll": 0,
+            "pitch": -46,
+            "yaw": 0,
+            "throttle": 497,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 579,
+          "command": {
+            "roll": 0,
+            "pitch": -49,
+            "yaw": 0,
+            "throttle": 503,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-08 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 362,
+          "throttle": 0.497
+        },
+        {
+          "step": 3,
+          "tick": 579,
+          "throttle": 0.503
+        }
+      ]
+    },
+    {
+      "name": "beginner-09 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 899,
+      "finalStateIdentity": "fd81a13164a8da78",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 351,
+          "command": {
+            "roll": 0,
+            "pitch": -46,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 449,
+          "command": {
+            "roll": 17,
+            "pitch": 0,
+            "yaw": 17,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 638,
+          "command": {
+            "roll": 13,
+            "pitch": -87,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-09 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 351,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 449,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 638,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-10 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 732,
+      "finalStateIdentity": "573b969949ebedb6",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 332,
+          "command": {
+            "roll": 0,
+            "pitch": -52,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 470,
+          "command": {
+            "roll": -40,
+            "pitch": -16,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-10 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 332,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 470,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-11 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 945,
+      "finalStateIdentity": "d22d2c0ed2f3769e",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "command": {
+            "roll": 0,
+            "pitch": -77,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 471,
+          "command": {
+            "roll": -17,
+            "pitch": -69,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 684,
+          "command": {
+            "roll": 11,
+            "pitch": -79,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-11 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 471,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 684,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-12 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1032,
+      "finalStateIdentity": "4d5e90cdbe3cccac",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 149,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "command": {
+            "roll": 0,
+            "pitch": -77,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 423,
+          "command": {
+            "roll": 38,
+            "pitch": 0,
+            "yaw": 8,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 625,
+          "command": {
+            "roll": 4,
+            "pitch": -85,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 782,
+          "command": {
+            "roll": 1,
+            "pitch": -29,
+            "yaw": 0,
+            "throttle": 502,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-12 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 149,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 423,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 625,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 782,
+          "throttle": 0.502
+        }
+      ]
+    },
+    {
+      "name": "beginner-13 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 654,
+      "finalStateIdentity": "11f9978ff8f10766",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 182,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 214,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 516,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 326,
+          "command": {
+            "roll": 0,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 489,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-13 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 182,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 214,
+          "throttle": 0.516
+        },
+        {
+          "step": 3,
+          "tick": 326,
+          "throttle": 0.489
+        }
+      ]
+    },
+    {
+      "name": "beginner-14 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 757,
+      "finalStateIdentity": "fe32539fa7036a87",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 337,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 483,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-14 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 337,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 483,
+          "throttle": 0.499
+        }
+      ]
+    },
+    {
+      "name": "beginner-15 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 360,
+      "finalStateIdentity": "a263ee9df3245fc6",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 40,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 148,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-15 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 40,
+          "throttle": 0
+        },
+        {
+          "step": 2,
+          "tick": 148,
+          "throttle": 0.493
+        }
+      ]
+    },
+    {
+      "name": "beginner-16 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 712,
+      "finalStateIdentity": "98a71c96624ef754",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 126,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 296,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 494,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 459,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 506,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-16 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 126,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 296,
+          "throttle": 0.494
+        },
+        {
+          "step": 3,
+          "tick": 459,
+          "throttle": 0.506
+        }
+      ]
+    },
+    {
+      "name": "beginner-17 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 608,
+      "finalStateIdentity": "e31f382df014b710",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 182,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 214,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 510,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 314,
+          "command": {
+            "roll": 0,
+            "pitch": 14,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-17 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 182,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 214,
+          "throttle": 0.51
+        },
+        {
+          "step": 3,
+          "tick": 314,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-18 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 961,
+      "finalStateIdentity": "c3cb25ef47210af2",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 379,
+          "command": {
+            "roll": 1,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 688,
+          "command": {
+            "roll": 3,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-18 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 379,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 688,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-19 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 973,
+      "finalStateIdentity": "4278125617729278",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 264,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 14,
+            "throttle": 498,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 389,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -13,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 492,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 14,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 699,
+          "command": {
+            "roll": 0,
+            "pitch": 3,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-19 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 264,
+          "throttle": 0.498
+        },
+        {
+          "step": 3,
+          "tick": 389,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 492,
+          "throttle": 0.499
+        },
+        {
+          "step": 5,
+          "tick": 699,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-20 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 908,
+      "finalStateIdentity": "85322821714cc6d5",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 496,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 504,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 645,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-20 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "throttle": 0.5
+        },
+        {
+          "step": 3,
+          "tick": 496,
+          "throttle": 0.504
+        },
+        {
+          "step": 4,
+          "tick": 645,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-21 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 959,
+      "finalStateIdentity": "f68bc332fde2cd48",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 328,
+          "command": {
+            "roll": 0,
+            "pitch": 23,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 511,
+          "command": {
+            "roll": -4,
+            "pitch": 20,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 686,
+          "command": {
+            "roll": 15,
+            "pitch": 17,
+            "yaw": -3,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-21 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 328,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 511,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 686,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-22 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1763,
+      "finalStateIdentity": "1eed4ab679368ff7",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 171,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 320,
+          "command": {
+            "roll": 25,
+            "pitch": 25,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 489,
+          "command": {
+            "roll": 23,
+            "pitch": 18,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 651,
+          "command": {
+            "roll": 25,
+            "pitch": 21,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 814,
+          "command": {
+            "roll": 27,
+            "pitch": 20,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 983,
+          "command": {
+            "roll": -26,
+            "pitch": 23,
+            "yaw": 3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1154,
+          "command": {
+            "roll": -23,
+            "pitch": 18,
+            "yaw": 3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1316,
+          "command": {
+            "roll": -27,
+            "pitch": 20,
+            "yaw": 3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 1479,
+          "command": {
+            "roll": -27,
+            "pitch": 20,
+            "yaw": 3,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-22 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 171,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 320,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 489,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 651,
+          "throttle": 0.501
+        },
+        {
+          "step": 5,
+          "tick": 814,
+          "throttle": 0.501
+        },
+        {
+          "step": 6,
+          "tick": 983,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1154,
+          "throttle": 0.501
+        },
+        {
+          "step": 8,
+          "tick": 1316,
+          "throttle": 0.501
+        },
+        {
+          "step": 9,
+          "tick": 1479,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-23 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1057,
+      "finalStateIdentity": "2845a2ff4aec8315",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 388,
+          "command": {
+            "roll": 0,
+            "pitch": -2,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 585,
+          "command": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 784,
+          "command": {
+            "roll": 3,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-23 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 388,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 585,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 784,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-24 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1031,
+      "finalStateIdentity": "7524261f630f7a40",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 321,
+          "command": {
+            "roll": 0,
+            "pitch": 25,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 523,
+          "command": {
+            "roll": -4,
+            "pitch": 8,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 769,
+          "command": {
+            "roll": 1,
+            "pitch": 0,
+            "yaw": 1,
+            "throttle": 502,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-24 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 321,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 523,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 769,
+          "throttle": 0.502
+        }
+      ]
+    },
+    {
+      "name": "beginner-25 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 676,
+      "finalStateIdentity": "d8840ecf804778f1",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 190,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 226,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 514,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 400,
+          "command": {
+            "roll": -7,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 503,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-25 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 190,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 226,
+          "throttle": 0.514
+        },
+        {
+          "step": 3,
+          "tick": 400,
+          "throttle": 0.503
+        }
+      ]
+    },
+    {
+      "name": "beginner-26 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1407,
+      "finalStateIdentity": "e0364f091e3eb2a4",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 337,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 460,
+          "command": {
+            "roll": -14,
+            "pitch": 3,
+            "yaw": 5,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 649,
+          "command": {
+            "roll": -3,
+            "pitch": 31,
+            "yaw": 1,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 772,
+          "command": {
+            "roll": 14,
+            "pitch": 3,
+            "yaw": -6,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 962,
+          "command": {
+            "roll": 3,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1145,
+          "command": {
+            "roll": -2,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-26 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 337,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 460,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 649,
+          "throttle": 0.502
+        },
+        {
+          "step": 5,
+          "tick": 772,
+          "throttle": 0.499
+        },
+        {
+          "step": 6,
+          "tick": 962,
+          "throttle": 0.502
+        },
+        {
+          "step": 7,
+          "tick": 1145,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-27 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1379,
+      "finalStateIdentity": "a18a122f726dfe48",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 350,
+          "command": {
+            "roll": 0,
+            "pitch": 31,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 539,
+          "command": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 728,
+          "command": {
+            "roll": -3,
+            "pitch": 31,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 917,
+          "command": {
+            "roll": -3,
+            "pitch": 1,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1106,
+          "command": {
+            "roll": -3,
+            "pitch": 30,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-27 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 350,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 539,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 728,
+          "throttle": 0.501
+        },
+        {
+          "step": 5,
+          "tick": 917,
+          "throttle": 0.5
+        },
+        {
+          "step": 6,
+          "tick": 1106,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-28 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1151,
+      "finalStateIdentity": "4126e0a2e80d49ae",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 405,
+          "command": {
+            "roll": 0,
+            "pitch": -3,
+            "yaw": 0,
+            "throttle": 498,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 653,
+          "command": {
+            "roll": -3,
+            "pitch": -2,
+            "yaw": 0,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 901,
+          "command": {
+            "roll": -2,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 502,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-28 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 405,
+          "throttle": 0.498
+        },
+        {
+          "step": 3,
+          "tick": 653,
+          "throttle": 0.502
+        },
+        {
+          "step": 4,
+          "tick": 901,
+          "throttle": 0.502
+        }
+      ]
+    },
+    {
+      "name": "beginner-29 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1597,
+      "finalStateIdentity": "cc775be8808698bd",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 417,
+          "command": {
+            "roll": -4,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 674,
+          "command": {
+            "roll": 4,
+            "pitch": -2,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 938,
+          "command": {
+            "roll": 0,
+            "pitch": 4,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1203,
+          "command": {
+            "roll": -4,
+            "pitch": -2,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1323,
+          "command": {
+            "roll": -3,
+            "pitch": 0,
+            "yaw": -17,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-29 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 417,
+          "throttle": 0.499
+        },
+        {
+          "step": 3,
+          "tick": 674,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 938,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 1203,
+          "throttle": 0.5
+        },
+        {
+          "step": 6,
+          "tick": 1323,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-30 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1277,
+      "finalStateIdentity": "12ff1f943cd2eccf",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 364,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 532,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 755,
+          "command": {
+            "roll": -4,
+            "pitch": 0,
+            "yaw": -3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1004,
+          "command": {
+            "roll": 3,
+            "pitch": 1,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-30 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 364,
+          "throttle": 0.5
+        },
+        {
+          "step": 3,
+          "tick": 532,
+          "throttle": 0.499
+        },
+        {
+          "step": 4,
+          "tick": 755,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 1004,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-31 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1840,
+      "finalStateIdentity": "a9d39bddf15619d9",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 578,
+          "command": {
+            "roll": -2,
+            "pitch": 10,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 797,
+          "command": {
+            "roll": 1,
+            "pitch": 23,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1040,
+          "command": {
+            "roll": 0,
+            "pitch": 14,
+            "yaw": 0,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1360,
+          "command": {
+            "roll": 4,
+            "pitch": -17,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1566,
+          "command": {
+            "roll": 0,
+            "pitch": 3,
+            "yaw": -2,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-31 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 578,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 797,
+          "throttle": 0.501
+        },
+        {
+          "step": 5,
+          "tick": 1040,
+          "throttle": 0.502
+        },
+        {
+          "step": 6,
+          "tick": 1360,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1566,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-32 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1709,
+      "finalStateIdentity": "77c17e1155019e55",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 350,
+          "command": {
+            "roll": 0,
+            "pitch": 31,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 639,
+          "command": {
+            "roll": -2,
+            "pitch": -14,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 842,
+          "command": {
+            "roll": 3,
+            "pitch": 28,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1021,
+          "command": {
+            "roll": -3,
+            "pitch": 27,
+            "yaw": 1,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1280,
+          "command": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1436,
+          "command": {
+            "roll": -2,
+            "pitch": 30,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-32 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 350,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 639,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 842,
+          "throttle": 0.501
+        },
+        {
+          "step": 5,
+          "tick": 1021,
+          "throttle": 0.502
+        },
+        {
+          "step": 6,
+          "tick": 1280,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1436,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-33 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2091,
+      "finalStateIdentity": "88d6cc9efa4bbd1a",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 610,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 771,
+          "command": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1062,
+          "command": {
+            "roll": -2,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1336,
+          "command": {
+            "roll": 1,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1497,
+          "command": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1818,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 1,
+            "throttle": 499,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-33 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 610,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 771,
+          "throttle": 0.493
+        },
+        {
+          "step": 5,
+          "tick": 1062,
+          "throttle": 0.499
+        },
+        {
+          "step": 6,
+          "tick": 1336,
+          "throttle": 0
+        },
+        {
+          "step": 7,
+          "tick": 1497,
+          "throttle": 0.493
+        },
+        {
+          "step": 8,
+          "tick": 1818,
+          "throttle": 0.499
+        }
+      ]
+    },
+    {
+      "name": "beginner-34 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2446,
+      "finalStateIdentity": "783d9ac33d8dd03f",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 350,
+          "command": {
+            "roll": 0,
+            "pitch": 31,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 642,
+          "command": {
+            "roll": -3,
+            "pitch": -7,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 848,
+          "command": {
+            "roll": -3,
+            "pitch": 0,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1076,
+          "command": {
+            "roll": -2,
+            "pitch": 24,
+            "yaw": 3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1414,
+          "command": {
+            "roll": -4,
+            "pitch": -19,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1699,
+          "command": {
+            "roll": 3,
+            "pitch": -3,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1901,
+          "command": {
+            "roll": 3,
+            "pitch": 30,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 2173,
+          "command": {
+            "roll": -2,
+            "pitch": -12,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-34 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 350,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 642,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 848,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 1076,
+          "throttle": 0.501
+        },
+        {
+          "step": 6,
+          "tick": 1414,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1699,
+          "throttle": 0.5
+        },
+        {
+          "step": 8,
+          "tick": 1901,
+          "throttle": 0.501
+        },
+        {
+          "step": 9,
+          "tick": 2173,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-35 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1902,
+      "finalStateIdentity": "8c29b29d69e761ab",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 386,
+          "command": {
+            "roll": 4,
+            "pitch": -6,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 691,
+          "command": {
+            "roll": 1,
+            "pitch": -34,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 997,
+          "command": {
+            "roll": 1,
+            "pitch": -32,
+            "yaw": -3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1303,
+          "command": {
+            "roll": 0,
+            "pitch": -27,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1512,
+          "command": {
+            "roll": 3,
+            "pitch": -22,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1628,
+          "command": {
+            "roll": -2,
+            "pitch": -2,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-35 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 386,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 691,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 997,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 1303,
+          "throttle": 0.5
+        },
+        {
+          "step": 6,
+          "tick": 1512,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1628,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-36 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1796,
+      "finalStateIdentity": "ad7aa5de2e99f9fe",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 182,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 374,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 498,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 517,
+          "command": {
+            "roll": 0,
+            "pitch": 27,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 678,
+          "command": {
+            "roll": 0,
+            "pitch": -3,
+            "yaw": 0,
+            "throttle": 507,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 856,
+          "command": {
+            "roll": 0,
+            "pitch": 31,
+            "yaw": 0,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1075,
+          "command": {
+            "roll": -3,
+            "pitch": 20,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1319,
+          "command": {
+            "roll": -2,
+            "pitch": 14,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1521,
+          "command": {
+            "roll": -2,
+            "pitch": 27,
+            "yaw": 1,
+            "throttle": 503,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-36 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 182,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 374,
+          "throttle": 0.498
+        },
+        {
+          "step": 3,
+          "tick": 517,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 678,
+          "throttle": 0.507
+        },
+        {
+          "step": 5,
+          "tick": 856,
+          "throttle": 0.503
+        },
+        {
+          "step": 6,
+          "tick": 1075,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1319,
+          "throttle": 0.5
+        },
+        {
+          "step": 8,
+          "tick": 1521,
+          "throttle": 0.503
+        }
+      ]
+    },
+    {
+      "name": "beginner-37 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2312,
+      "finalStateIdentity": "c4496bc85f21f7b4",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 198,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 490,
+          "command": {
+            "roll": 0,
+            "pitch": -2,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 739,
+          "command": {
+            "roll": 0,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 937,
+          "command": {
+            "roll": 0,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1257,
+          "command": {
+            "roll": 1,
+            "pitch": 0,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1505,
+          "command": {
+            "roll": 3,
+            "pitch": 1,
+            "yaw": -3,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1666,
+          "command": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": -3,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 2038,
+          "command": {
+            "roll": 0,
+            "pitch": -4,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-37 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 198,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 490,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 739,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 937,
+          "throttle": 0.493
+        },
+        {
+          "step": 5,
+          "tick": 1257,
+          "throttle": 0.501
+        },
+        {
+          "step": 6,
+          "tick": 1505,
+          "throttle": 0
+        },
+        {
+          "step": 7,
+          "tick": 1666,
+          "throttle": 0.493
+        },
+        {
+          "step": 8,
+          "tick": 2038,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-38 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1769,
+      "finalStateIdentity": "cabf135da49422b0",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 495,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 668,
+          "command": {
+            "roll": 0,
+            "pitch": 28,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 990,
+          "command": {
+            "roll": 1,
+            "pitch": -3,
+            "yaw": -2,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1163,
+          "command": {
+            "roll": -2,
+            "pitch": 30,
+            "yaw": -2,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1336,
+          "command": {
+            "roll": 1,
+            "pitch": 28,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1496,
+          "command": {
+            "roll": -2,
+            "pitch": 30,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-38 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 495,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 668,
+          "throttle": 0.501
+        },
+        {
+          "step": 5,
+          "tick": 990,
+          "throttle": 0.5
+        },
+        {
+          "step": 6,
+          "tick": 1163,
+          "throttle": 0.502
+        },
+        {
+          "step": 7,
+          "tick": 1336,
+          "throttle": 0.501
+        },
+        {
+          "step": 8,
+          "tick": 1496,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-39 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2028,
+      "finalStateIdentity": "c3c3eed9622e8f82",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 206,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 366,
+          "command": {
+            "roll": 0,
+            "pitch": 25,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 524,
+          "command": {
+            "roll": 0,
+            "pitch": 30,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 725,
+          "command": {
+            "roll": 0,
+            "pitch": 25,
+            "yaw": 0,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 953,
+          "command": {
+            "roll": -3,
+            "pitch": 24,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1156,
+          "command": {
+            "roll": -3,
+            "pitch": 30,
+            "yaw": 3,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1323,
+          "command": {
+            "roll": -3,
+            "pitch": 7,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1517,
+          "command": {
+            "roll": -3,
+            "pitch": 28,
+            "yaw": 3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 1754,
+          "command": {
+            "roll": -2,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-39 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 206,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 366,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 524,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 725,
+          "throttle": 0.503
+        },
+        {
+          "step": 5,
+          "tick": 953,
+          "throttle": 0.501
+        },
+        {
+          "step": 6,
+          "tick": 1156,
+          "throttle": 0.503
+        },
+        {
+          "step": 7,
+          "tick": 1323,
+          "throttle": 0.501
+        },
+        {
+          "step": 8,
+          "tick": 1517,
+          "throttle": 0.501
+        },
+        {
+          "step": 9,
+          "tick": 1754,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-40 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2007,
+      "finalStateIdentity": "7c4a810a0a8ab6e0",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 259,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 17,
+            "throttle": 497,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 462,
+          "command": {
+            "roll": 0,
+            "pitch": 28,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 702,
+          "command": {
+            "roll": 4,
+            "pitch": 20,
+            "yaw": -2,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 928,
+          "command": {
+            "roll": 1,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1143,
+          "command": {
+            "roll": -3,
+            "pitch": 27,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1448,
+          "command": {
+            "roll": 1,
+            "pitch": 17,
+            "yaw": 0,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1734,
+          "command": {
+            "roll": 3,
+            "pitch": -14,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-40 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 259,
+          "throttle": 0.497
+        },
+        {
+          "step": 3,
+          "tick": 462,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 702,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 928,
+          "throttle": 0.5
+        },
+        {
+          "step": 6,
+          "tick": 1143,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1448,
+          "throttle": 0.502
+        },
+        {
+          "step": 8,
+          "tick": 1734,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-41 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2510,
+      "finalStateIdentity": "3d33e5a01e58079c",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 405,
+          "command": {
+            "roll": -2,
+            "pitch": 24,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 622,
+          "command": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": -3,
+            "throttle": 495,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 905,
+          "command": {
+            "roll": 1,
+            "pitch": -27,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1153,
+          "command": {
+            "roll": 1,
+            "pitch": 14,
+            "yaw": 1,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1314,
+          "command": {
+            "roll": 3,
+            "pitch": -2,
+            "yaw": 1,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1531,
+          "command": {
+            "roll": 3,
+            "pitch": 25,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1729,
+          "command": {
+            "roll": 3,
+            "pitch": 1,
+            "yaw": 1,
+            "throttle": 507,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 1931,
+          "command": {
+            "roll": 3,
+            "pitch": 28,
+            "yaw": -2,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 10,
+          "tick": 2236,
+          "command": {
+            "roll": 4,
+            "pitch": -19,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-41 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 405,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 622,
+          "throttle": 0.495
+        },
+        {
+          "step": 4,
+          "tick": 905,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 1153,
+          "throttle": 0
+        },
+        {
+          "step": 6,
+          "tick": 1314,
+          "throttle": 0.493
+        },
+        {
+          "step": 7,
+          "tick": 1531,
+          "throttle": 0.5
+        },
+        {
+          "step": 8,
+          "tick": 1729,
+          "throttle": 0.507
+        },
+        {
+          "step": 9,
+          "tick": 1931,
+          "throttle": 0.502
+        },
+        {
+          "step": 10,
+          "tick": 2236,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-42 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2784,
+      "finalStateIdentity": "52dc63ca74fabe94",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 161,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 390,
+          "command": {
+            "roll": 3,
+            "pitch": 5,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 699,
+          "command": {
+            "roll": 1,
+            "pitch": -23,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 989,
+          "command": {
+            "roll": 3,
+            "pitch": -14,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1176,
+          "command": {
+            "roll": 1,
+            "pitch": 3,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1401,
+          "command": {
+            "roll": -2,
+            "pitch": 24,
+            "yaw": 1,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1603,
+          "command": {
+            "roll": -3,
+            "pitch": 28,
+            "yaw": 1,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1841,
+          "command": {
+            "roll": -2,
+            "pitch": 25,
+            "yaw": 0,
+            "throttle": 503,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 2027,
+          "command": {
+            "roll": -2,
+            "pitch": 27,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 10,
+          "tick": 2293,
+          "command": {
+            "roll": -2,
+            "pitch": -27,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 11,
+          "tick": 2536,
+          "command": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": -3,
+            "throttle": 500,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-42 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 161,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 390,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 699,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 989,
+          "throttle": 0.501
+        },
+        {
+          "step": 5,
+          "tick": 1176,
+          "throttle": 0.5
+        },
+        {
+          "step": 6,
+          "tick": 1401,
+          "throttle": 0.499
+        },
+        {
+          "step": 7,
+          "tick": 1603,
+          "throttle": 0.503
+        },
+        {
+          "step": 8,
+          "tick": 1841,
+          "throttle": 0.503
+        },
+        {
+          "step": 9,
+          "tick": 2027,
+          "throttle": 0.501
+        },
+        {
+          "step": 10,
+          "tick": 2293,
+          "throttle": 0.5
+        },
+        {
+          "step": 11,
+          "tick": 2536,
+          "throttle": 0.5
+        }
+      ]
+    },
+    {
+      "name": "beginner-43 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1657,
+      "finalStateIdentity": "c272e62e0a9e6d02",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 415,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 532,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 730,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 815,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 932,
+          "command": {
+            "roll": -14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 730,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1155,
+          "command": {
+            "roll": 3,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-43 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 415,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 532,
+          "throttle": 0.73
+        },
+        {
+          "step": 3,
+          "tick": 815,
+          "throttle": 0.493
+        },
+        {
+          "step": 4,
+          "tick": 932,
+          "throttle": 0.73
+        },
+        {
+          "step": 5,
+          "tick": 1155,
+          "throttle": 0.493
+        }
+      ]
+    },
+    {
+      "name": "beginner-44 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1657,
+      "finalStateIdentity": "774cd1ede8a1f63e",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 415,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 532,
+          "command": {
+            "roll": 0,
+            "pitch": 14,
+            "yaw": 0,
+            "throttle": 730,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 815,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 932,
+          "command": {
+            "roll": 0,
+            "pitch": -14,
+            "yaw": 0,
+            "throttle": 730,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1155,
+          "command": {
+            "roll": 0,
+            "pitch": 3,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-44 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 415,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 532,
+          "throttle": 0.73
+        },
+        {
+          "step": 3,
+          "tick": 815,
+          "throttle": 0.493
+        },
+        {
+          "step": 4,
+          "tick": 932,
+          "throttle": 0.73
+        },
+        {
+          "step": 5,
+          "tick": 1155,
+          "throttle": 0.493
+        }
+      ]
+    },
+    {
+      "name": "beginner-45 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1045,
+      "finalStateIdentity": "23393f68b2059498",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 300,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 417,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 14,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 467,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 1,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 584,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -14,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 634,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -2,
+            "throttle": 498,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-45 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 300,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 417,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 467,
+          "throttle": 0.5
+        },
+        {
+          "step": 4,
+          "tick": 584,
+          "throttle": 0.499
+        },
+        {
+          "step": 5,
+          "tick": 634,
+          "throttle": 0.498
+        }
+      ]
+    },
+    {
+      "name": "beginner-46 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1527,
+      "finalStateIdentity": "21110474859f0887",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 438,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 517,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 525,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 604,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 730,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1025,
+          "command": {
+            "roll": -2,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-46 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 438,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 517,
+          "throttle": 0
+        },
+        {
+          "step": 3,
+          "tick": 525,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 604,
+          "throttle": 0.73
+        },
+        {
+          "step": 5,
+          "tick": 1025,
+          "throttle": 0.493
+        }
+      ]
+    },
+    {
+      "name": "beginner-47 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1678,
+      "finalStateIdentity": "9c8306ffaf6dcc89",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 198,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 526,
+          "command": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 773,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 605,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 758,
+          "command": {
+            "roll": 0,
+            "pitch": -1000,
+            "yaw": 0,
+            "throttle": 640,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1178,
+          "command": {
+            "roll": 3,
+            "pitch": -4,
+            "yaw": -3,
+            "throttle": 507,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-47 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 198,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 526,
+          "throttle": 0.773
+        },
+        {
+          "step": 3,
+          "tick": 605,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 758,
+          "throttle": 0.64
+        },
+        {
+          "step": 5,
+          "tick": 1178,
+          "throttle": 0.507
+        }
+      ]
+    },
+    {
+      "name": "beginner-48 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1845,
+      "finalStateIdentity": "b58df5e614999bda",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 334,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 511,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 793,
+          "command": {
+            "roll": 0,
+            "pitch": -1000,
+            "yaw": 0,
+            "throttle": 1000,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 894,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 733,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1344,
+          "command": {
+            "roll": 0,
+            "pitch": -2,
+            "yaw": -3,
+            "throttle": 499,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-48 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 334,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "throttle": 0.511
+        },
+        {
+          "step": 3,
+          "tick": 793,
+          "throttle": 1
+        },
+        {
+          "step": 4,
+          "tick": 894,
+          "throttle": 0.733
+        },
+        {
+          "step": 5,
+          "tick": 1344,
+          "throttle": 0.499
+        }
+      ]
+    },
+    {
+      "name": "beginner-49 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1752,
+      "finalStateIdentity": "ce1234ce0817c6b8",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 537,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 597,
+          "command": {
+            "roll": 0,
+            "pitch": 14,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 642,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 702,
+          "command": {
+            "roll": 0,
+            "pitch": -14,
+            "yaw": 0,
+            "throttle": 729,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1251,
+          "command": {
+            "roll": 0,
+            "pitch": -3,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-49 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 537,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 597,
+          "throttle": 0
+        },
+        {
+          "step": 3,
+          "tick": 642,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 702,
+          "throttle": 0.729
+        },
+        {
+          "step": 5,
+          "tick": 1251,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-50 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1846,
+      "finalStateIdentity": "5d1a9e28acad2504",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 334,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 511,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 986,
+          "command": {
+            "roll": 0,
+            "pitch": -70,
+            "yaw": 0,
+            "throttle": 807,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 1401,
+          "command": {
+            "roll": 0,
+            "pitch": -2,
+            "yaw": 0,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-50 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 334,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "throttle": 0.511
+        },
+        {
+          "step": 3,
+          "tick": 986,
+          "throttle": 0.807
+        },
+        {
+          "step": 4,
+          "tick": 1401,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-51 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2018,
+      "finalStateIdentity": "7a49fb39bcb506c3",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 334,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 743,
+          "command": {
+            "roll": 1,
+            "pitch": -3,
+            "yaw": -2,
+            "throttle": 514,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 1153,
+          "command": {
+            "roll": -69,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 810,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 1573,
+          "command": {
+            "roll": -4,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-51 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 334,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 743,
+          "throttle": 0.514
+        },
+        {
+          "step": 3,
+          "tick": 1153,
+          "throttle": 0.81
+        },
+        {
+          "step": 4,
+          "tick": 1573,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "beginner-52 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2793,
+      "finalStateIdentity": "83ec857c83cdb077",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 363,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 461,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -17,
+            "throttle": 497,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 1198,
+          "command": {
+            "roll": 33,
+            "pitch": 8,
+            "yaw": 165,
+            "throttle": 509,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 1386,
+          "command": {
+            "roll": 18,
+            "pitch": -3,
+            "yaw": 3,
+            "throttle": 499,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 2123,
+          "command": {
+            "roll": -32,
+            "pitch": 8,
+            "yaw": -167,
+            "throttle": 509,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 2423,
+          "command": {
+            "roll": 1,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 507,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-52 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 363,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 461,
+          "throttle": 0.497
+        },
+        {
+          "step": 3,
+          "tick": 1198,
+          "throttle": 0.509
+        },
+        {
+          "step": 4,
+          "tick": 1386,
+          "throttle": 0.499
+        },
+        {
+          "step": 5,
+          "tick": 2123,
+          "throttle": 0.509
+        },
+        {
+          "step": 6,
+          "tick": 2423,
+          "throttle": 0.507
+        }
+      ]
+    },
+    {
+      "name": "beginner-53 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2491,
+      "finalStateIdentity": "83168bd78a32adf5",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 334,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 432,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -17,
+            "throttle": 497,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 1797,
+          "command": {
+            "roll": 33,
+            "pitch": 8,
+            "yaw": 166,
+            "throttle": 507,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 1990,
+          "command": {
+            "roll": -2,
+            "pitch": 18,
+            "yaw": 3,
+            "throttle": 497,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-53 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 334,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 432,
+          "throttle": 0.497
+        },
+        {
+          "step": 3,
+          "tick": 1797,
+          "throttle": 0.507
+        },
+        {
+          "step": 4,
+          "tick": 1990,
+          "throttle": 0.497
+        }
+      ]
+    },
+    {
+      "name": "beginner-54 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 1542,
+      "finalStateIdentity": "2f94f3b6491254c7",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 300,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 450,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 1000,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 529,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 608,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 14,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 687,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 729,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1097,
+          "command": {
+            "roll": 0,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 502,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-54 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 300,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 450,
+          "throttle": 1
+        },
+        {
+          "step": 3,
+          "tick": 529,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 608,
+          "throttle": 0
+        },
+        {
+          "step": 5,
+          "tick": 687,
+          "throttle": 0.729
+        },
+        {
+          "step": 6,
+          "tick": 1097,
+          "throttle": 0.502
+        }
+      ]
+    },
+    {
+      "name": "beginner-55 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2075,
+      "finalStateIdentity": "ffe2815daa8a832f",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 334,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 511,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 986,
+          "command": {
+            "roll": 0,
+            "pitch": -70,
+            "yaw": 0,
+            "throttle": 807,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 1305,
+          "command": {
+            "roll": 4,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 495,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1422,
+          "command": {
+            "roll": -14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 729,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1664,
+          "command": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": -2,
+            "throttle": 507,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-55 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 334,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "throttle": 0.511
+        },
+        {
+          "step": 3,
+          "tick": 986,
+          "throttle": 0.807
+        },
+        {
+          "step": 4,
+          "tick": 1305,
+          "throttle": 0.495
+        },
+        {
+          "step": 5,
+          "tick": 1422,
+          "throttle": 0.729
+        },
+        {
+          "step": 6,
+          "tick": 1664,
+          "throttle": 0.507
+        }
+      ]
+    },
+    {
+      "name": "beginner-56 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 2622,
+      "finalStateIdentity": "863576bd05ea03e6",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 198,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 526,
+          "command": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 773,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 605,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 758,
+          "command": {
+            "roll": 0,
+            "pitch": -1000,
+            "yaw": 0,
+            "throttle": 640,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1178,
+          "command": {
+            "roll": 4,
+            "pitch": 1,
+            "yaw": 0,
+            "throttle": 507,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1915,
+          "command": {
+            "roll": 33,
+            "pitch": 8,
+            "yaw": 166,
+            "throttle": 509,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 2252,
+          "command": {
+            "roll": 3,
+            "pitch": -3,
+            "yaw": 3,
+            "throttle": 507,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-56 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 198,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 526,
+          "throttle": 0.773
+        },
+        {
+          "step": 3,
+          "tick": 605,
+          "throttle": 0
+        },
+        {
+          "step": 4,
+          "tick": 758,
+          "throttle": 0.64
+        },
+        {
+          "step": 5,
+          "tick": 1178,
+          "throttle": 0.507
+        },
+        {
+          "step": 6,
+          "tick": 1915,
+          "throttle": 0.509
+        },
+        {
+          "step": 7,
+          "tick": 2252,
+          "throttle": 0.507
+        }
+      ]
+    },
+    {
+      "name": "beginner-57 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 3212,
+      "finalStateIdentity": "def0ca53a5dcd820",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 415,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 643,
+          "command": {
+            "roll": 3,
+            "pitch": 15,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 944,
+          "command": {
+            "roll": 1,
+            "pitch": -14,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 1155,
+          "command": {
+            "roll": 4,
+            "pitch": -3,
+            "yaw": 3,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1272,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 730,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1735,
+          "command": {
+            "roll": 3,
+            "pitch": 3,
+            "yaw": 3,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1795,
+          "command": {
+            "roll": 0,
+            "pitch": 14,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 1840,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 1900,
+          "command": {
+            "roll": 0,
+            "pitch": -14,
+            "yaw": 0,
+            "throttle": 729,
+            "actions": 0
+          }
+        },
+        {
+          "step": 10,
+          "tick": 2506,
+          "command": {
+            "roll": -3,
+            "pitch": -40,
+            "yaw": -2,
+            "throttle": 500,
+            "actions": 0
+          }
+        },
+        {
+          "step": 11,
+          "tick": 2936,
+          "command": {
+            "roll": 3,
+            "pitch": 20,
+            "yaw": 0,
+            "throttle": 505,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-57 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 415,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 643,
+          "throttle": 0.501
+        },
+        {
+          "step": 3,
+          "tick": 944,
+          "throttle": 0.501
+        },
+        {
+          "step": 4,
+          "tick": 1155,
+          "throttle": 0.5
+        },
+        {
+          "step": 5,
+          "tick": 1272,
+          "throttle": 0.73
+        },
+        {
+          "step": 6,
+          "tick": 1735,
+          "throttle": 0.493
+        },
+        {
+          "step": 7,
+          "tick": 1795,
+          "throttle": 0
+        },
+        {
+          "step": 8,
+          "tick": 1840,
+          "throttle": 0
+        },
+        {
+          "step": 9,
+          "tick": 1900,
+          "throttle": 0.729
+        },
+        {
+          "step": 10,
+          "tick": 2506,
+          "throttle": 0.5
+        },
+        {
+          "step": 11,
+          "tick": 2936,
+          "throttle": 0.505
+        }
+      ]
+    },
+    {
+      "name": "beginner-58 exact proof and natural boundaries retain commands through pause/resume",
+      "passed": true,
+      "proofTicks": 5285,
+      "finalStateIdentity": "19644e21a6648a57",
+      "boundaries": [
+        {
+          "step": 1,
+          "tick": 334,
+          "command": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 493,
+            "actions": 0
+          }
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "command": {
+            "roll": 0,
+            "pitch": 7,
+            "yaw": 0,
+            "throttle": 511,
+            "actions": 0
+          }
+        },
+        {
+          "step": 3,
+          "tick": 793,
+          "command": {
+            "roll": 0,
+            "pitch": -1000,
+            "yaw": 0,
+            "throttle": 1000,
+            "actions": 0
+          }
+        },
+        {
+          "step": 4,
+          "tick": 894,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 733,
+            "actions": 0
+          }
+        },
+        {
+          "step": 5,
+          "tick": 1403,
+          "command": {
+            "roll": -3,
+            "pitch": -3,
+            "yaw": -3,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 6,
+          "tick": 1645,
+          "command": {
+            "roll": 3,
+            "pitch": -7,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 7,
+          "tick": 1979,
+          "command": {
+            "roll": 4,
+            "pitch": -23,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 8,
+          "tick": 2438,
+          "command": {
+            "roll": -2,
+            "pitch": -3,
+            "yaw": -2,
+            "throttle": 502,
+            "actions": 0
+          }
+        },
+        {
+          "step": 9,
+          "tick": 2765,
+          "command": {
+            "roll": 3,
+            "pitch": 1,
+            "yaw": -2,
+            "throttle": 773,
+            "actions": 0
+          }
+        },
+        {
+          "step": 10,
+          "tick": 2844,
+          "command": {
+            "roll": 14,
+            "pitch": 0,
+            "yaw": 0,
+            "throttle": 0,
+            "actions": 0
+          }
+        },
+        {
+          "step": 11,
+          "tick": 2997,
+          "command": {
+            "roll": 0,
+            "pitch": -1000,
+            "yaw": 0,
+            "throttle": 647,
+            "actions": 0
+          }
+        },
+        {
+          "step": 12,
+          "tick": 3371,
+          "command": {
+            "roll": 1,
+            "pitch": -3,
+            "yaw": 1,
+            "throttle": 507,
+            "actions": 0
+          }
+        },
+        {
+          "step": 13,
+          "tick": 3867,
+          "command": {
+            "roll": -2,
+            "pitch": -3,
+            "yaw": 1,
+            "throttle": 501,
+            "actions": 0
+          }
+        },
+        {
+          "step": 14,
+          "tick": 4107,
+          "command": {
+            "roll": -3,
+            "pitch": 7,
+            "yaw": 1,
+            "throttle": 511,
+            "actions": 0
+          }
+        },
+        {
+          "step": 15,
+          "tick": 4517,
+          "command": {
+            "roll": 0,
+            "pitch": -67,
+            "yaw": 0,
+            "throttle": 807,
+            "actions": 0
+          }
+        },
+        {
+          "step": 16,
+          "tick": 5036,
+          "command": {
+            "roll": 3,
+            "pitch": -3,
+            "yaw": -2,
+            "throttle": 501,
+            "actions": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "beginner-58 explicit step seeks display previous final command without zeroing",
+      "passed": true,
+      "seeks": [
+        {
+          "step": 1,
+          "tick": 334,
+          "throttle": 0.493
+        },
+        {
+          "step": 2,
+          "tick": 576,
+          "throttle": 0.511
+        },
+        {
+          "step": 3,
+          "tick": 793,
+          "throttle": 1
+        },
+        {
+          "step": 4,
+          "tick": 894,
+          "throttle": 0.733
+        },
+        {
+          "step": 5,
+          "tick": 1403,
+          "throttle": 0.501
+        },
+        {
+          "step": 6,
+          "tick": 1645,
+          "throttle": 0.501
+        },
+        {
+          "step": 7,
+          "tick": 1979,
+          "throttle": 0.501
+        },
+        {
+          "step": 8,
+          "tick": 2438,
+          "throttle": 0.502
+        },
+        {
+          "step": 9,
+          "tick": 2765,
+          "throttle": 0.773
+        },
+        {
+          "step": 10,
+          "tick": 2844,
+          "throttle": 0
+        },
+        {
+          "step": 11,
+          "tick": 2997,
+          "throttle": 0.647
+        },
+        {
+          "step": 12,
+          "tick": 3371,
+          "throttle": 0.507
+        },
+        {
+          "step": 13,
+          "tick": 3867,
+          "throttle": 0.501
+        },
+        {
+          "step": 14,
+          "tick": 4107,
+          "throttle": 0.511
+        },
+        {
+          "step": 15,
+          "tick": 4517,
+          "throttle": 0.807
+        },
+        {
+          "step": 16,
+          "tick": 5036,
+          "throttle": 0.501
+        }
+      ]
+    },
+    {
+      "name": "Reported Acro09 turns49.3% remains49.3% at step2 in both locales",
+      "passed": true,
+      "course": "beginner-21",
+      "tick": 161,
+      "previousThrottle": 0.493,
+      "nextThrottle": 0.493,
+      "locales": ["en", "uk"]
+    },
+    {
+      "name": "Keyboard takeover and pause clear live ownership without altering example seeking",
+      "passed": true,
+      "pausedManualCommands": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0,
+        "throttle": 0
+      }
+    },
+    {
+      "name": "Radio ownership disconnect clears live input and cannot resume from retained signal",
+      "passed": true,
+      "disconnectCleared": true
+    },
+    {
+      "name": "No host arming, progress or retained callbacks",
+      "passed": true,
+      "hostStarts": 0,
+      "hostNexts": 0
+    }
+  ],
+  "totals": {
+    "lessons": 58,
+    "naturalBoundaries": 316,
+    "explicitSeeks": 316,
+    "controlledFrames": 24247
+  },
+  "inputs": {
+    "beginner-coach.mjs": "0703984e40efa41f4b822b89a411ad083e109962586155badd26b6d474105ee8",
+    "input.mjs": "d23195a04aad25ba9a45e62d5b69e0aeb9650c24724c1e1e0132cec2f828f277",
+    "world-model.mjs": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+    "world-catalogue.mjs": "1eb0940fdf2edd1d6dd6412e0781f77d65fe14459cfefc1408c3d94a3357ec24",
+    "world-demonstrations.mjs": "4de24b61664163cff3652894e326930c3a217ecc651233f132240d56e325d985",
+    "sim-presentation.mjs": "3ab238301da0ac4becac88a1970d9d73e4d0b17a5a7a45ac42a423990e84aafd",
+    "style.css": "2f1d5e02227ef44817c25da499d0158f3d84e4263f3a0bc7ed7f86ecfe39711f",
+    "world-style.css": "14015e9aea9781316cb9c7dd8c7eb5b9b5c9bef026780573c86acc6c64a361c0"
+  },
+  "scope": "Production coach SVG/readouts, exact58 recordings and actual world integrator under an explicit animation clock. Real recorded commands/physics remain unchanged; controlled keyboard and radio preview samples. No physical radio/hardware performance, player acceptance or added unit coverage claim."
+}

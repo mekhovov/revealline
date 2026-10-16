@@ -1,0 +1,2772 @@
+TAP version 13
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+    # Subtest: actual rotor controls preserve inherited motion while editing one existing hub
+    ok 1 - actual rotor controls preserve inherited motion while editing one existing hub
+      ---
+      duration_ms: 724.41275
+      ...
+    # Subtest: actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview
+    ok 2 - actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview
+      ---
+      duration_ms: 223.323208
+      ...
+    # Subtest: actual rotor controls translate EN/UK labels without rewriting a prepared draft
+    ok 3 - actual rotor controls translate EN/UK labels without rewriting a prepared draft
+      ---
+      duration_ms: 26.444542
+      ...
+    # Subtest: staging and saving rotor geometry retain the reviewed original and exact source bytes
+    ok 4 - staging and saving rotor geometry retain the reviewed original and exact source bytes
+      ---
+      duration_ms: 969.412083
+      ...
+    # Subtest: actual rotor Apply rejects a changed crop and disables unavailable hub controls
+    ok 5 - actual rotor Apply rejects a changed crop and disables unavailable hub controls
+      ---
+      duration_ms: 223.783
+      ...
+    1..5
+ok 1 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 7385.078667
+  ...
+# Subtest: appearance defaults are data-only immutable pins and preserve unavailable intent
+ok 2 - appearance defaults are data-only immutable pins and preserve unavailable intent
+  ---
+  duration_ms: 2.07725
+  ...
+# Subtest: each installed family travels through an ordinary community draft without changing source or legacy identity
+ok 3 - each installed family travels through an ordinary community draft without changing source or legacy identity
+  ---
+  duration_ms: 222.345208
+  ...
+# Subtest: canonical provider resolves selected campaign appearance and retains its edition admission boundary
+ok 4 - canonical provider resolves selected campaign appearance and retains its edition admission boundary
+  ---
+  duration_ms: 63.126375
+  ...
+# Subtest: v1 documents remain exact and reject new appearance fields until explicitly upgraded
+ok 5 - v1 documents remain exact and reject new appearance fields until explicitly upgraded
+  ---
+  duration_ms: 8.09075
+  ...
+# Subtest: compiled entry hints use campaign over community and scope legacy brand styles away from themed chrome
+ok 6 - compiled entry hints use campaign over community and scope legacy brand styles away from themed chrome
+  ---
+  duration_ms: 39.93525
+  ...
+# Subtest: the same complete appearance is portable across unrelated community drafts without merging their content
+ok 7 - the same complete appearance is portable across unrelated community drafts without merging their content
+  ---
+  duration_ms: 16.514291
+  ...
+# Subtest: upgrading current defaults preserves exact v1 retained presentation bytes and identity
+ok 8 - upgrading current defaults preserves exact v1 retained presentation bytes and identity
+  ---
+  duration_ms: 148.774667
+  ...
+# Subtest: edition tools share family authority and keep high contrast and plain type above legacy branding
+ok 9 - edition tools share family authority and keep high contrast and plain type above legacy branding
+  ---
+  duration_ms: 51.905375
+  ...
+# Subtest: whole-game preview verifies the report, every artifact byte and exact selected draft
+ok 10 - whole-game preview verifies the report, every artifact byte and exact selected draft
+  ---
+  duration_ms: 88.551292
+  ...
+# Subtest: a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins
+ok 11 - a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins
+  ---
+  duration_ms: 211.308709
+  ...
+# Subtest: changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification
+ok 12 - changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification
+  ---
+  duration_ms: 38.397542
+  ...
+# Subtest: preview verification stops before activation on cancellation and oversized streamed bytes
+ok 13 - preview verification stops before activation on cancellation and oversized streamed bytes
+  ---
+  duration_ms: 24.535375
+  ...
+# Subtest: overlong artifact and pending-read abort reject despite nonsettling transport cancellation
+ok 14 - overlong artifact and pending-read abort reject despite nonsettling transport cancellation
+  ---
+  duration_ms: 25.497125
+  ...
+# Subtest: focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
+ok 15 - focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
+  ---
+  duration_ms: 20314.202459
+  ...
+# Subtest: new-company starter loads the current Solo host and First Flight with complete neutral classes
+ok 16 - new-company starter loads the current Solo host and First Flight with complete neutral classes
+  ---
+  duration_ms: 51.652667
+  ...
+# Subtest: Studio CLI creates missing workspace parents while preserving new-only destinations
+ok 17 - Studio CLI creates missing workspace parents while preserving new-only destinations
+  ---
+  duration_ms: 559.028166
+  ...
+# Subtest: Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots
+ok 18 - Studio import/export preserves original retained JSON text and rejects modified, parsed or missing snapshots
+  ---
+  duration_ms: 125.327958
+  ...
+# Subtest: Studio preview verifies historical-only media and immutable snapshots in its inventory and totals
+ok 19 - Studio preview verifies historical-only media and immutable snapshots in its inventory and totals
+  ---
+  duration_ms: 192.774292
+  ...
+# Subtest: studio source packet roundtrips through the actual new-company CLI workspace format
+ok 20 - studio source packet roundtrips through the actual new-company CLI workspace format
+  ---
+  duration_ms: 45.032958
+  ...
+# Subtest: studio blocks missing sources, duplicate source paths and executable workspace injection
+ok 21 - studio blocks missing sources, duplicate source paths and executable workspace injection
+  ---
+  duration_ms: 13.604834
+  ...
+# Subtest: actor edits reject undeclared remote media and unbounded cosmetic motion before export
+ok 22 - actor edits reject undeclared remote media and unbounded cosmetic motion before export
+  ---
+  duration_ms: 20.94925
+  ...
+# Subtest: compiled preview must match the selected draft identity, content selection and artwork pins
+ok 23 - compiled preview must match the selected draft identity, content selection and artwork pins
+  ---
+  duration_ms: 28.89125
+  ...
+# Subtest: complete studio drafts apply the compiler gate for selected presentation and asset closure
+ok 24 - complete studio drafts apply the compiler gate for selected presentation and asset closure
+  ---
+  duration_ms: 37.001916
+  ...
+# Subtest: compiler report preserves review-required checks and only opens local company-game URLs
+ok 25 - compiler report preserves review-required checks and only opens local company-game URLs
+  ---
+  duration_ms: 0.960125
+  ...
+# Subtest: leaving preview cancels verification and a late completion cannot mount an offscreen game
+ok 26 - leaving preview cancels verification and a late completion cannot mount an offscreen game
+  ---
+  duration_ms: 1.726416
+  ...
+# Subtest: preview timeout aborts a stalled selected-source fetch before artifact verification
+ok 27 - preview timeout aborts a stalled selected-source fetch before artifact verification
+  ---
+  duration_ms: 0.950167
+  ...
+# Subtest: late source responses cannot populate an edited or cancelled draft cache
+ok 28 - late source responses cannot populate an edited or cancelled draft cache
+  ---
+  duration_ms: 11.253875
+  ...
+# Subtest: language changes preserve unsaved controller fields, options and focus through Cancel and Apply
+ok 29 - language changes preserve unsaved controller fields, options and focus through Cancel and Apply
+  ---
+  duration_ms: 44.053708
+  ...
+# Subtest: switching language during controller Apply retains its operation and adopts only once
+ok 30 - switching language during controller Apply retains its operation and adopts only once
+  ---
+  duration_ms: 9.808333
+  ...
+# Subtest: mount is inert and renders every button map with sixteen explicit options
+ok 31 - mount is inert and renders every button map with sixteen explicit options
+  ---
+  duration_ms: 3.471667
+  ...
+# Subtest: generated select, range and checkbox controls expose readable names for controller previews
+ok 32 - generated select, range and checkbox controls expose readable names for controller previews
+  ---
+  duration_ms: 4.067292
+  ...
+# Subtest: an explicit draft keeps the original configuration unchanged until canonical Apply
+ok 33 - an explicit draft keeps the original configuration unchanged until canonical Apply
+  ---
+  duration_ms: 4.979042
+  ...
+# Subtest: temporary button conflicts permit complete swaps but invalid Apply never reaches the host
+ok 34 - temporary button conflicts permit complete swaps but invalid Apply never reaches the host
+  ---
+  duration_ms: 6.409875
+  ...
+# Subtest: Cancel discards valid and conflicting draft changes without adoption
+ok 35 - Cancel discards valid and conflicting draft changes without adoption
+  ---
+  duration_ms: 5.609375
+  ...
+# Subtest: Restore defaults changes only the draft and requires Apply
+ok 36 - Restore defaults changes only the draft and requires Apply
+  ---
+  duration_ms: 10.282292
+  ...
+# Subtest: button label choices update draft option text without changing saved indices or detecting hardware
+ok 37 - button label choices update draft option text without changing saved indices or detecting hardware
+  ---
+  duration_ms: 3.754084
+  ...
+# Subtest: whole-candidate validation rejects axes, bounds and release-above-press conflicts
+ok 38 - whole-candidate validation rejects axes, bounds and release-above-press conflicts
+  ---
+  duration_ms: 31.232875
+  ...
+# Subtest: session-only success adopts the map and displays the host persistence warning as text
+ok 39 - session-only success adopts the map and displays the host persistence warning as text
+  ---
+  duration_ms: 5.959375
+  ...
+# Subtest: a thrown host rejection retains the current map and permits repairing the draft
+ok 40 - a thrown host rejection retains the current map and permits repairing the draft
+  ---
+  duration_ms: 3.412667
+  ...
+# Subtest: source change before Apply discards the old draft without overwriting new preferences
+ok 41 - source change before Apply discards the old draft without overwriting new preferences
+  ---
+  duration_ms: 5.230208
+  ...
+# Subtest: refresh explicitly invalidates even an unchanged source draft
+ok 42 - refresh explicitly invalidates even an unchanged source draft
+  ---
+  duration_ms: 3.820416
+  ...
+# Subtest: async Apply is single-flight and allows its own canonical adoption
+ok 43 - async Apply is single-flight and allows its own canonical adoption
+  ---
+  duration_ms: 4.60075
+  ...
+# Subtest: native Apply blur restores the same enabled Edit button and releases focus observers
+ok 44 - native Apply blur restores the same enabled Edit button and releases focus observers
+  ---
+  duration_ms: 3.607166
+  ...
+# Subtest: pending Apply does not reclaim focus after other modal
+ok 45 - pending Apply does not reclaim focus after other modal
+  ---
+  duration_ms: 3.556
+  ...
+# Subtest: pending Apply does not reclaim focus after other control then blur
+ok 46 - pending Apply does not reclaim focus after other control then blur
+  ---
+  duration_ms: 3.812208
+  ...
+# Subtest: pending Apply does not reclaim focus after pointer on body
+ok 47 - pending Apply does not reclaim focus after pointer on body
+  ---
+  duration_ms: 2.973958
+  ...
+# Subtest: pending Apply does not reclaim focus after keyboard navigation
+ok 48 - pending Apply does not reclaim focus after keyboard navigation
+  ---
+  duration_ms: 2.579625
+  ...
+# Subtest: pending Apply does not reclaim focus after window blur and return
+ok 49 - pending Apply does not reclaim focus after window blur and return
+  ---
+  duration_ms: 3.959916
+  ...
+# Subtest: pending Apply does not reclaim focus after hidden page
+ok 50 - pending Apply does not reclaim focus after hidden page
+  ---
+  duration_ms: 2.848667
+  ...
+# Subtest: pending Apply does not reclaim focus after hidden page then return
+ok 51 - pending Apply does not reclaim focus after hidden page then return
+  ---
+  duration_ms: 2.373083
+  ...
+# Subtest: programmatic Apply without initial focus ownership does not claim body focus
+ok 52 - programmatic Apply without initial focus ownership does not claim body focus
+  ---
+  duration_ms: 4.369833
+  ...
+# Subtest: refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status
+ok 53 - refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status
+  ---
+  duration_ms: 3.249084
+  ...
+# Subtest: source changes during asynchronous preparation invalidate the guard without a refresh
+ok 54 - source changes during asynchronous preparation invalidate the guard without a refresh
+  ---
+  duration_ms: 4.015459
+  ...
+# Subtest: malformed current data fails visibly and a later valid refresh recovers
+ok 55 - malformed current data fails visibly and a later valid refresh recovers
+  ---
+  duration_ms: 2.832792
+  ...
+# Subtest: destroy removes listeners and aborts pending work without late DOM adoption
+ok 56 - destroy removes listeners and aborts pending work without late DOM adoption
+  ---
+  duration_ms: 2.388042
+  ...
+# Subtest: Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving
+ok 57 - Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving
+  ---
+  duration_ms: 373.723166
+  ...
+# Subtest: Settings stays above a retained paused Team attempt and reopens its selected category
+ok 58 - Settings stays above a retained paused Team attempt and reopens its selected category
+  ---
+  duration_ms: 1882.927666
+  ...
+# Subtest: compact Team native cancellation returns to categories before the host closes Settings
+ok 59 - compact Team native cancellation returns to categories before the host closes Settings
+  ---
+  duration_ms: 659.068208
+  ...
+# Subtest: Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+ok 60 - Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+  ---
+  duration_ms: 243.55475
+  ...
+# Subtest: a controller selects Team Settings and paused quick sound without resuming
+not ok 61 - a controller selects Team Settings and paused quick sound without resuming
+  ---
+  duration_ms: 1003.327375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/coop-shared-settings.test.mjs:190:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected ... Lines skipped
+    
+      {
+        hud: [
+    ...
+            'revealline.team-contextual-teaching.v1',
+            '{"format":"revealline.team-contextual-teaching.v1","introduced":["cut"],"completed":[]}'
+    +     ],
+    +     [
+    +       'revealline.couch-radio-setup.v1',
+    +       '{"entries":[],"format":"RadioSetup.v1"}'
+          ]
+        ]
+      }
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+ok 62 - closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+  ---
+  duration_ms: 142.877541
+  ...
+# Subtest: Settings Back leaves a pending Team import under its existing operation owner
+ok 63 - Settings Back leaves a pending Team import under its existing operation owner
+  ---
+  duration_ms: 168.72125
+  ...
+# Subtest: a blur Settings close cannot focus or resume in the background
+ok 64 - a blur Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 457.049
+  ...
+# Subtest: a hidden Settings close cannot focus or resume in the background
+ok 65 - a hidden Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 458.17025
+  ...
+# Subtest: a pagehide Settings close cannot focus or resume in the background
+ok 66 - a pagehide Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 450.826333
+  ...
+# Subtest: queued old close and newer focus cannot replace the current Settings visit
+ok 67 - queued old close and newer focus cannot replace the current Settings visit
+  ---
+  duration_ms: 161.457917
+  ...
+# Subtest: paused keyboard quick Sound and Settings mute share one owner without resuming
+ok 68 - paused keyboard quick Sound and Settings mute share one owner without resuming
+  ---
+  duration_ms: 1474.757167
+  ...
+# Subtest: terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+ok 69 - terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+  ---
+  duration_ms: 388.134375
+  ...
+# Subtest: a newer focus choice during native Settings opening wins over the default category focus
+ok 70 - a newer focus choice during native Settings opening wins over the default category focus
+  ---
+  duration_ms: 135.032292
+  ...
+# Subtest: a reopen during return visibility checking retires the old Settings close
+ok 71 - a reopen during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 149.034042
+  ...
+# Subtest: a background during return visibility checking retires the old Settings close
+ok 72 - a background during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 148.070666
+  ...
+# Subtest: Custom Solo shows only real landing actions and retains actual settings controls
+ok 73 - Custom Solo shows only real landing actions and retains actual settings controls
+  ---
+  duration_ms: 12.378833
+  ...
+# Subtest: every Custom dialog pauses the real scene; compact Back returns categories before closing
+ok 74 - every Custom dialog pauses the real scene; compact Back returns categories before closing
+  ---
+  duration_ms: 9.542083
+  ...
+# Subtest: mission replacement Cancel is inert and stale guards cannot launch
+ok 75 - mission replacement Cancel is inert and stale guards cannot launch
+  ---
+  duration_ms: 7.299333
+  ...
+# Subtest: qualified Versus URLs preserve exact edition and mission; unsupported bundles expose no handoff
+ok 76 - qualified Versus URLs preserve exact edition and mission; unsupported bundles expose no handoff
+  ---
+  duration_ms: 4.451166
+  ...
+# Subtest: existing Plain/Large/reduced reading policy is adopted without writes, and display changes are explicit
+ok 77 - existing Plain/Large/reduced reading policy is adopted without writes, and display changes are explicit
+  ---
+  duration_ms: 3.785666
+  ...
+# Subtest: shared fullscreen controls synchronize, and Escape exits without leaving the menu
+ok 78 - shared fullscreen controls synchronize, and Escape exits without leaving the menu
+  ---
+  duration_ms: 2.822125
+  ...
+# Subtest: semantic home arrows reach each action and mode without entering closed settings
+ok 79 - semantic home arrows reach each action and mode without entering closed settings
+  ---
+  duration_ms: 9.471875
+  ...
+# Subtest: successful Install focuses Play only while it still owns the foreground interaction
+ok 80 - successful Install focuses Play only while it still owns the foreground interaction
+  ---
+  duration_ms: 0.208084
+  ...
+# Subtest: Custom menu labels follow English and Ukrainian without changing mission identity
+ok 81 - Custom menu labels follow English and Ukrainian without changing mission identity
+  ---
+  duration_ms: 8.003542
+  ...
+# Subtest: result actions and earned media stay reachable while flight hides home and moves the real Pause button
+ok 82 - result actions and earned media stay reachable while flight hides home and moves the real Pause button
+  ---
+  duration_ms: 2.890917
+  ...
+# Subtest: save failures remain visible on the compact home and busy state cancels old replacement approval
+ok 83 - save failures remain visible on the compact home and busy state cancels old replacement approval
+  ---
+  duration_ms: 2.933625
+  ...
+# Subtest: loading to ready retires the temporary primary Up override and keeps the complete action stack
+ok 84 - loading to ready retires the temporary primary Up override and keeps the complete action stack
+  ---
+  duration_ms: 5.492542
+  ...
+# Subtest: winning presentation keeps the original board in place until Continue releases it
+ok 85 - winning presentation keeps the original board in place until Continue releases it
+  ---
+  duration_ms: 2.307
+  ...
+# Subtest: player opens a story only from the exact runtime receipt while poster and Next stay available
+ok 86 - player opens a story only from the exact runtime receipt while poster and Next stay available
+  ---
+  duration_ms: 2.201209
+  ...
+# Subtest: image-only completion keeps its earned poster without adding story controls
+ok 87 - image-only completion keeps its earned poster without adding story controls
+  ---
+  duration_ms: 0.330708
+  ...
+# Subtest: story preparation failure preserves the poster and offers an exact-receipt retry
+ok 88 - story preparation failure preserves the poster and offers an exact-receipt retry
+  ---
+  duration_ms: 2.665417
+  ...
+# Subtest: new mission cancels late story preparation before it can replace the next poster
+ok 89 - new mission cancels late story preparation before it can replace the next poster
+  ---
+  duration_ms: 0.439291
+  ...
+# Subtest: a story cannot bind to a different poster even after valid runtime preparation
+ok 90 - a story cannot bind to a different poster even after valid runtime preparation
+  ---
+  duration_ms: 0.403375
+  ...
+# Subtest: company startup presentation block supplies the admitted candidate and waits for its resources
+ok 91 - company startup presentation block supplies the admitted candidate and waits for its resources
+  ---
+  duration_ms: 40.547667
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency
+ok 92 - actual custom campaign adoption latches interface and exact arcade dependency
+  ---
+  duration_ms: 751.604584
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+ok 93 - actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+  ---
+  duration_ms: 508.296875
+  ...
+# Subtest: a cancelled custom campaign load preserves the active run, interface and SIM pin
+ok 94 - a cancelled custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 454.373834
+  ...
+# Mission preparation failed. Error: Review fixture custom theme font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/curated-community-theme-host.test.mjs:241:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed custom campaign load preserves the active run, interface and SIM pin
+ok 95 - a failed custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 456.192917
+  ...
+# Subtest: one edited candidate is reusable in two unrelated source drafts and exact offline publications
+ok 96 - one edited candidate is reusable in two unrelated source drafts and exact offline publications
+  ---
+  duration_ms: 106.956166
+  ...
+# Subtest: candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+ok 97 - candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+  ---
+  duration_ms: 122.524667
+  ...
+# Subtest: normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+ok 98 - normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+  ---
+  duration_ms: 9.930292
+  ...
+# Subtest: compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+ok 99 - compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+  ---
+  duration_ms: 201.428042
+  ...
+# Subtest: custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+ok 100 - custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+  ---
+  duration_ms: 8.166625
+  ...
+# Subtest: compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+ok 101 - compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+  ---
+  duration_ms: 7.163208
+  ...
+# Subtest: retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+ok 102 - retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+  ---
+  duration_ms: 119.021209
+  ...
+# Subtest: unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+ok 103 - unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+  ---
+  duration_ms: 11.713583
+  ...
+# Subtest: unfinished low-contrast candidate stays previewable but cannot be registered or published
+ok 104 - unfinished low-contrast candidate stays previewable but cannot be registered or published
+  ---
+  duration_ms: 108.290209
+  ...
+# Subtest: noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+ok 105 - noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+  ---
+  duration_ms: 283.908792
+  ...
+# Subtest: only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+ok 106 - only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+  ---
+  duration_ms: 125.225375
+  ...
+# Subtest: demo video waits for the image hold and never acquires hidden/unearned or reduced media
+ok 107 - demo video waits for the image hold and never acquires hidden/unearned or reduced media
+  ---
+  duration_ms: 9.982417
+  ...
+# Subtest: Next, hide media and Pause cancel pending preparation without late autoplay
+ok 108 - Next, hide media and Pause cancel pending preparation without late autoplay
+  ---
+  duration_ms: 1.688833
+  ...
+# Subtest: scene departure retains only a decoded, displayed reward video frame
+ok 109 - scene departure retains only a decoded, displayed reward video frame
+  ---
+  duration_ms: 1.6525
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 110 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 857.69875
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 111 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 528.327167
+  ...
+# Subtest: a cancelled campaign theme preload retains the active flight and SIM context
+ok 112 - a cancelled campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 446.001084
+  ...
+# Mission preparation failed. Error: Fixture font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/edition-appearance-host.test.mjs:178:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed campaign theme preload retains the active flight and SIM context
+ok 113 - a failed campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 433.655583
+  ...
+# Subtest: retained original preserves exact execution and receipt while new artwork keeps logical Journey progress
+ok 114 - retained original preserves exact execution and receipt while new artwork keeps logical Journey progress
+  ---
+  duration_ms: 219.245625
+  ...
+# Subtest: retained lookup refuses unknown identities and corrupt or missing originals without substituting current data
+ok 115 - retained lookup refuses unknown identities and corrupt or missing originals without substituting current data
+  ---
+  duration_ms: 163.649875
+  ...
+# Subtest: retained snapshot cannot admit another audience, omitted JSON, restricted art or a forged receipt
+ok 116 - retained snapshot cannot admit another audience, omitted JSON, restricted art or a forged receipt
+  ---
+  duration_ms: 88.03225
+  ...
+# Subtest: old pixels remain separately pinned and cannot fall back to the new image when absent or corrupt
+ok 117 - old pixels remain separately pinned and cannot fall back to the new image when absent or corrupt
+  ---
+  duration_ms: 306.139708
+  ...
+# Subtest: retained snapshot reads cancel stalled fetches and streams without late activation
+ok 118 - retained snapshot reads cancel stalled fetches and streams without late activation
+  ---
+  duration_ms: 65.791667
+  ...
+# Subtest: adding permitted campaigns preserves exact old presentations while removed campaigns cannot be restored
+ok 119 - adding permitted campaigns preserves exact old presentations while removed campaigns cannot be restored
+  ---
+  duration_ms: 88.406584
+  ...
+# Subtest: runtime indentation preserves executable tokens, comments, line breaks and literal values
+ok 120 - runtime indentation preserves executable tokens, comments, line breaks and literal values
+  ---
+  duration_ms: 7.406833
+  ...
+# Subtest: all admitted engine JavaScript retains lexical and line-termination parity when compacted
+ok 121 - all admitted engine JavaScript retains lexical and line-termination parity when compacted
+  ---
+  duration_ms: 4112.363208
+  ...
+# Subtest: standalone branding projects only the image fallback to an approved selected logo
+ok 122 - standalone branding projects only the image fallback to an approved selected logo
+  ---
+  duration_ms: 6.001333
+  ...
+# Subtest: support page closure retains navigation without authoring sample media or manual fixtures
+ok 123 - support page closure retains navigation without authoring sample media or manual fixtures
+  ---
+  duration_ms: 1086.628041
+  ...
+# Subtest: edition recording inventory follows validated catalogue additions and runtime variants
+ok 124 - edition recording inventory follows validated catalogue additions and runtime variants
+  ---
+  duration_ms: 2.813541
+  ...
+# Subtest: standalone and public offline menus retain every dynamically attached panel stylesheet
+ok 125 - standalone and public offline menus retain every dynamically attached panel stylesheet
+  ---
+  duration_ms: 361.058458
+  ...
+# Subtest: the shared Snake launcher delivers both pages, current match modules and exact original artwork offline
+ok 126 - the shared Snake launcher delivers both pages, current match modules and exact original artwork offline
+  ---
+  duration_ms: 291.850625
+  ...
+# Subtest: actual company host closure retains explicit Demo dependencies and preserves optional artwork
+ok 127 - actual company host closure retains explicit Demo dependencies and preserves optional artwork
+  ---
+  duration_ms: 2979.79275
+  ...
+# Subtest: standalone menu projection preserves selected profile data and fallback without unrelated images
+ok 128 - standalone menu projection preserves selected profile data and fallback without unrelated images
+  ---
+  duration_ms: 35.618875
+  ...
+# Subtest: multi-edition menu builds retain their neutral FPV fallback and every selected scene
+ok 129 - multi-edition menu builds retain their neutral FPV fallback and every selected scene
+  ---
+  duration_ms: 2.78925
+  ...
+# Subtest: DroneAid aggregate uses only its lossless derivative while retaining original source files
+ok 130 - DroneAid aggregate uses only its lossless derivative while retaining original source files
+  ---
+  duration_ms: 7.41175
+  ...
+# Subtest: shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+ok 131 - shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+  ---
+  duration_ms: 3.031667
+  ...
+# Subtest: common host import projection closes over committed adapters without visiting historical registries
+ok 132 - common host import projection closes over committed adapters without visiting historical registries
+  ---
+  duration_ms: 10.913333
+  ...
+# Subtest: dynamic boot entry is explicit and unknown host JSON requests fail closed
+ok 133 - dynamic boot entry is explicit and unknown host JSON requests fail closed
+  ---
+  duration_ms: 0.5185
+  ...
+# Subtest: declared canonical navigation and data requests must exist in the artifact
+ok 134 - declared canonical navigation and data requests must exist in the artifact
+  ---
+  duration_ms: 0.263333
+  ...
+# Subtest: shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+ok 135 - shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+  ---
+  duration_ms: 38.968333
+  ...
+# Subtest: compiler retains the selected logo and projects shared fallback resources without default artwork
+ok 136 - compiler retains the selected logo and projects shared fallback resources without default artwork
+  ---
+  duration_ms: 142.105334
+  ...
+# Subtest: final offline edition budget counts every generated worker and manifest
+ok 137 - final offline edition budget counts every generated worker and manifest
+  ---
+  duration_ms: 363.010417
+  ...
+# Subtest: compacted engine bytes keep candidate provenance, offline hashes and authored content exact
+ok 138 - compacted engine bytes keep candidate provenance, offline hashes and authored content exact
+  ---
+  duration_ms: 120.431
+  ...
+# Subtest: lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory
+ok 139 - lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory
+  ---
+  duration_ms: 106.067291
+  ...
+# Subtest: selected retained presentation media stays exact in runtime, source and offline archives
+ok 140 - selected retained presentation media stays exact in runtime, source and offline archives
+  ---
+  duration_ms: 448.396041
+  ...
+# Subtest: retained packaging rejects altered originals, foreign audiences and unselected snapshots
+ok 141 - retained packaging rejects altered originals, foreign audiences and unselected snapshots
+  ---
+  duration_ms: 149.575167
+  ...
+# Subtest: whole-source eligibility includes registered historical-only originals before freezing candidates
+ok 142 - whole-source eligibility includes registered historical-only originals before freezing candidates
+  ---
+  duration_ms: 107.065625
+  ...
+# Subtest: source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions
+ok 143 - source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions
+  ---
+  duration_ms: 109.253292
+  ...
+# Subtest: sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+ok 144 - sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+  ---
+  duration_ms: 153.5745
+  ...
+# Subtest: catalog validates generic brands, immutable selections and strict allowlist lookup
+ok 145 - catalog validates generic brands, immutable selections and strict allowlist lookup
+  ---
+  duration_ms: 2.091792
+  ...
+# Subtest: repeated asset reads reuse only fully validated immutable edition closures
+ok 146 - repeated asset reads reuse only fully validated immutable edition closures
+  ---
+  duration_ms: 0.548125
+  ...
+# Subtest: mutable imports, copied catalogues and caller-frozen data cannot inherit admission
+ok 147 - mutable imports, copied catalogues and caller-frozen data cannot inherit admission
+  ---
+  duration_ms: 3.572833
+  ...
+# Subtest: shared-brand audience editions retain separate cached asset permissions
+ok 148 - shared-brand audience editions retain separate cached asset permissions
+  ---
+  duration_ms: 1.330917
+  ...
+# Subtest: dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+ok 149 - dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+  ---
+  duration_ms: 1.734
+  ...
+# Subtest: standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+ok 150 - standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+  ---
+  duration_ms: 60.223417
+  ...
+# Subtest: compilation excludes every omitted brand file and hashes exact selected media
+ok 151 - compilation excludes every omitted brand file and hashes exact selected media
+  ---
+  duration_ms: 46.637375
+  ...
+# Subtest: unselected restricted sources stay out, selected restricted and engine bypasses fail
+ok 152 - unselected restricted sources stay out, selected restricted and engine bypasses fail
+  ---
+  duration_ms: 24.857125
+  ...
+# Subtest: transitive assets are copied once and a boot file cannot sneak in omitted levels
+ok 153 - transitive assets are copied once and a boot file cannot sneak in omitted levels
+  ---
+  duration_ms: 46.94075
+  ...
+# Subtest: static dependency validation catches omitted imports and CSS images
+ok 154 - static dependency validation catches omitted imports and CSS images
+  ---
+  duration_ms: 0.489459
+  ...
+# Subtest: web editions reject external or computed code dependencies except the exact staged iOS bridge
+ok 155 - web editions reject external or computed code dependencies except the exact staged iOS bridge
+  ---
+  duration_ms: 0.394208
+  ...
+# Subtest: bootstrap preserves optional default and fetches only selected sources
+ok 156 - bootstrap preserves optional default and fetches only selected sources
+  ---
+  duration_ms: 22.797792
+  ...
+# Subtest: project merging rejects mismatched or conflicting immutable gameplay
+ok 157 - project merging rejects mismatched or conflicting immutable gameplay
+  ---
+  duration_ms: 64.217209
+  ...
+# Subtest: hub and compiled edition share progress and presentation pins including transitive and edition assets
+ok 158 - hub and compiled edition share progress and presentation pins including transitive and edition assets
+  ---
+  duration_ms: 123.003708
+  ...
+# Subtest: compiled first-paint and error shell uses only the selected brand and escapes HTML text
+ok 159 - compiled first-paint and error shell uses only the selected brand and escapes HTML text
+  ---
+  duration_ms: 36.303834
+  ...
+# Subtest: actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+ok 160 - actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+  ---
+  duration_ms: 28.270125
+  ...
+# Subtest: edition admission rejects mismatched themes and artwork outside the selected brand closure
+ok 161 - edition admission rejects mismatched themes and artwork outside the selected brand closure
+  ---
+  duration_ms: 152.570416
+  ...
+# Subtest: audience editions project primary and selected mission themes without other campaign labels
+ok 162 - audience editions project primary and selected mission themes without other campaign labels
+  ---
+  duration_ms: 242.962208
+  ...
+# Subtest: approved original-derived install icons ship both square sizes and the selected font only
+ok 163 - approved original-derived install icons ship both square sizes and the selected font only
+  ---
+  duration_ms: 1711.155542
+  ...
+# Subtest: canonical public edition selector compiles one stable identity and canonical standalone launcher
+ok 164 - canonical public edition selector compiles one stable identity and canonical standalone launcher
+  ---
+  duration_ms: 63.270709
+  ...
+# Subtest: calibration initializes a valid course and renders every offered Academy, World and Adventure environment
+ok 165 - calibration initializes a valid course and renders every offered Academy, World and Adventure environment
+  ---
+  duration_ms: 205.8485
+  ...
+# Subtest: fixed acceptance routes cover every current environment without changing course data
+ok 166 - fixed acceptance routes cover every current environment without changing course data
+  ---
+  duration_ms: 32.687875
+  ...
+# Subtest: paired comparison rejects changed conditions or incomplete runs and retains both directional results
+ok 167 - paired comparison rejects changed conditions or incomplete runs and retains both directional results
+  ---
+  duration_ms: 0.484542
+  ...
+# Subtest: percentiles use bounded actual samples and reject missing timing data
+ok 168 - percentiles use bounded actual samples and reject missing timing data
+  ---
+  duration_ms: 0.248458
+  ...
+# Subtest: snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+ok 169 - snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+  ---
+  duration_ms: 311.608625
+  ...
+# Subtest: authoring controls cannot bypass pending or failed source verification
+ok 170 - authoring controls cannot bypass pending or failed source verification
+  ---
+  duration_ms: 3.585791
+  ...
+# Subtest: failed scene changes block mislabeled reviews and recover only after a successful install
+ok 171 - failed scene changes block mislabeled reviews and recover only after a successful install
+  ---
+  duration_ms: 4.632125
+  ...
+# Subtest: closing the page while source verification waits never installs into a disposed renderer
+ok 172 - closing the page while source verification waits never installs into a disposed renderer
+  ---
+  duration_ms: 2.221208
+  ...
+# Subtest: measurement hashing failures release controls and disposal cannot reactivate them
+ok 173 - measurement hashing failures release controls and disposal cannot reactivate them
+  ---
+  duration_ms: 2.53675
+  ...
+# Subtest: SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+ok 174 - SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+  ---
+  duration_ms: 1.39675
+  ...
+# Subtest: first successful arm freezes accepted appearance until a new attempt, even after disarming
+ok 175 - first successful arm freezes accepted appearance until a new attempt, even after disarming
+  ---
+  duration_ms: 0.290708
+  ...
+# Subtest: recording metadata is bounded, portable and independent of Academy proof/reward identity
+ok 176 - recording metadata is bounded, portable and independent of Academy proof/reward identity
+  ---
+  duration_ms: 53.134375
+  ...
+# Subtest: replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+ok 177 - replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+  ---
+  duration_ms: 55.001917
+  ...
+# Subtest: World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+ok 178 - World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+  ---
+  duration_ms: 84.922458
+  ...
+# Subtest: World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+ok 179 - World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+  ---
+  duration_ms: 3.826792
+  ...
+# Subtest: World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+ok 180 - World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+  ---
+  duration_ms: 459.216083
+  ...
+# Subtest: World archive preserves the versioned profile fallback inside its unchanged course/proof record
+ok 181 - World archive preserves the versioned profile fallback inside its unchanged course/proof record
+  ---
+  duration_ms: 10.985083
+  ...
+# Subtest: cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+ok 182 - cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+  ---
+  duration_ms: 976.029292
+  ...
+# Subtest: cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+ok 183 - cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+  ---
+  duration_ms: 30.389167
+  ...
+# Subtest: aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+ok 184 - aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+  ---
+  duration_ms: 32.698833
+  ...
+# Subtest: closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+ok 185 - closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+  ---
+  duration_ms: 13.621459
+  ...
+# Subtest: cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+ok 186 - cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+  ---
+  duration_ms: 13.236042
+  ...
+# Subtest: Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+ok 187 - Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+  ---
+  duration_ms: 545.561083
+  ...
+# Subtest: portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+ok 188 - portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+  ---
+  duration_ms: 610.265916
+  ...
+# Subtest: a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+ok 189 - a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+  ---
+  duration_ms: 0.326708
+  ...
+# Subtest: real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+ok 190 - real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+  ---
+  duration_ms: 6.922666
+  ...
+# Subtest: touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+ok 191 - touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+  ---
+  duration_ms: 15.429959
+  ...
+# Subtest: swept obstacles stop a real directional flight without tunnelling and ignore author array order
+ok 192 - swept obstacles stop a real directional flight without tunnelling and ignore author array order
+  ---
+  duration_ms: 23.99675
+  ...
+# Subtest: checked-in integer rotation identities and bounded square roots
+ok 193 - checked-in integer rotation identities and bounded square roots
+  ---
+  duration_ms: 1.385916
+  ...
+# Subtest: all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+ok 194 - all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+  ---
+  duration_ms: 3.034917
+  ...
+# Subtest: manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+ok 195 - manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+  ---
+  duration_ms: 7.608417
+  ...
+# Subtest: Self-level centres attitude while Acro keeps tilt; both retain translation
+ok 196 - Self-level centres attitude while Acro keeps tilt; both retain translation
+  ---
+  duration_ms: 8.813958
+  ...
+# Subtest: swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+ok 197 - swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+  ---
+  duration_ms: 0.219
+  ...
+# Subtest: holds require consecutive ticks and pause never integrates or catches up
+ok 198 - holds require consecutive ticks and pause never integrates or catches up
+  ---
+  duration_ms: 1.630958
+  ...
+# Subtest: fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+ok 199 - fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+  ---
+  duration_ms: 21.426708
+  ...
+# Subtest: continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+ok 200 - continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+  ---
+  duration_ms: 36.133667
+  ...
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 201 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 102.327917
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 202 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 38.716042
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 203 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 52.404792
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 204 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 257.801541
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 205 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 1746.554833
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 206 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 90.457292
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 207 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 612.021041
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 208 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 25.890291
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 209 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 546.543834
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 210 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 56.927459
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 211 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 78.8845
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 212 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 50.839083
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 213 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.45175
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 214 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 1163.45775
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 215 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 108.46
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 216 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 26.12275
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 217 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 0.810833
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 218 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 21.48875
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 219 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 229.324708
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 220 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 56.730292
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 221 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 88.172542
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 222 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 31.17775
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 223 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 44.573541
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 224 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 17.969
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 225 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 54.424541
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 226 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 36.264875
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 227 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 29.688417
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 228 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 299.889375
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 229 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.492875
+  ...
+# Subtest: objective plates pair readable text with every collection panel while authored profiles retain the old path
+ok 230 - objective plates pair readable text with every collection panel while authored profiles retain the old path
+  ---
+  duration_ms: 4.376083
+  ...
+# Subtest: active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+ok 231 - active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+  ---
+  duration_ms: 1.380125
+  ...
+# Subtest: inactive, behind-camera and invalid viewport labels retain original bounds
+ok 232 - inactive, behind-camera and invalid viewport labels retain original bounds
+  ---
+  duration_ms: 0.54375
+  ...
+# Subtest: real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved
+ok 233 - real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved
+  ---
+  duration_ms: 93.417416
+  ...
+# Subtest: active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+ok 234 - active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+  ---
+  duration_ms: 12.742625
+  ...
+# Subtest: renderer exposes only the active themed gate brackets at every quality and releases shared resources once
+ok 235 - renderer exposes only the active themed gate brackets at every quality and releases shared resources once
+  ---
+  duration_ms: 938.619
+  ...
+# Subtest: 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 236 - 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 3202.603167
+  ...
+# Subtest: 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 237 - 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1479.916041
+  ...
+# Subtest: 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 238 - 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1613.276583
+  ...
+# Subtest: 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 239 - 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 617.492292
+  ...
+# Subtest: changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+ok 240 - changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+  ---
+  duration_ms: 297.674958
+  ...
+# Subtest: replay speed is localized and cannot change practice or start a replay by itself
+ok 241 - replay speed is localized and cannot change practice or start a replay by itself
+  ---
+  duration_ms: 246.745542
+  ...
+# Subtest: Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+ok 242 - Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+  ---
+  duration_ms: 66.390125
+  ...
+# Subtest: practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+ok 243 - practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+  ---
+  duration_ms: 14.60675
+  ...
+# Subtest: Radio setup import, explicit verification and save retain switch threshold and inversion
+ok 244 - Radio setup import, explicit verification and save retain switch threshold and inversion
+  ---
+  duration_ms: 36.809208
+  ...
+# Subtest: Acro notebook review chooses only evidence satisfying its mode rule
+ok 245 - Acro notebook review chooses only evidence satisfying its mode rule
+  ---
+  duration_ms: 107.973958
+  ...
+# Subtest: a custom imported course remains selectable with its exact reward and demonstration slot
+ok 246 - a custom imported course remains selectable with its exact reward and demonstration slot
+  ---
+  duration_ms: 19.996125
+  ...
+# Subtest: notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+ok 247 - notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+  ---
+  duration_ms: 25.515625
+  ...
+# Subtest: SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+ok 248 - SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+  ---
+  duration_ms: 1.436625
+  ...
+# Subtest: SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+ok 249 - SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+  ---
+  duration_ms: 21.374167
+  ...
+# Subtest: injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+ok 250 - injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+  ---
+  duration_ms: 7.612167
+  ...
+# Subtest: all production family collection pins round-trip through World and Academy presentation metadata
+ok 251 - all production family collection pins round-trip through World and Academy presentation metadata
+  ---
+  duration_ms: 25.3975
+  ...
+# Subtest: complete apply from another tab updates SIM intent while preserving the armed appearance
+ok 252 - complete apply from another tab updates SIM intent while preserving the armed appearance
+  ---
+  duration_ms: 11.651625
+  ...
+# Subtest: SIM offers fixed Classic Field Kit separately from Authored without changing the selected world
+ok 253 - SIM offers fixed Classic Field Kit separately from Authored without changing the selected world
+  ---
+  duration_ms: 16.289625
+  ...
+# Subtest: optional SIM re-exports the same shared offline collection authority
+ok 254 - optional SIM re-exports the same shared offline collection authority
+  ---
+  duration_ms: 0.86
+  ...
+# Subtest: versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+ok 255 - versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+  ---
+  duration_ms: 8.531458
+  ...
+# Subtest: collection effect palettes are immutable semantic cues with exact-revision fallback
+ok 256 - collection effect palettes are immutable semantic cues with exact-revision fallback
+  ---
+  duration_ms: 1.404708
+  ...
+# Subtest: SIM appearance resolution preserves authored profiles and never mutates course data
+ok 257 - SIM appearance resolution preserves authored profiles and never mutates course data
+  ---
+  duration_ms: 15.862834
+  ...
+# Subtest: industrial textures are deterministic local sRGB art with quality-capped world filtering
+ok 258 - industrial textures are deterministic local sRGB art with quality-capped world filtering
+  ---
+  duration_ms: 8.860167
+  ...
+# Subtest: bevel calibration normals are bounded deterministic linear tangent-space data
+ok 259 - bevel calibration normals are bounded deterministic linear tangent-space data
+  ---
+  duration_ms: 23.6525
+  ...
+# Subtest: all built-in environments have industrial materials without moving world geometry
+ok 260 - all built-in environments have industrial materials without moving world geometry
+  ---
+  duration_ms: 1125.9215
+  ...
+# Subtest: flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+ok 261 - flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+  ---
+  duration_ms: 96.375292
+  ...
+# Subtest: container detail batches retain all fittings outside flight bounds without per-container draws
+ok 262 - container detail batches retain all fittings outside flight bounds without per-container draws
+  ---
+  duration_ms: 8.632917
+  ...
+# Subtest: instanced replacements retain and release registered shadow owners without a later world traversal
+ok 263 - instanced replacements retain and release registered shadow owners without a later world traversal
+  ---
+  duration_ms: 758.30125
+  ...
+# Subtest: specimen collections bind the same model roles and geometry to distinct material palettes
+ok 264 - specimen collections bind the same model roles and geometry to distinct material palettes
+  ---
+  duration_ms: 327.946584
+  ...
+# Subtest: calibration disposal releases shared resources exactly once
+ok 265 - calibration disposal releases shared resources exactly once
+  ---
+  duration_ms: 16.290875
+  ...
+# Subtest: imported mesh material bindings are opt-in, bounded and revision-specific
+ok 266 - imported mesh material bindings are opt-in, bounded and revision-specific
+  ---
+  duration_ms: 17.964833
+  ...
+# Subtest: transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+ok 267 - transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+  ---
+  duration_ms: 1.785208
+  ...
+# Subtest: a glTF mesh-node binding covers only its own loader-identified primitives
+ok 268 - a glTF mesh-node binding covers only its own loader-identified primitives
+  ---
+  duration_ms: 1.108708
+  ...
+# Subtest: all collections cover every environment with protected course data and exterior dressing
+ok 269 - all collections cover every environment with protected course data and exterior dressing
+  ---
+  duration_ms: 4621.655625
+  ...
+# Subtest: family surface recipes provide distinct luminance structure beyond a global tint
+ok 270 - family surface recipes provide distinct luminance structure beyond a global tint
+  ---
+  duration_ms: 125.89775
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 271 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 1358.1085
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 272 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 188.664875
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 273 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 890.27325
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 274 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 542.310583
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 275 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 454.570583
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 276 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 479.009916
+  ...
+# Subtest: extracts stable semantic IDs in world coordinates and produces a self-contained GLB
+ok 277 - extracts stable semantic IDs in world coordinates and produces a self-contained GLB
+  ---
+  duration_ms: 13.786
+  ...
+# Subtest: local glTF resource resolution repacks buffers and rejects URLs, traversal and missing resources
+ok 278 - local glTF resource resolution repacks buffers and rejects URLs, traversal and missing resources
+  ---
+  duration_ms: 3.530042
+  ...
+# Subtest: GLB length, accessor overflow, nonfinite data, node cycles and duplicate semantic IDs are rejected
+ok 279 - GLB length, accessor overflow, nonfinite data, node cycles and duplicate semantic IDs are rejected
+  ---
+  duration_ms: 5.457166
+  ...
+# Subtest: required unsupported compression is rejected explicitly
+ok 280 - required unsupported compression is rejected explicitly
+  ---
+  duration_ms: 0.517834
+  ...
+# Subtest: reimport keeps authored overrides and diagnoses removed source IDs
+ok 281 - reimport keeps authored overrides and diagnoses removed source IDs
+  ---
+  duration_ms: 3.143583
+  ...
+# Subtest: project composition resolves explicit courses, themes and playlist references
+ok 282 - project composition resolves explicit courses, themes and playlist references
+  ---
+  duration_ms: 6.031625
+  ...
+# Subtest: portable pack verifies exact hashes and rejects trailing bytes or tampering
+ok 283 - portable pack verifies exact hashes and rejects trailing bytes or tampering
+  ---
+  duration_ms: 6.688167
+  ...
+# Subtest: editable ZIP round trip verifies directory metadata, CRC and resource closure
+ok 284 - editable ZIP round trip verifies directory metadata, CRC and resource closure
+  ---
+  duration_ms: 7.847417
+  ...
+# Subtest: IndexedDB install writes metadata and all blobs; stale generation does not change either
+ok 285 - IndexedDB install writes metadata and all blobs; stale generation does not change either
+  ---
+  duration_ms: 24.108084
+  ...
+# Subtest: hash validation completes before installation; corrupt packs never open an install transaction
+ok 286 - hash validation completes before installation; corrupt packs never open an install transaction
+  ---
+  duration_ms: 2.473042
+  ...
+# Subtest: transaction abort after queuing new blobs retains the previous revision and blobs
+ok 287 - transaction abort after queuing new blobs retains the previous revision and blobs
+  ---
+  duration_ms: 7.705375
+  ...
+# Subtest: animation cannot move gameplay anchors, but bounded cosmetic object animation is accepted
+ok 288 - animation cannot move gameplay anchors, but bounded cosmetic object animation is accepted
+  ---
+  duration_ms: 1.840875
+  ...
+# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes
+ok 289 - spatial editor applies current presentation before every course build without changing authored source or scene bytes
+  ---
+  duration_ms: 3.213417
+  ...
+# Subtest: world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+ok 290 - world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+  ---
+  duration_ms: 5.615667
+  ...
+# Subtest: static sphere sweep cannot tunnel through a thin wall or rotated box
+ok 291 - static sphere sweep cannot tunnel through a thin wall or rotated box
+  ---
+  duration_ms: 55.953375
+  ...
+# Subtest: drone takes off from support and refuses a solid-overlap spawn
+ok 292 - drone takes off from support and refuses a solid-overlap spawn
+  ---
+  duration_ms: 14.469584
+  ...
+# Subtest: elevated triangle platform supports a landing objective with exact surface identity
+ok 293 - elevated triangle platform supports a landing objective with exact surface identity
+  ---
+  duration_ms: 826.298209
+  ...
+# Subtest: moving actor relative sweep catches crossing trajectories between endpoints
+ok 294 - moving actor relative sweep catches crossing trajectories between endpoints
+  ---
+  duration_ms: 3.219333
+  ...
+# Subtest: a moving hazard contacts a resting drone after its floor movement is resolved
+ok 295 - a moving hazard contacts a resting drone after its floor movement is resolved
+  ---
+  duration_ms: 1.391916
+  ...
+# Subtest: fictional pulses damage targets, obey cooldown and complete verified combat
+ok 296 - fictional pulses damage targets, obey cooldown and complete verified combat
+  ---
+  duration_ms: 16.955334
+  ...
+# Subtest: enemy pulses can defeat the drone, while intervening geometry blocks both sides
+ok 297 - enemy pulses can defeat the drone, while intervening geometry blocks both sides
+  ---
+  duration_ms: 31.689292
+  ...
+# Subtest: authored ground and vehicle patrols stop at solid map obstacles
+ok 298 - authored ground and vehicle patrols stop at solid map obstacles
+  ---
+  duration_ms: 69.528791
+  ...
+# Subtest: ground patrols climb authored 0.15 m steps and supported slopes
+ok 299 - ground patrols climb authored 0.15 m steps and supported slopes
+  ---
+  duration_ms: 39.046083
+  ...
+# Subtest: projectile admission remains bounded while firing continuously
+ok 300 - projectile admission remains bounded while firing continuously
+  ---
+  duration_ms: 105.871167
+  ...
+# Subtest: pause freezes every subsystem; recovered command prefix resumes with the same final hash
+ok 301 - pause freezes every subsystem; recovered command prefix resumes with the same final hash
+  ---
+  duration_ms: 29.585959
+  ...
+# Subtest: reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+ok 302 - reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+  ---
+  duration_ms: 20.88875
+  ...
+# Subtest: recorder requires the consumed command and rejects skipped ticks
+ok 303 - recorder requires the consumed command and rejects skipped ticks
+  ---
+  duration_ms: 0.990958
+  ...
+# Subtest: real GLTFLoader reproduces blocked bitmap fetch and the shared decoder preserves exact PNG/material semantics
+ok 304 - real GLTFLoader reproduces blocked bitmap fetch and the shared decoder preserves exact PNG/material semantics
+  ---
+  duration_ms: 17.725375
+  ...
+# Subtest: actual import repacks local sidecars and renderer keeps valid imported texture, rejected scene ownership and bounds atomic
+ok 305 - actual import repacks local sidecars and renderer keeps valid imported texture, rejected scene ownership and bounds atomic
+  ---
+  duration_ms: 98.826334
+  ...
+# Subtest: late image success after cancellation is released, and unprovided remote images never reach a decoder
+ok 306 - late image success after cancellation is released, and unprovided remote images never reach a decoder
+  ---
+  duration_ms: 42.744042
+  ...
+# Subtest: decoded imported art stays authored under themes and only exact explicit node bindings replace a material
+ok 307 - decoded imported art stays authored under themes and only exact explicit node bindings replace a material
+  ---
+  duration_ms: 36.805958
+  ...
+# Subtest: collection capability requires explicit opt-in and a registered matching family
+ok 308 - collection capability requires explicit opt-in and a registered matching family
+  ---
+  duration_ms: 1.3265
+  ...
+# Subtest: native industrial texture is deterministic and keeps every alpha pixel of every sprite
+ok 309 - native industrial texture is deterministic and keeps every alpha pixel of every sprite
+  ---
+  duration_ms: 56.45325
+  ...
+# Subtest: material treatment adds bounded surface detail while rejecting giant inputs
+ok 310 - material treatment adds bounded surface detail while rejecting giant inputs
+  ---
+  duration_ms: 0.959708
+  ...
+# Subtest: adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+ok 311 - adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+  ---
+  duration_ms: 1.188542
+  ...
+# Subtest: uploaded/custom hashes and failed Canvas reads retain original artwork
+ok 312 - uploaded/custom hashes and failed Canvas reads retain original artwork
+  ---
+  duration_ms: 0.555916
+  ...
+# Subtest: Solo freezes selection at a new level and preserves source presentation identity
+ok 313 - Solo freezes selection at a new level and preserves source presentation identity
+  ---
+  duration_ms: 1.065417
+  ...
+# Subtest: every current published builtin sprite is pinned without importing its manifest at runtime
+ok 314 - every current published builtin sprite is pinned without importing its manifest at runtime
+  ---
+  duration_ms: 41.231
+  ...
+# Subtest: Neon Arcade remains independent of authored themes and FPV Field Kit never alters canvas inputs
+ok 315 - Neon Arcade remains independent of authored themes and FPV Field Kit never alters canvas inputs
+  ---
+  duration_ms: 8.94625
+  ...
+# Subtest: default Neon Arcade remains selected across FPV, campaign and unavailable presentations
+ok 316 - default Neon Arcade remains selected across FPV, campaign and unavailable presentations
+  ---
+  duration_ms: 1.372125
+  ...
+# Subtest: invalid menu choices and unaccepted theme identifiers leave the current appearance intact
+ok 317 - invalid menu choices and unaccepted theme identifiers leave the current appearance intact
+  ---
+  duration_ms: 3.502
+  ...
+# Subtest: ornaments add no focus stops, leave existing anchor order intact and never enter arena or HUD
+ok 318 - ornaments add no focus stops, leave existing anchor order intact and never enter arena or HUD
+  ---
+  duration_ms: 2.754875
+  ...
+# Subtest: replacement ownership removes old decorations and a stale completion cannot overwrite the new choice
+ok 319 - replacement ownership removes old decorations and a stale completion cannot overwrite the new choice
+  ---
+  duration_ms: 3.790083
+  ...
+# Subtest: cleanup restores previous values but preserves a later external writer
+ok 320 - cleanup restores previous values but preserves a later external writer
+  ---
+  duration_ms: 1.174792
+  ...
+# Subtest: both approved UI skins preserve functional text and cue contrast on menu panels
+ok 321 - both approved UI skins preserve functional text and cue contrast on menu panels
+  ---
+  duration_ms: 1.394125
+  ...
+# Subtest: the static menu stylesheet does not animate decorations or style canvas, HUD, fonts or theme image variables
+ok 322 - the static menu stylesheet does not animate decorations or style canvas, HUD, fonts or theme image variables
+  ---
+  duration_ms: 14.082708
+  ...
+# Subtest: Solo, Versus and Team expose the same two UI skin names independently of actors
+ok 323 - Solo, Versus and Team expose the same two UI skin names independently of actors
+  ---
+  duration_ms: 93.512208
+  ...
+# Subtest: a late player dialog and a rerendered dialog gain one decoration without adding input stops
+ok 324 - a late player dialog and a rerendered dialog gain one decoration without adding input stops
+  ---
+  duration_ms: 2.119
+  ...
+# Subtest: detached player dialogs release their decoration and reattachment remains owned; generic HUD additions are ignored
+ok 325 - detached player dialogs release their decoration and reattachment remains owned; generic HUD additions are ignored
+  ---
+  duration_ms: 0.814625
+  ...
+# Subtest: queued mutation callbacks after disposal or ownership replacement cannot redecorate the page
+ok 326 - queued mutation callbacks after disposal or ownership replacement cannot redecorate the page
+  ---
+  duration_ms: 3.155958
+  ...
+# Subtest: Couch ornament source rules reserve content and focus space without clipping
+ok 327 - Couch ornament source rules reserve content and focus space without clipping
+  ---
+  duration_ms: 8.558833
+  ...
+# Subtest: live language changes update audio slider names without changing focus or volume
+ok 328 - live language changes update audio slider names without changing focus or volume
+  ---
+  duration_ms: 13.431334
+  ...
+# Subtest: immediate: staged appearance preserves the actual paused Solo cut, saved slot and replay
+ok 329 - immediate: staged appearance preserves the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 6471.309625
+  ...
+# Subtest: grid-center: staged appearance preserves the actual paused Solo cut, saved slot and replay
+ok 330 - grid-center: staged appearance preserves the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 4571.899708
+  ...
+# Subtest: unified appearance survives Solo, Team, Versus and Solo return without altering display or progress
+    # Subtest: Solo immediately applies its complete family from real Settings
+    ok 1 - Solo immediately applies its complete family from real Settings
+      ---
+      duration_ms: 1668.221417
+      ...
+    # Subtest: Team applies chrome from paused Options without changing a single painter command
+    ok 2 - Team applies chrome from paused Options without changing a single painter command
+      ---
+      duration_ms: 1837.901042
+      ...
+    # Subtest: Versus preserves Appearance category, paused checkpoint and exact Back opener
+    ok 3 - Versus preserves Appearance category, paused checkpoint and exact Back opener
+      ---
+      duration_ms: 5642.453875
+      ...
+    # Subtest: fresh Solo adopts without an implicit save or start
+    ok 4 - fresh Solo adopts without an implicit save or start
+      ---
+      duration_ms: 1513.166875
+      ...
+    1..4
+ok 331 - unified appearance survives Solo, Team, Versus and Solo return without altering display or progress
+  ---
+  duration_ms: 10666.532666
+  ...
+# Subtest: controller immediately applies a family card without changing Ready
+ok 332 - controller immediately applies a family card without changing Ready
+  ---
+  duration_ms: 3372.250625
+  ...
+# Subtest: denied appearance saving leaves Team local choice usable without replacing shared records
+ok 333 - denied appearance saving leaves Team local choice usable without replacing shared records
+  ---
+  duration_ms: 300.536958
+  ...
+# Subtest: actual host storage notifications preserve focus, pause and latest accepted appearance
+ok 334 - actual host storage notifications preserve focus, pause and latest accepted appearance
+  ---
+  duration_ms: 2716.967417
+  ...
+# Subtest: versus SIM uses the current compiled pin ahead of accepted context after its entry check
+ok 335 - versus SIM uses the current compiled pin ahead of accepted context after its entry check
+  ---
+  duration_ms: 56.03075
+  ...
+# Subtest: versus SIM transfers the latest accepted custom candidate without changing player preferences
+ok 336 - versus SIM transfers the latest accepted custom candidate without changing player preferences
+  ---
+  duration_ms: 34.367417
+  ...
+# Subtest: team SIM uses the current compiled pin ahead of accepted context after its entry check
+ok 337 - team SIM uses the current compiled pin ahead of accepted context after its entry check
+  ---
+  duration_ms: 32.854125
+  ...
+# Subtest: team SIM transfers the latest accepted custom candidate without changing player preferences
+ok 338 - team SIM transfers the latest accepted custom candidate without changing player preferences
+  ---
+  duration_ms: 28.01875
+  ...
+# Subtest: the explicit Solo context getter remains primary over compiled and accepted defaults
+ok 339 - the explicit Solo context getter remains primary over compiled and accepted defaults
+  ---
+  duration_ms: 21.7085
+  ...
+# Subtest: cancelled entry checks cannot navigate or transfer an accepted custom theme
+ok 340 - cancelled entry checks cannot navigate or transfer an accepted custom theme
+  ---
+  duration_ms: 25.340916
+  ...
+# Subtest: hidden entry checks cannot navigate or transfer an accepted custom theme
+ok 341 - hidden entry checks cannot navigate or transfer an accepted custom theme
+  ---
+  duration_ms: 17.640542
+  ...
+# Subtest: solo Snake link preserves seats and resolves the appearance at activation
+ok 342 - solo Snake link preserves seats and resolves the appearance at activation
+  ---
+  duration_ms: 22.3515
+  ...
+# Subtest: versus Snake link preserves seats and resolves the appearance at activation
+ok 343 - versus Snake link preserves seats and resolves the appearance at activation
+  ---
+  duration_ms: 17.257833
+  ...
+# Subtest: team Snake link preserves seats and resolves the appearance at activation
+ok 344 - team Snake link preserves seats and resolves the appearance at activation
+  ---
+  duration_ms: 16.72525
+  ...
+# Subtest: accepted status producers translate live while obsolete leases stay fenced
+ok 345 - accepted status producers translate live while obsolete leases stay fenced
+  ---
+  duration_ms: 5.018666
+  ...
+# Subtest: a newer operation retains its status when an older completion or finally arrives
+ok 346 - a newer operation retains its status when an older completion or finally arrives
+  ---
+  duration_ms: 0.300792
+  ...
+# Subtest: closing a host, cancelling a lease and disposal fence late status updates
+ok 347 - closing a host, cancelling a lease and disposal fence late status updates
+  ---
+  duration_ms: 0.219625
+  ...
+# Subtest: detached observation can reconcile an actual save, but cannot overwrite a newer task
+ok 348 - detached observation can reconcile an actual save, but cannot overwrite a newer task
+  ---
+  duration_ms: 0.194041
+  ...
+# Subtest: measured progress is accessible without repeating the live phase announcement
+ok 349 - measured progress is accessible without repeating the live phase announcement
+  ---
+  duration_ms: 14.287584
+  ...
+# Subtest: measured file counts translate with locale-aware numbers without changing the meter
+ok 350 - measured file counts translate with locale-aware numbers without changing the meter
+  ---
+  duration_ms: 8.695709
+  ...
+# Subtest: optional installations preserve previous versions and isolate stable roots without touching Journey
+ok 351 - optional installations preserve previous versions and isolate stable roots without touching Journey
+  ---
+  duration_ms: 2.765042
+  ...
+# Subtest: optional launch references reject foreign origins, roots, entries and versions
+ok 352 - optional launch references reject foreign origins, roots, entries and versions
+  ---
+  duration_ms: 0.6085
+  ...
+# Subtest: an installation pointer is recorded only after a verified worker activates
+ok 353 - an installation pointer is recorded only after a verified worker activates
+  ---
+  duration_ms: 14.675125
+  ...
+# Subtest: stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+ok 354 - stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+  ---
+  duration_ms: 22.609334
+  ...
+# Subtest: stable launcher keeps locale and appearance on auto-play and verified offline fallback
+ok 355 - stable launcher keeps locale and appearance on auto-play and verified offline fallback
+  ---
+  duration_ms: 4.223042
+  ...
+# Subtest: stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+ok 356 - stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+  ---
+  duration_ms: 8.291
+  ...
+# Subtest: optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+ok 357 - optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+  ---
+  duration_ms: 1.344958
+  ...
+# Subtest: unqualified source previews are limited to the loopback source entry
+ok 358 - unqualified source previews are limited to the loopback source entry
+  ---
+  duration_ms: 1.499
+  ...
+# Subtest: Snake offers the exact World source preview only at a loopback source root
+ok 359 - Snake offers the exact World source preview only at a loopback source root
+  ---
+  duration_ms: 0.200959
+  ...
+# Subtest: launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+ok 360 - launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+  ---
+  duration_ms: 21.052375
+  ...
+# Subtest: shared practice entry is explicit, pauses once and never prefetches package bytes
+ok 361 - shared practice entry is explicit, pauses once and never prefetches package bytes
+  ---
+  duration_ms: 17.589375
+  ...
+# Subtest: closing an in-flight optional catalog discards late results and restores its opener
+ok 362 - closing an in-flight optional catalog discards late results and restores its opener
+  ---
+  duration_ms: 4.2905
+  ...
+# Subtest: a stalled optional catalog times out and leaves an explicit retry available
+ok 363 - a stalled optional catalog times out and leaves an explicit retry available
+  ---
+  duration_ms: 7.353875
+  ...
+# Subtest: Home and More share one public loader and restore the actual opener without resuming play
+ok 364 - Home and More share one public loader and restore the actual opener without resuming play
+  ---
+  duration_ms: 9.8835
+  ...
+# Subtest: local gym and FPV previews stay separate and usable while the public catalog is unavailable
+ok 365 - local gym and FPV previews stay separate and usable while the public catalog is unavailable
+  ---
+  duration_ms: 8.297834
+  ...
+# Subtest: SIM opens the checked bundled entry directly without an interstitial or package download
+ok 366 - SIM opens the checked bundled entry directly without an interstitial or package download
+  ---
+  duration_ms: 7.747208
+  ...
+# Subtest: unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+ok 367 - unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+  ---
+  duration_ms: 8.367166
+  ...
+# Subtest: installed practice links retain launch intent and refresh the appearance pin on activation
+ok 368 - installed practice links retain launch intent and refresh the appearance pin on activation
+  ---
+  duration_ms: 7.56675
+  ...
+# Subtest: recorded FPV actors survive preview changes, class switches, playback and restart; raw behavior remains separate
+ok 369 - recorded FPV actors survive preview changes, class switches, playback and restart; raw behavior remains separate
+  ---
+  duration_ms: 514.837084
+  ...
+# Subtest: retained company recording stages its exact old picture and preserves it across playback, failed imports and cancellation
+    # Subtest: a mismatched current edition offers only its registered recovery destination
+    ok 1 - a mismatched current edition offers only its registered recovery destination
+      ---
+      duration_ms: 141.204209
+      ...
+    1..1
+ok 370 - retained company recording stages its exact old picture and preserves it across playback, failed imports and cancellation
+  ---
+  duration_ms: 767.6955
+  ...
+# Subtest: wrong owner, exact source, asset bytes and oversized inputs preserve accepted recording and live actors
+ok 371 - wrong owner, exact source, asset bytes and oversized inputs preserve accepted recording and live actors
+  ---
+  duration_ms: 364.641333
+  ...
+# Subtest: cancel, supersede and close release staged actors once without replacing the accepted snapshot
+ok 372 - cancel, supersede and close release staged actors once without replacing the accepted snapshot
+  ---
+  duration_ms: 460.237459
+  ...
+# Subtest: actual Solo Journey export loads in Theater with exact actors and completes/restarts the recorded input stream
+    # Subtest: capture the real Solo download, not a fabricated Journey envelope
+    ok 1 - capture the real Solo download, not a fabricated Journey envelope
+      ---
+      duration_ms: 7279.228458
+      ...
+    # Subtest: actual Theater resolves the shipped Journey owner and retains the download pin
+    ok 2 - actual Theater resolves the shipped Journey owner and retains the download pin
+      ---
+      duration_ms: 4098.417875
+      ...
+    1..2
+ok 373 - actual Solo Journey export loads in Theater with exact actors and completes/restarts the recorded input stream
+  ---
+  duration_ms: 11378.905084
+  ...
+# Subtest: edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+ok 374 - edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+  ---
+  duration_ms: 263.687167
+  ...
+# Subtest: edition theater reports unavailable catalog through its ordinary boot status
+ok 375 - edition theater reports unavailable catalog through its ordinary boot status
+  ---
+  duration_ms: 35.918208
+  ...
+# Subtest: an empty edition recovers a focused Cancel to Verify because bundled examples are unavailable
+ok 376 - an empty edition recovers a focused Cancel to Verify because bundled examples are unavailable
+  ---
+  duration_ms: 83.153041
+  ...
+# Subtest: real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+ok 377 - real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+  ---
+  duration_ms: 56.26125
+  ...
+# Subtest: real theater preserves denied-save intent and its recording across a persisted return
+ok 378 - real theater preserves denied-save intent and its recording across a persisted return
+  ---
+  duration_ms: 26.8375
+  ...
+# Subtest: real theater boot failure retains usable shared reading controls without playback
+ok 379 - real theater boot failure retains usable shared reading controls without playback
+  ---
+  duration_ms: 10.984958
+  ...
+# Subtest: terminal exit during delayed boot retires authority and fences late replay startup
+ok 380 - terminal exit during delayed boot retires authority and fences late replay startup
+  ---
+  duration_ms: 11.6205
+  ...
+# Subtest: history-restored replay controls follow unchanged saved intent without touching playback
+ok 381 - history-restored replay controls follow unchanged saved intent without touching playback
+  ---
+  duration_ms: 26.854333
+  ...
+# Subtest: history-restored replay controls follow unchanged session-only intent without touching playback
+ok 382 - history-restored replay controls follow unchanged session-only intent without touching playback
+  ---
+  duration_ms: 30.697667
+  ...
+# Subtest: recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+ok 383 - recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+  ---
+  duration_ms: 219.544208
+  ...
+# Subtest: Theater adopts global remains without rewriting recordings or advancing a paused replay
+ok 384 - Theater adopts global remains without rewriting recordings or advancing a paused replay
+  ---
+  duration_ms: 16.906625
+  ...
+# Subtest: Replay Theater refreshes code-owned controller and example labels in both locale directions
+ok 385 - Replay Theater refreshes code-owned controller and example labels in both locale directions
+  ---
+  duration_ms: 237.98575
+  ...
+# Subtest: native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording
+ok 386 - native fragment Jump hands off to playback and the next Tab reaches Restart without changing the recording
+  ---
+  duration_ms: 67.12275
+  ...
+# Subtest: Jump chooses Cancel for a held import and preserves the prior recording after rejection
+ok 387 - Jump chooses Cancel for a held import and preserves the prior recording after rejection
+  ---
+  duration_ms: 42.793042
+  ...
+# Subtest: Jump with no loaded recording reaches Load example without retrying the failed import
+ok 388 - Jump with no loaded recording reaches Load example without retrying the failed import
+  ---
+  duration_ms: 16.817959
+  ...
+# Subtest: invalid pasted replay exposes local non-live feedback and recovers without taking editor focus or changing the retained route
+ok 389 - invalid pasted replay exposes local non-live feedback and recovers without taking editor focus or changing the retained route
+  ---
+  duration_ms: 49.412541
+  ...
+# Subtest: finishing or cancelling a held import restores a focused Cancel to a usable control, but never steals newer or background focus
+ok 390 - finishing or cancelling a held import restores a focused Cancel to a usable control, but never steals newer or background focus
+  ---
+  duration_ms: 49.441125
+  ...
+# Subtest: Escape return guidance and the paused badge change locale without replaying or moving focus
+ok 391 - Escape return guidance and the paused badge change locale without replaying or moving focus
+  ---
+  duration_ms: 30.909209
+  ...
+# Subtest: Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal
+ok 392 - Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal
+  ---
+  duration_ms: 65.570208
+  ...
+# Subtest: completed Play and Step hand off to Restart with exact final checkpoints and local next Tab
+ok 393 - completed Play and Step hand off to Restart with exact final checkpoints and local next Tab
+  ---
+  duration_ms: 271.023792
+  ...
+# Subtest: completion preserves unrelated editor focus and does not steal background focus
+ok 394 - completion preserves unrelated editor focus and does not steal background focus
+  ---
+  duration_ms: 58.928375
+  ...
+# Subtest: immediate: keyboard transport, focus and Back preserve the real recorded cut through completion
+ok 395 - immediate: keyboard transport, focus and Back preserve the real recorded cut through completion
+  ---
+  duration_ms: 47.787958
+  ...
+# Subtest: grid-center: keyboard transport, focus and Back preserve the real recorded cut through completion
+ok 396 - grid-center: keyboard transport, focus and Back preserve the real recorded cut through completion
+  ---
+  duration_ms: 60.893292
+  ...
+# Subtest: controller joins without activation, previews native speed, cancels once and pauses before leaving
+ok 397 - controller joins without activation, previews native speed, cancels once and pauses before leaving
+  ---
+  duration_ms: 118.833084
+  ...
+# Subtest: Back cancels a deferred import without adoption; native text editing and file choice remain native
+ok 398 - Back cancels a deferred import without adoption; native text editing and file choice remain native
+  ---
+  duration_ms: 52.331125
+  ...
+# Subtest: blur, controller loss and page disposal pause exact playback and reject a late import
+ok 399 - blur, controller loss and page disposal pause exact playback and reject a late import
+  ---
+  duration_ms: 70.740833
+  ...
+# Subtest: real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate
+ok 400 - real replay verification reports exact ticks and a cancelled artwork decode cannot adopt its candidate
+  ---
+  duration_ms: 53.968
+  ...
+# Subtest: Classic replay import stays paused and controller completion checks the exact v6 checkpoint
+ok 401 - Classic replay import stays paused and controller completion checks the exact v6 checkpoint
+  ---
+  duration_ms: 142.887167
+  ...
+# Subtest: Replay Theater native Confirm commits between frames without a second playback toggle
+ok 402 - Replay Theater native Confirm commits between frames without a second playback toggle
+  ---
+  duration_ms: 32.835584
+  ...
+# Subtest: vertical settings arrows select categories; compact Confirm enters and Back returns once
+ok 403 - vertical settings arrows select categories; compact Confirm enters and Back returns once
+  ---
+  duration_ms: 3.544208
+  ...
+# Subtest: compact native dialog cancellation returns to categories before allowing parent cancellation
+ok 404 - compact native dialog cancellation returns to categories before allowing parent cancellation
+  ---
+  duration_ms: 1.143625
+  ...
+# Subtest: mount respects the authored category and keeps existing controls, values and focus
+ok 405 - mount respects the authored category and keeps existing controls, values and focus
+  ---
+  duration_ms: 1.489333
+  ...
+# Subtest: tab arrows wrap and Home/End select before focus without bubbling a game command
+ok 406 - tab arrows wrap and Home/End select before focus without bubbling a game command
+  ---
+  duration_ms: 1.557958
+  ...
+# Subtest: capture-phase navigation recognizes only owned visible tab keys
+ok 407 - capture-phase navigation recognizes only owned visible tab keys
+  ---
+  duration_ms: 0.382417
+  ...
+# Subtest: owned tabs cannot toggle another root or a replaced panel
+ok 408 - owned tabs cannot toggle another root or a replaced panel
+  ---
+  duration_ms: 0.27325
+  ...
+# Subtest: a native cancellation hook may request focus without changing control values
+ok 409 - a native cancellation hook may request focus without changing control values
+  ---
+  duration_ms: 0.382042
+  ...
+# Subtest: a newer hook selection or removed root cannot be overwritten or refocused
+ok 410 - a newer hook selection or removed root cannot be overwritten or refocused
+  ---
+  duration_ms: 0.246833
+  ...
+# Subtest: disabled tabs are skipped and their previous panel still closes
+ok 411 - disabled tabs are skipped and their previous panel still closes
+  ---
+  duration_ms: 0.507584
+  ...
+# Subtest: a target hidden or disabled by its host hook does not replace the current panel or focus
+ok 412 - a target hidden or disabled by its host hook does not replace the current panel or focus
+  ---
+  duration_ms: 1.667792
+  ...
+# Subtest: destroy and absent supporting-page roots leave no active listeners or focus changes
+ok 413 - destroy and absent supporting-page roots leave no active listeners or focus changes
+  ---
+  duration_ms: 0.759375
+  ...
+# Subtest: Home quick sound toggles the existing master in place and remains synchronized with Audio settings
+ok 414 - Home quick sound toggles the existing master in place and remains synchronized with Audio settings
+  ---
+  duration_ms: 2466.429917
+  ...
+# Subtest: Solo Settings opens Display by default, returns to its Home opener and retains the chosen category on reopening
+ok 415 - Solo Settings opens Display by default, returns to its Home opener and retains the chosen category on reopening
+  ---
+  duration_ms: 979.775917
+  ...
+# Subtest: category arrows, Home and End cross the real document adapter exactly once without a game command
+ok 416 - category arrows, Home and End cross the real document adapter exactly once without a game command
+  ---
+  duration_ms: 1094.311667
+  ...
+# Subtest: changing categories cancels real key capture without saving a binding or closing Settings
+ok 417 - changing categories cancels real key capture without saving a binding or closing Settings
+  ---
+  duration_ms: 925.733167
+  ...
+# Subtest: exact historical A survives unbinding and original availability is checked before codec acquisition
+ok 418 - exact historical A survives unbinding and original availability is checked before codec acquisition
+  ---
+  duration_ms: 198.515625
+  ...
+# Subtest: opening stages exact poster before awaiting originals and never calls Play or changes volume automatically
+ok 419 - opening stages exact poster before awaiting originals and never calls Play or changes volume automatically
+  ---
+  duration_ms: 43.400916
+  ...
+# Subtest: dialog forwards the live shared master across delayed opening and releases no host authority on close
+ok 420 - dialog forwards the live shared master across delayed opening and releases no host authority on close
+  ---
+  duration_ms: 65.320708
+  ...
+# Subtest: missing/corrupt movie keeps the already staged exact poster and gives finite recovery guidance
+ok 421 - missing/corrupt movie keeps the already staged exact poster and gives finite recovery guidance
+  ---
+  duration_ms: 1.006875
+  ...
+# Subtest: story loading and failure notices follow the active language without replacing focused Close or the exact poster
+ok 422 - story loading and failure notices follow the active language without replacing focused Close or the exact poster
+  ---
+  duration_ms: 2.108208
+  ...
+# Subtest: story preference-save failure uses the existing live localized error while playback ownership stays intact
+ok 423 - story preference-save failure uses the existing live localized error while playback ownership stays intact
+  ---
+  duration_ms: 30.020958
+  ...
+# Subtest: Close during delayed acquisition neutralizes input and prevents late presentation allocation
+ok 424 - Close during delayed acquisition neutralizes input and prevents late presentation allocation
+  ---
+  duration_ms: 0.540458
+  ...
+# Subtest: new context and external lifecycle abort cannot publish old or later resources
+ok 425 - new context and external lifecycle abort cannot publish old or later resources
+  ---
+  duration_ms: 30.6335
+  ...
+# Subtest: failed poster staging preserves current view; blur pauses ready story and hidden loading closes safely
+ok 426 - failed poster staging preserves current view; blur pauses ready story and hidden loading closes safely
+  ---
+  duration_ms: 28.991416
+  ...
+# Subtest: reentrant presentation allocation cancellation releases the returned view without a late success
+ok 427 - reentrant presentation allocation cancellation releases the returned view without a late success
+  ---
+  duration_ms: 29.4265
+  ...
+# Subtest: persisted pagehide releases the open presentation and permits explicit reopening after pageshow
+ok 428 - persisted pagehide releases the open presentation and permits explicit reopening after pageshow
+  ---
+  duration_ms: 52.631333
+  ...
+# Subtest: persisted pagehide cancels pending acquisition without publishing its late return after reopening
+ok 429 - persisted pagehide cancels pending acquisition without publishing its late return after reopening
+  ---
+  duration_ms: 0.820875
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+ok 430 - saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+  ---
+  duration_ms: 1513.528625
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+ok 431 - saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+  ---
+  duration_ms: 1456.141708
+  ...
+# Subtest: missing exact basis stays portable and editable without silently becoming latest Industrial
+ok 432 - missing exact basis stays portable and editable without silently becoming latest Industrial
+  ---
+  duration_ms: 539.483042
+  ...
+# Subtest: v1 native data remains exact and malformed or unversioned basis metadata is rejected
+ok 433 - v1 native data remains exact and malformed or unversioned basis metadata is rejected
+  ---
+  duration_ms: 537.503459
+  ...
+# Subtest: workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+ok 434 - workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+  ---
+  duration_ms: 584.587667
+  ...
+# Subtest: Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+ok 435 - Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+  ---
+  duration_ms: 178.807833
+  ...
+# Subtest: role inspector uses runtime semantics without inline paint or stealing selector focus
+ok 436 - role inspector uses runtime semantics without inline paint or stealing selector focus
+  ---
+  duration_ms: 637.1785
+  ...
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 437 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 208.2255
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 438 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 134.473666
+  ...
+# Subtest: retained and current context pins paint exact material bytes through every accessibility override
+ok 439 - retained and current context pins paint exact material bytes through every accessibility override
+  ---
+  duration_ms: 360.704375
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 440 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 11.193708
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 441 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 5.138083
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 442 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 638.141792
+  ...
+# Subtest: Neon gallery generators retain shared appearance and exact authored image references on regeneration
+ok 443 - Neon gallery generators retain shared appearance and exact authored image references on regeneration
+  ---
+  duration_ms: 20.832625
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 444 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 2.514167
+  ...
+# Subtest: current red Vyshyvanka has new exact interface/Arcade pins while the original bytes and SIM binding remain retained
+ok 445 - current red Vyshyvanka has new exact interface/Arcade pins while the original bytes and SIM binding remain retained
+  ---
+  duration_ms: 61.665833
+  ...
+# Subtest: Signal Blue keeps both earlier named revisions and its original identity
+ok 446 - Signal Blue keeps both earlier named revisions and its original identity
+  ---
+  duration_ms: 0.101833
+  ...
+# Subtest: new players start with Flight Deck while saved personal and community themes remain respected
+ok 447 - new players start with Flight Deck while saved personal and community themes remain respected
+  ---
+  duration_ms: 0.19575
+  ...
+# Subtest: each new family resolves complete interface, Arcade and SIM contracts with readable state pairs
+ok 448 - each new family resolves complete interface, Arcade and SIM contracts with readable state pairs
+  ---
+  duration_ms: 23.211875
+  ...
+# Subtest: new Arcade finishes are distinct, deterministic and leave alpha, dimensions and source pixels intact
+ok 449 - new Arcade finishes are distinct, deterministic and leave alpha, dimensions and source pixels intact
+  ---
+  duration_ms: 301.977667
+  ...
+# Subtest: dark additions retain dark reading surfaces and distinct complete SIM pixel libraries
+ok 450 - dark additions retain dark reading surfaces and distinct complete SIM pixel libraries
+  ---
+  duration_ms: 192.223667
+  ...
+# Subtest: new dark collections leave every previously installed exact interface, Arcade pixel and SIM material revision unchanged
+ok 451 - new dark collections leave every previously installed exact interface, Arcade pixel and SIM material revision unchanged
+  ---
+  duration_ms: 312.749084
+  ...
+# Subtest: finish variants follow exact interface bases independently of family without altering serialized assets
+ok 452 - finish variants follow exact interface bases independently of family without altering serialized assets
+  ---
+  duration_ms: 498.965041
+  ...
+# Subtest: actual game and standalone SIM hosts retain custom interface finish and clear it on independent override
+ok 453 - actual game and standalone SIM hosts retain custom interface finish and clear it on independent override
+  ---
+  duration_ms: 480.957125
+  ...
+# Subtest: first-paint custom finish uses a bounded style-compatible variant and retains old seed compatibility
+ok 454 - first-paint custom finish uses a bounded style-compatible variant and retains old seed compatibility
+  ---
+  duration_ms: 481.255416
+  ...
+# Subtest: Versus controller applies gallery choices without starting or replacing Ready
+ok 455 - Versus controller applies gallery choices without starting or replacing Ready
+  ---
+  duration_ms: 4765.451083
+  ...
+# Subtest: unavailable exact family revision reports EN/UK at the UI boundary without changing accepted presentation
+ok 456 - unavailable exact family revision reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 14.305125
+  ...
+# Subtest: failed stylesheet load reports EN/UK at the UI boundary without changing accepted presentation
+ok 457 - failed stylesheet load reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 5.432625
+  ...
+# Subtest: read-only preferences reports EN/UK at the UI boundary without changing accepted presentation
+ok 458 - read-only preferences reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 8.339792
+  ...
+# Subtest: denied appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+ok 459 - denied appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 7.392417
+  ...
+# Subtest: denied SIM appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+ok 460 - denied SIM appearance storage reports EN/UK at the UI boundary without changing accepted presentation
+  ---
+  duration_ms: 8.19775
+  ...
+# Subtest: unknown validator diagnostics remain exact instead of changing pure contract error text
+ok 461 - unknown validator diagnostics remain exact instead of changing pure contract error text
+  ---
+  duration_ms: 3.648333
+  ...
+# Subtest: all registered candidate families pin exact interface revisions and edited paired colors
+ok 462 - all registered candidate families pin exact interface revisions and edited paired colors
+  ---
+  duration_ms: 237.261292
+  ...
+# Subtest: original candidate envelopes retain their r1 interface after the builtin upgrade
+not ok 463 - original candidate envelopes retain their r1 interface after the builtin upgrade
+  ---
+  duration_ms: 269.952875
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/theme-preview.test.mjs:58:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'r3' !== 'r2'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'r2'
+  actual: 'r3'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/theme-preview.test.mjs:74:10)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: candidate preview and runtime interface derive the same source tokens with separate immutable identities
+ok 464 - candidate preview and runtime interface derive the same source tokens with separate immutable identities
+  ---
+  duration_ms: 338.198667
+  ...
+# Subtest: one bounded same-tab payload hands off the candidate once without touching player preferences
+ok 465 - one bounded same-tab payload hands off the candidate once without touching player preferences
+  ---
+  duration_ms: 96.75425
+  ...
+# Subtest: malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+ok 466 - malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+  ---
+  duration_ms: 96.678666
+  ...
+# Subtest: failed handoff preserves the previous usable candidate
+ok 467 - failed handoff preserves the previous usable candidate
+  ---
+  duration_ms: 102.262292
+  ...
+# Subtest: rendered-material fixture uses matched native control pairs without replacing runtime paint
+ok 468 - rendered-material fixture uses matched native control pairs without replacing runtime paint
+  ---
+  duration_ms: 3.929875
+  ...
+# Subtest: material semantic checks reject active disabled paint and a pressed danger recolored as selection
+ok 469 - material semantic checks reject active disabled paint and a pressed danger recolored as selection
+  ---
+  duration_ms: 3.751833
+  ...
+# Subtest: material close-up composes native player, Studio and tall-card surfaces without replacing paint
+ok 470 - material close-up composes native player, Studio and tall-card surfaces without replacing paint
+  ---
+  duration_ms: 0.780208
+  ...
+# Subtest: danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+ok 471 - danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+  ---
+  duration_ms: 31.594709
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 472 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 38.487375
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 473 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 2.5515
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 474 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 1.799875
+  ...
+# Subtest: ornaments Off suppresses texture for every installed family without removing semantic state cues
+ok 475 - ornaments Off suppresses texture for every installed family without removing semantic state cues
+  ---
+  duration_ms: 26.324584
+  ...
+# Subtest: shared material layers preserve semantic state colors and reset at every presentation scope
+ok 476 - shared material layers preserve semantic state colors and reset at every presentation scope
+  ---
+  duration_ms: 19.151333
+  ...
+# Subtest: authored and retained Industrial identities keep their own material capability for scoped recipes
+ok 477 - authored and retained Industrial identities keep their own material capability for scoped recipes
+  ---
+  duration_ms: 110.914958
+  ...
+# Subtest: decorative face recipes require their own enabled texture and contrast scope
+ok 478 - decorative face recipes require their own enabled texture and contrast scope
+  ---
+  duration_ms: 1.509041
+  ...
+# Subtest: gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+ok 479 - gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+  ---
+  duration_ms: 1.097875
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 480 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 1.809583
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 481 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 2.152583
+  ...
+# Subtest: custom interface identity retains its material recipe and restores the prior DOM lease
+ok 482 - custom interface identity retains its material recipe and restores the prior DOM lease
+  ---
+  duration_ms: 2.048417
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 483 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 0.696834
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 484 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.163959
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 485 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 8.423584
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 486 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 5.963125
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 487 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 1.748041
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 488 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 1.102125
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 489 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 2.406458
+  ...
+# Subtest: prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+ok 490 - prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+  ---
+  duration_ms: 19.466417
+  ...
+# Subtest: prepared context rejects stale highContrast intent and leaves the current context in charge
+ok 491 - prepared context rejects stale highContrast intent and leaves the current context in charge
+  ---
+  duration_ms: 6.639209
+  ...
+# Subtest: prepared context rejects stale arcadeArt intent and leaves the current context in charge
+ok 492 - prepared context rejects stale arcadeArt intent and leaves the current context in charge
+  ---
+  duration_ms: 6.589916
+  ...
+# Subtest: prepared context rejects an intervening different context or a disposed owner
+ok 493 - prepared context rejects an intervening different context or a disposed owner
+  ---
+  duration_ms: 7.827916
+  ...
+# Subtest: failed font preparation retains the exact accepted context and lets a later preparation recover
+ok 494 - failed font preparation retains the exact accepted context and lets a later preparation recover
+  ---
+  duration_ms: 8.103291
+  ...
+# Subtest: failed stylesheet preparation never adopts its requested context and the original context recovers
+ok 495 - failed stylesheet preparation never adopts its requested context and the original context recovers
+  ---
+  duration_ms: 5.475125
+  ...
+# Subtest: a late earlier refresh cannot overwrite a synchronously committed prepared context
+ok 496 - a late earlier refresh cannot overwrite a synchronously committed prepared context
+  ---
+  duration_ms: 7.427375
+  ...
+# Subtest: an old context family pin reaches Arcade unchanged and a later context uses its own revision
+ok 497 - an old context family pin reaches Arcade unchanged and a later context uses its own revision
+  ---
+  duration_ms: 5.907583
+  ...
+# Subtest: compact theme cards immediately apply complete choices without replacing focused controls
+ok 498 - compact theme cards immediately apply complete choices without replacing focused controls
+  ---
+  duration_ms: 21.4465
+  ...
+# Subtest: Follow, original Field Kit and curated revisions have complete cards and exact context/custom colors
+ok 499 - Follow, original Field Kit and curated revisions have complete cards and exact context/custom colors
+  ---
+  duration_ms: 339.166417
+  ...
+# Subtest: rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure
+ok 500 - rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure
+  ---
+  duration_ms: 26.124875
+  ...
+# Subtest: v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+ok 501 - v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+  ---
+  duration_ms: 5.363541
+  ...
+# Subtest: Signal Blue paints its advertised palette independently of old menu skins, while exact r1 stays legacy
+ok 502 - Signal Blue paints its advertised palette independently of old menu skins, while exact r1 stays legacy
+  ---
+  duration_ms: 13.317541
+  ...
+# Subtest: complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+ok 503 - complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+  ---
+  duration_ms: 0.393625
+  ...
+# Subtest: all installed Arcade treatments preserve native sprite coverage and source ownership
+ok 504 - all installed Arcade treatments preserve native sprite coverage and source ownership
+  ---
+  duration_ms: 298.063875
+  ...
+# Subtest: theme cache isolates all installed variants and retained Industrial history without touching original media
+ok 505 - theme cache isolates all installed variants and retained Industrial history without touching original media
+  ---
+  duration_ms: 3.802667
+  ...
+# Subtest: an already failed preload is replaced and fetched before the host accepts a theme
+ok 506 - an already failed preload is replaced and fetched before the host accepts a theme
+  ---
+  duration_ms: 4.449459
+  ...
+# Subtest: full effects: a legal win keeps its full picture after the celebration finishes
+ok 507 - full effects: a legal win keeps its full picture after the celebration finishes
+  ---
+  duration_ms: 15888.964417
+  ...
+# Subtest: reduced effects: a legal win keeps its full picture after the celebration finishes
+ok 508 - reduced effects: a legal win keeps its full picture after the celebration finishes
+  ---
+  duration_ms: 18154.460833
+  ...
+# Subtest: skipping the win animation settles the picture without opening results
+ok 509 - skipping the win animation settles the picture without opening results
+  ---
+  duration_ms: 14483.016375
+  ...
+# Subtest: held controller Confirm cannot skip the earned picture or activate its result action
+ok 510 - held controller Confirm cannot skip the earned picture or activate its result action
+  ---
+  duration_ms: 17348.865042
+  ...
+# Subtest: edited Studio theme survives two real compiled community entries and verified cache-only reload
+ok 511 - edited Studio theme survives two real compiled community entries and verified cache-only reload
+  ---
+  duration_ms: 19641.742541
+  ...
+# Subtest: actual runtime loader uses the image-element path for the exact embedded PNG and distinguishes decode failures
+ok 512 - actual runtime loader uses the image-element path for the exact embedded PNG and distinguishes decode failures
+  ---
+  duration_ms: 46.432958
+  ...
+# Subtest: stored kit regenerates exactly and passes the actual Khronos standards validator
+ok 513 - stored kit regenerates exactly and passes the actual Khronos standards validator
+  ---
+  duration_ms: 96.764625
+  ...
+# Subtest: gate marks stay outside their exact aperture; pad pixels retain quiet H/orientation and alpha envelope
+ok 514 - gate marks stay outside their exact aperture; pad pixels retain quiet H/orientation and alpha envelope
+  ---
+  duration_ms: 24.423958
+  ...
+# prune: Removed types... Primitive (3)
+# Subtest: existing world preparation preserves exact marking geometry and extracts no gameplay or collision authority
+ok 515 - existing world preparation preserves exact marking geometry and extracts no gameplay or collision authority
+  ---
+  duration_ms: 5131.204541
+  ...
+# Subtest: portable recoloring keeps geometry while exact missing dependencies and unsafe source metadata fail closed
+ok 516 - portable recoloring keeps geometry while exact missing dependencies and unsafe source metadata fail closed
+  ---
+  duration_ms: 31.997834
+  ...
+# Subtest: successor receipts require the exact retained predecessor and refuse changed stored output
+ok 517 - successor receipts require the exact retained predecessor and refuse changed stored output
+  ---
+  duration_ms: 71.298375
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 518 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 4046.954166
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 519 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 684.368333
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside unchanged runtime/source budgets
+ok 520 - actual FPV application, native notebook and installation launcher close inside unchanged runtime/source budgets
+  ---
+  duration_ms: 675.404833
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+ok 521 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 818.111
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 522 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 526.680417
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 523 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 737.406209
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 524 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.6575
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 525 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 669.657208
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 526 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 1.472333
+  ...
+# Subtest: .github/workflows/fastline-release.yml boots its publisher from only the declared sparse module closure
+ok 527 - .github/workflows/fastline-release.yml boots its publisher from only the declared sparse module closure
+  ---
+  duration_ms: 976.36175
+  ...
+# Subtest: .github/workflows/publish-frozen-pages.yml boots its publisher from only the declared sparse module closure
+ok 528 - .github/workflows/publish-frozen-pages.yml boots its publisher from only the declared sparse module closure
+  ---
+  duration_ms: 986.026833
+  ...
+# Subtest: texture inspection closes over actual bounded optional-package bytes and the retained GLB
+ok 529 - texture inspection closes over actual bounded optional-package bytes and the retained GLB
+  ---
+  duration_ms: 3338.248834
+  ...
+# Subtest: texture acceptance output names cannot escape the isolated fixture directory
+ok 530 - texture acceptance output names cannot escape the isolated fixture directory
+  ---
+  duration_ms: 0.38475
+  ...
+1..530
+# tests 542
+# suites 0
+# pass 540
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 327786.75775

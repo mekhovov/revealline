@@ -1,0 +1,1896 @@
+{
+  "schema": "OverflightProgressionParitySummaryV1",
+  "candidateCommit": "e708ce99f0fc930406c15233d89d5598360b366d",
+  "sourceStable": true,
+  "raw": "progression-parity-aggregate.json.gz",
+  "rawSHA256": "844ea8aebffdb483537abaf1d0864828aa2c94783afe5a7fc6d7fb7926a46c5a",
+  "constituentEvidence": [
+    {
+      "path": "progression-parity-final.json.gz",
+      "rawSHA256": "dc49b24fe2353416958b3eb38ea28e2fe1a4a644d4bc8a64f7961a3c6209273b",
+      "compressedSHA256": "dff690edaa60c95a88dc984b77811de7afea733990ae8f5177e2c2ea74bcceef",
+      "complete": false,
+      "wallSeconds": 313.306598834,
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "path": "progression-parity-case11.json.gz",
+      "rawSHA256": "e8ab748b3d88b768a98988f8019594fa4094228df3434029d085d9609959228d",
+      "compressedSHA256": "0fe8e76f574cf3c29b20ab9dfe2f58dd7c5378a23670c1ce23776aa3491f7b32",
+      "complete": true,
+      "wallSeconds": 29.697895874999997,
+      "indices": [
+        11
+      ]
+    }
+  ],
+  "operationalInterruption": "Initial process stopped on ENOSPC saving case11 baseline; last durable artifact retains completed cases0\u201310. Same locked case11 alone rerun after space recovered, no configuration or source changes. Interrupted original stays incomplete; aggregate is a union of independent runs, not one uninterrupted process.",
+  "baselineOutcomes": {
+    "won": 2,
+    "lost": 10
+  },
+  "plannedBranches": 48,
+  "availableBranches": 47,
+  "unattendedCompletionGates": {
+    "pass": 47,
+    "unavailable": 1
+  },
+  "actualCheckpointCoverage": {
+    "60": 12,
+    "120": 12,
+    "180": 12,
+    "240": 11
+  },
+  "actualModePolicyCoverage": {
+    "survivor/park": 2,
+    "survivor/heading-0": 2,
+    "survivor/heading-1": 2,
+    "survivor/heading-2": 3,
+    "riy/heading-3": 2,
+    "riy/heading-4": 3,
+    "riy/heading-5": 2,
+    "riy/heading-6": 3,
+    "survivor/heading-7": 2,
+    "survivor/straight-shuttle": 2,
+    "survivor/tiny-circle": 1,
+    "survivor/wall": 2,
+    "riy/orbit": 2,
+    "riy/park": 2,
+    "riy/heading-0": 1,
+    "riy/heading-1": 2,
+    "survivor/heading-3": 2,
+    "survivor/heading-4": 1,
+    "survivor/heading-5": 2,
+    "riy/heading-7": 2,
+    "riy/straight-shuttle": 1,
+    "riy/tiny-circle": 2,
+    "survivor/orbit": 1,
+    "riy/heading-2": 1,
+    "survivor/heading-6": 1,
+    "riy/wall": 1
+  },
+  "unavailable": [
+    {
+      "case": 6,
+      "checkpoint": 240,
+      "policy": "heading-0",
+      "reason": "Active baseline lost at 212.63333333333333s"
+    }
+  ],
+  "maximumContinuationSeconds": 66.03333333333333,
+  "longestSafeFarming": [
+    {
+      "case": 6,
+      "mode": "survivor",
+      "build": "fan",
+      "layout": "river-port-floodgate-yard",
+      "checkpoint": 60,
+      "policy": "wall",
+      "phase": "lost",
+      "time": 115.16666666666667,
+      "longestSafeFarming": {
+        "seconds": 39.75,
+        "kills": 260,
+        "collected": 199
+      }
+    },
+    {
+      "case": 7,
+      "mode": "riy",
+      "build": "echo",
+      "layout": "river-port-twin-docks",
+      "checkpoint": 60,
+      "policy": "heading-1",
+      "phase": "lost",
+      "time": 123.9,
+      "longestSafeFarming": {
+        "seconds": 28.233333333333334,
+        "kills": 59,
+        "collected": 1
+      }
+    },
+    {
+      "case": 11,
+      "mode": "riy",
+      "build": "fan",
+      "layout": "orchard-strongpoint-irrigation-courts",
+      "checkpoint": 180,
+      "policy": "heading-6",
+      "phase": "lost",
+      "time": 246.03333333333333,
+      "longestSafeFarming": {
+        "seconds": 24.23333333333335,
+        "kills": 151,
+        "collected": 3
+      }
+    },
+    {
+      "case": 7,
+      "mode": "riy",
+      "build": "echo",
+      "layout": "river-port-twin-docks",
+      "checkpoint": 180,
+      "policy": "heading-3",
+      "phase": "lost",
+      "time": 212.75,
+      "longestSafeFarming": {
+        "seconds": 21.200000000000017,
+        "kills": 52,
+        "collected": 2
+      }
+    },
+    {
+      "case": 11,
+      "mode": "riy",
+      "build": "fan",
+      "layout": "orchard-strongpoint-irrigation-courts",
+      "checkpoint": 120,
+      "policy": "heading-5",
+      "phase": "lost",
+      "time": 142.73333333333332,
+      "longestSafeFarming": {
+        "seconds": 20.53333333333333,
+        "kills": 17,
+        "collected": 8
+      }
+    }
+  ],
+  "baselineComparisons": [
+    {
+      "index": 0,
+      "world": "field-crossing",
+      "layout": "field-crossing-shelterbelt-gaps",
+      "mode": "survivor",
+      "seed": 101303,
+      "build": "fan",
+      "difficulty": "standard",
+      "airframes": 3,
+      "projectIdentity": "21487518b7f1b949",
+      "phase": "won",
+      "time": 321.0833333333333,
+      "choices": 10,
+      "previousPhase": "won",
+      "previousTime": 319.3833333333333,
+      "previousChoices": 10,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        23.483333333333334,
+        31.783333333333335,
+        42.18333333333333,
+        49.45,
+        81.53333333333333,
+        91.96666666666667,
+        117.08333333333333,
+        142.7,
+        196.05,
+        216.16666666666666
+      ],
+      "previousChoiceTimes": [
+        23.483333333333334,
+        31.783333333333335,
+        42.18333333333333,
+        49.45,
+        81.53333333333333,
+        91.96666666666667,
+        121.2,
+        164.5,
+        218.98333333333332,
+        258.4166666666667
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 142.7,
+          "toTime": 196.05,
+          "seconds": 53.35000000000002
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 164.5,
+          "toTime": 218.98333333333332,
+          "seconds": 54.48333333333332
+        }
+      ],
+      "lastChoiceToEnd": 104.91666666666666,
+      "final": {
+        "t": 321.0833333333333,
+        "x": 1394.8823172362181,
+        "y": 1000.2061896164604,
+        "heading": 2.356194490192345,
+        "hull": 100,
+        "lives": 2,
+        "kills": 3142,
+        "damage": 100,
+        "shield": 0,
+        "earned": 4347,
+        "collected": 3993,
+        "reachable": 337,
+        "sectors": 159,
+        "pattern": "formation-9",
+        "warningDeferrals": 329,
+        "motionDeferrals": 209
+      },
+      "stats": {
+        "kills": 3142,
+        "spawned": 3656,
+        "enemiesAlive": 514,
+        "enemiesVisible": 433,
+        "peakAlive": 687,
+        "peakVisible": 597,
+        "heaviesAlive": 0,
+        "specialistsAlive": 8,
+        "priorityAttacks": 0,
+        "damageDealt": 312675.6651952258,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 80,
+          "lane": 20,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 4347,
+        "xpCollected": 3993,
+        "xpOnGround": 354,
+        "pickupsAlive": 256,
+        "pickupMerges": 0,
+        "boostsUsed": 58,
+        "airframesLost": 1,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 169276,
+        "hits": 7324,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1497,
+        "armorSegmentsBroken": 471,
+        "warningDeferrals": 329,
+        "motionDeferrals": 209
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "side-burst",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "index": 1,
+      "world": "field-crossing",
+      "layout": "field-crossing-supply-orchard-edge",
+      "mode": "riy",
+      "seed": 303907,
+      "build": "echo",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "projectIdentity": "5a8f86c16fa89e54",
+      "phase": "lost",
+      "time": 243.6,
+      "choices": 9,
+      "previousPhase": "lost",
+      "previousTime": 166.08333333333334,
+      "previousChoices": 7,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        18.683333333333334,
+        35.05,
+        58.8,
+        69.1,
+        85.16666666666667,
+        101.71666666666667,
+        121.13333333333334,
+        169,
+        215.56666666666666
+      ],
+      "previousChoiceTimes": [
+        18.683333333333334,
+        35.05,
+        58.8,
+        69.1,
+        85.16666666666667,
+        101.71666666666667,
+        129.53333333333333
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 7,
+          "toChoice": 8,
+          "fromTime": 121.13333333333334,
+          "toTime": 169,
+          "seconds": 47.86666666666666
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 6,
+          "toChoice": 7,
+          "fromTime": 101.71666666666667,
+          "toTime": 129.53333333333333,
+          "seconds": 27.816666666666663
+        }
+      ],
+      "lastChoiceToEnd": 28.03333333333333,
+      "final": {
+        "t": 243.6,
+        "x": 1667.5121452198591,
+        "y": 984.7287316289616,
+        "heading": -1.832595714594046,
+        "hull": 0,
+        "lives": 0,
+        "kills": 1361,
+        "damage": 100,
+        "shield": 2,
+        "earned": 2135,
+        "collected": 1830,
+        "reachable": 247,
+        "sectors": 223,
+        "pattern": "formation-7",
+        "warningDeferrals": 296,
+        "motionDeferrals": 23
+      },
+      "stats": {
+        "kills": 1361,
+        "spawned": 2293,
+        "enemiesAlive": 932,
+        "enemiesVisible": 336,
+        "peakAlive": 932,
+        "peakVisible": 404,
+        "heaviesAlive": 1,
+        "specialistsAlive": 2,
+        "priorityAttacks": 0,
+        "damageDealt": 76490.15000000001,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 100,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 2,
+        "xpEarned": 2135,
+        "xpCollected": 1830,
+        "xpOnGround": 305,
+        "pickupsAlive": 225,
+        "pickupMerges": 0,
+        "boostsUsed": 44,
+        "airframesLost": 1,
+        "upgradesChosen": 9,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 110211,
+        "hits": 8143,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 606.9375,
+        "armorSegmentsBroken": 190,
+        "warningDeferrals": 296,
+        "motionDeferrals": 23
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 2
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "index": 2,
+      "world": "freight-depot",
+      "layout": "freight-depot-dispatch-junction",
+      "mode": "survivor",
+      "seed": 202604,
+      "build": "echo",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "projectIdentity": "a6cfa0ed01ac728a",
+      "phase": "lost",
+      "time": 317.56666666666666,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 330.4166666666667,
+      "previousChoices": 10,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        13.883333333333333,
+        25.65,
+        43.25,
+        63.166666666666664,
+        80.36666666666666,
+        109.25,
+        127.6,
+        150.55,
+        174.28333333333333,
+        227.33333333333334
+      ],
+      "previousChoiceTimes": [
+        13.883333333333333,
+        25.65,
+        43.25,
+        63.166666666666664,
+        80.36666666666666,
+        109.25,
+        133.66666666666666,
+        160.18333333333334,
+        234.18333333333334,
+        299.8
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 9,
+          "toChoice": 10,
+          "fromTime": 174.28333333333333,
+          "toTime": 227.33333333333334,
+          "seconds": 53.05000000000001
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 160.18333333333334,
+          "toTime": 234.18333333333334,
+          "seconds": 74.0
+        }
+      ],
+      "lastChoiceToEnd": 90.23333333333332,
+      "final": {
+        "t": 317.56666666666666,
+        "x": 1824.4749113114176,
+        "y": 52.37396287959185,
+        "heading": -2.879793265790644,
+        "hull": 0,
+        "lives": 0,
+        "kills": 2665,
+        "damage": 300,
+        "shield": 3,
+        "earned": 3558,
+        "collected": 3040,
+        "reachable": 518,
+        "sectors": 255,
+        "pattern": "formation-8",
+        "warningDeferrals": 301,
+        "motionDeferrals": 319
+      },
+      "stats": {
+        "kills": 2665,
+        "spawned": 3450,
+        "enemiesAlive": 785,
+        "enemiesVisible": 414,
+        "peakAlive": 820,
+        "peakVisible": 439,
+        "heaviesAlive": 3,
+        "specialistsAlive": 8,
+        "priorityAttacks": 0,
+        "damageDealt": 250947.59939549663,
+        "damageTaken": 300,
+        "damageCauses": {
+          "contact": 300,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 3,
+        "xpEarned": 3558,
+        "xpCollected": 3040,
+        "xpOnGround": 518,
+        "pickupsAlive": 450,
+        "pickupMerges": 0,
+        "boostsUsed": 48,
+        "airframesLost": 3,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 131302,
+        "hits": 11477,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1796.55,
+        "armorSegmentsBroken": 454,
+        "warningDeferrals": 301,
+        "motionDeferrals": 319
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "index": 3,
+      "world": "freight-depot",
+      "layout": "freight-depot-loading-loop",
+      "mode": "riy",
+      "seed": 101303,
+      "build": "systems",
+      "difficulty": "standard",
+      "airframes": 1,
+      "projectIdentity": "f2e6e5fb1be99dbd",
+      "phase": "lost",
+      "time": 241.68333333333334,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 248.06666666666666,
+      "previousChoices": 9,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        16.283333333333335,
+        33.233333333333334,
+        51.35,
+        63.483333333333334,
+        85.78333333333333,
+        98.23333333333333,
+        119.83333333333333,
+        146.68333333333334,
+        196.86666666666667,
+        224.88333333333333
+      ],
+      "previousChoiceTimes": [
+        16.283333333333335,
+        33.233333333333334,
+        51.35,
+        63.483333333333334,
+        85.78333333333333,
+        98.23333333333333,
+        124.75,
+        166.15,
+        217
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 146.68333333333334,
+          "toTime": 196.86666666666667,
+          "seconds": 50.18333333333334
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 166.15,
+          "toTime": 217,
+          "seconds": 50.849999999999994
+        }
+      ],
+      "lastChoiceToEnd": 16.80000000000001,
+      "final": {
+        "t": 241.68333333333334,
+        "x": 1295.998714047186,
+        "y": 235.41824244208965,
+        "heading": -1.570796326794897,
+        "hull": 0,
+        "lives": 0,
+        "kills": 1492,
+        "damage": 100,
+        "shield": 0,
+        "earned": 2364,
+        "collected": 2299,
+        "reachable": 65,
+        "sectors": 255,
+        "pattern": "formation-7",
+        "warningDeferrals": 106,
+        "motionDeferrals": 11
+      },
+      "stats": {
+        "kills": 1492,
+        "spawned": 1798,
+        "enemiesAlive": 306,
+        "enemiesVisible": 193,
+        "peakAlive": 487,
+        "peakVisible": 290,
+        "heaviesAlive": 0,
+        "specialistsAlive": 7,
+        "priorityAttacks": 0,
+        "damageDealt": 97384.19999999982,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 80,
+          "lane": 0,
+          "fan": 20,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 2364,
+        "xpCollected": 2299,
+        "xpOnGround": 65,
+        "pickupsAlive": 53,
+        "pickupMerges": 0,
+        "boostsUsed": 52,
+        "airframesLost": 1,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 48993,
+        "hits": 3156,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 617.5500000000001,
+        "armorSegmentsBroken": 124,
+        "warningDeferrals": 106,
+        "motionDeferrals": 11
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "index": 4,
+      "world": "relay-ruins",
+      "layout": "relay-ruins-split-compound",
+      "mode": "survivor",
+      "seed": 303907,
+      "build": "systems",
+      "difficulty": "standard",
+      "airframes": 1,
+      "projectIdentity": "b0e826834bbb6268",
+      "phase": "lost",
+      "time": 299.31666666666666,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 304.6333333333333,
+      "previousChoices": 10,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        24.683333333333334,
+        36.733333333333334,
+        51.1,
+        64.88333333333334,
+        76.11666666666666,
+        103.7,
+        129.16666666666666,
+        169.18333333333334,
+        194.08333333333334,
+        233.28333333333333
+      ],
+      "previousChoiceTimes": [
+        24.683333333333334,
+        36.733333333333334,
+        51.1,
+        64.88333333333334,
+        76.11666666666666,
+        103.7,
+        133.23333333333332,
+        181.63333333333333,
+        228.7,
+        275.26666666666665
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 7,
+          "toChoice": 8,
+          "fromTime": 129.16666666666666,
+          "toTime": 169.18333333333334,
+          "seconds": 40.01666666666668
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 7,
+          "toChoice": 8,
+          "fromTime": 133.23333333333332,
+          "toTime": 181.63333333333333,
+          "seconds": 48.400000000000006
+        }
+      ],
+      "lastChoiceToEnd": 66.03333333333333,
+      "final": {
+        "t": 299.31666666666666,
+        "x": 1202.3171062092028,
+        "y": 505.49596717425936,
+        "heading": -1.570796326794897,
+        "hull": 0,
+        "lives": 0,
+        "kills": 2421,
+        "damage": 100,
+        "shield": 0,
+        "earned": 3166,
+        "collected": 3150,
+        "reachable": 12,
+        "sectors": 126,
+        "pattern": "formation-9",
+        "warningDeferrals": 81,
+        "motionDeferrals": 176
+      },
+      "stats": {
+        "kills": 2421,
+        "spawned": 2810,
+        "enemiesAlive": 389,
+        "enemiesVisible": 319,
+        "peakAlive": 611,
+        "peakVisible": 507,
+        "heaviesAlive": 1,
+        "specialistsAlive": 8,
+        "priorityAttacks": 0,
+        "damageDealt": 222226.65851970366,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 80,
+          "lane": 20,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 3166,
+        "xpCollected": 3150,
+        "xpOnGround": 16,
+        "pickupsAlive": 14,
+        "pickupMerges": 0,
+        "boostsUsed": 55,
+        "airframesLost": 1,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 192631,
+        "hits": 5994,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1525.503622704351,
+        "armorSegmentsBroken": 411,
+        "warningDeferrals": 81,
+        "motionDeferrals": 176
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "index": 5,
+      "world": "relay-ruins",
+      "layout": "relay-ruins-receiver-gardens",
+      "mode": "riy",
+      "seed": 202604,
+      "build": "fan",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "projectIdentity": "08200dc0e73fe617",
+      "phase": "won",
+      "time": 397.3833333333333,
+      "choices": 10,
+      "previousPhase": "won",
+      "previousTime": 379.53333333333336,
+      "previousChoices": 10,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        20.483333333333334,
+        33.016666666666666,
+        59.43333333333333,
+        74.4,
+        89.78333333333333,
+        113.31666666666666,
+        137.46666666666667,
+        151.65,
+        175.01666666666668,
+        229.4
+      ],
+      "previousChoiceTimes": [
+        20.483333333333334,
+        33.016666666666666,
+        59.43333333333333,
+        74.4,
+        89.78333333333333,
+        113.31666666666666,
+        140.16666666666666,
+        164.25,
+        233.08333333333334,
+        266.8666666666667
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 9,
+          "toChoice": 10,
+          "fromTime": 175.01666666666668,
+          "toTime": 229.4,
+          "seconds": 54.383333333333326
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 164.25,
+          "toTime": 233.08333333333334,
+          "seconds": 68.83333333333334
+        }
+      ],
+      "lastChoiceToEnd": 167.98333333333332,
+      "final": {
+        "t": 397.3833333333333,
+        "x": 1866.295631599183,
+        "y": 446.8352292693927,
+        "heading": 0.2617993877991494,
+        "hull": 100,
+        "lives": 1,
+        "kills": 3962,
+        "damage": 200,
+        "shield": 5,
+        "earned": 5786,
+        "collected": 3578,
+        "reachable": 1442,
+        "sectors": 195,
+        "pattern": null,
+        "warningDeferrals": 524,
+        "motionDeferrals": 557
+      },
+      "stats": {
+        "kills": 3962,
+        "spawned": 4277,
+        "enemiesAlive": 315,
+        "enemiesVisible": 142,
+        "peakAlive": 986,
+        "peakVisible": 748,
+        "heaviesAlive": 1,
+        "specialistsAlive": 6,
+        "priorityAttacks": 0,
+        "damageDealt": 411254.900000004,
+        "damageTaken": 200,
+        "damageCauses": {
+          "contact": 200,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 5,
+        "xpEarned": 5786,
+        "xpCollected": 3578,
+        "xpOnGround": 2208,
+        "pickupsAlive": 1588,
+        "pickupMerges": 0,
+        "boostsUsed": 63,
+        "airframesLost": 2,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 111530,
+        "hits": 10142,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1654.500000000002,
+        "armorSegmentsBroken": 481,
+        "warningDeferrals": 524,
+        "motionDeferrals": 557,
+        "cachesClaimed": 1
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "index": 6,
+      "world": "river-port",
+      "layout": "river-port-floodgate-yard",
+      "mode": "survivor",
+      "seed": 101303,
+      "build": "fan",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "projectIdentity": "043435a3825cc883",
+      "phase": "lost",
+      "time": 212.63333333333333,
+      "choices": 9,
+      "previousPhase": "lost",
+      "previousTime": 214.43333333333334,
+      "previousChoices": 9,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        17.5,
+        31.85,
+        39.61666666666667,
+        49.63333333333333,
+        72.38333333333334,
+        94.2,
+        118.35,
+        147.33333333333334,
+        191.5
+      ],
+      "previousChoiceTimes": [
+        17.5,
+        31.85,
+        39.61666666666667,
+        49.63333333333333,
+        72.38333333333334,
+        94.2,
+        122.73333333333333,
+        159.76666666666668,
+        211.05
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 147.33333333333334,
+          "toTime": 191.5,
+          "seconds": 44.16666666666666
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 159.76666666666668,
+          "toTime": 211.05,
+          "seconds": 51.28333333333333
+        }
+      ],
+      "lastChoiceToEnd": 21.133333333333326,
+      "final": {
+        "t": 212.63333333333333,
+        "x": 568.5805955881775,
+        "y": 244.7455114612874,
+        "heading": -2.3561944901923457,
+        "hull": 0,
+        "lives": 0,
+        "kills": 1235,
+        "damage": 100,
+        "shield": 0,
+        "earned": 1877,
+        "collected": 1753,
+        "reachable": 114,
+        "sectors": 255,
+        "pattern": "formation-6",
+        "warningDeferrals": 73,
+        "motionDeferrals": 6
+      },
+      "stats": {
+        "kills": 1235,
+        "spawned": 1554,
+        "enemiesAlive": 319,
+        "enemiesVisible": 218,
+        "peakAlive": 319,
+        "peakVisible": 226,
+        "heaviesAlive": 0,
+        "specialistsAlive": 8,
+        "priorityAttacks": 0,
+        "damageDealt": 69181.90161337184,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 80,
+          "lane": 0,
+          "fan": 0,
+          "ground": 20
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 1877,
+        "xpCollected": 1753,
+        "xpOnGround": 124,
+        "pickupsAlive": 88,
+        "pickupMerges": 0,
+        "boostsUsed": 44,
+        "airframesLost": 1,
+        "upgradesChosen": 9,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 41821,
+        "hits": 1846,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 810,
+        "armorSegmentsBroken": 149,
+        "warningDeferrals": 73,
+        "motionDeferrals": 6
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "side-burst",
+            "rank": 2
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "index": 7,
+      "world": "river-port",
+      "layout": "river-port-twin-docks",
+      "mode": "riy",
+      "seed": 303907,
+      "build": "echo",
+      "difficulty": "standard",
+      "airframes": 3,
+      "projectIdentity": "0f3f2abd3c73b89d",
+      "phase": "lost",
+      "time": 304.75,
+      "choices": 9,
+      "previousPhase": "lost",
+      "previousTime": 311.1,
+      "previousChoices": 9,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        20.033333333333335,
+        32.78333333333333,
+        66.76666666666667,
+        80,
+        100.4,
+        119.26666666666667,
+        144.38333333333333,
+        191.7,
+        218.03333333333333
+      ],
+      "previousChoiceTimes": [
+        20.033333333333335,
+        32.78333333333333,
+        66.76666666666667,
+        80,
+        100.4,
+        119.26666666666667,
+        147.06666666666666,
+        207.95,
+        296.26666666666665
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 7,
+          "toChoice": 8,
+          "fromTime": 144.38333333333333,
+          "toTime": 191.7,
+          "seconds": 47.31666666666666
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 207.95,
+          "toTime": 296.26666666666665,
+          "seconds": 88.31666666666666
+        }
+      ],
+      "lastChoiceToEnd": 86.71666666666667,
+      "final": {
+        "t": 304.75,
+        "x": 1118.5175385898926,
+        "y": 276.37874060578457,
+        "heading": 0.2617993877991494,
+        "hull": 0,
+        "lives": 0,
+        "kills": 1744,
+        "damage": 300,
+        "shield": 5,
+        "earned": 2375,
+        "collected": 1841,
+        "reachable": 305,
+        "sectors": 255,
+        "pattern": "formation-9",
+        "warningDeferrals": 189,
+        "motionDeferrals": 35
+      },
+      "stats": {
+        "kills": 1744,
+        "spawned": 2878,
+        "enemiesAlive": 1134,
+        "enemiesVisible": 515,
+        "peakAlive": 1134,
+        "peakVisible": 575,
+        "heaviesAlive": 4,
+        "specialistsAlive": 8,
+        "priorityAttacks": 0,
+        "damageDealt": 165720.02500000002,
+        "damageTaken": 300,
+        "damageCauses": {
+          "contact": 300,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 5,
+        "xpEarned": 2375,
+        "xpCollected": 1841,
+        "xpOnGround": 534,
+        "pickupsAlive": 516,
+        "pickupMerges": 0,
+        "boostsUsed": 53,
+        "airframesLost": 3,
+        "upgradesChosen": 9,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 167481,
+        "hits": 17858,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 905.775,
+        "armorSegmentsBroken": 372,
+        "warningDeferrals": 189,
+        "motionDeferrals": 35,
+        "cachesClaimed": 2
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 2
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "index": 8,
+      "world": "chalk-quarry",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "mode": "survivor",
+      "seed": 202604,
+      "build": "echo",
+      "difficulty": "standard",
+      "airframes": 3,
+      "projectIdentity": "fc83348a421d8ebd",
+      "phase": "lost",
+      "time": 339.5,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 317.28333333333336,
+      "previousChoices": 10,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        17.75,
+        29.55,
+        51.63333333333333,
+        66.11666666666666,
+        87.68333333333334,
+        122.45,
+        146,
+        169.05,
+        236.4,
+        298.8833333333333
+      ],
+      "previousChoiceTimes": [
+        17.75,
+        29.55,
+        51.63333333333333,
+        66.11666666666666,
+        87.68333333333334,
+        122.45,
+        151.61666666666667,
+        195.55,
+        250.96666666666667,
+        313.25
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 169.05,
+          "toTime": 236.4,
+          "seconds": 67.35
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 9,
+          "toChoice": 10,
+          "fromTime": 250.96666666666667,
+          "toTime": 313.25,
+          "seconds": 62.28333333333333
+        }
+      ],
+      "lastChoiceToEnd": 40.616666666666674,
+      "final": {
+        "t": 339.5,
+        "x": 1801.3009281763975,
+        "y": 48.32269734825441,
+        "heading": 2.6179938779914944,
+        "hull": 0,
+        "lives": 0,
+        "kills": 3036,
+        "damage": 300,
+        "shield": 3,
+        "earned": 3976,
+        "collected": 2528,
+        "reachable": 1412,
+        "sectors": 240,
+        "pattern": "formation-9",
+        "warningDeferrals": 277,
+        "motionDeferrals": 143
+      },
+      "stats": {
+        "kills": 3036,
+        "spawned": 3674,
+        "enemiesAlive": 638,
+        "enemiesVisible": 218,
+        "peakAlive": 1002,
+        "peakVisible": 614,
+        "heaviesAlive": 2,
+        "specialistsAlive": 8,
+        "priorityAttacks": 0,
+        "damageDealt": 319631.25123932376,
+        "damageTaken": 300,
+        "damageCauses": {
+          "contact": 280,
+          "lane": 0,
+          "fan": 20,
+          "ground": 0
+        },
+        "shieldBlocks": 3,
+        "xpEarned": 3976,
+        "xpCollected": 2528,
+        "xpOnGround": 1448,
+        "pickupsAlive": 1227,
+        "pickupMerges": 0,
+        "boostsUsed": 53,
+        "airframesLost": 3,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 164810,
+        "hits": 14390,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1353.75,
+        "armorSegmentsBroken": 462,
+        "warningDeferrals": 277,
+        "motionDeferrals": 143
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "double",
+          "evolved": true
+        },
+        "combat": [
+          {
+            "id": "slow-field",
+            "rank": 3
+          },
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "shield",
+          "rank": 1
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "index": 9,
+      "world": "chalk-quarry",
+      "layout": "chalk-quarry-reclaimer-court",
+      "mode": "riy",
+      "seed": 101303,
+      "build": "systems",
+      "difficulty": "veteran",
+      "airframes": 1,
+      "projectIdentity": "c30627c643eeff1c",
+      "phase": "lost",
+      "time": 245.55,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 211.16666666666666,
+      "previousChoices": 8,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        18.45,
+        37.31666666666667,
+        51.15,
+        60.88333333333333,
+        90.38333333333334,
+        111.23333333333333,
+        129,
+        157.28333333333333,
+        197.58333333333334,
+        226.48333333333332
+      ],
+      "previousChoiceTimes": [
+        18.45,
+        37.31666666666667,
+        51.15,
+        60.88333333333333,
+        90.38333333333334,
+        111.23333333333333,
+        134.76666666666668,
+        176
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 157.28333333333333,
+          "toTime": 197.58333333333334,
+          "seconds": 40.30000000000001
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 7,
+          "toChoice": 8,
+          "fromTime": 134.76666666666668,
+          "toTime": 176,
+          "seconds": 41.23333333333332
+        }
+      ],
+      "lastChoiceToEnd": 19.06666666666669,
+      "final": {
+        "t": 245.55,
+        "x": 487.2048201886406,
+        "y": 616.3543785864329,
+        "heading": 0.26179938779914935,
+        "hull": 0,
+        "lives": 0,
+        "kills": 1688,
+        "damage": 100,
+        "shield": 0,
+        "earned": 2528,
+        "collected": 2242,
+        "reachable": 281,
+        "sectors": 251,
+        "pattern": "formation-7",
+        "warningDeferrals": 115,
+        "motionDeferrals": 44
+      },
+      "stats": {
+        "kills": 1688,
+        "spawned": 2112,
+        "enemiesAlive": 424,
+        "enemiesVisible": 182,
+        "peakAlive": 483,
+        "peakVisible": 264,
+        "heaviesAlive": 1,
+        "specialistsAlive": 1,
+        "priorityAttacks": 0,
+        "damageDealt": 112492.79999999965,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 100,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 2528,
+        "xpCollected": 2242,
+        "xpOnGround": 286,
+        "pickupsAlive": 183,
+        "pickupMerges": 0,
+        "boostsUsed": 45,
+        "airframesLost": 1,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 56310,
+        "hits": 3604,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 682.2,
+        "armorSegmentsBroken": 160,
+        "warningDeferrals": 115,
+        "motionDeferrals": 44
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      }
+    },
+    {
+      "index": 10,
+      "world": "orchard-strongpoint",
+      "layout": "orchard-strongpoint-glasshouse-ruins",
+      "mode": "survivor",
+      "seed": 303907,
+      "build": "systems",
+      "difficulty": "veteran",
+      "airframes": 3,
+      "projectIdentity": "62856716349df73d",
+      "phase": "lost",
+      "time": 320.98333333333335,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 356.0833333333333,
+      "previousChoices": 10,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        16.716666666666665,
+        28.6,
+        46.166666666666664,
+        58.583333333333336,
+        83.58333333333333,
+        98.01666666666667,
+        108.96666666666667,
+        135.78333333333333,
+        172.16666666666666,
+        198.51666666666668
+      ],
+      "previousChoiceTimes": [
+        16.716666666666665,
+        28.6,
+        46.166666666666664,
+        58.583333333333336,
+        83.58333333333333,
+        98.01666666666667,
+        115.35,
+        150.5,
+        191.65,
+        233.61666666666667
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 135.78333333333333,
+          "toTime": 172.16666666666666,
+          "seconds": 36.383333333333326
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 9,
+          "toChoice": 10,
+          "fromTime": 191.65,
+          "toTime": 233.61666666666667,
+          "seconds": 41.96666666666667
+        }
+      ],
+      "lastChoiceToEnd": 122.46666666666667,
+      "final": {
+        "t": 320.98333333333335,
+        "x": 2016.9862405089107,
+        "y": 502.96244138976726,
+        "heading": -1.3089969389957476,
+        "hull": 0,
+        "lives": 0,
+        "kills": 3112,
+        "damage": 315,
+        "shield": 0,
+        "earned": 4229,
+        "collected": 3946,
+        "reachable": 99,
+        "sectors": 255,
+        "pattern": "formation-10",
+        "warningDeferrals": 246,
+        "motionDeferrals": 467
+      },
+      "stats": {
+        "kills": 3112,
+        "spawned": 3675,
+        "enemiesAlive": 563,
+        "enemiesVisible": 255,
+        "peakAlive": 987,
+        "peakVisible": 500,
+        "heaviesAlive": 4,
+        "specialistsAlive": 5,
+        "priorityAttacks": 0,
+        "damageDealt": 286372.6724932789,
+        "damageTaken": 315,
+        "damageCauses": {
+          "contact": 315,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 4229,
+        "xpCollected": 3946,
+        "xpOnGround": 283,
+        "pickupsAlive": 209,
+        "pickupMerges": 0,
+        "boostsUsed": 72,
+        "airframesLost": 3,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 238764,
+        "hits": 8060,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1613.219073169908,
+        "armorSegmentsBroken": 483,
+        "warningDeferrals": 246,
+        "motionDeferrals": 467,
+        "cachesClaimed": 1
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      }
+    },
+    {
+      "index": 11,
+      "world": "orchard-strongpoint",
+      "layout": "orchard-strongpoint-irrigation-courts",
+      "mode": "riy",
+      "seed": 202604,
+      "build": "fan",
+      "difficulty": "standard",
+      "airframes": 1,
+      "projectIdentity": "017dda557be26c38",
+      "phase": "lost",
+      "time": 328.53333333333336,
+      "choices": 10,
+      "previousPhase": "lost",
+      "previousTime": 301.53333333333336,
+      "previousChoices": 9,
+      "firstSixChoicesExactlyUnchanged": true,
+      "choiceTimes": [
+        19.283333333333335,
+        34.583333333333336,
+        74.88333333333334,
+        77.73333333333333,
+        105.71666666666667,
+        124.5,
+        146.66666666666666,
+        162.31666666666666,
+        211.83333333333334,
+        246.71666666666667
+      ],
+      "previousChoiceTimes": [
+        19.283333333333335,
+        34.583333333333336,
+        74.88333333333334,
+        77.73333333333333,
+        105.71666666666667,
+        124.5,
+        148.21666666666667,
+        172.3,
+        238.41666666666666
+      ],
+      "largestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 162.31666666666666,
+          "toTime": 211.83333333333334,
+          "seconds": 49.51666666666668
+        }
+      ],
+      "previousLargestChoiceGap": [
+        {
+          "fromChoice": 8,
+          "toChoice": 9,
+          "fromTime": 172.3,
+          "toTime": 238.41666666666666,
+          "seconds": 66.11666666666665
+        }
+      ],
+      "lastChoiceToEnd": 81.81666666666669,
+      "final": {
+        "t": 328.53333333333336,
+        "x": 2315.9672621691675,
+        "y": 128.34723822458267,
+        "heading": -1.3089969389957476,
+        "hull": 0,
+        "lives": 0,
+        "kills": 2443,
+        "damage": 100,
+        "shield": 4,
+        "earned": 3352,
+        "collected": 2599,
+        "reachable": 486,
+        "sectors": 253,
+        "pattern": "formation-9",
+        "warningDeferrals": 128,
+        "motionDeferrals": 450
+      },
+      "stats": {
+        "kills": 2443,
+        "spawned": 3050,
+        "enemiesAlive": 607,
+        "enemiesVisible": 286,
+        "peakAlive": 789,
+        "peakVisible": 452,
+        "heaviesAlive": 1,
+        "specialistsAlive": 8,
+        "priorityAttacks": 2,
+        "damageDealt": 247152.30000000223,
+        "damageTaken": 100,
+        "damageCauses": {
+          "contact": 100,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 4,
+        "xpEarned": 3352,
+        "xpCollected": 2599,
+        "xpOnGround": 753,
+        "pickupsAlive": 577,
+        "pickupMerges": 0,
+        "boostsUsed": 58,
+        "airframesLost": 1,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 76983,
+        "hits": 6193,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1488.9,
+        "armorSegmentsBroken": 395,
+        "warningDeferrals": 128,
+        "motionDeferrals": 450
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "shield",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Balanced rotating dimension coverage; not exhaustive Cartesian or complete pairwise combinatorial coverage.",
+    "Build names are draft preferences; exact earned cards and builds are recorded, never injected.",
+    "Missing checkpoints are unavailable, interrupted/capped branches inconclusive; neither is a pass.",
+    "Policies continue unchanged after replacement and auto-resolve earned drafts; boost and Focus remain off.",
+    "Wall holds one initial direction toward the closest cover/boundary; destroyed cover may cease blocking it.",
+    "Tiny-circle/orbit are timed steering patterns, not teleportation or exact geometric routes after collisions.",
+    "Direct-path reachable salvage is a geometric lower bound; it does not establish safe reachability.",
+    "Active pilots and unattended losses do not establish ordinary-player difficulty, readability or enjoyment.",
+    "Headless gameplay evidence does not establish browser render cadence or native presentation quality."
+  ]
+}

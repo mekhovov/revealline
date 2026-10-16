@@ -1,0 +1,51 @@
+{
+  "baselineCommit": "0a3e1fb51",
+  "currentCommit": "c636724b368cc60063482b5b4c8da0e62af3df3a",
+  "method": "Same browser/device, same six representative board cases and identical gallery harness. Each board warmed, then 12 consecutive redraw calls measured. Two steady-state passes per button activation; three activations per viewport. Committed JavaScript dependency graphs served directly from Git to avoid stale service workers. Grayscale and collision overlays disabled. No gameplay RNG changes.",
+  "desktop": {
+    "viewport": [1280, 900],
+    "boards": 24,
+    "samplesPerPass": 288,
+    "baselineMedianP95Ms": [
+      [0.4, 0.7],
+      [0.4, 5.5],
+      [0.4, 0.5],
+      [0.4, 5.4],
+      [0.4, 0.5],
+      [0.4, 5.2]
+    ],
+    "currentMedianP95Ms": [
+      [0.1, 0.2],
+      [0.1, 0.1],
+      [0.1, 0.1],
+      [0.1, 0.1],
+      [0, 0.1],
+      [0, 0.1]
+    ]
+  },
+  "mobileViewport": {
+    "viewport": [320, 700],
+    "boards": 6,
+    "look": "living-circuit",
+    "samplesPerPass": 72,
+    "baselineMedianP95Ms": [
+      [0.4, 0.6],
+      [0.4, 5.3],
+      [0.3, 0.5],
+      [0.4, 5.3],
+      [0.3, 0.5],
+      [0.4, 5.4]
+    ],
+    "currentMedianP95Ms": [
+      [0.1, 0.2],
+      [0.1, 0.2],
+      [0.1, 0.2],
+      [0.1, 0.2],
+      [0.1, 0.2],
+      [0.1, 0.2]
+    ]
+  },
+  "limits": "Synchronous CPU redraw timing only; not GPU frame rate, battery usage, or physical-phone measurements. A displayed0.00ms is below this timer/rounding resolution, not zero work. Both baseline passes, including its recurring p95 spikes, are retained; no favourable run selection. The harness substitutes cache statistics with a neutral stub because main lacks the new stats export; memory evidence comes from the separate real-cache tests.",
+  "aggregateCachePixelBytes": 15843328,
+  "aggregateCachePixelMiB": 15.109375
+}

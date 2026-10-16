@@ -2,6 +2,8 @@ import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { inspectEditionZip } from './edition-zip.mjs';
 import { validateEditionId } from '../game/edition-context.mjs';
+import { assertCompanyPackageBudget } from '../game/editions/package-budget.mjs';
+import { validateCuratedAppearanceInventory } from '../game/presentation/theme-system.mjs';
 
 const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40,64}$/;
@@ -130,7 +132,7 @@ export function validatePublicSourceEligibility({ files, assets = [] } = {}) {
   }
   for (const name of files.keys())
     if (
-      /^(?:game\/(?:editions|company-campaigns)|authoring\/brands)\/.*\.(?:png|jpe?g|webp|svg|mp3|ogg|wav|mp4|ttf|otf|woff2?)$/i.test(
+      /^(?:game\/(?:editions|company-campaigns)|authoring\/brands)\/.*\.(?:png|jpe?g|webp|svg|mp3|ogg|wav|mp4|webm|vtt|txt|ttf|otf|woff2?)$/i.test(
         name,
       ) &&
       !seen.has(name)
@@ -148,6 +150,7 @@ const json = (bytes) => JSON.parse(new TextDecoder('utf-8', { fatal: true }).dec
  * executable campaign/compiler code into the trusted sparse publisher. The
  * compiler additionally validates each old campaign and presentation receipt. */
 export function editionPublicationAssets(catalog, files) {
+  validateCuratedAppearanceInventory(catalog, { selectedOnly: true });
   if (
     !Array.isArray(catalog?.assets) ||
     !Array.isArray(catalog.editions) ||
@@ -194,6 +197,7 @@ export function editionPublicationAssets(catalog, files) {
       const snapshot = json(bytes),
         old = snapshot.catalog,
         retained = old?.editions?.[0];
+      validateCuratedAppearanceInventory(old, { selectedOnly: true });
       const sameList = (left, right) =>
         Array.isArray(left) &&
         Array.isArray(right) &&
@@ -204,7 +208,11 @@ export function editionPublicationAssets(catalog, files) {
         snapshot.format !== 'revealline-edition-presentation.v1' ||
         snapshot.editionId !== edition.id ||
         snapshot.authoredPresentationSha256 !== descriptor.id ||
-        old?.format !== 'revealline-edition-catalog.v1' ||
+        ![
+          'revealline-edition-catalog.v1',
+          'revealline-edition-catalog.v2',
+          'revealline-edition-catalog.v3',
+        ].includes(old?.format) ||
         old.publication !== 'public' ||
         old.defaultEditionId !== edition.id ||
         old.editions?.length !== 1 ||
@@ -214,11 +222,14 @@ export function editionPublicationAssets(catalog, files) {
         retained?.id !== edition.id ||
         retained.presentationHistory?.length ||
         !['brandId', 'audience', 'publication'].every((key) => retained[key] === edition[key]) ||
-        !sameList(retained.campaignIds, edition.campaignIds) ||
+        !Array.isArray(retained.campaignIds) ||
+        !retained.campaignIds.length ||
+        new Set(retained.campaignIds).size !== retained.campaignIds.length ||
+        !retained.campaignIds.every((id) => edition.campaignIds.includes(id)) ||
         !sameList(retained.modes, edition.modes) ||
         !sameList(
           old.campaigns?.map((item) => item.id),
-          edition.campaignIds,
+          retained.campaignIds,
         ) ||
         old.campaigns.some(
           (item) => item.brandId !== edition.brandId || item.publication !== 'public',
@@ -232,6 +243,8 @@ export function editionPublicationAssets(catalog, files) {
           ...old.campaigns.flatMap((item) => [
             item.sourcePath,
             ...(item.lessonPath ? [item.lessonPath] : []),
+            ...(item.rewardPath ? [item.rewardPath] : []),
+            ...(item.localizationPath ? [item.localizationPath] : []),
           ]),
         ]),
         inline = new Map();
@@ -379,6 +392,7 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
     )
       fail('Source inventory has not passed public eligibility.');
     const counts = inventory(manifest);
+    assertCompanyPackageBudget(counts.files, counts.totalBytes, 'Published edition runtime');
     inventory(source);
     const runtime = inspectEditionZip(originals.distribution, [
       ...manifest.files,
@@ -408,7 +422,7 @@ export async function validateEditionAdmission(envelope, { read } = {}) {
         safePath(name);
         const validKind = {
           'selected-entry':
-            /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater)\/index\.html)$/.test(
+            /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater|snake)\/index\.html|snake\/play\.html)$/.test(
               name,
             ),
           'selected-locales': /^game\/i18n\/(?:catalogs|bootstrap|content-registry)\.mjs$/.test(

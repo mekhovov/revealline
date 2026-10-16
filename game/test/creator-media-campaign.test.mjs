@@ -374,3 +374,35 @@ test('private media source v2 roundtrips originals and exact choices through con
     /source assets|closure|missing/i,
   );
 });
+
+test('reconverted video retains its generated gameplay while runtime dependencies use new bytes', async () => {
+  const intake = await fixture({ videoOnly: 1 });
+  intake.items[0].sourceSha256 = '9'.repeat(64);
+  const before = creatorMediaCampaignInput(intake, settings);
+  const changed = structuredClone(intake),
+    replacement = new Blob(['new converted bytes']);
+  const previousHash = changed.items[0].assetSha256,
+    nextHash = await hash(replacement);
+  changed.items[0].assetSha256 = nextHash;
+  Object.assign(changed.items[0].video.video, { sha256: nextHash, bytes: replacement.size });
+  Object.assign(changed.dependencies.stories[0].video, {
+    sha256: nextHash,
+    bytes: replacement.size,
+  });
+  Object.assign(
+    changed.assets.find((asset) => asset.sha256 === previousHash),
+    {
+      sha256: nextHash,
+      blob: replacement,
+    },
+  );
+  const after = creatorMediaCampaignInput(changed, settings);
+  assert.deepEqual(after.content.project.maps, before.content.project.maps);
+  assert.deepEqual(after.content.project.missions, before.content.project.missions);
+  assert.deepEqual(after.content.provenance, before.content.provenance);
+  assert.equal(after.content.media.stories[0].video.sha256, nextHash);
+  assert.notEqual(
+    after.content.media.stories[0].video.sha256,
+    before.content.media.stories[0].video.sha256,
+  );
+});

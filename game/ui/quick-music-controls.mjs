@@ -1,3 +1,4 @@
+import { renderMusicCreatorLinks } from './music-credits.mjs';
 import { t, localizedText, localizedAttribute, onLocaleChange } from '../i18n/index.mjs';
 
 export const MUSIC_SHORTCUTS_KEY = 'revealline.music-shortcuts.v1';
@@ -60,30 +61,45 @@ export function attachQuickMusicControls({
     }
   };
   enabled = readPreference();
-  const rows = after.filter(Boolean).map((anchor, index) => {
-    const root = doc.createElement('div'),
-      title = doc.createElement('span'),
-      toggle = doc.createElement('button'),
-      skip = doc.createElement('button');
-    root.id = `${prefix}-quick-music-${index}`;
-    root.className = 'quick-music-controls';
-    root.setAttribute('role', 'group');
-    localizedAttribute(root, 'aria-label', () => t('interface:quickMusic.controls'));
-    title.className = 'quick-music-title';
-    toggle.id = `${root.id}-toggle`;
-    toggle.type = skip.type = 'button';
-    toggle.className = skip.className = 'button secondary';
-    skip.id = `${root.id}-next`;
-    localizedText(skip, () => t('interface:quickMusic.next'));
-    toggle.onclick = () => run('toggle');
-    skip.onclick = () => run('next');
-    root.append(title, toggle, skip);
-    anchor.after(root);
-    return { root, title, toggle, skip };
-  });
+  const couchTransport =
+    settingsRoot?.matches?.('[data-couch-music]') ||
+    settingsRoot?.querySelector?.('[data-couch-music]');
+  const rows = after
+    .filter(Boolean)
+    // Late soundtrack initialization must not add actions to a prepared landing.
+    // Keep pause/in-game anchors and the host's Audio transport unchanged.
+    .filter((anchor) => !settingsRoot || !anchor.closest?.('.native-landing'))
+    .filter((anchor) => !couchTransport || !['race-start', 'coop-start'].includes(anchor.id))
+    .map((anchor, index) => {
+      const root = doc.createElement('div'),
+        credit = doc.createElement('div'),
+        sources = doc.createElement('span'),
+        title = doc.createElement('span'),
+        toggle = doc.createElement('button'),
+        skip = doc.createElement('button');
+      root.id = `${prefix}-quick-music-${index}`;
+      root.className = 'quick-music-controls';
+      root.setAttribute('role', 'group');
+      localizedAttribute(root, 'aria-label', () => t('interface:quickMusic.controls'));
+      title.className = 'quick-music-title';
+      toggle.id = `${root.id}-toggle`;
+      toggle.type = skip.type = 'button';
+      toggle.className = skip.className = 'button secondary';
+      skip.id = `${root.id}-next`;
+      localizedText(skip, () => t('interface:quickMusic.next'));
+      toggle.onclick = () => run('toggle');
+      skip.onclick = () => run('next');
+      credit.className = 'quick-music-credit';
+      credit.append(title, sources);
+      root.append(credit, toggle, skip);
+      anchor.after(root);
+      return { root, title, sources, toggle, skip };
+    });
   let settingsTransport = null;
-  if (settingsRoot) {
+  if (settingsRoot && !couchTransport) {
     const root = doc.createElement('div'),
+      credit = doc.createElement('div'),
+      sources = doc.createElement('span'),
       title = doc.createElement('span'),
       back = doc.createElement('button'),
       toggle = doc.createElement('button'),
@@ -105,11 +121,13 @@ export function attachQuickMusicControls({
     back.onclick = () => run('previous');
     toggle.onclick = () => run('toggle');
     skip.onclick = () => run('next');
-    root.append(title, back, toggle, skip);
+    credit.className = 'quick-music-credit';
+    credit.append(title, sources);
+    root.append(credit, back, toggle, skip);
     const anchor = settingsRoot.querySelector('.micro-note');
     if (anchor) anchor.after(root);
     else settingsRoot.append(root);
-    settingsTransport = { root, title, back, toggle, skip };
+    settingsTransport = { root, title, sources, back, toggle, skip };
   }
   let details = null,
     checkbox = null,
@@ -166,11 +184,21 @@ export function attachQuickMusicControls({
               : t('interface:quickMusic.paused'));
     const song = state?.track
       ? `${state.track.title}${state.track.artist ? ` · ${state.track.artist}` : ''}`
-      : t('interface:selectedSoundtrack');
+      : t('interface:noTrackSelected');
+    for (const label of doc.querySelectorAll('[data-landing-song]')) {
+      renderMusicCreatorLinks(label, state?.track, {
+        document: doc,
+        label: () => song,
+        fallbackText: song,
+        maxLinks: 1,
+      });
+      label.title = song;
+    }
     for (const row of [...rows, ...(settingsTransport ? [settingsTransport] : [])]) {
       const title = `${song} · ${status}`;
       if (row.title.textContent !== title) row.title.textContent = title;
       row.title.setAttribute('title', title);
+      renderMusicCreatorLinks(row.sources, state?.track, { document: doc });
       row.toggle.textContent = pausable
         ? t('interface:quickMusic.pause')
         : t('interface:quickMusic.play');
@@ -262,6 +290,11 @@ export function attachQuickMusicControls({
   render();
   return Object.freeze({
     render,
+    perform: run,
+    available: (action) => {
+      const state = snapshot();
+      return !!state && (action !== 'next' || !!state.queue?.length);
+    },
     handlesKey: (event) => event.type === 'keydown' && Boolean(shortcut(event)),
     contains: (node) =>
       rows.some((row) => row.root.contains(node)) ||

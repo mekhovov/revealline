@@ -1,0 +1,72 @@
+{
+  "sourceRevision": "a2361327dfae9d78e63b3c0e0d51071056359781",
+  "origin": 9194,
+  "receiptUTC": "2026-10-15T19:08:39.021956+00:00",
+  "viewerSource": "939df428",
+  "scope": "Serial CUA source appearance review using matched frozen viewer and cameras. No flight, package or default Library admission.",
+  "observations": {
+    "sameCameraBeforeAfter": [
+      "summit-concourse-pilot-height",
+      "summit-station"
+    ],
+    "before": "Uniform bright snow through the open concourse",
+    "after": "Restrained grey hardstanding distinguishes the approach and meets the existing opaque wall bases; central flight gap stays visibly open",
+    "tiersInspected": [
+      "balanced concourse and overview",
+      "performance concourse",
+      "quality concourse"
+    ],
+    "beforeGeometryBytes": 767476,
+    "afterGeometryBytes": 769524,
+    "afterMeshes": 36,
+    "beforeMeshes": 34,
+    "sourceContract": "260 existing visual terrain triangles recoloured across two cells; no new texture pixels/collision/flight openings, all104 source cells retain their oriented geometry identities (separate source verifier)",
+    "releaseUI": "Resources released; no live scenery or collision.",
+    "allRendererTabsClosed": true
+  },
+  "acceptedBoundary": "Bounded source grounding and approach legibility only.",
+  "remaining": [
+    "source protected publication",
+    "separate immutable r5 delivery and exact player Library admission",
+    "full-world/all-angle/physical-device/final representative-art acceptance"
+  ],
+  "evidence": [
+    {
+      "path": "alpine-grounding-after-concourse-native-20261015.png",
+      "bytes": 93362,
+      "sha256": "f9438b020bd662dc7e17fb0cd5579aa031f848a01ec1b3124c98638543e4415e"
+    },
+    {
+      "path": "alpine-grounding-after-overview-native-20261015.png",
+      "bytes": 76163,
+      "sha256": "e20b8264c12e961c858c766bbb4104e6b154235985bc1418d4bed650ce880fc1"
+    },
+    {
+      "path": "alpine-grounding-before-concourse-native-20261015.png",
+      "bytes": 94137,
+      "sha256": "9b49b6e25756481c676ea8c0eb1cc557296339669bcb6b7c7d38be4b408ac327"
+    },
+    {
+      "path": "alpine-grounding-before-overview-native-20261015.png",
+      "bytes": 75196,
+      "sha256": "30fa522ff2375107aa957382806f28c5073939b645f42dad125feefef9094416"
+    },
+    {
+      "path": "alpine-grounding-performance-concourse-native-20261015.png",
+      "bytes": 93362,
+      "sha256": "f9438b020bd662dc7e17fb0cd5579aa031f848a01ec1b3124c98638543e4415e"
+    },
+    {
+      "path": "alpine-grounding-quality-concourse-native-20261015.png",
+      "bytes": 93362,
+      "sha256": "f9438b020bd662dc7e17fb0cd5579aa031f848a01ec1b3124c98638543e4415e"
+    },
+    {
+      "path": "alpine-grounding-released-native-20261015.txt",
+      "bytes": 845,
+      "sha256": "a92c93fd270ae66b692ff2f70b8c34d9fd9f24b5599db87ddbf77cd3d61f0765"
+    }
+  ],
+  "originalReceiptSHA256": "2d098ef102851947b3f1cae8af9f1ab498ee7dca491efa3c06e29f65f1f1eddb",
+  "publicCopyNormalization": "Private evidence directory removed from seven path values; filenames, sizes, hashes and observations retained. Original coordinator receipt remains preserved."
+}

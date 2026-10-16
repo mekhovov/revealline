@@ -1,0 +1,205 @@
+TAP version 13
+# Subtest: v4 preserves all prior roles, physics and identities until a carrier is explicitly authored
+ok 1 - v4 preserves all prior roles, physics and identities until a carrier is explicitly authored
+  ---
+  duration_ms: 348.1825
+  ...
+# Subtest: the shared compiler selects only carrier IDs in Solo and equal-board Versus for every preset
+ok 2 - the shared compiler selects only carrier IDs in Solo and equal-board Versus for every preset
+  ---
+  duration_ms: 159.092375
+  ...
+# Subtest: carrier CRUD cannot override front speeds and removing the final carrier removes only its opt-in contract
+ok 3 - carrier CRUD cannot override front speeds and removing the final carrier removes only its opt-in contract
+  ---
+  duration_ms: 168.537958
+  ...
+# Subtest: Studio, chooser and gameplay share a distinct static bolt; ordinary keepers keep their circle
+ok 4 - Studio, chooser and gameplay share a distinct static bolt; ordinary keepers keep their circle
+  ---
+  duration_ms: 35.20675
+  ...
+# Subtest: carrier projection rejects accessors and forged IDs without changing simulation
+ok 5 - carrier projection rejects accessors and forged IDs without changing simulation
+  ---
+  duration_ms: 15.969292
+  ...
+# Subtest: accessible field details distinguish carriers from immediate-damage keepers without relying on color
+ok 6 - accessible field details distinguish carriers from immediate-damage keepers without relying on color
+  ---
+  duration_ms: 15.916375
+  ...
+# Subtest: return-in-reserve: current global-v1 impact missions retain their existing pressure details
+ok 7 - return-in-reserve: current global-v1 impact missions retain their existing pressure details
+  ---
+  duration_ms: 54.83825
+  ...
+# Subtest: return-in-reserve: charge recovery still exposes already travelling impact fronts
+ok 8 - return-in-reserve: charge recovery still exposes already travelling impact fronts
+  ---
+  duration_ms: 22.654875
+  ...
+# Subtest: return-in-reserve: valid explicit v2 carrier-plus-pressure import describes both abilities
+ok 9 - return-in-reserve: valid explicit v2 carrier-plus-pressure import describes both abilities
+  ---
+  duration_ms: 26.25675
+  ...
+# Subtest: crossed-bands: current global-v1 impact missions retain their existing pressure details
+ok 10 - crossed-bands: current global-v1 impact missions retain their existing pressure details
+  ---
+  duration_ms: 40.437208
+  ...
+# Subtest: crossed-bands: charge recovery still exposes already travelling impact fronts
+ok 11 - crossed-bands: charge recovery still exposes already travelling impact fronts
+  ---
+  duration_ms: 20.454333
+  ...
+# Subtest: crossed-bands: valid explicit v2 carrier-plus-pressure import describes both abilities
+ok 12 - crossed-bands: valid explicit v2 carrier-plus-pressure import describes both abilities
+  ---
+  duration_ms: 29.230208
+  ...
+# Subtest: carrier without pressure and pressure without carrier preserve their existing output
+ok 13 - carrier without pressure and pressure without carrier preserve their existing output
+  ---
+  duration_ms: 0.655875
+  ...
+# Subtest: combined roles and carrier ability use the existing English and Ukrainian translations
+ok 14 - combined roles and carrier ability use the existing English and Ukrainian translations
+  ---
+  duration_ms: 0.757167
+  ...
+# Subtest: real Classic run preserves existing projections and required-objective contract without mutation
+ok 15 - real Classic run preserves existing projections and required-objective contract without mutation
+  ---
+  duration_ms: 8.082625
+  ...
+# Subtest: legacy lane phases follow actual engine state and seconds clock
+ok 16 - legacy lane phases follow actual engine state and seconds clock
+  ---
+  duration_ms: 11.153083
+  ...
+# Subtest: Classic lane phases follow actual engine state and seconds clock
+ok 17 - Classic lane phases follow actual engine state and seconds clock
+  ---
+  duration_ms: 14.990625
+  ...
+# Subtest: freeze holds the lane actor clock while simulation time and effect expiry continue
+ok 18 - freeze holds the lane actor clock while simulation time and effect expiry continue
+  ---
+  duration_ms: 14.156667
+  ...
+# Subtest: individual stun suppresses a lane without freezing its clock or recomputing its phase
+ok 19 - individual stun suppresses a lane without freezing its clock or recomputing its phase
+  ---
+  duration_ms: 9.624417
+  ...
+# Subtest: missing Classic projection and missing lane fields remain explicit unknown information
+ok 20 - missing Classic projection and missing lane fields remain explicit unknown information
+  ---
+  duration_ms: 1.123125
+  ...
+# Subtest: host states and terminal status survive unchanged; terminal countdowns are not live
+ok 21 - host states and terminal status survive unchanged; terminal countdowns are not live
+  ---
+  duration_ms: 1.568375
+  ...
+# Subtest: immediate: authored legal encounter route retains exact view and typed lane facts
+ok 22 - immediate: authored legal encounter route retains exact view and typed lane facts
+  ---
+  duration_ms: 63.458667
+  ...
+# Subtest: grid-center: authored legal encounter route retains exact view and typed lane facts
+ok 23 - grid-center: authored legal encounter route retains exact view and typed lane facts
+  ---
+  duration_ms: 41.48475
+  ...
+# Subtest: complete feedback preserves earlier danger and last shield caption without inventing life loss
+ok 24 - complete feedback preserves earlier danger and last shield caption without inventing life loss
+  ---
+  duration_ms: 1.416583
+  ...
+# Subtest: conditional cut-start has no fabricated caption; complete source events and repeated actors stay ordered
+ok 25 - conditional cut-start has no fabricated caption; complete source events and repeated actors stay ordered
+  ---
+  duration_ms: 0.374417
+  ...
+# Subtest: unknown typed events preserve complete explanations and raw facts even without a caption
+ok 26 - unknown typed events preserve complete explanations and raw facts even without a caption
+  ---
+  duration_ms: 0.715375
+  ...
+# Subtest: event roles are exact typed classifications, independent of prose or prototype keys
+ok 27 - event roles are exact typed classifications, independent of prose or prototype keys
+  ---
+  duration_ms: 0.545959
+  ...
+# Subtest: several engine ticks in one call retain identity; owner tokens are copied without inferring a new run
+ok 28 - several engine ticks in one call retain identity; owner tokens are copied without inferring a new run
+  ---
+  duration_ms: 0.651417
+  ...
+# Subtest: malformed ownership, event clocks and out-of-order warning observations are rejected
+ok 29 - malformed ownership, event clocks and out-of-order warning observations are rejected
+  ---
+  duration_ms: 1.477084
+  ...
+# Subtest: missing encounter deadline or actor clock cannot present an unexplained zero/NaN countdown
+ok 30 - missing encounter deadline or actor clock cannot present an unexplained zero/NaN countdown
+  ---
+  duration_ms: 2.005333
+  ...
+# Subtest: paused actors use the same seven role names as the guide and authoring catalogue
+ok 31 - paused actors use the same seven role names as the guide and authoring catalogue
+  ---
+  duration_ms: 9.0115
+  ...
+# Subtest: outer perimeter and changing frontier remain explicit even when the crawler is idle
+ok 32 - outer perimeter and changing frontier remain explicit even when the crawler is idle
+  ---
+  duration_ms: 1.0445
+  ...
+# Subtest: frontier patrolling guidance retains domain, counterplay and effect modifiers
+ok 33 - frontier patrolling guidance retains domain, counterplay and effect modifiers
+  ---
+  duration_ms: 0.289458
+  ...
+# Subtest: frontier rejoining guidance retains domain, counterplay and effect modifiers
+ok 34 - frontier rejoining guidance retains domain, counterplay and effect modifiers
+  ---
+  duration_ms: 0.154042
+  ...
+# Subtest: frontier idle guidance retains domain, counterplay and effect modifiers
+ok 35 - frontier idle guidance retains domain, counterplay and effect modifiers
+  ---
+  duration_ms: 0.175083
+  ...
+# Subtest: missing encounter guidance never invents a single linked relay
+ok 36 - missing encounter guidance never invents a single linked relay
+  ---
+  duration_ms: 0.438333
+  ...
+# Subtest: single-relay and ended encounter details do not advertise plural requirements or a live countdown
+ok 37 - single-relay and ended encounter details do not advertise plural requirements or a live countdown
+  ---
+  duration_ms: 0.535042
+  ...
+# Subtest: encounter phase clocks name the event, not an apparent mission deadline
+ok 38 - encounter phase clocks name the event, not an apparent mission deadline
+  ---
+  duration_ms: 0.766542
+  ...
+# Subtest: real Home route guidance follows three shields, transition, opening and defeat without mutating the run
+ok 39 - real Home route guidance follows three shields, transition, opening and defeat without mutating the run
+  ---
+  duration_ms: 737.498125
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2119.206708

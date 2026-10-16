@@ -157,8 +157,11 @@ export function creatorMediaCampaignInput(intake, sourceSettings) {
     bindings = [],
     wantedAssets = new Set();
   for (const [index, unit] of units.entries()) {
-    const seed = generationSeed(settings.seed, unit.kind, unit.item.assetSha256, index);
-    const missionId = `media-${index + 1}-${unit.item.assetSha256.slice(0, 12)}`;
+    // Poster/range review may remux the video. Keep its gameplay selection stable.
+    const sourceHash = unit.item.sourceSha256 ?? unit.item.assetSha256;
+    required(hashValid(sourceHash), 'A reviewed media item is missing its source identity.');
+    const seed = generationSeed(settings.seed, unit.kind, sourceHash, index);
+    const missionId = `media-${index + 1}-${sourceHash.slice(0, 12)}`;
     const generated = generateCreatorProject({
       id: missionId,
       name: settings.collectionName,

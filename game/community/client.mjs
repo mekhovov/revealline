@@ -115,6 +115,11 @@ export function validateCommunityEdition(source) {
         ? source.latestVersion
         : null,
     previewAvailable: source.previewAvailable === true,
+    ...(['classic', 'team', 'fpv', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(
+      source.family,
+    )
+      ? { family: source.family }
+      : {}),
   });
 }
 
@@ -146,7 +151,9 @@ export function validateCommunityReport(source) {
   required(UUID_V4.test(source.id), 'Report identity is invalid.');
   required(EDITION.test(source.editionId), 'Reported edition identity is invalid.');
   required(REPORT_REASONS.has(source.reason), 'Report reason is invalid.');
-  const details = plain(source.details, 'Report details', 2_000, { empty: true });
+  const details = plain(source.details, 'Report details', 2_000, {
+    empty: true,
+  });
   required(REPORT_STATES.has(source.status), 'Report status is invalid.');
   const createdAt = instant(source.createdAt, 'Report creation time');
   let resolvedAt = null;

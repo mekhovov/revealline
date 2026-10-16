@@ -1,0 +1,322 @@
+{
+  "format": "revealline-soundtrack-batch-metadata.v1",
+  "id": "metal-next-20260930",
+  "catalogue": {
+    "format": "revealline-soundtrack-catalogue.v2",
+    "edition": "originals-1",
+    "tracks": [
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.solar-storm",
+        "kind": "mp3",
+        "title": "Solar Storm",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "f970376312c518988ce53f963432c2bd86b039655a80ca0118a33bf2a3515fec",
+          "bytes": 7234081,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 8654,
+          "durationSeconds": 226.06367346938777
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Solar Storm by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/f970376312c518988ce53f963432c2bd86b039655a80ca0118a33bf2a3515fec.mp3",
+        "tags": { "genres": ["metal"], "role": "gameplay", "energy": 5, "themes": [] },
+        "archiveId": "metal-next-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.solar-storm",
+          "sha256": "f970376312c518988ce53f963432c2bd86b039655a80ca0118a33bf2a3515fec",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Solar Storm.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.galactic-battle",
+        "kind": "mp3",
+        "title": "Galactic Battle",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "263567383813e1cfa75952436e1eb9cbfa2556a73d60499da0cccb0a5f0c3343",
+          "bytes": 7243276,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 8665,
+          "durationSeconds": 226.35102040816327
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Galactic Battle by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/263567383813e1cfa75952436e1eb9cbfa2556a73d60499da0cccb0a5f0c3343.mp3",
+        "tags": { "genres": ["metal"], "role": "gameplay", "energy": 5, "themes": [] },
+        "archiveId": "metal-next-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.galactic-battle",
+          "sha256": "263567383813e1cfa75952436e1eb9cbfa2556a73d60499da0cccb0a5f0c3343",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Galactic Battle.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.orbital-assault",
+        "kind": "mp3",
+        "title": "Orbital Assault",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "89c01c9f646c48bd6a1656bfa45a4b5af28a766b1d5f155f104a7902f628b5d9",
+          "bytes": 5954290,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 7123,
+          "durationSeconds": 186.07020408163265
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Orbital Assault by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/89c01c9f646c48bd6a1656bfa45a4b5af28a766b1d5f155f104a7902f628b5d9.mp3",
+        "tags": { "genres": ["metal"], "role": "gameplay", "energy": 5, "themes": [] },
+        "archiveId": "metal-next-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.orbital-assault",
+          "sha256": "89c01c9f646c48bd6a1656bfa45a4b5af28a766b1d5f155f104a7902f628b5d9",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Orbital Assault.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/interstellar-vol2-edm-metal-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.mutilations-melody",
+        "kind": "mp3",
+        "title": "Mutilation's Melody",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "00bcd6d67615f6dfa51cd1e03361a3fc8de7a742aec1ca9336ed56bfe231228c",
+          "bytes": 4264899,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 5102,
+          "durationSeconds": 133.27673469387756
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Mutilation's Melody by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/00bcd6d67615f6dfa51cd1e03361a3fc8de7a742aec1ca9336ed56bfe231228c.mp3",
+        "tags": { "genres": ["metal"], "role": "gameplay", "energy": 5, "themes": [] },
+        "archiveId": "metal-next-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.mutilations-melody",
+          "sha256": "00bcd6d67615f6dfa51cd1e03361a3fc8de7a742aec1ca9336ed56bfe231228c",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Mutilation's Melody.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.bone-grinders-ballad",
+        "kind": "mp3",
+        "title": "Bone Grinder's Ballad",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "e8c8670b02b6322c19e37ac993a7713a631af93a0bb997a0ef9c1e75c926ea04",
+          "bytes": 4015795,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 4804,
+          "durationSeconds": 125.49224489795918
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Bone Grinder's Ballad by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/e8c8670b02b6322c19e37ac993a7713a631af93a0bb997a0ef9c1e75c926ea04.mp3",
+        "tags": { "genres": ["metal"], "role": "gameplay", "energy": 5, "themes": [] },
+        "archiveId": "metal-next-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.bone-grinders-ballad",
+          "sha256": "e8c8670b02b6322c19e37ac993a7713a631af93a0bb997a0ef9c1e75c926ea04",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Bone Grinder's Ballad.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/purgatory-vol-3-extreme-metal-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.city-limits-crash",
+        "kind": "mp3",
+        "title": "City Limits Crash",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "7cc21044e1c8b23b9e71af8bf5a9d143ca8de8b6e8898fe930bc78811493a442",
+          "bytes": 3330342,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 3984,
+          "durationSeconds": 104.07183673469387
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "City Limits Crash by David KBD. CC BY 4.0: https://creativecommons.org/licenses/by/4.0/. Source: https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack. Changes: normalized 256 kb/s MP3 from native OGG.",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/7cc21044e1c8b23b9e71af8bf5a9d143ca8de8b6e8898fe930bc78811493a442.mp3",
+        "tags": { "genres": ["metal"], "role": "gameplay", "energy": 5, "themes": [] },
+        "archiveId": "metal-next-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.city-limits-crash",
+          "sha256": "7cc21044e1c8b23b9e71af8bf5a9d143ca8de8b6e8898fe930bc78811493a442",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "City Limits Crash.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/reckless-vol-2-punk-metal-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      }
+    ]
+  },
+  "archive": {
+    "id": "metal-next-20260930",
+    "baseURL": "https://mekhovov.github.io/revealline-soundtracks/",
+    "inventorySha256": "9e92ce2757f17568ff9753be21f07268314490153520273eb2034ef06534c560",
+    "inventoryPath": "admissions/metal-next-20260930.json"
+  },
+  "collections": [
+    {
+      "id": "builtin.album.metal-next",
+      "title": "Metal — next review batch",
+      "description": "Six complete David KBD recordings; exact-recording owner approval and trusted admission remain pending.",
+      "genre": "metal",
+      "trackIds": [
+        "builtin.catalog.davidkbd.solar-storm",
+        "builtin.catalog.davidkbd.galactic-battle",
+        "builtin.catalog.davidkbd.orbital-assault",
+        "builtin.catalog.davidkbd.mutilations-melody",
+        "builtin.catalog.davidkbd.bone-grinders-ballad",
+        "builtin.catalog.davidkbd.city-limits-crash"
+      ],
+      "order": "shuffle",
+      "repeat": "all"
+    }
+  ]
+}

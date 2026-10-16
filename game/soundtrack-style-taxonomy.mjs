@@ -11,6 +11,10 @@ export const PUBLIC_SOUNDTRACK_STYLE_IDS = Object.freeze([
   'fpv',
 ]);
 
+export const DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS = Object.freeze(
+  PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) => !['ukrainian', 'fpv'].includes(style)),
+);
+
 const match = (tags, expression) => tags.some((tag) => expression.test(tag));
 
 export function publicSoundtrackStyles(tags = []) {
@@ -65,4 +69,27 @@ export function localGenresForPublicStyles(styles) {
     selected.has('other') && 'cinematic',
     selected.has('other') && 'acoustic',
   ].filter(Boolean);
+}
+
+export function publicSoundtrackStylesForLocalGenres(genres = []) {
+  const selected = new Set(genres);
+  if (
+    [
+      'synth90s',
+      'metal',
+      'electronic',
+      'chiptune',
+      'rock',
+      'ambient',
+      'cinematic',
+      'acoustic',
+      'ukrainian',
+    ].every((genre) => selected.has(genre))
+  )
+    return [...PUBLIC_SOUNDTRACK_STYLE_IDS];
+  return PUBLIC_SOUNDTRACK_STYLE_IDS.filter((style) => {
+    if (style === 'synth') return selected.has('synth90s');
+    if (style === 'other') return selected.has('cinematic') || selected.has('acoustic');
+    return selected.has(style);
+  });
 }

@@ -1,0 +1,20 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-story-focus",
+  "branch": "codex/p03-story-focus",
+  "head": "1167291e27773ef076ed64b6e06ba7c0339423a0",
+  "status": [
+    " M game/test/victory-story-ui.test.mjs",
+    " M game/ui/victory-story.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "2713877dee9394dfb29e631d54b8d9255d7e1c4f0ce1348aa3616ad24acaec53",
+      "bytes": 5069
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

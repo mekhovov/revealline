@@ -1,0 +1,227 @@
+{
+  "format": "FPVTenInchTargetBrowserVerification.v1",
+  "createdAt": "2026-10-02T01:32:14.646Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-10inch-proportions-verification/index.html",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Four independent three-blade props, four cyan arcs, no gray surrounds",
+      "passed": true
+    },
+    {
+      "name": "Projected prop diameter/frame diagonal equals254/420 within drawing rounding",
+      "passed": true,
+      "diagonal": 1.6405200816733831,
+      "radii": [
+        0.4962419600614953,
+        0.49628710795656195,
+        0.49615848032891036,
+        0.49621842824598517
+      ],
+      "ratios": [
+        0.604981268568578,
+        0.605036309522445,
+        0.6048794962909723,
+        0.6049525803302894
+      ],
+      "referenceRatio": 0.6047619047619047
+    },
+    {
+      "name": "Central body is long and slim, approximately5:1",
+      "passed": true,
+      "width": 0.20017814749225255,
+      "length": 1.0005112606991209,
+      "ratio": 4.99810430475606
+    },
+    {
+      "name": "Props retain alternating directions and correct signed command mix",
+      "passed": true,
+      "motors": [
+        {
+          "name": "front-left",
+          "power": 0.478,
+          "phase": 0,
+          "rotation": "cw"
+        },
+        {
+          "name": "front-right",
+          "power": 0.39,
+          "phase": 0,
+          "rotation": "ccw"
+        },
+        {
+          "name": "rear-left",
+          "power": 0.698,
+          "phase": 0,
+          "rotation": "ccw"
+        },
+        {
+          "name": "rear-right",
+          "power": 0.434,
+          "phase": 0,
+          "rotation": "cw"
+        }
+      ]
+    },
+    {
+      "name": "Exact repeated pose/target causes no SVG mutations",
+      "passed": true,
+      "changes": 0
+    },
+    {
+      "name": "Default target is hidden and co-located equal-height goal aligns with drone",
+      "passed": true
+    },
+    {
+      "name": "Measured translation moves target cue; velocity does not invent movement",
+      "passed": true
+    },
+    {
+      "name": "Yaw rotates world target while full attitude retains inversion",
+      "passed": true
+    },
+    {
+      "name": "Both gate axes produce actual aperture outline and center",
+      "passed": true
+    },
+    {
+      "name": "Landing cue aligns with actual minimum ground/surface height",
+      "passed": true
+    },
+    {
+      "name": "Far, behind-camera and near-plane targets stay bounded with direction arrows",
+      "passed": true,
+      "values": [
+        {
+          "type": "hold",
+          "center": {
+            "x": 1000,
+            "y": 2,
+            "z": 0
+          },
+          "screen": [
+            622,
+            198
+          ],
+          "distance": 1000,
+          "offscreen": true
+        },
+        {
+          "type": "hold",
+          "center": {
+            "x": -1000,
+            "y": 2,
+            "z": 0
+          },
+          "screen": [
+            18,
+            198
+          ],
+          "distance": 1000,
+          "offscreen": true
+        },
+        {
+          "type": "hold",
+          "center": {
+            "x": 0,
+            "y": 2,
+            "z": 1000
+          },
+          "screen": [
+            320,
+            298
+          ],
+          "distance": 1000,
+          "offscreen": true
+        },
+        {
+          "type": "hold",
+          "center": {
+            "x": 100,
+            "y": 1000,
+            "z": 5.5
+          },
+          "screen": [
+            336.8708576019281,
+            30
+          ],
+          "distance": 1003.0125871593037,
+          "offscreen": true
+        }
+      ]
+    },
+    {
+      "name": "In-place target revision updates same-tick cue and both localized labels",
+      "passed": true
+    },
+    {
+      "name": "Malformed and unsupported targets do not draw misleading cues",
+      "passed": true
+    },
+    {
+      "name": "Full Acro attitudes and heights fit the immersive central safe region",
+      "passed": true,
+      "poses": 624,
+      "bounds": {
+        "x0": 220.11,
+        "x1": 418.87,
+        "y0": 47.44,
+        "y1": 335.43
+      }
+    },
+    {
+      "name": "Actual browser layout1000×420 retains enlarged props",
+      "passed": true,
+      "airframe": {
+        "width": 186.2933349609375,
+        "height": 149.07666015625
+      },
+      "stage": {
+        "width": 886,
+        "height": 420
+      }
+    },
+    {
+      "name": "Actual browser layout667×300 retains enlarged props",
+      "passed": true,
+      "airframe": {
+        "width": 133.06671142578125,
+        "height": 106.4832763671875
+      },
+      "stage": {
+        "width": 667,
+        "height": 300
+      }
+    },
+    {
+      "name": "Actual browser layout360×540 retains enlarged props",
+      "passed": true,
+      "airframe": {
+        "width": 139.719970703125,
+        "height": 111.8074951171875
+      },
+      "stage": {
+        "width": 360,
+        "height": 540
+      }
+    },
+    {
+      "name": "Disposal removes the target cue and diagram together",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "sim-presentation.mjs": "b9a1682788576599c9cc3ca4fabea232154361d563832031f57f189b98fbe22b",
+    "math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "style.css": "eb388f40541cf1fb0ffc48f01e31cc77d3031ffbd46eee422d2bf841a9209fce"
+  },
+  "reference": {
+    "wheelbaseMillimeters": 420,
+    "propDiameterMillimeters": 254,
+    "source": "https://shop.iflight.com/product-cat123/XL10-V6-6S-Pro1974"
+  },
+  "limits": [
+    "Generic schematic dimensions; flight physics unchanged",
+    "No physical-radio, human acceptance or performance qualification"
+  ]
+}

@@ -12,6 +12,7 @@ import { metadataCustomLibrarySources } from '../mission-library/metadata-custom
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { createRun } from '../core/index.mjs';
 import { createDuel } from '../multiplayer.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
 
 const recipe = JSON.parse(
   await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
@@ -43,7 +44,14 @@ test('inspected Custom display identities exactly match genuinely prepared owner
   });
   source.campaigns.push(second);
   const metadata = await inspected([source]);
-  const { pack } = await preparePack(source);
+  const { pack } = await preparePack(source, {
+    // Node has no native Image; inspect the real raster rather than bypassing preparation.
+    decodeImage: async (dataUrl) => {
+      const image = inspectImageDataUrl(dataUrl);
+      assert.equal(image.valid, true);
+      return { naturalWidth: image.width, naturalHeight: image.height };
+    },
+  });
   const actual = createMissionLibrary(
     await customLibrarySources(
       [

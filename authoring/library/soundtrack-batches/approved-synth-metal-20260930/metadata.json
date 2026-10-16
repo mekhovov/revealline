@@ -1,0 +1,397 @@
+{
+  "format": "revealline-soundtrack-batch-metadata.v1",
+  "id": "approved-synth-metal-20260930",
+  "catalogue": {
+    "format": "revealline-soundtrack-catalogue.v2",
+    "edition": "originals-1",
+    "tracks": [
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.bogart-vgm.retroracing-nightlife",
+        "kind": "mp3",
+        "title": "Retroracing Nightlife",
+        "artist": "Bogart VGM",
+        "asset": {
+          "sha256": "24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70",
+          "bytes": 5199456,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 6220,
+          "durationSeconds": 162.4816326530612
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Music: Retroracing Nightlife by Bogart VGM (https://www.facebook.com/BogartVGM/). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+          "license": "CC BY 4.0 International",
+          "source": "https://opengameart.org/content/retroracing-nightlife"
+        },
+        "edition": "originals-1",
+        "path": "objects/24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70.mp3",
+        "tags": {
+          "genres": [
+            "synth90s"
+          ],
+          "role": "gameplay",
+          "energy": 5,
+          "themes": [
+            "racing",
+            "arcade",
+            "retro"
+          ]
+        },
+        "archiveId": "approved-synth-metal-20260930",
+        "policy": {
+          "id": "builtin.catalog.bogart-vgm.retroracing-nightlife",
+          "sha256": "24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Retroracing Nightlife.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://opengameart.org/content/retroracing-nightlife"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          {
+            "label": "Bogart VGM",
+            "url": "https://www.facebook.com/BogartVGM/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.agony-space-deep",
+        "kind": "mp3",
+        "title": "Agony Space-deep",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d",
+          "bytes": 9048860,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 10825,
+          "durationSeconds": 282.7755102040816
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Music: Agony Space-deep by David KBD (https://davidkbd.itch.io/eternity-metal-scfi-music-pack). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d.mp3",
+        "tags": {
+          "genres": [
+            "metal"
+          ],
+          "role": "intense",
+          "energy": 5,
+          "themes": [
+            "combat",
+            "industrial"
+          ]
+        },
+        "archiveId": "approved-synth-metal-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.agony-space-deep",
+          "sha256": "991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Agony Space-deep.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.god-of-darkness",
+        "kind": "mp3",
+        "title": "God of Darkness",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0",
+          "bytes": 6281970,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 7515,
+          "durationSeconds": 196.31020408163266
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Music: God of Darkness by David KBD (https://davidkbd.itch.io/eternity-metal-scfi-music-pack). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0.mp3",
+        "tags": {
+          "genres": [
+            "metal"
+          ],
+          "role": "intense",
+          "energy": 5,
+          "themes": [
+            "combat",
+            "industrial"
+          ]
+        },
+        "archiveId": "approved-synth-metal-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.god-of-darkness",
+          "sha256": "ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "God of Darkness.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.davidkbd.suffocation",
+        "kind": "mp3",
+        "title": "Suffocation",
+        "artist": "David KBD",
+        "asset": {
+          "sha256": "c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae",
+          "bytes": 6880488,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 8231,
+          "durationSeconds": 215.0138775510204
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Music: Suffocation by David KBD (https://davidkbd.itch.io/eternity-metal-scfi-music-pack). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+          "license": "CC BY 4.0 International",
+          "source": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack"
+        },
+        "edition": "originals-1",
+        "path": "objects/c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae.mp3",
+        "tags": {
+          "genres": [
+            "metal"
+          ],
+          "role": "intense",
+          "energy": 5,
+          "themes": [
+            "combat",
+            "industrial"
+          ]
+        },
+        "archiveId": "approved-synth-metal-20260930",
+        "policy": {
+          "id": "builtin.catalog.davidkbd.suffocation",
+          "sha256": "c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Suffocation.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.yannz.pixel-damnation",
+        "kind": "mp3",
+        "title": "Pixel Damnation",
+        "artist": "Yanni Ziangos (YannZ)",
+        "asset": {
+          "sha256": "a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde",
+          "bytes": 4302515,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 5147,
+          "durationSeconds": 134.4522448979592
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Music: Pixel Damnation by Yanni Ziangos a.k.a. YannZ. Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+          "license": "CC BY 4.0 International",
+          "source": "https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz"
+        },
+        "edition": "originals-1",
+        "path": "objects/a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde.mp3",
+        "tags": {
+          "genres": [
+            "metal"
+          ],
+          "role": "gameplay",
+          "energy": 5,
+          "themes": [
+            "combat",
+            "industrial"
+          ]
+        },
+        "archiveId": "approved-synth-metal-20260930",
+        "policy": {
+          "id": "builtin.catalog.yannz.pixel-damnation",
+          "sha256": "a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Pixel Damnation.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      },
+      {
+        "format": "revealline-audio-track.v1",
+        "id": "builtin.catalog.yannz.revenges-waiting",
+        "kind": "mp3",
+        "title": "Revenge's Waiting",
+        "artist": "Yanni Ziangos (YannZ)",
+        "asset": {
+          "sha256": "a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec",
+          "bytes": 1538133,
+          "mime": "audio/mpeg",
+          "mpegVersion": "1",
+          "sampleRate": 44100,
+          "channels": 2,
+          "frames": 1840,
+          "durationSeconds": 48.06530612244898
+        },
+        "rights": {
+          "kind": "licensed",
+          "credit": "Music: Revenge's Waiting by Yanni Ziangos a.k.a. YannZ. Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+          "license": "CC BY 4.0 International",
+          "source": "https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz"
+        },
+        "edition": "originals-1",
+        "path": "objects/a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec.mp3",
+        "tags": {
+          "genres": [
+            "metal"
+          ],
+          "role": "intense",
+          "energy": 5,
+          "themes": [
+            "boss",
+            "combat"
+          ]
+        },
+        "archiveId": "approved-synth-metal-20260930",
+        "policy": {
+          "id": "builtin.catalog.yannz.revenges-waiting",
+          "sha256": "a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec",
+          "webPlayback": "allowed",
+          "offlineCache": "allowed",
+          "redistribute": "allowed",
+          "modify": "allowed",
+          "gameplayVideo": "unknown",
+          "contentId": "unknown"
+        },
+        "fileName": "Revenge's Waiting.mp3",
+        "websites": [
+          {
+            "label": "Creator source and recording license",
+            "url": "https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz"
+          },
+          {
+            "label": "CC BY 4.0 International",
+            "url": "https://creativecommons.org/licenses/by/4.0/"
+          }
+        ]
+      }
+    ]
+  },
+  "archive": {
+    "id": "approved-synth-metal-20260930",
+    "baseURL": "https://mekhovov.github.io/revealline-soundtracks/",
+    "inventorySha256": "64f0e2ac28718af710fc20702519dfa171fe4020a56037242795027c8f1d5caa",
+    "inventoryPath": "admissions/approved-synth-metal-20260930.json"
+  },
+  "collections": [
+    {
+      "id": "builtin.album.approved.synthwave-electro",
+      "title": "Synthwave & Electro — approved",
+      "description": "Owner-approved racing synth. Other approved Synth recordings remain pending technical admission.",
+      "genre": "synth90s",
+      "trackIds": [
+        "builtin.catalog.bogart-vgm.retroracing-nightlife"
+      ],
+      "order": "shuffle",
+      "repeat": "all"
+    },
+    {
+      "id": "builtin.album.approved.metal",
+      "title": "Metal — approved",
+      "description": "Three Eternity tracks, Pixel Damnation and the short Revenge's Waiting boss cue.",
+      "genre": "metal",
+      "trackIds": [
+        "builtin.catalog.davidkbd.agony-space-deep",
+        "builtin.catalog.davidkbd.god-of-darkness",
+        "builtin.catalog.davidkbd.suffocation",
+        "builtin.catalog.yannz.pixel-damnation",
+        "builtin.catalog.yannz.revenges-waiting"
+      ],
+      "order": "shuffle",
+      "repeat": "all"
+    }
+  ]
+}

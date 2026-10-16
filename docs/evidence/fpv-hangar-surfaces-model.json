@@ -1,0 +1,86 @@
+{
+  "sourceSha256": "d6909d4bf9414b4bad1243caa84502649e7da1bdf488ce5cc06b0a5fb4111346",
+  "checks": [
+    {
+      "environment": "coast",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "quarry",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "rooftops",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "orchard",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "solar-farm",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "rail-depot",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "gym",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": null
+    },
+    {
+      "environment": "field",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "woodland",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "courtyard",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "warehouse",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "stadium",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "container-yard",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    },
+    {
+      "environment": "garage",
+      "geometryAndTransformsIdentical": true,
+      "nonHangarMaterialsAndUVsIdentical": true
+    }
+  ],
+  "worlds": 14,
+  "qualityResize": [128, 256, 512],
+  "pixel": {
+    "size": 64,
+    "nearest": true,
+    "anisotropy": 1
+  },
+  "hangarSurfaces": ["hangar-concrete", "painted-steel", "rubber"],
+  "scope": "CPU generated geometry/material verification; actual WebGL and visual acceptance pending",
+  "baselineRevision": "5d9411ba831800bc7f6ae763f46d9d4ea69fa8f7",
+  "qualification": "Direct geometry/material inspection; not browser, device FPS or art acceptance."
+}

@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: post-ready practice render failure latches, preserves native Return and allows a clean parent relaunch
+    # Subtest: failed child stops simulation, paint and flight input without calling the retired boot failure path
+    ok 1 - failed child stops simulation, paint and flight input without calling the retired boot failure path
+      ---
+      duration_ms: 773.505333
+      type: 'test'
+      ...
+    # Subtest: a deliberately fresh practice child is not poisoned by the previous latch
+    ok 2 - a deliberately fresh practice child is not poisoned by the previous latch
+      ---
+      duration_ms: 437.411125
+      type: 'test'
+      ...
+    1..2
+ok 1 - post-ready practice render failure latches, preserves native Return and allows a clean parent relaunch
+  ---
+  duration_ms: 1214.279542
+  type: 'test'
+  ...
+# Subtest: ordinary Solo render exceptions retain the existing propagation path
+ok 2 - ordinary Solo render exceptions retain the existing propagation path
+  ---
+  duration_ms: 745.148541
+  type: 'test'
+  ...
+1..2
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2136.804

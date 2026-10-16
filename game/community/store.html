@@ -1,20 +1,76 @@
 <!doctype html>
-<html lang="en" data-community-api="/">
+<html lang="en" data-community-api="/" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script
+      src="../presentation/theme-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <title data-i18n="interface:community.pageTitle">Community campaigns · RevealLine</title>
     <link rel="stylesheet" href="./community.css" />
-    <script type="module" src="./page.mjs"></script>
+    <script
+      src="./page.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../ui/support-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </head>
   <body>
     <div data-language-control></div>
     <header>
-      <a href="../" data-i18n="interface:community.backToRevealLine">← RevealLine</a
+      <a href="../" data-support-return data-i18n="interface:community.backToRevealLine"
+        >← RevealLine</a
       ><a href="../creator/" data-i18n="interface:community.createCampaign">Create a campaign</a>
       <span data-i18n="interface:community.freeCampaigns">Free community campaigns</span>
     </header>
@@ -161,7 +217,7 @@
         </p>
         <label
           ><span data-i18n="interface:community.approvedPack">Approved pack</span>
-          <input id="publish-file" type="file" accept=".rlpack"
+          <input id="publish-file" type="file" accept=".rlpack,.rlsnake,.rlteam,.json"
         /></label>
         <label
           ><span data-i18n="interface:community.title">Title</span>

@@ -87,7 +87,8 @@
       "pathPatterns": [
         "^scripts/(content-inventory|content-artwork-screening|artwork-screening)\\.mjs$",
         "^game/content-design/content-lifecycle\\.mjs$",
-        "^game/test/(content-lifecycle|artwork-screening)\\.test\\.mjs$"
+        "^game/test/(content-lifecycle|artwork-screening)\\.test\\.mjs$",
+        "^scripts/(test-)?company-artwork-screening\\.mjs$"
       ],
       "commands": [
         {
@@ -96,7 +97,24 @@
           "args": [
             "--test",
             "game/test/content-lifecycle.test.mjs",
-            "game/test/artwork-screening.test.mjs"
+            "game/test/artwork-screening.test.mjs",
+            "scripts/test-company-artwork-screening.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-content-inventory",
+      "pathPatterns": ["^scripts/(test-)?company-content-inventory\\.mjs$"],
+      "commands": [
+        {
+          "id": "company-content-inventory",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-company-content-inventory.mjs",
+            "game/test/edition-retained-presentation.test.mjs",
+            "game/test/edition-profile-compatibility.test.mjs"
           ]
         }
       ]
@@ -187,7 +205,7 @@
       "pathPatterns": [
         "^game/(?:team|navigation)/",
         "^game/couch/(?!coop-(?:picture-bindings|presentation)\\.mjs$)",
-        "^game/test/.*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
+        "^game/test/(?!solo-result-continuation-host\\.test\\.mjs$).*(couch|team|navigation|pause|result).*\\.test\\.mjs$"
       ],
       "commands": [
         {
@@ -197,9 +215,11 @@
             "--test",
             "game/test/couch-navigation.test.mjs",
             "game/test/couch-composite-menu-navigation.test.mjs",
+            "game/test/mission-library-controller-host.test.mjs",
             "game/test/content-team-navigation.test.mjs",
             "game/test/controller-navigation.test.mjs"
-          ]
+          ],
+          "timeoutMs": 1200000
         }
       ]
     },
@@ -208,6 +228,12 @@
       "pathPatterns": [
         "^publishing/",
         "^scripts/(build-pages|pages-archive|pages-current-entry)\\.mjs$",
+        "^scripts/test-pages-(?:capacity|archive)-evidence\\.mjs$",
+        "^scripts/pages-(?:capacity|archive)-evidence\\.py$",
+        "^scripts/(pages-recovery\\.py|test-pages-recovery\\.mjs)$",
+        "^scripts/(?:test-)?pages-capacity-report\\.mjs$",
+        "^scripts/(?:write-main-pages-metadata|test-main-pages-metadata)\\.mjs$",
+        "^scripts/(?:test-)?pages-candidate-[a-z-]+\\.(?:mjs|py)$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -221,15 +247,17 @@
             "publishing/fastline-release-inputs.test.mjs",
             "publishing/fastline-release-objects.test.mjs",
             "publishing/fastline-release-publisher.test.mjs",
-            "publishing/test-policy.test.mjs",
-            "publishing/pages-controller/archive-authority.test.mjs",
-            "publishing/pages-controller/assemble.test.mjs",
-            "publishing/pages-controller/metadata.test.mjs",
-            "publishing/pages-controller/public-byte-audit.test.mjs",
-            "publishing/pages-controller/release-asset.test.mjs",
-            "publishing/pages-controller/release-policy.test.mjs",
-            "publishing/pages-controller/release-train-boundary.test.mjs",
-            "publishing/pages-controller/workflow.test.mjs"
+            "publishing/source-workflow.test.mjs",
+            "scripts/test-pages-capacity-evidence.mjs",
+            "scripts/test-pages-archive-evidence.mjs",
+            "scripts/test-pages-recovery.mjs",
+            "scripts/test-pages-capacity-report.mjs",
+            "scripts/test-main-pages-metadata.mjs",
+            "scripts/test-pages-candidate-contract.mjs",
+            "scripts/test-pages-candidate-overlay.mjs",
+            "scripts/test-pages-candidate-archive.mjs",
+            "scripts/test-pages-candidate-measurement.mjs",
+            "publishing/test-policy.test.mjs"
           ]
         }
       ]
@@ -260,7 +288,8 @@
         {
           "id": "company-runtime-and-publication",
           "command": "npm",
-          "args": ["run", "company:test"]
+          "args": ["run", "company:test"],
+          "timeoutMs": 2700000
         },
         {
           "id": "company-review-measurements",
@@ -330,6 +359,29 @@
           ]
         }
       ]
+    },
+    {
+      "id": "journey-star-compatibility",
+      "pathPatterns": [
+        "^game/journey/(profile|stars)\\.mjs$",
+        "^game/mission-library/(journey-source|creator-source)\\.mjs$",
+        "^game/test/journey-stars\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "journey-star-compatibility",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/journey-stars.test.mjs",
+            "game/test/journey-backup.test.mjs",
+            "game/test/journey-pictures.test.mjs",
+            "game/test/journey-profile-editions.test.mjs",
+            "game/test/journey.test.mjs",
+            "game/test/creator-bundle.test.mjs"
+          ]
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
@@ -341,7 +393,8 @@
     {
       "id": "unknown-runtime-validate",
       "command": "npm",
-      "args": ["run", "validate"]
+      "args": ["run", "validate"],
+      "timeoutMs": 1800000
     }
   ]
 }

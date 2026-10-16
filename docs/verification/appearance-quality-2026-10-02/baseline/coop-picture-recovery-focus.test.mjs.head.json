@@ -1,0 +1,104 @@
+{
+  "file": "game/test/coop-picture-recovery-focus.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-picture-recovery-focus.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 21.5,
+  "failures": [
+    {
+      "test": "failed picture \u2192 Retry \u2192 pending Cancel is visible at 844\u00d7390 without starting a flight",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:64:3",
+      "detail": "\n  ---\n  duration_ms: 172.466459\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:64:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n    + []\n    - [\n    -   {\n    -     active: 'coop-picture-retry',\n    -     id: 'coop-picture-retry',\n    -     level: 'relay-yard',\n    -     options: {\n    -       behavior: 'instant',\n    -       block: 'nearest',\n    -       inline: 'nearest'\n    -     }\n    -   }\n    - ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0:\n      id: 'coop-picture-retry'\n      options:\n        block: 'nearest'\n        inline: 'nearest'\n        behavior: 'instant'\n      active: 'coop-picture-retry'\n      level: 'relay-yard'\n  actual:\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:75:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "failed picture \u2192 Retry \u2192 pending Cancel is visible at 390\u00d7844 without starting a flight",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:64:3",
+      "detail": "\n  ---\n  duration_ms: 60.289\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:64:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n    + []\n    - [\n    -   {\n    -     active: 'coop-picture-retry',\n    -     id: 'coop-picture-retry',\n    -     level: 'relay-yard',\n    -     options: {\n    -       behavior: 'instant',\n    -       block: 'nearest',\n    -       inline: 'nearest'\n    -     }\n    -   }\n    - ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0:\n      id: 'coop-picture-retry'\n      options:\n        block: 'nearest'\n        inline: 'nearest'\n        behavior: 'instant'\n      active: 'coop-picture-retry'\n      level: 'relay-yard'\n  actual:\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:75:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:110:1",
+      "detail": "\n  ---\n  duration_ms: 59.351458\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:110:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'preparing'\n    - 'cancelled'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'cancelled'\n  actual: 'preparing'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:116:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a failed picture can be replaced by a different arena through the real selector",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:137:1",
+      "detail": "\n  ---\n  duration_ms: 79.055167\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:137:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + ''\n    - 'coop-picture-cancel'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'coop-picture-cancel'\n  actual: ''\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:145:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer focus-then-body inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 52.563375\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer settings inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 52.225708\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer blur-return inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 52.794458\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer hidden-return inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 51.500584\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer pagehide inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 60.46275\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer pointer-intent inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 50.663875\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "direct Retry reveal respects newer key-intent inside its focus callback",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:188:3",
+      "detail": "\n  ---\n  duration_ms: 62.538125\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:188:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:216:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "same-scope arena replacement during Retry geometry retires the old direct handoff",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:223:1",
+      "detail": "\n  ---\n  duration_ms: 5048.856334\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:223:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. '\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:238:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a pending reveal exception cannot prevent the real picture read or later recovery",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:251:1",
+      "detail": "\n  ---\n  duration_ms: 5061.636291\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:251:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. '\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:268:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a completion reveal exception leaves explicit Retry usable",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:276:1",
+      "detail": "\n  ---\n  duration_ms: 50.758459\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:276:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:285:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "newer focus during pending Cancel remains authoritative even after returning to BODY",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:295:1",
+      "detail": "\n  ---\n  duration_ms: 5056.374709\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:295:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. '\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:314:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "a fresh Retry retires all temporary focus observers after either terminal outcome",
+      "location": "/privategame/test/coop-picture-recovery-focus.test.mjs:327:1",
+      "detail": "\n  ---\n  duration_ms: 5068.324875\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:327:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. '\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-recovery-focus.test.mjs:357:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 18",
+    "# pass 2",
+    "# fail 16",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 21473.344125"
+  ]
+}

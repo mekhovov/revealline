@@ -1,5 +1,9 @@
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
 import {
+  OVERFLIGHT_FIELD_KIT_IDS,
+  overflightFieldKitArt,
+} from '../../game/presentation/overflight-field-kit-art.mjs';
+import {
   TEAM_OUTCOME_SLOTS,
   drawTeamOutcomeBadge,
 } from '../../game/couch/coop-outcome-presentation.mjs';
@@ -21,7 +25,9 @@ import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
 import { assetStudioErrorMessage, assetStudioErrorText } from './error-copy.mjs';
+import { isStudioActorSlot, studioActorCanvas } from './actor-resources.mjs';
 import {
+  croppedImage,
   playerRecipePreview,
   boardContextPreview,
   audioRecipePreview,
@@ -56,7 +62,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     state = 'default',
     statusTarget,
     cancelButton,
-    label = t('tools:assetPreview'),
+    label = () => t('tools:assetPreview'),
     isCurrent: hostCurrent = () => true,
     audioMaster = null,
     motionPreferences = null,
@@ -160,6 +166,22 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       await prepareFont(fontAsset, fontBlob, resolved);
       if (!isCurrent()) return;
     }
+    if (OVERFLIGHT_FIELD_KIT_IDS.includes(slot.id) && asset.kind === 'recipe') {
+      const pixels = overflightFieldKitArt(slot.id);
+      const canvas = document.createElement('canvas');
+      canvas.width = pixels.width;
+      canvas.height = pixels.height;
+      const ctx = canvas.getContext('2d');
+      const data = ctx.createImageData(pixels.width, pixels.height);
+      data.data.set(pixels.rgba);
+      ctx.putImageData(data, 0, 0);
+      canvas.style.imageRendering = 'pixelated';
+      canvas.style.width = mode === 'native' ? '16px' : '192px';
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', slot.label);
+      surface.append(canvas);
+      return;
+    }
     if (TEAM_OUTCOME_SLOTS.includes(slot.id)) {
       if (mode === 'context' && fieldMode !== 'team')
         throw new Error(t('tools:teamOutcomesUseCouchTeamContextChooseItsActualEvent'));
@@ -232,6 +254,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     const blob = asset.file && blobs.get(asset.file.sha256);
     if (asset.file && !blob) {
       throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
+    }
+    if (
+      asset.kind === 'audio' &&
+      (slot.id.startsWith('audio.destroy-') || slot.id.startsWith('audio.human-reaction-'))
+    ) {
+      audioRecipePreview(surface, slot, own, { audioMaster, readAudio: async () => ({ blob }) });
+      return;
     }
     if (asset.kind === 'audio') {
       phase(() => t('tools:studio.preview.loadingAudioMetadata'), 'decoding');
@@ -647,16 +676,27 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (asset.kind === 'image') {
       phase(() => t('tools:studio.preview.decodingImage'), 'decoding');
-      const bitmap = await createImageBitmap(blob);
+      const actor = isStudioActorSlot(slot.id),
+        actorOptions = { ...options, slotId: slot.id },
+        bitmap = actor
+          ? await croppedImage(asset, blobs, actorOptions, own)
+          : await createImageBitmap(blob);
       if (!isCurrent()) {
-        bitmap.close();
+        if (!actor) bitmap.close();
         return;
       }
       const frame = asset.geometry.frame,
-        canvas = document.createElement('canvas');
-      const contextual = mode === 'context';
-      canvas.width = contextual ? 320 : frame.width;
-      canvas.height = contextual ? 200 : frame.height;
+        contextual = mode === 'context',
+        width = contextual ? 320 : frame.width,
+        height = contextual ? 200 : frame.height,
+        canvas = actor
+          ? await studioActorCanvas(width, height, actorOptions, own)
+          : document.createElement('canvas');
+      if (!isCurrent()) return;
+      if (!actor) {
+        canvas.width = width;
+        canvas.height = height;
+      }
       localizedAttribute(canvas, 'aria-label', () =>
         t('tools:studio.preview.imageLabel', { slot: slot.label, mode }),
       );
@@ -668,8 +708,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       if (contextual) field(ctx, palette);
       ctx.drawImage(
         bitmap,
-        frame.x,
-        frame.y,
+        actor && !asset.animation ? 0 : frame.x,
+        actor && !asset.animation ? 0 : frame.y,
         frame.width,
         frame.height,
         x,
@@ -677,7 +717,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         frame.width * scale,
         frame.height * scale,
       );
-      bitmap.close();
+      if (!actor) bitmap.close();
       if (mode === 'alpha') {
         const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
         for (let at = 0; at < pixels.data.length; at += 4) {
@@ -780,6 +820,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         }),
       state: 'error',
     });
+    surface.previewCleanup(true);
     surface.replaceChildren(text('p', assetStudioErrorMessage(error), '', 'body'));
     if (cancelButton) {
       localizedText(cancelButton, () => t('common:preview.retry'));
@@ -790,7 +831,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (isCurrent()) {
       surface.setAttribute('aria-busy', 'false');
       if (!failed) {
-        lease?.finish({ message: `${label}: ${asset ? 'ready.' : t('tools:noAssetBound')}` });
+        lease?.finish({
+          message: () =>
+            t('tools:studio.preview.status', {
+              label: valueOf(label),
+              message: asset ? t('common:status.ready') : t('tools:noAssetBound'),
+            }),
+        });
         if (cancelButton) cancelButton.hidden = true;
       }
     }

@@ -1,0 +1,43 @@
+{
+  "format": "FPVCreatorInstallEvidence.v1",
+  "runtimeRevision": "5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28",
+  "fixtureCommit": "7ef511522",
+  "fixtureSHA256": "c813b541b3967ff33b5630c7905f459ba4da7b9a51d59b2008709e1bc175da97",
+  "checks": 254,
+  "controlChecksPassed": true,
+  "issues": [
+    "Committed installation followed by aborted refresh reports Flight storage failed",
+    "Postcommit generation-read abort leaves stale generation; ordinary retry aborts with generation-conflict"
+  ],
+  "files": [
+    {
+      "path": "fpv-creator-install-8957-diagnostic.json.gz",
+      "bytes": 83049,
+      "sha256": "8d8aae5456a05138f64fdc5fd32ff72d7fc58eb954d755ef40a7ce60c582bbf7",
+      "originalBytes": 1311673,
+      "originalSHA256": "dd835ff3fe4a82ea50bdc39d2624103bdae9b8f14fba00b03bebb7ee2f48bea1"
+    },
+    {
+      "path": "fpv-creator-install-8957-summary.json.gz",
+      "bytes": 642,
+      "sha256": "236359d206bb27ebd44be29f993cc8680123196c9f2e8546e7781e7b90cca2d4",
+      "originalBytes": 1737,
+      "originalSHA256": "22862d185451496a4227793b03864cd78ef19792f77a36ef45ac89a9794f7180"
+    },
+    {
+      "path": "fpv-creator-install-8957-diagnostic.png",
+      "bytes": 58599,
+      "sha256": "05a4d57d2f7cf3583c095bf5d620deb180f0d72fc50a26d3871384419111dd12",
+      "originalBytes": 58599,
+      "originalSHA256": "05a4d57d2f7cf3583c095bf5d620deb180f0d72fc50a26d3871384419111dd12"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 8398,
+      "sha256": "368a9c25f04efb37429b4a5145bc16f267e71045d5d80df666f0d973d049a600",
+      "originalBytes": 45941,
+      "originalSHA256": "c813b541b3967ff33b5630c7905f459ba4da7b9a51d59b2008709e1bc175da97"
+    }
+  ],
+  "restore": "gzip -dc FILE.json.gz restores exact original bytes; verify originalSHA256"
+}

@@ -1,0 +1,5 @@
+PASS global grid endpoints and exact local-origin limits for terrain, populated and empty scenery
+PASS bounded lattice, unchanged vertex/index counts, normals and mixed-size rejection
+PASS six negative-coordinate windows: far-half support, obstacle contact, cross-cell sweep, bounds and atomic retention/disposal
+PASS both actual flight modes at negative 16.384 km origin, explicit arming and pause
+{"wideCellContinuous":true,"cellSizeMm":256000,"ticks":4013,"recentres":3,"contacts":0,"position":{"x":-15851970,"y":11756,"z":6000}}

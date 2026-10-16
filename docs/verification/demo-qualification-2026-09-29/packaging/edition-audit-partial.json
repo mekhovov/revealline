@@ -1,0 +1,1344 @@
+{
+  "kind": "partial current-development-edition-packaging-qualification",
+  "complete": false,
+  "failedEdition": "droneaid-nl-community",
+  "failure": "64 MiB offline budget exceeded; see dutch-budget-failure.json",
+  "verifiedAt": "2026-09-29T02:21:02.739988+00:00",
+  "version": "0.142.3",
+  "releaseAdmitted": false,
+  "published": false,
+  "nativeStagingPerformed": false,
+  "sourceFiles": 1068,
+  "sourceChanges": [],
+  "editionCount": 7,
+  "requiredPathsPerEdition": 36,
+  "exactSourceOfflineReadbacks": 252,
+  "byteLimit": 67108864,
+  "largest": "coupa-all",
+  "largestOfflineBytes": 62208310,
+  "editions": [
+    {
+      "id": "coupa-all",
+      "offlineBytes": 62208310,
+      "offlineFiles": 655,
+      "offlineManifestSha256": "5944b4e691525c020fbf9376689ab4aa10a09681bd7cd0712d7624322670c5cd",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    },
+    {
+      "id": "coupa-adventure",
+      "offlineBytes": 28319756,
+      "offlineFiles": 622,
+      "offlineManifestSha256": "bf21cb48cd496677c024d126b2c1c34d9edae0cdc68a92890a534a3bc69f1b7e",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    },
+    {
+      "id": "coupa-culture",
+      "offlineBytes": 26769945,
+      "offlineFiles": 623,
+      "offlineManifestSha256": "8e12fcbb35545395867e1679e899f54d52570e9a6ae3ba0a0c926a19f8e326cf",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    },
+    {
+      "id": "coupa-foundations",
+      "offlineBytes": 29197580,
+      "offlineFiles": 624,
+      "offlineManifestSha256": "ce13c5efff8a2fa443f9ed1e778e83c339350aeed50c366545203146e2c849f9",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    },
+    {
+      "id": "coupa-operations",
+      "offlineBytes": 28343329,
+      "offlineFiles": 624,
+      "offlineManifestSha256": "81f4d3ec28b9fbac7a9378c859a2f10388d120bb5b2f4fe7c6719503204d64f2",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    },
+    {
+      "id": "coupa-developers",
+      "offlineBytes": 30168705,
+      "offlineFiles": 624,
+      "offlineManifestSha256": "d85389071c04bda456abd761ec8905944049e26603fe9a98196da1d34c289555",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    },
+    {
+      "id": "droneaid-community",
+      "offlineBytes": 27548211,
+      "offlineFiles": 617,
+      "offlineManifestSha256": "83773fc4d1aa83238b3819170223563d4ac9b2ce2217372d19402884be0cbacd",
+      "requiredExactChecks": [
+        {
+          "path": "game/demo-bot-worker.mjs",
+          "bytes": 530,
+          "sha256": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837"
+        },
+        {
+          "path": "game/demo-bot-player.mjs",
+          "bytes": 13337,
+          "sha256": "b9d063345b3955479e928060af90d8cfdb67638cede1f298ccf671751bf4f23b"
+        },
+        {
+          "path": "game/demo-catalog.mjs",
+          "bytes": 8573,
+          "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+        },
+        {
+          "path": "game/demo-library.mjs",
+          "bytes": 10298,
+          "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+        },
+        {
+          "path": "game/demo-sources.mjs",
+          "bytes": 3500,
+          "sha256": "268687b1ebffe50e3d04805930a9bef4ee128c3f78dce2b1a8236b9d4bc8abcc"
+        },
+        {
+          "path": "game/demo-director.mjs",
+          "bytes": 7203,
+          "sha256": "bdc47d3d1bc9c3e85f13d7f05a5a4ce1eddcde97a3351f47e8e2ca9a585cd299"
+        },
+        {
+          "path": "game/demo-experience.mjs",
+          "bytes": 4928,
+          "sha256": "9aeba930a9ac21cad7d8c06cf2bec8b92963395ec34386e2936eb12423a93313"
+        },
+        {
+          "path": "game/ui/demo-audio.mjs",
+          "bytes": 8677,
+          "sha256": "dad3e3d0d8f73770085b57ca99b31448b405703fdb22c2c02e5ceb1ed31ed635"
+        },
+        {
+          "path": "game/ui/demo-clock.mjs",
+          "bytes": 5747,
+          "sha256": "229eba68e1008996acc2bd8a4b2dd1bf086b86c0f0535a0ac9aace76b61d1c67"
+        },
+        {
+          "path": "game/ui/demo-input.mjs",
+          "bytes": 15224,
+          "sha256": "f107ab3c30e63c4a336938292983d4f04d3fa965ecedaf8845b596a9a07f4301"
+        },
+        {
+          "path": "game/ui/demo-host.mjs",
+          "bytes": 24312,
+          "sha256": "0183b2823a3ac8c8b20a6e18e1ac05e52e727385237106b11f89648cfc000ad7"
+        },
+        {
+          "path": "game/ui/demo-picture.mjs",
+          "bytes": 13010,
+          "sha256": "7f777a827d244249ac1b76d56df6e7df4e9b652cd060fb59e37ad4a7a877553f"
+        },
+        {
+          "path": "game/ui/demo-fullscreen.mjs",
+          "bytes": 3316,
+          "sha256": "3a1e17e2a43519a54d90b2545a034c0e7288314bd285b81fd8129bf1ea045198"
+        },
+        {
+          "path": "game/ui/demo.css",
+          "bytes": 5609,
+          "sha256": "a99acc0c869a7b44b318e42058b1fb7b16b448bb572540e47050c5d46e2a671d"
+        },
+        {
+          "path": "game/ui/analog-signal.mjs",
+          "bytes": 3162,
+          "sha256": "8bcbc2ac85c8ded6f0a34d2866ee99b8467ec5dec05dbb0874ac75c4564a7d75"
+        },
+        {
+          "path": "game/ui/signal-reception.mjs",
+          "bytes": 9548,
+          "sha256": "3560400ff9ad5c890a38f4418b2ca45e0e703a3e739e1d81bc219c88e56f27eb"
+        },
+        {
+          "path": "game/ui/jammer-picture.mjs",
+          "bytes": 5707,
+          "sha256": "1861fc9ba120ea09f47b612be2754335bef9bf43b73bb5a81c0bb5412269fa31"
+        },
+        {
+          "path": "game/ui/music-credit.mjs",
+          "bytes": 4462,
+          "sha256": "754c66d2ca5e9439a1a1cb6faa87655cdcde1dfdede8d0285b1224542066fd4b"
+        },
+        {
+          "path": "game/ui/soundtrack-player.mjs",
+          "bytes": 49262,
+          "sha256": "3580d75e9498edc8881e082edb79fb56444d9546efb3af60b9ba942d8d5de07e"
+        },
+        {
+          "path": "game/ui/menu-scene-motion.mjs",
+          "bytes": 15497,
+          "sha256": "9cd29d1cfd8fdf8702218ccbd7ecd92e0c9b1319454488540ae1936ed6883c2a"
+        },
+        {
+          "path": "game/ui/menu-signal-loss.mjs",
+          "bytes": 6465,
+          "sha256": "5f78ac3cabb23e50122ecf9d77f5dfba105dfa66e5c945f0f6848d23fd5fd405"
+        },
+        {
+          "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+          "bytes": 147343,
+          "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d"
+        },
+        {
+          "path": "game/demo-data/catalog.json",
+          "bytes": 4079,
+          "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+        },
+        {
+          "path": "game/demo-data/variant-provenance.json",
+          "bytes": 2210,
+          "sha256": "c000e38086afc7cd135534c9d6769ec8febb21e288c8541923178a31c4525d54"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.replay.json",
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+        },
+        {
+          "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.replay.json",
+          "bytes": 10795,
+          "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7"
+        },
+        {
+          "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+          "bytes": 10803,
+          "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.replay.json",
+          "bytes": 12238,
+          "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.replay.json",
+          "bytes": 12238,
+          "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1"
+        },
+        {
+          "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "bytes": 12246,
+          "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.replay.json",
+          "bytes": 12332,
+          "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676"
+        },
+        {
+          "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+          "bytes": 12340,
+          "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.replay.json",
+          "bytes": 12265,
+          "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9"
+        },
+        {
+          "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "bytes": 12273,
+          "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d"
+        }
+      ],
+      "testHarnessExcluded": true
+    }
+  ]
+}

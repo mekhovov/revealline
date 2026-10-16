@@ -1,0 +1,76 @@
+{
+  "format": "revealline-capacity-audit-summary.v1",
+  "sourceRevision": "7acf6af53143c75f0ae99e09c25e326c1141c3e8",
+  "sourceTree": "03f97d6086490c3e60843e0292622c07a2066205",
+  "version": "v0.142.0",
+  "candidateRun": "https://github.com/mekhovov/revealline/actions/runs/36447088737",
+  "artifactId": 10982502592,
+  "artifactZip": {
+    "bytes": 577457,
+    "sha256": "303cb3d2a5423be2e0492e730cb367c1fd9101875808867fedc5e97558162f80"
+  },
+  "report": {
+    "path": "capacity-inventory.json",
+    "bytes": 11094,
+    "sha256": "12e0c8d5f7bb4fa7fb5fcb4879857e3b52b450797ee531182658cf16a4b9cf0c"
+  },
+  "validation": "editionCapacityPacket passed against exact envelope/checksums/verification/runtime manifests",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "note": "Historical pre-rebase7acf candidate only; later main/revision/default not measured. Excludes hub, retained versions, optional packages and default output.",
+  "sets": {
+    "four": {
+      "ids": [
+        "social-drone-ua",
+        "victory-drones",
+        "ukraine-culture",
+        "fpv-learning"
+      ],
+      "immutableBytes": 118298749,
+      "activeLauncherBytes": 50876,
+      "combinedComponentBytes": 118349625
+    },
+    "six": {
+      "ids": [
+        "coupa-all",
+        "droneaid-nl-community",
+        "social-drone-ua",
+        "victory-drones",
+        "ukraine-culture",
+        "fpv-learning"
+      ],
+      "immutableBytes": 243503179,
+      "activeLauncherBytes": 330092,
+      "combinedComponentBytes": 243833271
+    },
+    "all": {
+      "ids": [
+        "coupa-adventure",
+        "coupa-all",
+        "coupa-culture",
+        "coupa-developers",
+        "coupa-foundations",
+        "coupa-operations",
+        "droneaid-community",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-community",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-shared-horizon",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-workshop-lights",
+        "fpv-learning",
+        "social-drone-ua",
+        "ukraine-culture",
+        "victory-drones"
+      ],
+      "immutableBytes": 566826033,
+      "activeLauncherBytes": 1994753,
+      "combinedComponentBytes": 568820786
+    }
+  },
+  "candidateConclusion": "success",
+  "hostedAcceptanceRun": "https://github.com/mekhovov/revealline/actions/runs/36447088556",
+  "hostedAcceptanceConclusion": "success"
+}

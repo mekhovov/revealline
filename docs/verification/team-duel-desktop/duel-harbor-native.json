@@ -1,0 +1,2530 @@
+[
+  {
+    "action": "Navigation timing",
+    "mode": "team",
+    "outcome": "browser entries; no device qualification",
+    "browserAtFrameLoad": {
+      "navigation": {
+        "responseStartMs": 43.600000001490116,
+        "domInteractiveMs": 68.30000000447035,
+        "domContentLoadedMs": 155.39999999850988,
+        "loadEventEndMs": 310.3999999985099
+      },
+      "paint": {
+        "firstPaintMs": 184,
+        "firstContentfulPaintMs": 184
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 64465812,
+        "totalBytes": 120283556,
+        "limitBytes": 4395630592
+      }
+    },
+    "resourcesAtFrameLoad": 40
+  },
+  {
+    "action": "Load to playable menu",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 9324.10000000149,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": null,
+    "resourcesAtReady": 250,
+    "transferBytesAtReady": 6299824,
+    "jsDecodedBytesAtReady": 5266080,
+    "cssDecodedBytesAtReady": 396876,
+    "zeroTransferEntries": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "browserAtReady": {
+      "navigation": {
+        "responseStartMs": 43.600000001490116,
+        "domInteractiveMs": 68.30000000447035,
+        "domContentLoadedMs": 155.39999999850988,
+        "loadEventEndMs": 310.3999999985099
+      },
+      "paint": {
+        "firstPaintMs": 184,
+        "firstContentfulPaintMs": 184
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 97983690,
+        "totalBytes": 189650594,
+        "limitBytes": 4395630592
+      }
+    },
+    "mediaAtReady": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "coop-preview-canvas",
+          "width": 576,
+          "height": 288,
+          "rgbaBackingEstimateBytes": 663552
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "coop-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-discovery-preview-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-earned-picture-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12851804,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 18871680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    }
+  },
+  {
+    "action": "Start",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 145.19999999552965,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true
+  },
+  {
+    "action": "Frame sample",
+    "mode": "team",
+    "edition": "",
+    "mission": "team-expedition-homecoming",
+    "scope": "active",
+    "outcome": "passive desktop sample; compare equivalent baseline before qualification",
+    "durationMs": 30004.60000000149,
+    "frameIntervals": {
+      "count": 3570,
+      "medianMs": 8.299999997019768,
+      "p95Ms": 10.200000002980232,
+      "p99Ms": 11.5,
+      "maxMs": 65.29999999701977,
+      "over33ms": 4,
+      "over50ms": 1
+    },
+    "longTasks": {
+      "supported": true,
+      "count": 0,
+      "over50Ms": 0,
+      "maxMs": 0
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "hardwareConcurrency": 14,
+      "pageUrl": "http://127.0.0.1:8789/game/couch/relay-rescue.html?journey=team-expedition-v1&library-mission=%5B%22journey%3Ateam-expedition-v1%22%2C%22team-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22team-expedition-aurora-pack%5C%22%2C%5C%22team-expedition-aurora%5C%22%5D%22%2C%22candidate%2Fteam-expedition-aurora-pack%2Fteam-expedition-aurora%2Fteam-expedition-homecoming%22%2C%22%22%5D&library-intent=select",
+      "buildVersion": "__REVEALLINE_VERSION__"
+    },
+    "inputs": {
+      "player1Keydowns": 8,
+      "player2Keydowns": 8,
+      "trustedKeydowns": 16,
+      "untrustedKeydowns": 0
+    },
+    "focusAtArm": {
+      "atMs": 22835.70000000298,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "sample",
+          "tag": "BUTTON"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 53291.10000000149,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "coop-canvas",
+          "tag": "CANVAS"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "activity": [
+      {
+        "atMs": 0.29999999701976776,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:00",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 505.6000000014901,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:00",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 1009.8999999985099,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:01",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 1515.8999999985099,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:01",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 2024.2999999970198,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:02",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 2532.60000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:02",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 3042.39999999851,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:03",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 3550.60000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:03",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 4059.2999999970198,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:04",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 4566.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:04",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 5074.10000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:05",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 5574.89999999851,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:05",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 6084,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:06",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 6590.10000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:06",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 7091.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:07",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 7591.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:07",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 8100.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:08",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 8601.60000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:08",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 9107.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:09",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 9607.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:09",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 10117.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:10",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "2 reserves",
+          "coop-state-0": "Rescue · 1s",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Crawl to your partner",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 10618.10000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:10",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Recovery shield · reclaimed ground only",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 11124.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:11",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Recovery shield · reclaimed ground only",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 11636.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:11",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 12141,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:12",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 12649.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:12",
+          "coop-coverage": "1.5%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 13157.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:13",
+          "coop-coverage": "1.5%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 13667.60000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:13",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 14175.10000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:14",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 14682.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:14",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 15182.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:15",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 15690.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:15",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 16190.60000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:16",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 16690.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:16",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 17190.89999999851,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:17",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 17699.89999999851,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:17",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 18200.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:18",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 18708.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:18",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 19215.79999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:19",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 19724.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:19",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 20233.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:20",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 20741.60000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:20",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 21250.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:21",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 21753.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:21",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 22254.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:22",
+          "coop-coverage": "6.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 22762.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:22",
+          "coop-coverage": "6.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 23270,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:23",
+          "coop-coverage": "6.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 23771.39999999851,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:23",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 24278.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:24",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 24787.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:24",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 25289.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:25",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 25789.89999999851,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:25",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 26297.69999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:26",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 26805.79999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:26",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 27305.79999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:27",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 27806.19999999553,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:27",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 28314.10000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:28",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 28814.10000000149,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:28",
+          "coop-coverage": "19.8%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 29321.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:29",
+          "coop-coverage": "30.0%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      },
+      {
+        "atMs": 29828.29999999702,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:29",
+          "coop-coverage": "30.0%",
+          "coop-reserves": "1 reserve",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        }
+      }
+    ],
+    "hudBefore": {
+      "coop-stage": "EXPEDITION HOMECOMING",
+      "coop-clock": "0:00",
+      "coop-coverage": "0.0%",
+      "coop-reserves": "2 reserves",
+      "coop-state-0": "On reclaimed ground",
+      "coop-state-1": "On reclaimed ground",
+      "coop-charge-0": "Interceptor ready",
+      "coop-charge-1": "Disruptor ready"
+    },
+    "hudAfter": {
+      "coop-stage": "EXPEDITION HOMECOMING",
+      "coop-clock": "0:30",
+      "coop-coverage": "30.0%",
+      "coop-reserves": "1 reserve",
+      "coop-state-0": "On reclaimed ground",
+      "coop-state-1": "On reclaimed ground",
+      "coop-charge-0": "Interceptor ready",
+      "coop-charge-1": "Disruptor ready"
+    },
+    "browserBefore": {
+      "navigation": {
+        "responseStartMs": 43.600000001490116,
+        "domInteractiveMs": 68.30000000447035,
+        "domContentLoadedMs": 155.39999999850988,
+        "loadEventEndMs": 310.3999999985099
+      },
+      "paint": {
+        "firstPaintMs": 184,
+        "firstContentfulPaintMs": 184
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 112626136,
+        "totalBytes": 193069008,
+        "limitBytes": 4395630592
+      }
+    },
+    "browserAfter": {
+      "navigation": {
+        "responseStartMs": 43.600000001490116,
+        "domInteractiveMs": 68.30000000447035,
+        "domContentLoadedMs": 155.39999999850988,
+        "loadEventEndMs": 310.3999999985099
+      },
+      "paint": {
+        "firstPaintMs": 184,
+        "firstContentfulPaintMs": 184
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 69338687,
+        "totalBytes": 132492871,
+        "limitBytes": 4395630592
+      }
+    },
+    "mediaBefore": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 256,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 174080
+        },
+        {
+          "id": "coop-preview-canvas",
+          "width": 576,
+          "height": 288,
+          "rgbaBackingEstimateBytes": 663552
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "coop-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-discovery-preview-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-earned-picture-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12845884,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 18871680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "mediaAfter": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 256,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 174080
+        },
+        {
+          "id": "coop-preview-canvas",
+          "width": 576,
+          "height": 288,
+          "rgbaBackingEstimateBytes": 663552
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "coop-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-discovery-preview-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-earned-picture-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12845884,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 18871680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "newResourceEntries": 0
+  },
+  {
+    "action": "Resume",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 18.599999994039536,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true
+  },
+  {
+    "action": "Navigation timing",
+    "mode": "versus",
+    "outcome": "browser entries; no device qualification",
+    "browserAtFrameLoad": {
+      "navigation": {
+        "responseStartMs": 6.800000004470348,
+        "domInteractiveMs": 43.5,
+        "domContentLoadedMs": 79.5,
+        "loadEventEndMs": 611.1000000014901
+      },
+      "paint": {
+        "firstPaintMs": 108,
+        "firstContentfulPaintMs": 108
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 84576390,
+        "totalBytes": 144816486,
+        "limitBytes": 4395630592
+      }
+    },
+    "resourcesAtFrameLoad": 242
+  },
+  {
+    "action": "Load to playable menu",
+    "mode": "versus",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 5989.10000000149,
+    "mission": "candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard",
+    "trustedActivation": null,
+    "resourcesAtReady": 250,
+    "transferBytesAtReady": 6277622,
+    "jsDecodedBytesAtReady": 5138959,
+    "cssDecodedBytesAtReady": 501795,
+    "zeroTransferEntries": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "browserAtReady": {
+      "navigation": {
+        "responseStartMs": 6.800000004470348,
+        "domInteractiveMs": 43.5,
+        "domContentLoadedMs": 79.5,
+        "loadEventEndMs": 611.1000000014901
+      },
+      "paint": {
+        "firstPaintMs": 108,
+        "firstContentfulPaintMs": 108
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 129089328,
+        "totalBytes": 214229756,
+        "limitBytes": 4395630592
+      }
+    },
+    "mediaAtReady": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "race-canvas-0",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "race-canvas-1",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12188252,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 18871680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    }
+  },
+  {
+    "action": "Start/rematch",
+    "mode": "versus",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 45.80000000447035,
+    "mission": "candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard",
+    "trustedActivation": true
+  },
+  {
+    "action": "Frame sample",
+    "mode": "versus",
+    "edition": "",
+    "mission": "candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard",
+    "scope": "active",
+    "outcome": "passive desktop sample; compare equivalent baseline before qualification",
+    "durationMs": 30001.20000000298,
+    "frameIntervals": {
+      "count": 3561,
+      "medianMs": 8.299999997019768,
+      "p95Ms": 10.100000001490116,
+      "p99Ms": 11.700000002980232,
+      "maxMs": 78.70000000298023,
+      "over33ms": 4,
+      "over50ms": 2
+    },
+    "longTasks": {
+      "supported": true,
+      "count": 0,
+      "over50Ms": 0,
+      "maxMs": 0
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "hardwareConcurrency": 14,
+      "pageUrl": "http://127.0.0.1:8789/game/couch/?journey=duel-expedition-v1&library-mission=%5B%22journey%3Aduel-expedition-v1%22%2C%22duel-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22versus-expedition-aurora-pack%5C%22%2C%5C%22versus-expedition-aurora-part-5%5C%22%5D%22%2C%22candidate%2Fversus-expedition-aurora-pack%2Fversus-expedition-aurora-part-5%2Fversus-expedition-decider%22%2C%22%22%5D&library-intent=select",
+      "buildVersion": "__REVEALLINE_VERSION__"
+    },
+    "inputs": {
+      "player1Keydowns": 10,
+      "player2Keydowns": 10,
+      "trustedKeydowns": 20,
+      "untrustedKeydowns": 0
+    },
+    "focusAtArm": {
+      "atMs": 22744.20000000298,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "sample",
+          "tag": "BUTTON"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 53212,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "race-canvas-0",
+          "tag": "CANVAS"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "race-start": {
+          "shown": false,
+          "disabled": true,
+          "state": null,
+          "open": null
+        },
+        "race-pause": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-boards": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "race-preparation": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        }
+      }
+    },
+    "activity": [
+      {
+        "atMs": 0.4000000059604645,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 507.40000000596046,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 1007.7000000029802,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 1515.6000000014901,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 2015.7000000029802,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 2524.2000000029802,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 3032,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 3539.8000000044703,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 4040.9000000059605,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 4548.30000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 5057.10000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 5564.60000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 6065.60000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 6574,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 7081.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 7590.60000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 8098.60000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 8608.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 9109.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 9615.80000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 10122.80000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+          "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 10624.30000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 11130.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 11632.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 12140.60000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 12649.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 13155.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 13655.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 14156,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 14662.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 15169.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 15671.80000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 16180.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 16680.90000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 17189,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 17695.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 18197.30000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 18697.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 19197.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 1.4% / 54% · 3 lives · 330 points",
+          "racer-stats-1": "2: 1.4% / 54% · 3 lives · 330 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 19705,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 20213.30000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 20715.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 21216.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 21725.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 22231.60000000149,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 22732.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 23232.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 23739.30000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 24239.30000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 3.2% / 54% · 3 lives · 750 points",
+          "racer-stats-1": "2: 3.2% / 54% · 3 lives · 750 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 24739.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 25241.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 25749.5,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 26249.80000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 26757.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 27257.70000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 27766,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 28274.40000000596,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 28780.80000000447,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 29289.20000000298,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      },
+      {
+        "atMs": 29791,
+        "hud": {
+          "race-clock": "No countdown",
+          "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+          "racer-state-0": "running",
+          "racer-state-1": "running",
+          "series-score": "0 : 0"
+        }
+      }
+    ],
+    "hudBefore": {
+      "race-clock": "No countdown",
+      "racer-stats-0": "1: 0.0% / 54% · 3 lives · 0 points",
+      "racer-stats-1": "2: 0.0% / 54% · 3 lives · 0 points",
+      "racer-state-0": "running",
+      "racer-state-1": "running",
+      "series-score": "0 : 0"
+    },
+    "hudAfter": {
+      "race-clock": "No countdown",
+      "racer-stats-0": "1: 10.7% / 54% · 3 lives · 2,490 points",
+      "racer-stats-1": "2: 10.7% / 54% · 3 lives · 2,490 points",
+      "racer-state-0": "running",
+      "racer-state-1": "running",
+      "series-score": "0 : 0"
+    },
+    "browserBefore": {
+      "navigation": {
+        "responseStartMs": 6.800000004470348,
+        "domInteractiveMs": 43.5,
+        "domContentLoadedMs": 79.5,
+        "loadEventEndMs": 611.1000000014901
+      },
+      "paint": {
+        "firstPaintMs": 108,
+        "firstContentfulPaintMs": 108
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 111981818,
+        "totalBytes": 208608074,
+        "limitBytes": 4395630592
+      }
+    },
+    "browserAfter": {
+      "navigation": {
+        "responseStartMs": 6.800000004470348,
+        "domInteractiveMs": 43.5,
+        "domContentLoadedMs": 79.5,
+        "loadEventEndMs": 611.1000000014901
+      },
+      "paint": {
+        "firstPaintMs": 108,
+        "firstContentfulPaintMs": 108
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 95012188,
+        "totalBytes": 171308268,
+        "limitBytes": 4395630592
+      }
+    },
+    "mediaBefore": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "race-canvas-0",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "race-canvas-1",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 255,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 173400
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12181652,
+      "domImageCount": 2,
+      "domImageRGBAEstimateBytes": 12581568,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "mediaAfter": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "race-canvas-0",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "race-canvas-1",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 255,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 173400
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12181652,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 12671568,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "newResourceEntries": 0
+  }
+]

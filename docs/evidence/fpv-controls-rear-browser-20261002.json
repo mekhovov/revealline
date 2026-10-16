@@ -1,0 +1,106 @@
+{
+  "format": "fpv-controls-browser-projection-verification.v1",
+  "createdAt": "2026-10-01T22:12:16.109Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-controls-verification/index.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "scope": "Actual browser SVG geometry + actual fixed-point flight integrator; controlled inputs, no physical-radio or performance acceptance.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Neutral rear view is level, with front farther away",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.9218423307113],
+      "browserBounds": {
+        "width": 1198,
+        "height": 871.265625
+      }
+    },
+    {
+      "name": "Positive roll lowers right side",
+      "passed": true,
+      "left": [83.56806973692781, 53.013507602907936],
+      "right": [134.75303978478038, 80.09810518221715]
+    },
+    {
+      "name": "Positive pitch moves nose down",
+      "passed": true,
+      "front": [110, 66.43382736298393],
+      "rear": [110, 57.74621174595716]
+    },
+    {
+      "name": "Positive yaw stays visible relative to start",
+      "passed": true,
+      "front": [142.71392391206703, 63.002043898680704],
+      "rear": [79.10327572275662, 63.002624490993476]
+    },
+    {
+      "name": "Negative roll lowers left side",
+      "passed": true,
+      "left": [85.24696021521962, 80.09810518221715],
+      "right": [136.4319302630722, 53.013507602907936]
+    },
+    {
+      "name": "Negative pitch moves nose up",
+      "passed": true,
+      "front": [110, 40.669422467907964],
+      "rear": [110, 92.07273259124023]
+    },
+    {
+      "name": "Negative yaw stays visible relative to start",
+      "passed": true,
+      "front": [77.28607608793297, 63.002043898680704],
+      "rear": [140.89672427724338, 63.002624490993476]
+    },
+    {
+      "name": "Full Acro roll inversion is retained",
+      "passed": true,
+      "inverted": true
+    },
+    {
+      "name": "Full Acro pitch inversion is retained",
+      "passed": true,
+      "inverted": true
+    },
+    {
+      "name": "Initial heading compensation keeps rear view and subsequent pitch truthful",
+      "passed": true,
+      "front": [110.00001934768723, 66.43382986376946],
+      "expected": [110, 66.43382736298393]
+    },
+    {
+      "name": "Actual flight integrator roll input agrees",
+      "passed": true,
+      "orientation": [0, 0, -78811, 996890]
+    },
+    {
+      "name": "Actual flight integrator pitch input agrees",
+      "passed": true,
+      "orientation": [-78811, 0, 0, 996890]
+    },
+    {
+      "name": "Actual flight integrator yaw input agrees",
+      "passed": true,
+      "orientation": [0, -78811, 0, 996890]
+    },
+    {
+      "name": "Measured world drift respects fixed start heading",
+      "passed": true,
+      "path": "M110.00 118.00L110.00 100.18M114.00 107.18L110.00 100.18L106.00 107.18"
+    },
+    {
+      "name": "Disposal removes owned SVG without removing host",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "43cc5da46325883ccb8a40eac69db7a6827d9af06784d220a3f803e904aef24f",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af",
+    "optional-practice/civilian-fpv/style.css": "d6d20c4e4539b4cadbe1293612e2ce7b3263a5d92bedb63208b37f28e67755d7"
+  }
+}

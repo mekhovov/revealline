@@ -1,96 +1,142 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../game/access-gate.css" />
+    <script src="../../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script
+      src="../../game/presentation/theme-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>Transfer practice · Company Studio</title>
     <link rel="stylesheet" href="studio.css" />
     <style>
-      .playtest-header {
-        flex-wrap: wrap;
-      }
-      .playtest-main {
-        max-width: 920px;
-      }
-      .playtest-main h1 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        letter-spacing: -0.04em;
-      }
-      .playtest-tools {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 18px;
-      }
-      .playtest-tools button {
-        margin: 0;
-      }
-      .company-workbench {
-        display: grid;
-        gap: 16px;
-        line-height: 1.6;
-      }
-      .company-workbench h2 {
-        margin: 0;
-        font-size: 1.75rem;
-        letter-spacing: -0.03em;
-      }
-      .company-workbench h3 {
-        font-size: 1.15rem;
-      }
-      .company-workbench p {
-        margin: 0;
-      }
-      .company-workbench-role,
-      .company-workbench-notice {
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
-      .company-workbench-record {
-        padding: 14px 0;
-        border-top: 1px solid var(--line);
-      }
-      .company-workbench-record button {
-        margin: 0 0 10px;
-        text-align: left;
-      }
-      .company-workbench-record p + p {
-        margin-top: 8px;
-      }
-      .company-workbench-configuration {
-        display: grid;
-        gap: 14px;
-      }
-      .company-workbench-configuration legend {
-        font-size: 1.15rem;
-      }
-      .company-workbench-feedback:not(:empty) {
-        padding: 16px;
-        background: #e7efea;
-        border-left: 3px solid var(--accent);
-      }
-      .company-workbench-feedback p + p {
-        margin-top: 10px;
-      }
-      .company-workbench-controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .company-workbench-controls button {
-        margin: 0;
-      }
-      .company-workbench-sources p {
-        margin-top: 12px;
-      }
-      .company-workbench :focus-visible,
-      .company-workbench-feedback:focus {
-        outline: 3px solid #945600;
-        outline-offset: 4px;
+      @layer legacy {
+        .playtest-header {
+          flex-wrap: wrap;
+        }
+        .playtest-main {
+          max-width: 920px;
+        }
+        .playtest-main h1 {
+          font-size: clamp(2rem, 5vw, 3rem);
+          letter-spacing: -0.04em;
+        }
+        .playtest-tools {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 18px;
+        }
+        .playtest-tools button {
+          margin: 0;
+        }
+        .company-workbench {
+          display: grid;
+          gap: 16px;
+          line-height: 1.6;
+        }
+        .company-workbench h2 {
+          margin: 0;
+          font-size: 1.75rem;
+          letter-spacing: -0.03em;
+        }
+        .company-workbench h3 {
+          font-size: 1.15rem;
+        }
+        .company-workbench p {
+          margin: 0;
+        }
+        .company-workbench-role,
+        .company-workbench-notice {
+          color: var(--muted);
+          font-size: 0.9rem;
+        }
+        .company-workbench-record {
+          padding: 14px 0;
+          border-top: 1px solid var(--line);
+        }
+        .company-workbench-record button {
+          margin: 0 0 10px;
+          text-align: left;
+        }
+        .company-workbench-record p + p {
+          margin-top: 8px;
+        }
+        .company-workbench-configuration {
+          display: grid;
+          gap: 14px;
+        }
+        .company-workbench-configuration legend {
+          font-size: 1.15rem;
+        }
+        .company-workbench-feedback:not(:empty) {
+          padding: 16px;
+          background: #e7efea;
+          border-left: 3px solid var(--accent);
+        }
+        .company-workbench-feedback p + p {
+          margin-top: 10px;
+        }
+        .company-workbench-controls {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .company-workbench-controls button {
+          margin: 0;
+        }
+        .company-workbench-sources p {
+          margin-top: 12px;
+        }
+        .company-workbench :focus-visible,
+        .company-workbench-feedback:focus {
+          outline: 3px solid #945600;
+          outline-offset: 4px;
+        }
       }
     </style>
-    <script type="module" src="playtest.mjs"></script>
+    <script
+      src="playtest.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body>
     <a class="skip-link" href="#practice-main">Skip to transfer practice</a>
@@ -138,5 +184,10 @@
         cards.</noscript
       >
     </main>
+    <script
+      src="../../game/ui/authoring-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </body>
 </html>

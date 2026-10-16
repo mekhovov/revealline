@@ -1,10 +1,23 @@
 import { editionOfflinePackageId } from './editions/offline-package-id.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
-import { resolveEditionAssets } from './editions/model.mjs';
-import { resolveEditionContext } from './edition-context.mjs';
+import {
+  resolveEditionAssets,
+  resolveEditionAppearanceDefault,
+  resolveEditionAppearanceThemes,
+} from './editions/model.mjs';
+import { editionIdentityId, editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
+import {
+  communityEntryURL,
+  communityHref,
+  communityRouteFromURL,
+  gameDocumentURL,
+} from './community-routes.mjs';
 import { required } from './data-json.mjs';
+import { validateCompletionRewards } from './rewards/model.mjs';
+import { isStudioPreview, STUDIO_PREVIEW_PARAMETER } from './studio-preview-session.mjs';
 import { projectEditionThemeSelection } from './editions/selected-presentation.mjs';
+import { installEditionLocalization } from './editions/localization-runtime.mjs';
 import {
   editionPresentationSha256,
   loadRetainedPresentation,
@@ -77,9 +90,16 @@ export async function loadRuntimeContentProvider({
   signal,
 } = {}) {
   signal?.throwIfAborted();
-  const url = new URL(locationRef.href);
+  const sourceURL = new URL(locationRef.href);
   const compiled = documentRef.documentElement.dataset.editionId;
-  const requested = url.searchParams.get('edition') ?? compiled;
+  const community = compiled ? null : communityRouteFromURL(sourceURL);
+  const url = compiled
+    ? sourceURL
+    : community
+      ? communityEntryURL(sourceURL)
+      : gameDocumentURL(sourceURL);
+  const selector = url.searchParams.get('edition') ?? compiled;
+  const requested = selector ? editionIdentityId(selector) : selector;
   if (!requested && url.searchParams.get('company') !== '1') return null;
   if (compiled)
     required(requested === compiled, 'This installed edition cannot load another audience.');
@@ -93,6 +113,10 @@ export async function loadRuntimeContentProvider({
     campaignId: url.searchParams.get('campaign') ?? undefined,
     allowMissing: false,
   });
+  required(
+    !community || currentBootstrap.selection.brand.id === community.brandId,
+    'This community address cannot open another company edition.',
+  );
   const retainedPresentationId = url.searchParams.get('presentation');
   const history = currentBootstrap.selection.edition.presentationHistory ?? [];
   const retained = retainedPresentationId
@@ -177,10 +201,21 @@ export async function loadRuntimeContentProvider({
     route: Object.freeze({ ...route, sessionKey: `${route.sessionKey}.solo-v2` }),
     legacySessionKey: route.sessionKey,
     theme,
+    appearanceDefault: resolveEditionAppearanceDefault(selection),
+    appearanceThemes: resolveEditionAppearanceThemes(catalog, {
+      editionIds: [selection.edition.id],
+    }),
+    appearanceDefaultFor(campaignId = selection.campaign.id) {
+      const campaign = selection.campaigns.find((item) => item.id === campaignId);
+      required(campaign, 'This campaign is not included in the selected edition.');
+      return resolveEditionAppearanceDefault({ ...selection, campaign });
+    },
     bootstrap,
     rootURL: rootURL.href,
     themes: projected.themes.themes,
     lessons: Object.values(bootstrap.lessons).flat(),
+    rewards: validateCompletionRewards(Object.values(bootstrap.rewards ?? {}).flat()),
+    installLocalization: () => installEditionLocalization(bootstrap),
     // The canonical host owns and augments its boot data; the immutable source
     // registry must remain untouched for session/presentation identities.
     boot: ['campaign', 'themes', 'presets', 'classes', 'packs', 'archives'].map((name) =>
@@ -195,17 +230,29 @@ export async function loadRuntimeContentProvider({
     },
     assetURL,
     href(parameters = {}) {
-      const target = new URL('index.html', url);
-      target.search = '';
-      target.searchParams.set('edition', selection.edition.id);
+      const destinationId =
+        parameters.edition == null ? selection.edition.id : editionIdentityId(parameters.edition);
+      const destination = currentBootstrap.catalog.editions.find(
+        (edition) => edition.id === destinationId && edition.brandId === selection.brand.id,
+      );
+      required(destination, 'This edition cannot navigate to another company.');
+      const friendly =
+        !compiled && communityHref(url, { brandId: selection.brand.id, editionId: destinationId });
+      const target = friendly || new URL('index.html', url);
+      if (!friendly) {
+        target.search = '';
+        target.searchParams.set('edition', editionPublicSlug(destinationId));
+      }
       if (
         retainedPresentationId &&
-        (!parameters.edition || parameters.edition === selection.edition.id)
+        (!parameters.edition || editionIdentityId(parameters.edition) === selection.edition.id)
       )
         target.searchParams.set('presentation', retainedPresentationId);
       for (const [key, value] of Object.entries(parameters))
-        if (value != null) target.searchParams.set(key, value);
+        if (key === 'edition') continue;
+        else if (value != null) target.searchParams.set(key, value);
         else target.searchParams.delete(key);
+      if (isStudioPreview(url.href)) target.searchParams.set(STUDIO_PREVIEW_PARAMETER, '1');
       return target.href;
     },
   });

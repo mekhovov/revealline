@@ -1,0 +1,418 @@
+{
+  "runtimeSource": "a4d9b96757a467b2771f686b5db614ce9ef51473",
+  "restoredStatus": "Graphics restored. Resume when ready.",
+  "pausedBeforeExplicitResume": true,
+  "explicitResumeAction": "Continue",
+  "afterResume": {
+    "phase": "playing",
+    "time": 11.6,
+    "renderer": "Phaser 4.2.1 WebGL",
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "backingWidth": 960,
+    "backingHeight": 540,
+    "atlas": {
+      "width": 1020,
+      "height": 1292,
+      "textures": 2,
+      "baseRGBABytes": 5533504,
+      "retainedCanvasBytes": 5533504,
+      "soldierFrames": 216,
+      "machineryFrames": 36,
+      "heroFrames": 4,
+      "equipmentFrames": 13,
+      "frameCount": 276
+    },
+    "heroArtwork": {
+      "assetId": "player.scout.detailed.field-kit",
+      "rotorCount": 4,
+      "visibleDiameter": 32,
+      "bakedFrameSize": 48,
+      "paintedWidth": 41.47608169635396,
+      "paintedHeight": 41.47608169635396
+    },
+    "counts": {
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 4,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 156,
+      "quads": 1371
+    },
+    "allocatedSprites": 1785,
+    "fixture": "reference",
+    "reducedEffects": false,
+    "preparationMs": 37.5,
+    "contextLosses": 1,
+    "contextRestores": 1,
+    "contextRecoveryTests": 1,
+    "lost": false,
+    "failed": false,
+    "valid": false,
+    "invalidReasons": [
+      "context-lost",
+      "context-restored"
+    ],
+    "cadenceMs": {
+      "samples": 1385,
+      "p50": 8.300000011920929,
+      "p95": 10.199999988079071,
+      "p99": 10.900000035762787,
+      "worst": 41
+    },
+    "submissionMs": {
+      "samples": 1387,
+      "p50": 0.6000000238418579,
+      "p95": 0.8999999761581421,
+      "p99": 1.0999999642372131,
+      "worst": 4.000000059604645
+    },
+    "cadenceHz": 119.60586198211497,
+    "measuredIntervals": 1385,
+    "measuredSeconds": 11.579700000047684,
+    "retainedIntervals": 1385,
+    "sampleCapacity": 120000,
+    "submissionTotalMs": 886.0000022649765,
+    "over33Ms": 2,
+    "over50Ms": 0,
+    "over100Ms": 0,
+    "exclusions": {
+      "context-lost": 1,
+      "context-restored": 1
+    },
+    "highWater": {
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 384,
+      "pickups": 480
+    },
+    "protocol": {
+      "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+      "warmupSeconds": 30,
+      "measurementSeconds": 120,
+      "repetitions": 3,
+      "windows": [
+        {
+          "index": 1,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        },
+        {
+          "index": 2,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        },
+        {
+          "index": 3,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        }
+      ],
+      "acceptance": null,
+      "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+    },
+    "clock": {
+      "steps": 696,
+      "droppedSeconds": 0,
+      "accumulator": 0.0009333333571754053
+    },
+    "longFrames": 0,
+    "trialValid": true
+  },
+  "canvasCount": 1,
+  "retries": [
+    {
+      "index": 1,
+      "canvasCount": 1,
+      "appearance": {
+        "projectIdentity": "8ab8476ceeb653ae",
+        "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+        "presentation": {
+          "id": "field-kit",
+          "revision": 104
+        },
+        "themeIdentity": "9670af00f1ea5378",
+        "familyId": "industrial-workshop",
+        "familyRevision": "r3",
+        "interfaceId": "industrial-workshop",
+        "interfaceRevision": "r3",
+        "arcade": {
+          "id": "industrial-workshop",
+          "revision": "r2"
+        },
+        "actorArtRevision": "industrial-roster-v3",
+        "equipment": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "materialStyle": "steel",
+        "materialVariant": "steel",
+        "playerSlot": "player.scout.detailed",
+        "cast": "authored"
+      }
+    },
+    {
+      "index": 2,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 3,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 4,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 5,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 6,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 7,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 8,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 9,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    },
+    {
+      "index": 10,
+      "canvasCount": 1,
+      "timer": "00:00",
+      "playing": true,
+      "state": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Pause\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 3\n    - strong: 00:00\n    - generic: Level 1\n    - generic: Saturation Fan 4\n    - generic: Proximity pulse 3\n    - progressbar \"Pulse flight charge\"\n    - generic: Slow field 3\n    - generic: Salvage scanner 3\n    - generic: Boost Ready\n    - generic \"Diagnostics\"\n    - paragraph: L"
+    }
+  ],
+  "afterRetries": {
+    "appearance": {
+      "projectIdentity": "8ab8476ceeb653ae",
+      "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+      "presentation": {
+        "id": "field-kit",
+        "revision": 104
+      },
+      "themeIdentity": "9670af00f1ea5378",
+      "familyId": "industrial-workshop",
+      "familyRevision": "r3",
+      "interfaceId": "industrial-workshop",
+      "interfaceRevision": "r3",
+      "arcade": {
+        "id": "industrial-workshop",
+        "revision": "r2"
+      },
+      "actorArtRevision": "industrial-roster-v3",
+      "equipment": {
+        "id": "overflight-field-kit",
+        "revision": 1
+      },
+      "materialStyle": "steel",
+      "materialVariant": "steel",
+      "playerSlot": "player.scout.detailed",
+      "cast": "authored"
+    },
+    "renderer": {
+      "renderer": "Phaser 4.2.1 WebGL",
+      "logicalWidth": 960,
+      "logicalHeight": 540,
+      "backingWidth": 960,
+      "backingHeight": 540,
+      "atlas": {
+        "width": 1020,
+        "height": 1292,
+        "textures": 2,
+        "baseRGBABytes": 5533504,
+        "retainedCanvasBytes": 5533504,
+        "soldierFrames": 216,
+        "machineryFrames": 36,
+        "heroFrames": 4,
+        "equipmentFrames": 13,
+        "frameCount": 276
+      },
+      "heroArtwork": {
+        "assetId": "player.scout.detailed.field-kit",
+        "rotorCount": 4,
+        "visibleDiameter": 32,
+        "bakedFrameSize": 48,
+        "paintedWidth": 41.47608169635396,
+        "paintedHeight": 41.47608169635396
+      },
+      "counts": {
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effects": 89,
+        "pickups": 480,
+        "warnings": 2,
+        "behaviorCues": 187,
+        "quads": 1488
+      },
+      "allocatedSprites": 1826,
+      "fixture": "reference",
+      "reducedEffects": false,
+      "preparationMs": 37.5,
+      "contextLosses": 1,
+      "contextRestores": 1,
+      "contextRecoveryTests": 1,
+      "lost": false,
+      "failed": false,
+      "valid": true,
+      "invalidReasons": [],
+      "cadenceMs": {
+        "samples": 2571,
+        "p50": 8.300000011920929,
+        "p95": 9.699999988079071,
+        "p99": 10.600000023841858,
+        "worst": 28.100000023841858
+      },
+      "submissionMs": {
+        "samples": 2572,
+        "p50": 0.6000000238418579,
+        "p95": 0.8999999761581421,
+        "p99": 1.100000023841858,
+        "worst": 1.300000011920929
+      },
+      "cadenceHz": 120.01736540656344,
+      "measuredIntervals": 2571,
+      "measuredSeconds": 21.42189999997616,
+      "retainedIntervals": 2571,
+      "sampleCapacity": 120000,
+      "submissionTotalMs": 1625.3999950289726,
+      "over33Ms": 0,
+      "over50Ms": 0,
+      "over100Ms": 0,
+      "exclusions": {},
+      "highWater": {
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effects": 391,
+        "pickups": 480
+      },
+      "protocol": {
+        "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+        "warmupSeconds": 30,
+        "measurementSeconds": 120,
+        "repetitions": 3,
+        "windows": [
+          {
+            "index": 1,
+            "complete": false,
+            "measuredSeconds": 0,
+            "cadenceMs": {
+              "samples": 0,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "worst": null
+            },
+            "cadenceHz": null,
+            "slowFraction": null,
+            "passes": null
+          },
+          {
+            "index": 2,
+            "complete": false,
+            "measuredSeconds": 0,
+            "cadenceMs": {
+              "samples": 0,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "worst": null
+            },
+            "cadenceHz": null,
+            "slowFraction": null,
+            "passes": null
+          },
+          {
+            "index": 3,
+            "complete": false,
+            "measuredSeconds": 0,
+            "cadenceMs": {
+              "samples": 0,
+              "p50": null,
+              "p95": null,
+              "p99": null,
+              "worst": null
+            },
+            "cadenceHz": null,
+            "slowFraction": null,
+            "passes": null
+          }
+        ],
+        "acceptance": null,
+        "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+      }
+    },
+    "phase": "playing",
+    "canvasCount": 1
+  },
+  "appearanceMatchesBeforeAndAfter": true,
+  "errors": [],
+  "recordedAt": "2026-10-05T12:39:24.965Z"
+}

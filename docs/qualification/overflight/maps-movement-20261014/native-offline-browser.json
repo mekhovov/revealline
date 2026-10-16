@@ -1,0 +1,605 @@
+{
+  "schema": "OverflightNativeOfflineBrowserV1",
+  "sourceRevision": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "buildId": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6",
+  "origin": "http://127.0.0.1:8936",
+  "browser": "Codex in-app Chromium155",
+  "actions": [
+    {
+      "at": "2026-10-14T15:39:00Z",
+      "kind": "fresh-install",
+      "selected": [
+        "Solo Starter",
+        "Survive \u00b7 all Overflight operations",
+        "Snake \u00b7 Classic"
+      ],
+      "displayedSizeMiB": 106.2,
+      "observed": [
+        "Selected chapters ready offline",
+        "Survive \u00b7 all Overflight operations: Ready offline",
+        "Snake \u00b7 Classic: Ready offline",
+        "0.0 MiB remain",
+        "Offline setup complete",
+        "Your selected game is verified and ready offline. Recorded soundtracks remain optional."
+      ],
+      "status": "passed",
+      "timePrecision": "minute",
+      "method": "Native Settings \u2192 Content & Offline \u2192 Install & offline play; genuine production output, unchanged installer/worker, CUA UI interaction."
+    },
+    {
+      "at": "2026-10-14T15:45:07.231Z",
+      "kind": "deny-origin-network",
+      "status": "enabled",
+      "method": "Task-owned dispatcher returns503 for every non-control origin request; authentic worker and cached application unchanged."
+    },
+    {
+      "kind": "offline-gameplay-launch",
+      "operation": "Single Drone",
+      "status": "passed",
+      "gameplaySecondsObserved": 16,
+      "clearedObserved": 18,
+      "hullObserved": 40,
+      "method": "Fresh native navigation/reload after origin denial, Home Start, advancing gameplay HUD observed through CUA."
+    },
+    {
+      "kind": "offline-gameplay-launch",
+      "operation": "Riy",
+      "status": "passed",
+      "gameplaySecondsObserved": 22,
+      "clearedObserved": 26,
+      "hullObserved": 60,
+      "method": "Fresh native navigation/reload after origin denial, Home Start, advancing gameplay HUD observed through CUA."
+    },
+    {
+      "kind": "offline-gameplay-launch",
+      "operation": "Single Raid",
+      "status": "passed",
+      "gameplaySecondsObserved": 12,
+      "clearedObserved": 6,
+      "hullObserved": 40,
+      "method": "Fresh native navigation/reload after origin denial, Home Start, advancing gameplay HUD observed through CUA."
+    },
+    {
+      "kind": "offline-gameplay-launch",
+      "operation": "Time Attack",
+      "status": "passed",
+      "gameplaySecondsObserved": 27,
+      "clearedObserved": 6,
+      "hullObserved": 100,
+      "method": "Fresh native navigation/reload after origin denial, Home Start, advancing gameplay HUD observed through CUA."
+    },
+    {
+      "kind": "offline-gameplay-launch",
+      "operation": "Contract Marathon",
+      "status": "passed",
+      "gameplaySecondsObserved": 15,
+      "clearedObserved": 6,
+      "airframesRemainingObserved": 2,
+      "contractObserved": "1/5",
+      "method": "Fresh native navigation after origin denial; Home Start; advancing gameplay HUD and rendered battlefield observed."
+    },
+    {
+      "kind": "offline-gameplay-launch",
+      "operation": "Snake Classic",
+      "status": "passed",
+      "gameplaySecondsObserved": 3,
+      "outcome": "head hit wall after8 moves; Try again/Home available",
+      "method": "Fresh native navigation after origin denial; Home Start; normal simulation and failure UX observed."
+    },
+    {
+      "kind": "creator-fresh-origin-import",
+      "status": "partial",
+      "package": "native/creator-glasshouse-package.json",
+      "title": "Review \u00b7 Glasshouse Routes",
+      "compiledIdentity": "12c9251df37ee67e",
+      "installedIdentity": "784aaf99b3089951",
+      "stepsPassed": [
+        "import exact earlier export in fresh-origin Creator store",
+        "validate same identity",
+        "native preview started;17s/14cleared",
+        "install package",
+        "explicit nativeplaycommunity URL loaded with server503",
+        "17s/15cleared and earned animated draft shown offline"
+      ],
+      "failedStep": "Studio Install and play used generic family=1 URL; saved Marathon redirected Survivorcommunity into Raidstore and failed. Narrow routing fix pending. ExplicitcorrectnativeURL proves package persistence/closure but does not erase normal-flowfailure."
+    },
+    {
+      "kind": "interrupted-update",
+      "candidateSource": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "candidateBuild": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+      "status": "failure-reproduced-as-intended",
+      "fault": "/game/ui/battlefield-ground-controls.mjs returns503",
+      "observed": [
+        "Latest published game:0.151.1 \u00b7 build8d1da69f",
+        "Previous downloadchoices selected",
+        "Update game \u00b763.1MiB",
+        "The installed edition could not be selected. Offline download failed integrity:game/ui/battlefield-ground-controls.mjs"
+      ],
+      "retention": "Passed direct cached custom mission launch after failure with all origin resources returning503:17 gameplay seconds,15 cleared, native earned-upgrade dialog. Launcher /app/ return failed503 separately; updater navigation fixe914 under test."
+    },
+    {
+      "at": "2026-10-14T16:20:16.173444+00:00",
+      "kind": "resume-interrupted-update",
+      "candidateSource": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "candidateBuild": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+      "status": "native-ui-update-complete",
+      "observed": [
+        "Update verified and selected. Choose Play updated game, or close and reopen the app. Your saved progress is kept.",
+        "Survive and Snake Ready offline",
+        "0.0MiB remain",
+        "Play updated game opens main native Home"
+      ],
+      "followup": "Custom package missing on direct same URL after update. Investigating persistence separately; fresh reimport required for routing retest. This is not a complete preservation pass."
+    },
+    {
+      "at": "2026-10-14T16:22:27.200887+00:00",
+      "kind": "creator-fixed-normal-flow",
+      "candidateSource": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "status": "passed-after-explicit-reimport",
+      "title": "Review \u00b7 Glasshouse Routes",
+      "compiledIdentity": "12c9251df37ee67e",
+      "installedIdentity": "784aaf99b3089951",
+      "steps": [
+        "Import same exact saved package",
+        "Validated exact compiled identity",
+        "Other game tab selected Contract Marathon",
+        "Install and play opened play.html?family=1&lang=en&community=784aaf99b3089951",
+        "Correct Survivor custom briefing and enabled Start",
+        "Deny all origin resources with503",
+        "Reload same normal Studio launch URL",
+        "Start;17gameplayseconds15cleared and native earned draft"
+      ],
+      "boundary": "Resolves normal Creator routing failure; does not erase unresolved missing library entry observed immediately after prior generation update."
+    },
+    {
+      "at": "2026-10-14T16:29:40.367685+00:00",
+      "kind": "launcher-fix-update-and-package-persistence",
+      "candidateSource": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+      "candidateBuild": "a6bc422f1a063bb0f0e2febb14e7a14d6f7c4dafdfe147dac28cbdada6953c0c",
+      "status": "passed-bounded-recheck",
+      "before": [
+        "Reinstalledsamepackage on4dab",
+        "ClosedCreator tab",
+        "Separate gameplaytab openedexactcommunity784aaf99b3089951briefing whileorigin503"
+      ],
+      "steps": [
+        "Nativeupdater identifiesa6bc422f",
+        "Update game0.0MiB reused verified content",
+        "Update verified and selected",
+        "Alloriginresourcesdenied503",
+        "Openapp launcher from updater reachedcachedlauncher thenmain/game/Home",
+        "ExactcustomcommunityURLstillopenedReviewGlasshouseRoutes",
+        "Start advanced17s15cleared and earnedupgrade"
+      ],
+      "boundary": "Second generation persistence checkpassed; first generation missinglibraryobservation remainsunresolved and isnot retrospectivelypassed. No OSicon or truebrowsernetworkoffline switch used."
+    }
+  ],
+  "boundaries": [
+    "Browsercacheinstallation;OSiconinstallationunsupported/unverified.",
+    "FiveoperationsandSnakelaunchedandsimulatedwithorigin503;not sixcompleteplaythroughs.",
+    "NormalCreatorofflineflowandsecondgenerationupdate/launcherreturnpassed;initialpostupdatemissinglibraryentryremainsanunresolvedobservation."
+  ],
+  "dispatcherAfterLaunches": {
+    "evidence": "Stable origin forwarding unmodified authentic production generations.",
+    "origin": "http://127.0.0.1:8936",
+    "upstreamPort": 8935,
+    "online": true,
+    "failedPath": null,
+    "requests": 2263,
+    "rejected": 13,
+    "generation": {
+      "evidence": "Unmodified prepareBuildProject output served from memory. No handcrafted cache manifest, bypassed validation, ZIP or site staging. Browser qualification is separate and uses the ordinary installed-app UI. Origin-unavailable mode returns503 for every build resource; the control endpoint remains available only to this localhost test host.",
+      "createdAt": "2026-10-14T15:20:09.689Z",
+      "observedCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+      "sourceRevision": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+      "sourceChanges": [
+        "M docs/fpv-survivals-maps-movement-plan-2026-10-14.md",
+        " M docs/fpv-survivals-maps-movement-status.md",
+        " M docs/qualification/overflight/maps-movement-20261014/README.md",
+        " M docs/qualification/overflight/maps-movement-20261014/art-review/native-worlds.html",
+        " M docs/qualification/overflight/maps-movement-20261014/native-offline-server.mjs",
+        "?? docs/qualification/overflight/maps-movement-20261014/FINAL-SPEED-FIX.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/NATIVE-PERFORMANCE.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/PERFORMANCE-INSTRUMENTATION.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/SOAK-SUMMARY.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/SOAK.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/final-speed-fix-output.txt",
+        "?? docs/qualification/overflight/maps-movement-20261014/final-speed-fix-probe.mjs",
+        "?? docs/qualification/overflight/maps-movement-20261014/final-speed-fix.json.gz",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-build-rejected-harness-version.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-build.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-dispatcher.mjs",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-harness-correction.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-performance-summary.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/raid-effective-speed-selection.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/raid-effective-speed-summary.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/raid-effective-speed.json.gz"
+      ],
+      "version": "0.151.1",
+      "buildId": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6",
+      "offlineFiles": 1673,
+      "offlineBytes": 66185808,
+      "hostedFiles": 3220,
+      "hostedBytes": 920417547,
+      "manifestSha256": "9e77fdfc194b5402cc31aa44ba30eb614f90aaa2444ab34e5269bc16ccdb01e2",
+      "required": [
+        {
+          "path": "game/overflight/battlefields.mjs",
+          "bytes": 23483,
+          "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+        },
+        {
+          "path": "game/overflight/coordinated-movement.mjs",
+          "bytes": 10388,
+          "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+        },
+        {
+          "path": "game/overflight/motion.mjs",
+          "bytes": 2361,
+          "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+        },
+        {
+          "path": "game/overflight/play.html",
+          "bytes": 17125,
+          "sha256": "323914bc7a72ea80402d0564c4680515797f1e5fa69380869f39109fcee19a3e"
+        },
+        {
+          "path": "game/overflight/raid-mode.mjs",
+          "bytes": 10024,
+          "sha256": "3c8ccf0643d7a7aebd5c46e6016d6a616ed3c12acf982205e102328cce043437"
+        },
+        {
+          "path": "game/overflight/raid-variants.mjs",
+          "bytes": 24767,
+          "sha256": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd"
+        },
+        {
+          "path": "game/overflight/raid.html",
+          "bytes": 17964,
+          "sha256": "47a71913f4aae343ab1261fd921e620f3929ef872ccf3da4951be16f47008a16"
+        },
+        {
+          "path": "game/overflight/riy-mode.mjs",
+          "bytes": 8740,
+          "sha256": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+        },
+        {
+          "path": "game/presentation/overflight-world-art-v2.mjs",
+          "bytes": 19404,
+          "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+        }
+      ],
+      "url": "http://127.0.0.1:8935/game/overflight/play.html?lang=en",
+      "online": true,
+      "requests": 2250,
+      "rejected": 0
+    },
+    "events": [
+      {
+        "at": "2026-10-14T15:16:26.078Z",
+        "action": "dispatcher-ready",
+        "port": 8936,
+        "upstreamPort": 8935
+      },
+      {
+        "at": "2026-10-14T15:45:07.231Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T15:50:01.484Z",
+        "action": "origin-network",
+        "online": true
+      }
+    ]
+  },
+  "dispatcherAfterFailedUpdate": {
+    "evidence": "Stable origin forwarding unmodified authentic production generations.",
+    "origin": "http://127.0.0.1:8936",
+    "upstreamPort": 8937,
+    "online": false,
+    "failedPath": "/game/ui/battlefield-ground-controls.mjs",
+    "requests": 2443,
+    "rejected": 17,
+    "generation": {
+      "evidence": "Unmodified prepareBuildProject output served from memory. No handcrafted cache manifest, bypassed validation, ZIP or site staging. Browser qualification is separate and uses the ordinary installed-app UI. Origin-unavailable mode returns503 for every build resource; the control endpoint remains available only to this localhost test host.",
+      "createdAt": "2026-10-14T16:02:18.282Z",
+      "observedCommit": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "sourceChanges": [
+        "M docs/fpv-survivals-maps-movement-plan-2026-10-14.md",
+        " M docs/fpv-survivals-maps-movement-status.md",
+        " M docs/qualification/overflight/maps-movement-20261014/EXPANDED-MATRIX.md",
+        " M docs/qualification/overflight/maps-movement-20261014/PERFORMANCE-INSTRUMENTATION.md",
+        " M docs/qualification/overflight/maps-movement-20261014/native-offline-browser.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/EXPANDED-MATRIX-RESULTS.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/UPGRADE-RENDER-CLOCK.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/creator-routing-tests.txt",
+        "?? docs/qualification/overflight/maps-movement-20261014/expanded-earned-final-output.txt",
+        "?? docs/qualification/overflight/maps-movement-20261014/expanded-earned-final-summary.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/expanded-earned-final.json.gz",
+        "?? docs/qualification/overflight/maps-movement-20261014/import-native-trial.mjs",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-creator-routing.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-full-content-summary.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-upgrade-b12d4a-interrupted.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native/full-survivor-trial-1.json.gz",
+        "?? docs/qualification/overflight/maps-movement-20261014/native/full-survivor-trial-2.json.gz",
+        "?? docs/qualification/overflight/maps-movement-20261014/upgrade-render-clock-tests.txt"
+      ],
+      "version": "0.151.1",
+      "buildId": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+      "offlineFiles": 1673,
+      "offlineBytes": 66190965,
+      "hostedFiles": 3220,
+      "hostedBytes": 920423425,
+      "manifestSha256": "f4b3ec5349c546a5eb2b7ece53334ee7b68e89125b5f17d3e0d82ef77f465f39",
+      "required": [
+        {
+          "path": "game/overflight/battlefields.mjs",
+          "bytes": 23483,
+          "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+        },
+        {
+          "path": "game/overflight/coordinated-movement.mjs",
+          "bytes": 10388,
+          "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+        },
+        {
+          "path": "game/overflight/motion.mjs",
+          "bytes": 2361,
+          "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+        },
+        {
+          "path": "game/overflight/play.html",
+          "bytes": 17125,
+          "sha256": "c9a6d0fec6e58f0ff8bce3d4541c78528075c85b0dd90227d17b3feb1a7501a8"
+        },
+        {
+          "path": "game/overflight/raid-mode.mjs",
+          "bytes": 10024,
+          "sha256": "3c8ccf0643d7a7aebd5c46e6016d6a616ed3c12acf982205e102328cce043437"
+        },
+        {
+          "path": "game/overflight/raid-variants.mjs",
+          "bytes": 24767,
+          "sha256": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd"
+        },
+        {
+          "path": "game/overflight/raid.html",
+          "bytes": 17964,
+          "sha256": "3b51395b75e123b42f4707513975cf3dea3102009654765f4b08e51bed80e8e8"
+        },
+        {
+          "path": "game/overflight/riy-mode.mjs",
+          "bytes": 8740,
+          "sha256": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+        },
+        {
+          "path": "game/presentation/overflight-world-art-v2.mjs",
+          "bytes": 19404,
+          "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+        }
+      ],
+      "url": "http://127.0.0.1:8937/game/overflight/play.html?lang=en",
+      "online": true,
+      "requests": 179,
+      "rejected": 0
+    },
+    "events": [
+      {
+        "at": "2026-10-14T15:16:26.078Z",
+        "action": "dispatcher-ready",
+        "port": 8936,
+        "upstreamPort": 8935
+      },
+      {
+        "at": "2026-10-14T15:45:07.231Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T15:50:01.484Z",
+        "action": "origin-network",
+        "online": true
+      },
+      {
+        "at": "2026-10-14T15:51:01.099Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T16:06:21.460Z",
+        "action": "candidate-resource-fault",
+        "failedPath": "/game/ui/battlefield-ground-controls.mjs"
+      },
+      {
+        "at": "2026-10-14T16:06:21.521Z",
+        "action": "generation-selected",
+        "upstreamPort": 8937,
+        "buildId": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+        "commit": "4dab801d9ce03b42227e99388b066c378c81ca02"
+      },
+      {
+        "at": "2026-10-14T16:06:21.579Z",
+        "action": "origin-network",
+        "online": true
+      },
+      {
+        "at": "2026-10-14T16:08:05.276Z",
+        "action": "origin-network",
+        "online": false
+      }
+    ]
+  },
+  "dispatcherFinal": {
+    "evidence": "Stable origin forwarding unmodified authentic production generations.",
+    "origin": "http://127.0.0.1:8936",
+    "upstreamPort": 8938,
+    "online": false,
+    "failedPath": null,
+    "requests": 4755,
+    "rejected": 188,
+    "generation": {
+      "evidence": "Unmodified prepareBuildProject output served from memory. No handcrafted cache manifest, bypassed validation, ZIP or site staging. Browser qualification is separate and uses the ordinary installed-app UI. Origin-unavailable mode returns503 for every build resource; the control endpoint remains available only to this localhost test host.",
+      "createdAt": "2026-10-14T16:24:34.021Z",
+      "observedCommit": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+      "sourceRevision": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+      "sourceChanges": [
+        "M authoring/fpv-worlds/regions/flight-preview.html",
+        " M docs/qualification/overflight/maps-movement-20261014/native-full-content-summary.json",
+        " M docs/qualification/overflight/maps-movement-20261014/native-offline-browser.json",
+        " M docs/qualification/overflight/maps-movement-20261014/native-offline-dispatcher.mjs",
+        "?? docs/qualification/overflight/maps-movement-20261014/launcher-update-client-probe.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-build-upgrade.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-generation-comparison.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-offline-upgrade-b12d4a-interrupted.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-package-persistence-investigation.md",
+        "?? docs/qualification/overflight/maps-movement-20261014/native-package-persistence-source.json",
+        "?? docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-1.json.gz",
+        "?? docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-2.json.gz"
+      ],
+      "version": "0.151.1",
+      "buildId": "a6bc422f1a063bb0f0e2febb14e7a14d6f7c4dafdfe147dac28cbdada6953c0c",
+      "offlineFiles": 1673,
+      "offlineBytes": 66191296,
+      "hostedFiles": 3220,
+      "hostedBytes": 920423756,
+      "manifestSha256": "8cf63e09c500c0fcb4e2b2f4cdc00abc4a7a66a66308b3351108e9e24cd058cc",
+      "required": [
+        {
+          "path": "game/overflight/battlefields.mjs",
+          "bytes": 23483,
+          "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+        },
+        {
+          "path": "game/overflight/coordinated-movement.mjs",
+          "bytes": 10388,
+          "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+        },
+        {
+          "path": "game/overflight/motion.mjs",
+          "bytes": 2361,
+          "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+        },
+        {
+          "path": "game/overflight/play.html",
+          "bytes": 17125,
+          "sha256": "d38fb24063d3d8f94b3f0fc7d6f8b685c69373433fe1ab58b4841785b7247108"
+        },
+        {
+          "path": "game/overflight/raid-mode.mjs",
+          "bytes": 10024,
+          "sha256": "3c8ccf0643d7a7aebd5c46e6016d6a616ed3c12acf982205e102328cce043437"
+        },
+        {
+          "path": "game/overflight/raid-variants.mjs",
+          "bytes": 24767,
+          "sha256": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd"
+        },
+        {
+          "path": "game/overflight/raid.html",
+          "bytes": 17964,
+          "sha256": "82d661809a8335ceb0b6b3b98454dd7108bf876e90e60a07275653d60c8d0fe1"
+        },
+        {
+          "path": "game/overflight/riy-mode.mjs",
+          "bytes": 8740,
+          "sha256": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+        },
+        {
+          "path": "game/presentation/overflight-world-art-v2.mjs",
+          "bytes": 19404,
+          "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+        }
+      ],
+      "url": "http://127.0.0.1:8938/game/overflight/play.html?lang=en",
+      "online": true,
+      "requests": 217,
+      "rejected": 0
+    },
+    "events": [
+      {
+        "at": "2026-10-14T15:16:26.078Z",
+        "action": "dispatcher-ready",
+        "port": 8936,
+        "upstreamPort": 8935
+      },
+      {
+        "at": "2026-10-14T15:45:07.231Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T15:50:01.484Z",
+        "action": "origin-network",
+        "online": true
+      },
+      {
+        "at": "2026-10-14T15:51:01.099Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T16:06:21.460Z",
+        "action": "candidate-resource-fault",
+        "failedPath": "/game/ui/battlefield-ground-controls.mjs"
+      },
+      {
+        "at": "2026-10-14T16:06:21.521Z",
+        "action": "generation-selected",
+        "upstreamPort": 8937,
+        "buildId": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+        "commit": "4dab801d9ce03b42227e99388b066c378c81ca02"
+      },
+      {
+        "at": "2026-10-14T16:06:21.579Z",
+        "action": "origin-network",
+        "online": true
+      },
+      {
+        "at": "2026-10-14T16:08:05.276Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T16:15:29.705Z",
+        "action": "origin-network",
+        "online": true
+      },
+      {
+        "at": "2026-10-14T16:15:29.718Z",
+        "action": "candidate-resource-fault",
+        "failedPath": null
+      },
+      {
+        "at": "2026-10-14T16:21:38.920Z",
+        "action": "origin-network",
+        "online": false
+      },
+      {
+        "at": "2026-10-14T16:25:34.592Z",
+        "action": "dispatcher-ready",
+        "port": 8936,
+        "upstreamPort": 8937,
+        "restoredHistory": true
+      },
+      {
+        "at": "2026-10-14T16:26:11.339Z",
+        "action": "generation-selected",
+        "upstreamPort": 8938,
+        "buildId": "a6bc422f1a063bb0f0e2febb14e7a14d6f7c4dafdfe147dac28cbdada6953c0c",
+        "commit": "e914f3bdd8e36b9b78d794da4f1342dcda449e00"
+      },
+      {
+        "at": "2026-10-14T16:26:11.351Z",
+        "action": "origin-network",
+        "online": true
+      },
+      {
+        "at": "2026-10-14T16:27:23.688Z",
+        "action": "origin-network",
+        "online": false
+      }
+    ]
+  }
+}

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { parseTestPolicy, readTestPolicy } from './test-policy.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,7 +30,9 @@ function validateCommand(command) {
     typeof command.id !== 'string' ||
     !['node', 'npm'].includes(command.command) ||
     !Array.isArray(command.args) ||
-    command.args.some((argument) => typeof argument !== 'string' || argument.includes('\0'))
+    command.args.some((argument) => typeof argument !== 'string' || argument.includes('\0')) ||
+    (command.timeoutMs !== undefined &&
+      (!Number.isSafeInteger(command.timeoutMs) || command.timeoutMs < 1))
   )
     throw new Error('Focused-test manifest contains an invalid command.');
   return command;
@@ -170,6 +173,33 @@ function packageNodeTestPatterns(script) {
   return patterns;
 }
 
+// Waive only unambiguous test-only commands. Mixed scripts, lifecycle hooks,
+// validation, generation and unknown syntax stay mandatory.
+export function applyFocusedTestPolicy(commands, policy, { packageScripts = {} } = {}) {
+  if (policy === null || policy === undefined) return { commands: [...commands], waivedTests: [] };
+  const parsed = parseTestPolicy(policy);
+  if (parsed.mode !== 'waived') return { commands: [...commands], waivedTests: [] };
+  const waivedTests = [];
+  const retained = commands.filter((command) => {
+    validateCommand(command);
+    const directTests =
+      command.command === 'node' &&
+      command.args.every((argument) => !/\s/u.test(argument)) &&
+      packageNodeTestPatterns(['node', ...command.args].join(' '));
+    const scriptName = packageScriptName(command);
+    const packageTests =
+      scriptName &&
+      Object.hasOwn(packageScripts, scriptName) &&
+      !Object.hasOwn(packageScripts, 'pre' + scriptName) &&
+      !Object.hasOwn(packageScripts, 'post' + scriptName) &&
+      packageNodeTestPatterns(packageScripts[scriptName]);
+    if (!directTests && !packageTests) return true;
+    waivedTests.push({ ...command, verdict: 'WAIVED_SKIPPED_NOT_PASSED' });
+    return false;
+  });
+  return { commands: retained, waivedTests };
+}
+
 function escapeRegularExpression(value) {
   let escaped = '';
   for (const character of value) {
@@ -219,7 +249,11 @@ export function focusedCommandExecutionPlan(
     const scriptName = packageScriptName(command);
     if (!scriptName) continue;
     if (!Object.hasOwn(packageScripts, scriptName)) {
-      diagnostics.push({ id: command.id, script: scriptName, reason: 'missing-package-script' });
+      diagnostics.push({
+        id: command.id,
+        script: scriptName,
+        reason: 'missing-package-script',
+      });
       continue;
     }
     const script = packageScripts[scriptName];
@@ -341,7 +375,9 @@ export async function loadFocusedExecutionInputs(
     }
     const directory = path.dirname(pattern);
     try {
-      const entries = await readDirectory(path.join(root, directory), { withFileTypes: true });
+      const entries = await readDirectory(path.join(root, directory), {
+        withFileTypes: true,
+      });
       for (const entry of entries) {
         const candidate = path.posix.join(directory, entry.name);
         if (entry.isFile()) {
@@ -359,17 +395,30 @@ export async function loadFocusedExecutionInputs(
       // An incomplete glob cannot authorize deduplication.
     }
   }
-  return { packageScripts, repositoryFiles: [...repositoryFiles], shellSemantics };
+  return {
+    packageScripts,
+    repositoryFiles: [...repositoryFiles],
+    shellSemantics,
+  };
 }
 
 export function runFocusedCommands(
   commands,
-  { root = '.', spawn = spawnSync, stdout = process.stdout, stderr = process.stderr } = {},
+  {
+    root = '.',
+    spawn = spawnSync,
+    stdout = process.stdout,
+    stderr = process.stderr,
+    timeoutMs = 10 * 60 * 1000,
+  } = {},
 ) {
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1)
+    throw new Error('Focused command timeout must be a positive safe integer.');
   const failures = [];
   let attempted = 0;
   for (const command of commands) {
     attempted += 1;
+    const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
     stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
     let result;
     try {
@@ -378,6 +427,8 @@ export function runFocusedCommands(
         encoding: 'utf8',
         stdio: 'inherit',
         env: { ...process.env, CI: 'true' },
+        timeout: commandTimeoutMs,
+        killSignal: 'SIGTERM',
       });
     } catch (error) {
       result = { error };
@@ -386,6 +437,7 @@ export function runFocusedCommands(
     const signal =
       typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
     if (!result?.error && status === 0 && signal === null) continue;
+    const timedOut = result?.error?.code === 'ETIMEDOUT';
     const failure = {
       id: command.id,
       command: command.command,
@@ -397,9 +449,16 @@ export function runFocusedCommands(
           ? result.error.message
           : String(result.error)
         : null,
+      ...(timedOut ? { timedOut: true } : {}),
     };
     failures.push(failure);
     stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
+    if (timedOut) {
+      stderr.write(
+        `[focused:${command.id}] timed out after ${commandTimeoutMs}ms; remaining focused commands were not run.\n`,
+      );
+      return { attempted, failures, exitCode: 124 };
+    }
   }
   return {
     attempted,
@@ -407,6 +466,91 @@ export function runFocusedCommands(
     exitCode:
       failures.find(({ status }) => Number.isInteger(status) && status !== 0)?.status ||
       (failures.length ? 1 : 0),
+  };
+}
+
+/** Execute independent focused commands with a bounded worker pool.  A large
+ * stacked PR can legitimately select many orthogonal checks; serial execution
+ * turns that coverage into a workflow timeout instead of a useful verdict.
+ * Each command still has its own timeout and every non-zero result remains a
+ * failure. */
+export async function runFocusedCommandsParallel(
+  commands,
+  {
+    root = '.',
+    concurrency = 1,
+    spawnChild = spawn,
+    stdout = process.stdout,
+    stderr = process.stderr,
+    timeoutMs = 10 * 60 * 1000,
+  } = {},
+) {
+  if (!Number.isSafeInteger(concurrency) || concurrency < 1)
+    throw new Error('Focused command concurrency must be a positive safe integer.');
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1)
+    throw new Error('Focused command timeout must be a positive safe integer.');
+  const failures = [];
+  let next = 0;
+  const execute = async (command) => {
+    const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
+    stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
+    const result = await new Promise((resolve) => {
+      let settled = false;
+      const finish = (value) => {
+        if (!settled) {
+          settled = true;
+          resolve(value);
+        }
+      };
+      try {
+        const child = spawnChild(command.command, command.args, {
+          cwd: root,
+          stdio: 'inherit',
+          env: { ...process.env, CI: 'true' },
+          timeout: commandTimeoutMs,
+          killSignal: 'SIGTERM',
+        });
+        child.once('error', (error) => finish({ error }));
+        child.once('close', (status, signal) => finish({ status, signal }));
+      } catch (error) {
+        finish({ error });
+      }
+    });
+    const status = Number.isInteger(result?.status) ? result.status : null;
+    const signal = typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
+    if (!result?.error && status === 0 && signal === null) return;
+    const timedOut = result?.error?.code === 'ETIMEDOUT';
+    const failure = {
+      id: command.id,
+      command: command.command,
+      args: command.args,
+      status,
+      signal,
+      error: result?.error
+        ? result.error instanceof Error
+          ? result.error.message
+          : String(result.error)
+        : null,
+      ...(timedOut ? { timedOut: true } : {}),
+    };
+    failures.push(failure);
+    stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
+  };
+  const worker = async () => {
+    while (next < commands.length) {
+      const command = commands[next++];
+      await execute(command);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, commands.length) }, worker));
+  return {
+    attempted: commands.length,
+    failures,
+    exitCode:
+      failures.some(({ timedOut }) => timedOut)
+        ? 124
+        : failures.find(({ status }) => Number.isInteger(status) && status !== 0)?.status ||
+          (failures.length ? 1 : 0),
   };
 }
 
@@ -430,6 +574,10 @@ async function main() {
     .split(/\r?\n/u)
     .map((item) => item.trim())
     .filter(Boolean);
+  const policyFile = argument('--test-policy');
+  if (process.argv.includes('--test-policy') && (!policyFile || policyFile.startsWith('--')))
+    throw new Error('An explicit test policy path is required; no waiver granted.');
+  const testPolicy = policyFile ? await readTestPolicy(path.resolve(policyFile)) : null;
   const fallbackHandled = process.argv.includes('--fallback-handled');
   const plan = focusedTestPlan(paths, manifest, { fallbackHandled });
   const summary = [
@@ -458,19 +606,33 @@ async function main() {
     }
     return;
   }
-  const execution = focusedCommandExecutionPlan(
-    plan.commands,
-    await loadFocusedExecutionInputs(plan.commands, root, {
-      shellSemantics: packageScriptShellSemantics(root),
-    }),
-  );
+  const inputs = await loadFocusedExecutionInputs(plan.commands, root, {
+    shellSemantics: packageScriptShellSemantics(root),
+  });
+  const selected = applyFocusedTestPolicy(plan.commands, testPolicy, inputs);
+  if (selected.waivedTests.length) {
+    const statement =
+      'Automated test commands are WAIVED_SKIPPED_NOT_PASSED by explicit user policy. ' +
+      'Non-test validation and source-identity guards remain required.';
+    const waiverSummary =
+      [
+        '',
+        statement,
+        'Deferred commands: ' + selected.waivedTests.map(({ id }) => id).join(', '),
+      ].join('\n') + '\n';
+    process.stdout.write('::warning::' + statement + '\n');
+    process.stdout.write(waiverSummary);
+    if (process.env.GITHUB_STEP_SUMMARY)
+      await fs.appendFile(process.env.GITHUB_STEP_SUMMARY, waiverSummary);
+  }
+  const execution = focusedCommandExecutionPlan(selected.commands, inputs);
   for (const diagnostic of execution.diagnostics)
     process.stderr.write(`[focused:coverage] ${JSON.stringify(diagnostic)}\n`);
   if (execution.deduplicated.length)
     process.stdout.write(
       `Focused executions: ${execution.commands.length} (${execution.deduplicated.length} exact duplicate tests covered by selected package scripts)\n`,
     );
-  const result = runFocusedCommands(execution.commands, { root });
+  const result = await runFocusedCommandsParallel(execution.commands, { root, concurrency: 2 });
   if (result.exitCode !== 0) process.exitCode = result.exitCode;
 }
 

@@ -1,11 +1,18 @@
 # Reveal Line: player-first UX execution
 
-> **Current status:** use the
-> [28 September completion and remaining delivery plan](plan-status-2026-09-28.md)
-> for v0.141.7 deployment, remaining player acceptance, current owners, compatible
-> batches, focused effort ranges and content-accounting limits. The checkpoints
-> and version tables below preserve historical contracts and observations; their
-> serial version allocations and pending PR labels are not the current queue.
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
+> **Historical reference:** the [1 October historical review and priority choices](plan-priorities-2026-10-01.md).
+> The recommendation is presented for user review; existing approvals/deferrals
+> remain intact. The [30 September completed/remaining review](plan-review-2026-09-30.md)
+> and [daily source register](plan-status-2026-09-30.md) preserve the earlier snapshots.
+> These distinguish integrated
+> UX foundations, current owner corrections, continuous-main Pages, immutable
+> releases, prepared artwork and unfinished device/public acceptance. The dated
+> checkpoints below retain historical evidence; old serial version allocations,
+> test totals and pending PR labels are not today's queue or fresh passing checks.
 
 > **Current release-coordination policy (27 September 2026):** the dedicated
 > release-coordinator chat is the sole merge, version, freeze, archive, selector,
@@ -19,7 +26,8 @@
 
 Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
-requirements. Each independent feature is released before the next is accepted.
+requirements. The later approved batch policy permits parallel implementation and
+compatible aggregate delivery; public acceptance still requires its own evidence.
 
 ## Current checkpoint — 26 September 2026
 

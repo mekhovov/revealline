@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "starts": [
+    {
+      "mode": "self-level",
+      "start": "crescent-dunes",
+      "heading": 14446
+    },
+    {
+      "mode": "self-level",
+      "start": "dry-wash",
+      "heading": 15162
+    },
+    {
+      "mode": "self-level",
+      "start": "salt-basin",
+      "heading": 17740
+    },
+    {
+      "mode": "self-level",
+      "start": "sunrise-escarpment",
+      "heading": 12246
+    },
+    {
+      "mode": "self-level",
+      "start": "mesa-corridor",
+      "heading": 10280
+    },
+    {
+      "mode": "self-level",
+      "start": "rocky-plain",
+      "heading": 14838
+    },
+    {
+      "mode": "acro",
+      "start": "crescent-dunes",
+      "heading": 14446
+    },
+    {
+      "mode": "acro",
+      "start": "dry-wash",
+      "heading": 15162
+    },
+    {
+      "mode": "acro",
+      "start": "salt-basin",
+      "heading": 17740
+    },
+    {
+      "mode": "acro",
+      "start": "sunrise-escarpment",
+      "heading": 12246
+    },
+    {
+      "mode": "acro",
+      "start": "mesa-corridor",
+      "heading": 10280
+    },
+    {
+      "mode": "acro",
+      "start": "rocky-plain",
+      "heading": 14838
+    }
+  ],
+  "savedHeadingPreserved": true,
+  "oldAndUnknownPinsUnchanged": true,
+  "sourcePositionsUnchanged": true,
+  "nativeReview": "pending",
+  "scope": "Functional source composition: exact 0d51 optional runtime with d7f48f24 parent files plus proposed Library/host changes. New frozen package and native heading review pending."
+}

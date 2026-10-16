@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
@@ -81,7 +82,7 @@ test('explicit native links preserve retry URLs, distinguish requested from prep
   assert.equal(h.$('backup-set-files').querySelectorAll('a').length, 5);
   const names = ['game', 'media', 'story', 'audio', 'coverage'].map((id) => {
     const anchor = h.$(`download-backup-${id}`);
-    assert.match(anchor.download, /^RevealLine-backup-[0-9TZ]+-[a-f0-9]{32}-/);
+    assert.match(anchor.download, /^fpv-line-backup-[0-9TZ]+-[a-f0-9]{32}-/);
     assert.equal(
       anchor.textContent,
       {
@@ -95,7 +96,7 @@ test('explicit native links preserve retry URLs, distinguish requested from prep
     assert.equal(anchor.getAttribute('aria-describedby'), `backup-set-state-${id}`);
     assert.equal(h.$(`backup-set-filename-${id}`).textContent, anchor.download);
     assert.equal(h.$(`backup-set-purpose-${id}`).textContent, anchor.textContent);
-    return anchor.download.match(/^RevealLine-backup-[0-9TZ]+-[a-f0-9]{32}-/)[0];
+    return anchor.download.match(/^fpv-line-backup-[0-9TZ]+-[a-f0-9]{32}-/)[0];
   });
   assert.equal(new Set(names).size, 1, 'The actual native links keep the shared prefix.');
   assert.match(h.$('backup-set-status').textContent, /No file has been saved/);
@@ -195,8 +196,8 @@ test('actual solo host exports a paused unfinished flight without changing its c
   assert.equal(h.$('music-preview').textContent, music);
   const link = h.$('download-backup-game'),
     game = await (await fetchBlob(link.href)).json();
-  assert.ok(game.session?.replay);
-  assert.equal(game.session.replay.ticks, h.rendered.run.tick);
+  assert.ok(nativeSession(game.session)?.replay);
+  assert.equal(nativeSession(game.session).replay.ticks, h.rendered.run.tick);
   assert.equal(h.document?.hidden ?? h.doc.hidden, false);
   assert.equal(h.doc.activeElement.id, 'download-backup-game');
   h.$('library-dialog').dispatchEvent(new Event('cancel', { cancelable: true }));

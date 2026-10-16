@@ -1,0 +1,203 @@
+{
+  "extent": {
+    "widthM": 768,
+    "depthM": 768,
+    "targetWidthM": 8192,
+    "targetDepthM": 8192
+  },
+  "districts": [
+    {
+      "id": "arrival-basin",
+      "title": ["Arrival Basin", "Стартова улоговина"],
+      "boundsM": [0, 0, 384, 256],
+      "purpose": "Broad low-altitude practice and safe landing"
+    },
+    {
+      "id": "red-mesa",
+      "title": ["Red Mesa", "Червоне плато"],
+      "boundsM": [384, 0, 768, 256],
+      "purpose": "Terraced ridge approaches and altitude changes"
+    },
+    {
+      "id": "serpentine-gorge",
+      "title": ["Serpentine Gorge", "Звивиста ущелина"],
+      "boundsM": [0, 256, 384, 512],
+      "purpose": "Linked bends, terrain reading and smooth throttle"
+    },
+    {
+      "id": "twin-buttes",
+      "title": ["Twin Buttes", "Дві скелі"],
+      "boundsM": [384, 256, 768, 512],
+      "purpose": "Orbit and figure-eight lines around isolated hills"
+    },
+    {
+      "id": "split-ravine",
+      "title": ["Split Ravine", "Роздвоєна балка"],
+      "boundsM": [0, 512, 384, 768],
+      "purpose": "Route choice and narrow terrain corridors"
+    },
+    {
+      "id": "sunset-shelf",
+      "title": ["Sunset Shelf", "Західна тераса"],
+      "boundsM": [384, 512, 768, 768],
+      "purpose": "Long ridge contours and high observation lines"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "basin-pad",
+      "title": {
+        "en": "Basin Pad",
+        "uk": "Майданчик улоговини"
+      },
+      "x": 110,
+      "z": 100
+    },
+    {
+      "id": "dry-lake",
+      "title": {
+        "en": "Dry Lake",
+        "uk": "Сухе озеро"
+      },
+      "x": 170,
+      "z": 155
+    },
+    {
+      "id": "mesa-steps",
+      "title": {
+        "en": "Mesa Steps",
+        "uk": "Сходинки плато"
+      },
+      "x": 610,
+      "z": 100
+    },
+    {
+      "id": "east-overlook",
+      "title": {
+        "en": "East Overlook",
+        "uk": "Східний оглядовий майданчик"
+      },
+      "x": 680,
+      "z": 215
+    },
+    {
+      "id": "needle-bend",
+      "title": {
+        "en": "Needle Bend",
+        "uk": "Гострий поворот"
+      },
+      "x": 210,
+      "z": 300
+    },
+    {
+      "id": "red-switchback",
+      "title": {
+        "en": "Red Switchback",
+        "uk": "Червоний серпантин"
+      },
+      "x": 300,
+      "z": 420
+    },
+    {
+      "id": "north-butte",
+      "title": {
+        "en": "North Butte",
+        "uk": "Північна скеля"
+      },
+      "x": 510,
+      "z": 330
+    },
+    {
+      "id": "south-butte",
+      "title": {
+        "en": "South Butte",
+        "uk": "Південна скеля"
+      },
+      "x": 620,
+      "z": 440
+    },
+    {
+      "id": "fork-mouth",
+      "title": {
+        "en": "Fork Mouth",
+        "uk": "Вхід у розвилку"
+      },
+      "x": 250,
+      "z": 540
+    },
+    {
+      "id": "narrow-exit",
+      "title": {
+        "en": "Narrow Exit",
+        "uk": "Вузький вихід"
+      },
+      "x": 125,
+      "z": 680
+    },
+    {
+      "id": "shelf-rim",
+      "title": {
+        "en": "Shelf Rim",
+        "uk": "Край тераси"
+      },
+      "x": 570,
+      "z": 620
+    },
+    {
+      "id": "sunset-ledge",
+      "title": {
+        "en": "Sunset Ledge",
+        "uk": "Західний уступ"
+      },
+      "x": 670,
+      "z": 700
+    }
+  ],
+  "routes": [
+    {
+      "id": "basin-circuit",
+      "title": ["Basin circuit", "Коло улоговиною"],
+      "difficulty": "beginner",
+      "clearanceM": 8,
+      "halfWidthM": 8,
+      "points": [
+        [90, 70, 28],
+        [190, 70, 28],
+        [210, 145, 28],
+        [130, 190, 28],
+        [90, 70, 28]
+      ]
+    },
+    {
+      "id": "gorge-run",
+      "title": ["Gorge run", "Політ ущелиною"],
+      "difficulty": "intermediate",
+      "clearanceM": 8,
+      "halfWidthM": 6,
+      "points": [
+        [170, 155, 34],
+        [240, 220, 34],
+        [210, 300, 34],
+        [280, 360, 34],
+        [300, 420, 34],
+        [250, 480, 34],
+        [250, 540, 34],
+        [300, 620, 34],
+        [330, 730, 34]
+      ]
+    },
+    {
+      "id": "fork-run",
+      "title": ["Fork run", "Політ розвилкою"],
+      "difficulty": "advanced",
+      "clearanceM": 8,
+      "halfWidthM": 4,
+      "points": [
+        [250, 540, 34],
+        [180, 590, 34],
+        [125, 680, 34],
+        [100, 740, 34]
+      ]
+    }
+  ]
+}

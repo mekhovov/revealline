@@ -14,29 +14,27 @@ const pull = {
   body: 'Depends on #12',
 };
 const options = { workflowRevision: base, policyDigest, paths: ['game/app.mjs'] };
-test('admission is bound to source, metadata, dependencies and policy', () => {
+test('admission is bound to source, dependencies and policy, not queue metadata', () => {
   const receipt = admissionBinding(pull, options);
   assert.equal(sameAdmission(receipt, pull, policyDigest), true);
-  for (const change of [
-    { title: 'Release v1.2.3' },
-    { head: { sha: base } },
-    { base: { sha: head } },
-    { milestone: { number: 2, title: 'v1.2.3' } },
-    { body: 'Depends on #13' },
-    { labels: [{ name: 'hold: review' }] },
-    { labels: [{ name: 'fastline-approved' }] },
-  ]) {
+  for (const change of [{ head: { sha: base } }, { base: { sha: head } }, { body: 'Depends on #13' }]) {
     assert.equal(sameAdmission(receipt, { ...pull, ...change }, policyDigest), false);
   }
   assert.equal(sameAdmission(receipt, pull, '4'.repeat(64)), false);
   assert.equal(sameAdmission({}, pull, policyDigest), false);
 });
-test('draft promotion and irrelevant metadata do not change source admission', () => {
+test('title, labels, milestone and draft state do not change source admission', () => {
   const receipt = admissionBinding(pull, options);
   assert.equal(
     sameAdmission(
       receipt,
-      { ...pull, draft: false, labels: [{ name: 'documentation' }] },
+      {
+        ...pull,
+        title: 'Release v9.9.9',
+        milestone: { number: 9, title: 'v9.9.9' },
+        draft: false,
+        labels: [{ name: 'hold: review' }, { name: 'fastline-approved' }],
+      },
       policyDigest,
     ),
     true,

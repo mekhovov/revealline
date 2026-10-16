@@ -1,0 +1,676 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A parked model, pause and reset sculptures welcome visitors to a fictional practice gym.",
+      "bytes": 141896,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-01-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "991e2ba9d123625894bbb124ed92373179650f01affd65f0fcba78f7ee448376",
+      "width": 960
+    },
+    {
+      "alt": "Two display models share one floor position at different heights beside overhead and side-view cards.",
+      "bytes": 121938,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "b08cfe7d0d4d25c55b958ffeadec3477092836606ab102e37442288f6c3ef493",
+      "width": 960
+    },
+    {
+      "alt": "A coral floor arrow and a turquoise model nose point in different directions in a spacious gym.",
+      "bytes": 120040,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "00a382113a9346f8e3e664ea480a57eb98866449ff92b300ba0e8a6538194638",
+      "width": 960
+    },
+    {
+      "alt": "Two cards keep the same window view while a model silhouette appears at different sideways positions.",
+      "bytes": 150717,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "0d22e3cbbf1693ef8cd4bec21003480c50b720ae9b730fae911a542be4eba827",
+      "width": 960
+    },
+    {
+      "alt": "A square floor ribbon, a separate turning arc and nose-marker tokens compare travel and heading.",
+      "bytes": 117319,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "ae257751d93ebe8c3c8cfedfd98a70656baf9ba4f854fc6f4f2134b4808b0bba",
+      "width": 960
+    },
+    {
+      "alt": "Six picture cards, separate height and heading markers, and a resting model complete a practice notebook.",
+      "bytes": 135472,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "fpv-first-flight-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/fpv-first-flight-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 6,
+      "discovery": {
+        "exhibitLayout": "route",
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["A new flight-pattern illustration joins your collection."],
+            "uk": ["Нова ілюстрація траєкторії поповнила вашу колекцію."]
+          },
+          "revision": "feedback-a6e72e31af4d1c45",
+          "victoryMotif": "bright-return-v1"
+        },
+        "finaleRewardRef": { "id": "fpv-first-flight-finale", "revision": "3" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "fpv-first-flight",
+      "missionIds": [
+        "fpv-first-flight-01",
+        "fpv-first-flight-02",
+        "fpv-first-flight-03",
+        "fpv-first-flight-04",
+        "fpv-first-flight-05",
+        "fpv-first-flight-06"
+      ],
+      "name": "First Flight Patterns",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "fpv-first-flight",
+  "maps": [
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 19, "x": 12, "y": 9 },
+        { "h": 5, "w": 10, "x": 31, "y": 23 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-first-flight-01-map",
+      "name": "Start with a Stop",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 21.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 12, "w": 2, "x": 46, "y": 13 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 8, "x": 15, "y": 9 },
+        { "h": 4, "w": 8, "x": 31, "y": 16 },
+        { "h": 4, "w": 15, "x": 46, "y": 24 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-first-flight-02-map",
+      "name": "Height Is a Separate Question",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 19.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 12, "x": 18, "y": 19 },
+        { "h": 11, "w": 2, "x": 45, "y": 8 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 26, "x": 14, "y": 21 },
+        { "h": 4, "w": 9, "x": 10, "y": 8 },
+        { "h": 5, "w": 9, "x": 51, "y": 10 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-first-flight-03-map",
+      "name": "A Straight Path, Two Views",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 17.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 27, "y": 8 },
+        { "h": 2, "w": 13, "x": 47, "y": 24 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 12, "w": 32, "x": 20, "y": 9 },
+        { "h": 4, "w": 10, "x": 11, "y": 26 },
+        { "h": 5, "w": 10, "x": 53, "y": 23 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-first-flight-04-map",
+      "name": "Slide Past the Window",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 12, "y": 9 },
+        { "h": 4, "w": 11, "x": 49, "y": 8 },
+        { "h": 4, "w": 9, "x": 13, "y": 25 },
+        { "h": 4, "w": 12, "x": 48, "y": 25 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "fpv-first-flight-05-map",
+      "name": "A Turn and a Translation",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 18.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 10, "x": 38, "y": 17 }],
+      "walls": [{ "h": 12, "w": 3, "x": 31, "y": 13 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV2",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 10, "y": 24 },
+        { "h": 5, "w": 10, "x": 31, "y": 10 },
+        { "h": 4, "w": 10, "x": 30, "y": 26 },
+        { "h": 5, "w": 9, "x": 53, "y": 7 },
+        { "h": 4, "w": 14, "x": 29, "y": 18 },
+        { "h": 4, "w": 13, "x": 49, "y": 23 }
+      ],
+      "gates": [{ "h": 3, "id": "return-1", "w": 1, "x": 36, "y": 15 }],
+      "height": 36,
+      "id": "fpv-first-flight-06-map",
+      "name": "The Joined Practice Route",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 11, "w": 2, "x": 21, "y": 9 },
+        { "h": 2, "w": 14, "x": 44, "y": 18 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.5780000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["trail-pursuer"],
+        "lesson": "Connect the fictional gym’s start and pause stations; this arcade map is not a flight simulator. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original civilian gym entrance with oversized pause and reset markers, soft floor lines and a fictional model parked on a mat.",
+        "pacingBeat": "discover",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "fpv-first-flight-01-discovery", "revision": "3" },
+        "routeDecision": "Establish the pause island early or connect the start terrace by a shorter return. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-first-flight-01",
+      "map": { "id": "fpv-first-flight-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Start with a Stop",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-first-flight-01-picture",
+        "themeId": "fpv-first-flight-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "trail-pursuer",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6280000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the height markers without mistaking a top-down position for altitude. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original paired top-down and side-view gym cards with a large height ruler, matching floor tile and two clearly different altitudes.",
+        "pacingBeat": "choose",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "trail-pursuer"
+        ],
+        "rewardRef": { "id": "fpv-first-flight-02-discovery", "revision": "3" },
+        "routeDecision": "Climb the arcade’s marker chain or capture the wider observation bay first. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-first-flight-02",
+      "map": { "id": "fpv-first-flight-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Height Is a Separate Question",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 23.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-first-flight-02-picture",
+        "themeId": "fpv-first-flight-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6580000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "difficulty": {
+          "band": 6,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 6,
+          "planning": 6,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["heading-interceptor"],
+        "lesson": "Join the straight-route stations and compare direction with heading. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original indoor gym diagram with a long floor arrow and an independently marked aircraft nose; inset overhead and oblique views.",
+        "pacingBeat": "combine",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor"
+        ],
+        "rewardRef": { "id": "fpv-first-flight-03-discovery", "revision": "3" },
+        "routeDecision": "Use the long straight island as a return or connect the two viewpoint alcoves. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-first-flight-03",
+      "map": { "id": "fpv-first-flight-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Straight Path, Two Views",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 7.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 26.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-first-flight-03-picture",
+        "themeId": "fpv-first-flight-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 25.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 20.5, "y": 9.5 }],
+      "coverage": 0.5980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["lane-emitter"],
+        "lesson": "Reveal a spacious lateral-travel scene with a fixed fictional viewpoint. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original sunlit civilian gym with giant window, blue floor mat and paired camera-framing cards; generous negative space.",
+        "pacingBeat": "breathe",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "fpv-first-flight-04-discovery", "revision": "3" },
+        "routeDecision": "Take the broad window terrace or make two short captures from the side mat. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-first-flight-04",
+      "map": { "id": "fpv-first-flight-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Slide Past the Window",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 22.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-first-flight-04-picture",
+        "themeId": "fpv-first-flight-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 29.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 9.5 }],
+      "coverage": 0.6980000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": [],
+        "lesson": "Connect the corner markers while separating a heading change from travel. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original square gym floor with two contrasting route ribbons, repeated nose markers and separate heading-change cards.",
+        "pacingBeat": "mastery",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter"
+        ],
+        "rewardRef": { "id": "fpv-first-flight-05-discovery", "revision": "3" },
+        "routeDecision": "Secure opposite corner islands or follow neighbouring corners around the board. Keep a second return ready before the warning locks your trail or heading."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-first-flight-05",
+      "map": { "id": "fpv-first-flight-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "A Turn and a Translation",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 24.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-first-flight-05-picture",
+        "themeId": "fpv-first-flight-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "locked-demand",
+          "role": "heading-interceptor",
+          "tier": "measured",
+          "x": 13.5,
+          "y": 29.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 56.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 10.5, "y": 24.5 }],
+      "coverage": 0.7380000000000001,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["heading-interceptor", "lane-emitter", "relay-gates"],
+        "counterplay": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 7,
+          "coordination": 0,
+          "execution": 5,
+          "mechanicLoad": 7,
+          "planning": 7,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [50, 210],
+        "introduces": ["relay-gates"],
+        "lesson": "Connect the gym landmarks into a route with readable checkpoints and an explicit finish. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Original finished civilian gym notebook spread with six route cards, separate height and heading markers and a clear resting finish mat.",
+        "pacingBeat": "resolve",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "heading-interceptor",
+          "lane-emitter",
+          "relay-gates"
+        ],
+        "rewardRef": { "id": "fpv-first-flight-06-discovery", "revision": "3" },
+        "routeDecision": "Join the three landmark returns first or close the route’s outer envelope. Choose which numbered relay will open the most useful return connector first."
+      },
+      "format": "MissionDesignV2",
+      "id": "fpv-first-flight-06",
+      "map": { "id": "fpv-first-flight-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Joined Practice Route",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 27.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "fpv-first-flight-06-picture",
+        "themeId": "fpv-first-flight-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "First Flight Patterns",
+  "packs": [
+    {
+      "campaignIds": ["fpv-first-flight"],
+      "format": "PackDesignV1",
+      "id": "fpv-first-flight-pack",
+      "name": "First Flight Patterns",
+      "revision": "3"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "3"
+}

@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Actual Solo/Collection/Library handlers; native queued dialog close and IDB
 // completion are modeled. Scroll commands prove ownership/order, not geometry.
 import test from 'node:test';
@@ -172,7 +173,8 @@ async function setup(t, { media = false } = {}) {
     manager.close();
     assert.equal(saveLibrary(storage, 'revealline.library.dev.v1', f.profile).ok, true);
   }
-  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  // Keep the shared complete inert Canvas boundary: the live field guide also
+  // paints during startup. Only gallery rendering is modeled below.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const h = await soloPage(t, {
     storage,
@@ -194,7 +196,8 @@ async function setup(t, { media = false } = {}) {
     h.frame(0);
     await settle(
       () =>
-        JSON.parse(storage.getItem('revealline.suspended.dev.v1') ?? 'null')?.replay?.ticks === 20,
+        nativeSession(JSON.parse(storage.getItem('revealline.suspended.dev.v1') ?? 'null'))?.replay
+          ?.ticks === 20,
     );
   }
   const collectionEntry = h.$(media ? 'collection-button' : 'shell-gallery');

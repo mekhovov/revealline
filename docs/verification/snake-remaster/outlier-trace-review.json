@@ -1,0 +1,957 @@
+{
+  "format": "classic-snake-trace-review.v1",
+  "scope": "12 verified winning outlier alternative journals; retained evidence must match the current recipe exactly. One route per setup, not all player strategies.",
+  "definitions": {
+    "captureConcentration": "Largest capture count at one cell divided by all accepted captures, including bonuses.",
+    "maxRepeatedSpot": "Largest total number of captures at one cell; longestSameSpotStreak separately counts consecutive captures.",
+    "noChange": "Moves without accepted encounter/objective/supply events or actor phase/intention/interference changes. Ordinary target movement alone does not reset the interval.",
+    "signals": "Review concentrated captures at >=3 catches and >=50% concentration; review no-change intervals at >=24 moves or >=6000ms. Heuristics only, not difficulty or enjoyment scores."
+  },
+  "summary": {
+    "runs": 12,
+    "missions": 2,
+    "setups": 12,
+    "missingSetups": [],
+    "missingMissions": [],
+    "flaggedRuns": 8,
+    "flaggedMissions": [
+      "classic-expedition-courier-overpass",
+      "classic-pursuit-supply-circuit"
+    ]
+  },
+  "runs": [
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 119,
+      "elapsedMs": 23800,
+      "captures": 10,
+      "captureLocations": [
+        {
+          "cell": "11,3",
+          "count": 1
+        },
+        {
+          "cell": "11,8",
+          "count": 1
+        },
+        {
+          "cell": "12,10",
+          "count": 1
+        },
+        {
+          "cell": "15,17",
+          "count": 1
+        },
+        {
+          "cell": "20,11",
+          "count": 1
+        },
+        {
+          "cell": "23,8",
+          "count": 1
+        },
+        {
+          "cell": "3,6",
+          "count": 1
+        },
+        {
+          "cell": "7,3",
+          "count": 1
+        },
+        {
+          "cell": "7,5",
+          "count": 1
+        },
+        {
+          "cell": "8,3",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.1,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 4400,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "target.caught": 10,
+        "target.spawned": 9,
+        "pickup.spawned": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 119,
+      "elapsedMs": 33320,
+      "captures": 10,
+      "captureLocations": [
+        {
+          "cell": "11,3",
+          "count": 1
+        },
+        {
+          "cell": "11,8",
+          "count": 1
+        },
+        {
+          "cell": "12,10",
+          "count": 1
+        },
+        {
+          "cell": "15,17",
+          "count": 1
+        },
+        {
+          "cell": "20,11",
+          "count": 1
+        },
+        {
+          "cell": "23,8",
+          "count": 1
+        },
+        {
+          "cell": "3,6",
+          "count": 1
+        },
+        {
+          "cell": "7,3",
+          "count": 1
+        },
+        {
+          "cell": "7,5",
+          "count": 1
+        },
+        {
+          "cell": "8,3",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.1,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 6160,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "target.caught": 10,
+        "target.spawned": 9,
+        "pickup.spawned": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 119,
+      "elapsedMs": 17850,
+      "captures": 10,
+      "captureLocations": [
+        {
+          "cell": "11,3",
+          "count": 1
+        },
+        {
+          "cell": "11,8",
+          "count": 1
+        },
+        {
+          "cell": "12,10",
+          "count": 1
+        },
+        {
+          "cell": "15,17",
+          "count": 1
+        },
+        {
+          "cell": "20,11",
+          "count": 1
+        },
+        {
+          "cell": "23,8",
+          "count": 1
+        },
+        {
+          "cell": "3,6",
+          "count": 1
+        },
+        {
+          "cell": "7,3",
+          "count": 1
+        },
+        {
+          "cell": "7,5",
+          "count": 1
+        },
+        {
+          "cell": "8,3",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.1,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 22,
+      "maxNoChangeMs": 3300,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "target.caught": 10,
+        "target.spawned": 9,
+        "pickup.spawned": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 95,
+      "elapsedMs": 19000,
+      "captures": 11,
+      "captureLocations": [
+        {
+          "cell": "7,8",
+          "count": 2
+        },
+        {
+          "cell": "1,13",
+          "count": 1
+        },
+        {
+          "cell": "1,2",
+          "count": 1
+        },
+        {
+          "cell": "11,5",
+          "count": 1
+        },
+        {
+          "cell": "13,8",
+          "count": 1
+        },
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "20,12",
+          "count": 1
+        },
+        {
+          "cell": "23,8",
+          "count": 1
+        },
+        {
+          "cell": "7,6",
+          "count": 1
+        },
+        {
+          "cell": "7,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 2,
+      "captureConcentration": 0.18181818181818182,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 4600,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 11,
+        "target.spawned": 10,
+        "pickup.spawned": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 95,
+      "elapsedMs": 26600,
+      "captures": 11,
+      "captureLocations": [
+        {
+          "cell": "7,8",
+          "count": 2
+        },
+        {
+          "cell": "1,13",
+          "count": 1
+        },
+        {
+          "cell": "1,2",
+          "count": 1
+        },
+        {
+          "cell": "11,5",
+          "count": 1
+        },
+        {
+          "cell": "13,8",
+          "count": 1
+        },
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "20,12",
+          "count": 1
+        },
+        {
+          "cell": "23,8",
+          "count": 1
+        },
+        {
+          "cell": "7,6",
+          "count": 1
+        },
+        {
+          "cell": "7,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 2,
+      "captureConcentration": 0.18181818181818182,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 6440,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 11,
+        "target.spawned": 10,
+        "pickup.spawned": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 95,
+      "elapsedMs": 14250,
+      "captures": 11,
+      "captureLocations": [
+        {
+          "cell": "7,8",
+          "count": 2
+        },
+        {
+          "cell": "1,13",
+          "count": 1
+        },
+        {
+          "cell": "1,2",
+          "count": 1
+        },
+        {
+          "cell": "11,5",
+          "count": 1
+        },
+        {
+          "cell": "13,8",
+          "count": 1
+        },
+        {
+          "cell": "14,16",
+          "count": 1
+        },
+        {
+          "cell": "20,12",
+          "count": 1
+        },
+        {
+          "cell": "23,8",
+          "count": 1
+        },
+        {
+          "cell": "7,6",
+          "count": 1
+        },
+        {
+          "cell": "7,7",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 2,
+      "captureConcentration": 0.18181818181818182,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 23,
+      "maxNoChangeMs": 3450,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 11,
+        "target.spawned": 10,
+        "pickup.spawned": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 168,
+      "elapsedMs": 33600,
+      "captures": 11,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "0,5",
+          "count": 1
+        },
+        {
+          "cell": "0,6",
+          "count": 1
+        },
+        {
+          "cell": "1,6",
+          "count": 1
+        },
+        {
+          "cell": "11,16",
+          "count": 1
+        },
+        {
+          "cell": "13,9",
+          "count": 1
+        },
+        {
+          "cell": "2,13",
+          "count": 1
+        },
+        {
+          "cell": "23,11",
+          "count": 1
+        },
+        {
+          "cell": "4,12",
+          "count": 1
+        },
+        {
+          "cell": "5,3",
+          "count": 1
+        },
+        {
+          "cell": "8,3",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.09090909090909091,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 30,
+      "maxNoChangeMs": 6000,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 11,
+        "target.spawned": 10,
+        "pickup.spawned": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 168,
+      "elapsedMs": 47040,
+      "captures": 11,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "0,5",
+          "count": 1
+        },
+        {
+          "cell": "0,6",
+          "count": 1
+        },
+        {
+          "cell": "1,6",
+          "count": 1
+        },
+        {
+          "cell": "11,16",
+          "count": 1
+        },
+        {
+          "cell": "13,9",
+          "count": 1
+        },
+        {
+          "cell": "2,13",
+          "count": 1
+        },
+        {
+          "cell": "23,11",
+          "count": 1
+        },
+        {
+          "cell": "4,12",
+          "count": 1
+        },
+        {
+          "cell": "5,3",
+          "count": 1
+        },
+        {
+          "cell": "8,3",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.09090909090909091,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 30,
+      "maxNoChangeMs": 8400,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 11,
+        "target.spawned": 10,
+        "pickup.spawned": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 168,
+      "elapsedMs": 25200,
+      "captures": 11,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "0,5",
+          "count": 1
+        },
+        {
+          "cell": "0,6",
+          "count": 1
+        },
+        {
+          "cell": "1,6",
+          "count": 1
+        },
+        {
+          "cell": "11,16",
+          "count": 1
+        },
+        {
+          "cell": "13,9",
+          "count": 1
+        },
+        {
+          "cell": "2,13",
+          "count": 1
+        },
+        {
+          "cell": "23,11",
+          "count": 1
+        },
+        {
+          "cell": "4,12",
+          "count": 1
+        },
+        {
+          "cell": "5,3",
+          "count": 1
+        },
+        {
+          "cell": "8,3",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.09090909090909091,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 30,
+      "maxNoChangeMs": 4500,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 11,
+        "target.spawned": 10,
+        "pickup.spawned": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 127,
+      "elapsedMs": 25400,
+      "captures": 12,
+      "captureLocations": [
+        {
+          "cell": "0,6",
+          "count": 1
+        },
+        {
+          "cell": "1,11",
+          "count": 1
+        },
+        {
+          "cell": "1,16",
+          "count": 1
+        },
+        {
+          "cell": "13,9",
+          "count": 1
+        },
+        {
+          "cell": "17,16",
+          "count": 1
+        },
+        {
+          "cell": "2,13",
+          "count": 1
+        },
+        {
+          "cell": "23,10",
+          "count": 1
+        },
+        {
+          "cell": "3,2",
+          "count": 1
+        },
+        {
+          "cell": "5,13",
+          "count": 1
+        },
+        {
+          "cell": "5,16",
+          "count": 1
+        },
+        {
+          "cell": "7,17",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.08333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 27,
+      "maxNoChangeMs": 5400,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "target.caught": 12,
+        "target.spawned": 10,
+        "pickup.spawned": 2,
+        "pickup.collected": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 127,
+      "elapsedMs": 35560,
+      "captures": 12,
+      "captureLocations": [
+        {
+          "cell": "0,6",
+          "count": 1
+        },
+        {
+          "cell": "1,11",
+          "count": 1
+        },
+        {
+          "cell": "1,16",
+          "count": 1
+        },
+        {
+          "cell": "13,9",
+          "count": 1
+        },
+        {
+          "cell": "17,16",
+          "count": 1
+        },
+        {
+          "cell": "2,13",
+          "count": 1
+        },
+        {
+          "cell": "23,10",
+          "count": 1
+        },
+        {
+          "cell": "3,2",
+          "count": 1
+        },
+        {
+          "cell": "5,13",
+          "count": 1
+        },
+        {
+          "cell": "5,16",
+          "count": 1
+        },
+        {
+          "cell": "7,17",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.08333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 27,
+      "maxNoChangeMs": 7560,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "target.caught": 12,
+        "target.spawned": 10,
+        "pickup.spawned": 2,
+        "pickup.collected": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "source": "outlier-alternative-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 127,
+      "elapsedMs": 19050,
+      "captures": 12,
+      "captureLocations": [
+        {
+          "cell": "0,6",
+          "count": 1
+        },
+        {
+          "cell": "1,11",
+          "count": 1
+        },
+        {
+          "cell": "1,16",
+          "count": 1
+        },
+        {
+          "cell": "13,9",
+          "count": 1
+        },
+        {
+          "cell": "17,16",
+          "count": 1
+        },
+        {
+          "cell": "2,13",
+          "count": 1
+        },
+        {
+          "cell": "23,10",
+          "count": 1
+        },
+        {
+          "cell": "3,2",
+          "count": 1
+        },
+        {
+          "cell": "5,13",
+          "count": 1
+        },
+        {
+          "cell": "5,16",
+          "count": 1
+        },
+        {
+          "cell": "7,17",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.08333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 27,
+      "maxNoChangeMs": 4050,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "target.caught": 12,
+        "target.spawned": 10,
+        "pickup.spawned": 2,
+        "pickup.collected": 1
+      },
+      "signals": [
+        "long-interval-without-encounter-change"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "mode": "solo",
+      "pace": "normal",
+      "baselineSteps": 1226,
+      "alternateSteps": 119,
+      "baselineMaxNoChangeMoves": 949,
+      "alternateMaxNoChangeMoves": 22
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "mode": "solo",
+      "pace": "slow",
+      "baselineSteps": 1226,
+      "alternateSteps": 119,
+      "baselineMaxNoChangeMoves": 949,
+      "alternateMaxNoChangeMoves": 22
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "mode": "solo",
+      "pace": "fast",
+      "baselineSteps": 1226,
+      "alternateSteps": 119,
+      "baselineMaxNoChangeMoves": 949,
+      "alternateMaxNoChangeMoves": 22
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "mode": "team",
+      "pace": "normal",
+      "baselineSteps": 804,
+      "alternateSteps": 95,
+      "baselineMaxNoChangeMoves": 447,
+      "alternateMaxNoChangeMoves": 23
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "mode": "team",
+      "pace": "slow",
+      "baselineSteps": 804,
+      "alternateSteps": 95,
+      "baselineMaxNoChangeMoves": 447,
+      "alternateMaxNoChangeMoves": 23
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "mode": "team",
+      "pace": "fast",
+      "baselineSteps": 804,
+      "alternateSteps": 95,
+      "baselineMaxNoChangeMoves": 447,
+      "alternateMaxNoChangeMoves": 23
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "mode": "solo",
+      "pace": "normal",
+      "baselineSteps": 168,
+      "alternateSteps": 168,
+      "baselineMaxNoChangeMoves": 30,
+      "alternateMaxNoChangeMoves": 30
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "mode": "solo",
+      "pace": "slow",
+      "baselineSteps": 168,
+      "alternateSteps": 168,
+      "baselineMaxNoChangeMoves": 30,
+      "alternateMaxNoChangeMoves": 30
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "mode": "solo",
+      "pace": "fast",
+      "baselineSteps": 168,
+      "alternateSteps": 168,
+      "baselineMaxNoChangeMoves": 30,
+      "alternateMaxNoChangeMoves": 30
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "mode": "team",
+      "pace": "normal",
+      "baselineSteps": 284,
+      "alternateSteps": 127,
+      "baselineMaxNoChangeMoves": 160,
+      "alternateMaxNoChangeMoves": 27
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "mode": "team",
+      "pace": "slow",
+      "baselineSteps": 284,
+      "alternateSteps": 127,
+      "baselineMaxNoChangeMoves": 160,
+      "alternateMaxNoChangeMoves": 27
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "mode": "team",
+      "pace": "fast",
+      "baselineSteps": 284,
+      "alternateSteps": 127,
+      "baselineMaxNoChangeMoves": 160,
+      "alternateMaxNoChangeMoves": 27
+    }
+  ]
+}

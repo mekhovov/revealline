@@ -1,0 +1,2429 @@
+{
+  "generatedAt": "2026-10-13T19:54:28.070Z",
+  "baseMain": "fba236ef80bd0310ae3b9c33fd7c26b1529b245c",
+  "scope": "Deterministic simulation route reachability only; not human enjoyment, first-player pacing, physical gamepad or GPU qualification.",
+  "seed": 17031991,
+  "node": "v20.19.5",
+  "sourceBindings": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "833e5a0f0c74415d037c7f9d90c4001e3f20d5ed8aac23b67466f05333aa51a9"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "e126c99e96ccbeb5ccc880d6fa42e1427144ba5e6474fea0782ca1ba9f7ebb1b"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "6dcad6a768cc00d5d29fba70a7044fb50c1d45f995b93e7d8f63893707db4dc4"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "43f5abd2d946953bcabcecc8b88ae4d3bd71c1ff32a083cfcffee53357057ca4"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "68786b4ef3e21f127e7cafe698fffa90c3c496b3bc3ddac8b9c64a14c9eab77b"
+    },
+    {
+      "path": "game/overflight/raid-upgrades.mjs",
+      "sha256": "6b7ad7aad09d6e2c1cf7d97c156fc6b1acfc9427cb6efc3ba2ac5410cc82e3a5"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "39e709a53c6e7bb5b1c9022bbeac1cd9e5a7826e582ab8c44efb51395e035f60"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "b555a85b874c2fef014357a91483a1b65718a11771dccdc13b55c5a8025344cb"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "f925e46ae35c4af9463c869c2c2a0de1e9a518858ed0a27fce6edf6a2dffde19"
+    },
+    {
+      "path": "game/overflight/raid-review-pilot.mjs",
+      "sha256": "2c1254ccb6762fa19a5909ad64fde32f8c25ad5991bda026f0b66c71e4ec09b2"
+    },
+    {
+      "path": "scripts/qualify-overflight.mjs",
+      "sha256": "1162a3e50aff6aa7d32477597c5684262013f57b678162a5849b136ac2af90da"
+    },
+    {
+      "path": "scripts/qualify-overflight-raid.mjs",
+      "sha256": "21a552696042334043203d9491beb4d02a4eab27eb1056c0bd32b1f9e7c19dc8"
+    },
+    {
+      "path": "scripts/qualify-overflight-variety.mjs",
+      "sha256": "9a6f73b83c5b5f91ee996c1cbe58d1bd0aaa0c0cb94543a9d925a226b1be779d"
+    }
+  ],
+  "routeGroups": 42,
+  "groupsWithCompletion": 42,
+  "attempts": 46,
+  "failedAttempts": 4,
+  "passiveProbes": [
+    {
+      "difficulty": "standard",
+      "route": "park-after-pulse2",
+      "outcome": "lost",
+      "start": 47.5,
+      "firstDamage": 52.46666666666667,
+      "end": 116.03
+    },
+    {
+      "difficulty": "standard",
+      "route": "tiny-circle-after-pulse2",
+      "outcome": "lost",
+      "start": 47.5,
+      "firstDamage": 51.2,
+      "end": 101.47
+    },
+    {
+      "difficulty": "standard",
+      "route": "wall-after-pulse2",
+      "outcome": "lost",
+      "start": 47.5,
+      "firstDamage": 70.35,
+      "end": 99.57
+    },
+    {
+      "difficulty": "standard",
+      "route": "edge-loop-after-pulse2",
+      "outcome": "lost",
+      "start": 47.5,
+      "firstDamage": 75.41666666666667,
+      "end": 113.6
+    },
+    {
+      "difficulty": "veteran",
+      "route": "park-after-pulse2",
+      "outcome": "lost",
+      "start": 21.9,
+      "firstDamage": 28.133333333333333,
+      "end": 64.33
+    },
+    {
+      "difficulty": "veteran",
+      "route": "tiny-circle-after-pulse2",
+      "outcome": "lost",
+      "start": 21.9,
+      "firstDamage": 25.116666666666667,
+      "end": 59.6
+    },
+    {
+      "difficulty": "veteran",
+      "route": "wall-after-pulse2",
+      "outcome": "lost",
+      "start": 21.9,
+      "firstDamage": 23.75,
+      "end": 62.15
+    },
+    {
+      "difficulty": "veteran",
+      "route": "edge-loop-after-pulse2",
+      "outcome": "lost",
+      "start": 21.9,
+      "firstDamage": 22.533333333333335,
+      "end": 57.87
+    }
+  ],
+  "rows": [
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "outcome": "won",
+      "time": 53.333333333333336,
+      "lives": 3,
+      "projectIdentity": "54706616b3a7c1ac",
+      "damageTaken": 60,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 53.30000000000049,
+        "noVisibleTargetSeconds": 1.7000000000000004,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 51.60000000000046,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 3,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 9.6,
+            "kills": 55,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 12.816666666666666,
+            "kills": 61,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 27.366666666666667,
+            "kills": 124,
+            "damageTaken": 0,
+            "boostsUsed": 15
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 29.816666666666666,
+            "kills": 131,
+            "damageTaken": 0,
+            "boostsUsed": 16
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 33.65,
+            "kills": 132,
+            "damageTaken": 0,
+            "boostsUsed": 18
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 53.333333333333336,
+            "kills": 194,
+            "damageTaken": 60,
+            "boostsUsed": 28
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "outcome": "won",
+      "time": 22.866666666666667,
+      "lives": 3,
+      "projectIdentity": "54706616b3a7c1ac",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.800000000000054,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.90000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 3,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 12,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 13,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 23,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 15.916666666666666,
+            "kills": 26,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.866666666666667,
+            "kills": 50,
+            "damageTaken": 0,
+            "boostsUsed": 8
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "outcome": "won",
+      "time": 26.15,
+      "lives": 3,
+      "projectIdentity": "54706616b3a7c1ac",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 26.1000000000001,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 25.200000000000088,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 3,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 12,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 13,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 23,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.95,
+            "kills": 27,
+            "damageTaken": 0,
+            "boostsUsed": 8
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 26.15,
+            "kills": 49,
+            "damageTaken": 0,
+            "boostsUsed": 11
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "outcome": "won",
+      "time": 26.416666666666668,
+      "lives": 3,
+      "projectIdentity": "54706616b3a7c1ac",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 26.400000000000105,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 25.500000000000092,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 3,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 12,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 13,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 23,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.616666666666667,
+            "kills": 28,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 26.416666666666668,
+            "kills": 50,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "outcome": "won",
+      "time": 49.733333333333334,
+      "lives": 3,
+      "projectIdentity": "f3fd850237e7d42c",
+      "damageTaken": 20,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 49.700000000000436,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 48.80000000000042,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 9.116666666666667,
+            "kills": 54,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 11.983333333333333,
+            "kills": 55,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 24.366666666666667,
+            "kills": 134,
+            "damageTaken": 0,
+            "boostsUsed": 14
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 27.683333333333334,
+            "kills": 151,
+            "damageTaken": 20,
+            "boostsUsed": 16
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 31.333333333333332,
+            "kills": 152,
+            "damageTaken": 20,
+            "boostsUsed": 17
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 49.733333333333334,
+            "kills": 233,
+            "damageTaken": 20,
+            "boostsUsed": 24
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "outcome": "won",
+      "time": 22.783333333333335,
+      "lives": 3,
+      "projectIdentity": "f3fd850237e7d42c",
+      "damageTaken": 18,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.700000000000053,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.80000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 19,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 15.916666666666666,
+            "kills": 22,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.783333333333335,
+            "kills": 27,
+            "damageTaken": 18,
+            "boostsUsed": 8
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "outcome": "won",
+      "time": 24.45,
+      "lives": 3,
+      "projectIdentity": "f3fd850237e7d42c",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 24.400000000000077,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 23.500000000000064,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 19,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.95,
+            "kills": 22,
+            "damageTaken": 0,
+            "boostsUsed": 8
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 24.45,
+            "kills": 38,
+            "damageTaken": 0,
+            "boostsUsed": 11
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "outcome": "won",
+      "time": 27.333333333333332,
+      "lives": 3,
+      "projectIdentity": "f3fd850237e7d42c",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 27.300000000000118,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 26.400000000000105,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 19,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.616666666666667,
+            "kills": 22,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 27.333333333333332,
+            "kills": 40,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "outcome": "won",
+      "time": 49.6,
+      "lives": 3,
+      "projectIdentity": "f57970af7d87862b",
+      "damageTaken": 20,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 49.600000000000435,
+        "noVisibleTargetSeconds": 1.6000000000000003,
+        "guardedTargetsOnlySeconds": 0.7999999999999999,
+        "exposedInfantrySeconds": 47.2000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 7.283333333333333,
+            "kills": 65,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 9.683333333333334,
+            "kills": 66,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 25.5,
+            "kills": 134,
+            "damageTaken": 0,
+            "boostsUsed": 13
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 28.25,
+            "kills": 150,
+            "damageTaken": 0,
+            "boostsUsed": 14
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 34.28333333333333,
+            "kills": 155,
+            "damageTaken": 20,
+            "boostsUsed": 17
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 49.6,
+            "kills": 233,
+            "damageTaken": 20,
+            "boostsUsed": 24
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "outcome": "won",
+      "time": 22.85,
+      "lives": 3,
+      "projectIdentity": "f57970af7d87862b",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.800000000000054,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.90000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 4,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 5,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 6,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 33,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 15.916666666666666,
+            "kills": 42,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.85,
+            "kills": 61,
+            "damageTaken": 0,
+            "boostsUsed": 8
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "outcome": "won",
+      "time": 22.6,
+      "lives": 3,
+      "projectIdentity": "f57970af7d87862b",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.60000000000005,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.70000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 4,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 5,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 6,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 33,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 15.616666666666667,
+            "kills": 43,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.6,
+            "kills": 64,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "outcome": "won",
+      "time": 23.75,
+      "lives": 3,
+      "projectIdentity": "f57970af7d87862b",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 23.700000000000067,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 22.800000000000054,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.816666666666667,
+            "kills": 4,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.95,
+            "kills": 5,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.6,
+            "kills": 6,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 12.65,
+            "kills": 33,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.616666666666667,
+            "kills": 43,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 23.75,
+            "kills": 65,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "sweeper",
+      "outcome": "won",
+      "time": 51.56666666666667,
+      "lives": 3,
+      "projectIdentity": "79d52ccec95dceec",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 51.50000000000046,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 50.60000000000045,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 2,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 10.35,
+            "kills": 56,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 13.083333333333334,
+            "kills": 62,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 25.25,
+            "kills": 131,
+            "damageTaken": 0,
+            "boostsUsed": 14
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 29.533333333333335,
+            "kills": 137,
+            "damageTaken": 0,
+            "boostsUsed": 15
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 33.93333333333333,
+            "kills": 143,
+            "damageTaken": 0,
+            "boostsUsed": 17
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 51.56666666666667,
+            "kills": 224,
+            "damageTaken": 0,
+            "boostsUsed": 23
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "pursuer",
+      "outcome": "won",
+      "time": 22.833333333333332,
+      "lives": 3,
+      "projectIdentity": "79d52ccec95dceec",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.800000000000054,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.90000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 2,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 11,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 21,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.05,
+            "kills": 22,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.833333333333332,
+            "kills": 51,
+            "damageTaken": 0,
+            "boostsUsed": 8
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "breaker",
+      "outcome": "won",
+      "time": 24.6,
+      "lives": 3,
+      "projectIdentity": "79d52ccec95dceec",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 24.60000000000008,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 23.700000000000067,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 2,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 11,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 21,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 17.066666666666666,
+            "kills": 24,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 24.6,
+            "kills": 51,
+            "damageTaken": 0,
+            "boostsUsed": 9
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "patrol",
+      "build": "baseline",
+      "outcome": "won",
+      "time": 24.666666666666668,
+      "lives": 3,
+      "projectIdentity": "79d52ccec95dceec",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 24.60000000000008,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 23.700000000000067,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 2,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 11,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 21,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.716666666666665,
+            "kills": 22,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 24.666666666666668,
+            "kills": 51,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "sweeper",
+      "outcome": "won",
+      "time": 50.733333333333334,
+      "lives": 3,
+      "projectIdentity": "d39f57f1cb84dd80",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 50.70000000000045,
+        "noVisibleTargetSeconds": 1.0999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 49.600000000000435,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 8.166666666666666,
+            "kills": 53,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 11.483333333333333,
+            "kills": 54,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 25.383333333333333,
+            "kills": 128,
+            "damageTaken": 0,
+            "boostsUsed": 13
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 29.833333333333332,
+            "kills": 145,
+            "damageTaken": 0,
+            "boostsUsed": 15
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 33.05,
+            "kills": 151,
+            "damageTaken": 0,
+            "boostsUsed": 17
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 50.733333333333334,
+            "kills": 214,
+            "damageTaken": 0,
+            "boostsUsed": 25
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "pursuer",
+      "outcome": "won",
+      "time": 22.616666666666667,
+      "lives": 3,
+      "projectIdentity": "d39f57f1cb84dd80",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.60000000000005,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.70000000000004,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 16,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 27,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.05,
+            "kills": 34,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.616666666666667,
+            "kills": 48,
+            "damageTaken": 0,
+            "boostsUsed": 8
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "breaker",
+      "outcome": "won",
+      "time": 27.083333333333332,
+      "lives": 3,
+      "projectIdentity": "d39f57f1cb84dd80",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 27.000000000000114,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 26.1000000000001,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 16,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 27,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 17.066666666666666,
+            "kills": 39,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 27.083333333333332,
+            "kills": 66,
+            "damageTaken": 0,
+            "boostsUsed": 11
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "baseline",
+      "outcome": "won",
+      "time": 25.483333333333334,
+      "lives": 3,
+      "projectIdentity": "d39f57f1cb84dd80",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 25.40000000000009,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 24.500000000000078,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 9,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 16,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 27,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.716666666666665,
+            "kills": 38,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 25.483333333333334,
+            "kills": 61,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "sweeper",
+      "outcome": "won",
+      "time": 42.71666666666667,
+      "lives": 3,
+      "projectIdentity": "53deaed302198853",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 42.70000000000034,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 41.800000000000324,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 6.283333333333333,
+            "kills": 53,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 9.033333333333333,
+            "kills": 56,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 22.816666666666666,
+            "kills": 128,
+            "damageTaken": 0,
+            "boostsUsed": 13
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 27.35,
+            "kills": 156,
+            "damageTaken": 0,
+            "boostsUsed": 14
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 30.483333333333334,
+            "kills": 160,
+            "damageTaken": 0,
+            "boostsUsed": 16
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 42.71666666666667,
+            "kills": 238,
+            "damageTaken": 0,
+            "boostsUsed": 22
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "pursuer",
+      "outcome": "won",
+      "time": 22.416666666666668,
+      "lives": 3,
+      "projectIdentity": "53deaed302198853",
+      "damageTaken": 18,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 22.40000000000005,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 21.500000000000036,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 6,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 62,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.05,
+            "kills": 81,
+            "damageTaken": 0,
+            "boostsUsed": 6
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 22.416666666666668,
+            "kills": 109,
+            "damageTaken": 18,
+            "boostsUsed": 8
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "breaker",
+      "outcome": "won",
+      "time": 24.6,
+      "lives": 3,
+      "projectIdentity": "53deaed302198853",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 24.60000000000008,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 23.700000000000067,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 6,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 62,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 17.066666666666666,
+            "kills": 78,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 24.6,
+            "kills": 116,
+            "damageTaken": 0,
+            "boostsUsed": 9
+          }
+        ]
+      }
+    },
+    {
+      "mode": "raid",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "baseline",
+      "outcome": "won",
+      "time": 24.25,
+      "lives": 3,
+      "projectIdentity": "53deaed302198853",
+      "damageTaken": 0,
+      "pacing": {
+        "observation": "Post-step visible target states sampled at 10 Hz; not a human decision or safety assessment.",
+        "sampleSeconds": 24.200000000000074,
+        "noVisibleTargetSeconds": 0.8999999999999999,
+        "guardedTargetsOnlySeconds": 0,
+        "exposedInfantrySeconds": 23.30000000000006,
+        "exposedMachineryOnlySeconds": 0,
+        "objectiveTimeline": [
+          {
+            "id": "leader-1",
+            "sector": 0,
+            "time": 1.0166666666666666,
+            "kills": 1,
+            "damageTaken": 0,
+            "boostsUsed": 1
+          },
+          {
+            "id": "leader-2",
+            "sector": 0,
+            "time": 3.7333333333333334,
+            "kills": 6,
+            "damageTaken": 0,
+            "boostsUsed": 2
+          },
+          {
+            "id": "leader-3",
+            "sector": 0,
+            "time": 5.85,
+            "kills": 7,
+            "damageTaken": 0,
+            "boostsUsed": 3
+          },
+          {
+            "id": "light-1",
+            "sector": 1,
+            "time": 8.966666666666667,
+            "kills": 8,
+            "damageTaken": 0,
+            "boostsUsed": 4
+          },
+          {
+            "id": "light-2",
+            "sector": 1,
+            "time": 13.183333333333334,
+            "kills": 62,
+            "damageTaken": 0,
+            "boostsUsed": 5
+          },
+          {
+            "id": "carrier",
+            "sector": 1,
+            "time": 16.716666666666665,
+            "kills": 78,
+            "damageTaken": 0,
+            "boostsUsed": 7
+          },
+          {
+            "id": "command-tank",
+            "sector": 2,
+            "time": 24.25,
+            "kills": 122,
+            "damageTaken": 0,
+            "boostsUsed": 10
+          }
+        ]
+      }
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "route": "tight",
+      "outcome": "won",
+      "time": 327.17,
+      "lives": 2,
+      "projectIdentity": "bea7505ed1616563",
+      "peakVisible": 529,
+      "densityPeaks": {
+        "opening": 53,
+        "developing": 130,
+        "late": 529,
+        "finale": 311
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "route": "tight",
+      "outcome": "won",
+      "time": 320.12,
+      "lives": 1,
+      "projectIdentity": "bea7505ed1616563",
+      "peakVisible": 540,
+      "densityPeaks": {
+        "opening": 57,
+        "developing": 128,
+        "late": 540,
+        "finale": 490
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "front",
+      "build": "systems",
+      "route": "tight",
+      "outcome": "won",
+      "time": 327.17,
+      "lives": 2,
+      "projectIdentity": "bea7505ed1616563",
+      "peakVisible": 649,
+      "densityPeaks": {
+        "opening": 50,
+        "developing": 91,
+        "late": 608,
+        "finale": 649
+      },
+      "secondsAtLeast600": 4.65,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "route": "tight",
+      "outcome": "won",
+      "time": 323.08,
+      "lives": 2,
+      "projectIdentity": "a8fd122d6c5f98da",
+      "peakVisible": 394,
+      "densityPeaks": {
+        "opening": 60,
+        "developing": 130,
+        "late": 393,
+        "finale": 394
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "route": "tight",
+      "outcome": "lost",
+      "time": 275.25,
+      "lives": 0,
+      "projectIdentity": "a8fd122d6c5f98da",
+      "peakVisible": 433,
+      "densityPeaks": {
+        "opening": 61,
+        "developing": 113,
+        "late": 433,
+        "finale": 0
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "route": "orbit",
+      "outcome": "won",
+      "time": 316.37,
+      "lives": 2,
+      "projectIdentity": "a8fd122d6c5f98da",
+      "peakVisible": 509,
+      "densityPeaks": {
+        "opening": 92,
+        "developing": 107,
+        "late": 322,
+        "finale": 509
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "route": "tight",
+      "outcome": "won",
+      "time": 325.23,
+      "lives": 2,
+      "projectIdentity": "a8fd122d6c5f98da",
+      "peakVisible": 465,
+      "densityPeaks": {
+        "opening": 68,
+        "developing": 122,
+        "late": 465,
+        "finale": 452
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "route": "tight",
+      "outcome": "won",
+      "time": 324.78,
+      "lives": 2,
+      "projectIdentity": "03874c7f51c6e427",
+      "peakVisible": 566,
+      "densityPeaks": {
+        "opening": 60,
+        "developing": 101,
+        "late": 566,
+        "finale": 373
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "route": "tight",
+      "outcome": "won",
+      "time": 320.08,
+      "lives": 3,
+      "projectIdentity": "03874c7f51c6e427",
+      "peakVisible": 509,
+      "densityPeaks": {
+        "opening": 62,
+        "developing": 98,
+        "late": 509,
+        "finale": 475
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "standard",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "route": "tight",
+      "outcome": "won",
+      "time": 333.27,
+      "lives": 2,
+      "projectIdentity": "03874c7f51c6e427",
+      "peakVisible": 428,
+      "densityPeaks": {
+        "opening": 64,
+        "developing": 96,
+        "late": 428,
+        "finale": 397
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "fan-shield",
+      "route": "tight",
+      "outcome": "won",
+      "time": 329.7,
+      "lives": 2,
+      "projectIdentity": "a6a162d968a60248",
+      "peakVisible": 512,
+      "densityPeaks": {
+        "opening": 61,
+        "developing": 136,
+        "late": 512,
+        "finale": 472
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "echo-scanner",
+      "route": "tight",
+      "outcome": "won",
+      "time": 317.78,
+      "lives": 2,
+      "projectIdentity": "a6a162d968a60248",
+      "peakVisible": 518,
+      "densityPeaks": {
+        "opening": 68,
+        "developing": 120,
+        "late": 469,
+        "finale": 518
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "front",
+      "build": "systems",
+      "route": "tight",
+      "outcome": "won",
+      "time": 338.77,
+      "lives": 2,
+      "projectIdentity": "a6a162d968a60248",
+      "peakVisible": 504,
+      "densityPeaks": {
+        "opening": 58,
+        "developing": 141,
+        "late": 491,
+        "finale": 504
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "fan-shield",
+      "route": "tight",
+      "outcome": "won",
+      "time": 325.88,
+      "lives": 1,
+      "projectIdentity": "4e3eb1b6c022e4e1",
+      "peakVisible": 410,
+      "densityPeaks": {
+        "opening": 53,
+        "developing": 145,
+        "late": 380,
+        "finale": 410
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "route": "tight",
+      "outcome": "lost",
+      "time": 308.95,
+      "lives": 0,
+      "projectIdentity": "4e3eb1b6c022e4e1",
+      "peakVisible": 372,
+      "densityPeaks": {
+        "opening": 53,
+        "developing": 117,
+        "late": 372,
+        "finale": 307
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "echo-scanner",
+      "route": "orbit",
+      "outcome": "won",
+      "time": 317.17,
+      "lives": 1,
+      "projectIdentity": "4e3eb1b6c022e4e1",
+      "peakVisible": 460,
+      "densityPeaks": {
+        "opening": 61,
+        "developing": 155,
+        "late": 460,
+        "finale": 450
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "route": "tight",
+      "outcome": "lost",
+      "time": 284.97,
+      "lives": 0,
+      "projectIdentity": "4e3eb1b6c022e4e1",
+      "peakVisible": 303,
+      "densityPeaks": {
+        "opening": 53,
+        "developing": 151,
+        "late": 303,
+        "finale": 0
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "crossing",
+      "build": "systems",
+      "route": "orbit",
+      "outcome": "won",
+      "time": 319.75,
+      "lives": 1,
+      "projectIdentity": "4e3eb1b6c022e4e1",
+      "peakVisible": 656,
+      "densityPeaks": {
+        "opening": 43,
+        "developing": 150,
+        "late": 486,
+        "finale": 656
+      },
+      "secondsAtLeast600": 1.3333333333333333,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "fan-shield",
+      "route": "tight",
+      "outcome": "won",
+      "time": 327.93,
+      "lives": 2,
+      "projectIdentity": "e8a7720b4fd20d1c",
+      "peakVisible": 536,
+      "densityPeaks": {
+        "opening": 64,
+        "developing": 156,
+        "late": 314,
+        "finale": 536
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "echo-scanner",
+      "route": "tight",
+      "outcome": "won",
+      "time": 318.27,
+      "lives": 2,
+      "projectIdentity": "e8a7720b4fd20d1c",
+      "peakVisible": 371,
+      "densityPeaks": {
+        "opening": 66,
+        "developing": 178,
+        "late": 371,
+        "finale": 332
+      },
+      "secondsAtLeast600": 0,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "route": "tight",
+      "outcome": "lost",
+      "time": 323.3,
+      "lives": 0,
+      "projectIdentity": "e8a7720b4fd20d1c",
+      "peakVisible": 609,
+      "densityPeaks": {
+        "opening": 63,
+        "developing": 169,
+        "late": 609,
+        "finale": 472
+      },
+      "secondsAtLeast600": 0.6833333333333333,
+      "secondsAbove800": 0
+    },
+    {
+      "mode": "survivor",
+      "difficulty": "veteran",
+      "encounterSet": "mixed",
+      "build": "systems",
+      "route": "orbit",
+      "outcome": "won",
+      "time": 338.27,
+      "lives": 1,
+      "projectIdentity": "e8a7720b4fd20d1c",
+      "peakVisible": 641,
+      "densityPeaks": {
+        "opening": 105,
+        "developing": 148,
+        "late": 509,
+        "finale": 641
+      },
+      "secondsAtLeast600": 4.35,
+      "secondsAbove800": 0
+    }
+  ]
+}

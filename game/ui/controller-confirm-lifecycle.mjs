@@ -178,7 +178,7 @@ export function createControllerConfirmLifecycle({
     return true;
   }
 
-  function beforeNativeActivation(event) {
+  function beforeNativeActivation(event, { activated = event.type === 'click' } = {}) {
     if (committing) return;
     const current = context(),
       snapshot = readConfirm({ scope: current.scope });
@@ -199,10 +199,11 @@ export function createControllerConfirmLifecycle({
         root: current.root,
         assigned: snapshot.assigned,
       }),
-      // Associate a later Gamepad edge with the winning native activation,
-      // even when its initial down event preceded the click by most of the lead window.
-      at: event.type === 'click' ? time : (prior?.at ?? time),
-      activated: prior?.activated === true || event.type === 'click',
+      // Some hosts commit a native button action on down. Record that actual
+      // activation before its handler changes scope, without inventing a click.
+      // Later Gamepad edges stay associated with the winning native activation.
+      at: activated ? time : (prior?.at ?? time),
+      activated: prior?.activated === true || activated === true,
     };
     trace('native-candidate', snapshot, {
       nativeEventType: event.type,

@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const root='/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test/';
+const prefix=root+'docs/evidence/', hash=b=>createHash('sha256').update(b).digest('hex');
+const read=async name=>JSON.parse(await readFile(prefix+name));
+const checks=[],check=(name,value)=>{checks.push({name,passed:!!value});assert(value,name);};
+const source=await read('fpv-railworks-source-browser.json'), packaged=await read('fpv-railworks-package-browser.json'), sourceManifest=await read('fpv-railworks-source-fixture.json'), packageManifest=await read('fpv-railworks-package-fixture.json'), stage=await read('fpv-railworks-admitted-player.json');
+const exactFields=['checks','samples','resourceCycles','controlDiagnostics','finalResources','contextLosses','limitations'];
+for(const field of exactFields)check(field+': complete JSON records identical',JSON.stringify(source[field])===JSON.stringify(packaged[field]));
+check('both actual browser matrices passed136checks56pairs3cycles', [source,packaged].every(r=>r.passed&&r.checks.length===136&&r.checks.every(c=>c.passed)&&r.samples.length===56&&r.resourceCycles.length===3));
+check('same executed harness',sourceManifest.harnessSha256===packageManifest.harnessSha256);
+check('source and package receipts bind their own frozen files',JSON.stringify(source.sourceFiles)===JSON.stringify(sourceManifest.files)&&JSON.stringify(packaged.sourceFiles)===JSON.stringify(packageManifest.files));
+check('integrated package uses current-main baseline',packageManifest.baseline==='a46aded0b56c612fbbfb1736cfb27ee0746c2b1f');
+const members=new Map(stage.files.map(f=>[f.path,f])), candidate='9efa36364425e2846002748bb29478b378d2b5cb';
+for(const [path,sha] of Object.entries(packageManifest.files.after))check('packaged fixture member matches exact admitted file: '+path,members.get(path)?.sha256===sha&&hash(await readFile(root+packageManifest.candidate+'/'+path))===sha);
+const changedFiles={};
+for(const side of ['before','after'])changedFiles[side]=Object.keys(sourceManifest.files[side]).filter(p=>sourceManifest.files[side][p]!==packageManifest.files[side][p]);
+check('only incomingD1renderer changes baseline closure',JSON.stringify(changedFiles.before)===JSON.stringify(['optional-practice/civilian-fpv/renderer.mjs']));
+check('package closure changes only D1renderer and standard i18n pruning',JSON.stringify([...changedFiles.after].sort())===JSON.stringify(['game/i18n/catalogs.mjs','optional-practice/civilian-fpv/renderer.mjs']));
+const replay=await read('fpv-railworks-wagon-replay.json');
+for(const [path,row] of Object.entries(replay.sources))if(path!=='optional-practice/civilian-fpv/renderer.mjs')check('historically replayed input still exact after integration: '+path,hash(execFileSync('git',['show',candidate+':'+path],{cwd:root,maxBuffer:16*1024*1024}))===row.sha256);
+const inputs={};for(const name of ['fpv-railworks-source-browser.json','fpv-railworks-package-browser.json','fpv-railworks-source-fixture.json','fpv-railworks-package-fixture.json','fpv-railworks-admitted-player.json']){const bytes=await readFile(prefix+name);inputs[name]={bytes:bytes.length,sha256:hash(bytes)};}
+const receipt={format:'FPVRailworksSourcePackageParity.v1',candidate,baseline:packageManifest.baseline,exactFields,changedFiles,inputs,checks,passed:checks.every(c=>c.passed),limitations:['Original source matrix remains attributed to96e baseline and renderer444e; packaged matrix uses a46baseline and integrated renderer1057.','Exact scoped browser records and input hashes do not imply arbitrary imported raster determinism, named-device timing, installed/offline or public qualification.']};
+await writeFile(prefix+'fpv-railworks-source-package-parity.json',JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({passed:receipt.passed,checks:checks.length,exactFields,changedFiles}));

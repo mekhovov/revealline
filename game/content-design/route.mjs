@@ -1,4 +1,9 @@
+import { createPursuitCampaignCandidates } from './pursuit-campaign-candidates.mjs';
+import { createDuelExpansionCandidates } from './multiplayer-expansion.mjs';
+import { createPursuitPilotCandidates } from './pursuit-pilot-candidates.mjs';
+import { createSnakeHuntCandidates } from './snake-hunt-candidates.mjs';
 import { createOpeningCandidates } from './horizon-candidates.mjs';
+import { createHuntTrainingCandidates } from './hunt-training-candidates.mjs';
 import { createBorderCandidates } from './border-candidates.mjs';
 import {
   createWholeSpatialCandidates,
@@ -40,6 +45,7 @@ import { createCulturalPressureTriptychCandidates } from './cultural-pressure-tr
 import { createCurrentRemixPressureCandidates } from './current-remix-pressure-candidates.mjs';
 import { createContestedWallTriptychCandidates } from './contested-wall-triptych-candidates.mjs';
 import { createPressureCorridorTriptychCandidates } from './pressure-corridor-triptych-candidates.mjs';
+import { createCoolingLoopErosionCandidates } from './cooling-loop-erosion-candidates.mjs';
 import { createUkrainianOrnamentJourney } from './ukrainian-ornament-candidates.mjs';
 import { createUkrainianOrnamentAtlasJourney } from './ukrainian-ornament-atlas.mjs';
 
@@ -50,7 +56,12 @@ export { createCandidateSequence } from './sequence.mjs';
 // selective async loader; both share the exact same route definition.
 export function createAuthoredJourneyRoute(id) {
   return createAuthoredJourneyRouteDefinition(id, {
+    createDuelExpansionCandidates,
+    createPursuitPilotCandidates,
+    createPursuitCampaignCandidates,
     createOpeningCandidates,
+    createHuntTrainingCandidates,
+    createSnakeHuntCandidates,
     createBorderCandidates,
     createWholeJourneyCandidates,
     createWholeSpatialCandidates,
@@ -90,6 +101,7 @@ export function createAuthoredJourneyRoute(id) {
     createCurrentRemixPressureCandidates,
     createContestedWallTriptychCandidates,
     createPressureCorridorTriptychCandidates,
+    createCoolingLoopErosionCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   });

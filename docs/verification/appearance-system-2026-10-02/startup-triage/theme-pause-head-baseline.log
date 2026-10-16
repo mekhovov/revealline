@@ -1,0 +1,98 @@
+TAP version 13
+# Subtest: repeated forced Pause keeps the chosen menu action after Settings closes
+not ok 1 - repeated forced Pause keeps the chosen menu action after Settings closes
+  ---
+  duration_ms: 4250.87125
+  location: '/private/tmp/theme-pause-head-baseline/game/test/controller-practice-pause-host.test.mjs:134:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected ... Lines skipped
+    
+      <ref *43> SoloElement {
+        _rect: [Object],
+    +   _text: 'Skip mission',
+    -   _text: 'Choose mission',
+        attributes: [Map],
+        captureListeners: Map(0) {},
+    ...
+        disabled: false,
+        hidden: false,
+    +   id: 'journey-skip',
+    -   id: 'overlay-missions',
+        inert: false,
+        listeners: Map(0) {},
+    ...
+        options: [],
+        ownerDocument: <ref *1> SoloDocument {
+    +     activeElement: [Circular *43],
+    +     body: <ref *12> SoloElement {
+    +       _rect: {
+    +         height: 44,
+    +         width: 100,
+    +         x: 0,
+    +         y: 0
+    +       },
+    +       _text: '',
+    +       attributes: Map(3) {
+    +         'data-menu-back' => 'East',
+    +         'data-menu-confirm' => 'South',
+    +         'data-menu-input' => 'keyboard'
+    +       },
+    +       captureListeners: Map(0) {},
+    +       captures: Set(0) {},
+    +       checked: false,
+    +       children: [
+    +         <ref *11> SoloElement {
+    ...
+    -     activeElement: <ref *607> SoloElement {
+    -       _rect: {
+    -         height: 44,
+    -         width: 100,
+    -         x: 0,
+    -         y: 0
+    -       },
+    -       _text: 'Skip mission',
+    -       attributes: Map(5) {
+    -         'class' => 'button secondary',
+    -         'data-i18n' => 'interface:skipMission',
+    -         'hidden' => '',
+    -         'id' => 'journey-skip',
+    -         'type' => 'button'
+    -       },
+    -       captureListeners: Map(0) {},
+    -       captures: Set(0) {},
+    -       checked: false,
+    -       children: [],
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: practice controller Return commits on release through the registered parent boundary
+ok 2 - practice controller Return commits on release through the registered parent boundary # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.613208
+  ...
+# Subtest: practice Return preserves stale-session rejection and the shell uses the same checked action
+ok 3 - practice Return preserves stale-session rejection and the shell uses the same checked action # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.067583
+  ...
+# Subtest: paused Controller practice exits both boundaries through the real app blur handler
+ok 4 - paused Controller practice exits both boundaries through the real app blur handler # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.057208
+  ...
+# Subtest: first iframe blur pauses a moving cut without focusing its new Resume action
+ok 5 - first iframe blur pauses a moving cut without focusing its new Resume action # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.096
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 4589.63175
