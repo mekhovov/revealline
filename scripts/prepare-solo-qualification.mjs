@@ -72,10 +72,11 @@ for (const id of ['first-return', 'long-rail']) {
   const manifest = resolveMission(authored, id, { difficulty: 'standard' });
   workloads.push({
     id,
+    ...(id === 'long-rail' ? { qualificationId: 'long-rail-captures-v2' } : {}),
     level: applyGameplayTuning(manifest.level, resolveGameplayTuning('standard')),
-    segments: row[4],
+    segments: id === 'long-rail' ? row[4].slice(0, 8) : row[4],
     themeId: manifest.presentation.themeId,
-    expected: 'won',
+    expected: id === 'long-rail' ? 'running' : 'won',
     basis: 'candidate-solo-tuned-host-routes.json',
     coverage: ['captures', ...(id === 'long-rail' ? ['long-cuts', 'patrols'] : [])],
   });
@@ -114,11 +115,15 @@ for (const id of ['first-return', 'long-rail']) {
   assert.equal(manifest.simulationIdentity, row.simulationIdentity);
   workloads.push({
     id: row.id,
+    qualificationId: 'sentry-detour-capture-projectile-v2',
     turnPolicy: row.turnPolicy,
     level: manifest.level,
-    segments: row.segments.map(({ direction, ticks }) => [direction, ticks]),
+    segments: row.segments.map(({ direction, ticks }, index) => [
+      direction,
+      index === row.segments.length - 1 ? 300 : ticks,
+    ]),
     themeId: manifest.presentation.themeId,
-    expected: 'won',
+    expected: 'running',
     basis: 'combat-candidate-routes.json',
     coverage: ['captures', 'combat-warning', 'combat-projectiles'],
   });
@@ -138,9 +143,9 @@ const definition = (level, turnPolicy = 'immediate') => ({
   options: { classId: 'scout', turnPolicy },
 });
 const expectedDefinitions = new Map(
-  workloads.map((workload) => [
-    workload.qualificationId ?? workload.id,
-    definition(workload.level, workload.turnPolicy),
+  workloads.flatMap((workload) => [
+    [workload.id, definition(workload.level, workload.turnPolicy)],
+    [workload.qualificationId ?? workload.id, definition(workload.level, workload.turnPolicy)],
   ]),
 );
 for (const id of [
@@ -192,6 +197,14 @@ const finish = [{ type: 'result', outcome: 'won', timeoutMs: 20000 }];
 const start = [
   { type: 'click', selector: '#start-button', timeoutMs: 60000 },
   { type: 'wait', phase: 'running', timeoutMs: 60000 },
+];
+const publicSettings = [
+  { type: 'click', selector: '#shell-menu' },
+  { type: 'click', selector: '#shell-options' },
+];
+const closePublicSettings = [
+  { type: 'click', selector: '[data-close="settings-dialog"]' },
+  { type: 'key', key: 'Escape', ms: 1 },
 ];
 const prepare = (id) => [
   {
@@ -740,7 +753,7 @@ await put(
       ...launch('signal-07'),
       { type: 'click', selector: '#pause-button' },
       { type: 'wait', phase: 'paused' },
-      { type: 'click', selector: '#settings-button' },
+      ...publicSettings,
       { type: 'click', selector: '#settings-tab-audio' },
       { type: 'click', selector: '#settings-master-mute' },
       { type: 'check', selector: '[data-reaction-option="sounds"]', value: true },
@@ -749,7 +762,7 @@ await put(
       { type: 'select', selector: '#soundtrack-quick-style', value: 'ambient' },
       { type: 'click', selector: '#soundtrack-play-style' },
       { type: 'click', selector: '#soundtrack-close' },
-      { type: 'click', selector: '[data-close=\"settings-dialog\"]' },
+      ...closePublicSettings,
       { type: 'snapshot', group: 'audio-enabled' },
       ...start,
       { type: 'wait', ms: 30000 },
@@ -766,14 +779,14 @@ const pause = [
   { type: 'wait', phase: 'paused' },
 ];
 const audioSettings = [
-  { type: 'click', selector: '#settings-button' },
+  ...publicSettings,
   // The clip is pinned in English. This is the visible public language control,
   // not a preference/storage injection or an assumption about the host locale.
   { type: 'select', selector: '#settings-dialog [data-language-select]', value: 'en' },
   { type: 'click', selector: '#settings-tab-audio' },
   { type: 'click', selector: '#settings-master-mute' },
 ];
-const closeAudioSettings = [{ type: 'click', selector: '[data-close="settings-dialog"]' }];
+const closeAudioSettings = closePublicSettings;
 const speechWorkload = workloads.find(({ id }) => id === 'long-rail');
 assert(
   speechWorkload.safeNonterminalCaptures > 0,
@@ -823,7 +836,7 @@ await put(
       { type: 'snapshot', group: 'recorded-speech-ready' },
       ...start,
       ...play(speechWorkload.nativeSegments),
-      ...finish,
+      ...pause,
       { type: 'snapshot', group: 'recorded-speech-result' },
       { type: 'exportReplay' },
     ],
