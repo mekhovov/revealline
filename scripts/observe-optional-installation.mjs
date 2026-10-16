@@ -75,6 +75,13 @@ import {
   disposeHistoricalSessionWindow,
 } from './optional-installation-active-window.mjs';
 import {
+  PWA_ACTIVATION_MODE,
+  configureHistoricalPWAActivation,
+  activateHistoricalPWAUpdater,
+  returnHistoricalPWAWindow,
+  disposeHistoricalPWAActivation,
+} from './optional-installation-pwa-activation.mjs';
+import {
   INSTALLATION_WORLD_SEED,
   selectInstallationWorldSeed,
   installationWorldReader,
@@ -354,7 +361,21 @@ const downloadMatrix = installationDownloadFaultMatrix(
 const activeSessionMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION;
 const activeSessionEnabled = selectHistoricalActiveSession(activeSessionMode);
 const activeWindowMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_WINDOW;
-const activeWindowEnabled = selectHistoricalWindowMode(activeWindowMode);
+const pwaActivationEnabled = activeWindowMode === PWA_ACTIVATION_MODE;
+assert(
+  !pwaActivationEnabled ||
+    [
+      'OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS',
+      'OPTIONAL_INSTALLATION_QUOTA_PROBE',
+      'OPTIONAL_INSTALLATION_QUOTA_PACKAGES',
+      'OPTIONAL_INSTALLATION_MIGRATION',
+      'OPTIONAL_INSTALLATION_VERIFICATION_CANCEL',
+      'OPTIONAL_INSTALLATION_IMPORTED_WORLD',
+      'OPTIONAL_INSTALLATION_OFFLINE_FLIGHT',
+    ].every((name) => process.env[name] === undefined),
+  'PWA activation requires a separate fault-free run.',
+);
+const activeWindowEnabled = pwaActivationEnabled || selectHistoricalWindowMode(activeWindowMode);
 const ordinaryWindowEnabled = activeWindowMode === ORDINARY_WINDOW_MODE;
 const ordinaryWindowURL = new URL('./optional-installation-ordinary-window.mjs', import.meta.url);
 const ordinaryWindow = ordinaryWindowEnabled
@@ -428,7 +449,12 @@ const activeSession = activeSessionEnabled
       passed: false,
     }
   : null;
-const activeWindowURL = new URL('./optional-installation-active-window.mjs', import.meta.url);
+const activeWindowURL = new URL(
+  pwaActivationEnabled
+    ? './optional-installation-pwa-activation.mjs'
+    : './optional-installation-active-window.mjs',
+  import.meta.url,
+);
 const focusSourcePath = path.resolve(
   path.dirname(modulePath),
   '../playwright-core/lib/coreBundle.js',
@@ -1798,7 +1824,11 @@ try {
           }
           currentStep = 'prepare real historical active Academy session';
           if (activeWindowEnabled)
-            windowGuard = await configureHistoricalSessionWindow({
+            windowGuard = await (
+              pwaActivationEnabled
+                ? configureHistoricalPWAActivation
+                : configureHistoricalSessionWindow
+            )({
               context,
               previousPage: priorWindow,
               updatePage: page,
@@ -1813,9 +1843,16 @@ try {
             receipt: activeSession,
             mode: activeSessionMode,
           });
-          await page.bringToFront();
-          if (windowGuard) await minimizeHistoricalSessionWindow(windowGuard);
-          await snapshotPausedAfterTransfer(sessionGuard);
+          if (pwaActivationEnabled) {
+            await activateHistoricalPWAUpdater(windowGuard, {
+              sessionDeadlineAt: sessionGuard.deadline,
+              observePaused: () => snapshotPausedAfterTransfer(sessionGuard),
+            });
+          } else {
+            await page.bringToFront();
+            if (windowGuard) await minimizeHistoricalSessionWindow(windowGuard);
+            await snapshotPausedAfterTransfer(sessionGuard);
+          }
         }
         await stageLauncher(fpv);
         await pointer(fpv, version);
@@ -1842,7 +1879,10 @@ try {
             previousVersion: installed(upgraded, fpv).previous.version,
             checkpoint: 'candidate-installed-over-previous-candidate',
           };
-          if (windowGuard) await restoreHistoricalSessionWindow(windowGuard);
+          if (windowGuard)
+            await (
+              pwaActivationEnabled ? returnHistoricalPWAWindow : restoreHistoricalSessionWindow
+            )(windowGuard);
           await verifyHistoricalSessionAfterUpdate(sessionGuard);
           const image = await sessionGuard.page.screenshot({ timeout: 5000 });
           const imagePath = output + '.active-session-paused.png';
@@ -1858,7 +1898,12 @@ try {
           if (sessionGuard) await disposeHistoricalAcademySession(sessionGuard);
         } finally {
           try {
-            if (windowGuard) await disposeHistoricalSessionWindow(windowGuard);
+            if (windowGuard)
+              await (
+                pwaActivationEnabled
+                  ? disposeHistoricalPWAActivation
+                  : disposeHistoricalSessionWindow
+              )(windowGuard);
           } finally {
             if (ordinaryGuard) await disposeHistoricalOrdinaryWindow(ordinaryGuard);
           }
@@ -2404,8 +2449,13 @@ try {
       activeSession.browserConfiguration = activeWindow;
       report.passed &&= Boolean(
         activeWindow.configured &&
-          activeWindow.minimized &&
-          activeWindow.restored &&
+          (pwaActivationEnabled
+            ? activeWindow.standaloneObserved &&
+              activeWindow.activated &&
+              activeWindow.returned &&
+              activeWindow.returnObservation?.passed &&
+              activeWindow.transfer?.passed
+            : activeWindow.minimized && activeWindow.restored) &&
           activeWindow.cleanup?.completed &&
           activeWindow.sourceStable,
       );

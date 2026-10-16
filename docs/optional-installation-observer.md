@@ -122,11 +122,23 @@ Its exact owned target, sessions, original bounds and focus defaults must all be
 cleaned up. Late acquisition results retain ownership before deadline checks;
 an unresolved or failed cleanup cannot produce a passing receipt.
 
-Only the explicit `owned-window-minimize-98ad851` diagnostic uses an isolated
+The explicit `owned-window-minimize-98ad851` diagnostic uses an isolated
 visible Chrome context. Headless installed-app windows can acknowledge native
 minimization without changing state; the preserved third attempt records that
 failure. Visibility does not waive actual bounds, focus/pause, identity or cleanup
 checks. Default, migration and download lanes remain headless.
+
+The separately named `owned-pwa-target-activation-98ad851` mode also runs headed,
+with the same historical and saved-world flags. It refuses all fault, quota,
+migration, imported-world, verification-cancellation and all-six-offline flags.
+It requires an actual installed standalone A and a separately owned updater B,
+then one native B target activation, a fresh trusted blur and maintained paused
+HUD within 1.5 seconds. Returning requires A actually unfocused before one native
+A activation and actually focused afterward, before the existing verifier may
+bring it forward. No minimize/manual-pause/synthetic-event fallback is allowed.
+The same shared 30-second session budget and exact owning cleanup remain required.
+This is a new unqualified native path until its own browser receipt passes;
+previous minimization failures are not erased or relabelled.
 
 With the pinned historical admission above, set
 `OPTIONAL_INSTALLATION_ACTIVE_SESSION=academy-v0.142.4-98ad851`. Do not combine it
