@@ -14,19 +14,20 @@ import {
 } from './game-cli.mjs';
 import { validateDownloadCatalogue } from '../game/download-catalogue.mjs';
 import { projectDefaultRuntimeMetadata } from './default-runtime-metadata.mjs';
+import {
+  soloBuildVerificationArguments,
+  verifyExternalBuildArchive,
+} from './solo-build-archive.mjs';
 
 // Read-only with respect to both source and artifact; only the report is written.
 // This checks an existing build, not publication admission or physical-device
 // qualification. Run after source edits finish, outside timing observations.
-const [artifactArgument, output, ...flags] = process.argv.slice(2);
-if (!artifactArgument || !output)
-  throw new Error(
-    'Usage: node scripts/verify-solo-build.mjs <finished artifact directory> <report.json> [--source=<directory>] [--base=<git ref>]',
-  );
-if (flags.some((flag) => !/^--(?:source|base)=.+/.test(flag)))
-  throw new Error('Invalid build verification options.');
-const option = (name, fallback) =>
-  flags.find((flag) => flag.startsWith(`--${name}=`))?.slice(name.length + 3) ?? fallback;
+// An external ZIP requires the independent extraction receipt. This verifier
+// recomputes its digest and binds that receipt to the verified local manifest;
+// retain both reports. It neither copies nor independently re-expands that ZIP.
+const args = soloBuildVerificationArguments(process.argv.slice(2));
+const { artifact: artifactArgument, output } = args;
+const option = (name, fallback) => args[name] ?? fallback;
 const sourceRoot = await realpath(option('source', fileURLToPath(new URL('../', import.meta.url))));
 const artifact = resolve(artifactArgument);
 const outputPath = resolve(output);
@@ -34,6 +35,9 @@ assert.ok(
   outputPath !== artifact && !outputPath.startsWith(`${artifact}${sep}`),
   'The report must be outside the read-only artifact.',
 );
+if (args.archive)
+  for (const input of [args.archive, `${args.archive}.sha256`, args['archive-receipt']])
+    assert.notEqual(outputPath, resolve(input), 'The report cannot overwrite archive evidence.');
 const runFile = promisify(execFile);
 const git = async (...args) =>
   (await runFile('git', args, { cwd: sourceRoot, maxBuffer: 16 * 1024 * 1024 })).stdout;
@@ -317,13 +321,22 @@ try {
     downloadFiles: catalogue.files.length,
     inventoryFiles: inventory.files.length,
   };
-  const archive = await digest(await artifactPath('distribution.zip'));
-  const checksum = (await readFile(await artifactPath('distribution.zip.sha256'), 'utf8')).trim();
-  check(checksum === `${archive.sha256}  distribution.zip`, 'ZIP checksum differs.');
-  report.zip = {
-    ...archive,
-    check: 'sidecar digest; ZIP members are not independently re-expanded',
-  };
+  if (args.archive)
+    report.zip = await verifyExternalBuildArchive({
+      archive: args.archive,
+      receipt: args['archive-receipt'],
+      artifactRoot,
+      manifestBytes,
+    });
+  else {
+    const archive = await digest(await artifactPath('distribution.zip'));
+    const checksum = (await readFile(await artifactPath('distribution.zip.sha256'), 'utf8')).trim();
+    check(checksum === `${archive.sha256}  distribution.zip`, 'ZIP checksum differs.');
+    report.zip = {
+      ...archive,
+      check: 'sidecar digest; ZIP members are not independently re-expanded',
+    };
+  }
   for (const [name, initial] of sourceDigests) {
     const final = await digest(resolve(sourceRoot, name));
     check(
