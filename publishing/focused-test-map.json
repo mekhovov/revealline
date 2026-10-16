@@ -257,6 +257,7 @@
             "scripts/test-pages-candidate-overlay.mjs",
             "scripts/test-pages-candidate-archive.mjs",
             "scripts/test-pages-candidate-measurement.mjs",
+            "scripts/test-pages-candidate-stack.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }
