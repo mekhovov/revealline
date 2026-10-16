@@ -2,6 +2,15 @@
 
 ## 16 October research and execution update
 
+Latest-main follow-up: PR #1512 merged; later work rebased cleanly onto
+`facf1627e`. Real hardware and hosting remain explicitly deferred. Independent
+audit confirms the three-app migration/rollback receipt's 630 cached-member
+pins and seven content witnesses. A fourth installed-window attempt also fails
+before update; do not mark active-session protection complete. Next software
+checks are an explicitly ordinary-browser continuity lane, real imported-model
+retention/offline flight, and the complete production-build directory journey.
+These add no simulator mechanics and require their own native receipts.
+
 Latest follow-up: safe EN/UK offline error feedback and synchronized player guides
 are implemented on reproduced/admitted source `b8aec0821`; the full practice suite
 passes 387/387. Its fresh native short-recovery run passes 22 checkpoints; genuine
@@ -243,15 +252,15 @@ arbitrary destination or executable query parameter.
 
 ## What is already implemented
 
-| Area                | Implemented                                                                                                                                                         | Remaining proof or refinement                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; six full-source-shell journeys pass | Public selection, complete production build and positive custom-appearance handoff remain unqualified |
-| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                   | Repeat current public compatibility checks after deployment                                                |
-| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; component browser failure/cache/retry checks passed                                             | Full-shell and released-package offline checks remain                                                      |
+| Area                | Implemented                                                                                                                                                                         | Remaining proof or refinement                                                                                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; six full-source-shell journeys pass                          | Public selection, complete production build and positive custom-appearance handoff remain unqualified                                      |
+| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                                   | Repeat current public compatibility checks after deployment                                                                                |
+| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; component browser failure/cache/retry checks passed                                                             | Full-shell and released-package offline checks remain                                                                                      |
 | Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three restart and nonempty World project evidence | Distinct-release migration, current cancellation/timing, imported assets/offline flight and wider browser checks remain; hardware deferred |
-| Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                      | Full retained-site capacity and reviewed release selection remain                                          |
-| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
-| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                             | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |
+| Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                                      | Full retained-site capacity and reviewed release selection remain                                                                          |
+| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                                | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence                                 |
+| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                                             | Complete for the unpublished fixture; does not qualify the three real apps and must never be published                                     |
 
 Prior 290/290 practice and 37/37 SIM recovery checks are useful recorded evidence,
 not automatic approval of a later source. See the
