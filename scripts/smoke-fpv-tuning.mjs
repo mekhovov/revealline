@@ -1,7 +1,8 @@
 /* global window, document, navigator */
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
-import { readFile, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
@@ -88,7 +89,13 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
     server.listen(0, '127.0.0.1', resolve);
   });
   const url = `http://127.0.0.1:${server.address().port}/qualification.html`;
+  const presetFolder = await mkdtemp(path.join(tmpdir(), 'fpv-tuning-preset-'));
   try {
+    await writeFile(
+      path.join(presetFolder, 'main.txt'),
+      'set yaw_srate = 80\n#$ OPTION BEGIN (CHECKED): Fast yaw\nset yaw_srate = 90\n#$ OPTION END\n',
+    );
+    await writeFile(path.join(presetFolder, 'other.txt'), 'set roll_srate = 72\n');
     for (const engine of ['chromium', 'firefox', 'webkit']) {
       let browser;
       try {
@@ -447,12 +454,110 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.explicitRotationOnlyCliExport = true;
             evidence.checks.download = true;
 
+            await page
+              .getByLabel('Local preset folder', { exact: true })
+              .setInputFiles(presetFolder);
+            const presetEntry = page.getByLabel('Preset entry path within folder', { exact: true });
+            await presetEntry.fill('main.txt');
+            await button('Resolve preset and review options').click();
+            const fastYaw = page.getByLabel('Fast yaw', { exact: true });
+            await fastYaw.waitFor();
+            await button('Preview import').click();
+            await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
+            await fastYaw.uncheck();
+            const beforePresetSave = await page.evaluate(() => window.qualificationStore.export());
+            await button('Preview import').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Resolve the preset again before previewing' })
+              .waitFor();
+            await button('Save import as new profile').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Preview the import first' })
+              .waitFor();
+            check(
+              (await page.evaluate(() => window.qualificationStore.export())) === beforePresetSave,
+              'Changed preset options saved the obsolete resolved text',
+            );
+            await button('Resolve preset and review options').click();
+            await button('Preview import').click();
+            await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
+            await button('Save import as new profile').click();
+            await page.waitForFunction(
+              () =>
+                window.qualificationStore.snapshot().profiles.at(-1).provenance?.source.kind ===
+                'preset',
+            );
+            check(
+              await page.evaluate(() => {
+                const profile = window.qualificationStore.snapshot().profiles.at(-1);
+                return (
+                  profile.response.rates.axes.yaw.rate === 80 &&
+                  profile.provenance.preset.options.entries.some((entry) =>
+                    entry.includes('"checked":false'),
+                  )
+                );
+              }),
+              'Resolved preset did not retain the chosen option and its receipt',
+            );
+            await presetEntry.fill('other.txt');
+            check((await fastYaw.count()) === 0, 'Entry change retained obsolete option controls');
+            await button('Preview import').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'Resolve the preset again before previewing' })
+              .waitFor();
+            await button('Resolve preset and review options').click();
+            await button('Preview import').click();
+            await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
+            await button('Save import as new profile').click();
+            await page.waitForFunction(
+              () =>
+                window.qualificationStore.snapshot().profiles.at(-1).provenance?.preset?.entry ===
+                'other.txt',
+            );
+            check(
+              await page.evaluate(() => {
+                const profile = window.qualificationStore.snapshot().profiles.at(-1);
+                return (
+                  profile.response.rates.axes.roll.rate === 72 &&
+                  profile.provenance.preset.options.total === 0
+                );
+              }),
+              'Entry change kept choices from the previous preset',
+            );
+            evidence.checks.stalePresetResolutionRejected = true;
+            evidence.checks.presetEntryClearsPriorOptions = true;
+
+            const firstSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
+            await button('Duplicate drone setup').click();
+            await page.waitForFunction(
+              (id) => window.qualificationStore.snapshot().selectedSetupId !== id,
+              firstSetup,
+            );
+            const secondSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
+            await page.getByLabel('Drone setup', { exact: true }).selectOption(firstSetup);
+            await page.waitForFunction(
+              (id) => window.qualificationStore.snapshot().selectedSetupId === id,
+              firstSetup,
+            );
+            await page.getByLabel('Drone name', { exact: true }).fill('Unsaved selection draft');
             const other = await context.newPage();
             await other.goto(url);
             await other.waitForFunction(() => window.qualificationReady);
             await other.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
             await other.getByRole('button', { name: 'New Actual profile', exact: true }).click();
             await page.getByRole('status').filter({ hasText: 'Another tab changed' }).waitFor();
+            await page.getByLabel('Drone setup', { exact: true }).selectOption(secondSetup);
+            await page.getByRole('status').filter({ hasText: 'Could not apply' }).waitFor();
+            check(
+              (await page.getByLabel('Drone setup', { exact: true }).inputValue()) === firstSetup &&
+                (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
+                  'Unsaved selection draft',
+              'Rejected setup selection did not restore the visible drone and retain its draft',
+            );
+            evidence.checks.failedSetupSelectionRestoresVisibleDrone = true;
             await button('Save for next flight').click();
             await page.getByRole('status').filter({ hasText: 'Could not apply' }).waitFor();
             evidence.checks.realCrossTabStaleEdit = true;
@@ -525,6 +630,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
     }
   } finally {
     await new Promise((resolve) => server.close(resolve));
+    await rm(presetFolder, { recursive: true, force: true });
   }
   const sourceRecords = [],
     changedSources = [...changedDuringRun];

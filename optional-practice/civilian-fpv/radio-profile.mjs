@@ -478,10 +478,16 @@ export function createFlightProfileStore({ storage, key = 'revealline.flight-pro
       })),
     library: () => structuredClone(library()),
     save,
-    import(input) {
+    import(input, { preserveResponse = false } = {}) {
+      // Validate the entire source before dropping an old response field. The
+      // separate tuning editor owns rates, including its unsaved migration base.
       const value = decode(input);
       return commit(
-        { format: 'FlightProfiles.v1', radio: value.radio, response: value.response },
+        {
+          format: 'FlightProfiles.v1',
+          radio: value.radio,
+          response: preserveResponse ? current.response : value.response,
+        },
         [...radios, ...value.radios],
         { importedKeys: value.radios.map(radioProfileKey) },
       );

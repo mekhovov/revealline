@@ -3,8 +3,9 @@
 Reviewed 16 October 2026 against the original phased plan and current upstream
 documentation. The first review used implementation `8202201b7` on `741948b14`;
 the second review rebased the accumulated work onto `3585f2c32` before edits.
-The third review rebased onto `20768f599` before its corrections; earlier
-source-bound reports retain their original hashes.
+The third review rebased onto `20768f599` before its corrections. The fourth
+review rebased onto `1cdf442dc` before edits; earlier source-bound reports retain
+their original hashes.
 This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
@@ -274,7 +275,7 @@ thresholds, publication limits and Advanced promotion policy remain unchanged.
 | --- | --- | --- |
 | 0 — base and compatibility | Latest-main rebase, retained Legacy model/identities, migrations and historical fixtures. | None beyond normal integration of the final commit. |
 | 1 — rates and throttle | Five models, independent axes, both Quick modes, versioned exact throttle, native increments and full supported range. | Physical feel is covered by the separately deferred pilot sessions. |
-| 2 — profiles and practical tuning | Device-local profiles, setup assignment, history, camera, overlays, preview/diagnostics, draft testing, atomic persistence and stale-tab protection; third-review camera regressions pass. | Actual radio/touch and experienced-pilot checks remain deferred. |
+| 2 — profiles and practical tuning | Device-local profiles, setup assignment, history, camera, overlays, preview/diagnostics, draft testing, atomic persistence and stale-tab protection; third-review camera regressions pass. | Radio/pilot sessions are deferred; physical-touch checks remain unmeasured. |
 | 3A/3B — transfer | Verified CLI versions, ordered dump/diff/patch handling, local preset bundles/options, previews, receipts and native/CLI export. | New firmware families, online catalog and other firmware formats remain outside this release. |
 | 4 — Advanced backend | Independent controller, worker/motor/body loops, frozen 250 Hz choice, compact recording/recovery and Regional rollback; third-review chronology regressions pass. | Wider physical platform and dense-region qualification remain open. |
 | 5 — aircraft and comparisons | Editable reference templates, battery/motor/filter controls, separate controller/rates, comparison identities, verified unscored ghosts and measured-log comparison tooling. | Real-aircraft fitting, validated propwash/ground effect and Advanced scored sector eligibility require their original evidence gates. |
@@ -300,3 +301,80 @@ The available software scope is complete and ready for the normal reviewed Pages
 integration process. Public deployment and installed-update testing remain
 unperformed, and the physical/platform/promotion gates in the phase table remain
 open. No gate was weakened or unmeasured result labeled complete.
+
+## Fourth review — calibration and preview boundaries
+
+Reviewed again on 16 October. Rebased all four feature commits onto current
+`main` at `1cdf442dc` before implementation. Their new identities are
+`da420505a`, `6d846f285`, `c4b771b14` and `8fe7b118f`. The integration retains
+main's broader dialog-hint protection, HUD accessibility grouping, offline
+changes and practice pointer/observer checks.
+
+Fresh primary-source review narrows the remaining work to demonstrated defects:
+
+| Reference | Finding and implementation decision |
+| --- | --- |
+| [Betaflight App 2026.6.1](https://github.com/betaflight/betaflight-configurator/releases/tag/2026.6.1) and [2026.6.2](https://github.com/betaflight/betaflight-configurator/releases/tag/2026.6.2) | The former includes numeric, preview, profile-display and offline corrections; the latter lists a stale-device-event transport fix. Exercise editor transitions and offline delivery. App release notes do not expand our verified firmware mathematics or supported firmware tags. |
+| [Betaflight rate calculator](https://betaflight.com/docs/wiki/guides/current/Rate-Calculator) | Preserve the five algorithms' native parameter meanings. Approximate rate conversion remains optional future work with explicit fitting error. |
+| [WebFPV notes](https://webfpv.org/notes/) | Aircraft-specific saving, device mapping and download-lifecycle fixes reinforce testing failure paths and separating browser observations from physical qualification. A reported fix in another SIM is an audit lead, not proof of a defect here. |
+| [QuadMath simulator](https://quadmath.com/sim.html) | Its adjacent axis rates, CLI paste, camera and aircraft controls reinforce the implemented tuning workflow. Visible controls do not establish measured aircraft fidelity or justify arbitrary gravity sliders. |
+| [SimITL](https://github.com/AJ92/SimITL) and [pr0p](https://pr0p.dev/) | Actual Betaflight execution has a concrete architectural reference. SimITL's README currently specifies a modified 2025.12.0 prerelease and Windows/Linux binaries. Keep the replaceable controller interface; this does not establish a drop-in browser backend, portable firmware equivalence or a new requirement for this release. |
+
+Independent reproductions reopened four bounded software items:
+
+1. **Preset preview integrity.** Changing an option invalidates generated CLI
+   text as well as the preview. **Preview import** and **Save import as new
+   profile** require the current choices to be resolved. Switching entry files
+   resets entry-specific option state and descriptions. A separately pasted CLI
+   snippet remains a deliberate input.
+2. **Failed drone-selection recovery.** If selecting another setup fails because
+   storage is full or another tab saved newer data, restore the displayed
+   selector to the committed setup without losing current drafts. A later Save
+   must never target a different drone from the one shown.
+3. **Calibration-only imports.** In Academy and World, importing a radio profile
+   or calibration library must preserve saved player rates, the existing legacy
+   migration response and the current flight. Validate the entire incoming
+   document before applying calibration changes, report ignored legacy response
+   settings, and retain the standalone legacy editor's original import behavior.
+4. **Replay observer integration.** Main's new frozen-source replay observer
+   needs the rates and response modules introduced by this branch. Add these
+   explicit dependencies while retaining exact-byte checks and the bounded
+   subprocess. Verify Legacy and tuned recordings in both Academy and World;
+   missing modules must still reject verification.
+
+The exit checks are negative/positive store and UI regressions, browser preset
+interaction, full practice and native tests, upstream pointer/observer checks,
+release validation and fresh normal-production Pages/offline checks. Compare
+historical numerical evidence against its source hashes before reuse; unchanged
+physics does not need a new benchmark labeled as new evidence. All qualification
+and publication limits remain unchanged.
+
+The original phase disposition above still applies. Complete these reproducible
+software corrections and commit the tested result for the normal Pages
+integration process. Radio and pilot feedback remain deferred at the user's
+request; absent aircraft measurements, untested physical devices and public
+rollout retain their explicit gates. They do not block the software corrections,
+and they cannot be represented as completed measurements.
+
+A bounded follow-up to WebFPV's download-lifetime note did not reproduce a local
+failure: nine initialized 457-byte Academy exports completed across current
+Chrome, Firefox and WebKit with the existing URL lifetime. The
+[experiment](fpv-academy-download-fourth-review.json) is explicitly limited to
+that small initialized attempt and those browser versions. It does not establish
+historical-browser or maximum-duration download behavior and does not justify a
+speculative production change.
+
+### Fourth-review completion
+
+All four reopened software items are implemented and independently reviewed. The
+[combined receipt](fpv-tuning-fourth-review-verification.json) records 664 passing
+practice tests, 75 native tests, 10 pointer tests and 170 passing observer tests
+with one existing opt-in fixture skipped. Six editor-browser cases, actual
+World/Regional recovery, nine-module lint/formatting and release validation pass.
+Unchanged numerical source hashes retain the prior matrix as historical evidence.
+The normal production build and generated Academy/World online/offline checks
+pass within the existing Pages cap.
+
+This closes the available software scope. Original measurement, platform and
+public-rollout gates remain as listed above; none is represented as completed or
+waived. The tested commit is ready for normal reviewed Pages integration.

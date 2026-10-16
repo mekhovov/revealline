@@ -30,7 +30,26 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The [current third-review check](fpv-pages-third-review-live-testing-evidence.json)
+The [current fourth-review check](fpv-pages-fourth-review-live-testing-evidence.json)
+passes against the normal production build at
+`/private/tmp/fpv-rates-fourth-review-20261016-pages`, version `0.151.1`, after the
+rebase onto `1cdf442dc` and the preset/calibration corrections. Academy and World
+pass online and in isolated offline contexts, including saved rates, keyboard
+installer activation, Advanced start/restart/export and complete worker disposal.
+All 3,433 manifest entries and the archive checksum verify. The seven changed FPV
+runtime/shared-install modules, including the rebased host changes, match the
+checkout byte-for-byte. Build-only worker inputs are validated separately; the
+normal builder emits manifest-specific workers checked by the offline tests.
+
+The publication contains 3,435 files / 963,653,304 bytes. Its conservative archive
+forecast is 972,276,224 bytes, leaving 7,723,776 bytes below the unchanged cap.
+The distribution ZIP digest is
+`1aee5b1fb08f0966c8db39ded19b245aee7ec5babcf68f36f5984e86e293de5d`.
+This remains a local working-tree build (`sourceRevision: null`), ready for the
+normal reviewed main publication process. Public HTTPS, the real password form
+and existing-install updates remain separate checks; no deployment was performed.
+
+The [historical third-review check](fpv-pages-third-review-live-testing-evidence.json)
 passes against the normal production build at
 `/private/tmp/fpv-rates-third-review-20261016-pages`, version `0.151.1`, after the
 rebase onto `20768f599` and the camera/replay validation fixes. Academy and World
@@ -47,6 +66,9 @@ The distribution ZIP digest is
 This is a local working-tree build (`sourceRevision: null`), ready for the normal
 reviewed main publication process. Public HTTPS, the real password form and
 existing-install updates remain separate checks; no deployment was performed.
+Its superseded temporary output was removed only after checking its recorded
+manifest and ZIP digests, to make room for the fourth-review build. The repository
+receipts remain unchanged.
 
 The [historical second-review check](fpv-pages-second-review-live-testing-evidence.json)
 passes against the unmodified normal production build at
@@ -135,8 +157,8 @@ fallback. All other failed requests and console errors fail the check.
 
 The full generated host exposed a pointer bug: clearing a menu hint shortened
 the tuning dialog by 42 pixels between pointer down and pointer up, moving Save
-away from the pointer. Academy and World now preserve the hint while tuning is
-open. The original failure is retained in
+away from the pointer. Academy and World preserve the hint while a dialog is open. The latest-main
+rebase retains its broader protection and HUD accessibility grouping. The original failure is retained in
 [`fpv-pages-pointer-investigation.json`](fpv-pages-pointer-investigation.json);
 the final probe repeats the same physical Save and Advanced clicks and records
 their geometry in

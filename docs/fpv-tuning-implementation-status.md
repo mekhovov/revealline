@@ -1,12 +1,84 @@
 # FPV tuning implementation status
 
-Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, refreshed cleanly onto
-`origin/main` at `20768f599` before the third review. The earlier implementation
-and review commits are now `1506e44f4`, `3f0d3abbc` and `1ff0d996d`; their original hashes
-remain in historical reports. Unrelated local files are preserved. A local commit
-does not deploy GitHub Pages.
+Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, rebased onto
+`origin/main` at `1cdf442dc` before the fourth review. The four earlier feature
+commits are now `da420505a`, `6d846f285`, `c4b771b14` and `8fe7b118f`; historical
+reports keep their original hashes. Unrelated local files are preserved. A local
+commit does not deploy GitHub Pages.
 
-## Third review — camera submission and replay chronology
+## Fourth review — calibration, presets and current-main integration
+
+The [updated plan](fpv-tuning-completion-plan.md#fourth-review--calibration-and-preview-boundaries)
+adds primary-source findings from Betaflight App, WebFPV, QuadMath and SimITL.
+The review reproduces and closes four concrete software gaps:
+
+- Preset option and entry changes invalidate the generated result. **Preview
+  import** and **Save import as new profile** require a fresh resolution; changing
+  entry clears the previous options, and deliberate pasted CLI input remains
+  supported. The saved receipt describes the choices that produced the saved curve.
+- Failed drone selection restores the actual current setup in the selector while
+  preserving its draft. Quota and stale-tab failures cannot mislabel a subsequent
+  save as targeting a different drone.
+- Academy/World radio calibration imports preserve player rates and the existing
+  legacy migration response, with no rate-apply/restart callback. Complete source
+  validation remains mandatory, and EN/UK messages identify ignored response
+  settings. Standalone legacy radio-editor imports retain their prior behavior.
+- Main's new frozen-source replay observer now explicitly pins the rates and
+  response modules needed by the feature. Legacy and tuned recordings replay in
+  both hosts; missing dependencies and changed executable bytes remain rejected.
+
+Independent cross-reviews found no remaining issues in these changes. All
+**664 practice tests** pass (659 top-level and five nested), including long-flight
+recording/recovery. All **75 native tests**, **10 pointer tests**, and nine-module
+lint/formatting checks pass. The practice-observer suite passes **170 tests**;
+its one opt-in historical-snapshot case is skipped without a supplied fixture.
+The initial six observer failures exposed the missing dependency pins above;
+the corrected final run passes without relaxing executable admission.
+
+All six [editor browser cases](fpv-tuning-browser-fourth-review-qualification.json)
+pass in Chrome, Firefox and WebKit, desktop and narrow touch emulation. They
+cover real folder upload, stale option refusal, entry switching, receipts and
+cross-tab selection rollback. All 23 source hashes match the final implementation.
+The [World/Regional check](fpv-advanced-regional-browser-smoke-2026-10-16-fourth-review.json)
+passes recovery adoption, corruption rejection, cancellation, landing/takeoff,
+replay and Legacy return. All 143 source hashes match, all five workers terminate
+and there are no page errors.
+
+The [native staging receipt](fpv-native-fourth-review-staging.json) verifies all
+172 runtime sources. Desktop staging contains 183 files / 18,279,753 bytes; iOS
+contains 188 files / 18,353,980 bytes. Security policies and package limits remain
+unchanged. This review does not repeat Electron or iOS runtime interactions;
+previous actual Electron evidence remains historical and iOS runtime remains
+unavailable.
+
+All 20 source pins in the [third-review numerical matrix](fpv-advanced-runtime-qualification-2026-10-16-third-review.json)
+still match exactly. Those six-runtime numerical/determinism observations are
+reused as historical evidence, not relabeled as a new benchmark. The backend,
+dynamics, 250 Hz frequency and promotion policy are unchanged.
+
+Release validation passes 3,328 distribution files, valid literal references,
+13,651 EN/UK messages and 9,049 references, generated assets and runtime checks.
+The seven existing navigation warnings remain unchanged.
+
+The normal production Pages build and [generated-site checks](fpv-pages-fourth-review-live-testing-evidence.json)
+pass Academy and World online and in isolated offline contexts. All 3,433 manifest
+entries and the ZIP checksum verify, with seven changed FPV/shared-install
+modules matching the checkout. The 3,435-file publication is 963,653,304 bytes;
+its conservative archive forecast leaves 7,723,776 bytes below the unchanged
+980,000,000-byte cap. No build or publication policy was relaxed. The initial
+supplemental checkout comparison included an unrelated civilian-flight module
+outside this inventory; restricting that comparison to the changed FPV/shared
+modules required no artifact changes. Every manifest entry was still verified.
+
+All currently actionable software items are complete. The
+[combined fourth-review receipt](fpv-tuning-fourth-review-verification.json) binds
+implementation, test and delivery evidence. The user-deferred radio/pilot
+sessions, missing aircraft measurements, wider physical-platform qualification
+and public-deployment gates remain open. Advanced remains optional, unscored and
+ineligible as the default; this commit is ready for the normal reviewed Pages
+integration process and does not deploy it.
+
+## Third review — historical camera submission and replay chronology
 
 The [updated plan](fpv-tuning-completion-plan.md#third-review--complete-the-available-scope-without-inventing-qualification)
 adds primary examples from FlySpark, FPV Web and ShramkoGSFPV, distinguishes the

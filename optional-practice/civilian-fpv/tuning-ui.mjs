@@ -490,7 +490,8 @@ export function mountFlightTuning({
   file.accept = '.txt,.json,.cli';
   let uploadGeneration = 0,
     uploadedSource = null,
-    resolvedPreset = null;
+    resolvedPreset = null,
+    presetNeedsResolution = false;
   const readImportText = async (picked) =>
     picked.arrayBuffer
       ? new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(
@@ -502,6 +503,7 @@ export function mountFlightTuning({
     clearImportPreview();
     uploadedSource = null;
     resolvedPreset = null;
+    presetNeedsResolution = false;
     importReview.textContent = '';
     text.value = '';
     try {
@@ -518,6 +520,13 @@ export function mountFlightTuning({
   });
   const importReview = el('pre', undefined, transfer);
   function parseImport(source = uploadedSource ?? text.value) {
+    if (presetNeedsResolution)
+      throw new Error(
+        t(
+          'Preset choices changed. Resolve the preset again before previewing.',
+          'Вибір пресету змінено. Повторно розгорніть пресет перед переглядом.',
+        ),
+      );
     const baseline = draft.format === TUNED_RESPONSE_FORMAT ? draft.rates : null;
     if (source.trim().startsWith('{')) return previewNativeRateImport(source);
     return previewBetaflightImport(source, {
@@ -567,6 +576,7 @@ export function mountFlightTuning({
         if (node === text) {
           uploadedSource = null;
           resolvedPreset = null;
+          presetNeedsResolution = false;
         }
       });
   action(
@@ -645,18 +655,32 @@ export function mountFlightTuning({
     transfer,
   );
   listen(bundleEntry, 'input', () => {
-    clearImportPreview();
-    resolvedPreset = null;
-    uploadGeneration++;
+    optionSelection = {};
+    releaseChildren(bundleOptions);
+    bundleOptions.replaceChildren();
+    invalidatePresetResolution();
   });
   const bundleOptions = el('div', undefined, transfer);
   let bundle = {},
     optionSelection = {};
+  function invalidatePresetResolution() {
+    clearImportPreview();
+    resolvedPreset = null;
+    uploadedSource = null;
+    presetNeedsResolution = true;
+    uploadGeneration++;
+    importReview.textContent = '';
+    status.textContent = t(
+      'Preset choices changed. Resolve the preset again before previewing.',
+      'Вибір пресету змінено. Повторно розгорніть пресет перед переглядом.',
+    );
+  }
   listen(bundleFiles, 'change', async () => {
     const generation = ++uploadGeneration;
     clearImportPreview();
     uploadedSource = null;
     resolvedPreset = null;
+    presetNeedsResolution = true;
     importReview.textContent = '';
     text.value = '';
     bundle = {};
@@ -691,10 +715,7 @@ export function mountFlightTuning({
   action(
     t('Resolve preset and review options', 'Розгорнути пресет і переглянути опції'),
     () => {
-      clearImportPreview();
-      resolvedPreset = null;
-      uploadedSource = null;
-      uploadGeneration++;
+      invalidatePresetResolution();
       const result = resolveBetaflightPresetBundle({
         files: bundle,
         entry: bundleEntry.value,
@@ -707,9 +728,7 @@ export function mountFlightTuning({
         box.checked = option.checked ?? false;
         listen(box, 'change', () => {
           optionSelection[option.name] = box.checked;
-          clearImportPreview();
-          resolvedPreset = null;
-          uploadGeneration++;
+          invalidatePresetResolution();
         });
       }
       text.value = result.text;
@@ -717,6 +736,7 @@ export function mountFlightTuning({
         text: result.text,
         bundle: { files: clone(bundle), entry: bundleEntry.value, options: clone(optionSelection) },
       };
+      presetNeedsResolution = false;
       importKind.value = 'patch';
       importReview.textContent = JSON.stringify(result, null, 2);
       clearImportPreview();
@@ -745,6 +765,7 @@ export function mountFlightTuning({
       text.value = exportNativeRateProfile(portable());
       uploadedSource = null;
       resolvedPreset = null;
+      presetNeedsResolution = false;
     },
     transfer,
   );
@@ -764,6 +785,7 @@ export function mountFlightTuning({
       });
       uploadedSource = null;
       resolvedPreset = null;
+      presetNeedsResolution = false;
       status.textContent = includeThrottleExport.checked
         ? t(
             'CLI export ready: rotation rates and throttle settings.',
@@ -783,6 +805,7 @@ export function mountFlightTuning({
       text.value = store.export();
       uploadedSource = null;
       resolvedPreset = null;
+      presetNeedsResolution = false;
     },
     transfer,
   );
@@ -1122,7 +1145,10 @@ export function mountFlightTuning({
         load();
         onSaved(store.effective());
       })
-      .catch(report);
+      .catch((failure) => {
+        setupSelect.value = library.selectedSetupId;
+        report(failure);
+      });
   });
   listen(algorithm, 'change', () => {
     const old = draft.format === TUNED_RESPONSE_FORMAT ? draft.rates.algorithm : 'legacy';

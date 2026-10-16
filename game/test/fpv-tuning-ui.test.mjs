@@ -688,6 +688,139 @@ for (const uploadedRoot of ['firmware-presets', 'presets'])
     assert.equal(f.store.snapshot().revision, 0);
   });
 
+async function uploadPresetFiles(f, sources) {
+  const file = f.find('Local preset folder');
+  file.files = Object.entries(sources).map(([path, source]) => ({
+    name: path.split('/').at(-1),
+    size: source.length,
+    webkitRelativePath: `bundle/${path}`,
+    text: async () => source,
+  }));
+  file.emit('change');
+  await settle();
+}
+const optionalYawPreset =
+  'set yaw_srate = 80\n#$ OPTION BEGIN (CHECKED): Fast yaw\nset yaw_srate = 90\n#$ OPTION END';
+
+for (const previewFirst of [false, true])
+  test(`changed preset options require resolution before preview/save (${previewFirst ? 'existing preview' : 'resolved text'})`, async (t) => {
+    const f = fixture(t);
+    f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+    await uploadPresetFiles(f, { 'main.txt': optionalYawPreset });
+    await f.click('Resolve preset and review options');
+    if (previewFirst) await f.click('Preview import');
+    const option = f.find('Fast yaw');
+    option.checked = false;
+    option.emit('change');
+    const before = f.store.export();
+    await f.click('Preview import');
+    assert.match(f.ui.root.textContent, /Resolve the preset again before previewing/);
+    await f.click('Save import as new profile');
+    assert.match(f.ui.root.textContent, /Preview the import first/);
+    assert.equal(f.store.export(), before);
+    await f.click('Resolve preset and review options');
+    await f.click('Preview import');
+    await f.click('Save import as new profile');
+    const imported = f.store.snapshot().profiles.at(-1);
+    assert.equal(imported.response.rates.axes.yaw.rate, 80);
+    assert.equal(imported.provenance.source.kind, 'preset');
+    assert.match(imported.provenance.preset.options.entries[0], /"checked":false/);
+  });
+
+test('choosing a different preset entry discards old option choices and controls', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  await uploadPresetFiles(f, {
+    'main.txt': optionalYawPreset,
+    'other.txt': 'set roll_srate = 72',
+  });
+  await f.click('Resolve preset and review options');
+  const option = f.find('Fast yaw');
+  option.checked = false;
+  option.emit('change');
+  f.edit('Preset entry path within folder', 'other.txt');
+  assert.equal(f.ui.root.contains(option), false);
+  await f.click('Preview import');
+  assert.match(f.ui.root.textContent, /Resolve the preset again before previewing/);
+  await f.click('Resolve preset and review options');
+  assert.doesNotMatch(f.ui.root.textContent, /Unknown preset option/);
+  await f.click('Preview import');
+  await f.click('Save import as new profile');
+  const imported = f.store.snapshot().profiles.at(-1);
+  assert.equal(imported.response.rates.axes.roll.rate, 72);
+  assert.equal(imported.provenance.preset.entry, 'other.txt');
+  assert.equal(imported.provenance.preset.options.total, 0);
+});
+
+test('failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  await uploadPresetFiles(f, { 'main.txt': optionalYawPreset });
+  await f.click('Resolve preset and review options');
+  f.edit('Preset entry path within folder', 'missing.txt');
+  await f.click('Resolve preset and review options');
+  assert.match(f.ui.root.textContent, /Missing preset file/);
+  await f.click('Preview import');
+  assert.match(f.ui.root.textContent, /Resolve the preset again before previewing/);
+  assert.equal(f.store.snapshot().profiles.length, 1);
+  f.edit('Paste CLI or a SIM rate profile', 'set yaw_srate = 61', { tag: 'textarea' });
+  await f.click('Preview import');
+  await f.click('Save import as new profile');
+  const imported = f.store.snapshot().profiles.at(-1);
+  assert.equal(imported.response.rates.axes.yaw.rate, 61);
+  assert.equal(imported.provenance.source.kind, 'cli');
+});
+
+for (const failure of ['quota', 'stale tab'])
+  test(`failed drone selection restores the visible selection and retains drafts (${failure})`, async (t) => {
+    const f = fixture(t);
+    await f.store.saveSetup({
+      id: 'second-drone',
+      name: 'Second drone',
+      profileId: null,
+      camera: { tilt: 25, verticalFov: 95 },
+    });
+    await f.click('Refresh library');
+    f.edit('Drone name', 'Unsaved first drone');
+    f.edit('Camera tilt (degrees)', 23);
+    const write = f.storage.setItem;
+    if (failure === 'quota')
+      f.storage.setItem = () => {
+        throw new Error('Quota exceeded');
+      };
+    else {
+      const other = createTuningLibraryStore({ storage: f.storage });
+      await other.saveProfile('legacy-feel', { name: 'Other tab saved' });
+    }
+    const stored = f.storage.getItem(TUNING_LIBRARY_KEY);
+    f.edit('Drone setup', 'second-drone', { tag: 'select', event: 'change' });
+    await settle();
+    assert.match(f.ui.root.textContent, failure === 'quota' ? /Quota exceeded/ : /Another tab/);
+    assert.equal(f.find('Drone setup', 'select').value, 'my-drone');
+    assert.equal(f.store.snapshot().selectedSetupId, 'my-drone');
+    assert.equal(f.find('Drone name').value, 'Unsaved first drone');
+    assert.equal(f.find('Camera tilt (degrees)').value, '23');
+    assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
+    assert.equal(f.saved.length, 0);
+    f.storage.setItem = write;
+    if (failure === 'quota') {
+      await f.click('Save drone assignment & camera');
+      const setups = f.store.snapshot().setups;
+      assert.equal(setups[0].name, 'Unsaved first drone');
+      assert.equal(setups[0].camera.tilt, 23);
+      assert.equal(setups[1].name, 'Second drone');
+    } else {
+      await f.click('Save drone assignment & camera');
+      assert.match(f.ui.root.textContent, /Another tab/);
+      assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
+      await f.click('Refresh library');
+    }
+    f.edit('Drone setup', 'second-drone', { tag: 'select', event: 'change' });
+    await settle();
+    assert.equal(f.find('Drone setup', 'select').value, 'second-drone');
+    assert.equal(f.find('Drone name').value, 'Second drone');
+  });
+
 test('ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller', async (t) => {
   const { validateAdvancedAircraft, createAdvancedAircraftTune } = await import(
     '../../optional-practice/civilian-fpv/advanced-simulation.mjs'
