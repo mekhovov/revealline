@@ -79,6 +79,9 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
     throw new Error(
       `Complete optional source output exceeds package limits: ${id} has ${selectedSource.size + 1}/${policy.limits.files} files and ${sourceBytes}/${policy.limits.bytes} bytes.`,
     );
+  const inputBytes = [...inputs.values()].reduce((sum, bytes) => sum + bytes.length, 0);
+  if (inputBytes > (policy.sourceInputBytes ?? policy.limits.bytes))
+    throw new Error(`Optional source input inventory exceeds its byte budget: ${manifest.id}.`);
   const files = new Map([
     [`manifest-optional-${id}.json`, manifestBytes],
     [`distribution-optional-${id}.zip`, built.zip],

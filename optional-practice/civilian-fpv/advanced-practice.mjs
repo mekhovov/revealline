@@ -1,7 +1,11 @@
 import * as THREE from './vendor/three.module.js';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import { createRateProfile, validateRateProfile } from './rates.mjs';
-import { createAdvancedAircraftTune, validateAdvancedAircraft } from './advanced-simulation.mjs';
+import {
+  ADVANCED_RECORDING_BYTES,
+  createAdvancedAircraftTune,
+  validateAdvancedAircraft,
+} from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
 
@@ -60,6 +64,35 @@ const COPY = {
     exportShared: 'Shared with the selected app. Check the destination for your file.',
     exportCancelled: 'Sharing cancelled. No destination was confirmed.',
     exportFailed: 'Could not export:',
+    comparison: 'Unscored comparison',
+    comparisonHelp:
+      'Import a reference-arena recording or keep this practice. Its complete replay is checked in a separate worker. Rotation rates may differ; aircraft, controller, throttle, timing and arena must match. The cyan ghost has no collisions or score.',
+    importComparison: 'Import comparison recording',
+    keepComparison: 'Keep this practice as reference',
+    clearComparison: 'Clear reference',
+    cancelComparison: 'Cancel verification',
+    showComparison: 'Show verified ghost',
+    checkingComparison: 'Checking the complete recording… Practice is paused.',
+    comparisonReady: 'Verified reference ready. Restart practice for the same launch point.',
+    comparisonFailed: 'Comparison unavailable:',
+    comparisonEmpty: 'No reference selected.',
+    comparisonCancelled: 'Verification cancelled. The previous reference is unchanged.',
+    comparisonEnded: 'Reference finished; ghost holds its final position.',
+    comparisonMismatch:
+      'This aircraft setup uses a different comparison class. Restore the setup or choose another reference.',
+    positionGap: 'Position gap at the same flight time',
+    maneuver: 'Repeatable practice',
+    maneuverHelp:
+      'Choose a short exercise, then restart from the same launch point. Follow the cues manually; no controls or scores are automated. Keep a reference or export it before returning to edit rates.',
+    free: 'Free practice',
+    hover: 'Hover and land',
+    turn: 'Turn and stop',
+    pulse: 'Throttle pulse',
+    completeManeuver:
+      'Exercise finished. Pause to compare, keep this reference, or return to tuning to save or revert your draft.',
+    revertConfiguration: 'Revert aircraft draft',
+    revertedConfiguration:
+      'Aircraft draft restored to its last saved values. Restart to test them.',
   },
   uk: {
     title: 'Практика з розширеною моделлю',
@@ -115,6 +148,35 @@ const COPY = {
     exportShared: 'Передано вибраному застосунку. Перевірте файл у місці призначення.',
     exportCancelled: 'Поширення скасовано. Місце призначення не підтверджено.',
     exportFailed: 'Не вдалося експортувати:',
+    comparison: 'Порівняння без заліку',
+    comparisonHelp:
+      'Імпортуйте запис еталонної арени або збережіть цю практику як орієнтир. Повне відтворення перевіряється в окремому воркері. Рейти обертання можуть відрізнятися; дрон, контролер, газ, частота та арена мають збігатися. Блакитна примара не має зіткнень чи оцінки.',
+    importComparison: 'Імпортувати запис для порівняння',
+    keepComparison: 'Залишити цю практику як орієнтир',
+    clearComparison: 'Прибрати орієнтир',
+    cancelComparison: 'Скасувати перевірку',
+    showComparison: 'Показати перевірену примару',
+    checkingComparison: 'Перевірка повного запису… Практику призупинено.',
+    comparisonReady: 'Перевірений орієнтир готовий. Перезапустіть практику з тієї самої точки.',
+    comparisonFailed: 'Порівняння недоступне:',
+    comparisonEmpty: 'Орієнтир не вибрано.',
+    comparisonCancelled: 'Перевірку скасовано. Попередній орієнтир не змінено.',
+    comparisonEnded: 'Орієнтир завершено; примара залишається в кінцевій позиції.',
+    comparisonMismatch:
+      'Ці налаштування дрона належать до іншого класу порівняння. Відновіть налаштування або виберіть інший орієнтир.',
+    positionGap: 'Відстань між позиціями в той самий час польоту',
+    maneuver: 'Повторювана практика',
+    maneuverHelp:
+      'Виберіть коротку вправу й перезапустіть із тієї самої точки. Виконуйте підказки самостійно; автоматичного керування чи оцінки немає. Залиште орієнтир або експортуйте його перед поверненням до зміни рейтів.',
+    free: 'Вільна практика',
+    hover: 'Зависання й посадка',
+    turn: 'Поворот і зупинка',
+    pulse: 'Імпульс газу',
+    completeManeuver:
+      'Вправу завершено. Призупиніть для порівняння, залиште орієнтир або поверніться до налаштувань, щоб зберегти чи скасувати чернетку.',
+    revertConfiguration: 'Скасувати чернетку дрона',
+    revertedConfiguration:
+      'Чернетку дрона відновлено до останніх збережених значень. Перезапустіть для перевірки.',
   },
 };
 
@@ -146,6 +208,13 @@ export function mountAdvancedPractice({
         createAdvancedAircraftTune(configuration?.aircraft ?? 'freestyle'),
     ),
   };
+  let savedConfiguration = structuredClone(draftConfiguration),
+    activeOptions = null,
+    activeComparison = null,
+    comparison = null,
+    verificationClient = null,
+    verifying = false,
+    verificationGeneration = 0;
   let disposed = false,
     client,
     renderer,
@@ -235,6 +304,42 @@ export function mountAdvancedPractice({
     const option = el('option', label, input);
     option.value = id;
   }
+  const maneuverLabel = el('label', `${copy.maneuver} `, settings),
+    maneuver = el('select', '', maneuverLabel);
+  for (const id of ['free', 'hover', 'turn', 'pulse']) {
+    const option = el('option', copy[id], maneuver);
+    option.value = id;
+  }
+  maneuver.value = 'free';
+  el('p', copy.maneuverHelp);
+  const maneuverCue = el('output');
+  maneuverCue.setAttribute('aria-label', copy.maneuver);
+  const comparisonPanel = el('details');
+  el('summary', copy.comparison, comparisonPanel);
+  el('p', copy.comparisonHelp, comparisonPanel);
+  const comparisonFileLabel = el('label', `${copy.importComparison} `, comparisonPanel),
+    comparisonFile = el('input', '', comparisonFileLabel);
+  comparisonFile.type = 'file';
+  comparisonFile.disabled = true;
+  comparisonFile.accept = '.json,application/json';
+  comparisonFile.setAttribute('aria-label', copy.importComparison);
+  const comparisonTools = el('div', '', comparisonPanel);
+  comparisonTools.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap';
+  const keepComparison = el('button', copy.keepComparison, comparisonTools),
+    clearComparison = el('button', copy.clearComparison, comparisonTools),
+    cancelComparison = el('button', copy.cancelComparison, comparisonTools);
+  for (const button of [keepComparison, clearComparison, cancelComparison]) button.type = 'button';
+  keepComparison.disabled = true;
+  cancelComparison.hidden = true;
+  const showComparisonLabel = el('label', `${copy.showComparison} `, comparisonPanel),
+    showComparison = el('input', '', showComparisonLabel);
+  showComparison.type = 'checkbox';
+  showComparison.checked = true;
+  showComparison.setAttribute('aria-label', copy.showComparison);
+  const comparisonStatus = el('p', copy.comparisonEmpty, comparisonPanel);
+  comparisonStatus.setAttribute('role', 'status');
+  comparisonStatus.setAttribute('aria-live', 'polite');
+  const comparisonInfo = el('output', '', comparisonPanel);
   const touch = el('div');
   const sliders = {};
   touch.style.cssText =
@@ -448,8 +553,10 @@ export function mountAdvancedPractice({
   const tuneButtons = el('div', '', tuning);
   tuneButtons.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-top:12px';
   const saveTuning = el('button', copy.saveConfiguration, tuneButtons),
+    revertTuning = el('button', copy.revertConfiguration, tuneButtons),
     exportTuning = el('button', copy.exportConfiguration, tuneButtons);
   saveTuning.type = 'button';
+  revertTuning.type = 'button';
   exportTuning.type = 'button';
   exportTuning.disabled = true;
   saveTuning.hidden = typeof onSaveConfiguration !== 'function';
@@ -459,11 +566,18 @@ export function mountAdvancedPractice({
       await onSaveConfiguration?.(structuredClone(next));
       if (!disposed) {
         draftConfiguration = next;
+        savedConfiguration = structuredClone(next);
         tunePreview.textContent = copy.savedConfiguration;
       }
     } catch (error) {
       if (!disposed) tunePreview.textContent = `${copy.invalidConfiguration} ${error.message}`;
     }
+  });
+  listen(revertTuning, 'click', () => {
+    draftConfiguration = structuredClone(savedConfiguration);
+    aircraft.value = draftConfiguration.aircraft.id;
+    fillTuning();
+    tunePreview.textContent = copy.revertedConfiguration;
   });
   async function exportData(value, name, output) {
     if (disposed || exporting || !initialized) return;
@@ -531,6 +645,24 @@ export function mountAdvancedPractice({
   );
   const grid = new THREE.GridHelper(180, 90, 0x244e43, 0x7c9865);
   scene.add(grid);
+  const ghost = new THREE.Group();
+  ghost.name = 'advanced-comparison-ghost';
+  ghost.visible = false;
+  const ghostMaterial = new THREE.MeshBasicMaterial({
+    color: 0x30e6ff,
+    transparent: true,
+    opacity: 0.65,
+  });
+  materials.push(ghostMaterial);
+  for (const dimensions of [
+    [0.6, 0.04, 0.06],
+    [0.06, 0.04, 0.6],
+  ]) {
+    const shape = new THREE.BoxGeometry(...dimensions);
+    geometry.push(shape);
+    ghost.add(new THREE.Mesh(shape, ghostMaterial));
+  }
+  scene.add(ghost);
   for (let index = 0; index < 5; index++) {
     const z = -8 - index * 10;
     obstacles.push(
@@ -570,6 +702,148 @@ export function mountAdvancedPractice({
     new THREE.Vector3(1, 0, 0),
     (Math.max(-45, Math.min(85, Number(camera.tilt) || 0)) * Math.PI) / 180,
   );
+  const maneuverSteps =
+    locale === 'uk'
+      ? {
+          hover: [
+            [5, 'Плавно підніміть газ і стабілізуйте висоту біля верхньої перекладини воріт.'],
+            [10, 'Утримуйте висоту п’ять секунд малими корекціями.'],
+            [15, 'Плавно знижуйте газ і приземліться.'],
+          ],
+          turn: [
+            [5, 'Стабілізуйте зависання над точкою старту.'],
+            [8, 'Виконайте один поворот за рисканням.'],
+            [12, 'Центруйте рискання й спостерігайте за зупинкою обертання.'],
+            [16, 'Стабілізуйте висоту й приземліться.'],
+          ],
+          pulse: [
+            [5, 'Стабілізуйте зависання й запам’ятайте положення газу.'],
+            [6, 'На одну секунду додайте приблизно 10% газу.'],
+            [10, 'Поверніть газ у попереднє положення й спостерігайте за висотою.'],
+            [15, 'Плавно знизьте газ і приземліться.'],
+          ],
+        }
+      : {
+          hover: [
+            [5, 'Raise throttle gently and settle near the gate crossbar height.'],
+            [10, 'Hold height for five seconds with small corrections.'],
+            [15, 'Lower throttle gently and land.'],
+          ],
+          turn: [
+            [5, 'Settle into a hover above the launch point.'],
+            [8, 'Make one yaw turn.'],
+            [12, 'Centre yaw and observe how rotation stops.'],
+            [16, 'Settle the height and land.'],
+          ],
+          pulse: [
+            [5, 'Settle into a hover and note the throttle position.'],
+            [6, 'Add about 10% throttle for one second.'],
+            [10, 'Return to the previous throttle position and observe the height.'],
+            [15, 'Lower throttle gently and land.'],
+          ],
+        };
+  function paintManeuver() {
+    const steps = maneuverSteps[maneuver.value],
+      seconds = telemetry?.seconds ?? 0;
+    maneuverCue.textContent = steps
+      ? `${seconds.toFixed(1)} s · ${steps.find(([end]) => seconds < end)?.[1] ?? copy.completeManeuver}`
+      : '';
+  }
+  function paintComparison() {
+    const compatible =
+      comparison &&
+      activeComparison &&
+      comparison.comparison.comparisonClass === activeComparison.comparisonClass;
+    ghost.visible = Boolean(compatible && showComparison.checked && telemetry);
+    if (!comparison) {
+      comparisonInfo.textContent = '';
+      return;
+    }
+    if (!compatible) {
+      comparisonInfo.textContent = copy.comparisonMismatch;
+      return;
+    }
+    const point = comparison.path[Math.min(telemetry?.missionTick ?? 0, comparison.missionTicks)];
+    ghost.position.set(point[1], point[2], point[3]);
+    ghost.quaternion.set(point[4], point[5], point[6], point[7]);
+    comparisonInfo.textContent =
+      (telemetry?.missionTick ?? 0) > comparison.missionTicks
+        ? copy.comparisonEnded
+        : `${copy.positionGap}: ${Math.hypot((telemetry?.position.x ?? point[1]) - point[1], (telemetry?.position.y ?? point[2]) - point[2], (telemetry?.position.z ?? point[3]) - point[3]).toFixed(2)} m · ${((telemetry?.missionTick ?? 0) / 50).toFixed(2)} s`;
+  }
+  function cancelVerification() {
+    verificationGeneration++;
+    verificationClient?.dispose();
+    verificationClient = null;
+    verifying = false;
+    cancelComparison.hidden = true;
+    comparisonFile.disabled = !initialized;
+    keepComparison.disabled = !initialized || !telemetry?.missionTick;
+    start.disabled = !initialized || graphicsLost;
+  }
+  async function verifyReference(load) {
+    if (disposed || !initialized || exporting) return;
+    cancelVerification();
+    const owner = verificationGeneration;
+    const options = structuredClone(activeOptions);
+    pause();
+    verifying = true;
+    start.disabled = true;
+    keepComparison.disabled = true;
+    comparisonFile.disabled = true;
+    cancelComparison.hidden = false;
+    comparisonStatus.textContent = copy.checkingComparison;
+    try {
+      const source = await load();
+      if (disposed || owner !== verificationGeneration) return;
+      verificationClient = createAdvancedWorkerClient({
+        Worker: WorkerClass,
+        url: workerURL,
+      });
+      await verificationClient.initialize(options);
+      const checked = await verificationClient.verifyRecording(source);
+      if (disposed || owner !== verificationGeneration) return;
+      comparison = checked;
+      comparisonStatus.textContent = copy.comparisonReady;
+      paintComparison();
+    } catch (error) {
+      if (!disposed && owner === verificationGeneration)
+        comparisonStatus.textContent = `${copy.comparisonFailed} ${error.message}`;
+    } finally {
+      if (!disposed && owner === verificationGeneration) cancelVerification();
+    }
+  }
+  listen(comparisonFile, 'change', () => {
+    const file = comparisonFile.files?.[0];
+    if (!file) return;
+    void verifyReference(async () => {
+      if (!Number.isFinite(file.size) || file.size <= 0 || file.size > ADVANCED_RECORDING_BYTES)
+        throw new Error('Recording exceeds the 8 MiB import limit.');
+      const text = await file.text();
+      if (new TextEncoder().encode(text).byteLength > ADVANCED_RECORDING_BYTES)
+        throw new Error('Recording exceeds the 8 MiB import limit.');
+      return text;
+    });
+    comparisonFile.value = '';
+  });
+  listen(keepComparison, 'click', () => {
+    if (telemetry?.missionTick > 0) void verifyReference(() => client.recording());
+  });
+  listen(cancelComparison, 'click', () => {
+    cancelVerification();
+    comparisonStatus.textContent = copy.comparisonCancelled;
+  });
+  listen(clearComparison, 'click', () => {
+    cancelVerification();
+    comparison = null;
+    comparisonStatus.textContent = copy.comparisonEmpty;
+    paintComparison();
+  });
+  listen(showComparison, 'change', paintComparison);
+  listen(maneuver, 'change', () => {
+    pause();
+    paintManeuver();
+  });
   function pause(message = copy.paused) {
     if (disposed) return;
     running = false;
@@ -582,7 +856,7 @@ export function mountAdvancedPractice({
     lastPollAt = null;
     observedPollHz = null;
     pauseButton.disabled = true;
-    start.disabled = !initialized || graphicsLost;
+    start.disabled = !initialized || graphicsLost || verifying;
     aircraft.disabled = false;
     status.textContent = message;
     onPause();
@@ -593,6 +867,8 @@ export function mountAdvancedPractice({
     reset.disabled = true;
     download.disabled = true;
     exportTuning.disabled = true;
+    keepComparison.disabled = true;
+    comparisonFile.disabled = true;
   }
   function sampleControls() {
     if (input.value === 'radio') {
@@ -649,6 +925,7 @@ export function mountAdvancedPractice({
       const result = await client.step(sample);
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
+      keepComparison.disabled = verifying || !telemetry.missionTick;
       if (telemetry.consumedSequence === sample.sequence) lastConsumedPollAt = started;
       const elapsed = win.performance.now() - started;
       if (elapsed > 250) pause(copy.slow);
@@ -667,12 +944,15 @@ export function mountAdvancedPractice({
       tunePreview.textContent = `${copy.invalidConfiguration} ${error.message}`;
       return;
     }
+    cancelVerification();
     pause(copy.loading);
     initialized = false;
     start.disabled = true;
     reset.disabled = true;
     download.disabled = true;
     exportTuning.disabled = true;
+    keepComparison.disabled = true;
+    comparisonFile.disabled = true;
     generation++;
     const owner = generation;
     client?.dispose();
@@ -686,21 +966,27 @@ export function mountAdvancedPractice({
     }
     try {
       client = createAdvancedWorkerClient({ Worker: WorkerClass, url: workerURL });
-      const result = await client.initialize({
+      const options = {
         aircraft: draftConfiguration.aircraft,
         controller: draftConfiguration.controller,
         rateProfile: frozenProfile,
         spawn: { x: 0, y: 1.5, z: 3 },
         obstacles,
-      });
+      };
+      const result = await client.initialize(options);
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
+      activeOptions = structuredClone(options);
+      activeComparison = result.comparison;
       initialized = true;
       status.textContent = copy.ready;
       start.disabled = graphicsLost;
       reset.disabled = false;
       download.disabled = false;
       exportTuning.disabled = false;
+      comparisonFile.disabled = false;
+      paintManeuver();
+      paintComparison();
     } catch (error) {
       if (!disposed && owner === generation) failed(error);
     }
@@ -731,11 +1017,13 @@ export function mountAdvancedPractice({
         lastRender = now;
       }
     }
+    paintManeuver();
+    paintComparison();
     renderer.render(scene, view);
     frame = win.requestAnimationFrame(draw);
   }
   listen(start, 'click', () => {
-    if (!initialized || graphicsLost || disposed || exporting) return;
+    if (!initialized || graphicsLost || disposed || exporting || verifying) return;
     try {
       if (sampleControls().throttle > 0.1 && (telemetry?.missionTick ?? 0) === 0) {
         status.textContent = copy.low;
@@ -811,6 +1099,9 @@ export function mountAdvancedPractice({
     win.clearTimeout(timer);
     win.cancelAnimationFrame(frame);
     client?.dispose();
+    verificationClient?.dispose();
+    verificationClient = null;
+    verificationGeneration++;
     if (removeNativeInactive) void Promise.resolve(removeNativeInactive()).catch(() => {});
     for (const cleanup of listeners) cleanup();
     for (const shape of geometry) shape.dispose();
@@ -842,5 +1133,17 @@ export function mountAdvancedPractice({
     pause,
     element: root,
     getTelemetry: () => (telemetry ? structuredClone(telemetry) : null),
+    getComparison: () =>
+      comparison
+        ? {
+            verified: comparison.verified,
+            scored: false,
+            comparisonClass: comparison.comparison.comparisonClass,
+            missionTicks: comparison.missionTicks,
+            samples: comparison.path.length,
+            visible: ghost.visible,
+            position: { x: ghost.position.x, y: ghost.position.y, z: ghost.position.z },
+          }
+        : null,
   };
 }
