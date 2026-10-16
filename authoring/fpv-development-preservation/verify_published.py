@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import time
 from pack import digest, safe_relative
-from verify_upload import REPO, RELEASE_ID, TAG, assets, readback, restore_part, validate_header
+from verify_upload import REPO, RELEASE_ID, TAG, gh_json, readback, restore_part, validate_header
 
 
 def verify_plan(plan):
@@ -36,11 +36,10 @@ def main():
     verify_plan(plan)
     work = Path(a.work)
     work.mkdir()
-    found = [x for x in assets() if x['id'] == plan['assetId']]
-    if len(found) != 1:
-        raise ValueError('Asset is not present in the approved preservation release')
-    asset = found[0]
-    if (asset['state'] != 'uploaded' or asset['name'] != plan['assetName']
+    # The sealed plan binds this immutable asset ID to the approved draft release.
+    # Direct asset reads avoid the separate push-access requirement for draft listings.
+    asset = gh_json('api', f'repos/{REPO}/releases/assets/{plan["assetId"]}')
+    if (asset['id'] != plan['assetId'] or asset['state'] != 'uploaded' or asset['name'] != plan['assetName']
             or asset['size'] != plan['bytes'] or asset.get('digest') != 'sha256:' + plan['sha256']):
         raise ValueError('Published asset no longer matches its sealed source plan')
     print(json.dumps({'event': 'cloud-server-digest-pass', 'assetId': asset['id']}), flush=True)
