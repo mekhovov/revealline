@@ -3081,9 +3081,11 @@ try {
     const touchLatency = (event) => {
       if (
         (event.type !== 'pointermove' || event.buttons) &&
-        event.target?.closest?.(
+        (event.target?.closest?.(
           '#game-canvas,[data-move],#boost-button,#action-button,#pickup-button',
-        )
+        ) ||
+          (event.defaultPrevented &&
+            event.target?.closest?.('#touch-surface,.direction-controls')))
       )
         observeInput(event.pointerType === 'touch' ? 'touch' : 'pointer', event.timeStamp);
     };
