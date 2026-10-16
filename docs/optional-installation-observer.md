@@ -133,7 +133,14 @@ Each app upgrades to genuinely different admitted current bytes, then returns to
 its retained historical runtime through ordinary current-shell removal and an
 offline stable launcher. Ordinary online Play visits prepare/update launchers;
 workers must activate normally after the old launcher client leaves. There is
-no forced activation, unregister or manual cache deletion.
+one worker per stable launcher scope; activation retains exactly its current and
+one previous admitted shell cache. The migration lane hashes both and rejects
+extra/missing caches. Read-only status must bind the active worker to the exact
+admitted revision, scope and ready state, with no installing/waiting worker.
+Only genuinely absent historical status fields are compatible; explicit unknown
+or malformed values fail closed. Bounded stage snapshots preserve failures
+without registering/updating workers, opening caches or weakening dependency hashes.
+There is no forced activation, unregister or manual cache deletion.
 
 Seven ordered checkpoints require exact active/previous pointers, every admitted
 runtime **and launcher** response hash, no extra/missing cache/worker scopes,

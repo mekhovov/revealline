@@ -1,5 +1,6 @@
 /** Strict, migration-only protocol. Admission and owned resource cleanup stay in the caller. */
 import assert from 'node:assert/strict';
+import { setTimeout as pause } from 'node:timers/promises';
 import {
   INSTALLATION_WORLD_TITLE,
   assertInstallationWorldSeed,
@@ -50,7 +51,12 @@ export function assertMigrationOwnership(state, references, keyFor, launchers = 
   ];
   assert.deepEqual(
     [...state.caches].sort(),
-    owned.map((ref) => ref.cacheName).sort(),
+    [
+      ...Object.values(references).flatMap((row) =>
+        [row.active, row.previous].filter(Boolean).map((ref) => ref.cacheName),
+      ),
+      ...launchers.flatMap((ref) => ref.cacheNames ?? [ref.cacheName]),
+    ].sort(),
     'Unexpected or missing prepared cache.',
   );
   assert.deepEqual(
@@ -62,6 +68,142 @@ export function assertMigrationOwnership(state, references, keyFor, launchers = 
       .sort((a, b) => a.scope.localeCompare(b.scope)),
     'Unexpected, inactive or missing owned worker.',
   );
+}
+
+/** Stable launcher workers retain exactly one previous shell cache. Both caches
+ * are admitted and hashed by the caller; only the current worker owns the scope. */
+export function assertMigrationLauncherReady(state, expected) {
+  assert.deepEqual(state.caches, [...expected.cacheNames].sort());
+  assert.equal(state.registrations, 1);
+  assert.equal(state.active?.state, 'activated');
+  assert.equal(state.active?.scriptURL, new URL('worker.js', expected.scope).href);
+  assert.equal(state.installing, null);
+  assert.equal(state.waiting, null);
+  assert.equal(state.sameActive, true);
+  assert.equal(state.reply?.type, 'practice-status');
+  assert.equal(state.reply?.scope, expected.scope);
+  assert.equal(state.reply?.revision, expected.revision);
+  assert.equal(state.reply?.ready, true);
+  assert(
+    state.reply?.status === 'ready' ||
+      (expected.legacyStatus === true && state.reply?.statusPresent === false),
+  );
+  return true;
+}
+
+/** Read-only native worker status request. No register/update/skipWaiting/cache-open. */
+export async function readMigrationLauncherState({ scope }) {
+  const prefix = `:${new URL(scope).pathname}:`;
+  const caches = (await globalThis.caches.keys()).filter((name) => name.includes(prefix)).sort();
+  const registrations = (await globalThis.navigator.serviceWorker.getRegistrations()).filter(
+    (registration) => registration.scope === scope,
+  );
+  const registration = registrations[0],
+    worker = registration?.active;
+  const identify = (value) => (value ? { state: value.state, scriptURL: value.scriptURL } : null);
+  let reply = null;
+  if (worker) {
+    reply = await new Promise((resolve) => {
+      const channel = new MessageChannel();
+      let timer,
+        finished = false;
+      const finish = (value) => {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timer);
+        channel.port1.onmessage = null;
+        channel.port1.onmessageerror = null;
+        channel.port1.close();
+        channel.port2.close();
+        resolve(value);
+      };
+      timer = setTimeout(() => finish(null), 1000);
+      channel.port1.onmessage = ({ data }) =>
+        finish({
+          type: data?.type === 'practice-status' ? data.type : null,
+          scope: typeof data?.scope === 'string' && data.scope.length <= 2048 ? data.scope : null,
+          revision:
+            typeof data?.revision === 'string' && /^[a-f0-9]{64}$/.test(data.revision)
+              ? data.revision
+              : null,
+          ready: data?.ready === true,
+          statusPresent: data != null && Object.hasOwn(data, 'status'),
+          status: ['ready', 'unknown', 'unavailable'].includes(data?.status) ? data.status : null,
+        });
+      channel.port1.onmessageerror = () => finish(null);
+      try {
+        worker.postMessage({ type: 'practice-status' }, [channel.port2]);
+      } catch {
+        finish(null);
+      }
+    });
+  }
+  return {
+    caches,
+    registrations: registrations.length,
+    active: identify(registration?.active),
+    waiting: identify(registration?.waiting),
+    installing: identify(registration?.installing),
+    sameActive: Boolean(worker && registration?.active === worker),
+    reply,
+  };
+}
+
+export async function waitForMigrationLauncher(
+  page,
+  expected,
+  receipt,
+  { requireActive = () => {}, timeoutMs = 30000 } = {},
+) {
+  const url = new URL(expected.scope);
+  assert(
+    url.protocol === 'http:' &&
+      url.hostname === '127.0.0.1' &&
+      !url.username &&
+      !url.password &&
+      !url.search &&
+      !url.hash,
+  );
+  assert(
+    /^\/(?:[a-zA-Z0-9_-]+\/)*practice\/(civilian-flight|civilian-fpv|fpv-worlds)\/app\/$/.test(
+      url.pathname,
+    ),
+  );
+  assert.match(expected.revision, /^[a-f0-9]{64}$/);
+  assert.equal(typeof expected.legacyStatus, 'boolean');
+  assert(expected.cacheNames.length >= 1 && expected.cacheNames.length <= 2);
+  assert.equal(new Set(expected.cacheNames).size, expected.cacheNames.length);
+  const namespace = url.pathname.endsWith('/civilian-flight/app/') ? 'civilian-flight' : 'package';
+  const prefix = `revealline.optional.${namespace}.v1:${url.pathname}:`;
+  for (const name of expected.cacheNames)
+    assert(name.startsWith(prefix) && /^[a-f0-9]{64}$/.test(name.slice(prefix.length)));
+  assert(expected.cacheNames.includes(prefix + expected.revision));
+  assert(Number.isSafeInteger(timeoutMs) && timeoutMs >= 1 && timeoutMs <= 30000);
+  receipt.expected = structuredClone(expected);
+  receipt.snapshots = [];
+  const deadline = Date.now() + timeoutMs;
+  let previous;
+  while (Date.now() < deadline) {
+    requireActive();
+    const state = await page.evaluate(readMigrationLauncherState, { scope: expected.scope });
+    requireActive();
+    const serialized = JSON.stringify(state);
+    if (serialized !== previous) {
+      if (receipt.snapshots.length < 64) receipt.snapshots.push(state);
+      else receipt.dropped = (receipt.dropped ?? 0) + 1;
+      previous = serialized;
+    }
+    try {
+      assertMigrationLauncherReady(state, expected);
+      if (Date.now() >= deadline) break;
+      receipt.ready = true;
+      return state;
+    } catch (error) {
+      if (error.code !== 'ERR_ASSERTION') throw error;
+    }
+    await pause(Math.min(50, Math.max(0, deadline - Date.now())));
+  }
+  throw new Error('Admitted stable launcher did not reach exact revision-bound readiness.');
 }
 export function assertMigrationUnrelated(before, after, selected, keyFor) {
   assert(MIGRATION_IDS.includes(selected));

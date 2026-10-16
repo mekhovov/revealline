@@ -47,8 +47,8 @@ their executed authority are retained; neither lane is qualified yet.
 The full build's second attempt was cancelled
 at a cross-volume file-cloning bottleneck, not accepted as a distribution pass.
 A narrow same-device writer guard preserves exact-byte checks and fallbacks.
-The third build has prepared its immutable bytes and is writing the original
-artifact. Next: finish its production player journey and run the separate
+The third build completes successfully: 3,493 original output members,
+1,072,077,940 bytes at source `3a1b5e3c3`. Next: finish its production player journey and run the separate
 historical active-session/all-three migration lanes; improve safe localized
 failure reasons exposed by the long-run results. Real hardware is
 deferred at the owner's subsequent request; hosting remains deferred. SIM flight

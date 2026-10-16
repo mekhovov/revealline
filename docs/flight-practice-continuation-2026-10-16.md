@@ -11,7 +11,7 @@ library, session, reaction and world-store changes were integrated from main;
 no files were copied from SIM's active worktree. A local backup branch preserves
 the earlier frozen evidence commits, whose original receipts remain historical.
 
-The current reproduced/admitted three-app candidate is source
+The original recovery candidate used by the native receipts below is source
 `134313f232e45ec2768d02ceb65aa4fac9795748`, tree
 `ac1697d2f0a740220512c56a2884fbd7b1c4a986`, envelope SHA-256
 `072fa308213cb1d9885c6f480bb9afda3cf156d04bd47aa1bf091aae4d9c9826`.
@@ -48,9 +48,16 @@ Eight admission regressions pass, including altered import/service rejection.
 The [unchanged original candidate](flight-practice-continuation-20261016/feedback-legacy-admission.json)
 also passes current admission for all three apps; compatibility was not assumed.
 
-These source/unit results do not update the existing candidate or native receipts.
-A fresh committed-source reproduced/admitted bundle and new native failure
-observations remain required before claiming the changed package bytes qualified.
+The normal practice suite subsequently passes **387/387**, zero failures/skips.
+A fresh candidate freezes source `b8aec0821087354ac8a6765a5b95c68d24dd9137`,
+tree `3bafa19b36118173b1b19a9039d9572b09692f7b`, envelope SHA-256
+`c271bc6c248844f756ba4c1a191e6008593d48c4d03b9e4d34836d6a174c73a6`.
+Both a new external-drive output and a 54-MiB local fallback reproduce all three
+apps twice and pass committed-input and complete archive admission checks.
+The fallback avoids external-drive latency, not admission or source checks.
+The existing numeric development version remains `v0.151.1`, with no public
+release allocation, selection or hosting change. These new bytes require fresh
+native observations; none of the earlier receipts is relabelled.
 
 ## Six selected-appearance player journeys pass
 
@@ -294,9 +301,11 @@ observer-only changes resume. The writer retains those exact prepared bytes even
 if source files later differ. The backup branch
 `codex/practice-built-shell-3a1b-20261016` preserves the original clean source for
 the strict production-browser observer; later harness commits are not relabelled
-as its build source. Writing is still in progress, so a completed distribution
-and native production journey remain unqualified,
-not implied by this infrastructure repair. Hosting/capacity remain separate.
+as its build source. The build subsequently **completes, exit 0**: 3,493 output
+members, 1,072,077,940 bytes, distribution SHA-256
+`147d78d5beba3713cb69e3b06a4b165e30a1afbb1cb0760bc9b3adb2d957ec09`.
+The original manifest records source `3a1b5e3c3`; a native production journey is
+still required and is not implied by build success. Hosting/capacity remain separate.
 
 ## Still open
 
