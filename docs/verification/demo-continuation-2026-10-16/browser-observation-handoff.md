@@ -6,14 +6,12 @@
 
 Work only in `/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test`, branch `codex/demo-acceptance-followup-20261015`, held draft [PR 1356](https://github.com/mekhovov/revealline/pull/1356), milestone 57. Frozen production/test source is **`1dc0320462cd6dd14a4538b001da03218e86dd29`**. Later evidence-only commits are allowed. No served-source edits, rebase, merge, version allocation, release or Pages/native publication during qualification. The prior interrupted observation is immutable history and is never resumed.
 
-Read [the evidence README](README.md), `batch-state.json` and any `browser-handoff-state.json` before acting. Resource/session identifiers will be recorded here as created. The one-use sequential batch is now exec session **80620**; inspect `batch-state.json` before any further action. No new observer/server exists yet. Never touch ports 8779/8820, the shared checkout, unrelated processes or earlier observer resources.
 
 ## Exactly one sequential owner batch
 
 
-## Known base outcome — qualification blocker
+## Production audit outcomes — qualification blockers
 
-Base verifies 45/46 cases, with usable playback on all 15 maps under both selections. Orchard Crossing live seed 3 / immediate fails admission with a generic incomplete-performance error. Its underlying cause is not established by the report. Preserve the failure and finish the rest of the one-use batch. Do not retry, waive or call live qualification passed. The separate browser observation can still provide rendering/session evidence, but cannot waive this source failure or establish release readiness.
 
 ## One new browser observation after the entire batch finishes
 
@@ -44,3 +42,11 @@ node --expose-gc scripts/soak-demo.mjs --simulation-seconds 7200 --report docs/v
 Keep complete log beside the report. Retain unchanged source comparisons, real thread peak/final cleanup, actual advanced simulation separately from wall time and every failure. Do not change watchdogs, limits, assertions or source, kill unrelated processes, or retry until green. Earlier failed runs remain preserved.
 
 Update only evidence/qualification docs and run focused format/link/JSON checks. Inspect current remote PR head before any push; preserve newer owner work and push a fast-forward continuation only. Keep draft/hold/milestone. Notify only meaningful completion, new failure or required action. Once the finite outcomes are reported or cannot continue without new action, pause `finish-demo-qualification-observation` through automation_update, preserving fields, and stop recurring work. Do not turn future expansion or deferred human/device acceptance into completed work.
+
+## Actual owned UI and viewport checks
+
+The 1200×900 override was applied before Start and the actual demo canvas was drawable (768×576 intrinsic; 1144×699 CSS rectangle). Initial scene was recorded First Signal; live Orchard Crossing and improvised Night Crossfire appeared. Sound was already on and the soundtrack already playing on this local origin; entry did not unmute/restart it. Actual Pause demo retained Night Crossfire at 0% / 3 lives / 2s over samples 92–102 elapsed seconds while music stayed playing. After Resume, actual Pause music retained paused transport while the game advanced from 17s to 27s over samples 123–133 elapsed seconds. Explicit Play music restored playback, and details were closed. No steering, abilities or takeover were injected. No physical audibility claim.
+
+A separate temporary blank tab is used only to seek measurable background visibility/focus samples; browser presentation remains false. Do not infer hidden execution from tab creation or presentation. Record actual report states. Reset the viewport at final cleanup, never during the active run.
+
+At the saved 205.085-second startup snapshot, all 41 visibility pairs remain visible/visible and parent focus remains true. The temporary blank tab (browser 2 / tab 3) was closed; it established no hidden/unfocused browser execution. Child focus varies during owned UI use. The exact immutable startup snapshot and current running report are both retained. No JS diagnostics, attachment failures or long callback gaps have appeared in that bounded sample. These are early observations, not final endurance results.

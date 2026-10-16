@@ -47,3 +47,4 @@ The broader host/recovery run passes 76 cases, including both policies on the tw
 Frozen production/test source: `1dc0320462cd6dd14a4538b001da03218e86dd29`. Further qualification updates may change documentation/evidence only. The [finite continuation handoff](verification/demo-continuation-2026-10-16/browser-observation-handoff.md) owns the next sequential audit and separate browser/Worker checks.
 
 The first new-source production audit verifies 45/46 base sources: every one of the 15 maps retains usable complete playback under both selections, but Orchard Crossing live seed 3 / immediate fails admission. Live qualification remains blocked; the preserved generic error does not establish its underlying cause. The other community audits continue, without retry or source changes.
+

@@ -50,3 +50,14 @@ The finite continuation uses [this handoff](browser-observation-handoff.md). The
 ## First production-budget outcome on the frozen source
 
 The first [base report](base-final.json) and [exact log](base-final.log) verify **45/46** source/selection cases. All **15/15** base + Pressure Lines maps have complete usable playback under both selections, but **Orchard Crossing live seed 3 / immediate fails during admission** with `Live performance cannot reach a complete result.` (1,801 ms elapsed). The generic admission error does not preserve the underlying cause; do not infer a watchdog, routing or host-load cause from elapsed time alone. This is a live qualification blocker, regardless of focused tests or later browser rotation. No source/content changes, top-level errors, retained Worker owners or listeners are reported. The remaining community batch continues sequentially; no case is retried.
+
+## Completed sequential owner batch
+
+
+Two blockers remain: Orchard Crossing live seed 3 / immediate fails admission, and DroneAid Careful Handoff 06 / immediate exceeds the unchanged loading deadline at 15,005 ms. Do not infer a cause for the generic live admission failure. All reports retain unchanged sampled source/content, no top-level errors and zero final Worker owners/listeners. None establishes browser rendering, physical acceptance or release readiness. Separate browser observation proceeds only for independent session/rendering evidence and cannot waive either failure.
+
+## Browser observation — active, not endurance acceptance
+
+The one new two-wall-hour run started **2026-10-16T04:40:12.842Z**, on unchanged frozen source, after the complete owner batch. Resources and actual start are in [the handoff state](browser-handoff-state.json). The initial drawable 1200×900 viewport precedes its first sample. The exact [startup snapshot](browser-observation-startup.json) retains 41 samples / 205.085 elapsed seconds, including the initial samples and independent pause checks, with no attachment/JS diagnostics or long gaps. The [latest running snapshot](browser-observation-running.json) is incomplete. All measured visibility states are visible; creating a separate blank tab did not establish hidden-page execution. Parent focus remained true, with child focus varying while owned controls were used. No browser-background claim.
+
+Actual UI checks demonstrate independent pause intent: paused demo samples keep the game at 2s with music playing; resumed gameplay advances from 17s to 27s while music is explicitly paused, then explicit Play music resumes it. Sound was already on; no implicit-unmute or physical audio claim. [The actual music-pause screenshot](browser-independent-music-pause.jpg) is 1200×900 and shows the real board and transport. Source/loading failures above remain blockers regardless of this browser evidence.
