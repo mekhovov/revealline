@@ -119,7 +119,8 @@ export function createAdvancedRegionalSession(
     frameJob = null,
     frameCommitOwner = null,
     recoveryJob = null,
-    recoveryClient = null;
+    recoveryClient = null,
+    recoveryVerification = null;
   let telemetry = {
     missionTick: 0,
     seconds: 0,
@@ -357,6 +358,7 @@ export function createAdvancedRegionalSession(
     live();
     generation++;
     stopStreaming();
+    if (recoveryJob) preparingController?.abort();
     if (status === 'active') {
       status = 'paused';
       reason = 'prepared';
@@ -536,11 +538,17 @@ export function createAdvancedRegionalSession(
     },
     cancelPreparation() {
       live();
+      const recovering = Boolean(recoveryJob);
+      const verificationOnly = recovering && preparingController === recoveryVerification;
       pause();
       preparingController?.abort();
-      terrain.cancel();
-      reason = 'terrain-required';
-      pendingTarget ??= centre();
+      if (!verificationOnly) terrain.cancel();
+      // A detached verifier has not changed the admitted live terrain/flight.
+      // Its finally path marks terrain-required if publication did begin.
+      if (!recovering) {
+        reason = 'terrain-required';
+        pendingTarget ??= centre();
+      }
     },
     async recording() {
       live();
@@ -575,11 +583,14 @@ export function createAdvancedRegionalSession(
       const token = generation,
         controller = new AbortController();
       const current = () => {
-        if (disposed || token !== generation) throw abort();
+        if (disposed || token !== generation || controller.signal.aborted) throw abort();
       };
       preparingController = controller;
+      recoveryVerification = controller;
       const operation = (async () => {
         let candidate = null;
+        const cancelVerification = () => candidate?.dispose(abort());
+        controller.signal.addEventListener('abort', cancelVerification, { once: true });
         try {
           await stepJob;
           await frameJob?.catch(() => {});
@@ -592,6 +603,10 @@ export function createAdvancedRegionalSession(
           current();
           const restored = await candidate.restore(saved.simulation);
           current();
+          // Once verified, terrain adoption owns its existing commit/rollback
+          // cleanup. Cancellation during replay instead terminates its CPU owner.
+          controller.signal.removeEventListener('abort', cancelVerification);
+          if (recoveryVerification === controller) recoveryVerification = null;
           const adopted = await transition(globalPoint(restored.position), {
             signal: controller.signal,
             current,
@@ -610,6 +625,8 @@ export function createAdvancedRegionalSession(
           previous.dispose();
           return snapshot();
         } finally {
+          controller.signal.removeEventListener('abort', cancelVerification);
+          if (recoveryVerification === controller) recoveryVerification = null;
           candidate?.dispose();
           if (
             !disposed &&

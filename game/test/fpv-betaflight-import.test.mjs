@@ -409,6 +409,47 @@ test('import receipts pin exact UTF-8 source, firmware choice, source profile an
   );
 });
 
+test('firmware-default patch baselines resolve the same verified header as the import and receipt', async () => {
+  for (const version of BETAFLIGHT_IMPORT_VERSIONS) {
+    const source = `# Betaflight ${version}\nset roll_srate = 81`;
+    const result = await previewBetaflightImport(source, {
+      kind: 'patch',
+      baseline: 'firmware-defaults',
+    });
+    assert.equal(result.sourceVersion, version);
+    assert.equal(result.profile.axes.roll.rate, 81);
+    assert.deepEqual(result.profile.throttle, betaflightDefaultRateProfile(version).throttle);
+    assert.deepEqual(result.provenance.firmware, { version, origin: 'header' });
+    assert.equal(result.provenance.baseline.kind, 'firmware-defaults');
+    assert.equal(
+      result.provenance.baseline.sha256,
+      sha(canonicalJSON(betaflightDefaultRateProfile(version))),
+    );
+  }
+  const options = { kind: 'patch', baseline: 'firmware-defaults' };
+  fails(
+    () => parseBetaflightConfiguration('set roll_srate = 81', options),
+    'source-version-required',
+  );
+  fails(
+    () => parseBetaflightConfiguration('# Betaflight 4.5.9\nset roll_srate = 81', options),
+    'unsupported-version',
+  );
+  fails(
+    () =>
+      parseBetaflightConfiguration('# Betaflight 4.5.2\nset roll_srate = 81', {
+        ...options,
+        sourceVersion: '2026.6.2',
+      }),
+    'version-conflict',
+  );
+  const manual = await previewBetaflightImport('set roll_srate = 81', {
+    ...options,
+    sourceVersion: '4.5.2',
+  });
+  assert.deepEqual(manual.provenance.firmware, { version: '4.5.2', origin: 'manual' });
+});
+
 test('headerless patch receipts retain the exact baseline and do not invent source firmware', async () => {
   const baseline = createRateProfile({ axes: { pitch: { expo: 25 } } });
   const original = structuredClone(baseline);
