@@ -1,0 +1,25 @@
+# Independent source preservation review — 2026-10-16
+
+This checkpoint verifies specific published identities and privacy dispositions. It does **not** accept the unfinished local-history bundle, a complete offline repository, current edits after the snapshot cutoff, or product/native/runtime behavior.
+
+## Verified published source
+
+- The public prerequisite umbrella `be46a8344fdc61c65e09ad01a9965a2d8fab8c11` is a normal child of `f0ff62adf1dd6673b5c557b365507fb0831147f9`. Its exact ref, 12 batch commits, all parent lists, common public tree and **554 unique declared prerequisite identities** were independently read back through GitHub. The earlier review separately verifies 269 individual tip refs and the original 505-tip union; those remain independent source seeds.
+- Existing Draft PR #1547 head `83aab9e4b3d2fa1bab86f6859f3805a2beda0a0c` has exact parents `80ba467daf4f73666e0fe93f00592f7c172dc1e3` and `f69a58fb7170fd742e14205b8df9faf493653115`. The latter has its exact preservation ref. All **28 files / 1,814,919 bytes** in the stable **2026-10-16T04:41:04.137352Z** snapshot match their GitHub tree paths, Git blob identities and full downloaded-body SHA256 values. The published manifest intentionally omits the local root and adds file modes and historical provenance. The 21 tracked changes and seven app-untracked files are a point-time snapshot; later changes require separate coverage.
+- The historical #1547 `80ba` snapshot remains independently verified at its earlier cutoff: 50 files / 2,084,014 bytes. Its validity is historical and is not substituted for the newer snapshot.
+- All six newly pinned primary source commits have independently matched GitHub tree/parent identities. Explicit first-parent comparisons cover **207 file versions / 189 unique blobs / 7,352,781 bytes**. The owner's original `diff-tree <commit>` invocation omitted 18 merge-commit versions; each omitted version has exactly the same blob identity as one already scanned. The independent correction checks all unique bodies and commit metadata, with zero bounded credential-pattern findings. The original 189-version receipt is retained as superseded evidence.
+- Draft PR #1551 checkpoint `38377002020448fb554b3e9ddef9388518bf7c37` is a normal child of `4dbbb495f31b8c673920d3045c595e1773eccab3`. All eight added backup-document blobs were read back. The 24,680-byte app review document exactly matches blob `231f26ec91631c0e426d4362e44a485f1ea6552f` and SHA256 `c788051d9eda3069535b98c4f76890af38faa656181a82b0f6d470e918a46348`. Raw stash/index headers confirm tracked trees equal the already-public `a89a34b52ad6be291347b68ebde7e9ebcf8b8e45` tree. No private excluded file bodies were read or republished by this review.
+
+## Bounded privacy review
+
+Seven exact historical `services/community/.env.example` blobs were individually reviewed and cleared: local Docker development settings, explicitly guarded local development-auth samples, empty/replacement placeholders and non-secret configuration. The receipt records each blob and each variable disposition without matched values. There is no blanket `.env.example` exemption.
+
+Six early candidate blobs were separately checked against their exact raw Git object identities. URL candidates were explicit test literals matching the two reviewed hashes; the sampled old Google-pattern candidates lie inside quoted base64 and fail the corrected token-boundary pattern. These receipts do not clear unrelated matches or the final historical scan.
+
+The finite patterns are a bounded screening step. No raw credential match values, private configuration, browser/player data or local machine paths are included.
+
+## Open closure gates
+
+`bundle-plan-and-baseline-independent-review.json` records the plan, baseline metadata and exact remaining gates. The sparse public baseline has 554 shallow boundaries, GitHub origin and no alternates or object-directory symlinks. Its owner-reported fetch succeeded; a subsequent bounded object traversal timed out and remains negative evidence.
+
+Final local-source acceptance still needs the fixed-point inventory, completed selected-object/privacy audit, explicit private ancestry and object-type exclusions, exact reviewed bundle allowlist, durable original bundle asset and a cold GitHub-only restore with all selected new object identities read back. No full clone, build, renderer, browser/player storage access or original checkout mutation was performed by this independent lane.
