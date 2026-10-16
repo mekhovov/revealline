@@ -18,7 +18,7 @@ const POLICY_SKIPPED_JOBS = new Set(["focused", "test", "build"]);
 
 // Reviewed, exact-source exceptions are trusted only because this module is
 // loaded from main. Never load approvals from a pull request or an artifact.
-const TRUSTED_POLICY_1553 = [
+const TRUSTED_POLICY_1558 = [
   [
     ".github/workflows/deploy-pages.yml",
     "fe9b921b9456a8ffa7bb79c9ee104206ac7a7f82",
@@ -34,7 +34,7 @@ const TRUSTED_POLICY_1553 = [
   ["publishing/focused-tests.mjs", "403941412c35b2a61c2f67f611aa11d0b6d57467"],
   [
     "publishing/focused-test-map.json",
-    "9d09a9d27d6d0ef7b68606b7d3d489968fc92530",
+    "61a0b7a8f903a73a1ae5e5eeb26863b3b585f1f2",
   ],
   ["publishing/test-policy.json", "e067e704a165e16e449761989e3e1b611dc35181"],
   ["publishing/test-policy.mjs", "aa9f1efc79301cd227dbe7eb874dcba6b601003c"],
@@ -42,25 +42,38 @@ const TRUSTED_POLICY_1553 = [
 export const REVIEWED_POLICY_CHANGES = [
   {
     repository: "mekhovov/revealline",
-    number: 1553,
-    headSha: "717f2ba6fec280d8bbf9ff3ac495648b95c5e4f2",
-    baseSha: "facf1627e2bb039ee7e5a3b9d662ded4c4ef3368",
+    number: 1558,
+    headSha: "d69dfcdc853e99c2a727ef13e747334ffe7ef97a",
+    baseSha: "0597edff78fbec0faeccffae413ca48e7a5d91f1",
     trustedPolicyDigest:
-      "730c6d2aff774640f4275ee7f24cf1bee46d0f9d5a130e91f075c162890a0e22",
-    approvedPolicyDigest:
       "533b2fbc30efdf12a2d5ea578a4360239e284ff8200107f1f7765b9f6210489b",
+    approvedPolicyDigest:
+      "083826bf415c8ff93e7801bfd7b35674547bcbb1acecf7f7734f4146a9eef475",
     paths: [
-      "docs/pages-capacity-safe-plan-2026-10-15.md",
+      ".github/workflows/measure-pages-stack.yml",
+      "docs/pages-stack-measurement-design-2026-10-16.md",
+      "docs/pages-stack-measurement-plan-2026-10-16.md",
       "publishing/focused-test-map.json",
       "publishing/focused-tests.test.mjs",
-      "scripts/pages-candidate-stack.mjs",
-      "scripts/test-pages-candidate-stack.mjs",
+      "publishing/source-workflow.test.mjs",
+      "scripts/pages-stack-artifact.py",
+      "scripts/pages-stack-artifacts.mjs",
+      "scripts/pages-stack-contract.mjs",
+      "scripts/pages-stack-measurement.mjs",
+      "scripts/pages-stack-packet.mjs",
+      "scripts/pages-stack-source.mjs",
+      "scripts/test-pages-stack-artifacts.mjs",
+      "scripts/test-pages-stack-contract.mjs",
+      "scripts/test-pages-stack-e2e.mjs",
+      "scripts/test-pages-stack-measurement.mjs",
+      "scripts/test-pages-stack-packet.mjs",
+      "scripts/test-pages-stack-source.mjs",
     ],
-    trustedPolicyBlobs: TRUSTED_POLICY_1553,
-    candidatePolicyBlobs: TRUSTED_POLICY_1553.map(([name, oid]) => [
+    trustedPolicyBlobs: TRUSTED_POLICY_1558,
+    candidatePolicyBlobs: TRUSTED_POLICY_1558.map(([name, oid]) => [
       name,
       name === "publishing/focused-test-map.json"
-        ? "61a0b7a8f903a73a1ae5e5eeb26863b3b585f1f2"
+        ? "61dda74f9db14d20b6055e725cf5836b3b539bfe"
         : oid,
     ]),
   },
@@ -193,8 +206,9 @@ export function reviewedPolicyChangeMatches(
     !policyBlobsValid(approval.candidatePolicyBlobs)
   )
     return false;
-  // This bounded first path supports only the reviewed test-map registration,
-  // never controller/workflow/executable-policy changes through an exception.
+  // Only the reviewed map may differ among policy files. The new manual
+  // diagnostic workflow is outside POLICY_FILES and allowed only at this
+  // immutable reviewed PR/head/base identity, never as a generic exception.
   const differences = approval.trustedPolicyBlobs
     .filter(
       (entry, index) => !equal(entry, approval.candidatePolicyBlobs[index]),
@@ -203,7 +217,17 @@ export function reviewedPolicyChangeMatches(
   if (
     !equal(differences, ["publishing/focused-test-map.json"]) ||
     approval.paths.includes("publishing/fastline-merge-controller.mjs") ||
-    approval.paths.some((name) => name.startsWith(".github/"))
+    approval.paths.some(
+      (name) =>
+        name.startsWith(".github/") &&
+        !(
+          name === ".github/workflows/measure-pages-stack.yml" &&
+          approval.repository === "mekhovov/revealline" &&
+          approval.number === 1558 &&
+          approval.headSha === "d69dfcdc853e99c2a727ef13e747334ffe7ef97a" &&
+          approval.baseSha === "0597edff78fbec0faeccffae413ca48e7a5d91f1"
+        ),
+    )
   )
     return false;
   const pull = input.pullRequest;
