@@ -32,6 +32,7 @@ function fixture({
   wrongContext = false,
   closeFails = false,
   detachFails = false,
+  rejectClosedDetach = false,
   state = 'normal',
 } = {}) {
   const log = [];
@@ -82,6 +83,7 @@ function fixture({
     },
     async detach() {
       log.push(['detach', page === b ? 'B' : 'A']);
+      if (rejectClosedDetach && page === a && closed) throw Error('target already closed');
       if (detachFails) throw Error('detach failed');
     },
   });
@@ -139,6 +141,21 @@ test('requires exact historical mode/URL and fresh owned updater', async () => {
     await assert.rejects(acquireHistoricalOrdinaryWindow({ ...f, ...patch }));
     assert.equal(f.log.length, 0);
   }
+});
+test('detaches page before target closure, retaining updater control until afterward', async () => {
+  const f = fixture({ rejectClosedDetach: true });
+  const guard = await acquireHistoricalOrdinaryWindow(f);
+  assert((await disposeHistoricalOrdinaryWindow(guard)).completed);
+  assert.deepEqual(
+    f.log.filter((row) => Array.isArray(row) && ['detach', 'Target.closeTarget'].includes(row[0])),
+    [
+      ['detach', 'A'],
+      ['Target.closeTarget', { targetId: 'A' }],
+      ['detach', 'B'],
+    ],
+  );
+  assert((await disposeHistoricalOrdinaryWindow(guard)).completed);
+  assert.equal(f.log.filter((row) => row[0] === 'detach').length, 2);
 });
 test('rejects standalone, foreign context and abnormal initial bounds, closes only created target', async () => {
   for (const patch of [{ standalone: true }, { wrongContext: true }, { state: 'minimized' }]) {
