@@ -1,19 +1,33 @@
 # Solo regression evidence snapshot
 
-As of **2026-10-16 10:43 UTC**, **1,721 of the original 1,948 files** have complete
-observations at their recorded source revisions; **227 remain unobserved**. This
-combines the historical local 1,233-file snapshot with 488 disjoint remote files.
-It is not a complete-suite pass or a single-revision result. Remote failures still
-include unresolved groups. The [machine-readable ledger](solo-regression-audit.json)
-binds each source, comparison and retained result to SHA-256 evidence.
+As of **2026-10-16 12:16 UTC**, **1,758 of the original 1,948 files** have complete
+observations at their recorded source revisions; **190 remain unobserved**. This
+combines the historical local 1,233-file snapshot with 525 disjoint remote files.
+It is not a complete-suite pass or a single-revision result. The
+[machine-readable ledger](solo-regression-audit.json) binds sources, comparisons
+and retained results to SHA-256 evidence.
 
 The original 715-file continuation at `90f4d1a0` / runtime `49c0b6c1` has retained
-423 complete files: 301 passed and 122 failed. Its separate 70-file recovery queue
-at `845e2a1e` / runtime `e0252ff8` has retained 65: 39 passed and 26 failed. Two
-resource-aborted recovery files remain incomplete in that attempt. The retained
-sets have no overlap. All 225 referenced artifact archives passed digest, ZIP,
-source and test identity checks. These figures are frozen checkpoints, not live
-run totals.
+456 complete files: 324 passed and 132 failed. Its separate 70-file recovery queue
+at `845e2a1e` / runtime `e0252ff8` completed 67: 40 passed and 27 failed; three
+remain incomplete in that attempt. Two of those three later completed under
+canonical bounded-identity fixtures, with their existing baseline failures
+retained. These disjoint observations produce the 525-file total. Source, test,
+TAP, resource and archive integrity checks passed for the cited receipts.
+
+A new missing-only queue selects **179 files** at `d56bc4c4` / runtime `a159dd2e`,
+in 36 batches with at most two runners. It excludes all 525 completed files and
+11 still-withheld files: ten in the original active batch and one historical
+candidate device-controls diagnostic. This is dispatch evidence, not completion.
+
+A further 31 exact-baseline comparisons are retained. Twenty-six have identical
+named diagnostic fields; two more reproduce the same failures with only a
+reaction timestamp or checkout/stack location differing. The raw differences and
+comparison rules remain explicit. Three candidate fixture differences received
+complete canonical follow-ups: setup **26/26**, history **5/6** and Ukraine
+appearance **8/9**. History retains only its exact baseline decoded-dimension
+failure; Ukraine retains only its exact baseline Couch storage-write failure.
+Their repaired save, Resume and checkpoint cases pass without relaxed assertions.
 
 Supplementary receipts classify 23 complete baseline files. Twenty-one reproduce
 all 65 named candidate failure diagnostics; seven storage-write diagnostics differ
@@ -76,14 +90,26 @@ on their recorded corrected sources. The same touch test fails **0/4** on the
 preceding source, preserving the regression proof. These are Node correctness
 checks, not native timing or physical-device acceptance.
 
-The first meaningful-input cadence run is **1/2**: keyboard movement, all nine
-schedules and interruption recovery passed; gamepad setup attempted Start twice
-after automatic controller joining. Its unchanged correctness assertions are
-queued in a corrected complete-file run at `605cbd6d`, before 46 exact-baseline
-comparisons in run `38888826217`. The original failed run remains retained.
-These four files bring the repository count to 1,955 if there are no other
-additions; the original 1,948-file partition remains unchanged. Later Demo power
-changes require their own revision-specific checks.
+The first meaningful-input cadence run remains retained at **1/2**. Its first
+repair reached all nine gamepad schedules but timed out before the independent
+interruption branch. The final canonical file at `8a670281` now completes
+**4/4** (274.818 seconds), covering keyboard and gamepad schedules plus separate
+interruption/Resume cases with strict replay and checkpoint agreement. No deadline
+or correctness assertion was relaxed. These are Node correctness observations,
+not native performance or device acceptance.
+
+The unchanged device-controls diagnostic passes **15/15** on exact baseline.
+Its historical candidate run is still active and receives no completion credit;
+the earlier 145-minute timeout remains incomplete. Retained handle observations
+are diagnostic evidence, with observer overhead and bounded attribution explicit.
+
+The live inventory contains **1,959 files**, including **11 added after** the
+original launch: three archive/profile/startup tooling tests, four Solo
+correctness files, two Demo host files, the preparation-invalidation host file,
+and the cadence-calibration helper test. Their hashes and tracked-source state
+are listed separately; merely counting a new file grants no execution coverage.
+Later runtime and tooling checks do not overwrite the original 1,948-file
+partition or turn historical failures into passes.
 
 The added audio-fixture test was already present in the original launch inventory,
 although it was then uncommitted. It is not a fourth post-launch addition. The
