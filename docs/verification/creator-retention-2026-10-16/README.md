@@ -54,8 +54,14 @@ Current legal host-route proofs remain separately scoped automated evidence.
   Custom metadata test, and the workshop test's stale finite Neon distribution
   inventory. Production decoding and build inclusion were unchanged.
 - The two fixture repairs: **12 passed**, no failures/skips.
-- Source/compiler validation passed. Full creator rerun and repository validation
-  results are recorded in the current delivery plan once complete.
+- The complete rerun on runtime source `50205800c7aceb0bc330499a71c383fb2d384036` passed
+  **830/830**, zero failures/skips, in 952,094 ms (about 16 minutes under load).
+- Source/compiler and full `npm run validate` passed, including localization,
+  presentation metadata and byte-identical generated assets. Changed-module lint,
+  formatting and diff checks passed.
+- [PR #1548](https://github.com/mekhovov/revealline/pull/1548) is ready in the existing
+  aggregate target. Its final evidence-only documentation commit does not change
+  this tested runtime. Public retention delivery is not yet accepted.
 
 The native result does not establish Firefox/Safari, physical clean profiles,
 real quota exhaustion, peak browser memory, physical audio or human balance.
