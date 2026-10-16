@@ -7,6 +7,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { sharedBattlefieldGround } from '../presentation/battlefield-ground.mjs';
 
 const options = () => ({
   pictures: { Image: PNGImage },
@@ -282,6 +283,62 @@ test('hidden and unfocused frames retain the display without advancing play and 
     const resumed = page.displayRender.draws;
     page.frame(1000 / 60);
     assert.ok(page.displayRender.draws > resumed, 'Explicit Resume restores ordinary rendering');
+  }
+  assert.deepEqual(page.errors, []);
+});
+
+test('paused display choices repaint once without advancing play or resuming steady compositing', async (t) => {
+  const page = await soloPage(t, options());
+  await start(page);
+  page.$('pause-button').click();
+  page.frame(0);
+  page.frame(120);
+  const before = authoritativeCheckpoint(page.rendered.run);
+  function checkChange(change, inspect = () => {}) {
+    const draws = page.displayRender.draws;
+    change();
+    page.frame(120);
+    inspect();
+    assert.equal(
+      page.displayRender.draws,
+      draws + 1,
+      'A changed display choice refreshes the board',
+    );
+    for (let i = 0; i < 3; i++) page.frame(120);
+    assert.equal(page.displayRender.draws, draws + 1, 'Unchanged paused frames retain pixels');
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  }
+  checkChange(
+    () => {
+      page.$('settings-grid').checked = true;
+      page.$('settings-grid').emit('change');
+    },
+    () => assert.equal(page.rendered.showGrid, true),
+  );
+  checkChange(
+    () => page.change('text-face', 'plain'),
+    () => assert.equal(page.rendered.textFace, 'plain'),
+  );
+  for (const [id, option, value] of [
+    ['enemy-remains', 'showCombatScrap', false],
+    ['brutal-destruction', 'brutal', true],
+    ['blood-body-parts', 'blood', false],
+  ]) {
+    checkChange(
+      () => {
+        page.$(id).checked = value;
+        page.$(id).emit('change');
+      },
+      () => assert.equal(page.rendered[option], value),
+    );
+  }
+  const ground = sharedBattlefieldGround(),
+    previousGround = ground.snapshot().world;
+  try {
+    checkChange(() => ground.set('field-crossing'));
+  } finally {
+    ground.set(previousGround);
   }
   assert.deepEqual(page.errors, []);
 });

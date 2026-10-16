@@ -250,6 +250,7 @@ import { createJourneyVisualThemeIdentityAdapter } from './presentation/journey-
 import { prepareCampaignVisualThemeContext } from './presentation/visual-theme-identities.mjs';
 import { verifyIndexedInstalledPack } from './mission-library/pack-identity.mjs';
 import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
+import { sharedBattlefieldGround } from './presentation/battlefield-ground.mjs';
 import { attachPreferenceRestoration } from './ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
@@ -1245,6 +1246,7 @@ try {
   const packLaunchGuard = createPackLaunchGuard();
   let playedLevelLink = null;
   let playedLevelLinkGeneration = 0;
+  let playedLevelLinkController = null;
   let demoHost = null;
   const demoLibrary = createDemoLibrary();
   const courseVisit = Object.create(null);
@@ -1318,6 +1320,7 @@ try {
     document,
     window,
     getStorage: () => localStorage,
+    onChange: () => fieldScene?.invalidate(),
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
@@ -1362,6 +1365,8 @@ try {
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   if (runtimeContent) menuStyle.themeHost.setThemes(runtimeContent.appearanceThemes);
+  const stopBoardThemeView = menuStyle.themeHost.subscribe(() => fieldScene?.invalidate());
+  const stopBoardGroundView = sharedBattlefieldGround().subscribe(() => fieldScene?.invalidate());
   function currentAppearanceDefault(entry = activeEntry) {
     if (!runtimeContent) return null;
     // Difficulty projections have their own execution identity. Only an owned
@@ -1537,7 +1542,8 @@ try {
   let flightActorLease = null,
     flightActorsReady = false,
     actorJourneyIdentity = null,
-    actorMissionIndex = null;
+    actorMissionIndex = null,
+    actorMissionIndexValue = null;
   const actorCustomPacks = new WeakSet();
   let flightPictures = null,
     picturePrewarm = null,
@@ -2523,10 +2529,12 @@ try {
       const pack = installed.packs.find((item) => item.id === entry.sourcePackId);
       if (!pack) return null;
       if (actorCustomPacks.has(pack)) return null;
-      actorMissionIndex ??= getJSON('content/mission-library-index.json').catch((error) => {
-        actorMissionIndex = null;
-        throw error;
-      });
+      actorMissionIndex ??= getJSON('content/mission-library-index.json')
+        .then((index) => (actorMissionIndexValue = index))
+        .catch((error) => {
+          actorMissionIndex = null;
+          throw error;
+        });
       let index;
       try {
         index = await actorMissionIndex;
@@ -3491,6 +3499,8 @@ try {
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      stopBoardThemeView();
+      stopBoardGroundView();
       stopActorView();
       actorPreferences.dispose();
       compactCredit.dispose();
@@ -5973,7 +5983,9 @@ try {
         ok: false,
         warning: t('interface:finishOrCancelTheCourseHandoffBeforeChangingSettings'),
       };
+    const previousGrid = library.preferences.showGrid;
     library = updatePreferences(library, { ...library.preferences, ...patch });
+    if (library.preferences.showGrid !== previousGrid) fieldScene?.invalidate();
     if (!practice) return persistProfile();
     refreshTextSize();
     refreshScreenSteeringHand();
@@ -6107,7 +6119,15 @@ try {
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
   }
+  function cancelPlayedLevelDiscovery() {
+    if (!playedLevelLinkController) return;
+    ++playedLevelLinkGeneration;
+    playedLevelLinkController.abort();
+    playedLevelLinkController = null;
+  }
+  window.addEventListener('pagehide', cancelPlayedLevelDiscovery);
   function clearPlayedLevelLink() {
+    cancelPlayedLevelDiscovery();
     playedLevelLinkGeneration++;
     if (playedLevelLink) {
       // A newly selected local/practice mission must not retain the previous
@@ -6128,29 +6148,72 @@ try {
     $('level-link-status').textContent = '';
     $('level-link-status').hidden = true;
   }
-  async function updatePlayedLevelLink() {
+  async function updatePlayedLevelLink({ discoverClassic = false } = {}) {
+    if (practiceSession || practice || demo || runtimeContent || playedLevelLink) return;
+    const mission = journeyMission();
+    if (!mission && (!discoverClassic || playedLevelLinkController)) return;
     const generation = ++playedLevelLinkGeneration;
-    const selectedRun = run;
-    if (practiceSession || practice || demo || runtimeContent) return;
+    const selectedRun = run,
+      selectedEntry = activeEntry,
+      selectedLevel = campaign.levels[levelIndex],
+      selectedPacks = packs;
+    let controller = null;
     try {
-      const mission = journeyMission();
       let row = mission
         ? acceptedJourneyMission(mission, authoredRoute?.id ?? DEFAULT_JOURNEY_ROUTES.solo)
         : null;
       if (!mission) {
-        actorMissionIndex ??= getJSON('content/mission-library-index.json').catch((error) => {
-          actorMissionIndex = null;
-          throw error;
-        });
-        row = await acceptedClassicMission({
-          index: await actorMissionIndex,
-          entry: activeEntry,
-          level: campaign.levels[levelIndex],
-          baseEntry,
-          packs,
-        });
+        const safe = () =>
+          (paused || !started) && pictureResume === null && !document.hidden && document.hasFocus();
+        if (!safe()) return;
+        controller = new AbortController();
+        playedLevelLinkController = controller;
+        const isCurrent = () =>
+          !controller.signal.aborted &&
+          generation === playedLevelLinkGeneration &&
+          run === selectedRun &&
+          activeEntry === selectedEntry &&
+          packs === selectedPacks &&
+          safe();
+        let text = null;
+        if (!actorMissionIndexValue) {
+          const path = 'content/mission-library-index.json';
+          const response = await fetch(
+            communityRouteFromURL(location.href)
+              ? new URL(path, gameDocumentURL(location.href))
+              : path,
+            { signal: controller.signal },
+          );
+          if (!response.ok || !isCurrent()) return;
+          text = await response.text();
+          if (!isCurrent()) return;
+        }
+        // Optional discovery never holds Start. Parse and fingerprint only in
+        // a safe phase, including when the response arrives after Resume.
+        row = await sound.mediaPreparation.run(
+          'main',
+          () => {
+            const index = actorMissionIndexValue ?? JSON.parse(text);
+            actorMissionIndexValue = index;
+            actorMissionIndex = Promise.resolve(index);
+            return acceptedClassicMission({
+              index,
+              entry: selectedEntry,
+              level: selectedLevel,
+              baseEntry,
+              packs: selectedPacks,
+              isCurrent,
+            });
+          },
+          { signal: controller.signal, eligible: isCurrent },
+        );
       }
-      if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
+      if (
+        controller?.signal.aborted ||
+        generation !== playedLevelLinkGeneration ||
+        run !== selectedRun
+      )
+        return;
       const href = playedLevelHref(row, { baseURL: location.href });
       if (!href) return;
       playedLevelLink = href;
@@ -6163,6 +6226,8 @@ try {
       }
     } catch {
       // Optional discovery failures cannot stop gameplay or share the wrong map.
+    } finally {
+      if (controller && playedLevelLinkController === controller) playedLevelLinkController = null;
     }
   }
   $('copy-level-link').onclick = async () => {
@@ -8355,13 +8420,19 @@ try {
   }
   $('text-face').onchange = () => changeDisplay({ textFace: $('text-face').value });
   function applyDisplayPreferences(state) {
+    const effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    const boardChanged =
+      document.body.dataset.textSize !== state.textSize ||
+      document.body.dataset.textFace !== state.textFace ||
+      document.body.dataset.effects !== effects;
     $('text-size').value = state.textSize;
     document.body.dataset.textSize = state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
     $('reduced-effects').checked = state.reducedEffects;
     $('settings-reduced-effects').checked = state.reducedEffects;
-    document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    document.body.dataset.effects = effects;
+    if (boardChanged) fieldScene?.invalidate();
     localizedText($('display-system-reduction'), () =>
       state.effectiveReducedEffects && !state.reducedEffects
         ? t('interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice')
@@ -10162,6 +10233,7 @@ try {
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    cancelPlayedLevelDiscovery();
     if (deferredPagePresentation && paused) applyFlightPresentation();
     if (!started && runningEnemyNeedsPreparation) {
       try {
@@ -10303,7 +10375,6 @@ try {
             });
           painter.setAttemptAppearance(acceptedCaptureAppearance);
           await fieldScene.prepareBoard(controller.signal);
-          await updatePlayedLevelLink();
           if (
             controller.signal.aborted ||
             pictureResume !== ticket ||
@@ -10360,6 +10431,7 @@ try {
       painter.setAttemptAppearance(acceptedCaptureAppearance);
       rememberSelection();
     }
+    void updatePlayedLevelLink();
     started = true;
     paused = false;
     sound.setPreparationPhase('playing');
@@ -10427,7 +10499,10 @@ try {
       sound.pause?.();
       return;
     }
-    if (!started || ['won', 'lost'].includes(run?.status)) return;
+    if (!started || ['won', 'lost'].includes(run?.status)) {
+      void updatePlayedLevelLink({ discoverClassic: true });
+      return;
+    }
     if (force !== true && paused) {
       resume();
       return;
@@ -10458,6 +10533,7 @@ try {
     overlay('pause');
     localizedText($('pause-button'), () => '▶');
     refreshHUD();
+    void updatePlayedLevelLink({ discoverClassic: true });
   }
   function refreshHUDClocks() {
     localizedText($('time'), () =>
@@ -13033,6 +13109,7 @@ try {
       const index =
         runtimeContent?.missionIndex ?? (await getJSON('content/mission-library-index.json'));
       actorMissionIndex = Promise.resolve(index);
+      actorMissionIndexValue = index;
       const route = authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo));
       const originalThemes =
         runtimeContent?.themes ?? (await getJSON('content-design/themes.json')).themes;
