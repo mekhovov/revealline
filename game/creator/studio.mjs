@@ -43,6 +43,7 @@ import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
 import { runCreatorOperation } from './operation.mjs';
 import { attachCreatorReviewReading } from './review-reading.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { mountCreatorStorageRetention } from './storage-retention.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -56,6 +57,7 @@ const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
   backend = createCreatorDraftBackend(store),
   batchBackend = createCreatorBatchDraftBackend(store);
+mountCreatorStorageRetention({ document, window });
 const status = (message, error = false) => {
   localizedText($('status'), message);
   $('status').classList.toggle('error', error);

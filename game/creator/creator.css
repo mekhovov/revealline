@@ -33,6 +33,10 @@
     width: min(1100px, 92vw);
     margin: 2.6rem auto 5rem;
   }
+  .creator-retention {
+    width: min(1100px, 92vw);
+    margin: 1.3rem auto 2.6rem;
+  }
   h1 {
     font-size: clamp(2rem, 5vw, 3.7rem);
     line-height: 1.1;
