@@ -44,6 +44,25 @@ const missionCard = (page) =>
   [...(page.$('journey-cards')?.children ?? [])].find(
     (button) => button.dataset.missionId === missionId,
   );
+function assertInstalledPlay(page) {
+  const card = missionCard(page),
+    status = card.querySelector('.journey-card-action');
+  assert.equal(card.dataset.availabilityState, 'ready');
+  assert.equal(card.disabled, false);
+  assert.equal(status.hidden, true, 'Installed missions have no download status label.');
+  assert.equal(status.textContent, '');
+}
+function showAllLifecycles(page) {
+  // The fixture authenticates the published Original-rules chapter. Current
+  // offers its distinct travelling-impact edition; All exposes this exact row.
+  const lifecycle = page.$('journey-lifecycle');
+  assert.ok(lifecycle);
+  if (lifecycle.value !== '') {
+    assert.ok(lifecycle.children.some((option) => option.value === ''));
+    lifecycle.value = '';
+    lifecycle.emit('change');
+  }
+}
 function assertCurrentBaseCardFocused(page) {
   const row = index.missions.find(
     (item) => item.source === 'base' && item.levelId === page.renders[0].levelId,
@@ -272,7 +291,11 @@ async function openCatalogue(page) {
   activate(page, 'race-chapters');
   await settled(
     page,
-    () => page.$('journey-chooser')?.open && missionCard(page)?.disabled === false,
+    () => {
+      if (!page.$('journey-chooser')?.open) return false;
+      showAllLifecycles(page);
+      return missionCard(page)?.disabled === false;
+    },
     'The real All missions chooser must expose the exact indexed chapter mission.',
   );
   assert.equal(page.$('optional-worlds-dialog'), null, 'No second chapter picker is mounted.');
@@ -522,7 +545,7 @@ hostTest(
     const before = snapshot(p),
       writes = f.writes().length;
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertInstalledPlay(p);
     activate(p, missionCard(p));
     await settled(
       p,
@@ -578,7 +601,7 @@ for (const interruption of ['Back then setup', 'foreground loss'])
       t.after(() => gate.resolve());
       const before = snapshot(p);
       await openCatalogue(p);
-      assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+      assertInstalledPlay(p);
       let heldImage;
       f.media.onDecode = async (image) => {
         // Embedded originals decode from data URLs. Hold the first actual
@@ -607,7 +630,9 @@ for (const interruption of ['Back then setup', 'foreground loss'])
           'A newer browse intent must expose Back while the retired decoder is unresolved.',
         );
         await closeCatalogue(p);
-        tap(p, 'race-optional-setup-toggle');
+        tap(p, 'race-options');
+        tap(p, 'race-settings-tab-gameplay');
+        assert.equal(p.$('race-settings-panel-gameplay').hidden, false);
         assert.equal(p.$('race-optional-setup').open, true);
         activate(p, 'race-focus');
         assert.equal(p.$('race-setup').hidden, false);
@@ -670,7 +695,7 @@ hostTest(
       decoded = false;
     t.after(() => gate.resolve());
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertInstalledPlay(p);
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
       heldImage = image;
@@ -721,7 +746,7 @@ hostTest(
     await prepareState(p, 'finished');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertInstalledPlay(p);
     let heldImage;
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
@@ -731,7 +756,10 @@ hostTest(
     activate(p, missionCard(p));
     try {
       await settled(p, () => heldImage, 'The committed chapter must begin picture preparation.');
-      p.$('race-help').focus();
+      const nextFocus = p.$('race-options');
+      assert.ok(nextFocus.getClientRects().length, 'The newer Settings action is visible.');
+      assert.equal(nextFocus.disabled, false);
+      nextFocus.focus();
       assert.equal(p.$('journey-chooser').open, false);
       assertRetained(p, before);
     } finally {
@@ -743,7 +771,7 @@ hostTest(
       'A retired preparation must leave a terminal catalogue state.',
     );
     assert.equal(p.$('journey-chooser').open, false);
-    assert.ok(p.doc.activeElement === p.$('race-help'), 'The newer action retains exact focus.');
+    assert.ok(p.doc.activeElement === p.$('race-options'), 'The newer action retains exact focus.');
     assert.doesNotMatch(p.$('race-message').textContent, /preparing|checking/i);
     assert.doesNotMatch(p.$('journey-chooser-status').textContent, /preparing|checking/i);
     assertRetained(p, before);
@@ -760,7 +788,7 @@ hostTest(
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertInstalledPlay(p);
     p.$('journey-back').focus();
     assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
     tap(p, missionCard(p));
@@ -810,7 +838,7 @@ hostTest(
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    assertInstalledPlay(p);
     p.$('journey-back').focus();
     assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
     tap(p, missionCard(p));
@@ -865,6 +893,7 @@ hostTest(
     assert.equal(p.$('race-chapters').disabled, false);
     activate(p, 'race-chapters');
     await settled(p, () => p.$('journey-chooser')?.open, 'Core missions remain browseable.');
+    showAllLifecycles(p);
     assert.equal(missionCard(p).disabled, true);
     assert(
       [...p.$('journey-cards').children].some((card) => !card.disabled),
@@ -890,7 +919,7 @@ hostTest(
     const before = snapshot(p);
     await openCatalogue(p);
     const dialog = p.$('journey-chooser'),
-      nextFocus = p.$('race-help'),
+      nextFocus = p.$('race-options'),
       button = [...p.$('journey-cards').children].find(
         (card) => JSON.parse(card.dataset.missionId)[3] === 'signal-12',
       );
@@ -899,6 +928,8 @@ hostTest(
     const chooseNewerFocus = () => {
       if (redirects) return;
       redirects++;
+      assert.ok(nextFocus.getClientRects().length, 'The newer Settings action is visible.');
+      assert.equal(nextFocus.disabled, false);
       nextFocus.focus();
     };
     dialog.addEventListener('close', chooseNewerFocus);
@@ -943,7 +974,10 @@ hostTest(
     p.pulse(0, 0);
     await settled(
       p,
-      () => p.$('journey-chooser')?.open && missionCard(p)?.disabled === false,
+      () =>
+        p.$('journey-chooser')?.open &&
+        p.$('journey-cards')?.contains(p.doc.activeElement) &&
+        p.doc.activeElement.disabled === false,
       'South must open the shared All missions chooser.',
     );
     assertCurrentBaseCardFocused(p);
