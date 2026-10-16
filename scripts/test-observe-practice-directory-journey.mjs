@@ -28,6 +28,7 @@ import {
   directoryJourneyServer,
 } from './observe-practice-directory-journey.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
+import { DIRECTORY_DISTRIBUTION_IO_POLICY } from './practice-distribution-io.mjs';
 
 test('popup click and late waiter failures stay owned without unhandled rejection', async () => {
   let rejectPopup;
@@ -720,4 +721,43 @@ test('production v2 orchestration uses independent source guard before admission
     body.indexOf('report.observerSource.verifiedAfter = true') <
       body.indexOf('report.procedureComplete = true'),
   );
+});
+
+test('distribution I/O records bounded integrity progress separately from unchanged gameplay deadlines', async () => {
+  assert.equal(DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.caseMs, 90000);
+  assert.equal(DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.actionMs, 10000);
+  assert.equal(DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.overallMs, 600000);
+  await productionFixture(async ({ input, entries, directory }) => {
+    const diagnostics = { label: 'before-browser' };
+    await verifyDirectoryDistribution(productionV2Plan(input), diagnostics);
+    assert.deepEqual(diagnostics.policy, DIRECTORY_DISTRIBUTION_IO_POLICY);
+    assert.equal(diagnostics.label, 'before-browser');
+    assert.equal(diagnostics.totalFiles, entries.size);
+    assert.equal(diagnostics.completedFiles, entries.size);
+    assert.equal(
+      diagnostics.completedBytes,
+      [...entries.values()].reduce((n, b) => n + b.length, 0),
+    );
+    assert(diagnostics.completed && diagnostics.cleanup.completed);
+    assert.deepEqual(diagnostics.cleanup.pending, []);
+    await writeFile(
+      path.join(directory, 'game/index.html'),
+      Buffer.alloc(entries.get('game/index.html').length, 88),
+    );
+    const failed = { label: 'after-browser' };
+    await assert.rejects(
+      verifyDirectoryDistribution(productionV2Plan(input), failed),
+      /hash mismatch/,
+    );
+    assert.equal(failed.failureMember, 'game/index.html');
+    assert(!failed.completed && failed.cleanup.completed);
+    assert(failed.completedFiles < failed.totalFiles);
+  });
+  const source = await readFile(
+    new URL('./observe-practice-directory-journey.mjs', import.meta.url),
+    'utf8',
+  );
+  assert(source.includes("label: 'before-browser'"));
+  assert(source.includes("label: 'after-browser'"));
+  assert.match(source, /distributionIO\.some\(\(row\) => !row\.cleanup\?\.completed\)/);
 });

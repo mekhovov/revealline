@@ -22,6 +22,7 @@ import {
   closeFPVObservationResources,
 } from './fpv-observation-artifact.mjs';
 import { acquirePointerResource } from './observe-practice-pointer.mjs';
+import { withDirectoryDistributionIO } from './practice-distribution-io.mjs';
 import {
   unlockObservedPage,
   matchesLaunchedAppURL,
@@ -85,6 +86,7 @@ export const DIRECTORY_JOURNEY_CASES = Object.freeze(
   ),
 );
 const AUTHORITY = [
+  'scripts/practice-distribution-io.mjs',
   'scripts/observe-practice-directory-journey.mjs',
   'scripts/fpv-observation-artifact.mjs',
   'scripts/observe-practice-pointer.mjs',
@@ -218,20 +220,37 @@ function distributionMember(name) {
   );
   return name;
 }
-async function distributionTarget(root, name, expectedBytes) {
+async function distributionTarget(root, name, expectedBytes, io) {
   distributionMember(name);
   const target = path.join(root, name);
-  assert.equal(await realpath(target), target, 'Production member symlink refused.');
-  const info = await stat(target);
+  const perform = (label, work) => (io ? io.perform(label, work) : work());
+  assert.equal(
+    await perform(`realpath: ${name}`, () => realpath(target)),
+    target,
+    'Production member symlink refused.',
+  );
+  const info = await perform(`stat: ${name}`, () => stat(target));
   assert(
     info.isFile() && info.size === expectedBytes,
     'Production member missing or size changed.',
   );
   return target;
 }
-async function boundedDistributionBytes(target, limit) {
+async function boundedDistributionBytes(target, limit, io) {
   const chunks = [];
   let count = 0;
+  if (io) {
+    await io.consume(
+      target,
+      (signal) => createReadStream(target, { signal }),
+      (chunk) => {
+        count += chunk.length;
+        assert(count <= limit, 'Production file exceeded read bound.');
+        chunks.push(chunk);
+      },
+    );
+    return Buffer.concat(chunks, count);
+  }
   for await (const chunk of createReadStream(target, {
     signal: AbortSignal.timeout(30000),
   })) {
@@ -242,21 +261,32 @@ async function boundedDistributionBytes(target, limit) {
   return Buffer.concat(chunks, count);
 }
 /** Verify the original generated manifest and every original member before
- * serving. Hash sequential streams rather than retaining a whole distribution.
+ * serving. Four bounded streams never retain a whole distribution in memory.
  * The external manifest pin is supplied by the build owner, never synthesized.
  */
-export async function verifyDirectoryDistribution(plan) {
+export async function verifyDirectoryDistribution(plan, diagnostics = {}) {
+  return withDirectoryDistributionIO(
+    (io) => verifyDirectoryDistributionInIO(plan, io),
+    diagnostics,
+  );
+}
+async function verifyDirectoryDistributionInIO(plan, io) {
   assert(productionProtocol(plan));
   assert(path.isAbsolute(plan.distribution));
-  const root = await realpath(plan.distribution);
-  assert((await stat(root)).isDirectory());
+  const root = await io.perform('distribution root realpath', () => realpath(plan.distribution));
+  assert((await io.perform('distribution root stat', () => stat(root))).isDirectory());
   const manifestPath = path.join(root, 'manifest.json');
-  assert.equal(await realpath(manifestPath), manifestPath, 'Manifest symlink refused.');
-  const info = await stat(manifestPath);
+  assert.equal(
+    await io.perform('manifest realpath', () => realpath(manifestPath)),
+    manifestPath,
+    'Manifest symlink refused.',
+  );
+  const info = await io.perform('manifest stat', () => stat(manifestPath));
   assert(info.isFile() && info.size > 0 && info.size <= DISTRIBUTION_LIMITS.manifestBytes);
   const manifestBytes = await boundedDistributionBytes(
     manifestPath,
     DISTRIBUTION_LIMITS.manifestBytes,
+    io,
   );
   assert(manifestBytes.length <= DISTRIBUTION_LIMITS.manifestBytes);
   assert.equal(
@@ -316,23 +346,25 @@ export async function verifyDirectoryDistribution(plan) {
     files.has('game/index.html') && files.has('game/build-info.json'),
     'Production entry/build-info missing.',
   );
-  const signal = AbortSignal.timeout(120000);
-  for (const row of files.values()) {
-    signal.throwIfAborted();
-    const target = await distributionTarget(root, row.path, row.bytes);
+  await io.members([...files.values()], async (row) => {
+    const target = await distributionTarget(root, row.path, row.bytes, io);
     const hash = createHash('sha256');
     let count = 0;
-    for await (const chunk of createReadStream(target, { signal })) {
-      count += chunk.length;
-      assert(count <= row.bytes, 'Production member grew while hashing.');
-      hash.update(chunk);
-    }
+    await io.consume(
+      row.path,
+      (signal) => createReadStream(target, { signal }),
+      (chunk) => {
+        count += chunk.length;
+        assert(count <= row.bytes, 'Production member grew while hashing.');
+        hash.update(chunk);
+      },
+    );
     assert.equal(count, row.bytes);
     assert.equal(hash.digest('hex'), row.sha256, `Production member hash mismatch: ${row.path}`);
-  }
+  });
   const verified = { root, manifest, manifestBytes, files };
   const buildInfo = JSON.parse(
-    await readDirectoryDistributionFile(verified, 'game/build-info.json'),
+    await readDirectoryDistributionFile(verified, 'game/build-info.json', io),
   );
   assert.deepEqual(buildInfo, {
     formatVersion: 1,
@@ -341,18 +373,18 @@ export async function verifyDirectoryDistribution(plan) {
     entry: manifest.entry,
   });
   assert.equal(
-    sha(await boundedDistributionBytes(manifestPath, DISTRIBUTION_LIMITS.manifestBytes)),
+    sha(await boundedDistributionBytes(manifestPath, DISTRIBUTION_LIMITS.manifestBytes, io)),
     plan.distributionManifestSha256,
     'Production manifest changed during verification.',
   );
   return verified;
 }
-export async function readDirectoryDistributionFile(distribution, name) {
+export async function readDirectoryDistributionFile(distribution, name, io) {
   const row =
     name === 'manifest.json' ? pin(name, distribution.manifestBytes) : distribution.files.get(name);
   assert(row, 'Not a verified production distribution member.');
-  const target = await distributionTarget(distribution.root, name, row.bytes);
-  const bytes = await boundedDistributionBytes(target, row.bytes);
+  const target = await distributionTarget(distribution.root, name, row.bytes, io);
+  const bytes = await boundedDistributionBytes(target, row.bytes, io);
   assert.equal(bytes.length, row.bytes);
   assert.equal(sha(bytes), row.sha256, 'Production member changed before serving.');
   return bytes;
@@ -912,6 +944,7 @@ export async function observePracticeDirectoryJourney({
     servedSources: [],
     requestFailures: [],
     resourceAcquisitions: [],
+    ...(production ? { distributionIO: [] } : {}),
     limitations: [
       ...(production
         ? [
@@ -955,7 +988,9 @@ export async function observePracticeDirectoryJourney({
     report.admission = overlay.loaded.admission;
     report.overlay = [...overlay.files].map(([name, bytes]) => pin(name, bytes));
     if (production) {
-      distribution = await verifyDirectoryDistribution(plan);
+      const ioPhase = { label: 'before-browser' };
+      report.distributionIO.push(ioPhase);
+      distribution = await verifyDirectoryDistribution(plan, ioPhase);
       report.distribution = {
         directory: distribution.root,
         manifest: pin('manifest.json', distribution.manifestBytes),
@@ -1059,7 +1094,9 @@ export async function observePracticeDirectoryJourney({
       }
     }
     if (production) {
-      await verifyDirectoryDistribution(plan);
+      const ioPhase = { label: 'after-browser' };
+      report.distributionIO.push(ioPhase);
+      await verifyDirectoryDistribution(plan, ioPhase);
       report.distribution.originalsVerifiedAfter = true;
     }
     for (const source of [...report.authority, ...report.servedSources])
@@ -1079,6 +1116,8 @@ export async function observePracticeDirectoryJourney({
       ...(server ? [['server', () => closeServer(server)]] : []),
     ]);
     if (report.resourceAcquisitions.some((r) => r.pending || (r.timedOut && !r.lateClosed)))
+      report.cleanup.completed = false;
+    if (production && report.distributionIO.some((row) => !row.cleanup?.completed))
       report.cleanup.completed = false;
     report.completed = Boolean(
       report.procedureComplete &&

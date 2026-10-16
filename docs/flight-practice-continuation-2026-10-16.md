@@ -5,6 +5,64 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Three fresh local browser checks pass
+
+Frozen observer `8e29a04c35eb57de6fb8274347e10397f5fc110e`, tree
+`b5254b22dd24cebd127a950e9fdd68f520f41b1c`, uses the exact feedback candidate
+`b8aec0821`/`c271bc6c…`. The ordinary-window run additionally uses the original
+historical `98ad851` candidate. No package is rebuilt or relabelled.
+[Original receipts, seven screenshots and authority](flight-practice-continuation-20261016/native-8e29-passed-originals.tgz)
+have SHA-256 `af7ba4d991bbcb54ae75f112f60356c7317c7dbaa7a2d30309caf3217b1c7f45`.
+
+- [Imported offline flight](flight-practice-continuation-20261016/imported-offline-flight-passed.json):
+  nine installation checkpoints and five exact populated content witnesses pass.
+  Independent audit extracts the original 63,754-byte pack's 31,796-byte GLB and
+  independently derives its observed asset-row fingerprint. All five databases
+  retain assets=1, projects=2, revisions=2 and metadata=1. After owned browser
+  process restart, stable launcher and standalone routes each explicitly arm,
+  rise from 0 to 0.2 m and pause at that height for over 640 ms, with real offline
+  probes, visible HUD and screenshots. No course completion is claimed.
+  The import screenshot shows the success toast; the card is below the captured
+  viewport, so its exact identity is DOM evidence, not visible-card PNG proof.
+  Gym/Academy offline flight, whole-machine outage and OS reboot remain open.
+- [Final verification cancellation](flight-practice-continuation-20261016/final-verification-cancel-passed.json):
+  22 checkpoints, three original ready replies, actual Verifying screenshots and
+  three ordinary pointer cancellations pass. Observed cancellation latency is
+  46.35/48.57/40.64 ms for Gym/Academy/Worlds. Every original cache pin and pointer
+  remains intact. Each complete unrecorded target is verified, adopted by public
+  retry, then removed through UI. The [independent audit](flight-practice-continuation-20261016/final-verification-independent-audit.json)
+  re-admits the candidate and binds inventories to original archived workers.
+  Proof/profile equality is an executed source assertion with retained hashes,
+  not retained raw export backups. Nonempty World projects/revisions/cards remain
+  exact; assets and Gym records are unpopulated in this separate lane.
+  Scope is English controlled response latency after hashing, not interruption
+  during hashing, Ukrainian native cancellation, actual eviction or real devices.
+- [Ordinary-browser update continuity](flight-practice-continuation-20261016/ordinary-update-continuity-passed.json):
+  nine checkpoints and actual flight/focus-loss pause/update/explicit-resume pass
+  within 7,325 ms. The original document, time origin and immutable URL survive
+  genuine different-version B preparation; visible height remains paused at
+  0.3 m and rises to 0.4 m only after explicit resume. Actual geometry, focus
+  defaults, sessions and exact owned target are cleaned up. Identity equality
+  is enforced by archived source; raw document/time-origin values are not saved.
+  Sibling cache names/scopes and proof/profile export equality are checked, not
+  per-entry cache hashes. Its five exact World witnesses precede this active
+  update and are not post-update World-retention proof. Installed-PWA continuity
+  stays open; four PWA failures and ordinary run 5's cleanup failure stay failed.
+
+All three runs have no page errors and remove their owned profiles/apps. They
+are functional checks, not measured performance, human approval or public release.
+
+### Production I/O follow-up
+
+The reviewed verifier uses four bounded streams, a separately reported ten-minute
+integrity-I/O phase, thirty-second stream inactivity and five-second settlement.
+This replaces only the sequential 120-second file-verification ceiling that failed
+on the original network-drive output. The 90-second case, ten-second action and
+ten-minute browser-journey limits are unchanged. Every original manifest/member/
+source pin is still checked before and after, with no source fallback.
+Pending filesystem operations or streams prevent a clean result. Thirty focused
+tests and independent review pass; a fresh production native receipt is required.
+
 Frozen observer `752e4c999` has three further failed native receipts in
 [the unchanged original archive](flight-practice-continuation-20261016/native-752e-failed-originals.tgz),
 SHA-256 `8a26ac2a813dc34cf889367443bc50ccb54178f21ad92fcbb4f4377ba0a6b1a4`:

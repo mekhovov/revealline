@@ -198,6 +198,15 @@ files never fall back to source. Package envelope/source pins remain separate.
 This permits a maintained observer to test an earlier exact production build
 without pretending the build came from today's source. V1 remains unchanged.
 
+Original-distribution I/O is separate from browser/player timing: four streams,
+a fixed ten-minute phase, thirty-second per-stream inactivity and five-second
+settlement. Receipts retain before/after counts, bytes, elapsed time, failure
+member and outstanding metadata/stream ownership. Contents are streamed, not
+loaded as a whole distribution. Every original member and external manifest pin
+remain mandatory; pending I/O cannot pass cleanup. The 90/10/600-second browser
+case/action/overall limits are unchanged. These integrity-I/O durations are not
+startup or player-performance measurements.
+
 ## All-three historical migration details
 
 Set `OPTIONAL_INSTALLATION_MIGRATION=all-three-98ad851`, the pinned historical
