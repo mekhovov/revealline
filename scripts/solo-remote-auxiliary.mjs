@@ -1,0 +1,427 @@
+// Adapter draft only: common source/archive/process/finalization ownership is reused.
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { copyFile, lstat, mkdir, open, readFile, realpath, writeFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { setTimeout as delay } from 'node:timers/promises';
+
+const MiB = 1024 ** 2;
+const SOURCE = {
+  baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
+  candidate: '2ec605eb76e38f9c9a3e21b7fa82dd80c580c457',
+};
+export const AUXILIARY_JOBS = Object.freeze({
+  'speech-chromium': {
+    recipe: 'speech',
+    engine: 'chromium',
+    roles: ['baseline', 'candidate'],
+    timeoutMs: 540000,
+    helperMinutes: 75,
+    jobMinutes: 120,
+  },
+  'music-chromium': {
+    recipe: 'music',
+    engine: 'chromium',
+    roles: ['baseline', 'candidate'],
+    timeoutMs: 600000,
+    helperMinutes: 75,
+    jobMinutes: 120,
+  },
+  'recovery-chromium': {
+    recipe: 'recovery',
+    engine: 'chromium',
+    roles: ['candidate'],
+    timeoutMs: 420000,
+    helperMinutes: 60,
+    jobMinutes: 105,
+  },
+  'recovery-webkit': {
+    recipe: 'recovery',
+    engine: 'webkit',
+    roles: ['candidate'],
+    timeoutMs: 420000,
+    helperMinutes: 60,
+    jobMinutes: 105,
+  },
+});
+const HASHES = {
+  speech: '235350a6011bd9ebcfa73aa815b6a4c616f945ca67278c64b93a906e8388411d',
+  music: 'dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493',
+  recovery: '907929279c5231edb727cad3ff42e45ddf146129215fc27a9a6b809e0cd227d2',
+};
+export function validateAuxiliaryPlan(plan) {
+  assert.equal(plan.format, 'SoloHostedAuxiliaryPlanV1');
+  assert.equal(plan.status, 'reviewed-and-released');
+  assert.equal(plan.repository, 'mekhovov/revealline');
+  assert.equal(plan.maxParallel, 2);
+  assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
+  assert.equal(plan.release.priorProofInspected, true);
+  assert.equal(plan.release.noUnclosedOwners, true);
+  assert(
+    Array.isArray(plan.release.evidence) &&
+      plan.release.evidence.length > 0 &&
+      plan.release.evidence.length <= 32,
+  );
+  for (const row of plan.release.evidence) {
+    assert(Number.isSafeInteger(row.runId) && row.runId > 0);
+    assert(Number.isSafeInteger(row.artifactId) && row.artifactId > 0);
+    assert.match(row.artifactSHA256, /^[a-f0-9]{64}$/);
+    assert.match(row.summarySHA256, /^[a-f0-9]{64}$/);
+  }
+  const spec = AUXILIARY_JOBS[plan.job];
+  assert(spec);
+  assert.equal(plan.candidate.revision, SOURCE.candidate);
+  assert.equal(plan.baseline.revision, SOURCE.baseline);
+  assert.equal(plan.node, '22.13.1');
+  assert.equal(plan.playwright, '1.62.1');
+  assert.equal(plan.performanceExclusion, true);
+  assert.equal(plan.cpu, 1);
+  assert.equal(plan.setupTimeoutMs, 2400000);
+  assert.equal(plan.fixturePreparationTimeoutMs, 180000);
+  assert.equal(plan.helperTimeoutMs, spec.helperMinutes * 60000);
+  assert.equal(plan.evidenceBytes, 256 * MiB);
+  assert.equal(plan.rowEvidenceBytes, 32 * MiB);
+  assert.deepEqual(
+    plan.adapterInputs.map((ref) => ref.path),
+    [
+      'scripts/solo-remote-auxiliary.mjs',
+      ...(plan.baseline.reusableArtifact ? ['scripts/solo-remote-baseline.mjs'] : []),
+    ],
+  );
+  assert(plan.frozenTools.length > 0 && plan.frozenTools.length <= 64);
+  assert.equal(new Set(plan.frozenTools.map((ref) => ref.path)).size, plan.frozenTools.length);
+  assert.deepEqual(
+    plan.rows.map(({ id, source, kind, engine, timeoutMs, performanceExclusion }) => ({
+      id,
+      source,
+      kind,
+      engine,
+      timeoutMs,
+      performanceExclusion,
+    })),
+    spec.roles.map((source) => ({
+      id: `${plan.job}-${source}`,
+      source,
+      kind: 'auxiliary',
+      engine: spec.engine,
+      timeoutMs: spec.timeoutMs,
+      performanceExclusion: true,
+    })),
+  );
+  assert.equal(plan.recipes[spec.recipe].sha256, HASHES[spec.recipe]);
+  assert.deepEqual(Object.keys(plan.recipes).sort(), ['music', 'recovery', 'speech']);
+  assert.equal(plan.uploads.length, 3);
+  assert.equal(new Set(plan.uploads.map((ref) => ref.name)).size, 3);
+  for (const ref of [
+    ...Object.values(plan.recipes),
+    ...plan.uploads,
+    ...plan.frozenTools,
+    ...plan.adapterInputs,
+  ]) {
+    assert(!ref.path.split('/').includes('..') && /^(scripts|game|docs)\//.test(ref.path));
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
+  }
+  assert.equal(
+    plan.musicBundle.sha256,
+    'aa25ae643608cfa9a2dd6aac1a3dcd7ba65d667f998144d0927c194df7c1e99f',
+  );
+  assert.equal(plan.musicBundle.bytes, 3124928);
+  return plan;
+}
+export function bindAuxiliaryJob(manifest, job) {
+  assert.equal(manifest.format, 'SoloHostedAuxiliaryManifestV1');
+  assert.equal(manifest.status, 'reviewed-and-released');
+  assert.deepEqual(
+    manifest.jobs.map(({ id }) => id),
+    Object.keys(AUXILIARY_JOBS),
+  );
+  const spec = AUXILIARY_JOBS[job];
+  assert(spec);
+  const plan = structuredClone(manifest);
+  delete plan.jobs;
+  plan.format = 'SoloHostedAuxiliaryPlanV1';
+  plan.job = job;
+  plan.helperTimeoutMs = spec.helperMinutes * 60000;
+  plan.rows = spec.roles.map((source) => ({
+    id: `${job}-${source}`,
+    source,
+    kind: 'auxiliary',
+    engine: spec.engine,
+    timeoutMs: spec.timeoutMs,
+    performanceExclusion: true,
+  }));
+  return validateAuxiliaryPlan(plan);
+}
+export function auxiliaryMatrix(manifest) {
+  return {
+    include: Object.keys(AUXILIARY_JOBS).map((job) => {
+      const plan = bindAuxiliaryJob(manifest, job);
+      const spec = AUXILIARY_JOBS[plan.job];
+      return {
+        job,
+        jobMinutes: spec.jobMinutes,
+        stepMinutes: spec.helperMinutes + 3,
+        outerSeconds: (spec.helperMinutes + 2) * 60,
+      };
+    }),
+  };
+}
+export async function readAuxiliaryJSON(path, maximum = 32 * MiB) {
+  const info = await lstat(path);
+  assert(info.isFile() && !info.isSymbolicLink() && info.size <= maximum);
+  assert.equal(await realpath(path), resolve(path));
+  const file = await open(path, 'r');
+  try {
+    const before = await file.stat();
+    assert(before.dev === info.dev && before.ino === info.ino && before.size === info.size);
+    const buffer = Buffer.alloc(maximum + 1);
+    let count = 0;
+    while (count < buffer.length) {
+      const part = await file.read(buffer, count, buffer.length - count, count);
+      if (!part.bytesRead) break;
+      count += part.bytesRead;
+    }
+    assert(count <= maximum && count === info.size);
+    const after = await file.stat();
+    assert(after.size === before.size && after.mtimeMs === before.mtimeMs);
+    return JSON.parse(buffer.subarray(0, count).toString('utf8'));
+  } finally {
+    await file.close();
+  }
+}
+async function verifyInputs(ctx) {
+  for (const ref of [
+    ...Object.values(ctx.plan.recipes),
+    ...ctx.plan.uploads,
+    ...ctx.plan.frozenTools,
+    ...ctx.plan.adapterInputs,
+  ]) {
+    const path = resolve(ctx.repository, ref.path);
+    assert(path.startsWith(ctx.repository + '/'));
+    const info = await lstat(path);
+    assert(info.isFile() && !info.isSymbolicLink());
+    assert.deepEqual(await ctx.digest(path), { bytes: ref.bytes, sha256: ref.sha256 });
+  }
+}
+export async function prepareAuxiliaryMode(ctx) {
+  validateAuxiliaryPlan(ctx.plan);
+  await verifyInputs(ctx);
+  const spec = AUXILIARY_JOBS[ctx.plan.job];
+  if (spec.roles.includes('baseline')) await ctx.ensureBaseline();
+  const inputs = join(ctx.work, 'auxiliary-inputs');
+  await mkdir(inputs);
+  const recipe = ctx.plan.recipes[spec.recipe];
+  const scenario = join(inputs, 'scenario.qualification.json');
+  await copyFile(resolve(ctx.repository, recipe.path), scenario);
+  assert.deepEqual(await ctx.digest(scenario), { bytes: recipe.bytes, sha256: recipe.sha256 });
+  for (const upload of ctx.plan.uploads) {
+    const target = join(inputs, upload.name);
+    assert(!upload.name.includes('/') && !upload.name.includes('..'));
+    await copyFile(resolve(ctx.repository, upload.path), target);
+    assert.deepEqual(await ctx.digest(target), { bytes: upload.bytes, sha256: upload.sha256 });
+  }
+  let audioFixture = null;
+  if (spec.recipe === 'music') {
+    const output = join(ctx.work, 'exact-audio-fixtures');
+    await ctx.required(
+      'exact-audio-fixtures',
+      [process.execPath, join(ctx.here, 'prepare-solo-audio-fixtures.mjs'), output, '--download'],
+      ctx.plan.fixturePreparationTimeoutMs,
+    );
+    const provenance = await readAuxiliaryJSON(join(output, 'provenance.json'), MiB);
+    assert.equal(provenance.status, 'prepared-not-executed');
+    const bundle = join(output, 'recorded-music.rlsound');
+    assert.deepEqual(await ctx.digest(bundle), {
+      bytes: ctx.plan.musicBundle.bytes,
+      sha256: ctx.plan.musicBundle.sha256,
+    });
+    await copyFile(bundle, join(inputs, 'recorded-music.rlsound'));
+    assert.deepEqual(await ctx.digest(join(inputs, 'recorded-music.rlsound')), {
+      bytes: ctx.plan.musicBundle.bytes,
+      sha256: ctx.plan.musicBundle.sha256,
+    });
+    await copyFile(
+      join(output, 'provenance.json'),
+      join(ctx.evidence, 'audio-fixture-provenance.json'),
+    );
+    audioFixture = {
+      bytes: ctx.plan.musicBundle.bytes,
+      sha256: ctx.plan.musicBundle.sha256,
+      scope:
+        'Exact public archived recordings imported locally; no remote streaming or audible-output claim.',
+    };
+  }
+  ctx.report.performanceExclusion = true;
+  ctx.report.auxiliaryScope =
+    'Linux correctness-only; intrusive audio identity or synthetic handler delivery. No timing, actual GPU loss, physical audio, or thermal qualification.';
+  return { recipePath: scenario, browserVersion: null, audioFixture };
+}
+export function auxiliaryArguments(ctx, row, url, dir) {
+  const spec = AUXILIARY_JOBS[ctx.plan.job];
+  return [
+    join(ctx.here, 'qualify-solo-runtime.mjs'),
+    url,
+    ctx.modeState.recipePath,
+    join(dir, 'report.json'),
+    '--server-fixture-access',
+    '--work-probe',
+    '--cadence=settled120',
+    '--cpu=1',
+    `--browser=${row.engine}`,
+    `--source-revision=${SOURCE[row.source]}`,
+    ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
+    ...(row.engine === 'webkit' ? ['--context=persistent'] : []),
+    ...(spec.recipe !== 'recovery' ? ['--audio-proof'] : []),
+  ];
+}
+export function auxiliaryAssessment(plan, row, raw, command, browserVersion) {
+  const spec = AUXILIARY_JOBS[plan.job],
+    replay = raw?.replay?.nativeVerification;
+  const common =
+    command?.status === 'closed' &&
+    command.exitCode === 0 &&
+    !command.forcedCleanup &&
+    !command.cleanupUnconfirmed &&
+    !command.violation &&
+    command.survivors?.length === 0 &&
+    command.ambiguous?.length === 0 &&
+    raw?.scenarioStatus === 'pass' &&
+    raw.scenarioSHA256 === HASHES[spec.recipe] &&
+    raw.sourceRevision === SOURCE[row.source] &&
+    raw.buildIdentity?.sourceRevision === SOURCE[row.source] &&
+    raw.environment?.engine === row.engine &&
+    raw.environment?.cpuThrottle === 1 &&
+    raw.environment?.contextMode === (row.engine === 'webkit' ? 'persistent' : 'ephemeral') &&
+    typeof raw.environment?.browserVersion === 'string' &&
+    (!browserVersion || raw.environment.browserVersion === browserVersion) &&
+    raw.replay?.scope === 'completed-scenario' &&
+    replay?.status === 'pass' &&
+    replay.engine === row.engine &&
+    replay.browserVersion === raw.environment.browserVersion &&
+    raw.pageErrors?.length === 0 &&
+    !raw.failure &&
+    !raw.finalReadFailure &&
+    !raw.failureCleanupFailure &&
+    !raw.audioIdentityFailure &&
+    !raw.contextCleanupFailure &&
+    !raw.replayFailure;
+  const audio = raw?.audioIdentity;
+  const admitted =
+    spec.recipe === 'recovery'
+      ? raw?.performanceGateStatus === 'excluded-synthetic-recovery'
+      : raw?.performanceGateStatus === 'excluded-audio-identity-profiling' &&
+        audio?.status === 'pass' &&
+        [
+          audio.pending,
+          audio.failed,
+          audio.capped,
+          audio.droppedStarts,
+          audio.droppedMediaEvents,
+        ].every((n) => n === 0);
+  return {
+    status: common && admitted ? 'passed' : 'failed',
+    correctness: common ? 'pass' : 'fail',
+    performanceQualification: 'excluded',
+    audioIdentity: spec.recipe === 'recovery' ? 'not-requested' : (audio?.status ?? 'unobserved'),
+    scope:
+      spec.recipe === 'recovery'
+        ? 'Synthetic main-display loss/restore+blur/resize/explicit Resume only; no Demo or actual GPU-loss credit.'
+        : 'Exact encoded identity linked to native API starts/advancement; no listening/speaker or video-approval claim.',
+  };
+}
+export async function runAuxiliaryRow(ctx, row, dir, tmp) {
+  await verifyInputs(ctx);
+  const { startProductionPreview } = await import(
+    pathToFileURL(join(ctx.here, 'serve-production-preview.mjs')).href
+  );
+  const { PUBLIC_SECURITY_HEADERS } = await import(
+    pathToFileURL(join(ctx.here, 'game-cli.mjs')).href
+  );
+  let server;
+  try {
+    server = await startProductionPreview({
+      root: ctx.payloads[row.source],
+      port: 0,
+      fixtureAccess: true,
+      cache: 'policy',
+    });
+    const response = await fetch(new URL('game/build-info.json', server.url), {
+      signal: AbortSignal.timeout(10000),
+    });
+    assert.equal(response.status, 200);
+    const bytes = Buffer.from(await response.arrayBuffer()),
+      build = JSON.parse(bytes);
+    assert.equal(build.sourceRevision, SOURCE[row.source]);
+    for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
+      assert.equal(response.headers.get(name), value);
+    const url = new URL('game/?journey=opening', server.url).href;
+    row.served = {
+      url,
+      build,
+      buildInfoSHA256: createHash('sha256').update(bytes).digest('hex'),
+      headers: server.headers,
+      mode: server.mode,
+      fixtureAccess: server.fixtureAccess,
+    };
+    row.artifactAdmission = ctx.admitted.artifacts[row.source];
+    row.command = await ctx.run(
+      row.id,
+      [process.execPath, ...auxiliaryArguments(ctx, row, url, dir)],
+      row.timeoutMs,
+      {
+        env: { ...ctx.cleanEnv, TMPDIR: tmp },
+        log: join(dir, 'command.log'),
+        receipt: join(dir, 'command.json'),
+        inspect: async () => {
+          await ctx.inspect();
+          assert((await ctx.evidenceSize(dir)) <= ctx.plan.rowEvidenceBytes);
+        },
+      },
+    );
+    const raw = await readAuxiliaryJSON(join(dir, 'report.json'));
+    Object.assign(
+      row,
+      auxiliaryAssessment(ctx.plan, row, raw, row.command, ctx.modeState.browserVersion),
+    );
+    row.browserVersion = raw.environment?.browserVersion;
+    assert.equal(typeof row.browserVersion, 'string');
+    if (ctx.modeState.browserVersion)
+      assert.equal(row.browserVersion, ctx.modeState.browserVersion);
+    else ctx.modeState.browserVersion = row.browserVersion;
+    await verifyInputs(ctx);
+  } finally {
+    if (server)
+      await Promise.race([
+        new Promise((yes, no) => {
+          server.server.close((error) => (error ? no(error) : yes()));
+          server.server.closeAllConnections();
+        }),
+        delay(10000).then(() => {
+          throw Error('Auxiliary owned preview close deadline');
+        }),
+      ]).catch((error) => {
+        row.serverCleanupFailure = String(error);
+        row.status = 'failed';
+        throw error;
+      });
+  }
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  const [mode, input, output, job] = process.argv.slice(2);
+  const bytes = await readFile(input);
+  if (mode === 'matrix-plan')
+    process.stdout.write(`matrix=${JSON.stringify(auxiliaryMatrix(JSON.parse(bytes)))}\n`);
+  else {
+    assert.equal(mode, 'bind-plan');
+    const plan = bindAuxiliaryJob(JSON.parse(bytes), job);
+    plan.manifestInput = {
+      path: resolve(input),
+      bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+    };
+    await writeFile(output, JSON.stringify(plan, null, 2) + '\n', { flag: 'wx' });
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "format": "SoloHostedAuxiliaryManifestV1",
+  "status": "integrated-pending-current-artifact-and-first-eight-review",
+  "createdAt": "2026-10-16T22:25:46.255755+00:00",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "candidate": {
+    "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "tree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
+    "run": 38963874667,
+    "artifact": 12074887637,
+    "outer": {
+      "bytes": 1090917792,
+      "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+    },
+    "inner": {
+      "bytes": 1073304249,
+      "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9"
+    },
+    "manifestSHA256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c",
+    "producer": "Exact retained Appearance CI package, Node22.13.1 Linux; 819/819 focused checks across65completefiles. No substitute rebuild."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Fresh exact-source normal Linux build under Node22.13.1, original source flags/budgets. New archive/manifest identity; not the historical macOS baseline artifact.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "reuse": "May consume a future exactly pinned verified-normal b117 producer only through the common ensureBaseline verifier; no reuse authority exists yet."
+  },
+  "performanceExclusion": true,
+  "cpu": 1,
+  "setupTimeoutMs": 2400000,
+  "fixturePreparationTimeoutMs": 180000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "release": {
+    "firstEightAllCorrectnessPassed": false,
+    "priorProofInspected": false,
+    "noUnclosedOwners": false,
+    "evidence": []
+  },
+  "recipes": {
+    "speech": {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/recorded-speech.qualification.fixture",
+      "bytes": 6574,
+      "sha256": "235350a6011bd9ebcfa73aa815b6a4c616f945ca67278c64b93a906e8388411d"
+    },
+    "music": {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/recorded-music.qualification.fixture",
+      "bytes": 6456,
+      "sha256": "dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493"
+    },
+    "recovery": {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/recovery.qualification.fixture",
+      "bytes": 4655,
+      "sha256": "907929279c5231edb727cad3ff42e45ddf146129215fc27a9a6b809e0cd227d2"
+    }
+  },
+  "uploads": [
+    {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/long-rail.xonix.fixture",
+      "bytes": 3563,
+      "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c",
+      "name": "long-rail.xonix.json"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/first-return.xonix.fixture",
+      "bytes": 2897,
+      "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e",
+      "name": "first-return.xonix.json"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture",
+      "bytes": 3011,
+      "sha256": "5c9c935dac1049314c7ce644a1dcb747e7770bac3d8e1dd9f14b75e7c3dab015",
+      "name": "signal-07.xonix.json"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 58150,
+      "sha256": "7db5478c4c4c921c6bf2fff36c3d3b93d87147bcdf2eed796fcf61bbff05bcfe"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 12873,
+      "sha256": "a516127f0068bf05ce3a2f828f6d793844ddb6f214a0b5623ee13e1d6f91e28c"
+    },
+    {
+      "path": "scripts/prepare-solo-audio-fixtures.mjs",
+      "bytes": 10676,
+      "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "bytes": 114695,
+      "sha256": "e6eef8e91bd53e7608585625c34677a9fda40a6083e8dcbf58e3ed995801407e"
+    },
+    {
+      "path": "game/audio/reactions/pilot.mjs",
+      "bytes": 9663,
+      "sha256": "41662fedb8ebfbc40f4009c3ebec7d12ffb5f28cc79ebdbb170488367f04548c"
+    }
+  ],
+  "musicBundle": {
+    "path": ".cache/solo-followup/qualification-playground-ready-01/recorded-music.rlsound",
+    "bytes": 3124928,
+    "sha256": "aa25ae643608cfa9a2dd6aac1a3dcd7ba65d667f998144d0927c194df7c1e99f",
+    "preparation": "Use unchanged prepare-solo-audio-fixtures.mjs --download inside3min declared pre-observation fixture stage; exact archived SHA/size checked, no creator fallback or transcoding. Reconstructed bundle must match retained byte identity.",
+    "originalRecordings": [
+      {
+        "sha256": "77e1ad0bd0a7c5625a12eaa1c8099408ede6959b2ee2dbf5bace85d09a602ada",
+        "bytes": 1925141
+      },
+      {
+        "sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7",
+        "bytes": 1196325
+      }
+    ]
+  },
+  "maxParallel": 2,
+  "jobs": [
+    {
+      "id": "speech-chromium",
+      "recipe": "speech",
+      "engine": "chromium",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "speech-chromium-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "speech-chromium-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "music-chromium",
+      "recipe": "music",
+      "engine": "chromium",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "music-chromium-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "music-chromium-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "recovery-chromium",
+      "recipe": "recovery",
+      "engine": "chromium",
+      "helperMinutes": 60,
+      "wholeJobMinutes": 105,
+      "rows": [
+        {
+          "id": "recovery-chromium-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 420000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "recovery-webkit",
+      "recipe": "recovery",
+      "engine": "webkit",
+      "helperMinutes": 60,
+      "wholeJobMinutes": 105,
+      "rows": [
+        {
+          "id": "recovery-webkit-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 420000,
+          "performanceExclusion": true
+        }
+      ]
+    }
+  ],
+  "duplicateAvoidance": "The two original Chromium Retry source arms are mapped to prospective sustained Retry phase, not dispatched here. A new successful report would be source-scoped; no historical macOS credit.",
+  "demoRecovery": {
+    "proposal": {
+      "path": ".cache/solo-followup/demo-context-recovery-successor-proposal-01/proposal.json",
+      "bytes": 8510,
+      "sha256": "83032c3ef3acf9bdaa2e73a7c202fa1bc066109bdb4a099c6a6018950ae54217"
+    },
+    "status": "missing-executable-driver",
+    "scope": "Four display/layer x spectator/practice synthetic fault arms plus stale-layer event remain separate; main-display recovery recipe cannot substitute."
+  },
+  "continuousRecording": "Separate long uninterrupted recording/Pause/save attribution still open; Retry-based soak does not cover it.",
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-auxiliary.mjs",
+      "bytes": 16004,
+      "sha256": "0fb6061d899f388ab15f0c98e600404671ffd456cbfbcceba090d492f77f9e84"
+    }
+  ]
+}
