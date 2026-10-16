@@ -312,6 +312,12 @@ export function createArcadeAdapter({
     owner.canvas.width = owner.canvas.height = 0;
     if (wasLost) onContextRestored({ source: 'arcade-sprite', owner, retired: true });
   }
+  function clear() {
+    const retired = [...canvases.values()];
+    canvases.clear();
+    snapshots = new WeakMap();
+    for (const owner of retired) retire(owner);
+  }
   return {
     resourceSnapshot() {
       let pixels = 0,
@@ -406,8 +412,9 @@ export function createArcadeAdapter({
             };
             owner.onRestored = () => {
               owner.lost = false;
-              canvases.delete(canvas);
-              retire(owner);
+              // Some painters retain prepared frames until snapshot identity changes.
+              // Retire every derived frame before publishing the restored generation.
+              clear();
               onContextRestored({ source: 'arcade-sprite', owner });
             };
             canvas.addEventListener?.('contextlost', owner.onLost);
@@ -463,11 +470,6 @@ export function createArcadeAdapter({
       snapshots.set(base, variants);
       return adapted;
     },
-    clear() {
-      const retired = [...canvases.values()];
-      canvases.clear();
-      snapshots = new WeakMap();
-      for (const owner of retired) retire(owner);
-    },
+    clear,
   };
 }

@@ -28,7 +28,15 @@ export function acceptedJourneyMission(mission, editionId) {
   };
 }
 
-export async function acceptedClassicMission({ index, entry, level, baseEntry, packs }) {
+export async function acceptedClassicMission({
+  index,
+  entry,
+  level,
+  baseEntry,
+  packs,
+  isCurrent = () => true,
+}) {
+  if (!isCurrent()) return null;
   const key =
     entry.classicRulesSourceCampaignKey || entry.baseCampaignKey || campaignKey(entry.campaign);
   const rulesEdition = entry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL;
@@ -53,8 +61,9 @@ export async function acceptedClassicMission({ index, entry, level, baseEntry, p
       return null;
   } else {
     const pack = packs.packs.find((item) => item.id === row.packId);
-    if (!pack || !(await verifyIndexedInstalledPack(pack, row))) return null;
+    if (!pack || !(await verifyIndexedInstalledPack(pack, row, { isCurrent }))) return null;
   }
+  if (!isCurrent()) return null;
   const current = rulesEdition === CLASSIC_RULES_CURRENT;
   const ownerId = JSON.stringify([
     'classic',

@@ -296,3 +296,32 @@ test('BoardPainter forwards adapted context loss and invalidates derived pixels 
   painter.dispose();
   assert.equal(second.width, 0);
 });
+
+test('restored adapter publishes a new snapshot for Team consumers retaining prepared frames', () => {
+  const f = fixture(),
+    other = fixture(),
+    adapter = createArcadeAdapter({ canvasFactory: f.canvasFactory }),
+    collection = getArcadeCollection('military-field'),
+    firstSnapshot = adapter.resolve(f.base, collection),
+    secondSnapshot = adapter.resolve(other.base, collection),
+    first = firstSnapshot.image('terrain.wall'),
+    second = secondSnapshot.image('terrain.wall');
+  assert.equal(adapter.resourceSnapshot().canvases, 2);
+  first.image.listeners.get('contextlost')();
+  first.image.listeners.get('contextrestored')();
+  assert.equal(adapter.resourceSnapshot().canvases, 0);
+  for (const frame of [first, second]) {
+    assert.equal(frame.image.width, 0);
+    assert.equal(frame.image.listeners.size, 0);
+  }
+  const restored = adapter.resolve(f.base, collection);
+  assert.notEqual(restored, firstSnapshot, 'Team refreshes prepared frames on snapshot identity');
+  assert.notEqual(adapter.resolve(other.base, collection), secondSnapshot);
+  const fresh = restored.image('terrain.wall');
+  assert.equal(fresh.image.width, 16);
+  assert.notEqual(fresh.image, first.image);
+  assert.deepEqual(fresh.geometry, first.geometry);
+  assert.equal(fresh.asset, first.asset);
+  assert.equal(f.frame.image.width, 16, 'The shared source image remains intact');
+  adapter.clear();
+});

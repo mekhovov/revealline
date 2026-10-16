@@ -361,6 +361,11 @@ export async function soloPage(
       }
       return {
         ok: path !== 'build-info.json' || !!buildInfo,
+        text: async () => {
+          const replacement = fetchJSON?.(path);
+          if (replacement !== undefined) return JSON.stringify(replacement);
+          return readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8');
+        },
         json: async () => {
           if (path === 'build-info.json' && buildInfo) return structuredClone(buildInfo);
           const replacement = fetchJSON?.(path);
