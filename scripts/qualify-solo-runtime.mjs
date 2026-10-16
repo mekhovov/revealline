@@ -22,6 +22,7 @@ import {
 } from './solo-qualification.mjs';
 import {
   readPrePlayReadiness,
+  createRafIntervalClock,
   calibrateReadyCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
@@ -293,7 +294,8 @@ try {
     });
   if (audioProof) await page.addInitScript(installAudioProof);
   await page.addInitScript(
-    `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};`,
+    `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};
+     window.soloQualificationIntervalClock = ${createRafIntervalClock.toString()};`,
   );
   await page.addInitScript(
     ({ bounds, workProbe }) => {
@@ -350,8 +352,8 @@ try {
           };
         },
       });
-      let previous = performance.now(),
-        phase = 0,
+      const intervalClock = window.soloQualificationIntervalClock(performance.now());
+      let phase = 0,
         previousPhase = 0,
         tailCount = 0;
       const audio = {
@@ -409,7 +411,13 @@ try {
         { once: true },
       );
       function frame(now) {
-        const dt = now - previous,
+        const dt = intervalClock.observe(now);
+        if (dt === null) {
+          previousPhase = phase;
+          requestAnimationFrame(frame);
+          return;
+        }
+        const previous = now - dt,
           offset = previousPhase * 5;
         let bucket = 0;
         while (bounds[bucket] !== null && dt > bounds[bucket]) bucket++;
@@ -438,7 +446,6 @@ try {
           tail[index + 2] = previousPhase;
           tail[index + 3] = phase;
         }
-        previous = now;
         previousPhase = phase;
         requestAnimationFrame(frame);
       }
@@ -490,6 +497,7 @@ try {
             'Retained last submitted paint record only; sparse action-boundary observations do not establish the tier between samples.',
         }),
         export: () => ({
+          firstRafCallback: intervalClock.snapshot(),
           phases,
           bounds,
           counts: counts.map((x) => Array.from(x)),

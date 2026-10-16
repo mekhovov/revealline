@@ -16,6 +16,7 @@ import {
 } from './solo-qualification-audio.mjs';
 import {
   readPrePlayReadiness,
+  createRafIntervalClock,
   calibrateReadyCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
@@ -40,6 +41,24 @@ const scenario = (actions, extra = {}) => ({
   coverage: ['declared request, not observed mechanics'],
   actions,
   ...extra,
+});
+
+test('rAF intervals begin at the second callback and preserve later lifecycle gaps', () => {
+  let clockReads = 0;
+  const clock = vm.runInNewContext(`(${createRafIntervalClock.toString()})(64.8, readNow)`, {
+    readNow: () => {
+      clockReads++;
+      return 65;
+    },
+  });
+  assert.equal(clock.observe(60), null);
+  assert.equal(clock.snapshot().timestampMs, 60);
+  assert(Math.abs(clock.snapshot().registrationToFirstCallbackMs - 0.2) < 1e-10);
+  assert(Math.abs(clock.snapshot().timestampMinusRegistrationMs + 4.8) < 1e-10);
+  assert(Math.abs(clock.observe(76.7) - 16.7) < 1e-10);
+  assert.equal(clock.observe(576.7), 576.7 - 76.7);
+  assert(Math.abs(clock.observe(570) + 6.7) < 1e-10);
+  assert.equal(clockReads, 1, 'Only the first callback needs a wall-clock read');
 });
 
 test('qualification accepts public input and rejects simulation writes or performance fault injection', () => {
