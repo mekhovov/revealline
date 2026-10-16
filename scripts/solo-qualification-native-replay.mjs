@@ -55,6 +55,7 @@ export async function verifyNativeQualificationReplay({
   expected,
   recordingText,
   requirements = {},
+  expectedDefinition,
   mirror,
   timeoutMs = 120000,
 }) {
@@ -170,25 +171,30 @@ export async function verifyNativeQualificationReplay({
         report.csp = response.headers()['content-security-policy'] ?? null;
         assertReplayVerificationIdentity(expected, { ...report, url: page.url() });
         report.observation = await page.evaluate(
-          async ({ source, requirements, base }) => {
+          async ({ source, requirements, expectedDefinition, base }) => {
             const [core, replay, jammer, combat] = await Promise.all([
               import(new URL('core/index.mjs', base).href),
               import(new URL('replay.mjs', base).href),
               import(new URL('ui/jammer-picture.mjs', base).href),
               import(new URL('ui/combat-view.mjs', base).href),
             ]);
-            return window.soloInspectReplayMechanics(JSON.parse(source), requirements, {
-              createRun: core.createRun,
-              stepRun: core.stepRun,
-              releaseInputs: core.releaseInputs,
-              FIXED_DT: core.FIXED_DT,
-              verifyReplay: replay.verifyReplay,
-              authoritativeCheckpoint: replay.authoritativeCheckpoint,
-              jammerPictureStrength: jammer.jammerPictureStrength,
-              combatView: combat.combatView,
-            });
+            return window.soloInspectReplayMechanics(
+              JSON.parse(source),
+              requirements,
+              {
+                createRun: core.createRun,
+                stepRun: core.stepRun,
+                releaseInputs: core.releaseInputs,
+                FIXED_DT: core.FIXED_DT,
+                verifyReplay: replay.verifyReplay,
+                authoritativeCheckpoint: replay.authoritativeCheckpoint,
+                jammerPictureStrength: jammer.jammerPictureStrength,
+                combatView: combat.combatView,
+              },
+              expectedDefinition,
+            );
           },
-          { source: recordingText, requirements, base: gameURL.href },
+          { source: recordingText, requirements, expectedDefinition, base: gameURL.href },
         );
         await Promise.all(pending);
         assert(report.modules.length > 0, 'Production verifier modules were not observed');

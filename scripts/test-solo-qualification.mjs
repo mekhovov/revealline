@@ -4,6 +4,11 @@ import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
 import { inspectReplayMechanics } from './solo-qualification-replay-core.mjs';
 import {
+  installQualificationUploadWitness,
+  readPublicQualificationReplay,
+  qualificationControlReady,
+} from './solo-qualification-export.mjs';
+import {
   assertReplayVerificationIdentity,
   verifyNativeQualificationReplay,
   replayVerificationRequestAllowed,
@@ -41,6 +46,103 @@ const scenario = (actions, extra = {}) => ({
   coverage: ['declared request, not observed mechanics'],
   actions,
   ...extra,
+});
+
+test('public replay export refuses active play or a disabled ordinary control', async () => {
+  const clicked = [];
+  let phase = 'running';
+  let disabled = null;
+  const page = {
+    locator: (selector) => ({
+      getAttribute: async () => phase,
+      waitFor: async ({ timeout }) => assert(timeout > 0 && timeout <= 1000),
+      isEnabled: async () => selector !== disabled,
+      isVisible: async () => true,
+      click: async () => clicked.push(selector),
+      inputValue: async () => '{"exact":"public bytes"}',
+    }),
+  };
+  await assert.rejects(readPublicQualificationReplay(page, 1000), /after measured gameplay/);
+  assert.deepEqual(clicked, []);
+  phase = 'paused';
+  disabled = '#export-replay';
+  await assert.rejects(readPublicQualificationReplay(page, 1000), /control is disabled/);
+  assert(!clicked.includes('#export-replay'));
+  clicked.length = 0;
+  disabled = null;
+  assert.equal(await readPublicQualificationReplay(page, 1000), '{"exact":"public bytes"}');
+  assert.deepEqual(clicked, [
+    '#shell-menu',
+    '#shell-options',
+    '#settings-tab-extras',
+    '#shell-workshop',
+    '#export-replay',
+  ]);
+});
+
+test('tool upload readiness requires an enabled non-inert non-busy public control', () => {
+  const element = {
+    disabled: false,
+    closest: () => null,
+    getClientRects: () => [{}],
+    getAttribute: () => null,
+  };
+  assert.equal(qualificationControlReady(element), true);
+  assert.equal(qualificationControlReady(null), false);
+  assert.equal(qualificationControlReady({ ...element, disabled: true }), false);
+  assert.equal(qualificationControlReady({ ...element, getClientRects: () => [] }), false);
+  for (const boundary of ['inert', 'aria-busy', 'hidden'])
+    assert.equal(
+      qualificationControlReady({
+        ...element,
+        closest: (selector) => {
+          assert(selector.includes(boundary));
+          return {};
+        },
+      }),
+      false,
+    );
+  assert.equal(qualificationControlReady({ ...element, getAttribute: () => 'true' }), false);
+});
+
+test('upload witnesses retain bounded native events without replacing handlers or files', () => {
+  const listeners = new Map();
+  const originalHandler = () => {};
+  const originalFiles = [{}];
+  const control = {
+    onchange: originalHandler,
+    files: originalFiles,
+    addEventListener(type, listener, capture) {
+      assert.equal(capture, true);
+      listeners.set(type, listener);
+    },
+    removeEventListener(type, listener, capture) {
+      assert.equal(capture, true);
+      assert.equal(listeners.get(type), listener);
+      listeners.delete(type);
+    },
+  };
+  const owner = vm.runInNewContext(`(${installQualificationUploadWitness.toString()})`, {})(
+    control,
+    () => 42,
+  );
+  const invoke = listeners.get('change');
+  listeners.get('input')({ type: 'input', isTrusted: true });
+  invoke({ type: 'change', isTrusted: false });
+  const observed = JSON.parse(JSON.stringify(owner.snapshot()));
+  assert.deepEqual(observed, [
+    { type: 'input', atMs: 42, isTrusted: true, selectedFiles: 1, changeHandlerPresent: true },
+    { type: 'change', atMs: 42, isTrusted: false, selectedFiles: 1, changeHandlerPresent: true },
+  ]);
+  observed[0].type = 'altered-copy';
+  assert.equal(owner.snapshot()[0].type, 'input');
+  for (let index = 0; index < 20; index++) invoke({ type: 'change', isTrusted: true });
+  assert.equal(owner.dispose().length, 8);
+  assert.equal(listeners.size, 0);
+  invoke({ type: 'change', isTrusted: true });
+  assert.equal(owner.dispose().length, 8);
+  assert.equal(control.onchange, originalHandler);
+  assert.equal(control.files, originalFiles);
 });
 
 test('rAF intervals begin at the second callback and preserve later lifecycle gaps', () => {
@@ -323,7 +425,9 @@ test('offline native-recording inspection verifies actual captures and rejects a
   const { readFile } = await import('node:fs/promises');
   const { createRun, stepRun, FIXED_DT } = await import('../game/core/index.mjs');
   const { createRecorder, recordInput, exportReplay } = await import('../game/replay.mjs');
-  const { inspectQualificationReplay } = await import('./solo-qualification-replay.mjs');
+  const { inspectQualificationReplay, inspectQualificationReplayPortability } = await import(
+    './solo-qualification-replay.mjs'
+  );
   const campaign = JSON.parse(
     await readFile(new URL('../game/content/campaign.json', import.meta.url)),
   );
@@ -351,6 +455,33 @@ test('offline native-recording inspection verifies actual captures and rejects a
   assert(inspected.features.movingTicks >= 20);
   assert.equal(inspectQualificationReplay(replay, { movingTicks: 100000 }).status, 'fail');
   assert.equal(inspectQualificationReplay(replay, { eroded: 1 }).status, 'fail');
+  const expected = { level: structuredClone(replay.level), options: { seed: 1 } };
+  const exact = inspectQualificationReplayPortability(replay, { closures: 1 }, expected);
+  assert.equal(exact.definitionCheck.match, true);
+  assert.equal(exact.status, 'pass');
+  const sameTitleWrongRules = structuredClone(expected);
+  sameTitleWrongRules.level.rules.moveSpeed += 0.01;
+  const wrong = inspectQualificationReplayPortability(replay, { closures: 1 }, sameTitleWrongRules);
+  assert.equal(wrong.match, true, 'Recording itself remains strictly valid');
+  assert.equal(wrong.features.closures, exact.features.closures);
+  assert.equal(wrong.definitionCheck.actualLevelId, wrong.definitionCheck.expectedLevelId);
+  assert.equal(wrong.definitionCheck.match, false);
+  assert.equal(
+    wrong.status,
+    'fail',
+    'Mechanic counts and matching title cannot qualify changed rules',
+  );
+  assert.equal(
+    inspectQualificationReplayPortability(
+      replay,
+      {},
+      {
+        ...expected,
+        options: { seed: 2 },
+      },
+    ).definitionCheck.match,
+    false,
+  );
   const tampered = structuredClone(replay);
   tampered.segments[0].ticks++;
   assert.throws(() => inspectQualificationReplay(tampered));

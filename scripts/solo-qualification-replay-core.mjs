@@ -1,7 +1,12 @@
 // Intentionally dependency-free and self-contained: this exact function can run
 // with the observed artifact's production modules inside its browser engine.
 // Never import the current checkout or a permissive demo verifier here.
-export function inspectReplayMechanics(recording, requirements = {}, dependencies) {
+export function inspectReplayMechanics(
+  recording,
+  requirements = {},
+  dependencies,
+  expectedDefinition,
+) {
   const {
     createRun,
     stepRun,
@@ -29,6 +34,33 @@ export function inspectReplayMechanics(recording, requirements = {}, dependencie
       scope: 'Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved.',
     };
   const run = createRun(replay.level, replay.options);
+  const canonical = (value) =>
+    Array.isArray(value)
+      ? `[${value.map(canonical).join(',')}]`
+      : value && typeof value === 'object'
+        ? `{${Object.keys(value)
+            .sort()
+            .map((key) => `${JSON.stringify(key)}:${canonical(value[key])}`)
+            .join(',')}}`
+        : JSON.stringify(value);
+  const definitionCheck = expectedDefinition
+    ? {
+        expectedLevelId: expectedDefinition.level.id,
+        actualLevelId: replay.level.id,
+        levelMatches: canonical(replay.level) === canonical(expectedDefinition.level),
+        optionChecks: Object.entries(expectedDefinition.options).map(([key, expected]) => ({
+          key,
+          expected,
+          actual: replay.options[key],
+          match: canonical(replay.options[key]) === canonical(expected),
+        })),
+        scope:
+          'Every immutable recorded level field, including rules, actors, geometry and revision, plus explicitly declared run options. Undeclared options are not claimed equal.',
+      }
+    : null;
+  if (definitionCheck)
+    definitionCheck.match =
+      definitionCheck.levelMatches && definitionCheck.optionChecks.every((row) => row.match);
   const features = {
     closures: 0,
     eroded: 0,
@@ -75,7 +107,9 @@ export function inspectReplayMechanics(recording, requirements = {}, dependencie
   return {
     match: true,
     diagnostics: verified.diagnostics,
-    status: checks.every((check) => check.pass) ? 'pass' : 'fail',
+    status:
+      checks.every((check) => check.pass) && definitionCheck?.match !== false ? 'pass' : 'fail',
+    definitionCheck,
     levelId: run.levelId,
     ticks: run.tick,
     outcome: run.status,

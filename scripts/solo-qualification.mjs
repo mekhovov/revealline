@@ -83,6 +83,21 @@ export function qualificationCacheMode(
   return scenario.cacheMode;
 }
 
+export function qualificationProfileMode(flags, engine, scenario) {
+  const requested = ['cpu-profile', 'memory-profile', 'audio-proof'].filter((mode) =>
+    flags.includes(`--${mode}`),
+  );
+  assert(requested.length <= 1, 'CPU, memory and audio identity profiles must run separately');
+  const mode = requested[0] ?? null;
+  if (mode === 'cpu-profile' || mode === 'memory-profile')
+    assert.equal(engine, 'chromium', `${mode} is Chromium-only`);
+  if (mode === 'cpu-profile')
+    integer(scenario.timeoutMs, 1000, 300000, 'CPU profile scenario timeout');
+  if (scenario.requiredProfile === 'cpu')
+    assert.equal(mode, 'cpu-profile', 'This scenario requires --cpu-profile');
+  return mode;
+}
+
 export function validateQualification(scenario) {
   assert.equal(scenario.format, QUALIFICATION_FORMAT);
   string(scenario.id, 'scenario id');
@@ -104,7 +119,22 @@ export function validateQualification(scenario) {
     );
   }
   if (scenario.readySelector !== undefined) string(scenario.readySelector, 'ready selector');
+  if (scenario.readyHiddenSelector !== undefined)
+    string(scenario.readyHiddenSelector, 'completed public loading indicator');
   integer(scenario.timeoutMs, 1000, 7_200_000, 'scenario timeout');
+  if (scenario.requiredProfile !== undefined) {
+    assert.equal(scenario.requiredProfile, 'cpu', 'Unsupported required profile');
+    integer(scenario.timeoutMs, 1000, 300000, 'CPU profile scenario timeout');
+  }
+  if (scenario.expectedReplayDefinition !== undefined) {
+    const { level, options } = scenario.expectedReplayDefinition;
+    assert(level && typeof level === 'object' && !Array.isArray(level));
+    string(level.id, 'expected level id');
+    assert(level.rules && typeof level.rules === 'object', 'Expected full level rules required');
+    assert(options && typeof options === 'object' && !Array.isArray(options));
+    assert(Object.keys(options).every((key) => ['seed', 'classId', 'turnPolicy'].includes(key)));
+    assert(JSON.stringify(scenario.expectedReplayDefinition).length <= 2 * 1024 * 1024);
+  }
   assert(Array.isArray(scenario.coverage) && scenario.coverage.every((x) => typeof x === 'string'));
   if (scenario.expectAudio) {
     integer(scenario.expectAudio.nativeStartsAtLeast, 1, 1000000, 'audio source count');
@@ -172,7 +202,11 @@ export function validateQualification(scenario) {
         string(action.selector, 'selector');
       if (['select', 'fill'].includes(action.type)) string(action.value, 'control value');
       if (action.type === 'check') assert.equal(typeof action.value, 'boolean');
-      if (action.type === 'upload') string(action.file, 'fixture file');
+      if (action.type === 'upload') {
+        string(action.file, 'fixture file');
+        if (action.acceptedLevelSelector !== undefined)
+          string(action.acceptedLevelSelector, 'public accepted level selector');
+      }
       if (action.type === 'key') {
         assert(keys.includes(action.key), 'Only gameplay keys are admitted');
         integer(action.ms, 1, 60_000, 'key duration');
@@ -227,6 +261,13 @@ export function validateQualification(scenario) {
     }
   }
   actions(scenario.actions);
+  if (scenario.expectedReplayDefinition) {
+    const exports = (items) =>
+      items.some(
+        (item) => item.type === 'exportReplay' || (item.type === 'repeat' && exports(item.actions)),
+      );
+    assert(exports(scenario.actions), 'Expected definition requires a public replay export');
+  }
   if (scenario.replayRequirements)
     assert.equal(
       scenario.actions.at(-1).type,

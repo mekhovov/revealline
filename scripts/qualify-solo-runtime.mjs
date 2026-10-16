@@ -10,9 +10,16 @@ import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
+  installQualificationUploadWitness,
+  readPublicQualificationReplay,
+  waitQualificationControl,
+} from './solo-qualification-export.mjs';
+import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
+import {
   validateQualification,
   qualificationDisplayOptions,
   qualificationCacheMode,
+  qualificationProfileMode,
   resourceStability,
   createManifestMirror,
   evaluateQualificationBudgets,
@@ -33,7 +40,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile] [--work-probe] [--baseline-runtime] [--audio-proof] [--viewport=400x850] [--dpr=3] [--mobile-context]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--work-probe] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -42,14 +49,20 @@ const bytes = await readFile(resolve(scenarioPath)),
 const display = qualificationDisplayOptions(flags);
 const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
-const memoryProfile = flags.includes('--memory-profile'),
-  audioProof = flags.includes('--audio-proof');
+const profileMode = qualificationProfileMode(flags, engine, scenario);
+const memoryProfile = profileMode === 'memory-profile',
+  audioProof = profileMode === 'audio-proof',
+  cpuProfile = profileMode === 'cpu-profile';
 const exportsReplay = (actions) =>
   actions.some(
     (action) =>
       action.type === 'exportReplay' || (action.type === 'repeat' && exportsReplay(action.actions)),
   );
 const needsReplayIdentity = exportsReplay(scenario.actions);
+assert(
+  scenario.expectedReplayDefinition && needsReplayIdentity,
+  'Qualification requires an expected immutable level definition and public replay export',
+);
 assert(
   !(memoryProfile && audioProof),
   'Audio identity profiling retains media elements; run memory profiling separately',
@@ -104,7 +117,7 @@ url.searchParams.set('performance', '1');
 const report = {
   format: 'SoloQualificationReportV1',
   scenario: scenario.id,
-  kind: memoryProfile ? 'memory-profile' : audioProof ? 'audio-proof' : scenario.kind,
+  kind: profileMode ?? scenario.kind,
   scenarioKind: scenario.kind,
   cacheMode,
   baselineRuntime,
@@ -164,6 +177,11 @@ const report = {
           'Forced GC and heap/DOM observations perturb the browser. This whole run is excluded from timing qualification. No Memory.prepareForLeakDetection, worker termination or cache retirement is used.',
         ]
       : []),
+    ...(cpuProfile
+      ? [
+          'CDP CPU sampling perturbs this whole run, including menus, preparation and play. All timing gates are excluded. The separate profile is capped at five minutes and retained on failure where the browser can return it.',
+        ]
+      : []),
     ...(fixtureAccess || mirrored
       ? [
           'Playwright routing disables HTTP cache. This is a fixture/network-transport run, not warm-cache qualification.',
@@ -196,7 +214,8 @@ async function save() {
   await rename(temporary, target);
 }
 await save();
-let browser, context, page, deadline, nativeReplay, cdp, playwright;
+let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder;
+let partialReplay = false;
 let memorySnapshots = 0;
 async function profileMemory() {
   if (!memoryProfile) return undefined;
@@ -249,7 +268,7 @@ try {
     'Service workers are explicitly blocked for controlled online qualification; offline/update lifecycle is separate.',
   );
   page = await context.newPage();
-  if (memoryProfile || cpu !== 1) cdp = await context.newCDPSession(page);
+  if (memoryProfile || cpuProfile || cpu !== 1) cdp = await context.newCDPSession(page);
   page.on('pageerror', (error) => {
     if (report.pageErrors.length < 100) report.pageErrors.push(String(error.stack ?? error));
   });
@@ -525,6 +544,20 @@ try {
     { bounds: FRAME_BOUNDS, workProbe },
   );
   if (cpu !== 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
+  if (cpuProfile) {
+    cpuRecorder = createQualificationCpuProfile(cdp, {
+      file: resolve(output) + '.cpuprofile',
+      maximumMs: scenario.timeoutMs,
+      onLimit: async () => {
+        report.scenarioStatus = 'fail';
+        report.cpuProfileLimit = 'Bounded profile duration reached; partial recording retained.';
+        process.exitCode = 1;
+        await context?.close().catch(() => {});
+      },
+    });
+    report.cpuProfile = cpuRecorder.report;
+    await cpuRecorder.start();
+  }
   const entryURL = scenario.entryPath ? new URL(scenario.entryPath, url) : url;
   const response = await page.goto(entryURL.href, {
     waitUntil: 'domcontentloaded',
@@ -553,9 +586,16 @@ try {
     await page.locator('input[name=password]').fill('fixture-password');
     await page.getByRole('button', { name: 'Unlock', exact: true }).click();
   }
-  if (scenario.readySelector)
+  if (scenario.readySelector) {
     await page.locator(scenario.readySelector).waitFor({ state: 'visible', timeout: 120000 });
-  else
+    if (scenario.readyHiddenSelector)
+      await page.waitForFunction(
+        (selector) => document.querySelector(selector)?.hidden === true,
+        scenario.readyHiddenSelector,
+        { timeout: 120000 },
+      );
+    await waitQualificationControl(page, scenario.readySelector, 120000);
+  } else
     await page.waitForFunction(() => document.documentElement.dataset.bootState === 'ready', null, {
       timeout: 120000,
     });
@@ -724,7 +764,82 @@ try {
             bytes: data.length,
             sha256: createHash('sha256').update(data).digest('hex'),
           });
-          await locator.setInputFiles(file, { timeout });
+          await waitQualificationControl(page, action.selector, timeout);
+          record.publicUpload = await locator.evaluate((control) => ({
+            loadingIndicatorHidden:
+              control.ownerDocument.getElementById('boot-status')?.hidden ?? null,
+            inertAncestor: Boolean(control.closest('[inert]')),
+            busyAncestor: Boolean(control.closest('[aria-busy="true"]')),
+            selectedFilesBefore: control.files?.length ?? null,
+            changeHandlerPresent: typeof control.onchange === 'function',
+            toolState: control.ownerDocument.documentElement.dataset.toolState ?? null,
+            publicStatus:
+              control.ownerDocument.getElementById('editor-status')?.textContent ?? null,
+          }));
+          await locator.evaluate(
+            `(control) => { window.soloQualificationUploadWitness = (${installQualificationUploadWitness.toString()})(control); }`,
+          );
+          try {
+            await locator.setInputFiles(file, { timeout });
+          } finally {
+            record.publicUpload.events = await page.evaluate(() => {
+              const events = window.soloQualificationUploadWitness?.dispose() ?? [];
+              delete window.soloQualificationUploadWitness;
+              return events;
+            });
+          }
+          record.publicUpload.selectedFilesAfter = await locator.evaluate(
+            (control) => control.files?.length ?? null,
+          );
+          if (action.acceptedLevelSelector) {
+            const submitted = JSON.parse(data).level;
+            assert(submitted, 'Accepted-level check requires a full scenario fixture');
+            const control = page.locator(action.acceptedLevelSelector);
+            if (!(await control.isVisible()))
+              await page
+                .locator(`details:has(${action.acceptedLevelSelector}) > summary`)
+                .click({ timeout });
+            try {
+              await page.waitForFunction(
+                ({ selector, expected }) => {
+                  const canonical = (value) =>
+                    Array.isArray(value)
+                      ? `[${value.map(canonical).join(',')}]`
+                      : value && typeof value === 'object'
+                        ? `{${Object.keys(value)
+                            .sort()
+                            .map((key) => `${JSON.stringify(key)}:${canonical(value[key])}`)
+                            .join(',')}}`
+                        : JSON.stringify(value);
+                  const control = document.querySelector(selector);
+                  if (!control || control.closest('[inert], [aria-busy="true"]')) return false;
+                  try {
+                    return canonical(JSON.parse(control.value)) === canonical(expected);
+                  } catch {
+                    return false;
+                  }
+                },
+                { selector: action.acceptedLevelSelector, expected: submitted },
+                { timeout },
+              );
+              record.acceptedConfiguration = {
+                status: 'match',
+                levelId: submitted.id,
+                scope:
+                  'Public editor JSON matches every submitted level field before Preview; native replay acceptance remains independently required.',
+              };
+            } catch (error) {
+              record.acceptedConfiguration = {
+                status: 'mismatch-or-unavailable',
+                publicJSON: (await control.inputValue().catch(() => '')).slice(0, 65536),
+                publicStatus: await page
+                  .locator('#editor-status')
+                  .textContent()
+                  .catch(() => null),
+              };
+              throw error;
+            }
+          }
         } else if (action.type === 'key') {
           assert(
             action.ms <= deadline - Date.now(),
@@ -840,21 +955,7 @@ try {
             );
           }, action);
         else if (action.type === 'exportReplay') {
-          assert.notEqual(
-            await page.locator('body').getAttribute('data-flight-state'),
-            'running',
-            'Export only after measured gameplay',
-          );
-          await page.locator('#shell-menu').click({ timeout });
-          await page.locator('#shell-options').click({ timeout });
-          await page.locator('#settings-tab-extras').click({ timeout });
-          await page.locator('#shell-workshop').click({ timeout });
-          const summary = page.locator('details:has(#export-replay) > summary');
-          if (!(await page.locator('#export-replay').isVisible())) await summary.click({ timeout });
-          await page.locator('#export-replay').click({ timeout });
-          await page.locator('#replay-dialog').waitFor({ state: 'visible', timeout });
-          const text = await page.locator('#replay-json').inputValue();
-          assert(Buffer.byteLength(text) <= 32 * 1024 * 1024, 'Replay exceeds public byte bound');
+          const text = await readPublicQualificationReplay(page, timeout);
           nativeReplay = text;
           record.bytes = Buffer.byteLength(text);
         } else if (action.type === 'snapshot') {
@@ -945,6 +1046,15 @@ try {
   report.failure = String(error.stack ?? error);
   process.exitCode = 1;
 } finally {
+  if (cpuRecorder) {
+    await cpuRecorder.stop(report.scenarioStatus === 'fail' ? 'scenario-failure' : 'actions-ended');
+    if (report.cpuProfile.status !== 'retained' || report.cpuProfile.limitReached) {
+      report.scenarioStatus = 'fail';
+      report.cpuProfileFailure =
+        'Complete bounded CPU recording unavailable; partial evidence retained.';
+      process.exitCode = 1;
+    }
+  }
   if (page && !page.isClosed()) {
     try {
       if (report.scenarioStatus === 'fail') {
@@ -967,6 +1077,12 @@ try {
               application:
                 phase !== 'running' ? (window.RevealLineSoloPerformance?.export() ?? null) : null,
               presentation: window.soloQualificationProbe?.presentation() ?? null,
+              hud: Object.fromEntries(
+                ['coverage', 'lives', 'time', 'score', 'run-message'].map((id) => [
+                  id,
+                  document.getElementById(id)?.textContent ?? null,
+                ]),
+              ),
             };
           });
           report.failureCleanup.afterStop = partial.phase;
@@ -978,6 +1094,25 @@ try {
               harnessInducedBoundary: beforeStop === 'running',
               memory: await profileMemory(),
             });
+          if (
+            needsReplayIdentity &&
+            !nativeReplay &&
+            ['paused', 'result', 'picture'].includes(partial.phase)
+          ) {
+            report.failureReplayExport = {
+              status: 'attempting',
+              scope:
+                'Public export of partial play after failure; original scenario failure remains.',
+            };
+            try {
+              nativeReplay = await readPublicQualificationReplay(page, 10000);
+              partialReplay = true;
+              report.failureReplayExport.status = 'retained';
+            } catch (error) {
+              report.failureReplayExport.status = 'unavailable';
+              report.failureReplayExport.failure = String(error.stack ?? error);
+            }
+          }
         } catch (error) {
           report.failureCleanupFailure = String(error.stack ?? error);
         }
@@ -1028,7 +1163,8 @@ try {
       process.exitCode = 1;
     }
   }
-  if (audioProof) report.performanceGateStatus = 'excluded-audio-identity-profiling';
+  if (cpuProfile) report.performanceGateStatus = 'excluded-cpu-profiling';
+  else if (audioProof) report.performanceGateStatus = 'excluded-audio-identity-profiling';
   else if (memoryProfile) {
     report.performanceGateStatus = 'excluded-memory-profiling';
     report.memory = memoryProfileSummary(report.snapshots);
@@ -1058,14 +1194,17 @@ try {
         file,
         sha256: createHash('sha256').update(nativeReplay).digest('hex'),
         bytes: Buffer.byteLength(nativeReplay),
+        scope: partialReplay ? 'failed-scenario-partial-play' : 'completed-scenario',
       };
+      const replayRequirements = partialReplay ? {} : scenario.replayRequirements;
       try {
         const { inspectQualificationReplayPortability } = await import(
           './solo-qualification-replay.mjs'
         );
         const observation = inspectQualificationReplayPortability(
           JSON.parse(nativeReplay),
-          scenario.replayRequirements,
+          replayRequirements,
+          scenario.expectedReplayDefinition,
         );
         report.replay.nodePortability = {
           status: observation.match ? 'match' : 'mismatch',
@@ -1092,7 +1231,8 @@ try {
           csp: report.csp,
         },
         recordingText: nativeReplay,
-        requirements: scenario.replayRequirements,
+        requirements: replayRequirements,
+        expectedDefinition: scenario.expectedReplayDefinition,
         mirror,
       });
       report.replay.observation = report.replay.nativeVerification.observation ?? null;
