@@ -5,6 +5,55 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Current continuation: fresh five-minute passes; production startup still open
+
+The newer feedback candidate now passes all three genuine five-minute runs:
+[Gym](flight-practice-continuation-20261016/feedback-overall-gym.json),
+[Academy](flight-practice-continuation-20261016/feedback-overall-academy.json),
+[Worlds](flight-practice-continuation-20261016/feedback-overall-worlds.json).
+Each passes 13 checkpoints, explicit five-minute reason, pristine retry/removal
+and owned cleanup without page errors. First-byte-to-abort is
+299,810.945/299,809.875/299,602.932 ms, with continued original bytes, no Cancel or
+server-safety termination. All retain original candidate `b8aec0821`, envelope
+`c271bc6c…`, and observer `ddacb33d2`. Earlier timeout receipts remain bound to
+their original candidate. [Original receipts/logs and authority](flight-practice-continuation-20261016/feedback-overall-originals.tgz)
+also retain the current **388/388** full practice regression log.
+
+The [second production attempt](flight-practice-continuation-20261016/production-run2-failed-originals.tgz),
+SHA-256 `cdf2bf34abdfbdf38d1b231914943ceacaed2912f3db266b0648c6461cff7cb5`,
+verifies all 3,493 original files/1,072,077,940 bytes both before and after.
+Integrity phases take 349,675 and 209,567 ms with zero pending operations/streams.
+All six browser cases nevertheless fail before Home at the unchanged ten-second
+action deadline, showing Loading flight systems. No request or page errors are
+reported; 643 original members/10,300,719 bytes are served. Cleanup and final
+source checks pass. This is **not** a production player-journey pass. The receipt
+does not contain request timings, so slow network-drive delivery versus an
+application startup problem remains an unproven hypothesis requiring a matched
+diagnostic, not a larger startup deadline or source fallback.
+
+A [separate native zoom capability probe](flight-practice-continuation-20261016/native-zoom-capability-originals.tgz),
+SHA-256 `8c63928ab5c3cf29daade9e2738d78ae41867b0f246846c7a5c8c3db4754a32c`,
+passes on Chrome 155 in an owned disposable profile. Ordinary visible Chrome
+Appearance controls select 100→200→100; fixed outer width 1280 accompanies
+inner width 1280→640→1280 and DPR 2→4→2, with visual scale 1 and unchanged CSS.
+Reset, browser/server closure and profile removal succeed. Its temporary source
+hashes are archived, not falsely assigned a repository commit. The settings PNG
+shows magnified Settings but not the below-viewport zoom select; selected-option
+proof is DOM/control evidence. This is capability only, not app accessibility,
+physical input, screen-reader announcements or a package-bound C9 pass.
+
+The next source-bound opt-in adds four deliberate restarted-offline Gym/Academy
+flights to the two existing imported Worlds routes. Both visible-HUD controllers
+retain the original 30-second case/ten-minute journey bounds; delayed cleanup
+responses now fail independently of timer dispatch. Card screenshots use an
+ordinary scroll and require onscreen bounds. Focused tests pass 24/24 and the
+expanded observer suite passes 298 with one explicit historical-fixture skip.
+Native all-six flight execution remains pending.
+
+Follow-up [draft PR #1554](https://github.com/mekhovov/revealline/pull/1554) is open;
+the prior PR remains merged. Development continues without waiting for merge.
+Hosting/public selection and real hardware remain deferred.
+
 ### Three fresh local browser checks pass
 
 Frozen observer `8e29a04c35eb57de6fb8274347e10397f5fc110e`, tree
