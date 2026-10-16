@@ -14,6 +14,8 @@ Parts are deterministic regular-file-only TAR streams compressed with Zstandard.
 
 Coverage completion also requires `--inventory-set-final`, which may be supplied only after the root audit confirms that all primary, flat-file, ignored-payload and final-delta manifests are included. A completed primary walk alone does not establish that complete input set. Active-batch reservations avoid duplicate packing and never count as uploaded or verified coverage.
 
+Malformed JSON rows and unsupported row kinds always refuse processing, including an interior corrupt row. Final index inputs must end every row with a newline and remain the same size, modification time and file identity while read and hashed. A writer's partial trailing row must finish before another packing attempt; it is never silently discarded.
+
 ## Portable restoration
 
 The restore utility requires Python 3.10+, `zstd`, the GitHub CLI, authenticated read access, the final index, and these Python files in one directory. Choose fresh output and cache directories on any disk; the old volume is not required. Paths below are examples, not fixed locations:

@@ -1,6 +1,7 @@
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import tarfile
@@ -36,6 +37,8 @@ class PreservationTests(unittest.TestCase):
         raw = b'actual preservation boundary\0' * 1000
         path = source / 'original.bin'
         path.write_bytes(raw)
+        # Give the immutable fixture an explicit stable timestamp on SMB shares.
+        os.utime(path, ns=(1_500_000_000_000_000_000, 1_500_000_000_000_000_000))
         sha = hashlib.sha256(raw).hexdigest()
         row = {'path': path.name, 'bytes': len(raw), 'sha256': sha,
                'mtime_ns': path.stat().st_mtime_ns, 'mode': 0o644}
@@ -56,6 +59,7 @@ class PreservationTests(unittest.TestCase):
             p.mkdir()
         path = source / 'original.bin'
         path.write_bytes(b'original')
+        os.utime(path, ns=(1_500_000_000_000_000_000, 1_500_000_000_000_000_000))
         row = {'path': path.name, 'bytes': 8, 'sha256': hashlib.sha256(b'original').hexdigest(),
                'mtime_ns': path.stat().st_mtime_ns, 'mode': 0o644}
         path.write_bytes(b'replaced')
@@ -192,6 +196,20 @@ class PreservationTests(unittest.TestCase):
                            stdout=output, check=True)
         with self.assertRaisesRegex(ValueError, 'trailing'):
             restore_part(archive, self.root / 'restored', header)
+
+    def test_final_index_rejects_corrupt_middle_and_unclosed_final_rows(self):
+        inventory, state, catalogue = [self.root / x for x in ['inventory.jsonl', 'state.json', 'catalogue.json']]
+        state.write_text(json.dumps({'complete': True}))
+        catalogue.write_text(json.dumps({'releases': []}))
+        valid = json.dumps({'kind': 'excluded', 'path': 'reproducible-dependency', 'reason': 'pinned lockfile'})
+        for text in [valid + '\n{corrupt interior}\n' + valid + '\n',
+                     valid + '\n{"kind":"file","path":', valid]:
+            inventory.write_text(text)
+            with self.assertRaisesRegex(ValueError, 'manifest'):
+                build([inventory], state, [], [], catalogue, '/old/root', inventory_set_final=True)
+        inventory.write_text(valid + '\n')
+        result = build([inventory], state, [], [], catalogue, '/old/root', inventory_set_final=True)
+        self.assertTrue(result['coverageComplete'])
 
 
 if __name__ == '__main__':
