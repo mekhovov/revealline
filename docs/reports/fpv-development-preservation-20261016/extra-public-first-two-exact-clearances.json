@@ -1,0 +1,48 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "77a00fff4b3fb5fa9430b8496ab3186728115ddc4762ea77dc11fc8ca69a71ab",
+  "originalGitBlob": "348bbbf1c24773ea8af9b48c9c54eb8c25f0c5a8",
+  "removedRecordsOrFields": 50,
+  "excerpt": {
+    "rows": [
+      {
+        "path": "fpv-catalogue-play-20261014/docs/history/core-soundtrack-expansion-pr643.md",
+        "sha256": "95e0dbe4bccab61d06a2a1b18433f0babff8d547bf7ac291f6d8a9bc4d5fd958",
+        "decision": "allow-app-archive",
+        "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+      },
+      {
+        "path": "fpv-catalogue-play-20261014/docs/history/pr1124-appearance-plan-notes.md",
+        "sha256": "022b936d7b48b474f62ce330b8f9fa0d76b0da468026a169c5646969a92a43fa",
+        "decision": "allow-app-archive",
+        "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+      },
+      {
+        "path": "fpv-catalogue-play-20261014/docs/history/pr1124-pause-menu-plan-review-2026-10-01.md",
+        "sha256": "660779883df5154442c865177bfde03694b921751ae2c9a72baa32a09703e631",
+        "decision": "allow-app-archive",
+        "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+      },
+      {
+        "path": "fpv-catalogue-play-20261014/docs/history/pr1124-whole-product-plan-review-2026-10-01.md",
+        "sha256": "d40d8421e917400843dc79e4a8dca15e437d441bd6b1d674612a894c5dd29e64",
+        "decision": "allow-app-archive",
+        "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+      },
+      {
+        "path": "fpv-catalogue-play-20261014/docs/history/pr539-player-first-ux2-couch-secondary-navigation.md",
+        "sha256": "50a3688ec9710be5ce8a61f64f19d0c5974f78c04437b31ffd66a56ee9307ff3",
+        "decision": "allow-app-archive",
+        "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+      },
+      {
+        "path": "fpv-catalogue-play-20261014/docs/history/pr549-player-first-ux2-team-quickstart.md",
+        "sha256": "31c9e40e9157bde0a9351dabfeda7937ed8abc86ce03e7527da14727489b052c",
+        "decision": "allow-app-archive",
+        "reason": "Exact frozen first-two public-only manifest; every listed body verified as existing declared public Git leaf and raw/decompressed finite pattern review passed. Bound source clearance receipt d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11."
+      }
+    ],
+    "sourceReceiptSHA256": "d397ae2583ca5b1188a3bd99bf12e159a6a0ad4897a79d4a49d336c1f2f21f11"
+  }
+}
