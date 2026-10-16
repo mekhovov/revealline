@@ -1,0 +1,37 @@
+{
+  "format": "revealline-scoped-audio-recipe-review-successor.v1",
+  "status": "bounded offline selection and file-ownership source review; physical-device and public acceptance pending",
+  "candidateBase": "a63ad4cc32fb14c53fa126d69df42e2e53d1477d",
+  "priorReview": {
+    "path": "docs/verification/online-soundtrack-reconciliation-2026-09-25/source-review.json",
+    "sha256": "55198d5d74044c8a272f50b32fb01240245dea1843869d22f7dab21d0c310e42",
+    "fingerprintSHA256": "6b9b58a0d51a1b15d533e76b531cb4db09662274c8b5cad3988b06f01e7327c4"
+  },
+  "fingerprint": {
+    "group": "audio",
+    "paths": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs",
+    "sha256": "37587bf42b0ffc5ae07aa660ce9fd5ac61cd38e04edaac00722fcd049c173541",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInput": {
+    "assessment": "Installed gameplay selects imported or verified official local recordings, with procedural fallback for Automatic and silence for an empty explicit selection. Streaming remains an explicit listening action. Official recording checkpoints commit independently of settings drafts; removal preserves imports, playlists and preferences. A locally shipped recording is excluded from the gameplay cache and remains an optional, explicitly downloaded soundtrack."
+  },
+  "unchangedBindings": "The eight selected audio roles retain their procedural recipe IDs; essential effects and procedural music remain in the gameplay download.",
+  "evidence": {
+    "focusedTests": {
+      "passed": 271,
+      "command": "See docs/offline-pwa/verification.md"
+    },
+    "browser": "Prior implementation evidence on macOS 26.6.2 prepared all gameplay with zero MP3 requests, cold-launched the stable app after server shutdown and preserved gameplay readiness after an optional music failure. Current rebased release qualification remains pending.",
+    "artifacts": [
+      "docs/offline-pwa/evidence/network-summary.json",
+      "docs/offline-pwa/evidence/stable-launcher-offline-win.png"
+    ]
+  },
+  "excluded": [
+    "No new recording, rights or trusted-default admission.",
+    "No subjective musical suitability, full-track listening or physical-device approval.",
+    "No universal installed-app, frozen final release or public acceptance."
+  ],
+  "decision": "Approve the bounded source policy and ownership continuation described here. Any fingerprint change reopens this review; prior records remain immutable."
+}

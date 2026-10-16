@@ -1,0 +1,11 @@
+{
+  "scope": "Local unversioned feature development build; not exact integrated release qualification",
+  "version": "0.141.7",
+  "sourceRevision": null,
+  "files": 1796,
+  "totalBytes": 744498292,
+  "manifestSha256": "b740a667aa8e64a99ce31aae758cb00ccbf9d243a231a84f62714b457cffa216",
+  "allManifestBytesVerified": true,
+  "affectedStudioModulesMatchSource": true,
+  "sourceArtCohorts": "Not production runtime dependencies; retained in source only"
+}

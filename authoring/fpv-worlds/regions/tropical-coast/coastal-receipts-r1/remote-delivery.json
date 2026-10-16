@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "sourceCommit": "7f2b74dfc186f14c712aa548151bd5baf3eeebf1",
+  "productionAPI": "prepareRegionalDownload",
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json",
+    "bytes": 6602,
+    "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443"
+  },
+  "verifiedFiles": 38,
+  "verifiedBytes": 5982641,
+  "playerStoreChanged": false,
+  "claim": "Actual immutable remote bytes passed production hash/size/paired-closure verification in Node. Not a native install/offline/Library flight claim."
+}

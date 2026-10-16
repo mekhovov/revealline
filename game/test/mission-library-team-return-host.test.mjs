@@ -4,15 +4,18 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { missionLibraryHref } from '../mission-library/handoff.mjs';
 import { createModeReturn } from '../mode-return.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
+const enemyCatalogURL = new URL('../content/enemy-presentations.json', import.meta.url);
+const enemyCatalogBytes = await readFile(enemyCatalogURL);
 const root = 'http://localhost/releases/v-test/game/';
-const source = createTeamSpatialOriginalCandidates();
+const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const library = createMissionLibrary(createRemoteTeamLibrarySources({ launch: () => true }));
 const originals = new Map(
   await Promise.all(
@@ -48,7 +51,7 @@ function href(mode, journey, collection, returnToken) {
     baseURL: mode === 'solo' ? root : root + 'couch/',
     currentMode: mode,
     mode: 'team',
-    journey: collection === 'Journey' ? 'team-spatial-originals-1' : 'legacy',
+    journey: collection === 'Journey' ? 'team-cultural-specialist-originals-2' : 'legacy',
     sourceJourney: journey,
     missionId: target(collection).id,
     returnToken,
@@ -67,7 +70,8 @@ async function fixture(t, href, returnStorage = memory()) {
     nativeVisibility: true,
     retainInitialDifficulty: true,
     beforeImport({ install }) {
-      const BaseImage = globalThis.Image;
+      const BaseImage = globalThis.Image,
+        actorFetch = globalThis.fetch;
       class OriginalImage extends BaseImage {
         async decode() {
           if (!this.source.startsWith('data:image/png;base64,')) return super.decode();
@@ -82,10 +86,11 @@ async function fixture(t, href, returnStorage = memory()) {
       install('localStorage', { value: settings });
       install('fetch', {
         value: async (url) => {
+          if (new URL(url).href === enemyCatalogURL.href) return new Response(enemyCatalogBytes);
           const path = new URL(url).pathname.split('/game/')[1];
           if (metadata.has(path)) return new Response(metadata.get(path));
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
-          assert(asset, 'Only the selected Team original may be fetched');
+          if (!asset) return actorFetch(url);
           return new Response(originals.get(asset.path));
         },
       });
@@ -168,7 +173,15 @@ test('older exact library links without source hints keep the existing checked-t
   assert.equal(f.$('coop-level').value, target('Classic').runtimeId);
 });
 
-for (const route of ['legacy', 'team-spatial-originals-1', 'team-greybox'])
+for (const route of [
+  'legacy',
+  'team-spatial-originals-1',
+  'team-trail-impact-originals-1',
+  'team-complete-specialist-originals-1',
+  'team-cultural-specialist-originals-1',
+  'team-cultural-specialist-originals-2',
+  'team-greybox',
+])
   test(`outgoing Team ${route} mission handoff preserves its exact finite source route`, async (t) => {
     const f = await fixture(t, root + `couch/relay-rescue.html?journey=${route}`);
     const opener = f.$('coop-discovery-open'),
@@ -184,6 +197,13 @@ for (const route of ['legacy', 'team-spatial-originals-1', 'team-greybox'])
     assert(opening instanceof Promise, 'Keyboard activation owns catalogue preparation.');
     await opening;
     assert.equal(f.$('journey-chooser').open, true);
+    const archivedSource = [
+      'team-spatial-originals-1',
+      'team-trail-impact-originals-1',
+      'team-cultural-specialist-originals-1',
+    ].includes(route);
+    const lifecycle = f.$('journey-lifecycle');
+    assert.equal(lifecycle.value, archivedSource ? 'archive' : 'current');
     const mode = f.$('journey-mode'),
       listeners = mode.listeners.get('change'),
       pending = [];
@@ -206,14 +226,22 @@ for (const route of ['legacy', 'team-spatial-originals-1', 'team-greybox'])
     }
     assert.equal(pending.length, 1, 'Mode selection owns one remote metadata operation.');
     await pending[0];
-    assert.equal(f.$('journey-cards').children.length, 201);
+    assert.equal(f.$('journey-cards').children.length, archivedSource ? 195 : 240);
+    // Browsing an archived Team source retains its archive filter until the
+    // player explicitly chooses current missions in the receiving mode.
+    lifecycle.focus();
+    lifecycle.value = 'current';
+    lifecycle.emit('change');
+    assert.equal(f.$('journey-cards').children.length, 240);
     const selected = f.$('journey-cards').children[8];
+    assert.equal(JSON.parse(selected.dataset.missionId)[1], DEFAULT_JOURNEY_ROUTES.solo);
     selected.focus();
     f.tap('Enter');
     await waitFor(() => f.visits.length === 1);
     const destination = new URL(f.visits[0]);
     assert.equal(destination.pathname, '/releases/v-test/game/');
-    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+    assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
+    assert.equal(destination.searchParams.get('journey'), DEFAULT_JOURNEY_ROUTES.solo);
     assert.equal(destination.searchParams.get('library-mission'), selected.dataset.missionId);
     assert.equal(destination.searchParams.get('return'), 'team');
     assert.equal(destination.searchParams.get('journey-return'), route);

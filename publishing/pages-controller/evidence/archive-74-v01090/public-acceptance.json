@@ -1,0 +1,80 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-74",
+    "repository": "mekhovov/revealline-archive-74",
+    "url": "https://mekhovov.github.io/revealline-archive-74/"
+  },
+  "preservedRelease": {
+    "version": "v0.109.0",
+    "sourceRevision": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+    "sourceTree": "11917c2c72fa6c5d7530399a99fc5a372e793c95",
+    "tagObject": "cb32accb796fcc52f3e8237e2400b8b802543047",
+    "releaseId": 396167125,
+    "distributionSha256": "96869d2cacab3ec46e667af78c0311eee3514f82ad010b0917aa9b415764e57f"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "9a8b172b78b99abc5de3310c56f9405acf4cbe1b",
+    "mergeCommit": "6c9cd53b7e55f411b9a41c5926720284a62f75bf",
+    "mergeTree": "f6be672de1b7fef3b6776e191655555d82181991",
+    "review": "SAFE",
+    "reviewedExactHead": "9a8b172b78b99abc5de3310c56f9405acf4cbe1b"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36084810281,
+    "exactMainRun": 36084943061,
+    "buildJob": 107914611673,
+    "deployJob": 107914778211,
+    "receiptsArtifact": {
+      "id": 10843472459,
+      "name": "archive74-verification-receipts",
+      "size_in_bytes": 60563,
+      "digest": "sha256:05b130b1e47934417b0f27ed0e44690028c41f503826373546b95a0f68c62597"
+    },
+    "pagesArtifact": {
+      "id": 10843074948,
+      "name": "github-pages",
+      "size_in_bytes": 534680805,
+      "digest": "sha256:36c988366e9d0195567725eefaeaa18a61f1f61f2af210022f09d93008f20218"
+    },
+    "deployment": {
+      "id": 6652182989,
+      "statusId": 18814701022,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-74/",
+      "createdAt": "2026-09-25T02:08:39Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "3c0ce0c9e7c7bed8fffd5bb248777239d6b4559a850c797a64b01fc785f4a99c",
+      "receiptSha256": "988ed0b6a0193997f752248168e5dfd0410c3c3f395d330f14fb6b5c50dd08bc",
+      "zipReceiptSha256": "7555f34ff62a7f64691902c999a3852d77c01e2e14c8e75bc79a59a57a174bd4",
+      "files": 1145,
+      "bytes": 595439486,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path with Accept-Encoding: identity; stream and compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1145,
+    "bytes": 595439486,
+    "failures": 0,
+    "verifiedAt": "2026-09-25T02:13:22.783117+00:00"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-74/releases/v0.109.0/site/game/",
+    "observations": [
+      "fresh Home loaded New Journey with 91 missions and Start focused",
+      "Solo Start reached the prepared first-mission board with HUD and controls",
+      "Versus loaded 91 missions, enabled Start race, and entered two live boards",
+      "Team loaded 12 missions, resolved the exact Twin landings picture, enabled Start together, and entered the shared arena",
+      "mode links remained inside the same archived release and no warning/error console entries were observed"
+    ],
+    "scope": "Browser interaction admission only; does not claim physical touch/controller devices, comprehensive offline, or full mission balance."
+  },
+  "accepted": true
+}

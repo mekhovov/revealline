@@ -1,0 +1,90 @@
+TAP version 13
+# Subtest: actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+ok 1 - actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+  ---
+  duration_ms: 4771.697875
+  ...
+# Subtest: actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+ok 2 - actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+  ---
+  duration_ms: 4466.38975
+  ...
+# Subtest: mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+    # Subtest: ordinary Ready materializes the release still without an assignment
+    ok 1 - ordinary Ready materializes the release still without an assignment
+      ---
+      duration_ms: 2410.308833
+      ...
+    # Subtest: standard host: earned original stays clear during takeover and completed playback
+    ok 2 - standard host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 6196.67775
+      ...
+    # Subtest: gentle host: earned original stays clear during takeover and completed playback
+    ok 3 - gentle host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 2967.165541
+      ...
+    # Subtest: another unearned level stays obscured in fresh practice despite the existing receipt
+    ok 4 - another unearned level stays obscured in fresh practice despite the existing receipt
+      ---
+      duration_ms: 1038.20025
+      ...
+    1..4
+ok 3 - mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+  ---
+  duration_ms: 12964.565083
+  ...
+# Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start
+ok 4 - an accessible demo on an idle Legacy host prepares the same level without automatic Start
+  ---
+  duration_ms: 7278.403708
+  ...
+# Subtest: default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+    # Subtest: the Journey host requests its verified destination without adopting a Legacy run
+    ok 1 - the Journey host requests its verified destination without adopting a Legacy run
+      ---
+      duration_ms: 41352.068417
+      ...
+    # Subtest: the receiving Legacy host prepares exact art and remains at tick zero
+    ok 2 - the receiving Legacy host prepares exact art and remains at tick zero
+      ---
+      duration_ms: 19803.366542
+      ...
+    # Subtest: a Ready hint cannot authorize an unearned locked Legacy mission
+    ok 3 - a Ready hint cannot authorize an unearned locked Legacy mission
+      ---
+      duration_ms: 99012.06175
+      ...
+    1..3
+ok 5 - default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+  ---
+  duration_ms: 160168.2265
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 6 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 38056.529
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 7 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 12296.761084
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 8 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 7597.671083
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 9 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 14797.116541
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 10 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 6070.460666
+  ...
+
+Node.js v20.19.5

@@ -1,0 +1,67 @@
+{
+  "format": "revealline-main-v097-http-request.v1",
+  "reviewed": true,
+  "controllerCommit": "ca3f3fd638e02e1907a0811d7759d24ba8f726b6",
+  "controllerTree": "c12820bdf90ec8feaeeab389ab092e9921ad2551",
+  "runId": 35962558115,
+  "deploymentId": 6631370106,
+  "deploymentStatusId": 18767390016,
+  "receiptArtifactId": 10792966805,
+  "inventory": {
+    "files": 4271,
+    "bytes": 625227678,
+    "sha256": "55f1444efc52dcdbf9de8b8f80c584696fe6034a62872838cda169c8101b4e69"
+  },
+  "pins": {
+    "artifacts": {
+      "path": "authority/artifacts.json",
+      "bytes": 1401,
+      "sha256": "d848b0566716c8e7e2cc8c2d4bbec369da7db6139832307b0279b3d3e2c92716"
+    },
+    "catalog": {
+      "path": "authority/catalog.json",
+      "bytes": 62849,
+      "sha256": "c790e800c3ff7e507e276d988e3acde3c8247becee336bbdf5efa0a1a70dff6f"
+    },
+    "commit": {
+      "path": "authority/commit.json",
+      "bytes": 2692,
+      "sha256": "ad69087840db1c385afc72215aea455a048a6e79d05da4e3495f5216ab83f687"
+    },
+    "deployment": {
+      "path": "authority/deployment.json",
+      "bytes": 3823,
+      "sha256": "2b592957080f3db4111818a449bc1ca867a1b60a27be0c39b05e5ec65bc4394d"
+    },
+    "jobs": {
+      "path": "authority/jobs.json",
+      "bytes": 5749,
+      "sha256": "384e13e48980d3d98a58c28f83dc43ef14837fd5192143c0a6054b5761c10255"
+    },
+    "main": {
+      "path": "authority/main.json",
+      "bytes": 336,
+      "sha256": "c08b180f6776f0455fd758aa226d69cf7c665a9d10084c6d753401ff556e542e"
+    },
+    "publication": {
+      "path": "authority/publication.json",
+      "bytes": 374725,
+      "sha256": "0991bf7dc0129e45f9300cba39e54c63188b5144984c9c032754cbce41d814de"
+    },
+    "receiptZIP": {
+      "path": "authority/receiptZIP.zip",
+      "bytes": 195763,
+      "sha256": "d1998ebb5033d54267baf74861821dc5404b2f7cc26111ab0b0068d9616e8100"
+    },
+    "run": {
+      "path": "authority/run.json",
+      "bytes": 12182,
+      "sha256": "07f473cd5c47a20e837d1786bab2c366ce384691905069477a5b438ad77e0714"
+    },
+    "statuses": {
+      "path": "authority/statuses.json",
+      "bytes": 6586,
+      "sha256": "0af31a79e445b75a0d32f97483ec7c364c696fa00f37c25200b8f77caa613a72"
+    }
+  }
+}

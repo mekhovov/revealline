@@ -1,0 +1,425 @@
+/** Serialized with an exact package identity by the optional builder. */
+export function installOptionalLauncher(
+  { packageId, root, description },
+  {
+    optionalInstallationKey,
+    validateOptionalInstallationReference,
+    inspectOptionalOffline,
+    prepareOptionalOffline,
+    removeOptionalOffline,
+    mountPracticeNavigation,
+  },
+) {
+  const $ = (id) => document.getElementById(id);
+  const copy = {
+    en: {
+      title: 'Flight practice',
+      check: 'Check available practice',
+      open: 'Open prepared practice',
+      prepare: 'Play available version',
+      previous: 'Open previous practice',
+      status: 'Optional practice uses separate installation storage.',
+      ready:
+        'Open the available version, then choose Prepare offline. Your existing version stays available.',
+      error: 'This version is unavailable. Previously prepared practice remains available.',
+      offline: 'Ready offline',
+      checking: 'Checking prepared versions…',
+      unverified:
+        'Offline verification could not finish. Check again. Your saved versions have not been removed.',
+      repair:
+        'Needs repair: a saved installation has missing files or no owning worker. Remove this offline copy, then download it again.',
+      available: 'Available online. Choose Download for offline use to prepare this version.',
+      update:
+        'Update available. Your prepared version remains available; no running flight will reload.',
+      guide: 'Player guide',
+      directory: 'Back to directory',
+      game: 'Main game',
+      install: 'Add to home screen',
+      download: 'Download for offline use',
+      remove: 'Remove this offline copy (keep records)',
+      support: 'Support / report a problem',
+      'storage-note':
+        'Offline files and home-screen installation are separate. Apps own separate caches but share this site’s browser quota. Removing an offline app shell does not delete records or imported worlds. Export backups before clearing site data.',
+      'install-note':
+        'If no install button appears, use your browser’s Install app menu, or on iPhone/iPad use Share → Add to Home Screen. Online play needs neither installation nor offline download.',
+    },
+    uk: {
+      title: 'Практика польоту',
+      check: 'Перевірити доступну практику',
+      open: 'Відкрити підготовлену практику',
+      prepare: 'Грати в доступну версію',
+      previous: 'Відкрити попередню практику',
+      status: 'Додаткова практика має окреме сховище встановлення.',
+      ready:
+        'Відкрийте доступну версію та виберіть підготовку офлайн. Попередня версія залишається доступною.',
+      error: 'Ця версія недоступна. Раніше підготовлена практика залишається доступною.',
+      offline: 'Готово офлайн',
+      checking: 'Перевірка підготовлених версій…',
+      unverified:
+        'Не вдалося завершити офлайн-перевірку. Перевірте ще раз. Збережені версії не видалено.',
+      repair:
+        'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Видаліть цю офлайн-копію, потім завантажте її знову.',
+      available:
+        'Доступно онлайн. Виберіть «Завантажити для роботи офлайн» для підготовки цієї версії.',
+      update:
+        'Доступне оновлення. Підготовлена версія залишається доступною; поточний політ не перезавантажиться.',
+      guide: 'Посібник гравця',
+      directory: 'Назад до каталогу',
+      game: 'Основна гра',
+      install: 'На початковий екран',
+      download: 'Завантажити для роботи офлайн',
+      remove: 'Видалити цю офлайн-копію (зберегти записи)',
+      support: 'Підтримка / повідомити про проблему',
+      'storage-note':
+        'Офлайн-файли й установлення на екран — різні дії. Застосунки мають окремі кеші, але спільну квоту цього сайту. Видалення офлайн-оболонки не стирає записи й імпортовані світи. Експортуйте резервні копії перед очищенням даних сайту.',
+      'install-note':
+        'Якщо кнопки встановлення немає, скористайтеся меню браузера, а на iPhone/iPad — «Поділитися → На початковий екран». Для гри онлайн установлення й офлайн-завантаження не потрібні.',
+    },
+  };
+  const query = new URL(location.href).searchParams;
+  let locale = ['en', 'uk'].includes(query.get('lang'))
+    ? query.get('lang')
+    : navigator.language?.startsWith('uk')
+      ? 'uk'
+      : 'en';
+  let prepared = null,
+    retained = null,
+    available = null,
+    repairReference = null,
+    launcherReady = false,
+    verificationUnknown = false,
+    verificationUnavailable = false,
+    stateKey = 'status';
+  const entryURL = (value) => {
+    const url = new URL(value.entry, value.scope);
+    url.searchParams.set('lang', locale);
+    const family = query.get('appearanceFamily'),
+      revision = query.get('appearanceRevision');
+    if (
+      query.getAll('appearanceFamily').length === 1 &&
+      query.getAll('appearanceRevision').length === 1 &&
+      /^[a-z][a-z0-9-]{0,63}$/.test(family ?? '') &&
+      /^r[1-9][0-9]{0,8}$/.test(revision ?? '')
+    ) {
+      url.searchParams.set('appearanceFamily', family);
+      url.searchParams.set('appearanceRevision', revision);
+    }
+    return url.href;
+  };
+  function render() {
+    document.documentElement.lang = locale;
+    document.title = copy[locale].title;
+    for (const name of [
+      'title',
+      'check',
+      'open',
+      'prepare',
+      'previous',
+      'guide',
+      'directory',
+      'game',
+      'install',
+      'download',
+      'remove',
+      'support',
+      'storage-note',
+      'install-note',
+    ])
+      if ($(name)) $(name).textContent = copy[locale][name];
+    $('status').textContent = copy[locale][stateKey];
+    if (description) {
+      $('title').textContent = description.copy[locale].name;
+      for (const name of ['description', 'purpose', 'inputs', 'requirements', 'firstFlight'])
+        if ($(name)) $(name).textContent = description.copy[locale][name];
+      if ($('changelog')) $('changelog').textContent = description.changelog[locale];
+      if ($('support')) $('support').href = description.support;
+    }
+    if (prepared) $('open').href = entryURL(prepared);
+    if (retained) $('previous').href = entryURL(retained);
+    if (available) $('prepare').href = entryURL(available);
+    if ($('download')) $('download').hidden = !available;
+    if ($('remove')) $('remove').hidden = !prepared && stateKey !== 'repair';
+    if ($('directory'))
+      $('directory').href = new URL('../?lang=' + locale, new URL(root, location.href)).href;
+    if ($('game'))
+      $('game').href = new URL('../../game/?lang=' + locale, new URL(root, location.href)).href;
+    const guideVersion = available ?? prepared;
+    if ($('guide') && guideVersion) {
+      $('guide').href = new URL(
+        `optional-practice/${packageId}/guide.html?lang=` + locale,
+        guideVersion.scope,
+      ).href;
+      $('guide').hidden = false;
+    }
+  }
+  const validate = (value) =>
+    validateOptionalInstallationReference(value, { packageId, root, baseURL: location.href });
+  const readiness = async (base) => {
+    const result = await inspectOptionalOffline?.(base, { detailed: true });
+    if (result === true) return 'ready';
+    if (result === false) return 'unavailable';
+    return ['ready', 'unavailable'].includes(result?.status) ? result.status : 'unknown';
+  };
+  let restoreRevision = 0;
+  async function restore() {
+    const revision = ++restoreRevision;
+    const entries = [];
+    let invalid = false,
+      shell = 'absent';
+    // Each action belongs to its own verified package. A stalled retained copy
+    // or launcher-shell check must not conceal a ready active package (or vice versa).
+    // The aggregate status stays Checking until all checks finish.
+    stateKey = 'checking';
+    render();
+    try {
+      const state = JSON.parse(
+        localStorage.getItem(optionalInstallationKey(packageId, root)) ?? '{}',
+      );
+      for (const [key, element] of [
+        ['active', 'open'],
+        ['previous', 'previous'],
+      ])
+        if (state[key]) {
+          try {
+            const value = validate(state[key]);
+            entries.push({
+              key,
+              element,
+              value,
+              status: 'pending',
+              previouslyVerified: !$(element).hidden && $(element).href === entryURL(value),
+            });
+          } catch {
+            invalid = true;
+          }
+        }
+    } catch {
+      invalid = true;
+    }
+    const active = entries.find((entry) => entry.key === 'active');
+    if (active) shell = 'pending';
+    const publish = () => {
+      if (revision !== restoreRevision || hidden) return;
+      prepared = null;
+      retained = null;
+      repairReference = null;
+      for (const element of ['open', 'previous']) {
+        const entry = entries.find((item) => item.element === element);
+        const usable =
+          entry &&
+          (entry.status === 'ready' ||
+            (['pending', 'unknown'].includes(entry.status) && entry.previouslyVerified));
+        $(element).hidden = !usable;
+        if (usable) {
+          $(element).href = entryURL(entry.value);
+          if (entry.key === 'active') prepared = entry.value;
+          else retained = entry.value;
+        }
+        if (entry?.status === 'unavailable') repairReference ??= entry.value;
+      }
+      launcherReady = shell === 'ready';
+      verificationUnknown =
+        entries.some((entry) => entry.status === 'unknown') || (!!prepared && shell === 'unknown');
+      verificationUnavailable = !!repairReference || (!!prepared && shell === 'unavailable');
+      stateKey =
+        entries.some((entry) => entry.status === 'pending') || shell === 'pending'
+          ? 'checking'
+          : verificationUnavailable
+            ? 'repair'
+            : verificationUnknown
+              ? 'unverified'
+              : invalid
+                ? 'error'
+                : prepared
+                  ? 'offline'
+                  : available
+                    ? 'available'
+                    : 'status';
+      render();
+    };
+    publish();
+    await Promise.all([
+      ...entries.map(async (entry) => {
+        entry.status = await readiness(
+          new URL('./', new URL(entry.value.entry, entry.value.scope)),
+        ).catch(() => 'unknown');
+        publish();
+      }),
+      ...(active
+        ? [
+            (async () => {
+              shell = await readiness(new URL('./', location.href)).catch(() => 'unknown');
+              publish();
+            })(),
+          ]
+        : []),
+    ]);
+    return revision === restoreRevision && !hidden;
+  }
+  $('locale').value = locale;
+  $('locale').onchange = () => {
+    locale = $('locale').value === 'uk' ? 'uk' : 'en';
+    render();
+  };
+  let busy = false,
+    checking = false,
+    activeRequest = null,
+    hidden = false;
+  globalThis.addEventListener?.('pagehide', () => {
+    hidden = true;
+    restoreRevision++;
+    activeRequest?.abort();
+  });
+  globalThis.addEventListener?.('pageshow', () => {
+    hidden = false;
+  });
+  const check = async (play = false) => {
+    if (busy) return;
+    const revision = restoreRevision;
+    busy = true;
+    $('check').disabled = true;
+    const controller = new AbortController();
+    activeRequest = controller;
+    const timer = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch('./current.json', {
+        cache: 'no-store',
+        credentials: 'omit',
+        redirect: 'error',
+        signal: controller.signal,
+      });
+      if (!response.ok) throw new Error('Unavailable');
+      const advertised = response.headers?.get('content-length');
+      if (advertised && (!/^\d+$/.test(advertised) || Number(advertised) > 4096))
+        throw new Error('Oversized');
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('A bounded response is required');
+      const chunks = [];
+      let size = 0;
+      try {
+        while (true) {
+          if (controller.signal.aborted) throw new Error('Cancelled');
+          const { done, value } = await reader.read();
+          if (done) break;
+          size += value.byteLength;
+          if (size > 4096) throw new Error('Oversized');
+          chunks.push(value);
+        }
+      } finally {
+        await reader.cancel().catch(() => {});
+      }
+      if (hidden || revision !== restoreRevision || controller.signal.aborted) return;
+      const bytes = new Uint8Array(size);
+      let offset = 0;
+      for (const chunk of chunks) {
+        bytes.set(chunk, offset);
+        offset += chunk.byteLength;
+      }
+      const value = validate(JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes)));
+      available = value;
+      $('prepare').href = entryURL(value);
+      $('prepare').hidden = false;
+      stateKey = verificationUnavailable
+        ? 'repair'
+        : verificationUnknown
+          ? 'unverified'
+          : prepared
+            ? prepared.version !== value.version
+              ? 'update'
+              : 'offline'
+            : 'available';
+      render();
+      if (play) location.assign(entryURL(value));
+    } catch {
+      if (!hidden && revision === restoreRevision) {
+        stateKey = verificationUnavailable
+          ? 'repair'
+          : verificationUnknown
+            ? 'unverified'
+            : prepared
+              ? launcherReady
+                ? 'offline'
+                : 'repair'
+              : 'error';
+        render();
+        if (play && prepared) location.assign(entryURL(prepared));
+      }
+    } finally {
+      clearTimeout(timer);
+      busy = false;
+      activeRequest = null;
+      $('check').disabled = false;
+    }
+  };
+  const refresh = async (play = false) => {
+    if (busy || checking) return;
+    checking = true;
+    $('check').disabled = true;
+    try {
+      if (await restore()) await check(play);
+    } finally {
+      checking = false;
+      $('check').disabled = false;
+    }
+  };
+  $('check').onclick = () => refresh(false);
+  if ($('download'))
+    $('download').onclick = async () => {
+      if (!available || busy || checking) return;
+      busy = true;
+      $('download').disabled = true;
+      try {
+        await prepareOptionalOffline({ packageId, location: { href: entryURL(available) } });
+        await prepareOptionalOffline({ packageId, location });
+        await restore();
+      } catch (error) {
+        $('status').textContent =
+          (locale === 'uk'
+            ? 'Завантаження не завершено. Повторіть або відкрийте попередню версію. '
+            : 'Download not completed. Retry or open the previous version. ') + error.message;
+      } finally {
+        busy = false;
+        $('download').disabled = false;
+      }
+    };
+  if ($('remove'))
+    $('remove').onclick = async () => {
+      const value = repairReference ?? prepared;
+      if (!value || busy || checking) return;
+      busy = true;
+      try {
+        await removeOptionalOffline({ packageId, location: { href: entryURL(value) } });
+        prepared = null;
+        $('open').hidden = true;
+        $('previous').hidden = true;
+        stateKey = 'available';
+        await restore();
+      } catch {
+        stateKey = 'repair';
+        render();
+      } finally {
+        busy = false;
+      }
+    };
+  let installPrompt;
+  globalThis.addEventListener?.('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    if ($('install')) {
+      $('install').hidden = false;
+      $('install').onclick = async () => {
+        await installPrompt.prompt();
+        $('install').hidden = true;
+      };
+    }
+  });
+  navigator.serviceWorker
+    ?.register('./worker.js', { scope: './', updateViaCache: 'none' })
+    .catch(() => {});
+  render();
+  mountPracticeNavigation?.();
+  // Unknown query parameters cannot select a route or arm a flight.
+  const play = query.get('action') === 'play';
+  if (play) globalThis.history?.replaceState(null, '', '?lang=' + locale);
+  return refresh(play);
+}

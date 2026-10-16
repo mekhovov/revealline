@@ -1,0 +1,152 @@
+{
+  "format": "FPVMountainReservoirCheckpointFlights.v1",
+  "pack": {
+    "path": "/tmp/fpv-mountain-reservoir-scene-r4/prepared/mountain-reservoir-checkpoint.r4.rlpack",
+    "bytes": 1158277,
+    "sha256": "4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c",
+    "identity": "fpv-pack:4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c"
+  },
+  "checks": [
+    {
+      "name": "Shore pad spawn has physical support",
+      "passed": true
+    },
+    {
+      "name": "Closed maintenance hut rejects interior spawn",
+      "passed": true
+    },
+    {
+      "name": "Dam solid rejects interior spawn",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne point 0 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne point 1 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 1 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 2 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 2 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 3 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 3 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 4 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 4 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Nominal airborne point 5 retains 0.5m extra margin",
+      "passed": true
+    },
+    {
+      "name": "Nominal airborne segment 5 retains swept margin",
+      "passed": true,
+      "detail": {
+        "contacts": []
+      }
+    },
+    {
+      "name": "Reservoir starts beyond the visible rail and first eastern bound",
+      "passed": true
+    },
+    {
+      "name": "self-level completes all four ordinary objectives",
+      "passed": false
+    }
+  ],
+  "modes": [
+    {
+      "mode": "self-level",
+      "status": "active",
+      "ticks": 15000,
+      "contacts": 0,
+      "health": 100,
+      "terminalSupport": "platform-shore-pad",
+      "position": {
+        "x": -29990,
+        "y": 452,
+        "z": 25974
+      },
+      "milestones": [
+        {
+          "step": 0,
+          "tick": 0,
+          "position": {
+            "x": -30000,
+            "y": 450,
+            "z": 26000
+          }
+        },
+        {
+          "step": 1,
+          "tick": 253,
+          "position": {
+            "x": -30000,
+            "y": 3645,
+            "z": 24184
+          }
+        },
+        {
+          "step": 2,
+          "tick": 717,
+          "position": {
+            "x": -10215,
+            "y": 4987,
+            "z": 15095
+          }
+        },
+        {
+          "step": 3,
+          "tick": 1272,
+          "position": {
+            "x": -10008,
+            "y": 6979,
+            "z": -11766
+          }
+        }
+      ],
+      "proof": {
+        "path": "mountain-reservoir-01-self-level.proof.json",
+        "bytes": 246716,
+        "sha256": "a0ebb5757bd2cb2feacb930018c3c30a259da18721127861d0dbd4f513d36f07"
+      },
+      "finalStateIdentity": "e8336b6babb8901b"
+    }
+  ],
+  "status": "failed",
+  "scope": "One course/two modes; ordinary controls through unchanged runtime, independent complete and archive-import replays. No eight-course delivery, native browser, offline or hardware claim.",
+  "error": "Error: self-level completes all four ordinary objectives\n    at check (file:///private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/mountain-reservoir/qualify-checkpoint.mjs:58:22)\n    at file:///private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/mountain-reservoir/qualify-checkpoint.mjs:146:7"
+}

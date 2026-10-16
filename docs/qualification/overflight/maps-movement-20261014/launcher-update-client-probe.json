@@ -1,0 +1,19 @@
+{
+  "evidence": "Read-only VM contract probe of exact generated launcher worker, with an existing cached launcher and an origin returning503. This demonstrates code behavior for specified clientId values, not which clientId native browser navigation actually sends.",
+  "build": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6",
+  "source": "game/offline/app-worker.template.js:107",
+  "results": [
+    {
+      "clientId": "update-document",
+      "mode": "navigate",
+      "status": 503,
+      "networkRequests": 1
+    },
+    {
+      "clientId": "(empty/fresh navigation)",
+      "mode": "navigate",
+      "status": 200,
+      "networkRequests": 1
+    }
+  ]
+}

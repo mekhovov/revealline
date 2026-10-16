@@ -1,0 +1,1238 @@
+{
+  "complete": true,
+  "sourceStable": true,
+  "expectedRuntimeCommit": "e708ce99f0fc930406c15233d89d5598360b366d",
+  "startHead": "821df0aed48ca3491b97c9d1c2d9a09e728e3854",
+  "endHead": "821df0aed48ca3491b97c9d1c2d9a09e728e3854",
+  "wallSeconds": 38.287226209,
+  "schema": "OverflightProgressionParitySystemsSummaryV1",
+  "raw": "progression-parity-systems-final.json.gz",
+  "rawSHA256": "bbae7eededb86d8cbdb4f6b301cc789c8cc96dc05a99f255c26aa60acf62dcf3",
+  "cases": [
+    {
+      "id": "survivor-systems-default-airframes",
+      "mode": "survivor",
+      "build": "systems",
+      "layout": "relay-ruins-split-compound",
+      "seed": 303907,
+      "difficulty": "standard",
+      "airframes": 3,
+      "route": "systems",
+      "focusPolicy": "normal",
+      "projectIdentity": "b0e826834bbb6268",
+      "phase": "won",
+      "time": 380.6,
+      "stats": {
+        "kills": 3544,
+        "spawned": 3783,
+        "enemiesAlive": 239,
+        "enemiesVisible": 20,
+        "peakAlive": 758,
+        "peakVisible": 507,
+        "heaviesAlive": 1,
+        "specialistsAlive": 3,
+        "priorityAttacks": 0,
+        "damageDealt": 366701.53617409535,
+        "damageTaken": 280,
+        "damageCauses": {
+          "contact": 260,
+          "lane": 20,
+          "fan": 0,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 5029,
+        "xpCollected": 4920,
+        "xpOnGround": 109,
+        "pickupsAlive": 53,
+        "pickupMerges": 0,
+        "boostsUsed": 68,
+        "airframesLost": 2,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 302151,
+        "hits": 9905,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1525.503622704351,
+        "armorSegmentsBroken": 484,
+        "warningDeferrals": 122,
+        "motionDeferrals": 344,
+        "cachesClaimed": 1
+      },
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": false,
+        "finalSpawned": true,
+        "finalDefeated": true,
+        "finalId": 2834
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 2,
+          "branch": "double",
+          "evolved": false
+        },
+        "combat": [
+          {
+            "id": "proximity-pulse",
+            "rank": 3
+          },
+          {
+            "id": "side-burst",
+            "rank": 3
+          }
+        ],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0
+      },
+      "firstLifeComparison": {
+        "firstReplacementAt": 299.31666666666666,
+        "originalDefeatAt": 299.31666666666666,
+        "sameFirstLifeDuration": true,
+        "sameEarnedChoicePrefix": true,
+        "choicesThroughOriginalDefeat": [
+          {
+            "id": "primary:double:2",
+            "time": 24.683333333333334,
+            "tick": 1481
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 36.733333333333334,
+            "tick": 2204
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 51.1,
+            "tick": 3066
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 64.88333333333334,
+            "tick": 3893
+          },
+          {
+            "id": "side-burst:1",
+            "time": 76.11666666666666,
+            "tick": 4567
+          },
+          {
+            "id": "side-burst:2",
+            "time": 103.7,
+            "tick": 6222
+          },
+          {
+            "id": "side-burst:3",
+            "time": 129.16666666666666,
+            "tick": 7750
+          },
+          {
+            "id": "scanner:1",
+            "time": 169.18333333333334,
+            "tick": 10151
+          },
+          {
+            "id": "scanner:2",
+            "time": 194.08333333333334,
+            "tick": 11645
+          },
+          {
+            "id": "scanner:3",
+            "time": 233.28333333333333,
+            "tick": 13997
+          }
+        ]
+      },
+      "previousDefaultPhase": "won",
+      "previousDefaultTime": 361.78333333333336,
+      "choices": 10,
+      "choiceTimes": [
+        24.683333333333334,
+        36.733333333333334,
+        51.1,
+        64.88333333333334,
+        76.11666666666666,
+        103.7,
+        129.16666666666666,
+        169.18333333333334,
+        194.08333333333334,
+        233.28333333333333
+      ],
+      "firstSixPreFixChoicesExactlyUnchanged": true,
+      "largestChoiceGaps": [
+        {
+          "from": 129.16666666666666,
+          "to": 169.18333333333334,
+          "seconds": 40.01666666666668
+        },
+        {
+          "from": 194.08333333333334,
+          "to": 233.28333333333333,
+          "seconds": 39.19999999999999
+        },
+        {
+          "from": 76.11666666666666,
+          "to": 103.7,
+          "seconds": 27.583333333333343
+        }
+      ],
+      "final": {
+        "t": 380.6,
+        "phase": "won",
+        "player": {
+          "x": 572.5135919687418,
+          "y": 345.3311446577081,
+          "heading": 2.6179938779914944,
+          "hull": 45,
+          "lives": 1
+        },
+        "kills": 3544,
+        "damage": 280,
+        "shield": 0,
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2834
+        },
+        "progression": {
+          "choices": 10,
+          "earned": 5029,
+          "collected": 4920,
+          "onGround": 109,
+          "directReachable": 94,
+          "nearby": 48,
+          "nextThreshold": null,
+          "deficit": null,
+          "secondsSinceDraft": 147.3166666666667
+        },
+        "targets": [
+          {
+            "id": 475,
+            "family": "tracked-tank",
+            "role": "elite",
+            "x": 1533.190394418433,
+            "y": 241.30024411727618,
+            "hp": 106.73893807177053,
+            "maxHp": 504,
+            "armor": 0,
+            "maxArmor": 216,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 12593,
+            "distance": 966.2930958214574,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 3691,
+            "family": "scout-car",
+            "role": "common",
+            "x": 729.5330970927339,
+            "y": 234.67525781327583,
+            "hp": 150,
+            "maxHp": 168,
+            "armor": 0,
+            "maxArmor": 72,
+            "armorSegments": 0,
+            "exposureRemaining": 3.1333333333333346,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 192.09333742405323,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": true,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 3649,
+            "family": "scout-car",
+            "role": "common",
+            "x": 803.2324374783535,
+            "y": 209.09074941774546,
+            "hp": 144,
+            "maxHp": 168,
+            "armor": 0,
+            "maxArmor": 72,
+            "armorSegments": 0,
+            "exposureRemaining": 3.1333333333333346,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 267.94146929586935,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 701,
+            "family": "scout-car",
+            "role": "common",
+            "x": 739,
+            "y": 659.9688865725858,
+            "hp": 56,
+            "maxHp": 63,
+            "armor": 0,
+            "maxArmor": 27,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 355.96998847718015,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 1923,
+            "family": "scout-car",
+            "role": "common",
+            "x": 739.0183302853137,
+            "y": 660.9997375539947,
+            "hp": 72,
+            "maxHp": 126,
+            "armor": 0,
+            "maxArmor": 54,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 356.89002286837837,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 806,
+            "family": "scout-car",
+            "role": "common",
+            "x": 739.2871402918051,
+            "y": 660.9957893600564,
+            "hp": 56,
+            "maxHp": 63,
+            "armor": 0,
+            "maxArmor": 27,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 357.01202267616276,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 1914,
+            "family": "scout-car",
+            "role": "common",
+            "x": 738.4829856099872,
+            "y": 661.5804071787098,
+            "hp": 72,
+            "maxHp": 126,
+            "armor": 0,
+            "maxArmor": 54,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 357.1546383161223,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 1936,
+            "family": "scout-car",
+            "role": "common",
+            "x": 749.5314260346682,
+            "y": 661.0066623813467,
+            "hp": 20.423298987370316,
+            "maxHp": 126,
+            "armor": 0,
+            "maxArmor": 54,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 361.92035873584,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 1919,
+            "family": "scout-car",
+            "role": "common",
+            "x": 1200.0370366156387,
+            "y": 358.9155200481913,
+            "hp": 126,
+            "maxHp": 126,
+            "armor": 16,
+            "maxArmor": 54,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 627.6704619752762,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 3651,
+            "family": "scout-car",
+            "role": "common",
+            "x": 1637.9034274731578,
+            "y": 359.1934887540377,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 14,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 1065.480016790541,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 834,
+            "family": "scout-car",
+            "role": "common",
+            "x": 1639.000000000002,
+            "y": 641.6719746345216,
+            "hp": 63,
+            "maxHp": 63,
+            "armor": 27,
+            "maxArmor": 27,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 1106.8925630009294,
+            "lineOfSight": false,
+            "directApproachClear": false,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": false
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": false
+              }
+            ]
+          },
+          {
+            "id": 871,
+            "family": "scout-car",
+            "role": "common",
+            "x": 1652.7242169162305,
+            "y": 663.414009196697,
+            "hp": 63,
+            "maxHp": 63,
+            "armor": 27,
+            "maxArmor": 27,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 1126.0691377365656,
+            "lineOfSight": false,
+            "directApproachClear": false,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": false
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": false
+              }
+            ]
+          },
+          {
+            "id": 1662,
+            "family": "scout-car",
+            "role": "common",
+            "x": 1656.6002156862598,
+            "y": 664.6498560437473,
+            "hp": 1,
+            "maxHp": 126,
+            "armor": 0,
+            "maxArmor": 54,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 1130.136384320268,
+            "lineOfSight": false,
+            "directApproachClear": false,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": false
+              },
+              {
+                "index": 1,
+                "overlapsCurrentBody": false,
+                "lineOfSight": false
+              }
+            ]
+          }
+        ],
+        "pendingPayloads": [
+          {
+            "x": 660.5117483091984,
+            "y": 295.25034635321094,
+            "radius": 44,
+            "damage": 40,
+            "remaining": 0.1833333333333334,
+            "kind": "drop"
+          },
+          {
+            "x": 705.5450693059893,
+            "y": 269.25034635321094,
+            "radius": 52,
+            "damage": 34,
+            "remaining": 0.38333333333333297,
+            "kind": "bell"
+          }
+        ],
+        "riy": null
+      },
+      "salvageConservedAtEverySample": true
+    },
+    {
+      "id": "riy-systems-default-airframes",
+      "mode": "riy",
+      "build": "systems",
+      "layout": "freight-depot-loading-loop",
+      "seed": 101303,
+      "difficulty": "standard",
+      "airframes": 3,
+      "route": "systems",
+      "focusPolicy": "normal",
+      "projectIdentity": "f2e6e5fb1be99dbd",
+      "phase": "won",
+      "time": 320.75,
+      "stats": {
+        "kills": 2607,
+        "spawned": 3149,
+        "enemiesAlive": 542,
+        "enemiesVisible": 401,
+        "peakAlive": 692,
+        "peakVisible": 475,
+        "heaviesAlive": 3,
+        "specialistsAlive": 6,
+        "priorityAttacks": 0,
+        "damageDealt": 241442.9000000015,
+        "damageTaken": 180,
+        "damageCauses": {
+          "contact": 160,
+          "lane": 0,
+          "fan": 20,
+          "ground": 0
+        },
+        "shieldBlocks": 0,
+        "xpEarned": 3727,
+        "xpCollected": 3473,
+        "xpOnGround": 254,
+        "pickupsAlive": 166,
+        "pickupMerges": 0,
+        "boostsUsed": 70,
+        "airframesLost": 1,
+        "upgradesChosen": 10,
+        "rerollsUsed": 0,
+        "droppedVisualEffects": 0,
+        "collisionCandidates": 86527,
+        "hits": 6463,
+        "retired": 0,
+        "spawnDeferred": 0,
+        "fixtureDefeats": 0,
+        "projectileDeferrals": 0,
+        "guardDamageBlocked": 1029.1499999999999,
+        "armorSegmentsBroken": 332,
+        "warningDeferrals": 155,
+        "motionDeferrals": 13,
+        "cachesClaimed": 1
+      },
+      "goals": {
+        "eliteSpawned": true,
+        "eliteDefeated": true,
+        "finalSpawned": true,
+        "finalDefeated": true,
+        "finalId": 2844
+      },
+      "finalBuild": {
+        "primary": {
+          "rank": 4,
+          "branch": "wide",
+          "evolved": true
+        },
+        "combat": [],
+        "support": {
+          "id": "scanner",
+          "rank": 3
+        },
+        "reinforcement": 0,
+        "repair": 0,
+        "escorts": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "chain"
+          }
+        ]
+      },
+      "firstLifeComparison": {
+        "firstReplacementAt": 241.68333333333334,
+        "originalDefeatAt": 241.68333333333334,
+        "sameFirstLifeDuration": true,
+        "sameEarnedChoicePrefix": true,
+        "choicesThroughOriginalDefeat": [
+          {
+            "id": "primary:wide:2",
+            "time": 16.283333333333335,
+            "tick": 977
+          },
+          {
+            "id": "riy-sweeper:broad:2",
+            "time": 33.233333333333334,
+            "tick": 1994
+          },
+          {
+            "id": "riy-breaker:chain:2",
+            "time": 51.35,
+            "tick": 3081
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 63.483333333333334,
+            "tick": 3809
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 85.78333333333333,
+            "tick": 5147
+          },
+          {
+            "id": "riy-sweeper:broad:3",
+            "time": 98.23333333333333,
+            "tick": 5894
+          },
+          {
+            "id": "riy-breaker:chain:3",
+            "time": 119.83333333333333,
+            "tick": 7190
+          },
+          {
+            "id": "scanner:1",
+            "time": 146.68333333333334,
+            "tick": 8801
+          },
+          {
+            "id": "scanner:2",
+            "time": 196.86666666666667,
+            "tick": 11812
+          },
+          {
+            "id": "scanner:3",
+            "time": 224.88333333333333,
+            "tick": 13493
+          }
+        ]
+      },
+      "previousDefaultPhase": "won",
+      "previousDefaultTime": 326.8833333333333,
+      "choices": 10,
+      "choiceTimes": [
+        16.283333333333335,
+        33.233333333333334,
+        51.35,
+        63.483333333333334,
+        85.78333333333333,
+        98.23333333333333,
+        119.83333333333333,
+        146.68333333333334,
+        196.86666666666667,
+        224.88333333333333
+      ],
+      "firstSixPreFixChoicesExactlyUnchanged": true,
+      "largestChoiceGaps": [
+        {
+          "from": 146.68333333333334,
+          "to": 196.86666666666667,
+          "seconds": 50.18333333333334
+        },
+        {
+          "from": 196.86666666666667,
+          "to": 224.88333333333333,
+          "seconds": 28.01666666666665
+        },
+        {
+          "from": 119.83333333333333,
+          "to": 146.68333333333334,
+          "seconds": 26.85000000000001
+        }
+      ],
+      "final": {
+        "t": 320.75,
+        "phase": "won",
+        "player": {
+          "x": 516.2599122040001,
+          "y": 634.4419265571407,
+          "heading": 1.832595714594046,
+          "hull": 20,
+          "lives": 2
+        },
+        "kills": 2607,
+        "damage": 180,
+        "shield": 0,
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2844
+        },
+        "progression": {
+          "choices": 10,
+          "earned": 3727,
+          "collected": 3473,
+          "onGround": 254,
+          "directReachable": 246,
+          "nearby": 109,
+          "nextThreshold": null,
+          "deficit": null,
+          "secondsSinceDraft": 95.86666666666667
+        },
+        "targets": [
+          {
+            "id": 2190,
+            "family": "utility-car",
+            "role": "common",
+            "x": 506.8613564399569,
+            "y": 566.4055829204225,
+            "hp": 49.50000000000001,
+            "maxHp": 168,
+            "armor": 0,
+            "maxArmor": 72,
+            "armorSegments": 0,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 68.68243520656092,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": true,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2180,
+            "family": "utility-car",
+            "role": "common",
+            "x": 494.07141432984764,
+            "y": 519.6645294418131,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 23.39999999999999,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 116.90243935214049,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 1962,
+            "family": "scout-car",
+            "role": "common",
+            "x": 618.7374597889517,
+            "y": 552.9936219480187,
+            "hp": 126,
+            "maxHp": 126,
+            "armor": 54,
+            "maxArmor": 54,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 130.9025365786559,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2196,
+            "family": "utility-car",
+            "role": "common",
+            "x": 600.2525499976233,
+            "y": 521.9628382919523,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 140.37915977985776,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2321,
+            "family": "utility-car",
+            "role": "common",
+            "x": 600.618001642995,
+            "y": 521.9183071921549,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 140.63375188337142,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2203,
+            "family": "utility-car",
+            "role": "common",
+            "x": 518.7203751594818,
+            "y": 480.977318456642,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 153.48433085300582,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2359,
+            "family": "utility-car",
+            "role": "common",
+            "x": 522.5589630166169,
+            "y": 477.0177415971459,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 157.55015725621664,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 1810,
+            "family": "scout-car",
+            "role": "common",
+            "x": 630.1584895022579,
+            "y": 507.5546952804456,
+            "hp": 126,
+            "maxHp": 126,
+            "armor": 54,
+            "maxArmor": 54,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 170.50881317877008,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2366,
+            "family": "utility-car",
+            "role": "common",
+            "x": 550.2775081418149,
+            "y": 456.5064297287082,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 181.15804664703566,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2421,
+            "family": "utility-car",
+            "role": "common",
+            "x": 579.6641385841335,
+            "y": 463.56011755938266,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 182.26543437857185,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2367,
+            "family": "utility-car",
+            "role": "common",
+            "x": 579.9609587249864,
+            "y": 462.9225342735878,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 182.96645937763614,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          },
+          {
+            "id": 2212,
+            "family": "utility-car",
+            "role": "common",
+            "x": 625.5884210922936,
+            "y": 484.7493796036268,
+            "hp": 168,
+            "maxHp": 168,
+            "armor": 72,
+            "maxArmor": 72,
+            "armorSegments": 1,
+            "exposureRemaining": 0,
+            "attackWarning": 0,
+            "spawnWarning": 0,
+            "marked": false,
+            "markUntil": 0,
+            "distance": 185.36607421307616,
+            "lineOfSight": true,
+            "directApproachClear": true,
+            "pendingFootprints": [
+              {
+                "index": 0,
+                "overlapsCurrentBody": false,
+                "lineOfSight": true
+              }
+            ]
+          }
+        ],
+        "pendingPayloads": [
+          {
+            "x": 487.3788943709633,
+            "y": 609.6821194735298,
+            "radius": 48,
+            "damage": 60,
+            "remaining": 0.16666666666666674,
+            "kind": "scatter"
+          }
+        ],
+        "riy": {
+          "phase": "engaged",
+          "targetId": 2844,
+          "candidateId": 2190,
+          "candidateRole": "common",
+          "cooldown": 3.7666666666666746,
+          "focusRemaining": 0.766666666666673,
+          "approachRemaining": 0,
+          "commands": 38,
+          "engagements": 38,
+          "escorts": [
+            {
+              "role": "sweeper",
+              "x": 413.2188273276069,
+              "y": 538.0750417053562,
+              "heading": -2.0121702051156554,
+              "formationHeading": -2.0121702051156554,
+              "shots": 247,
+              "cooldown": 0.36666666666666564
+            },
+            {
+              "role": "breaker",
+              "x": 507.2520518626191,
+              "y": 493.6481052416748,
+              "heading": -2.686911147339208,
+              "formationHeading": -2.0121702051156554,
+              "shots": 167,
+              "cooldown": 1.8
+            }
+          ]
+        }
+      },
+      "salvageConservedAtEverySample": true
+    }
+  ]
+}

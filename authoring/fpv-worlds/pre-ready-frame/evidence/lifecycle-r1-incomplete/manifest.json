@@ -1,0 +1,25 @@
+{
+  "format": "FPVIncompleteBrowserEvidence.v1",
+  "completeReceipt": false,
+  "sourceRevision": "2f9a7a87876a4ee64eb5b7c581b3ea339aaba146",
+  "fixtureSha256": "da0158f563011c4779fdf599a7c3ba4350f37331347ed17bb75847e0f8f6e95d",
+  "files": [
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8940-failed.json",
+      "bytes": 200054,
+      "sha256": "273afc0becc31ab5e89914f28951b85964c9271ecaba8c81c914ae6e0a0a56ce",
+      "gzip": "fpv-warm-lifecycle-8940-failed.json.gz",
+      "gzipBytes": 16946,
+      "gzipSha256": "166d81b26a9bcfde5fc8a92dc1c687d2e4da818fef7f72729cda0404e65192fb"
+    },
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8940-partial-diagnosis.json",
+      "bytes": 205860,
+      "sha256": "1124a3daf93fb9f06fd88f486a98ad28bd3e5278742093d1d3c33d9e21ebcb50",
+      "gzip": "fpv-warm-lifecycle-8940-partial-diagnosis.json.gz",
+      "gzipBytes": 7282,
+      "gzipSha256": "fb1478e588f708443848deb7928e16cdb79adfa276debaa8c3555904cc14214f"
+    }
+  ],
+  "finding": "Only complete JSON member values were recovered from the truncated prefix. Original entire receipt is incomplete, not a passing run. Global pending prepare count included an obsolete High owner, while the current Balanced prepare had completed successfully before warm rendering."
+}

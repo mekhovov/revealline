@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-14",
+  "implementationHead": "0e2d47957dad0faaf10ca5e53a0a6e62461c7af3",
+  "existingRegressionChecks": {
+    "passed": 135,
+    "failed": 0,
+    "scope": [
+      "radio controls",
+      "radio profiles",
+      "shared mode shell",
+      "flight UI",
+      "world appearance"
+    ]
+  },
+  "actualBrowser": {
+    "hosts": [
+      "World Studio",
+      "Academy"
+    ],
+    "languages": [
+      "en",
+      "uk"
+    ],
+    "viewports": [
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "horizontalOverflow": false,
+    "largeTouchStickDiameterCssPx": 124.8,
+    "verified": [
+      "Download to focused Fly",
+      "installed-world disarmed preparation",
+      "keyboard Learn navigation",
+      "retry retains Chase and requires Arm",
+      "recorded example half-speed",
+      "Academy replay end Try requires Arm",
+      "paused camera preset updates canonical sliders",
+      "shared Large Quiet preferences",
+      "full-route practice distinguished from verified sections",
+      "final EN/UK locale refresh creates no new console errors"
+    ]
+  },
+  "notClaimed": [
+    "physical iPhone",
+    "physical Steam Deck",
+    "physical radio",
+    "device FPS",
+    "new D6 unit coverage",
+    "public deployment"
+  ],
+  "publication": {
+    "stack": 1180,
+    "pullRequests": [
+      1184,
+      1185,
+      1186,
+      1188
+    ],
+    "status": "protected checks pending"
+  },
+  "packageAdmission": {
+    "sourceRevision": "63cda2f18d56b4b7ca938832e765dfa711729879",
+    "packages": [
+      "civilian-flight",
+      "civilian-fpv",
+      "fpv-worlds"
+    ],
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "chooserLocaleRegression": {
+    "passed": 101,
+    "failed": 0,
+    "probe": "closed chooser/source replacement/source removal/locale refresh; stale launch still rejects"
+  }
+}

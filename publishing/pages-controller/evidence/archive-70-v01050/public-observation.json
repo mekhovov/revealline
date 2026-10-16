@@ -1,0 +1,25 @@
+{
+  "format": "revealline-archive-public-observation.v1",
+  "status": "PASS",
+  "archiveId": "archive-70",
+  "version": "v0.105.0",
+  "infrastructureCommit": "e575dd18228feecf72da6ebd3609f0e73c8207fd",
+  "infrastructureTree": "922cd3e47db8841987e1503c269db561c6b04557",
+  "runId": 36058063169,
+  "deploymentId": 6647931936,
+  "deploymentStatusId": 18805055566,
+  "receiptArtifactId": 10833445540,
+  "observed": [
+    "The archive root, release record and game index returned HTTP 200 from their exact canonical URLs.",
+    "A real in-app browser loaded the archived game and exposed the Reveal / Line Home screen.",
+    "The visible Home reported Version v0.105.0 and exposed Solo, Versus, Team, Continue, Missions, Collection, Settings, More and Sound, with Continue focused.",
+    "The More menu exposed All missions, help, Field guide, Controller practice, Replay Theater, Scores & saves, About and Releases.",
+    "The archived Releases route opened the main release explorer and reported v0.105.0 as the current preserved version."
+  ],
+  "limitations": [
+    "This is bounded historical preservation evidence, not renewed gameplay or balance acceptance for v0.105.0.",
+    "No mission was started or completed during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "The browser shared existing local preferences; its selected difficulty is not evidence of a fresh-profile default."
+  ]
+}

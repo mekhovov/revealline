@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-29T05:42:53.441498+00:00",
+  "relativeLinksVerified": 85,
+  "documents": [
+    "docs/verification/demo-qualification-2026-09-29/README.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/README.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/browser-observation-handoff.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/browser-final-review.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/hidden-observation-review.md",
+    "docs/verification/demo-qualification-2026-09-29/loading-recovery/interim-review.md"
+  ],
+  "exactRawReportHashes": {
+    "browser-observation-final.json": "2c943ad9352dcb1022f0c9cc93bf9c1d07fcdad5d8119214a719201452a4cc1e",
+    "browser-observation-checkpoint-io-failure.json": "7d9316fe3be11067719394702e2f94e430f7c76b5b6edc3f1ee0ac1211898dd4",
+    "browser-observation-hidden-checkpoint.json": "9f55f436e35c9e8bdb643c25db3dade178f681fdcac162a6aa9f7f580dca1f77",
+    "browser-observation-10min.json": "02bdf44aa1924d49630941aa036b5291fc6489fe22da2add2947f2a116266b61",
+    "worker-final-qualification.json": "20d5d0d5975683fd4fad90e702234ebe37946fc63c930a3b40d0b90cf4f95367"
+  },
+  "browserFinalDurationVerified": true,
+  "browserStorageFailurePreserved": true,
+  "visibleReturnStaleSamplesVerified": 33,
+  "visibleReturnStaleSeconds": 158.0978,
+  "workerSingleFollowupPassed": true,
+  "sourceOnlyChangeSinceFrozenCommit": ["game/test/demo-director.test.mjs"],
+  "currentWorkingChangesOnlyObservationDocsAndEvidence": true,
+  "releaseQualified": false
+}

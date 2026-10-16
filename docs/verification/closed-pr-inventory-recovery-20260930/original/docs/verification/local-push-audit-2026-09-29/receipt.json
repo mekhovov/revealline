@@ -1,0 +1,140 @@
+{
+  "format": "revealline-local-push-audit-v1",
+  "verifiedAt": "2026-09-29T15:30:54.155484+00:00",
+  "captureCutoff": "2026-09-29T15:27:54.400408+00:00",
+  "repository": "mekhovov/revealline",
+  "recovery": {
+    "ref": "refs/heads/codex/local-recovery-20260929",
+    "head": "117d892e8bb140a1c30b574f1b23bba280d0adfe",
+    "tree": "b7205313420dac42e4098517055fb50e75c4d759",
+    "remoteRefMatches": true,
+    "githubCommitTreeMatches": true,
+    "url": "https://github.com/mekhovov/revealline/tree/codex/local-recovery-20260929",
+    "historicalFrontierTips": 240,
+    "initialWorkingIndexSnapshots": 53,
+    "finalDeltaSnapshots": 2,
+    "stashes": 7,
+    "allStashAndPhase1ParentsReachable": true
+  },
+  "verification": {
+    "initialSnapshots": {
+      "path": "independent-worktree-verification.json",
+      "bytes": 1494,
+      "sha256": "ad0d14c52d8d567dbe0170a22184726f73d66d041f1b46bbf952f957d25de6f5",
+      "archiveUrl": "https://github.com/mekhovov/revealline/blob/117d892e8bb140a1c30b574f1b23bba280d0adfe/independent-worktree-verification.json"
+    },
+    "finalDelta": {
+      "path": "final-delta/independent-verification.json",
+      "bytes": 1310,
+      "sha256": "72d2161f302bb469aea518e2842af31488566a1afe9ff74dc103c7c32ccc80f0",
+      "archiveUrl": "https://github.com/mekhovov/revealline/blob/117d892e8bb140a1c30b574f1b23bba280d0adfe/final-delta/independent-verification.json"
+    },
+    "phase1Provenance": {
+      "path": "phase1-media-provenance.json",
+      "bytes": 32151,
+      "sha256": "a99daeba3dc16436a6deda050b111e8596794fcebe3750c44a1215eff77d7c9d",
+      "archiveUrl": "https://github.com/mekhovov/revealline/blob/117d892e8bb140a1c30b574f1b23bba280d0adfe/phase1-media-provenance.json"
+    },
+    "stashProvenance": {
+      "path": "stash-media-rights-final.json",
+      "bytes": 24766,
+      "sha256": "3548df174f0d341fe3ca486e4a99d964dc8c995d0030dfcb1934ffe57cc2df9f",
+      "archiveUrl": "https://github.com/mekhovov/revealline/blob/117d892e8bb140a1c30b574f1b23bba280d0adfe/stash-media-rights-final.json"
+    },
+    "stashInventory": {
+      "path": "stash-preservation-audit.json",
+      "bytes": 519377,
+      "sha256": "3471a581a18ab53e14b437523bbf1557c899e51a34a9925db7181cb9aba5d2b6",
+      "archiveUrl": "https://github.com/mekhovov/revealline/blob/117d892e8bb140a1c30b574f1b23bba280d0adfe/stash-preservation-audit.json"
+    }
+  },
+  "releaseTargetUpdates": {
+    "startedAtUTC": "2026-09-29T15:10:25.186618+00:00",
+    "scope": "Authorized donor scheduling only; no source, merge, publishing, workflow or selected-host execution.795/796 not edited.",
+    "updates": [
+      {
+        "pr": 779,
+        "url": "https://github.com/mekhovov/revealline/pull/779",
+        "head": "2c160ed7e8f291fcc80e35c8fa6192d72ce2dfa6",
+        "baseRef": "main",
+        "draft": true,
+        "labels": ["release-aggregate-input", "release-train-hold"],
+        "beforeMilestone": 41,
+        "afterMilestone": 57,
+        "beforeTitle": "[Target v0.143.0 input] Preserve Audio styles across reload and playback",
+        "afterTitle": "[Target v0.150.0 input] Preserve Audio styles across reload and playback",
+        "beforeUpdatedAt": "2026-09-29T15:08:57Z",
+        "afterUpdatedAt": "2026-09-29T15:10:31Z",
+        "bodySHA256": "096c691b05eac0ae8a8b8798611ec33149e438f7e92fa38739e3917d31b9518d",
+        "patchRequests": 1,
+        "verified": true
+      },
+      {
+        "pr": 736,
+        "url": "https://github.com/mekhovov/revealline/pull/736",
+        "head": "7af3dde47daaf4bc8cd92574a6d62dc803ee00b2",
+        "baseRef": "codex/community-production-session-acceptance",
+        "draft": false,
+        "labels": ["release-train-hold"],
+        "beforeMilestone": null,
+        "afterMilestone": 57,
+        "beforeTitle": "Automate deployed account verification acceptance",
+        "afterTitle": "[Target v0.150.0 input] Automate deployed account verification acceptance",
+        "beforeUpdatedAt": "2026-09-28T02:19:40Z",
+        "afterUpdatedAt": "2026-09-29T15:10:35Z",
+        "bodySHA256": "7ee983128e74073176e4c03696ecbc22c8e7963626d98887a5275617f6c3d650",
+        "patchRequests": 1,
+        "verified": true
+      },
+      {
+        "pr": 745,
+        "url": "https://github.com/mekhovov/revealline/pull/745",
+        "head": "e390ac9dd1066af78f4e2ce7b3772f66d8de59ad",
+        "baseRef": "codex/community-account-bootstrap",
+        "draft": false,
+        "labels": ["release-train-hold"],
+        "beforeMilestone": null,
+        "afterMilestone": 57,
+        "beforeTitle": "Automate deployed browser moderation cutover",
+        "afterTitle": "[Target v0.150.0 input] Automate deployed browser moderation cutover",
+        "beforeUpdatedAt": "2026-09-28T04:23:28Z",
+        "afterUpdatedAt": "2026-09-29T15:10:38Z",
+        "bodySHA256": "403924a20604e1e4c67a8f2d3fc906f81f72894c6014b525c16db37b41e33b8f",
+        "patchRequests": 1,
+        "verified": true
+      },
+      {
+        "pr": 787,
+        "url": "https://github.com/mekhovov/revealline/pull/787",
+        "head": "6138b28ba068455128c3d4f55de6aa2ae283649f",
+        "baseRef": "main",
+        "draft": true,
+        "labels": ["release-train-hold"],
+        "beforeMilestone": 13,
+        "afterMilestone": 13,
+        "beforeTitle": "Preserve opt-in CI timing and balanced-shard tools",
+        "afterTitle": "Preserve opt-in CI timing and balanced-shard tools",
+        "beforeUpdatedAt": "2026-09-29T01:31:59Z",
+        "afterUpdatedAt": "2026-09-29T15:10:41Z",
+        "bodySHA256": "896b419c9917e38bb67c20f40e5e5924d6907b308d22d9b27cd38fe0e6d2689e",
+        "patchRequests": 1,
+        "verified": true
+      }
+    ],
+    "completedAtUTC": "2026-09-29T15:10:42.155619+00:00",
+    "attachmentsVerified": [779, 736, 745, 787]
+  },
+  "sourceReviewDispositions": {
+    "800": "superseded historical A-down/120 ms design; draft source retained, excluded from product queue",
+    "801": "duplicate Levels intake closed by its creator",
+    "802": "historical Studio/Team source preserved for selective current-source review",
+    "797": "current radio/two-controller source input; owner-managed integration"
+  },
+  "boundaries": [
+    "This records observed source through the capture cutoff; active owners can make later edits.",
+    "No owner checkout, index, stash or feature branch was reset or changed by this capture.",
+    "Private ignored assets and dependency/build caches were not swept into Git.",
+    "The recovery ref is never a release source and must not be merged into main.",
+    "No release, production cutover or physical Steam Deck acceptance was performed."
+  ]
+}

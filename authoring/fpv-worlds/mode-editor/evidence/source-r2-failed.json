@@ -1,0 +1,656 @@
+{
+  "format": "FPVEditorModesSourceOverlayQualification.v1",
+  "startedAt": "2026-10-04T05:15:01.934Z",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "Baseline admitted checksum: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/encounter-display-preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/fpv-entry.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/actor-art.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/hunt/presentation-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/profile-database.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/profile-storage.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/audio-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/exploration.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/learning-profiles.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/rewards/store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/art/identity/fpv-line/wordmark.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/art/menu-scenes/fpv-portrait.webp",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/art/menu-scenes/fpv.webp",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/native-menu-icons.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/ui/reward-knowledge.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: game/vendor/I18NEXT-LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/index.html",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: launcher/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "Source overlay checksum: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/guide.html",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/index.html",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/preview.png",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/README.md",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/scenery-provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/fpv-worlds/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/install-context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-practice/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Baseline admitted checksum: optional-package.json",
+      "passed": true
+    },
+    {
+      "name": "Instrumented HTML checksum",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: index.html",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: browser-harness.mjs",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/divergent.zip",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-shared.zip",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-shared.project.json",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-differ.zip",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/mode-bindings-differ.project.json",
+      "passed": true
+    },
+    {
+      "name": "Public input checksum: inputs/source-updated.glb",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    },
+    {
+      "name": "Divergent starter imported exactly",
+      "passed": true
+    },
+    {
+      "name": "Divergent routes default to Self-level and disable Both",
+      "passed": true
+    },
+    {
+      "name": "Public JSON accepted independently ordered, unequal-length routes",
+      "passed": true
+    },
+    {
+      "name": "Criterion list follows shorter Acro route",
+      "passed": true
+    },
+    {
+      "name": "Numeric move changes only selected Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Undo restores exact pre-Acro-edit course",
+      "passed": true
+    },
+    {
+      "name": "Undo restores captured Acro mode and selection",
+      "passed": true
+    },
+    {
+      "name": "Redo restores exact edited course",
+      "passed": true
+    },
+    {
+      "name": "Redo restores context captured by Undo",
+      "passed": true
+    },
+    {
+      "name": "Reorder changes only Acro despite differing Self-level order",
+      "passed": true
+    },
+    {
+      "name": "Reorder selects moved Acro objective",
+      "passed": true
+    },
+    {
+      "name": "Reorder Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Reorder Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Duplicate adds exactly one selected Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Duplicate selects new Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Duplicate Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Duplicate Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Delete removes only selected Acro criterion",
+      "passed": true
+    },
+    {
+      "name": "Delete Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Delete Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "Acro order/edit install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: explicit Acro overrides previous flight setting",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: preview starts disarmed",
+      "passed": true
+    },
+    {
+      "name": "preview-challenge: flight menu opens",
+      "passed": false
+    }
+  ],
+  "exports": [
+    {
+      "label": "Acro order/edit ZIP",
+      "filename": "creator-industrial-split-level.zip",
+      "bytes": 16736,
+      "sha256": "69d135be81c32760d2c71936fe4a82a9aada3e501782f98f4d808f7f3fccf924"
+    }
+  ],
+  "packRevisions": [
+    {
+      "label": "Acro order/edit install",
+      "id": "creator-industrial-split-level",
+      "original": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+      "edited": "a0c001c08789324115cefeb1841d17aa35b9b38984c57b2ac7857298c76c8957",
+      "retained": 2
+    }
+  ],
+  "limitations": [
+    "Source overlay over the full admitted closure; not package admission.",
+    "Trusted pointer drag required for spatial acceptance.",
+    "Online native-IDB reopening only; no offline, controller, novice or performance acceptance."
+  ],
+  "message": "FAIL: preview-challenge: flight menu opens. Preserve this receipt and fixture.",
+  "fixtureSha256": "81c975f79095a18e92a4c47f46e9872d53c206f0a8fad431563e3ab90de3ceab",
+  "baseline": {
+    "source": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+    "host": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+    "packageRevision": "b866d9b4145da43a01e9699e0383ef2fb29143bdf9723bb09d3c381967030bd4"
+  },
+  "overlay": {
+    "path": "optional-practice/civilian-fpv/world-app.mjs",
+    "bytes": 250540,
+    "sha256": "bd2449768d465ecf6dd3415263dac00b7ab6086b5355c35418a67562acdfa394",
+    "sourceCommit": "c8df0af001ab8eae21f983ed15e439e445d03006"
+  },
+  "storagePrefix": "fpv-editor-modes-cf636d1f-ce1c-4aee-9347-c6e7b0cffae3:",
+  "error": "Error: preview-challenge: flight menu opens\n    at must (http://127.0.0.1:8886/browser-harness.mjs:26:18)\n    at previewCheck (http://127.0.0.1:8886/browser-harness.mjs:360:3)\n    at async stageOne (http://127.0.0.1:8886/browser-harness.mjs:534:3)",
+  "failureDOM": {
+    "url": "http://127.0.0.1:8886/player/optional-practice/fpv-worlds/#creator",
+    "creatorHidden": false,
+    "packsHidden": true,
+    "studioStatus": "World pack is ready to fly.",
+    "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+    "importReport": "",
+    "creatorJSON": "{\n  \"format\": \"FlightCourse.v2\",\n  \"id\": \"creator-industrial-split-level-route\",\n  \"revision\": \"r1\",\n  \"environment\": \"container-yard\",\n  \"world\": {\n    \"id\": \"creator-industrial-split-level\",\n    \"theme\": \"academy\",\n    \"style\": \"industrial\",\n    \"themeProfile\": {\n      \"format\": \"ThemeProfile.v1\",\n      \"id\": \"academy\",\n      \"revision\": \"r1\",\n      \"title\": {\n        \"en\": \"Flight Academy\",\n        \"uk\": \"Льотна академія\"\n      },\n      \"palette\": {\n        \"sky\": 11916770,\n        \"fog\": 12965849,\n        \"ground\": 5400931,\n        \"wall\": 3625316,\n        \"accent\": 11135933,\n        \"warm\": 15054977\n      },\n      \"textureFilter\": \"linear\",\n      \"drone\": \"racer\",\n      \"characters\": \"civilian\",\n      \"assets\": {\n        \"gate\": \"builtin:gate\",\n        \"marker\": \"builtin:beacon\",\n        \"enemy\": \"builtin:sentry\",\n        \"vehicle\": \"builtin:vehicle\"\n      },\n      \"audio\": {\n        \"ambience\": \"hangar\",\n        \"motor\": \"quad\",\n        \"gate\": \"chime\"\n      },\n      \"ui\": {\n        \"accent\": \"#a2dfcf\",\n        \"font\": \"system-ui\",\n        \"borderRadius\": 12\n      }\n    }\n  },\n  \"locales\": {\n    \"en\": {\n      \"brief\": \"Use the open side zone to change height. Self-level passes below then above the deck; Acro reverses that order. Finish on the ground pad. These are editable starter routes, not timed mastery tests.\",\n      \"lesson\": \"Gate openings are objective regions, not collision guarantees. Keep at least 0.5 m of extra nominal clearance around the 0.22 m drone radius. Height is measured at the drone lower point. Recheck every edited route in both modes.\",\n      \"title\": \"Industrial starter · Split level\"\n    },\n    \"uk\": {\n      \"brief\": \"Змінюйте висоту у відкритій бічній зоні. Самовирівнювання проходить під настилом, потім над ним; Acro змінює порядок. Завершіть посадкою на землі. Це редаговані шаблони маршрутів, а не іспити на швидкість.\",\n      \"lesson\": \"Отвори воріт — це області цілей, а не гарантія відсутності зіткнень. Залишайте принаймні 0,5 м додаткового запасу навколо радіуса дрона 0,22 м. Висота вимірюється за нижньою точкою дрона. Перевіряйте кожен змінений маршрут в обох режимах.\",\n      \"title\": \"Промисловий шаблон · Два рівні\"\n    }\n  },\n  \"spawn\": {\n    \"x\": -24000,\n    \"y\": 0,\n    \"z\": 24000\n  },\n  \"bounds\": {\n    \"max\": {\n      \"x\": 38000,\n      \"y\": 16000,\n      \"z\": 38000\n    },\n    \"min\": {\n      \"x\": -38000,\n      \"y\": 0,\n      \"z\": -38000\n    }\n  },\n  \"obstacles\": [\n    {\n      \"id\": \"west-stack\",\n      \"max\": {\n        \"x\": -27000,\n        \"y\": 5000,\n        \"z\": 4000\n      },\n      \"min\": {\n        \"x\": -33000,\n        \"y\": 0,\n        \"z\": -4000\n      }\n    },\n    {\n      \"id\": \"east-stack\",\n      \"max\": {\n        \"x\": 33000,\n        \"y\": 4000,\n        \"z\": 4000\n      },\n      \"min\": {\n        \"x\": 27000,\n        \"y\": 0,\n        \"z\": -4000\n      }\n    },\n    {\n      \"id\": \"north-store\",\n      \"max\": {\n        \"x\": 8000,\n        \"y\": 4000,\n        \"z\": -31000\n      },\n      \"min\": {\n        \"x\": -8000,\n        \"y\": 0,\n        \"z\": -35000\n      }\n    },\n    {\n      \"id\": \"practice-deck\",\n      \"max\": {\n        \"x\": 7000,\n        \"y\": 5000,\n        \"z\": 10000\n      },\n      \"min\": {\n        \"x\": -7000,\n        \"y\": 4000,\n        \"z\": -10000\n      }\n    },\n    {\n      \"id\": \"deck-west-support\",\n      \"max\": {\n        \"x\": -6000,\n        \"y\": 4000,\n        \"z\": 1000\n      },\n      \"min\": {\n        \"x\": -7000,\n        \"y\": 0,\n        \"z\": -1000\n      }\n    },\n    {\n      \"id\": \"deck-east-support\",\n      \"max\": {\n        \"x\": 7000,\n        \"y\": 4000,\n        \"z\": 1000\n      },\n      \"min\": {\n        \"x\": 6000,\n        \"y\": 0,\n        \"z\": -1000\n      }\n    }\n  ],\n  \"steps\": {\n    \"self-level\": [\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": -22500,\n          \"y\": 3650,\n          \"z\": 25500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": -25500,\n          \"y\": 2350,\n          \"z\": 22500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"at\": 15000,\n        \"axis\": \"z\",\n        \"direction\": -1,\n        \"maxSide\": 3000,\n        \"maxY\": 3000,\n        \"minSide\": -3000,\n        \"minY\": 1000,\n        \"type\": \"gate\"\n      },\n      {\n        \"at\": 0,\n        \"axis\": \"z\",\n        \"direction\": -1,\n        \"maxSide\": 3000,\n        \"maxY\": 3000,\n        \"minSide\": -3000,\n        \"minY\": 1000,\n        \"type\": \"gate\"\n      },\n      {\n        \"at\": -15000,\n        \"axis\": \"z\",\n        \"direction\": -1,\n        \"maxSide\": 3000,\n        \"maxY\": 3000,\n        \"minSide\": -3000,\n        \"minY\": 1000,\n        \"type\": \"gate\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 19500,\n          \"y\": 2650,\n          \"z\": -19500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 16500,\n          \"y\": 1350,\n          \"z\": -22500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 19500,\n          \"y\": 8150,\n          \"z\": -15500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 16500,\n          \"y\": 6850,\n          \"z\": -18500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"at\": 0,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 3000,\n        \"maxY\": 8500,\n        \"minSide\": -3000,\n        \"minY\": 6500,\n        \"type\": \"gate\"\n      },\n      {\n        \"at\": 15000,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 3000,\n        \"maxY\": 8500,\n        \"minSide\": -3000,\n        \"minY\": 6500,\n        \"type\": \"gate\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 22500,\n          \"y\": 8150,\n          \"z\": 24500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 19500,\n          \"y\": 6850,\n          \"z\": 21500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 25500,\n          \"y\": 500,\n          \"z\": 25500\n        },\n        \"maxSpeed\": 1300,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 22500,\n          \"y\": 0,\n          \"z\": 22500\n        },\n        \"minTilt\": 0,\n        \"surface\": \"$floor\",\n        \"ticks\": 30,\n        \"type\": \"land\"\n      }\n    ],\n    \"acro\": [\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": -22500,\n          \"y\": 3650,\n          \"z\": 25500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": -25500,\n          \"y\": 2350,\n          \"z\": 22500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"at\": 15000,\n        \"axis\": \"z\",\n        \"direction\": -1,\n        \"maxSide\": 2250,\n        \"maxY\": 8500,\n        \"minSide\": -2250,\n        \"minY\": 6500,\n        \"type\": \"gate\"\n      },\n      {\n        \"at\": -15000,\n        \"axis\": \"z\",\n        \"direction\": -1,\n        \"maxSide\": 2500,\n        \"maxY\": 8500,\n        \"minSide\": -2000,\n        \"minY\": 6500,\n        \"type\": \"gate\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 19500,\n          \"y\": 8150,\n          \"z\": -19500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 16500,\n          \"y\": 6850,\n          \"z\": -22500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 19500,\n          \"y\": 2650,\n          \"z\": -19500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 16500,\n          \"y\": 1350,\n          \"z\": -22500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"at\": -15000,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 2250,\n        \"maxY\": 3000,\n        \"minSide\": -2250,\n        \"minY\": 1000,\n        \"type\": \"gate\"\n      },\n      {\n        \"at\": 0,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 2250,\n        \"maxY\": 3000,\n        \"minSide\": -2250,\n        \"minY\": 1000,\n        \"type\": \"gate\"\n      },\n      {\n        \"at\": 15000,\n        \"axis\": \"z\",\n        \"direction\": 1,\n        \"maxSide\": 2250,\n        \"maxY\": 3000,\n        \"minSide\": -2250,\n        \"minY\": 1000,\n        \"type\": \"gate\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 22500,\n          \"y\": 2650,\n          \"z\": 24500\n        },\n        \"maxSpeed\": 2500,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 19500,\n          \"y\": 1350,\n          \"z\": 21500\n        },\n        \"minTilt\": 0,\n        \"ticks\": 30,\n        \"type\": \"hold\"\n      },\n      {\n        \"centred\": false,\n        \"heading\": null,\n        \"max\": {\n          \"x\": 25500,\n          \"y\": 500,\n          \"z\": 25500\n        },\n        \"maxSpeed\": 1300,\n        \"maxTilt\": 4000,\n        \"min\": {\n          \"x\": 22500,\n          \"y\": 0,\n          \"z\": 22500\n        },\n        \"minTilt\": 0,\n        \"surface\": \"$floor\",\n        \"ticks\": 30,\n        \"type\": \"land\"\n      }\n    ]\n  },\n  \"actors\": [],\n  \"rules\": {\n    \"seed\": 1,\n    \"maxTicks\": 36000,\n    \"droneRadius\": 220,\n    \"playerHealth\": 100,\n    \"collisionDamage\": 0,\n    \"playerDamage\": 25,\n    \"fireCooldown\": 8,\n    \"projectileSpeed\": 20000,\n    \"projectileTicks\": 150\n  },\n  \"conditions\": {\n    \"profile\": \"clear\",\n    \"revision\": \"r1\"\n  }\n}",
+    "creatorIdentity": {
+      "id": "creator-industrial-split-level-route",
+      "revision": "r1",
+      "world": "creator-industrial-split-level",
+      "selfLevelSteps": 10,
+      "acroSteps": 10
+    },
+    "uncaughtErrors": [],
+    "rows": [
+      {
+        "id": "creator-industrial-split-level",
+        "connected": true,
+        "text": "Industrial starter · Split level1 challenges · a0c001c08789EditExport packRemoveRestore revision 311b04890037"
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "format": "fpv-environment-light-cosmetic-scope.v1",
+  "before": "acc9ccbfc21e7f8f5f4a72283ad523a8f62d1fbd",
+  "after": "e76c07374a2df735949c0bbcb2190d53f064786d",
+  "exactOnlyChange": "droneVisual.tint.color.set \u2192 droneVisual?.tint.color.set in public setCosmetic",
+  "addedBytes": 1,
+  "rendererSha256": "3e2d55d51f4267c7e89c9007296f23211f38ec0f481b8eca289878d34deab28b",
+  "guardQualification": "When a live drone exists behavior is identical; when absent the valid color is retained for Retry without dereferencing null. 48-check manual receipt verifies the latter."
+}

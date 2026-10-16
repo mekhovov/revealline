@@ -1,0 +1,506 @@
+{
+  "format": "FPVNavigationModelEvidence.v1",
+  "createdAt": "2026-10-02T01:54:03.558Z",
+  "parent": "d37644f95b914f0585763920ff28afa9773c5985",
+  "passed": true,
+  "source": {
+    "modelSha256": "b680ec30aea04ed66cb8eedfbb5bc35cda83cf08ebc7ae371dc5f43c702158e8",
+    "pilotSha256": "4a0e62e08b665b793661f938035e8061810600863c332a6a8126bd0676138083",
+    "qualifiedCatalogueSha256": "a5c782f3d1e8f2e01d4e7d1f734f0f9b4fb75c530ec5a3d62ba1c1fa63e19e25",
+    "preparedDemonstrationsSha256": "6c0622df7e7650775b3a86dc91f42bc237e5fe107afbd84da06c61ec3d13c2cc",
+    "currentCatalogueSha256": "c0a8a2e03a7eb8f0ff830835fcad83a3eda41b8db3a12e43189513e97d83678d",
+    "originalPreparedDemonstrationsSha256": "4c9d9076a35550d40f912642d5409d00bb5ca8f99cc688cd48caf4ced0691307"
+  },
+  "summary": {
+    "oldLessons": 26,
+    "oldCourseAndPackIdentitiesUnchanged": 26,
+    "oldPilotCommandsCompared": 21875,
+    "newLessons": 16,
+    "independentlyReplayed": 16,
+    "exactPreparedProofsReproduced": 16,
+    "originalPreparedCommandSequencesUnchanged": 16,
+    "originalPreparedGeometryUnchanged": 16,
+    "namedLandingCourses": 3,
+    "missingNamedSurfaceRejected": true
+  },
+  "oldResults": [
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "ticks": 360,
+      "courseIdentity": "5b7652234b696e5a",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "ticks": 564,
+      "courseIdentity": "e50fcbdb6764bd0f",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "ticks": 561,
+      "courseIdentity": "20c47db382d75bc5",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "ticks": 696,
+      "courseIdentity": "bbce5a92237477b8",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "ticks": 654,
+      "courseIdentity": "29eb33e8d0941bc0",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "ticks": 828,
+      "courseIdentity": "e1520c67b8bab038",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "ticks": 948,
+      "courseIdentity": "96b61727c33609cb",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "ticks": 830,
+      "courseIdentity": "df81ed3f34a3b642",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "ticks": 899,
+      "courseIdentity": "a76f372299d61107",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "ticks": 732,
+      "courseIdentity": "6c6745619ebc45cf",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "ticks": 945,
+      "courseIdentity": "6cdbd35333c04b69",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "ticks": 1032,
+      "courseIdentity": "43f761053d0d99c5",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "ticks": 654,
+      "courseIdentity": "69bdf9a4ac73a31e",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "ticks": 757,
+      "courseIdentity": "cea3c2b2d9a5dc24",
+      "packIdentity": "fpv-beginner:654387e76ace406c",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "ticks": 360,
+      "courseIdentity": "451ad6d46ab40e85",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "ticks": 712,
+      "courseIdentity": "5f480be5552a4896",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "ticks": 608,
+      "courseIdentity": "1cefa1a39dc2964d",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "ticks": 961,
+      "courseIdentity": "01b84b1aaae8d520",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "ticks": 973,
+      "courseIdentity": "80dc8d60a229d28f",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "ticks": 908,
+      "courseIdentity": "1b0ad0ea2b94f32f",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "ticks": 959,
+      "courseIdentity": "6e525e60ae7a9fd7",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "ticks": 1763,
+      "courseIdentity": "f2fee45d782060e4",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "ticks": 1057,
+      "courseIdentity": "ed45d8e143324668",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "ticks": 1031,
+      "courseIdentity": "89edd7ed96c134ec",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "ticks": 676,
+      "courseIdentity": "5b7fdad9ec9b8949",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "ticks": 1407,
+      "courseIdentity": "616326c6a2c3dcc6",
+      "packIdentity": "fpv-acro-school:376562a567e6ba93",
+      "pilotCommandsIdentical": true
+    }
+  ],
+  "results": [
+    {
+      "id": "beginner-27",
+      "status": "complete",
+      "ticks": 1379,
+      "steps": 7,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "61cef0ae26829648",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "4e6fd5ec883cd03ea838837177e5c3e7b11cc4a5e4d15766128291396be873ed",
+      "finalStateIdentity": "a18a122f726dfe48",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-28",
+      "status": "complete",
+      "ticks": 1151,
+      "steps": 5,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "98ef9c7fc4ecf757",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "9cc0b2320b256cbfb67aa041e1a29cc39a06c11ddf3df8e27aba10f50badb97b",
+      "finalStateIdentity": "4126e0a2e80d49ae",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-29",
+      "status": "complete",
+      "ticks": 1597,
+      "steps": 7,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "d6b2a77138cf3647",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "33055fd094209a2ab16895b1d8d22697b5367bb67a07136b0b23152f40e88032",
+      "finalStateIdentity": "cc775be8808698bd",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-30",
+      "status": "complete",
+      "ticks": 1277,
+      "steps": 6,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "f64b398a00779157",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "ff39a20f729a7a5ed45d636857a4ff6c5c551dc3b5f42eb25d8c6848b3b0c46f",
+      "finalStateIdentity": "12ff1f943cd2eccf",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-31",
+      "status": "complete",
+      "ticks": 1840,
+      "steps": 8,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "f1cdd1513c0ee9f3",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "3a0fb5fec9f03125120b4848d7c2cdecd7f91bdc7f609b2b2dafc596be3061d1",
+      "finalStateIdentity": "a9d39bddf15619d9",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-32",
+      "status": "complete",
+      "ticks": 1709,
+      "steps": 8,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "9e197dcf42162e29",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "6a6f30ef5c9cdf0dad7b4ff050319421b98ceec074c19b3cf455bcb934744a3d",
+      "finalStateIdentity": "77c17e1155019e55",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-33",
+      "status": "complete",
+      "ticks": 2091,
+      "steps": 9,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "72d00097adedbf2a",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "0b0111be50be8f6425cda65906984e6101d7f2b530e33651aadc4e81e2f69ac9",
+      "finalStateIdentity": "88d6cc9efa4bbd1a",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-34",
+      "status": "complete",
+      "ticks": 2446,
+      "steps": 10,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "ca13700fe66c2268",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "a18fd00c2de31aecd494d30a6904f991e72bb03f030a70868acd4fa466188a70",
+      "finalStateIdentity": "783d9ac33d8dd03f",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-35",
+      "status": "complete",
+      "ticks": 1902,
+      "steps": 8,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "61eba51d4d1f67f9",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "fd3ba62fbdce744998a18d4eeffc8c40cc86c88631269a336a431599be9f12ba",
+      "finalStateIdentity": "8c29b29d69e761ab",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-36",
+      "status": "complete",
+      "ticks": 1796,
+      "steps": 9,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "dc42d2fa3d3c4baa",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "afe1505778ce0954d3b11e23af718c645b4c40e8da197e1865244ef6a9494449",
+      "finalStateIdentity": "ad7aa5de2e99f9fe",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-37",
+      "status": "complete",
+      "ticks": 2312,
+      "steps": 9,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "50a60434c3e9d920",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "65d5efc21fb10f980d188137ddcffcdd875b0cbf24059031f3b7d457b2ebbcf0",
+      "finalStateIdentity": "c4496bc85f21f7b4",
+      "namedLandingSurfaces": [
+        "school-platform-low",
+        "school-platform-high"
+      ],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-38",
+      "status": "complete",
+      "ticks": 1769,
+      "steps": 9,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "3c13e4acdfc93df4",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "28700265dfc336671f3372a9e186939bbcdb55b35f57ebab799bd73187395336",
+      "finalStateIdentity": "cabf135da49422b0",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-39",
+      "status": "complete",
+      "ticks": 2028,
+      "steps": 10,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "e7465341f53c8e7c",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "37d1e5d39e7575b87dcc9d784617223472a470b6d1afdbd57a8f2cf152a6fbbc",
+      "finalStateIdentity": "c3c3eed9622e8f82",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-40",
+      "status": "complete",
+      "ticks": 2007,
+      "steps": 9,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "f1542163caf3e49f",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "bddf111392e0fa296136bbc4fb0a7aa6dfdbe41f63f672578c8dc952b959570c",
+      "finalStateIdentity": "7c4a810a0a8ab6e0",
+      "namedLandingSurfaces": [],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-41",
+      "status": "complete",
+      "ticks": 2510,
+      "steps": 11,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "3f038022f908f6c6",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "cdc12c625b0bc25787177492a4bb3fcaa7702a4fd5cb208c5be2980dd452d76e",
+      "finalStateIdentity": "3d33e5a01e58079c",
+      "namedLandingSurfaces": [
+        "school-upper-deck"
+      ],
+      "finalSupport": "$floor"
+    },
+    {
+      "id": "beginner-42",
+      "status": "complete",
+      "ticks": 2784,
+      "steps": 12,
+      "contacts": 0,
+      "health": 100,
+      "independentReplay": true,
+      "pilotProofIdentical": true,
+      "sourceIdentity": "54080d3efd75e5d8",
+      "packIdentity": "fpv-navigation-school:5c31fce0b5a82b98",
+      "proofSha256": "c11485f46dbb81b08d881557eb876f4882815a04aafacd770bfb8b1c6b591891",
+      "finalStateIdentity": "52dc63ca74fabe94",
+      "namedLandingSurfaces": [
+        "school-finish-platform"
+      ],
+      "finalSupport": "school-finish-platform"
+    }
+  ],
+  "limits": [
+    "Ordinary commands and exact runtime/replay; no state or course advancement injected",
+    "No browser, physical-radio, unfamiliar-player, translation or hardware-performance acceptance claim",
+    "No new unit suite or skill-draft runtime used"
+  ]
+}

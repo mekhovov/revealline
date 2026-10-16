@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: mounted immediate: Details reading and Back preserve flight; only Resume moves
+ok 1 - mounted immediate: Details reading and Back preserve flight; only Resume moves
+  ---
+  duration_ms: 1396.048666
+  type: 'test'
+  ...
+# Subtest: mounted grid-center: Details reading and Back preserve flight; only Resume moves
+ok 2 - mounted grid-center: Details reading and Back preserve flight; only Resume moves
+  ---
+  duration_ms: 1181.779167
+  type: 'test'
+  ...
+# Subtest: actual notices survive later empty fixed-step batches and same-ID restore resets the history
+ok 3 - actual notices survive later empty fixed-step batches and same-ID restore resets the history
+  ---
+  duration_ms: 1579.113083
+  type: 'test'
+  ...
+# Subtest: actual current and stale async notices keep full copy without opening or refreshing a reading dialog
+ok 4 - actual current and stale async notices keep full copy without opening or refreshing a reading dialog
+  ---
+  duration_ms: 535.042375
+  type: 'test'
+  ...
+# Subtest: accepted notice history is bounded with explicit omission while current full text is never truncated
+ok 5 - accepted notice history is bounded with explicit omission while current full text is never truncated
+  ---
+  duration_ms: 430.553333
+  type: 'test'
+  ...
+# Subtest: Details does not reopen or steal focus after run replacement, nested dialog, BFCache or teardown
+ok 6 - Details does not reopen or steal focus after run replacement, nested dialog, BFCache or teardown
+  ---
+  duration_ms: 757.083125
+  type: 'test'
+  ...
+# Subtest: mounted Classic Details retains typed lane warnings, required objectives and automatic-only actions
+ok 7 - mounted Classic Details retains typed lane warnings, required objectives and automatic-only actions
+  ---
+  duration_ms: 3613.683584
+  type: 'test'
+  ...
+# Subtest: mounted encounter Details uses actual full instruction and typed lane
+ok 8 - mounted encounter Details uses actual full instruction and typed lane
+  ---
+  duration_ms: 450.12775
+  type: 'test'
+  ...
+# Subtest: mounted authored three-relay preview shares guide names and exact paused encounter instructions
+ok 9 - mounted authored three-relay preview shares guide names and exact paused encounter instructions
+  ---
+  duration_ms: 784.350125
+  type: 'test'
+  ...
+# Subtest: mounted controller navigates Pause to Details and reading; held Back cannot resume after closing Details
+ok 10 - mounted controller navigates Pause to Details and reading; held Back cannot resume after closing Details
+  ---
+  duration_ms: 3257.677417
+  type: 'test'
+  ...
+# Subtest: queued Details entry does not open or steal focus in a hidden or unfocused document
+ok 11 - queued Details entry does not open or steal focus in a hidden or unfocused document
+  ---
+  duration_ms: 448.65975
+  type: 'test'
+  ...
+# Subtest: actual reader Tab leaves Done for Back once; reopening resets only the new dialog scroll
+ok 12 - actual reader Tab leaves Done for Back once; reopening resets only the new dialog scroll
+  ---
+  duration_ms: 725.505875
+  type: 'test'
+  ...
+# Subtest: return-in-reserve: current global-v1 impact missions retain their existing pressure details
+ok 13 - return-in-reserve: current global-v1 impact missions retain their existing pressure details
+  ---
+  duration_ms: 54.035958
+  type: 'test'
+  ...
+# Subtest: return-in-reserve: charge recovery still exposes already travelling impact fronts
+ok 14 - return-in-reserve: charge recovery still exposes already travelling impact fronts
+  ---
+  duration_ms: 19.107083
+  type: 'test'
+  ...
+# Subtest: return-in-reserve: valid explicit v2 carrier-plus-pressure import describes both abilities
+ok 15 - return-in-reserve: valid explicit v2 carrier-plus-pressure import describes both abilities
+  ---
+  duration_ms: 25.508459
+  type: 'test'
+  ...
+# Subtest: crossed-bands: current global-v1 impact missions retain their existing pressure details
+ok 16 - crossed-bands: current global-v1 impact missions retain their existing pressure details
+  ---
+  duration_ms: 38.982459
+  type: 'test'
+  ...
+# Subtest: crossed-bands: charge recovery still exposes already travelling impact fronts
+ok 17 - crossed-bands: charge recovery still exposes already travelling impact fronts
+  ---
+  duration_ms: 17.263375
+  type: 'test'
+  ...
+# Subtest: crossed-bands: valid explicit v2 carrier-plus-pressure import describes both abilities
+ok 18 - crossed-bands: valid explicit v2 carrier-plus-pressure import describes both abilities
+  ---
+  duration_ms: 25.684167
+  type: 'test'
+  ...
+# Subtest: carrier without pressure and pressure without carrier preserve their existing output
+ok 19 - carrier without pressure and pressure without carrier preserve their existing output
+  ---
+  duration_ms: 0.63925
+  type: 'test'
+  ...
+# Subtest: combined roles and carrier ability use the existing English and Ukrainian translations
+ok 20 - combined roles and carrier ability use the existing English and Ukrainian translations
+  ---
+  duration_ms: 0.777125
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15635.199125

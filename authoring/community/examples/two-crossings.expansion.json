@@ -1,0 +1,230 @@
+{
+  "format": "xonix-pack.v1",
+  "id": "community-guide-crossings",
+  "version": "1.0.0",
+  "name": "Creator guide · two crossings",
+  "description": "A tiny instructional campaign. Travel down to the opposite boundary to finish each map. No enemies, uploads, or external media. Intended to teach installation and Next, not difficulty balance.",
+  "engine": "xonix-core.v2",
+  "dependencies": [],
+  "metadata": {
+    "author": "Reveal Line contributors",
+    "license": "Follow the repository distribution terms for reused theme and class recipes.",
+    "rightsStatus": "Repository-owned geometry and procedural presentation; no third-party media or personal data."
+  },
+  "themes": [
+    {
+      "id": "fpv",
+      "name": "FPV Front",
+      "subtitle": "Dawn over home",
+      "family": "fpv",
+      "player": "fpv-body",
+      "enemyShape": "tank",
+      "patrolShape": "drone",
+      "bossShape": "radar",
+      "scene": "dawn",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply pad",
+        "enemy": "Invader patrol",
+        "boss": "Signal sentinel",
+        "currency": "Score",
+        "ability": "Equipment"
+      },
+      "palette": {
+        "ink": "#112d35",
+        "paper": "#f5f1e6",
+        "muted": "#8baaa5",
+        "accent": "#e9c46a",
+        "safe": "#81b5bf",
+        "danger": "#f08168",
+        "field": "#102831",
+        "grid": "#193941",
+        "sky": "#dfb781",
+        "land": "#687c55"
+      },
+      "classBodies": {
+        "scout": "scout-quad",
+        "bomber": "fpv-body",
+        "carrier": "heavy-lift",
+        "interceptor": "scout-quad",
+        "fiber": "fpv-body",
+        "impact": "fpv-body",
+        "trapper": "fpv-body"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "guide-first-crossing",
+      "revision": "1",
+      "title": "Creator guide · two crossings",
+      "themeId": "fpv",
+      "levels": [
+        {
+          "version": "xonix-level.v1",
+          "id": "guide-first-crossing",
+          "revision": "1",
+          "name": "First crossing",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [],
+          "objectives": [],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.15
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [
+              40,
+              73
+            ]
+          }
+        },
+        {
+          "version": "xonix-level.v1",
+          "id": "guide-second-crossing",
+          "revision": "1",
+          "name": "Second crossing",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 12.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [],
+          "objectives": [],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.15
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [
+              40,
+              73
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [],
+  "music": []
+}

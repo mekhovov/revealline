@@ -1,4 +1,13 @@
 import { boundedJSON } from '../data-json.mjs';
+import { classifyContent } from '../content-design/content-lifecycle.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+  classicRulesCampaignIdentity,
+  supportsClassicCurrentRules,
+} from './classic-current-rules.mjs';
+import { classicMissionPresentation, classicMissionDetails } from './classic-presentation.mjs';
+import { canonicalMissionLevelKey, officialLevelNumber } from '../level-numbering.mjs';
 
 const SOURCES = ['base', 'bundled', 'archived', 'optional', 'external'];
 const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
@@ -73,49 +82,85 @@ export function prepareMissionLibraryIndex(value) {
 
 /** No source-name guesses and no eager artwork reads. In particular an installed
  * pack with a matching name or ID is not automatically the official edition. */
-export function classicLibrarySources(index, { availability, prepare, launch, progress, card }) {
+export function classicLibrarySources(
+  index,
+  { availability, prepare, launch, progress, progressState, card },
+) {
   const checked = prepareMissionLibraryIndex(index);
   if (typeof availability !== 'function' || typeof launch !== 'function')
     throw new TypeError('Classic browsing needs host-owned availability and launch adapters.');
   const owners = new Map();
-  for (const entry of checked.missions) {
-    const id = JSON.stringify(['classic', entry.source, entry.packId]);
+  const originals = new WeakMap();
+  const entries = checked.missions.flatMap((entry) =>
+    [
+      ...(supportsClassicCurrentRules(entry) ? [CLASSIC_RULES_CURRENT] : []),
+      CLASSIC_RULES_ORIGINAL,
+    ].map((rulesEdition) => {
+      const row = Object.freeze({ ...entry, rulesEdition });
+      originals.set(row, entry);
+      return row;
+    }),
+  );
+  for (const entry of entries) {
+    const current = entry.rulesEdition === CLASSIC_RULES_CURRENT;
+    const id = JSON.stringify([
+      'classic',
+      entry.source,
+      entry.packId,
+      ...(current ? [CLASSIC_RULES_CURRENT] : []),
+    ]);
     let owner = owners.get(id);
     if (!owner) {
+      const contentLifecycle =
+        classifyContent({ family: 'classic', id: entry.packId, source: entry.source }) ===
+        'archived'
+          ? 'archive'
+          : 'current';
       owner = {
         id,
         collection: 'Classic',
-        editionId: entry.sourceFile.sha256,
-        edition: entry.edition,
+        // Once a compatible Current-rules projection exists, the authenticated
+        // Original-rules edition remains available through Archive instead of
+        // appearing as a duplicate campaign in ordinary player browsing.
+        lifecycle: !current && supportsClassicCurrentRules(entry) ? 'archive' : contentLifecycle,
+        editionId: current
+          ? `${entry.sourceFile.sha256}:${CLASSIC_RULES_CURRENT}`
+          : entry.sourceFile.sha256,
+        edition: `${entry.edition} · ${current ? 'Current rules' : 'Original rules'}`,
         entries: [],
-        describe: (row) => ({
-          id: row.levelId,
-          revision: row.levelRevision,
-          campaignKey: row.campaignKey,
-          campaignTitle: row.campaignTitle,
-          name: row.name,
-          levelIndex: row.levelIndex,
-          modes: row.modes,
-          tags: row.tags,
-          rules: row.rules,
-        }),
+        describe: (row) => {
+          const canonicalLevelKey = canonicalMissionLevelKey(row);
+          return {
+            id: row.levelId,
+            revision: row.levelRevision,
+            campaignKey: classicRulesCampaignIdentity(row),
+            campaignTitle: row.campaignTitle,
+            name: row.name,
+            levelIndex: row.levelIndex,
+            canonicalLevelKey,
+            globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+            modes: row.modes,
+            tags: row.tags,
+            rules: row.rules,
+          };
+        },
         availability,
         prepare,
         launch,
         progress,
+        progressState,
         card,
-        details: (row, mode) => ({
-          challenge: `Authored Standard rules · ${row.rules}${mode === 'versus' ? ' · Separate Versus race timer also applies' : ''}`,
-          route: `Difficulty settings: ${row.difficultiesByMode[mode]
-            .map((preset) => `${preset[0].toUpperCase()}${preset.slice(1)}`)
-            .join(', ')}`,
-        }),
+        presentation: (row) => classicMissionPresentation(originals.get(row), row.rulesEdition),
+        details: (row, mode) => classicMissionDetails(originals.get(row), row.rulesEdition, mode),
       };
       owners.set(id, owner);
     }
     if (
-      owner.editionId !== entry.sourceFile.sha256 ||
-      owner.edition !== entry.edition ||
+      owner.editionId !==
+        (current
+          ? `${entry.sourceFile.sha256}:${CLASSIC_RULES_CURRENT}`
+          : entry.sourceFile.sha256) ||
+      owner.edition !== `${entry.edition} · ${current ? 'Current rules' : 'Original rules'}` ||
       (owner.entries.length > 0 &&
         (owner.entries[0].packIdentity?.sha256 !== entry.packIdentity?.sha256 ||
           owner.entries[0].packIdentity?.bytes !== entry.packIdentity?.bytes))

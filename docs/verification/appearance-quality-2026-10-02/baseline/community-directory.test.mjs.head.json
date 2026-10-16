@@ -1,0 +1,29 @@
+{
+  "file": "game/test/community-directory.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/community-directory.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 0.1,
+  "failures": [
+    {
+      "test": "public company directory can display and navigate without a community backend",
+      "location": "/privategame/test/community-directory.test.mjs:17:1",
+      "detail": "\n  ---\n  duration_ms: 8.845833\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/community-directory.test.mjs:17:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Only the local localization runtime runs; no catalog/auth/client bootstrap is loaded.\n    + actual - expected\n    \n      [\n        '../i18n/bootstrap.mjs',\n        '../i18n/catalogs.mjs',\n        '../vendor/i18next-26.4.2.min.js',\n    +   './directory.mjs'\n      ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0: '../i18n/bootstrap.mjs'\n    1: '../i18n/catalogs.mjs'\n    2: '../vendor/i18next-26.4.2.min.js'\n  actual:\n    0: '../i18n/bootstrap.mjs'\n    1: '../i18n/catalogs.mjs'\n    2: '../vendor/i18next-26.4.2.min.js'\n    3: './directory.mjs'\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/community-directory.test.mjs:28:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 8",
+    "# pass 7",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 75.04275"
+  ]
+}

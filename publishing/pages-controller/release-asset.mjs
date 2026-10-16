@@ -6,12 +6,12 @@ const headers = (token, accept) => ({
   'X-GitHub-Api-Version': '2022-11-28',
 });
 
-async function readBounded(response, expectedBytes) {
+async function readBounded(response, expectedBytes, limit = SHA_ASSET_LIMIT) {
   const chunks = [];
   let size = 0;
   for await (const chunk of response.body) {
     size += chunk.length;
-    if (size > SHA_ASSET_LIMIT) {
+    if (size > limit) {
       await response.body.cancel().catch(() => {});
       throw new Error('Published qualification exceeds its byte budget.');
     }
@@ -28,7 +28,10 @@ export async function downloadReleaseAsset({
   name,
   token = process.env.GH_TOKEN,
   fetchImpl = fetch,
+  maxBytes = SHA_ASSET_LIMIT,
 }) {
+  if (!Number.isSafeInteger(maxBytes) || maxBytes <= 0 || maxBytes > 950_000_000)
+    throw new Error('Invalid bounded release asset size.');
   if (!/^[\w.-]+\/[\w.-]+$/.test(repository)) throw new Error('Invalid release repository.');
   if (!/^v\d+\.\d+\.\d+$/.test(version)) throw new Error('Invalid release version.');
   if (!/^[\w.-]+$/.test(name)) throw new Error('Invalid release asset name.');
@@ -52,7 +55,7 @@ export async function downloadReleaseAsset({
     matches[0].state !== 'uploaded' ||
     !Number.isSafeInteger(matches[0].size) ||
     matches[0].size < 0 ||
-    matches[0].size > SHA_ASSET_LIMIT ||
+    matches[0].size > maxBytes ||
     !/^https:\/\/api\.github\.com\/repos\/[\w.-]+\/[\w.-]+\/releases\/assets\/\d+$/.test(
       matches[0].url,
     )
@@ -66,5 +69,5 @@ export async function downloadReleaseAsset({
   });
   if (!assetResponse.ok)
     throw new Error('The selected release does not publish its source qualification.');
-  return readBounded(assetResponse, matches[0].size);
+  return readBounded(assetResponse, matches[0].size, maxBytes);
 }

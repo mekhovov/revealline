@@ -1,8 +1,13 @@
 # UX0 hosted-CI correction record
 
-This record supplements `docs/player-first-ux0-verification.md` for the final
-v0.98.0 candidate. It does not replace fresh exact-source CI, release
-qualification, browser verification, or physical-device evidence.
+This record supplements `docs/player-first-ux0-verification.md`. Its runs belong
+to the former PR320/v0.98 candidate and are preserved as historical evidence.
+v0.98.0 was published independently; the reconciled UX0 candidate is v0.100.0.
+Run `36007570919` was cancelled after the temporary fast-release policy became
+authoritative: preflight, build and shard 1 passed, while shards 2–4 were cancelled
+and are deferred rather than passes. This record does not replace fresh
+exact-source CI, release qualification, browser verification or physical-device
+evidence.
 
 The first complete hosted run for source
 `26fe20f8c00aa2d09238595c8856fa5572ea0561` executed 12,803 tests: 12,788
@@ -35,10 +40,11 @@ delays reproduce every original failure and the corrected cases pass. The backup
 observer lifecycle passes 5/5. Syntax, scoped lint, repository formatting and
 independent read-only reviews pass.
 
-The candidate remains blocked until a new hosted full suite passes on the exact
-final PR head. After that: merge, exact-source qualification, immutable freeze,
-release publication, archive admission, Pages deployment and public input/play
-verification. UX1-A starts only after v0.98.0 is publicly accepted.
+The reconciled candidate requires focused UX0 checks and the ordinary exact-head
+preflight, build and release-ready jobs under the temporary fast-release policy.
+After that: merge, exact-source qualification with `run_tests=false`, immutable
+freeze, release publication, archive admission, Pages deployment and public
+input/play verification. UX1-A starts only after v0.100.0 is publicly accepted.
 
 ## Exact-head run 35976493810
 

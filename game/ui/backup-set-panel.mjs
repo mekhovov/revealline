@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { prepareBackupSet } from '../backup-set.mjs';
 
@@ -25,19 +26,31 @@ export function attachBackupSetPanel({
   const node = (tag, id, text) => {
     const element = document.createElement(tag);
     element.id = id;
-    element.textContent = text;
+    localizedText(element, () => text);
     return element;
   };
-  const prepare = node('button', 'prepare-backup-set', 'Prepare game and originals backup'),
-    cancelButton = node('button', 'cancel-backup-set', 'Cancel preparation'),
+  const prepare = node(
+      'button',
+      'prepare-backup-set',
+      localizedMessage('interface:prepareGameAndOriginalsBackup'),
+    ),
+    cancelButton = node(
+      'button',
+      'cancel-backup-set',
+      localizedMessage('common:actions.cancelPreparation'),
+    ),
     status = node(
       'p',
       'backup-set-status',
-      'Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.',
+      localizedMessage('interface:prepareSeparateGameDataPictureStoryAndSavedMusicFiles'),
     ),
     list = node('ul', 'backup-set-files', ''),
     filenames = node('details', 'backup-set-filenames', ''),
-    filenameSummary = node('summary', 'backup-set-filename-summary', 'File names'),
+    filenameSummary = node(
+      'summary',
+      'backup-set-filename-summary',
+      localizedMessage('interface:fileNames'),
+    ),
     filenameList = node('dl', 'backup-set-filename-list', '');
   prepare.type = cancelButton.type = 'button';
   prepare.className = 'button primary';
@@ -52,9 +65,7 @@ export function attachBackupSetPanel({
   const presenter = createOperationStatus(status);
   const showStatus = (message, state = 'ready') =>
     presenter.begin({ message }).finish({ message, state });
-  showStatus(
-    'Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.',
-  );
+  showStatus(t('interface:prepareSeparateGameDataPictureStoryAndSavedMusicFiles'));
   let operation = null,
     prepared = null;
   const urls = new Set();
@@ -80,7 +91,7 @@ export function attachBackupSetPanel({
   }
   function cancel({
     focus = true,
-    message = 'Preparation cancelled. Your data is unchanged.',
+    message = t('interface:preparationCancelledYourDataIsUnchanged'),
   } = {}) {
     const op = operation;
     if (!op && !prepared) return false;
@@ -98,7 +109,7 @@ export function attachBackupSetPanel({
     try {
       prepared.assertGameCurrent();
     } catch {
-      cancel({ message: 'Game data changed. Prepare the backup set again.' });
+      cancel({ message: t('interface:gameDataChangedPrepareTheBackupSetAgain') });
     }
   }
   prepare.onclick = async () => {
@@ -114,7 +125,7 @@ export function attachBackupSetPanel({
     operation = op;
     presentFeedback();
     op.lease = presenter.begin({
-      message: 'Reading saved inventories for the backup set…',
+      message: t('interface:readingSavedInventoriesForTheBackupSet'),
       isCurrent: () => operation === op && !op.controller.signal.aborted,
     });
     setBusy(true);
@@ -158,7 +169,7 @@ export function attachBackupSetPanel({
             return false;
           }
           presentFeedback();
-          state.textContent = `Download requested · ${file.bytes} bytes`;
+          localizedText(state, () => `Download requested · ${file.bytes} bytes`);
           showStatus(
             'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.' +
               (result.coverage.musicRecoveryNotice
@@ -180,7 +191,7 @@ export function attachBackupSetPanel({
           ? `Prepared music recovery references. ${result.coverage.musicRecoveryNotice}${result.coverage.detachedStories.length ? ` ${result.coverage.detachedStories.length} detached story original(s) are also unavailable.` : ''} Read the coverage report. No file has been saved to disk.`
           : result.coverage.detachedStories.length
             ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
-            : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.',
+            : t('interface:preparedAllFourSavedInventoriesAndTheirCoverageReportDownload'),
       );
       const hadCancelFocus = finish(op);
       if (!document.hidden && document.hasFocus?.() !== false && hadCancelFocus)

@@ -1,0 +1,1345 @@
+{
+  "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+  "origin": "http://127.0.0.1:9020/sustained.html",
+  "scope": "Synthetic recorded-input production runtime+renderer workload; explicit manual load/start;30warmup+1200measuredframes;one50Hzphysicstick/frame,notrealtime;notgameplay/deviceFPS",
+  "files": {
+    "sustained.html": {
+      "bytes": 1785,
+      "sha256": "7051fe5e172a1ac36d287423533ce0f3d5d4cb75d620dca44898cc8a5873154a"
+    },
+    "sustained.mjs": {
+      "bytes": 8210,
+      "sha256": "bdfc0686186e6069708a14876e7aa50e0e55bc6aca17e7bd875e1328f6d88c7e"
+    },
+    "sustained-workload.json": {
+      "bytes": 74424,
+      "sha256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8"
+    }
+  },
+  "status": "completed-bounded-native-synthetic-workload",
+  "physicsPreflight": {
+    "scope": "Node production physics sanity only, not native renderer timing",
+    "rows": [
+      {
+        "world": "mountain-reservoir",
+        "commands": 1230,
+        "resets": 0,
+        "moving": 1230,
+        "contacts": 125,
+        "final": {
+          "ticks": 1230,
+          "status": "active",
+          "position": {
+            "x": -16690,
+            "y": 22,
+            "z": 26796
+          },
+          "health": 100
+        },
+        "snapshotSHA256": "86a548bafba90a4168fcb92bb689f6522b44855c3b9128b1570aed3d9dbf4127"
+      },
+      {
+        "world": "harbor-docks",
+        "commands": 1230,
+        "resets": 0,
+        "moving": 1192,
+        "contacts": 143,
+        "final": {
+          "ticks": 1230,
+          "status": "active",
+          "position": {
+            "x": 10953,
+            "y": 2022,
+            "z": 34392
+          },
+          "health": 100
+        },
+        "snapshotSHA256": "11f28019d7256aba417e1627db37f197703a4e050881f80e50763bb9f98c3034"
+      },
+      {
+        "world": "cc0-coaster-park",
+        "commands": 1230,
+        "resets": 0,
+        "moving": 1230,
+        "contacts": 0,
+        "final": {
+          "ticks": 1230,
+          "status": "active",
+          "position": {
+            "x": 13648,
+            "y": 33948,
+            "z": 41197
+          },
+          "health": 100
+        },
+        "snapshotSHA256": "2d6abb7a761f163ea6cbd3f9eab50b1041ba98eeb77b16270ca14af77691297d"
+      }
+    ]
+  },
+  "canvasLifecycle": "Each load uses a fresh canvas after explicit production renderer disposal and context release; previous resource counts captured before replacement.",
+  "nativeSamples": [
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "quality": "balanced",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10282.39999999851,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1230,
+      "terminalResets": 0,
+      "contactsPeak": 125,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": -16690,
+          "y": 22,
+          "z": 26796
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.6742499999888242,
+        "p50Ms": 0.6999999992549419,
+        "p95Ms": 0.9000000022351742,
+        "maxMs": 1.199999999254942
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.1159166665468365,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.5
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.5575833334339162,
+        "p50Ms": 0.5999999977648258,
+        "p95Ms": 0.8000000007450581,
+        "maxMs": 1
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.333000000000006,
+        "p50Ms": 8.30000000000291,
+        "p95Ms": 10,
+        "maxMs": 10.400000000008731
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 187,
+          "materials": 282,
+          "textures": 32
+        },
+        "renderer": {
+          "calls": 281,
+          "triangles": 31840,
+          "geometries": 172,
+          "textures": 30,
+          "programs": 16,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 187,
+          "materials": 282,
+          "textures": 32
+        },
+        "renderer": {
+          "calls": 281,
+          "triangles": 31840,
+          "geometries": 172,
+          "textures": 30,
+          "programs": 16,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 281,
+          "triangles": 31840,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 76680640,
+        "total": 82486216,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 77198692,
+        "total": 83371128,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "quality": "high",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10274.39999999851,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1230,
+      "terminalResets": 0,
+      "contactsPeak": 125,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": -16690,
+          "y": 22,
+          "z": 26796
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.7605000000384947,
+        "p50Ms": 0.8000000007450581,
+        "p95Ms": 1,
+        "maxMs": 1.4000000022351742
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.12150000002545615,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.4000000022351742
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.6385000000117967,
+        "p50Ms": 0.6999999992549419,
+        "p95Ms": 0.8999999985098839,
+        "maxMs": 1.2000000029802322
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.326750000000004,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 10.10000000000582,
+        "maxMs": 10.39999999999418
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 198,
+          "materials": 288,
+          "textures": 32
+        },
+        "renderer": {
+          "calls": 312,
+          "triangles": 37024,
+          "geometries": 193,
+          "textures": 30,
+          "programs": 16,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 198,
+          "materials": 288,
+          "textures": 32
+        },
+        "renderer": {
+          "calls": 312,
+          "triangles": 37024,
+          "geometries": 193,
+          "textures": 30,
+          "programs": 16,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 312,
+          "triangles": 37024,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 97588444,
+        "total": 109780960,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 93768984,
+        "total": 111353824,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "mountain-reservoir",
+      "packRevision": "r16",
+      "packSHA256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "quality": "low",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10267.5,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1230,
+      "terminalResets": 0,
+      "contactsPeak": 125,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": -16690,
+          "y": 22,
+          "z": 26796
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.5835833332656573,
+        "p50Ms": 0.5999999977648258,
+        "p95Ms": 0.8999999985098839,
+        "maxMs": 1.0999999977648258
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.11933333323337138,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.4000000022351742
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.4635833333587895,
+        "p50Ms": 0.5,
+        "p95Ms": 0.7000000029802322,
+        "maxMs": 0.9000000022351742
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.322833333333305,
+        "p50Ms": 8.300000000046566,
+        "p95Ms": 10,
+        "maxMs": 11.300000000046566
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 187,
+          "materials": 282,
+          "textures": 29
+        },
+        "renderer": {
+          "calls": 180,
+          "triangles": 17040,
+          "geometries": 167,
+          "textures": 25,
+          "programs": 12,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 187,
+          "materials": 282,
+          "textures": 29
+        },
+        "renderer": {
+          "calls": 180,
+          "triangles": 17040,
+          "geometries": 167,
+          "textures": 25,
+          "programs": 12,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 180,
+          "triangles": 17040,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 73744776,
+        "total": 96243148,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 71367787,
+        "total": 96505351,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "quality": "balanced",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10282,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1192,
+      "terminalResets": 0,
+      "contactsPeak": 143,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": 10953,
+          "y": 2022,
+          "z": 34392
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.660499999942258,
+        "p50Ms": 0.6999999992549419,
+        "p95Ms": 0.9000000022351742,
+        "maxMs": 1.300000000745058
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.12383333325075606,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.6000000014901161
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.5358333333581686,
+        "p50Ms": 0.5,
+        "p95Ms": 0.8000000007450581,
+        "maxMs": 1
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.333833333333338,
+        "p50Ms": 8.30000000000291,
+        "p95Ms": 9.200000000004366,
+        "maxMs": 9.400000000001455
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 251,
+          "materials": 301,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 249,
+          "triangles": 22716,
+          "geometries": 153,
+          "textures": 23,
+          "programs": 13,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 251,
+          "materials": 301,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 249,
+          "triangles": 22716,
+          "geometries": 153,
+          "textures": 23,
+          "programs": 13,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 249,
+          "triangles": 22716,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 81238065,
+        "total": 95976785,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 83494305,
+        "total": 95072365,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "quality": "high",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10281.60000000149,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1192,
+      "terminalResets": 0,
+      "contactsPeak": 143,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": 10953,
+          "y": 2022,
+          "z": 34392
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.7759166666585952,
+        "p50Ms": 0.8000000007450581,
+        "p95Ms": 1.1000000014901161,
+        "maxMs": 1.5
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.12283333330104748,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.4000000022351742
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.651583333350718,
+        "p50Ms": 0.6000000014901161,
+        "p95Ms": 1,
+        "maxMs": 1.300000000745058
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.333000000000006,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 10.10000000000582,
+        "maxMs": 10.39999999999418
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 262,
+          "materials": 307,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 301,
+          "triangles": 29680,
+          "geometries": 195,
+          "textures": 23,
+          "programs": 13,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 262,
+          "materials": 307,
+          "textures": 26
+        },
+        "renderer": {
+          "calls": 301,
+          "triangles": 29680,
+          "geometries": 195,
+          "textures": 23,
+          "programs": 13,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 301,
+          "triangles": 29680,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 93070454,
+        "total": 113735202,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 96230789,
+        "total": 114259549,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "harbor-docks",
+      "packRevision": "r4",
+      "packSHA256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "quality": "low",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10278.599999997765,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1192,
+      "terminalResets": 0,
+      "contactsPeak": 143,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": 10953,
+          "y": 2022,
+          "z": 34392
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.5046666666275511,
+        "p50Ms": 0.5,
+        "p95Ms": 0.6999999992549419,
+        "maxMs": 1.1000000014901161
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.11933333329235514,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.30000000074505806
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.3843333333420257,
+        "p50Ms": 0.3999999985098839,
+        "p95Ms": 0.6000000014901161,
+        "maxMs": 0.8999999985098839
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.331999999999995,
+        "p50Ms": 8.300000000017462,
+        "p95Ms": 10,
+        "maxMs": 10.39999999999418
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 251,
+          "materials": 301,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 154,
+          "triangles": 12404,
+          "geometries": 141,
+          "textures": 18,
+          "programs": 10,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 251,
+          "materials": 301,
+          "textures": 23
+        },
+        "renderer": {
+          "calls": 154,
+          "triangles": 12404,
+          "geometries": 141,
+          "textures": 18,
+          "programs": 10,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 154,
+          "triangles": 12404,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 84822356,
+        "total": 93684216,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 68082081,
+        "total": 94119797,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "cc0-coaster-park",
+      "packRevision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "quality": "low",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10281.800000000745,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1230,
+      "terminalResets": 0,
+      "contactsPeak": 0,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": 13648,
+          "y": 33948,
+          "z": 41197
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.41900000006891785,
+        "p50Ms": 0.4000000022351742,
+        "p95Ms": 0.6000000014901161,
+        "maxMs": 1
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.1180000000850608,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.30000000074505806
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.3002499999850988,
+        "p50Ms": 0.30000000074505806,
+        "p95Ms": 0.5,
+        "maxMs": 0.9000000022351742
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.333333333333334,
+        "p50Ms": 8.299999999988358,
+        "p95Ms": 9.899999999965075,
+        "maxMs": 10.400000000023283
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 282,
+          "materials": 293,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 134,
+          "triangles": 23063,
+          "geometries": 75,
+          "textures": 8,
+          "programs": 17,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 282,
+          "materials": 293,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 134,
+          "triangles": 23063,
+          "geometries": 75,
+          "textures": 8,
+          "programs": 17,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 134,
+          "triangles": 23063,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 82850556,
+        "total": 141060616,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 73161317,
+        "total": 110686493,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "cc0-coaster-park",
+      "packRevision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "quality": "balanced",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10263,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1230,
+      "terminalResets": 0,
+      "contactsPeak": 0,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": 13648,
+          "y": 33948,
+          "z": 41197
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.544916666628172,
+        "p50Ms": 0.5,
+        "p95Ms": 0.7000000029802322,
+        "maxMs": 1.8999999985098839
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.12608333327186605,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.30000000074505806
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.4180000000198682,
+        "p50Ms": 0.4000000022351742,
+        "p95Ms": 0.6000000014901161,
+        "maxMs": 1.5999999977648258
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.319166666666666,
+        "p50Ms": 8.300000000046566,
+        "p95Ms": 9.199999999953434,
+        "maxMs": 9.400000000023283
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 282,
+          "materials": 293,
+          "textures": 24
+        },
+        "renderer": {
+          "calls": 235,
+          "triangles": 43816,
+          "geometries": 75,
+          "textures": 13,
+          "programs": 22,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 282,
+          "materials": 293,
+          "textures": 24
+        },
+        "renderer": {
+          "calls": 235,
+          "triangles": 43816,
+          "geometries": 75,
+          "textures": 13,
+          "programs": 22,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 235,
+          "triangles": 43816,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 80141845,
+        "total": 137342797,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 74332980,
+        "total": 80480564,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    },
+    {
+      "status": "completed-bounded-synthetic-workload",
+      "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+      "world": "cc0-coaster-park",
+      "packRevision": "r1",
+      "packSHA256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "quality": "high",
+      "mode": "self-level",
+      "workloadSHA256": "5aa726775942d69f828a7305ede0f36da8c77d60f35b39313afb7277df2e9ff8",
+      "workloadSeed": 5369869,
+      "requestedMeasuredFrames": 1200,
+      "actualMeasuredFrames": 1200,
+      "warmupFrames": 30,
+      "simulationTicksExecuted": 1230,
+      "wallElapsedMs": 10277.39999999851,
+      "viewport": {
+        "basis": "visualViewport",
+        "width": 1280,
+        "height": 800,
+        "dpr": 1,
+        "canvasCSS": {
+          "width": 1280,
+          "height": 520
+        },
+        "canvasBacking": {
+          "width": 1280,
+          "height": 520
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "movingFrames": 1230,
+      "terminalResets": 0,
+      "contactsPeak": 0,
+      "cameraMeasuredFrames": {
+        "fpv": 400,
+        "chase": 400,
+        "overview": 400
+      },
+      "lastSnapshot": {
+        "ticks": 1230,
+        "status": "active",
+        "position": {
+          "x": 13648,
+          "y": 33948,
+          "z": 41197
+        },
+        "health": 100
+      },
+      "CPU": {
+        "count": 1200,
+        "meanMs": 0.5905000000571211,
+        "p50Ms": 0.5999999977648258,
+        "p95Ms": 0.8000000007450581,
+        "maxMs": 1.5
+      },
+      "physicsCPU": {
+        "count": 1200,
+        "meanMs": 0.13225000001490117,
+        "p50Ms": 0.10000000149011612,
+        "p95Ms": 0.20000000298023224,
+        "maxMs": 0.30000000074505806
+      },
+      "drawCPU": {
+        "count": 1200,
+        "meanMs": 0.4575833333687236,
+        "p50Ms": 0.5,
+        "p95Ms": 0.6999999992549419,
+        "maxMs": 1.3999999985098839
+      },
+      "animationCadence": {
+        "count": 1200,
+        "meanMs": 8.330499999999981,
+        "p50Ms": 8.300000000046566,
+        "p95Ms": 9.099999999976717,
+        "maxMs": 9.400000000023283
+      },
+      "resourcesBefore": {
+        "disposed": false,
+        "registered": {
+          "geometries": 293,
+          "materials": 299,
+          "textures": 24
+        },
+        "renderer": {
+          "calls": 257,
+          "triangles": 54144,
+          "geometries": 87,
+          "textures": 13,
+          "programs": 22,
+          "contextLost": false
+        }
+      },
+      "resourcesBeforeDispose": {
+        "disposed": false,
+        "registered": {
+          "geometries": 293,
+          "materials": 299,
+          "textures": 24
+        },
+        "renderer": {
+          "calls": 257,
+          "triangles": 54144,
+          "geometries": 87,
+          "textures": 13,
+          "programs": 22,
+          "contextLost": false
+        }
+      },
+      "resourcesAfterDispose": {
+        "disposed": true,
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 257,
+          "triangles": 54144,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      },
+      "heapBefore": {
+        "used": 92496736,
+        "total": 131211988,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "heapAfter": {
+        "used": 83870685,
+        "total": 88767965,
+        "limit": 4395630592,
+        "scope": "Browser-reported coarse JS heap; no forcedGC, not GPU memory"
+      },
+      "limits": "Synthetic one 50 Hz physics tick per rendered frame, not realtime. Model+drawCPU excludes bookkeeping/DOMprogress and asynchronousGPUcompletion; physicsCPU excludes terminalreset while combinedCPU includes it. Resource disposal counters/heap are observations, not proof of leakfreeGPUmemory or hardwareFPS."
+    }
+  ],
+  "rawReceipt": {
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/native-sustained-measurements-20261014.json",
+    "bytes": 34672,
+    "sha256": "6dce8f7bcf313e520a434ed9707bc194e82955bcce4eb197a47eab8799cdfce2"
+  },
+  "limitations": [
+    "One 50Hz simulation tick per rendered frame: synthetic throughput workload, not real-time gameplay or device FPS.",
+    "CPU measurements exclude browser/GPU completion and harness bookkeeping; requestAnimationFrame cadence reported separately.",
+    "Three first-course samples across three quality tiers, not every map/course or regional host.",
+    "Coarse heap samples without forced GC do not establish leak freedom; renderer retains one internal texture counter after disposal while registered resources are zero and context explicitly released.",
+    "No player storage, saved recordings or installed worlds touched. No public catalogue or new regional package admission claim."
+  ]
+}

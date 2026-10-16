@@ -1,0 +1,180 @@
+{
+  "date": "2026-10-15",
+  "scope": "Exact optional regional Library package and native origin-unavailable cached flight",
+  "archives": {
+    "sourceRevision": "9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee",
+    "sourceTree": "16c112649cc99c400a2f35ed06b646015b801531",
+    "version": "v0.151.1",
+    "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "kind": "distribution",
+        "verifiedMembers": 94,
+        "uncompressedBytes": 3738628,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3752312,
+        "archiveSHA256": "d3b10cb35f237de05fbae8342fb5908eccc8a98a24c7bc91b0ff35fee83461e1"
+      },
+      {
+        "id": "civilian-flight",
+        "kind": "source",
+        "verifiedMembers": 96,
+        "uncompressedBytes": 3772182,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3786202,
+        "archiveSHA256": "51d89548a8a23188361b8662380e507807680ba83a3da6c621013b10d3df1fa8"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "distribution",
+        "verifiedMembers": 101,
+        "uncompressedBytes": 6751069,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6766087,
+        "archiveSHA256": "6d53c7c0e52d23ca3e0e99e905ce7d60b876ab2c0adffd466d265c17337f798e"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "source",
+        "verifiedMembers": 103,
+        "uncompressedBytes": 6786133,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6801455,
+        "archiveSHA256": "f9926bbb3e4ca7ee7ef3c5a3215397b61c75c3191ccc3306081e6fd11b4f507e"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "distribution",
+        "verifiedMembers": 157,
+        "uncompressedBytes": 17368260,
+        "limits": {
+          "files": 159,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17393688,
+        "archiveSHA256": "cb424a5290a8962cc75ccc433348a975a7d82eb6f36b26441a14f9e4289f75ca"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "source",
+        "verifiedMembers": 159,
+        "uncompressedBytes": 17411223,
+        "limits": {
+          "files": 159,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17436955,
+        "archiveSHA256": "2164aaef06ed77dee92173b12ad1e1d852ea30db6a3768e2bf304a3c5decf250"
+      }
+    ]
+  },
+  "stagedMembers": {
+    "stagedImmutableMembers": 157,
+    "stagedBytes": 17368260,
+    "sourceRevision": "9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee",
+    "packageBytesUnmodified": true
+  },
+  "native": {
+    "canonicalPreparation": "Ready offline on first attempt",
+    "normalPlayerPath": [
+      "Open prepared practice: packaged Home",
+      "Home / Explore / regional remote Download: Saved review-r1",
+      "Fly: height 3m, zero input, disarmed",
+      "Explicit Arm and keyboard flight: 5.3m height, +5.3m/s vertical, 1.0m/s drift",
+      "Space pause and V Chase passed"
+    ],
+    "originUnavailable": {
+      "transport": "connection refused / HTTP 000",
+      "sameURLReload": "cached Home rendered",
+      "installedRegion": "Saved review-r1 retained",
+      "fly": "height 3m, zero input, disarmed, Chase preserved",
+      "explicitFlight": "Arm, W 2000ms, Space: paused at 0.2m height, +1.0m/s vertical, 69% throttle"
+    },
+    "serverRestored": true,
+    "restoredEntryHTTP": 200,
+    "storageDeleted": false,
+    "errorLogsBeforeStop": []
+  },
+  "regionalPin": {
+    "id": "urban-earthworks-study",
+    "revision": "review-r1",
+    "sourceCommit": "9d97e70c18729c3f399b90610380274e50d7d0df",
+    "descriptorBytes": 6615,
+    "descriptorSHA256": "1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c",
+    "contentFiles": 38,
+    "contentBytes": 1455090
+  },
+  "screenshots": [
+    {
+      "file": "regional-exact-package-flight.png",
+      "bytes": 51207,
+      "sha256": "a500bac3dc63dfa557b9f32370c296fce67c42e1762aefeef7b7a23eacb2b176"
+    },
+    {
+      "file": "regional-origin-unavailable-flight.png",
+      "bytes": 47449,
+      "sha256": "4d8193098997a6726bff233faf9c53d036b24b5359a5ddc877ab68042fc3adee"
+    }
+  ],
+  "limits": {
+    "companyCandidateAtReceipt": "in_progress",
+    "frozenHeadIncludesPairingCorrection1291": false,
+    "browserProcessRestartTested": false,
+    "allNetworkOfflineTested": false,
+    "actualQuotaEvictionTested": false,
+    "devicePerformanceClaim": false,
+    "publicPublicationClaim": false
+  },
+  "candidateRetrievalSnapshot": {
+    "sourceRevision": "9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee",
+    "sourceTree": "16c112649cc99c400a2f35ed06b646015b801531",
+    "version": "v0.151.1",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "revision": "b2613678aa1949fd22bef8e1e1f9b68cc3af08f3a9f28ac4b5f66f376863b984",
+    "cloudRun": 38653769049,
+    "githubArtifactId": 11935183630,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 156,
+    "worldsBytes": 17339492,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 23032713,
+        "sha256": "ff036aa3dd5da849d6b298e298257d1e133b6864c0229ddfb0d3c0334f647dd5"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 17393688,
+        "sha256": "cb424a5290a8962cc75ccc433348a975a7d82eb6f36b26441a14f9e4289f75ca"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 28768,
+        "sha256": "ccd58a8c3eafa0e674cf6826b7042b7aafeb6e0559ad5ca2f72e13cd7b625bcc"
+      }
+    }
+  },
+  "stagingPreparationSnapshot": {
+    "sourceRevision": "9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee",
+    "revision": "b2613678aa1949fd22bef8e1e1f9b68cc3af08f3a9f28ac4b5f66f376863b984",
+    "origin": "http://127.0.0.1:9043",
+    "launcherURL": "http://127.0.0.1:9043/revealline/practice/fpv-worlds/app/?lang=en",
+    "entryURL": "http://127.0.0.1:9043/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
+    "libraryURL": "http://127.0.0.1:9043/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en#packs",
+    "boundary": "Frozen package bytes unchanged. No external review fixture is injected. Native normal Library must download the shipped immutable pin and verify installation independently.",
+    "stageStatus": "prepared-native-review-pending"
+  }
+}

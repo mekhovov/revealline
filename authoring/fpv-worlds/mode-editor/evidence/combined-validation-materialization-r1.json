@@ -1,0 +1,11 @@
+{
+  "format": "FPVModeValidationMaterialization.v1",
+  "sourceRevision": "d41a251519ccb97dbac3b27bb9eed1718041d70e",
+  "selected": 4843,
+  "existing": 2971,
+  "apfsClones": 1872,
+  "cloneLogicalBytes": 774542260,
+  "gitFallbackFiles": 0,
+  "gitFallbackBytes": 0,
+  "allSelectedGitBlobHashesVerified": true
+}

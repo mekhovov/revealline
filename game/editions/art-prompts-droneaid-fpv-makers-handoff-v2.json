@@ -1,0 +1,645 @@
+{
+  "format": "revealline-art-prompts.v1",
+  "tool": "image_gen.imagegen",
+  "date": "2026-09-26",
+  "review": "FPV replacement-art candidates. Every completed master and selected derivative is inspected separately; in-game composition review and human artwork approval remain pending.",
+  "palette": {
+    "violet": "#4238EB",
+    "yellow": "#FFD62C",
+    "white": "#FFFFFF",
+    "carbon": "#17191E"
+  },
+  "sources": [
+    {
+      "title": "DroneAid Netherlands official initiative",
+      "url": "https://drone-aid.nl/en"
+    },
+    {
+      "title": "Authored FPV art direction",
+      "path": "docs/droneaid-fpv-art-direction.md"
+    }
+  ],
+  "assets": [
+    {
+      "id": "droneaid-nl-careful-handoff-01",
+      "missionId": "droneaid-nl-careful-handoff-01",
+      "revision": 2,
+      "title": "From Bench to Box",
+      "alt": "A carbon FPV quad beside foam-lined donation cases and goggles in a violet Dutch workshop, with blue-and-yellow fabric.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque 2:1 landscape reveal artwork for a fictional Dutch community FPV-drone workshop game; no text in the image.\nScene: From Bench to Box. A finished, clearly recognizable black carbon-frame FPV quad rests at a three-quarter angle on the right side of a realistic timber packing bench, beside its open foam-lined protective hard case. It has exactly four separate motors on four slender carbon arms, four visible simple three-blade propellers, a compact central body and one small forward FPV camera. Its design reads immediately as a hobby FPV quad, not a smooth consumer camera drone. A second closed hard case and unbranded black FPV goggles sit further back. Modest blue-over-yellow fabric ties and one folded blue/yellow cloth quietly communicate a fictional donation batch supporting Ukraine. No claim about actual deliveries. White plaster, matte violet #4238EB cabinet fronts and a restrained warm yellow #FFD62C lamp establish the Dutch workshop setting. True black woven carbon, matte foam, gently worn timber, practical straps, natural daylight mixed with warm task lighting. Premium photographic diorama realism with believable ordinary workshop proportions; no palace, fantasy objects or ornamental trinkets.\nComposition: wide exactly 2:1, complete quad and propeller tips comfortably inside frame, visually clear at 640×320. Elevated oblique view. One main quad focal subject, generous unoccupied central mat and low-detail floor edges. Keep the central rectangle x39–60%, y39–47% quiet; also preserve quiet patches near x14–25%, y67–78% and x74–85%, y17–28%. Keep broad soft-detail zones around x17%,y24% and x77%,y74%. These are composition reservations only: do NOT draw grid, markers, overlays or boundaries. Keep enough open space that game lines will remain legible after partial reveal.\nConstraints: fictional illustrative workshop, no people, hands, text, lettering, logos, watermarks, unit insignia, address labels, weapons, payloads, battle scenes, maps, routes, active screens, targeting UI, operational assembly or flight instructions, exploded component diagrams, exposed reproducible wiring or readable circuitry. All props parked, no flight. Opaque full-frame image.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2a34e08e-9de0-4e65-abff-ea8a2a55db04.png",
+        "sha256": "2d01ce4f130a455f3b71d27ebd2479030e0fa3fc76f138ac76c05769628bfb57",
+        "bytes": 2345273,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-01.png",
+        "sha256": "a18c0fd50924e46b4f7b277c4a1848cbde105012174df1ea87756bb81d5b08fe",
+        "bytes": 373593,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2a34e08e-9de0-4e65-abff-ea8a2a55db04.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-01.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: recognizable carbon quad with four separated motor/prop assemblies and front camera, foam-lined case and goggles, blue/yellow donation fabric; ordinary workshop, no people, readable labels, logo, payload or operational diagram.",
+        "selected": "Inspected 640×320 derivative: all four motor positions and camera remain readable, full craft stays within frame, central mat remains quiet. RGB opaque PNG below 384 KiB. Exact map-mask clearance remains for in-game review.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-02",
+      "missionId": "droneaid-nl-careful-handoff-02",
+      "revision": 2,
+      "title": "The Label Trail",
+      "alt": "A complete four-motor carbon FPV quad on a violet packing mat, blank labels and tags, goggles and cases around a clear aisle.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for The Label Trail (do not write title): A practical packing desk viewed along its length. A finished black carbon FPV quad fills the near-left worktop, with blank paper label rolls and plain tags grouped well behind it. Closed rugged cases occupy the right-back station. The long central aisle remains calm and empty. A single folded blue/yellow cloth lies across a rear case. Cooler noon light, violet cabinet edges, dark goggles case, no visible writing.\nComposition: Keep central x39–60%,y42–50% and lower-left x14–25%,y67–78% quiet, with soft patches around x17%,y24% and x77%,y74%; upper-right x74–85%,y19–31% stays plain.\nTargeted imagegen editing pass: Edit only framing of this existing workshop image. Zoom the camera out slightly, about 12%, preserving the same complete room, FPV quad, goggles, blank label rolls and tags, violet cabinets, daylight, blue/yellow fabric, photorealistic texture and wide 2:1 composition. The far-left propeller blade currently meets the left border: show that entire blade and leave comfortable empty margin around every quad propeller tip. Keep four motors and forward camera unchanged in design. Add only natural continuation of tabletop at the outer margins, no new subjects. No text, people, logo or UI. Opaque image.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-575312f5-9c19-4142-a919-6391002a65cc.png",
+        "sha256": "7b159db7ca16d4eb292e800369b4f38322ba1b21030f7c26dbd9f29fc04714a5",
+        "bytes": 2010960,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-02.png",
+        "sha256": "bd7d16c482fb993ff5af5282f935e9222d98425b6f18ec7e53a6a7cf38ee1111",
+        "bytes": 340440,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-575312f5-9c19-4142-a919-6391002a65cc.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-02.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Master reframed with imagegen to restore clearance around the left propeller. Inspected final master: complete quad and camera, blank paperwork, grounded room and blue/yellow fabric; no people or operational diagrams.",
+        "selected": "640×320 inspected: propeller tips now inside frame, four motors and camera legible, aisle remains clear. No resize cropping; exact map-mask review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-b8b50e3f-6e77-40dc-842e-7b04079c53b3.png",
+          "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for The Label Trail (do not write title): A practical packing desk viewed along its length. A finished black carbon FPV quad fills the near-left worktop, with blank paper label rolls and plain tags grouped well behind it. Closed rugged cases occupy the right-back station. The long central aisle remains calm and empty. A single folded blue/yellow cloth lies across a rear case. Cooler noon light, violet cabinet edges, dark goggles case, no visible writing.\nComposition: Keep central x39–60%,y42–50% and lower-left x14–25%,y67–78% quiet, with soft patches around x17%,y24% and x77%,y74%; upper-right x74–85%,y19–31% stays plain.",
+          "status": "not-selected",
+          "reason": "Left propeller blade reached image border; edited by imagegen to add margin.",
+          "editPrompt": "Edit only framing of this existing workshop image. Zoom the camera out slightly, about 12%, preserving the same complete room, FPV quad, goggles, blank label rolls and tags, violet cabinets, daylight, blue/yellow fabric, photorealistic texture and wide 2:1 composition. The far-left propeller blade currently meets the left border: show that entire blade and leave comfortable empty margin around every quad propeller tip. Keep four motors and forward camera unchanged in design. Add only natural continuation of tabletop at the outer margins, no new subjects. No text, people, logo or UI. Opaque image."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-03",
+      "missionId": "droneaid-nl-careful-handoff-03",
+      "revision": 2,
+      "title": "Collection Point",
+      "alt": "A camera-equipped carbon FPV quad nested in a foam-lined donation case in a practical violet-accented collection room.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Collection Point (do not write title): A modest Dutch brick workshop collection bay, seen from a slightly elevated side view. One open foam-lined hard case prominently holds a complete four-motor FPV carbon quad on a low table near the right-middle. Three closed violet-trimmed rugged cases wait on other low tables, with folded goggles straps and a small blue-over-yellow flag above a plain white wall section. A wide uncluttered floor aisle and practical timber table geometry; realistic warehouse room, no harbour scenery.\nComposition: Keep central x39–60%,y44–53%, lower-left x14–25%,y67–78%, upper-right x74–85%,y17–28% low contrast; leave soft space around x17%,y24% and x78%,y71%.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-adccf03a-a225-4d1b-a392-f60ebf727ab0.png",
+        "sha256": "af12a7ad9de6b00292e9cd768e64bb41c0205a5deac7fca27a2ba775acfb8182",
+        "bytes": 2409223,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-03.png",
+        "sha256": "fe9059ea223db49a583c25946656b0eed1edcd23047479fa2c00e185b9cbd4d4",
+        "bytes": 361665,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-adccf03a-a225-4d1b-a392-f60ebf727ab0.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-03.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master: four visible motor/prop positions, forward camera, fitted case, goggles and blue/yellow flag; plain aisle and practical tables, no text, people or operational screen.",
+        "selected": "640×320 inspected: quad silhouette remains readable within open case, padding and case contrast clear; no crop introduced and open aisle retained.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-04",
+      "missionId": "droneaid-nl-careful-handoff-04",
+      "revision": 2,
+      "title": "Shared Manifest",
+      "alt": "A carbon FPV quad and goggles beside plain case tags and a blank clipboard on shared packing benches.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Shared Manifest (do not write title): Two packing stations face a broad quiet central timber bench. A prominent intact carbon FPV quad and black goggles are arranged at the near-right station; a blank clipboard and identical plain case tags rest at the far-left station beside a foam-lined case. Four separate motor/prop assemblies and front camera are obvious. Woven carbon, closed cardboard boxes, webbing and foam are the dominant materials, with one blue/yellow strap on the far case. Late-afternoon sidelight and restrained violet drawers. No readable paperwork.\nComposition: Keep x39–60%,y39–47% calm, plus lower-left x14–25%,y67–78% and upper-right x74–85%,y19–31%; reserve soft zones around x17%,y24% and x77%,y71%.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-f804d879-b0ce-4bfe-bee2-4a4e676175ad.png",
+        "sha256": "719614f90fffd266a03543f3f8a248912558644c600e4ef801be4fd61a821788",
+        "bytes": 2176847,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-04.png",
+        "sha256": "39b8e2cd81130fbf146c52f55086f0f407993b46b3c34db12645e6fc58219b4f",
+        "bytes": 351275,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-f804d879-b0ce-4bfe-bee2-4a4e676175ad.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-04.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master: intact four-motor quad with camera, blank manifest and tags, restrained blue/yellow straps and realistic foam/carbon materials; no instructional detail or people.",
+        "selected": "640×320 inspected: craft and propeller positions legible, blank paperwork stays unreadable, quiet central tabletop remains; no resize crop.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-05",
+      "missionId": "droneaid-nl-careful-handoff-05",
+      "revision": 2,
+      "title": "Across the Quay",
+      "alt": "A foam-lined carbon FPV quad case and donation trolley at a Dutch workshop doorway at dusk.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Across the Quay (do not write title): At dusk inside a modest Dutch brick workshop loading entrance, a low trolley carries several closed donation hard cases. One open foam case on a foreground table presents a clearly recognizable intact carbon FPV quad, four motors and front camera, with goggles alongside. The door admits a narrow distant glimpse of canal-side brick and warm reflections, secondary to the practical equipment. A small folded blue/yellow fabric on a trolley handle and matte violet storage shelves. No boat, grand palace, people or actual route.\nComposition: Keep x39–60%,y42–50%, lower-left x14–25%,y67–78%, upper-right x74–85%,y17–28% quiet. Low-detail halos near x17%,y24% and x77%,y71%.\nTargeted imagegen editing pass: Change only the violet cutting mat surface: remove all grid lines, ruler ticks and markings, leaving a plain smooth matte violet surface with the same lighting and shadows. Preserve the complete four-motor quad and camera inside the case, case foam, goggles, trolley, blue/yellow cloth, distant canal view, composition and all other details exactly. No new text, logos, people or props. Opaque 2:1.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-a74efd88-0737-4cfb-934d-4671e4721cb6.png",
+        "sha256": "73852e946ad701dd566e3da449f1ce81b432f11c3575fe212b59a2500d083422",
+        "bytes": 2002087,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-05.png",
+        "sha256": "3eda2b221539263cff8f5730149d4ea0b9f8ef38d6c3fa926c6c7b9b63221caf",
+        "bytes": 355585,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-a74efd88-0737-4cfb-934d-4671e4721cb6.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-05.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master after mat-grid cleanup: quad has four motors and camera, goggles and cases anchor practical workshop; blue/yellow cloth and distant canal set context; no people or readable claims.",
+        "selected": "640×320 inspected: complete quad in case remains identifiable, grid removed from mat, dusk contrast and clear floor retained; map-mask review pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3c63c14e-ea70-47c2-9a2e-1036b74d6409.png",
+          "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Across the Quay (do not write title): At dusk inside a modest Dutch brick workshop loading entrance, a low trolley carries several closed donation hard cases. One open foam case on a foreground table presents a clearly recognizable intact carbon FPV quad, four motors and front camera, with goggles alongside. The door admits a narrow distant glimpse of canal-side brick and warm reflections, secondary to the practical equipment. A small folded blue/yellow fabric on a trolley handle and matte violet storage shelves. No boat, grand palace, people or actual route.\nComposition: Keep x39–60%,y42–50%, lower-left x14–25%,y67–78%, upper-right x74–85%,y17–28% quiet. Low-detail halos near x17%,y24% and x77%,y71%.",
+          "status": "not-selected",
+          "reason": "Replaced by the targeted imagegen cleanup recorded below.",
+          "editPrompt": "Change only the violet cutting mat surface: remove all grid lines, ruler ticks and markings, leaving a plain smooth matte violet surface with the same lighting and shadows. Preserve the complete four-motor quad and camera inside the case, case foam, goggles, trolley, blue/yellow cloth, distant canal view, composition and all other details exactly. No new text, logos, people or props. Opaque 2:1."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-careful-handoff-06",
+      "missionId": "droneaid-nl-careful-handoff-06",
+      "revision": 2,
+      "title": "Ready for the Next Team",
+      "alt": "Prepared quad and goggles cases on a violet workshop packing table with blue-and-yellow cloth.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Ready for the Next Team (do not write title): An orderly fictional donation handoff area ready for another workshop group: several padded hard cases and goggles cases on low packing tables, one open hero case revealing a complete black carbon FPV quad with four visibly separated motors and propellers. Warm task lamps, white plaster, matte violet drawers, a modest blue-over-yellow folded fabric backdrop. A clean broad table through the middle signals readiness, not a documented completed delivery. Dawn-like fresh light, generous negative space.\nComposition: Keep central x39–60%,y44–53%, lower-left x14–25%,y67–78%, upper-right x74–85%,y19–31% and narrow top area around x79–82%,y0–21% plain. Soft halos near x17%,y24% and x77%,y71%.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-896bc440-220e-4ef4-82f4-32f615168355.png",
+        "sha256": "f31f7edfb82f4204a962cd6ef72b111c035ac332c740078e29ac622a5a4d775f",
+        "bytes": 1948118,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-06.png",
+        "sha256": "d2adb95ca3ee0186e20f0491e3de41c51241cc50121cbcffdd48f9c3ae507fc2",
+        "bytes": 320718,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-896bc440-220e-4ef4-82f4-32f615168355.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-careful-handoff-06.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master: four-motor camera quad in foam, closed cases and goggles, clean white room and donation cloth; no real delivery assertion or operational display.",
+        "selected": "640×320 inspected: four rotor positions and front lens remain visible in the central case; edge crop unchanged; foam contrast requires ordinary in-game masked review.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-01",
+      "missionId": "droneaid-nl-makers-together-01",
+      "revision": 2,
+      "title": "A Friendly Welcome",
+      "alt": "Two accessible maker benches with carbon FPV quads, goggles and blue-and-yellow fabric in a warm violet workshop.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for A Friendly Welcome (do not write title): An accessible shared workshop awaits its next group. Paired stools and generous unobstructed table clearance surround two different practical timber benches; an intact black carbon FPV quad with four motors and camera dominates a right-side tabletop, another rests smaller at the back. A black FPV goggles kit and organized tool tray support the main craft. Warm timber, violet silicone mats and small blue/yellow fabric flags convey welcome without showing participants. Bright soft morning window light, calm roomy floor.\nComposition: Keep quiet surface areas at x15–28%,y42–53%, x65–78%,y42–53%, and x42–53%,y56–64%. Soft-detail halos around x17%,y24% and x77%,y71%.\nTargeted imagegen editing pass: Remove only every printed letter, digit, manufacturer-like marking or logo from the drone's motors and all visible equipment. Also remove the grid and ruler markings from the violet mat, leaving it plain smooth matte violet. Keep the exact same four-motor carbon quad, camera, propellers, composition, paired stools, goggles, warm workshop lighting, blue/yellow fabrics and all other objects. No new text, shapes, people or UI. Opaque 2:1.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5bf4cd47-4347-4908-a300-eaffd17648ae.png",
+        "sha256": "3873145147f4e94a6f65dd88066bdd4448ade01340d5caf691fb2293be7af23a",
+        "bytes": 2206100,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-01.png",
+        "sha256": "8398b41cecd82a5f81597443510a0512c096cdaad5be6d2eb37612845e4e38b5",
+        "bytes": 382591,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5bf4cd47-4347-4908-a300-eaffd17648ae.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-01.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected cleaned master: principal quad has four distinct motors, forward camera and visible carbon; paired seating and second quad establish shared workshop. Imagegen removed distracting mat grid and legible component-like markings.",
+        "selected": "640×320 inspected: principal quad remains complete with recognizable four-motor silhouette, no readable equipment text; paired benches and plain violet mat are legible. In-game masks pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-29d84dd0-b798-4df4-bf67-f0e175c3cf86.png",
+          "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for A Friendly Welcome (do not write title): An accessible shared workshop awaits its next group. Paired stools and generous unobstructed table clearance surround two different practical timber benches; an intact black carbon FPV quad with four motors and camera dominates a right-side tabletop, another rests smaller at the back. A black FPV goggles kit and organized tool tray support the main craft. Warm timber, violet silicone mats and small blue/yellow fabric flags convey welcome without showing participants. Bright soft morning window light, calm roomy floor.\nComposition: Keep quiet surface areas at x15–28%,y42–53%, x65–78%,y42–53%, and x42–53%,y56–64%. Soft-detail halos around x17%,y24% and x77%,y71%.",
+          "status": "not-selected",
+          "reason": "Replaced by the targeted imagegen cleanup recorded below.",
+          "editPrompt": "Remove only every printed letter, digit, manufacturer-like marking or logo from the drone's motors and all visible equipment. Also remove the grid and ruler markings from the violet mat, leaving it plain smooth matte violet. Keep the exact same four-motor carbon quad, camera, propellers, composition, paired stools, goggles, warm workshop lighting, blue/yellow fabrics and all other objects. No new text, shapes, people or UI. Opaque 2:1."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-makers-together-02",
+      "missionId": "droneaid-nl-makers-together-02",
+      "revision": 2,
+      "title": "Watch and Try",
+      "alt": "Two equal practice benches with complete carbon FPV quads, goggles and a soldering iron at rest across an open aisle.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Watch and Try (do not write title): Two equal, inviting demonstration and practice benches are seen together across a broad uncluttered aisle. The near-left instructor table holds a complete carbon FPV quad and unbranded goggles; the other table holds a second intact quad, a safely resting soldering iron in its stand, and closed tool tray. No diagrams or sequential assembly states. Four distinct motors on the principal quad, small front camera and carbon texture read clearly. Violet drawer fronts, warm yellow lamps, a small folded blue/yellow cloth on the back shelf.\nComposition: Keep x17–29%,y42–53%, x64–76%,y44–56%, and x42–53%,y58–67% quiet. Soft halos around x17%,y24% and x77%,y71%.\nAdditional visual constraint: mats must be plain, with no grid, ruler ticks or moulded markings; motors, straps and goggles must be entirely unbranded, with no manufactured lettering or digits even at close range.\nTargeted imagegen editing pass: Correct only the near-left foreground aircraft: it incorrectly has five visible motor towers. Replace that single aircraft with a physically plausible carbon FPV QUADCOPTER with EXACTLY FOUR motors and exactly four propeller hubs, one at each corner of a simple X frame. Four slender arms, compact central battery body and one small front camera. No fifth motor, no spare motor beside it, no logos or text. Preserve the other complete four-motor quad on the right table, both benches, lights, goggles, blue/yellow flag, plain violet mats, wide central aisle and all other composition and lighting. Opaque 2:1 photographic workshop.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-e0f894fe-ffbd-4af9-bd01-051420ccb589.png",
+        "sha256": "e5978b8879cfbfd1bf48d909320a9f1ffbf11290b39e4c1857a8b99bc27c9ae4",
+        "bytes": 1964371,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-02.png",
+        "sha256": "73279510c3855b8def6b33ac3ee4ab8da22b6dfdcd43e044dcdeb98cb44c0d10",
+        "bytes": 351487,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-e0f894fe-ffbd-4af9-bd01-051420ccb589.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-02.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected corrected master: imagegen removed the erroneous fifth foreground motor; both principal craft now show four motor positions and cameras. Plain mats, no logos or instructional diagrams, open centre aisle.",
+        "selected": "640×320 inspected: foreground quad reads as four-motor FPV and second craft remains distinct; lamps and aisle remain coherent, no crop introduced.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-7088106b-e2b9-4d25-9ba0-4eec5127e3c5.png",
+          "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Watch and Try (do not write title): Two equal, inviting demonstration and practice benches are seen together across a broad uncluttered aisle. The near-left instructor table holds a complete carbon FPV quad and unbranded goggles; the other table holds a second intact quad, a safely resting soldering iron in its stand, and closed tool tray. No diagrams or sequential assembly states. Four distinct motors on the principal quad, small front camera and carbon texture read clearly. Violet drawer fronts, warm yellow lamps, a small folded blue/yellow cloth on the back shelf.\nComposition: Keep x17–29%,y42–53%, x64–76%,y44–56%, and x42–53%,y58–67% quiet. Soft halos around x17%,y24% and x77%,y71%.\nAdditional visual constraint: mats must be plain, with no grid, ruler ticks or moulded markings; motors, straps and goggles must be entirely unbranded, with no manufactured lettering or digits even at close range.",
+          "status": "not-selected",
+          "reason": "Replaced by the targeted imagegen cleanup recorded below.",
+          "editPrompt": "Correct only the near-left foreground aircraft: it incorrectly has five visible motor towers. Replace that single aircraft with a physically plausible carbon FPV QUADCOPTER with EXACTLY FOUR motors and exactly four propeller hubs, one at each corner of a simple X frame. Four slender arms, compact central battery body and one small front camera. No fifth motor, no spare motor beside it, no logos or text. Preserve the other complete four-motor quad on the right table, both benches, lights, goggles, blue/yellow flag, plain violet mats, wide central aisle and all other composition and lighting. Opaque 2:1 photographic workshop."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-makers-together-03",
+      "missionId": "droneaid-nl-makers-together-03",
+      "revision": 2,
+      "title": "Pass It On",
+      "alt": "Three shared maker stations with carbon FPV quads, goggles, a motor tray and a blue-and-yellow donation-case strap.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Pass It On (do not write title): Three paired maker stations form a gentle diagonal through one grounded Dutch workroom. Each contains recognizable FPV equipment: one foreground carbon quad dominates, with four distinct motor/prop positions and small forward camera; nearby are dark FPV goggles, a neat round-motor tray and shared precision tools. A packed rugged donation case at the back carries a blue/yellow fabric strap. Warm afternoon light and violet storage bins unify the room, broad plain tabletops and walking gaps, no instructional sequence.\nComposition: Keep x18–31%,y42–53%, x63–75%,y42–53%, x42–53%,y61–69% quiet; low-detail halos around x17%,y24% and x77%,y71%.\nAdditional visual constraint: mats must be plain, with no grid, ruler ticks or moulded markings; motors, straps and goggles must be entirely unbranded, with no manufactured lettering or digits even at close range.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3a639722-f599-496e-92f2-16edaeca8278.png",
+        "sha256": "fb38fc637628c6e8d1ce913ea0eba85f7439cdcd4857b954fd4c21107e14e967",
+        "bytes": 2173554,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-03.png",
+        "sha256": "d1b2d70699a335446c5356611192174dfed4d636c3e07066b05020672b33df15",
+        "bytes": 357395,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3a639722-f599-496e-92f2-16edaeca8278.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-03.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master: four separate foreground motors and compact camera, three practical stations, closed case and tools; unbranded equipment and plain mat, no people or operational instructions.",
+        "selected": "640×320 inspected: hero camera and four motor positions remain legible, round-motor tray and paired distant stations support scene; no edge cropping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-04",
+      "missionId": "droneaid-nl-makers-together-04",
+      "revision": 2,
+      "title": "Room for Every Maker",
+      "alt": "A complete carbon FPV quad at an open communal bench with a quieter station, goggles and safe tool stands.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Room for Every Maker (do not write title): A bright spacious communal workbench and a quieter side workstation both contain the same credible FPV equipment. The foreground hero is an intact carbon FPV quad with four motors, propellers and forward camera; black goggles and a soldering station safely at rest flank it. Adjustable yellow task lights, empty spacious seating and neatly organized tools show accessible participation through room design. White walls, violet mats, one modest blue/yellow cloth and green plant; calm daylight, no people.\nComposition: Keep x19–32%,y42–53%, x61–74%,y44–56%, x42–53%,y56–64% plain; soft halos around x17%,y24% and x77%,y71%.\nAdditional visual constraint: mats must be plain, with no grid, ruler ticks or moulded markings; motors, straps and goggles must be entirely unbranded, with no manufactured lettering or digits even at close range.\nTargeted imagegen editing pass: Remove only the small white emblem/logo printed on the top carbon plate of the foreground drone, immediately above its camera. Replace that white mark with natural uninterrupted black carbon weave. Preserve the exact same four motors, propellers, camera, complete drone geometry, room, workshop tools, violet mat, chairs, plants, blue/yellow flag, light and composition. No lettering, logo or new object anywhere. Opaque2:1.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-1296dd43-3947-437e-885f-b14500fc0814.png",
+        "sha256": "87e54cc04f13ba14b8e454007832eb9d4a24a81618fca6c5a72c2cee5fe4a6fa",
+        "bytes": 2086103,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-04.png",
+        "sha256": "621a4172432823b3757e285ae02ce77f16a0f8af0be349678a1d82d69bcc014a",
+        "bytes": 360092,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-1296dd43-3947-437e-885f-b14500fc0814.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-04.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected final master after removing the generated white frame emblem: four motors and camera preserved, plain violet mat, empty adjustable seating and side station; no readable logos or component labels.",
+        "selected": "640×320 inspected: drone silhouette and camera stay readable, cleaned carbon top plate has no emblem, practical bench clearance remains; exact gameplay masks await review.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-8826953d-7cb8-4235-9db2-a68d2ebbe5d4.png",
+          "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Room for Every Maker (do not write title): A bright spacious communal workbench and a quieter side workstation both contain the same credible FPV equipment. The foreground hero is an intact carbon FPV quad with four motors, propellers and forward camera; black goggles and a soldering station safely at rest flank it. Adjustable yellow task lights, empty spacious seating and neatly organized tools show accessible participation through room design. White walls, violet mats, one modest blue/yellow cloth and green plant; calm daylight, no people.\nComposition: Keep x19–32%,y42–53%, x61–74%,y44–56%, x42–53%,y56–64% plain; soft halos around x17%,y24% and x77%,y71%.\nAdditional visual constraint: mats must be plain, with no grid, ruler ticks or moulded markings; motors, straps and goggles must be entirely unbranded, with no manufactured lettering or digits even at close range.",
+          "status": "not-selected",
+          "reason": "Replaced by the targeted imagegen cleanup recorded below.",
+          "editPrompt": "Remove only the small white emblem/logo printed on the top carbon plate of the foreground drone, immediately above its camera. Replace that white mark with natural uninterrupted black carbon weave. Preserve the exact same four motors, propellers, camera, complete drone geometry, room, workshop tools, violet mat, chairs, plants, blue/yellow flag, light and composition. No lettering, logo or new object anywhere. Opaque2:1."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-makers-together-05",
+      "missionId": "droneaid-nl-makers-together-05",
+      "revision": 2,
+      "title": "Many Hands",
+      "alt": "Finished carbon FPV quads and padded cases gathered from several practical workshop tables for a fictional donation batch.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for Many Hands (do not write title): Several ordinary workshop tables contribute finished quads and padded cases toward one central fictional donation batch. One near-right carbon FPV quad is the clear focal subject, four slender arms and distinct motors/propellers surrounding a compact camera body. Additional complete quads stay farther back and smaller. Used silicone mats, closed tool trays and round motor trays suggest patient making. Modest blue/yellow fabric ties on cases, violet drawers, warm timber under late-afternoon light; substantial clear work surfaces.\nComposition: Keep x21–33%,y42–53%, x60–72%,y42–53%, x42–53%,y58–67% calm. Soft-detail areas around x17%,y24% and x77%,y71%.\nStrict detail check: main quad has exactly FOUR motor towers, four arms, four propeller hubs, no fifth or sixth. Mats entirely plain with no grid, ruler ticks or markings. Motors and carbon plates entirely blank/unbranded, no letters, digits or emblem.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-986b1217-0485-45f2-b164-487a3c52e9ae.png",
+        "sha256": "cdfd6851186da5ec05d202892a1a6d6aba4d43f35073aa178e24e6863bc88ae6",
+        "bytes": 2011090,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-05.png",
+        "sha256": "3e617f7b5aab93b6e9eec98ef0aafd18fd6f3653d3ba50ca2c3306d61873f766",
+        "bytes": 346452,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-986b1217-0485-45f2-b164-487a3c52e9ae.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-05.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master: main four-motor quad and camera are complete, distant craft and wrapped cases give shared-work context; plain violet mat and blue/yellow fabric, no generated participants or readable delivery claim.",
+        "selected": "640×320 inspected: four main motors and camera remain visible, the hero craft is contained and case shapes are distinct; supporting rear craft are intentionally smaller.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-06",
+      "missionId": "droneaid-nl-makers-together-06",
+      "revision": 2,
+      "title": "A New Instructor",
+      "alt": "An instructor-ready carbon FPV quad, goggles and tool station face paired empty practice benches at dusk.",
+      "prompt": "Use case: photorealistic-natural. Asset type: opaque landscape 2:1 mission reveal artwork for a fictional Dutch community FPV workshop supporting Ukraine. Premium photographic physical-diorama realism: believable ordinary workrooms, true black woven carbon, matte plastic and foam, worn pale timber, white walls, violet #4238EB cabinets/mats, restrained yellow #FFD62C task lighting. Blue-over-yellow cloth or modest fabric accents establish Ukraine support without claims about actual participants or completed deliveries. At least one unmistakable carbon-frame hobby FPV quad is the main focal subject: exactly four separate motor positions on four slender carbon arms, visible simple propeller silhouettes, compact centre body, one small front camera. No smooth consumer camera drone. All equipment rests parked. Keep meaningful forms legible at 640×320, complete quad propeller tips inside frame, substantial quiet surfaces and subdued backgrounds. Full opaque image, no panels. No people, hands, text, letters, logos, watermark, unit insignia, payloads, weapons, battle scenes, addresses, deployment routes, tactical screens, active UI, operational assembly or flight instructions, wiring diagrams, sequential build states, exposed reproducible circuitry, fantasy architecture, jewellery or abstract trinkets. Composition reservations below are quiet surface regions only; never draw a grid, game marker, gate, line or boundary.\nScene for A New Instructor (do not write title): An instructor-ready bench in the foreground faces two paired practice tables. A sharply legible intact black carbon FPV quad, four separate motor/prop positions and small front camera, sits beside substantial black FPV goggles and a safely parked soldering station. A second prepared set of simple tools and a closed donation case imply knowledge passed forward, never a real person's story. Modest blue/yellow folded cloth, matte violet cabinets, warm yellow lamp and early-evening window light; premium grounded workshop photography with clean negative space.\nComposition: Keep x22–35%,y42–53%, x58–71%,y44–56%, x42–53%,y61–69% quiet, soft halos near x17%,y24% and x77%,y71%.\nStrict detail check: main quad has exactly FOUR motor towers, four arms, four propeller hubs, no fifth or sixth. Mats entirely plain with no grid, ruler ticks or markings. Motors and carbon plates entirely blank/unbranded, no letters, digits or emblem.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-14645148-bb87-4407-a0e9-9b19560fb874.png",
+        "sha256": "48159396223d22f11c2449582ae7d074fdbde4217ca1657af666a3664e323003",
+        "bytes": 1863859,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-06.png",
+        "sha256": "d7ff6f724b39663741a4774e16775ae6dcfbbc4c54c455c2ee119cfffb453fc2",
+        "bytes": 322276,
+        "width": 640,
+        "height": 320
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "320",
+          "640",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-14645148-bb87-4407-a0e9-9b19560fb874.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/artwork-v2/droneaid-nl-makers-together-06.png"
+        ],
+        "changes": "Resize only; no crop, repaint, or composition change.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected master: exactly four main motor positions, compact front camera, goggles and resting tools; clear ordinary classroom-workshop layout and blue/yellow backdrop, no people or procedural diagram.",
+        "selected": "640×320 inspected: main FPV silhouette and goggles remain recognizable, blank mat and open paired stations read clearly; no crop introduced, map-specific contrast review remains pending.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    }
+  ]
+}

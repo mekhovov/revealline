@@ -1,0 +1,382 @@
+{
+  "baselineRevision": "5d6c0ec3e6995cd0485fe5065ff5ea2bf82e0cdc",
+  "nodeVersion": "20.19.5",
+  "rebasedVerification": {
+    "baselineRevision": "23e6129782e08ed826686f137a0989e5f154732a",
+    "targetRelease": "v0.132.0",
+    "focused": {
+      "tests": 276,
+      "pass": 276,
+      "fail": 0,
+      "concurrency": 4
+    },
+    "gates": {
+      "validate": "passed",
+      "lint": "passed",
+      "formatCheck": "passed",
+      "productionReproduction": "passed at revision 86",
+      "ordinaryBuild": "passed"
+    },
+    "baselineFailuresConfirmed": [
+      "Team picture fixture cannot settle",
+      "Versus menu transport timeout",
+      "stale reviewed-screen fingerprint expectation"
+    ],
+    "note": "Each listed failure was reproduced in the unchanged 0e678f42 worktree. Historical runs below remain evidence from the initial v0.116 implementation cycle."
+  },
+  "fullSuite": {
+    "command": "npm test (node scripts/game-cli.mjs test)",
+    "outcome": "Test runner exited 1; CLI reported Tests failed with exit 1. The shell wrapper subsequently printed a tail and returned 0.",
+    "log": "full-suite-initial.log.gz",
+    "sha256": "7506e366275c933d9ffb699d2940f98ee2c60afc8a0e72e4374fecca733bd9c0",
+    "capturedTopLevelPassed": 11018,
+    "capturedTopLevelFailed": 1297,
+    "capturedTopLevelTotal": 12315,
+    "finalTotalsPresent": false,
+    "note": "Run started before fixes. Corrected cases have focused reruns. Output stops at result 12315 with no final TAP totals; the two late Versus journeys and buffered later-file results have no final receipt in this log. Do not infer their outcomes or a complete suite count. Not every failure was classified."
+  },
+  "runs": [
+    {
+      "log": "final-focused.log.gz",
+      "sha256": "8da48c9b7a04e0ca3f8a1e679c6a252590e0ee48d62e718a0a7c7231d2a72722",
+      "counts": {
+        "tests": 262,
+        "pass": 262,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "implementation",
+      "note": ""
+    },
+    {
+      "log": "publication-tests.log.gz",
+      "sha256": "de73a97becf2138a08e0c180e62dad57c7120fd63ada349a12ef942ec9a89b0e",
+      "counts": {
+        "tests": 85,
+        "pass": 85,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "implementation",
+      "note": ""
+    },
+    {
+      "log": "transfer-regression.log.gz",
+      "sha256": "0a5242516e8d5937176e2297ea89eba913d25b2b5c7666eae7b619ab02fb29b7",
+      "counts": {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "implementation",
+      "note": ""
+    },
+    {
+      "log": "production-regressions.log.gz",
+      "sha256": "f10565c4cb9c92c3bc832aae58c6bed6a4dfeff0e8b77a621b9f575e6583aebc",
+      "counts": {
+        "tests": 14,
+        "pass": 13,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "implementation",
+      "note": ""
+    },
+    {
+      "log": "baseline-failures-extra.log.gz",
+      "sha256": "b6a084253158dc6028097b1adbe9914cb9b45f2ae79552da141bdffaf04c4423",
+      "counts": {
+        "tests": 189,
+        "pass": 143,
+        "fail": 46,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/course-selection-host.test.mjs",
+        "game/test/default-journey-endings-host.test.mjs",
+        "game/test/defeat-presentation-host.test.mjs",
+        "game/test/difficulty-host.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/enemy-guide-host.test.mjs",
+        "game/test/enemy-guide-panel.test.mjs",
+        "game/test/enemy-workshop-return.test.mjs",
+        "game/test/external-backup-host.test.mjs",
+        "game/test/external-chapter-app.test.mjs",
+        "game/test/field-kit-flow.test.mjs",
+        "game/test/first-light-playthrough.test.mjs",
+        "game/test/flight-information-backup-host.test.mjs",
+        "game/test/flight-information-details-host.test.mjs",
+        "game/test/flight-information-host.test.mjs",
+        "game/test/flight-pictures-host.test.mjs",
+        "game/test/flight-preparation-status-host.test.mjs",
+        "game/test/fpv-role-host.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-failures-fifth.log.gz",
+      "sha256": "bad6bcf01c815c2ce2a33cef8372b669699678da740f978b456ad811bf0c73d3",
+      "counts": {
+        "tests": 124,
+        "pass": 89,
+        "fail": 35,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/mode-return-host.test.mjs",
+        "game/test/route-worlds-host.test.mjs",
+        "game/test/saved-visual-host.test.mjs",
+        "game/test/session-only-release-next-host.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/still-workshop-build.test.mjs",
+        "game/test/storage-retention-host.test.mjs",
+        "game/test/story-flight-host.test.mjs",
+        "game/test/team-art.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-failures-fourth.log.gz",
+      "sha256": "a81c158fda607eac0e7b60b7b0a6b3ba9a41aaae0e90b6edfbff4968ebe44e08",
+      "counts": {
+        "tests": 273,
+        "pass": 226,
+        "fail": 47,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/mission-library-versus-inventory-host.test.mjs",
+        "game/test/mission-picker-older.test.mjs",
+        "game/test/mission-picker.test.mjs",
+        "game/test/mission-replacement-host.test.mjs",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/motion-lab-display-host.test.mjs",
+        "game/test/optional-world-play-current-host.test.mjs",
+        "game/test/optional-world-play-host.test.mjs",
+        "game/test/optional-world-play-installed-host.test.mjs",
+        "game/test/optional-world-play-late-host.test.mjs",
+        "game/test/optional-world-play-lock-conflict-host.test.mjs",
+        "game/test/optional-world-play-picture-cancel-host.test.mjs",
+        "game/test/optional-world-play-picture-failure-host.test.mjs",
+        "game/test/optional-world-play-picture-hidden-host.test.mjs",
+        "game/test/optional-world-play-reentry-host.test.mjs",
+        "game/test/optional-world-play-release-original-host.test.mjs",
+        "game/test/optional-world-play-replace-host.test.mjs",
+        "game/test/optional-world-play-save-conflict-host.test.mjs",
+        "game/test/platform.test.mjs",
+        "game/test/practice-brief-host.test.mjs",
+        "game/test/practice-playground-display.test.mjs",
+        "game/test/presentation-metadata-io.test.mjs",
+        "game/test/presentation-production-history.test.mjs",
+        "game/test/presentation-renderer.test.mjs",
+        "game/test/profile-recovery-settings-host.test.mjs",
+        "game/test/profile-transfer-suspended.test.mjs",
+        "game/test/restart-picture-retention.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-failures-seventh.log.gz",
+      "sha256": "3eacb8e1d760848a9f15e25c30a56a19446c336273d2d1fe3960083c310bf279",
+      "counts": {
+        "tests": 14,
+        "pass": 12,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/terminal-navigation.test.mjs",
+        "game/test/title-operation-status-host.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-failures-sixth.log.gz",
+      "sha256": "95b3eca75ca210f587e90d48b86a4d99f8adce251cdb23caed63277f1de65216",
+      "counts": {
+        "tests": 970,
+        "pass": 169,
+        "fail": 801,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/team-coolant-relocation.test.mjs",
+        "game/test/team-depot-reserve-relocation.test.mjs",
+        "game/test/team-depot-spatial.test.mjs",
+        "game/test/team-foundation-routes.test.mjs",
+        "game/test/team-inner-landing-continuations.test.mjs",
+        "game/test/team-inner-landing-routes.test.mjs",
+        "game/test/team-partner-return-routes.test.mjs",
+        "game/test/team-pressure-assessment.test.mjs",
+        "game/test/team-pressure-foundation-routes.test.mjs",
+        "game/test/team-pressure-later-routes.test.mjs",
+        "game/test/team-pressure-opening-routes.test.mjs",
+        "game/test/team-pressure-originals.test.mjs",
+        "game/test/team-reserve-routes.test.mjs",
+        "game/test/team-roamer-routes.test.mjs",
+        "game/test/team-roamer-spatial-openings.test.mjs",
+        "game/test/team-roamer-spatial-routes.test.mjs",
+        "game/test/team-spatial-originals.test.mjs",
+        "game/test/team-timed-candidates.test.mjs",
+        "game/test/team-timed-qualification.test.mjs",
+        "game/test/team-window-spatial.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-failures-third.log.gz",
+      "sha256": "98a95f90490572272eb25a44892aac944882e5ec8fadb575f4ed5d233cf0d060",
+      "counts": {
+        "tests": 169,
+        "pass": 119,
+        "fail": 50,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/fresh-visual-host.test.mjs",
+        "game/test/host-presentation-size.test.mjs",
+        "game/test/hud-status-cues.test.mjs",
+        "game/test/journey-capture-stop-differential-host.test.mjs",
+        "game/test/main-menu-collection-host.test.mjs",
+        "game/test/media-runtime-read.test.mjs",
+        "game/test/mission-library-compact.test.mjs",
+        "game/test/mission-library-journey-presentation.test.mjs",
+        "game/test/mission-library-remote-installed.test.mjs",
+        "game/test/mission-library-return-intent-host.test.mjs",
+        "game/test/mission-library-solo-host.test.mjs",
+        "game/test/mission-library-solo-lifecycle-host.test.mjs",
+        "game/test/mission-library-team-inventory-host.test.mjs",
+        "game/test/mission-library-team-remote-host.test.mjs",
+        "game/test/mission-library-team-return-host.test.mjs",
+        "game/test/mission-library-versus-host.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-failures.log.gz",
+      "sha256": "777e75d60102b82cac3584908956cb0b9e1f05f4e37a5e27c86d4f82a84ca826",
+      "counts": {
+        "tests": 370,
+        "pass": 293,
+        "fail": 77,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Targeted comparison; not the full unchanged-main suite.",
+      "testFiles": [
+        "game/test/acceptance-inspector.test.mjs",
+        "game/test/asset-studio-team-fixture.test.mjs",
+        "game/test/authored-mode-bootstrap.test.mjs",
+        "game/test/authored-mode-entry-host.test.mjs",
+        "game/test/backup.test.mjs",
+        "game/test/campaign-difficulty-backup.test.mjs",
+        "game/test/candidate-solo-host.test.mjs",
+        "game/test/collection-records-return-host.test.mjs",
+        "game/test/combat-board-adapter.test.mjs",
+        "game/test/continuous-host.test.mjs",
+        "game/test/controller-boost.test.mjs",
+        "game/test/coop-import-next.test.mjs",
+        "game/test/coop-lobby-focus.test.mjs",
+        "game/test/coop-lobby-preview.test.mjs",
+        "game/test/coop-next-host.test.mjs",
+        "game/test/coop-picture-recovery-focus.test.mjs",
+        "game/test/coop-startup-selection.test.mjs",
+        "game/test/coop-terrain-trail.test.mjs",
+        "game/test/coop-won-terminal-host.test.mjs",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-catalogue-host.test.mjs",
+        "game/test/couch-chapter.test.mjs"
+      ]
+    },
+    {
+      "log": "final-host-regressions.log.gz",
+      "sha256": "7f192cb683f87ee3a4e9e0713982c9331fff186c45e63e218b11999df52b993c",
+      "counts": {
+        "tests": 57,
+        "pass": 55,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "implementation",
+      "note": "Final host reruns; retention focus expectation corrected after the first batch. Collection picture timeout also reproduces on main and passes in isolation."
+    },
+    {
+      "log": "final-host-recheck.log.gz",
+      "sha256": "fd258b9efd13a5f5f56a00a0462ef1c94dac315f79b7a919c6db415c2e3131c0",
+      "counts": {
+        "tests": 18,
+        "pass": 17,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "implementation",
+      "note": "Final host reruns; retention focus expectation corrected after the first batch. Collection picture timeout also reproduces on main and passes in isolation."
+    },
+    {
+      "log": "collection-isolated.log.gz",
+      "sha256": "ca29057db7f29fddcf0720e060931d5bca938bfb114bef7fa121ece9ff069125",
+      "counts": {
+        "tests": 17,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 16
+      },
+      "source": "implementation",
+      "note": "Final host reruns; retention focus expectation corrected after the first batch. Collection picture timeout also reproduces on main and passes in isolation."
+    },
+    {
+      "log": "baseline-collection-recheck.log.gz",
+      "sha256": "939be69208ed6f015c5813d1ef76ab1eac07117bd4470a19f1ffc110e69aee28",
+      "counts": {
+        "tests": 17,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 16
+      },
+      "source": "unchanged-main",
+      "note": "Final host reruns; retention focus expectation corrected after the first batch. Collection picture timeout also reproduces on main and passes in isolation.",
+      "testFiles": [
+        "game/test/collection-records-return-host.test.mjs"
+      ]
+    },
+    {
+      "log": "baseline-collection-full.log.gz",
+      "sha256": "9d0b9ce97aa9d2c577a571f5b5e5c4b14e68ff654ef47da7523a24b92c3bc119",
+      "counts": {
+        "tests": 17,
+        "pass": 16,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "source": "unchanged-main",
+      "note": "Collection picture initialization timeout reproduces in file order; isolated case passes on both trees.",
+      "testFiles": [
+        "game/test/collection-records-return-host.test.mjs"
+      ]
+    }
+  ]
+}

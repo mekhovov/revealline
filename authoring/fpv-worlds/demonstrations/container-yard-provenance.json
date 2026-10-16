@@ -1,0 +1,2534 @@
+{
+  "format": "FPVWorldDemonstrationProvenance.v1",
+  "generatedAt": "2026-09-30T22:49:47.348Z",
+  "sourceCommit": "80b68e7f86f62631b74661631d96b5c71b4a4907",
+  "generator": "authoring/fpv-worlds/demonstrations/generate-container-yard.mjs",
+  "qualification": "Fresh Node independent replay with unchanged exact courses. Real approaches and quantized pulse commands; successful completion with zero contacts. Shield loss is accepted and explicitly reported. Browser presentation and final packaged offline qualification are separate.",
+  "alignmentDefinition": "Consecutive20ms replay positions at horizontal speed>=1000mm/s versus drone yaw; forward<=90deg, aligned<=45deg.",
+  "records": [
+    {
+      "id": "container-yard-01",
+      "mode": "self-level",
+      "file": "container-yard-01-self-level.json",
+      "sha256": "4e9bd964975cd2de88ecb07d218629feecd6167fa38c62c805cf7c32865dbf39",
+      "proofSha256": "43dd2dec37963f841201133cf99ca242be2ead3133afe476ba43c0e1dfac1048",
+      "bytes": 26257,
+      "proofBytes": 23575,
+      "originalProofSha256": "43dd2dec37963f841201133cf99ca242be2ead3133afe476ba43c0e1dfac1048",
+      "changedFromOriginal": false,
+      "courseSha256": "544a6f4b860cc3baa07fc3f62c7513d68a5de3c24e6e126bda56bf88127db11a",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "52e0b40805abaed9",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14e82944bb85c62",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "ddacc183c3ff0a5a",
+      "status": "complete",
+      "ticks": 1282,
+      "durationSeconds": 25.64,
+      "health": 100,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "opponentFireEvents": 0,
+      "fireObservations": [],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 2,
+          "tick": 1282,
+          "position": {
+            "x": 8,
+            "y": 2,
+            "z": 11987
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1049,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 700,
+        "p95Degrees": 17.631662551706768,
+        "maxDegrees": 44.144074834290336,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "1bed23119c5fb82b"
+    },
+    {
+      "id": "container-yard-01",
+      "mode": "acro",
+      "file": "container-yard-01-acro.json",
+      "sha256": "209319c6c5aaa2db2014bf07dff50d38a5bb04fbb1ecaefe90baec61eab723c8",
+      "proofSha256": "788a3dcebe37e3e822363870c89c0c4ec4c5f3a512af76443c6a4ee361b3fb7c",
+      "bytes": 24639,
+      "proofBytes": 21957,
+      "originalProofSha256": "788a3dcebe37e3e822363870c89c0c4ec4c5f3a512af76443c6a4ee361b3fb7c",
+      "changedFromOriginal": false,
+      "courseSha256": "544a6f4b860cc3baa07fc3f62c7513d68a5de3c24e6e126bda56bf88127db11a",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "52e0b40805abaed9",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14e82944bb85c62",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "9c9674541ca10911",
+      "status": "complete",
+      "ticks": 1282,
+      "durationSeconds": 25.64,
+      "health": 100,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "opponentFireEvents": 0,
+      "fireObservations": [],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 2,
+          "tick": 1282,
+          "position": {
+            "x": 8,
+            "y": 2,
+            "z": 11997
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1048,
+          "landingTilt": 12
+        }
+      ],
+      "heading": {
+        "movingSamples": 704,
+        "p95Degrees": 18.074342406584265,
+        "maxDegrees": 44.70493401088197,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "1bed23119c5fb82b"
+    },
+    {
+      "id": "container-yard-02",
+      "mode": "self-level",
+      "file": "container-yard-02-self-level.json",
+      "sha256": "514a6a5285112b959e82597e2c67bce52713548759d4d7017251b1853b741350",
+      "proofSha256": "1b832527feeca7ff098fb97e48270676c0f2cf953850f88ee6118fe81fdc3856",
+      "bytes": 56019,
+      "proofBytes": 52973,
+      "originalProofSha256": "1b832527feeca7ff098fb97e48270676c0f2cf953850f88ee6118fe81fdc3856",
+      "changedFromOriginal": false,
+      "courseSha256": "c9c08214ad2e883228e73bd3e1d5d0094fa123f1fbe0cd6c4e150d5304a281cc",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "67f4b62219e9287b",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14b7e944bb61fbf",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "0dc7cc513295c60f",
+      "status": "complete",
+      "ticks": 2867,
+      "durationSeconds": 57.34,
+      "health": 100,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "opponentFireEvents": 0,
+      "fireObservations": [],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 3,
+          "tick": 2867,
+          "position": {
+            "x": -6,
+            "y": 2,
+            "z": 11986
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1046,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 2041,
+        "p95Degrees": 32.17018001482677,
+        "maxDegrees": 58.674934010882,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.66,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "8b75f2fd5817aa83"
+    },
+    {
+      "id": "container-yard-02",
+      "mode": "acro",
+      "file": "container-yard-02-acro.json",
+      "sha256": "a0117660cbc1f4a422bf7a9f96d8f7d252183849ce7c7c514babdf8fe1d74b84",
+      "proofSha256": "95469474a0210c89314749266e766e3c513bb531f23513a1957780f3d65b064b",
+      "bytes": 51896,
+      "proofBytes": 48850,
+      "originalProofSha256": "95469474a0210c89314749266e766e3c513bb531f23513a1957780f3d65b064b",
+      "changedFromOriginal": false,
+      "courseSha256": "c9c08214ad2e883228e73bd3e1d5d0094fa123f1fbe0cd6c4e150d5304a281cc",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "67f4b62219e9287b",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d14b7e944bb61fbf",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "84a9a113c32d05a4",
+      "status": "complete",
+      "ticks": 2883,
+      "durationSeconds": 57.66,
+      "health": 100,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "opponentFireEvents": 0,
+      "fireObservations": [],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 3,
+          "tick": 2883,
+          "position": {
+            "x": -4,
+            "y": 2,
+            "z": 11997
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1051,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 2066,
+        "p95Degrees": 32.813745714175354,
+        "maxDegrees": 57.99000000000001,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.62,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "8b75f2fd5817aa83"
+    },
+    {
+      "id": "container-yard-03",
+      "mode": "self-level",
+      "file": "container-yard-03-self-level.json",
+      "sha256": "5239abb3ffa915e39eda37a4ff10c1a70956ac6caa8f48a549541871e45a7e55",
+      "proofSha256": "f5f6d8b5ce9b95f98146a3c9d596740ff1dadfbf505f4e42d455bd017d573e31",
+      "bytes": 53836,
+      "proofBytes": 50453,
+      "originalProofSha256": "f5f6d8b5ce9b95f98146a3c9d596740ff1dadfbf505f4e42d455bd017d573e31",
+      "changedFromOriginal": false,
+      "courseSha256": "d74ad969d242c977decba130eaa47b88f530bbba4e1be1e7910456aa24904308",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "04ebefb617e346dc",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1557e944bbe7444",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "99677880cb075b52",
+      "status": "complete",
+      "ticks": 2750,
+      "durationSeconds": 55,
+      "health": 100,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "opponentFireEvents": 0,
+      "fireObservations": [],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 3,
+          "tick": 2750,
+          "position": {
+            "x": 8,
+            "y": 2,
+            "z": 11986
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1047,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 1704,
+        "p95Degrees": 34.82913932790734,
+        "maxDegrees": 61.90493401088196,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.39,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "988a786656816ea8"
+    },
+    {
+      "id": "container-yard-03",
+      "mode": "acro",
+      "file": "container-yard-03-acro.json",
+      "sha256": "c6cd4f12fdbf90f438cb21cdc2028e5b7b043df4e7d6db0ff781e1ad25ea4be6",
+      "proofSha256": "298278b42701ee97f44c33e16b66e5cd3020fdfc52068121d22c7b4c39379e74",
+      "bytes": 49119,
+      "proofBytes": 45736,
+      "originalProofSha256": "298278b42701ee97f44c33e16b66e5cd3020fdfc52068121d22c7b4c39379e74",
+      "changedFromOriginal": false,
+      "courseSha256": "d74ad969d242c977decba130eaa47b88f530bbba4e1be1e7910456aa24904308",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "04ebefb617e346dc",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1557e944bbe7444",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "bfa9419f3790ffe3",
+      "status": "complete",
+      "ticks": 2756,
+      "durationSeconds": 55.12,
+      "health": 100,
+      "contacts": 0,
+      "shots": 0,
+      "hits": 0,
+      "opponentFireEvents": 0,
+      "fireObservations": [],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 3,
+          "tick": 2756,
+          "position": {
+            "x": 4,
+            "y": 2,
+            "z": 11998
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1047,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 1715,
+        "p95Degrees": 34.83000000000004,
+        "maxDegrees": 64.31493401088198,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.3,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "988a786656816ea8"
+    },
+    {
+      "id": "container-yard-04",
+      "mode": "self-level",
+      "file": "container-yard-04-self-level.json",
+      "sha256": "79108424f7e2b8954b9c56a5a59ce7886aba65be1b8bf096cf5e6baa296eca1a",
+      "proofSha256": "eb2a108a57a78b40b9001707571499e335c82669636ff6bd8ed9b69cef269c98",
+      "bytes": 24125,
+      "proofBytes": 21854,
+      "originalProofSha256": "84cd4c3003038cbe9cf76f77008d097375b234143209f907b01ef10b5cc096ab",
+      "changedFromOriginal": true,
+      "courseSha256": "38fb62772f44cf4ac6344d844aff4009e68c5a981595be9ff32e0854de2aedc9",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "30fec45af1073f6b",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15282944bbc4539",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "15864780f35fcf9f",
+      "status": "complete",
+      "ticks": 1285,
+      "durationSeconds": 25.7,
+      "health": 100,
+      "contacts": 0,
+      "shots": 2,
+      "hits": 2,
+      "opponentFireEvents": 3,
+      "fireObservations": [
+        {
+          "tick": 524,
+          "position": {
+            "x": 0,
+            "y": 880,
+            "z": -2952
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7050.837113421356
+            }
+          ]
+        },
+        {
+          "tick": 532,
+          "position": {
+            "x": 0,
+            "y": 820,
+            "z": -2960
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7041.391907854582
+            }
+          ]
+        }
+      ],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 1285,
+          "position": {
+            "x": 4,
+            "y": 2,
+            "z": 11986
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1048,
+          "landingTilt": 12
+        }
+      ],
+      "heading": {
+        "movingSamples": 695,
+        "p95Degrees": 4.4500000000000455,
+        "maxDegrees": 26.81240522611165,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "bd60fadc69b39d69"
+    },
+    {
+      "id": "container-yard-04",
+      "mode": "acro",
+      "file": "container-yard-04-acro.json",
+      "sha256": "6879fd75b67e772313515174af0e3523c793c90be9a3346b5198c5590f80e1ef",
+      "proofSha256": "16c82f990159dd79fca6bd0b97627a86a2854060f15f898794ea1fc6805f53f1",
+      "bytes": 23371,
+      "proofBytes": 21100,
+      "originalProofSha256": "f003249fee3db35c29bb010da031e39b5afa7f4a3c08910f0ff1b78cb39999ed",
+      "changedFromOriginal": true,
+      "courseSha256": "38fb62772f44cf4ac6344d844aff4009e68c5a981595be9ff32e0854de2aedc9",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "30fec45af1073f6b",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15282944bbc4539",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "3aaed09ef76b9004",
+      "status": "complete",
+      "ticks": 1292,
+      "durationSeconds": 25.84,
+      "health": 100,
+      "contacts": 0,
+      "shots": 2,
+      "hits": 2,
+      "opponentFireEvents": 3,
+      "fireObservations": [
+        {
+          "tick": 526,
+          "position": {
+            "x": 0,
+            "y": 872,
+            "z": -2964
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7038.619182765892
+            }
+          ]
+        },
+        {
+          "tick": 534,
+          "position": {
+            "x": 0,
+            "y": 814,
+            "z": -2972
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7029.277345502878
+            }
+          ]
+        }
+      ],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 1292,
+          "position": {
+            "x": 30,
+            "y": 2,
+            "z": 11996
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1048,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 701,
+        "p95Degrees": 4.669999999999959,
+        "maxDegrees": 29.11240522611172,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 100,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "bd60fadc69b39d69"
+    },
+    {
+      "id": "container-yard-05",
+      "mode": "self-level",
+      "file": "container-yard-05-self-level.json",
+      "sha256": "e5c480c104e75e7133ce7a5de705ece512f58bb2e011cec438eb5057b9bc0d24",
+      "proofSha256": "59898dd807eef28fa57b878fc64b8aa36653dc3e5af2c53fdb7a3df66abf2931",
+      "bytes": 33670,
+      "proofBytes": 31048,
+      "originalProofSha256": "77240e52ba68028f6660429a9ca730b5d0d04a9c55dbebd6b7716c05793163a5",
+      "changedFromOriginal": true,
+      "courseSha256": "3202e4708b67812c799112f47f16bc63b1979fa126bca9f1a86a97dd1d800a90",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "7a81181aab83825b",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15c82944bc499be",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "89d94e30baab33d4",
+      "status": "complete",
+      "ticks": 1707,
+      "durationSeconds": 34.14,
+      "health": 100,
+      "contacts": 0,
+      "shots": 4,
+      "hits": 4,
+      "opponentFireEvents": 6,
+      "fireObservations": [
+        {
+          "tick": 495,
+          "position": {
+            "x": -2988,
+            "y": 820,
+            "z": -958
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 9136.885464971092
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 21978.049867993293
+            }
+          ]
+        },
+        {
+          "tick": 503,
+          "position": {
+            "x": -2988,
+            "y": 775,
+            "z": -966
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 9091.068419058345
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 21850.938767018684
+            }
+          ]
+        },
+        {
+          "tick": 837,
+          "position": {
+            "x": 4972,
+            "y": 840,
+            "z": -8974
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 9370.863620819588
+            }
+          ]
+        },
+        {
+          "tick": 845,
+          "position": {
+            "x": 4980,
+            "y": 790,
+            "z": -8982
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 9471.747515638284
+            }
+          ]
+        }
+      ],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 1707,
+          "position": {
+            "x": 5,
+            "y": 2,
+            "z": 11988
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1046,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 965,
+        "p95Degrees": 39.548596003417856,
+        "maxDegrees": 64.84493401088196,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 98.36,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "b22648d12041a47a"
+    },
+    {
+      "id": "container-yard-05",
+      "mode": "acro",
+      "file": "container-yard-05-acro.json",
+      "sha256": "09ae836c6bf0e954b990334341ec3564adedb78f1f8cac6c411c3638b78ac522",
+      "proofSha256": "fb3a710e5c27f149afa75583782c9e47739a92ff875b4c15061da9ad420312ed",
+      "bytes": 31517,
+      "proofBytes": 28895,
+      "originalProofSha256": "d412e16e2a9a8e71c37bcf5837177db0b78a6274c418a358d7add606ee1b8fea",
+      "changedFromOriginal": true,
+      "courseSha256": "3202e4708b67812c799112f47f16bc63b1979fa126bca9f1a86a97dd1d800a90",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "7a81181aab83825b",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15c82944bc499be",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "48fd4678f37081ba",
+      "status": "complete",
+      "ticks": 1714,
+      "durationSeconds": 34.28,
+      "health": 100,
+      "contacts": 0,
+      "shots": 4,
+      "hits": 4,
+      "opponentFireEvents": 6,
+      "fireObservations": [
+        {
+          "tick": 497,
+          "position": {
+            "x": -2994,
+            "y": 808,
+            "z": -974
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 9110.265857811175
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 21939.30135624195
+            }
+          ]
+        },
+        {
+          "tick": 505,
+          "position": {
+            "x": -2994,
+            "y": 765,
+            "z": -982
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 9064.918366979373
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 21812.215499577294
+            }
+          ]
+        },
+        {
+          "tick": 841,
+          "position": {
+            "x": 4982,
+            "y": 835,
+            "z": -8985
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 9412.439906846683
+            }
+          ]
+        },
+        {
+          "tick": 849,
+          "position": {
+            "x": 4989,
+            "y": 786,
+            "z": -8992
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 9514.92122931136
+            }
+          ]
+        }
+      ],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 1714,
+          "position": {
+            "x": 2,
+            "y": 2,
+            "z": 11994
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1047,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 969,
+        "p95Degrees": 39.01605990839926,
+        "maxDegrees": 66.49633437499733,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 98.22,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "b22648d12041a47a"
+    },
+    {
+      "id": "container-yard-06",
+      "mode": "self-level",
+      "file": "container-yard-06-self-level.json",
+      "sha256": "863229c52c9592f17e0e0122c36e2d5892006564fa07da469f020957f9f98492",
+      "proofSha256": "6bbb54a105bc50be816a641490bbc7bdc599921a1e264c648f62301e22d50412",
+      "bytes": 39935,
+      "proofBytes": 37458,
+      "originalProofSha256": "75e1151788cb5f29b52ef17fb18650c562a08c472a481165f17cde7f82e2c2d0",
+      "changedFromOriginal": true,
+      "courseSha256": "6f93e81b2790a1d8e5c0080e4157b8bf89c2aaba42f8064f0c4531037eb0dd33",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "705554d4675f2666",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1597e944bc25d1b",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "bfe50e07a3707d3f",
+      "status": "complete",
+      "ticks": 2128,
+      "durationSeconds": 42.56,
+      "health": 90,
+      "contacts": 0,
+      "shots": 4,
+      "hits": 4,
+      "opponentFireEvents": 8,
+      "fireObservations": [
+        {
+          "tick": 549,
+          "position": {
+            "x": -2987,
+            "y": 3291,
+            "z": -5840
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 5107.826347870491
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 16550.041993904426
+            }
+          ]
+        },
+        {
+          "tick": 557,
+          "position": {
+            "x": -2987,
+            "y": 3291,
+            "z": -5856
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 5097.943310787204
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 16537.322213707997
+            }
+          ]
+        },
+        {
+          "tick": 884,
+          "position": {
+            "x": 2981,
+            "y": 4284,
+            "z": -15831
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 5118.099061174959
+            }
+          ]
+        },
+        {
+          "tick": 892,
+          "position": {
+            "x": 2987,
+            "y": 4284,
+            "z": -15855
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 5098.549793813923
+            }
+          ]
+        }
+      ],
+      "damageObservations": [
+        {
+          "tick": 569,
+          "health": 95,
+          "position": {
+            "x": -2987,
+            "y": 3292,
+            "z": -5880
+          }
+        },
+        {
+          "tick": 881,
+          "health": 90,
+          "position": {
+            "x": 2978,
+            "y": 4284,
+            "z": -15822
+          }
+        }
+      ],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 2128,
+          "position": {
+            "x": 7,
+            "y": 2,
+            "z": 11985
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1051,
+          "landingTilt": 12
+        }
+      ],
+      "heading": {
+        "movingSamples": 1206,
+        "p95Degrees": 37.59759477388826,
+        "maxDegrees": 63.95592516570969,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 98.71,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "42550035d6485211"
+    },
+    {
+      "id": "container-yard-06",
+      "mode": "acro",
+      "file": "container-yard-06-acro.json",
+      "sha256": "7b027096aab851b28bb4868d2d431d03e74c1c5bb1d5434c01974f9c18ac6bdf",
+      "proofSha256": "5df6e396b702a95e673883b3f0a79ed8cd56d29e5da2b81239cac1c41d8aac97",
+      "bytes": 37412,
+      "proofBytes": 34935,
+      "originalProofSha256": "55f97356f74a5acdc73ded2beb1c26d8869ed8af9a36f029286ec61222481ee5",
+      "changedFromOriginal": true,
+      "courseSha256": "6f93e81b2790a1d8e5c0080e4157b8bf89c2aaba42f8064f0c4531037eb0dd33",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "705554d4675f2666",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1597e944bc25d1b",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "0829e0ec0e3ce870",
+      "status": "complete",
+      "ticks": 2132,
+      "durationSeconds": 42.64,
+      "health": 90,
+      "contacts": 0,
+      "shots": 4,
+      "hits": 4,
+      "opponentFireEvents": 8,
+      "fireObservations": [
+        {
+          "tick": 549,
+          "position": {
+            "x": -2999,
+            "y": 3291,
+            "z": -5849
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 5092.830548918744
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 16550.1336248382
+            }
+          ]
+        },
+        {
+          "tick": 557,
+          "position": {
+            "x": -2999,
+            "y": 3291,
+            "z": -5872
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 5078.63229619944
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 16531.86335535108
+            }
+          ]
+        },
+        {
+          "tick": 887,
+          "position": {
+            "x": 2985,
+            "y": 4283,
+            "z": -15847
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 5105.060528534407
+            }
+          ]
+        },
+        {
+          "tick": 895,
+          "position": {
+            "x": 2985,
+            "y": 4283,
+            "z": -15871
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 5090.272586021302
+            }
+          ]
+        }
+      ],
+      "damageObservations": [
+        {
+          "tick": 568,
+          "health": 95,
+          "position": {
+            "x": -2999,
+            "y": 3291,
+            "z": -5894
+          }
+        },
+        {
+          "tick": 880,
+          "health": 90,
+          "position": {
+            "x": 2985,
+            "y": 4283,
+            "z": -15824
+          }
+        }
+      ],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 2132,
+          "position": {
+            "x": 5,
+            "y": 2,
+            "z": 11995
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1048,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 1210,
+        "p95Degrees": 37.612598161765845,
+        "maxDegrees": 64.05385888622948,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 98.63,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "42550035d6485211"
+    },
+    {
+      "id": "container-yard-07",
+      "mode": "self-level",
+      "file": "container-yard-07-self-level.json",
+      "sha256": "a4552cf4a649cad66d8421bc2a8c398cf4e246eb1052231f6b14a8eed19bf9c4",
+      "proofSha256": "5fa245b1ae864e1d7952b162fb046fec77d4f7f1ade5d7b76de41469b279a665",
+      "bytes": 34308,
+      "proofBytes": 31766,
+      "originalProofSha256": "baf1ac5574f9f5e9fa294570daee9a72eb92ae9ac36a81d5b1269363882b8751",
+      "changedFromOriginal": true,
+      "courseSha256": "557d9ab6da7be38ccbc878b895e998fb515fc8dab170123d2f86985d70ab396e",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "55048116afbbb047",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1637e944bcab1a0",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "9eb041f89f1547d4",
+      "status": "complete",
+      "ticks": 1794,
+      "durationSeconds": 35.88,
+      "health": 100,
+      "contacts": 0,
+      "shots": 6,
+      "hits": 6,
+      "opponentFireEvents": 9,
+      "fireObservations": [
+        {
+          "tick": 640,
+          "position": {
+            "x": 0,
+            "y": 934,
+            "z": -8953
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7746.406973558774
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12040.461992797455
+            }
+          ]
+        },
+        {
+          "tick": 648,
+          "position": {
+            "x": 0,
+            "y": 886,
+            "z": -8961
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7654.361697751158
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12040.180937178644
+            }
+          ]
+        },
+        {
+          "tick": 656,
+          "position": {
+            "x": 0,
+            "y": 850,
+            "z": -8969
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7563.07080490458
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12040.260005498221
+            }
+          ]
+        },
+        {
+          "tick": 683,
+          "position": {
+            "x": 0,
+            "y": 790,
+            "z": -8975
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7290.320774835631
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12040.046719178461
+            }
+          ]
+        },
+        {
+          "tick": 1060,
+          "position": {
+            "x": 5925,
+            "y": 776,
+            "z": -2121
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 8454.435640538048
+            }
+          ]
+        },
+        {
+          "tick": 1068,
+          "position": {
+            "x": 5941,
+            "y": 742,
+            "z": -2105
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 8453.777262265668
+            }
+          ]
+        }
+      ],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 1794,
+          "position": {
+            "x": 13,
+            "y": 2,
+            "z": 11988
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1047,
+          "landingTilt": 12
+        }
+      ],
+      "heading": {
+        "movingSamples": 950,
+        "p95Degrees": 27.397266409857934,
+        "maxDegrees": 54.85493401088195,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.45,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "e6bc433f2ee2658b"
+    },
+    {
+      "id": "container-yard-07",
+      "mode": "acro",
+      "file": "container-yard-07-acro.json",
+      "sha256": "dae8787dfc8f7af049c36d280ec26740980325810734f115db0542558c4671a6",
+      "proofSha256": "bd29de9a002feaca795bf7432522b81640398217a50daef2951f4a7b263d968d",
+      "bytes": 32806,
+      "proofBytes": 30264,
+      "originalProofSha256": "1eff97f0ff0becedb1b164c69964067f6415f97d64fde29df10199539cd6cfd8",
+      "changedFromOriginal": true,
+      "courseSha256": "557d9ab6da7be38ccbc878b895e998fb515fc8dab170123d2f86985d70ab396e",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "55048116afbbb047",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d1637e944bcab1a0",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "fbef4ea6a731e041",
+      "status": "complete",
+      "ticks": 1799,
+      "durationSeconds": 35.98,
+      "health": 100,
+      "contacts": 0,
+      "shots": 6,
+      "hits": 6,
+      "opponentFireEvents": 9,
+      "fireObservations": [
+        {
+          "tick": 641,
+          "position": {
+            "x": 0,
+            "y": 933,
+            "z": -8966
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7722.764660404977
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12041.476861249204
+            }
+          ]
+        },
+        {
+          "tick": 649,
+          "position": {
+            "x": 0,
+            "y": 886,
+            "z": -8974
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7630.884680035468
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12041.225519024218
+            }
+          ]
+        },
+        {
+          "tick": 657,
+          "position": {
+            "x": 0,
+            "y": 850,
+            "z": -8982
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7540.7427353013445
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12041.313217419434
+            }
+          ]
+        },
+        {
+          "tick": 684,
+          "position": {
+            "x": 0,
+            "y": 790,
+            "z": -8989
+          },
+          "activeTargets": [
+            {
+              "id": "target-1",
+              "distanceMm": 7266.5879200626205
+            },
+            {
+              "id": "target-2",
+              "distanceMm": 12041.188521072161
+            }
+          ]
+        },
+        {
+          "tick": 1063,
+          "position": {
+            "x": 5956,
+            "y": 775,
+            "z": -2099
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 8447.529934838942
+            }
+          ]
+        },
+        {
+          "tick": 1071,
+          "position": {
+            "x": 5964,
+            "y": 741,
+            "z": -2083
+          },
+          "activeTargets": [
+            {
+              "id": "target-2",
+              "distanceMm": 8452.686318561691
+            }
+          ]
+        }
+      ],
+      "damageObservations": [],
+      "landings": [
+        {
+          "index": 1,
+          "tick": 1799,
+          "position": {
+            "x": 6,
+            "y": 2,
+            "z": 11996
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1046,
+          "landingTilt": 12
+        }
+      ],
+      "heading": {
+        "movingSamples": 957,
+        "p95Degrees": 27.497266409857957,
+        "maxDegrees": 58.19407483429035,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.43,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "e6bc433f2ee2658b"
+    },
+    {
+      "id": "container-yard-08",
+      "mode": "self-level",
+      "file": "container-yard-08-self-level.json",
+      "sha256": "606dcce6b60450b16c43877fb6df32134b4eb252f34186e18528b98fd492b649",
+      "proofSha256": "d8ab520b5f8b19f410697e432d3c4d90aed115bde69d2edffb39685415d10dad",
+      "bytes": 79047,
+      "proofBytes": 75082,
+      "originalProofSha256": "cd5616a37ef37a2f77d8dcc0fd881ee4602b61e458bbfa0eea41e1b585f73ad5",
+      "changedFromOriginal": true,
+      "courseSha256": "69f35ea09d874f54eaf6cd9e28c05cda71d75299dc0a2a8c59f687351d722464",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "e9425c207b9db555",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15f82944bc6cf95",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "4a04da70a3db1916",
+      "status": "complete",
+      "ticks": 4100,
+      "durationSeconds": 82,
+      "health": 90,
+      "contacts": 0,
+      "shots": 5,
+      "hits": 5,
+      "opponentFireEvents": 24,
+      "fireObservations": [
+        {
+          "tick": 2356,
+          "position": {
+            "x": -6,
+            "y": 732,
+            "z": -3977
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 19430.41093235035
+            },
+            {
+              "id": "extraction-patrol",
+              "distanceMm": 8398.30679363406
+            }
+          ]
+        },
+        {
+          "tick": 2364,
+          "position": {
+            "x": -6,
+            "y": 711,
+            "z": -3977
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 19435.33704364295
+            },
+            {
+              "id": "extraction-patrol",
+              "distanceMm": 8441.881662283593
+            }
+          ]
+        },
+        {
+          "tick": 2372,
+          "position": {
+            "x": -6,
+            "y": 696,
+            "z": -3977
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 19438.86881996995
+            },
+            {
+              "id": "extraction-patrol",
+              "distanceMm": 8487.737330996995
+            }
+          ]
+        },
+        {
+          "tick": 2715,
+          "position": {
+            "x": 4985,
+            "y": 5291,
+            "z": -15842
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 6514.546031766144
+            }
+          ]
+        },
+        {
+          "tick": 2723,
+          "position": {
+            "x": 4985,
+            "y": 5291,
+            "z": -15859
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 6503.708711189332
+            }
+          ]
+        }
+      ],
+      "damageObservations": [
+        {
+          "tick": 2403,
+          "health": 95,
+          "position": {
+            "x": 24,
+            "y": 812,
+            "z": -4006
+          }
+        },
+        {
+          "tick": 2731,
+          "health": 90,
+          "position": {
+            "x": 4985,
+            "y": 5291,
+            "z": -15875
+          }
+        }
+      ],
+      "landings": [
+        {
+          "index": 5,
+          "tick": 4100,
+          "position": {
+            "x": 6,
+            "y": 2,
+            "z": 11989
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1050,
+          "landingTilt": 12
+        }
+      ],
+      "heading": {
+        "movingSamples": 2658,
+        "p95Degrees": 25.635888983693462,
+        "maxDegrees": 67.56493401088198,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.26,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "192c5446d4ebe5d8"
+    },
+    {
+      "id": "container-yard-08",
+      "mode": "acro",
+      "file": "container-yard-08-acro.json",
+      "sha256": "5dd58df9741918594b9c38fb8b15eedfbff1a5cb27f28c1be52d843e14d343bd",
+      "proofSha256": "3a8fe897dcc9f3d6d6729b1632f0dec0cbe04727245b82630ed014f9154f5e0f",
+      "bytes": 74425,
+      "proofBytes": 70460,
+      "originalProofSha256": "d31ceb0f6b2bff1485c368fe663be4f83dde94e768548f609702336032784dd7",
+      "changedFromOriginal": true,
+      "courseSha256": "69f35ea09d874f54eaf6cd9e28c05cda71d75299dc0a2a8c59f687351d722464",
+      "model": "civilian-world-fixed.v2",
+      "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "courseIdentity": "e9425c207b9db555",
+      "worldIdentity": "1aff4915f0247ca7",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "rulesIdentity": "d15f82944bc6cf95",
+      "conditionsIdentity": "030d08b3879ad283",
+      "finalStateIdentity": "2b0cd84e7c6c3c64",
+      "status": "complete",
+      "ticks": 4112,
+      "durationSeconds": 82.24,
+      "health": 85,
+      "contacts": 0,
+      "shots": 5,
+      "hits": 5,
+      "opponentFireEvents": 24,
+      "fireObservations": [
+        {
+          "tick": 2364,
+          "position": {
+            "x": 8,
+            "y": 717,
+            "z": -3988
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 19417.65117103508
+            },
+            {
+              "id": "extraction-patrol",
+              "distanceMm": 8427.102526966193
+            }
+          ]
+        },
+        {
+          "tick": 2372,
+          "position": {
+            "x": 8,
+            "y": 701,
+            "z": -3988
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 19421.41727578088
+            },
+            {
+              "id": "extraction-patrol",
+              "distanceMm": 8472.787085723328
+            }
+          ]
+        },
+        {
+          "tick": 2380,
+          "position": {
+            "x": 8,
+            "y": 691,
+            "z": -3988
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 19423.777413263364
+            },
+            {
+              "id": "extraction-patrol",
+              "distanceMm": 8520.696274366315
+            }
+          ]
+        },
+        {
+          "tick": 2725,
+          "position": {
+            "x": 4996,
+            "y": 5290,
+            "z": -15857
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 6496.5040598771275
+            }
+          ]
+        },
+        {
+          "tick": 2733,
+          "position": {
+            "x": 4996,
+            "y": 5290,
+            "z": -15880
+          },
+          "activeTargets": [
+            {
+              "id": "extraction-drone",
+              "distanceMm": 6481.860535370998
+            }
+          ]
+        }
+      ],
+      "damageObservations": [
+        {
+          "tick": 2402,
+          "health": 95,
+          "position": {
+            "x": 8,
+            "y": 682,
+            "z": -3988
+          }
+        },
+        {
+          "tick": 2427,
+          "health": 90,
+          "position": {
+            "x": 393,
+            "y": 1270,
+            "z": -4353
+          }
+        },
+        {
+          "tick": 2731,
+          "health": 85,
+          "position": {
+            "x": 4996,
+            "y": 5290,
+            "z": -15875
+          }
+        }
+      ],
+      "landings": [
+        {
+          "index": 5,
+          "tick": 4112,
+          "position": {
+            "x": 6,
+            "y": 2,
+            "z": 11994
+          },
+          "support": {
+            "id": "$floor",
+            "y": 1,
+            "normal": {
+              "x": 0,
+              "y": 1000000,
+              "z": 0
+            }
+          },
+          "landingSpeed": 1049,
+          "landingTilt": 17
+        }
+      ],
+      "heading": {
+        "movingSamples": 2676,
+        "p95Degrees": 25.516577041616756,
+        "maxDegrees": 69.84493401088196,
+        "forwardDistancePercent": 100,
+        "alignedWithin45DistancePercent": 99.2,
+        "fastReverseTicks": 0
+      },
+      "sourceIdentity": "192c5446d4ebe5d8"
+    }
+  ],
+  "generatorSha256": "251fcddfa178fdb807e247a8b958bff6e46eae3353738ee61efec83ad69bbd14",
+  "totalBytes": 672382,
+  "totalProofBytes": 626406,
+  "summary": {
+    "complete": 16,
+    "changedRecordings": 10,
+    "minimumHealth": 85,
+    "contacts": 0,
+    "allPlayerPulsesHit": true
+  },
+  "runtimeSourceHashes": [
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sha256": "7f76d8e1a713318f67bf147d486a6488768f44997b58999516402c492f8a17b5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "348642a47e43f1cb621858d87d1584a7546c301230b4ac8ebf0707f29cc8b49a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "75944a7c621d087618eae009b7daf3482cee4196df48f1843e540918eddb793a"
+    }
+  ],
+  "response": {
+    "format": "FlightResponseProfile.v1",
+    "id": "demonstration-v2",
+    "name": "Demonstration response",
+    "maxRate": 180,
+    "maxTilt": 30,
+    "expo": 0,
+    "responseTicks": 4
+  },
+  "reproduction": {
+    "count": 16,
+    "result": "All sixteen complete course+proof artifact SHA256 hashes exactly reproduced by the installed repository-relative generator in a fresh Node process.",
+    "node": "v20.19.5"
+  },
+  "origin": "Original locally authored offline proportional/derivative command recorder; no third-party source or runtime autopilot.",
+  "runtimeModule": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+  "runtimeModuleSha256": "bcacba2236cf939f1a15bd46614a99444caf77a76fa76656505490760ed9eee9",
+  "runtimeModuleRecordingCount": 80,
+  "runtimeModuleHashScope": "Snapshot at container yard batch preparation. Later batches append records; per-proof hashes remain independently verifiable.",
+  "releaseQualified": false,
+  "pilotingChoices": {
+    "approach": "Physically approach authored target-specific anchors before aiming and firing quantized pulse commands. All actual projectiles and opponent fire remain active. Successful examples can lose shields; health and damage observations are retained.",
+    "hazards": "Return at 6.2 m above moving hazard lanes; extraction uses a recorded detour before the original landing pad.",
+    "limits": "Command-only piloting. No course, actor, collision, scoring or runtime changes. Browser presentation and offline qualification are reported separately."
+  },
+  "previousProofsPreserved": {
+    "v1": 24,
+    "v2": 64,
+    "proofs": [
+      {
+        "id": "flight-01",
+        "mode": "self-level",
+        "sha256": "3ed2a52b4a597da21de599fe5989a8a3434749fd6754336503ea9619efff383b"
+      },
+      {
+        "id": "flight-01",
+        "mode": "acro",
+        "sha256": "cbe339c8db849d584a6bcc18ef2997c247d640b84cb9595dd6b6506d2bb1de43"
+      },
+      {
+        "id": "flight-02",
+        "mode": "self-level",
+        "sha256": "38bc8d1d2b52ea573fa262131b13ff721ea4011f878674cd7023c7c5cb1dbedf"
+      },
+      {
+        "id": "flight-02",
+        "mode": "acro",
+        "sha256": "0d47f0994382504aa8463afba49f3d93d69468e679050721c361f046eddd82e3"
+      },
+      {
+        "id": "flight-03",
+        "mode": "self-level",
+        "sha256": "ab58017440d3a6b74785c46a327d9b6e0e69821a1872538231eb1e7685b236ca"
+      },
+      {
+        "id": "flight-03",
+        "mode": "acro",
+        "sha256": "2ad55ff9b561850b4d9eb2e5f07ab2f2c73ff5ac8c7b79f6135c9b345f4e120b"
+      },
+      {
+        "id": "flight-04",
+        "mode": "self-level",
+        "sha256": "58745a84bb3cac5a4cb520edd2d24525807d5ae4c936f8a5e6926453108b55ea"
+      },
+      {
+        "id": "flight-04",
+        "mode": "acro",
+        "sha256": "aaabff64302f5a2ffa3c4e017c97de4292593b8c05ad22ff69e6230f339f40cc"
+      },
+      {
+        "id": "flight-05",
+        "mode": "self-level",
+        "sha256": "808797f792da7abb84faedf5f4406fbf520460bf0077988dfa81e23809e90daf"
+      },
+      {
+        "id": "flight-05",
+        "mode": "acro",
+        "sha256": "df9dd5fe940ca175de4e4d334e258ec45fb1e4b71577ca459cc69b2ec9e8674f"
+      },
+      {
+        "id": "flight-06",
+        "mode": "self-level",
+        "sha256": "fb7422e1b0e37f6e22f23a63433b07c5bb9d10819b28f82c2cdf0047632f6de2"
+      },
+      {
+        "id": "flight-06",
+        "mode": "acro",
+        "sha256": "4713720d38fbfde2caea5e489a82b3d740cb22b8e1f4788dde375d7fe742d0ac"
+      },
+      {
+        "id": "flight-07",
+        "mode": "self-level",
+        "sha256": "4c5afc4a064aad27e051d4bb744bf6e6ec2fad25636cfdb5c38dde0f89ccf37a"
+      },
+      {
+        "id": "flight-07",
+        "mode": "acro",
+        "sha256": "8423183c303621a51876807179f3e4c34a307b61f7976f66338e1b029b02aa81"
+      },
+      {
+        "id": "flight-08",
+        "mode": "self-level",
+        "sha256": "f04990c0921182c0f11f5a62445fec4759158a3a7082dcd065b5c828b376cdc1"
+      },
+      {
+        "id": "flight-08",
+        "mode": "acro",
+        "sha256": "ff8b31e6f4e81a363eb0630a776e50166babbd26f1199c4d0553972766f44f52"
+      },
+      {
+        "id": "flight-09",
+        "mode": "self-level",
+        "sha256": "42fdc87542197925b83474d031e44677314d32c5d7b784e24250b7553977036d"
+      },
+      {
+        "id": "flight-09",
+        "mode": "acro",
+        "sha256": "3658dd25e8c77c7826f74bb568db55db5929bfb50e135911c080073de02ab20d"
+      },
+      {
+        "id": "flight-10",
+        "mode": "self-level",
+        "sha256": "bfc18214357db7d50aaf4795e62c0e8ee21b6e6a482b5d49cf8b93bc0808fcc3"
+      },
+      {
+        "id": "flight-10",
+        "mode": "acro",
+        "sha256": "d4509e72e983fc3946ffd98b1d3d819369488531739d7083c2993274b0747e5b"
+      },
+      {
+        "id": "flight-11",
+        "mode": "self-level",
+        "sha256": "123fff0f89dedd2f683234cc6657a8a517726bab73df1e14aa484f2815b0a4e2"
+      },
+      {
+        "id": "flight-11",
+        "mode": "acro",
+        "sha256": "a04fddcc2757fcd1f62925b8cd3553ce0e577ea142d931386771e5f5020cdddf"
+      },
+      {
+        "id": "flight-12",
+        "mode": "self-level",
+        "sha256": "37617055d8c2d4179037fe3c5f3028a4aca627c5d86ced76898d615b92342c15"
+      },
+      {
+        "id": "flight-12",
+        "mode": "acro",
+        "sha256": "5010a05b8f23be9f2ea28897069f42b4d83dbca796373a4afac5eb0f13ca3d95"
+      },
+      {
+        "id": "woodland-01",
+        "mode": "self-level",
+        "sha256": "e3fa8c00f009b61cb147c6dcd12e60c837525c9d961da5b2cc8e21b985be7f85"
+      },
+      {
+        "id": "woodland-01",
+        "mode": "acro",
+        "sha256": "aa3abe1af6bebaf9804c860548dc14ee695da46b80d7e80ad400a72e0549b90e"
+      },
+      {
+        "id": "woodland-02",
+        "mode": "self-level",
+        "sha256": "a4e32f962ab214f0f5cdb1d22ce09b4145c76d27c9c4ebb12efe9aff40848276"
+      },
+      {
+        "id": "woodland-02",
+        "mode": "acro",
+        "sha256": "cc1e2565485f770f6d010ebe172f0d92ab58e03b37911b956c32656b60bccc28"
+      },
+      {
+        "id": "woodland-03",
+        "mode": "self-level",
+        "sha256": "791388ea478f7b838cc3e92800f41bbc6964153ab841c495f38796361a552067"
+      },
+      {
+        "id": "woodland-03",
+        "mode": "acro",
+        "sha256": "444ca01b2c66cb5211b231c26c91ec73c176025545965ee38c92be1eb6c4335a"
+      },
+      {
+        "id": "woodland-04",
+        "mode": "self-level",
+        "sha256": "f8eb42ff4135deabee9ceb087a4a409dc1414d1bbacbabd23f2f0b5e359f680b"
+      },
+      {
+        "id": "woodland-04",
+        "mode": "acro",
+        "sha256": "6a880dd931888d1cf71808253f9834d4304417e98b160cd9cba3295ab1ebb06b"
+      },
+      {
+        "id": "woodland-05",
+        "mode": "self-level",
+        "sha256": "1b0d263fa89832916bf5b5c474f2b118a670d5060afbfee20ada9a70b171bc32"
+      },
+      {
+        "id": "woodland-05",
+        "mode": "acro",
+        "sha256": "7c94bb9b2138517985a882a62ed8c104029b7ff4cd2f4dfa4cc0aaa7599e9ad6"
+      },
+      {
+        "id": "woodland-06",
+        "mode": "self-level",
+        "sha256": "132827a969119239ede2338cff07ef25a759ac273ba059d5767a8b7f664cae97"
+      },
+      {
+        "id": "woodland-06",
+        "mode": "acro",
+        "sha256": "4bc4d8b1922ef51752c4fa801e043ea3122c93fc6918f7a465efe0128dc4af6b"
+      },
+      {
+        "id": "woodland-07",
+        "mode": "self-level",
+        "sha256": "f2309bb8af886aeb4a0f3825b4d40e5bcde315f5195b83e450f76664c5f0ab6d"
+      },
+      {
+        "id": "woodland-07",
+        "mode": "acro",
+        "sha256": "8b8280184ad51c6a77fdaf718352f87b5a5f464089ee7bbe6b30883b43f04f05"
+      },
+      {
+        "id": "woodland-08",
+        "mode": "self-level",
+        "sha256": "4d204e25158e9a0ab981485c812d097cf580ec3b56f4fe3bfa84f646ead027bb"
+      },
+      {
+        "id": "woodland-08",
+        "mode": "acro",
+        "sha256": "a1e9d6d71d560cdf515182c4220522b1a9d27e1b872845ba87ec18e7723e581f"
+      },
+      {
+        "id": "courtyard-01",
+        "mode": "self-level",
+        "sha256": "804ccc00c49d11a91cd4d2bb452c5aa512f4c26f3a564d2a92aeaea84582fbb3"
+      },
+      {
+        "id": "courtyard-01",
+        "mode": "acro",
+        "sha256": "b0a1e1443300bcf3141f9c80417de5572a9ad21c85aa1bffec1faae619afa1fc"
+      },
+      {
+        "id": "courtyard-02",
+        "mode": "self-level",
+        "sha256": "30ab5704b1730fe39bbfb1f5546ad1a81a19a0f35fecef9f0710c0535a03b5d3"
+      },
+      {
+        "id": "courtyard-02",
+        "mode": "acro",
+        "sha256": "3bb23e05442c0fa5634c670a37bb334cae7ce1fca8f3151038c35edd6950ec16"
+      },
+      {
+        "id": "courtyard-03",
+        "mode": "self-level",
+        "sha256": "cec8f6de42f1ed8371810eb43cc4a262b009449768f523be8b87abd64140de2d"
+      },
+      {
+        "id": "courtyard-03",
+        "mode": "acro",
+        "sha256": "fa5d3291399f9cf4cef8715bdd8ed6535965ff941b16ef1e367bfca246ae700f"
+      },
+      {
+        "id": "courtyard-04",
+        "mode": "self-level",
+        "sha256": "780eff5f9aaaa1806919578a80ab4f0635bdbeccbd3d83a9d38f7b954c6ff770"
+      },
+      {
+        "id": "courtyard-04",
+        "mode": "acro",
+        "sha256": "1281af3d54e3393948e4dba4f2061a7af5d028bc9b8f8ac1747df99177c64eff"
+      },
+      {
+        "id": "courtyard-05",
+        "mode": "self-level",
+        "sha256": "521930d222deb4ff1898d8110b0ececd1d4459e158ce0d3b1aff6f7a948b1e9d"
+      },
+      {
+        "id": "courtyard-05",
+        "mode": "acro",
+        "sha256": "1c2d4fd9dba7361d9de4cbe256b69d9bc51dea93697b5e6dfef808f514bf4194"
+      },
+      {
+        "id": "courtyard-06",
+        "mode": "self-level",
+        "sha256": "5d898b91ef6ae2bec17dc6c445d3ae17b4ca01947616a0898bf309843d0ed30f"
+      },
+      {
+        "id": "courtyard-06",
+        "mode": "acro",
+        "sha256": "6bd3f3b0d931f34ba62e1645c27017ea4c2e896af60ed24bd24144177ee0a15d"
+      },
+      {
+        "id": "courtyard-07",
+        "mode": "self-level",
+        "sha256": "b642c1457100cfae8f42e6adce232e77e22edda19caf780a5a9207573bf60cd7"
+      },
+      {
+        "id": "courtyard-07",
+        "mode": "acro",
+        "sha256": "6afd5ea8f56d22efde2ad94b03df8d778441fd0bddffdaaaa688b0aded6f15ed"
+      },
+      {
+        "id": "courtyard-08",
+        "mode": "self-level",
+        "sha256": "462a9e5ca8fe561b7892d4462dedb67593bfce8104bb50560ca890215ec87b83"
+      },
+      {
+        "id": "courtyard-08",
+        "mode": "acro",
+        "sha256": "49f581cba7bfcc37420177214aeabfc4eb39a37c2ff69184be78a9a2179d1e8a"
+      },
+      {
+        "id": "warehouse-01",
+        "mode": "self-level",
+        "sha256": "c5397a69bbbb7e7079a24be51e260a35d8d8ab643209203f7f854288ca4249ca"
+      },
+      {
+        "id": "warehouse-01",
+        "mode": "acro",
+        "sha256": "e867cdc7a99139e63a4b26388b1f7d3c288b5d5687aa5fda0a3663d2f0ca4279"
+      },
+      {
+        "id": "warehouse-02",
+        "mode": "self-level",
+        "sha256": "cb28fd416644dbd81f74184f2eee70512f71356499254414309dc5f54130cfa9"
+      },
+      {
+        "id": "warehouse-02",
+        "mode": "acro",
+        "sha256": "83a5bcb80df8aec749e49c33778ddbeb8547131dfc447442e786ecd784ab864e"
+      },
+      {
+        "id": "warehouse-03",
+        "mode": "self-level",
+        "sha256": "6dfc10daa48a920b241a2fa7a9b2b5e1a39a942a7b6d8d3565ad61d7c0df567d"
+      },
+      {
+        "id": "warehouse-03",
+        "mode": "acro",
+        "sha256": "a4f9767760dd2b88bb831d92b5a3c53442989b399023e752760c05c269fa0591"
+      },
+      {
+        "id": "warehouse-04",
+        "mode": "self-level",
+        "sha256": "65ff59fa93e1cd8bb3a1c793b800593e12cc31cf868760e8afa0f840913ebb7a"
+      },
+      {
+        "id": "warehouse-04",
+        "mode": "acro",
+        "sha256": "c1204d7369e865ae8a3f9865b5e601b19389aec444566dead6ee4b0905cf0912"
+      },
+      {
+        "id": "warehouse-05",
+        "mode": "self-level",
+        "sha256": "117cee75880e19b79a615b8b2ee48a50a2007389cb3aabfdf6a826e6bee21019"
+      },
+      {
+        "id": "warehouse-05",
+        "mode": "acro",
+        "sha256": "cda9d728bcad8cfa2ab2cb76f978e1f00557409af671671383b539830c176326"
+      },
+      {
+        "id": "warehouse-06",
+        "mode": "self-level",
+        "sha256": "e37c275cc6accb65ce98ea504f5dd12bf56f578f69b496515ef97cea0c1b13c4"
+      },
+      {
+        "id": "warehouse-06",
+        "mode": "acro",
+        "sha256": "5a58ec6b5bf2e123a5d50285a5ccadacf53e13e75148b3eec7291727a829d417"
+      },
+      {
+        "id": "warehouse-07",
+        "mode": "self-level",
+        "sha256": "9479cf367277810925feef3391ae314262670e84d3a20722bd97079dddf73c93"
+      },
+      {
+        "id": "warehouse-07",
+        "mode": "acro",
+        "sha256": "2954d62c417d1792fa696fc5335e85e520368f284c3f5963703eb722379b3096"
+      },
+      {
+        "id": "warehouse-08",
+        "mode": "self-level",
+        "sha256": "103b14a6005ad8cb832b2a90d467357cbd706d70d3375d0317f38029aa3deab5"
+      },
+      {
+        "id": "warehouse-08",
+        "mode": "acro",
+        "sha256": "0d56cf12c6a9f21460c9f531901c59de01cdfddec204965c91e40365de110f4d"
+      },
+      {
+        "id": "stadium-01",
+        "mode": "self-level",
+        "sha256": "a8516332d1e02f3eedd207890c59464ab342278e85250b0e3c25a6d2a70d6f5d"
+      },
+      {
+        "id": "stadium-01",
+        "mode": "acro",
+        "sha256": "35b2ac52e7dcafca83b19b67fd05563e61fc00f1ddbd5712f8350b686e2054f1"
+      },
+      {
+        "id": "stadium-02",
+        "mode": "self-level",
+        "sha256": "adcfe722cbd3280775dacd81ef3bcb93e76193cdfd7035b025800196acb4f056"
+      },
+      {
+        "id": "stadium-02",
+        "mode": "acro",
+        "sha256": "d6848b4c9044b0e38097a387d389ccf5f7e032160a8d4a5cc2e9788569135eba"
+      },
+      {
+        "id": "stadium-03",
+        "mode": "self-level",
+        "sha256": "96ef4ecddcb5aba94e5c34961cd5f94aaa9fa6be8b609faeb1d5d583509c4343"
+      },
+      {
+        "id": "stadium-03",
+        "mode": "acro",
+        "sha256": "5943e5a0e914d4c75234ac9c1d5e8c00599d676db66dd1c5de46a5992f4b3922"
+      },
+      {
+        "id": "stadium-04",
+        "mode": "self-level",
+        "sha256": "f823a5d94b0bb9a632cb8abb83d9f71b6f7daeff7db4d10c6279750e389c8540"
+      },
+      {
+        "id": "stadium-04",
+        "mode": "acro",
+        "sha256": "892f21a2d2192e95dd3ea349945478e2c1c7c9856d4c323161234397047addc6"
+      },
+      {
+        "id": "stadium-05",
+        "mode": "self-level",
+        "sha256": "e021079c1e7e8a6a4ed1b76bc017dd24115334192aff4aaa292936c1795251eb"
+      },
+      {
+        "id": "stadium-05",
+        "mode": "acro",
+        "sha256": "6064f934b497970827199f99f383b1790e016eaadc9f7fdd1386e0f55d683814"
+      },
+      {
+        "id": "stadium-06",
+        "mode": "self-level",
+        "sha256": "db97454e31d211b9093d7de8a46e2e91d9a130f83805fcbe2da36e62982733f3"
+      },
+      {
+        "id": "stadium-06",
+        "mode": "acro",
+        "sha256": "733c04a0d836fd3a3b8deb9db4c829f8e947a755f1a42f3de763bbeff59bd328"
+      },
+      {
+        "id": "stadium-07",
+        "mode": "self-level",
+        "sha256": "ac8699e84635aca04a923571618f0d9a139a591fffae2dc569322de2e26f86c0"
+      },
+      {
+        "id": "stadium-07",
+        "mode": "acro",
+        "sha256": "57c3e08aacdd069dbc67a809e6654b90618eccf81d2e880fd8ae50f0f23e6f1d"
+      },
+      {
+        "id": "stadium-08",
+        "mode": "self-level",
+        "sha256": "3bea7d43277b9c19072abdd8757633cc4da2fe5d108cd49f3ce0975cca92929b"
+      },
+      {
+        "id": "stadium-08",
+        "mode": "acro",
+        "sha256": "38d63235fb18030c3d1bf93b030b2a154f2d229bb18eb3f498231039b29207a5"
+      }
+    ]
+  },
+  "browserVerification": {
+    "browser": "154.0.8037.93",
+    "replays": [
+      {
+        "id": "container-yard-01",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 1282,
+        "contacts": 0,
+        "health": 100,
+        "shots": 0,
+        "hits": 0,
+        "sectors": 3
+      },
+      {
+        "id": "container-yard-01",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 1282,
+        "contacts": 0,
+        "health": 100,
+        "shots": 0,
+        "hits": 0,
+        "sectors": 3
+      },
+      {
+        "id": "container-yard-02",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2867,
+        "contacts": 0,
+        "health": 100,
+        "shots": 0,
+        "hits": 0,
+        "sectors": 4
+      },
+      {
+        "id": "container-yard-02",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2883,
+        "contacts": 0,
+        "health": 100,
+        "shots": 0,
+        "hits": 0,
+        "sectors": 4
+      },
+      {
+        "id": "container-yard-03",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2750,
+        "contacts": 0,
+        "health": 100,
+        "shots": 0,
+        "hits": 0,
+        "sectors": 4
+      },
+      {
+        "id": "container-yard-03",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2756,
+        "contacts": 0,
+        "health": 100,
+        "shots": 0,
+        "hits": 0,
+        "sectors": 4
+      },
+      {
+        "id": "container-yard-04",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 1285,
+        "contacts": 0,
+        "health": 100,
+        "shots": 2,
+        "hits": 2,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-04",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 1292,
+        "contacts": 0,
+        "health": 100,
+        "shots": 2,
+        "hits": 2,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-05",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 1707,
+        "contacts": 0,
+        "health": 100,
+        "shots": 4,
+        "hits": 4,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-05",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 1714,
+        "contacts": 0,
+        "health": 100,
+        "shots": 4,
+        "hits": 4,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-06",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 2128,
+        "contacts": 0,
+        "health": 90,
+        "shots": 4,
+        "hits": 4,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-06",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 2132,
+        "contacts": 0,
+        "health": 90,
+        "shots": 4,
+        "hits": 4,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-07",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 1794,
+        "contacts": 0,
+        "health": 100,
+        "shots": 6,
+        "hits": 6,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-07",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 1799,
+        "contacts": 0,
+        "health": 100,
+        "shots": 6,
+        "hits": 6,
+        "sectors": 2
+      },
+      {
+        "id": "container-yard-08",
+        "mode": "self-level",
+        "status": "complete",
+        "ticks": 4100,
+        "contacts": 0,
+        "health": 90,
+        "shots": 5,
+        "hits": 5,
+        "sectors": 6
+      },
+      {
+        "id": "container-yard-08",
+        "mode": "acro",
+        "status": "complete",
+        "ticks": 4112,
+        "contacts": 0,
+        "health": 85,
+        "shots": 5,
+        "hits": 5,
+        "sectors": 6
+      }
+    ],
+    "catalogueLinks": 52,
+    "coverage": "104 recorded examples cover all 52 Academy, Woodland Park, Ukrainian Courtyard, Warehouse, Racing Stadium and Container Yard challenges in both modes. Parking Garage examples are still in production.",
+    "views": [
+      {
+        "id": "container-yard-04",
+        "tick": 502,
+        "health": 100,
+        "contacts": 0
+      },
+      {
+        "id": "container-yard-05",
+        "tick": 472,
+        "health": 100,
+        "contacts": 0
+      },
+      {
+        "id": "container-yard-06",
+        "tick": 526,
+        "health": 100,
+        "contacts": 0
+      },
+      {
+        "id": "container-yard-07",
+        "tick": 616,
+        "health": 100,
+        "contacts": 0
+      },
+      {
+        "id": "container-yard-08",
+        "tick": 2327,
+        "health": 100,
+        "contacts": 0
+      }
+    ],
+    "playbackControls": {
+      "restartTicks": 3,
+      "halfSpeed": {
+        "before": 3,
+        "after": 16,
+        "replay": {
+          "kind": "demonstration",
+          "mode": "acro",
+          "rate": 0.5,
+          "frames": 1292,
+          "finished": false
+        }
+      },
+      "flyThisStatus": "disarmed",
+      "recordsAfterViewing": 0
+    },
+    "offline": {
+      "links": 52,
+      "complete": "complete",
+      "records": 0
+    },
+    "mobile": {
+      "width": 390,
+      "scroll": 390,
+      "coverage": "104 записані приклади охоплюють усі 52 завдання Академії, Лісопарку, Українського подвір’я, Складу, Перегонового стадіону та Контейнерного двору в обох режимах. Приклади для Паркінгу ще готуються."
+    },
+    "mobileFlight": {
+      "width": 390,
+      "scroll": 390,
+      "dialogWidth": 380,
+      "dialogScroll": 380,
+      "label": "ДЕМОНСТРАЦІЯ СВІТУ",
+      "status": "Відтворення на паузі. Натисніть «Продовжити»."
+    },
+    "errors": [],
+    "build": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 75,
+      "bytes": 12306578,
+      "zipSha256": "f33c04cf3a4a63953bebf0914046c841e3fa4f1602912f7e943c9c2931dbf2cb",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    },
+    "offlineCombat": {
+      "status": "complete",
+      "shots": 2,
+      "hits": 2,
+      "health": 100,
+      "records": 0,
+      "pausedStateUnchanged": true,
+      "hazardViewTick": 1202,
+      "errors": []
+    }
+  }
+}

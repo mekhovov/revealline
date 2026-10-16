@@ -1,0 +1,370 @@
+TAP version 13
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 1 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 12.936541
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 2 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 678.328458
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 3 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 551.012625
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 4 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 138.246875
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 5 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 1120.816584
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 6 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 1.84475
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 7 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.245458
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 8 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.692875
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 9 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.288167
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 10 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 12.234041
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 11 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 1.248042
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 12 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.18925
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 13 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.207833
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 14 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 44.646542
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 15 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 5.435167
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 16 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 2.612625
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 17 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 3.305625
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 18 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.502916
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 19 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.210459
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 20 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.409541
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 21 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.17825
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 22 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.05625
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 23 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 7.628
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 24 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 12.102917
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 25 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 42.16225
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 26 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.455166
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 27 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.376916
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 28 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 87.017542
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 29 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.251667
+  ...
+# Subtest: mastery follows completed actions, preserves earned flags and compares the prior same-seed run
+ok 30 - mastery follows completed actions, preserves earned flags and compares the prior same-seed run
+  ---
+  duration_ms: 370.113125
+  ...
+# Subtest: all six battlefield worlds persist mastery across reopened stores and retain legacy entries
+ok 31 - all six battlefield worlds persist mastery across reopened stores and retain legacy entries
+  ---
+  duration_ms: 263.5305
+  ...
+# Subtest: Riy requires reached attack range and Raid requires an earned chain, not selected upgrades
+ok 32 - Riy requires reached attack range and Raid requires an earned chain, not selected upgrades
+  ---
+  duration_ms: 14.167333
+  ...
+# Subtest: world artwork does not split mastery for unchanged authored encounters or legacy rules
+ok 33 - world artwork does not split mastery for unchanged authored encounters or legacy rules
+  ---
+  duration_ms: 53.896375
+  ...
+# Subtest: report distinguishes earned, collected, ground salvage and upgrade gaps without claiming reachability
+ok 34 - report distinguishes earned, collected, ground salvage and upgrade gaps without claiming reachability
+  ---
+  duration_ms: 7.729125
+  ...
+# Subtest: flight report shows actual final armor and hull without treating missing targets as defeated
+ok 35 - flight report shows actual final armor and hull without treating missing targets as defeated
+  ---
+  duration_ms: 5.37625
+  ...
+# Subtest: failed profile writes retain session achievements; review fixtures never write
+ok 36 - failed profile writes retain session achievements; review fixtures never write
+  ---
+  duration_ms: 41.73925
+  ...
+# Subtest: Marathon is recorded only after banking and its mode stays separate from Single Raid
+ok 37 - Marathon is recorded only after banking and its mode stays separate from Single Raid
+  ---
+  duration_ms: 176.408708
+  ...
+# Subtest: mastery evicts the oldest context at capacity while retaining recently replayed achievements
+ok 38 - mastery evicts the oldest context at capacity while retaining recently replayed achievements
+  ---
+  duration_ms: 474.245625
+  ...
+# Subtest: Marathon mastery totals damage and airframe loss across contracts exactly once
+ok 39 - Marathon mastery totals damage and airframe loss across contracts exactly once
+  ---
+  duration_ms: 65.506708
+  ...
+# Subtest: native report presents three goals, measured progression and understandable prior-run differences
+ok 40 - native report presents three goals, measured progression and understandable prior-run differences
+  ---
+  duration_ms: 15.490416
+  ...
+# Subtest: Raid records keep score and fastest successful clear independent
+ok 41 - Raid records keep score and fastest successful clear independent
+  ---
+  duration_ms: 6.476292
+  ...
+# Subtest: record identity separates content, seed and gameplay settings but shares cosmetics
+ok 42 - record identity separates content, seed and gameplay settings but shares cosmetics
+  ---
+  duration_ms: 2.106292
+  ...
+# Subtest: storage failure is session-only and can recover without losing the previous record
+ok 43 - storage failure is session-only and can recover without losing the previous record
+  ---
+  duration_ms: 1.0225
+  ...
+# Subtest: nonterminal, nonfinite and review attempts cannot set records
+ok 44 - nonterminal, nonfinite and review attempts cannot set records
+  ---
+  duration_ms: 0.771084
+  ...
+# Subtest: failed writes preserve stronger durable records in session results and later reads
+ok 45 - failed writes preserve stronger durable records in session results and later reads
+  ---
+  duration_ms: 2.340208
+  ...
+# Subtest: Raid launch preserves same-build locale and artwork, rejects unknown paths
+ok 46 - Raid launch preserves same-build locale and artwork, rejects unknown paths
+  ---
+  duration_ms: 4.482542
+  ...
+# Subtest: Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+ok 47 - Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+  ---
+  duration_ms: 23.008
+  ...
+# Subtest: Raid commentator never promises salvage on the ground and only announces first earned Rush
+ok 48 - Raid commentator never promises salvage on the ground and only announces first earned Rush
+  ---
+  duration_ms: 0.573916
+  ...
+# Subtest: V2 records write durably beside untouched legacy history and isolate difficulty
+ok 49 - V2 records write durably beside untouched legacy history and isolate difficulty
+  ---
+  duration_ms: 38.731083
+  ...
+# Subtest: V4 records have an independent durable bucket and never overwrite V3 results
+ok 50 - V4 records have an independent durable bucket and never overwrite V3 results
+  ---
+  duration_ms: 2.86275
+  ...
+# Subtest: Survivor records separate fastest victories, most cleared, failure details and chosen branches
+ok 51 - Survivor records separate fastest victories, most cleared, failure details and chosen branches
+  ---
+  duration_ms: 8.547125
+  ...
+# Subtest: mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+ok 52 - mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+  ---
+  duration_ms: 9.144458
+  ...
+# Subtest: storage failures retain session achievements and recover without dropping a stronger record
+ok 53 - storage failures retain session achievements and recover without dropping a stronger record
+  ---
+  duration_ms: 217.058583
+  ...
+# Subtest: record captures result before asynchronous profile access or retry changes the run
+ok 54 - record captures result before asynchronous profile access or retry changes the run
+  ---
+  duration_ms: 17.372958
+  ...
+# Subtest: invalid and review results cannot overwrite records; disposal closes access
+ok 55 - invalid and review results cannot overwrite records; disposal closes access
+  ---
+  duration_ms: 34.007042
+  ...
+# Subtest: review steering routes around cover to collect salvage through public movement input
+ok 56 - review steering routes around cover to collect salvage through public movement input
+  ---
+  duration_ms: 216.894167
+  ...
+# Subtest: review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+ok 57 - review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+  ---
+  duration_ms: 49.4655
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 58 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 1235.523375
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 59 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 728.222583
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 60 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 551.154083
+  ...
+# Subtest: actual native menu imports and styles remain in each mode offline closure
+ok 61 - actual native menu imports and styles remain in each mode offline closure
+  ---
+  duration_ms: 711.066541
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 62 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 173.819917
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 63 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 283.888083
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 64 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 408.75525
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 65 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 5.354375
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 66 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.311125
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 67 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 0.656083
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 68 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 2.616583
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 69 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 0.321625
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 70 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 0.198833
+  ...
+# Subtest: Riy operation keeps its dynamic runtime and authored package graph in offline core
+ok 71 - Riy operation keeps its dynamic runtime and authored package graph in offline core
+  ---
+  duration_ms: 226.234458
+  ...
+# Subtest: six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+ok 72 - six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+  ---
+  duration_ms: 192.511125
+  ...
+1..72
+# tests 72
+# suites 0
+# pass 72
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5032.857

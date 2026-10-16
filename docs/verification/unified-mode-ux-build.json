@@ -1,0 +1,18 @@
+{
+  "scope": "Exact clean committed-source production preparation; no completed archive or public-release qualification",
+  "sourceRevision": "2b338c0e7aeb5f2d3ecbd24c7eda39ecca79d914",
+  "sourceTree": "eff980e02e9c5bd611c8fa6f58711867f8611447",
+  "version": "v0.143.0",
+  "preparedFiles": 2969,
+  "payloadBytes": 995377822,
+  "zipBytes": 995882946,
+  "coreFiles": 1343,
+  "coreBytes": 67095618,
+  "coreLimitBytes": 67108864,
+  "manifestSha256": "0103ce5aea76410432fe2dfdd3c16fc8fd4d5d3df4aa02ed0b526404c2dc39f9",
+  "availableBytes": 716910592,
+  "fullOutputBytes": 1991260768,
+  "archive": "blocked-insufficient-capacity-even-for-zip",
+  "automatedSuites": "waived-not-run",
+  "coreHeadroomBytes": 13246
+}

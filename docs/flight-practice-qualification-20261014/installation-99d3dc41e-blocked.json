@@ -1,0 +1,113 @@
+{
+  "format": "OptionalInstallationObservation.v1",
+  "passed": false,
+  "browserPreparationPassed": false,
+  "createdAt": "2026-10-14T05:24:23.624Z",
+  "sourceRevision": "99d3dc41e08b420f2b430ef1875b309983be8f38",
+  "sourceTree": "fb5457a3f5281430fe7cf6739eb6c9cdc734f0e8",
+  "envelopeSha256": "29bd820e4ca31e0514812f464072b1e438c5a93699e02123f96d2982148e2f66",
+  "artifacts": [
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 3635778,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "cb8735967f9c41907a8a1650099b1630e3e537b56ba41ceb9d9819c3463763fa"
+      },
+      "entry": "optional-practice/civilian-flight/index.html",
+      "id": "civilian-flight",
+      "manifest": {
+        "bytes": 15177,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "50f4885dcb0cf6aacdde5d08f6b74e17f855162298b8982fec63ad5cfe2b30b9"
+      },
+      "revision": "66964f745ea20966dcdf750c0765b59e0b14832719f3639c1a1437e28d173ac1",
+      "sourceArchive": {
+        "bytes": 3666340,
+        "path": "source-optional-civilian-flight.zip",
+        "sha256": "7e2ac1d415783f9cf1b9ee644469ffecc3a20801fd3db6f2a6856810d5fd4975"
+      },
+      "sourceInventory": {
+        "bytes": 24926,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "a3a46328bf7893b705906e2f8d90d8f4b43dd57be92f7a815596906215304b9b"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 6633308,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "da72eaaf16b66b3507c7317a398e15b416cccbcc81aee3062ede13ca906346f8"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 16323,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "f8a023e92bc29cf3cecbd0c7a877e58fae9fb79bfd5ad61a73c3e9f1b220dc17"
+      },
+      "revision": "7eda291a971d3ee995c6b7faaa5650c9b88f8f6e0e50f27fb6a0e87a47832c9c",
+      "sourceArchive": {
+        "bytes": 6664866,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "fbf2205966daf50ac74afa7fe9169cd3dd09bd06bfe3381b3381a684d0c5ac13"
+      },
+      "sourceInventory": {
+        "bytes": 27174,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "1285705455c6671a0db4f12a780aeae7748d9df2e307507c415a8bb2e2c6c03b"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 17051423,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "297ac8c0c2cfa7a48a785ad7922e49aff5709a744ff24881841899973d26498c"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 22892,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "ef19c49989afaddef2d6f34cf4e299b95256d4d8d21862a8183c43f2a2144c87"
+      },
+      "revision": "98552ddb92fca218fc581ea8b8b77650a9a1437eda7e50d297cd0fe635a72779",
+      "sourceArchive": {
+        "bytes": 17088202,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "6a079f1369c423d0e11f904fa2b2f9284e22500a8770b176b8dc7660766ef759"
+      },
+      "sourceInventory": {
+        "bytes": 38956,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "8be6f86cb8fe417c8b325c698e571ddccfb015705acb3858918d813868de49e1"
+      }
+    }
+  ],
+  "transition": {
+    "kind": "same-payload-path-fixture",
+    "fromVersion": "v0.0.0",
+    "toVersion": "v0.151.1",
+    "changedFiles": [],
+    "previous": null
+  },
+  "harnessSha256": "345e517c48a9031e589c21b241daba38b450407a5b15b38e27c976ee1760b235",
+  "helperSha256": "e3da2c02426f3c0f2fbc1b6a1abff93dd5d4c6c06c889e90e8f5516e4ea66b1e",
+  "inputRoute": {
+    "academyOfflineDisclosure": "Native summary keyboard Enter",
+    "limitation": "A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction."
+  },
+  "failure": "This admitted package requires a password. Set OPTIONAL_INSTALLATION_PASSWORD to an authorized test credential; the observer will use the ordinary unlock form, never bypass it.",
+  "osApps": [],
+  "checkpoints": [],
+  "errors": [],
+  "cleanup": {
+    "errors": [],
+    "temporaryProfileRemoved": true
+  }
+}

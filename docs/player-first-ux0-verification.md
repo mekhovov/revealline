@@ -1,7 +1,10 @@
 # UX0: primary input and mission focus
 
-Candidate v0.98.0; not a published-release acceptance record. See the
-[execution board](player-first-ux-execution.md) for remaining UX1–UX6 work.
+Reconciled candidate v0.100.0; not a published-release acceptance record. The
+original PR320/v0.98 references below are preserved as dated qualification
+evidence. v0.98.0 was published independently and remains immutable. See the
+[execution board](player-first-ux-execution.md) for the active fast-release gate
+and remaining UX1–UX6 work.
 
 ## Latest release and qualification checkpoint
 

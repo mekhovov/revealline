@@ -116,21 +116,88 @@ export async function validateWaivedSourceQualification({
     )
   )
     throw new Error('Waived source qualification evidence pins are incomplete.');
-  const build = qualification.ordinaryBuildCorroboration,
+  const premerge = qualification.preMergeValidationCorroboration,
+    legacyBuild = qualification.ordinaryBuildCorroboration,
+    focused = qualification.focusedAdmissionCorroboration,
     frozen = qualification.frozenArtifactCorroboration;
+  const focusedValid =
+    exact(focused, [
+      'runId',
+      'jobId',
+      'aggregateJobId',
+      'sourceRevision',
+      'sourceTree',
+      'classificationSteps',
+      'genericBuild',
+      'fullTests',
+      'scope',
+    ]) &&
+    positive(focused?.runId, 1e14) &&
+    positive(focused?.jobId, 1e14) &&
+    positive(focused?.aggregateJobId, 1e14) &&
+    COMMIT.test(focused?.sourceRevision) &&
+    focused?.sourceTree === qualification.sourceTree &&
+    Array.isArray(focused?.classificationSteps) &&
+    focused.classificationSteps.length === 2 &&
+    focused.classificationSteps.every(
+      (row) =>
+        exact(row, ['name', 'number', 'status', 'conclusion']) &&
+        positive(row.number, 10_000) &&
+        row.status === 'completed' &&
+        row.conclusion === 'success',
+    ) &&
+    focused.classificationSteps.map((row) => row.name).join('\n') ===
+      'Capture the reviewed changed-path set\nSelect the fail-closed focused gate' &&
+    exact(focused?.genericBuild, ['jobId', 'status']) &&
+    positive(focused.genericBuild.jobId, 1e14) &&
+    focused.genericBuild.status === 'skipped-by-fast-release-policy' &&
+    exact(focused?.fullTests, ['status']) &&
+    focused.fullTests.status === 'waived-and-skipped' &&
+    typeof focused.scope === 'string' &&
+    Boolean(focused.scope.trim());
   if (
-    build?.command !== 'npm run build' ||
-    !successfulStep(build) ||
+    [premerge, legacyBuild, focused].filter((item) => item !== undefined).length !== 1 ||
+    !(
+      (premerge?.command === 'npm run validate' &&
+        exact(premerge, [
+          'runId',
+          'jobId',
+          'command',
+          'step',
+          'sourceRevision',
+          'sourceTree',
+          'artifactBuild',
+          'scope',
+        ]) &&
+        positive(premerge.runId, 1e14) &&
+        positive(premerge.jobId, 1e14) &&
+        successfulStep(premerge) &&
+        COMMIT.test(premerge.sourceRevision) &&
+        COMMIT.test(premerge.sourceTree) &&
+        typeof premerge.scope === 'string' &&
+        Boolean(premerge.scope.trim()) &&
+        exact(premerge.artifactBuild, ['status', 'step']) &&
+        premerge.artifactBuild?.status === 'deferred-to-frozen-source' &&
+        successfulStep(premerge.artifactBuild)) ||
+      (legacyBuild?.command === 'npm run build' && successfulStep(legacyBuild)) ||
+      focusedValid
+    ) ||
     !positive(frozen?.artifactId, 1e14) ||
+    (Object.hasOwn(frozen, 'sourceContract') &&
+      !['tar-v1', 'manifest-v1'].includes(frozen.sourceContract)) ||
     (Object.hasOwn(frozen, 'runId') && frozen.runId !== waiver.runId) ||
     ![
       'wholeOriginalArtifactVerifiedBeforeQualification',
-      'sourceTarGitBlobTypeModeAndPaxCommitVerified',
+      frozen?.sourceContract === 'manifest-v1'
+        ? 'sourceManifestGitContentsAndModesVerified'
+        : 'sourceTarGitBlobTypeModeAndPaxCommitVerified',
       'allInnerZipManifestBytesVerified',
       'frozenOfflineInventoryAndBindingsVerified',
     ].every((key) => frozen[key] === true)
   )
-    throw new Error('Waived source qualification build or frozen artifact proof is incomplete.');
+    throw new Error(
+      'Waived source qualification PR validation/deferral or frozen artifact proof is incomplete.',
+    );
   const bytes = await readPolicyEvidence(
     qualification.sourceRevision,
     'publishing/test-policy.json',

@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: launcher health detects eviction without fetching and repair verifies only missing shell files
+ok 1 - launcher health detects eviction without fetching and repair verifies only missing shell files
+  ---
+  duration_ms: 16.402875
+  ...
+# Subtest: returning from an updater uses the cached launcher while update resources stay network-only
+ok 2 - returning from an updater uses the cached launcher while update resources stay network-only
+  ---
+  duration_ms: 3.568125
+  ...
+# Subtest: installed launch preserves only opted-in controller diagnostics and its selected edition
+ok 3 - installed launch preserves only opted-in controller diagnostics and its selected edition
+  ---
+  duration_ms: 3.134666
+  ...
+# Subtest: updater documents satisfy the existing script and base CSP without caching their sidecars
+ok 4 - updater documents satisfy the existing script and base CSP without caching their sidecars
+  ---
+  duration_ms: 2.094667
+  ...
+# Subtest: frozen publication binds the candidate and requires every external update dependency
+ok 5 - frozen publication binds the candidate and requires every external update dependency
+  ---
+  duration_ms: 32.187209
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 91.163167

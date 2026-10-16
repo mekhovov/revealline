@@ -1,0 +1,320 @@
+{
+  "format": "revealline-committed-default-preparation.v1",
+  "sourceRevision": "125bde7d77dbc982681419f828fcdb262f8a4cd2",
+  "completedAt": "2026-10-03T05:04:37.385Z",
+  "method": "Normal prepareBuildProject with all source validation and production offline admission; no ZIP or expanded output",
+  "validationPassed": true,
+  "core": {
+    "files": 1335,
+    "bytes": 67034483,
+    "maxFiles": 2000,
+    "maxBytes": 67108864,
+    "headroomBytes": 74381
+  },
+  "distribution": {
+    "files": 2962,
+    "bytes": 995179397,
+    "manifestPayloadBytes": 994738542,
+    "manifestFileBytes": 440855,
+    "storedZipBytesEstimated": 995683591,
+    "expandedPlusZipBytesEstimated": 1990862988
+  },
+  "families": {
+    "other": {
+      "files": 1507,
+      "bytes": 201986956
+    },
+    "authoring": {
+      "files": 315,
+      "bytes": 177436364
+    },
+    "audio": {
+      "files": 128,
+      "bytes": 14503503
+    },
+    "authored-artwork": {
+      "files": 113,
+      "bytes": 273267869
+    },
+    "generated-runtime": {
+      "files": 77,
+      "bytes": 13593841
+    },
+    "game-content": {
+      "files": 217,
+      "bytes": 118824859
+    },
+    "company": {
+      "files": 376,
+      "bytes": 158245493
+    },
+    "compiled-presentation": {
+      "files": 148,
+      "bytes": 23528279
+    },
+    "optional-practice": {
+      "files": 81,
+      "bytes": 13792233
+    }
+  },
+  "largestEntries": [
+    {
+      "path": "game/content/packs/neon-mosaic-pack.json",
+      "bytes": 15623239
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+      "bytes": 12358446
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "bytes": 11949780
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "bytes": 11707106
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "bytes": 11706413
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "bytes": 11706060
+    },
+    {
+      "path": "game/content/packs/fpv-arcade.json",
+      "bytes": 11701968
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "bytes": 11377254
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "bytes": 11371849
+    },
+    {
+      "path": "game/content/packs/equipment-workshop.json",
+      "bytes": 11127024
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+      "bytes": 11067202
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+      "bytes": 10719959
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+      "bytes": 10329657
+    },
+    {
+      "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+      "bytes": 8825887
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-ukraine/media.rlmedia",
+      "bytes": 8734108
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+      "bytes": 8718918
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-fpv/media.rlmedia",
+      "bytes": 8669310
+    },
+    {
+      "path": "game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3",
+      "bytes": 8641768
+    },
+    {
+      "path": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+      "bytes": 8596058
+    },
+    {
+      "path": "optional/external-chapters/countercurrent-coupa/media.rlmedia",
+      "bytes": 8527514
+    },
+    {
+      "path": "optional/external-chapters/countercurrent-ukraine/media.rlmedia",
+      "bytes": 8512868
+    },
+    {
+      "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "bytes": 8280993
+    },
+    {
+      "path": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+      "bytes": 8175624
+    },
+    {
+      "path": "optional/external-chapters/original-fpv-pressure-external/media.rlmedia",
+      "bytes": 8037391
+    },
+    {
+      "path": "optional/external-chapters/fracture-lines-retro/media.rlmedia",
+      "bytes": 7967075
+    },
+    {
+      "path": "optional/external-chapters/countercurrent-retro/media.rlmedia",
+      "bytes": 7625557
+    },
+    {
+      "path": "optional/external-chapters/route-worlds-retro/media.rlmedia",
+      "bytes": 7589633
+    },
+    {
+      "path": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia",
+      "bytes": 7553086
+    },
+    {
+      "path": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+      "bytes": 7416321
+    },
+    {
+      "path": "optional/external-chapters/countercurrent-fpv/media.rlmedia",
+      "bytes": 7070195
+    },
+    {
+      "path": "game/content/packs/neon-reference-pack.json",
+      "bytes": 6927774
+    },
+    {
+      "path": "offline-content.json",
+      "bytes": 6005261
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 4729041
+    },
+    {
+      "path": "authoring/library/real-world-references/synevyr-lake-rafts.jpg",
+      "bytes": 4590659
+    }
+  ],
+  "largestCoreEntries": [
+    {
+      "path": "offline-content.json",
+      "bytes": 6005261
+    },
+    {
+      "path": "game/vendor/phaser-4.2.1.min.js",
+      "bytes": 1375976
+    },
+    {
+      "path": "game/content-design/runtime/navigation-whole-spatial-v25.json",
+      "bytes": 1363574
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 1264907
+    },
+    {
+      "path": "game/presentation/compiled/runtime.813ce5598736109011290a38ce3bbf257375d1e45f496ba60237bf4725bc81ca.json",
+      "bytes": 1252907
+    },
+    {
+      "path": "game/presentation/compiled/runtime.3663f75cfc922f63f99e2e57ac4fc82ce65a45e25af1624c29178c69f7f7af44.json",
+      "bytes": 1250579
+    },
+    {
+      "path": "game/presentation/compiled/runtime.92f09d9eb867989438991f116ee8a192cee6ac8c2e3f286297aa184257c96f78.json",
+      "bytes": 1249035
+    },
+    {
+      "path": "game/presentation/compiled/runtime.2706697f90141845bad18c9d47bac82ef0648ceb0bf12834e7ee7c07e1e42262.json",
+      "bytes": 1247371
+    },
+    {
+      "path": "game/presentation/compiled/runtime.7e8db95cec2eaab6b031e12bb44e036173611539393d44bbdfc50ff784d098b8.json",
+      "bytes": 1221603
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1192247
+    },
+    {
+      "path": "game/presentation/compiled/runtime.ca5f264f6a62c10a4e51c6a0296866edbb340f6db75118d8aa11f92a8c9a9f93.json",
+      "bytes": 1178803
+    },
+    {
+      "path": "game/presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json",
+      "bytes": 1094096
+    },
+    {
+      "path": "game/presentation/compiled/runtime.38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f.json",
+      "bytes": 1092838
+    },
+    {
+      "path": "authoring/library/fpv-role-presentations/originals/trapper.png",
+      "bytes": 1052291
+    },
+    {
+      "path": "game/presentation/compiled/runtime.ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54.json",
+      "bytes": 979746
+    },
+    {
+      "path": "game/presentation/compiled/runtime.91a3d66966e1b1a3c2e9b5c68aebcc4be284edff4e7b9b272731a769a4f66ace.json",
+      "bytes": 978694
+    },
+    {
+      "path": "authoring/library/fpv-role-presentations/originals/bomber.png",
+      "bytes": 905251
+    },
+    {
+      "path": "authoring/library/fpv-role-presentations/originals/fiber.png",
+      "bytes": 899233
+    },
+    {
+      "path": "authoring/motion-lab/assets/fpv-racer.png",
+      "bytes": 879038
+    },
+    {
+      "path": "game/presentation/compiled/assets/57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0.png",
+      "bytes": 866080
+    },
+    {
+      "path": "game/ui/art/field-kit/prepared/title-hangar-v1.png",
+      "bytes": 866080
+    },
+    {
+      "path": "authoring/library/fpv-role-presentations/originals/carrier.png",
+      "bytes": 808782
+    },
+    {
+      "path": "authoring/motion-lab/assets/heavy-lift.png",
+      "bytes": 795459
+    },
+    {
+      "path": "game/presentation/compiled/assets/4f56a78772cd7363a2992a8252e4dc629638dad705a9b981d4561830117f511e.png",
+      "bytes": 790579
+    },
+    {
+      "path": "game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png",
+      "bytes": 790579
+    }
+  ],
+  "optionalVoiceGroups": [
+    {
+      "id": "extras:character-voices-en",
+      "files": 32,
+      "bytes": 559499
+    },
+    {
+      "id": "extras:character-voices-uk",
+      "files": 32,
+      "bytes": 652107
+    }
+  ],
+  "automatedSuitesRun": false,
+  "zipCreated": false,
+  "expandedOutputCreated": false,
+  "sourceUnchangedDuringPreparation": true
+}
