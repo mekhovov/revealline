@@ -1,0 +1,84 @@
+{
+  "evidence": "Unmodified prepareBuildProject output served from memory. No handcrafted cache manifest, bypassed validation, ZIP or site staging. Browser qualification is separate and uses the ordinary installed-app UI. Origin-unavailable mode returns503 for every build resource; the control endpoint remains available only to this localhost test host.",
+  "createdAt": "2026-10-14T15:20:09.689Z",
+  "observedCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "sourceRevision": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "sourceChanges": [
+    "M docs/fpv-survivals-maps-movement-plan-2026-10-14.md",
+    " M docs/fpv-survivals-maps-movement-status.md",
+    " M docs/qualification/overflight/maps-movement-20261014/README.md",
+    " M docs/qualification/overflight/maps-movement-20261014/art-review/native-worlds.html",
+    " M docs/qualification/overflight/maps-movement-20261014/native-offline-server.mjs",
+    "?? docs/qualification/overflight/maps-movement-20261014/FINAL-SPEED-FIX.md",
+    "?? docs/qualification/overflight/maps-movement-20261014/NATIVE-PERFORMANCE.md",
+    "?? docs/qualification/overflight/maps-movement-20261014/PERFORMANCE-INSTRUMENTATION.md",
+    "?? docs/qualification/overflight/maps-movement-20261014/SOAK-SUMMARY.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/SOAK.md",
+    "?? docs/qualification/overflight/maps-movement-20261014/final-speed-fix-output.txt",
+    "?? docs/qualification/overflight/maps-movement-20261014/final-speed-fix-probe.mjs",
+    "?? docs/qualification/overflight/maps-movement-20261014/final-speed-fix.json.gz",
+    "?? docs/qualification/overflight/maps-movement-20261014/native-offline-build-rejected-harness-version.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/native-offline-build.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/native-offline-dispatcher.mjs",
+    "?? docs/qualification/overflight/maps-movement-20261014/native-offline-harness-correction.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/native-performance-summary.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/raid-effective-speed-selection.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/raid-effective-speed-summary.json",
+    "?? docs/qualification/overflight/maps-movement-20261014/raid-effective-speed.json.gz"
+  ],
+  "version": "0.151.1",
+  "buildId": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6",
+  "offlineFiles": 1673,
+  "offlineBytes": 66185808,
+  "hostedFiles": 3220,
+  "hostedBytes": 920417547,
+  "manifestSha256": "9e77fdfc194b5402cc31aa44ba30eb614f90aaa2444ab34e5269bc16ccdb01e2",
+  "required": [
+    {
+      "path": "game/overflight/battlefields.mjs",
+      "bytes": 23483,
+      "sha256": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+    },
+    {
+      "path": "game/overflight/coordinated-movement.mjs",
+      "bytes": 10388,
+      "sha256": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+    },
+    {
+      "path": "game/overflight/motion.mjs",
+      "bytes": 2361,
+      "sha256": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "bytes": 17125,
+      "sha256": "323914bc7a72ea80402d0564c4680515797f1e5fa69380869f39109fcee19a3e"
+    },
+    {
+      "path": "game/overflight/raid-mode.mjs",
+      "bytes": 10024,
+      "sha256": "3c8ccf0643d7a7aebd5c46e6016d6a616ed3c12acf982205e102328cce043437"
+    },
+    {
+      "path": "game/overflight/raid-variants.mjs",
+      "bytes": 24767,
+      "sha256": "c63fc24eac3438a86475ca64e8066b29c1414c14847874df6912935ed6dbcebd"
+    },
+    {
+      "path": "game/overflight/raid.html",
+      "bytes": 17964,
+      "sha256": "47a71913f4aae343ab1261fd921e620f3929ef872ccf3da4951be16f47008a16"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "bytes": 8740,
+      "sha256": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+    },
+    {
+      "path": "game/presentation/overflight-world-art-v2.mjs",
+      "bytes": 19404,
+      "sha256": "91ab2d86a97cde769b5e8f183c799c5363cbb7e34a364156017753c4cc779b83"
+    }
+  ],
+  "url": "http://127.0.0.1:8935/game/overflight/play.html?lang=en"
+}

@@ -1,0 +1,139 @@
+{
+  "format": "FPVMultiRadioLibraryProbe.v1",
+  "createdAt": "2026-10-02T05:18:58.128Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Legacy migration retains rollback bytes and v1 snapshot/export interfaces",
+      "passed": true,
+      "legacyBytesPreserved": true
+    },
+    {
+      "name": "Different radios sharing setup profile id are retained across reopen",
+      "passed": true
+    },
+    {
+      "name": "Repeated identical saves deduplicate without losing older calibrations",
+      "passed": true
+    },
+    {
+      "name": "Response edits retain the complete radio library",
+      "passed": true
+    },
+    {
+      "name": "Library backup round trips and merges legacy/v2 imports",
+      "passed": true
+    },
+    {
+      "name": "Explicit select/remove is bounded and preserves other radios",
+      "passed": true
+    },
+    {
+      "name": "Independent settings stores merge calibrations saved after they opened",
+      "passed": true
+    },
+    {
+      "name": "Library count overflow is rejected without discarding saved or session entries",
+      "passed": true,
+      "maxProfiles": 16
+    },
+    {
+      "name": "Malformed repeated missing-selected unknown fields and oversize imports are atomic",
+      "passed": true
+    },
+    {
+      "name": "Failed writes retain session profiles and report quota without touching legacy",
+      "passed": true
+    },
+    {
+      "name": "Unreadable new library bytes are preserved and block guessed default restoration",
+      "passed": true
+    },
+    {
+      "name": "Unique connected saved radio restores even when another was last saved",
+      "passed": true
+    },
+    {
+      "name": "Runtime edits and dirty calibration retain exclusive ownership",
+      "passed": true
+    },
+    {
+      "name": "Multiple distinct known connected radios require explicit selection",
+      "passed": true
+    },
+    {
+      "name": "Identical hardware identities at two slots are never guessed",
+      "passed": true
+    },
+    {
+      "name": "Different calibrations for a single same-model identity remain ambiguous after reload",
+      "passed": true
+    },
+    {
+      "name": "Metadata-only copies share one calibration for safe restoration",
+      "passed": true
+    },
+    {
+      "name": "Explicit runtime calibration reconnects uniquely without switching same-model mapping",
+      "passed": true
+    },
+    {
+      "name": "Saved TX15 calibration suppresses tested fallback and preserves custom direction",
+      "passed": true
+    },
+    {
+      "name": "Unverified selected mapping does not acquire verified/default ownership",
+      "passed": true
+    },
+    {
+      "name": "No saved calibration still permits only exact tested TX15 fallback without arming",
+      "passed": true
+    },
+    {
+      "name": "Legacy store interface and unavailable Gamepad API remain supported",
+      "passed": true
+    },
+    {
+      "name": "Explicit saved selection survives reload and selects one exact connected device",
+      "passed": true
+    },
+    {
+      "name": "Sanitized equivalent imports cannot downgrade a locally verified calibration",
+      "passed": true
+    },
+    {
+      "name": "Different imported calibration stays unverified until an explicit local verified save",
+      "passed": true
+    },
+    {
+      "name": "Snapshot and library list mutations do not mutate stored data",
+      "passed": true
+    },
+    {
+      "name": "Response save from a stale view cannot resurrect another view deletion",
+      "passed": true
+    },
+    {
+      "name": "Concurrent deletion preserves unrelated pending calibrations and explicit reimport",
+      "passed": true
+    },
+    {
+      "name": "A deleted entry frees full-library capacity for stale views",
+      "passed": true
+    },
+    {
+      "name": "Quota-failed session additions survive a retry without resurrecting concurrent deletions",
+      "passed": true
+    },
+    {
+      "name": "A stale legacy reader respects another view migration and deletion",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b"
+  },
+  "scope": "Production profile/store/session/runtime modules and controlled storage/Gamepad samples. No browser, physical-radio acceptance, performance or added unit-suite claim."
+}

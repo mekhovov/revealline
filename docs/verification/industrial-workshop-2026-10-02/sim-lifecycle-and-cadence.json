@@ -1,0 +1,2121 @@
+{
+  "date": "2026-10-02T04:16:45.170Z",
+  "browser": "154.0.8037.93",
+  "viewport": [
+    1440,
+    1000
+  ],
+  "errors": [],
+  "backend": {
+    "vendor": "Google Inc. (Apple)",
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+  },
+  "resourceSnapshots": [
+    {
+      "cycle": 0,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 1,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 2,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 3,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 4,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 5,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 6,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 7,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    {
+      "cycle": 8,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    }
+  ],
+  "resourceSwitches": {
+    "environmentCollectionChanges": 128,
+    "baselineRestores": 8,
+    "specimenChanges": 24
+  },
+  "frameRuns": [
+    {
+      "environment": "container-yard",
+      "course": "container-yard-07",
+      "camera": "fpv",
+      "quality": "balanced",
+      "collectionId": "authored",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.7,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations"
+          },
+          "registered": {
+            "geometries": 96,
+            "materials": 61,
+            "textures": 9
+          },
+          "renderer": {
+            "calls": 89,
+            "triangles": 1618,
+            "geometries": 55,
+            "textures": 11,
+            "programs": 7,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 0
+    },
+    {
+      "environment": "container-yard",
+      "course": "container-yard-07",
+      "camera": "fpv",
+      "quality": "balanced",
+      "collectionId": "industrial-workshop",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.7,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 105,
+            "materials": 68,
+            "textures": 22
+          },
+          "renderer": {
+            "calls": 95,
+            "triangles": 7842,
+            "geometries": 61,
+            "textures": 19,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 1
+    },
+    {
+      "environment": "container-yard",
+      "course": "container-yard-07",
+      "camera": "fpv",
+      "quality": "balanced",
+      "collectionId": "industrial-workshop",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.7,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 105,
+            "materials": 68,
+            "textures": 22
+          },
+          "renderer": {
+            "calls": 95,
+            "triangles": 7842,
+            "geometries": 61,
+            "textures": 19,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 2
+    },
+    {
+      "environment": "container-yard",
+      "course": "container-yard-07",
+      "camera": "fpv",
+      "quality": "balanced",
+      "collectionId": "authored",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "balanced",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "operations"
+          },
+          "registered": {
+            "geometries": 96,
+            "materials": 61,
+            "textures": 9
+          },
+          "renderer": {
+            "calls": 89,
+            "triangles": 1618,
+            "geometries": 55,
+            "textures": 11,
+            "programs": 7,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 3
+    },
+    {
+      "environment": "warehouse",
+      "course": "warehouse-02",
+      "camera": "fpv",
+      "quality": "high",
+      "collectionId": "authored",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "pixel"
+          },
+          "registered": {
+            "geometries": 191,
+            "materials": 84,
+            "textures": 12
+          },
+          "renderer": {
+            "calls": 206,
+            "triangles": 2498,
+            "geometries": 147,
+            "textures": 14,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 0
+    },
+    {
+      "environment": "warehouse",
+      "course": "warehouse-02",
+      "camera": "fpv",
+      "quality": "high",
+      "collectionId": "industrial-workshop",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.7,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 201,
+            "materials": 91,
+            "textures": 26
+          },
+          "renderer": {
+            "calls": 211,
+            "triangles": 2978,
+            "geometries": 154,
+            "textures": 21,
+            "programs": 11,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 1
+    },
+    {
+      "environment": "warehouse",
+      "course": "warehouse-02",
+      "camera": "fpv",
+      "quality": "high",
+      "collectionId": "industrial-workshop",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 201,
+            "materials": 91,
+            "textures": 26
+          },
+          "renderer": {
+            "calls": 211,
+            "triangles": 2978,
+            "geometries": 154,
+            "textures": 21,
+            "programs": 11,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 2
+    },
+    {
+      "environment": "warehouse",
+      "course": "warehouse-02",
+      "camera": "fpv",
+      "quality": "high",
+      "collectionId": "authored",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "pixel"
+          },
+          "registered": {
+            "geometries": 191,
+            "materials": 84,
+            "textures": 12
+          },
+          "renderer": {
+            "calls": 206,
+            "triangles": 2498,
+            "geometries": 147,
+            "textures": 14,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 3
+    },
+    {
+      "environment": "woodland",
+      "course": "woodland-06",
+      "camera": "overview",
+      "quality": "low",
+      "collectionId": "authored",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.7,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "ukrainian"
+          },
+          "registered": {
+            "geometries": 206,
+            "materials": 60,
+            "textures": 13
+          },
+          "renderer": {
+            "calls": 190,
+            "triangles": 9708,
+            "geometries": 180,
+            "textures": 14,
+            "programs": 7,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 0
+    },
+    {
+      "environment": "woodland",
+      "course": "woodland-06",
+      "camera": "overview",
+      "quality": "low",
+      "collectionId": "industrial-workshop",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 211,
+            "materials": 64,
+            "textures": 26
+          },
+          "renderer": {
+            "calls": 195,
+            "triangles": 9840,
+            "geometries": 185,
+            "textures": 25,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 1
+    },
+    {
+      "environment": "woodland",
+      "course": "woodland-06",
+      "camera": "overview",
+      "quality": "low",
+      "collectionId": "industrial-workshop",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 211,
+            "materials": 64,
+            "textures": 26
+          },
+          "renderer": {
+            "calls": 195,
+            "triangles": 9840,
+            "geometries": 185,
+            "textures": 25,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 2
+    },
+    {
+      "environment": "woodland",
+      "course": "woodland-06",
+      "camera": "overview",
+      "quality": "low",
+      "collectionId": "authored",
+      "warmup": 60,
+      "samples": 240,
+      "viewport": [
+        1440,
+        1000
+      ],
+      "devicePixelRatio": 1,
+      "medianFrameMs": 16.7,
+      "p95FrameMs": 16.8,
+      "p99FrameMs": 16.8,
+      "maxFrameMs": 16.8,
+      "framesOver25Ms": 0,
+      "resources": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "authored",
+            "revision": "r1",
+            "profileId": "ukrainian"
+          },
+          "registered": {
+            "geometries": 206,
+            "materials": 60,
+            "textures": 13
+          },
+          "renderer": {
+            "calls": 190,
+            "triangles": 9708,
+            "geometries": 180,
+            "textures": 14,
+            "programs": 7,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      },
+      "note": "Complete requestAnimationFrame intervals include the flight scene and specimen preview; not GPU timestamps or physical-device certification.",
+      "order": 3
+    }
+  ],
+  "snapshots": [
+    {
+      "name": "gym-low-fpv.png",
+      "environment": "gym",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 77,
+            "materials": 42,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 27,
+            "triangles": 472,
+            "geometries": 28,
+            "textures": 7,
+            "programs": 6,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "gym-low-overview.png",
+      "environment": "gym",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 77,
+            "materials": 42,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 82,
+            "triangles": 3746,
+            "geometries": 77,
+            "textures": 16,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "gym-high-fpv.png",
+      "environment": "gym",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 77,
+            "materials": 42,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 52,
+            "triangles": 762,
+            "geometries": 34,
+            "textures": 9,
+            "programs": 6,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "gym-high-overview.png",
+      "environment": "gym",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 77,
+            "materials": 42,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 127,
+            "triangles": 5666,
+            "geometries": 77,
+            "textures": 18,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "field-low-fpv.png",
+      "environment": "field",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 125,
+            "materials": 42,
+            "textures": 17
+          },
+          "renderer": {
+            "calls": 37,
+            "triangles": 608,
+            "geometries": 36,
+            "textures": 6,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "field-low-overview.png",
+      "environment": "field",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 125,
+            "materials": 42,
+            "textures": 17
+          },
+          "renderer": {
+            "calls": 114,
+            "triangles": 4252,
+            "geometries": 107,
+            "textures": 18,
+            "programs": 10,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "field-high-fpv.png",
+      "environment": "field",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 125,
+            "materials": 42,
+            "textures": 17
+          },
+          "renderer": {
+            "calls": 43,
+            "triangles": 702,
+            "geometries": 42,
+            "textures": 8,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "field-high-overview.png",
+      "environment": "field",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 125,
+            "materials": 42,
+            "textures": 17
+          },
+          "renderer": {
+            "calls": 141,
+            "triangles": 5978,
+            "geometries": 107,
+            "textures": 20,
+            "programs": 10,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "woodland-low-fpv.png",
+      "environment": "woodland",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 205,
+            "materials": 53,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 91,
+            "triangles": 3558,
+            "geometries": 86,
+            "textures": 9,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "woodland-low-overview.png",
+      "environment": "woodland",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 205,
+            "materials": 53,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 187,
+            "triangles": 9258,
+            "geometries": 180,
+            "textures": 20,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "woodland-high-fpv.png",
+      "environment": "woodland",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 205,
+            "materials": 53,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 115,
+            "triangles": 4486,
+            "geometries": 101,
+            "textures": 11,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "woodland-high-overview.png",
+      "environment": "woodland",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 205,
+            "materials": 53,
+            "textures": 19
+          },
+          "renderer": {
+            "calls": 232,
+            "triangles": 11818,
+            "geometries": 180,
+            "textures": 22,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "courtyard-low-fpv.png",
+      "environment": "courtyard",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 130,
+            "materials": 94,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 59,
+            "triangles": 1202,
+            "geometries": 54,
+            "textures": 10,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "courtyard-low-overview.png",
+      "environment": "courtyard",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 130,
+            "materials": 94,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 136,
+            "triangles": 4914,
+            "geometries": 129,
+            "textures": 21,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "courtyard-high-fpv.png",
+      "environment": "courtyard",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 130,
+            "materials": 94,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 130,
+            "triangles": 2282,
+            "geometries": 86,
+            "textures": 12,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "courtyard-high-overview.png",
+      "environment": "courtyard",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 130,
+            "materials": 94,
+            "textures": 20
+          },
+          "renderer": {
+            "calls": 228,
+            "triangles": 7626,
+            "geometries": 129,
+            "textures": 23,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "warehouse-low-fpv.png",
+      "environment": "warehouse",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 149,
+            "materials": 68,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 83,
+            "triangles": 1238,
+            "geometries": 78,
+            "textures": 11,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "warehouse-low-overview.png",
+      "environment": "warehouse",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 149,
+            "materials": 68,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 154,
+            "triangles": 4636,
+            "geometries": 148,
+            "textures": 17,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "warehouse-high-fpv.png",
+      "environment": "warehouse",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 149,
+            "materials": 68,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 169,
+            "triangles": 2270,
+            "geometries": 104,
+            "textures": 13,
+            "programs": 8,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "warehouse-high-overview.png",
+      "environment": "warehouse",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 149,
+            "materials": 68,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 261,
+            "triangles": 7300,
+            "geometries": 148,
+            "textures": 19,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "stadium-low-fpv.png",
+      "environment": "stadium",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 74,
+            "materials": 50,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 33,
+            "triangles": 338,
+            "geometries": 28,
+            "textures": 9,
+            "programs": 7,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "stadium-low-overview.png",
+      "environment": "stadium",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 74,
+            "materials": 50,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 79,
+            "triangles": 3460,
+            "geometries": 73,
+            "textures": 16,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "stadium-high-fpv.png",
+      "environment": "stadium",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 74,
+            "materials": 50,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 47,
+            "triangles": 506,
+            "geometries": 30,
+            "textures": 11,
+            "programs": 7,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "stadium-high-overview.png",
+      "environment": "stadium",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 74,
+            "materials": 50,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 114,
+            "triangles": 5260,
+            "geometries": 73,
+            "textures": 18,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "container-yard-low-fpv.png",
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 90,
+            "materials": 63,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 38,
+            "triangles": 6410,
+            "geometries": 33,
+            "textures": 10,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "container-yard-low-overview.png",
+      "environment": "container-yard",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 90,
+            "materials": 63,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 95,
+            "triangles": 9640,
+            "geometries": 89,
+            "textures": 16,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "container-yard-high-fpv.png",
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 90,
+            "materials": 63,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 64,
+            "triangles": 6722,
+            "geometries": 45,
+            "textures": 12,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "container-yard-high-overview.png",
+      "environment": "container-yard",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 90,
+            "materials": 63,
+            "textures": 15
+          },
+          "renderer": {
+            "calls": 142,
+            "triangles": 11584,
+            "geometries": 89,
+            "textures": 18,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "garage-low-fpv.png",
+      "environment": "garage",
+      "quality": "low",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 168,
+            "materials": 72,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 106,
+            "triangles": 1312,
+            "geometries": 101,
+            "textures": 11,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "garage-low-overview.png",
+      "environment": "garage",
+      "quality": "low",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "low",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 168,
+            "materials": 72,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 173,
+            "triangles": 4686,
+            "geometries": 167,
+            "textures": 17,
+            "programs": 10,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "garage-high-fpv.png",
+      "environment": "garage",
+      "quality": "high",
+      "camera": "fpv",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 168,
+            "materials": 72,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 194,
+            "triangles": 2364,
+            "geometries": 125,
+            "textures": 13,
+            "programs": 9,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    },
+    {
+      "name": "garage-high-overview.png",
+      "environment": "garage",
+      "quality": "high",
+      "camera": "overview",
+      "stats": {
+        "flight": {
+          "available": true,
+          "disposed": false,
+          "quality": "high",
+          "drone": "utility",
+          "presentation": {
+            "collectionId": "industrial-workshop",
+            "revision": "r1",
+            "profileId": "industrial-workshop"
+          },
+          "registered": {
+            "geometries": 168,
+            "materials": 72,
+            "textures": 16
+          },
+          "renderer": {
+            "calls": 282,
+            "triangles": 7370,
+            "geometries": 167,
+            "textures": 19,
+            "programs": 10,
+            "contextLost": false
+          }
+        },
+        "specimen": {
+          "geometries": 43,
+          "textures": 13,
+          "programs": 4
+        }
+      }
+    }
+  ]
+}

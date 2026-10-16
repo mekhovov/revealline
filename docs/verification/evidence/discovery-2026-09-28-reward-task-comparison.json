@@ -1,0 +1,1147 @@
+{
+  "format": "revealline-reward-task-optimization-comparison.v1",
+  "qualified": false,
+  "diagnosisOnly": true,
+  "baseline": {
+    "source": {
+      "commit": "de4cec8ba208ba01caac6aa9fdbdbc0e2073dff8",
+      "tree": "1e852bcf370c0358f3ca8eb171025fa948d9ae96",
+      "editionId": "fpv-learning",
+      "editionRevision": 8,
+      "distributionSha256": "16ba0548d23f9390982ee95dbad73882a0d9eb21d3bf2ea4c6a98f2121ebb018",
+      "distributionBytes": 32414007,
+      "compiledTwice": true,
+      "publicEligible": false,
+      "selectedModules": [
+        {
+          "bytes": 32897,
+          "path": "game/ui/edition-rewards.mjs",
+          "sha256": "f169848e2ae0d89f081436a016cb36208954e1aef388e8a7bd670a05a7037258"
+        },
+        {
+          "bytes": 2851,
+          "path": "game/ui/reward-image.mjs",
+          "sha256": "1e9a23900d11113eb5ac3899c8b2dc1fc3c9a552c68574cde93249249f86668d"
+        },
+        {
+          "bytes": 14526,
+          "path": "game/ui/reward-media.mjs",
+          "sha256": "f255819b80081d0c7224693425ff56a81c61bd92549884658f98f4a1ce1d320f"
+        },
+        {
+          "bytes": 3405,
+          "path": "game/editions/assets.mjs",
+          "sha256": "a018eff0d9db93fbb5feb12d10b40757b2ddd1631e8cc805d71ce2d2b447b859"
+        },
+        {
+          "bytes": 18437,
+          "path": "game/editions/model.mjs",
+          "sha256": "07429ac9726bd4825aa24c9045a08c1f57372f8f9d8a7869f177f5ce8cb8c958"
+        },
+        {
+          "bytes": 3801,
+          "path": "game/rewards/media.mjs",
+          "sha256": "9d0f7c87e469e788745601815dca209bc5043e94fb403ffccc032635749d040a"
+        },
+        {
+          "bytes": 5108,
+          "path": "game/data-json.mjs",
+          "sha256": "c238667bfb7315a93a76fb798b53b06a684c9438750faeffc0f8b032b272483a"
+        }
+      ]
+    },
+    "cleanTrace": {
+      "path": "motion-reward-profiler-fresh-process.json",
+      "bytes": 14096274,
+      "sha256": "05e98c7bd21221f56135ddc22b49902f66d9a142b42fee3c42ef4a9ac3a53724",
+      "eventCount": 67640,
+      "keydownEvents": 0,
+      "passiveKeyCounts": {}
+    }
+  },
+  "current": {
+    "source": {
+      "commit": "61a31509008da07d0163bfd9aa693014cc7c8f8f",
+      "tree": "047223919bc9f96b50f91c3c9def829a4f3bcb42",
+      "editionId": "fpv-learning",
+      "editionRevision": 8,
+      "distributionSha256": "efb0dd74f216ac46ea68f8b205e5608075883e530dbb84885bb167909b64dbc1",
+      "distributionBytes": 32414728,
+      "compiledTwice": true,
+      "publicEligible": false,
+      "selectedModules": [
+        {
+          "bytes": 32897,
+          "path": "game/ui/edition-rewards.mjs",
+          "sha256": "f169848e2ae0d89f081436a016cb36208954e1aef388e8a7bd670a05a7037258"
+        },
+        {
+          "bytes": 2851,
+          "path": "game/ui/reward-image.mjs",
+          "sha256": "1e9a23900d11113eb5ac3899c8b2dc1fc3c9a552c68574cde93249249f86668d"
+        },
+        {
+          "bytes": 14526,
+          "path": "game/ui/reward-media.mjs",
+          "sha256": "f255819b80081d0c7224693425ff56a81c61bd92549884658f98f4a1ce1d320f"
+        },
+        {
+          "bytes": 3405,
+          "path": "game/editions/assets.mjs",
+          "sha256": "a018eff0d9db93fbb5feb12d10b40757b2ddd1631e8cc805d71ce2d2b447b859"
+        },
+        {
+          "bytes": 19158,
+          "path": "game/editions/model.mjs",
+          "sha256": "491153327ccf8b7b10667bffae052b4314fd19140fbcc6cccafe3867f5e2cc39"
+        },
+        {
+          "bytes": 3801,
+          "path": "game/rewards/media.mjs",
+          "sha256": "9d0f7c87e469e788745601815dca209bc5043e94fb403ffccc032635749d040a"
+        },
+        {
+          "bytes": 5108,
+          "path": "game/data-json.mjs",
+          "sha256": "c238667bfb7315a93a76fb798b53b06a684c9438750faeffc0f8b032b272483a"
+        }
+      ]
+    },
+    "cleanTrace": {
+      "trace": "motion-reward-profiler-61a315090.json",
+      "bytes": 14767760,
+      "sha256": "c236ef835ade08311334b2b5b43a1ed25a429df2cd0150b762b8f7bc0a3a01a2",
+      "eventCount": 70629,
+      "keyEvents": 0
+    }
+  },
+  "environment": {
+    "browser": "HeadlessChrome154.0.0.0",
+    "tool": "agent-browser0.27.0 documented profiler",
+    "os": "macOS26.7 build25G229",
+    "device": "Mac16,7 Apple M4 Pro48GiB",
+    "viewport": {
+      "width": 1280,
+      "height": 633,
+      "dpr": 1
+    },
+    "settings": "English, standard, immediate, scout, full effects, muted sound"
+  },
+  "scenario": {
+    "missionId": "fpv-meet-aircraft-02",
+    "reward": "Motion Makers",
+    "entry": "Collection Explore discovery via ordinary pointer click",
+    "earnedState": "Previously earned through ordinary keyboard play; no import, synthetic progress or engine writes.",
+    "firstOpenInProcess": true,
+    "networkCache": "Reused persistent owned profile; previously fetched assets may be in disk cache. Not a cold-network test.",
+    "recording": "Each process: default profiler start, ordinary pointer Explore click, nominal2000ms wait, profiler stop. Neither clean capture includes Escape or other keyboard action; native video Play was not invoked."
+  },
+  "protocol": {
+    "mechanism": "agent-browser0.27.0 documented Chrome profiler and ordinary pointer clicks; bounded passive key listeners; no engine/progress/state injection",
+    "sequence": [
+      "Open exact compiled candidate in new headless Chrome process using genuine previously earned persistent profile",
+      "Set1280x633 viewport/DPR1; wait for normal home; confirm muted sound and English",
+      "Open Collection and scroll its dialog400px to visible Motion Explore control",
+      "Attach passive key counter; start default profiler; ordinary pointer click Motion Explore; wait nominal2000ms; stop profiler",
+      "Confirm actual Motion viewer and native Play/Pause controls, export zero-key report, remove listeners and close owned browser"
+    ],
+    "noKeyboardBeforeOrDuringCapture": true,
+    "videoPlayInvoked": false,
+    "syntheticProgress": false,
+    "firstOpenInProcess": true,
+    "firstWinResult": false,
+    "coldNetwork": false,
+    "networkCacheNote": "Same owned persistent profile across distinct immutable path mounts. Disk caches may contain previous assets; neither capture is asserted cold-network or identical network-cache state.",
+    "localContention": "Root confirmed no other active browser, build or test job before measurement. No workload monitor was installed.",
+    "sourceAdmission": "Each candidate was compiled twice from exact clean committed source; candidate members, source archive, offline pins and selected HTTP-served bytes verified. publicEligible remains false."
+  },
+  "measurements": [
+    {
+      "trace": "motion-reward-profiler-fresh-process.json",
+      "bytes": 14096274,
+      "sha256": "05e98c7bd21221f56135ddc22b49902f66d9a142b42fee3c42ef4a9ac3a53724",
+      "eventCount": 67640,
+      "renderer": {
+        "pid": 26443,
+        "tid": 8083756
+      },
+      "keyEvents": 0,
+      "rewardTask": {
+        "ts": 141428200437,
+        "durationMs": 56.28,
+        "threadDurationMs": 55.427,
+        "callbackDurationMs": 33.203,
+        "callbackPath": "game/ui/edition-rewards.mjs",
+        "callbackLine": 260,
+        "microtasks": [
+          {
+            "durationMs": 22.282,
+            "count": 7
+          }
+        ],
+        "cpuSamples": 369,
+        "catalogValidationSampleCount": 270,
+        "sampledStackBasis": [
+          {
+            "samples": 35,
+            "stack": [
+              {
+                "function": "showModal",
+                "line1": 0
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 24,
+            "stack": [
+              {
+                "function": "(program)",
+                "line1": 0
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 13,
+            "stack": [
+              {
+                "function": "focus",
+                "line1": 0
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 5,
+            "stack": [
+              {
+                "function": "encode",
+                "line1": 0
+              },
+              {
+                "function": "encodedBytes",
+                "line1": 24,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "own",
+                "line1": 24,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "validateEditionRuntimeCatalog",
+                "line1": 492,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionSelection",
+                "line1": 505,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionAssets",
+                "line1": 527,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "exactAsset",
+                "line1": 5,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "resolveRewardAsset",
+                "line1": 19,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "loadRewardImage",
+                "line1": 8,
+                "path": "game/ui/reward-image.mjs"
+              },
+              {
+                "function": "loadImage",
+                "line1": 562,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 4,
+            "stack": [
+              {
+                "function": "encode",
+                "line1": 0
+              },
+              {
+                "function": "encodedBytes",
+                "line1": 24,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "own",
+                "line1": 24,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "validateEditionRuntimeCatalog",
+                "line1": 492,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionAssets",
+                "line1": 527,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "exactAsset",
+                "line1": 5,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "resolveRewardAsset",
+                "line1": 19,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "loadRewardImage",
+                "line1": 8,
+                "path": "game/ui/reward-image.mjs"
+              },
+              {
+                "function": "loadImage",
+                "line1": 562,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 4,
+            "stack": [
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "own",
+                "line1": 24,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "createEditionRuntimeCatalog",
+                "line1": 348,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "validateEditionRuntimeCatalog",
+                "line1": 492,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionAssets",
+                "line1": 527,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "exactAsset",
+                "line1": 5,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "resolveRewardAsset",
+                "line1": 19,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "loadRewardImage",
+                "line1": 8,
+                "path": "game/ui/reward-image.mjs"
+              },
+              {
+                "function": "loadImage",
+                "line1": 562,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 4,
+            "stack": [
+              {
+                "function": "encode",
+                "line1": 0
+              },
+              {
+                "function": "encodedBytes",
+                "line1": 24,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "own",
+                "line1": 24,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "validateEditionRuntimeCatalog",
+                "line1": 492,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionAssets",
+                "line1": 527,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "exactAsset",
+                "line1": 5,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "resolveRewardAsset",
+                "line1": 19,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "",
+                "line1": 164,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "acquire",
+                "line1": 145,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "mountRewardMedia",
+                "line1": 15,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 4,
+            "stack": [
+              {
+                "function": "encode",
+                "line1": 0
+              },
+              {
+                "function": "encodedBytes",
+                "line1": 24,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "own",
+                "line1": 24,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "validateEditionRuntimeCatalog",
+                "line1": 492,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionSelection",
+                "line1": 505,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionAssets",
+                "line1": 527,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "exactAsset",
+                "line1": 5,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "resolveRewardAsset",
+                "line1": 19,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "",
+                "line1": 164,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "acquire",
+                "line1": 145,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "mountRewardMedia",
+                "line1": 15,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 4,
+            "stack": [
+              {
+                "function": "fetch",
+                "line1": 0
+              },
+              {
+                "function": "verifyEditionAssets",
+                "line1": 6,
+                "path": "game/editions/assets.mjs"
+              },
+              {
+                "function": "",
+                "line1": 164,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 3,
+            "stack": [
+              {
+                "function": "encode",
+                "line1": 0
+              },
+              {
+                "function": "encodedBytes",
+                "line1": 24,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "copy",
+                "line1": 41,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "own",
+                "line1": 24,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "validateEditionRuntimeCatalog",
+                "line1": 492,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "resolveEditionAssets",
+                "line1": 527,
+                "path": "game/editions/model.mjs"
+              },
+              {
+                "function": "exactAsset",
+                "line1": 5,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "resolveRewardAsset",
+                "line1": 19,
+                "path": "game/rewards/media.mjs"
+              },
+              {
+                "function": "loadRewardImage",
+                "line1": 8,
+                "path": "game/ui/reward-image.mjs"
+              },
+              {
+                "function": "loadImage",
+                "line1": 562,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          }
+        ]
+      },
+      "excludedProfilerStartup": [
+        {
+          "taskMs": 169.085,
+          "profilerMs": [163.803]
+        }
+      ],
+      "maxTaskExcludingProfilerStartupMs": 56.28,
+      "rendererTasksOver50msExcludingProfilerStartup": 1
+    },
+    {
+      "trace": "motion-reward-profiler-61a315090.json",
+      "bytes": 14767760,
+      "sha256": "c236ef835ade08311334b2b5b43a1ed25a429df2cd0150b762b8f7bc0a3a01a2",
+      "eventCount": 70629,
+      "renderer": {
+        "pid": 36110,
+        "tid": 8160968
+      },
+      "keyEvents": 0,
+      "rewardTask": {
+        "ts": 142030589835,
+        "durationMs": 8.558,
+        "threadDurationMs": 8.263,
+        "callbackDurationMs": 7.36,
+        "callbackPath": "game/ui/edition-rewards.mjs",
+        "callbackLine": 260,
+        "microtasks": [
+          {
+            "durationMs": 0.49,
+            "count": 7
+          }
+        ],
+        "cpuSamples": 100,
+        "catalogValidationSampleCount": 0,
+        "sampledStackBasis": [
+          {
+            "samples": 39,
+            "stack": [
+              {
+                "function": "showModal",
+                "line1": 0
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 22,
+            "stack": [
+              {
+                "function": "(program)",
+                "line1": 0
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 13,
+            "stack": [
+              {
+                "function": "focus",
+                "line1": 0
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 3,
+            "stack": [
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 2,
+            "stack": [
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 2,
+            "stack": [
+              {
+                "function": "encode",
+                "line1": 0
+              },
+              {
+                "function": "boundedJSON",
+                "line1": 13,
+                "path": "game/data-json.mjs"
+              },
+              {
+                "function": "validateCompletionRewardPayload",
+                "line1": 169,
+                "path": "game/rewards/model.mjs"
+              },
+              {
+                "function": "mountRewardKnowledge",
+                "line1": 6,
+                "path": "game/ui/reward-knowledge.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 2,
+            "stack": [
+              {
+                "function": "setTimeout",
+                "line1": 0
+              },
+              {
+                "function": "",
+                "line1": 151,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "acquire",
+                "line1": 145,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "mountRewardMedia",
+                "line1": 15,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "renderViewer",
+                "line1": 587,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "openReward",
+                "line1": 778,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "",
+                "line1": 260,
+                "path": "game/ui/edition-rewards.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 2,
+            "stack": [
+              {
+                "function": "fetch",
+                "line1": 0
+              },
+              {
+                "function": "verifyEditionAssets",
+                "line1": 6,
+                "path": "game/editions/assets.mjs"
+              },
+              {
+                "function": "loadRewardImage",
+                "line1": 8,
+                "path": "game/ui/reward-image.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 2,
+            "stack": [
+              {
+                "function": "fetch",
+                "line1": 0
+              },
+              {
+                "function": "verifyEditionAssets",
+                "line1": 6,
+                "path": "game/editions/assets.mjs"
+              },
+              {
+                "function": "",
+                "line1": 164,
+                "path": "game/ui/reward-media.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          },
+          {
+            "samples": 1,
+            "stack": [
+              {
+                "function": "isPrimaryActivation",
+                "line1": 55,
+                "path": "game/ui/controller-confirm-guard.mjs"
+              },
+              {
+                "function": "",
+                "line1": 117,
+                "path": "game/ui/controller-confirm-guard.mjs"
+              },
+              {
+                "function": "(root)",
+                "line1": 0
+              }
+            ]
+          }
+        ]
+      },
+      "excludedProfilerStartup": [
+        {
+          "taskMs": 190.552,
+          "profilerMs": [185.054]
+        }
+      ],
+      "maxTaskExcludingProfilerStartupMs": 8.558,
+      "rendererTasksOver50msExcludingProfilerStartup": 0
+    }
+  ],
+  "conclusion": {
+    "scopedFinding": "In these single profiled first-open-in-process samples, the Motion reward opening task decreased from56.280ms to8.558ms. The new trace has zero renderer tasks above50ms after excluding profiler-startup work. This corroborates the targeted catalogue-reuse diagnosis for this viewer opening.",
+    "catalogValidationSamples": {
+      "before": 270,
+      "after": 0,
+      "meaning": "CPU samples within the enclosing reward task whose stack includes validateEditionRuntimeCatalog. These are sampling observations, not exact invocation counts or exclusive durations."
+    },
+    "notEstablished": [
+      "Unprofiled or statistically repeated timings",
+      "Cold-network behaviour or first-win result cost",
+      "Every reward type, locale, device or all-release50ms gate",
+      "No5% p95 frame-time qualification for this new candidate from this task trace alone",
+      "Retained-memory stability or20-cycle resource behaviour",
+      "Release/publication qualification"
+    ]
+  },
+  "previousEvidence": {
+    "path": "../reward-traces/reward-task-summary.json",
+    "sha256": "b10793cf641e3585e2c9ea1daaf8ae530eba2da862ef9ca27133eabe0be452eb",
+    "unchanged": true
+  },
+  "artifacts": {
+    "analysis": "motion-comparison-analysis-61a315090.json",
+    "analyzer": "analyze-motion-comparison-61a315090.py",
+    "keys": "keys-61a315090.json",
+    "viewerSnapshot": "motion-reward-snapshot-61a315090.txt",
+    "currentRaw": "motion-reward-profiler-61a315090.json",
+    "baselineRaw": "../reward-traces/motion-reward-profiler-fresh-process.json"
+  }
+}

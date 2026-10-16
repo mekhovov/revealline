@@ -40,6 +40,30 @@ def strict_json(data):
     return json.loads(data.decode('utf-8'), object_pairs_hook=unique,
                       parse_constant=lambda value: (_ for _ in ()).throw(ValueError('Invalid JSON number')))
 
+def verify_optional_inventory(offline, rows):
+    """Every optional descriptor must name final, already verified ZIP bytes."""
+    downloads = offline.get('downloadFiles')
+    require(isinstance(downloads, list), 'Offline download inventory missing')
+    require(all(isinstance(row, dict) and isinstance(row.get('path'), str)
+                for row in downloads), 'Invalid offline download row')
+    require(len({row['path'] for row in downloads}) == len(downloads),
+            'Duplicate offline download path')
+    for row in downloads:
+        frozen = rows.get(row['path'])
+        require(row.get('kind') == 'gameplay' and isinstance(frozen, dict) and
+                type(row.get('bytes')) is int and row['bytes'] > 0 and
+                row['bytes'] == frozen.get('bytes') and row.get('sha256') == frozen.get('sha256'),
+                'Optional download differs from fully verified frozen manifest: ' + row['path'])
+    packs = offline.get('optionalPacks', [])
+    require(isinstance(packs, list) and
+            all(isinstance(row, dict) and isinstance(row.get('path'), str) for row in packs),
+            'Invalid optional pack inventory')
+    require(len({row['path'] for row in packs}) == len(packs), 'Duplicate optional pack path')
+    for row in packs:
+        require(row['path'] in rows and row.get('sha256') == rows[row['path']].get('sha256'),
+                'Optional pack differs from fully verified frozen manifest: ' + row['path'])
+    return len(downloads)
+
 class Markers(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -124,6 +148,7 @@ def main():
             len({r['path'] for r in files}) == len(files), 'Offline count/unique paths invalid')
     for row in files:
         require(rows.get(row['path']) == row, 'Offline dependency differs from fully verified frozen manifest')
+    download_count = verify_optional_inventory(offline, rows)
     total = sum(row['bytes'] for row in files)
     require(total <= 64 * 1024**2 and manifest['entry'] in {r['path'] for r in files},
             'Offline byte budget or entry missing')
@@ -160,6 +185,9 @@ def main():
               'offline': {'buildId': offline['buildId'], 'files': len(files), 'bytes': total,
                           'maxFiles': 2000, 'maxBytes': 64 * 1024**2,
                           'optionalPacks': len(offline.get('optionalPacks', [])),
+                          'downloadFiles': download_count,
+                          'allDownloadRowsMatchFrozenManifest': True,
+                          'allOptionalPackRowsMatchFrozenManifest': True,
                           'allOfflineRowsMatchFrozenManifest': True, 'allOfflineBytesVerified': True,
                           'offlineBudgetVerified': True, 'workerInventoryBindingVerified': True,
                           'entryMetaBindingVerified': True, 'entryIncluded': True},

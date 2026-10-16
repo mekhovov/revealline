@@ -1,0 +1,231 @@
+{
+  "format": "FPVStorageContinuityNativeReceipt.v1",
+  "capturedAt": "2026-10-15T18:01:37.406Z",
+  "accepted": true,
+  "scope": "Root-owned CUA native observer export/import/refusal and read-only stored-byte continuity around normal player close/reopen on two fresh origins. No actual application restart or offline acceptance.",
+  "authoringSource": "311f66b7117a36b67e6c4f36b5dc22185ad86654",
+  "qualifiedPlayer": {
+    "source": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+    "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+    "cloudRun": 38759650896,
+    "artifactId": 11984593788,
+    "archiveMembers": 162
+  },
+  "observerOrigins": [
+    "http://127.0.0.1:9181",
+    "http://127.0.0.1:9182"
+  ],
+  "nativeActions": {
+    "reportedBy": "Root agent using CUA; this receipt independently validates its preserved exported files",
+    "repeatedEmptyReadsAllFourMissing": true,
+    "normalLibraryInstalls": [
+      {
+        "id": "hillside-town-study",
+        "revision": "courtyard-r5",
+        "descriptorSHA256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573"
+      },
+      {
+        "id": "hillside-town-study",
+        "revision": "town-r2",
+        "descriptorSHA256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+      }
+    ],
+    "namedPlaceSavedViaNormalUI": true,
+    "reopenedPlayerBothVersionsAndPlaceVisible": true,
+    "cachedFlyReadyDisarmed": true,
+    "storageSeededOrDeleted": false,
+    "allTabsClosedAfterReview": true
+  },
+  "independentlyVerified": {
+    "fiveSnapshotContentHashesValid": true,
+    "twoPopulatedExportsExactlyMatch": true,
+    "populatedHash": "38e7d96f55b22f866c41d9f860080fdc9dda78113afe7214d95039a99a11010c",
+    "emptyVersusPopulated": {
+      "exactMatch": false,
+      "presenceDifferences": 4
+    },
+    "genuineForeignOriginRefused": true,
+    "alteredTopHashRefused": true,
+    "validBaselineRecoversExactMatch": true,
+    "afterNormalPlayerReopenExactlyMatches": true,
+    "storedCounts": [
+      {
+        "name": "revealline-fpv-regions-v1",
+        "version": 2,
+        "stores": [
+          {
+            "name": "assets",
+            "count": 39
+          },
+          {
+            "name": "meta",
+            "count": 1
+          },
+          {
+            "name": "projects",
+            "count": 1
+          },
+          {
+            "name": "revisions",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "name": "revealline-fpv-regional-locations-v1",
+        "version": 1,
+        "stores": [
+          {
+            "name": "state",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "revealline-fpv-worlds-v1",
+        "version": 2,
+        "stores": [
+          {
+            "name": "assets",
+            "count": 0
+          },
+          {
+            "name": "meta",
+            "count": 0
+          },
+          {
+            "name": "projects",
+            "count": 0
+          },
+          {
+            "name": "revisions",
+            "count": 0
+          }
+        ]
+      },
+      {
+        "name": "revealline.fpv.world-records.v1",
+        "version": 1,
+        "stores": [
+          {
+            "name": "records",
+            "count": 0
+          },
+          {
+            "name": "session",
+            "count": 0
+          }
+        ]
+      }
+    ],
+    "qualificationFieldsRemainNotMeasured": true
+  },
+  "emptyContentHash": "0cefa2d74ef89916a68cbc5afaf116c210ffb787e531dd70dc3270ed5c84d0a3",
+  "foreignContentHash": "34b4825910d8ac2f0085fb59ce9235925909cdd1ab8d436480ba26bb43589c1c",
+  "evidence": [
+    {
+      "path": "storage-continuity-native-empty-20261015.json",
+      "bytes": 952,
+      "sha256": "a75b5a61cf0fd0508244ebf2fa0efdceb0b9dc09248f8d4c4810e0344770bffe"
+    },
+    {
+      "path": "storage-continuity-native-baseline-a-20261015.json",
+      "bytes": 12278,
+      "sha256": "6002e59800a78451a28615bdcbc51bb9858b9a990419c6b028dc6091a89ec91a"
+    },
+    {
+      "path": "storage-continuity-native-baseline-b-20261015.json",
+      "bytes": 12278,
+      "sha256": "619664db487579e1b1567a511ebb466e8d19fa948c1976194cd48215ad5c49e2"
+    },
+    {
+      "path": "storage-continuity-native-after-player-reopen-20261015.json",
+      "bytes": 12278,
+      "sha256": "e53b5980dc169604f87241ea8abe0916e652d389c763adf6c60cd28af81ea880"
+    },
+    {
+      "path": "storage-continuity-native-exact-comparison-20261015.json",
+      "bytes": 13398,
+      "sha256": "98cf33f90bdff8bb5133dcb0a32688908bb6bdbe600ce02215cff8a82c64fdfc"
+    },
+    {
+      "path": "storage-continuity-native-recovered-comparison-20261015.json",
+      "bytes": 13398,
+      "sha256": "98cf33f90bdff8bb5133dcb0a32688908bb6bdbe600ce02215cff8a82c64fdfc"
+    },
+    {
+      "path": "storage-continuity-native-reopened-comparison-20261015.json",
+      "bytes": 13398,
+      "sha256": "109ffe80245683540acce2bae994c4b0008674ef15708bbf528e2fd1b0d2a71d"
+    },
+    {
+      "path": "storage-continuity-native-empty-vs-populated-20261015.json",
+      "bytes": 13872,
+      "sha256": "7d4d5173a25924a4955c7baf86311b7223f2f90b310b89e3ae6f8858716db146"
+    },
+    {
+      "path": "storage-continuity-native-other-origin-20261015.json",
+      "bytes": 952,
+      "sha256": "36c5f7534c8df1d21cf903fe94d14937f170da48b9105deff756be7d76397ade"
+    },
+    {
+      "path": "storage-continuity-native-tampered-input-20261015.json",
+      "bytes": 12278,
+      "sha256": "974fab4710842498cac30315e75d75c9409eee1ab1fa14cbe7b1952fb4801eb6"
+    },
+    {
+      "path": "storage-continuity-native-origin-rejection-20261015.txt",
+      "bytes": 56,
+      "sha256": "8000cd117ef3af3baf379c98eb6724670124f246ec7b409d2fbfaef4c0989a29"
+    },
+    {
+      "path": "storage-continuity-native-tamper-rejection-20261015.txt",
+      "bytes": 57,
+      "sha256": "613b2dd58aadabdc932a9c1183599a226acdd7e05fa3ad64ada7a47712b505d1"
+    },
+    {
+      "path": "storage-continuity-native-exact-comparison-20261015.png",
+      "bytes": 112592,
+      "sha256": "ddf04fccd52b3b3ba7d36d5d7e8084b0c5f7d8ceed9294405d4a3799164f2bc7"
+    }
+  ],
+  "fixtureIdentityAndTransport": [
+    {
+      "path": "storage-continuity-native-9181/review-identity.json",
+      "bytes": 32833,
+      "sha256": "cee136a662e9fed679af6b3d6c306ddb9403e33cca43467f89678d5129c53daf"
+    },
+    {
+      "path": "storage-continuity-native-9181/transport-verification.json",
+      "bytes": 47467,
+      "sha256": "9dd0fa7441be6095ba92c4a06287d162e89a12c3aa0f2a6f614518cc613a3f6d"
+    },
+    {
+      "path": "storage-continuity-negative-9182/review-identity.json",
+      "bytes": 3337,
+      "sha256": "cb36d39788f03890e91ce0ff2cbb9aba80810db1747f4e931386df821fb7959d"
+    },
+    {
+      "path": "storage-continuity-negative-9182/transport-verification.json",
+      "bytes": 3695,
+      "sha256": "72d0a0aa9bc58c9f24cda2d4ba081399cbda3b00ea2e86af8f1a23421a285fc3"
+    }
+  ],
+  "excludedEvidence": [
+    {
+      "path": "storage-continuity-native-empty-vs-populated-transition-20261015.json",
+      "bytes": 13398,
+      "sha256": "98cf33f90bdff8bb5133dcb0a32688908bb6bdbe600ce02215cff8a82c64fdfc",
+      "reason": "Root identified this transition capture as stale previous UI state; excluded from every accepted assertion. Final empty-vs-populated file supplies the actual false/four-difference observation."
+    }
+  ],
+  "notQualified": [
+    "Whole-browser/context network isolation and offline flight",
+    "Full browser/application or device restart",
+    "CacheStorage or localStorage preference continuity",
+    "Nonempty World pack or flight recording preservation (their observed stores were empty)",
+    "Actual quota exhaustion, eviction or hardware/device/controller acceptance",
+    "Two-hour authored endurance, public launch or all-roadmap completion"
+  ],
+  "browserIdentity": "Not recorded by snapshot files; no new device-version, FPS or performance claim"
+}

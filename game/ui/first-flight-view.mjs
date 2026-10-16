@@ -1,3 +1,5 @@
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 import { FIRST_FLIGHT_LESSONS, getFirstFlightLesson } from '../first-flight.mjs';
 
 /** Presentation only. The host owns course transitions, focus and every run. */
@@ -30,10 +32,10 @@ export function attachFirstFlightView({
   ];
   const nodes = Object.fromEntries(ids.map((id) => [id, doc.getElementById(id)]));
   if (Object.values(nodes).some((node) => !node))
-    throw new Error('First Flight view is incomplete.');
+    throw new Error(t('interface:firstFlightViewIsIncomplete'));
   const callbacks = { onEnter, onCancelEnter, onNext, onSkip, onSelect, onExit, getControlLabels };
   if (Object.values(callbacks).some((value) => typeof value !== 'function'))
-    throw new TypeError('First Flight view requires callback functions.');
+    throw new TypeError(t('interface:firstFlightViewRequiresCallbackFunctions'));
   const $ = (name) => nodes[`first-flight-${name}`];
   const listeners = [];
   let destroyed = false,
@@ -85,14 +87,14 @@ export function attachFirstFlightView({
         node.style.width = `${(marker.w / 48) * 100}%`;
         node.style.height = `${(marker.h / 36) * 100}%`;
         const label = doc.createElement('span');
-        label.textContent = marker.label;
+        localizedText(label, () => contentText(marker, 'label'));
         node.append(label);
         return node;
       }),
     );
   }
   function text(name, value) {
-    if ($(name).textContent !== value) $(name).textContent = value;
+    if ($(name).textContent !== value) localizedText($(name), () => value);
   }
   function render({
     request = null,
@@ -122,7 +124,7 @@ export function attachFirstFlightView({
     const lessonChanged = currentLesson !== lesson.id;
     lessonNodes(lesson);
     snapshot = snapshot?.lessonId === lesson.id ? snapshot : null;
-    text('title', `First Flight · ${lesson.title}`);
+    text('title', t('gameplay:firstFlight', { value1: contentText(lesson, 'title') }));
     for (const { lesson: item, option } of options) {
       const status = visit && Object.hasOwn(visit, item.id) ? visit[item.id] : null;
       const suffix =
@@ -131,8 +133,8 @@ export function attachFirstFlightView({
           : status === 'skipped'
             ? ' · skipped'
             : '';
-      const label = `${FIRST_FLIGHT_LESSONS.indexOf(item) + 1}. ${item.title}${suffix}`;
-      if (option.textContent !== label) option.textContent = label;
+      const label = `${FIRST_FLIGHT_LESSONS.indexOf(item) + 1}. ${contentText(item, 'title')}${suffix}`;
+      if (option.textContent !== label) localizedText(option, () => label);
     }
     if (lessonChanged) $('select').value = lesson.id;
     const busy = ['switching', 'leaving', 'ended'].includes(phase);
@@ -142,29 +144,29 @@ export function attachFirstFlightView({
     const last = lesson.id === FIRST_FLIGHT_LESSONS.at(-1).id;
     $('next').hidden = phase !== 'review' || snapshot?.outcome !== 'complete' || last;
     $('next').disabled = busy;
-    text('exit', embedded ? 'End course' : 'Return to the game');
+    text('exit', embedded ? t('interface:endCourse') : t('interface:returnToTheGame'));
     for (const { step, node } of steps) {
       const status = snapshot?.steps?.find((item) => item.id === step.id)?.status;
       const prefix =
         status === 'complete' ? '✓ Complete' : status === 'current' ? '→ Now' : '○ Next';
-      const label = `${prefix} · ${step.label}`;
-      if (node.textContent !== label) node.textContent = label;
+      const label = `${prefix} · ${contentText(step, 'label')}`;
+      if (node.textContent !== label) localizedText(node, () => label);
       node.dataset.status = status || 'pending';
     }
     const outcome =
       phase === 'ended'
-        ? 'Course ended. Use the parent page’s game link to leave practice.'
+        ? t('interface:courseEndedUseTheParentPageSGameLinkTo2')
         : snapshot?.available === false
-          ? 'Guidance is unavailable. You can still play, retry, skip or leave.'
+          ? t('interface:guidanceIsUnavailableYouCanStillPlayRetrySkipOr')
           : snapshot?.outcome === 'missed'
-            ? 'Picture revealed; the suggested example was not completed. Retry or skip this lesson.'
+            ? t('interface:pictureRevealedTheSuggestedExampleWasNotCompletedRetryOr')
             : snapshot?.outcome === 'lost'
-              ? 'This attempt ended. Retry starts a fresh lesson; earlier course choices are kept.'
+              ? t('interface:thisAttemptEndedRetryStartsAFreshLessonEarlierCourse')
               : snapshot?.outcome === 'complete'
                 ? last
-                  ? 'Lesson complete. Enjoy the picture, then return whenever you are ready.'
-                  : 'Lesson complete. Next lesson opens a fresh Ready screen.'
-                : 'Your real cuts advance these steps. Reading and course choices never move the craft.';
+                  ? t('interface:lessonCompleteEnjoyThePictureThenReturnWheneverYouAre')
+                  : t('interface:lessonCompleteNextLessonOpensAFreshReadyScreen')
+                : t('interface:yourRealCutsAdvanceTheseStepsReadingAndCourseChoices');
     text('outcome', outcome);
     const labels = getControlLabels() || {};
     const hints = ['directions', 'pause']

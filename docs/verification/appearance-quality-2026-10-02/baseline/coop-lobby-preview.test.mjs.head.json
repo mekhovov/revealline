@@ -1,0 +1,69 @@
+{
+  "file": "game/test/coop-lobby-preview.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-lobby-preview.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 29.14,
+  "failures": [
+    {
+      "test": "relay-yard ready lobby hides the picture centre until an earned win",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:186:3",
+      "detail": "\n  ---\n  duration_ms: 149.684209\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:186:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'Relay Yard teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Relay Yard teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:189:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "first-connection ready lobby hides the picture centre until an earned win",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:186:3",
+      "detail": "\n  ---\n  duration_ms: 92.881542\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:186:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:189:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "held artwork completes behind Settings without reclaiming its selector or starting an arena",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:232:1",
+      "detail": "\n  ---\n  duration_ms: 2883.907541\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:232:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected \"actual\" to be reference-equal to \"expected\":\n    + actual - expected ... Lines skipped\n    \n    + <ref *78> Element {\n    - <ref *142> Element {\n        _rect: [Object],\n    +   _text: 'Display & Language',\n    -   _text: '',\n        attributes: [Map],\n        captureListeners: Map(0) {},\n        captures: Set(0) {},\n        checked: false,\n    +   children: [],\n    +   classList: [Classes],\n    +   clientHeight: 44,\n    +   dataset: [Object],\n    +   disabled: [Getter/Setter: false],\n    +   hidden: [Getter/Setter: false],\n    +   id: 'coop-settings-tab-display',\n    +   inert: false,\n    +   listeners: Map(2) {\n    +     'click' => Set(1) {\n    +       [Function: click]\n    +     },\n    +     'keydown' => Set(1) {\n    +       [Function: keydown]\n    +     }\n    +   },\n    +   nodeName: 'BUTTON',\n    +   nodeType: 1,\n    +   open: false,\n    +   options: [],\n    +   ownerDocument: <ref *1> Document {\n    ...\n    -   children: [\n    -     Element {\n    -       _rect: {\n    -         height: 44,\n    -         width: 100,\n    -         x: 0,\n    -         y: 0\n    -       },\n    -       _text: 'Standard',\n    -       attributes: Map(2) {\n    -         'data-i18n' => 'interface:display.textSize.standard',\n    -         'value' => 'standard'\n    -       },\n    -       captureListeners: Map(0) {},\n    -       captures: Set(0) {},\n    -       checked: false,\n    -       children: [],\n    -       classList: Classes {\n    -         values: Set(0) {}\n    -       },\n    -       clientHeight: 44,\n    ...\n  code: 'ERR_TEST_FAILURE'"
+    },
+    {
+      "test": "required original decode failure shows no lobby art and Retry prepares the same exact slot",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:336:1",
+      "detail": "\n  ---\n  duration_ms: 5068.216833\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:336:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:354:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:385:1",
+      "detail": "\n  ---\n  duration_ms: 107.898209\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:385:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:398:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:507:1",
+      "detail": "\n  ---\n  duration_ms: 10819.261041\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:507:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:516:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:528:1",
+      "detail": "\n  ---\n  duration_ms: 147.707625\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:528:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'unavailable'\n    - 'ready'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'ready'\n  actual: 'unavailable'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:559:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "required read failure clears preview while a rejected starter import preserves the accepted arena",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:573:1",
+      "detail": "\n  ---\n  duration_ms: 5109.507542\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:573:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:600:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "Settings close and queued older close cannot enable Browse over pending artwork or a reopened visit",
+      "location": "/privategame/test/coop-lobby-preview.test.mjs:673:1",
+      "detail": "\n  ---\n  duration_ms: 2772.531584\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-lobby-preview.test.mjs:673:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected \"actual\" to be reference-equal to \"expected\":\n    + actual - expected ... Lines skipped\n    \n    + <ref *78> Element {\n    - <ref *142> Element {\n        _rect: [Object],\n    +   _text: 'Display & Language',\n    -   _text: '',\n        attributes: [Map],\n        captureListeners: Map(0) {},\n        captures: Set(0) {},\n        checked: false,\n    +   children: [],\n    +   classList: [Classes],\n    +   clientHeight: 44,\n    +   dataset: [Object],\n    +   disabled: [Getter/Setter: false],\n    +   hidden: [Getter/Setter: false],\n    +   id: 'coop-settings-tab-display',\n    +   inert: false,\n    +   listeners: Map(2) {\n    +     'click' => Set(1) {\n    +       [Function: click]\n    +     },\n    +     'keydown' => Set(1) {\n    +       [Function: keydown]\n    +     }\n    +   },\n    +   nodeName: 'BUTTON',\n    +   nodeType: 1,\n    +   open: false,\n    +   options: [],\n    +   ownerDocument: <ref *1> Document {\n    ...\n    -   children: [\n    -     Element {\n    -       _rect: {\n    -         height: 44,\n    -         width: 100,\n    -         x: 0,\n    -         y: 0\n    -       },\n    -       _text: 'Standard',\n    -       attributes: Map(2) {\n    -         'data-i18n' => 'interface:display.textSize.standard',\n    -         'value' => 'standard'\n    -       },\n    -       captureListeners: Map(0) {},\n    -       captures: Set(0) {},\n    -       checked: false,\n    -       children: [],\n    -       classList: Classes {\n    -         values: Set(0) {}\n    -       },\n    -       clientHeight: 44,\n    ...\n  code: 'ERR_TEST_FAILURE'"
+    }
+  ],
+  "summary": [
+    "# tests 20",
+    "# pass 11",
+    "# fail 9",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 29108.989625"
+  ]
+}

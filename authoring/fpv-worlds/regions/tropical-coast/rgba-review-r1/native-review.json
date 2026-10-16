@@ -1,0 +1,25 @@
+{
+  "scope": "Native production scenery material comparison; no assembled world, flight, player installation, package or device performance claim",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "review": "Original intake GLTFLoader beside actual prepareSceneryWindow under same lighting and camera",
+  "observations": [
+    "Initial palm comparison rejected: omitted authored vertex tints made trunk and leaves too pale.",
+    "Corrected palm inspected from both sides: deep green foliage/trunk tints visually consistent with original; cutouts retained.",
+    "128px derived textures visibly lose detail; accepted only as bounded material prototype.",
+    "Covered jetty comparison acceptable; 492 triangles and three solid surfaces retained.",
+    "Palm production disposal reported zero geometry, texture, material, collider, world and resource counters."
+  ],
+  "palmResources": {
+    "geometryBytes": 107328,
+    "textureBytes": 611664,
+    "resourceBytes": 718992
+  },
+  "screenshot": {
+    "name": "tropical-palm-tints-preserved.png",
+    "sha256": "07ef16fa4ee78cc07df3e14c424b97fc218e5cf8d0a525fa327ef21c12ac04cf"
+  },
+  "sourceReceipt": "receipt.json"
+}

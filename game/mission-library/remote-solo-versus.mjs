@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
@@ -21,6 +22,8 @@ import { inspectPackLibraryMetadata, PACK_LIBRARY_VERSION } from '../packs.mjs';
 import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
 import { createSpatialNextEditionSources } from './spatial-next-editions.mjs';
+import { duelExpeditionLibrarySources } from './multiplayer-expeditions.mjs';
+import { isIncludedBundledMission } from './included-bundled-pack.mjs';
 
 /** Read-only remote browsing, with deliberate verified chapter preparation.
  * Compiler-qualified Journey and inspected installed metadata grant an exact
@@ -60,7 +63,11 @@ export async function createRemoteSoloVersusLibrarySources({
     return { text, value };
   }
   const [route, indexFile, themeFile, campaignFile, classesFile] = await Promise.all([
-    loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo),
+    loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo, {
+      fullSource: true,
+      signal,
+      fetchAsset: (path, options) => request(new URL(`content-design/${path}`, root), options),
+    }),
     read('content/mission-library-index.json'),
     read('content-design/themes.json'),
     read('content/campaign.json'),
@@ -144,12 +151,19 @@ export async function createRemoteSoloVersusLibrarySources({
       // metadata or Journey materials. No pictures are decoded by this read.
       const owner = await installedSources({
         index,
-        journeySources: [journey, ...spatialEditions.sources],
+        journeySources: [
+          journey,
+          ...spatialEditions.sources,
+          ...duelExpeditionLibrarySources({ themes: themeFile.value.themes, launch, difficulty }),
+        ],
         baseEntry: {
           campaign: baseCampaign,
           classRecipes: classesFile.value,
-          visualOverrides: {},
-          levelVisuals: [],
+          ...(await loadBaseArtwork(baseCampaign, {
+            fetch: request,
+            signal,
+            url: new URL('content/base-artwork.json', root),
+          })),
           music: [],
           sourcePackId: null,
         },
@@ -344,7 +358,11 @@ async function installedSources({
               };
         return pack
           ? { state: 'ready' }
-          : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+          : {
+              state: 'download',
+              bytes: row.download?.bytes ?? row.sourceFile.bytes,
+              ...(isIncludedBundledMission(row) ? { included: true } : {}),
+            };
       },
       availabilityCustom() {
         return state().ready

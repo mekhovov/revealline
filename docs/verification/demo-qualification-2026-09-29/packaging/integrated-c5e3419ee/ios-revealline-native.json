@@ -1,0 +1,10 @@
+{
+  "format": "revealline-native-site.v1",
+  "platform": "ios",
+  "scheme": "capacitor",
+  "host": "localhost",
+  "entry": "game/index.html",
+  "version": "0.142.3",
+  "manifestSha256": "45f89abcff078a12bdb0c38ecd46b4e8a66019b90d06a8c0de486627d4a930f3",
+  "sourceManifestSha256": "cc9a329986242fc136d3a68efe283f3a645625df6e90192e93e5650ee782a515"
+}

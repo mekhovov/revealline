@@ -1,0 +1,47 @@
+{
+  "format": "retro-player-body-original.v1",
+  "role": "interceptor",
+  "proposedSourceId": "retro-interceptor-v1",
+  "tool": "image_gen.imagegen",
+  "generationMode": "Fresh text-only built-in original, no image reference input",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-eb36168d-526a-4822-b549-1bc6c9c6e253.png",
+  "original": {
+    "path": "originals/interceptor.png",
+    "bytes": 706515,
+    "sha256": "99f2cdad4a060541f029e00dd180fb40add7386978a55d5de35426fb438ca1f2",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/interceptor.txt",
+    "sha256": "42c90501e4e9540aa14ae9eea02a20c55f4d19015955e2a881ae204b5f59620c"
+  },
+  "copy": {
+    "mode": "APFS fclonefileat, exclusive destination, no fallback or transformation",
+    "toolInode": 76062769,
+    "worktreeInode": 76071262
+  },
+  "transforms": [],
+  "runtimeBinding": null,
+  "inspection": "Full source and alpha checks recorded in full-image-inspection.json and alpha-inspection.json; completed native CSS compositing and its limits are in ../inspection/game-scale-receipt.json."
+}

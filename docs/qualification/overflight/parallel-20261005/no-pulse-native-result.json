@@ -1,0 +1,7 @@
+{
+  "recordedAt": "2026-10-05T11:51:46.523Z",
+  "source": "native-build-source.json",
+  "scope": "Ordinary-input native Fan+Shield no-pulse review, before controller integration; a canvas clip was recorded, so excluded from performance. Blob download timed out; no saved video claim.",
+  "url": "http://127.0.0.1:8879/game/overflight/play.html?reviewBuild=fan-shield&diagnostics=1",
+  "result": "Results\nSortie complete\n\nAutomated review · Fan + shield · no pulse\n\nTime\n05:42\nCleared\n4733\nSalvage\n5443\nYour build\nSaturation Fan 4 · Side burst 3 · Slow field 3 · Recovery shield 1\n\nTry another combination on the same battlefield.\n\nBack\nRetry"
+}

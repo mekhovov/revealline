@@ -1,0 +1,59 @@
+{
+  "format": "FPVGroundCohortQualificationArchive.v1",
+  "sourceRevision": "2c99a82508f23e508666d7354a1b473507514d48",
+  "sourceTree": "9b8339c70f93c9405770038d806dd1c283710687",
+  "fullValidationPassed": true,
+  "admissionStarted": false,
+  "admissionBlockedByDiskFloor": true,
+  "artifacts": [
+    {
+      "source": "/tmp/fpv-ground-cohort-materialize-2c99a8250.mjs",
+      "path": "fpv-ground-cohort-materialize-2c99a8250.mjs.gz",
+      "bytes": 3872,
+      "sha256": "0ae3d57e6ff483e5131935f1ce3354c9ca7e5e5e933301e3163fbc477751b9a9",
+      "gzipBytes": 1772,
+      "gzipSHA256": "0d5938f4667cc99ae6c7f54229e95d12378dde8c9dcd4d49597d4cff10e46689"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-materialize-2c99a8250-r1.json",
+      "path": "fpv-ground-cohort-materialize-2c99a8250-r1.json.gz",
+      "bytes": 305,
+      "sha256": "bd8b228fc8fe138e278c31ac18f5d1f35964f4377a50c90af6692d7f347e9da1",
+      "gzipBytes": 221,
+      "gzipSHA256": "39ce42fcf3112fe010c08563a7e4ef3310db23ee83d50350a560e883083bb219"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-run-bounded-2c99a8250.py",
+      "path": "fpv-ground-cohort-run-bounded-2c99a8250.py.gz",
+      "bytes": 2148,
+      "sha256": "0a96826813e27f05ffadce740ed6eb7487d336fd7ab1e531bffa2fb7305416bc",
+      "gzipBytes": 1001,
+      "gzipSHA256": "778795925065480ca45092909a25560824b7b3dd555af054870c99098a7e2732"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-validate-2c99a8250-r1.log",
+      "path": "fpv-ground-cohort-validate-2c99a8250-r1.log.gz",
+      "bytes": 3676,
+      "sha256": "1030e5b8ddf5a7cb020aa0a07b235abdfb9073969f08bec314d6bac31cc214f5",
+      "gzipBytes": 1536,
+      "gzipSHA256": "fedc05f1802af18178240cd1637be915b79fe7317e60c2277fe83b408ff37a43"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-validate-2c99a8250-r1.json",
+      "path": "fpv-ground-cohort-validate-2c99a8250-r1.json.gz",
+      "bytes": 410,
+      "sha256": "a4988cb642c7935c935181584c1c0ead6b72b115d76387de5801762bf267393f",
+      "gzipBytes": 287,
+      "gzipSHA256": "de2d0c41dadfd4102d88a01f29e310bec2e7f44224a5b992ae31f044fcd31d35"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-admission-2c99a8250-r1-preflight-failed.json",
+      "path": "fpv-ground-cohort-admission-2c99a8250-r1-preflight-failed.json.gz",
+      "bytes": 407,
+      "sha256": "d363c9426ed46cf88949cc27b91b39a1abca6cb824a662e5c31c39077af3faa6",
+      "gzipBytes": 298,
+      "gzipSHA256": "4995315cc68d4f3ca79a6ed853ff5b139980f66d0f388755087c6467156224b2"
+    }
+  ],
+  "scope": "Frozen ground328/Harborc958 plus cohort source; excludes newer main audio changes. No native, admission, publication or current-main qualification claimed."
+}

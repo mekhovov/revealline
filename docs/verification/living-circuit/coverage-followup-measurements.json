@@ -1,0 +1,1493 @@
+{
+  "format": "snake-coverage-followup-measurements.v1",
+  "date": "2026-10-05",
+  "source": {
+    "baseHead": "3b9797961c45066bacdc16c9191b51e88a5b4141",
+    "workingTreeFollowup": true,
+    "files": {
+      "game/snake/classic-core-v4.mjs": {
+        "sha256": "dc895afd7fad17d60eb32ac2cc5f43e738c90b163939454e60861249ce6e10b7"
+      },
+      "game/snake/classic-signal-view.mjs": {
+        "sha256": "7397988ec295e4369879916edfc6790bf4ebff444280aeb1fa091f8afea921b2"
+      },
+      "game/test/fixtures/classic-snake-v4-proofs.json": {
+        "sha256": "4dbe59a33a5358710541d0229e63c434ab9ee7226bf6513cf5b6f30c4943c862"
+      },
+      "game/test/fixtures/classic-snake-local-v1-proofs.json": {
+        "sha256": "e44b826228d1e6a7d5aa0fab7a7f94f589f44632f63bc09ecd1f2b556e742bf0"
+      }
+    }
+  },
+  "scope": "Deterministic accepted simulation measurements. These are not human playability, reaction-time, browser paint-latency, contrast-perception, or hardware performance measurements. No live profile saves or awards are involved.",
+  "method": {
+    "cases": "18 current winning proofs: Quiet Return (local with runner), Quiet Channel (broadcast with runner), and Field Links (local specialists/cable), each Solo/Team at Slow/Normal/Fast. Each uses its accepted level seed 17 and hazard seed 17; no inference about other hazard seeds.",
+    "authority": "Every current and archived comparison replay is stepped using only its accepted turn journal, and the exported complete replay is checked for deep equality with its recorded proof.",
+    "interval": "A move interval uses the displayed pre-step state, held from its elapsedMs boundary until the next accepted boundary. Exposure milliseconds sum those actual simulation intervals when classicSignalStrength is positive.",
+    "protectedArea": "Union of all living heads’ inclusive two-cell squares, with wrap distances, plus source cells; matches renderer protection. Cable counts unique non-head cells outside that union.",
+    "ordinaryTargetKinds": [
+      "still",
+      "runner",
+      "patroller",
+      "sprinter",
+      "courier",
+      "refuge",
+      "switchback",
+      "pair",
+      "shield",
+      "brace",
+      "perimeter",
+      "contour",
+      "rover",
+      "ricochet"
+    ],
+    "ordinaryTargetDefinition": "Counts non-specialist prey kinds listed above. Jammer, lane, relay, eroder, guard, relay pads, projectiles and pickups are excluded.",
+    "cellSamples": "cellMoveSamples sums the number of distant cells across exposed intervals; repeated cells across time are repeated samples. cellMilliseconds is the corresponding exposure-time integral, not a unique enemy/cable count.",
+    "responses": "Zero extra moves/ms means the projected receiver is clear at the same accepted boundary that exits coverage or catches the transmitting source; it is not a wall-clock or pixel-display latency claim.",
+    "absence": "Zero exposure and empty response samples remain explicit. They do not prove that every possible route or hazard seed avoids interference."
+  },
+  "cases": [
+    {
+      "key": "classic-field-quiet-return/solo/slow",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 116,
+      "elapsedMs": 32480,
+      "exposureMoves": 12,
+      "exposureMs": 3360,
+      "exposedWarningMoves": 12,
+      "exposedWarningMs": 3360,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 42,
+        "cellMilliseconds": 11760,
+        "movesPresent": 12,
+        "peakCells": 6
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 21,
+          "sourceId": "required-1",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 56,
+          "sourceId": "required-3",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 75,
+          "sourceId": "required-4",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 116,
+          "sourceId": "required-6",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.103448
+    },
+    {
+      "key": "classic-field-quiet-return/solo/normal",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 116,
+      "elapsedMs": 23200,
+      "exposureMoves": 4,
+      "exposureMs": 800,
+      "exposedWarningMoves": 8,
+      "exposedWarningMs": 1600,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 18,
+        "cellMilliseconds": 3600,
+        "movesPresent": 4,
+        "peakCells": 6
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 56,
+          "sourceId": "required-3",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 116,
+          "sourceId": "required-6",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.034483
+    },
+    {
+      "key": "classic-field-quiet-return/solo/fast",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 116,
+      "elapsedMs": 17400,
+      "exposureMoves": 0,
+      "exposureMs": 0,
+      "exposedWarningMoves": 13,
+      "exposedWarningMs": 1950,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0
+    },
+    {
+      "key": "classic-field-quiet-return/team/slow",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 84,
+      "elapsedMs": 23520,
+      "exposureMoves": 9,
+      "exposureMs": 2520,
+      "exposedWarningMoves": 9,
+      "exposedWarningMs": 2520,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 43,
+        "cellMilliseconds": 12040,
+        "movesPresent": 9,
+        "peakCells": 7
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 32,
+          "sourceId": "required-3",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 51,
+          "sourceId": "required-4",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 84,
+          "sourceId": "required-6",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.107143
+    },
+    {
+      "key": "classic-field-quiet-return/team/normal",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 84,
+      "elapsedMs": 16800,
+      "exposureMoves": 4,
+      "exposureMs": 800,
+      "exposedWarningMoves": 8,
+      "exposedWarningMs": 1600,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 20,
+        "cellMilliseconds": 4000,
+        "movesPresent": 4,
+        "peakCells": 6
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 32,
+          "sourceId": "required-3",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        },
+        {
+          "tick": 84,
+          "sourceId": "required-6",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.047619
+    },
+    {
+      "key": "classic-field-quiet-return/team/fast",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 84,
+      "elapsedMs": 12600,
+      "exposureMoves": 0,
+      "exposureMs": 0,
+      "exposedWarningMoves": 4,
+      "exposedWarningMs": 600,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0
+    },
+    {
+      "key": "classic-field-quiet-channel/solo/slow",
+      "profile": "broadcast-burst-v1",
+      "recipeRevision": "1",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 76,
+      "elapsedMs": 21280,
+      "exposureMoves": 9,
+      "exposureMs": 2520,
+      "exposedWarningMoves": 12,
+      "exposedWarningMs": 3360,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 6,
+        "cellMilliseconds": 1680,
+        "movesPresent": 6,
+        "peakCells": 1
+      },
+      "distantCable": {
+        "cellMoveSamples": 33,
+        "cellMilliseconds": 9240,
+        "movesPresent": 8,
+        "peakCells": 6
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 76,
+          "sourceId": "required-5",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.118421
+    },
+    {
+      "key": "classic-field-quiet-channel/solo/normal",
+      "profile": "broadcast-burst-v1",
+      "recipeRevision": "1",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 76,
+      "elapsedMs": 15200,
+      "exposureMoves": 13,
+      "exposureMs": 2600,
+      "exposedWarningMoves": 8,
+      "exposedWarningMs": 1600,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 2,
+        "cellMilliseconds": 400,
+        "movesPresent": 2,
+        "peakCells": 1
+      },
+      "distantCable": {
+        "cellMoveSamples": 49,
+        "cellMilliseconds": 9800,
+        "movesPresent": 13,
+        "peakCells": 5
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0.171053
+    },
+    {
+      "key": "classic-field-quiet-channel/solo/fast",
+      "profile": "broadcast-burst-v1",
+      "recipeRevision": "1",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 76,
+      "elapsedMs": 11400,
+      "exposureMoves": 8,
+      "exposureMs": 1200,
+      "exposedWarningMoves": 12,
+      "exposedWarningMs": 1800,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 27,
+        "cellMilliseconds": 4050,
+        "movesPresent": 8,
+        "peakCells": 6
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 76,
+          "sourceId": "required-5",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.105263
+    },
+    {
+      "key": "classic-field-quiet-channel/team/slow",
+      "profile": "broadcast-burst-v1",
+      "recipeRevision": "1",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 46,
+      "elapsedMs": 12880,
+      "exposureMoves": 3,
+      "exposureMs": 840,
+      "exposedWarningMoves": 3,
+      "exposedWarningMs": 840,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 3,
+        "cellMilliseconds": 840,
+        "movesPresent": 3,
+        "peakCells": 1
+      },
+      "distantCable": {
+        "cellMoveSamples": 14,
+        "cellMilliseconds": 3920,
+        "movesPresent": 3,
+        "peakCells": 6
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 31,
+          "sourceId": "required-4",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.065217
+    },
+    {
+      "key": "classic-field-quiet-channel/team/normal",
+      "profile": "broadcast-burst-v1",
+      "recipeRevision": "1",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 46,
+      "elapsedMs": 9200,
+      "exposureMoves": 0,
+      "exposureMs": 0,
+      "exposedWarningMoves": 0,
+      "exposedWarningMs": 0,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0
+    },
+    {
+      "key": "classic-field-quiet-channel/team/fast",
+      "profile": "broadcast-burst-v1",
+      "recipeRevision": "1",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 46,
+      "elapsedMs": 6900,
+      "exposureMoves": 0,
+      "exposureMs": 0,
+      "exposedWarningMoves": 0,
+      "exposedWarningMs": 0,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0
+    },
+    {
+      "key": "classic-field-field-links/solo/slow",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 75,
+      "elapsedMs": 21000,
+      "exposureMoves": 4,
+      "exposureMs": 1120,
+      "exposedWarningMoves": 3,
+      "exposedWarningMs": 840,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 15,
+        "cellMilliseconds": 4200,
+        "movesPresent": 4,
+        "peakCells": 4
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0.053333
+    },
+    {
+      "key": "classic-field-field-links/solo/normal",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 75,
+      "elapsedMs": 15000,
+      "exposureMoves": 4,
+      "exposureMs": 800,
+      "exposedWarningMoves": 4,
+      "exposedWarningMs": 800,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 13,
+        "cellMilliseconds": 2600,
+        "movesPresent": 4,
+        "peakCells": 4
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 39,
+          "sourceId": "required-2",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.053333
+    },
+    {
+      "key": "classic-field-field-links/solo/fast",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 75,
+      "elapsedMs": 11250,
+      "exposureMoves": 2,
+      "exposureMs": 300,
+      "exposedWarningMoves": 6,
+      "exposedWarningMs": 900,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 5,
+        "cellMilliseconds": 750,
+        "movesPresent": 2,
+        "peakCells": 3
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 39,
+          "sourceId": "required-2",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.026667
+    },
+    {
+      "key": "classic-field-field-links/team/slow",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 47,
+      "elapsedMs": 13160,
+      "exposureMoves": 3,
+      "exposureMs": 840,
+      "exposedWarningMoves": 3,
+      "exposedWarningMs": 840,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 21,
+        "cellMilliseconds": 5880,
+        "movesPresent": 3,
+        "peakCells": 7
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0.06383
+    },
+    {
+      "key": "classic-field-field-links/team/normal",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 47,
+      "elapsedMs": 9400,
+      "exposureMoves": 4,
+      "exposureMs": 800,
+      "exposedWarningMoves": 4,
+      "exposedWarningMs": 800,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 25,
+        "cellMilliseconds": 5000,
+        "movesPresent": 4,
+        "peakCells": 7
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [
+        {
+          "tick": 47,
+          "sourceId": "required-5",
+          "extraMovesToClear": 0,
+          "extraSimulationMsToClear": 0
+        }
+      ],
+      "exposureFraction": 0.085106
+    },
+    {
+      "key": "classic-field-field-links/team/fast",
+      "profile": "local-burst-v2",
+      "recipeRevision": "3",
+      "seed": 17,
+      "hazardSeed": 17,
+      "moves": 47,
+      "elapsedMs": 7050,
+      "exposureMoves": 0,
+      "exposureMs": 0,
+      "exposedWarningMoves": 2,
+      "exposedWarningMs": 300,
+      "distantOrdinaryTarget": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "distantCable": {
+        "cellMoveSamples": 0,
+        "cellMilliseconds": 0,
+        "movesPresent": 0,
+        "peakCells": 0
+      },
+      "activeSourceExits": [],
+      "activeSourceCaptures": [],
+      "exposureFraction": 0
+    }
+  ],
+  "legacyLocalComparison": [
+    {
+      "key": "classic-field-quiet-return/solo/slow",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 12,
+      "v1ExposureMs": 3360,
+      "v2ExposureMoves": 12,
+      "v2ExposureMs": 3360
+    },
+    {
+      "key": "classic-field-quiet-return/solo/normal",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 4,
+      "v1ExposureMs": 800,
+      "v2ExposureMoves": 4,
+      "v2ExposureMs": 800
+    },
+    {
+      "key": "classic-field-quiet-return/solo/fast",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 2,
+      "v1ExposureMs": 300,
+      "v2ExposureMoves": 0,
+      "v2ExposureMs": 0
+    },
+    {
+      "key": "classic-field-quiet-return/team/slow",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 11,
+      "v1ExposureMs": 3080,
+      "v2ExposureMoves": 9,
+      "v2ExposureMs": 2520
+    },
+    {
+      "key": "classic-field-quiet-return/team/normal",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 7,
+      "v1ExposureMs": 1400,
+      "v2ExposureMoves": 4,
+      "v2ExposureMs": 800
+    },
+    {
+      "key": "classic-field-quiet-return/team/fast",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 0,
+      "v1ExposureMs": 0,
+      "v2ExposureMoves": 0,
+      "v2ExposureMs": 0
+    },
+    {
+      "key": "classic-field-field-links/solo/slow",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 3,
+      "v1ExposureMs": 840,
+      "v2ExposureMoves": 4,
+      "v2ExposureMs": 1120
+    },
+    {
+      "key": "classic-field-field-links/solo/normal",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 1,
+      "v1ExposureMs": 200,
+      "v2ExposureMoves": 4,
+      "v2ExposureMs": 800
+    },
+    {
+      "key": "classic-field-field-links/solo/fast",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 0,
+      "v1ExposureMs": 0,
+      "v2ExposureMoves": 2,
+      "v2ExposureMs": 300
+    },
+    {
+      "key": "classic-field-field-links/team/slow",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 0,
+      "v1ExposureMs": 0,
+      "v2ExposureMoves": 3,
+      "v2ExposureMs": 840
+    },
+    {
+      "key": "classic-field-field-links/team/normal",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 2,
+      "v1ExposureMs": 400,
+      "v2ExposureMoves": 4,
+      "v2ExposureMs": 800
+    },
+    {
+      "key": "classic-field-field-links/team/fast",
+      "sameTurnJournal": true,
+      "v1ExposureMoves": 0,
+      "v1ExposureMs": 0,
+      "v2ExposureMoves": 0,
+      "v2ExposureMs": 0
+    }
+  ],
+  "entryRegression": {
+    "key": "classic-field-quiet-return/team/normal",
+    "sameTurnJournal": true,
+    "traces": [
+      {
+        "profile": "local-burst-v1",
+        "frames": [
+          {
+            "tick": 77,
+            "elapsedMs": 15400,
+            "heads": [
+              {
+                "x": 17,
+                "y": 9
+              },
+              {
+                "x": 10,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "jamming",
+                "remainingMs": 800,
+                "radius": 6,
+                "exposed": false
+              }
+            ]
+          },
+          {
+            "tick": 78,
+            "elapsedMs": 15600,
+            "heads": [
+              {
+                "x": 16,
+                "y": 9
+              },
+              {
+                "x": 9,
+                "y": 10
+              }
+            ],
+            "active": true,
+            "warning": false,
+            "strength": 0.25,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "jamming",
+                "remainingMs": 600,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 79,
+            "elapsedMs": 15800,
+            "heads": [
+              {
+                "x": 15,
+                "y": 9
+              },
+              {
+                "x": 8,
+                "y": 10
+              }
+            ],
+            "active": true,
+            "warning": false,
+            "strength": 0.375,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "jamming",
+                "remainingMs": 400,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 80,
+            "elapsedMs": 16000,
+            "heads": [
+              {
+                "x": 14,
+                "y": 9
+              },
+              {
+                "x": 7,
+                "y": 10
+              }
+            ],
+            "active": true,
+            "warning": false,
+            "strength": 0.5,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "jamming",
+                "remainingMs": 200,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 81,
+            "elapsedMs": 16200,
+            "heads": [
+              {
+                "x": 13,
+                "y": 9
+              },
+              {
+                "x": 6,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "rest",
+                "remainingMs": 4200,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 82,
+            "elapsedMs": 16400,
+            "heads": [
+              {
+                "x": 12,
+                "y": 9
+              },
+              {
+                "x": 5,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "rest",
+                "remainingMs": 4000,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 83,
+            "elapsedMs": 16600,
+            "heads": [
+              {
+                "x": 11,
+                "y": 9
+              },
+              {
+                "x": 4,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v1",
+                "phase": "rest",
+                "remainingMs": 3800,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 84,
+            "elapsedMs": 16800,
+            "heads": [
+              {
+                "x": 11,
+                "y": 8
+              },
+              {
+                "x": 3,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": []
+          }
+        ]
+      },
+      {
+        "profile": "local-burst-v2",
+        "frames": [
+          {
+            "tick": 77,
+            "elapsedMs": 15400,
+            "heads": [
+              {
+                "x": 17,
+                "y": 9
+              },
+              {
+                "x": 10,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "rest",
+                "remainingMs": 0,
+                "radius": 6,
+                "exposed": false
+              }
+            ]
+          },
+          {
+            "tick": 78,
+            "elapsedMs": 15600,
+            "heads": [
+              {
+                "x": 16,
+                "y": 9
+              },
+              {
+                "x": 9,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": true,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "warning",
+                "remainingMs": 800,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 79,
+            "elapsedMs": 15800,
+            "heads": [
+              {
+                "x": 15,
+                "y": 9
+              },
+              {
+                "x": 8,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": true,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "warning",
+                "remainingMs": 600,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 80,
+            "elapsedMs": 16000,
+            "heads": [
+              {
+                "x": 14,
+                "y": 9
+              },
+              {
+                "x": 7,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": true,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "warning",
+                "remainingMs": 400,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 81,
+            "elapsedMs": 16200,
+            "heads": [
+              {
+                "x": 13,
+                "y": 9
+              },
+              {
+                "x": 6,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": true,
+            "strength": 0,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "warning",
+                "remainingMs": 200,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 82,
+            "elapsedMs": 16400,
+            "heads": [
+              {
+                "x": 12,
+                "y": 9
+              },
+              {
+                "x": 5,
+                "y": 10
+              }
+            ],
+            "active": true,
+            "warning": false,
+            "strength": 0.75,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "jamming",
+                "remainingMs": 800,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 83,
+            "elapsedMs": 16600,
+            "heads": [
+              {
+                "x": 11,
+                "y": 9
+              },
+              {
+                "x": 4,
+                "y": 10
+              }
+            ],
+            "active": true,
+            "warning": false,
+            "strength": 0.875,
+            "sources": [
+              {
+                "id": "required-6",
+                "x": 3,
+                "y": 10,
+                "profile": "local-burst-v2",
+                "phase": "jamming",
+                "remainingMs": 600,
+                "radius": 6,
+                "exposed": true
+              }
+            ]
+          },
+          {
+            "tick": 84,
+            "elapsedMs": 16800,
+            "heads": [
+              {
+                "x": 11,
+                "y": 8
+              },
+              {
+                "x": 3,
+                "y": 10
+              }
+            ],
+            "active": false,
+            "warning": false,
+            "strength": 0,
+            "sources": []
+          }
+        ]
+      }
+    ],
+    "conclusion": "With identical accepted steering, local-v1 enters ongoing interference at tick78 with no new warning. Local-v2 enters an 800ms warning at tick78 and begins interference at tick82."
+  },
+  "exitCounterplayProbe": {
+    "provenance": "Legal-turn branch from the current verified Quiet Return / Team / Normal proof at tick78. It is a partial counterplay probe, not a catalogue winning qualification proof. No actors, timers, phases, geometry or RNG were edited.",
+    "proofKey": "classic-field-quiet-return/team/normal",
+    "prefixThroughTick": 78,
+    "seed": 17,
+    "hazardSeed": 17,
+    "controlledSeat": 1,
+    "controlledDirections": ["left", "down", "down", "left", "down", "down", "down"],
+    "otherSeatBehavior": "Seat0 holds its accepted current direction; no new commands are supplied.",
+    "frames": [
+      {
+        "tick": 78,
+        "elapsedMs": 15600,
+        "heads": [
+          {
+            "x": 16,
+            "y": 9
+          },
+          {
+            "x": 9,
+            "y": 10
+          }
+        ],
+        "active": false,
+        "warning": true,
+        "strength": 0,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "warning",
+            "remainingMs": 800,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 79,
+        "elapsedMs": 15800,
+        "heads": [
+          {
+            "x": 15,
+            "y": 9
+          },
+          {
+            "x": 8,
+            "y": 10
+          }
+        ],
+        "active": false,
+        "warning": true,
+        "strength": 0,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "warning",
+            "remainingMs": 600,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 80,
+        "elapsedMs": 16000,
+        "heads": [
+          {
+            "x": 14,
+            "y": 9
+          },
+          {
+            "x": 8,
+            "y": 11
+          }
+        ],
+        "active": false,
+        "warning": true,
+        "strength": 0,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "warning",
+            "remainingMs": 400,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 81,
+        "elapsedMs": 16200,
+        "heads": [
+          {
+            "x": 13,
+            "y": 9
+          },
+          {
+            "x": 8,
+            "y": 12
+          }
+        ],
+        "active": false,
+        "warning": true,
+        "strength": 0,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "warning",
+            "remainingMs": 200,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 82,
+        "elapsedMs": 16400,
+        "heads": [
+          {
+            "x": 12,
+            "y": 9
+          },
+          {
+            "x": 7,
+            "y": 12
+          }
+        ],
+        "active": true,
+        "warning": false,
+        "strength": 0.44098300562505255,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "jamming",
+            "remainingMs": 800,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 83,
+        "elapsedMs": 16600,
+        "heads": [
+          {
+            "x": 11,
+            "y": 9
+          },
+          {
+            "x": 7,
+            "y": 13
+          }
+        ],
+        "active": true,
+        "warning": false,
+        "strength": 0.375,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "jamming",
+            "remainingMs": 600,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 84,
+        "elapsedMs": 16800,
+        "heads": [
+          {
+            "x": 10,
+            "y": 9
+          },
+          {
+            "x": 7,
+            "y": 14
+          }
+        ],
+        "active": true,
+        "warning": false,
+        "strength": 0.2928932188134524,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "jamming",
+            "remainingMs": 400,
+            "radius": 6,
+            "exposed": true
+          }
+        ]
+      },
+      {
+        "tick": 85,
+        "elapsedMs": 17000,
+        "heads": [
+          {
+            "x": 9,
+            "y": 9
+          },
+          {
+            "x": 7,
+            "y": 15
+          }
+        ],
+        "active": false,
+        "warning": false,
+        "strength": 0,
+        "sources": [
+          {
+            "id": "required-6",
+            "x": 3,
+            "y": 10,
+            "profile": "local-burst-v2",
+            "phase": "rest",
+            "remainingMs": 4200,
+            "radius": 6,
+            "exposed": false
+          }
+        ]
+      }
+    ],
+    "exitTick": 85,
+    "extraMovesToClear": 0,
+    "extraSimulationMsToClear": 0,
+    "cancelledBurstRemainingBeforeExitMs": 400,
+    "recoveryRemainingAfterExitMs": 4200,
+    "sharedClearRemainingAfterExitMs": 1600,
+    "exactPartialReplayRoundtrip": true,
+    "partialReplaySHA256": "9fa8e93a14281503a0eca7c3bcfb98a6d430524629afc931292b666a16993157"
+  },
+  "summary": {
+    "exactWinningProofsMeasured": 18,
+    "archivedLocalComparisonProofs": 12,
+    "currentProofExposureMoves": 79,
+    "currentProofExposureMs": 18500,
+    "currentProofActiveSourceExitSamples": 0,
+    "currentProofActiveSourceCaptureSamples": 17,
+    "currentProofExitResponse": "Not observed in the selected winning journals; one separately labelled verified legal-turn branch measures this counterplay.",
+    "zeroExposureCases": [
+      "classic-field-quiet-return/solo/fast",
+      "classic-field-quiet-return/team/fast",
+      "classic-field-quiet-channel/team/normal",
+      "classic-field-quiet-channel/team/fast",
+      "classic-field-field-links/team/fast"
+    ],
+    "interpretation": "The measured local routes exercise distant cable visibility; they do not place an ordinary runner outside the protected neighborhood during exposure. Broadcast routes include distant runner exposure at Solo slow/normal and Team slow. Several fast or short routes finish before any burst. These observations motivate human route-choice testing; contrast tests and winning proofs alone do not establish pressure or difficulty."
+  }
+}

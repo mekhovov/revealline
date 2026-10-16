@@ -7,8 +7,9 @@ exact compiled v11 missions as manual-only Previous Journey cards; v10 and v9
 historical cards remain available as well. Authored current progression skips
 all prior-edition cards.
 
-No release, production asset, package version, milestone, tag, or Pages state is
-owned by this change.
+This source and localization package is prepared for the coordinated v0.138.0
+slot. Merge, tag, immutable release assets and Pages promotion remain owned by
+the release publisher; this branch does not mutate those states.
 
 ## Attribution and adaptation boundary
 

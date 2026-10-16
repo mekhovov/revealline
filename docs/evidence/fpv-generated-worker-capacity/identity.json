@@ -1,0 +1,15 @@
+{
+  "format": "FPVWorkerSourceProjection.v1",
+  "baseline": "ade4bfc2dd2934668889bf622e87a48cf1b52c03",
+  "canonicalExact": true,
+  "normalizedASTEqual": true,
+  "tokens": 1360,
+  "comments": 3,
+  "lineTerminators": 179,
+  "baselineBytes": 6528,
+  "generatedBytes": 4812,
+  "recoveredBytes": 1716,
+  "canonicalSHA256": "ae18471ac69798c91c89fed1dd6ff7f8db4db59cb61ce1d9f6946b8f9260212e",
+  "generatedSHA256": "59b0b73b90ff5970e1cfba997f1d42bc8d3164e6b4e6115524d46cf6eee26f55",
+  "networkContract": "Unchanged; no Library transport in this prerequisite."
+}

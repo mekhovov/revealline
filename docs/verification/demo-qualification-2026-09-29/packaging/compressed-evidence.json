@@ -1,0 +1,166 @@
+{
+  "format": "lossless-evidence-archives.v1",
+  "note": "Machine inventories and exact diagnostic logs are stored as deterministic gzip. Original bytes and hashes remain exact; decode before reading. Browser reports remain directly readable.",
+  "files": [
+    {
+      "originalPath": "baseline-web-manifest.json",
+      "archivePath": "baseline-web-manifest.json.gz",
+      "bytes": 345427,
+      "sha256": "69da77c430c3f3cfa13749abe0eec7a68b553b831d70c5202a0ee9618a6c8e8b",
+      "archiveBytes": 98100,
+      "archiveSha256": "9610a2ac5b78875f87d6aafd4f0b14b302af85a66dbb93f579ae8868637dbf0f"
+    },
+    {
+      "originalPath": "baseline-web-offline-cache.json",
+      "archivePath": "baseline-web-offline-cache.json.gz",
+      "bytes": 416538,
+      "sha256": "8d3e392fe5c129c6104a767089593802fb4999b26a4005723c0845077e6a509e",
+      "archiveBytes": 108688,
+      "archiveSha256": "60a3803f9f510df6c2718a93eeeac788ef0053383f6532a30833038727b03dbe"
+    },
+    {
+      "originalPath": "dutch-budget-failure.json",
+      "archivePath": "dutch-budget-failure.json.gz",
+      "bytes": 119388,
+      "sha256": "871025f3df6ae91fccbed13556b7a83dd3ebb516a25ad411d1dd750bf5889c8f",
+      "archiveBytes": 36925,
+      "archiveSha256": "d653fd594f8e47488a48ee46d8943d7552b45b578d8527c8f7cb4df4bc1d6781"
+    },
+    {
+      "originalPath": "final/desktop-manifest.json",
+      "archivePath": "final/desktop-manifest.json.gz",
+      "bytes": 345617,
+      "sha256": "691051ed7f57e989b4b56350640b7113d2cfffac66ee5e2bff187d1d4509a5dc",
+      "archiveBytes": 98161,
+      "archiveSha256": "9b627195b533275d46c05d329246126d9fd330e7acb600fa19eb7125f2d5d7ee"
+    },
+    {
+      "originalPath": "final/edition-audit.json",
+      "archivePath": "final/edition-audit.json.gz",
+      "bytes": 100607,
+      "sha256": "db5737ec34f56650d5a51a2ee71c99be4de167f5614b99bdaf2164141c9ba0e5",
+      "archiveBytes": 4242,
+      "archiveSha256": "baee665fff8813a409eed67e71a0cb022c9add9609a039717907833e198ce18b"
+    },
+    {
+      "originalPath": "final/ios-manifest.json",
+      "archivePath": "final/ios-manifest.json.gz",
+      "bytes": 346392,
+      "sha256": "6a303aba109a56e0a0520827bc0008efb4f7c6db0a08e036cf56e01deea8459c",
+      "archiveBytes": 98411,
+      "archiveSha256": "b84297a691fb4533f0dfaa2294ed8651658c24543acf00c93fe230a1d46064d8"
+    },
+    {
+      "originalPath": "final/source-after.json",
+      "archivePath": "final/source-after.json.gz",
+      "bytes": 187607,
+      "sha256": "716b4e0e4a405943accdf2b36b06aa41ff2101b828a85b537bd04de1827d9bd4",
+      "archiveBytes": 54336,
+      "archiveSha256": "631a8509fdeca6d55bc04db0ad27c62c9cc5622dc02933275c8089894e5cb841"
+    },
+    {
+      "originalPath": "final/source-before.json",
+      "archivePath": "final/source-before.json.gz",
+      "bytes": 187607,
+      "sha256": "4c099a9f9cf2e3a9996cdd27631d7b857409e1e5b542ccd7c7451f0b49da309a",
+      "archiveBytes": 54336,
+      "archiveSha256": "1cd886392d84e2cbe765b94a6619104b41eddab4b70f12e15baf9aeefb100ec0"
+    },
+    {
+      "originalPath": "final/web-manifest.json",
+      "archivePath": "final/web-manifest.json.gz",
+      "bytes": 345617,
+      "sha256": "691051ed7f57e989b4b56350640b7113d2cfffac66ee5e2bff187d1d4509a5dc",
+      "archiveBytes": 98161,
+      "archiveSha256": "9b627195b533275d46c05d329246126d9fd330e7acb600fa19eb7125f2d5d7ee"
+    },
+    {
+      "originalPath": "final/web-offline-cache.json",
+      "archivePath": "final/web-offline-cache.json.gz",
+      "bytes": 416728,
+      "sha256": "8805c61d2e8bbca45bb091949c2586c36cd9a5fc1d10a856e0c6603805be2fe8",
+      "archiveBytes": 108750,
+      "archiveSha256": "db614ac5b45a32762ed1f507bb630aab18a66f95cbaf420709cac9e772a7f341"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/desktop-manifest.json",
+      "archivePath": "integrated-c5e3419ee/desktop-manifest.json.gz",
+      "bytes": 345655,
+      "sha256": "cc9a329986242fc136d3a68efe283f3a645625df6e90192e93e5650ee782a515",
+      "archiveBytes": 98166,
+      "archiveSha256": "ebbc197786dfd92e32bd22e25d84742ce599169c3649791c484f3f33c1619cc2"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/edition-audit.json",
+      "archivePath": "integrated-c5e3419ee/edition-audit.json.gz",
+      "bytes": 100607,
+      "sha256": "b7e399e559ca019f7953bec7007d16da65fb3c1b68a9c62adca3bbcf2bc00f2c",
+      "archiveBytes": 4240,
+      "archiveSha256": "bb9c1f019b8e44409e0ac6a29c41a25350931a8a5252cd46d8b43b4e2a790c90"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/ios-manifest.json",
+      "archivePath": "integrated-c5e3419ee/ios-manifest.json.gz",
+      "bytes": 346430,
+      "sha256": "45f89abcff078a12bdb0c38ecd46b4e8a66019b90d06a8c0de486627d4a930f3",
+      "archiveBytes": 98425,
+      "archiveSha256": "9df062e3a150b0169f0417e9764b23d1228d1eafe3e3e9f6391de71c5a3a0f05"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/source-after.json",
+      "archivePath": "integrated-c5e3419ee/source-after.json.gz",
+      "bytes": 359288,
+      "sha256": "97e291bc9784cf17890416dce296a633c564260cae9bde0297adedd7dae3ff05",
+      "archiveBytes": 103188,
+      "archiveSha256": "235eb01a6e2b925a64ad599a93d91960e41df43f20db59bc3fa5ea7d741cf5dc"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/source-before.json",
+      "archivePath": "integrated-c5e3419ee/source-before.json.gz",
+      "bytes": 359288,
+      "sha256": "dcd3d37277bff1c169b1f17b716edbd957a82b9bb41ded68b9565202027b09c5",
+      "archiveBytes": 103188,
+      "archiveSha256": "2e622b98c72ed8dae6ff9d492125df696649912e08c19d2043d6c24b82152eb9"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/web-manifest.json",
+      "archivePath": "integrated-c5e3419ee/web-manifest.json.gz",
+      "bytes": 345655,
+      "sha256": "cc9a329986242fc136d3a68efe283f3a645625df6e90192e93e5650ee782a515",
+      "archiveBytes": 98166,
+      "archiveSha256": "ebbc197786dfd92e32bd22e25d84742ce599169c3649791c484f3f33c1619cc2"
+    },
+    {
+      "originalPath": "integrated-c5e3419ee/web-offline-cache.json",
+      "archivePath": "integrated-c5e3419ee/web-offline-cache.json.gz",
+      "bytes": 416728,
+      "sha256": "1427e226c6bf39eab1dcb4b948c02e28f5424ec1da09008c88989fe4133c62f3",
+      "archiveBytes": 108751,
+      "archiveSha256": "174e2604430a03a5cb7ba872f7315d4b68bee5e9a53149bffcfa66497f7d81df"
+    },
+    {
+      "originalPath": "source-after.json",
+      "archivePath": "source-after.json.gz",
+      "bytes": 187044,
+      "sha256": "78a5e2c7198ba2359658d7a4f4ba73126d73153db160bffd2d6b4ecbd6bd4ed8",
+      "archiveBytes": 54148,
+      "archiveSha256": "abfe0566ce1953219472d7ce4ed2296c9c336d92dbb67cabfa5b803e304e6132"
+    },
+    {
+      "originalPath": "source-before.json",
+      "archivePath": "source-before.json.gz",
+      "bytes": 187044,
+      "sha256": "40a0b5820eff836a0b12d23994feb9c96d5e8a20a1c9a995db39402b0ca35357",
+      "archiveBytes": 54149,
+      "archiveSha256": "e5198a56e419cb44c190c2e8c1db39f2082cb5016036f468d6fc95c3bcdbf8e1"
+    },
+    {
+      "originalPath": "pr781-a9edb0c-candidate-failure.log",
+      "archivePath": "pr781-a9edb0c-candidate-failure.log.gz",
+      "bytes": 3073,
+      "sha256": "4a56a5af49a09993a0aaf52c95567936df745858237b372b1d76df3a48058ecb",
+      "archiveBytes": 730,
+      "archiveSha256": "48b874b57dc8b71a76617abe6e7a67a9403a080d0e3a7fae6d10a2cb453a1256"
+    }
+  ]
+}

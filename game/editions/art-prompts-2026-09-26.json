@@ -1,0 +1,12 @@
+{
+  "format": "revealline-art-prompts.v1",
+  "tool": "image_gen.imagegen",
+  "date": "2026-09-26",
+  "review": "Representative compositions; human in-game review pending",
+  "assets": [
+    {
+      "path": "game/editions/assets/droneaid-nl-workshop-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: one beautiful wide 2:1 reward background for the DroneAid Netherlands community workshop arcade game. Create a sophisticated cinematic miniature maker workshop in a converted Dutch canal-side brick warehouse, doors open toward a sunny canal and slender Dutch townhouses. Inside: six spacious modular workbenches, violet-blue drawer cabinets, bright yellow desk lamps, carefully organized colorful component trays, pegboard tools, unpowered generic hobby propellers and empty frames displayed as playful sculptural objects, shelves of neatly packed blank boxes, leafy plants and bicycles near the entrance. A warm welcoming place for people to learn together, currently empty of people. Polished tactile 3D illustration with richly crafted real materials, warm wood, matte violet painted metal, frosted glass; layered visual storytelling and beautiful depth. Official website inspired palette: vivid violet-blue #4238EB, yellow #FFD62C, pale blue #DCEBFD with white and neutral brick. Elevated oblique camera that reveals the entire space, wide landscape board aspect 2:1, fill opaque frame. Fictional illustrative community environment, not a photograph or a documented actual event. No text, digits, words, logos, emblems, readable electronics diagrams, operational instructions, weapons, combat, people, UI, grid lines, panel montage, or watermarks. Detailed and inspiring but uncluttered, large coherent shapes recognizable in a small thumbnail."
+    }
+  ]
+}

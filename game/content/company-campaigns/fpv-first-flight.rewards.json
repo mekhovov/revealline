@@ -1,0 +1,1090 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A practice plan includes how to stop before it includes how to move.",
+        "title": "Start with a Stop"
+      },
+      "uk": {
+        "teaser": "План вправи містить спосіб зупинки раніше за рух.",
+        "title": "Почніть із зупинки"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-01-reveal-v1",
+          "sha256": "991e2ba9d123625894bbb124ed92373179650f01affd65f0fcba78f7ee448376"
+        },
+        "id": "fpv-first-flight-01-image",
+        "locales": {
+          "en": {
+            "alt": "A parked model, pause and reset sculptures welcome visitors to a fictional practice gym.",
+            "title": "Start with a Stop"
+          },
+          "uk": {
+            "alt": "Нерухома модель, скульптури паузи й скидання вітають відвідувачів у вигаданій навчальній залі.",
+            "title": "Почніть із зупинки"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "NASA’s classroom simulation activity uses a deliberately simplified digital drone task. A model is useful when its scope and assumptions are clear.",
+              "Our optional assisted gym has pause and reset, neutral input and explicit checkpoints. Before any movement, find those controls and describe what the model omits: real wind, inertia, aircraft setup and flight authorization. Completing this arcade level does not complete a gym drill."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Start with a Stop"
+          },
+          "uk": {
+            "paragraphs": [
+              "Навчальна вправа NASA використовує навмисно спрощене цифрове завдання з дроном. Модель корисна, коли зрозумілі її межі й припущення.",
+              "Необов’язкова зала має паузу, скидання, нейтральне введення та явні контрольні точки. Перед рухом знайдіть ці команди й назвіть відсутнє: реальний вітер, інерцію, налаштування й дозвіл на політ. Аркадна перемога не завершує вправу зали."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Почніть із зупинки"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Describe the optional gym’s stopping controls and one omitted physical effect. Keep arcade completion separate from a practice-drill result."
+              ],
+              "title": "Make the distinction: Start with a Stop"
+            },
+            "uk": {
+              "paragraphs": [
+                "Опишіть зупинку в додатковій залі й один невідтворений фізичний ефект. Відокремте аркадну перемогу від результату практичної вправи."
+              ],
+              "title": "Розрізніть поняття: Почніть із зупинки"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find pause and reset together before exploring the optional gym. Name one reason a model can help even when it omits real conditions."
+              ],
+              "title": "Explore together: Start with a Stop"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом знайдіть паузу й скидання перед вивченням додаткової зали. Чим корисна модель, навіть коли не відтворює реальних умов?"
+              ],
+              "title": "Дослідіть разом: Почніть із зупинки"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare this assisted model with a second fictional model that lists different assumptions. Which observations could transfer, and which require separate validation?"
+              ],
+              "title": "Apply and question: Start with a Stop"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте цю модель з іншою вигаданою моделлю з іншими припущеннями. Які спостереження переносяться, а які потребують окремої перевірки?"
+              ],
+              "title": "Застосуйте й запитайте: Почніть із зупинки"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "145b33f9f0e8754f" },
+            { "difficulty": "standard", "gameplayId": "7abb9fcb5828189f" },
+            { "difficulty": "expert", "gameplayId": "a230e917a7ec3866" }
+          ],
+          "missionId": "fpv-first-flight-01"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Two dots can share a map position and have different heights.",
+        "title": "Height Is a Separate Question"
+      },
+      "uk": {
+        "teaser": "Дві точки можуть збігатися на карті, але мати різну висоту.",
+        "title": "Висота — окреме питання"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-02-reveal-v1",
+          "sha256": "b08cfe7d0d4d25c55b958ffeadec3477092836606ab102e37442288f6c3ef493"
+        },
+        "id": "fpv-first-flight-02-image",
+        "locales": {
+          "en": {
+            "alt": "Two display models share one floor position at different heights beside overhead and side-view cards.",
+            "title": "Height Is a Separate Question"
+          },
+          "uk": {
+            "alt": "Дві виставкові моделі займають одне положення над підлогою на різній висоті поряд із картками вигляду згори й збоку.",
+            "title": "Висота — окреме питання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "In our assisted gym model, a separate height gauge accompanies the overhead view. Two screenshots can place the marker over the same tile while showing different heights.",
+              "Compare the fictional screenshots, name both quantities and predict which gauge changes during a climb-only command. This is an exercise in reading the model, not a suggested real takeoff procedure."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Height Is a Separate Question"
+          },
+          "uk": {
+            "paragraphs": [
+              "У моделі зали окремий покажчик висоти доповнює вигляд зверху. На двох знімках маркер може бути над тією самою клітинкою, але на різній висоті.",
+              "Порівняйте вигадані знімки, назвіть обидві величини та передбачте зміну покажчика за команди лише набору висоти. Це читання моделі, а не інструкція реального зльоту."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Висота — окреме питання"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Identify overhead position and height separately. Predict which display changes in the fictional climb-only comparison."
+              ],
+              "title": "Make the distinction: Height Is a Separate Question"
+            },
+            "uk": {
+              "paragraphs": [
+                "Окремо визначте положення на вигляді згори й висоту. Яке відображення зміниться у вигаданому порівнянні лише підйому?"
+              ],
+              "title": "Розрізніть поняття: Висота — окреме питання"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Look together at the shared floor tile and the two heights. Describe two things about position instead of using only one dot."
+              ],
+              "title": "Explore together: Height Is a Separate Question"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом подивіться на спільну плитку підлоги й дві висоти. Опишіть дві характеристики положення замість однієї точки."
+              ],
+              "title": "Дослідіть разом: Висота — окреме питання"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional screenshot omits the height gauge. State the conclusion that can no longer be established, even if its overhead marker is clear."
+              ],
+              "title": "Apply and question: Height Is a Separate Question"
+            },
+            "uk": {
+              "paragraphs": [
+                "На новому вигаданому знімку немає показника висоти. Який висновок уже неможливий, навіть коли позначка згори чітка?"
+              ],
+              "title": "Застосуйте й запитайте: Висота — окреме питання"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "fadd17e068fc14ed" },
+            { "difficulty": "standard", "gameplayId": "9698f010ebdd835d" },
+            { "difficulty": "expert", "gameplayId": "8aea9b37b2530e49" }
+          ],
+          "missionId": "fpv-first-flight-02"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A floor arrow and a nose marker answer different questions.",
+        "title": "A Straight Path, Two Views"
+      },
+      "uk": {
+        "teaser": "Стрілка підлоги й позначка носа відповідають на різні питання.",
+        "title": "Прямий шлях, два види"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-03-reveal-v1",
+          "sha256": "00a382113a9346f8e3e664ea480a57eb98866449ff92b300ba0e8a6538194638"
+        },
+        "id": "fpv-first-flight-03-image",
+        "locales": {
+          "en": {
+            "alt": "A coral floor arrow and a turquoise model nose point in different directions in a spacious gym.",
+            "title": "A Straight Path, Two Views"
+          },
+          "uk": {
+            "alt": "Коралова стрілка підлоги й бірюзовий ніс моделі показують різні напрямки у просторій залі.",
+            "title": "Прямий шлях, два види"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our original fixture shows a model facing the gym window and a separate arrow tracing its path. The arrow records travel; the nose marker records orientation.",
+              "Compare a forward segment with a sideways segment while keeping the heading fixed. Explain why both can be straight paths in the assisted model. Real control response depends on the aircraft and mode; this diagram supplies neither setup nor operational commands."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "A Straight Path, Two Views"
+          },
+          "uk": {
+            "paragraphs": [
+              "Оригінальна вправа показує модель носом до вікна й окрему стрілку шляху. Стрілка позначає переміщення, а ніс — орієнтацію.",
+              "Порівняйте рух уперед і вбік зі сталим курсом. Поясніть, чому обидва шляхи прямі в моделі з допомогою. Реальна реакція залежить від апарата й режиму; схема не містить налаштувань чи експлуатаційних команд."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Прямий шлях, два види"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep heading fixed while comparing the two straight segments. Explain how a path can be straight without matching the nose direction."
+              ],
+              "title": "Make the distinction: A Straight Path, Two Views"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зберігайте курс незмінним, порівнюючи два прямі відрізки. Чому прямий шлях може не збігатися з напрямком носа?"
+              ],
+              "title": "Розрізніть поняття: Прямий шлях, два види"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Follow the floor arrow with one finger and point to the nose with another. Tell each other what the two markers describe."
+              ],
+              "title": "Explore together: A Straight Path, Two Views"
+            },
+            "uk": {
+              "paragraphs": [
+                "Одним пальцем простежте стрілку підлоги, іншим покажіть ніс. Розкажіть одне одному, що описують ці позначки."
+              ],
+              "title": "Дослідіть разом: Прямий шлях, два види"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A second fictional route preserves its geometric line but changes heading. Separate the two records and avoid inferring real control commands from either."
+              ],
+              "title": "Apply and question: A Straight Path, Two Views"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший вигаданий маршрут зберігає пряму лінію, але змінює курс. Розділіть записи, не виводячи з них реальних команд керування."
+              ],
+              "title": "Застосуйте й запитайте: Прямий шлях, два види"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "2b20acad4f73287f" },
+            { "difficulty": "standard", "gameplayId": "7c3cc73b9c9343b8" },
+            { "difficulty": "expert", "gameplayId": "196491c04d0ae554" }
+          ],
+          "missionId": "fpv-first-flight-03"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A calm comparison makes a changing viewpoint easier to understand.",
+        "title": "Slide Past the Window"
+      },
+      "uk": {
+        "teaser": "Спокійне порівняння пояснює зміну точки огляду.",
+        "title": "Рух убік повз вікно"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-04-reveal-v1",
+          "sha256": "0d22e3cbbf1693ef8cd4bec21003480c50b720ae9b730fae911a542be4eba827"
+        },
+        "id": "fpv-first-flight-04-image",
+        "locales": {
+          "en": {
+            "alt": "Two cards keep the same window view while a model silhouette appears at different sideways positions.",
+            "title": "Slide Past the Window"
+          },
+          "uk": {
+            "alt": "Дві картки зберігають однаковий вид вікна, тоді як силует моделі займає різні бокові положення.",
+            "title": "Рух убік повз вікно"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The window, blue mat and door are landmarks in our invented indoor gym. They provide a stable reference for a short sideways movement in the assisted model.",
+              "Predict which landmark moves across a fictional camera frame, then compare with the overhead sketch. State the viewpoint before saying “left”. This is an untimed visual reasoning task, with no performance claim about real FPV flying."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Slide Past the Window"
+          },
+          "uk": {
+            "paragraphs": [
+              "Вікно, синій килимок і двері — орієнтири вигаданої зали. Вони задають сталу систему для короткого бокового переміщення в моделі з допомогою.",
+              "Передбачте, який орієнтир зміститься у вигаданому кадрі, та порівняйте з виглядом зверху. Перед словом «ліворуч» назвіть точку огляду. Це візуальна вправа без таймера, а не доказ уміння літати FPV."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Рух убік повз вікно"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "State the fictional viewpoint before describing left. Compare the camera-frame observation with the overhead sketch."
+              ],
+              "title": "Make the distinction: Slide Past the Window"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уточніть вигадану точку огляду перед словом «ліворуч». Порівняйте спостереження в кадрі зі схемою згори."
+              ],
+              "title": "Розрізніть поняття: Рух убік повз вікно"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare the two window pictures together. Find a landmark that stays framed the same way while the model’s sideways position changes."
+              ],
+              "title": "Explore together: Slide Past the Window"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порівняйте два зображення вікна. Знайдіть орієнтир із незмінним кадруванням, коли бокове положення моделі змінюється."
+              ],
+              "title": "Дослідіть разом: Рух убік повз вікно"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fixture moves the viewpoint instead of the model. What extra record would distinguish these explanations for a changed image?"
+              ],
+              "title": "Apply and question: Slide Past the Window"
+            },
+            "uk": {
+              "paragraphs": [
+                "Новий приклад рухає точку огляду замість моделі. Який додатковий запис розрізнить ці пояснення зміненого зображення?"
+              ],
+              "title": "Застосуйте й запитайте: Рух убік повз вікно"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "79a9987ef3bbb60d" },
+            { "difficulty": "standard", "gameplayId": "7be65d5bbdefa2d7" },
+            { "difficulty": "expert", "gameplayId": "cd4e1b575c0fc2e6" }
+          ],
+          "missionId": "fpv-first-flight-04"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A square route can be described in more than one way.",
+        "title": "A Turn and a Translation"
+      },
+      "uk": {
+        "teaser": "Квадратний маршрут можна описати по-різному.",
+        "title": "Поворот і переміщення"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-05-reveal-v1",
+          "sha256": "ae257751d93ebe8c3c8cfedfd98a70656baf9ba4f854fc6f4f2134b4808b0bba"
+        },
+        "id": "fpv-first-flight-05-image",
+        "locales": {
+          "en": {
+            "alt": "A square floor ribbon, a separate turning arc and nose-marker tokens compare travel and heading.",
+            "title": "A Turn and a Translation"
+          },
+          "uk": {
+            "alt": "Квадратна стрічка підлоги, окрема дуга повороту й позначки носа порівнюють переміщення та курс.",
+            "title": "Поворот і переміщення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our comparison cards draw two assisted-model routes around the same square: one keeps a fixed heading; the other changes heading between sides. These are different command plans for the same geometric path.",
+              "Mark the moments when orientation changes, then name a shared checkpoint. Keep the example bounded to the gym model rather than assuming a real aircraft stops instantly at each corner."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "A Turn and a Translation"
+          },
+          "uk": {
+            "paragraphs": [
+              "Картки порівнюють два маршрути моделі навколо квадрата: зі сталим курсом і зі зміною курсу між сторонами. Це різні плани команд для однакового геометричного шляху.",
+              "Позначте моменти зміни орієнтації й назвіть спільну контрольну точку. Залишайте приклад у межах моделі зали: реальний апарат не обов’язково миттєво зупиняється на куті."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Поворот і переміщення"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Compare the fixed-heading and changing-heading cards. Identify one shared checkpoint without assuming instant real stops at corners."
+              ],
+              "title": "Make the distinction: A Turn and a Translation"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте картки незмінного й змінного курсу. Знайдіть спільну точку, не припускаючи миттєвих реальних зупинок у кутах."
+              ],
+              "title": "Розрізніть поняття: Поворот і переміщення"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Trace the square together, then point to the separate turning mark. Explain travelling somewhere and facing another way as different changes."
+              ],
+              "title": "Explore together: A Turn and a Translation"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом обведіть квадрат, потім покажіть окрему позначку повороту. Поясніть переміщення й зміну напрямку як різні зміни."
+              ],
+              "title": "Дослідіть разом: Поворот і переміщення"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional plan reaches the same points with a different heading record. Explain what matching paths prove and what they leave unresolved."
+              ],
+              "title": "Apply and question: A Turn and a Translation"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інший вигаданий план проходить ті самі точки з іншим записом курсу. Що доводить збіг шляхів, а що лишається невизначеним?"
+              ],
+              "title": "Застосуйте й запитайте: Поворот і переміщення"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dddd5862ddbddfc" },
+            { "difficulty": "standard", "gameplayId": "fdd7487dff92edde" },
+            { "difficulty": "expert", "gameplayId": "e37ab36cf3f7589e" }
+          ],
+          "missionId": "fpv-first-flight-05"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A good practice notebook explains the model and the next attempt.",
+        "title": "The Joined Practice Route"
+      },
+      "uk": {
+        "teaser": "Добрий щоденник пояснює модель і наступну спробу.",
+        "title": "Спільний навчальний маршрут"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-06-reveal-v1",
+          "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2"
+        },
+        "id": "fpv-first-flight-06-image",
+        "locales": {
+          "en": {
+            "alt": "Six picture cards, separate height and heading markers, and a resting model complete a practice notebook.",
+            "title": "The Joined Practice Route"
+          },
+          "uk": {
+            "alt": "Шість карток-зображень, окремі позначки висоти й курсу та нерухома модель завершують навчальний зошит.",
+            "title": "Спільний навчальний маршрут"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our final route combines a height check, a straight segment, a lateral segment and a heading comparison. The notebook records what was intended and what was observed, without a compulsory speed target.",
+              "Pick one difference to investigate on a later attempt. The optional practice package verifies its own ordered checkpoints separately. This six-card exhibit can be completed and reread without installing that package or earning any practice completion automatically."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "The Joined Practice Route"
+          },
+          "uk": {
+            "paragraphs": [
+              "Підсумковий маршрут поєднує перевірку висоти, прямий і боковий відрізки та порівняння курсу. Щоденник фіксує задум і спостереження без обов’язкової швидкості.",
+              "Оберіть одну відмінність для наступного дослідження. Необов’язковий пакет практики окремо перевіряє послідовність точок. Цю виставку із шести карток можна завершити й перечитувати без встановлення пакета та без автоматичного проходження вправ."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Спільний навчальний маршрут"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Compare intended and observed results for one fictional segment. Keep the explanation separate from optional-package drill completion."
+              ],
+              "title": "Make the distinction: The Joined Practice Route"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте задуманий і спостережений результат одного вигаданого відрізка. Відокремте пояснення від завершення вправи додаткового пакета."
+              ],
+              "title": "Розрізніть поняття: Спільний навчальний маршрут"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose a notebook card together and tell what it helped you notice. Pick a question worth revisiting whenever you want."
+              ],
+              "title": "Explore together: The Joined Practice Route"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом оберіть картку зошита й розкажіть, що вона допомогла помітити. Оберіть питання, до якого хочете повернутися згодом."
+              ],
+              "title": "Дослідіть разом: Спільний навчальний маршрут"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Write a narrow follow-up question for a new fictional attempt, changing one comparison at a time. No speed target or real-flight qualification follows."
+              ],
+              "title": "Apply and question: The Joined Practice Route"
+            },
+            "uk": {
+              "paragraphs": [
+                "Запишіть вузьке питання для нової вигаданої спроби, змінюючи одне порівняння за раз. Це не встановлює вимог швидкості чи кваліфікації польоту."
+              ],
+              "title": "Застосуйте й запитайте: Спільний навчальний маршрут"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "fdbef147770e0696" },
+            { "difficulty": "standard", "gameplayId": "6c0cfbf125da1328" },
+            { "difficulty": "expert", "gameplayId": "0b281aebdfd95a99" }
+          ],
+          "missionId": "fpv-first-flight-06"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-first-flight",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-first-flight-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "The Civilian Practice Notebook"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Щоденник цивільних вправ"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-first-flight-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Collect six planning cards for a fictional indoor gym: start and stop, height, straight travel, lateral travel, turns and a joined route. Each card states its simplified model assumptions. The optional practice package tracks its own exercises; arcade victories unlock this notebook, not real-flight qualifications or simulator completions."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "The Civilian Practice Notebook"
+          },
+          "uk": {
+            "paragraphs": [
+              "Зберіть шість карток планування для вигаданої зали: початок і зупинка, висота, рух прямо, рух убік, повороти та спільний маршрут. На кожній зазначено припущення спрощеної моделі. Необов’язковий пакет практики окремо обліковує вправи; аркадні перемоги відкривають цей щоденник, а не льотну кваліфікацію чи проходження симулятора."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Package Delivery Drone Simulation classroom activity",
+                "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+              }
+            ],
+            "title": "Щоденник цивільних вправ"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-01-reveal-v1",
+          "sha256": "991e2ba9d123625894bbb124ed92373179650f01affd65f0fcba78f7ee448376"
+        },
+        "id": "fpv-first-flight-01-image",
+        "locales": {
+          "en": {
+            "alt": "A parked model, pause and reset sculptures welcome visitors to a fictional practice gym.",
+            "title": "Start with a Stop"
+          },
+          "uk": {
+            "alt": "Нерухома модель, скульптури паузи й скидання вітають відвідувачів у вигаданій навчальній залі.",
+            "title": "Почніть із зупинки"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-02-reveal-v1",
+          "sha256": "b08cfe7d0d4d25c55b958ffeadec3477092836606ab102e37442288f6c3ef493"
+        },
+        "id": "fpv-first-flight-02-image",
+        "locales": {
+          "en": {
+            "alt": "Two display models share one floor position at different heights beside overhead and side-view cards.",
+            "title": "Height Is a Separate Question"
+          },
+          "uk": {
+            "alt": "Дві виставкові моделі займають одне положення над підлогою на різній висоті поряд із картками вигляду згори й збоку.",
+            "title": "Висота — окреме питання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-03-reveal-v1",
+          "sha256": "00a382113a9346f8e3e664ea480a57eb98866449ff92b300ba0e8a6538194638"
+        },
+        "id": "fpv-first-flight-03-image",
+        "locales": {
+          "en": {
+            "alt": "A coral floor arrow and a turquoise model nose point in different directions in a spacious gym.",
+            "title": "A Straight Path, Two Views"
+          },
+          "uk": {
+            "alt": "Коралова стрілка підлоги й бірюзовий ніс моделі показують різні напрямки у просторій залі.",
+            "title": "Прямий шлях, два види"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-04-reveal-v1",
+          "sha256": "0d22e3cbbf1693ef8cd4bec21003480c50b720ae9b730fae911a542be4eba827"
+        },
+        "id": "fpv-first-flight-04-image",
+        "locales": {
+          "en": {
+            "alt": "Two cards keep the same window view while a model silhouette appears at different sideways positions.",
+            "title": "Slide Past the Window"
+          },
+          "uk": {
+            "alt": "Дві картки зберігають однаковий вид вікна, тоді як силует моделі займає різні бокові положення.",
+            "title": "Рух убік повз вікно"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-05-reveal-v1",
+          "sha256": "ae257751d93ebe8c3c8cfedfd98a70656baf9ba4f854fc6f4f2134b4808b0bba"
+        },
+        "id": "fpv-first-flight-05-image",
+        "locales": {
+          "en": {
+            "alt": "A square floor ribbon, a separate turning arc and nose-marker tokens compare travel and heading.",
+            "title": "A Turn and a Translation"
+          },
+          "uk": {
+            "alt": "Квадратна стрічка підлоги, окрема дуга повороту й позначки носа порівнюють переміщення та курс.",
+            "title": "Поворот і переміщення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-first-flight-06-reveal-v1",
+          "sha256": "3c2fdd8a8c038ad1c2e50d18e833cb7cf2e141b02ffc7b3402af77c3f679a8b2"
+        },
+        "id": "fpv-first-flight-06-image",
+        "locales": {
+          "en": {
+            "alt": "Six picture cards, separate height and heading markers, and a resting model complete a practice notebook.",
+            "title": "The Joined Practice Route"
+          },
+          "uk": {
+            "alt": "Шість карток-зображень, окремі позначки висоти й курсу та нерухома модель завершують навчальний зошит.",
+            "title": "Спільний навчальний маршрут"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-first-flight-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://www.nasa.gov/stem-content/package-delivery-drone-simulation/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "145b33f9f0e8754f" },
+            { "difficulty": "standard", "gameplayId": "7abb9fcb5828189f" },
+            { "difficulty": "expert", "gameplayId": "a230e917a7ec3866" }
+          ],
+          "missionId": "fpv-first-flight-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "fadd17e068fc14ed" },
+            { "difficulty": "standard", "gameplayId": "9698f010ebdd835d" },
+            { "difficulty": "expert", "gameplayId": "8aea9b37b2530e49" }
+          ],
+          "missionId": "fpv-first-flight-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "2b20acad4f73287f" },
+            { "difficulty": "standard", "gameplayId": "7c3cc73b9c9343b8" },
+            { "difficulty": "expert", "gameplayId": "196491c04d0ae554" }
+          ],
+          "missionId": "fpv-first-flight-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "79a9987ef3bbb60d" },
+            { "difficulty": "standard", "gameplayId": "7be65d5bbdefa2d7" },
+            { "difficulty": "expert", "gameplayId": "cd4e1b575c0fc2e6" }
+          ],
+          "missionId": "fpv-first-flight-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "6dddd5862ddbddfc" },
+            { "difficulty": "standard", "gameplayId": "fdd7487dff92edde" },
+            { "difficulty": "expert", "gameplayId": "e37ab36cf3f7589e" }
+          ],
+          "missionId": "fpv-first-flight-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "fdbef147770e0696" },
+            { "difficulty": "standard", "gameplayId": "6c0cfbf125da1328" },
+            { "difficulty": "expert", "gameplayId": "0b281aebdfd95a99" }
+          ],
+          "missionId": "fpv-first-flight-06"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "fpv-first-flight", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-first-flight-key-v1",
+        "sha256": "a35b3173e87e85562cb2cc9d4186cd7526c05065183284142b958f672da40757"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional indoor practice gym with soft gates, a landing mat and a small protected-rotor model beneath tall windows."
+        },
+        "uk": {
+          "alt": "Уявна крита тренувальна зала з м’якими воротами, посадковим килимком і невеликою моделлю із захищеними роторами під високими вікнами."
+        }
+      }
+    }
+  }
+]

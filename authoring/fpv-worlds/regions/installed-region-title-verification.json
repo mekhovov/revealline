@@ -1,0 +1,17 @@
+{
+  "scope": "Presentation-only exact installed titles; no source identity, arming or store mutation",
+  "results": [
+    {
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "installedTitle": "Tropical coast — six flight districts",
+      "installedRevision": "review-r2",
+      "retainedSourceTitle": "Tropical coast — six flight districts"
+    },
+    {
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "installedTitle": "Tropical coast — connected harbour arrival",
+      "installedRevision": "harbour-r3",
+      "retainedSourceTitle": "Tropical coast — six flight districts"
+    }
+  ]
+}

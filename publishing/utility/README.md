@@ -71,7 +71,10 @@ gh workflow run qualify-release-source.yml \
   -f artifact_binding="$(cat "$REVIEWED_INSPECTION_BINDING")"
 ```
 
-For the separately approved second stage, use `operation=upload-originals` and its reviewed upload binding. These examples are instructions, not executed release operations.
+For the separately approved second stage, dispatch `upload-release-originals.yml` with its reviewed
+`artifact_binding`. The write-capable emergency path is intentionally separate from the reusable,
+read-only qualifier so a shadow caller cannot inherit release-write permission. These examples are
+instructions, not executed release operations.
 
 ## Receipts and limits
 

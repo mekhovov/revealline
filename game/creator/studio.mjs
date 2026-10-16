@@ -1,4 +1,8 @@
-import { CREATOR_TEMPLATES, generateCreatorProject } from './templates.mjs';
+import {
+  CREATOR_TEMPLATES,
+  generateCreatorProject,
+  selectCreatorBatchTemplate,
+} from './templates.mjs';
 import { prepareCreatorImage } from './image.mjs';
 import {
   prepareCreatorBundle,
@@ -15,6 +19,7 @@ import {
 } from './installed.mjs';
 import {
   prepareCreatorSource,
+  creatorBundleAssets,
   exportCreatorSource,
   importCreatorSource,
   createCreatorDraftBackend,
@@ -26,25 +31,53 @@ import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { downloadCreatorFile } from './download.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createBatchCreatorController } from './batch-ui.mjs';
+import {
+  createCreatorBatchDraftBackend,
+  prepareCreatorBatchDraft,
+  reopenCreatorBatchDraft,
+} from './batch-drafts.mjs';
 import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
+import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
+import { runCreatorOperation } from './operation.mjs';
+import { attachCreatorReviewReading } from './review-reading.mjs';
+import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import {
+  formatNumber,
+  localizedAttribute,
+  localizedMessage,
+  localizedText,
+  onLocaleChange,
+  t,
+} from '../i18n/index.mjs';
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
-  backend = createCreatorDraftBackend(store);
+  backend = createCreatorDraftBackend(store),
+  batchBackend = createCreatorBatchDraftBackend(store);
 const status = (message, error = false) => {
-  $('status').textContent = message;
+  localizedText($('status'), message);
   $('status').classList.toggle('error', error);
 };
 const fail = (error) =>
   status(
     error.name === 'AbortError'
-      ? 'Cancelled. Your current draft is still available.'
+      ? localizedMessage('interface:creator.cancelledDraftAvailable')
       : error.message,
     error.name !== 'AbortError',
   );
-const mib = (bytes) => `${(bytes / 1048576).toFixed(2)} MiB`;
+const mib = (bytes) =>
+  t('common:format.mebibytes', {
+    value: formatNumber(bytes / 1048576, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+  });
+const seconds = (value) =>
+  t('common:format.seconds', {
+    value: formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+  });
 const params = new URLSearchParams(location.search);
 const id = params.get('draft') ?? `creation-${crypto.randomUUID()}`;
 const draft = { id, revision: null, source: null, saved: null, running: null };
@@ -56,23 +89,30 @@ let sourceFile = null,
   installReview = null,
   controller = null,
   busy = true,
-  pictureURL = null,
+  pictureURLs = [],
   batchMode = false,
   batchSource = null,
   mediaMode = false,
   mediaSource = null,
   sourceVersion = 0,
   saveTimer = null;
-const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
+const batchDraft = {
+  revision: null,
+  checkpoint: null,
+  saved: null,
+  snapshot: null,
+  running: null,
+  pending: null,
+  version: 0,
+  restoring: false,
+};
+let batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
 let themes = [];
 try {
   const themesResponse = await fetch('../content-design/themes.json');
   if (themesResponse.ok) themes = (await themesResponse.json()).themes;
 } catch {
-  status(
-    'Presentation themes are unavailable. Reconnect and reload to generate a new level.',
-    true,
-  );
+  status(localizedMessage('interface:creator.themesUnavailable'), true);
 }
 if (!params.has('draft')) {
   params.set('draft', id);
@@ -82,18 +122,41 @@ if (!params.has('draft')) {
 // one-mission preparations displayed on every review card.
 const batchApprovalAdapter = { approve: approveReviewedBatch };
 const batchEnabled = !!batchApprovalAdapter;
+const defaultFields = new Map([
+  ['name', 'interface:creator.defaultCollectionName'],
+  ['mission-title', 'interface:creator.defaultLevelTitle'],
+  ['description', 'interface:creator.defaultPictureDescription'],
+  ['creator-credit', 'interface:creator.defaultCreatorCredit'],
+  ['picture-credit', 'interface:creator.defaultPictureCredit'],
+  ['license', 'interface:creator.defaultLicense'],
+]);
+const localizedDefaults = new Map();
+const defaultOwned = new Set(defaultFields.keys());
+function refreshDefaultFields() {
+  for (const [field, key] of defaultFields) {
+    if (!defaultOwned.has(field)) continue;
+    const next = t(key);
+    const previous = localizedDefaults.get(field);
+    if (previous === undefined || $(field).value === previous) $(field).value = next;
+    localizedDefaults.set(field, next);
+  }
+}
+for (const field of defaultFields.keys())
+  $(field).addEventListener('input', () => defaultOwned.delete(field));
+onLocaleChange(refreshDefaultFields);
+refreshDefaultFields();
 
 function controls() {
   $('edits').hidden = !content || batchMode || mediaMode;
-  $('generate').disabled = busy || mediaMode || (!sourceFile && !content);
+  $('generate').disabled = busy || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
   $('approve').hidden = batchMode && !!approval;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
   $('download').disabled = busy || !approval;
-  $('backup').disabled = busy || !content || mediaMode;
-  $('save').disabled = busy || !content || mediaMode;
+  $('backup').disabled = busy || !content;
+  $('save').disabled = busy || !content;
   $('cancel').hidden = !busy;
-  for (const key of ['image', 'import']) $(key).disabled = busy;
+  for (const key of ['image', 'import', 'social-drone-example']) $(key).disabled = busy;
   for (const key of ['advanced', 'load-advanced', 'regenerate']) $(key).disabled = busy || !content;
   for (const key of [
     'name',
@@ -103,7 +166,7 @@ function controls() {
     'picture-credit',
     'license',
   ])
-    $(key).disabled = busy || mediaMode;
+    $(key).disabled = busy;
   $('fit').disabled = busy || mediaMode || (!!content && !sourceFile);
 }
 
@@ -136,15 +199,12 @@ const batch = createBatchCreatorController({
       { signal: context.signal },
     );
     const seed = (batchSeed + context.index + context.generation * 65537) >>> 0;
-    const families = CREATOR_TEMPLATES.map(({ id: templateId }) => templateId);
-    const templateId =
-      context.settings.pacing === 'gentle-first' && context.index < Math.ceil(context.total / 3)
-        ? families[0]
-        : context.settings.pacing === 'steady'
-          ? families[2]
-          : context.settings.pacing === 'balanced'
-            ? families[(seed + context.index) % families.length]
-            : undefined;
+    const templateId = selectCreatorBatchTemplate({
+      seed,
+      index: context.index,
+      total: context.total,
+      pacing: context.settings.pacing,
+    });
     const generated = generateCreatorProject({
       id: `${id}-${item.id}`,
       name: context.settings.collectionName,
@@ -195,32 +255,48 @@ const batch = createBatchCreatorController({
       alt: item.title,
       estimatedBytes: itemPack.bytes,
       validation: itemPack.review.validation,
-      templateLabel:
-        `${generated.provenance.templateId} · ${generated.provenance.variantId} · ` +
-        `${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ` +
-        `${walls} wall${walls === 1 ? '' : 's'} · ` +
-        `${foundations} safe island${foundations === 1 ? '' : 's'} · ` +
-        `${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified Solo route evidence`,
+      templateLabel: () =>
+        t('interface:creator.templateSummary', {
+          template: generated.provenance.templateId,
+          variant: generated.provenance.variantId,
+          enemies: t('common:counts.enemies', { count: enemies }),
+          walls: t('common:counts.walls', { count: walls }),
+          foundations: t('common:counts.safeIslands', { count: foundations }),
+          terrain: t('common:counts.terrainZones', { count: terrain }),
+        }),
     };
   },
   approveBatch: batchApprovalAdapter?.approve,
-  onChange: () => {
+  onChange: (review) => {
     $('batch-split-results').replaceChildren();
     $('batch-split-results').hidden = true;
+    checkpointBatchReview(review);
   },
   onSplit: (chunks, settings) => {
-    $('batch-capacity').textContent =
-      `Accepted ${chunks.length} explicit parts: ${chunks.map((chunk, index) => `part ${index + 1} (${chunk.length})`).join(', ')}. Review and download or install each part before opening the next.`;
+    localizedText($('batch-capacity'), () =>
+      t('interface:creator.acceptedParts', {
+        count: chunks.length,
+        parts: chunks
+          .map((chunk, index) =>
+            t('interface:creator.partSummary', {
+              number: index + 1,
+              count: chunk.length,
+            }),
+          )
+          .join(', '),
+      }),
+    );
     const results = $('batch-split-results');
     const explanation = document.createElement('p');
-    explanation.textContent =
-      'Each button revalidates one exact part. Finish its install or download before reviewing another part.';
+    localizedText(explanation, () => t('interface:creator.splitReviewHelp'));
     results.replaceChildren(explanation);
     for (const [index, chunk] of chunks.entries()) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'secondary';
-      button.textContent = `Review part ${index + 1} of ${chunks.length}`;
+      localizedText(button, () =>
+        t('interface:creator.reviewPart', { current: index + 1, total: chunks.length }),
+      );
       button.onclick = () =>
         approveReviewedBatch(chunk, {
           ...settings,
@@ -239,15 +315,43 @@ const mediaReview = createCreatorMediaReviewController({
     status: $('media-status'),
     apply: $('media-apply'),
     cancel: $('media-cancel'),
+    capacity: $('media-capacity'),
+    removeExcluded: $('media-remove-excluded'),
+    split: $('media-split'),
+  },
+  onChange: (review) => {
+    if (review.dirty && mediaMode && prepared) invalidate();
+    $('media-split-results').replaceChildren();
+    $('media-split-results').hidden = true;
+  },
+  onSplit: (chunks) => {
+    const results = $('media-split-results');
+    const explanation = document.createElement('p');
+    localizedText(explanation, () => t('interface:creator.mediaSplitReviewHelp'));
+    results.replaceChildren(explanation);
+    for (const [index, chunk] of chunks.entries()) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'secondary';
+      localizedText(button, () =>
+        t('interface:creator.reviewPart', { current: index + 1, total: chunks.length }),
+      );
+      button.onclick = () => {
+        mediaReview.setFiles(chunk);
+        void mediaReview.prepare().catch(fail);
+      };
+      results.append(button);
+    }
+    results.hidden = false;
   },
   onPrepared: (reviewed) => {
     if (reviewed.items.some((item) => item.errors.length)) {
-      status('Resolve the media choices shown below before generating the campaign.', true);
+      status(localizedMessage('interface:creator.resolveMediaChoices'), true);
       return;
     }
     void operation(async (signal) => {
       invalidate();
-      status('Generating enemies, obstacles and verified routes for the reviewed media…');
+      status(localizedMessage('interface:creator.generatingReviewedMedia'));
       const result = await prepareCreatorMediaCampaign(
         reviewed,
         {
@@ -270,11 +374,13 @@ const mediaReview = createCreatorMediaReviewController({
       batchMode = false;
       mediaMode = true;
       sourceFile = image = null;
-      $('save-status').textContent =
-        'Video source files remain in this session. Download the approved .rlpack before leaving.';
+      fillLabels();
+      await saveDraft();
       showReview(prepared);
       status(
-        `${content.project.missions.length} media level${content.project.missions.length === 1 ? '' : 's'} generated with enemies, obstacles and verified completion routes. Review before approving.`,
+        localizedMessage('interface:creator.mediaLevelsGenerated', {
+          count: content.project.missions.length,
+        }),
       );
     });
   },
@@ -300,15 +406,17 @@ function readLabels() {
   };
 }
 function fillLabels() {
+  defaultOwned.clear();
   $('name').value = content.project.name;
   $('mission-title').value = content.project.missions[0].name;
-  $('description').value = content.project.assets[0]?.alt ?? 'My reveal picture';
+  $('description').value =
+    content.project.assets[0]?.alt ?? t('interface:creator.defaultPictureDescription');
   $('creator-credit').value = content.credits.creator;
   $('picture-credit').value = content.credits.picture;
   $('license').value = content.credits.license;
 }
 function currentAssets() {
-  if (mediaSource) return mediaSource.sourceAssets;
+  if (mediaSource) return creatorBundleAssets(mediaSource.sourceAssets);
   if (batchSource) return batchSource.sourceAssets;
   const all = [
     ...(image
@@ -333,12 +441,71 @@ function currentAssets() {
     ).values(),
   ];
 }
+function checkpointBatchReview(review) {
+  if (batchDraft.restoring || !batchMode) return;
+  batchDraft.snapshot = { ...review, seed: batchSeed };
+  // The stable states before and after generation are sufficient. Avoid one
+  // storage revision for every transient progress render in a 50-item batch.
+  if (review.running) return;
+  const pending = saveBatchDraft().catch((error) => {
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.sessionOnlyBackupAvailable', {
+        error: error.message,
+      }),
+    );
+  });
+  batchDraft.pending = pending;
+  void pending.finally(() => {
+    if (batchDraft.pending === pending) batchDraft.pending = null;
+  });
+}
+
+async function saveBatchDraft() {
+  if (!batchDraft.snapshot) return;
+  const version = ++batchDraft.version;
+  const checkpoint = await prepareCreatorBatchDraft(id, batchDraft.snapshot);
+  if (version !== batchDraft.version) return;
+  batchDraft.checkpoint = checkpoint;
+  if (
+    batchDraft.saved &&
+    canonicalJSON(batchDraft.saved.document) === canonicalJSON(checkpoint.document)
+  )
+    batchDraft.checkpoint = batchDraft.saved;
+  if (batchDraft.running) return batchDraft.running;
+  const running = (async () => {
+    while (batchDraft.checkpoint !== batchDraft.saved) {
+      const next = batchDraft.checkpoint;
+      const result = await batchBackend.save(next, batchDraft.revision);
+      batchDraft.revision = result.revision;
+      batchDraft.saved = next;
+    }
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.savedCheckpoint', { revision: batchDraft.revision }),
+    );
+  })();
+  batchDraft.running = running;
+  try {
+    await running;
+  } finally {
+    if (batchDraft.running === running) batchDraft.running = null;
+  }
+}
+
 async function sourceSnapshot() {
   return prepareCreatorSource(
     {
       draftId: id,
       content: structuredClone(content),
-      editing: { fit: $('fit').value },
+      editing: {
+        fit: $('fit').value,
+        ...(content.media
+          ? {
+              media: mediaSource?.sourceEditing ?? draft.source?.document.editing.media,
+            }
+          : {}),
+      },
       originalSha256:
         batchSource?.originalSha256 ??
         image?.original?.sha256 ??
@@ -367,10 +534,17 @@ async function saveDraft() {
         draft.revision = result.revision;
         draft.saved = next;
       }
-      $('save-status').textContent = `Saved locally · checkpoint ${draft.revision}.`;
+      localizedText(
+        $('save-status'),
+        localizedMessage('interface:creator.savedCheckpoint', { revision: draft.revision }),
+      );
     } catch (error) {
-      $('save-status').textContent =
-        `Session only: ${error.message} Your source backup remains downloadable.`;
+      localizedText(
+        $('save-status'),
+        localizedMessage('interface:creator.sessionOnlyBackupAvailable', {
+          error: error.message,
+        }),
+      );
     }
   })();
   // A duplicate checkpoint can finish synchronously. Assign first and clear
@@ -382,63 +556,125 @@ async function saveDraft() {
     if (draft.running === running) draft.running = null;
   }
 }
-async function operation(action) {
+async function operation(action, options = {}) {
   if (busy) return;
-  busy = true;
-  controller = new AbortController();
-  controls();
-  try {
-    await action(controller.signal);
-  } catch (error) {
-    fail(error);
-  } finally {
-    busy = false;
-    controller = null;
-    controls();
-  }
+  return runCreatorOperation(action, {
+    document,
+    window,
+    cancel: $('cancel'),
+    onStart: (next) => {
+      busy = true;
+      controller = next;
+      controls();
+    },
+    onFinish: () => {
+      busy = false;
+      controller = null;
+      controls();
+    },
+    onError: fail,
+    ...options,
+  });
 }
 function showReview(pack) {
   const project = pack.manifest.content.project;
   const provenances = Array.isArray(pack.manifest.content.provenance)
     ? pack.manifest.content.provenance
     : [pack.manifest.content.provenance];
-  const provenance = provenances[0];
-  const mission = project.missions.find(({ id: missionId }) => missionId === provenance.missionId);
-  const picture = project.assets.find(
-    ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
-  );
-  const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
-  if (!mission || !picture || !runtime)
-    throw new Error('The reviewed campaign is missing its first mission picture.');
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
-  pictureURL = URL.createObjectURL(runtime.blob);
-  $('picture').src = pictureURL;
-  $('picture').alt = picture.alt;
-  $('picture-caption').textContent =
-    project.missions.length === 1
-      ? mission.name
-      : `${mission.name} · first of ${project.missions.length} levels`;
-  const preview = prepareContentPreview(project, provenance.missionId);
-  paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
-  const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
-  const map = project.maps.find(
-    ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
-  );
-  const enemies = mission.actors.length;
-  const walls = map?.walls.length ?? 0;
-  const foundations = map?.foundations.length ?? 0;
-  const terrain = map?.terrain.length ?? 0;
-  $('map-caption').textContent =
-    `${template?.name ?? 'Verified crossing'} · 72 × 36 cells · Solo · ${enemies} ${enemies === 1 ? 'enemy' : 'enemies'} · ${walls} wall${walls === 1 ? '' : 's'} · ${foundations} safe island${foundations === 1 ? '' : 's'} · ${terrain} terrain zone${terrain === 1 ? '' : 's'} · verified completion route${provenances.length === 1 ? '.' : `; ${provenances.length} mission configurations verified.`}`;
-  $('validation').textContent = pack.review.validation;
+  for (const url of pictureURLs) URL.revokeObjectURL(url);
+  pictureURLs = [];
+  const cards = [];
+  for (const [index, provenance] of provenances.entries()) {
+    const mission = project.missions.find(({ id }) => id === provenance.missionId);
+    const picture = project.assets.find(
+      ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
+    );
+    const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
+    if (!mission || !picture || !runtime)
+      throw new Error(t('errors:creator.firstMissionPictureMissing'));
+    const card = document.createElement('article');
+    card.className = 'creator-mission-review-card';
+    const heading = document.createElement('h3');
+    localizedText(heading, () =>
+      t('interface:creator.numberedTitle', { number: index + 1, title: mission.name }),
+    );
+    const grid = document.createElement('div');
+    grid.className = 'review-grid';
+    const picturePanel = document.createElement('div');
+    const image = document.createElement('img');
+    const url = URL.createObjectURL(runtime.blob);
+    pictureURLs.push(url);
+    image.src = url;
+    image.alt = picture.alt;
+    const pictureCaption = document.createElement('p');
+    pictureCaption.textContent = mission.name;
+    picturePanel.append(image, pictureCaption);
+    const mapPanel = document.createElement('div');
+    const canvas = document.createElement('canvas');
+    canvas.width = 720;
+    canvas.height = 360;
+    localizedAttribute(canvas, 'aria-label', () => t('interface:creator.generatedLevelMap'));
+    paintContentMap(canvas.getContext('2d'), prepareContentPreview(project, provenance.missionId), {
+      width: 720,
+      showCapture: false,
+    });
+    const mapCaption = document.createElement('p');
+    const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
+    const map = project.maps.find(
+      ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
+    );
+    localizedText(mapCaption, () =>
+      t('interface:creator.mapSummary', {
+        template: template?.name ?? t('interface:creator.verifiedCrossing'),
+        enemies: t('common:counts.enemies', { count: mission.actors.length }),
+        walls: t('common:counts.walls', { count: map?.walls.length ?? 0 }),
+        foundations: t('common:counts.safeIslands', { count: map?.foundations.length ?? 0 }),
+        terrain: t('common:counts.terrainZones', { count: map?.terrain.length ?? 0 }),
+        evidence: t('interface:creator.routeEvidence', { count: 1 }),
+      }),
+    );
+    mapPanel.append(canvas, mapCaption);
+    grid.append(picturePanel, mapPanel);
+    const story = pack.manifest.content.media?.stories.find(
+      ({ missionId }) => missionId === mission.id,
+    );
+    const storyStatus = document.createElement('p');
+    localizedText(storyStatus, () =>
+      story
+        ? t('interface:creator.missionVictoryStory', {
+            start: seconds(story.playbackRange.startSeconds),
+            end: seconds(story.playbackRange.endSeconds),
+          })
+        : t('interface:creator.missionPosterReward'),
+    );
+    const validation = document.createElement('p');
+    validation.className = 'creator-mission-validation';
+    validation.textContent = pack.review.validation;
+    attachCreatorReviewReading({
+      card,
+      heading,
+      content: [grid, storyStatus, validation],
+      index,
+      navigation: mountAuthoringInputHost().navigation,
+    });
+    cards.push(card);
+  }
+  $('legacy-review-grid').hidden = true;
+  $('validation').hidden = true;
+  $('mission-review-list').replaceChildren(...cards);
   const storyCount = pack.manifest.content.media?.stories.length ?? 0;
-  $('package-size').textContent =
-    `${mib(pack.bytes)} portable pack. Includes ${project.assets.length} PNG derivative${project.assets.length === 1 ? '' : 's'}${storyCount ? ` and ${storyCount} complete victory video${storyCount === 1 ? '' : 's'}` : ''}. Source image originals and player progress are excluded.`;
+  localizedText($('package-size'), () =>
+    t('interface:creator.packageSummary', {
+      size: mib(pack.bytes),
+      derivatives: t('common:counts.pngDerivatives', { count: project.assets.length }),
+      videos: storyCount ? t('interface:creator.withVictoryVideos', { count: storyCount }) : '',
+    }),
+  );
   $('review').hidden = false;
 }
 async function generate(signal) {
   invalidate();
-  status('Preparing your picture and verifying the generated route…');
+  status(localizedMessage('interface:creator.preparingPictureRoute'));
   if (sourceFile)
     image = await prepareCreatorImage(
       sourceFile,
@@ -466,9 +702,7 @@ async function generate(signal) {
   await saveDraft();
   prepared = await prepareCreatorBundle(content, currentAssets(), { signal });
   showReview(prepared);
-  status(
-    'Your level is ready for review. Check the picture, title, map and credits before approving.',
-  );
+  status(localizedMessage('interface:creator.levelReadyForReview'));
 }
 function choose(file) {
   if (!file) return;
@@ -477,10 +711,16 @@ function choose(file) {
   mediaMode = false;
   mediaSource = null;
   sourceFile = file;
+  defaultOwned.delete('mission-title');
   invalidate();
-  $('mission-title').value = file.name.replace(/\.[^.]+$/, '').slice(0, 160) || 'First picture';
+  $('mission-title').value =
+    file.name.replace(/\.[^.]+$/, '').slice(0, 160) || t('interface:creator.defaultLevelTitle');
   $('fit').disabled = false;
-  status(`${file.name} selected. Generate to prepare its picture and level.`);
+  status(
+    localizedMessage('interface:creator.fileSelected', {
+      file: file.name,
+    }),
+  );
 }
 
 function chooseFiles(files) {
@@ -506,7 +746,9 @@ function chooseFiles(files) {
     $('play').hidden = true;
     const review = mediaReview.setFiles(selected);
     status(
-      `${review.sources.length} media file${review.sources.length === 1 ? '' : 's'} selected. Inspect them, resolve poster choices, then review the generated playable campaign.`,
+      localizedMessage('interface:creator.mediaFilesSelected', {
+        count: review.sources.length,
+      }),
     );
     controls();
     return;
@@ -515,10 +757,7 @@ function chooseFiles(files) {
   mediaMode = false;
   mediaSource = null;
   if (selected.length > 1 && !batchEnabled)
-    return status(
-      'This build supports one picture at a time. Batch review will appear when campaign assembly is available.',
-      true,
-    );
+    return status(localizedMessage('interface:creator.batchUnavailable'), true);
   if (selected.length === 1) {
     batch.setFiles([]);
     $('batch-options').hidden = true;
@@ -536,14 +775,16 @@ function chooseFiles(files) {
   $('batch-options').hidden = false;
   const selectedBatch = batch.setFiles(selected);
   status(
-    `${selectedBatch.items.length} pictures selected in natural filename order. Review the order, then generate the included levels.`,
+    localizedMessage('interface:creator.batchSelected', {
+      count: selectedBatch.items.length,
+    }),
   );
   controls();
 }
 async function approveReviewedBatch(items, settings) {
   return operation(async (signal) => {
     invalidate();
-    status('Assembling the exact reviewed levels and verifying the complete campaign…');
+    status(localizedMessage('interface:creator.assemblingCampaign'));
     const result = await prepareReviewedCreatorBundle(
       items,
       {
@@ -570,14 +811,32 @@ async function approveReviewedBatch(items, settings) {
     $('approved').hidden = false;
     try {
       installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
-      $('storage-review').textContent =
-        `Pack: ${mib(installReview.packageBytes)}. Required staging space: ${mib(installReview.stagingBytes)}. Managed storage: ${mib(installReview.usedBytes)} of ${mib(installReview.limitBytes)}. ${installReview.enoughManagedSpace ? 'Ready to install.' : 'Download the pack to keep your work; storage is full.'}`;
+      const review = installReview;
+      localizedText($('storage-review'), () =>
+        t('interface:creator.storageReview', {
+          pack: mib(review.packageBytes),
+          staging: mib(review.stagingBytes),
+          used: mib(review.usedBytes),
+          limit: mib(review.limitBytes),
+          status: t(
+            review.enoughManagedSpace
+              ? 'interface:creator.readyToInstall'
+              : 'interface:creator.storageFullDownload',
+          ),
+        }),
+      );
     } catch (error) {
-      $('storage-review').textContent =
-        `Installation storage is unavailable: ${error.message} You can still download your pack.`;
+      localizedText(
+        $('storage-review'),
+        localizedMessage('interface:creator.installStorageUnavailable', {
+          error: error.message,
+        }),
+      );
     }
     status(
-      `${content.project.missions.length} reviewed levels approved as one immutable campaign. Install it or download the portable pack.`,
+      localizedMessage('interface:creator.reviewedLevelsApproved', {
+        count: content.project.missions.length,
+      }),
     );
   });
 }
@@ -590,16 +849,22 @@ async function openPrepared(pack) {
   mediaSource = null;
   sourceFile = image = null;
   if (mediaMode) {
-    draft.source = null;
     $('fit').value = 'contain';
     $('fit').disabled = true;
     fillLabels();
     invalidate();
     prepared = pack;
+    draft.source = await prepareCreatorSource(
+      { draftId: id, content, editing: { fit: 'contain' }, originalSha256: null },
+      pack.assets,
+    );
+    mediaSource = {
+      sourceAssets: draft.source.assets,
+      sourceEditing: draft.source.document.editing.media,
+    };
     showReview(pack);
-    $('save-status').textContent =
-      'This portable video campaign is verified for this session and can be installed.';
-    status('Pack verified. Review this exact media campaign before installing.');
+    await saveDraft();
+    status(localizedMessage('interface:creator.mediaPackVerified'));
     return;
   }
   draft.source = await prepareCreatorSource(
@@ -613,16 +878,19 @@ async function openPrepared(pack) {
   prepared = pack;
   showReview(pack);
   await saveDraft();
-  status(
-    'Pack verified. Review this exact picture and level before installing. Select a new source picture to change fitting.',
-  );
+  status(localizedMessage('interface:creator.picturePackVerified'));
 }
 async function openSource(source) {
   content = structuredClone(source.document.content);
   batchMode = content.project.missions.length > 1;
   batchSource = null;
   mediaMode = !!content.media;
-  mediaSource = null;
+  mediaSource = mediaMode
+    ? {
+        sourceAssets: source.assets,
+        sourceEditing: source.document.editing.media,
+      }
+    : null;
   draft.source = source;
   image = null;
   sourceFile = Array.isArray(source.document.originalSha256)
@@ -632,14 +900,18 @@ async function openSource(source) {
   $('fit').disabled = !sourceFile;
   fillLabels();
   invalidate();
-  status('Source draft restored. Generate and review again before approving.');
+  if (mediaMode) {
+    prepared = await prepareCreatorBundle(content, currentAssets());
+    showReview(prepared);
+  }
+  status(localizedMessage('interface:creator.sourceDraftRestored'));
 }
 async function listInstalled() {
   const list = $('installed-list');
   list.replaceChildren();
   try {
     const manifests = await installedCreatorManifests(store);
-    if (!manifests.length) list.textContent = 'No creator campaigns installed yet.';
+    if (!manifests.length) localizedText(list, () => t('interface:creator.noCampaignsInstalled'));
     for (const manifest of manifests) {
       const row = document.createElement('div');
       row.className = 'installed-item';
@@ -648,22 +920,32 @@ async function listInstalled() {
       const edition = document.createElement('p');
       edition.className = 'muted';
       const missions = manifest.content.project.missions.length;
-      edition.textContent = `Edition ${manifest.editionId.slice(0, 12)} · ${missions} Solo mission${missions === 1 ? '' : 's'}`;
+      localizedText(edition, () =>
+        t('interface:creator.installedEdition', {
+          edition: manifest.editionId.slice(0, 12),
+          missions: t('common:counts.missions', { count: missions }),
+        }),
+      );
       const play = document.createElement('a');
       play.href = `./player.html?edition=${manifest.editionId}`;
-      play.textContent = 'Play campaign →';
+      localizedText(play, () => t('interface:creator.playCampaign'));
       const edit = document.createElement('button');
       edit.className = 'secondary';
-      edit.textContent = 'Open editable source';
+      localizedText(edit, () => t('interface:creator.openEditableSource'));
       edit.onclick = () =>
-        operation(async (signal) =>
-          openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
+        operation(
+          async (signal) =>
+            openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
+          { opener: edit },
         );
       row.append(title, edition, play, document.createTextNode(' '), edit);
       list.append(row);
     }
   } catch (error) {
-    list.textContent = `Library unavailable: ${error.message}`;
+    localizedText(
+      list,
+      localizedMessage('interface:creator.libraryUnavailable', { error: error.message }),
+    );
   }
 }
 $('image').onchange = () => chooseFiles($('image').files);
@@ -693,53 +975,92 @@ for (const key of [
     readLabels();
     if (content) {
       clearTimeout(saveTimer);
-      $('save-status').textContent = 'Saving draft changes…';
+      localizedText($('save-status'), localizedMessage('interface:creator.savingDraftChanges'));
       saveTimer = setTimeout(() => {
         void saveDraft().catch(fail);
       }, 500);
     }
-    status('Changes are in your draft. Generate and review the updated level before approving.');
+    status(localizedMessage('interface:creator.draftChangesPending'));
   };
-$('generate').onclick = () => operation(generate);
+$('generate').onclick = () => operation(generate, { opener: $('generate') });
 $('regenerate').onclick = () =>
-  operation(async (signal) => {
-    const created = generateCreatorProject({
-      id: content.project.id,
-      name: $('name').value,
-      seed: (content.provenance.generationSeed + 1) >>> 0,
-    });
-    const assets = content.project.assets;
-    content.project = structuredClone(created.project);
-    content.project.assets = assets;
-    content.project.missions[0].presentation.backgroundAssetId = assets[0].id;
-    content.provenance = created.provenance;
-    await generate(signal);
-  });
+  operation(
+    async (signal) => {
+      const created = generateCreatorProject({
+        id: content.project.id,
+        name: $('name').value,
+        seed: (content.provenance.generationSeed + 1) >>> 0,
+      });
+      const assets = content.project.assets;
+      content.project = structuredClone(created.project);
+      content.project.assets = assets;
+      content.project.missions[0].presentation.backgroundAssetId = assets[0].id;
+      content.provenance = created.provenance;
+      await generate(signal);
+    },
+    { opener: $('regenerate') },
+  );
 $('cancel').onclick = () => controller?.abort();
 $('approve').onclick = () =>
-  operation(async (signal) => {
-    await draft.running;
-    approval = approveCreatorBundle(prepared);
-    $('approved').hidden = false;
-    try {
-      installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
-      $('storage-review').textContent =
-        `Pack: ${mib(installReview.packageBytes)}. Required staging space: ${mib(installReview.stagingBytes)}. Managed storage: ${mib(installReview.usedBytes)} of ${mib(installReview.limitBytes)}. ${installReview.enoughManagedSpace ? 'Ready to install.' : 'Download the pack to keep your work; storage is full.'}`;
-    } catch (error) {
-      $('storage-review').textContent =
-        `Installation storage is unavailable: ${error.message} You can still download your pack.`;
-    }
-    status('Approved. Install locally or download the portable pack.');
-  });
+  operation(
+    async (signal) => {
+      await draft.running;
+      approval = approveCreatorBundle(prepared);
+      $('approved').hidden = false;
+      try {
+        installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
+        const review = installReview;
+        localizedText($('storage-review'), () =>
+          t('interface:creator.storageReview', {
+            pack: mib(review.packageBytes),
+            staging: mib(review.stagingBytes),
+            used: mib(review.usedBytes),
+            limit: mib(review.limitBytes),
+            status: t(
+              review.enoughManagedSpace
+                ? 'interface:creator.readyToInstall'
+                : 'interface:creator.storageFullDownload',
+            ),
+          }),
+        );
+      } catch (error) {
+        localizedText(
+          $('storage-review'),
+          localizedMessage('interface:creator.installStorageUnavailable', {
+            error: error.message,
+          }),
+        );
+      }
+      status(localizedMessage('interface:creator.approvedInstallOrDownload'));
+    },
+    { opener: $('approve') },
+  );
 $('install').onclick = () =>
-  operation(async (signal) => {
-    await installPreparedCreatorBundle(store, prepared, approval, installReview, { signal });
-    $('play').href = `./player.html?edition=${prepared.editionId}`;
-    $('play').hidden = false;
-    installReview = null;
-    status('Campaign installed. Open it to play and earn your picture.');
-    await listInstalled();
-  });
+  operation(
+    async (signal) => {
+      // Installation reviews authorize one attempt. Keep Approve available for
+      // a fresh store review after cancellation, contention or a failed write.
+      const review = installReview;
+      installReview = null;
+      await installPreparedCreatorBundle(store, prepared, approval, review, { signal });
+      $('play').href = `./player.html?edition=${prepared.editionId}`;
+      $('play').hidden = false;
+      status(localizedMessage('interface:creator.campaignInstalled'));
+      await listInstalled();
+    },
+    {
+      opener: $('install'),
+      restoreTo: $('approve'),
+      onSuccessFocus: ({ opener, ownedFocus }) =>
+        focusCreatorInstalledPlay({
+          document,
+          opener,
+          ownedFocus,
+          play: $('play'),
+          wasFocused: true,
+        }),
+    },
+  );
 $('download').onclick = () => {
   try {
     downloadCreatorFile(exportCreatorBundle(prepared, approval), `${content.project.id}.rlpack`);
@@ -757,51 +1078,77 @@ $('backup').onclick = async () => {
 $('save').onclick = () => {
   void saveDraft().catch(fail);
 };
+$('social-drone-example').onclick = () =>
+  operation(
+    async (signal) => {
+      const response = await fetch(
+        new URL('./examples/social-drone-sky-watch.rlpack', import.meta.url),
+        { signal },
+      );
+      if (!response.ok) throw new Error(t('interface:creator.socialDroneExampleUnavailable'));
+      await openPrepared(await importCreatorBundle(await response.blob(), { signal }));
+    },
+    { opener: $('social-drone-example') },
+  );
 $('import').onchange = () =>
-  operation(async (signal) => {
-    const file = $('import').files[0];
-    if (!file) return;
-    if (file.name.toLowerCase().endsWith('.rlsource')) {
-      await openSource(await importCreatorSource(file, { signal }));
-      await saveDraft();
-    } else await openPrepared(await importCreatorBundle(file, { signal }));
-  });
+  operation(
+    async (signal) => {
+      const file = $('import').files[0];
+      if (!file) return;
+      if (file.name.toLowerCase().endsWith('.rlsource')) {
+        await openSource(await importCreatorSource(file, { signal }));
+        await saveDraft();
+      } else await openPrepared(await importCreatorBundle(file, { signal }));
+    },
+    { opener: $('import') },
+  );
 const advancedId = `advanced-${id}`;
 $('advanced').onclick = () =>
-  operation(async () => {
-    await saveDraft();
-    const drafts = createContentDraftBackend();
-    const checkpoint = await drafts.read(advancedId);
-    if (!checkpoint)
-      await drafts.save({ ...structuredClone(content.project), id: advancedId }, null);
-    location.href = `../studio/?project=${advancedId}&creator-draft=${id}`;
-  });
+  operation(
+    async () => {
+      await saveDraft();
+      const drafts = createContentDraftBackend();
+      const checkpoint = await drafts.read(advancedId);
+      if (!checkpoint)
+        await drafts.save({ ...structuredClone(content.project), id: advancedId }, null);
+      location.href = `../studio/?project=${advancedId}&creator-draft=${id}`;
+    },
+    { opener: $('advanced') },
+  );
 $('load-advanced').onclick = () =>
-  operation(async () => {
-    const checkpoint = await createContentDraftBackend().read(advancedId);
-    if (!checkpoint) throw new Error('Save a checkpoint in Advanced Studio first.');
-    requireCreatorEditableProject(checkpoint.project);
-    const next = { ...content, project: checkpoint.project };
-    // Validate source dependencies before replacing the current editable draft.
-    await prepareCreatorSource(
-      {
-        draftId: id,
-        content: next,
-        editing: { fit: $('fit').value },
-        originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
-      },
-      currentAssets(),
-    );
-    content = next;
-    invalidate();
-    fillLabels();
-    await saveDraft();
-    status(
-      'Studio edits loaded into this draft. Generate to verify them; changed gameplay may need regeneration.',
-    );
-  });
+  operation(
+    async () => {
+      const checkpoint = await createContentDraftBackend().read(advancedId);
+      if (!checkpoint) throw new Error(t('errors:creator.saveAdvancedCheckpointFirst'));
+      requireCreatorEditableProject(checkpoint.project);
+      const next = { ...content, project: checkpoint.project };
+      // Validate source dependencies before replacing the current editable draft.
+      await prepareCreatorSource(
+        {
+          draftId: id,
+          content: next,
+          editing: { fit: $('fit').value },
+          originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
+        },
+        currentAssets(),
+      );
+      content = next;
+      invalidate();
+      fillLabels();
+      await saveDraft();
+      status(localizedMessage('interface:creator.studioEditsLoaded'));
+    },
+    { opener: $('load-advanced') },
+  );
 window.addEventListener('beforeunload', (event) => {
-  if (saveTimer || draft.running || (draft.source && draft.source !== draft.saved)) {
+  if (
+    saveTimer ||
+    draft.running ||
+    batchDraft.pending ||
+    batchDraft.running ||
+    (draft.source && draft.source !== draft.saved) ||
+    (batchDraft.checkpoint && batchDraft.checkpoint !== batchDraft.saved)
+  ) {
     event.preventDefault();
     event.returnValue = '';
   }
@@ -810,8 +1157,10 @@ window.addEventListener('pagehide', () => {
   controller?.abort();
   batch.destroy();
   mediaReview.destroy();
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
-  store.close();
+  for (const url of pictureURLs) URL.revokeObjectURL(url);
+  const pending = batchDraft.pending || batchDraft.running || draft.running;
+  if (pending) void pending.finally(() => store.close());
+  else store.close();
 });
 try {
   const saved = await backend.read(id);
@@ -819,20 +1168,62 @@ try {
     draft.revision = saved.revision;
     await openSource(saved.source);
     draft.saved = draft.source;
-    $('save-status').textContent = `Restored local checkpoint ${saved.revision}.`;
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.restoredCheckpoint', { revision: saved.revision }),
+    );
+  } else {
+    const savedBatch = await batchBackend.read(id);
+    if (savedBatch) {
+      batchDraft.revision = savedBatch.revision;
+      batchDraft.checkpoint = savedBatch.checkpoint;
+      batchDraft.saved = savedBatch.checkpoint;
+      const reopened = reopenCreatorBatchDraft(savedBatch.checkpoint);
+      if (reopened.items.length) {
+        batchSeed = reopened.seed;
+        batchMode = true;
+        $('batch-options').hidden = false;
+        batchDraft.restoring = true;
+        try {
+          batch.restore(reopened);
+        } finally {
+          batchDraft.restoring = false;
+        }
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.restoredCheckpoint', {
+            revision: savedBatch.revision,
+          }),
+        );
+        await batch.resume(reopened.resumeItemIds);
+        const restoredReview = batch.snapshot();
+        status(
+          localizedMessage(
+            restoredReview.ready
+              ? 'interface:creator.levelsReady'
+              : 'interface:creator.batchSelected',
+            { count: restoredReview.included },
+          ),
+        );
+      }
+    }
   }
 } catch (error) {
-  $('save-status').textContent =
-    `Draft storage unavailable: ${error.message} Creation and downloadable backups remain available.`;
+  localizedText(
+    $('save-status'),
+    localizedMessage('interface:creator.draftStorageUnavailable', {
+      error: error.message,
+    }),
+  );
 }
 controls();
 await listInstalled();
 busy = false;
 $('image').multiple = batchEnabled;
 if (batchEnabled) {
-  $('choose-title').textContent = '1. Choose pictures or videos';
-  $('intake-help').textContent =
-    'Or drop media here. Pictures can be up to 4 MiB and 16 megapixels. MP4/WebM videos are inspected locally; matching image/video names are suggested and exact hashes remain authoritative.';
-  status('Choose PNG, JPEG or WebP pictures, MP4/WebM videos, or a mixture to begin.');
+  localizedText($('choose-title'), () => t('interface:creator.chooseMediaHeading'));
+  localizedText($('intake-help'), () => t('interface:creator.dropMediaHelp'));
+  if (!content && !batchMode && !mediaMode)
+    status(localizedMessage('interface:creator.chooseMediaToBegin'));
 }
 controls();

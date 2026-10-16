@@ -1,0 +1,70 @@
+{
+  "baseline": "2dbbe0a0f26684eae0a2bdb0b7cbda087627457f",
+  "beforeBytes": 891755,
+  "afterBytes": 849454,
+  "savedBytes": 42301,
+  "normalizedAstEqual": true,
+  "packedRecordingsExact": true,
+  "recordings": 24,
+  "beforeSha256": "fffa90addec3f0007c1d40c2d46a3d2559fa146de9a8d1f9fad0eb1596b8d6cb",
+  "afterSha256": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
+  "astSha256": "f37aa7515f0df4a169a2366db95f4642d68348babc320d14398fc97ebe32e7aa",
+  "packedSha256": "341924c33f2befca79b4dff33c2aee0c565396ebd8d03a63bd9fce1c81c8078d",
+  "sourceRevision": "6dff17865b2e593a73bbbec1680f1d908ed2a765",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputFiles": 41,
+      "inputBytes": 1902195,
+      "sourceFiles": 49,
+      "sourceBytes": 690397,
+      "runtimeFiles": 47,
+      "runtimeBytes": 670419
+    },
+    {
+      "id": "civilian-fpv",
+      "inputFiles": 62,
+      "inputBytes": 5595400,
+      "sourceFiles": 70,
+      "sourceBytes": 4385163,
+      "runtimeFiles": 68,
+      "runtimeBytes": 4365180
+    },
+    {
+      "id": "fpv-worlds",
+      "inputFiles": 95,
+      "inputBytes": 16735813,
+      "sourceFiles": 103,
+      "sourceBytes": 15530896,
+      "runtimeFiles": 101,
+      "runtimeBytes": 15510905
+    }
+  ],
+  "baselineOriginalInputBytes": 16778114,
+  "limitBytes": 16777216,
+  "currentOriginalInputBytes": 16735813,
+  "remainingOriginalInputBytes": 41403,
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "validation": "pass",
+  "existingChecks": {
+    "passed": 20,
+    "failed": 1,
+    "failure": "game/test/fpv-hunt-reactions.test.mjs:169 existing native-dialogue warning-priority assertion; test and all direct audio imports byte-identical to baseline; generated module is not imported by this test"
+  },
+  "browser": {
+    "url": "http://127.0.0.1:8848/dist/fpv-source-budget-player/optional-practice/fpv-worlds/index.html",
+    "source": "admitted distribution ZIP",
+    "actions": [
+      "launch Lift and land",
+      "arm at zero throttle",
+      "observe active ticks",
+      "pause to menu"
+    ],
+    "screenshot": "/tmp/fpv-source-budget-player.png"
+  },
+  "limitsChanged": false,
+  "unitCoverageAdded": false,
+  "hardwareQualification": false
+}

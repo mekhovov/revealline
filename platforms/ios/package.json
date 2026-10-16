@@ -3,7 +3,7 @@
   "version": "0.21.0",
   "private": true,
   "type": "module",
-  "description": "Local Capacitor iOS wrapper for the unchanged Reveal Line web distribution",
+  "description": "Local Capacitor iOS wrapper for the unchanged FPV / LINE web distribution",
   "engines": {
     "node": ">=22.0.0"
   },

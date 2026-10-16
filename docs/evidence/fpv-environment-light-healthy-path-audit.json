@@ -1,0 +1,75 @@
+{
+  "format": "fpv-environment-light-healthy-path-audit.v1",
+  "before": "083ac67bf68f33a03f01730c80dec39ee98a3654",
+  "after": "acc9ccbfc21e7f8f5f4a72283ad523a8f62d1fbd",
+  "file": "optional-practice/civilian-fpv/renderer.mjs",
+  "rendererSha256": "a1d7acd926d50b28714cce89d16da2d389154a7b04900ecee846f59320fb01df",
+  "checks": [
+    {
+      "name": "cleanup retains every old final cleanup operation and order",
+      "pass": true
+    },
+    {
+      "name": "cleanup only additionally clears optional Hunt owner and editor rows",
+      "pass": true
+    },
+    {
+      "name": "setCourse remainder unchanged after lost-context guard and null-owner recreation",
+      "pass": true
+    },
+    {
+      "name": "setCourse lost-context guard is the only guard addition",
+      "pass": true
+    },
+    {
+      "name": "optional Hunt recreation is nullish assignment",
+      "pass": true
+    },
+    {
+      "name": "all other named renderer functions unchanged",
+      "pass": true
+    },
+    {
+      "name": "whole module AST matches after only the enumerated lifecycle changes",
+      "pass": true
+    }
+  ],
+  "unchangedNamedFunctions": [
+    "ownShadowMaterial",
+    "releaseGroup",
+    "clearImported",
+    "releaseShadow",
+    "label",
+    "setQuality",
+    "setDrone",
+    "setPresentation",
+    "lineVolume",
+    "obstacleSurfaceKind",
+    "worldScaleUV",
+    "garageStructureUV",
+    "addGarageSurfaceDetails",
+    "woodlandTrunkUV",
+    "storageModuleUV",
+    "stadiumStructureUV",
+    "stadiumStructureDetail",
+    "addFlushPanels",
+    "renderObstacle",
+    "releaseEnvironmentLight",
+    "setEnvironmentLight",
+    "createActor",
+    "projectileBatch",
+    "updateActors",
+    "draw",
+    "setPath",
+    "setGhost",
+    "updateGhost",
+    "loadScene",
+    "editorValue",
+    "applyEditorPreview",
+    "selectEditor",
+    "refreshEditorHandles",
+    "createEditor",
+    "attachTransform"
+  ],
+  "qualification": "Healthy setCourse with a live context and existing optional Hunt owner follows the same operations. Loss invalidation, rebuilding a missing owner and final cleanup intentionally differ. This is static scope evidence, not a new browser run."
+}

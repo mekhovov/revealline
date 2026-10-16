@@ -87,12 +87,16 @@ def stream_digest(stream, size):
 
 class PinnedSource:
     """Keep one ZIP file descriptor; verify before sending and detect later change."""
+    asset_name = 'source.tar'
+    inspection_role = 'sourceTar'
+    maximum_bytes = 2_000_000_000
+
     def __init__(self, args):
         require(SHA.fullmatch(args.outer_sha256) and SHA.fullmatch(args.source_sha256)
                 and SHA.fullmatch(args.inspection_sha256), 'Invalid explicit SHA256 pin')
         require(COMMIT.fullmatch(args.source_commit), 'Invalid explicit source commit')
         require(TAG.fullmatch(args.tag), 'Expected an exact version tag')
-        require(0 < args.source_bytes <= 2_000_000_000, 'Invalid source byte length')
+        require(0 < args.source_bytes <= self.maximum_bytes, 'Invalid source byte length')
         require(0 < args.outer_bytes <= 4_000_000_000, 'Invalid outer ZIP byte length')
         with open_regular(args.inspection) as receipt:
             data = receipt.read(JSON_LIMIT + 1)
@@ -108,13 +112,17 @@ class PinnedSource:
                 and inspection.get('gitHead') == args.source_commit
                 and inspection.get('version') == args.tag, 'Inspection identity or result differs')
         outer = inspection.get('artifact', {})
-        source = inspection.get('sourceTar', {})
+        source = inspection.get(self.inspection_role, {})
+        if self.inspection_role == 'sourceManifest':
+            require('sourceTar' not in inspection and
+                    source.get('allGitBlobContentsAndModesVerified') is True,
+                    'Source manifest Git proof missing or mixed with legacy source')
         require(outer.get('sha256') == args.outer_sha256 and outer.get('bytes') == args.outer_bytes
                 and outer.get('externallyExpectedDigestSupplied') is True,
                 'Inspection outer ZIP authority differs')
         self.member = source.get('outerMember')
         require(isinstance(self.member, str) and isinstance(outer.get('prefix'), str)
-                and self.member == outer['prefix'] + 'source.tar' and source.get('bytes') == args.source_bytes
+                and self.member == outer['prefix'] + self.asset_name and source.get('bytes') == args.source_bytes
                 and source.get('sha256') == args.source_sha256 and source.get('copiedToDisk') is False,
                 'Inspection source authority differs')
         self.file = open_regular(args.outer_zip)
@@ -212,7 +220,8 @@ class GitHub:
         phase = 'send-headers'
         try:
             headers = self.headers()
-            headers.update({'Content-Type': 'application/x-tar', 'Content-Length': str(size)})
+            content_type = 'application/json' if path.endswith('/assets?name=source-manifest.json') else 'application/x-tar'
+            headers.update({'Content-Type': content_type, 'Content-Length': str(size)})
             # Be conservative: even header-send failure can leave a starter asset.
             posted = True
             connection.putrequest('POST', path)
@@ -273,10 +282,10 @@ def release_assets(api, repository, release_id, tag):
     raise Refusal('Asset list exceeded finite pagination bound')
 
 
-def validate_asset(asset, repository, size, digest):
+def validate_asset(asset, repository, size, digest, name='source.tar'):
     require(isinstance(asset, dict) and type(asset.get('id')) is int and asset['id'] > 0
             and asset.get('url') == f'https://api.github.com/repos/{repository}/releases/assets/{asset["id"]}'
-            and asset.get('name') == 'source.tar' and asset.get('state') == 'uploaded'
+            and asset.get('name') == name and asset.get('state') == 'uploaded'
             and asset.get('size') == size and asset.get('digest') == 'sha256:' + digest,
             'Uploaded asset identity/size/server digest differs or is unavailable')
 
@@ -303,25 +312,27 @@ def verify_tag(api, repository, tag, expected_commit):
 
 
 def perform(source, api, repository, release_id, tag):
+    name = getattr(source, 'asset_name', 'source.tar')
+    require(name in ('source.tar', 'source-manifest.json'), 'Unsupported source contract')
     assets = release_assets(api, repository, release_id, tag)
-    require(not any(a.get('name') == 'source.tar' for a in assets),
-            'source.tar already exists; refusing to overwrite, delete or retry')
+    require(not any(a.get('name') in ('source.tar', 'source-manifest.json') for a in assets),
+            'Source asset already exists; refusing to overwrite, delete or retry')
     verify_tag(api, repository, tag, source.commit)
     source.unchanged()
     initiated, sent = False, None
     try:
         with source.open() as stream:
             initiated = True
-            result, sent, digest = api.upload(f'/repos/{repository}/releases/{release_id}/assets?name=source.tar',
+            result, sent, digest = api.upload(f'/repos/{repository}/releases/{release_id}/assets?name={name}',
                                               stream, source.size, source.sha256)
         source.unchanged()
-        validate_asset(result, repository, source.size, source.sha256)
+        validate_asset(result, repository, source.size, source.sha256, name)
         # Read back the exact draft asset list and tag after the single POST.
         reread = release_assets(api, repository, release_id, tag)
-        matching = [a for a in reread if a.get('name') == 'source.tar']
+        matching = [a for a in reread if a.get('name') == name]
         require(len(matching) == 1 and matching[0].get('id') == result['id'],
                 'Uploaded asset is not uniquely bound to the same draft release')
-        validate_asset(matching[0], repository, source.size, source.sha256)
+        validate_asset(matching[0], repository, source.size, source.sha256, name)
         verify_tag(api, repository, tag, source.commit)
     except Ambiguous:
         raise
@@ -332,7 +343,7 @@ def perform(source, api, repository, release_id, tag):
                             diagnostics=upload_diagnostics('verify-upload', sent, error)) from None
         raise
     return {'status': 'UPLOADED_VERIFIED', 'repository': repository, 'releaseId': release_id,
-            'tag': tag, 'tagCommit': source.commit, 'assetId': result['id'], 'assetName': 'source.tar',
+            'tag': tag, 'tagCommit': source.commit, 'assetId': result['id'], 'assetName': name,
             'bytes': sent, 'sha256': digest, 'serverDigest': result['digest'], 'postCount': 1,
             'readBackVerified': True}
 

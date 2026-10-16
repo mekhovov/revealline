@@ -1,20 +1,30 @@
-import { exactKeys, required, stableId } from '../data-json.mjs';
+import { requireAuthoring, describeAuthoringError } from './authoring-error.mjs';
+import { exactKeys, stableId } from '../data-json.mjs';
 import { readImageTrace } from './image-trace.mjs';
 
 export const IMAGE_TRACE_DATABASE = 'revealline-content-image-traces-v1';
 const validRevision = (value) => Number.isSafeInteger(value) && value > 0;
 function key(projectId, missionId) {
-  required(stableId(projectId) && stableId(missionId), 'Invalid tracing storage owner.');
+  requireAuthoring(
+    stableId(projectId) && stableId(missionId),
+    'Invalid tracing storage owner.',
+    'errors:studio.trace.storageOwner',
+  );
   return `${projectId}/${missionId}`;
 }
 function entry(value, projectId, missionId) {
   if (value === undefined) return { revision: null, trace: null };
   exactKeys(value, ['revision', 'trace'], 'stored tracing draft');
-  required(validRevision(value.revision), 'Invalid stored tracing revision.');
+  requireAuthoring(
+    validRevision(value.revision),
+    'Invalid stored tracing revision.',
+    'errors:studio.trace.savedRevision',
+  );
   const trace = value.trace === null ? null : readImageTrace(value.trace);
-  required(
+  requireAuthoring(
     trace === null || (trace.projectId === projectId && trace.missionId === missionId),
     'Stored tracing ownership mismatch.',
+    'errors:studio.trace.storedOwnerMismatch',
   );
   return { revision: value.revision, trace };
 }
@@ -26,13 +36,20 @@ export function createImageTraceBackend({
   indexedDB = globalThis.indexedDB,
   timeoutMs = 1500,
 } = {}) {
-  required(
+  requireAuthoring(
     Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 10000,
     'Invalid trace timeout.',
+    'errors:studio.trace.timeoutValue',
   );
   let opening;
   function open() {
-    if (!indexedDB) return Promise.reject(new Error('Tracing storage is unavailable.'));
+    if (!indexedDB)
+      return Promise.reject(
+        describeAuthoringError(
+          new Error('Tracing storage is unavailable.'),
+          'errors:studio.trace.storageUnavailable',
+        ),
+      );
     if (opening) return opening;
     opening = new Promise((resolve, reject) => {
       let failed = false;
@@ -40,16 +57,33 @@ export function createImageTraceBackend({
       const fail = (error) => {
         failed = true;
         clearTimeout(timer);
-        reject(error || new Error('Tracing storage failed.'));
+        reject(
+          error ||
+            describeAuthoringError(
+              new Error('Tracing storage failed.'),
+              'errors:studio.trace.storageFailed',
+            ),
+        );
       };
       const timer = setTimeout(
-        () => fail(new Error('Tracing storage did not open in time.')),
+        () =>
+          fail(
+            describeAuthoringError(
+              new Error('Tracing storage did not open in time.'),
+              'errors:studio.trace.openTimeout',
+            ),
+          ),
         timeoutMs,
       );
       request.onupgradeneeded = () => request.result.createObjectStore('traces');
       request.onerror = () => fail(request.error);
       request.onblocked = () =>
-        fail(new Error('Close an older Studio tab to open tracing storage.'));
+        fail(
+          describeAuthoringError(
+            new Error('Close an older Studio tab to open tracing storage.'),
+            'errors:studio.trace.closeOlderTab',
+          ),
+        );
       request.onsuccess = () => {
         clearTimeout(timer);
         const db = request.result;
@@ -83,7 +117,10 @@ export function createImageTraceBackend({
         else resolve(result);
       };
       const timer = setTimeout(() => {
-        failure = new Error('Tracing save did not finish. Keep this session and export a backup.');
+        failure = describeAuthoringError(
+          new Error('Tracing save did not finish. Keep this session and export a backup.'),
+          'errors:studio.trace.saveTimeout',
+        );
         try {
           tx.abort();
         } catch {
@@ -93,7 +130,14 @@ export function createImageTraceBackend({
       }, timeoutMs);
       tx.oncomplete = () => finish();
       tx.onerror = tx.onabort = () =>
-        finish(failure || tx.error || new Error('Tracing storage failed.'));
+        finish(
+          failure ||
+            tx.error ||
+            describeAuthoringError(
+              new Error('Tracing storage failed.'),
+              'errors:studio.trace.storageFailed',
+            ),
+        );
       const request = store.get(id);
       request.onsuccess = () => {
         try {
@@ -103,14 +147,19 @@ export function createImageTraceBackend({
             return;
           }
           if (current.revision !== expectedRevision) {
-            const error = new Error(
-              'A newer tracing draft exists. Inspect it before replacing it.',
+            const error = describeAuthoringError(
+              new Error('A newer tracing draft exists. Inspect it before replacing it.'),
+              'errors:studio.trace.conflict',
             );
             error.code = 'trace-conflict';
             throw error;
           }
           const revision = (current.revision ?? 0) + 1;
-          required(validRevision(revision), 'Tracing revision limit reached. Export a backup.');
+          requireAuthoring(
+            validRevision(revision),
+            'Tracing revision limit reached. Export a backup.',
+            'errors:studio.trace.revisionLimit',
+          );
           result = { revision, trace };
           store.put(result, id);
         } catch (error) {
@@ -123,14 +172,16 @@ export function createImageTraceBackend({
   return {
     read: (projectId, missionId) => transact(projectId, missionId, false),
     save(projectId, missionId, source, expectedRevision) {
-      required(
+      requireAuthoring(
         expectedRevision === null || validRevision(expectedRevision),
         'Save requires the exact prior tracing revision.',
+        'errors:studio.trace.exactRevision',
       );
       const trace = source === null ? null : readImageTrace(source);
-      required(
+      requireAuthoring(
         trace === null || (trace.projectId === projectId && trace.missionId === missionId),
         'Tracing owner mismatch.',
+        'errors:studio.trace.ownerMismatch',
       );
       return transact(projectId, missionId, true, trace, expectedRevision);
     },

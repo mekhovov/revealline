@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required, dataIdentity } from '../data-json.mjs';
 import { compileAssetRevision } from '../content-design/assets.mjs';
+import { t } from '../i18n/index.mjs';
 import { JOURNEY_MODES } from './catalog.mjs';
 
 export const JOURNEY_PICTURES_VERSION = 'revealline-journey-pictures.v1';
@@ -37,16 +38,19 @@ const key = (record) =>
 /** Presentation provenance only: never a Legacy award, score or replay authority. */
 export function validateJourneyPicture(source) {
   const record = boundedJSON(source, { maxBytes: 16384, maxNodes: 64, maxDepth: 3 });
-  exactKeys(record, fields, 'Journey picture');
+  exactKeys(record, fields, t('interface:journeyPictures.validation.record'));
   for (const field of fields.filter((field) => field !== 'asset'))
     required(
       typeof record[field] === 'string' && record[field].trim() && record[field].length <= 1024,
-      `Journey picture needs ${field}.`,
+      t('interface:journeyPictures.validation.needsField', { field }),
     );
-  required(JOURNEY_MODES.includes(record.mode), 'Invalid Journey picture mode.');
+  required(
+    JOURNEY_MODES.includes(record.mode),
+    t('interface:journeyPictures.validation.invalidMode'),
+  );
   required(
     ['gentle', 'standard', 'expert'].includes(record.difficulty),
-    'Invalid picture difficulty.',
+    t('interface:journeyPictures.validation.invalidDifficulty'),
   );
   record.asset = compileAssetRevision(record.asset);
   return record;
@@ -58,10 +62,10 @@ export function validateJourneyPictures(source) {
     maxDepth: 5,
     maxArray: JOURNEY_PICTURES_LIMIT,
   });
-  exactKeys(ledger, ['format', 'records'], 'Journey pictures');
+  exactKeys(ledger, ['format', 'records'], t('interface:journeyPictures.validation.collection'));
   required(
     ledger.format === JOURNEY_PICTURES_VERSION && Array.isArray(ledger.records),
-    'Unsupported Journey pictures. Keep your backup before recovery.',
+    t('interface:journeyPictures.validation.unsupported'),
   );
   const keys = new Set(),
     runs = new Set();
@@ -69,7 +73,10 @@ export function validateJourneyPictures(source) {
     const record = validateJourneyPicture(source),
       identity = key(record),
       run = JSON.stringify([record.mode, record.runId]);
-    required(!keys.has(identity) && !runs.has(run), 'Duplicate Journey picture identity.');
+    required(
+      !keys.has(identity) && !runs.has(run),
+      t('interface:journeyPictures.validation.duplicateIdentity'),
+    );
     keys.add(identity);
     runs.add(run);
     return record;
@@ -83,14 +90,17 @@ export function validateJourneyPictureCompletions(profile, source, { editionId =
   const ledger = validateJourneyPictures(source);
   for (const record of ledger.records) {
     if (editionId !== null)
-      required(record.editionId === editionId, 'Journey picture belongs to a different edition.');
+      required(
+        record.editionId === editionId,
+        t('interface:journeyPictures.validation.differentEdition'),
+      );
     const receipt = profile.clears?.[record.mode]?.[record.missionId];
-    required(receipt, 'Journey picture has no matching completion receipt.');
+    required(receipt, t('interface:journeyPictures.validation.missingReceipt'));
     required(
       receipt.runId === record.runId &&
         receipt.gameplayId === record.gameplayId &&
         receipt.difficulty === record.difficulty,
-      'Journey picture and completion receipt must agree.',
+      t('interface:journeyPictures.validation.receiptMismatch'),
     );
   }
   return ledger;
@@ -102,20 +112,20 @@ function addPicture(ledger, source) {
   );
   required(
     !sameRun || dataIdentity(sameRun) === dataIdentity(record),
-    'A Journey run cannot replace its earned original.',
+    t('interface:journeyPictures.validation.runCannotReplace'),
   );
   // A fresh replay of the same original preserves its first accepted receipt.
   const existing = ledger.records.find((old) => key(old) === key(record));
   if (existing) {
     required(
       dataIdentity(existing.asset) === dataIdentity(record.asset),
-      'An earned original cannot change its asset descriptor.',
+      t('interface:journeyPictures.validation.assetChanged'),
     );
     return;
   }
   required(
     ledger.records.length < JOURNEY_PICTURES_LIMIT,
-    'Journey picture storage is full. Export before recovery.',
+    t('interface:journeyPictures.validation.storageFull'),
   );
   ledger.records.push(record);
 }
@@ -125,10 +135,13 @@ export function applyJourneyPictureEvent(source, event) {
     for (const record of validateJourneyPictures(event.pictures).records)
       addPicture(ledger, record);
   } else if (event.picture !== undefined) {
-    required(event.type === 'complete', 'Only a completed attempt can retain a picture.');
+    required(event.type === 'complete', t('interface:journeyPictures.validation.completedOnly'));
     const record = validateJourneyPicture(event.picture);
     for (const field of ['mode', 'missionId', 'runId', 'gameplayId', 'difficulty'])
-      required(record[field] === event[field], 'Picture and gameplay receipt must agree.');
+      required(
+        record[field] === event[field],
+        t('interface:journeyPictures.validation.gameplayReceiptMismatch'),
+      );
     addPicture(ledger, record);
   }
   return ledger;
@@ -147,6 +160,7 @@ export function journeyPictureCompletion({ profile, pictures, mode, editionId, m
       state: 'unavailable',
       reason:
         'Earlier edition · original unavailable. Complete this mission again to earn its current picture.',
+      reasonKey: 'interface:journeyPictures.earlierEditionUnavailable',
     };
   return { state: 'unfinished' };
 }

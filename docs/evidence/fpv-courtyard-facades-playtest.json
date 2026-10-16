@@ -1,0 +1,11 @@
+{
+  "out": "/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test/dist/fpv-courtyard-facades-playtest-c452dd215",
+  "format": "FPVPlaytestBuild.v1",
+  "entry": "optional-practice/fpv-worlds/index.html",
+  "files": 94,
+  "bytes": 15378809,
+  "zipSha256": "882e54c123843ce1065310e33a5bda52673a7c6700cf4d8a3ea56af1ea244e7e",
+  "qualification": "development-playtest",
+  "unitTests": "deferred-to-final-phase",
+  "releaseQualified": false
+}

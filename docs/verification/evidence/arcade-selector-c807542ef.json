@@ -1,0 +1,771 @@
+{
+  "format": "revealline-selector-first-win-followup.v1",
+  "qualified": false,
+  "date": "2026-09-29",
+  "identity": {
+    "sourceRevision": "c807542ef4840ce739beb7af86424488f7508772",
+    "sourceTree": "6be6aa62a151a6d32638f46f8fa08aad1b9cbaaf",
+    "editionId": "fpv-learning",
+    "distribution": {
+      "sha256": "693c78f220ada0897252572b3058253a9de4dcfd3185d66c741af9e41eb5838c",
+      "bytes": 33282781
+    },
+    "manifest": {
+      "sha256": "6b1500aa2204080f74e377856189034e1fcebfdcc48ae6492a4aafe7d016b43c",
+      "bytes": 93740
+    },
+    "runtimeFiles": 688,
+    "runtimeBytes": 33183009,
+    "contentSha256": "77f862035392266e8c3e9f1b03d3c89d3b4755e3947431b6792a19ac8b2329b7",
+    "gameplayId": "7feffc97157784af",
+    "gameplayBindingAuthority": "Exact admitted authored reward requirement, not an independent engine recomputation."
+  },
+  "change": {
+    "description": "Selector repaint reuses the exact adopted base campaign identity instead of normalizing its raw geometry again. No gameplay, reward schema, content or artwork change.",
+    "previousSourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+    "appBeforeSha256": "1ead88f36cb5d4bf0b7bd32b513cbfa1dc4afc9afadde15daf82a902f3864e1f",
+    "appAfterSha256": "9bc15e9e8760031d926b29a5407f689dca3ee08d6dc6cc0c6829866bced940a8",
+    "unchangedManifestedMembers": 682,
+    "changedManifestedMembers": [
+      {
+        "path": "edition-build.json",
+        "beforeSha256": "5d79889adeaeb01e18dc93518e2af63e1da5609752e98bfcc74beafcea54ca06",
+        "afterSha256": "a1d2641797101a740ecc756be7396723912816519c1fa703524921effab2a2f3",
+        "afterBytes": 93514
+      },
+      {
+        "path": "game/app.mjs",
+        "beforeSha256": "1ead88f36cb5d4bf0b7bd32b513cbfa1dc4afc9afadde15daf82a902f3864e1f",
+        "afterSha256": "9bc15e9e8760031d926b29a5407f689dca3ee08d6dc6cc0c6829866bced940a8",
+        "afterBytes": 471107
+      },
+      {
+        "path": "game/build-info.json",
+        "beforeSha256": "f838881a3ef0471dd2ff6bef8b67050e4c0a064389cf27748fcf0082d1cc953e",
+        "afterSha256": "7875eeb6d6f9279b375d41e604457ce213c545422636983dd07fa46f71827c11",
+        "afterBytes": 186
+      },
+      {
+        "path": "offline-cache.json",
+        "beforeSha256": "803f9166db5f385c0011fa7471e3ee35a9fb35c64a482cdb030bd227d874e55b",
+        "afterSha256": "801a9e2f2acc890edae6b57f529ac7eb15840ecf828fcece380db8eeb5237983",
+        "afterBytes": 93230
+      },
+      {
+        "path": "service-worker.js",
+        "beforeSha256": "c7ae83b5a8e2af396cb58992a8176c8592cf593be3093164fb2afe38362bd2fd",
+        "afterSha256": "11dd7062b3fe30c761f7684207dfec7d2af6ab2bc7aa6fb7b9c151a69741d2fb",
+        "afterBytes": 97323
+      }
+    ],
+    "sourceAuthority": "Both exact selected-edition archives were independently double-built and admitted; runner verifies the playable ZIP and every listed member before serving."
+  },
+  "method": {
+    "protocol": "fpv-frame-first-win.v1",
+    "device": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+      "platform": "MacIntel",
+      "hardwareConcurrency": 14,
+      "width": 1280,
+      "height": 633,
+      "dpr": 1,
+      "timeOrigin": 1790640900015.1,
+      "headlessReported": true
+    },
+    "settings": "en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-cpu",
+    "inputs": "Automated keyboard through ordinary controls: Down 1800 ms, Down 3200 ms, Right 1400 ms, Up 6000 ms after normal restart. No engine, stored progress or replay injection.",
+    "freshContexts": true,
+    "attemptBound": 3,
+    "sequence": [
+      "Untimed public-header preflight: first proxy attempt failed, corrected proxy passed.",
+      "Thirty-second settle.",
+      "Timeline attempt 1: ordinary enemy catch, no win; retained.",
+      "CPU attempt: accepted first win at 64.3%, followed after tracing by image accounting.",
+      "Timeline attempt 2: one unchanged permitted retry, accepted first win at 64.3%."
+    ],
+    "quietWindow": "Root and pipeline reported all owned heavy preparation and other browsers closed. Root performed light reads/docs; pipeline reported brief small-JSON operations and two bounded GitHub metadata calls during the timeline attempt. No competing heavy builds/tests/browsers were reported; this does not exclude all machine activity.",
+    "traceHeaders": "For diagnostic continuity with 837, both captures use the same minimal loopback MIME/no-store/nosniff policy. Production headers were checked separately and are not implied for timing.",
+    "instrumentation": [
+      {
+        "path": "docs/verification/discovery-observer.mjs",
+        "bytes": 17910,
+        "sha256": "76a5738cf196a21e7e74e6309f4296c2b7db7765552374e9d7d98c882f52f72b"
+      },
+      {
+        "path": "docs/verification/discovery-comparison.mjs",
+        "bytes": 11187,
+        "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+      },
+      {
+        "path": "docs/verification/company-review-model.mjs",
+        "bytes": 7785,
+        "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+      },
+      {
+        "path": "scripts/observe-discovery-cycles.mjs",
+        "bytes": 11051,
+        "sha256": "b297771b78108204025765ca2e433911fbdaf9e15155f16ea187b628408f9bf3"
+      },
+      {
+        "path": "publishing/edition-zip.mjs",
+        "bytes": 6736,
+        "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+      },
+      {
+        "path": "scripts/observe-discovery-runtime.mjs",
+        "bytes": 27191,
+        "sha256": "acc4ca343fcc1d032b8b8ad6f466f5d102f31948472ef6456cb869f253546a0a"
+      }
+    ],
+    "imageExtension": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/observe-with-image-accounting.mjs",
+      "bytes": 32963,
+      "sha256": "c308b38366ecbb9b931a47f8fcba6778746b85a712b31ad573e86a09b60698aa"
+    },
+    "primaryCDPReference": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/runtime-protocol-reference.json",
+      "bytes": 10355,
+      "sha256": "78d7899a7f3b76618fcd8ca0b455b8a1a21ed24ebb537f87879dda0a1e77f18f"
+    },
+    "screenshotOrder": "Accepted result sample completes and tracing stops before the first-result screenshot. Screenshots are not inside accepted first-win windows.",
+    "newP95Comparison": false,
+    "previousP95Scope": "The existing837/1106 order-balanced comparison remains the scoped 5% evidence. These short traces add no new p95/regression or all-edition qualification."
+  },
+  "attempts": [
+    {
+      "id": "timeline-attempt-1",
+      "acceptedFirstWin": false,
+      "result": "After 47% capture, an ordinary enemy catch left two lives and the visible message that revealed territory is kept. Result target timed out; no performance acceptance inferred.",
+      "frameCoverageAfterInputs": "47.0%",
+      "winRecord": {
+        "started": 15269,
+        "visible": null,
+        "ended": null,
+        "keys": [
+          {
+            "key": "ArrowUp",
+            "time": 15281.100000023842,
+            "trusted": true
+          }
+        ],
+        "untrustedDOMInputs": 0
+      },
+      "resultSample": {
+        "kind": "sample",
+        "scenario": "result-reveal",
+        "outcome": "discarded: target surface did not appear within 30 seconds",
+        "surfaceVisibleWhenArmed": false,
+        "effects": null,
+        "mission": null,
+        "durationMs": 3000,
+        "activeElapsedMs": null,
+        "transitionWindowMs": 30006.40000000596,
+        "frameIntervals": null,
+        "metric": "requestAnimationFrame intervals including observer overhead, not renderer execution time",
+        "pageLongTasks": {
+          "supported": true,
+          "count": 0,
+          "over50Ms": 0,
+          "maxMs": 0,
+          "scope": "page-wide from arming through completion; not attributed to reward rendering"
+        },
+        "rewardTaskAttribution": {
+          "supported": false
+        },
+        "before": {
+          "connectedNodes": 4282,
+          "connectedImages": 1,
+          "connectedAudio": 1,
+          "connectedVideo": 0,
+          "connectedBlobMedia": 0,
+          "uniqueConnectedBlobURLs": 0,
+          "rewardDialogs": 1,
+          "rewardShelves": 1,
+          "rewardResults": 1,
+          "openDialogs": 0,
+          "usedJSHeapBytes": 107329277,
+          "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+          "detachedNodes": null,
+          "outstandingObjectURLs": null,
+          "decoderResources": null
+        },
+        "after": {
+          "connectedNodes": 4282,
+          "connectedImages": 1,
+          "connectedAudio": 1,
+          "connectedVideo": 0,
+          "connectedBlobMedia": 0,
+          "uniqueConnectedBlobURLs": 0,
+          "rewardDialogs": 1,
+          "rewardShelves": 1,
+          "rewardResults": 1,
+          "openDialogs": 0,
+          "usedJSHeapBytes": 49627684,
+          "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+          "detachedNodes": null,
+          "outstandingObjectURLs": null,
+          "decoderResources": null
+        },
+        "inputEvents": {
+          "trusted": 1,
+          "synthetic": 0
+        }
+      },
+      "pageErrors": [],
+      "cleanup": {
+        "qualified": false,
+        "completed": true,
+        "primaryError": "Error: result sample rejected: discarded: target surface did not appear within 30 seconds\n    at fail (file://[source-checkout]/scripts/observe-discovery-runtime.mjs:13:9)\n    at sampleReport (file://[source-checkout]/scripts/observe-discovery-runtime.mjs:538:44)\n    at async observeDiscoveryRuntime (file://[source-checkout]/scripts/observe-discovery-runtime.mjs:640:5)\n    at async file://[source-checkout]/scripts/observe-discovery-runtime.mjs:729:20",
+        "operations": [
+          {
+            "name": "observer",
+            "requested": true,
+            "closed": true,
+            "error": null
+          },
+          {
+            "name": "browser",
+            "requested": true,
+            "closed": true,
+            "error": null
+          },
+          {
+            "name": "server",
+            "requested": true,
+            "closed": true,
+            "error": null
+          }
+        ]
+      },
+      "failure": {
+        "path": ".cache/phase7-c807542ef/arcade-selector/timeline/failure.json",
+        "bytes": 17520,
+        "sha256": "ab4e73a41998225954d1625681030ce2130e27f549ccb2365789592220fdbfa7"
+      },
+      "trace": {
+        "path": ".cache/phase7-c807542ef/arcade-selector/timeline/first-win-trace.json",
+        "bytes": 85972991,
+        "sha256": "90256ecb18d1853f6120219554f9aeac6662c874657db003869a718c7e416ab3"
+      },
+      "screenshot": {
+        "path": ".cache/phase7-c807542ef/arcade-selector/timeline/failure.png",
+        "bytes": 418973,
+        "sha256": "34ce7f4b5703cb3f337d3fb78f2b59b22dbf186dbc682b88be8b0b0e814b851e"
+      }
+    },
+    {
+      "id": "cpu",
+      "acceptedFirstWin": true,
+      "coverage": "64.3%",
+      "winRecord": {
+        "started": 13358.40000000596,
+        "visible": 17064.20000001788,
+        "ended": 19064.40000000596,
+        "keys": [
+          {
+            "key": "ArrowUp",
+            "time": 13363.5,
+            "trusted": true
+          }
+        ],
+        "untrustedDOMInputs": 0,
+        "kind": "won"
+      },
+      "cleanup": {
+        "qualified": false,
+        "completed": true,
+        "primaryError": null,
+        "operations": [
+          {
+            "name": "observer",
+            "requested": true,
+            "closed": true,
+            "error": null
+          },
+          {
+            "name": "browser",
+            "requested": true,
+            "closed": true,
+            "error": null
+          },
+          {
+            "name": "server",
+            "requested": true,
+            "closed": true,
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "timeline-attempt-2",
+      "acceptedFirstWin": true,
+      "coverage": "64.3%",
+      "winRecord": {
+        "started": 13224.59999999404,
+        "visible": 17103.09999999404,
+        "ended": 19104.19999998808,
+        "keys": [
+          {
+            "key": "ArrowUp",
+            "time": 13225.59999999404,
+            "trusted": true
+          }
+        ],
+        "untrustedDOMInputs": 0,
+        "kind": "won"
+      },
+      "cleanup": {
+        "qualified": false,
+        "completed": true,
+        "primaryError": null,
+        "operations": [
+          {
+            "name": "observer",
+            "requested": true,
+            "closed": true,
+            "error": null
+          },
+          {
+            "name": "browser",
+            "requested": true,
+            "closed": true,
+            "error": null
+          },
+          {
+            "name": "server",
+            "requested": true,
+            "closed": true,
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "timelineObservation": {
+    "trace": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/timeline-attempt-2/first-win-trace.json",
+      "bytes": 17916322,
+      "sha256": "12174a64aa498782efc3d03e259ecd95248969f2820d19bd2560f02f85c9f796"
+    },
+    "analysis": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/timeline-attempt-2/first-win-analysis.json",
+      "bytes": 3944,
+      "sha256": "4a372c95ba0263bd3509ab04a2f026f43d98f0a52cb7bf5768854b981b033f0b"
+    },
+    "renderer": {
+      "pid": 27110,
+      "tid": 11503558
+    },
+    "window": {
+      "start": {
+        "name": "discovery-first-win:start",
+        "ts": 174299566561
+      },
+      "end": {
+        "name": "discovery-first-win:end",
+        "ts": 174305446233
+      },
+      "explicit": true
+    },
+    "checkpoints": [
+      {
+        "name": "discovery-first-win:visible",
+        "ts": 174303445048
+      }
+    ],
+    "selectedRunTasks": 4330,
+    "maxInclusiveTaskMs": 41.539,
+    "over50Ms": [],
+    "pageWideObserverTasks": {
+      "supported": true,
+      "count": 0,
+      "over50Ms": 0,
+      "maxMs": 0,
+      "scope": "page-wide from arming through completion; not attributed to reward rendering"
+    },
+    "scope": "This one accepted named first-win window contains no observed RunTask above 50 ms. It is a scoped inclusive-task observation, not exclusive reward attribution or a general acceptance claim."
+  },
+  "cpuObservation": {
+    "trace": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/cpu/first-win-trace.json",
+      "bytes": 37352231,
+      "sha256": "5dd9cb5b76e1ca5d6465f3d419610fd289041ce2b2460eccedc39313e5092386"
+    },
+    "analysis": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/cpu/first-win-analysis.json",
+      "bytes": 161467,
+      "sha256": "c827c1e48ccd3300dfefd3e3746048b37294771bc0b41f1d3198c3743decfc1c"
+    },
+    "diagnostic": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/cpu/phaser-task-diagnostic.json",
+      "bytes": 31669,
+      "sha256": "1d7a3a18869c959367507e37692b06db148dceb61b040a9d8c0270392f9962ee"
+    },
+    "selectorAudit": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/cpu/selector-stack-audit.json",
+      "bytes": 468,
+      "sha256": "38883f906b32d30f469d97df9fb2d84ce13b6c24faeb0e4649b5e51f57b6ed2f"
+    },
+    "renderer": {
+      "pid": 26646,
+      "tid": 11498747
+    },
+    "window": {
+      "start": {
+        "name": "discovery-first-win:start",
+        "ts": 174241146608
+      },
+      "end": {
+        "name": "discovery-first-win:end",
+        "ts": 174246852510
+      },
+      "explicit": true
+    },
+    "checkpoints": [
+      {
+        "name": "discovery-first-win:visible",
+        "ts": 174244852349
+      }
+    ],
+    "selectedRunTasks": 3380,
+    "preservedOver50Ms": [
+      {
+        "ts": 174240956447,
+        "durationMs": 190.296,
+        "fullyInsideWindow": false,
+        "classification": "application-or-browser-task",
+        "overlapWithNamedWindowMs": 0.135,
+        "cpuSamples": 5,
+        "rewardStackSamples": 0
+      }
+    ],
+    "firstWinTask": {
+      "ts": 174244806671,
+      "durationMs": 49.061,
+      "callbacks": [
+        {
+          "ts": 174244806865,
+          "durationMs": 45.152,
+          "functionName": "e",
+          "path": "game/vendor/phaser-4.2.1.min.js"
+        },
+        {
+          "ts": 174244852060,
+          "durationMs": 0.09,
+          "functionName": "",
+          "path": "game/ui/menu-appearance.mjs"
+        },
+        {
+          "ts": 174244852156,
+          "durationMs": 0.062,
+          "functionName": "refresh",
+          "path": "game/ui/controller-reading.mjs"
+        },
+        {
+          "ts": 174244852222,
+          "durationMs": 0.035,
+          "functionName": "sync",
+          "path": "game/ui/mission-gallery.mjs"
+        },
+        {
+          "ts": 174244852260,
+          "durationMs": 0.005,
+          "functionName": "schedule",
+          "path": "game/ui/mission-picker.mjs"
+        },
+        {
+          "ts": 174244852268,
+          "durationMs": 0.015,
+          "functionName": "syncPreparation",
+          "path": "game/ui/game-shell.mjs"
+        },
+        {
+          "ts": 174244852286,
+          "durationMs": 0.019,
+          "functionName": "schedule",
+          "path": "game/ui/edition-play-layout.mjs"
+        },
+        {
+          "ts": 174244852310,
+          "durationMs": 0.068,
+          "functionName": "",
+          "path": null
+        },
+        {
+          "ts": 174244852417,
+          "durationMs": 0.063,
+          "functionName": "",
+          "path": "game/ui/mission-picker.mjs"
+        },
+        {
+          "ts": 174244852544,
+          "durationMs": 0.821,
+          "functionName": "tick",
+          "path": null
+        },
+        {
+          "ts": 174244854172,
+          "durationMs": 0.037,
+          "functionName": "refresh",
+          "path": "game/ui/controller-reading.mjs"
+        }
+      ]
+    },
+    "approximateSampleSupport": {
+      "reward": {
+        "samples": 109,
+        "nearestSampleSupportMs": 14.618500000000003
+      },
+      "other": {
+        "samples": 348,
+        "nearestSampleSupportMs": 34.400000000000055
+      }
+    },
+    "samplingGapsUs": {
+      "median": 130,
+      "p95": 145,
+      "max": 196
+    },
+    "largestRewardEvidenceTasks": [
+      {
+        "ts": 174244806671,
+        "durationMs": 49.061,
+        "cpuSamples": 457,
+        "rewardStackSamples": 109
+      },
+      {
+        "ts": 174244939917,
+        "durationMs": 30.649,
+        "cpuSamples": 230,
+        "rewardStackSamples": 216
+      },
+      {
+        "ts": 174244897241,
+        "durationMs": 26.234,
+        "cpuSamples": 224,
+        "rewardStackSamples": 132
+      },
+      {
+        "ts": 174244989748,
+        "durationMs": 4.684,
+        "cpuSamples": 59,
+        "rewardStackSamples": 2
+      },
+      {
+        "ts": 174243924161,
+        "durationMs": 4.464,
+        "cpuSamples": 49,
+        "rewardStackSamples": 1
+      }
+    ],
+    "selectorSamples": 7,
+    "selectorCampaignKeySamples": 0,
+    "pageWideObserverTasks": {
+      "supported": true,
+      "count": 0,
+      "over50Ms": 0,
+      "maxMs": 0,
+      "scope": "page-wide from arming through completion; not attributed to reward rendering"
+    },
+    "previous837FirstWinInclusiveMs": 64.939,
+    "currentFirstWinInclusiveMs": 49.061,
+    "interpretation": "Current first-win inclusive task 49.061 ms versus the retained837 diagnostic 64.939 ms. Seven samples include selector repaint and zero include campaignKey under it; the focused deterministic read-count regression independently checks the removed normalization. This is not a controlled percentage speedup or exclusive function duration. A 190.296 ms task starts before the mark and overlaps by 0.135 ms, with no observed reward samples; it remains visible rather than being discarded or automatically labeled profiler-only. CPU sampling adds overhead and absence of a stack does not prove zero work."
+  },
+  "imageAccounting": {
+    "summary": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/cpu/image-accounting.json",
+      "bytes": 3864,
+      "sha256": "0dd864d5d100462888a1b9991becaca4070e9931feb34694fb59e6fb6da9c62a"
+    },
+    "checkpoints": [
+      {
+        "cycle": 0,
+        "at": "2026-09-29T00:15:21.966Z",
+        "forcedGC": true,
+        "heap": {
+          "usedSize": 34945720,
+          "totalSize": 37535744,
+          "embedderHeapUsedSize": 6622384,
+          "backingStorageSize": 9747598
+        },
+        "dom": {
+          "documents": 2,
+          "nodes": 12809,
+          "jsEventListeners": 998
+        },
+        "objectGroupReleased": true,
+        "images": {
+          "total": 7,
+          "connected": 1,
+          "disconnected": 6,
+          "knownAssetPathMatches": 0,
+          "knownAssetConnected": 0,
+          "knownAssetDisconnected": 0,
+          "blobSources": 0,
+          "dataSources": 4,
+          "emptySources": 2,
+          "otherSources": 1
+        }
+      },
+      {
+        "cycle": 20,
+        "at": "2026-09-29T00:15:29.878Z",
+        "forcedGC": true,
+        "heap": {
+          "usedSize": 34315620,
+          "totalSize": 36487168,
+          "embedderHeapUsedSize": 6677992,
+          "backingStorageSize": 9750993
+        },
+        "dom": {
+          "documents": 2,
+          "nodes": 12809,
+          "jsEventListeners": 998
+        },
+        "objectGroupReleased": true,
+        "images": {
+          "total": 7,
+          "connected": 1,
+          "disconnected": 6,
+          "knownAssetPathMatches": 0,
+          "knownAssetConnected": 0,
+          "knownAssetDisconnected": 0,
+          "blobSources": 0,
+          "dataSources": 4,
+          "emptySources": 2,
+          "otherSources": 1
+        }
+      },
+      {
+        "cycle": 40,
+        "at": "2026-09-29T00:15:37.533Z",
+        "forcedGC": true,
+        "heap": {
+          "usedSize": 34261728,
+          "totalSize": 36225024,
+          "embedderHeapUsedSize": 6806920,
+          "backingStorageSize": 9750891
+        },
+        "dom": {
+          "documents": 2,
+          "nodes": 12803,
+          "jsEventListeners": 998
+        },
+        "objectGroupReleased": true,
+        "images": {
+          "total": 7,
+          "connected": 1,
+          "disconnected": 6,
+          "knownAssetPathMatches": 0,
+          "knownAssetConnected": 0,
+          "knownAssetDisconnected": 0,
+          "blobSources": 0,
+          "dataSources": 4,
+          "emptySources": 2,
+          "otherSources": 1
+        }
+      }
+    ],
+    "knownAsset": {
+      "path": "game/editions/assets/discovery/fpv-meet-aircraft-01-v1.jpg",
+      "sha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8"
+    },
+    "method": "One warm ordinary viewer/result cycle, then closed0/20/40 checkpoints after CPU tracing stopped. Each performs explicit GC, renderer heap/DOM counters and main-realm HTMLImageElement prototype query; all remote object groups are released before the next cycle.",
+    "scope": "Main-realm HTMLImageElement prototype cohort after explicit GC, including disconnected objects; renderer-wide DOM/heap counters are recorded separately. Every query object group was released before the next cycle.",
+    "findings": "All three checkpoints find 7 images: 1 connected and 6 disconnected, with 4 data sources, 2 empty sources and 1 other URL. No blob URLs or exact known-asset URL path matches were observed. Disconnected includes never-attached caches and is not proof of a leak. Blob/data indirection means these counts do not identify which asset is retained.",
+    "limitations": [
+      "Disconnected means isConnected=false, including never-attached engine caches; it is not a confirmed leak or former DOM membership.",
+      "Exact public URL path matching cannot identify the source asset behind blob/data URLs.",
+      "Counts do not establish retaining paths, owner attribution, exclusive memory, native decoders, GPU accounting or whole-heap stability."
+    ],
+    "wholeHeapStable": false
+  },
+  "publicHeaderPreflight": {
+    "passed": true,
+    "headers": {
+      "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "no-referrer",
+      "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+      "Cache-Control": "no-cache"
+    },
+    "boot": {
+      "ready": "ready",
+      "edition": "fpv-learning",
+      "locale": "en"
+    },
+    "passiveExports": [
+      "DISCOVERY_OBSERVATION_FORMAT",
+      "discoveryCycleSurface",
+      "discoverySurfaceSnapshot",
+      "discoverySurfaceState",
+      "observeDiscovery"
+    ],
+    "headerSource": {
+      "path": "scripts/game-cli.mjs",
+      "sha256": "a2df6cf4bfb0bca120782ade485c468dadad835825e1135bf81eb5b4c71d5754"
+    },
+    "cleanup": [
+      {
+        "name": "browser",
+        "closed": true
+      },
+      {
+        "name": "proxy",
+        "closed": true
+      },
+      {
+        "name": "archive server",
+        "closed": true
+      }
+    ],
+    "pageErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    ],
+    "correctedAttempt": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/public-headers-preflight-v2.json",
+      "bytes": 3570,
+      "sha256": "fd15142c1a9bdac904df27a31f9a6eeb6042cc9f1ec359196117570018ee1bc1"
+    },
+    "firstAttempt": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/public-headers-preflight.json",
+      "bytes": 3537,
+      "sha256": "41d855fc24a153782c5ffdfa35f9b3ca9db21c97cb0341330cd2e2a9a0782945"
+    },
+    "correction": {
+      "path": ".cache/phase7-c807542ef/arcade-selector/header-preflight-correction.json",
+      "bytes": 654,
+      "sha256": "b918ed44c27566a6af431be0b8955e6ae71160f44ba68a8b489b492a31d848bf"
+    },
+    "scope": "Untimed boot and passive module import under the existing public security-header values. No first win, timing, installation, device or release qualification."
+  },
+  "reproducibility": {
+    "timingRunner": "scripts/observe-discovery-runtime.mjs",
+    "command": "node scripts/observe-discovery-runtime.mjs \"$PLAYWRIGHT_MODULE\" <exact-plan.json> <new-output-directory>",
+    "analysisCommand": "node scripts/analyze-discovery-trace.mjs --trace <trace.json> --options <options.json> --out <new-analysis.json>",
+    "artifactNames": ["distribution-fpv-learning.zip", "manifest-fpv-learning.json"],
+    "plans": [
+      {
+        "path": ".cache/phase7-c807542ef/arcade-selector/plans-approved/timeline.json",
+        "bytes": 1185,
+        "sha256": "0da115bb62719858793de37f157e58e2915f24fd74b6100c14d44197762c8fd9"
+      },
+      {
+        "path": ".cache/phase7-c807542ef/arcade-selector/plans-approved/cpu.json",
+        "bytes": 1175,
+        "sha256": "dd2277146665b81357645e9c563baac5fc9ca36eeb1fb7da3582159e6291a88e"
+      }
+    ],
+    "taskLocalHelpers": "Public-header proxy and post-trace image accounting are separately pinned ignored validation helpers, not portable committed automation."
+  },
+  "limits": [
+    "No new 5% regression qualification.",
+    "Exclusive reward-rendering 50 ms limit and broader all-mission acceptance remain unverified.",
+    "Stable image-instance counts do not establish retaining paths, class ownership, native decoders, GPU or whole-heap stability.",
+    "Automated software inputs are not human or physical-device evidence.",
+    "No release, promotion, rollback or installation qualification is implied."
+  ]
+}

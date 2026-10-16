@@ -1,3 +1,4 @@
+import { t } from '../../game/i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createEnemyCatalogInput } from '../../game/ui/enemy-catalog-input.mjs';
@@ -5,6 +6,11 @@ import { attachEnemyWorkshopReturnHost } from '../../game/ui/enemy-workshop-retu
 import { attachEnemyCatalogPanel } from '../../game/ui/enemy-catalog-panel.mjs';
 import { attachControllerNavigation } from '../../game/ui/controller-navigation.mjs';
 import { createControllerRouter } from '../../game/ui/controller-router.mjs';
+import {
+  createAuthoringSourcePicker,
+  attachAuthoringSourceButtons,
+} from '../../game/ui/authoring-sources.mjs';
+import { attachAuthoringPreview } from '../../game/ui/authoring-input-host.mjs';
 import { emptyEnemyCatalogDraft, validateEnemyCatalogDraft } from '../../game/enemy-catalog.mjs';
 import { createEnemyCatalogScenario } from '../../game/enemy-catalog-scenarios.mjs';
 import { prepareScenario } from '../../game/imports.mjs';
@@ -99,10 +105,10 @@ function claimStartupOpening() {
 const startupOpening = claimStartupOpening();
 
 async function start() {
-  report('Loading registered themes…', 'busy');
+  report(t('tools:loadingRegisteredThemes'), 'busy');
   const response = await fetch('../../game/content/themes.json');
   if (!(await startupOpening.whenActive())) return;
-  if (!response.ok) throw new Error('Registered themes could not be loaded.');
+  if (!response.ok) throw new Error(t('tools:registeredThemesCouldNotBeLoaded'));
   const { themes } = await response.json();
   if (!(await startupOpening.whenActive())) return;
   const practiceReturn = attachEnemyWorkshopReturnHost({
@@ -112,7 +118,7 @@ async function start() {
       document.getElementById('open-catalog').focus();
       panel.open();
       navigation.sync();
-      report('Returned to the same workshop draft. Practice has ended.');
+      report(t('tools:returnedToTheSameWorkshopDraftPracticeHasEnded'));
     },
   });
   let initial = emptyEnemyCatalogDraft();
@@ -120,7 +126,7 @@ async function start() {
     const text = localStorage.getItem(key);
     if (text) initial = validateEnemyCatalogDraft(JSON.parse(text));
   } catch {
-    report('Saved choices unavailable; using the default authoring catalog.');
+    report(t('tools:savedChoicesUnavailableUsingTheDefaultAuthoringCatalog'));
   }
   panel = attachEnemyCatalogPanel({
     initialDraft: initial,
@@ -130,14 +136,14 @@ async function start() {
     },
     onApplyDraft: (draft) => {
       localStorage.setItem(key, JSON.stringify(draft));
-      report('Future authoring choices saved locally.');
+      report(t('tools:futureAuthoringChoicesSavedLocally'));
     },
     onExport: (draft) => {
       const blob = new Blob([JSON.stringify(draft, null, 2)], { type: 'application/json' }),
         url = URL.createObjectURL(blob),
         link = document.createElement('a');
       link.href = url;
-      link.download = 'RevealLine-enemy-catalog.json';
+      link.download = 'fpv-line-enemy-catalog.json';
       document.body.append(link);
       link.click();
       link.remove();
@@ -155,37 +161,72 @@ async function start() {
         panel.close();
         if (!document.hidden && document.hasFocus?.() !== false) frame.focus();
       }, 0);
-      report(
-        'Practice prepared. Loading the child game; its loading screen reports when play is available. Pause and choose Return to workshop to keep editing this draft.',
-      );
+      report(t('tools:practicePreparedLoadingTheChildGameItsLoadingScreenReports'));
     },
   });
-  router = createControllerRouter();
-  navigation = attachControllerNavigation({
-    getScope: () => (panel.dialog.open ? 'enemy-catalog' : 'catalog-page'),
-    getRoot: () => (panel.dialog.open ? panel.dialog : document),
-    getDefaultFocus: () =>
-      document.getElementById(panel.dialog.open ? 'enemy-catalog-role' : 'open-catalog'),
-    onBack: () => panel.close(),
-    keyboard: true,
-    onNativeInput: () => menuInput?.clear(),
-    onHint: (text) => {
-      if (!panel?.dialog.querySelector('.operation-status[data-state="busy"]')) report(text);
-    },
-  });
+  router = createControllerRouter({ navigationAliases: true });
+  let sourcePicker = null;
+  const menuRoot = () =>
+    sourcePicker?.dialog.open
+      ? sourcePicker.dialog
+      : panel.dialog.open
+        ? panel.dialog
+        : document.body;
   menuInput = createEnemyCatalogInput({
     document,
     frame,
     router,
-    navigation,
-    getScope: () => (panel.dialog.open ? 'enemy-catalog' : 'catalog-page'),
+    navigation: () => navigation,
+    getRoot: menuRoot,
+    getScope: () =>
+      sourcePicker?.dialog.open
+        ? 'catalog-sources'
+        : panel.dialog.open
+          ? 'enemy-catalog'
+          : 'catalog-page',
   });
+  navigation = attachControllerNavigation({
+    getScope: () =>
+      sourcePicker?.dialog.open
+        ? 'catalog-sources'
+        : panel.dialog.open
+          ? 'enemy-catalog'
+          : 'catalog-page',
+    getRoot: menuRoot,
+    getDefaultFocus: () =>
+      document.getElementById(panel.dialog.open ? 'enemy-catalog-role' : 'open-catalog'),
+    onBack: () => (sourcePicker?.dialog.open ? sourcePicker.close() : panel.close()),
+    activateFileInput: (input) => sourcePicker?.open(input),
+    keyboard: true,
+    activateControl: (element) => menuInput.activate(element),
+    onNativeInput: (event) => menuInput?.nativeInput(event),
+    onHint: (text) => {
+      if (!panel?.dialog.querySelector('.operation-status[data-state="busy"]')) report(text);
+    },
+  });
+  let stopSourceButtons = null,
+    previewNavigation = null;
+  if (
+    document.head &&
+    typeof window.MutationObserver === 'function' &&
+    typeof frame.before === 'function'
+  ) {
+    sourcePicker = createAuthoringSourcePicker({
+      document,
+      window,
+      onOpen: () => navigation.sync(),
+      onClose: () => router.clear(),
+    });
+    stopSourceButtons = attachAuthoringSourceButtons({ document, window, picker: sourcePicker });
+    previewNavigation = attachAuthoringPreview(frame, { document, window });
+  }
+
   document.getElementById('open-catalog').disabled = false;
   document.getElementById('open-catalog').onclick = () => {
     panel.open();
     navigation.sync();
   };
-  const blur = () => router.clear();
+  const blur = () => menuInput.clear();
   window.addEventListener('blur', blur);
   function loop(now) {
     const elapsed = last ? (now - last) / 1000 : 0;
@@ -200,12 +241,16 @@ async function start() {
   }
   window.addEventListener('pagehide', (event) => {
     cancelAnimationFrame(raf);
-    router.clear();
+    menuInput.clear();
     if (!event.persisted) {
       practiceReturn.dispose();
       panel.dispose();
+      menuInput.destroy();
       router.destroy();
       navigation.destroy();
+      stopSourceButtons?.();
+      sourcePicker?.destroy();
+      previewNavigation?.destroy();
       window.removeEventListener('blur', blur);
     }
   });
@@ -215,7 +260,7 @@ async function start() {
       raf = requestAnimationFrame(loop);
     }
   });
-  report('Seven behavior roles and four original presentation families ready.');
+  report(t('tools:sevenBehaviorRolesAndFourOriginalPresentationFamiliesReady'));
   if (startupOpening.current())
     panel.open({ returnFocus: document.getElementById('open-catalog') });
   raf = requestAnimationFrame(loop);

@@ -12,6 +12,7 @@ import {
   applyJourneyPictureEvent,
   journeyPictureCompletion,
 } from '../journey/pictures.mjs';
+import { emptyJourneyStars } from '../journey/stars.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 function completion(overrides = {}) {
@@ -82,6 +83,36 @@ test('strict historical profile receipts remain unchanged; exact picture descrip
   assert.deepEqual(await createJourneyBackend(disk).read(), emptyJourneyProfile());
 });
 
+test('picture and star sidecars commit and round-trip together without changing v1 receipts', async () => {
+  const disk = managedIndexedDB(),
+    { backend, profile } = store(disk);
+  await profile.load();
+  disk.failAnyPutAt = 3;
+  profile.record({ ...completion(), stars: 3 });
+  assert.equal(await profile.flush(), false);
+  assert.deepEqual(await backend.readState(), {
+    profile: emptyJourneyProfile(),
+    pictures: emptyJourneyPictures(),
+    stars: emptyJourneyStars(),
+  });
+  const exported = profile.export();
+  assert.equal(JSON.parse(exported).format, 'revealline-journey-backup.v5');
+  disk.failAnyPutAt = null;
+  assert.equal(await profile.flush(), true);
+  const restored = store(managedIndexedDB()).profile;
+  restored.restore(exported);
+  assert.equal(await restored.flush(), true);
+  assert.deepEqual(restored.pictures(), profile.pictures());
+  assert.deepEqual(restored.stars(), profile.stars());
+  assert.equal(restored.bestStars('solo', 'candidate/p/c/l'), 3);
+  assert.deepEqual(restored.snapshot(), profile.snapshot());
+  assert.deepEqual(Object.keys(restored.snapshot().clears.solo['candidate/p/c/l']), [
+    'runId',
+    'gameplayId',
+    'difficulty',
+  ]);
+});
+
 test('failure of the second write rolls back both receipts; session original exports and retries atomically', async () => {
   const disk = managedIndexedDB(),
     { backend, profile } = store(disk);
@@ -92,6 +123,7 @@ test('failure of the second write rolls back both receipts; session original exp
   assert.deepEqual(await backend.readState(), {
     profile: emptyJourneyProfile(),
     pictures: emptyJourneyPictures(),
+    stars: emptyJourneyStars(),
   });
   assert.equal(profile.pictures().records[0].asset.sha256, 'a'.repeat(64));
   const backup = JSON.parse(profile.export());
@@ -100,6 +132,45 @@ test('failure of the second write rolls back both receipts; session original exp
   disk.failAnyPutAt = null;
   assert.equal(await profile.flush(), true);
   assert.deepEqual((await backend.readState()).pictures, backup.pictures);
+});
+
+test('picture write failure durably falls back to the exact clear receipt after immediate caller teardown', async () => {
+  const disk = managedIndexedDB(),
+    { profile } = store(disk);
+  await profile.load();
+  disk.failAnyPutAt = 2;
+  const settling = profile.recordWithReceiptFallback(completion());
+  // The page may release all references as soon as the terminal frame is
+  // presented. The owned settlement promise must still finish the fallback.
+  const result = await settling;
+  assert.deepEqual(result, {
+    durable: true,
+    picture: false,
+    fallback: true,
+    error: 'Injected storage write failure',
+  });
+  const fresh = store(disk).profile;
+  await fresh.load();
+  assert.equal(fresh.snapshot().clears.solo['candidate/p/c/l'].runId, 'run-1');
+  assert.deepEqual(fresh.pictures().records, []);
+  assert.equal(fresh.status().durable, true);
+});
+
+test('a completion without available artwork still durably records progress', async () => {
+  const disk = managedIndexedDB(),
+    { profile } = store(disk),
+    { picture: _picture, ...receipt } = completion();
+  await profile.load();
+  assert.deepEqual(await profile.recordWithReceiptFallback(receipt), {
+    durable: true,
+    picture: false,
+    fallback: false,
+    error: null,
+  });
+  const fresh = store(disk).profile;
+  await fresh.load();
+  assert.equal(fresh.snapshot().clears.solo['candidate/p/c/l'].runId, 'run-1');
+  assert.deepEqual(fresh.pictures().records, []);
 });
 
 test('concurrent tabs keep independent mode and edition originals; duplicate terminal delivery is idempotent', async () => {

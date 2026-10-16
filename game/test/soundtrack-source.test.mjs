@@ -20,6 +20,30 @@ const catalogue = {
 };
 const body = original.assets[0].blob;
 
+test('local gameplay never consults a live catalogue or soundtrack server even when the browser reports online', async () => {
+  let requests = 0;
+  const source = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => true,
+    readOfficial: async () => null,
+    fetch: async () => {
+      requests++;
+      throw new Error('Network blocked');
+    },
+  });
+  assert.equal(await source.readAsset(track.asset.sha256), null);
+  assert.equal(requests, 0);
+  const local = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => true,
+    readOfficial: async () => body,
+    fetch: async () => {
+      throw new Error('Network must not be used');
+    },
+  });
+  assert.equal(await local.readAsset(track.asset.sha256), body);
+});
+
 test('catalogue streaming trusts only shipped hashes and checks the entire original without saving it', async () => {
   const calls = [];
   const source = createSoundtrackSource({
@@ -198,12 +222,13 @@ const coreRegistration = {
   path: `game/audio/soundtracks/${coreTrack.asset.sha256}.mp3`,
 };
 
-test('code-owned core audio honors local-only preparation and Installed only playback', async () => {
+test('a shipped recording remains local-only in installed play but can be explicitly downloaded', async () => {
   const urls = [];
   let local = null;
   const source = createSoundtrackSource({
     catalogue: coreCatalogue,
     bundled: [coreRegistration],
+    localPlayback: () => true,
     readLocal: () => local,
     installedOnly: () => true,
     baseURL: 'https://example.test/releases/v1/',
@@ -218,11 +243,13 @@ test('code-owned core audio honors local-only preparation and Installed only pla
   assert.equal(await source.readAsset(coreTrack.asset.sha256, { localOnly: true }), body);
   assert.equal(urls.length, 0);
   local = null;
-  for (const options of [{}, { purpose: 'offline' }, { purpose: 'export' }]) {
+  assert.equal(await source.readAsset(coreTrack.asset.sha256), null);
+  assert.equal(urls.length, 0);
+  for (const options of [{ purpose: 'offline' }, { purpose: 'export' }]) {
     const found = await source.readAsset(coreTrack.asset.sha256, options);
     assert.deepEqual(Buffer.from(await found.arrayBuffer()), Buffer.from(await body.arrayBuffer()));
   }
-  assert.equal(urls.length, 3);
+  assert.equal(urls.length, 2);
   assert.ok(
     urls.every((url) => url === `https://example.test/releases/v1/${coreRegistration.path}`),
   );

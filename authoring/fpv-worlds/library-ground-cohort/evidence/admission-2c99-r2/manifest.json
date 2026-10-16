@@ -1,0 +1,141 @@
+{
+  "format": "FPVGroundCohortAdmissionArchive.v1",
+  "sourceRevision": "2c99a82508f23e508666d7354a1b473507514d48",
+  "sourceTree": "9b8339c70f93c9405770038d806dd1c283710687",
+  "output": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2",
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "allArtifactChecksumsVerified": true,
+  "allDistinctWorkingInputsVerified": 138,
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputCount": 41,
+      "inputBytes": 1921336,
+      "members": 48,
+      "revision": "f194d29887f3e2ca805370a9d4104ac4e07fc6e76094158f5ee70f412f7835c6"
+    },
+    {
+      "id": "civilian-fpv",
+      "inputCount": 69,
+      "inputBytes": 5687631,
+      "members": 76,
+      "revision": "74c52ef00b01eab0f40f05d5d4fe3600ca03d98ac90f7712f9a138ce317aa8ff"
+    },
+    {
+      "id": "fpv-worlds",
+      "inputCount": 105,
+      "inputBytes": 16981607,
+      "members": 112,
+      "revision": "24e3c30e9f4c3e6f97cfaa06f871985f7a4c5fcb4e8d92b5f0b791cc38d5d2e8"
+    }
+  ],
+  "artifacts": [
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/manifest-optional-civilian-flight.json",
+      "path": "manifest-optional-civilian-flight.json.gz",
+      "bytes": 8846,
+      "sha256": "e77b6c2abeff6d2a66d384663be315617f79ab65decc3a215a53d039304164b8",
+      "gzipBytes": 2851,
+      "gzipSHA256": "58e5c4a75512e6a6fa247c407697972bd194665dd25542e4ce085e6309fc7925"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/manifest-optional-civilian-fpv.json",
+      "path": "manifest-optional-civilian-fpv.json.gz",
+      "bytes": 13816,
+      "sha256": "76789b2ec93c925bcd8318c454b56c5fa1a3f5ac370a56e374c2f36f6e1e54a2",
+      "gzipBytes": 4404,
+      "gzipSHA256": "6ac107717641ed9119626e41b1aff5283e0608e6e8eb4d74247f6d9819250517"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/manifest-optional-fpv-worlds.json",
+      "path": "manifest-optional-fpv-worlds.json.gz",
+      "bytes": 20541,
+      "sha256": "3e2692b9630c0ff42bc7b347496f2b4071a02bdbe0b314cab0133d6df120dfd0",
+      "gzipBytes": 6423,
+      "gzipSHA256": "b28b2b90f96b02c8e670e2bf5fca3b41376e1c41cb36bf28edbdc99f25d4acc2"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/optional-candidate-verification.json",
+      "path": "optional-candidate-verification.json.gz",
+      "bytes": 1142,
+      "sha256": "518e189c1a4bdf435780a4d8cda33d257972c1ba561bb7253cd6311f8e0a08b1",
+      "gzipBytes": 612,
+      "gzipSHA256": "d94f848ac109f451ebb437c3245a164bb890e49f4a4e7657961f09ef7d088d34"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/optional-checksums.json",
+      "path": "optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "ef1eed663c1a79b2a527408deef2bb517d7e3c36beb7d17163466107fc5e101e",
+      "gzipBytes": 916,
+      "gzipSHA256": "512f21f4467f6bd7ee552a4cc43b6bf34fe95717d58d79a90df006eea7e17bed"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/optional-package-review.json",
+      "path": "optional-package-review.json.gz",
+      "bytes": 2838,
+      "sha256": "468a13bbd4b0215f0937eb6abf16cdf787e9a6b8e2d653d2ca2b6964278f8185",
+      "gzipBytes": 459,
+      "gzipSHA256": "c6a9a197e1acc0198749a2886ea77b9332f586bbbd134b93157eec6dff8000ad"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/optional-packages.json",
+      "path": "optional-packages.json.gz",
+      "bytes": 2633,
+      "sha256": "8d4654dbf4fb625fa9605fea1330f10d24d2717a50c74e9e9a0e0e6ff98ee808",
+      "gzipBytes": 1075,
+      "gzipSHA256": "946557e29289de2be76c45b913bd43c94647ccee7a81f46669f22ca251871d0c"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/source-inventory-optional-civilian-flight.json",
+      "path": "source-inventory-optional-civilian-flight.json.gz",
+      "bytes": 14050,
+      "sha256": "f693b3a843428971b2ecd64c64afb5df4fa8603f6c57af0f99538b24154004c5",
+      "gzipBytes": 3447,
+      "gzipSHA256": "8e6e9b8de5b4f416e47303df755beba0c9fd1c84da473b80b552db439eff849d"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/source-inventory-optional-civilian-fpv.json",
+      "path": "source-inventory-optional-civilian-fpv.json.gz",
+      "bytes": 23050,
+      "sha256": "18688ee6f23422738667f9ec3da097727e351cf3b18477da4e01f2f77bcfa6e0",
+      "gzipBytes": 5387,
+      "gzipSHA256": "e8010c9642869a7308e2b74e2f32ee5aa86f109e47a13d1391f02b28782658a8"
+    },
+    {
+      "source": "/private/tmp/fpv-ground-cohort-admission-2c99a8250-r2/source-inventory-optional-fpv-worlds.json",
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 35076,
+      "sha256": "62c4b931117b1289a2229bed76d42c4371483c17b5577e0ed77f3cb68ec508d8",
+      "gzipBytes": 7786,
+      "gzipSHA256": "2244da126be25003fd4911b75718f85ab073606c7ec5227fbf68c81592674f4b"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-admission-2c99a8250-r2.log",
+      "path": "fpv-ground-cohort-admission-2c99a8250-r2.log.gz",
+      "bytes": 423,
+      "sha256": "2071edc21f0fdfb215ff411eccf2aac37969750f393de24e8d3d1a1759680377",
+      "gzipBytes": 294,
+      "gzipSHA256": "ffc1a15de0b698bc760bad7671a7dc5e5528c1c988e401224a9cdbbbb1352ef4"
+    },
+    {
+      "source": "/tmp/fpv-ground-cohort-admission-2c99a8250-r2.json",
+      "path": "fpv-ground-cohort-admission-2c99a8250-r2.json.gz",
+      "bytes": 567,
+      "sha256": "8e80e9c68d420b6305ff11aaaafeadf13b1e761cfdaac7e570c176ea9f3903c7",
+      "gzipBytes": 377,
+      "gzipSHA256": "f12cc4c8e6a815efe823d2e5307453c351951d607e5b2a4213f0964bac54b273"
+    },
+    {
+      "source": "/tmp/fpv-safe-cleanup-20261005.md",
+      "path": "fpv-safe-cleanup-20261005.md.gz",
+      "bytes": 3103,
+      "sha256": "9c8db5d83172ef4cf2caf63dc7e96997c16b6152f5ede6b71ce5221b9928fac6",
+      "gzipBytes": 1493,
+      "gzipSHA256": "3b3ca610d14c49b36dd4401a4797e67b3e71e945a35ae6219f1d61a8423d8321"
+    }
+  ],
+  "scope": "Exact frozen2c99 only; excludes incoming main audio. No native, offline or public-eligible claim. First disk-floor refusal remains archived separately. Cleanup journal is the exact supplied snapshot, not a live job status."
+}

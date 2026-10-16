@@ -1,0 +1,40 @@
+{
+  "format": "appearance-quality-checks.v1",
+  "gates": {
+    "appearance": {
+      "tests": 142,
+      "pass": 142,
+      "fail": 0,
+      "skipped": 0
+    },
+    "practice": {
+      "tests": 207,
+      "pass": 207,
+      "fail": 0,
+      "skipped": 0
+    },
+    "world": {
+      "tests": 62,
+      "pass": 62,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "checks": {
+    "eslint": "passed",
+    "contentValidation": "passed",
+    "presentationMetadata": "passed",
+    "i18n": "passed; see localization receipt",
+    "bootstrapProjection": "passed",
+    "sharedSIMProjection": "passed",
+    "diffWhitespace": "passed"
+  },
+  "build": {
+    "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test/dist",
+    "version": "0.142.4",
+    "files": 2749,
+    "sha256": "62f8638e1ea0587c791b45539b0a748839bbd1362d60a2f673134a8e83b4e6c1",
+    "sourceRevision": null
+  },
+  "limits": "This is not a full-repository test pass or release/device qualification."
+}

@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { journeyMissionId } from '../journey/catalog.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 class CandidateImage {
   width = 1774;
   height = 887;
@@ -53,7 +55,7 @@ async function activate(p, id, level) {
   assert.equal(p.$(id).hidden, false, 'The primary action must actually be visible.');
   p.$(id).focus();
   p.$(id).click();
-  await settle(() => p.doc.body.dataset.flightState === 'running');
+  await waitFor(() => p.doc.body.dataset.flightState === 'running', { timeoutMs: 15_000 });
   p.frame(0);
   assert.equal(p.rendered.run.levelId, level);
   assert.equal(p.$('shell-home').open, false);
@@ -111,12 +113,22 @@ test('completed Prologue names the successor in Horizon School', async (t) => {
 });
 
 test('an active Journey caption continues to name its paused flight', async (t) => {
-  const { p } = await setup(t);
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const { p } = await setup(t, { route: 'whole-spatial-v11' });
   const primary = p.$('shell-continue').hidden ? 'shell-featured' : 'shell-continue';
   await activate(p, primary, 'first-return');
   p.$('pause-button').click();
   p.$('overlay-menu').click();
   assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.$('shell-destination').textContent, 'Continue · First return');
+  setLocale('uk', { persist: false });
+  assert.equal(p.$('shell-continue').textContent.trim(), 'Продовжити→');
+  assert.equal(p.$('mission-brief-title').textContent, 'Перше повернення');
+  assert.equal(p.$('shell-destination').textContent, 'Продовжити · Перше повернення');
+  setLocale('en', { persist: false });
+  assert.equal(p.$('shell-continue').textContent.trim(), 'Continue→');
   assert.equal(p.$('shell-destination').textContent, 'Continue · First return');
   assert.equal(p.rendered.run.levelId, 'first-return');
   assert.deepEqual(p.errors, []);

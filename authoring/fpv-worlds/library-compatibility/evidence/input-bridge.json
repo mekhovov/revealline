@@ -1,0 +1,1449 @@
+{
+  "format": "FPVLibraryCompatibilityInputBridge.v1",
+  "frozenSource": "97883b0aebc1e75a8b7f26da3f556bf5b8e24e24",
+  "integratedMain": "ecf0bafc6541c6b57ae28a530763bab221555d4f",
+  "admittedSource": "4eeb7bc4480acc1f82f07d436401283ea80cfd04",
+  "sourceTree": "e26ff23410a3511a24a6fa4a264663323dae5f48",
+  "inputs": [
+    {
+      "path": "game/data-json.mjs",
+      "frozenSource": {
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      },
+      "integratedMain": {
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      },
+      "admittedSource": {
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      }
+    },
+    {
+      "path": "game/encounter-display-preferences.mjs",
+      "frozenSource": {
+        "bytes": 7314,
+        "sha256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03"
+      },
+      "integratedMain": {
+        "bytes": 7314,
+        "sha256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03"
+      },
+      "admittedSource": {
+        "bytes": 7314,
+        "sha256": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03"
+      }
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "frozenSource": {
+        "bytes": 6211,
+        "sha256": "f994c064b82e04c2f218f748b9e745800fc6cc32163c51b40876a572c3c4fd42"
+      },
+      "integratedMain": {
+        "bytes": 6211,
+        "sha256": "f994c064b82e04c2f218f748b9e745800fc6cc32163c51b40876a572c3c4fd42"
+      },
+      "admittedSource": {
+        "bytes": 6211,
+        "sha256": "f994c064b82e04c2f218f748b9e745800fc6cc32163c51b40876a572c3c4fd42"
+      }
+    },
+    {
+      "path": "game/hunt/actor-art.mjs",
+      "frozenSource": {
+        "bytes": 15647,
+        "sha256": "c1373ba06450ee95be32d530f0bc85311d4f38d82244a65fc52d252c920e746b"
+      },
+      "integratedMain": {
+        "bytes": 15647,
+        "sha256": "c1373ba06450ee95be32d530f0bc85311d4f38d82244a65fc52d252c920e746b"
+      },
+      "admittedSource": {
+        "bytes": 15647,
+        "sha256": "c1373ba06450ee95be32d530f0bc85311d4f38d82244a65fc52d252c920e746b"
+      }
+    },
+    {
+      "path": "game/hunt/actor-catalog.mjs",
+      "frozenSource": {
+        "bytes": 17484,
+        "sha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92"
+      },
+      "integratedMain": {
+        "bytes": 17484,
+        "sha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92"
+      },
+      "admittedSource": {
+        "bytes": 17484,
+        "sha256": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92"
+      }
+    },
+    {
+      "path": "game/hunt/preferences.mjs",
+      "frozenSource": {
+        "bytes": 5851,
+        "sha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324"
+      },
+      "integratedMain": {
+        "bytes": 5851,
+        "sha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324"
+      },
+      "admittedSource": {
+        "bytes": 5851,
+        "sha256": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324"
+      }
+    },
+    {
+      "path": "game/hunt/presentation-catalog.mjs",
+      "frozenSource": {
+        "bytes": 4479,
+        "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796"
+      },
+      "integratedMain": {
+        "bytes": 4479,
+        "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796"
+      },
+      "admittedSource": {
+        "bytes": 4479,
+        "sha256": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796"
+      }
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "frozenSource": {
+        "bytes": 13117,
+        "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+      },
+      "integratedMain": {
+        "bytes": 13117,
+        "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+      },
+      "admittedSource": {
+        "bytes": 13117,
+        "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+      }
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "frozenSource": {
+        "bytes": 417,
+        "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+      },
+      "integratedMain": {
+        "bytes": 417,
+        "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+      },
+      "admittedSource": {
+        "bytes": 417,
+        "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+      }
+    },
+    {
+      "path": "game/locales/en/errors.json",
+      "frozenSource": {
+        "bytes": 71247,
+        "sha256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db"
+      },
+      "integratedMain": {
+        "bytes": 71247,
+        "sha256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db"
+      },
+      "admittedSource": {
+        "bytes": 71247,
+        "sha256": "c9ae30690d8379d685117b74b62517e580c980b3501c9b42d562037cdc0c04db"
+      }
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "frozenSource": {
+        "bytes": 500983,
+        "sha256": "9891110c7eb1aa4fed02a10fb4e2f43586a9a71223c9d88aca9fd11d3c1a82af"
+      },
+      "integratedMain": {
+        "bytes": 500983,
+        "sha256": "9891110c7eb1aa4fed02a10fb4e2f43586a9a71223c9d88aca9fd11d3c1a82af"
+      },
+      "admittedSource": {
+        "bytes": 500983,
+        "sha256": "9891110c7eb1aa4fed02a10fb4e2f43586a9a71223c9d88aca9fd11d3c1a82af"
+      }
+    },
+    {
+      "path": "game/locales/uk/errors.json",
+      "frozenSource": {
+        "bytes": 113049,
+        "sha256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772"
+      },
+      "integratedMain": {
+        "bytes": 113049,
+        "sha256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772"
+      },
+      "admittedSource": {
+        "bytes": 113049,
+        "sha256": "e77e08aa64b2e472c87e2234be8a38783e4744a88a189b58930b26ae78b2c772"
+      }
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "frozenSource": {
+        "bytes": 813860,
+        "sha256": "633b7322bd897f493585234e34e272fc5eb7c95698416ec8cd2038886deb8cbf"
+      },
+      "integratedMain": {
+        "bytes": 813860,
+        "sha256": "633b7322bd897f493585234e34e272fc5eb7c95698416ec8cd2038886deb8cbf"
+      },
+      "admittedSource": {
+        "bytes": 813860,
+        "sha256": "633b7322bd897f493585234e34e272fc5eb7c95698416ec8cd2038886deb8cbf"
+      }
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "frozenSource": {
+        "bytes": 65920,
+        "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6"
+      },
+      "integratedMain": {
+        "bytes": 65920,
+        "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6"
+      },
+      "admittedSource": {
+        "bytes": 65920,
+        "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6"
+      }
+    },
+    {
+      "path": "game/profile-database.mjs",
+      "frozenSource": {
+        "bytes": 152,
+        "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+      },
+      "integratedMain": {
+        "bytes": 152,
+        "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+      },
+      "admittedSource": {
+        "bytes": 152,
+        "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+      }
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "frozenSource": {
+        "bytes": 6205,
+        "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+      },
+      "integratedMain": {
+        "bytes": 6205,
+        "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+      },
+      "admittedSource": {
+        "bytes": 6205,
+        "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+      }
+    },
+    {
+      "path": "game/rewards/audio-groups.mjs",
+      "frozenSource": {
+        "bytes": 2937,
+        "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+      },
+      "integratedMain": {
+        "bytes": 2937,
+        "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+      },
+      "admittedSource": {
+        "bytes": 2937,
+        "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+      }
+    },
+    {
+      "path": "game/rewards/exploration.mjs",
+      "frozenSource": {
+        "bytes": 9341,
+        "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+      },
+      "integratedMain": {
+        "bytes": 9341,
+        "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+      },
+      "admittedSource": {
+        "bytes": 9341,
+        "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+      }
+    },
+    {
+      "path": "game/rewards/learning-profiles.mjs",
+      "frozenSource": {
+        "bytes": 1519,
+        "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+      },
+      "integratedMain": {
+        "bytes": 1519,
+        "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+      },
+      "admittedSource": {
+        "bytes": 1519,
+        "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+      }
+    },
+    {
+      "path": "game/rewards/model.mjs",
+      "frozenSource": {
+        "bytes": 34442,
+        "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+      },
+      "integratedMain": {
+        "bytes": 34442,
+        "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+      },
+      "admittedSource": {
+        "bytes": 34442,
+        "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+      }
+    },
+    {
+      "path": "game/rewards/store.mjs",
+      "frozenSource": {
+        "bytes": 17038,
+        "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+      },
+      "integratedMain": {
+        "bytes": 17038,
+        "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+      },
+      "admittedSource": {
+        "bytes": 17038,
+        "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+      }
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "frozenSource": {
+        "bytes": 485216,
+        "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+      },
+      "integratedMain": {
+        "bytes": 485216,
+        "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+      },
+      "admittedSource": {
+        "bytes": 485216,
+        "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+      "frozenSource": {
+        "bytes": 482136,
+        "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+      },
+      "integratedMain": {
+        "bytes": 482136,
+        "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+      },
+      "admittedSource": {
+        "bytes": 482136,
+        "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/fpv.webp",
+      "frozenSource": {
+        "bytes": 514190,
+        "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+      },
+      "integratedMain": {
+        "bytes": 514190,
+        "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+      },
+      "admittedSource": {
+        "bytes": 514190,
+        "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+      }
+    },
+    {
+      "path": "game/ui/native-menu-icons.mjs",
+      "frozenSource": {
+        "bytes": 1903,
+        "sha256": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db"
+      },
+      "integratedMain": {
+        "bytes": 1903,
+        "sha256": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db"
+      },
+      "admittedSource": {
+        "bytes": 1903,
+        "sha256": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db"
+      }
+    },
+    {
+      "path": "game/ui/reward-knowledge.mjs",
+      "frozenSource": {
+        "bytes": 2251,
+        "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+      },
+      "integratedMain": {
+        "bytes": 2251,
+        "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+      },
+      "admittedSource": {
+        "bytes": 2251,
+        "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+      }
+    },
+    {
+      "path": "game/vendor/I18NEXT-LICENSE.txt",
+      "frozenSource": {
+        "bytes": 1082,
+        "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+      },
+      "integratedMain": {
+        "bytes": 1082,
+        "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+      },
+      "admittedSource": {
+        "bytes": 1082,
+        "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+      }
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "frozenSource": {
+        "bytes": 43702,
+        "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+      },
+      "integratedMain": {
+        "bytes": 43702,
+        "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+      },
+      "admittedSource": {
+        "bytes": 43702,
+        "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/README.md",
+      "frozenSource": {
+        "bytes": 25804,
+        "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+      },
+      "integratedMain": {
+        "bytes": 25804,
+        "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+      },
+      "admittedSource": {
+        "bytes": 25804,
+        "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/attempts.mjs",
+      "frozenSource": {
+        "bytes": 13389,
+        "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+      },
+      "integratedMain": {
+        "bytes": 13389,
+        "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+      },
+      "admittedSource": {
+        "bytes": 13389,
+        "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+      "frozenSource": {
+        "bytes": 101913,
+        "sha256": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c"
+      },
+      "integratedMain": {
+        "bytes": 101913,
+        "sha256": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c"
+      },
+      "admittedSource": {
+        "bytes": 101913,
+        "sha256": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "frozenSource": {
+        "bytes": 10565,
+        "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+      },
+      "integratedMain": {
+        "bytes": 10565,
+        "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+      },
+      "admittedSource": {
+        "bytes": 10565,
+        "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "frozenSource": {
+        "bytes": 10543,
+        "sha256": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd"
+      },
+      "integratedMain": {
+        "bytes": 10543,
+        "sha256": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd"
+      },
+      "admittedSource": {
+        "bytes": 10543,
+        "sha256": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "frozenSource": {
+        "bytes": 221646,
+        "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+      },
+      "integratedMain": {
+        "bytes": 221646,
+        "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+      },
+      "admittedSource": {
+        "bytes": 221646,
+        "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "frozenSource": {
+        "bytes": 12582,
+        "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede"
+      },
+      "integratedMain": {
+        "bytes": 12582,
+        "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede"
+      },
+      "admittedSource": {
+        "bytes": 12582,
+        "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "frozenSource": {
+        "bytes": 22919,
+        "sha256": "ed48db6bde6cc14aae093301df945769bb82c3e50af80f07420474ef7946a01e"
+      },
+      "integratedMain": {
+        "bytes": 22919,
+        "sha256": "ed48db6bde6cc14aae093301df945769bb82c3e50af80f07420474ef7946a01e"
+      },
+      "admittedSource": {
+        "bytes": 22919,
+        "sha256": "ed48db6bde6cc14aae093301df945769bb82c3e50af80f07420474ef7946a01e"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "frozenSource": {
+        "bytes": 2673,
+        "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+      },
+      "integratedMain": {
+        "bytes": 2673,
+        "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+      },
+      "admittedSource": {
+        "bytes": 2673,
+        "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "frozenSource": {
+        "bytes": 36565,
+        "sha256": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a"
+      },
+      "integratedMain": {
+        "bytes": 36565,
+        "sha256": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a"
+      },
+      "admittedSource": {
+        "bytes": 36565,
+        "sha256": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "frozenSource": {
+        "bytes": 3062,
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+      },
+      "integratedMain": {
+        "bytes": 3062,
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+      },
+      "admittedSource": {
+        "bytes": 3062,
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "frozenSource": {
+        "bytes": 17641,
+        "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+      },
+      "integratedMain": {
+        "bytes": 17641,
+        "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+      },
+      "admittedSource": {
+        "bytes": 17641,
+        "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/notebook.mjs",
+      "frozenSource": {
+        "bytes": 18432,
+        "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+      },
+      "integratedMain": {
+        "bytes": 18432,
+        "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+      },
+      "admittedSource": {
+        "bytes": 18432,
+        "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/offline.mjs",
+      "frozenSource": {
+        "bytes": 1045,
+        "sha256": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444"
+      },
+      "integratedMain": {
+        "bytes": 1045,
+        "sha256": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444"
+      },
+      "admittedSource": {
+        "bytes": 1045,
+        "sha256": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/playlists.mjs",
+      "frozenSource": {
+        "bytes": 5130,
+        "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77"
+      },
+      "integratedMain": {
+        "bytes": 5130,
+        "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77"
+      },
+      "admittedSource": {
+        "bytes": 5130,
+        "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-controls.mjs",
+      "frozenSource": {
+        "bytes": 5726,
+        "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+      },
+      "integratedMain": {
+        "bytes": 5726,
+        "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+      },
+      "admittedSource": {
+        "bytes": 5726,
+        "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-guide.mjs",
+      "frozenSource": {
+        "bytes": 37387,
+        "sha256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1"
+      },
+      "integratedMain": {
+        "bytes": 37387,
+        "sha256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1"
+      },
+      "admittedSource": {
+        "bytes": 37387,
+        "sha256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "frozenSource": {
+        "bytes": 18097,
+        "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+      },
+      "integratedMain": {
+        "bytes": 18097,
+        "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+      },
+      "admittedSource": {
+        "bytes": 18097,
+        "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "frozenSource": {
+        "bytes": 8037,
+        "sha256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b"
+      },
+      "integratedMain": {
+        "bytes": 8037,
+        "sha256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b"
+      },
+      "admittedSource": {
+        "bytes": 8037,
+        "sha256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-session.mjs",
+      "frozenSource": {
+        "bytes": 3780,
+        "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+      },
+      "integratedMain": {
+        "bytes": 3780,
+        "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+      },
+      "admittedSource": {
+        "bytes": 3780,
+        "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "frozenSource": {
+        "bytes": 45087,
+        "sha256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6"
+      },
+      "integratedMain": {
+        "bytes": 45087,
+        "sha256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6"
+      },
+      "admittedSource": {
+        "bytes": 45087,
+        "sha256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "frozenSource": {
+        "bytes": 112007,
+        "sha256": "dcdd583c885d417c569e2361243fd992bb967e2b95343d95eac379246547d09a"
+      },
+      "integratedMain": {
+        "bytes": 112007,
+        "sha256": "dcdd583c885d417c569e2361243fd992bb967e2b95343d95eac379246547d09a"
+      },
+      "admittedSource": {
+        "bytes": 112007,
+        "sha256": "dcdd583c885d417c569e2361243fd992bb967e2b95343d95eac379246547d09a"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "frozenSource": {
+        "bytes": 7509,
+        "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+      },
+      "integratedMain": {
+        "bytes": 7509,
+        "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+      },
+      "admittedSource": {
+        "bytes": 7509,
+        "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "frozenSource": {
+        "bytes": 500292,
+        "sha256": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5"
+      },
+      "integratedMain": {
+        "bytes": 500292,
+        "sha256": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5"
+      },
+      "admittedSource": {
+        "bytes": 500292,
+        "sha256": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "frozenSource": {
+        "bytes": 23242,
+        "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a"
+      },
+      "integratedMain": {
+        "bytes": 23242,
+        "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a"
+      },
+      "admittedSource": {
+        "bytes": 23242,
+        "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "frozenSource": {
+        "bytes": 8990,
+        "sha256": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81"
+      },
+      "integratedMain": {
+        "bytes": 8990,
+        "sha256": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81"
+      },
+      "admittedSource": {
+        "bytes": 8990,
+        "sha256": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt.mjs",
+      "frozenSource": {
+        "bytes": 3683,
+        "sha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da"
+      },
+      "integratedMain": {
+        "bytes": 3683,
+        "sha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da"
+      },
+      "admittedSource": {
+        "bytes": 3683,
+        "sha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "frozenSource": {
+        "bytes": 87704,
+        "sha256": "04ff745f2bff3ae2ee08dff1af64eba49f8aeddc4c36caae685773415b48bf41"
+      },
+      "integratedMain": {
+        "bytes": 87704,
+        "sha256": "04ff745f2bff3ae2ee08dff1af64eba49f8aeddc4c36caae685773415b48bf41"
+      },
+      "admittedSource": {
+        "bytes": 87704,
+        "sha256": "04ff745f2bff3ae2ee08dff1af64eba49f8aeddc4c36caae685773415b48bf41"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "frozenSource": {
+        "bytes": 1081,
+        "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+      },
+      "integratedMain": {
+        "bytes": 1081,
+        "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+      },
+      "admittedSource": {
+        "bytes": 1081,
+        "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "frozenSource": {
+        "bytes": 51722,
+        "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+      },
+      "integratedMain": {
+        "bytes": 51722,
+        "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+      },
+      "admittedSource": {
+        "bytes": 51722,
+        "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "frozenSource": {
+        "bytes": 117586,
+        "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f"
+      },
+      "integratedMain": {
+        "bytes": 117586,
+        "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f"
+      },
+      "admittedSource": {
+        "bytes": 117586,
+        "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "frozenSource": {
+        "bytes": 1689,
+        "sha256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1"
+      },
+      "integratedMain": {
+        "bytes": 1689,
+        "sha256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1"
+      },
+      "admittedSource": {
+        "bytes": 1689,
+        "sha256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "frozenSource": {
+        "bytes": 37728,
+        "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800"
+      },
+      "integratedMain": {
+        "bytes": 37728,
+        "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800"
+      },
+      "admittedSource": {
+        "bytes": 37728,
+        "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "frozenSource": {
+        "bytes": 11551,
+        "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17"
+      },
+      "integratedMain": {
+        "bytes": 11551,
+        "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17"
+      },
+      "admittedSource": {
+        "bytes": 11551,
+        "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "frozenSource": {
+        "bytes": 11343,
+        "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519"
+      },
+      "integratedMain": {
+        "bytes": 11343,
+        "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519"
+      },
+      "admittedSource": {
+        "bytes": 11343,
+        "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "frozenSource": {
+        "bytes": 1030,
+        "sha256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074"
+      },
+      "integratedMain": {
+        "bytes": 1030,
+        "sha256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074"
+      },
+      "admittedSource": {
+        "bytes": 1030,
+        "sha256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "frozenSource": {
+        "bytes": 4340292,
+        "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+      },
+      "integratedMain": {
+        "bytes": 4340292,
+        "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+      },
+      "admittedSource": {
+        "bytes": 4340292,
+        "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "frozenSource": {
+        "bytes": 1458113,
+        "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+      },
+      "integratedMain": {
+        "bytes": 1458113,
+        "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+      },
+      "admittedSource": {
+        "bytes": 1458113,
+        "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "frozenSource": {
+        "bytes": 662772,
+        "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+      },
+      "integratedMain": {
+        "bytes": 662772,
+        "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+      },
+      "admittedSource": {
+        "bytes": 662772,
+        "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "frozenSource": {
+        "bytes": 261850,
+        "sha256": "c89355b549be99fc06ef1fdaf3d46733cc4cfbc012cafacff71e43ff618d5d4b"
+      },
+      "integratedMain": {
+        "bytes": 261869,
+        "sha256": "285ab4d1f5312e57d4cef45b062a147f3173159134d3a447b3b126637df7f474"
+      },
+      "admittedSource": {
+        "bytes": 261971,
+        "sha256": "654a16daaaa9fe7c8ffad6c260cd185b687d423337b0ea330eee899801fc571a"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-assets.mjs",
+      "frozenSource": {
+        "bytes": 1168270,
+        "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c"
+      },
+      "integratedMain": {
+        "bytes": 1168270,
+        "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c"
+      },
+      "admittedSource": {
+        "bytes": 1168270,
+        "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "frozenSource": {
+        "bytes": 240477,
+        "sha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+      },
+      "integratedMain": {
+        "bytes": 240477,
+        "sha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+      },
+      "admittedSource": {
+        "bytes": 240477,
+        "sha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "frozenSource": {
+        "bytes": 12256,
+        "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+      },
+      "integratedMain": {
+        "bytes": 12256,
+        "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+      },
+      "admittedSource": {
+        "bytes": 12256,
+        "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "frozenSource": {
+        "bytes": 49894,
+        "sha256": "8ccfa7c0fef5002d1bc181ad96083966f56e7cec71267520c676e68f8ebe5bee"
+      },
+      "integratedMain": {
+        "bytes": 49574,
+        "sha256": "e9ec95c30121fbd4ec76d4344e7769418e5647344085904c9d1526b5571ef653"
+      },
+      "admittedSource": {
+        "bytes": 49894,
+        "sha256": "8ccfa7c0fef5002d1bc181ad96083966f56e7cec71267520c676e68f8ebe5bee"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "frozenSource": {
+        "bytes": 2207074,
+        "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+      },
+      "integratedMain": {
+        "bytes": 2207074,
+        "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+      },
+      "admittedSource": {
+        "bytes": 2207074,
+        "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-editor.mjs",
+      "frozenSource": {
+        "bytes": 5402,
+        "sha256": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c"
+      },
+      "integratedMain": {
+        "bytes": 5402,
+        "sha256": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c"
+      },
+      "admittedSource": {
+        "bytes": 5402,
+        "sha256": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "frozenSource": {
+        "bytes": 55549,
+        "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+      },
+      "integratedMain": {
+        "bytes": 55549,
+        "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+      },
+      "admittedSource": {
+        "bytes": 55549,
+        "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "frozenSource": {
+        "bytes": 846912,
+        "sha256": "00b3aac55c6d307360a4a73a7d65d81ed8e2f9b2acb253c9f939d483eca3daa6"
+      },
+      "integratedMain": {
+        "bytes": 845617,
+        "sha256": "f2fcd0914abc35d871753921bd0a4d267d0a773913aef6a72fb0e3d91615bc6a"
+      },
+      "admittedSource": {
+        "bytes": 846912,
+        "sha256": "00b3aac55c6d307360a4a73a7d65d81ed8e2f9b2acb253c9f939d483eca3daa6"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "frozenSource": {
+        "bytes": 11475,
+        "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+      },
+      "integratedMain": {
+        "bytes": 11475,
+        "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+      },
+      "admittedSource": {
+        "bytes": 11475,
+        "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "frozenSource": {
+        "bytes": 14207,
+        "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0"
+      },
+      "integratedMain": {
+        "bytes": 14207,
+        "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0"
+      },
+      "admittedSource": {
+        "bytes": 14207,
+        "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "frozenSource": {
+        "bytes": 109258,
+        "sha256": "bd76ed996e03644cff168b82ec28e04dac5da8b9fcc62e35b1af1bd5e1c5829b"
+      },
+      "integratedMain": {
+        "bytes": 109258,
+        "sha256": "bd76ed996e03644cff168b82ec28e04dac5da8b9fcc62e35b1af1bd5e1c5829b"
+      },
+      "admittedSource": {
+        "bytes": 109258,
+        "sha256": "bd76ed996e03644cff168b82ec28e04dac5da8b9fcc62e35b1af1bd5e1c5829b"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "frozenSource": {
+        "bytes": 22851,
+        "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a"
+      },
+      "integratedMain": {
+        "bytes": 22851,
+        "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a"
+      },
+      "admittedSource": {
+        "bytes": 22851,
+        "sha256": "afba6fd6914167398e1d3f27ac547ada118b088a9dff9f65b9dc78cbd03a9a1a"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+      "frozenSource": {
+        "bytes": 120985,
+        "sha256": "082bdb6e6e078632f3ee55adec7ab0c07155170e149994e37fecb71c0d024a79"
+      },
+      "integratedMain": {
+        "bytes": 120985,
+        "sha256": "082bdb6e6e078632f3ee55adec7ab0c07155170e149994e37fecb71c0d024a79"
+      },
+      "admittedSource": {
+        "bytes": 120985,
+        "sha256": "082bdb6e6e078632f3ee55adec7ab0c07155170e149994e37fecb71c0d024a79"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-zip.mjs",
+      "frozenSource": {
+        "bytes": 6269,
+        "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+      },
+      "integratedMain": {
+        "bytes": 6269,
+        "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+      },
+      "admittedSource": {
+        "bytes": 6269,
+        "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/README.md",
+      "frozenSource": {
+        "bytes": 5851,
+        "sha256": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5"
+      },
+      "integratedMain": {
+        "bytes": 5851,
+        "sha256": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5"
+      },
+      "admittedSource": {
+        "bytes": 5851,
+        "sha256": "6520e5a40dcd9858ebf53e085dc1d37e27cc0617d228ab1721ad045444896ed5"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "frozenSource": {
+        "bytes": 1402,
+        "sha256": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd"
+      },
+      "integratedMain": {
+        "bytes": 1402,
+        "sha256": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd"
+      },
+      "admittedSource": {
+        "bytes": 1402,
+        "sha256": "d879c1a60cabeb2179e7a60fe6d827ef17828d263de84369f2f994eceb7439cd"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/app.webmanifest",
+      "frozenSource": {
+        "bytes": 504,
+        "sha256": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0"
+      },
+      "integratedMain": {
+        "bytes": 504,
+        "sha256": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0"
+      },
+      "admittedSource": {
+        "bytes": 504,
+        "sha256": "57c44da18b2a120b907c94a105940a86ae158726ac514c6401958d870ab3ddb0"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/guide.html",
+      "frozenSource": {
+        "bytes": 15992,
+        "sha256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2"
+      },
+      "integratedMain": {
+        "bytes": 15992,
+        "sha256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2"
+      },
+      "admittedSource": {
+        "bytes": 15992,
+        "sha256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "frozenSource": {
+        "bytes": 33736,
+        "sha256": "26ecdae0dd5a0e2e3f2baf4124222060240e7d263289671da829d466427abe3e"
+      },
+      "integratedMain": {
+        "bytes": 33736,
+        "sha256": "26ecdae0dd5a0e2e3f2baf4124222060240e7d263289671da829d466427abe3e"
+      },
+      "admittedSource": {
+        "bytes": 33736,
+        "sha256": "26ecdae0dd5a0e2e3f2baf4124222060240e7d263289671da829d466427abe3e"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/package-info.json",
+      "frozenSource": {
+        "bytes": 1953,
+        "sha256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014"
+      },
+      "integratedMain": {
+        "bytes": 1953,
+        "sha256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014"
+      },
+      "admittedSource": {
+        "bytes": 1953,
+        "sha256": "fa717dfeb5ba0f3e84fef0564e486bd47545896229d55733f3a485e85414e014"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/preview.png",
+      "frozenSource": {
+        "bytes": 197771,
+        "sha256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1"
+      },
+      "integratedMain": {
+        "bytes": 197771,
+        "sha256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1"
+      },
+      "admittedSource": {
+        "bytes": 197771,
+        "sha256": "a80c3e123dd83e6c1072503a3fdc091538d5415e21ba1b26ad345ab19d2c72a1"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/scenery-provenance.json",
+      "frozenSource": {
+        "bytes": 13161,
+        "sha256": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878"
+      },
+      "integratedMain": {
+        "bytes": 13161,
+        "sha256": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878"
+      },
+      "admittedSource": {
+        "bytes": 13161,
+        "sha256": "d45c8608de29b2b2fb4f7b2d3d1e10559cb7c1302972ebd7363b6cde6400c878"
+      }
+    },
+    {
+      "path": "optional-practice/guide.mjs",
+      "frozenSource": {
+        "bytes": 733,
+        "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+      },
+      "integratedMain": {
+        "bytes": 733,
+        "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+      },
+      "admittedSource": {
+        "bytes": 733,
+        "sha256": "31eff4946e03a906e593301e76c4a49fade84f9c05abeb13aa52b06b2dfa3203"
+      }
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "frozenSource": {
+        "bytes": 10881,
+        "sha256": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3"
+      },
+      "integratedMain": {
+        "bytes": 10881,
+        "sha256": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3"
+      },
+      "admittedSource": {
+        "bytes": 10881,
+        "sha256": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3"
+      }
+    },
+    {
+      "path": "optional-practice/launcher-template.mjs",
+      "frozenSource": {
+        "bytes": 13605,
+        "sha256": "9da2559fa8608c16948dbe144145950877a3eea0ddf3417bbc80e036dca77ca4"
+      },
+      "integratedMain": {
+        "bytes": 13605,
+        "sha256": "9da2559fa8608c16948dbe144145950877a3eea0ddf3417bbc80e036dca77ca4"
+      },
+      "admittedSource": {
+        "bytes": 13605,
+        "sha256": "9da2559fa8608c16948dbe144145950877a3eea0ddf3417bbc80e036dca77ca4"
+      }
+    },
+    {
+      "path": "optional-practice/navigation.mjs",
+      "frozenSource": {
+        "bytes": 2719,
+        "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+      },
+      "integratedMain": {
+        "bytes": 2719,
+        "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+      },
+      "admittedSource": {
+        "bytes": 2719,
+        "sha256": "c59fd48a3cce005934ac290773da5b60d18e9a2bebc392a9e911a34b7112f6f1"
+      }
+    },
+    {
+      "path": "optional-practice/worker-template.mjs",
+      "frozenSource": {
+        "bytes": 6513,
+        "sha256": "b22c275810d2cb8a499642ccaa4fae6c710588f98ebfff451904e4aa6cd2c300"
+      },
+      "integratedMain": {
+        "bytes": 6494,
+        "sha256": "452ad600c9dd98d6250ec1923dd1a31114a70647b9110977c167d46aefd72b21"
+      },
+      "admittedSource": {
+        "bytes": 6513,
+        "sha256": "b22c275810d2cb8a499642ccaa4fae6c710588f98ebfff451904e4aa6cd2c300"
+      }
+    }
+  ],
+  "changedSinceSourceFixture": ["optional-practice/civilian-fpv/world-app.mjs"],
+  "sourceFixtureIncomingChange": "Already qualified HUD ecf (+121 bytes), no compatibility hunk change.",
+  "changedFromMain": [
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "optional-practice/civilian-fpv/world-content.mjs",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+    "optional-practice/worker-template.mjs"
+  ],
+  "compatibilityDeltaBytes": 1736,
+  "originalInputBytes": 16741315,
+  "originalInputCount": 95,
+  "sourceLimitBytes": 16777216,
+  "sourceReserveBytes": 35901,
+  "packageFiles": 102,
+  "packageFileLimit": 104
+}

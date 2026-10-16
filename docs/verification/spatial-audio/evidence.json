@@ -1,0 +1,46 @@
+{
+  "base": "321408a3cfd75ae230d760f39fb692503652601a",
+  "sourceFiles": {
+    "game/ui/audio.mjs": "eae37f1e4c927d8f37674fd221de34b37e2a07d8e70196074135853a68ff5b23",
+    "game/ui/feedback-director.mjs": "d36fbcf1d3b1dc7605ec67c9fba5cae42f3cd272cf13801500cedf04d94fde2b",
+    "game/ui/feedback-cues.mjs": "3e42f43fcefd084db9672d6b24ba6d53e581ba9ec5efbb428d1cec7f8f36a237",
+    "game/audio/effects/bank.mjs": "5feee09ad948e1c4f561f29ec31f46f7beeb28f23c7fb367f7f58700d84df16f",
+    "scripts/offline-core-closure.mjs": "719bcc63a2620ec4cd7acec9ee4961be48e1e7f2668dd125c9757bfdb52935f0",
+    "game/ui/menu-audio.mjs": "ca6ee3c5883f2b0c56d02e4d3e4433966b85ec85d717dcac504d3cfbcf01dc16"
+  },
+  "nativeBankDecode": {
+    "assets": 42,
+    "decoded": 42,
+    "browser": "Chromium 154 in Codex in-app browser"
+  },
+  "menuPersistence": {
+    "before": {
+      "enabled": true,
+      "volume": 35
+    },
+    "saved": {
+      "enabled": false,
+      "volume": 20
+    },
+    "afterReload": {
+      "enabled": false,
+      "volume": 20
+    },
+    "restored": {
+      "enabled": true,
+      "volume": 35
+    }
+  },
+  "subjectiveListening": "not performed",
+  "physicalDevices": "not performed",
+  "nativeFirstMission": {
+    "coveragePercent": 34.3,
+    "score": 8160,
+    "lives": 3,
+    "time": "0:21",
+    "input": "keyboard s",
+    "consoleErrors": 0,
+    "masterMuted": true,
+    "purpose": "Gameplay and presentation smoke test; not a listening check"
+  }
+}

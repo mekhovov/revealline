@@ -1,0 +1,86 @@
+TAP version 13
+# Subtest: mounted immediate: Details reading and Back preserve flight; only Resume moves
+ok 1 - mounted immediate: Details reading and Back preserve flight; only Resume moves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.491458
+  ...
+# Subtest: mounted grid-center: Details reading and Back preserve flight; only Resume moves
+ok 2 - mounted grid-center: Details reading and Back preserve flight; only Resume moves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044083
+  ...
+# Subtest: actual notices survive later empty fixed-step batches and same-ID restore resets the history
+ok 3 - actual notices survive later empty fixed-step batches and same-ID restore resets the history # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033875
+  ...
+# Subtest: actual current and stale async notices keep full copy without opening or refreshing a reading dialog
+ok 4 - actual current and stale async notices keep full copy without opening or refreshing a reading dialog # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.081542
+  ...
+# Subtest: accepted notice history is bounded with explicit omission while current full text is never truncated
+ok 5 - accepted notice history is bounded with explicit omission while current full text is never truncated # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042
+  ...
+# Subtest: Details does not reopen or steal focus after run replacement, nested dialog, BFCache or teardown
+ok 6 - Details does not reopen or steal focus after run replacement, nested dialog, BFCache or teardown # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029167
+  ...
+# Subtest: mounted Classic Details retains typed lane warnings, required objectives and automatic-only actions
+ok 7 - mounted Classic Details retains typed lane warnings, required objectives and automatic-only actions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029667
+  ...
+# Subtest: mounted encounter Details uses actual full instruction and typed lane
+ok 8 - mounted encounter Details uses actual full instruction and typed lane # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033417
+  ...
+# Subtest: mounted authored three-relay preview shares guide names and exact paused encounter instructions
+ok 9 - mounted authored three-relay preview shares guide names and exact paused encounter instructions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.081042
+  ...
+# Subtest: mounted controller navigates Pause to Details and reading; held Back cannot resume after closing Details
+not ok 10 - mounted controller navigates Pause to Details and reading; held Back cannot resume after closing Details
+  ---
+  duration_ms: 2038.998792
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/flight-information-details-host.test.mjs:376:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/flight-information-details-host.test.mjs:412:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: queued Details entry does not open or steal focus in a hidden or unfocused document
+ok 11 - queued Details entry does not open or steal focus in a hidden or unfocused document # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.39325
+  ...
+# Subtest: actual reader Tab leaves Done for Back once; reopening resets only the new dialog scroll
+ok 12 - actual reader Tab leaves Done for Back once; reopening resets only the new dialog scroll # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.084916
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 11
+# todo 0
+# duration_ms 2219.171167

@@ -1,0 +1,126 @@
+{
+  "format": "revealline-source-art-layout-briefs.v1",
+  "sourceLevelFile": "authoring/library/moving-edges/layouts.json",
+  "sha256": "f9f15bd2d88d23d88922d90b41b4639c62347b8f26e46b99c66c6328b4bbc82c",
+  "sourceStatus": "Separately owned Moving Edges geometry, fixed before image generation. Artwork is not geometry or gameplay qualification.",
+  "grid": {
+    "width": 72,
+    "height": 36
+  },
+  "levels": [
+    {
+      "id": "moving-edges-terrace-stitch",
+      "slotId": "unassigned-16",
+      "name": "Terrace Stitch",
+      "walls": [
+        {
+          "x": 12,
+          "y": 7,
+          "w": 18,
+          "h": 2
+        },
+        {
+          "x": 12,
+          "y": 9,
+          "w": 2,
+          "h": 5
+        },
+        {
+          "x": 43,
+          "y": 12,
+          "w": 15,
+          "h": 2
+        },
+        {
+          "x": 56,
+          "y": 14,
+          "w": 2,
+          "h": 5
+        },
+        {
+          "x": 20,
+          "y": 25,
+          "w": 20,
+          "h": 2
+        },
+        {
+          "x": 38,
+          "y": 21,
+          "w": 2,
+          "h": 4
+        }
+      ],
+      "description": "Reveal 68%. Three unequal stepped terraces leave a central stitch and wider outer returns. A contour patrol follows the field boundary as you capture. The dormant rover warns when its cell becomes claimed, then moves inside claimed ground: a completed cut is a new decision, not permanent shelter. Try the north stitch or the lower terrace first. The extra life is an optional detour. Walls cannot reconnect a cut; each closure stops the craft until a fresh direction."
+    },
+    {
+      "id": "moving-edges-survey-wheel",
+      "slotId": "unassigned-17",
+      "name": "Survey Wheel",
+      "walls": [
+        {
+          "x": 29,
+          "y": 13,
+          "w": 8,
+          "h": 6
+        },
+        {
+          "x": 31,
+          "y": 5,
+          "w": 2,
+          "h": 5
+        },
+        {
+          "x": 13,
+          "y": 15,
+          "w": 12,
+          "h": 2
+        },
+        {
+          "x": 42,
+          "y": 14,
+          "w": 17,
+          "h": 2
+        },
+        {
+          "x": 33,
+          "y": 23,
+          "w": 2,
+          "h": 7
+        }
+      ],
+      "description": "Reveal 70%. An off-center wall hub and four separated spokes divide unequal sectors. The hub is not a cut endpoint. Two contour patrols circulate in opposite directions; watch both before choosing a new return. Compare securing the outer sectors with stitching across the open gaps. A field interceptor warns before committing to its marked direction. The small eastern patch slows movement; the remote enemy-slow pickup is optional. Each closure stops movement until a fresh direction."
+    },
+    {
+      "id": "moving-edges-breakwater-return",
+      "slotId": "unassigned-18",
+      "name": "Breakwater Return",
+      "walls": [
+        {
+          "x": 12,
+          "y": 10,
+          "w": 32,
+          "h": 3
+        },
+        {
+          "x": 31,
+          "y": 23,
+          "w": 29,
+          "h": 3
+        },
+        {
+          "x": 10,
+          "y": 23,
+          "w": 3,
+          "h": 7
+        },
+        {
+          "x": 13,
+          "y": 28,
+          "w": 10,
+          "h": 2
+        }
+      ],
+      "description": "Reveal 70%. Two offset breakwaters shelter a broad bay, with an open return corridor on the right and a small western cove. Two eroders warn at vulnerable claimed cells before reopening them. Keep a return available, then decide whether to repair the bay or secure the outer strip first. The original outer border remains safe from erosion; the enemies still threaten contact. Recapturing an old cell restores coverage without earning that cell score twice. The cove extra life is optional. Walls cannot close a cut, and each capture requires a fresh direction to continue."
+    }
+  ]
+}

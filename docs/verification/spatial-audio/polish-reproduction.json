@@ -1,0 +1,17 @@
+{
+  "cueCount": 56,
+  "wavBytes": 4470080,
+  "allRuntimeWavsReproducedExactly": true,
+  "sources": {
+    "rotor": "9d73c02356bb53e1a1f37f685094cdbf7a7167481860b7630c96d812d54488e8",
+    "wings": "bbd6ea224effe8c81020cac4da768e296cd8ee4fec69401b48ba237628d98daf",
+    "grain": "63887d92134333842e2c65fe6da4db4c9495b471d0e59019749e83a6dac904d6",
+    "wheels": "769d47b1c499ca59a9a087a887383afd88dd8c306a2b3f51160c333b7dc3e6be",
+    "motor": "c880a4570363d9355b0201ab78275e9e17096a350231202e9b8fed61dd7d4b9a",
+    "ceramic": "e3585da62dc5f7a9a3b3eae555f7b82a85536f891bbfe437ed288971f489bee0",
+    "wood": "2f58585670e4a1f13587d2e2847739a9ab3192ee86acb3af80da265fd357d6a8",
+    "ratchet": "164ed7ed77b94810e85ecc29cdfd54898ae20780e3dca5c38d3e42c1923129c3",
+    "bell": "0153087783311cc521e1f5121d3895375f50a75c7f69c715518f9f5277513aab",
+    "esc-recording": "8764ad308064baf50b2c1fd6c013a7800d73cb5ca3b4c0470dd0c7a743d4a20f"
+  }
+}

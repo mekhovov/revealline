@@ -1,11 +1,5 @@
-import {
-  boundedJSON,
-  canonicalJSON,
-  dataIdentity,
-  exactKeys,
-  required,
-  stableId,
-} from '../data-json.mjs';
+import { requireAuthoring as required } from './authoring-error.mjs';
+import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, stableId } from '../data-json.mjs';
 import { compileContentProject, resolveMission } from './project.mjs';
 import { freezeDesign } from './catalogs.mjs';
 
@@ -59,16 +53,23 @@ function validateTarget(target) {
   required(
     stableId(target.projectId) && stableId(target.missionId),
     'Evidence requires stable project and mission IDs.',
+    'errors:studio.acceptance.targetIds',
   );
   required(
     modes.includes(target.mode) && ['gentle', 'standard', 'expert'].includes(target.difficulty),
     'Evidence requires an explicit mode and preset.',
+    'errors:studio.acceptance.mode',
   );
   required(
     identity(target.simulationIdentity) && identity(target.experienceIdentity),
     'Evidence identities must pin the resolved mission.',
+    'errors:studio.acceptance.identities',
   );
-  required(commit(target.sourceCommit), 'Evidence requires an exact 40-character source commit.');
+  required(
+    commit(target.sourceCommit),
+    'Evidence requires an exact 40-character source commit.',
+    'errors:studio.acceptance.commit',
+  );
   return target;
 }
 
@@ -77,7 +78,11 @@ function validateTarget(target) {
 export function missionEvidenceTarget(source, missionId, options = {}) {
   const selected = boundedJSON(options, { maxBytes: 4096, maxNodes: 30, maxDepth: 2 });
   exactKeys(selected, ['mode', 'difficulty', 'sourceCommit'], 'evidence selection');
-  required(commit(selected.sourceCommit), 'Choose an exact source commit for evidence inspection.');
+  required(
+    commit(selected.sourceCommit),
+    'Choose an exact source commit for evidence inspection.',
+    'errors:studio.acceptance.chooseCommit',
+  );
   const project = compileContentProject(source),
     manifest = resolveMission(project, missionId, {
       mode: selected.mode ?? 'solo',
@@ -111,11 +116,13 @@ function validateRecord(record) {
   required(
     record.format === PLAYTEST_EVIDENCE_FORMAT && stableId(record.id),
     'Unsupported evidence format or ID.',
+    'errors:studio.acceptance.format',
   );
   validateTarget(record.target);
   required(
     kinds.includes(record.kind),
     'Evidence must distinguish automated, native and human observations.',
+    'errors:studio.acceptance.kinds',
   );
   required(
     typeof record.observedAt === 'string' &&
@@ -123,16 +130,19 @@ function validateRecord(record) {
       Number.isFinite(Date.parse(record.observedAt)) &&
       new Date(record.observedAt).toISOString() === record.observedAt,
     'Evidence requires a valid UTC observation timestamp.',
+    'errors:studio.acceptance.timestamp',
   );
   required(
     text(record.method),
     'Describe the observation method; do not infer evidence from a label.',
+    'errors:studio.acceptance.method',
   );
   required(
     Array.isArray(record.checks) &&
       record.checks.length > 0 &&
       record.checks.length <= MISSION_ACCEPTANCE_CHECKS.length,
     'Evidence requires a bounded list of observations.',
+    'errors:studio.acceptance.observations',
   );
   const seen = new Set();
   for (const result of record.checks) {
@@ -141,20 +151,24 @@ function validateRecord(record) {
     required(
       check && !seen.has(result.id) && check.modes.includes(record.target.mode),
       'Check IDs must be unique and applicable to this mode.',
+      'errors:studio.acceptance.checkIds',
     );
     required(
       check.kinds.includes(record.kind),
       'This observation cannot be supplied by this evidence kind.',
+      'errors:studio.acceptance.checkKind',
     );
     required(
       ['pass', 'fail', 'not-run'].includes(result.outcome) && text(result.detail),
       'Each observation requires its result and concrete details.',
+      'errors:studio.acceptance.outcome',
     );
     seen.add(result.id);
   }
   required(
     Array.isArray(record.artifacts) && record.artifacts.length <= 16,
     'Evidence requires a bounded artifact-reference list.',
+    'errors:studio.acceptance.artifacts',
   );
   const hashes = new Set();
   for (const artifact of record.artifacts) {
@@ -164,24 +178,28 @@ function validateRecord(record) {
         /^[a-f0-9]{64}$/.test(artifact.sha256) &&
         !hashes.has(artifact.sha256),
       'Artifact references need unique SHA-256 values.',
+      'errors:studio.acceptance.hashes',
     );
     required(
       Number.isSafeInteger(artifact.bytes) &&
         artifact.bytes > 0 &&
         artifact.bytes <= 128 * 1024 * 1024,
       'Artifact byte size is outside the evidence-reference budget.',
+      'errors:studio.acceptance.bytes',
     );
     required(
       text(artifact.label, 160) &&
         typeof artifact.mediaType === 'string' &&
         /^[a-z0-9.+-]+\/[a-z0-9.+-]+$/.test(artifact.mediaType),
       'Artifact references need a label and media type.',
+      'errors:studio.acceptance.media',
     );
     hashes.add(artifact.sha256);
   }
   required(
     record.supersedes === null || stableId(record.supersedes),
     'Superseded evidence must be explicitly identified.',
+    'errors:studio.acceptance.supersededId',
   );
   return record;
 }
@@ -216,11 +234,16 @@ export function readPlaytestLedger(source = { format: PLAYTEST_LEDGER_FORMAT, re
       Array.isArray(ledger.records) &&
       ledger.records.length <= 1024,
     'Unsupported or oversized playtest ledger.',
+    'errors:studio.acceptance.ledger',
   );
   const seen = new Map();
   for (const record of ledger.records) {
     validateRecord(record);
-    required(!seen.has(record.id), 'Evidence IDs are immutable and unique.');
+    required(
+      !seen.has(record.id),
+      'Evidence IDs are immutable and unique.',
+      'errors:studio.acceptance.uniqueIds',
+    );
     if (record.supersedes) {
       const previous = seen.get(record.supersedes);
       required(
@@ -228,6 +251,7 @@ export function readPlaytestLedger(source = { format: PLAYTEST_LEDGER_FORMAT, re
           previous.kind === record.kind &&
           canonicalJSON(previous.target) === canonicalJSON(record.target),
         'Supersession requires earlier evidence for this exact target and kind.',
+        'errors:studio.acceptance.supersession',
       );
     }
     seen.set(record.id, record);
@@ -245,6 +269,7 @@ export function appendPlaytestEvidence(source, evidence) {
     required(
       canonicalJSON(previous) === canonicalJSON(record),
       'An immutable evidence ID cannot be overwritten.',
+      'errors:studio.acceptance.overwrite',
     );
     return ledger;
   }

@@ -167,7 +167,9 @@ class FullTests(unittest.TestCase):
         return full.assemble(self.config, self.root / 'out')
 
     def test_complete_package_executes_exact_frozen_consumer(self):
-        result = self.assemble()
+        with patch.object(common, 'consumer_helpers', wraps=common.consumer_helpers) as helpers:
+            result = self.assemble()
+        helpers.assert_called_once_with(str(self.root), self.source['commit'])
         self.assertEqual(result['tests'], {'tests': 4, 'pass': 4, 'fail': 0, 'cancelled': 0, 'skipped': 0, 'todo': 0})
         self.assertEqual(len(list((self.root / 'out').iterdir())), 7)
         self.assertEqual(len(result['artifacts']), 9)
@@ -179,6 +181,9 @@ class FullTests(unittest.TestCase):
         self.assertEqual(len(q['gates']), 6)
         self.assertNotIn('waiverEvidence', q)
         self.assertFalse((self.root / 'out/source.tar').exists())
+        with zipfile.ZipFile(self.root / 'out/source-qualification-evidence.zip') as archive:
+            retained = archive.read(common.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)
+        self.assertEqual(common.sha(retained), common.HISTORICAL_AUDIO_EVIDENCE_SHA256)
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary'):
             self.assemble()
 

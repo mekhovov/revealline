@@ -1,0 +1,236 @@
+{
+  "format": "revealline-pending-historical-retention-intake.v1",
+  "captured_at_utc": "2026-09-30T05:12:36.580057+00:00",
+  "classification": "preserved_pending_current_contract_review",
+  "runtime_adopted": false,
+  "donor": {
+    "worktree_name": "team-after-music",
+    "head": "595fdadddf3cf5c4240c430b78d27772915df83d"
+  },
+  "comparison": {
+    "remote_ref": "refs/heads/codex/team-presentation-integration",
+    "advertised_head_verified": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+    "method": "Exact captured working-file postimages versus pinned remote commit; no foreign index writes."
+  },
+  "totals": {
+    "files": 10,
+    "source_files": 5,
+    "historical_verification_text_files": 5,
+    "postimage_bytes": 91444,
+    "base_bytes": 52413
+  },
+  "files": [
+    {
+      "path": "game/couch/coop-retained-presentation.mjs",
+      "role": "historical_source",
+      "base": {
+        "exists": true,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": "72d7a76a93640f99d21c580d95c34ea857654da3",
+        "bytes": 2979,
+        "sha256": "7b4d303e0744253d0f3c475303fcc5638b2035ac154ea8b44cf4e64c327d5d10"
+      },
+      "postimage": {
+        "git_blob_sha1": "324b4bb4e1d05c0b4ef89b27312a442dd119bee8",
+        "bytes": 3880,
+        "sha256": "3bef52a204d8e1f480ace16bc1caf0b3d92492100b093d4de1558db93023c694"
+      }
+    },
+    {
+      "path": "game/couch/coop-owned-presentation.mjs",
+      "role": "historical_source",
+      "base": {
+        "exists": true,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": "f21d9340044857f081c9143f7c3fc6420cd2426e",
+        "bytes": 13561,
+        "sha256": "38c494da69f13199e387999a72193517d8966203941aa0bee69a226c1d26a725"
+      },
+      "postimage": {
+        "git_blob_sha1": "ebc9e8d8a534efc805dad314c092724668ac22b7",
+        "bytes": 13607,
+        "sha256": "0789e1c5dd070ec77873e393b7f19f6001a56a9e1fc1ee1b26306bd0ffc0cc16"
+      }
+    },
+    {
+      "path": "scripts/retained-team-presentation.mjs",
+      "role": "historical_source",
+      "base": {
+        "exists": true,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": "3cbb65ee564c7cd89586e2965963ed236088985b",
+        "bytes": 4040,
+        "sha256": "fec816b73a3da1e9a62dab0fff5720b8eb71c8ea64c5afe0965f87b90b8ba31c"
+      },
+      "postimage": {
+        "git_blob_sha1": "adb846f5dc9248f3ed4088bc199373d7d0dbd577",
+        "bytes": 4073,
+        "sha256": "df4191357a5ddad853a20170d0f8214f7b6402421eda48653c1337145977a384"
+      }
+    },
+    {
+      "path": "scripts/test-retained-team-presentation.mjs",
+      "role": "historical_source",
+      "base": {
+        "exists": true,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": "95a805f0e3d2ddb859019d354f8648a07f6b15f5",
+        "bytes": 11137,
+        "sha256": "3a64873dee5f7c313afc7b8c839840cf2f53ac07b06af3efcc982fe7c965f3be"
+      },
+      "postimage": {
+        "git_blob_sha1": "06478f3e098a379875e58060f424f4fa53dbefda",
+        "bytes": 12329,
+        "sha256": "b43563db64ae22969c01e816f973da2117a733fe7277368ff088bb1afb1f4641"
+      }
+    },
+    {
+      "path": "game/test/coop-owned-presentation.test.mjs",
+      "role": "historical_source",
+      "base": {
+        "exists": true,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": "ba94a4ba0ff425a63124f59e511520e52e91781d",
+        "bytes": 20696,
+        "sha256": "5867f9ae24722917911c7b784adf62e187b465c5ee7b235794d23022bee9b97d"
+      },
+      "postimage": {
+        "git_blob_sha1": "5319e0f3dcec5c9bbfa81571498bfc367d38e0d9",
+        "bytes": 23289,
+        "sha256": "ca8d706861f87367fa0189fd3d34ade320c9ef7ba2a1c1c927a4d585c1f1e412"
+      }
+    },
+    {
+      "path": "docs/verification/team-public-retention/README.md",
+      "role": "historical_verification_text",
+      "base": {
+        "exists": false,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": null,
+        "bytes": 0,
+        "sha256": null
+      },
+      "postimage": {
+        "git_blob_sha1": "ff037eeec3eed880a10d5cff90a7c8b6b87feb81",
+        "bytes": 1155,
+        "sha256": "2a2400982c32c8fde9fb0e0b4c910d59ba981fa18785e8652049b3fdc7eee8d1"
+      }
+    },
+    {
+      "path": "docs/verification/team-public-retention/public-retention-final-node20.tap.json",
+      "role": "historical_verification_text",
+      "base": {
+        "exists": false,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": null,
+        "bytes": 0,
+        "sha256": null
+      },
+      "postimage": {
+        "git_blob_sha1": "05729fb5756dc731a33b28d1675aa3443e741638",
+        "bytes": 10963,
+        "sha256": "0bcddc3df89e817cd200650c76774ea6fd55fcf8f7256786af4f849353ce9ebb"
+      }
+    },
+    {
+      "path": "docs/verification/team-public-retention/public-retention-final-node22.tap.json",
+      "role": "historical_verification_text",
+      "base": {
+        "exists": false,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": null,
+        "bytes": 0,
+        "sha256": null
+      },
+      "postimage": {
+        "git_blob_sha1": "ac7ac04fb475c20d205be1e5438032ce54c63e69",
+        "bytes": 11656,
+        "sha256": "5133c1e56ac5b400ac56f18ecdded9bf2fc6e8753805466450296b8b2c202d75"
+      }
+    },
+    {
+      "path": "docs/verification/team-public-retention/public50-baseline-red.tap.json",
+      "role": "historical_verification_text",
+      "base": {
+        "exists": false,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": null,
+        "bytes": 0,
+        "sha256": null
+      },
+      "postimage": {
+        "git_blob_sha1": "2fe394eb4b3660142710d09046210e9a52fc9a21",
+        "bytes": 8295,
+        "sha256": "6ad412b6b7c3e0c2cbe4378132f8580ed8c32f3e9fa640b6b1c9fc5e7437bf5b"
+      }
+    },
+    {
+      "path": "docs/verification/team-public-retention/report.json",
+      "role": "historical_verification_text",
+      "base": {
+        "exists": false,
+        "commit": "e69f4ecabbe8a92525853cc5f148f824487ecbaf",
+        "git_blob_sha1": null,
+        "bytes": 0,
+        "sha256": null
+      },
+      "postimage": {
+        "git_blob_sha1": "a6bbcc7a234b36521a19117b07583125c4eb4d34",
+        "bytes": 2197,
+        "sha256": "c252bbd696394265599b8bd507cc96f50047867e863ec06f9668fdf8628436e2"
+      }
+    }
+  ],
+  "artifacts": {
+    "candidate-files.tar.gz": {
+      "bytes": 18548,
+      "sha256": "4ac323f10ee951222e95dae6937e80a4bbd573272fe76b756506816deb9105c4",
+      "members": 10
+    },
+    "pending-source.patch": {
+      "bytes": 53820,
+      "sha256": "c25067f85b8dbfdf75f9e448a03ec1e136f9fd39e8869ed570e67ce7712b1b5b",
+      "postimages_reconstructed": 10
+    },
+    "README.md": {
+      "bytes": 1936,
+      "sha256": "0046d7956e1e597b83be4900bede436cc5f4fada8eccd02e3173aae3a52f1c46"
+    }
+  },
+  "content_review": {
+    "all_ten_files_read": true,
+    "utf8_only": true,
+    "nul_bytes": false,
+    "symlinks": false,
+    "credential_signature_flags": [],
+    "disclosed_historical_path_flags": [
+      {
+        "path": "docs/verification/team-public-retention/public50-baseline-red.tap.json",
+        "kind": "private_path",
+        "matches": 9,
+        "lines": [
+          4
+        ]
+      }
+    ],
+    "review_scope": "Bounded signature scan and source-delta review; exact historical bytes retained.",
+    "excluded": [
+      "audio",
+      "images",
+      "fpv51 production.rltheme",
+      "compiled runtime/studio/build outputs",
+      "all other donor paths"
+    ]
+  },
+  "checks": {
+    "donor_file_bytes_reread_identical": true,
+    "donor_head_stable": true,
+    "donor_scoped_status_stable": true,
+    "patch_reconstructs_all_postimages": true,
+    "archive_exact_regular_members": true,
+    "tests_run": false,
+    "builds_run": false,
+    "runtime_adopted": false,
+    "donor_source_index_refs_modified": false
+  }
+}

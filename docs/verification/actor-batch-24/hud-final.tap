@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: Solo HUD formats 0.1-point captures without changing saved or replay scores
+ok 1 - Solo HUD formats 0.1-point captures without changing saved or replay scores
+  ---
+  duration_ms: 2313.308959
+  type: 'test'
+  ...
+# Subtest: Solo HUD formats 7-point captures without changing saved or replay scores
+ok 2 - Solo HUD formats 7-point captures without changing saved or replay scores
+  ---
+  duration_ms: 1928.745083
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4536.614583

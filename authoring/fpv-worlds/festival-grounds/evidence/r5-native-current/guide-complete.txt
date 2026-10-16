@@ -1,0 +1,19 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Pause" [disabled]
+  - paragraph: Festival guide
+  - generic: +
+  - generic: 0.0 m · 0 m/s · 41.3 s · ♥ 100
+  - strong: Flight ended
+  - status: Playback paused. Resume to continue.
+  - generic "Yaw 0%, Throttle 0%":
+  - generic "Roll 0%, Pitch 0%":
+  - heading "Demonstration complete" [level=2]
+  - paragraph: Watching does not change your completion, medals or playlist progress.
+  - button "Fly this challenge"
+  - button "Watch again"
+- status: Preparing flight…

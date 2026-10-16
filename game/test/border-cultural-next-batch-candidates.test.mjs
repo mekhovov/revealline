@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parse } from 'parse5';
 import {
   BORDER_CULTURAL_NEXT_BATCH_REVISION,
   BORDER_CULTURAL_NEXT_BATCH_SELECTIONS,
@@ -331,9 +332,9 @@ test('registered v12 successor preserves v11 and authored order with isolated ow
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v12',
-    versus: 'whole-spatial-v12',
-    team: 'team-trail-impact-originals-1',
+    solo: 'whole-spatial-v25',
+    versus: 'whole-spatial-v25',
+    team: 'team-cultural-specialist-originals-2',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v12');
   assert.equal(
@@ -351,11 +352,32 @@ test('registered v12 successor preserves v11 and authored order with isolated ow
     );
 });
 
-test('Studio exposes v11 and v12 separately and defaults its selector to v12', async () => {
+test('Studio retains v11 and v12 after the selector advances to v20', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
-  assert.match(html, /value="horizon-cultural-joins-1">/);
-  assert.match(html, /value="border-cultural-routes-1" selected/);
+  const nodes = [];
+  const visit = (node) => {
+    nodes.push(node);
+    node.childNodes?.forEach(visit);
+  };
+  visit(parse(html));
+  const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
+  const selector = nodes.find((node) => attribute(node, 'id') === 'whole-variety-edition');
+  const options = selector.childNodes.filter((node) => node.tagName === 'option');
+  assert.equal(
+    options.filter((node) => attribute(node, 'value') === 'horizon-cultural-joins-1').length,
+    1,
+  );
+  assert.deepEqual(
+    options
+      .filter((node) => attribute(node, 'selected') !== undefined)
+      .map((node) => attribute(node, 'value')),
+    ['apex-cultural-routes-1'],
+  );
+  assert.equal(
+    options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
+    1,
+  );
   assert.match(html, /journey=whole-spatial-v12/);
   assert.match(script, /'border-cultural-routes-1': createBorderCulturalNextBatchCandidates/);
 });
