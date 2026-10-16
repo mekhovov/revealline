@@ -9,6 +9,7 @@ import {
 } from './solo-qualification-observation.mjs';
 import {
   validateQualification,
+  qualificationDisplayOptions,
   resourceStability,
   quantileBound,
   mirroredRequest,
@@ -541,4 +542,33 @@ test('explicit audio probe preserves native promises and links decoded buffers a
     1,
     'Container upload is not a recording identity',
   );
+});
+
+test('display arguments preserve defaults and label bounded desktop mobile-layout stress', () => {
+  assert.deepEqual(qualificationDisplayOptions([]), {
+    viewport: { width: 1280, height: 800 },
+    deviceScaleFactor: 1,
+    isMobile: false,
+    hasTouch: false,
+  });
+  assert.deepEqual(
+    qualificationDisplayOptions(['--viewport=400x850', '--dpr=3', '--mobile-context']),
+    { viewport: { width: 400, height: 850 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
+  );
+  for (const flags of [
+    ['--viewport'],
+    ['--viewport=400'],
+    ['--viewport=0x850'],
+    ['--viewport=400x99999'],
+    ['--viewport=400x850', '--viewport=800x600'],
+    ['--viewport=3840x2160', '--dpr=4'],
+    ['--dpr'],
+    ['--dpr='],
+    ['--dpr=Infinity'],
+    ['--dpr=0'],
+    ['--dpr=5'],
+    ['--dpr=1', '--dpr=2'],
+    ['--mobile-context=false'],
+  ])
+    assert.throws(() => qualificationDisplayOptions(flags));
 });

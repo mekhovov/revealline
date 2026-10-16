@@ -10,6 +10,7 @@ import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
 import {
   validateQualification,
+  qualificationDisplayOptions,
   resourceStability,
   createManifestMirror,
   evaluateQualificationBudgets,
@@ -27,12 +28,13 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile] [--work-probe] [--baseline-runtime] [--audio-proof]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile] [--work-probe] [--baseline-runtime] [--audio-proof] [--viewport=400x850] [--dpr=3] [--mobile-context]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
 const bytes = await readFile(resolve(scenarioPath)),
   scenario = validateQualification(JSON.parse(bytes));
+const display = qualificationDisplayOptions(flags);
 const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
 const memoryProfile = flags.includes('--memory-profile'),
@@ -109,6 +111,8 @@ const report = {
     architecture: arch(),
     osRelease: release(),
     initialLoad: loadavg(),
+    requestedDisplay: display,
+    inputMethod: 'public keyboard and UI controls; no touch gestures',
     url: url.href,
     localTransport: mirrored ? localURL.href : null,
   },
@@ -117,6 +121,7 @@ const report = {
     'Keyboard and ordinary UI actions use native elapsed time. No fixed-tick replay or simulation mutation; a route that misses its expected result fails.',
     'Requested coverage is not proof that a mechanic occurred. Assertions and visible results are recorded separately.',
     'Desktop browser observations do not qualify iPhone Safari, Steam Deck graphics, thermals, touch, controllers or actual orientation.',
+    'Viewport/DPR/mobile-context options exercise desktop layout and raster density, without a device-model or user-agent override. Touch capability does not mean touch actions were exercised.',
     'rAF histograms are quantile bounds. Previous-phase attribution retains transition-crossing intervals; browser GPU completion is unobserved.',
     ...(serverFixtureAccess
       ? [
@@ -222,7 +227,7 @@ try {
     headless: !flags.includes('--headed'),
   });
   context = await browser.newContext({
-    viewport: { width: 1280, height: 800 },
+    ...display,
     reducedMotion: 'no-preference',
     serviceWorkers: 'block',
   });
@@ -584,6 +589,12 @@ try {
   if (!scenario.readySelector) await prepareObservation('initial-ready');
   report.readyAt = new Date().toISOString();
   report.environment.userAgent = await page.evaluate(() => navigator.userAgent);
+  report.environment.initialDisplay = await page.evaluate(() => ({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    devicePixelRatio: window.devicePixelRatio,
+    maxTouchPoints: navigator.maxTouchPoints,
+  }));
   deadline = Date.now() + scenario.timeoutMs;
   const remaining = (action) => {
     const time = Math.min(action.timeoutMs ?? 30000, deadline - Date.now());
@@ -932,6 +943,12 @@ try {
       report.finalState = await page.evaluate(() => ({
         state: document.body?.dataset.flightState,
         boot: document.documentElement.dataset.bootState,
+        display: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+          devicePixelRatio: window.devicePixelRatio,
+          maxTouchPoints: navigator.maxTouchPoints,
+        },
         probe: window.soloQualificationProbe?.export(),
         audioProof: window.soloAudioProof?.export() ?? null,
       }));
