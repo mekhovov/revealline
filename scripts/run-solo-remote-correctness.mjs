@@ -437,14 +437,25 @@ async function main() {
       ? 'offline'
       : plan.format === 'SoloHostedSustainedPlanV1'
         ? 'sustained'
-        : null;
+        : plan.format === 'SoloHostedAuxiliaryPlanV1'
+          ? 'auxiliary'
+          : plan.format === 'SoloHostedDemoRecoveryPlanV1'
+            ? 'demo'
+            : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
-    setupActive = extension === 'sustained';
+    setupActive = ['sustained', 'auxiliary', 'demo'].includes(extension);
   if (extension) {
     adapter = await import(`./solo-remote-${extension}.mjs`);
-    adapter[extension === 'offline' ? 'validateOfflinePlan' : 'validateSustainedPlan'](plan);
+    adapter[
+      {
+        offline: 'validateOfflinePlan',
+        sustained: 'validateSustainedPlan',
+        auxiliary: 'validateAuxiliaryPlan',
+        demo: 'validateDemoPlan',
+      }[extension]
+    ](plan);
   }
   const profileEvidence = extension === 'offline' ? join(output, 'profile-evidence') : null;
   if (profileEvidence) await mkdir(profileEvidence);
@@ -454,7 +465,11 @@ async function main() {
         ? 'SoloHostedOfflinePair.v1'
         : extension === 'sustained'
           ? 'SoloHostedSustained.v1'
-          : 'SoloHostedCorrectness.v1',
+          : extension === 'auxiliary'
+            ? 'SoloHostedAuxiliary.v1'
+            : extension === 'demo'
+              ? 'SoloHostedDemoRecoveryCohortV1'
+              : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: extension === 'sustained' ? plan.performanceExclusion : true,
     timingQualification:
@@ -633,7 +648,9 @@ async function main() {
       moduleIdentity: await digest(browserModule),
       engines: {},
     };
-    for (const engine of extension === 'offline' ? ['chromium'] : ['chromium', 'webkit'])
+    for (const engine of ['offline', 'demo'].includes(extension)
+      ? ['chromium']
+      : ['chromium', 'webkit'])
       report.playwright.engines[engine] = {
         executable: pw[engine].executablePath(),
         identity: await digest(pw[engine].executablePath()),
@@ -924,14 +941,25 @@ async function main() {
       chromeExecutable: cleanEnv.CHROME_EXECUTABLE,
     };
     if (extension) {
-      if (extension === 'offline' || plan.phase !== 'diagnostics') await ensureBaseline();
+      if (
+        extension === 'offline' ||
+        (extension === 'sustained' && plan.phase !== 'diagnostics') ||
+        (extension === 'auxiliary' && plan.rows.some((row) => row.source === 'baseline'))
+      )
+        await ensureBaseline();
+      if (['auxiliary', 'demo'].includes(extension)) await inspect();
       setupActive = false;
       report.setupCompletedAt = new Date().toISOString();
       report.modePreparationStartedAt = report.setupCompletedAt;
       modeState =
-        await adapter[extension === 'offline' ? 'prepareOfflineMode' : 'prepareSustainedMode'](
-          context,
-        );
+        await adapter[
+          {
+            offline: 'prepareOfflineMode',
+            sustained: 'prepareSustainedMode',
+            auxiliary: 'prepareAuxiliaryMode',
+            demo: 'prepareDemoMode',
+          }[extension]
+        ](context);
       context.modeState = modeState;
       report.modePreparationCompletedAt = new Date().toISOString();
       report.modeScope = plan.scope;
@@ -960,7 +988,7 @@ async function main() {
         freeBytesAtAdmission: scratchSpace.bavail * scratchSpace.bsize,
         minimumRemainingBytes: GiB,
       };
-      if (extension === 'offline') {
+      if (['offline', 'demo'].includes(extension)) {
         const authorityPath = join(dir, 'scratch-authority.json');
         await writeFile(
           authorityPath,
@@ -987,12 +1015,14 @@ async function main() {
         for (const role of ['baseline', 'candidate'])
           await sourceIdentity(sources[role], plan[role].revision);
         if (extension) {
-          await adapter[extension === 'offline' ? 'runOfflineRow' : 'runSustainedRow'](
-            context,
-            row,
-            dir,
-            tmp,
-          );
+          await adapter[
+            {
+              offline: 'runOfflineRow',
+              sustained: 'runSustainedRow',
+              auxiliary: 'runAuxiliaryRow',
+              demo: 'runDemoRow',
+            }[extension]
+          ](context, row, dir, tmp);
         } else {
           assert.deepEqual(await digest(fixture), {
             bytes: plan.fixture.bytes,

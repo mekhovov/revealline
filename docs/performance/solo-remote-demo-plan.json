@@ -1,0 +1,186 @@
+{
+  "format": "SoloHostedDemoRecoveryPlanV1",
+  "cohort": "linux-demo-quality-recovery-successor-unbound",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rows": [
+    {
+      "id": "candidate-demo-quality-recovery",
+      "kind": "demo",
+      "source": "candidate",
+      "engine": "chromium",
+      "timeoutMs": 660000
+    }
+  ],
+  "candidate": {
+    "revision": null,
+    "tree": null,
+    "run": null,
+    "artifact": null,
+    "outer": null,
+    "inner": null,
+    "manifestSHA256": null,
+    "producer": null
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "role": "Exact source checkout identity retained by common admission only; Demo mode does not build or observe baseline."
+  },
+  "acceptance": {
+    "recovery": "Four fixed synthetic display/owned-concealment-layer spectator/practice arms require exact frozen checkpoint/tick, blocked controls, paused restoration repaint without autoplay, explicit Resume, and fresh practice steering.",
+    "quality": "Boundary public policy/calibration and forwarded actual painter tier before/after fixed CPU1 windows. No forced tier/pressure; no observed transition remains not-observed and is not a performance pass.",
+    "replay": "Parent public export bytes unchanged; same-engine/version strict replay of both parent and actual bundled Demo source after observation browser closure. Every spectator snapshot independently reconstructs exact source prefix. Practice has no public recorder: exact takeover prefix plus releaseInputs and paused checkpoint facts only, no full practice replay claim.",
+    "failure": "Any failed assertion, resource/deadline overflow, source mismatch, page error, failed request or unconfirmed owned cleanup fails. No retries. Preserve partial reports and not-run verifier outcomes.",
+    "scope": "Separate headed Linux Chromium functional fault-injection observation; synthetic events are untrusted and do not establish actual GPU context loss, pixel equality, device timing, heat, Safari/iPhone/PWA or authentication qualification.",
+    "access": "Existing local production preview fixtureAccess=true only. Original payload/source/CSP proof remains required; authentication explicitly unqualified."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Common candidate archive/member/source/CSP verification only; 300s transfer,600s each ZIP verification,480s source proof,75min common helper. No baseline build or calibration in this mode.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "workflow": "Prospective separate workflow must leave setup/upload margin outside the75min helper; no dispatch or executable workflow is bound by this cache proposal.",
+    "browserLaunch": "Original Demo Chrome/CDP lifecycle with explicit Linux --no-sandbox matching pinned Playwright1.62.1 default; fresh exact-owned profile, no local browser and no physical-device inference.",
+    "workflowBudgetMinutes": {
+      "checkoutsAndNode": 7,
+      "dependenciesAndBrowser": 20,
+      "testsAndPlan": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 121,
+      "job": 125
+    }
+  },
+  "guidance": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "application": "One serial worker and helper deadline below job deadline so partial reports can upload. Version1.62.1 is explicitly pinned instead of following current documentation examples."
+    },
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "application": "Record exact pinned browser builds; Linux WebKit is a separate platform stratum, not Safari/iOS."
+    },
+    {
+      "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
+      "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
+    }
+  ],
+  "status": "integrated-pending-current-artifact-and-first-eight-review",
+  "scope": "Synthetic Demo renderer ownership and quality presentation correctness only; no timing/thermal/GPU/authentication qualification",
+  "rowEvidenceBytes": 33554432,
+  "demo": {
+    "arms": [
+      "spectator-display",
+      "spectator-owned-concealment-layer",
+      "practice-display",
+      "practice-owned-concealment-layer"
+    ],
+    "qualityWindowsMs": [5000, 2500],
+    "observationTimeoutMs": 360000,
+    "replayTimeoutMs": 120000,
+    "cpuThrottle": 1,
+    "retries": 0,
+    "driver": {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "bytes": 26724,
+      "sha256": "ec7b30d354c3767b9810f523f51d27df0590851861399d9915c32eb7b009ac03"
+    },
+    "probe": {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "bytes": 4939,
+      "sha256": "21a919f0c71acd167149b4391efa042480c1eef39fa7e4341e4fb9657e3fc858"
+    },
+    "sourcePaths": [
+      "game/build-info.json",
+      "game/index.html",
+      "game/app.mjs",
+      "game/ui/demo-host.mjs",
+      "game/ui/demo-clock.mjs",
+      "game/ui/visual-quality-policy.mjs",
+      "game/demo-experience.mjs",
+      "game/replay-player.mjs",
+      "game/ui/render.mjs",
+      "game/replay.mjs",
+      "game/core/index.mjs"
+    ],
+    "expectedClip": {
+      "id": "first-signal-left",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "identity": "d31dfb37580148ee",
+      "recordingIdentity": "c48b4182e13d1541",
+      "inputTraceIdentity": "004a620b36d19d0d",
+      "title": "First Signal",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground"],
+      "durationSeconds": 30.683333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/first-signal-left.replay.json",
+      "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
+    },
+    "sourceAssets": [
+      {
+        "role": "catalog",
+        "relative": "demo-data/catalog.json",
+        "bytes": 6839,
+        "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.replay.json",
+        "bytes": 10793,
+        "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.chromium-macos.replay.json",
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+      }
+    ],
+    "bindingRequired": "Recompute every source asset, expected clip and manifest module projection from exact new package. Historical values are a prospective unchanged-identity premise, not an accepted source binding."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-demo.mjs",
+      "bytes": 13894,
+      "sha256": "ea3fc96bfb2fe9b6f6938647be74c46e457b0afc728558dafa540fb105548535"
+    },
+    {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "bytes": 26724,
+      "sha256": "ec7b30d354c3767b9810f523f51d27df0590851861399d9915c32eb7b009ac03"
+    },
+    {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "bytes": 4939,
+      "sha256": "21a919f0c71acd167149b4391efa042480c1eef39fa7e4341e4fb9657e3fc858"
+    }
+  ],
+  "retention": "Common bounded evidence contains plans, exact served source/replay hashes, checkpoint snapshots, full strict replay results and owned command closure. Fresh Chrome profiles remain in exact short scratch until hosted job teardown and are not advertised as preserved archives.",
+  "setupTimeoutMs": 2400000,
+  "release": {
+    "status": "pending",
+    "candidateRevision": null,
+    "scope": "Explicit reviewed release and exact new package/source/driver pins required before the single prospective hosted row."
+  }
+}

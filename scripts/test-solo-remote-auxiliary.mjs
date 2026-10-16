@@ -1,0 +1,315 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import test from 'node:test';
+import {
+  AUXILIARY_JOBS,
+  auxiliaryMatrix,
+  auxiliaryArguments,
+  auxiliaryAssessment,
+  bindAuxiliaryJob,
+  readAuxiliaryJSON,
+  validateAuxiliaryPlan,
+} from './solo-remote-auxiliary.mjs';
+
+const manifest = JSON.parse(
+  await readFile(new URL('../docs/performance/solo-remote-auxiliary-plan.json', import.meta.url)),
+);
+const clone = (x) => structuredClone(x);
+function admitted() {
+  const m = clone(manifest);
+  m.status = 'reviewed-and-released';
+  m.release = {
+    firstEightAllCorrectnessPassed: true,
+    priorProofInspected: true,
+    noUnclosedOwners: true,
+    evidence: [
+      { runId: 1, artifactId: 2, artifactSHA256: 'a'.repeat(64), summarySHA256: 'b'.repeat(64) },
+    ],
+  };
+  return m;
+}
+const plan = (job = 'speech-chromium') => bindAuxiliaryJob(admitted(), job);
+const closed = {
+  status: 'closed',
+  exitCode: 0,
+  forcedCleanup: false,
+  survivors: [],
+  ambiguous: [],
+};
+function raw(p, row) {
+  const spec = AUXILIARY_JOBS[p.job],
+    revision = p[row.source].revision;
+  return {
+    scenarioStatus: 'pass',
+    scenarioSHA256: p.recipes[spec.recipe].sha256,
+    sourceRevision: revision,
+    buildIdentity: { sourceRevision: revision },
+    environment: {
+      engine: row.engine,
+      cpuThrottle: 1,
+      contextMode: row.engine === 'webkit' ? 'persistent' : 'ephemeral',
+      browserVersion: '123.4',
+    },
+    replay: {
+      scope: 'completed-scenario',
+      nativeVerification: { status: 'pass', engine: row.engine, browserVersion: '123.4' },
+    },
+    pageErrors: [],
+    performanceGateStatus:
+      spec.recipe === 'recovery'
+        ? 'excluded-synthetic-recovery'
+        : 'excluded-audio-identity-profiling',
+    audioIdentity: {
+      status: 'pass',
+      pending: 0,
+      failed: 0,
+      capped: 0,
+      droppedStarts: 0,
+      droppedMediaEvents: 0,
+    },
+  };
+}
+test('prospective manifest cannot launch before reviewed first-eight proof', () => {
+  assert.throws(() => bindAuxiliaryJob(manifest, 'speech-chromium'));
+  for (const change of [
+    { firstEightAllCorrectnessPassed: false },
+    { priorProofInspected: false },
+    { noUnclosedOwners: false },
+    { evidence: [] },
+  ]) {
+    const m = admitted();
+    Object.assign(m.release, change);
+    assert.throws(() => bindAuxiliaryJob(m, 'speech-chromium'));
+  }
+});
+test('four fixed jobs retain six audio/main-recovery commands and all original arm bounds', () => {
+  const jobs = Object.keys(AUXILIARY_JOBS).map(plan);
+  assert.equal(jobs.length, 4);
+  assert.equal(
+    jobs.reduce((n, p) => n + p.rows.length, 0),
+    6,
+  );
+  assert.deepEqual(
+    jobs.map((p) => p.rows.map((r) => r.timeoutMs)),
+    [[540000, 540000], [600000, 600000], [420000], [420000]],
+  );
+  assert(jobs.every((p) => p.performanceExclusion && p.cpu === 1));
+});
+test('workflow matrix binds the four fixed jobs and preserves disjoint helper shutdown margins', () => {
+  assert.throws(() => auxiliaryMatrix(manifest));
+  const matrix = auxiliaryMatrix(admitted());
+  assert.deepEqual(
+    matrix.include.map((row) => row.job),
+    Object.keys(AUXILIARY_JOBS),
+  );
+  for (const row of matrix.include) {
+    const spec = AUXILIARY_JOBS[row.job];
+    assert.equal(row.jobMinutes, spec.jobMinutes);
+    assert.equal(row.stepMinutes, spec.helperMinutes + 3);
+    assert.equal(row.outerSeconds, (spec.helperMinutes + 2) * 60);
+  }
+  const omitted = admitted();
+  omitted.jobs.pop();
+  assert.throws(() => auxiliaryMatrix(omitted));
+});
+test('parallel auxiliary jobs retain separate job-named evidence artifacts', async () => {
+  const workflow = await readFile(
+    new URL('../.github/workflows/solo-remote-auxiliary-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(workflow, /max-parallel: 2/);
+  assert.match(
+    workflow,
+    /name: solo-linux-auxiliary-\$\{\{ matrix\.job \}\}-\$\{\{ github\.run_id \}\}/,
+  );
+  assert(!/matrix\.(phase|engine|repetition)/.test(workflow));
+  assert.match(workflow, /cancel-in-progress: false/);
+});
+test('verified baseline reuse requires its separately pinned verifier without permitting arbitrary helpers', () => {
+  const p = plan();
+  p.baseline.reusableArtifact = {};
+  assert.throws(() => validateAuxiliaryPlan(p));
+  p.adapterInputs.push({
+    path: 'scripts/solo-remote-baseline.mjs',
+    bytes: 1,
+    sha256: 'a'.repeat(64),
+  });
+  assert.equal(validateAuxiliaryPlan(p), p);
+  p.adapterInputs[1].path = 'scripts/other.mjs';
+  assert.throws(() => validateAuxiliaryPlan(p));
+});
+test('source, recipe, resource, row and concurrency changes cannot enter a job', () => {
+  for (const mutate of [
+    (p) => {
+      p.candidate.revision = p.baseline.revision;
+    },
+    (p) => {
+      p.rows[0].timeoutMs++;
+    },
+    (p) => {
+      p.rows.push(p.rows[0]);
+    },
+    (p) => {
+      p.recipes.speech.sha256 = '0'.repeat(64);
+    },
+    (p) => {
+      p.helperTimeoutMs++;
+    },
+    (p) => {
+      p.evidenceBytes++;
+    },
+    (p) => {
+      p.rowEvidenceBytes++;
+    },
+    (p) => {
+      p.setupTimeoutMs++;
+    },
+    (p) => {
+      p.fixturePreparationTimeoutMs++;
+    },
+    (p) => {
+      p.performanceExclusion = false;
+    },
+    (p) => {
+      p.maxParallel = 3;
+    },
+    (p) => {
+      p.cpu = 2;
+    },
+    (p) => {
+      p.adapterInputs[0].path = 'scripts/other.mjs';
+    },
+  ]) {
+    const p = plan();
+    mutate(p);
+    assert.throws(() => validateAuxiliaryPlan(p));
+  }
+});
+test('all preserved recipe/upload bytes and the adapter pin match the draft manifest', async () => {
+  for (const ref of [
+    ...Object.values(manifest.recipes),
+    ...manifest.uploads,
+    ...manifest.adapterInputs,
+  ]) {
+    const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
+    assert.equal(bytes.length, ref.bytes);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256);
+  }
+});
+test('audio and recovery argv preserve exact tools, engine context and intrusive exclusion', () => {
+  for (const job of Object.keys(AUXILIARY_JOBS)) {
+    const p = plan(job);
+    for (const row of p.rows) {
+      const args = auxiliaryArguments(
+        { here: '/tools', plan: p, modeState: { recipePath: '/scenario' } },
+        row,
+        'http://localhost/game/',
+        '/evidence',
+      );
+      assert.equal(args.includes('--audio-proof'), !job.startsWith('recovery'));
+      assert.equal(args.includes('--context=persistent'), row.engine === 'webkit');
+      assert.equal(args.includes('--baseline-runtime'), row.source === 'baseline');
+      assert(args.includes('--cpu=1'));
+      assert(!args.some((x) => x.includes('cpu-profile') || x.includes('memory-profile')));
+    }
+  }
+});
+test('complete audio identities and synthetic main recovery can qualify only their declared correctness scope', () => {
+  for (const job of Object.keys(AUXILIARY_JOBS)) {
+    const p = plan(job),
+      row = p.rows.at(-1),
+      result = auxiliaryAssessment(p, row, raw(p, row), closed, '123.4');
+    assert.equal(result.status, 'passed');
+    assert.equal(result.performanceQualification, 'excluded');
+    if (job.startsWith('recovery')) assert.match(result.scope, /no Demo or actual GPU/);
+  }
+});
+test('positive audio witnesses with any pending, failed, capped or dropped observation stay failed', () => {
+  const p = plan('music-chromium'),
+    row = p.rows[1];
+  for (const key of ['pending', 'failed', 'capped', 'droppedStarts', 'droppedMediaEvents']) {
+    const r = raw(p, row);
+    r.audioIdentity[key] = 1;
+    assert.equal(auxiliaryAssessment(p, row, r, closed, '123.4').status, 'failed');
+  }
+});
+test('wrong source/recipe/browser/replay/engine/context or partial replay cannot grant credit', () => {
+  const p = plan(),
+    row = p.rows[1];
+  for (const mutate of [
+    (r) => {
+      r.sourceRevision = p.baseline.revision;
+    },
+    (r) => {
+      r.scenarioSHA256 = '0'.repeat(64);
+    },
+    (r) => {
+      r.environment.browserVersion = 'other';
+    },
+    (r) => {
+      r.replay.nativeVerification.status = 'fail';
+    },
+    (r) => {
+      r.replay.nativeVerification.engine = 'webkit';
+    },
+    (r) => {
+      r.replay.scope = 'partial-scenario';
+    },
+    (r) => {
+      r.environment.cpuThrottle = 2;
+    },
+    (r) => {
+      r.environment.contextMode = 'persistent';
+    },
+    (r) => {
+      r.pageErrors.push('error');
+    },
+    (r) => {
+      r.performanceGateStatus = 'pass';
+    },
+    (r) => {
+      r.finalReadFailure = 'final snapshot incomplete';
+    },
+    (r) => {
+      r.failureCleanupFailure = 'failed observation cleanup';
+    },
+  ]) {
+    const r = raw(p, row);
+    mutate(r);
+    assert.equal(auxiliaryAssessment(p, row, r, closed, '123.4').status, 'failed');
+  }
+});
+test('resource stops, forced cleanup and unknown owners cannot become successful observations', () => {
+  const p = plan(),
+    row = p.rows[1];
+  for (const change of [
+    { status: 'failed' },
+    { exitCode: 1 },
+    { forcedCleanup: true },
+    { cleanupUnconfirmed: true },
+    { violation: 'rss' },
+    { survivors: [1] },
+    { ambiguous: [1] },
+  ])
+    assert.equal(
+      auxiliaryAssessment(p, row, raw(p, row), { ...closed, ...change }, '123.4').status,
+      'failed',
+    );
+});
+test('bounded report read refuses oversized and aliased input', async () => {
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'aux-report-')));
+  try {
+    const target = join(root, 'report.json');
+    await writeFile(target, '{"status":"pass"}');
+    assert.deepEqual(await readAuxiliaryJSON(target, 64), { status: 'pass' });
+    await assert.rejects(readAuxiliaryJSON(target, 4));
+    const alias = join(root, 'alias.json');
+    await symlink(target, alias);
+    await assert.rejects(readAuxiliaryJSON(alias, 64));
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
