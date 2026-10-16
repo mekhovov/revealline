@@ -27,7 +27,7 @@ import {
   libraryCapacity,
 } from '../game/library.mjs';
 import { dataIdentity } from '../game/data-json.mjs';
-import { validateQualification } from './solo-qualification.mjs';
+import { validateQualification as validateQualificationSchema } from './solo-qualification.mjs';
 import {
   AUDIO_FIXTURE_FORMAT,
   AUDIO_PLAYLIST_ID,
@@ -125,6 +125,51 @@ workloads.push({
   coverage: ['lane-warning', 'active-lane', 'jammer-picture'],
 });
 
+const definition = (level, turnPolicy = 'immediate') => ({
+  level,
+  options: { classId: 'scout', turnPolicy },
+});
+const expectedDefinitions = new Map(
+  workloads.map((workload) => [workload.id, definition(workload.level, workload.turnPolicy)]),
+);
+for (const id of [
+  'original-art-opening-capture',
+  'original-art-opening-warm-reload-capture',
+  'original-art-long-recording-save-reward-next-profile',
+  'twenty-retries',
+  'thirty-minute-lifecycle-soak',
+  'recorded-local-stream-current-next-and-natural-transition',
+  'large-profile-public-import-and-reload',
+])
+  expectedDefinitions.set(id, expectedDefinitions.get('first-return'));
+expectedDefinitions.set('recorded-guide-capture-speech', expectedDefinitions.get('long-rail'));
+for (const id of ['enabled-local-audio-and-reactions', 'explicit-resume-recovery-handlers'])
+  expectedDefinitions.set(id, expectedDefinitions.get('signal-07'));
+expectedDefinitions.set(
+  'ten-next-current-opening',
+  definition(
+    applyGameplayTuning(
+      resolveMission(authored, routes.rows[10][0], { difficulty: 'standard' }).level,
+      resolveGameplayTuning('standard'),
+    ),
+  ),
+);
+function validateQualification(value) {
+  const expectedReplayDefinition = expectedDefinitions.get(value.id);
+  assert(expectedReplayDefinition, `Missing accepted workload definition: ${value.id}`);
+  const exports = (actions) =>
+    actions.some(
+      (action) =>
+        action.type === 'exportReplay' || (action.type === 'repeat' && exports(action.actions)),
+    );
+  return validateQualificationSchema({
+    ...value,
+    ...(value.entryPath === 'playground/' ? { readyHiddenSelector: '#boot-status' } : {}),
+    expectedReplayDefinition,
+    actions: exports(value.actions) ? value.actions : [...value.actions, { type: 'exportReplay' }],
+  });
+}
+
 const key = (direction) => `Arrow${direction[0].toUpperCase()}${direction.slice(1)}`;
 const play = (segments) =>
   segments.map(([direction, ticks]) =>
@@ -138,7 +183,12 @@ const start = [
   { type: 'wait', phase: 'running', timeoutMs: 60000 },
 ];
 const prepare = (id) => [
-  { type: 'upload', selector: '#import-file', file: `${id}.xonix.json` },
+  {
+    type: 'upload',
+    selector: '#import-file',
+    file: `${id}.xonix.json`,
+    acceptedLevelSelector: '#level-json',
+  },
   { type: 'click', selector: '#preview-button', timeoutMs: 60000 },
   { type: 'follow', selector: '#open-preview', timeoutMs: 120000 },
   { type: 'snapshot', group: 'prepared' },
@@ -331,9 +381,135 @@ await put(
     ],
   }),
 );
+// Profile one long recording separately from short-win lifecycle/timing runs.
+// Neutral input is legal on First Return's protected start; enemies still tick.
+// Keep the authored level, time limit, lives, seed and winning controls unchanged.
+{
+  const seconds = 180,
+    options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' },
+    run = createRun(opening.level, options),
+    recorder = createRecorder(opening.level, options),
+    initialLives = run.lives;
+  assert.equal(run.rules.timeLimitSeconds, 0, 'Long recording needs the original untimed mission');
+  assert.equal(run.lives, 3);
+  const tick = (direction) => {
+    recordInput(recorder, { direction });
+    stepRun(run, { direction }, FIXED_DT);
+  };
+  for (let index = 0; index < seconds * 120; index++) tick(null);
+  assert.equal(run.status, 'running');
+  assert.equal(run.lives, initialLives);
+  assert.equal(run.player.cutting, false);
+  assert.equal(run.player.x, 24.5);
+  assert.equal(run.player.y, 0.5);
+  const pausedCheckpoint = authoritativeCheckpoint(run),
+    longReplay = exportReplay(recorder, run);
+  assert.equal(longReplay.ticks, 21600);
+  assert.equal(verifyReplay(longReplay).match, true);
+  for (const [direction, ticks] of opening.segments)
+    for (let index = 0; index < ticks; index++) tick(direction);
+  assert.equal(run.status, 'won');
+  assert.equal(run.lives, 3);
+  assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+  const nearbyDurations = [];
+  for (const waitSeconds of [178, 179, 181, 182]) {
+    const nearby = createRun(opening.level, options);
+    for (let index = 0; index < waitSeconds * 120; index++)
+      stepRun(nearby, { direction: null }, FIXED_DT);
+    assert.equal(nearby.status, 'running');
+    assert.equal(nearby.lives, 3);
+    for (const [direction, ticks] of opening.segments)
+      for (let index = 0; index < ticks; index++) stepRun(nearby, { direction }, FIXED_DT);
+    assert.equal(nearby.status, 'won');
+    assert.equal(nearby.lives, 3);
+    nearbyDurations.push({
+      waitSeconds,
+      status: nearby.status,
+      lives: nearby.lives,
+      tick: nearby.tick,
+    });
+  }
+  await put('long-recording-save-reward.model.json', {
+    kind: 'model-correctness',
+    basis: 'Unchanged First Return standard mission and candidate-solo-tuned-host-routes.json',
+    levelIdentity: dataIdentity(opening.level),
+    fixedDt: FIXED_DT,
+    options,
+    timeLimitSeconds: run.rules.timeLimitSeconds,
+    preCaptureSeconds: seconds,
+    preCaptureTicks: longReplay.ticks,
+    preCaptureReplayBytes: Buffer.byteLength(JSON.stringify(longReplay)),
+    preCaptureReplaySHA256: createHash('sha256').update(JSON.stringify(longReplay)).digest('hex'),
+    preCaptureReplayVerified: true,
+    pausedCheckpoint,
+    winningSegments: opening.segments,
+    wonCheckpoint: authoritativeCheckpoint(run),
+    wonReplayVerified: true,
+    nearbyDurations,
+    limitations: [
+      'Fixed-tick feasibility only; the public browser must independently retain the actual outcome.',
+      'Neutral input compresses well: this tests long replay verification, not maximum recording byte size or the thirty-minute cap.',
+      'Pause/save/export and Next are host actions; model proof does not establish their native cost or durability.',
+      'Native export precedes the win so immediate Next is not delayed by export UI; no exported winning replay is claimed.',
+      'Whether optional reward verification overlaps the next flight must be observed in the separately excluded CPU profile.',
+    ],
+  });
+  await put(
+    'long-recording-save-reward.qualification.json',
+    validateQualification({
+      format: 'SoloQualificationV1',
+      id: 'original-art-long-recording-save-reward-next-profile',
+      kind: 'lifecycle',
+      requiredProfile: 'cpu',
+      timeoutMs: 300000,
+      query: { journey: 'opening' },
+      coverage: [
+        'CPU profiling only; excluded from timing qualification and the matched performance cohorts',
+        'unchanged original-art First Return with 180 seconds of legal neutral recording',
+        'public Pause invokes existing save/readback; public replay export retains the long unfinished recording',
+        'unchanged earned win followed immediately by public Next and ten seconds of new gameplay',
+        'profile determines reward verification overlap; no overlap or durable-save success is assumed',
+      ],
+      actions: [
+        { type: 'snapshot', group: 'long-recording-ready' },
+        { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
+        { type: 'wait', phase: 'running', timeoutMs: 60000 },
+        ...Array.from({ length: 3 }, (_, index) => ({
+          type: 'wait',
+          ms: 60000,
+          label: `long-recording-minute-${index + 1}`,
+        })),
+        { type: 'wait', phase: 'running' },
+        { type: 'click', selector: '#pause-button', label: 'long-recording-save' },
+        { type: 'wait', phase: 'paused' },
+        { type: 'snapshot', group: 'long-recording-paused-after-save' },
+        { type: 'exportReplay', label: 'long-recording-public-export' },
+        { type: 'click', selector: '#replay-dialog .dialog-close' },
+        { type: 'click', selector: '#shell-workshop-dialog [data-close="shell-workshop-dialog"]' },
+        { type: 'click', selector: '#settings-dialog .dialog-close' },
+        { type: 'key', key: 'Escape', ms: 20 },
+        ...start,
+        ...play(opening.nativeSegments),
+        ...finish,
+        {
+          type: 'click',
+          selector: '#next-button',
+          timeoutMs: 60000,
+          label: 'immediate-earned-next',
+        },
+        { type: 'wait', phase: 'running', timeoutMs: 60000 },
+        { type: 'wait', ms: 10000, label: 'next-flight-reward-overlap-observation' },
+        { type: 'click', selector: '#pause-button' },
+        { type: 'wait', phase: 'paused' },
+        { type: 'snapshot', group: 'long-recording-next-flight' },
+      ],
+    }),
+  );
+}
 const sentinel = await json('../game/content/packs/sentinel-relay.json');
 const sentinelLevel = sentinel.campaigns[0].levels[0];
 assert.equal(sentinelLevel.id, 'sentinel-relay-01');
+expectedDefinitions.set('original-art-sentinel-relay-jamming', definition(sentinelLevel));
 assert(
   sentinel.levelVisuals.some(
     (row) => row.levelId === sentinelLevel.id && row.visualOverrides.background,

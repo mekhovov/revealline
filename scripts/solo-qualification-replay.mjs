@@ -8,17 +8,26 @@ import { inspectReplayMechanics } from './solo-qualification-replay-core.mjs';
 
 /** Node tooling/model verification. Native evidence uses the same inspector
  * with the observed artifact's dependencies and exact browser engine instead. */
-export function inspectQualificationReplayPortability(recording, requirements = {}) {
-  const result = inspectReplayMechanics(recording, requirements, {
-    createRun,
-    stepRun,
-    releaseInputs,
-    FIXED_DT,
-    verifyReplay,
-    authoritativeCheckpoint,
-    jammerPictureStrength,
-    combatView,
-  });
+export function inspectQualificationReplayPortability(
+  recording,
+  requirements = {},
+  expectedDefinition,
+) {
+  const result = inspectReplayMechanics(
+    recording,
+    requirements,
+    {
+      createRun,
+      stepRun,
+      releaseInputs,
+      FIXED_DT,
+      verifyReplay,
+      authoritativeCheckpoint,
+      jammerPictureStrength,
+      combatView,
+    },
+    expectedDefinition,
+  );
   return result;
 }
 
