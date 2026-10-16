@@ -38,6 +38,99 @@ const raw = () => ({
   viewportFocused: true,
 });
 
+// Deliberately blocks timer dispatch in a synthetic unit fixture, not a native flight.
+function blockTimerDispatch(ms) {
+  const deadline = performance.now() + ms;
+  while (performance.now() < deadline) {
+    // A resolved operation must still be rejected after its monotonic deadline.
+  }
+}
+
+test('a resolved read after a timer-dispatch stall cannot pass its deadline', async () => {
+  const f = fixture(),
+    receipt = {};
+  const evaluate = f.page.evaluate;
+  f.page.evaluate = async (fn) => {
+    const result = await evaluate(fn);
+    blockTimerDispatch(60);
+    return result;
+  };
+  await assert.rejects(
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 40,
+    }),
+    /Deadline exceeded: capture time origin/,
+  );
+  assert.equal(receipt.failure, 'capture time origin');
+  assert.equal(receipt.passed, false);
+  assert.equal(receipt.witnesses.length, 0);
+  assert.equal(receipt.actions.length, 0);
+  assert.equal(receipt.cleanup.completed, true);
+  assert.equal(f.state.disposed, true);
+  assert.equal(f.listeners.size, 0);
+});
+
+test('a handle resolved after a dispatch stall remains owned for independent cleanup', async () => {
+  const f = fixture(),
+    receipt = {};
+  const acquire = f.page.evaluateHandle;
+  let disposals = 0;
+  f.page.evaluateHandle = async () => {
+    const handle = await acquire();
+    const dispose = handle.dispose;
+    handle.dispose = async () => {
+      disposals++;
+      await dispose();
+    };
+    blockTimerDispatch(60);
+    return handle;
+  };
+  await assert.rejects(
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 40,
+    }),
+    /Deadline exceeded: capture document identity/,
+  );
+  assert.equal(receipt.failure, 'capture document identity');
+  assert.equal(receipt.passed, false);
+  assert.equal(receipt.actions.length, 0);
+  assert.equal(disposals, 1);
+  assert.equal(f.state.disposed, true);
+  assert.equal(receipt.cleanup.completed, true);
+  assert.equal(f.listeners.size, 0);
+});
+
+test('cleanup returning after its unchanged one-second budget cannot report verified cleanup', async () => {
+  const f = fixture(),
+    receipt = {};
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
+  const off = f.page.off;
+  f.page.off = (...args) => {
+    off(...args);
+    blockTimerDispatch(1020);
+  };
+  const cleanup = await disposeHistoricalAcademySession(guard);
+  assert.equal(cleanup.completed, false);
+  assert.equal(
+    cleanup.results.find((row) => row.name === 'remove navigation listener').passed,
+    false,
+  );
+  assert.equal(f.state.disposed, true, 'Other independent cleanup is still attempted.');
+  assert.equal(f.listeners.size, 0);
+  assert.equal(f.state.held.size, 0);
+  assert.equal(receipt.passed, false);
+});
+
 test('strict opt-in and historical URL reject current versions, foreign hosts and locales', () => {
   assert.equal(selectHistoricalActiveSession(undefined), false);
   assert.equal(selectHistoricalActiveSession(mode), true);
@@ -385,7 +478,11 @@ test('missing opt-in, out-of-order verification, and fabricated guards cannot qu
 test('failed native focus transfer preserves one bounded last public snapshot', async () => {
   const f = fixture(),
     receipt = {};
-  const guard = await prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode });
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
   try {
     await assert.rejects(snapshotPausedAfterTransfer(guard), /1500ms/);
     assert.equal(receipt.passed, false);
@@ -414,7 +511,11 @@ test('native key failure releases owned key; handle failure does not skip listen
 test('one shared expired deadline rejects the later stage and still permits independent disposal', async () => {
   const f = fixture(),
     receipt = {};
-  const guard = await prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode });
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
   try {
     assert.equal(receipt.deadlineMs, 30000);
     // Unit-only expiry of the guard's wall-clock budget, never a browser/model time override.
@@ -450,7 +551,12 @@ test('late visibility or enabled results cannot emit an activation after timeout
       return control;
     };
     await assert.rejects(
-      prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode, timeoutMs: 100 }),
+      prepareHistoricalAcademySession(f.page, {
+        expectedURL,
+        receipt,
+        mode,
+        timeoutMs: 100,
+      }),
     );
     assert(entered);
     assert.equal(receipt.cleanup.completed, true);
@@ -484,7 +590,12 @@ test('already in-flight activation prevents a verified cleanup even if it settle
     return control;
   };
   await assert.rejects(
-    prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode, timeoutMs: 100 }),
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 100,
+    }),
   );
   assert(entered);
   assert.equal(receipt.cleanup.completed, false);
@@ -516,7 +627,12 @@ test('a late native key-down is released again and cannot qualify cleanup', asyn
     return down(key);
   };
   await assert.rejects(
-    prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode, timeoutMs: 100 }),
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 100,
+    }),
   );
   assert(entered);
   assert.equal(receipt.cleanup.completed, false);
@@ -530,7 +646,11 @@ test('a late native key-down is released again and cannot qualify cleanup', asyn
 test('a disarmed Start is recorded, then only visible enabled native Arm permits another action', async () => {
   const f = fixture({ startDisarmed: true }),
     receipt = {};
-  const guard = await prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode });
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
   try {
     assert.deepEqual(receipt.startAttempt, {
       phase: 'disarmed',
