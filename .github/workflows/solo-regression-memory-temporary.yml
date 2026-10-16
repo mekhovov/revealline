@@ -29,12 +29,27 @@ jobs:
       matrix:
         include:
           - label: baseline
+            case: demo-recordings
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
+            case: demo-recordings
+            source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
+          - label: baseline
+            case: coop-lobby-preview
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: coop-lobby-preview
+            source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
+          - label: baseline
+            case: couch-reading
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: couch-reading
             source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
+      SOLO_CASE: ${{ matrix.case }}
       SOLO_TARGET: ${{ matrix.source }}
       SOLO_EVIDENCE: .cache/solo-memory-diagnostic
     steps:
@@ -83,14 +98,47 @@ jobs:
           workflow_head = subprocess.check_output(['git', '-C', str(tools), 'rev-parse', 'HEAD'], text=True).strip()
           assert head == os.environ['SOLO_TARGET'] and workflow_head == os.environ['GITHUB_SHA']
           assert subprocess.check_output(['node', '--version'], text=True).strip() == manifest['nodeVersion'] == 'v22.22.2'
-          entry = next(row for row in manifest['entries'] if row['label'] == os.environ['SOLO_LABEL'])
+          entry = next(row for row in manifest['entries'] if row['label'] == os.environ['SOLO_LABEL'] and row['case'] == os.environ['SOLO_CASE'])
           assert entry['sourceRevision'] == head
-          assert digest((root / entry['file']).read_bytes()) == entry['testSHA256']
+          original = (root / entry['file']).read_bytes()
+          assert digest(original) == entry['testSHA256']
+          selected_path = entry['file']
+          selected_bytes = original
+          if entry['mode'] == 'bounded-object-identity':
+              old = "import assert from 'node:assert/strict';"
+              assert original.decode().count(old) == 1
+              replacement = """import nativeAssert from 'node:assert/strict';
+          // Diagnostic copy only: preserve strict identity truth while bounding
+          // Node's mismatch formatter for the large cyclic finite DOM fixture.
+          const assert = new Proxy(nativeAssert, {
+            get(target, key, receiver) {
+              if (key !== 'equal') return Reflect.get(target, key, receiver);
+              return (actual, expected, message) => {
+                const reference = (value) => value !== null &&
+                  (typeof value === 'object' || typeof value === 'function');
+                if (reference(actual) || reference(expected))
+                  return nativeAssert.ok(Object.is(actual, expected),
+                    message ?? 'Strict object identity mismatch (bounded diagnostic).');
+                return nativeAssert.equal(actual, expected, message);
+              };
+            },
+          });"""
+              selected_bytes = original.decode().replace(old, replacement).encode()
+              selected_path = 'game/test/.solo-memory-diagnostic-' + entry['case'] + '.test.mjs'
+              copy = root / selected_path
+              assert not copy.exists()
+              copy.write_bytes(selected_bytes)
+              (out / 'diagnostic-test.mjs').write_bytes(selected_bytes)
+          else:
+              assert entry['mode'] == 'original'
           receipt = {'format': 'SoloBoundedMemorySelectionV1', 'sourceRevision': head,
                      'sourceTree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
                      'workflowSourceRevision': workflow_head, 'workflowSHA256': digest(wp.read_bytes()),
                      'manifestSHA256': digest(raw), 'runtimeRevision': entry['runtimeRevision'],
-                     'batch': 1, 'selected': [{'path': entry['file'], 'sha256': entry['testSHA256']}],
+                     'batch': 1, 'selected': [{'path': selected_path, 'sha256': digest(selected_bytes)}],
+                     'originalTest': {'path': entry['file'], 'sha256': entry['testSHA256']},
+                     'diagnosticMode': entry['mode'], 'case': entry['case'],
+                     'diagnosticOverlay': manifest['diagnosticOverlay'],
                      'nodeVersion': 'v22.22.2', 'CI': '1', 'platform': 'ubuntu-latest',
                      'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
                      'dependencyHashes': {name: digest((root / name).read_bytes()) for name in [
@@ -106,7 +154,7 @@ jobs:
       - name: Retain authority before admitting the test
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-memory-${{ matrix.label }}-selection-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-memory-${{ matrix.label }}-${{ matrix.case }}-selection-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: source/.cache/solo-memory-diagnostic/
           include-hidden-files: true
           if-no-files-found: error
@@ -118,7 +166,7 @@ jobs:
       - name: Install the exact target optional SIM fixture dependencies
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --include=dev
 
-      - name: Run the unchanged complete file with explicit resource boundaries
+      - name: Run the declared complete file with explicit resource boundaries
         timeout-minutes: 150
         run: |
           cat > "$RUNNER_TEMP/solo-memory-checkpoint.py" <<'PY'
@@ -320,7 +368,7 @@ jobs:
         if: always() && steps.selection.outcome == 'success'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-memory-${{ matrix.label }}-result-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-memory-${{ matrix.label }}-${{ matrix.case }}-result-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: source/.cache/solo-memory-diagnostic/checkpoint-1/
           include-hidden-files: true
           if-no-files-found: warn

@@ -1,31 +1,67 @@
 {
-  "format": "SoloBoundedMemoryDiagnosticManifestV1",
-  "purpose": "Temporary exact-source diagnostic of a remote host test that exhausted runner memory. No test assertions, goldens or test deadlines are changed. This is not a passing qualification run.",
+  "format": "SoloBoundedMemoryDiagnosticManifestV2",
+  "purpose": "Temporary exact-source Linux comparisons: unchanged demo recordings and diagnostic copies of two memory-heavy host fixtures with unchanged strict object-identity truth and bounded failure formatting. No runtime, goldens, assertions or deadlines are weakened.",
   "entries": [
     {
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/coop-lobby-preview.test.mjs",
-      "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
-      "bytes": 28942,
       "label": "baseline",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371"
+      "case": "demo-recordings",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/demo-recordings.test.mjs",
+      "testSHA256": "68aa45b1b0a8fc4dc473f56b6393333227660c27f277eef65b1ad01cca409cc2",
+      "bytes": 19210
     },
     {
+      "label": "candidate",
+      "case": "demo-recordings",
+      "mode": "original",
       "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "file": "game/test/demo-recordings.test.mjs",
+      "testSHA256": "68aa45b1b0a8fc4dc473f56b6393333227660c27f277eef65b1ad01cca409cc2",
+      "bytes": 19210
+    },
+    {
+      "label": "baseline",
+      "case": "coop-lobby-preview",
+      "mode": "bounded-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "file": "game/test/coop-lobby-preview.test.mjs",
       "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
-      "bytes": 28942,
+      "bytes": 28942
+    },
+    {
       "label": "candidate",
-      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b"
+      "case": "coop-lobby-preview",
+      "mode": "bounded-object-identity",
+      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "file": "game/test/coop-lobby-preview.test.mjs",
+      "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
+      "bytes": 28942
+    },
+    {
+      "label": "baseline",
+      "case": "couch-reading",
+      "mode": "bounded-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/couch-reading.test.mjs",
+      "testSHA256": "c7a02f718299a4764619ec657be7fff572858a33f1f416ec7091ae183e3f1b33",
+      "bytes": 11819
+    },
+    {
+      "label": "candidate",
+      "case": "couch-reading",
+      "mode": "bounded-object-identity",
+      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "file": "game/test/couch-reading.test.mjs",
+      "testSHA256": "c7a02f718299a4764619ec657be7fff572858a33f1f416ec7091ae183e3f1b33",
+      "bytes": 11819
     }
-  ],
-  "sameTestBytes": true,
-  "command": [
-    "node",
-    "--test",
-    "--test-concurrency=1",
-    "--test-reporter=tap",
-    "game/test/coop-lobby-preview.test.mjs"
   ],
   "nodeVersion": "v22.22.2",
   "CI": "1",
@@ -45,5 +81,26 @@
     "sampledAvailableBytes": 204603392,
     "scope": "Sample before shutdown establishes severe memory pressure, not a captured kernel OOM verdict."
   },
-  "scope": "Two separate exact checkouts retain workflow and target revisions independently. Aborted/resource-exhausted files are incomplete. Later358 layout correction is not part of this historical comparison."
+  "scope": "Two separate exact checkouts retain workflow and target revisions independently. Aborted/resource-exhausted files are incomplete. Later358 layout correction is not part of this historical comparison.",
+  "sameTestBytesByCase": {
+    "demo-recordings": true,
+    "coop-lobby-preview": true,
+    "couch-reading": true
+  },
+  "commandTemplate": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "selectedTestPath"
+  ],
+  "diagnosticOverlay": "Only strict equality comparisons involving objects/functions use assert.ok(Object.is(actual, expected), message). This is the same acceptance condition as strictEqual; original primitive comparisons and all deep equality, values, deadlines and production code remain exact. Copies are untracked siblings of the source tests, explicitly hashed and retained.",
+  "priorBoundedPair": {
+    "runId": 38866775177,
+    "workflowSourceRevision": "266823b7b968251dd56de81dd5a7011a215b849e",
+    "baselineRSSBytes": 13265383424,
+    "candidateRSSBytes": 13536002048,
+    "bothIncomplete": true,
+    "scope": "Both exact sources exceeded12GiB before any test result, with only TAP header retained. This diagnoses shared resource runaway, not a completed file or exact failing assertion."
+  }
 }
