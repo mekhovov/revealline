@@ -1,36 +1,26 @@
 {
-  "format": "SoloBoundedBaselineClassificationManifestV6",
-  "purpose": "Exact original-main Linux execution of three image ownership, image-format and scene-clock regression groups, retaining full original tests and all failures. Named comparisons use prior retained candidate TAP; completed baseline files never count as candidate coverage.",
+  "format": "SoloBoundedCanonicalFixturesManifestV7",
+  "purpose": "Full canonical verification of shared-image lease lifetime/cleanup and explicit neutral scene-clock anchoring, after retained exact-original-main proofs. Keep every rejection, identity, replay and checkpoint assertion.",
   "entries": [
     {
-      "label": "baseline",
+      "label": "candidate",
       "case": "presentation-team-runtime",
       "mode": "original",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
+      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
       "file": "game/test/presentation-team-runtime.test.mjs",
-      "testSHA256": "18cbe09bc8c4a4008123ea2a9b708a6fb1c934ffe57c57bee37c4c07a131d7a6",
-      "bytes": 8522
+      "testSHA256": "1ad8b3c4252384e77cd0d349a534108363aa4cf7d81deb6b668d5a170d012d5e",
+      "bytes": 9047
     },
     {
-      "label": "baseline",
-      "case": "test-company-content-inventory",
-      "mode": "original",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "scripts/test-company-content-inventory.mjs",
-      "testSHA256": "eea9cb5a3326c695dd2105434e591d5d77e5a50396e83bd0d5bf6bcff38c9934",
-      "bytes": 4996
-    },
-    {
-      "label": "baseline",
+      "label": "candidate",
       "case": "selection-bookmark-host",
       "mode": "original",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
+      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
       "file": "game/test/selection-bookmark-host.test.mjs",
-      "testSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
-      "bytes": 5359
+      "testSHA256": "25bf85e3c80c40471ee09b5f485a31fbde76f4489aecd87167ae045f3a065e4e",
+      "bytes": 5377
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -50,11 +40,10 @@
     "failureAuthoritySHA256": "3093a14c4d7b6c27e21652cb9a46a3bd8796936825813a4f037e98fc83470c77",
     "scope": "Retained complete candidate failures only; baseline results are separate scoped comparisons, not passing waivers."
   },
-  "scope": "Three full original-main files under the same Node22/CI=1 Linux environment. Source and workflow revisions separate. Compare only observed named assertions; later assertions after a failure remain unexecuted. No candidate/full-suite/device acceptance inferred.",
+  "scope": "Two complete canonical files at050d/e025 only. Source/workflow identities separate; failed or partial files never pass. This supplements prior historical source observations, not a complete-suite or device acceptance.",
   "sameTestBytesByCase": {
-    "presentation-team-runtime": true,
-    "test-company-content-inventory": true,
-    "selection-bookmark-host": true
+    "presentation-team-runtime": false,
+    "selection-bookmark-host": false
   },
   "commandTemplate": [
     "node",
@@ -81,23 +70,6 @@
       ]
     },
     {
-      "case": "test-company-content-inventory",
-      "file": "scripts/test-company-content-inventory.mjs",
-      "baselineTestSHA256": "eea9cb5a3326c695dd2105434e591d5d77e5a50396e83bd0d5bf6bcff38c9934",
-      "candidateTestSHA256": "eea9cb5a3326c695dd2105434e591d5d77e5a50396e83bd0d5bf6bcff38c9934",
-      "sameTestBytes": true,
-      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12035039142,
-      "candidateArtifactSHA256": "sha256:5addde9f03f269ecb1ccb925f1dae5b8771d95e5963bbccda1b3322638569484",
-      "candidateTAPSHA256": "834841f59bdf95df3b085cd54ad14a72aeebe9a4e65ba965b69b4af947d2ba5e",
-      "candidateFailureNames": [
-        "every registered current and retained edition is inventoried without multiplying bundle owners",
-        "historical originals retain their exact source, presentation, campaign and save dependencies",
-        "committed company evidence exactly reproduces from current source and pinned originals"
-      ]
-    },
-    {
       "case": "selection-bookmark-host",
       "file": "game/test/selection-bookmark-host.test.mjs",
       "baselineTestSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
@@ -114,5 +86,17 @@
         "retained chapter selector persists its choice while the other saved flight stays explicit and exact"
       ]
     }
-  ]
+  ],
+  "canonicalProofs": {
+    "fixtureCommit": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
+    "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+    "baselineRunId": 38877911109,
+    "baselineWorkflowRevision": "9bf8d29ab0e9785ae3bf19af4f0f5a0ed3630696",
+    "baselineVerifiedReportSHA256": "eba89f91633364b04cf47b907018a966bcf4a2152a6ba80ea683b03d6ae71326",
+    "baselineOutcomes": {
+      "presentation-team-runtime": "4tests3pass1same early-close expectation failure; following case masked by missing cleanup.",
+      "selection-bookmark-host": "3/3pass with existing12tick expectation."
+    },
+    "scope": "No production module, golden, authority validation or deadline changes. Canonical outcomes pending."
+  }
 }
