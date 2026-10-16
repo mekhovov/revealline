@@ -42,13 +42,14 @@ if (fixtureAccess && !['localhost', '127.0.0.1'].includes(url.hostname))
   throw new Error('The explicit access fixture is restricted to local test servers.');
 url.searchParams.set('performance', option('diagnostics', '1'));
 const playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
-const browser = await playwright[engine].launch({
-  ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),
-  headless: true,
-});
 const results = [];
 await mkdir(dirname(resolve(output)), { recursive: true });
+let browser;
 try {
+  browser = await playwright[engine].launch({
+    ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),
+    headless: true,
+  });
   for (let pass = 0; pass < runs; pass++) {
     const observedAt = new Date().toISOString(),
       initialHostLoad = loadavg();
@@ -332,6 +333,31 @@ try {
     console.log(JSON.stringify({ pass, firstActiveAt, beforePause, failure, errors }));
     await context.close();
   }
+} catch (error) {
+  // Launch/context failures occur outside the per-page observation block. Keep
+  // every requested pass explicit instead of silently losing the remaining runs.
+  const failure = String(error?.message ?? error);
+  if (results.length) results.at(-1).batchFailure = failure;
+  while (results.length < runs)
+    results.push({
+      pass: results.length,
+      status: 'not-observed',
+      observedAt: null,
+      address: url.href,
+      sourceRevision: option('source-revision', null),
+      browser: `${engine} ${browser?.version() ?? 'not launched'}`,
+      diagnostics: option('diagnostics', '1') === '1',
+      independentWorkProbe: flags.includes('--work-probe'),
+      cpuRate: cpu,
+      fixtureAccess,
+      requestedActiveMs: duration,
+      failure,
+      application: null,
+      external: null,
+    });
+  await writeFile(output, JSON.stringify(results, null, 2));
+  console.error(failure);
+  process.exitCode = 1;
 } finally {
-  await browser.close();
+  await browser?.close();
 }
