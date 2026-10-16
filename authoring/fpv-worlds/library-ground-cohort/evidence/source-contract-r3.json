@@ -1,0 +1,485 @@
+{
+  "format": "GroundMotionCohortSourceContract.v1",
+  "baseline": "f9617ba8e0fdb0a526171f0fab944d06ad2d834e",
+  "checks": [
+    {
+      "name": "Readable Library differs only by reviewed endpoint/comments",
+      "passed": true
+    },
+    {
+      "name": "Readable Worker differs only by exact index URL",
+      "passed": true
+    },
+    {
+      "name": "Strict v1 parser accepts empty index.json",
+      "passed": true
+    },
+    {
+      "name": "Older feed exact index.json",
+      "passed": true
+    },
+    {
+      "name": "Strict v1 parser accepts empty surface-coating-v1/index.json",
+      "passed": true
+    },
+    {
+      "name": "Older feed exact surface-coating-v1/index.json",
+      "passed": true
+    },
+    {
+      "name": "Strict v1 parser accepts empty ground-motion-v1/index.json",
+      "passed": true
+    },
+    {
+      "name": "New feed is byte-exact same empty v1 shape",
+      "passed": true
+    },
+    {
+      "name": "Existing row derives fixed immutable URL",
+      "passed": true
+    },
+    {
+      "name": "Closed schema rejects unknown capability key",
+      "passed": true
+    },
+    {
+      "name": "Closed schema rejects mutable commit",
+      "passed": true
+    },
+    {
+      "name": "Closed schema rejects arbitrary URL field",
+      "passed": true
+    },
+    {
+      "name": "Closed schema rejects path traversal",
+      "passed": true
+    },
+    {
+      "name": "old exact index accepted",
+      "passed": true
+    },
+    {
+      "name": "old index request policy exact",
+      "passed": true
+    },
+    {
+      "name": "old refuses other cohort before fetch",
+      "passed": true
+    },
+    {
+      "name": "old refuses original feed before fetch",
+      "passed": true
+    },
+    {
+      "name": "old refuses query before fetch",
+      "passed": true
+    },
+    {
+      "name": "old refuses fragment before fetch",
+      "passed": true
+    },
+    {
+      "name": "old refuses foreign origin before fetch",
+      "passed": true
+    },
+    {
+      "name": "old refuses wrong index budget before fetch",
+      "passed": true
+    },
+    {
+      "name": "old refuses index with digest before fetch",
+      "passed": true
+    },
+    {
+      "name": "old immutable pack transport unchanged",
+      "passed": true
+    },
+    {
+      "name": "old wrong pack hash refused",
+      "passed": true
+    },
+    {
+      "name": "old unavailable index refused",
+      "passed": true
+    },
+    {
+      "name": "new exact index accepted",
+      "passed": true
+    },
+    {
+      "name": "new index request policy exact",
+      "passed": true
+    },
+    {
+      "name": "new refuses other cohort before fetch",
+      "passed": true
+    },
+    {
+      "name": "new refuses original feed before fetch",
+      "passed": true
+    },
+    {
+      "name": "new refuses query before fetch",
+      "passed": true
+    },
+    {
+      "name": "new refuses fragment before fetch",
+      "passed": true
+    },
+    {
+      "name": "new refuses foreign origin before fetch",
+      "passed": true
+    },
+    {
+      "name": "new refuses wrong index budget before fetch",
+      "passed": true
+    },
+    {
+      "name": "new refuses index with digest before fetch",
+      "passed": true
+    },
+    {
+      "name": "new immutable pack transport unchanged",
+      "passed": true
+    },
+    {
+      "name": "new wrong pack hash refused",
+      "passed": true
+    },
+    {
+      "name": "new unavailable index refused",
+      "passed": true
+    },
+    {
+      "name": "Parent admission input count remains95",
+      "passed": true
+    },
+    {
+      "name": "Only two generated admitted inputs change",
+      "passed": true
+    },
+    {
+      "name": "Existing16MiB source ceiling preserved",
+      "passed": true
+    }
+  ],
+  "feeds": [
+    {
+      "path": "authoring/fpv-worlds/published/index.json",
+      "bytes": 49,
+      "sha256": "427b1d6684f0367f7d785c7ea0f429c04d7cb3b5639424dd0cdf3dcd56f09617"
+    },
+    {
+      "path": "authoring/fpv-worlds/published/surface-coating-v1/index.json",
+      "bytes": 49,
+      "sha256": "427b1d6684f0367f7d785c7ea0f429c04d7cb3b5639424dd0cdf3dcd56f09617"
+    },
+    {
+      "path": "authoring/fpv-worlds/published/ground-motion-v1/index.json",
+      "bytes": 49,
+      "sha256": "427b1d6684f0367f7d785c7ea0f429c04d7cb3b5639424dd0cdf3dcd56f09617"
+    }
+  ],
+  "cases": [
+    {
+      "kind": "old",
+      "name": "own index",
+      "fetched": [
+        {
+          "url": "https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/surface-coating-v1/index.json",
+          "credentials": "omit",
+          "redirect": "error",
+          "cache": "no-store"
+        }
+      ],
+      "events": [
+        "world-progress",
+        "world-done"
+      ],
+      "type": "world-done",
+      "bytes": [
+        123,
+        32,
+        34,
+        102,
+        111,
+        114,
+        109,
+        97,
+        116,
+        34,
+        58,
+        32,
+        34,
+        70,
+        80,
+        86,
+        87,
+        111,
+        114,
+        108,
+        100,
+        76,
+        105,
+        98,
+        114,
+        97,
+        114,
+        121,
+        46,
+        118,
+        49,
+        34,
+        44,
+        32,
+        34,
+        119,
+        111,
+        114,
+        108,
+        100,
+        115,
+        34,
+        58,
+        32,
+        91,
+        93,
+        32,
+        125,
+        10
+      ]
+    },
+    {
+      "kind": "old",
+      "name": "other cohort",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "old",
+      "name": "original feed",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "old",
+      "name": "query",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "old",
+      "name": "fragment",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "old",
+      "name": "foreign origin",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "old",
+      "name": "wrong index budget",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "old",
+      "name": "index with digest",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "own index",
+      "fetched": [
+        {
+          "url": "https://raw.githubusercontent.com/mekhovov/revealline/main/authoring/fpv-worlds/published/ground-motion-v1/index.json",
+          "credentials": "omit",
+          "redirect": "error",
+          "cache": "no-store"
+        }
+      ],
+      "events": [
+        "world-progress",
+        "world-done"
+      ],
+      "type": "world-done",
+      "bytes": [
+        123,
+        32,
+        34,
+        102,
+        111,
+        114,
+        109,
+        97,
+        116,
+        34,
+        58,
+        32,
+        34,
+        70,
+        80,
+        86,
+        87,
+        111,
+        114,
+        108,
+        100,
+        76,
+        105,
+        98,
+        114,
+        97,
+        114,
+        121,
+        46,
+        118,
+        49,
+        34,
+        44,
+        32,
+        34,
+        119,
+        111,
+        114,
+        108,
+        100,
+        115,
+        34,
+        58,
+        32,
+        91,
+        93,
+        32,
+        125,
+        10
+      ]
+    },
+    {
+      "kind": "new",
+      "name": "other cohort",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "original feed",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "query",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "fragment",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "foreign origin",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "wrong index budget",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    },
+    {
+      "kind": "new",
+      "name": "index with digest",
+      "fetched": [],
+      "events": [
+        "world-error"
+      ],
+      "type": "world-error",
+      "bytes": null
+    }
+  ],
+  "changedInputs": [
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 846934,
+      "sha256": "94f1b63b7390dc45e90eb6491f32040bb722d8a20a80cdd6939ada178ed8ee8d",
+      "beforeBytes": 846952,
+      "beforeSHA256": "a30ce61c2216c0f5fa1f22f31acb4e100e7882855d13d498e7483eaceecfa2e7"
+    },
+    {
+      "path": "optional-practice/worker-template.mjs",
+      "bytes": 6511,
+      "sha256": "ed3eaea980e9a29f3626767464bd56f28041ffad646a80ed3eb08d7e4d2aaab9",
+      "beforeBytes": 6513,
+      "beforeSHA256": "b22c275810d2cb8a499642ccaa4fae6c710588f98ebfff451904e4aa6cd2c300"
+    }
+  ],
+  "inputCount": 95,
+  "totalSourceBytes": 16744040,
+  "remainingSourceBytes": 33176,
+  "limitations": [
+    "Manual Node parser and serialized worker request contracts with an in-memory scope and stubbed Response only; not a native Worker, HTTPS, UI, storage, offline or publication qualification.",
+    "Input sum is a source measurement, not fresh package admission. No runtime limits or file policy changed.",
+    "Both old feeds remain exact; all three feeds are empty. No held row is republished."
+  ]
+}

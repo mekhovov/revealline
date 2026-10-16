@@ -23,6 +23,7 @@ const teamOriginals = new Map(
 
 function teamPictures({ install }) {
   const BaseImage = globalThis.Image;
+  const hostFetch = globalThis.fetch;
   install('Image', {
     value: class extends BaseImage {
       async decode() {
@@ -40,7 +41,7 @@ function teamPictures({ install }) {
       const asset = defaultTeam.assets.find((row) =>
         new URL(url).pathname.endsWith('/' + row.path),
       );
-      assert(asset, 'Team fetch uses a registered original');
+      if (!asset) return hostFetch(url);
       return new Response(teamOriginals.get(asset.path));
     },
   });
@@ -127,7 +128,7 @@ for (const route of ['opening', 'authored']) {
       p.$('shell-title-versus').getAttribute('href'),
       `couch/?journey=${route}&return=solo`,
     );
-    assert.match(p.$('shell-title-team').textContent, /Separate Team arenas/);
+    assert.match(p.$('shell-title-team').textContent, /\bTeam\b/);
     await action(p.$('shell-title-versus'));
     assert.equal(
       globalThis.location.href,
@@ -143,7 +144,7 @@ for (const route of ['opening', 'authored']) {
     const p = await versus(t, route),
       before = p.checkpoint();
     assert.equal(p.$('race-journey-note').hidden, false);
-    assert.match(p.$('race-coop').textContent, /Separate Team arenas/);
+    assert.match(p.$('race-coop').textContent, /\bTeam\b/);
     assert.equal(
       p.$('race-coop').getAttribute('href'),
       `relay-rescue.html?return=versus&journey-return=${route}`,

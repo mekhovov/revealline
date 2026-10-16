@@ -176,6 +176,7 @@ export function imagePresentation(source) {
   const g = asset.geometry;
   return freezePresentation({
     frame: g.frame,
+    animation: asset.animation ?? null,
     pivot: g.pivot,
     occupiedBounds: g.occupiedBounds,
     nineSlice: g.nineSlice,
@@ -183,8 +184,8 @@ export function imagePresentation(source) {
       x: anchor.x - g.pivot.x,
       y: anchor.y - g.pivot.y,
       radiusScale: anchor.radius / 0.16,
-      direction: i % 2 ? -1 : 1,
-      phaseDegrees: i * 23,
+      direction: anchor.direction ?? (i % 2 ? -1 : 1),
+      phaseDegrees: anchor.phaseDegrees ?? i * 23,
       bladeCount: anchor.blades,
     })),
   });

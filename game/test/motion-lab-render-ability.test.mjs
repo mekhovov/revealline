@@ -56,6 +56,7 @@ test('Motion ability labels retain historical defaults and support Standard/Larg
     for (const face of ['pixel', 'plain'])
       for (const labelPixels of [14, 18]) {
         const labelFont = canvasTextFonts(face, { ui: themeFont }).ui;
+        if (face === 'pixel') assert.match(labelFont, /Reveal Line Pixel/);
         const result = paint(state, { pixels, labelFont, labelPixels });
         const reference = paint(state, { pixels });
         assert.deepEqual(

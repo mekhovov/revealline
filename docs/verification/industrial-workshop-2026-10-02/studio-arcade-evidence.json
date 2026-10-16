@@ -1,0 +1,335 @@
+{
+  "format": "revealline-industrial-workshop-software-evidence.v1",
+  "date": "2026-10-02",
+  "head": "f4545d68a9be0ada4b7a8ad1327c9c02e25214a1",
+  "scope": "Independent Studio workspaces and opt-in industrial Arcade appearance layer. Software evidence only, not production recipe admission, artwork approval, human acceptance, a gameplay completion proof or release qualification.",
+  "status": "focused-software-checks-passed",
+  "inputs": [
+    {
+      "path": "game/presentation/industrial-arcade.mjs",
+      "bytes": 6514,
+      "sha256": "85e48653d2a5625951912f256764f8b6d357d619a4c14f7b569b3cd880842ded"
+    },
+    {
+      "path": "game/presentation/industrial-arcade-builtins.mjs",
+      "bytes": 3545,
+      "sha256": "20c3eb3f1a52f5ab09675f9cc283b7c72921356734042ca5d54b298533f0f086"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 43606,
+      "sha256": "1ce3e04859eaaddba4b9d58790d9150f76334ee96b0d1b5ba7d3d155e585687c"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 40892,
+      "sha256": "2ed12b897d5bddad97a4911b84359a03343c9240f1650c7dc6c1524a3f5a559d"
+    },
+    {
+      "path": "game/text-face.mjs",
+      "bytes": 1119,
+      "sha256": "0e572b57b1554a0d9d4efe1a388981b61e27e4c9476e178a394380d38a40efb8"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 509202,
+      "sha256": "9d96a618b652eec116aa5c324a94d0e615d8cdc165b6d6665d86fde26570f876"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 181435,
+      "sha256": "9069620354535adc7b0e8652c21278c2e069f3da37f7b57fecc8fde8bed20646"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 238148,
+      "sha256": "abe0284147bc5188b7e6ba69c4495187ea191e4e1fe8a886e64c711d1ddcacde"
+    },
+    {
+      "path": "game/company-player.mjs",
+      "bytes": 46290,
+      "sha256": "860154c3f0b30f1c2d945ba98f81d6064a658249ba85d05d0fee608b5f06c949"
+    },
+    {
+      "path": "game/presentation/studio-store.mjs",
+      "bytes": 15454,
+      "sha256": "12767ea1ac13916b7930267993beeae62038df0ab725c43bcc526e16e9ab8a17"
+    },
+    {
+      "path": "game/presentation/studio-session.mjs",
+      "bytes": 15281,
+      "sha256": "4d38bd65ae179b8b13265c3073afe27bf86ea52a9ebab3974335d71590752e97"
+    },
+    {
+      "path": "game/presentation/studio-inspection.mjs",
+      "bytes": 2961,
+      "sha256": "494e822cff9e38567d88d467883732c3911463aa698531155e617a00008af88a"
+    },
+    {
+      "path": "authoring/asset-studio/theme-workbench.mjs",
+      "bytes": 11984,
+      "sha256": "3af5babdcda78d78174daafb1abf1fc491a438979339aa61629e7c09ee19baa9"
+    },
+    {
+      "path": "authoring/asset-studio/arcade-specimen.mjs",
+      "bytes": 6093,
+      "sha256": "ec91b2a281d0b3145c8d8c9d4d57a7bb066f5c476c0269cbaa5b197f5231afa0"
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "bytes": 58001,
+      "sha256": "bcfac15924a050c806ef47b40108879079797298c3297c637825fd766dfdbf0b"
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "bytes": 25899,
+      "sha256": "2bfc724536288d95cb7dcba6c0b9ab0592d35c651bb4825592221dc0d352542f"
+    },
+    {
+      "path": "game/presentation/runtime-transfer.mjs",
+      "bytes": 7330,
+      "sha256": "00b90c5c5f7b643995b9d5963cc3647bae61740aed77aca51fba4042cd4ab215"
+    },
+    {
+      "path": "game/test/studio-runtime-transfer.test.mjs",
+      "bytes": 8581,
+      "sha256": "ef742ce88d6ba5a496840acaaef2cc8ecef0a72d4704aec7d7e60ef23d0e2eec"
+    },
+    {
+      "path": "game/test/industrial-arcade.test.mjs",
+      "bytes": 7320,
+      "sha256": "c109cb335cc90252a4bc53e86cf72ad7b780468cb3ca509054288d198d453ff8"
+    },
+    {
+      "path": "game/test/studio-workspaces.test.mjs",
+      "bytes": 8068,
+      "sha256": "24932fd3077575e5d85826a22d18abb01d9c544e892a741e6f934db0e22fac4a"
+    },
+    {
+      "path": "game/presentation/theme-preview.mjs",
+      "bytes": 7924,
+      "sha256": "1453b96bbfc5c7dda3f4b45afaf296da2855e5293b08952e8c3ac0b65786e77a"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "bytes": 27981,
+      "sha256": "0baa586c76f78b0e55f291a54e202e4ab5f2daf1332bb96ae9076deb904ad87b"
+    },
+    {
+      "path": "game/test/theme-preview.test.mjs",
+      "bytes": 5041,
+      "sha256": "4dab12327a1c045a2b8eccbb456ac873285f58facbaff246f0a696984e0b2b0f"
+    },
+    {
+      "path": "authoring/asset-studio/README.md",
+      "bytes": 5682,
+      "sha256": "13295faf857db95f2f17babad07c7a2dee82373b0f491d47e5236110d49d5e2f"
+    }
+  ],
+  "verification": {
+    "focused": {
+      "tests": 90,
+      "passed": 90,
+      "failed": 0,
+      "logSHA256": "f6f05986924bdfa61745ef07210d3d3cfbca2420d8ca2b3576d6cd25a261d887",
+      "suites": [
+        "industrial-arcade",
+        "studio-workspaces",
+        "presentation-studio",
+        "asset-studio-build",
+        "asset-studio-interface-preferences",
+        "asset-studio-preview-motion",
+        "coop-view-presentation",
+        "presentation-renderer",
+        "studio-runtime-transfer"
+      ],
+      "supplemental": "After the exact-builtin-identity guard was tightened to preserve byte-identical custom uploads, all10 industrial-arcade and studio-runtime-transfer tests passed again."
+    },
+    "eslint": "Owned JavaScript files: zero warnings or errors.",
+    "independentReview": {
+      "agent": "plan_scope_critique",
+      "scope": "Legacy source identity, exact picture binding, uploaded image precedence, alpha/geometry/rotor preservation and per-attempt selection.",
+      "suites": [
+        "industrial-arcade",
+        "presentation-renderer",
+        "coop-view-presentation",
+        "presentation-rotor-geometry",
+        "presentation-backdrop",
+        "classic-presentation",
+        "couch-built-in-picture-parity",
+        "coop-core-presentation",
+        "coop-anchor-presentation"
+      ],
+      "result": "Passed; sufficient for unchanged legacy behavior evidence, not theme art approval."
+    },
+    "browser": {
+      "engine": "Safari Technology Preview",
+      "origin": "http://127.0.0.1:8797",
+      "route": "/authoring/asset-studio/",
+      "observed": [
+        "Create and persist independent workspace; reload retains workspace.",
+        "Workbench exposes independent Workspace, Industrial, Windows Classic and DOS specimens; switching to Windows Classic leaves editor preferences unchanged.",
+        "Industrial comparison loaded both real Team painter boards and35 native original/derived sprite pairs.",
+        "Industrial board preserves pilot-number markers, contact rings, objective labels and tile footprints."
+      ],
+      "limits": [
+        "Initial-state static specimen only; no full playthrough, performance, touch/controller or physical-device acceptance claimed."
+      ]
+    },
+    "baselineFailures": {
+      "method": "Node module loader reads tracked game/authoring .mjs source from the recorded Git HEAD. Existing HTML/data fixtures remain unchanged; no working-tree file is replaced.",
+      "cases": [
+        {
+          "suite": "coop-presentation-bootstrap-retry",
+          "failures": 5,
+          "assertion": "Retry expects preparing but remains error."
+        },
+        {
+          "suite": "defeat-presentation-host",
+          "test": "controller skip cannot carry held Confirm into Retry",
+          "line": 194,
+          "assertion": "Expected lost; actual ready."
+        },
+        {
+          "suite": "host-presentation-size",
+          "line": 219,
+          "width": 600,
+          "assertion": "firstEnemySpan <18 fails in the deliberate missing-width handoff check."
+        }
+      ],
+      "conclusion": "The same seven assertions fail against HEAD sources and current sources; not attributed to the industrial adapter. Not waived or represented as passing.",
+      "logs": [
+        {
+          "path": "docs/verification/industrial-workshop-2026-10-02/head-baseline-retry-tests.tap",
+          "sha256": "404779beb4885c3a3abbf5db619f25a94f27a7554a9352e6ba4c2bfbe88534a8"
+        },
+        {
+          "path": "docs/verification/industrial-workshop-2026-10-02/head-baseline-size-tests.tap",
+          "sha256": "e6e8a12709edd4c5445fd87dccf1ea7b80dfe6401c7a215bc8ba5b4517fea9aa"
+        }
+      ]
+    },
+    "integration": "Final shared interface provider adds UI-only font resolution independently of Arcade artwork. Parent verified32painter tests and12theme-contract tests; Plain and legacy defaults retained.",
+    "authoringLint": "node node_modules/eslint/bin/eslint.js authoring/**/*.mjs --max-warnings 0: exit 0, all authoring JavaScript clean. Changed workbench status subscription also linted and formatting checked.",
+    "finalReview": {
+      "scope": "Studio transfers, workspace ownership, actual candidate previews and legacy defaults.",
+      "changes": [
+        "Workbench observes shared host status, clears warning on recovery, and disposes the subscription.",
+        "New Industrial workspace seeds from selected verified release assets, flattens history while keeping provenance parents and original bytes.",
+        "RuntimeTheme.v2 contains compiled Presentation, derived ThemeFamily.v1/InterfaceTheme.v1 candidate and exact installed-engine SIM dependency.",
+        "Arcade comparison uses current workspace bytes; editing/switching closes stale comparison.",
+        "Same-tab SIM calibration receives bounded candidate data after staged work is saved."
+      ],
+      "limitations": [
+        "Runtime transfer has no arbitrary player-theme installation UI. Procedural SIM resources must be present in the installed engine.",
+        "Restored Arcade attempts retain authored art; per-attempt appearance choices are not yet saved as separate pins.",
+        "SIM candidate handoff previews the exact builtin material/model/effect collection; it does not import arbitrary executable shaders, geometry or external resource URLs."
+      ]
+    },
+    "crossDomain": {
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "log": "docs/verification/industrial-workshop-2026-10-02/studio-cross-domain-tests.tap",
+      "logSHA256": "9ea2444ad6bfe6169ae4bc66fdc097339269c716f5dc457f6b738ca30ee86dba",
+      "scope": "Final runtime v2 envelope, legacy runtime v1 reader, editable authoring roundtrip, exact source/SIM coupling and changed-byte rejection, bounded one-shot candidate preview/expiry/injection/quota, workspace persistence invariants and static release graph."
+    },
+    "candidateBrowser": {
+      "engine": "Isolated Chrome",
+      "log": "docs/verification/industrial-workshop-2026-10-02/studio-candidate-browser.log",
+      "observed": [
+        "New verified-release-seeded industrial workspace; changed panel token survives actual save and reload.",
+        "Full authoring export is 8,471,687 bytes; compact runtime v2 export is 3,444,497 bytes with source revision2 and edited #252d27 panel token.",
+        "Actual selected-workspace Team comparison renders35 native sprite pairs and labels the matching workspace revision.",
+        "No browser errors recorded."
+      ],
+      "note": "Script was corrected to wait for completed save acknowledgement instead of the already-staged r2 summary before reloading. No source data-loss bug was found."
+    },
+    "studioToSimBrowser": {
+      "engine": "Isolated Chrome",
+      "log": "docs/verification/industrial-workshop-2026-10-02/studio-complete-browser.log",
+      "logSHA256": "e17b1dac0e33dc73b71a2834d3fcf83b0cc9a8bb38bfecbacb375c287caaf6de",
+      "screenshot": "docs/verification/industrial-workshop-2026-10-02/studio-to-sim.png",
+      "screenshotSHA256": "46954e8089370d3645db9f5c712429fa36e130c49d7010c615b7915563ebb0b0",
+      "observed": [
+        "Created new Industrial workspace seeded from the verified release, changed panel token to #252d27, saved to completed acknowledgement, and reloaded with the edit retained.",
+        "Full .rltheme export was 8,471,687 bytes; compact runtime v2 export was 3,444,497 bytes with matching workspace revision2 and edited token.",
+        "Actual current-workspace Team comparison rendered35 native sprite pairs.",
+        "Clicked the Studio SIM preview link; calibration received the same workspace@2 and applied candidate panel #252d27.",
+        "Actual SIM renderer selected industrial-workshop@r1. LocalStorage remained unchanged and browser errors were empty."
+      ],
+      "limits": "Authoring transfer and browser rendering evidence only; no arbitrary player-theme installation, production admission, human art approval or physical-device qualification claimed."
+    }
+  },
+  "retainedProduction": {
+    "source": {
+      "id": "field-kit",
+      "revision": 104
+    },
+    "action": "No compiled files or production ledger changed. All six current HEAD recipe source closures already differ from compiled104; whole-producer refresh would include unrelated prior changes.",
+    "groups": {
+      "ui": {
+        "headSource": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:681df05a5885995d476b28d9609cbf7ca5daeafffe7eb3a33d650d747ce327a7",
+        "currentSource": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:681df05a5885995d476b28d9609cbf7ca5daeafffe7eb3a33d650d747ce327a7",
+        "compiledSample": "ui.button.chip",
+        "compiledSource": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs sha256:c0038df428a29111169b2e3f852811bd0785410315c58981db2bb869e2639e5e",
+        "compiledMatchesHead": false,
+        "changedByWorkingTree": false
+      },
+      "screens": {
+        "headSource": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:af463b140a15b5c2fdb27cf89c689b44923960f59697e6001d4d0fdf6a973121",
+        "currentSource": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:af463b140a15b5c2fdb27cf89c689b44923960f59697e6001d4d0fdf6a973121",
+        "compiledSample": "screen.collection.background",
+        "compiledSource": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:52a6145755fc879c7759d8c3845741bb20c7f5009b77b4da66b6987194185f53",
+        "compiledMatchesHead": false,
+        "changedByWorkingTree": false
+      },
+      "motion": {
+        "headSource": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/ui/rotor-presentation.mjs; game/presentation/journey-actor-materials.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; authoring/motion-lab/animation.mjs; authoring/motion-lab/presets.json; authoring/library/fpv-role-presentations/originals/scout.png; authoring/library/fpv-role-presentations/originals/bomber.png; authoring/library/fpv-role-presentations/originals/carrier.png; authoring/library/fpv-role-presentations/originals/interceptor.png; authoring/library/fpv-role-presentations/originals/fiber.png; authoring/library/fpv-role-presentations/originals/impact.png; authoring/library/fpv-role-presentations/originals/trapper.png sha256:5e092fb45edd0d320eed96dadc195eeca9dc15ce7b07e7a103a9f7eabbd204d8",
+        "currentSource": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/ui/rotor-presentation.mjs; game/presentation/journey-actor-materials.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; authoring/motion-lab/animation.mjs; authoring/motion-lab/presets.json; authoring/library/fpv-role-presentations/originals/scout.png; authoring/library/fpv-role-presentations/originals/bomber.png; authoring/library/fpv-role-presentations/originals/carrier.png; authoring/library/fpv-role-presentations/originals/interceptor.png; authoring/library/fpv-role-presentations/originals/fiber.png; authoring/library/fpv-role-presentations/originals/impact.png; authoring/library/fpv-role-presentations/originals/trapper.png sha256:5e092fb45edd0d320eed96dadc195eeca9dc15ce7b07e7a103a9f7eabbd204d8",
+        "compiledSample": "player.bomber.rotors",
+        "compiledSource": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs; game/presentation/journey-actor-materials.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; authoring/motion-lab/animation.mjs; authoring/motion-lab/presets.json; authoring/library/fpv-role-presentations/originals/scout.png; authoring/library/fpv-role-presentations/originals/bomber.png; authoring/library/fpv-role-presentations/originals/carrier.png; authoring/library/fpv-role-presentations/originals/interceptor.png; authoring/library/fpv-role-presentations/originals/fiber.png; authoring/library/fpv-role-presentations/originals/impact.png; authoring/library/fpv-role-presentations/originals/trapper.png sha256:5e32f549e39ecdabc7a5449b320f703c40aa23a87889ea27b3594187e69f2f7f",
+        "compiledMatchesHead": false,
+        "changedByWorkingTree": false
+      },
+      "effects": {
+        "headSource": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/contact-cue.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; authoring/motion-lab/animation.mjs; game/ui/combat-view.mjs; game/ui/combat-presentation.mjs; game/ui/actor-presentation.mjs; game/data-json.mjs; game/core/registry.mjs; game/core/combat-definition.mjs; game/core/geometry.mjs; game/core/classic-motion.mjs; game/core/classic-topology.mjs; game/core/movement.mjs; game/core/versions.mjs sha256:35cd4d82e13920678d320ccbe89ad65419f2df6c02f2897f715937abe136fa20",
+        "currentSource": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/contact-cue.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; authoring/motion-lab/animation.mjs; game/ui/combat-view.mjs; game/ui/combat-presentation.mjs; game/ui/actor-presentation.mjs; game/data-json.mjs; game/core/registry.mjs; game/core/combat-definition.mjs; game/core/geometry.mjs; game/core/classic-motion.mjs; game/core/classic-topology.mjs; game/core/movement.mjs; game/core/versions.mjs sha256:acc0d2aa6f9b1bafc98d3d06b47d0201c13a7714e209d6a7c0130d0125165c06",
+        "compiledSample": "effect.capture",
+        "compiledSource": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs; game/content-design/actor-marker.mjs; game/ui/lane-presentation.mjs; game/ui/render.mjs; game/ui/relay-view.mjs; game/ui/directional-view.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; game/enemy-catalog.mjs; game/ui/body-motion.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; authoring/motion-lab/animation.mjs sha256:b7aa3a6b9bc2302df0309e90acddf899766a9b9406f93bd266a94b685940a5eb",
+        "compiledMatchesHead": false,
+        "changedByWorkingTree": true
+      },
+      "team": {
+        "headSource": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-pilot-cues.mjs; game/ui/contact-cue.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/ui/rotor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/text-size.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs sha256:d117d023b097472e8975a7fa6e0384ba72bcc194ee84405e7afbe3753df14605",
+        "currentSource": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-pilot-cues.mjs; game/ui/contact-cue.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/ui/rotor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/text-size.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs sha256:456180a9599e0f59ba1595b67520a2982779d997c9ac30d8542d5e3a459a3a98",
+        "compiledSample": "team.capture.joint",
+        "compiledSource": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-assets.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs; game/ui/actor-recipes.mjs; game/ui/fpv-body-recipes.mjs; game/ui/body-backing.mjs; game/ui/body-motion.mjs sha256:c162660dcc177f6d975704920513d8171a9190ea708c61b1a5189adbb3b67980",
+        "compiledMatchesHead": false,
+        "changedByWorkingTree": true
+      },
+      "audio": {
+        "headSource": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:1a3fb0cd7a4c67bdd62b8a545385ec049eddf5cfff88d68d9e50fcac88196c5c",
+        "currentSource": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:7f493ef24e7772d0e7e5af491cbc4bd4652dbf75d5ba5a83f1a61dcc9e054db3",
+        "compiledSample": "audio.cancel",
+        "compiledSource": "game/app.mjs; game/couch/couch-music-host.mjs; game/opening-soundtrack.mjs; game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/quick-music-controls.mjs; game/ui/audio-master.mjs; game/soundtrack.mjs; game/soundtrack-style-taxonomy.mjs; game/soundtrack-rights.mjs; game/soundtrack-bundle.mjs; game/soundtrack-share.mjs; game/soundtrack-source.mjs; game/soundtrack-bundled.mjs; game/ui/soundtrack-panel.mjs; game/ui/soundtrack-panel.css; game/soundtrack-albums.mjs; game/soundtrack-portable.mjs; game/content/soundtrack-catalogue.mjs; game/online-soundtrack-catalogue.mjs; game/official-downloads.mjs; game/soundtrack-download-volumes.mjs; game/installed-app.mjs; game/managed-media-store.mjs; game/media-storage-record.mjs; game/soundtrack-private-intake.mjs; game/ui/soundtrack-error-copy.mjs; game/journey/campaign-feedback.mjs; game/rewards/audio-original.mjs; game/rewards/media-format.mjs; game/ui/edition-solo.mjs; game/ui/edition-rewards.mjs; game/ui/reward-media.mjs; game/ui/reward-audio-group.mjs; game/rewards/audio-groups.mjs; game/studio-preview-session.mjs; game/audio-preferences.mjs; game/ui/story-dialog.mjs; game/ui/victory-story.mjs; game/ui/music.mjs; game/data-json.mjs; game/mp3.mjs; game/media-audio.mjs; game/video-poster.mjs; game/rewards/model.mjs; game/rewards/media.mjs; game/editions/assets.mjs; game/editions/model.mjs; game/editions/retained-presentation.mjs sha256:b3ab688c9818ac2d35aff830a0700b0869c8065c08ebd49c0316cefe3faa7e2d",
+        "compiledMatchesHead": false,
+        "changedByWorkingTree": true
+      }
+    }
+  },
+  "limitations": [
+    "The arcade adapter decorates code-pinned builtin bitmap roles in prepared FPV/Team snapshots; custom/uploaded bytes, explicitly selected actor leases and non-FPV authored world art retain precedence.",
+    "The appearance selection is frozen for an in-memory attempt. Historical/restored attempts remain authored because saved-session schemas do not yet persist an industrial appearance pin.",
+    "Company pages use shared interface preferences but retain authored body artwork where no compiled Arcade snapshot exists.",
+    "Windows Classic and DOS are component specimens only."
+  ],
+  "runtimeExport": {
+    "format": "RLRUN2",
+    "backwardRead": "RLRUN1 (Presentation-only, candidate null)",
+    "extension": ".rlruntime",
+    "manifestFormat": "RuntimeTheme.v2",
+    "scope": "One selected compiled Presentation and exact original file closure plus independently identified ThemeFamily.v1/InterfaceTheme.v1 candidate and canonical SimVisualCollection.v1 installed-engine-builtin dependency. Source/theme/collection/asset revision IDs and selected provenance retained; full editable .rltheme export unchanged.",
+    "validation": "Bounded native Blob, manifest SHA-256, exact derived candidate/source binding and canonical installed SIM descriptor, dependency hashes, truncation/trailing bytes and cancellation. Hashes establish byte integrity, not authorship or publication approval."
+  }
+}

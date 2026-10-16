@@ -1,0 +1,77 @@
+[
+  {
+    "test": "failed catalogue download retains the accepted ready race, artwork and results",
+    "exitCode": 1,
+    "seconds": 45.97,
+    "failedNames": [
+      "failed catalogue download retains the accepted ready race, artwork and results"
+    ],
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=^failed\\ catalogue\\ download\\ retains\\ the\\ accepted\\ ready\\ race,\\ artwork\\ and\\ results$",
+      "game/test/couch-catalogue-host.test.mjs"
+    ]
+  },
+  {
+    "test": "failed catalogue download retains the accepted paused race, artwork and results",
+    "exitCode": 1,
+    "seconds": 46.04,
+    "failedNames": [
+      "failed catalogue download retains the accepted paused race, artwork and results"
+    ],
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=^failed\\ catalogue\\ download\\ retains\\ the\\ accepted\\ paused\\ race,\\ artwork\\ and\\ results$",
+      "game/test/couch-catalogue-host.test.mjs"
+    ]
+  },
+  {
+    "test": "failed catalogue download retains the accepted finished race, artwork and results",
+    "exitCode": 1,
+    "seconds": 46.1,
+    "failedNames": [
+      "failed catalogue download retains the accepted finished race, artwork and results"
+    ],
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=^failed\\ catalogue\\ download\\ retains\\ the\\ accepted\\ finished\\ race,\\ artwork\\ and\\ results$",
+      "game/test/couch-catalogue-host.test.mjs"
+    ]
+  },
+  {
+    "test": "Back fences a late transport completion without replacing the paused race",
+    "exitCode": 1,
+    "seconds": 45.67,
+    "failedNames": [
+      "Back fences a late transport completion without replacing the paused race"
+    ],
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=^Back\\ fences\\ a\\ late\\ transport\\ completion\\ without\\ replacing\\ the\\ paused\\ race$",
+      "game/test/couch-catalogue-host.test.mjs"
+    ]
+  },
+  {
+    "test": "new focus fences a late transport completion without replacing the paused race",
+    "exitCode": 1,
+    "seconds": 45.75,
+    "failedNames": [
+      "new focus fences a late transport completion without replacing the paused race"
+    ],
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=^new\\ focus\\ fences\\ a\\ late\\ transport\\ completion\\ without\\ replacing\\ the\\ paused\\ race$",
+      "game/test/couch-catalogue-host.test.mjs"
+    ]
+  }
+]

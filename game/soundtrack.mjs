@@ -14,15 +14,15 @@ export const SOUNDTRACK_CATALOGUE_FORMAT = 'revealline-soundtrack-catalogue.v1';
 export const SOUNDTRACK_CATALOGUE_FORMAT_V2 = 'revealline-soundtrack-catalogue.v2';
 const LEGACY_SOUNDTRACK_GENRES = Object.freeze(['synth90s', 'metal', 'ukrainian']);
 export const SOUNDTRACK_GENRE_LABELS = Object.freeze({
-  synth90s: '90s Synth',
+  synth90s: 'Synth',
   metal: 'Metal',
-  ukrainian: 'Ukrainian',
-  chiptune: 'Chiptune',
-  electronic: 'Electronic & dance',
+  electronic: 'Electronic',
+  chiptune: 'Chiptune & 8-bit',
   rock: 'Rock',
-  ambient: 'Ambient & chill',
+  ambient: 'Ambient',
   cinematic: 'Cinematic',
   acoustic: 'Acoustic & folk',
+  ukrainian: 'Ukrainian · UA',
 });
 export const SOUNDTRACK_GENRES = Object.freeze(Object.keys(SOUNDTRACK_GENRE_LABELS));
 export const SOUNDTRACK_MODES = Object.freeze(['auto', ...SOUNDTRACK_GENRES, 'fusion', 'mix']);
@@ -34,6 +34,7 @@ export const SOUNDTRACK_LIMITS = Object.freeze({
   customTracks: 123,
   customPlaylists: 26,
   catalogueTracks: 256,
+  onlineTracks: 512,
   assets: 512,
   playlists: 32,
   playlistEntries: 128,
@@ -194,9 +195,9 @@ export function emptySoundtrackLibrary({ catalogue = false, version = 3 } = {}) 
           installedTrackIds: [],
           tags: {},
           listening: {
-            // New players land on the hosted retro collection immediately. Older
+            // New players land on the bundled Ukrainian opening theme. Older
             // saved libraries keep their explicit choice during upgrade.
-            mode: version === 2 ? 'auto' : 'synth90s',
+            mode: version === 2 ? 'auto' : 'ukrainian',
             genres: [...(version === 2 ? LEGACY_SOUNDTRACK_GENRES : SOUNDTRACK_GENRES)],
             installedOnly: false,
             ...(version === 2 ? {} : { recordingMode: false }),
@@ -415,7 +416,7 @@ export function resolveSoundtrackSelection(value, context = {}, { catalogue } = 
     scope = copy(context);
   exactKeys(
     scope,
-    ['mapKey', 'campaignKey', 'themeId', 'scene', 'energy', 'installedTrackIds'],
+    ['mapKey', 'campaignKey', 'themeId', 'scene', 'energy', 'installedTrackIds', 'bundledTrackIds'],
     'soundtrack context',
   );
   for (const key of ['mapKey', 'campaignKey', 'themeId'])
@@ -431,6 +432,14 @@ export function resolveSoundtrackSelection(value, context = {}, { catalogue } = 
         scope.installedTrackIds.length <= SOUNDTRACK_LIMITS.catalogueTracks &&
         scope.installedTrackIds.every(stableId)),
     'Invalid installed soundtrack context.',
+  );
+  required(
+    scope.bundledTrackIds === undefined ||
+      (Array.isArray(scope.bundledTrackIds) &&
+        scope.bundledTrackIds.length <= SOUNDTRACK_LIMITS.catalogueTracks &&
+        new Set(scope.bundledTrackIds).size === scope.bundledTrackIds.length &&
+        scope.bundledTrackIds.every(stableId)),
+    'Invalid bundled soundtrack context.',
   );
   required(
     scope.energy === undefined ||
@@ -796,7 +805,10 @@ export function resolveSoundtrackCollections(value) {
       'Invalid soundtrack collection tracks.',
     );
     required(
-      collection.order === 'shuffle' && collection.repeat === 'all',
+      (collection.order === 'shuffle' ||
+        (collection.id === 'builtin.album.ukrainian.shchedryk-opening' &&
+          collection.order === 'ordered')) &&
+        collection.repeat === 'all',
       'Invalid soundtrack collection playback.',
     );
   }
@@ -862,7 +874,10 @@ export function soundtrackPlaylists(value) {
 }
 function installedSelection(library, context, ids) {
   const catalogue = new Set(library.catalogTracks.map((track) => track.id));
-  const present = new Set(context.installedTrackIds ?? library.installedTrackIds);
+  const present = new Set([
+    ...(context.installedTrackIds ?? library.installedTrackIds),
+    ...(context.bundledTrackIds ?? []),
+  ]);
   const availableHashes = new Set([
     ...soundtrackStoredTracks(library)
       .filter((track) => !catalogue.has(track.id))

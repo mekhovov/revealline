@@ -1,0 +1,46 @@
+{
+  "format": "FPVFestivalGroundsCheckpointBuild.v1",
+  "stage": "one course; actual visual review and ordinary completion qualification pending",
+  "source": {
+    "bytes": 740764,
+    "sha256": "70fb388c6daa44df6ca41a6db64e1c73f45971cf682bdd6b9f677eceaa4f0086",
+    "triangles": 8340,
+    "materials": 12,
+    "nodes": 49,
+    "textures": 1,
+    "colliders": 32
+  },
+  "prepared": {
+    "bytes": 733576,
+    "sha256": "5b0511bad6a896fe0fca11aa875f65941fd50842c109f18334075bbc5c0b3ced",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 759554,
+    "sha256": "532e338b9445b6c977554000a2fce3e093f65875fb3fb348b211764ddd67ebac",
+    "identity": "fpv-pack:532e338b9445b6c977554000a2fce3e093f65875fb3fb348b211764ddd67ebac"
+  },
+  "zip": {
+    "bytes": 759614,
+    "sha256": "ca65734ae1556b7f844d0c84c34ec0c2160ef9aad32bb7ae512848c3771d9dd3"
+  },
+  "sourceFiles": [
+    {
+      "path": "source/scene.mjs",
+      "sha256": "84afaaf555b33718e552c4c716b0de82a0c0e4227fa6734141f687e9f09d781f"
+    },
+    {
+      "path": "source/art.mjs",
+      "sha256": "0c08f356728ba9aa3fd8dbe8de90e364fbacbd7ba70743353d4c78f456759607"
+    },
+    {
+      "path": "build-checkpoint.mjs",
+      "sha256": "59082632b30faf858ed2bf69828833404e15c624d4426113f9cff1dfc984aef2"
+    }
+  ],
+  "courses": [
+    "festival-grounds-01"
+  ],
+  "runtimeChanges": 0,
+  "limitsUnchanged": true
+}

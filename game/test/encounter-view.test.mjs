@@ -92,3 +92,48 @@ test('a terminal failed run cannot advertise a live opening countdown or remaini
   assert.equal(view.seconds, 0);
   assert.match(view.instruction, /Restart/);
 });
+
+test('every replay-observed encounter phase has Ukrainian guidance without changing its replay state', async (context) => {
+  const { getLocale, setLocale } = await import('../i18n/index.mjs');
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const route = proof.routes.find(
+    (item) =>
+      item.turnPolicy === 'immediate' && item.variant === 'ordinary' && item.classId === 'scout',
+  );
+  const run = createRun(level, { classRecipes: pack.classRecipes });
+  const observed = new Set();
+  for (const segment of route.segments) {
+    if (segment.releaseBefore) releaseInputs(run);
+    for (let i = 0; i < segment.ticks; i++) {
+      stepRun(run, segment.input, FIXED_DT);
+      if (observed.has(run.encounter.phase)) continue;
+      observed.add(run.encounter.phase);
+      const checkpoint = JSON.stringify(run);
+      setLocale('en', { persist: false });
+      const english = encounterView(run);
+      setLocale('uk', { persist: false });
+      const ukrainian = encounterView(run);
+      assert.notEqual(ukrainian.title, english.title);
+      assert.notEqual(ukrainian.instruction, english.instruction);
+      assert.doesNotMatch(ukrainian.instruction, /[a-zA-Z]{3}/);
+      for (const field of [
+        'phase',
+        'stage',
+        'seconds',
+        'cutCells',
+        'min',
+        'remaining',
+        'suppressed',
+      ])
+        assert.equal(ukrainian[field], english[field]);
+      assert.equal(JSON.stringify(run), checkpoint);
+      setLocale('en', { persist: false });
+      assert.deepEqual(encounterView(run), english);
+    }
+  }
+  assert.ok(observed.has('warning'));
+  assert.ok(observed.has('transition'));
+  assert.ok(observed.has('open'));
+  assert.ok(observed.has('defeated'));
+});

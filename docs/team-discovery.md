@@ -6,16 +6,18 @@ the unified cross-mode catalogue or P06.
 
 ## Available content
 
-The same-page browser lists the two approved starter arenas, **First Connection**
-and **Relay Yard**, plus every arena in the currently opened local Team pack.
+The browser lists the two approved starter arenas, **First Connection** and
+**Relay Yard**, every exact installed `.rlteamcampaign` edition, and every arena
+in the currently opened local Team pack.
 Cards identify pack, source and objective; accessible Play names also identify the pack and source when arena titles repeat. Selecting a starter retains the opened
 pack and artwork owner for a later return. Another validated import replaces that
-local entry. This is a page-session browser, not persistent pack installation.
+local entry. Installed portable campaigns remain available across browser visits;
+raw Team JSON and `.rlteam` artwork imports remain page-session content.
 
-There are **no downloadable Team campaigns in this feature**. Solo/Versus packs
-and Team packs have different schemas and rules. Created Team JSON packs and
-`.rlteam` artwork bundles use the advanced setup file picker. Future downloads need
-reviewed Team content, exact artwork dependencies and a qualified installer.
+Solo/Versus packs and Team packs have different schemas and rules. The advanced
+setup file picker installs only a verified `.rlteamcampaign`; raw Team JSON packs
+and `.rlteam` artwork bundles still launch for the current visit without claiming
+installation.
 
 ## Optional artwork preview
 
@@ -48,7 +50,9 @@ These are source contracts; completed evidence is recorded below.
 - Completing a pack focuses **Browse Team arenas** directly on Results. Back keeps the earned result and original picture. **Change setup** remains a separate explicit action.
 - Accepted starter play updates the existing Team arena bookmark only after adoption; local same-ID imports never replace that bookmark. Storage denial or a newer callback focus cannot break play or steal focus.
 - The browser does not award Solo pictures or write Solo sessions, saves or
-  progression. Local Team packs and attempts remain page-local.
+  progression. A legal installed-campaign win records one exact-edition Team
+  clear. Local raw packs and unfinished Team attempts remain page-local; durable
+  Team picture rewards are not yet included.
 
 ## Cancellation, navigation and accessibility
 

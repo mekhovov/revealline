@@ -1,0 +1,26 @@
+{
+  "source": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "checks": 160,
+  "failures": 0,
+  "overlays": [],
+  "operatorConsoleWarnings": [],
+  "operatorConsoleErrors": [],
+  "archives": [
+    {
+      "file": "identity-r3.json.gz",
+      "uncompressedBytes": 144216,
+      "uncompressedSha256": "c35f67c8fec57f0917d52cd3d852a7b274ae5fb0312de60a2dc52daac5e69410"
+    },
+    {
+      "file": "identity-r3-fixture.json.gz",
+      "uncompressedBytes": 19956,
+      "uncompressedSha256": "ba28b87c6740a3b5959d1d2081728a7a9f3eff471d4fc1e6161d973280cdd747"
+    },
+    {
+      "file": "identity-r3-harness.mjs.gz",
+      "uncompressedBytes": 26341,
+      "uncompressedSha256": "a7adaccc067c22208cdcd27e0792a14ed49e0a4442e7d0d67ae9636f886c6a8f"
+    }
+  ],
+  "scope": "Existing stable-ID guards preserve typed JSON and the exact applied eight-course project through refusal, reset, switch, export and native reopening. Qualified runtime unchanged."
+}

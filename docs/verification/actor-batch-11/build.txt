@@ -1,0 +1,11 @@
+
+> revealline@0.141.7 build
+> node scripts/game-cli.mjs build --out /private/tmp/revealline-actor-batch-11-build
+
+{
+  "out": "/private/tmp/revealline-actor-batch-11-build",
+  "version": "0.141.7",
+  "files": 1803,
+  "sha256": "fdcff18041a9c216bcb544d615ee12d1fc2d480b0fa22cb90c00be331200b8e2",
+  "sourceRevision": null
+}

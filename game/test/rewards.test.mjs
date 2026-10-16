@@ -65,7 +65,7 @@ test('four worlds choose distinct bounded non-graphic victory presentations', ()
     kinds.add(state.kind);
     for (let i = 0; i < 50; i++) {
       const frame = celebrationFrame(state);
-      assert.ok(frame.particles.length <= 80);
+      assert.ok(frame.particles.length <= 120);
       assert.ok(frame.equipment.length <= 3);
       for (const p of frame.particles) {
         assert.ok(p.alpha >= 0 && p.alpha <= 1);

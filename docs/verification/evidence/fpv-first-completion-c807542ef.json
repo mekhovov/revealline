@@ -1,0 +1,447 @@
+{
+  "format": "revealline-fpv-airborne-observation.v1",
+  "dateUTC": "2026-09-29",
+  "qualification": false,
+  "scope": "One exact-frozen civilian-fpv airborne flight-01 completion, ordinary cooperative proof admission/save, Notebook, Next and reload recovery.",
+  "source": {
+    "commit": "c807542ef4840ce739beb7af86424488f7508772",
+    "tree": "6be6aa62a151a6d32638f46f8fa08aad1b9cbaaf"
+  },
+  "package": {
+    "classification": "public",
+    "core": false,
+    "distribution": {
+      "bytes": 2755824,
+      "path": "distribution-optional-civilian-fpv.zip",
+      "sha256": "4e4a57fc44a3c5c31c93f9ecfcb2f23be637bf1de661ba9e82edf3be0839fb50"
+    },
+    "entry": "optional-practice/civilian-fpv/index.html",
+    "id": "civilian-fpv",
+    "manifest": {
+      "bytes": 9242,
+      "path": "manifest-optional-civilian-fpv.json",
+      "sha256": "dc48accdebc0c8a915ff2e1974c562320b36cfe98638c7f8c119a28510267263"
+    },
+    "revision": "c70c5fb13cdfb4256a06bfc2dc13acb496c2443f63bdc73171d4724966ace5c8",
+    "sourceArchive": {
+      "bytes": 2770522,
+      "path": "source-optional-civilian-fpv.zip",
+      "sha256": "2da6a33af0c65d7bed78a840294a44c398e2a3b6e258a45afa147030f4ce0b47"
+    },
+    "sourceInventory": {
+      "bytes": 15182,
+      "path": "source-inventory-optional-civilian-fpv.json",
+      "sha256": "4f11bdc29fe7ab6f5703793f3a55f075dda5acb56949b784bdb711d5d218fa95"
+    }
+  },
+  "envelope": {
+    "sha256": "74302da6189cfb182e5d3793030a5eb3bc90747d21c384b6487bf2ca707ca6dd",
+    "bytes": 1830
+  },
+  "frozenMembers": {
+    "count": 50,
+    "allServedMembersHashAndLengthVerified": true
+  },
+  "browser": {
+    "name": "Headless Chrome",
+    "version": "154.0.8037.57",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    "freshIsolatedContext": true
+  },
+  "serving": {
+    "headers": {
+      "cache-control": "no-cache",
+      "connection": "keep-alive",
+      "content-length": "7289",
+      "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com; font-src 'self'; connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "content-type": "text/html; charset=utf-8",
+      "date": "Tue, 29 Sep 2026 00:17:11 GMT",
+      "keep-alive": "timeout=5",
+      "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+      "referrer-policy": "no-referrer",
+      "x-content-type-options": "nosniff"
+    },
+    "description": "Production-style preview headers from the existing startServer helper; not a public deployment or standalone installation observation."
+  },
+  "instrumentation": {
+    "observer": {
+      "sha256": "8886ee93d6316784cf24e24ab1b5e40b0b079c1851c5b594e9a341e6afa5e4b6"
+    },
+    "wrapper": {
+      "sha256": "663724e494f9be6cd27e148cdcacfb0b7ba79b07fc0c9e876732e8d774140fa4",
+      "bytes": 2309
+    },
+    "html": {
+      "sha256": "2c898bb4ba48c1acea4191feef457efeb6c87ec9ba181d425a547f3ae809f1b9",
+      "bytes": 7289
+    },
+    "toolFiles": [
+      {
+        "path": "scripts/game-cli.mjs",
+        "bytes": 79589,
+        "sha256": "a2df6cf4bfb0bca120782ade485c468dadad835825e1135bf81eb5b4c71d5754"
+      },
+      {
+        "path": "publishing/edition-zip.mjs",
+        "bytes": 6736,
+        "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+      },
+      {
+        "path": "publishing/optional-package-admission.mjs",
+        "bytes": 18387,
+        "sha256": "c4ad35ef3798940cee7eba854c536a39e1981967ca6a50785a61fd7cc7ff5dca"
+      }
+    ],
+    "additiveHost": true,
+    "originalRuntimeMembersUnchanged": true,
+    "callback": "Read-only onAttempt callback runs after ordinary notebook admission/save; it does not replace admission.",
+    "input": "Adaptive automation reads snapshots and uses trusted browser ArrowUp/ArrowDown events to change manual throttle. No artificial core stepping, recorder frames, reward/progress writes, or proof import.",
+    "keyEvents": 44,
+    "allKeysTrusted": true,
+    "preArmSetupIncluded": "Observation begin precedes CDP Tracing.start and Arm; whole-window metrics include that setup. The active segment starts at the first observed active state."
+  },
+  "attempts": [
+    {
+      "number": 1,
+      "accepted": true,
+      "airborne": true,
+      "maxHeightMm": 1721,
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "model": "civilian-quad-fixed.v1",
+      "mode": "self-level",
+      "responseIdentity": "73833493634ba989",
+      "response": {
+        "format": "FlightResponseProfile.v1",
+        "id": "gentle-v1",
+        "name": "Gentle",
+        "maxRate": 240,
+        "maxTilt": 30,
+        "expo": 30,
+        "responseTicks": 8
+      },
+      "session": "practice",
+      "modelTicks": 481,
+      "contacts": 0,
+      "landingSpeedMmPerSecond": 423,
+      "landingTilt": 0,
+      "proofHash": "41273e7de3b052defe99878e2526d3204747dfd8c6a1a755371f45f54dacd6c7"
+    }
+  ],
+  "rejectedAttempts": [],
+  "timing": {
+    "units": "milliseconds; page performance clock unless stated otherwise",
+    "completeWindow": {
+      "startMs": 343.4,
+      "endMs": 11524.3,
+      "intervals": 655,
+      "p95Ms": 16.8,
+      "maximumMs": 266.7
+    },
+    "activeThroughFirstCompletion": {
+      "first": {
+        "rafMs": 413.9,
+        "observerReadMs": 415.2,
+        "status": "active",
+        "ticks": 0
+      },
+      "last": {
+        "rafMs": 10046.8,
+        "observerReadMs": 10051.7,
+        "status": "complete",
+        "ticks": 481
+      },
+      "intervals": 578,
+      "p95Ms": 16.8,
+      "maximumMs": 16.8
+    },
+    "completionAndSave": {
+      "firstObservedCompleteMs": 10051.7,
+      "acceptedCallbackMs": 10070.3,
+      "observedDifferenceMs": 18.6,
+      "firstSampleAfterAccepted": {
+        "rafMs": 10080.1,
+        "observerReadMs": 10081.7,
+        "status": "complete",
+        "ticks": 481
+      },
+      "intervals": 2,
+      "p95Ms": 16.7,
+      "maximumMs": 16.7,
+      "meaning": "Observed callback interval, not an exclusive verifier or IndexedDB timing benchmark."
+    },
+    "largestGap": {
+      "durationMs": 266.7,
+      "before": {
+        "rafMs": 10096.8,
+        "observerReadMs": 10098.2,
+        "status": "complete",
+        "ticks": 481
+      },
+      "after": {
+        "rafMs": 10363.5,
+        "observerReadMs": 10366.5,
+        "status": "complete",
+        "ticks": 481
+      },
+      "phase": "Completed-state interval after accepted proof/save and before the actual Notebook click.",
+      "cause": "Unattributed; retained as observed. No claim that zero long-task entries proves smooth rendering or excludes GPU/scheduler/automation effects."
+    },
+    "actions": [
+      {
+        "kind": "complete-controls",
+        "atMs": 10126.1,
+        "status": "complete",
+        "ticks": 481,
+        "nextVisible": true,
+        "nextEnabled": true,
+        "retryVisible": true,
+        "retryEnabled": true
+      },
+      {
+        "kind": "notebook-open",
+        "atMs": 10391.4
+      },
+      {
+        "kind": "next-click",
+        "atMs": 10519.5,
+        "status": "disarmed",
+        "ticks": 0,
+        "nextVisible": false,
+        "nextEnabled": true,
+        "retryVisible": false,
+        "retryEnabled": true
+      }
+    ],
+    "performanceObserverLongTasks": [],
+    "trace": {
+      "categories": ["devtools.timeline", "blink.user_timing"],
+      "clockAlignment": {
+        "method": "Sequence-matched all trusted keydown/keyup EventDispatch events; median trace timestamp minus observer key timestamp.",
+        "matchedEvents": 44,
+        "offsetSpreadMs": 0.172
+      },
+      "recordedSynchronousRendererSlices": 6136,
+      "maximumRecordedSlice": {
+        "name": "EventDispatch",
+        "estimatedPageTimeMs": 10485.805,
+        "durationMs": 22.12,
+        "eventType": "click"
+      },
+      "recordedSlicesOver50Ms": [],
+      "notebookClick": {
+        "name": "EventDispatch",
+        "estimatedPageTimeMs": 10385.154,
+        "durationMs": 4.088,
+        "eventType": "click"
+      },
+      "topSlices": [
+        {
+          "name": "EventDispatch",
+          "estimatedPageTimeMs": 10485.805,
+          "durationMs": 22.12,
+          "eventType": "click"
+        },
+        {
+          "name": "FunctionCall",
+          "estimatedPageTimeMs": 10485.81,
+          "durationMs": 22.095,
+          "source": "optional-practice/civilian-fpv/app.mjs",
+          "line": 523
+        },
+        {
+          "name": "EventDispatch",
+          "estimatedPageTimeMs": 10385.154,
+          "durationMs": 4.088,
+          "eventType": "click"
+        },
+        {
+          "name": "FunctionCall",
+          "estimatedPageTimeMs": 10385.159,
+          "durationMs": 4.065,
+          "source": "optional-practice/civilian-fpv/app.mjs",
+          "line": 546
+        },
+        {
+          "name": "TimerFire",
+          "estimatedPageTimeMs": 10056.021,
+          "durationMs": 3.905
+        },
+        {
+          "name": "TimerFire",
+          "estimatedPageTimeMs": 10052.267,
+          "durationMs": 3.737
+        },
+        {
+          "name": "FireAnimationFrame",
+          "estimatedPageTimeMs": 10048.048,
+          "durationMs": 3.621
+        },
+        {
+          "name": "Layout",
+          "estimatedPageTimeMs": 10386.013,
+          "durationMs": 2.913
+        },
+        {
+          "name": "FunctionCall",
+          "estimatedPageTimeMs": 10066.915,
+          "durationMs": 2.327,
+          "source": "game/profile-storage.mjs",
+          "line": 141,
+          "function": "request.onsuccess"
+        },
+        {
+          "name": "FunctionCall",
+          "estimatedPageTimeMs": 10048.06,
+          "durationMs": 1.897,
+          "source": "optional-practice/civilian-fpv/app.mjs",
+          "line": 441,
+          "function": "frame"
+        }
+      ],
+      "topLevelTaskCoverage": false,
+      "limitation": "The selected categories do not contain top-level RunTask records or CPU stacks. Slice maxima and zero PerformanceObserver entries are not proof that every renderer/GPU task is below 50 ms."
+    },
+    "afterWindow": [
+      "Both screenshots",
+      "Page reload and proof revalidation/export",
+      "Application disposal",
+      "CDP trace stop/export",
+      "Browser/server/temp-site cleanup"
+    ]
+  },
+  "behavior": {
+    "acceptedByOrdinaryNotebook": true,
+    "saveCallbackSaved": true,
+    "notebookSavedStatus": true,
+    "distinctDrillsCompleted": 1,
+    "acroDrillsCompleted": 0,
+    "finalesStillLocked": true,
+    "nextAndRetryVisibleEnabled": true,
+    "nextActuallyClicked": true,
+    "nextDrill": "flight-02",
+    "nextDisarmedAtTick": 0,
+    "retryActuallyClicked": false,
+    "proofBackup": {
+      "sha256": "b5d50c8c95798ba5d592e14eef49b43758235fe71957d36b79992324b340b32b",
+      "bytes": 6150
+    },
+    "proofBackupIdenticalAfterReload": true,
+    "applicationErrors": []
+  },
+  "screenshots": {
+    "visuallyInspected": true,
+    "next": "next-drill.png shows drill02 Hold a volume, disarmed at ground level with visible controls.",
+    "notebook": "saved-notebook.png shows the native Flight notebook and proof export textarea after reload; it is scrolled to the export controls. Saved status and 1/12 were separately read/asserted before screenshot."
+  },
+  "cleanup": {
+    "initialResources": {
+      "available": true,
+      "disposed": false,
+      "registered": {
+        "geometries": 52,
+        "materials": 52,
+        "textures": 4
+      },
+      "renderer": {
+        "geometries": 34,
+        "textures": 2,
+        "programs": 4,
+        "contextLost": false
+      }
+    },
+    "disposedResources": {
+      "available": true,
+      "disposed": true,
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "renderer": {
+        "geometries": 0,
+        "textures": 1,
+        "programs": 0,
+        "contextLost": true
+      }
+    },
+    "browserClosed": true,
+    "serverClosed": true,
+    "temporarySiteRemoved": true,
+    "limitation": "Owned geometries/materials/textures are 0 and WebGL context is lost; renderer still reports 1 texture. This is not detached-object, decoder, GPU-byte or long-run leak certification."
+  },
+  "limitations": [
+    "Adaptive automated trusted keyboard flight using read-only snapshots, not a human playtest.",
+    "Exact frozen runtime in a separately hashed observation host; no runtime member changes.",
+    "One headless Chrome desktop, no hardware/USB or input-to-photon measurement.",
+    "Timing includes read-only snapshot/rAF observation and browser automation; no matched5% comparison.",
+    "Notebook admission remains the ordinary app path; onAttempt only observes accepted callbacks.",
+    "One short Self-level lift/land course; not Acro, radio hardware, all 12 drills, physical-device, human learning, touch/controller usability or publication qualification.",
+    "Every rAF observer calls read-only snapshot and getBoundingClientRect; trace/automation/observation overhead remains included.",
+    "Whole-window maximum 266.7 ms is retained; active-flight maximum 16.8 ms does not erase the completed-state gap.",
+    "No matched baseline or 5% regression claim; Retry is only visibility/enabled coverage here, Next is the action exercised.",
+    "No causal attribution for the completed-state gap; trace categories lack top-level task and CPU profiling."
+  ],
+  "evidence": [
+    {
+      "path": "observe.mjs",
+      "bytes": 14219,
+      "sha256": "8886ee93d6316784cf24e24ab1b5e40b0b079c1851c5b594e9a341e6afa5e4b6"
+    },
+    {
+      "path": "wrapper.mjs",
+      "bytes": 2309,
+      "sha256": "663724e494f9be6cd27e148cdcacfb0b7ba79b07fc0c9e876732e8d774140fa4"
+    },
+    {
+      "path": "host.html",
+      "bytes": 7289,
+      "sha256": "2c898bb4ba48c1acea4191feef457efeb6c87ec9ba181d425a547f3ae809f1b9"
+    },
+    {
+      "path": "analyze.mjs",
+      "bytes": 9893,
+      "sha256": "f500afa56f2cbaa4ee8a63cbe29830d986d2dd570c841e0481a313bc90c49c41"
+    },
+    {
+      "path": "observation.json",
+      "bytes": 96524,
+      "sha256": "1a4b77d7b97c44e397ae92f35e3ba8d55fc0440417f04a0bb0da6cb105612c7d"
+    },
+    {
+      "path": "attempt-1-raw.json",
+      "bytes": 1398465,
+      "sha256": "172fb1173365e9dd708e0ea602e0d6e1f4c671875c59f080b1935c2ef9d4966e"
+    },
+    {
+      "path": "attempt-1-trace.json",
+      "bytes": 3473575,
+      "sha256": "1391b358fc64ce1dce7e5898e4d45e0dae6ff9040440aadfc3c94704b0811e8b"
+    },
+    {
+      "path": "earned-proof-backup.json",
+      "bytes": 6150,
+      "sha256": "b5d50c8c95798ba5d592e14eef49b43758235fe71957d36b79992324b340b32b"
+    },
+    {
+      "path": "next-drill.png",
+      "bytes": 165532,
+      "sha256": "295bb53866388d8724c321c71c19cdbe0e7bb5997dcfb0942f6948b00225c614"
+    },
+    {
+      "path": "saved-notebook.png",
+      "bytes": 162821,
+      "sha256": "1bd43fbfbe5c969ec85fa7755e6c6d5d76f2123ce1744e086d9a133d159975a5"
+    },
+    {
+      "path": "run.log",
+      "bytes": 176,
+      "sha256": "844a929be2f13e7943415f375e0aca30c32d7d757833fde69272ce420cb7a124"
+    }
+  ],
+  "procedureComplete": true
+}

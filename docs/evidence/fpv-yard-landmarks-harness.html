@@ -1,0 +1,220 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Container Yard landmarks qualification</title>
+<style>
+  body {
+    background: #101b28;
+    color: #eee;
+    font: 16px system-ui;
+    margin: 20px;
+  }
+  canvas {
+    display: none !important;
+  }
+  #views {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  #views img {
+    width: calc(50% - 12px);
+    height: auto;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+</style>
+<h1>Container Yard landmarks</h1>
+<p>
+  Original / distinct industrial frontages. Imported vertex clearance and rendered comparisons. No
+  hardware FPS claim.
+</p>
+<button id="run">Run verification</button
+><a id="download" download="yard-landmarks-browser.json" hidden>Download evidence</a>
+<div id="views"></div>
+<pre id="result">Ready</pre>
+<script type="module">
+  import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
+  import * as after from '../../optional-practice/civilian-fpv/world-visuals.mjs';
+  import * as before from '../../dist/fpv-yard-landmarks-verification/before.mjs';
+  import {
+    WORLD_CATALOGUE,
+    BEGINNER_CATALOGUE,
+  } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+  import * as beforeAssets from '../../dist/fpv-yard-landmarks-verification/before-assets.mjs';
+  import * as afterAssets from '../../optional-practice/civilian-fpv/world-assets.mjs';
+  import { GLTFLoader } from '../../optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js';
+  const result = document.querySelector('#result');
+  function build(api, course, quality) {
+    const world = new THREE.Group();
+    const material = (color, extras = {}) =>
+      new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extras });
+    const mesh = (shape, paint, parent = world) => {
+      const m = new THREE.Mesh(shape, paint);
+      parent.add(m);
+      return m;
+    };
+    const box = (size, at, color, parent = world) => {
+      const m = mesh(new THREE.BoxGeometry(...size), material(color), parent);
+      m.position.set(...at);
+      return m;
+    };
+    const visual = api.buildWorldVisuals({ course, world, material, mesh, box, quality });
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xb6d5e2);
+    scene.add(world, new THREE.HemisphereLight(0xe6f3ff, 0x69644d, 2));
+    const light = new THREE.DirectionalLight(0xffefcd, 2);
+    light.position.set(15, 40, 20);
+    scene.add(light);
+    const paints = new Set();
+    world.traverse((m) => {
+      if (m.material) paints.add(m.material);
+    });
+    api.setSurfaceQuality(paints, quality);
+    light.castShadow = quality !== 'low';
+    light.shadow.mapSize.setScalar(quality === 'high' ? 2048 : 1024);
+    Object.assign(light.shadow.camera, {
+      left: -120,
+      right: 120,
+      top: 120,
+      bottom: -120,
+      near: 0.1,
+      far: 300,
+    });
+    light.shadow.camera.updateProjectionMatrix();
+    world.updateMatrixWorld(true);
+    return { world, visual, scene };
+  }
+  function assert(ok, message) {
+    if (!ok) throw Error(message);
+  }
+  document.querySelector('#run').onclick = async () => {
+    const report = {
+      baseline: 'b43b0ce12d97475a2fbdc9e43b9a53af5d6ff9a0',
+      userAgent: navigator.userAgent,
+    };
+    try {
+      const courses = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].map((x) => x.course);
+      const yard = [
+        ...new Map(
+          courses
+            .filter((c) => c.environment === 'container-yard')
+            .map((c) => [JSON.stringify(c.bounds), c]),
+        ).values(),
+      ];
+      const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+      renderer.setSize(640, 360);
+      renderer.setPixelRatio(1);
+      report.renderer = renderer.getContext().getParameter(renderer.getContext().RENDERER);
+      document.querySelector('#views').replaceChildren(renderer.domElement);
+      report.imported = [];
+      for (const environment of ['woodland', 'courtyard', 'warehouse', 'stadium', 'garage']) {
+        const a = new Uint8Array(await beforeAssets.builtinWorldScene(environment).arrayBuffer()),
+          b = new Uint8Array(await afterAssets.builtinWorldScene(environment).arrayBuffer());
+        assert(
+          a.length === b.length && a.every((v, i) => v === b[i]),
+          'Unchanged ' + environment + ' GLB',
+        );
+      }
+      for (const course of yard.filter((c) => !c.id.endsWith('-check'))) {
+        const pair = [before, after].map((api) => build(api, course, 'balanced'));
+        const rows = [];
+        for (let index = 0; index < 2; index++) {
+          const bytes = new Uint8Array(
+              await [beforeAssets, afterAssets][index].builtinWorldScene(course).arrayBuffer(),
+            ),
+            view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+          const json = JSON.parse(
+            new TextDecoder().decode(bytes.subarray(20, 20 + view.getUint32(12, true))),
+          );
+          const placed = json.asset.extras.placements;
+          assert(
+            placed.every(
+              (p) =>
+                p.bounds.max[0] < course.bounds.min.x / 1000 ||
+                p.bounds.min[0] > course.bounds.max.x / 1000 ||
+                p.bounds.max[2] < course.bounds.min.z / 1000 ||
+                p.bounds.min[2] > course.bounds.max.z / 1000,
+            ),
+            'Imported placement clearance',
+          );
+          const imported = await new GLTFLoader().parseAsync(
+            bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
+            '',
+          );
+          const owner = pair[index];
+          owner.visual.backdrop.visible = false;
+          owner.world.add(imported.scene);
+          owner.world.updateMatrixWorld(true);
+          imported.scene.traverse((m) => {
+            if (m.isMesh) {
+              m.castShadow = true;
+              m.receiveShadow = true;
+            }
+          });
+          const matrix = new THREE.Matrix4(),
+            point = new THREE.Vector3();
+          let checked = 0;
+          imported.scene.traverse((m) => {
+            if (!m.isMesh) return;
+            for (let i = 0; i < (m.isInstancedMesh ? m.count : 1); i++) {
+              if (m.isInstancedMesh) {
+                m.getMatrixAt(i, matrix);
+                matrix.premultiply(m.matrixWorld);
+              } else matrix.copy(m.matrixWorld);
+              for (let j = 0; j < m.geometry.attributes.position.count; j++) {
+                point.fromBufferAttribute(m.geometry.attributes.position, j).applyMatrix4(matrix);
+                checked++;
+                assert(
+                  point.x < course.bounds.min.x / 1000 ||
+                    point.x > course.bounds.max.x / 1000 ||
+                    point.z < course.bounds.min.z / 1000 ||
+                    point.z > course.bounds.max.z / 1000,
+                  'Imported vertex outside flight arena',
+                );
+              }
+            }
+          });
+          const camera = new THREE.PerspectiveCamera(65, 640 / 360, 0.1, 1000);
+          const centreX = (course.bounds.min.x + course.bounds.max.x) / 2000;
+          const centreZ = (course.bounds.min.z + course.bounds.max.z) / 2000;
+          const span =
+            Math.max(
+              course.bounds.max.x - course.bounds.min.x,
+              course.bounds.max.z - course.bounds.min.z,
+            ) / 1000;
+          camera.position.set(centreX + span * 0.7, span * 0.7, centreZ + span * 0.95);
+          camera.lookAt(centreX, 2, centreZ);
+          renderer.render(owner.scene, camera);
+          const image = document.createElement('img');
+          image.width = 640;
+          image.alt = index ? 'Yard with distinct frontages' : 'Original Yard';
+          image.src = renderer.domElement.toDataURL('image/png');
+          document.querySelector('#views').append(image);
+          rows.push({
+            bytes: bytes.length,
+            placements: placed.length,
+            verticesOutsideArena: checked,
+            calls: renderer.info.render.calls,
+            triangles: renderer.info.render.triangles,
+          });
+          after.disposeSimVisualGroup(owner.world);
+          owner.scene.traverse((o) => {
+            if (o.shadow) o.shadow.dispose();
+          });
+        }
+        report.imported.push({ id: course.id, before: rows[0], after: rows[1] });
+      }
+      report.passed = true;
+      renderer.dispose();
+      result.textContent = JSON.stringify(report, null, 2);
+      const link = document.querySelector('#download');
+      link.href = URL.createObjectURL(new Blob([result.textContent], { type: 'application/json' }));
+      link.hidden = false;
+    } catch (error) {
+      report.passed = false;
+      report.error = error.stack;
+      result.textContent = JSON.stringify(report, null, 2);
+    }
+  };
+</script>

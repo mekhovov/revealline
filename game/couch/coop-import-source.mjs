@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import {
   readCoopPresentationEnvelope,
   exportCoopPresentationEnvelope,
@@ -5,20 +6,21 @@ import {
 } from '../coop/presentation-envelope.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 
-const cancelled = () => new DOMException('Team artwork import cancelled.', 'AbortError');
+const cancelled = () => new DOMException(t('interface:teamArtworkImportCancelled'), 'AbortError');
 
 /** An in-memory staging boundary. The host still checks theme/content identity
  * and prepares its drawable image before deliberately committing a candidate.
  * No player storage, registry or simulation object is changed here.
  */
 export function createCoopPresentationImport({ decodeImage = decodeCoopPicture } = {}) {
-  if (typeof decodeImage !== 'function') throw new TypeError('An image decoder is required.');
+  if (typeof decodeImage !== 'function')
+    throw new TypeError(t('interface:anImageDecoderIsRequired'));
   let accepted = null,
     candidate = null,
     operation = null,
     closed = false;
   const requireOpen = () => {
-    if (closed) throw new Error('This Team artwork importer has been closed.');
+    if (closed) throw new Error(t('interface:thisTeamArtworkImporterHasBeenClosed'));
   };
   const releaseCandidate = () => {
     if (candidate) disposeCoopPresentationEnvelope(candidate.owner);
@@ -27,9 +29,7 @@ export function createCoopPresentationImport({ decodeImage = decodeCoopPicture }
   async function prepare(source, { signal, onProgress } = {}) {
     requireOpen();
     if (operation)
-      throw new Error(
-        'The previous Team artwork import is still finishing. Try again when it is ready.',
-      );
+      throw new Error(t('interface:thePreviousTeamArtworkImportIsStillFinishingTryAgain'));
     if (signal?.aborted) throw cancelled();
     releaseCandidate();
     const request = { controller: new AbortController(), signal };
@@ -60,7 +60,7 @@ export function createCoopPresentationImport({ decodeImage = decodeCoopPicture }
   function commit(owner) {
     requireOpen();
     if (operation || !candidate || candidate.owner !== owner)
-      throw new Error('Choose the current fully prepared Team artwork candidate.');
+      throw new Error(t('interface:chooseTheCurrentFullyPreparedTeamArtworkCandidate'));
     if (candidate.signal?.aborted) {
       releaseCandidate();
       throw cancelled();

@@ -1,0 +1,16 @@
+{
+  "main": {
+    "ref": "6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8",
+    "team_sources": 31,
+    "team_sha256": "c162660dcc177f6d975704920513d8171a9190ea708c61b1a5189adbb3b67980",
+    "ledger_contains_current_team_sha256": true,
+    "ledger_sha256": "3cfdf800e5794058de080edddf5a91a914ddd20098015a25a27818694478c71f"
+  },
+  "batch": {
+    "ref": "aa32c591e7a7b57dabc2ab122d0125f0a35fbbf5",
+    "team_sources": 32,
+    "team_sha256": "4547bb004e73a8d31ad1e3d8449da8ee32b8e4819c179577f81f0f7224dc2494",
+    "ledger_contains_current_team_sha256": false,
+    "ledger_sha256": "3cfdf800e5794058de080edddf5a91a914ddd20098015a25a27818694478c71f"
+  }
+}

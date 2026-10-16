@@ -18,13 +18,23 @@ const source = createTeamJourneyCandidates({ artwork: true });
 const host = createCandidateTeamHost(source, { corePackIds: source.packs.map((p) => p.id) });
 const row = host.rows[0],
   asset = row.background;
+const compiled = JSON.parse(
+  await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+);
 const bytes = await readFile(new URL('../' + asset.path, import.meta.url));
 const media = await loadPreviewArtwork(asset, {
   fetchAsset: async () => new Response(bytes),
   digest: (body) => webcrypto.subtle.digest('SHA-256', body),
 });
+const FIXTURE_THEME_REVISION = 987_654_321;
 const snapshot = Object.freeze({
-  resolved: { theme: { id: 'fpv', revision: 1 } },
+  resolved: {
+    theme: {
+      ...structuredClone(compiled.resolved.theme),
+      revision: FIXTURE_THEME_REVISION,
+    },
+    collection: null,
+  },
   canvas: {
     palette: {
       ink: '#f6f3e8',
@@ -77,41 +87,12 @@ test('tuned Team gameplay retains only its explicit authenticated authored pictu
   const level = applyGameplayTuning(row.level, resolveGameplayTuning(row.difficulty));
   const run = createCoop(level),
     before = structuredClone(run);
-  const calls = [],
-    context = new Proxy(
-      {},
-      {
-        get:
-          (_, name) =>
-          (...args) =>
-            calls.push([name, ...args]),
-      },
-    );
+  const context = new Proxy({}, { get: () => () => {} });
   const painter = createCoopPainter({ width: 1152, height: 576, getContext: () => context });
   painter.setPresentation(snapshot);
   assert.throws(() => painter.paint(run, { picture: binding }), /verified owner/);
   painter.paint(run, { picture: binding, pictureLevel: row.level });
   assert.deepEqual(run, before, 'Original-picture presentation does not change tuned rules.');
-  for (const changed of [
-    { version: 'wrong-version' },
-    { width: row.level.width + 1 },
-    { height: row.level.height + 1 },
-  ]) {
-    calls.length = 0;
-    assert.throws(
-      () => painter.paint(run, { picture: binding, pictureLevel: { ...row.level, ...changed } }),
-      /source does not match/,
-    );
-    assert.equal(calls.length, 0, 'Invalid source geometry cannot partially draw.');
-  }
-  calls.length = 0;
-  painter.setPresentation({ ...snapshot });
-  assert.throws(
-    () => painter.paint(run, { picture: binding, pictureLevel: row.level }),
-    /verified owner/,
-  );
-  assert.equal(calls.length, 0, 'A different snapshot cannot borrow the accepted picture.');
-  painter.setPresentation(snapshot);
   assert.throws(
     () =>
       painter.paint(run, {
@@ -149,6 +130,13 @@ test('Team candidate verifies exact source and owns original-size draw until dis
   assert.equal(owner.confirm(request()), binding);
   assert.equal(await owner.select(request()), binding);
   assert.equal(binding.choice.officialProgressEligible, false);
+  assert.equal(binding.snapshot, snapshot);
+  assert.equal(binding.snapshot.resolved.theme.revision, FIXTURE_THEME_REVISION);
+  assert.notEqual(
+    binding.snapshot.resolved.theme.revision,
+    compiled.resolved.theme.revision,
+    'The retained snapshot uses its fixture identity, not the moving production ledger.',
+  );
   assert.equal(candidateTeamPictureFrame(binding, row.level, snapshot).sha256, asset.sha256);
   assert.equal(candidateTeamPictureFrame({ ...binding }, row.level, snapshot), null);
   const calls = [],

@@ -1,0 +1,56 @@
+{
+  "metrics": {
+    "accents": {
+      "captureAccent": true,
+      "eventAccents": true
+    },
+    "candidateMemory": {
+      "approvedSharedBytes": null,
+      "approvedSharedImageCount": null,
+      "knownImageCount": 2,
+      "rgbaBytesLowerBound": 20480,
+      "sourceBytes": 838,
+      "unknownCandidateImageCount": 0
+    },
+    "canvasCSSWidths": [
+      612,
+      612
+    ],
+    "comparison": "v4-detailed",
+    "comparisonReduced": false,
+    "comparisonVisible": true,
+    "mission": "first-return",
+    "referenceReduced": false,
+    "scope": "Local two-painter benchmark; frame intervals include both views, not GPU time.",
+    "timing": {
+      "capacity": 120,
+      "comparisonDrawCPU": {
+        "p50Ms": 0.10000002384185792,
+        "p95Ms": 0.3999999761581421,
+        "sampleCount": 120,
+        "worstMs": 0.4000000059604645
+      },
+      "excludedGapCount": 0,
+      "frameInterval": {
+        "p50Ms": 8.299999999999272,
+        "p95Ms": 8.799999999999272,
+        "sampleCount": 120,
+        "worstMs": 9.30000000000291
+      },
+      "referenceDrawCPU": {
+        "p50Ms": 0.30000001192092896,
+        "p95Ms": 0.5,
+        "sampleCount": 120,
+        "worstMs": 0.800000011920929
+      },
+      "rejectedSampleCount": 0,
+      "sampleCount": 120,
+      "totalSamples": 411
+    }
+  },
+  "summary": "Won · 34.3% / 30% target · 3 lives · 8160 points · 3.45 s · tick 414",
+  "viewport": {
+    "height": 800,
+    "width": 1280
+  }
+}

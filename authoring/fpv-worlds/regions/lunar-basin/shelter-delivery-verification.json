@@ -1,0 +1,138 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://lunar.invalid/delivery.json",
+    "bytes": 14759,
+    "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65"
+  },
+  "files": 116,
+  "verifiedResponses": 117,
+  "totalBytes": 2079110,
+  "totalWithDescriptor": 2093869,
+  "originalSourceUnchanged": true,
+  "sourceRevision": "084564ca1a39d06bb077cae34fb2bdc1c3afbaee",
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "mare-apron",
+      "preparedResources": 255684,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "ejecta-fan",
+      "preparedResources": 323088,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "sinuous-rille",
+      "preparedResources": 311580,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "terraced-crater",
+      "preparedResources": 318468,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "fractured-highland",
+      "preparedResources": 493116,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "observatory-ridge",
+      "preparedResources": 574512,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "mare-apron",
+      "preparedResources": 255684,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "ejecta-fan",
+      "preparedResources": 323088,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "sinuous-rille",
+      "preparedResources": 311580,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "terraced-crater",
+      "preparedResources": 318468,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "fractured-highland",
+      "preparedResources": 493116,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "observatory-ridge",
+      "preparedResources": 574512,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    }
+  ],
+  "liveCollision": {
+    "worlds": 2,
+    "colliders": 60,
+    "rigidBodies": 0
+  },
+  "disposedCollision": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "allResourcesDisposed": true,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Exact bytes and production prepare/explicit-arm/pause/dispose only. Bounded source appearance is a separate gate; Library admission, package/offline and sustained real-device flight remain pending."
+}

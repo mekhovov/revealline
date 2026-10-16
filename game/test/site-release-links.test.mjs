@@ -21,6 +21,16 @@ test('release explorer resolves to the shared catalog from source and frozen gam
     releaseExplorerHref('http://127.0.0.1:8768/preview/releases/v0.51.0/site/game/index.html'),
     'http://127.0.0.1:8768/preview/releases/',
   );
+  assert.equal(
+    releaseExplorerHref('https://mekhovov.github.io/revealline/game/couch/'),
+    'https://mekhovov.github.io/revealline/releases/',
+  );
+  assert.equal(
+    releaseExplorerHref(
+      'https://mekhovov.github.io/revealline/releases/v0.110.1/site/game/couch/relay-rescue.html',
+    ),
+    'https://mekhovov.github.io/revealline/releases/',
+  );
 });
 
 test('About accepts actual local and canonical archived play records without double-prefixing', () => {

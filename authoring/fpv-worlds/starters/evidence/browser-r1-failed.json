@@ -1,0 +1,866 @@
+{
+  "format": "FPVCreatorStarterBrowserQualification.v1",
+  "startedAt": "2026-10-04T04:20:47.474Z",
+  "status": "failed",
+  "checks": [
+    {
+      "name": "Admitted asset checksum: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/encounter-display-preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/fpv-entry.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/actor-art.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/presentation-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/profile-database.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/profile-storage.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/audio-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/exploration.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/learning-profiles.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/art/identity/fpv-line/wordmark.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/art/menu-scenes/fpv-portrait.webp",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/art/menu-scenes/fpv.webp",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/native-menu-icons.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/reward-knowledge.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/vendor/I18NEXT-LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/index.html",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/guide.html",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/index.html",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/preview.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/README.md",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/scenery-provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/install-context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-package.json",
+      "passed": true
+    },
+    {
+      "name": "Instrumented HTML checksum",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: index.html",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: browser-harness.mjs",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 source qualification",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: actual public import keeps exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: divergent mode scope visible",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: movable gate exists",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: numeric move changes only selected Self-level gate",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: numeric Undo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: numeric Redo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: public ZIP reimport retains numeric edit",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: reimport preserves active pack hash",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: exact original self-level proof",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: original self-level proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: exact original acro proof",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: original acro proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: actual public import keeps exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: divergent mode scope visible",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: movable gate exists",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: numeric move changes only selected Self-level gate",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: numeric Undo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: numeric Redo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: public ZIP reimport retains numeric edit",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: reimport preserves active pack hash",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: exact original self-level proof",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: original self-level proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: exact original acro proof",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: original acro proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "Previous host has no uncaught errors",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    }
+  ],
+  "exports": [
+    {
+      "label": "creator-natural-sweeper numeric ZIP",
+      "filename": "creator-natural-sweeper.zip",
+      "bytes": 13478,
+      "sha256": "180ef1b8ea560994c096704acd16d02a74e91ec501f0a7dc100109503d3f6a59"
+    },
+    {
+      "label": "creator-industrial-split-level numeric ZIP",
+      "filename": "creator-industrial-split-level.zip",
+      "bytes": 17131,
+      "sha256": "9b9a3acc1e9ca8d3415e7eb927ee1fac3ce116183e411a0d78d88ef1a43faeb7"
+    }
+  ],
+  "packRevisions": [
+    {
+      "label": "creator-natural-sweeper numeric install",
+      "id": "creator-natural-sweeper",
+      "original": "6b694e25e27b7cecc49c5bb7abc1eb4aa339fdd8825ec87c1c508722ee56f120",
+      "edited": "8d17b55604e652301c7e04bc7e431f592112756a0a2707490f55719d03db182c",
+      "retained": 2
+    },
+    {
+      "label": "creator-industrial-split-level numeric install",
+      "id": "creator-industrial-split-level",
+      "original": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+      "edited": "693305b08b3c9db3280bf8667973e3116448f6618c2780709d61e643f3a58104",
+      "retained": 2
+    }
+  ],
+  "replays": [
+    {
+      "id": "creator-natural-sweeper",
+      "mode": "self-level",
+      "ticks": 2108,
+      "stateIdentity": "40d812661d495a25"
+    },
+    {
+      "id": "creator-natural-sweeper",
+      "mode": "acro",
+      "ticks": 2081,
+      "stateIdentity": "d9787d1a7f83c99e"
+    },
+    {
+      "id": "creator-industrial-split-level",
+      "mode": "self-level",
+      "ticks": 4024,
+      "stateIdentity": "c6a52efd455aeefa"
+    },
+    {
+      "id": "creator-industrial-split-level",
+      "mode": "acro",
+      "ticks": 3670,
+      "stateIdentity": "4a4560272f8dc41a"
+    }
+  ],
+  "limitations": [
+    "Online native-IDB reopening; no installed-worker or offline claim.",
+    "Actual pointer drag required for spatial acceptance.",
+    "Explicit Acro spatial mode chooser remains follow-on; current divergent route UI edits Self-level.",
+    "No physical-controller, novice or performance acceptance."
+  ],
+  "message": "FAIL: Timeout: public Edit of installed project. Preserve this receipt and fixture.",
+  "fixtureSha256": "35b55ed19c8c4500b281873648f68def6a2e4df9550666f8bfde8f31e2d3eca8",
+  "admittedHost": {
+    "source": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+    "sha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+    "packageRevision": "b866d9b4145da43a01e9699e0383ef2fb29143bdf9723bb09d3c381967030bd4"
+  },
+  "storagePrefix": "fpv-creator-editor-6647c0d2-409f-4123-abf4-2e9fae449f73:",
+  "error": "Error: Timeout: public Edit of installed project\n    at until (http://127.0.0.1:8884/browser-harness.mjs:45:52)\n    at async loadInstalled (http://127.0.0.1:8884/browser-harness.mjs:197:3)\n    at async stageOne (http://127.0.0.1:8884/browser-harness.mjs:372:3)"
+}

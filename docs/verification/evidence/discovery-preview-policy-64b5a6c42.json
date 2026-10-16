@@ -1,0 +1,445 @@
+{
+  "format": "revealline-packaged-preview-discovery-observation.v1",
+  "qualified": false,
+  "promotable": false,
+  "source": {
+    "sourceRevision": "64b5a6c42a0bb261bf3a3c21dd1ec13196430d63",
+    "sourceTree": "d524b404bfc1468ecbdada1a4297a7be1aedd856",
+    "editionId": "fpv-learning",
+    "distribution": {
+      "sha256": "ea951de382f211d8347827a8c60810ebfce1dcd19e6e8b6fcca2fcdec8745c87",
+      "bytes": 33301474
+    },
+    "manifest": {
+      "sha256": "9fd5132770972ca1d169b01df48c423d7359592883e623147312a7e9a1be6a1b",
+      "bytes": 93740
+    },
+    "runtimeFiles": 688,
+    "runtimeBytes": 33201702,
+    "contentSha256": "77f862035392266e8c3e9f1b03d3c89d3b4755e3947431b6792a19ac8b2329b7",
+    "gameplayId": "7feffc97157784af",
+    "gameplayBindingAuthority": "Exact admitted authored reward requirement, not an independent engine recomputation."
+  },
+  "plan": {
+    "format": "revealline-discovery-runtime-plan.v1",
+    "caseId": "preview-policy-64b5-followup",
+    "protocol": "fpv-frame-first-win.v1",
+    "deviceLabel": "Local macOS desktop / Chrome / automated keyboard",
+    "quietWindow": "Concurrent repository builds active. Functional header, first-win and twenty-viewer-cycle observation only; not a quiet or matched performance benchmark. Follow-up after the first ordinary route was caught by an enemy at47% withtwo lives left; that failed observation remains retained. Same route/settings, no injected progress.",
+    "mode": "timings",
+    "cycles": 20,
+    "headerPolicy": "packaged-preview",
+    "artifact": {
+      "archive": "fpv-edition/distribution-fpv-learning.zip",
+      "archiveSha256": "ea951de382f211d8347827a8c60810ebfce1dcd19e6e8b6fcca2fcdec8745c87",
+      "manifest": "fpv-edition/manifest-fpv-learning.json",
+      "manifestSha256": "9fd5132770972ca1d169b01df48c423d7359592883e623147312a7e9a1be6a1b",
+      "sourceRevision": "64b5a6c42a0bb261bf3a3c21dd1ec13196430d63",
+      "sourceTree": "d524b404bfc1468ecbdada1a4297a7be1aedd856",
+      "editionId": "fpv-learning"
+    }
+  },
+  "binding": {
+    "label": "preview-policy-64b5-followup",
+    "deviceLabel": "Local macOS desktop / Chrome / automated keyboard",
+    "editionId": "fpv-learning",
+    "gameplayId": "7feffc97157784af",
+    "inputProtocol": "Automated keyboard Frame01;20s active stationary;normal restart;down1800/down3200/right1400/up6000;20s first-win result;no engine/progress injection",
+    "settingsIdentity": "en;standard;immediate;scout;full;muted;menu-neon;hybrid;fpv-learning-marker;fpv-meet-aircraft-theme;grid-off;reactions-on;1280x633@1;trace-timings;headers-packaged-preview",
+    "sourceKind": "compiled-artifact",
+    "sourceIdentity": "ea951de382f211d8347827a8c60810ebfce1dcd19e6e8b6fcca2fcdec8745c87"
+  },
+  "instrumentation": [
+    {
+      "path": "docs/verification/discovery-observer.mjs",
+      "bytes": 17910,
+      "sha256": "76a5738cf196a21e7e74e6309f4296c2b7db7765552374e9d7d98c882f52f72b"
+    },
+    {
+      "path": "docs/verification/discovery-comparison.mjs",
+      "bytes": 11187,
+      "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+    },
+    {
+      "path": "docs/verification/company-review-model.mjs",
+      "bytes": 7785,
+      "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+    },
+    {
+      "path": "scripts/observe-discovery-cycles.mjs",
+      "bytes": 11051,
+      "sha256": "b297771b78108204025765ca2e433911fbdaf9e15155f16ea187b628408f9bf3"
+    },
+    {
+      "path": "publishing/edition-zip.mjs",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+    },
+    {
+      "path": "scripts/observe-discovery-runtime.mjs",
+      "bytes": 29607,
+      "sha256": "e4f5fc195eaa358bd05854aaaa9114e00c87eedb8100fbd6dce9363b18bcaad7"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 79596,
+      "sha256": "f7530f224ccce1e49c81aa70b438fdebfe76da47b90a09065ed29505cf32541b"
+    }
+  ],
+  "serverHeaders": {
+    "policy": "packaged-preview",
+    "values": {
+      "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com; font-src 'self'; connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "no-referrer",
+      "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+      "Cache-Control": "no-cache"
+    },
+    "cacheControl": "no-cache",
+    "contentType": "explicit extension MIME mapping",
+    "xContentTypeOptions": "nosniff",
+    "productionCSP": false,
+    "packagedPreviewCSP": true
+  },
+  "successfulAttempt": {
+    "completed": true,
+    "errors": [],
+    "securityPolicy": {
+      "violations": [],
+      "overflow": false
+    },
+    "firstWin": {
+      "started": 33251.40000000596,
+      "visible": 37130.90000000596,
+      "ended": 39132.09999999404,
+      "keys": [
+        {
+          "key": "ArrowUp",
+          "time": 33252.5,
+          "trusted": true
+        }
+      ],
+      "untrustedDOMInputs": 0,
+      "kind": "won"
+    },
+    "lifecycle": {
+      "qualified": false,
+      "resultViewerPairsObserved": 20,
+      "twentyResultViewerPairsObserved": true,
+      "closedCheckpoints": 20,
+      "connectedMetrics": {
+        "connectedNodes": {
+          "first": 4309,
+          "last": 4309,
+          "min": 4309,
+          "max": 4309,
+          "delta": 0
+        },
+        "connectedImages": {
+          "first": 1,
+          "last": 1,
+          "min": 1,
+          "max": 1,
+          "delta": 0
+        },
+        "connectedAudio": {
+          "first": 1,
+          "last": 1,
+          "min": 1,
+          "max": 1,
+          "delta": 0
+        },
+        "connectedVideo": {
+          "first": 0,
+          "last": 0,
+          "min": 0,
+          "max": 0,
+          "delta": 0
+        },
+        "connectedBlobMedia": {
+          "first": 0,
+          "last": 0,
+          "min": 0,
+          "max": 0,
+          "delta": 0
+        },
+        "uniqueConnectedBlobURLs": {
+          "first": 0,
+          "last": 0,
+          "min": 0,
+          "max": 0,
+          "delta": 0
+        },
+        "rewardDialogs": {
+          "first": 1,
+          "last": 1,
+          "min": 1,
+          "max": 1,
+          "delta": 0
+        },
+        "rewardShelves": {
+          "first": 1,
+          "last": 1,
+          "min": 1,
+          "max": 1,
+          "delta": 0
+        },
+        "rewardResults": {
+          "first": 1,
+          "last": 1,
+          "min": 1,
+          "max": 1,
+          "delta": 0
+        }
+      },
+      "retainedResourceStabilityVerified": false,
+      "rewardRenderingTaskLimitVerified": false,
+      "note": "Only observed viewer/result exits and connected closed-view counts. Detached owners, outstanding URLs, decoders and isolated reward tasks remain unmeasured."
+    },
+    "cleanup": {
+      "qualified": false,
+      "completed": true,
+      "primaryError": null,
+      "operations": [
+        {
+          "name": "observer",
+          "requested": true,
+          "closed": true,
+          "error": null
+        },
+        {
+          "name": "browser",
+          "requested": true,
+          "closed": true,
+          "error": null
+        },
+        {
+          "name": "server",
+          "requested": true,
+          "closed": true,
+          "error": null
+        }
+      ]
+    }
+  },
+  "timingSamples": {
+    "active": {
+      "kind": "sample",
+      "scenario": "active-play",
+      "outcome": "observed",
+      "surfaceVisibleWhenArmed": true,
+      "effects": "full",
+      "mission": "01 \u00b7 The Frame",
+      "durationMs": 20000,
+      "activeElapsedMs": 20016.30000001192,
+      "transitionWindowMs": 20025.19999998808,
+      "frameIntervals": {
+        "frames": 1200,
+        "p50Ms": 16.69999999999891,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000291,
+        "over33ms": 0
+      },
+      "metric": "requestAnimationFrame intervals including observer overhead, not renderer execution time",
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "rewardTaskAttribution": {
+        "supported": false
+      },
+      "before": {
+        "connectedNodes": 4286,
+        "connectedImages": 1,
+        "connectedAudio": 1,
+        "connectedVideo": 0,
+        "connectedBlobMedia": 0,
+        "uniqueConnectedBlobURLs": 0,
+        "rewardDialogs": 1,
+        "rewardShelves": 1,
+        "rewardResults": 1,
+        "openDialogs": 0,
+        "usedJSHeapBytes": 77818688,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "detachedNodes": null,
+        "outstandingObjectURLs": null,
+        "decoderResources": null
+      },
+      "after": {
+        "connectedNodes": 4286,
+        "connectedImages": 1,
+        "connectedAudio": 1,
+        "connectedVideo": 0,
+        "connectedBlobMedia": 0,
+        "uniqueConnectedBlobURLs": 0,
+        "rewardDialogs": 1,
+        "rewardShelves": 1,
+        "rewardResults": 1,
+        "openDialogs": 0,
+        "usedJSHeapBytes": 66244972,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "detachedNodes": null,
+        "outstandingObjectURLs": null,
+        "decoderResources": null
+      },
+      "inputEvents": {
+        "trusted": 0,
+        "synthetic": 0
+      }
+    },
+    "result": {
+      "kind": "sample",
+      "scenario": "result-reveal",
+      "outcome": "observed",
+      "surfaceVisibleWhenArmed": false,
+      "effects": "full",
+      "mission": "01 \u00b7 The Frame",
+      "durationMs": 20000,
+      "activeElapsedMs": 20014.59999999404,
+      "transitionWindowMs": 23895.59999999404,
+      "frameIntervals": {
+        "frames": 1201,
+        "p50Ms": 16.69999999999709,
+        "p95Ms": 16.700000000004366,
+        "maxMs": 16.80000000000291,
+        "over33ms": 0
+      },
+      "metric": "requestAnimationFrame intervals including observer overhead, not renderer execution time",
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "rewardTaskAttribution": {
+        "supported": false
+      },
+      "before": {
+        "connectedNodes": 4286,
+        "connectedImages": 1,
+        "connectedAudio": 1,
+        "connectedVideo": 0,
+        "connectedBlobMedia": 0,
+        "uniqueConnectedBlobURLs": 0,
+        "rewardDialogs": 1,
+        "rewardShelves": 1,
+        "rewardResults": 1,
+        "openDialogs": 0,
+        "usedJSHeapBytes": 67817526,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "detachedNodes": null,
+        "outstandingObjectURLs": null,
+        "decoderResources": null
+      },
+      "after": {
+        "connectedNodes": 4309,
+        "connectedImages": 1,
+        "connectedAudio": 1,
+        "connectedVideo": 0,
+        "connectedBlobMedia": 0,
+        "uniqueConnectedBlobURLs": 0,
+        "rewardDialogs": 1,
+        "rewardShelves": 1,
+        "rewardResults": 1,
+        "openDialogs": 0,
+        "usedJSHeapBytes": 52677669,
+        "heapScope": "approximate browser-provided heap; not edition-owned retained memory",
+        "detachedNodes": null,
+        "outstandingObjectURLs": null,
+        "decoderResources": null
+      },
+      "inputEvents": {
+        "trusted": 1,
+        "synthetic": 0
+      }
+    }
+  },
+  "evidence": [
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/case.json",
+      "bytes": 5255,
+      "sha256": "5de72a88a8fc78868701acfeb22c0c23639399d58940288d9df367267de78de3"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/complete.json",
+      "bytes": 17671,
+      "sha256": "731e01c83608758e5cd3cc8472de175cfd80db2ded52ef4027f1ae81034fa11b"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/plan.json",
+      "bytes": 1111,
+      "sha256": "e01a953d8f19e6f20fcb0e4cec4004090af8ab035034aed9f76afa866afc00e8"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/active-report.json",
+      "bytes": 5175,
+      "sha256": "032d2659da6e8704c4ca9f79c82c02cc2072440ad62b5c57b57b9e139056d9ae"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/result-report.json",
+      "bytes": 5193,
+      "sha256": "6d5f709d3f76b8ef8a6bce2bc713add1bea944b92e899a4e59345baf8fe17819"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/cycles-20.json",
+      "bytes": 267387,
+      "sha256": "f0d069bc9d0547af40bbe937d63713fce139028b9023a98734a1c9279fc5d22b"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/security-policy.json",
+      "bytes": 44,
+      "sha256": "154e3b5f83343fa4ef8d626590687298f04a5548becb64d1d83061ed63646d1f"
+    },
+    {
+      "path": ".cache/phase7-64b5a6c42/preview-policy-followup/cleanup.json",
+      "bytes": 407,
+      "sha256": "d0bc105c9478c9f6f3734117dfa2e32255ad06e31ed26d533f6bbce67ad48983"
+    }
+  ],
+  "retainedPriorAttempt": {
+    "outcome": "Enemy caught the first ordinary route; coverage47%,two lives remain. No result appeared during bounded observation.",
+    "evidence": [
+      {
+        "path": ".cache/phase7-64b5a6c42/preview-policy-observation/failure.json",
+        "bytes": 17520,
+        "sha256": "d4da0bcfa076f237eb4e2f9ca41c5b08b76e00e73bff2d764d2fda1b53e7444a"
+      },
+      {
+        "path": ".cache/phase7-64b5a6c42/preview-policy-observation/result-sample.json",
+        "bytes": 1711,
+        "sha256": "17a510fb6a2602901f77038b849b52f4f249842bc678a8710699870841998d8d"
+      },
+      {
+        "path": ".cache/phase7-64b5a6c42/preview-policy-observation/cleanup.json",
+        "bytes": 1067,
+        "sha256": "9e408cfe726c67eab3221ad5a94d9079985a967c943238ba8219cf9611436292"
+      },
+      {
+        "path": ".cache/phase7-64b5a6c42/preview-policy-observation/security-policy-on-failure.json",
+        "bytes": 44,
+        "sha256": "154e3b5f83343fa4ef8d626590687298f04a5548becb64d1d83061ed63646d1f"
+      },
+      {
+        "path": ".cache/phase7-64b5a6c42/preview-policy-observation/failure.png",
+        "bytes": 418933,
+        "sha256": "e961299ad764ae2bd88c341eeffd3ef3535b326cb40ccc65792ca141d54ff022"
+      }
+    ],
+    "securityPolicy": {
+      "violations": [],
+      "overflow": false
+    },
+    "cleanupCompleted": true
+  },
+  "limits": [
+    "Concurrent repository builds; functional/header/lifecycle observation, not a quiet or matched5% performance comparison.",
+    "Existing packaged-preview headers include explicit external soundtrack origins; the observation server is loopback. This is not public-origin, installed-PWA or warm-cache qualification.",
+    "One mission and twenty repeated views; no injected wins, no all-edition or physical-device claim.",
+    "Connected DOM/media stability does not establish detached ownership,exclusive reward cost,GPU or decoder stability.",
+    "All prior failed attempts and reported raw intervals remain retained."
+  ]
+}

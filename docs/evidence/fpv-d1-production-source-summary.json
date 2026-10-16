@@ -1,0 +1,84 @@
+{
+  "sourceHead": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "sourceMode": "committed-source",
+  "passed": true,
+  "bytes": 3492950,
+  "sha256": "abb38414fb27d4211cd22fc614af01e3fe3db6e8de8fa1b3d8a7c06ed26347e2",
+  "samples": 90,
+  "renderedViews": 270,
+  "controls": 60,
+  "checks": [
+    {
+      "name": "Five D1 environment/arena representatives",
+      "passed": true
+    },
+    {
+      "name": "90 configurations rendered in each of three rounds",
+      "passed": true
+    },
+    {
+      "name": "Resources plateau between rounds two and three",
+      "passed": true
+    },
+    {
+      "name": "Pixel and shared linear-theme controls rendered",
+      "passed": true
+    },
+    {
+      "name": "Timing configurations kept visible",
+      "passed": true
+    },
+    {
+      "name": "Quality invalidates pending preparation",
+      "passed": true
+    },
+    {
+      "name": "Course invalidates pending preparation",
+      "passed": true
+    },
+    {
+      "name": "Aborted preparation rejects",
+      "passed": true
+    },
+    {
+      "name": "Dispose invalidates pending preparation",
+      "passed": true
+    },
+    {
+      "name": "Registered ownership empty after disposal",
+      "passed": true
+    },
+    {
+      "name": "Disposed renderer refuses preparation",
+      "passed": true
+    },
+    {
+      "name": "Frozen source closure unchanged",
+      "passed": true
+    },
+    {
+      "name": "No console errors",
+      "passed": true
+    },
+    {
+      "name": "No unexpected context loss",
+      "passed": true
+    }
+  ],
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "actualDevicePixelRatio": 2,
+    "requestedDevicePixelRatio": 2,
+    "viewport": [
+      1280,
+      720
+    ],
+    "drawingCSS": [
+      640,
+      360
+    ],
+    "visibility": "visible"
+  },
+  "startedAt": "2026-10-03T19:22:13.940Z",
+  "finishedAt": "2026-10-03T19:29:09.718Z"
+}

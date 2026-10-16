@@ -93,7 +93,10 @@ const makePad = (index = 0) => ({
   axes: [0, 0],
   buttons: Array.from({ length: 16 }, () => ({ pressed: false })),
 });
-function fixture(t, { external = true, tap = false, onClear = () => {} } = {}) {
+function fixture(
+  t,
+  { external = true, tap = false, onClear = () => {}, onSteer = () => {}, touchMode = null } = {},
+) {
   const originals = new Map(
     ['window', 'document', 'navigator'].map((key) => [
       key,
@@ -137,6 +140,8 @@ function fixture(t, { external = true, tap = false, onClear = () => {} } = {}) {
     continuousSteering: () => continuous,
     tapMode: () => tap,
     onClear,
+    onSteer,
+    getTouchSettings: touchMode ? () => ({ mode: touchMode }) : null,
     onActivity: () => activities++,
     onPause: () => {
       pauses++;
@@ -186,6 +191,33 @@ function fixture(t, { external = true, tap = false, onClear = () => {} } = {}) {
 test('continuous option rejects invalid configuration before attaching listeners', () => {
   for (const value of [true, false, null, 'continuous'])
     assert.throws(() => attachInput({ continuousSteering: value }), /must be a function/);
+});
+
+test('Solo: failed-capture outside release permits a fresh continuous steering gesture', (t) => {
+  const f = fixture(t, { touchMode: 'stick' });
+  f.arena.getBoundingClientRect = () => ({ left: 0, top: 0, width: 156, height: 156 });
+  f.arena.setPointerCapture = () => {
+    throw new Error('Pointer capture unavailable');
+  };
+  const pointer = (type, x, y, id) =>
+    f.arena.emit(type, {
+      clientX: x,
+      clientY: y,
+      pointerId: id,
+      pointerType: 'touch',
+      button: 0,
+    });
+  pointer('pointerdown', 78, 78, 11);
+  pointer('pointermove', 115, 78, 11);
+  f.win.emit('pointerup', { pointerId: 11 });
+  assert.equal(f.input.poll().direction, 'right');
+  pointer('pointerdown', 78, 78, 22);
+  pointer('pointermove', 78, 115, 22);
+  assert.equal(f.input.poll().direction, 'down');
+  f.win.emit('pointercancel', { pointerId: 11 });
+  assert.equal(f.pauses, 0);
+  f.win.emit('pointercancel', { pointerId: 22 });
+  assert.equal(f.pauses, 1);
 });
 
 test('fresh keys persist after release without falling back to an older hold or repeat', (t) => {
@@ -815,3 +847,18 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(runs[0].player.direction, 'down');
     assert.equal(f.reads, reads);
   });
+
+test('fresh steering callback retains same-direction gestures and ignores held keyboard repeats', (t) => {
+  const turns = [],
+    f = fixture(t, { onSteer: (direction) => turns.push(direction) });
+  f.key('ArrowRight');
+  f.key('ArrowRight', { repeat: true });
+  f.input.poll();
+  f.up('ArrowRight');
+  f.key('ArrowRight');
+  assert.deepEqual(turns, ['right', 'right']);
+  f.setActive(false);
+  f.up('ArrowRight');
+  f.key('ArrowLeft');
+  assert.deepEqual(turns, ['right', 'right']);
+});

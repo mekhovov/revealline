@@ -11,14 +11,18 @@ import {
   fieldKitRecipeSources,
 } from '../../scripts/produce-field-kit-theme.mjs';
 import { fieldKitTeamRecipeQuality } from '../../scripts/team-recipe-review.mjs';
-import { TEAM_PICTURE_REVIEW_EXTENSION_PATH } from '../../scripts/team-picture-review-extension.mjs';
 const root = new URL('../../', import.meta.url);
 const read = (name) => readFile(new URL(name, root));
 const bytes = await read('docs/verification/team37/review.json');
 const review = JSON.parse(bytes);
-const extensionBytes = await read(TEAM_PICTURE_REVIEW_EXTENSION_PATH);
-const extension = JSON.parse(extensionBytes);
+const successorBytes = await read('docs/verification/team-specialist-cues-2026-09-24/review.json');
+const successor = JSON.parse(successorBytes);
+const continuationBytes = await read(
+  'docs/verification/v0.132.5-presentation-continuation/review.json',
+);
+const continuation = JSON.parse(continuationBytes);
 const fingerprint = (await fieldKitRecipeSources(read)).team;
+const reviewedSuccessorFingerprint = `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`;
 const defaults = createDefaultThemeBundle().assets;
 const production = await createFieldKitProduction();
 const resolved = resolvePresentation(production.document);
@@ -29,29 +33,36 @@ const images = Object.fromEntries(
     return [image.id, image];
   }),
 );
-const input = (role) => ({
+const input = (role, source = fingerprint) => ({
   slotId: role.slot,
-  source: fingerprint,
+  source,
   recipe: structuredClone(role.defaultRecipePayload),
   defaultAsset: defaults.find((asset) => asset.id === role.defaultAsset.id),
   inheritedAssets: images,
   reviewBytes: bytes,
-  reviewExtensionBytes: extensionBytes,
+  successorReviewBytes: successorBytes,
+  continuationReviewBytes: continuationBytes,
 });
 const stage = (args) => fieldKitTeamRecipeQuality(args).stage;
 
-test('all37 exact defaults receive only the scoped Team declaration in current assembly', () => {
+test('current Team sources and both exact reviewed predecessors remain usable', () => {
   assert.equal(review.recipes.length, 37);
   assert.equal(new Set(review.recipes.map(({ slot }) => slot)).size, 37);
   assert.equal(review.inheritedImages.length, 4);
   for (const role of review.recipes) {
     assert.equal(stage(input(role)), 'reviewed', role.slot);
+    assert.equal(stage(input(role, reviewedSuccessorFingerprint)), 'reviewed', role.slot);
     const asset = resolved.assets[role.slot];
     assert.equal(asset.kind, 'recipe');
     assert.deepEqual(asset.recipe, role.defaultRecipePayload);
     assert.deepEqual(asset.quality, fieldKitTeamRecipeQuality(input(role)));
-    assert.match(asset.quality.evidence[0], /Team functional scope only:/);
-    assert.ok(asset.quality.evidence[0].endsWith(createHash('sha256').update(bytes).digest('hex')));
+    assert.equal(asset.quality.stage, 'reviewed');
+    assert.match(asset.quality.evidence[0], /v0\.132\.5 exact Team continuation:/);
+    const reviewed = fieldKitTeamRecipeQuality(input(role, reviewedSuccessorFingerprint));
+    assert.match(reviewed.evidence[0], /Team specialist functional successor:/);
+    assert.ok(
+      reviewed.evidence[0].includes(createHash('sha256').update(successorBytes).digest('hex')),
+    );
   }
   // Default ancestor records remain source and are not mutated by the gate.
   assert.ok(
@@ -80,29 +91,43 @@ test('changed/unknown roles, payloads, default records and review bytes remain s
       'source',
     );
     assert.equal(stage({ ...original, reviewBytes: null }), 'source');
+    assert.equal(
+      stage({
+        ...original,
+        successorReviewBytes: Buffer.concat([successorBytes, Buffer.from('\n')]),
+      }),
+      'source',
+    );
+    assert.equal(stage({ ...original, successorReviewBytes: null }), 'source');
+    assert.equal(
+      stage({
+        ...original,
+        continuationReviewBytes: Buffer.concat([continuationBytes, Buffer.from('\n')]),
+      }),
+      'source',
+    );
+    assert.equal(stage({ ...original, continuationReviewBytes: null }), 'source');
   }
   for (const slotId of ['team.unknown', 'team.anchor.available', '__proto__', 'trail.active'])
     assert.equal(stage({ ...input(review.recipes[0]), slotId }), 'source');
 });
 
-test('each of26 renderer inputs and a forged path declaration reopen the review', async () => {
-  for (const entry of extension.fingerprints.team.inputs) {
-    assert.equal(
-      createHash('sha256')
-        .update(await read(entry.path))
-        .digest('hex'),
-      entry.sha256,
-    );
+test('both exact predecessors remain reviewed and every current renderer dependency fails closed', async () => {
+  assert.equal(successor.priorReview.sha256, createHash('sha256').update(bytes).digest('hex'));
+  assert.notEqual(fingerprint, reviewedSuccessorFingerprint);
+  assert.match(fingerprint, /game\/ui\/enemy-body-assets\.mjs/);
+  assert.equal(continuation.fingerprints.team.currentSHA256, fingerprint.split(' sha256:')[1]);
+  for (const dependency of fingerprint.split(' sha256:')[0].split('; ')) {
     const changed = (
       await fieldKitRecipeSources(async (name) => {
         const value = await read(name);
-        return name === entry.path
+        return name === dependency
           ? Buffer.concat([value, Buffer.from('\n// unreviewed\n')])
           : value;
       })
     ).team;
     for (const role of review.recipes)
-      assert.equal(stage({ ...input(role), source: changed }), 'source', entry.path);
+      assert.equal(stage({ ...input(role), source: changed }), 'source', dependency);
   }
   assert.equal(
     stage({
@@ -111,23 +136,13 @@ test('each of26 renderer inputs and a forged path declaration reopen the review'
     }),
     'source',
   );
-});
-
-test('only exact extension bytes admit the new fingerprint; the original review remains valid', () => {
-  const historicalSource = `${review.fingerprint.inputs.map((entry) => entry.path).join('; ')} sha256:${review.fingerprint.sha256}`;
-  for (const role of review.recipes) {
-    for (const invalid of [null, Buffer.concat([extensionBytes, Buffer.from('\n')])])
-      assert.equal(stage({ ...input(role), reviewExtensionBytes: invalid }), 'source', role.slot);
-    assert.equal(
-      stage({ ...input(role), source: historicalSource, reviewExtensionBytes: null }),
-      'reviewed',
-      role.slot,
-    );
-    assert.equal(
-      stage({ ...input(role), source: extension.fingerprints.equipment.sha256 }),
-      'source',
-    );
-  }
+  const legacy = `${review.fingerprint.inputs.map((entry) => entry.path).join('; ')} sha256:${review.fingerprint.sha256}`;
+  assert.equal(
+    stage({ ...input(review.recipes[0], legacy), successorReviewBytes: null }),
+    'reviewed',
+    'the immutable prior declaration remains independently usable for its exact source',
+  );
+  assert.equal(stage(input(review.recipes[0], reviewedSuccessorFingerprint)), 'reviewed');
 });
 
 test('every inherited image identity, bytes, geometry and record must remain exact', () => {

@@ -1,0 +1,611 @@
+TAP version 13
+# Subtest: Team Settings has the same four categories, original controls, and exact lobby return without preparing or saving
+ok 1 - Team Settings has the same four categories, original controls, and exact lobby return without preparing or saving
+  ---
+  duration_ms: 560.088416
+  type: 'test'
+  ...
+# Subtest: Settings stays above a retained paused Team attempt and reopens its selected category
+ok 2 - Settings stays above a retained paused Team attempt and reopens its selected category
+  ---
+  duration_ms: 2391.849417
+  type: 'test'
+  ...
+# Subtest: Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+ok 3 - Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+  ---
+  duration_ms: 139.9055
+  type: 'test'
+  ...
+# Subtest: a controller selects Team Settings and paused quick sound without resuming
+ok 4 - a controller selects Team Settings and paused quick sound without resuming
+  ---
+  duration_ms: 2201.047209
+  type: 'test'
+  ...
+# Subtest: closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+ok 5 - closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+  ---
+  duration_ms: 106.681625
+  type: 'test'
+  ...
+# Subtest: Settings Back leaves a pending Team import under its existing operation owner
+ok 6 - Settings Back leaves a pending Team import under its existing operation owner
+  ---
+  duration_ms: 123.504209
+  type: 'test'
+  ...
+# Subtest: a blur Settings close cannot focus or resume in the background
+ok 7 - a blur Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 418.174417
+  type: 'test'
+  ...
+# Subtest: a hidden Settings close cannot focus or resume in the background
+ok 8 - a hidden Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 397.549625
+  type: 'test'
+  ...
+# Subtest: a pagehide Settings close cannot focus or resume in the background
+ok 9 - a pagehide Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 402.857
+  type: 'test'
+  ...
+# Subtest: queued old close and newer focus cannot replace the current Settings visit
+ok 10 - queued old close and newer focus cannot replace the current Settings visit
+  ---
+  duration_ms: 101.991542
+  type: 'test'
+  ...
+# Subtest: paused keyboard quick Sound and Settings mute share one owner without resuming
+ok 11 - paused keyboard quick Sound and Settings mute share one owner without resuming
+  ---
+  duration_ms: 1526.018166
+  type: 'test'
+  ...
+# Subtest: terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+ok 12 - terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+  ---
+  duration_ms: 329.566625
+  type: 'test'
+  ...
+# Subtest: a newer focus choice during native Settings opening wins over the default category focus
+ok 13 - a newer focus choice during native Settings opening wins over the default category focus
+  ---
+  duration_ms: 87.1575
+  type: 'test'
+  ...
+# Subtest: a reopen during return visibility checking retires the old Settings close
+ok 14 - a reopen during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 89.236666
+  type: 'test'
+  ...
+# Subtest: a background during return visibility checking retires the old Settings close
+ok 15 - a background during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 91.832458
+  type: 'test'
+  ...
+# Subtest: Solo uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization
+ok 16 - Solo uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization
+  ---
+  duration_ms: 71.816125
+  type: 'test'
+  ...
+# Subtest: Versus uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization
+ok 17 - Versus uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization
+  ---
+  duration_ms: 12.851625
+  type: 'test'
+  ...
+# Subtest: Team uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization
+ok 18 - Team uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization
+  ---
+  duration_ms: 8.5455
+  type: 'test'
+  ...
+# Subtest: failed persistence keeps the chosen view, updates EN/UK labels and status without moving focus, and retries explicitly
+ok 19 - failed persistence keeps the chosen view, updates EN/UK labels and status without moving focus, and retries explicitly
+  ---
+  duration_ms: 20.895875
+  type: 'test'
+  ...
+# Subtest: a session-only host localizes its warning and never offers a misleading persistence retry
+ok 20 - a session-only host localizes its warning and never offers a misleading persistence retry
+  ---
+  duration_ms: 13.66025
+  type: 'test'
+  ...
+# Subtest: disposal removes control and storage owners; later gestures, restores and detached locale refresh cannot update the retired view
+ok 21 - disposal removes control and storage owners; later gestures, restores and detached locale refresh cannot update the retired view
+  ---
+  duration_ms: 28.511125
+  type: 'test'
+  ...
+# Subtest: ordinary Solo uses the global remains choice, ignores preview override and changes no paused state
+ok 22 - ordinary Solo uses the global remains choice, ignores preview override and changes no paused state
+  ---
+  duration_ms: 1823.303917
+  type: 'test'
+  ...
+# Subtest: Versus reads and changes global remains for both boards without starting either player
+ok 23 - Versus reads and changes global remains for both boards without starting either player
+  ---
+  duration_ms: 2041.912667
+  type: 'test'
+  ...
+# Subtest: Team shares the preference without creating combat mechanics, starting or writing Solo data
+ok 24 - Team shares the preference without creating combat mechanics, starting or writing Solo data
+  ---
+  duration_ms: 149.605334
+  type: 'test'
+  ...
+# Subtest: strict record validates owned bounded data without invoking getters or coercion
+ok 25 - strict record validates owned bounded data without invoking getters or coercion
+  ---
+  duration_ms: 18.742709
+  type: 'test'
+  ...
+# Subtest: default and saved intent load synchronously without writes to any record
+ok 26 - default and saved intent load synchronously without writes to any record
+  ---
+  duration_ms: 0.67025
+  type: 'test'
+  ...
+# Subtest: corrupt or future raw bytes survive load, explicit choice and retry until repaired
+ok 27 - corrupt or future raw bytes survive load, explicit choice and retry until repaired
+  ---
+  duration_ms: 3.927083
+  type: 'test'
+  ...
+# Subtest: set accepts only boolean intent and saves only the separate cosmetic record
+ok 28 - set accepts only boolean intent and saves only the separate cosmetic record
+  ---
+  duration_ms: 0.55225
+  type: 'test'
+  ...
+# Subtest: storage events require the exact key, current storage area and still-current raw bytes
+ok 29 - storage events require the exact key, current storage area and still-current raw bytes
+  ---
+  duration_ms: 0.587792
+  type: 'test'
+  ...
+# Subtest: persisted restoration reconciles current records; ordinary pageshow is inert
+ok 30 - persisted restoration reconciles current records; ordinary pageshow is inert
+  ---
+  duration_ms: 0.241833
+  type: 'test'
+  ...
+# Subtest: storage clear requires the same area and a still-absent record, and preserves pending intent
+ok 31 - storage clear requires the same area and a still-absent record, and preserves pending intent
+  ---
+  duration_ms: 0.344584
+  type: 'test'
+  ...
+# Subtest: read-only hosts retain local intent through events and restore, then explicit retry saves
+ok 32 - read-only hosts retain local intent through events and restore, then explicit retry saves
+  ---
+  duration_ms: 0.143208
+  type: 'test'
+  ...
+# Subtest: quota storage failure retains intent and retry verifies the saved bytes
+ok 33 - quota storage failure retains intent and retry verifies the saved bytes
+  ---
+  duration_ms: 0.220542
+  type: 'test'
+  ...
+# Subtest: silent storage failure retains intent and retry verifies the saved bytes
+ok 34 - silent storage failure retains intent and retry verifies the saved bytes
+  ---
+  duration_ms: 0.269917
+  type: 'test'
+  ...
+# Subtest: read storage failure retains intent and retry verifies the saved bytes
+ok 35 - read storage failure retains intent and retry verifies the saved bytes
+  ---
+  duration_ms: 0.065417
+  type: 'test'
+  ...
+# Subtest: unavailable storage and failed feedback keep the true default and usable local choices
+ok 36 - unavailable storage and failed feedback keep the true default and usable local choices
+  ---
+  duration_ms: 0.078583
+  type: 'test'
+  ...
+# Subtest: reentrant observers publish current intent and a failing observer cannot block persistence
+ok 37 - reentrant observers publish current intent and a failing observer cannot block persistence
+  ---
+  duration_ms: 0.082
+  type: 'test'
+  ...
+# Subtest: warning callbacks can choose newer intent without stale notifications or writes
+ok 38 - warning callbacks can choose newer intent without stale notifications or writes
+  ---
+  duration_ms: 0.065167
+  type: 'test'
+  ...
+# Subtest: reentrant storage reads cannot adopt older external state over new local intent
+ok 39 - reentrant storage reads cannot adopt older external state over new local intent
+  ---
+  duration_ms: 0.106292
+  type: 'test'
+  ...
+# Subtest: reentrant storage writes retain newer unsaved intent until an explicit retry
+ok 40 - reentrant storage writes retain newer unsaved intent until an explicit retry
+  ---
+  duration_ms: 0.056084
+  type: 'test'
+  ...
+# Subtest: readback cannot clear newer intent accepted inside the storage callback
+ok 41 - readback cannot clear newer intent accepted inside the storage callback
+  ---
+  duration_ms: 0.047125
+  type: 'test'
+  ...
+# Subtest: a reentrant pre-write read or writable guard cannot persist obsolete intent
+ok 42 - a reentrant pre-write read or writable guard cannot persist obsolete intent
+  ---
+  duration_ms: 0.06825
+  type: 'test'
+  ...
+# Subtest: same-value retries notify durability recovery without duplicate restore notifications
+ok 43 - same-value retries notify durability recovery without duplicate restore notifications
+  ---
+  duration_ms: 0.083125
+  type: 'test'
+  ...
+# Subtest: disposal and unsubscription stop observers, late events and future mutation
+ok 44 - disposal and unsubscription stop observers, late events and future mutation
+  ---
+  duration_ms: 0.106042
+  type: 'test'
+  ...
+# Subtest: disposal during storage access or notification prevents subsequent writes and observers
+ok 45 - disposal during storage access or notification prevents subsequent writes and observers
+  ---
+  duration_ms: 0.062375
+  type: 'test'
+  ...
+# Subtest: practice remains affect only painter options through a real combat route and Retry
+    # Subtest: hide
+    ok 1 - hide
+      ---
+      duration_ms: 11102.421584
+      type: 'test'
+      ...
+    # Subtest: show
+    ok 2 - show
+      ---
+      duration_ms: 8847.45975
+      type: 'test'
+      ...
+    1..2
+ok 46 - practice remains affect only painter options through a real combat route and Retry
+  ---
+  duration_ms: 19950.794625
+  type: 'test'
+  ...
+# Subtest: ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+ok 47 - ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+  ---
+  duration_ms: 1146.720458
+  type: 'test'
+  ...
+# Subtest: only one exact, explicitly owned practice query may hide remains
+ok 48 - only one exact, explicitly owned practice query may hide remains
+  ---
+  duration_ms: 0.758041
+  type: 'test'
+  ...
+# Subtest: missing, malformed, unknown and duplicate options retain the usual presentation
+ok 49 - missing, malformed, unknown and duplicate options retain the usual presentation
+  ---
+  duration_ms: 0.953416
+  type: 'test'
+  ...
+# Subtest: reading cosmetic options leaves the query unchanged and returns an immutable choice
+ok 50 - reading cosmetic options leaves the query unchanged and returns an immutable choice
+  ---
+  duration_ms: 0.314792
+  type: 'test'
+  ...
+# Subtest: actual Studio remains control has a native label and translates through the runtime catalog without changing selection
+ok 51 - actual Studio remains control has a native label and translates through the runtime catalog without changing selection
+  ---
+  duration_ms: 70.133583
+  type: 'test'
+  ...
+# Subtest: only explicit owned preview choices override global remains
+ok 52 - only explicit owned preview choices override global remains
+  ---
+  duration_ms: 0.148083
+  type: 'test'
+  ...
+# Subtest: edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+ok 53 - edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+  ---
+  duration_ms: 321.681292
+  type: 'test'
+  ...
+# Subtest: edition theater reports unavailable catalog through its ordinary boot status
+ok 54 - edition theater reports unavailable catalog through its ordinary boot status
+  ---
+  duration_ms: 37.425666
+  type: 'test'
+  ...
+# Subtest: real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+ok 55 - real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+  ---
+  duration_ms: 86.563958
+  type: 'test'
+  ...
+# Subtest: real theater preserves denied-save intent and its recording across a persisted return
+ok 56 - real theater preserves denied-save intent and its recording across a persisted return
+  ---
+  duration_ms: 23.399833
+  type: 'test'
+  ...
+# Subtest: real theater boot failure retains usable shared reading controls without playback
+ok 57 - real theater boot failure retains usable shared reading controls without playback
+  ---
+  duration_ms: 7.645
+  type: 'test'
+  ...
+# Subtest: terminal exit during delayed boot retires authority and fences late replay startup
+ok 58 - terminal exit during delayed boot retires authority and fences late replay startup
+  ---
+  duration_ms: 16.556625
+  type: 'test'
+  ...
+# Subtest: history-restored replay controls follow unchanged saved intent without touching playback
+ok 59 - history-restored replay controls follow unchanged saved intent without touching playback
+  ---
+  duration_ms: 30.845542
+  type: 'test'
+  ...
+# Subtest: history-restored replay controls follow unchanged session-only intent without touching playback
+ok 60 - history-restored replay controls follow unchanged session-only intent without touching playback
+  ---
+  duration_ms: 43.77025
+  type: 'test'
+  ...
+# Subtest: recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+ok 61 - recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+  ---
+  duration_ms: 448.87
+  type: 'test'
+  ...
+# Subtest: Theater adopts global remains without rewriting recordings or advancing a paused replay
+ok 62 - Theater adopts global remains without rewriting recordings or advancing a paused replay
+  ---
+  duration_ms: 19.637416
+  type: 'test'
+  ...
+# Subtest: Solo pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 63 - Solo pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 1888.301625
+  type: 'test'
+  ...
+# Subtest: Solo the deferred pageshow task repairs form values restored after the event without writes
+ok 64 - Solo the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 1016.422667
+  type: 'test'
+  ...
+# Subtest: Solo a newer explicit setting before deferred restoration keeps its current authority
+ok 65 - Solo a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 1182.245083
+  type: 'test'
+  ...
+# Subtest: Solo terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 66 - Solo terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 934.958209
+  type: 'test'
+  ...
+# Subtest: Versus pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 67 - Versus pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 2030.561917
+  type: 'test'
+  ...
+# Subtest: Versus the deferred pageshow task repairs form values restored after the event without writes
+ok 68 - Versus the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 1916.023125
+  type: 'test'
+  ...
+# Subtest: Versus a newer explicit setting before deferred restoration keeps its current authority
+ok 69 - Versus a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 2083.031583
+  type: 'test'
+  ...
+# Subtest: Versus terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 70 - Versus terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 1765.5635
+  type: 'test'
+  ...
+# Subtest: Team pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 71 - Team pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 229.848708
+  type: 'test'
+  ...
+# Subtest: Team the deferred pageshow task repairs form values restored after the event without writes
+ok 72 - Team the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 195.307291
+  type: 'test'
+  ...
+# Subtest: Team a newer explicit setting before deferred restoration keeps its current authority
+ok 73 - Team a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 206.333042
+  type: 'test'
+  ...
+# Subtest: Team terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 74 - Team terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 170.989333
+  type: 'test'
+  ...
+# Subtest: Home quick sound toggles the existing master in place and remains synchronized with Audio settings
+ok 75 - Home quick sound toggles the existing master in place and remains synchronized with Audio settings
+  ---
+  duration_ms: 2036.402
+  type: 'test'
+  ...
+# Subtest: Solo Settings opens Appearance by default, returns to its Home opener and retains the chosen category on reopening
+ok 76 - Solo Settings opens Appearance by default, returns to its Home opener and retains the chosen category on reopening
+  ---
+  duration_ms: 954.985125
+  type: 'test'
+  ...
+# Subtest: category arrows, Home and End cross the real document adapter exactly once without a game command
+ok 77 - category arrows, Home and End cross the real document adapter exactly once without a game command
+  ---
+  duration_ms: 1093.379667
+  type: 'test'
+  ...
+# Subtest: changing categories cancels real key capture without saving a binding or closing Settings
+ok 78 - changing categories cancels real key capture without saving a binding or closing Settings
+  ---
+  duration_ms: 913.469917
+  type: 'test'
+  ...
+# Subtest: Versus Settings uses native categories, consumes tab keys once and returns to its opener
+ok 79 - Versus Settings uses native categories, consumes tab keys once and returns to its opener
+  ---
+  duration_ms: 2757.669042
+  type: 'test'
+  ...
+# Subtest: paused Versus keeps both runs and requires explicit Resume after appearance changes
+ok 80 - paused Versus keeps both runs and requires explicit Resume after appearance changes
+  ---
+  duration_ms: 2081.967584
+  type: 'test'
+  ...
+# Subtest: Versus quick sound shares the Settings master without starting or replacing a match
+ok 81 - Versus quick sound shares the Settings master without starting or replacing a match
+  ---
+  duration_ms: 1803.755208
+  type: 'test'
+  ...
+# Subtest: modeled controller selects Settings categories and Back preserves its Ready match
+ok 82 - modeled controller selects Settings categories and Back preserves its Ready match
+  ---
+  duration_ms: 1879.137334
+  type: 'test'
+  ...
+# Subtest: Studio slow preview warns once, then accepts later exact-document readiness
+ok 83 - Studio slow preview warns once, then accepts later exact-document readiness
+  ---
+  duration_ms: 2.435
+  type: 'test'
+  ...
+# Subtest: Studio accepts ready without depending on the iframe load event
+ok 84 - Studio accepts ready without depending on the iframe load event
+  ---
+  duration_ms: 0.973375
+  type: 'test'
+  ...
+# Subtest: Studio terminal boot failure settles even after a slow warning
+ok 85 - Studio terminal boot failure settles even after a slow warning
+  ---
+  duration_ms: 0.078375
+  type: 'test'
+  ...
+# Subtest: stale, blank and foreign preview documents cannot report ready
+ok 86 - stale, blank and foreign preview documents cannot report ready
+  ---
+  duration_ms: 0.144417
+  type: 'test'
+  ...
+# Subtest: replaced previews stop before reading or notifying, including queued callbacks
+ok 87 - replaced previews stop before reading or notifying, including queued callbacks
+  ---
+  duration_ms: 0.279125
+  type: 'test'
+  ...
+# Subtest: closing or leaving Studio cancels the owned monitor and late callbacks
+ok 88 - closing or leaving Studio cancels the owned monitor and late callbacks
+  ---
+  duration_ms: 0.129959
+  type: 'test'
+  ...
+# Subtest: inaccessible frame remains unknown and does not throw or claim successful boot
+ok 89 - inaccessible frame remains unknown and does not throw or claim successful boot
+  ---
+  duration_ms: 0.120208
+  type: 'test'
+  ...
+# Subtest: owned practice observes a post-ready render failure without repeating readiness
+ok 90 - owned practice observes a post-ready render failure without repeating readiness
+  ---
+  duration_ms: 0.060458
+  type: 'test'
+  ...
+# Subtest: foreign or replaced practice cannot overwrite an accepted ready status with failure
+ok 91 - foreign or replaced practice cannot overwrite an accepted ready status with failure
+  ---
+  duration_ms: 0.24725
+  type: 'test'
+  ...
+# Subtest: practice render failure before first readiness is visible without a ready flash
+ok 92 - practice render failure before first readiness is visible without a ready flash
+  ---
+  duration_ms: 0.258791
+  type: 'test'
+  ...
+# Subtest: Studio pagehide persisted=false retires pending media without focus or late launch
+ok 93 - Studio pagehide persisted=false retires pending media without focus or late launch
+  ---
+  duration_ms: 124.301292
+  type: 'test'
+  ...
+# Subtest: Studio pagehide persisted=true retires pending media without focus or late launch
+ok 94 - Studio pagehide persisted=true retires pending media without focus or late launch
+  ---
+  duration_ms: 51.153208
+  type: 'test'
+  ...
+# Subtest: Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+ok 95 - Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+  ---
+  duration_ms: 93.95175
+  type: 'test'
+  ...
+# Subtest: Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice
+ok 96 - Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice
+  ---
+  duration_ms: 373.620375
+  type: 'test'
+  ...
+# Subtest: Studio snapshots remains before media awaits and transports it outside byte-identical scenario data
+ok 97 - Studio snapshots remains before media awaits and transports it outside byte-identical scenario data
+  ---
+  duration_ms: 198.768708
+  type: 'test'
+  ...
+# Subtest: Studio ignores the remembered hidden-remains choice for ordinary and disabled previews
+ok 98 - Studio ignores the remembered hidden-remains choice for ordinary and disabled previews
+  ---
+  duration_ms: 96.735709
+  type: 'test'
+  ...
+1..98
+# tests 100
+# suites 0
+# pass 100
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21789.126666
