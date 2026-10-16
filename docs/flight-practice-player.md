@@ -53,6 +53,8 @@ Removing a home-screen icon or uninstalling a browser app is a separate operatio
 
 Apps own separate caches but share this origin’s quota with other games on the same site. Browsers can evict cached files. If **Needs repair** appears, reconnect, remove only the affected offline copy and download again. For denied/full storage, allow storage or leave private browsing, free space and retry. World Studio’s **Request persistent storage** can reduce eviction risk if granted; it is not a backup or a guarantee against user-initiated deletion. See [browser storage and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria).
 
+**Browser eviction can remove records and imported worlds, not only cached files.** This differs from the launcher’s scoped removal. Keep exported backups outside browser storage. If records are missing after eviction, reconnect, prepare the app again, then restore your exported backups with its import tools. Downloading the app does not recover lost records; without an export, they may be unrecoverable.
+
 ## When something is missing
 
 - **Download stalled / exceeded five minutes:** check your connection and retry online. Cancelled means that attempt stopped, not that a previous copy was removed. A combined download or verification failure does not identify a single cause: check connection and browser storage, then retry. Permission errors do not necessarily mean storage is full. Check saved copies in the launcher before relying on them offline.
