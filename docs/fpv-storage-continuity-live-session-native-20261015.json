@@ -1,0 +1,70 @@
+{
+  "receiptUTC": "2026-10-15T19:41:19.664616+00:00",
+  "origin": "http://127.0.0.1:9181",
+  "observerRevision": "311f66b7",
+  "productionRevision": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+  "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+  "scope": "Normal UI pause/tab-close/reopen/recover of a live grounded attempt; no induced crash, process restart, raw database access or player-store injection.",
+  "observations": {
+    "world": "Roadworks Practice Park · discovery, exact installed world retained",
+    "initialState": "Prepared Motors off/Ready with Arm/resume; explicit click starts actual normal attempt",
+    "attempt": "Grounded, zero throttle; observed running UI, then explicit Pause. This does not claim moving-flight recovery.",
+    "afterPause": "Paused, Arm/resume available",
+    "sessionCountAfterNormalClose": 1,
+    "reopen": "Normal Settings→Progress & Collection→Recorded flights & recovery exposes Resume interrupted flight",
+    "restore": "Normal Resume interrupted flight followed by Back returns the scene paused at0.0m with Arm/resume; no automatic active flight",
+    "allOtherStoredContentUnchangedFromD": true,
+    "exactStoredBytesAfterNormalRecoveryAndClose": true,
+    "contentSHA256": "85ab302a859d95af485f18593a68c980a287bf3796d236d06e1652235bae2194",
+    "recordCount": 1,
+    "sessionCount": 1,
+    "differences": [],
+    "allRootTabsClosedAtEndOfThisCase": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-baseline-e-20261015.json",
+      "bytes": 13592,
+      "sha256": "9d3a6f994784c8c0b1d051d89e2132e8d87ec0a718be2d91c43289546807ff1b"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-restored-f-20261015.json",
+      "bytes": 13592,
+      "sha256": "09d6ee040306862fc956bcb79884bb79a94a859001a6e4a2e59f1458696e29b8"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-restored-comparison-native-20261015.json",
+      "bytes": 14773,
+      "sha256": "c0877da430236d7334375c03070a795c72dbbda88e339d7dd1ecb4ef9e9ae97d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-paused-native-20261015.txt",
+      "bytes": 2741,
+      "sha256": "79a2b45102c78fb729f5df860d1eac7d3459d72081f49542a64d6034842f68af"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-paused-native-20261015.png",
+      "bytes": 60852,
+      "sha256": "ca1ac4fa8c12e3e1324e1eab7672f83ea0d24b800dbbf736b8cc624f4f2d7972"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-restored-native-20261015.txt",
+      "bytes": 1640,
+      "sha256": "8ec34aa94dbf62a3f69ece92f9f5b21e6c76b00292aff70964363d3cc9adc398"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-live-session-restored-native-20261015.png",
+      "bytes": 44535,
+      "sha256": "24a63598f297f588c74d022c806249829fd242537bdb84c45bed4dd36ef36ecd"
+    }
+  ],
+  "acceptedBoundary": "Nonempty live-attempt session and existing four database channels survive the normal paused tab recovery path byte-exactly.",
+  "remaining": [
+    "moving-flight/abrupt-interruption recovery",
+    "actual browser/application restart",
+    "network-wide offline and retained flight",
+    "actual quota/eviction",
+    "physical-device/controller/radio qualification",
+    "two-hour authored stability and broader release acceptance"
+  ]
+}

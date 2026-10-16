@@ -1,0 +1,2077 @@
+{
+  "format": "FPVReservoirRootContactQualification.v1",
+  "beforeSHA256": "caf24d9c11ea4be3ee5db66a2e420ee06354c4a127d987ed15bba49ef344d0d5",
+  "afterSHA256": "3215632ac49f9c7142858744140165dd1382b3fda3ea40a7b864688b7305d898",
+  "checks": [
+    {
+      "name": "Exact accepted r14 source",
+      "passed": true
+    },
+    {
+      "name": "Unchanged source target",
+      "passed": true
+    },
+    {
+      "name": "nodes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "scenes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "meshes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "materials exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "textures exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "samplers exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "extensionsUsed exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "extensionsRequired exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Image 0 exact",
+      "passed": true
+    },
+    {
+      "name": "Image 1 exact",
+      "passed": true
+    },
+    {
+      "name": "Image 2 exact",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "closed-window/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "closed-window/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "chalk-enamel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "blue-enamel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "safety-yellow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "oxidized-roof/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "shore-meadow/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "warm-gravel/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "mineral-ridge/TEXCOORD_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 same allocation size",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/COLOR_0 exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "reservoir-water/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "water-current/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "water-current/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "tree-bark/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "fir-light/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "fir-light/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL same allocation size",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/NORMAL exact bytes",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION same allocation size",
+      "passed": true
+    },
+    {
+      "name": "fir-dark/POSITION exact bytes",
+      "passed": true
+    },
+    {
+      "name": "Tree 0 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 0 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 0 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 0 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 1 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 1 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 1 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 1 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 2 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 2 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 2 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 2 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 3 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 3 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 3 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 3 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 4 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 4 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 4 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 4 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 5 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 5 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 5 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 5 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 6 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 6 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 6 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 6 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 7 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 7 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 7 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 7 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 8 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 8 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 8 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 8 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 9 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 9 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 9 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 9 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 10 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 10 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 10 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 10 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 11 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 11 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 11 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 11 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 12 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 12 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 12 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 12 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 13 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 13 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 13 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 13 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 14 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 14 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 14 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 14 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 15 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 15 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 15 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 15 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 16 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 16 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 16 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 16 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 17 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 17 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 17 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 17 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 18 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 18 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 18 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 18 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 19 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 19 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 19 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 19 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 20 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 20 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 20 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 20 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 21 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 21 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 21 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 21 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 22 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 22 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 22 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 22 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 23 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 23 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 23 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 23 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 24 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 24 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 24 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 24 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 25 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 25 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 25 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 25 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 26 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 26 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 26 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 26 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 27 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 27 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 27 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 27 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 28 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 28 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 28 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 28 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 29 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 29 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 29 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 29 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 30 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 30 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 30 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 30 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 31 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 31 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 31 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 31 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 32 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 32 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 32 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 32 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 33 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 33 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 33 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 33 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 34 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 34 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 34 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 34 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 35 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 35 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 35 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 35 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 36 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 36 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 36 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 36 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 37 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 37 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 37 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 37 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 38 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 38 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 38 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 38 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 39 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 39 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 39 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 39 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 40 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 40 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 40 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 40 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 41 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 41 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 41 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 41 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 42 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 42 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 42 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 42 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 43 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 43 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 43 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 43 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 44 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 44 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 44 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 44 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 45 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 45 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 45 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 45 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 46 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 46 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 46 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 46 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 47 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 47 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 47 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 47 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 48 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 48 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 48 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 48 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 49 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 49 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 49 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 49 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 50 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 50 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 50 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 50 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 51 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 51 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 51 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 51 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 52 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 52 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 52 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 52 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 53 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 53 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 53 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 53 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 54 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 54 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 54 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 54 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Tree 55 exact horizontal footprint/top/crown attachment",
+      "passed": true
+    },
+    {
+      "name": "Tree 55 complete foot corners covered with intersected terrain extrema",
+      "passed": true
+    },
+    {
+      "name": "Tree 55 entire foot embedded at least 79.99mm",
+      "passed": true
+    },
+    {
+      "name": "Tree 55 complete footprint remains outside playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Exactly 55 existing trunk feet lowered for the bounded margin",
+      "passed": true
+    },
+    {
+      "name": "All modified trunk normals finite and unit length",
+      "passed": true
+    },
+    {
+      "name": "New explicit r15 identity",
+      "passed": true
+    },
+    {
+      "name": "All eight complete courses/colliders/routes exact except revision",
+      "passed": true
+    },
+    {
+      "name": "spawnBindings exact",
+      "passed": true
+    },
+    {
+      "name": "routeBindings exact",
+      "passed": true
+    },
+    {
+      "name": "overrides exact",
+      "passed": true
+    },
+    {
+      "name": "themes exact",
+      "passed": true
+    },
+    {
+      "name": "campaigns exact",
+      "passed": true
+    },
+    {
+      "name": "playlists exact",
+      "passed": true
+    },
+    {
+      "name": "Prepared nodes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared scenes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared meshes exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared materials exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared textures exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared samplers exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared extensionsUsed exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared extensionsRequired exact ownership/state",
+      "passed": true
+    },
+    {
+      "name": "Prepared model validation has no errors",
+      "passed": true
+    }
+  ],
+  "trees": [
+    {
+      "tree": 0,
+      "centre": [
+        57.99999999999999,
+        19.00000063578288
+      ],
+      "oldBottom": 11.003891944885254,
+      "newBottom": 10.675366401672363,
+      "oldTop": 13.815892219543457,
+      "minimum": 10.755366783148324,
+      "originalGap": 0.2485251617369304,
+      "embedDepth": 0.08000038147596022,
+      "extrema": 12
+    },
+    {
+      "tree": 1,
+      "centre": [
+        66.0263900756836,
+        -9.386533737182617
+      ],
+      "oldBottom": 22.90827178955078,
+      "newBottom": 22.856630325317383,
+      "oldTop": 26.038471221923828,
+      "minimum": 22.93663073153766,
+      "originalGap": 0,
+      "embedDepth": 0.08000040622027882,
+      "extrema": 5
+    },
+    {
+      "tree": 2,
+      "centre": [
+        33.01534207661946,
+        -49.86719258626302
+      ],
+      "oldBottom": 26.127796173095703,
+      "newBottom": 26.0026912689209,
+      "oldTop": 29.576196670532227,
+      "minimum": 26.082690600463437,
+      "originalGap": 0.045105572632266444,
+      "embedDepth": 0.07999933154253824,
+      "extrema": 5
+    },
+    {
+      "tree": 3,
+      "centre": [
+        -2.031660735607147,
+        -47.11011123657226
+      ],
+      "oldBottom": 20.539306640625,
+      "newBottom": 20.41158103942871,
+      "oldTop": 24.305906295776367,
+      "minimum": 20.49158174183291,
+      "originalGap": 0.04772489879209019,
+      "embedDepth": 0.08000070240419888,
+      "extrema": 9
+    },
+    {
+      "tree": 4,
+      "centre": [
+        -61.045960744222,
+        8.216384887695312
+      ],
+      "oldBottom": 23.848779678344727,
+      "newBottom": 23.77911376953125,
+      "oldTop": 27.93358039855957,
+      "minimum": 23.859113246358298,
+      "originalGap": 0,
+      "embedDepth": 0.079999476827048,
+      "extrema": 5
+    },
+    {
+      "tree": 5,
+      "centre": [
+        -63.75601069132487,
+        -31.204023996988933
+      ],
+      "oldBottom": 30.447803497314453,
+      "newBottom": 30.383501052856445,
+      "oldTop": 34.85080337524414,
+      "minimum": 30.46350086673798,
+      "originalGap": 0,
+      "embedDepth": 0.07999981388153543,
+      "extrema": 5
+    },
+    {
+      "tree": 6,
+      "centre": [
+        59.93131573994953,
+        14.857203324635824
+      ],
+      "oldBottom": 18.03798484802246,
+      "newBottom": 17.57647132873535,
+      "oldTop": 22.759185791015625,
+      "minimum": 17.65647086405079,
+      "originalGap": 0.38151398397167213,
+      "embedDepth": 0.07999953531543724,
+      "extrema": 9
+    },
+    {
+      "tree": 7,
+      "centre": [
+        61.33729871114095,
+        -5.855718692143758
+      ],
+      "oldBottom": 23.648164749145508,
+      "newBottom": 23.584264755249023,
+      "oldTop": 28.687564849853516,
+      "minimum": 23.664265027082973,
+      "originalGap": 0,
+      "embedDepth": 0.0800002718339492,
+      "extrema": 5
+    },
+    {
+      "tree": 8,
+      "centre": [
+        38.37325986226399,
+        -43.441480000813804
+      ],
+      "oldBottom": 22.368343353271484,
+      "newBottom": 22.21085548400879,
+      "oldTop": 27.725942611694336,
+      "minimum": 22.2908559774102,
+      "originalGap": 0.07748737586128485,
+      "embedDepth": 0.08000049340141047,
+      "extrema": 5
+    },
+    {
+      "tree": 9,
+      "centre": [
+        -4.09374757607778,
+        -54.50758361816406
+      ],
+      "oldBottom": 28.48749542236328,
+      "newBottom": 28.33352279663086,
+      "oldTop": 31.299495697021484,
+      "minimum": 28.41352264375928,
+      "originalGap": 0.07397277860400209,
+      "embedDepth": 0.07999984712841979,
+      "extrema": 5
+    },
+    {
+      "tree": 10,
+      "centre": [
+        -65.43347040812175,
+        2.449673334757487
+      ],
+      "oldBottom": 25.583858489990234,
+      "newBottom": 25.583858489990234,
+      "oldTop": 28.714059829711914,
+      "minimum": 25.67152516817532,
+      "originalGap": 0,
+      "embedDepth": 0.08766667818508722,
+      "extrema": 9
+    },
+    {
+      "tree": 11,
+      "centre": [
+        -53.32000414530436,
+        -27.033487955729168
+      ],
+      "oldBottom": 20.837308883666992,
+      "newBottom": 20.71290397644043,
+      "oldTop": 24.285709381103516,
+      "minimum": 20.79290408536084,
+      "originalGap": 0.04440479830615374,
+      "embedDepth": 0.08000010892040876,
+      "extrema": 5
+    },
+    {
+      "tree": 12,
+      "centre": [
+        56.996421178181954,
+        17.08140309651693
+      ],
+      "oldBottom": 8.864178657531738,
+      "newBottom": 8.53296184539795,
+      "oldTop": 12.630779266357422,
+      "minimum": 8.612962203825191,
+      "originalGap": 0.2512164537065473,
+      "embedDepth": 0.08000035842724174,
+      "extrema": 9
+    },
+    {
+      "tree": 13,
+      "centre": [
+        63.357241948445626,
+        -13.970407485961914
+      ],
+      "oldBottom": 20.310606002807617,
+      "newBottom": 20.215394973754883,
+      "oldTop": 24.39540672302246,
+      "minimum": 20.29539536987977,
+      "originalGap": 0.015210632927846746,
+      "embedDepth": 0.08000039612488763,
+      "extrema": 5
+    },
+    {
+      "tree": 14,
+      "centre": [
+        40.27106539408366,
+        -44.58512115478515
+      ],
+      "oldBottom": 24.74077606201172,
+      "newBottom": 24.59088134765625,
+      "oldTop": 29.143775939941406,
+      "minimum": 24.670881642082048,
+      "originalGap": 0.06989441992967116,
+      "embedDepth": 0.08000029442579759,
+      "extrema": 5
+    },
+    {
+      "tree": 15,
+      "centre": [
+        -10.958894411722818,
+        -47.13336944580079
+      ],
+      "oldBottom": 22.872411727905273,
+      "newBottom": 22.703168869018555,
+      "oldTop": 27.593610763549805,
+      "minimum": 22.78316795217931,
+      "originalGap": 0.08924377572596498,
+      "embedDepth": 0.07999908316075377,
+      "extrema": 9
+    },
+    {
+      "tree": 16,
+      "centre": [
+        -56.130619684855134,
+        1.5710458556811016
+      ],
+      "oldBottom": 20.46329689025879,
+      "newBottom": 20.34644889831543,
+      "oldTop": 25.502696990966797,
+      "minimum": 20.42644926973056,
+      "originalGap": 0.036847620528227765,
+      "embedDepth": 0.08000037141513161,
+      "extrema": 9
+    },
+    {
+      "tree": 17,
+      "centre": [
+        -59.71514765421549,
+        -33.24229303995769
+      ],
+      "oldBottom": 28.525978088378906,
+      "newBottom": 28.428401947021484,
+      "oldTop": 33.88357925415039,
+      "minimum": 28.50840279495363,
+      "originalGap": 0.01757529342527775,
+      "embedDepth": 0.08000084793214413,
+      "extrema": 9
+    },
+    {
+      "tree": 18,
+      "centre": [
+        56.590178807576486,
+        20.425969123840332
+      ],
+      "oldBottom": 8.336799621582031,
+      "newBottom": 8.030571937561035,
+      "oldTop": 11.148799896240234,
+      "minimum": 8.110571893132146,
+      "originalGap": 0.22622772844988503,
+      "embedDepth": 0.07999995557111106,
+      "extrema": 5
+    },
+    {
+      "tree": 19,
+      "centre": [
+        66.99669901529948,
+        -5.195962270100911
+      ],
+      "oldBottom": 23.98444175720215,
+      "newBottom": 23.930644989013672,
+      "oldTop": 27.114641189575195,
+      "minimum": 24.010644817387703,
+      "originalGap": 0,
+      "embedDepth": 0.07999982837403152,
+      "extrema": 9
+    },
+    {
+      "tree": 20,
+      "centre": [
+        33.926981608072914,
+        -47.69713973999024
+      ],
+      "oldBottom": 24.609018325805664,
+      "newBottom": 24.491172790527344,
+      "oldTop": 28.057418823242188,
+      "minimum": 24.571172063566337,
+      "originalGap": 0.03784626223932719,
+      "embedDepth": 0.07999927303899312,
+      "extrema": 9
+    },
+    {
+      "tree": 21,
+      "centre": [
+        -5.329438845316569,
+        -50.246017456054695
+      ],
+      "oldBottom": 24.46650505065918,
+      "newBottom": 24.27927017211914,
+      "oldTop": 28.233104705810547,
+      "minimum": 24.35927111802448,
+      "originalGap": 0.10723393263469916,
+      "embedDepth": 0.0800009459053399,
+      "extrema": 5
+    },
+    {
+      "tree": 22,
+      "centre": [
+        -56.577194213867195,
+        6.8223942915598546
+      ],
+      "oldBottom": 21.40156364440918,
+      "newBottom": 21.325775146484375,
+      "oldTop": 25.486364364624023,
+      "minimum": 21.405775848608755,
+      "originalGap": 0,
+      "embedDepth": 0.08000070212438004,
+      "extrema": 5
+    },
+    {
+      "tree": 23,
+      "centre": [
+        -66.82801564534505,
+        -29.15454037984212
+      ],
+      "oldBottom": 30.17150115966797,
+      "newBottom": 30.093048095703125,
+      "oldTop": 34.574501037597656,
+      "minimum": 30.173048373694957,
+      "originalGap": 0,
+      "embedDepth": 0.08000027799183229,
+      "extrema": 9
+    },
+    {
+      "tree": 24,
+      "centre": [
+        59.73617108662922,
+        11.004969596862793
+      ],
+      "oldBottom": 18.908113479614258,
+      "newBottom": 18.52094268798828,
+      "oldTop": 23.62931251525879,
+      "minimum": 18.600942622001945,
+      "originalGap": 0.3071708576123129,
+      "embedDepth": 0.07999993401366368,
+      "extrema": 9
+    },
+    {
+      "tree": 25,
+      "centre": [
+        63.08556811014811,
+        -8.823232650756836
+      ],
+      "oldBottom": 23.17301368713379,
+      "newBottom": 23.105491638183594,
+      "oldTop": 28.212413787841797,
+      "minimum": 23.18549173437532,
+      "originalGap": 0,
+      "embedDepth": 0.08000009619172488,
+      "extrema": 5
+    },
+    {
+      "tree": 26,
+      "centre": [
+        35.325782140096024,
+        -43.0708122253418
+      ],
+      "oldBottom": 20.826841354370117,
+      "newBottom": 20.646848678588867,
+      "oldTop": 26.18444061279297,
+      "minimum": 20.726849222378707,
+      "originalGap": 0.0999921319914101,
+      "embedDepth": 0.0800005437898399,
+      "extrema": 9
+    },
+    {
+      "tree": 27,
+      "centre": [
+        -1.3895525932312012,
+        -50.35996119181315
+      ],
+      "oldBottom": 23.244075775146484,
+      "newBottom": 23.08169937133789,
+      "oldTop": 26.056076049804688,
+      "minimum": 23.161700076251385,
+      "originalGap": 0.08237569889509899,
+      "embedDepth": 0.08000070491349476,
+      "extrema": 5
+    },
+    {
+      "tree": 28,
+      "centre": [
+        -65.6479886372884,
+        -1.4439221819241843
+      ],
+      "oldBottom": 25.113296508789062,
+      "newBottom": 25.059429168701172,
+      "oldTop": 28.24349594116211,
+      "minimum": 25.139430105345433,
+      "originalGap": 0,
+      "embedDepth": 0.08000093664426089,
+      "extrema": 5
+    },
+    {
+      "tree": 29,
+      "centre": [
+        -56.73677889506021,
+        -26.58587900797526
+      ],
+      "oldBottom": 23.71944236755371,
+      "newBottom": 23.5976505279541,
+      "oldTop": 27.167842864990234,
+      "minimum": 23.677650782391233,
+      "originalGap": 0.041791585162478384,
+      "embedDepth": 0.08000025443713099,
+      "extrema": 5
+    },
+    {
+      "tree": 30,
+      "centre": [
+        58.50764719645181,
+        18.484308878580727
+      ],
+      "oldBottom": 12.188139915466309,
+      "newBottom": 11.804827690124512,
+      "oldTop": 15.954740524291992,
+      "minimum": 11.884827317015151,
+      "originalGap": 0.3033125984511571,
+      "embedDepth": 0.07999962689063977,
+      "extrema": 5
+    },
+    {
+      "tree": 31,
+      "centre": [
+        61.478470484415695,
+        -11.280795256296793
+      ],
+      "oldBottom": 21.571508407592773,
+      "newBottom": 21.503297805786133,
+      "oldTop": 25.656307220458984,
+      "minimum": 21.58329804101959,
+      "originalGap": 0,
+      "embedDepth": 0.0800002352334559,
+      "extrema": 5
+    },
+    {
+      "tree": 32,
+      "centre": [
+        40.94300015767415,
+        -48.18496894836426
+      ],
+      "oldBottom": 28.21722984313965,
+      "newBottom": 28.059886932373047,
+      "oldTop": 32.62023162841797,
+      "minimum": 28.139887447304016,
+      "originalGap": 0.07734239583563252,
+      "embedDepth": 0.08000051493096905,
+      "extrema": 5
+    },
+    {
+      "tree": 33,
+      "centre": [
+        -9.066309769948322,
+        -44.49487113952637
+      ],
+      "oldBottom": 19.749282836914062,
+      "newBottom": 19.57801628112793,
+      "oldTop": 24.470481872558594,
+      "minimum": 19.65801595180286,
+      "originalGap": 0.09126688511120307,
+      "embedDepth": 0.07999967067492975,
+      "extrema": 5
+    },
+    {
+      "tree": 34,
+      "centre": [
+        -60.487914403279625,
+        4.884346882502238
+      ],
+      "oldBottom": 23.357770919799805,
+      "newBottom": 23.269777297973633,
+      "oldTop": 28.397171020507812,
+      "minimum": 23.349776428149198,
+      "originalGap": 0.007994491650606506,
+      "embedDepth": 0.07999913017556537,
+      "extrema": 9
+    },
+    {
+      "tree": 35,
+      "centre": [
+        -54.86766751607259,
+        -31.963909467061356
+      ],
+      "oldBottom": 23.203786849975586,
+      "newBottom": 23.09062957763672,
+      "oldTop": 28.561386108398438,
+      "minimum": 23.170629350281768,
+      "originalGap": 0.03315749969381798,
+      "embedDepth": 0.0799997726450492,
+      "extrema": 9
+    },
+    {
+      "tree": 36,
+      "centre": [
+        56.00003878275553,
+        16.816943486531578
+      ],
+      "oldBottom": 6.998632907867432,
+      "newBottom": 6.60301399230957,
+      "oldTop": 9.810632705688477,
+      "minimum": 6.683014104317408,
+      "originalGap": 0.3156188035500236,
+      "embedDepth": 0.08000011200783774,
+      "extrema": 5
+    },
+    {
+      "tree": 37,
+      "centre": [
+        66.22470601399739,
+        -5.009284496307373
+      ],
+      "oldBottom": 24.067577362060547,
+      "newBottom": 24.04290199279785,
+      "oldTop": 27.197776794433594,
+      "minimum": 24.122901391353782,
+      "originalGap": 0,
+      "embedDepth": 0.07999939855593041,
+      "extrema": 5
+    },
+    {
+      "tree": 38,
+      "centre": [
+        36.625298182169594,
+        -46.98036066691081
+      ],
+      "oldBottom": 25.030916213989258,
+      "newBottom": 24.898170471191406,
+      "oldTop": 28.47931671142578,
+      "minimum": 24.978170293300842,
+      "originalGap": 0.05274592068841599,
+      "embedDepth": 0.07999982210943557,
+      "extrema": 5
+    },
+    {
+      "tree": 39,
+      "centre": [
+        -9.017086346944174,
+        -54.682919820149735
+      ],
+      "oldBottom": 29.928020477294922,
+      "newBottom": 29.764455795288086,
+      "oldTop": 33.69462203979492,
+      "minimum": 29.84445550173405,
+      "originalGap": 0.08356497556087206,
+      "embedDepth": 0.07999970644596388,
+      "extrema": 5
+    },
+    {
+      "tree": 40,
+      "centre": [
+        -54.09847323099773,
+        3.8802860180536904
+      ],
+      "oldBottom": 19.095624923706055,
+      "newBottom": 18.979278564453125,
+      "oldTop": 23.1804256439209,
+      "minimum": 19.05927787911469,
+      "originalGap": 0.036347044591366284,
+      "embedDepth": 0.0799993146615634,
+      "extrema": 5
+    },
+    {
+      "tree": 41,
+      "centre": [
+        -65.93015925089519,
+        -27.498799641927086
+      ],
+      "oldBottom": 29.1077880859375,
+      "newBottom": 29.038145065307617,
+      "oldTop": 33.51078796386719,
+      "minimum": 29.1181448633979,
+      "originalGap": 0,
+      "embedDepth": 0.07999979809028446,
+      "extrema": 5
+    },
+    {
+      "tree": 42,
+      "centre": [
+        58.53160222371419,
+        14.380052407582602
+      ],
+      "oldBottom": 15.127307891845703,
+      "newBottom": 14.665797233581543,
+      "oldTop": 19.848506927490234,
+      "minimum": 14.745796855191958,
+      "originalGap": 0.38151103665374464,
+      "embedDepth": 0.07999962161041552,
+      "extrema": 5
+    },
+    {
+      "tree": 43,
+      "centre": [
+        65.36549504597981,
+        -12.32475185394287
+      ],
+      "oldBottom": 21.504087448120117,
+      "newBottom": 21.4273624420166,
+      "oldTop": 26.543487548828125,
+      "minimum": 21.507361515299028,
+      "originalGap": 0,
+      "embedDepth": 0.07999907328242628,
+      "extrema": 5
+    },
+    {
+      "tree": 44,
+      "centre": [
+        33.25170834859212,
+        -41.041976928710945
+      ],
+      "oldBottom": 18.41819953918457,
+      "newBottom": 18.23992347717285,
+      "oldTop": 23.775798797607422,
+      "minimum": 18.319923686712475,
+      "originalGap": 0.09827585247209569,
+      "embedDepth": 0.08000020953962306,
+      "extrema": 5
+    },
+    {
+      "tree": 45,
+      "centre": [
+        -1.3659074505170186,
+        -48.09597524007161
+      ],
+      "oldBottom": 21.15727424621582,
+      "newBottom": 21.02954864501953,
+      "oldTop": 23.96927261352539,
+      "minimum": 21.109547926176823,
+      "originalGap": 0.04772632003899702,
+      "embedDepth": 0.07999928115729205,
+      "extrema": 5
+    },
+    {
+      "tree": 46,
+      "centre": [
+        -62.57872327168782,
+        0.17155230728288492
+      ],
+      "oldBottom": 24.400907516479492,
+      "newBottom": 24.3478946685791,
+      "oldTop": 27.53110694885254,
+      "minimum": 24.42789455603559,
+      "originalGap": 0,
+      "embedDepth": 0.07999988745648778,
+      "extrema": 5
+    },
+    {
+      "tree": 47,
+      "centre": [
+        -62.050816218058266,
+        -30.836236317952473
+      ],
+      "oldBottom": 29.679706573486328,
+      "newBottom": 29.58875846862793,
+      "oldTop": 33.128108978271484,
+      "minimum": 29.668757967915244,
+      "originalGap": 0.010948605571083903,
+      "embedDepth": 0.07999949928731453,
+      "extrema": 13
+    },
+    {
+      "tree": 48,
+      "centre": [
+        59.72372182210286,
+        21.9834410349528
+      ],
+      "oldBottom": 15.83930492401123,
+      "newBottom": 15.515424728393555,
+      "oldTop": 19.605905532836914,
+      "minimum": 15.59542471659491,
+      "originalGap": 0.24388020741632133,
+      "embedDepth": 0.07999998820135445,
+      "extrema": 5
+    },
+    {
+      "tree": 49,
+      "centre": [
+        61.065735499064125,
+        -9.286658922831219
+      ],
+      "oldBottom": 22.404499053955078,
+      "newBottom": 22.328784942626953,
+      "oldTop": 26.489299774169922,
+      "minimum": 22.40878415957559,
+      "originalGap": 0,
+      "embedDepth": 0.07999921694863588,
+      "extrema": 9
+    },
+    {
+      "tree": 50,
+      "centre": [
+        39.32244427998861,
+        -47.968753814697266
+      ],
+      "oldBottom": 27.298770904541016,
+      "newBottom": 27.14142608642578,
+      "oldTop": 31.701770782470703,
+      "minimum": 27.22142696826147,
+      "originalGap": 0.07734393627954717,
+      "embedDepth": 0.08000088183568721,
+      "extrema": 5
+    },
+    {
+      "tree": 51,
+      "centre": [
+        -5.390948851903279,
+        -48.095681508382164
+      ],
+      "oldBottom": 22.22867774963379,
+      "newBottom": 22.103927612304688,
+      "oldTop": 26.94987678527832,
+      "minimum": 22.18392832029955,
+      "originalGap": 0.044749429334238755,
+      "embedDepth": 0.08000070799486281,
+      "extrema": 5
+    },
+    {
+      "tree": 52,
+      "centre": [
+        -64.56153233846028,
+        6.6267960866292315
+      ],
+      "oldBottom": 25.04498291015625,
+      "newBottom": 24.96921157836914,
+      "oldTop": 30.084383010864258,
+      "minimum": 25.04921248552273,
+      "originalGap": 0,
+      "embedDepth": 0.08000090715358965,
+      "extrema": 5
+    },
+    {
+      "tree": 53,
+      "centre": [
+        -53.00416628519695,
+        -32.67542902628581
+      ],
+      "oldBottom": 21.746044158935547,
+      "newBottom": 21.46541404724121,
+      "oldTop": 27.10364532470703,
+      "minimum": 21.54541339213514,
+      "originalGap": 0.20063076680040837,
+      "embedDepth": 0.07999934489392757,
+      "extrema": 9
+    },
+    {
+      "tree": 54,
+      "centre": [
+        56.572691599527985,
+        12.387120246887205
+      ],
+      "oldBottom": 11.282123565673828,
+      "newBottom": 10.88000202178955,
+      "oldTop": 14.094123840332031,
+      "minimum": 10.960002435069631,
+      "originalGap": 0.3221211306041969,
+      "embedDepth": 0.08000041328008045,
+      "extrema": 9
+    },
+    {
+      "tree": 55,
+      "centre": [
+        64.1592508951823,
+        -7.533598979314167
+      ],
+      "oldBottom": 23.912416458129883,
+      "newBottom": 23.860774993896484,
+      "oldTop": 27.04261589050293,
+      "minimum": 23.940775219666346,
+      "originalGap": 0,
+      "embedDepth": 0.08000022576986154,
+      "extrema": 9
+    }
+  ],
+  "limitations": [
+    "Independent serialized geometry/identity audit; actual root close/cluster/overview art acceptance still required.",
+    "Scenery remains outside flight bounds. No added tree collision or changed gameplay."
+  ]
+}

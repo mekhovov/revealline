@@ -5,6 +5,9 @@ on:
   pull_request:
     paths:
       - '.github/workflows/community-minio-recovery.yml'
+      - 'publishing/test-policy.json'
+      - 'publishing/test-policy.mjs'
+      - 'publishing/test-policy.test.mjs'
       - 'services/community/compose.minio-acceptance.yaml'
       - 'services/community/Dockerfile'
       - 'services/community/Dockerfile.minio-acceptance'
@@ -31,7 +34,18 @@ jobs:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 20.19.x
+          package-manager-cache: false
+
+      - name: Read explicit automated-suite policy
+        id: test_policy
+        run: node publishing/test-policy.mjs
+
       - name: Run isolated MinIO recovery acceptance
+        if: steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: >-
           docker compose -f compose.minio-acceptance.yaml up --build
@@ -39,7 +53,7 @@ jobs:
           minio-recovery-acceptance
 
       - name: Collect redacted receipt
-        if: success()
+        if: success() && steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: |
           mkdir -p minio-recovery-evidence
@@ -47,7 +61,7 @@ jobs:
             cp minio-recovery-acceptance:/data/recovery/. minio-recovery-evidence
 
       - name: Upload redacted receipt
-        if: success()
+        if: success() && steps.test_policy.outputs.runTests == 'true'
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: community-minio-recovery-receipt
@@ -56,13 +70,13 @@ jobs:
           retention-days: 14
 
       - name: Show acceptance service logs on failure
-        if: failure()
+        if: failure() && steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: >-
           docker compose -f compose.minio-acceptance.yaml logs --no-color
           recovery-database-init minio minio-recovery-acceptance
 
       - name: Remove acceptance containers and volumes
-        if: always()
+        if: always() && steps.test_policy.outputs.runTests == 'true'
         working-directory: services/community
         run: docker compose -f compose.minio-acceptance.yaml down --volumes --remove-orphans

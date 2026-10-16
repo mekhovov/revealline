@@ -1,0 +1,327 @@
+{
+  "method": "PCM file inspection; not listening or mixed-output qualification",
+  "assets": [
+    {
+      "file": "contact-metal-1.wav",
+      "seconds": 0.217125,
+      "peak": 0.649078369140625,
+      "rms": 0.08869123447344825,
+      "boundaryStep": 3.0517578125e-05
+    },
+    {
+      "file": "cancel.wav",
+      "seconds": 0.061,
+      "peak": 0.644683837890625,
+      "rms": 0.060570925961168594,
+      "boundaryStep": 0.013702392578125
+    },
+    {
+      "file": "win.wav",
+      "seconds": 1.35,
+      "peak": 0.10009765625,
+      "rms": 0.015649685489786735,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "impact.wav",
+      "seconds": 0.26,
+      "peak": 0.649932861328125,
+      "rms": 0.13005652407347906,
+      "boundaryStep": 0.00018310546875
+    },
+    {
+      "file": "wings.wav",
+      "seconds": 1.0,
+      "peak": 0.129241943359375,
+      "rms": 0.034203296482320344,
+      "boundaryStep": 0.000457763671875
+    },
+    {
+      "file": "interference.wav",
+      "seconds": 0.35,
+      "peak": 0.6500244140625,
+      "rms": 0.34799402061213563,
+      "boundaryStep": 0.043212890625
+    },
+    {
+      "file": "contact-metal-2.wav",
+      "seconds": 0.217125,
+      "peak": 0.6494140625,
+      "rms": 0.07865834308885848,
+      "boundaryStep": 3.0517578125e-05
+    },
+    {
+      "file": "deploy.wav",
+      "seconds": 0.45,
+      "peak": 0.65045166015625,
+      "rms": 0.28388053683011893,
+      "boundaryStep": 0.0078125
+    },
+    {
+      "file": "respawn.wav",
+      "seconds": 0.45,
+      "peak": 0.097900390625,
+      "rms": 0.021252499149145954,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "esc-start.wav",
+      "seconds": 0.785,
+      "peak": 0.14276123046875,
+      "rms": 0.07328582438510606,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "contact-glass.wav",
+      "seconds": 0.23075,
+      "peak": 0.593109130859375,
+      "rms": 0.07142046983943548,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "loss.wav",
+      "seconds": 0.6,
+      "peak": 0.10076904296875,
+      "rms": 0.019428456226313676,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "contact-wood.wav",
+      "seconds": 0.217125,
+      "peak": 0.6292724609375,
+      "rms": 0.0639612614479164,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "motor.wav",
+      "seconds": 1.0,
+      "peak": 0.057586669921875,
+      "rms": 0.031339356673283296,
+      "boundaryStep": 0.00115966796875
+    },
+    {
+      "file": "contact-wood-1.wav",
+      "seconds": 0.217125,
+      "peak": 0.4150390625,
+      "rms": 0.04638099664447241,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "pickup.wav",
+      "seconds": 0.25828125,
+      "peak": 0.650909423828125,
+      "rms": 0.2770112800854384,
+      "boundaryStep": 0.331451416015625
+    },
+    {
+      "file": "warning.wav",
+      "seconds": 0.42,
+      "peak": 0.103759765625,
+      "rms": 0.01670784669895411,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "focus.wav",
+      "seconds": 0.045,
+      "peak": 0.158935546875,
+      "rms": 0.02037036422650184,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "neutralized.wav",
+      "seconds": 0.45,
+      "peak": 0.097412109375,
+      "rms": 0.018623315527306825,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "paper.wav",
+      "seconds": 0.13934375,
+      "peak": 0.656585693359375,
+      "rms": 0.20331292044667543,
+      "boundaryStep": 3.0517578125e-05
+    },
+    {
+      "file": "contact-wood-2.wav",
+      "seconds": 0.217125,
+      "peak": 0.6375732421875,
+      "rms": 0.06569656696546654,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "erosion.wav",
+      "seconds": 0.36,
+      "peak": 0.392578125,
+      "rms": 0.0605706833980414,
+      "boundaryStep": 0.001373291015625
+    },
+    {
+      "file": "closure.wav",
+      "seconds": 0.09953125,
+      "peak": 0.58642578125,
+      "rms": 0.0714456292931984,
+      "boundaryStep": 0.00103759765625
+    },
+    {
+      "file": "gate.wav",
+      "seconds": 0.528625,
+      "peak": 0.355621337890625,
+      "rms": 0.07576253504503798,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "retry.wav",
+      "seconds": 0.45,
+      "peak": 0.097412109375,
+      "rms": 0.020125088386305768,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "rotor.wav",
+      "seconds": 1.0,
+      "peak": 0.057373046875,
+      "rms": 0.03133946678190128,
+      "boundaryStep": 0.0008544921875
+    },
+    {
+      "file": "radio-armed-en.wav",
+      "seconds": 1.512,
+      "peak": 0.3150634765625,
+      "rms": 0.053216761114274286,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "reveal-large.wav",
+      "seconds": 0.65,
+      "peak": 0.098907470703125,
+      "rms": 0.019925862947210823,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "reveal-small.wav",
+      "seconds": 0.2,
+      "peak": 0.0938720703125,
+      "rms": 0.02284447712206208,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "wheels.wav",
+      "seconds": 1.0,
+      "peak": 0.057586669921875,
+      "rms": 0.03133934768935618,
+      "boundaryStep": 0.000579833984375
+    },
+    {
+      "file": "start.wav",
+      "seconds": 0.45,
+      "peak": 0.097900390625,
+      "rms": 0.019912415352318413,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "contact-glass-2.wav",
+      "seconds": 0.20671875,
+      "peak": 0.651947021484375,
+      "rms": 0.08735950342512405,
+      "boundaryStep": 6.103515625e-05
+    },
+    {
+      "file": "contact-glass-1.wav",
+      "seconds": 0.20671875,
+      "peak": 0.643798828125,
+      "rms": 0.07539599224116146,
+      "boundaryStep": 3.0517578125e-05
+    },
+    {
+      "file": "flow.wav",
+      "seconds": 1.0,
+      "peak": 0.13140869140625,
+      "rms": 0.03506888303847745,
+      "boundaryStep": 0.00274658203125
+    },
+    {
+      "file": "contact-soft.wav",
+      "seconds": 0.115125,
+      "peak": 0.649993896484375,
+      "rms": 0.13254395697457588,
+      "boundaryStep": 0.001007080078125
+    },
+    {
+      "file": "esc-retry.wav",
+      "seconds": 0.285,
+      "peak": 0.142425537109375,
+      "rms": 0.07010920646853745,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "confirm.wav",
+      "seconds": 0.28,
+      "peak": 0.64630126953125,
+      "rms": 0.21207147460946557,
+      "boundaryStep": 0.027099609375
+    },
+    {
+      "file": "contact-metal.wav",
+      "seconds": 0.217125,
+      "peak": 0.65087890625,
+      "rms": 0.09619808100914044,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "attack.wav",
+      "seconds": 0.24446875,
+      "peak": 0.41558837890625,
+      "rms": 0.06312663225650002,
+      "boundaryStep": 0.011871337890625
+    },
+    {
+      "file": "radio-armed-uk.wav",
+      "seconds": 2.2,
+      "peak": 0.5205078125,
+      "rms": 0.07636466155549705,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "contact-soft-1.wav",
+      "seconds": 0.18040625,
+      "peak": 0.642425537109375,
+      "rms": 0.1320888927510067,
+      "boundaryStep": 0.00164794921875
+    },
+    {
+      "file": "grain.wav",
+      "seconds": 1.0,
+      "peak": 0.13031005859375,
+      "rms": 0.034565805025820545,
+      "boundaryStep": 0.002227783203125
+    },
+    {
+      "file": "reactivated.wav",
+      "seconds": 0.45,
+      "peak": 0.100128173828125,
+      "rms": 0.01837050659204552,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "switch.wav",
+      "seconds": 0.217125,
+      "peak": 0.64166259765625,
+      "rms": 0.07535714084284453,
+      "boundaryStep": 0.0
+    },
+    {
+      "file": "contact-soft-2.wav",
+      "seconds": 0.1323125,
+      "peak": 0.649993896484375,
+      "rms": 0.13917903492079797,
+      "boundaryStep": 0.001983642578125
+    },
+    {
+      "file": "reveal-medium.wav",
+      "seconds": 0.4,
+      "peak": 0.097503662109375,
+      "rms": 0.02064666798616775,
+      "boundaryStep": 0.0
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "implementationCommit": "aa625deffb61b55bb61538638ac90d9eda5b4a0d",
+  "distributionSha256": "cb2e2c8281306259d9d5d1437f4f03082c8c9974ad283c9d41086ad514893daa",
+  "offlineBuildId": "662dc2aa0a572ebc714979ca411d4f79dc11ff1258b16441e53a78e4cb671b86",
+  "files": 1835,
+  "effectEntriesInCore": 57,
+  "cacheHashesMatch": true,
+  "nonHtmlEffectsMatchSource": true,
+  "htmlNote": "Build transforms license HTML as expected.",
+  "runtimeModulesMatchSource": [
+    "game/ui/feedback-director.mjs",
+    "game/ui/movement-profiles.mjs",
+    "game/audio/effects/bank.mjs"
+  ]
+}

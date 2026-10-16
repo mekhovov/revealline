@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Solar panel assemblies · frozen comparison</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 15px system-ui;
+      background: #0c1723;
+      color: #e5edf1;
+    }
+    body {
+      margin: 20px;
+      max-width: 1400px;
+    }
+    button,
+    select {
+      font: inherit;
+      padding: 10px;
+      margin: 6px;
+    }
+    .pair {
+      display: flex;
+      gap: 12px;
+      overflow: auto;
+    }
+    figure {
+      margin: 0;
+    }
+    figcaption {
+      padding: 8px;
+    }
+    .screen,
+    .screen canvas {
+      display: block;
+      width: 640px;
+      height: 360px;
+      background: #111;
+    }
+    textarea {
+      width: 100%;
+      height: 180px;
+      font: 11px monospace;
+    }
+    #status {
+      min-height: 24px;
+    }
+  </style>
+  <h1>Solar panel assemblies</h1>
+  <p>
+    Frozen before/after modules, actual flight renderers, static inspection poses. Solar uses its
+    actual procedural scene (no built-in GLB). The authored panel atlas adds no geometry, collision
+    surface or shadow caster. This fixture does not certify artistic acceptance, hardware FPS or a
+    flight demonstration.
+  </p>
+  <p id="provenance">Loading frozen inputs…</p>
+  <button id="run" disabled>Run panel assembly qualification</button>
+  <button id="preview" disabled>Show selected view</button>
+  <button id="order" disabled>Diagnose Courtyard construction order</button>
+  <button id="download" disabled>Download receipt</button>
+  <label
+    >Course
+    <select id="course">
+      <option>adventure-solar-farm-01</option>
+      <option>adventure-solar-farm-02</option>
+      <option>adventure-solar-farm-03</option>
+      <option>adventure-solar-farm-04</option>
+      <option>adventure-solar-farm-05</option>
+    </select></label
+  >
+  <label
+    >Finish
+    <select id="appearance">
+      <option value="authored">Authored</option>
+      <option value="pixel">Pixel</option>
+      <option value="industrial-workshop">Industrial Workshop</option>
+    </select></label
+  >
+  <label
+    >View
+    <select id="wall">
+      <option value="terrace">Top assembly · 7 m</option>
+      <option value="close">Upper cells close · 3 m (preview only)</option>
+      <option value="spire">Opaque underside · 3 m</option>
+      <option value="distant">Panel banks · distant (preview only)</option>
+    </select></label
+  >
+  <label
+    >Camera<select id="camera">
+      <option value="fpv">FPV</option>
+      <option value="chase">Chase</option>
+      <option value="overview">Overview</option>
+    </select></label
+  >
+  <label
+    >Quality<select id="quality">
+      <option>low</option>
+      <option selected>balanced</option>
+      <option>high</option>
+    </select></label
+  >
+  <p id="status">Preparing controls…</p>
+  <div class="pair">
+    <figure>
+      <figcaption>Before</figcaption>
+      <div class="screen" id="before"></div>
+    </figure>
+    <figure>
+      <figcaption>After</figcaption>
+      <div class="screen" id="after"></div>
+    </figure>
+  </div>
+  <p>
+    The bounded receipt keeps every check and per-view image hash/count, without raw pixel buffers.
+    Download the JSON or transfer it in validated chunks; never truncate the DOM text.
+  </p>
+  <textarea id="receipt" aria-label="Solar panel assemblies evidence" readonly></textarea>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      clone = structuredClone,
+      encode = JSON.stringify,
+      wait = () => new Promise(requestAnimationFrame),
+      sha = async (value) =>
+        [
+          ...new Uint8Array(
+            await crypto.subtle.digest(
+              'SHA-256',
+              typeof value === 'string' ? new TextEncoder().encode(value) : value,
+            ),
+          ),
+        ]
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+    let manifest,
+      modules,
+      owners = [],
+      receipt,
+      busy = false;
+    const errors = [];
+    addEventListener('error', (event) => errors.push(event.message));
+    addEventListener('unhandledrejection', (event) => errors.push(String(event.reason)));
+    const status = (text) => ($('status').textContent = text);
+    function publish() {
+      window.fpvSolarPanelReceipt = receipt;
+      $('receipt').value = encode(receipt);
+      $('download').disabled = !receipt;
+    }
+    function check(name, passed, details) {
+      receipt.checks.push({
+        name,
+        passed: !!passed,
+        ...(details === undefined ? {} : { details }),
+      });
+      publish();
+      if (!passed) throw Error(name);
+    }
+    async function verifyHashes() {
+      for (const [side, files] of Object.entries(manifest.files))
+        for (const [path, hash] of Object.entries(files)) {
+          const response = await fetch('./' + side + '/' + path, { cache: 'no-store' });
+          if (!response.ok || (await sha(await response.arrayBuffer())) !== hash)
+            throw Error('Frozen source mismatch: ' + side + '/' + path);
+        }
+      if (
+        (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+        manifest.harnessSha256
+      )
+        throw Error('Harness mismatch');
+    }
+    const catalogue = (i) => [
+      ...new Map(
+        [...modules[i].catalogue.WORLD_CATALOGUE, ...modules[i].catalogue.BEGINNER_CATALOGUE].map(
+          (r) => [r.id, r.course],
+        ),
+      ).values(),
+    ];
+    const course = (i, id) => {
+      const value = catalogue(i).find((c) => c.id === id);
+      if (!value) throw Error('Missing ' + id);
+      return value;
+    };
+    function createOwners() {
+      owners = modules.map((row) => {
+        const canvas = document.createElement('canvas');
+        $(row.side).replaceChildren(canvas);
+        let scene = null;
+        const prototype = row.THREE.Object3D.prototype,
+          add = prototype.add;
+        prototype.add = function (...objects) {
+          if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+            scene = this;
+          return add.apply(this, objects);
+        };
+        let runtime;
+        try {
+          runtime = row.assets.createFlightRenderer({
+            canvas,
+            window,
+            reducedMotion: true,
+            onContextLost: () => {
+              if (receipt && !receipt.disposing) receipt.contextLosses.push(row.side);
+            },
+          });
+        } finally {
+          prototype.add = add;
+        }
+        if (!runtime.available || !scene) {
+          runtime.dispose();
+          throw Error('Renderer unavailable: ' + row.side);
+        }
+        return {
+          ...row,
+          canvas,
+          runtime,
+          scene,
+          world: scene.children[0],
+          imported: scene.children[6],
+          gl: canvas.getContext('webgl2'),
+        };
+      });
+    }
+    function disposeOwners() {
+      if (receipt) receipt.disposing = true;
+      const results = owners.map((owner) => {
+        owner.runtime.dispose();
+        return { side: owner.side, resources: owner.runtime.resources() };
+      });
+      owners = [];
+      if (receipt) delete receipt.disposing;
+      return results;
+    }
+    async function load(id, quality, appearance = 'authored', orderedImport = false) {
+      for (let i = 0; i < owners.length; i++) {
+        const owner = owners[i],
+          c = clone(course(i, id));
+        if (appearance === 'pixel') c.world = { ...c.world, theme: 'pixel' };
+        owner.runtime.setPresentation({
+          collectionId: appearance === 'pixel' ? 'authored' : appearance,
+          revision: 'r1',
+        });
+        owner.runtime.setCourse(c, 'acro');
+        owner.runtime.setQuality(quality);
+        owner.runtime.setDrone('racer');
+        const glb = owner.assets.builtinWorldScene(c);
+        owner.glbHash = glb ? await sha(await glb.arrayBuffer()) : null;
+        if (glb) {
+          if (orderedImport) {
+            const { GLTFLoader } = await import(
+              './' +
+                owner.side +
+                '/optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js'
+            );
+            const originalParse = GLTFLoader.prototype.parse;
+            owner.importOrder = [];
+            GLTFLoader.prototype.parse = function (...args) {
+              this.register((parser) => ({
+                name: 'SOLAR_CONTROL_SOURCE_MATERIAL_ORDER',
+                async beforeRoot() {
+                  owner.expectedImportMaterials = (parser.json.materials ?? []).length;
+                  await parser.getDependencies('texture');
+                  for (let index = 0; index < (parser.json.materials ?? []).length; index++) {
+                    await parser.getDependency('material', index);
+                    owner.importOrder.push({
+                      index,
+                      name: parser.json.materials[index].name ?? '',
+                    });
+                  }
+                },
+              }));
+              return originalParse.apply(this, args);
+            };
+            try {
+              await owner.runtime.loadScene(glb);
+            } finally {
+              GLTFLoader.prototype.parse = originalParse;
+            }
+            owner.importHookRestored = GLTFLoader.prototype.parse === originalParse;
+          } else {
+            owner.importOrder = null;
+            await owner.runtime.loadScene(glb);
+          }
+          if (!owner.imported.children.length) throw Error('Actual GLB was not installed');
+        }
+        if ((await owner.runtime.prepare()) === false) throw Error('Shader preparation superseded');
+        owner.scene.updateMatrixWorld(true);
+      }
+    }
+    function observation(id, wall) {
+      const c = course(0, id),
+        m = modules[0],
+        flight = (
+          c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+        )({ course: c, mode: 'acro' }),
+        state = flight.snapshot();
+      flight.dispose?.();
+      if (c.environment === 'solar-farm') {
+        const poses = {
+            terrace: [
+              [-25, 7.5, 15],
+              [-25, 2.2, 10],
+            ],
+            close: [
+              [-25, 5.5, 10],
+              [-25, 2.2, 10],
+            ],
+            spire: [
+              [-25, 1.1, 4],
+              [-25, 1.8, 9],
+            ],
+            distant: [
+              [0, 10, 40],
+              [-25, 2.2, 10],
+            ],
+          },
+          [position, target] = poses[wall] ?? poses.terrace,
+          dx = target[0] - position[0],
+          dz = target[2] - position[2],
+          q = new m.THREE.Quaternion().setFromEuler(
+            new m.THREE.Euler(
+              Math.atan2(target[1] - position[1], Math.hypot(dx, dz)),
+              -Math.atan2(dx, -dz),
+              0,
+              'YXZ',
+            ),
+          );
+        state.position = Object.fromEntries(
+          ['x', 'y', 'z'].map((axis, i) => [axis, position[i] * 1000]),
+        );
+        state.orientation = q.toArray().map((n) => Math.round(n * 1e6));
+      }
+      state.ticks = 100;
+      return state;
+    }
+    function pixels(owner, state, camera) {
+      const original = encode(state);
+      owner.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+      const gl = owner.gl,
+        rgba = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
+      gl.readPixels(
+        0,
+        0,
+        gl.drawingBufferWidth,
+        gl.drawingBufferHeight,
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
+        rgba,
+      );
+      if (gl.getError() !== gl.NO_ERROR || encode(state) !== original)
+        throw Error('WebGL error or observer state mutation');
+      return { rgba, resources: owner.runtime.resources() };
+    }
+    async function pair(id, quality, appearance, camera, wall) {
+      await wait();
+      const state = observation(id, wall),
+        a = pixels(owners[0], state, camera),
+        b = pixels(owners[1], state, camera);
+      if (a.rgba.length !== b.rgba.length) throw Error('Pixel dimensions differ');
+      let changed = 0,
+        nonBlack = 0;
+      for (let i = 0; i < a.rgba.length; i += 4) {
+        if (
+          a.rgba[i] !== b.rgba[i] ||
+          a.rgba[i + 1] !== b.rgba[i + 1] ||
+          a.rgba[i + 2] !== b.rgba[i + 2]
+        )
+          changed++;
+        if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) nonBlack++;
+      }
+      return {
+        id,
+        quality,
+        appearance,
+        camera,
+        wall,
+        changedPixels: changed,
+        nonBlackPixels: nonBlack,
+        beforeHash: await sha(a.rgba),
+        afterHash: await sha(b.rgba),
+        drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+        triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+      };
+    }
+    const panelIds = Array.from({ length: 4 }, (_, row) =>
+      Array.from({ length: 4 }, (_, column) => `solar-panel-${row}-${column}`),
+    ).flat();
+    async function baseGeometry(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (!item.geometry) return;
+        result.push({
+          name: item.name,
+          matrix: item.matrixWorld.elements,
+          attributes: Object.fromEntries(
+            Object.entries(item.geometry.attributes)
+              .filter(([key]) => key !== 'uv' || !panelIds.includes(item.userData.collisionId))
+              .map(([key, value]) => [key, Array.from(value.array)]),
+          ),
+          index: item.geometry.index ? Array.from(item.geometry.index.array) : null,
+          instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+          cast: item.castShadow,
+          receive: item.receiveShadow,
+          visible: item.visible,
+        });
+      });
+      return sha(encode(result));
+    }
+    async function controlSnapshot(owner) {
+      const geometryCache = new Map(),
+        textureCache = new Map(),
+        materials = [],
+        meshes = [];
+      const materialSet = new Set();
+      owner.scene.traverse((item) => {
+        for (const material of Array.isArray(item.material)
+          ? item.material
+          : item.material
+            ? [item.material]
+            : [])
+          materialSet.add(material);
+      });
+      const ranks = new Map(
+        [...materialSet].sort((a, b) => a.id - b.id).map((material, index) => [material, index]),
+      );
+      async function textureRecord(texture) {
+        if (!texture) return null;
+        if (textureCache.has(texture)) return textureCache.get(texture);
+        const image = texture.image;
+        let pixels = null;
+        if (image?.data) pixels = image.data;
+        else if (image?.width && image?.height) {
+          const canvas = document.createElement('canvas');
+          canvas.width = image.width;
+          canvas.height = image.height;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(image, 0, 0);
+          pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        }
+        const record = {
+          name: texture.name,
+          width: image?.width,
+          height: image?.height,
+          sha256: pixels ? await sha(pixels) : null,
+          wrap: [texture.wrapS, texture.wrapT],
+          filters: [texture.magFilter, texture.minFilter, texture.anisotropy],
+          colorSpace: texture.colorSpace,
+          flipY: texture.flipY,
+          matrix: texture.matrix.elements,
+        };
+        textureCache.set(texture, record);
+        return record;
+      }
+      for (const material of materialSet) {
+        const maps = {};
+        for (const key of [
+          'map',
+          'normalMap',
+          'roughnessMap',
+          'metalnessMap',
+          'aoMap',
+          'emissiveMap',
+          'alphaMap',
+        ])
+          maps[key] = await textureRecord(material[key]);
+        materials.push({
+          name: material.name,
+          type: material.type,
+          color: material.color?.toArray(),
+          emissive: material.emissive?.toArray(),
+          roughness: material.roughness,
+          metalness: material.metalness,
+          opacity: material.opacity,
+          transparent: material.transparent,
+          alphaTest: material.alphaTest,
+          side: material.side,
+          depthWrite: material.depthWrite,
+          depthTest: material.depthTest,
+          polygonOffset: [
+            material.polygonOffset,
+            material.polygonOffsetFactor,
+            material.polygonOffsetUnits,
+          ],
+          vertexColors: material.vertexColors,
+          normalScale: material.normalScale?.toArray(),
+          maps,
+        });
+      }
+      const nodes = [];
+      owner.scene.traverse((item) => {
+        if (item.geometry) nodes.push(item);
+      });
+      for (const item of nodes) {
+        const geometry = item.geometry;
+        if (!geometryCache.has(geometry))
+          geometryCache.set(
+            geometry,
+            await sha(
+              encode({
+                attributes: Object.fromEntries(
+                  Object.entries(geometry.attributes).map(([name, value]) => [
+                    name,
+                    {
+                      itemSize: value.itemSize,
+                      normalized: value.normalized,
+                      array: Array.from(value.array),
+                    },
+                  ]),
+                ),
+                index: geometry.index ? Array.from(geometry.index.array) : null,
+                groups: geometry.groups,
+              }),
+            ),
+          );
+        const values = Array.isArray(item.material) ? item.material : [item.material];
+        meshes.push({
+          name: item.name,
+          geometry: geometryCache.get(geometry),
+          matrix: item.matrixWorld.elements,
+          instances: item.instanceMatrix ? Array.from(item.instanceMatrix.array) : null,
+          materials: values.map((value) => [...materialSet].indexOf(value)),
+          materialIdRanks: values.map((value) => ranks.get(value)),
+          visible: item.visible,
+          castShadow: item.castShadow,
+          receiveShadow: item.receiveShadow,
+          renderOrder: item.renderOrder,
+        });
+      }
+      return {
+        solarDetails: details(owner).length,
+        glbHash: owner.glbHash,
+        worldGeometrySha256: await baseGeometry(owner),
+        materials,
+        meshes,
+        draws: owner.controlDraws,
+        resources: owner.runtime.resources(),
+      };
+    }
+    function traceControl(owner) {
+      owner.controlDraws = [];
+      const restore = [];
+      owner.scene.traverse((item) => {
+        if (!item.geometry) return;
+        const before = item.onBeforeRender;
+        item.onBeforeRender = function (...args) {
+          const material = args[4];
+          owner.controlDraws.push({
+            name: this.name,
+            matrix: this.matrixWorld.elements,
+            materialName: material.name,
+            color: material.color?.toArray(),
+            materialId: material.id,
+            group: args[5],
+          });
+          return before.apply(this, args);
+        };
+        restore.push(() => {
+          item.onBeforeRender = before;
+        });
+      });
+      return () => restore.forEach((fn) => fn());
+    }
+    function details(owner) {
+      const result = [];
+      owner.world.traverse((item) => {
+        if (panelIds.includes(item.userData.collisionId)) result.push(item);
+      });
+      return result;
+    }
+    function resourceKey(owner) {
+      const r = owner.runtime.resources();
+      return {
+        registered: r.registered,
+        geometries: r.renderer.geometries,
+        textures: r.renderer.textures,
+      };
+    }
+    async function run() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = $('preview').disabled = true;
+      disposeOwners();
+      receipt = {
+        format: 'FPVSolarPanelBrowserEvidence.v1',
+        createdAt: new Date().toISOString(),
+        baseline: manifest.baseline,
+        candidate: manifest.candidate,
+        sourceFiles: manifest.files,
+        checks: [],
+        samples: [],
+        resourceCycles: [],
+        contextLosses: [],
+        limitations: [
+          'Actual WebGL static observer evidence; not new flight proofs, hardware performance or human art acceptance.',
+          'Every image comparison retains hashes/counts, not raw pixel buffers.',
+          'Coast and Solar are actual procedural fallback scenes, with no built-in GLB; Courtyard control explicitly loads its built-in GLB.',
+          'Courtyard control preloads existing encoded textures and material dependencies in GLTF source order equally on both sides, preserving production material content and draw policy. Temporary loader hooks restore immediately after import. This constrained comparison is not a claim of unconstrained Courtyard raster determinism.',
+        ],
+      };
+      try {
+        await verifyHashes();
+        check('Frozen source and harness hashes match', true);
+        createOwners();
+        const solarCourses = catalogue(0).filter((c) => c.environment === 'solar-farm');
+        check(
+          'All five Solar courses unchanged',
+          solarCourses.length === 5 &&
+            solarCourses.every((c) => encode(c) === encode(course(1, c.id))),
+        );
+        const representative = [
+          ...new Map(solarCourses.map((c) => [encode(c.bounds), c.id])).values(),
+        ];
+        check('One canonical arena represented', representative.length === 1);
+        for (const id of representative)
+          for (const quality of ['low', 'balanced', 'high'])
+            for (const appearance of ['authored', 'pixel', 'industrial-workshop']) {
+              status(id + ' · ' + quality + ' · ' + appearance);
+              await load(id, quality, appearance);
+              check(
+                id +
+                  '/' +
+                  quality +
+                  '/' +
+                  appearance +
+                  ' existing geometry/transforms/shadows and non-panel UVs exact',
+                (await baseGeometry(owners[0])) === (await baseGeometry(owners[1])),
+              );
+              const panels = details(owners[1]);
+              check(
+                id + '/' + quality + '/' + appearance + ' sixteen original opaque panel meshes',
+                panels.length === 16 &&
+                  panels.every(
+                    (m) =>
+                      m.castShadow &&
+                      m.receiveShadow &&
+                      !m.material.transparent &&
+                      m.material.opacity === 1,
+                  ),
+              );
+              check(
+                id + '/' + quality + '/' + appearance + ' authored-only surface recipe',
+                panels.every(
+                  (m) =>
+                    (m.material.map?.userData.surface?.kind === 'solar-array') ===
+                    (appearance === 'authored'),
+                ),
+              );
+              const oldUV = details(owners[0]).map((m) =>
+                  Array.from(m.geometry.attributes.uv.array),
+                ),
+                newUV = panels.map((m) => Array.from(m.geometry.attributes.uv.array));
+              check(
+                id + '/' + quality + '/' + appearance + ' only authored panel UVs change',
+                (encode(oldUV) === encode(newUV)) === (appearance !== 'authored'),
+              );
+              check(
+                id + '/' + quality + '/' + appearance + ' unchanged registered ownership',
+                encode(owners[0].runtime.resources().registered) ===
+                  encode(owners[1].runtime.resources().registered),
+              );
+              check(
+                id + '/' + quality + '/' + appearance + ' top-only PV atlas and opaque backing',
+                appearance !== 'authored' ||
+                  panels.every((mesh) => {
+                    const uv = mesh.geometry.attributes.uv,
+                      normal = mesh.geometry.attributes.normal;
+                    return (
+                      mesh.material.roughness === 0.8 &&
+                      mesh.material.metalness === 0.35 &&
+                      Array.from(
+                        { length: uv.count },
+                        (_, i) =>
+                          uv.getX(i) >= 0.014 &&
+                          uv.getX(i) <= 0.986 &&
+                          (normal.getY(i) > 0.5
+                            ? uv.getY(i) >= 0.169 && uv.getY(i) <= 0.981
+                            : uv.getY(i) >= 0.019 && uv.getY(i) <= 0.121),
+                      ).every(Boolean)
+                    );
+                  }),
+              );
+              check(
+                id + '/' + quality + '/' + appearance + ' actual fallback path',
+                owners.every(
+                  (o) =>
+                    o.glbHash === null &&
+                    o.imported.children.length === 0 &&
+                    o.world.getObjectByName('procedural-scenery-fallback')?.visible,
+                ),
+              );
+              for (const camera of ['fpv', 'chase', 'overview'])
+                for (const wall of ['terrace', 'spire']) {
+                  const sample = await pair(id, quality, appearance, camera, wall);
+                  receipt.samples.push(sample);
+                  check(
+                    id + '/' + quality + '/' + appearance + '/' + camera + '/' + wall + ' rendered',
+                    sample.nonBlackPixels > 100 &&
+                      sample.drawCalls.every((n) => n > 0) &&
+                      sample.drawCalls[0] === sample.drawCalls[1] &&
+                      sample.triangles[0] === sample.triangles[1] &&
+                      (appearance !== 'authored'
+                        ? sample.changedPixels === 0
+                        : camera !== 'fpv' || sample.changedPixels > 20),
+                  );
+                }
+            }
+        for (const id of solarCourses.map((c) => c.id)) {
+          await load(id, 'balanced');
+          check(id + ' exact canonical-panel scope', details(owners[1]).length === 16);
+        }
+        for (const id of ['adventure-coast-01', 'courtyard-01']) {
+          await load(id, 'balanced', 'authored', id === 'courtyard-01');
+          const restore = owners.map(traceControl);
+          const control = await pair(id, 'balanced', 'authored', 'overview', 'terrace');
+          restore.forEach((fn) => fn());
+          receipt.samples.push(control);
+          receipt.controlDiagnostics ??= {};
+          const snapshots = await Promise.all(owners.map(controlSnapshot)),
+            semantic = ({ draws, resources, ...data }) => data;
+          check(
+            id + ' full geometry/material/decoded texture semantics exact',
+            encode(semantic(snapshots[0])) === encode(semantic(snapshots[1])),
+          );
+          receipt.controlDiagnostics[id] = await Promise.all(
+            snapshots.map(async (snapshot) => ({
+              glbHash: snapshot.glbHash,
+              semanticSha256: await sha(encode(semantic(snapshot))),
+              materials: snapshot.materials.length,
+              meshes: snapshot.meshes.length,
+              drawSubmissions: snapshot.draws.length,
+              resources: snapshot.resources,
+            })),
+          );
+          if (id === 'courtyard-01')
+            check(
+              'Courtyard source material order equal and loader hooks restored',
+              owners.every(
+                (o) =>
+                  o.importHookRestored &&
+                  o.expectedImportMaterials > 0 &&
+                  o.importOrder.length === o.expectedImportMaterials &&
+                  o.importOrder.every((row, i) => row.index === i),
+              ) && encode(owners[0].importOrder) === encode(owners[1].importOrder),
+              owners.map((o) => o.importOrder),
+            );
+          publish();
+          check(
+            id + ' no solar-farm panel artwork and exact pixels',
+            details(owners[1]).length === 0 && control.changedPixels === 0,
+            {
+              solarDetails: owners.map((o) => details(o).length),
+              changedPixels: control.changedPixels,
+            },
+          );
+          check(
+            id + ' correct imported/fallback ownership',
+            owners.every((o) =>
+              id === 'courtyard-01'
+                ? o.glbHash !== null && o.imported.children.length > 0
+                : o.glbHash === null && o.imported.children.length === 0,
+            ),
+          );
+          if (id === 'courtyard-01')
+            check('Actual control GLB bytes exact', owners[0].glbHash === owners[1].glbHash);
+        }
+        for (let cycle = 0; cycle < 3; cycle++) {
+          await load('adventure-solar-farm-01', 'balanced');
+          await pair('adventure-solar-farm-01', 'balanced', 'authored', 'fpv', 'terrace');
+          receipt.resourceCycles.push(owners.map(resourceKey));
+        }
+        check(
+          'Three repeated loads have stable registered/GPU resources',
+          receipt.resourceCycles.every((r) => encode(r) === encode(receipt.resourceCycles[0])),
+        );
+        const final = disposeOwners();
+        receipt.finalResources = final;
+        check(
+          'Final disposal releases all registered resources',
+          final.every((r) => Object.values(r.resources.registered).every((n) => n === 0)),
+        );
+        check(
+          'No unexpected context loss or application error',
+          receipt.contextLosses.length === 0 && errors.length === 0,
+          errors,
+        );
+        receipt.passed = true;
+        publish();
+        status(
+          'PASS · ' +
+            receipt.checks.length +
+            ' checks · ' +
+            receipt.samples.length +
+            ' image pairs',
+        );
+        createOwners();
+        await load('adventure-solar-farm-01', 'balanced');
+        await pair('adventure-solar-farm-01', 'balanced', 'authored', 'fpv', 'terrace');
+      } catch (error) {
+        receipt.passed = false;
+        receipt.error = String(error.stack ?? error);
+        publish();
+        status('FAIL · ' + error.message);
+      } finally {
+        busy = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    async function diagnoseOrder() {
+      if (busy) return;
+      busy = true;
+      disposeOwners();
+      receipt = {
+        format: 'FPVSolarCourtyardOrderDiagnostic.v1',
+        createdAt: new Date().toISOString(),
+        baseline: manifest.baseline,
+        candidate: manifest.candidate,
+        sourceFiles: manifest.files,
+        checks: [],
+        samples: [],
+        contextLosses: [],
+        limitations: [
+          'Manual controlled-construction diagnostic only; no production renderer/material/geometry changes. Original unmodified asynchronous-load pixel mismatches remain preserved.',
+        ],
+      };
+      try {
+        await verifyHashes();
+        createOwners();
+        const snapshots = [];
+        for (const ordered of [false, true]) {
+          status(
+            ordered
+              ? 'Courtyard source-order material construction'
+              : 'Courtyard unmodified asynchronous material construction',
+          );
+          await load('courtyard-01', 'balanced', 'authored', ordered);
+          const restore = owners.map(traceControl);
+          const sample = await pair('courtyard-01', 'balanced', 'authored', 'overview', 'terrace');
+          restore.forEach((fn) => fn());
+          receipt.samples.push({ ...sample, orderedImport: ordered });
+          snapshots.push(await Promise.all(owners.map(controlSnapshot)));
+        }
+        const semantic = (snapshot) => ({
+          glbHash: snapshot.glbHash,
+          solarDetails: snapshot.solarDetails,
+          world: snapshot.worldGeometrySha256,
+          materials: snapshot.materials,
+          meshes: snapshot.meshes.map(({ materialIdRanks, ...mesh }) => mesh),
+        });
+        receipt.controlDiagnostics = {
+          uncontrolled: snapshots[0],
+          sourceOrdered: snapshots[1],
+          importOrder: owners.map((o) => o.importOrder),
+        };
+        for (let side = 0; side < 2; side++)
+          check(
+            'Side ' +
+              side +
+              ' ordering constraint preserves every mesh/material/decoded texture/GLB/world byte',
+            encode(semantic(snapshots[0][side])) === encode(semantic(snapshots[1][side])),
+          );
+        check(
+          'Both source-ordered scenes and relative material ranks are exact',
+          encode(snapshots[1][0].materials) === encode(snapshots[1][1].materials) &&
+            encode(snapshots[1][0].meshes) === encode(snapshots[1][1].meshes),
+        );
+        check(
+          'GLTF source order equal and temporary loader hooks restored',
+          owners.every((o) => o.importHookRestored) &&
+            encode(owners[0].importOrder) === encode(owners[1].importOrder),
+        );
+        check(
+          'Source-ordered actual render has zero differing pixels',
+          receipt.samples[1].changedPixels === 0,
+          receipt.samples[1],
+        );
+        receipt.passed = true;
+        publish();
+        status('PASS · controlled Courtyard import diagnostic');
+      } catch (error) {
+        receipt.passed = false;
+        receipt.error = String(error.stack ?? error);
+        publish();
+        status('FAIL · ' + error.message);
+      } finally {
+        busy = false;
+      }
+    }
+    $('order').onclick = diagnoseOrder;
+    $('run').onclick = run;
+    $('preview').onclick = async () => {
+      try {
+        if (!owners.length) createOwners();
+        await load($('course').value, $('quality').value, $('appearance').value);
+        await pair(
+          $('course').value,
+          $('quality').value,
+          $('appearance').value,
+          $('camera').value,
+          $('wall').value,
+        );
+        status('Selected static view');
+      } catch (error) {
+        status(error.message);
+      }
+    };
+    $('download').onclick = () => {
+      const url = URL.createObjectURL(
+          new Blob([JSON.stringify(receipt, null, 2) + '\n'], { type: 'application/json' }),
+        ),
+        a = document.createElement('a');
+      a.href = url;
+      a.download = 'fpv-solar-panel-browser.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+    try {
+      manifest = await (await fetch('./fixture-manifest.json')).json();
+      if (manifest.format !== 'FPVSolarPanelFixture.v1') throw Error('Unknown fixture');
+      modules = await Promise.all(
+        ['before', 'after'].map(async (side) => {
+          const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href),
+            [assets, catalogue, model, worldModel, THREE] = await Promise.all(
+              [
+                'world-assets.mjs',
+                'world-catalogue.mjs',
+                'model.mjs',
+                'world-model.mjs',
+                'vendor/three.module.js',
+              ].map((p) => import(new URL(p, base))),
+            );
+          await worldModel.initWorldRuntime();
+          return { side, assets, catalogue, model, worldModel, THREE };
+        }),
+      );
+      $('provenance').textContent =
+        'Baseline ' +
+        manifest.baseline +
+        ' · Candidate ' +
+        (manifest.candidate === '.' ? 'working tree' : manifest.candidate) +
+        ' · Runtime SHA-256 ' +
+        manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+      $('order').disabled = $('run').disabled = $('preview').disabled = false;
+      status('Ready. Qualification has not run.');
+    } catch (error) {
+      status('Preparation failed: ' + error.message);
+    }
+  </script>
+</html>

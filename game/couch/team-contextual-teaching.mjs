@@ -108,7 +108,11 @@ export function createTeamContextualTeaching({
             changed = true;
           }
         }
-        if (event?.type === 'support.pulse' && !state.completed.has('support')) {
+        if (
+          event?.type === 'support.pulse' &&
+          (event.slowedEnemies?.length > 0 || event.interceptedImpacts?.length > 0) &&
+          !state.completed.has('support')
+        ) {
           state.completed.add('support');
           changed = true;
         }

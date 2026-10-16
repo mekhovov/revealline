@@ -5,6 +5,20 @@ import { verifyPresentationDependencies } from '../game/presentation/dependencie
 
 // Original committed bytes, not a reserialization of the revision ledger.
 // New retained revisions require explicit inputs and separately reviewed policy.
+export const FIELD_KIT_RETAINED_RUNTIME_38 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3.json",
+  sha256: "e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3",
+  bytes: 808787,
+  commit: '432110b51c570b838cdae390790b67dfa76f0785',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_RUNTIME_50 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae.json",
+  sha256: "666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae",
+  bytes: 818280,
+  commit: 'e9434d03feb30bf8767051b2832a4ab987b2fa41',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
 export const FIELD_KIT_RETAINED_RUNTIME = Object.freeze({
   path: "authoring/library/fpv-field-kit/retained/runtime.8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501.json",
   sha256: "8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501",
@@ -33,7 +47,65 @@ export const FIELD_KIT_RETAINED_RUNTIME_62 = Object.freeze({
   commit: '2e64c130d219dfece5134ba9119b85a5bf34904d',
   originalPath: 'game/presentation/compiled/runtime.json',
 });
+// Independent release/candidate lineages use exact runtime hashes. Numeric
+// theme revisions alone cannot distinguish their immutable promises.
+export const FIELD_KIT_RETAINED_DISCOVERY101 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.ebeb38f511c01b48daa84eb824e1521b43bddbfb0e16345c952b7b822b19db5b.json",
+  sha256: "ebeb38f511c01b48daa84eb824e1521b43bddbfb0e16345c952b7b822b19db5b",
+  bytes: 1005846,
+  commit: 'd541946f4e9d49e97cfcb2b0ce4054f3dac7d2cf',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_DISCOVERY102 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.911a111fb2cfd2fdbae9da95ae13602800cfdccb8a3b7e3545ffce61579b38f5.json",
+  sha256: "911a111fb2cfd2fdbae9da95ae13602800cfdccb8a3b7e3545ffce61579b38f5",
+  bytes: 1072278,
+  commit: 'db8e45e0e4dcfb9c57a4d942c424ae04ee147b16',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_DISCOVERY103 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.3074a0964b6f451500b7f104c62d17d876ee2058488a830365ad5ed23ff3cfaa.json",
+  sha256: "3074a0964b6f451500b7f104c62d17d876ee2058488a830365ad5ed23ff3cfaa",
+  bytes: 1077814,
+  commit: 'db4b2c8e89f3c9a3c0b67d6e7e5f64f08ea3c6ef',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+export const FIELD_KIT_RETAINED_MAIN101 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0.json",
+  sha256: "a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0",
+  bytes: 1046822,
+  commit: '321408a3cfd75ae230d760f39fb692503652601a',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+// The pre-radio canonical 102 is a separate promise from discovery 102.
+export const FIELD_KIT_RETAINED_RADIO_PREDECESSOR102 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.649a6f8b94cac1fd2f81e05c5647e0e85e16cd7858c592ae5bdbdc85481b384f.json",
+  sha256: "649a6f8b94cac1fd2f81e05c5647e0e85e16cd7858c592ae5bdbdc85481b384f",
+  bytes: 1073942,
+  commit: '280321ca77eef81d1bce9de8c23247548ae9dd03',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+
+// The accepted radio canonical103 remains distinct from discovery103.
+export const FIELD_KIT_RETAINED_NATIVE_PREDECESSOR103 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589.json",
+  sha256: "7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589",
+  bytes: 1075486,
+  commit: '1b99d2ea791074ff79f6be9b8176594b0733874f',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+
+// The published 335-slot canonical104 is an exact byte authority, not an
+// inferred reconstruction from a newer ledger or a production-art approval.
+export const FIELD_KIT_RETAINED_CANONICAL104 = Object.freeze({
+  path: "authoring/library/fpv-field-kit/retained/runtime.087e920b6c20d5f8adb64b4824a954c998799a18becd5dbe1030fd007de69ce8.json",
+  sha256: "087e920b6c20d5f8adb64b4824a954c998799a18becd5dbe1030fd007de69ce8",
+  bytes: 1089502,
+  commit: 'c5e22bc860e9021d42ce326761d0f4decba3fc40',
+  blob: 'c27b56d8195b0675d2657dbdb7f284b7955571f2',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
 
 /** Construct explicit compiler history from immutable authoring input and the
  * ledger's hash-addressed originals. Never consult the current output directory. */
@@ -86,15 +158,35 @@ async function readPinnedOutput({ read, assets }, pin, revision) {
   return files;
 }
 
-/** Preserve exact committed54, accepted58 and retained60/62 runtime manifests and their complete lazy
+/** Preserve published38/50 imports, committed54, accepted58, retained60/62, both101–103 lineages and canonical104
+ * by manifest identity, with their complete lazy
  * dependencies. New ledger revisions never authorize implicit output-directory IO. */
 export async function readFieldKitRetainedOutput(options) {
-  const legacy = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54);
+  const historical38 = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_38, 38);
+  const historical50 = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_50, 50);
+  const legacy = await retainPresentationOutput(
+    await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME, 54),
+    await retainPresentationOutput(historical50, historical38),
+  );
   const accepted = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_58, 58);
   const held = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_60, 60);
   const actors = await readPinnedOutput(options, FIELD_KIT_RETAINED_RUNTIME_62, 62);
-  return retainPresentationOutput(
+  let previous = await retainPresentationOutput(
     actors,
     await retainPresentationOutput(held, await retainPresentationOutput(accepted, legacy)),
   );
+  for (const [pin, revision] of [
+    [FIELD_KIT_RETAINED_DISCOVERY101, 101],
+    [FIELD_KIT_RETAINED_DISCOVERY102, 102],
+    [FIELD_KIT_RETAINED_DISCOVERY103, 103],
+    [FIELD_KIT_RETAINED_MAIN101, 101],
+    [FIELD_KIT_RETAINED_RADIO_PREDECESSOR102, 102],
+    [FIELD_KIT_RETAINED_NATIVE_PREDECESSOR103, 103],
+    [FIELD_KIT_RETAINED_CANONICAL104, 104],
+  ])
+    previous = await retainPresentationOutput(
+      await readPinnedOutput(options, pin, revision),
+      previous,
+    );
+  return previous;
 }

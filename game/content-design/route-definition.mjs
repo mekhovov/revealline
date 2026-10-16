@@ -8,7 +8,12 @@ import { WHOLE_JOURNEY_CORE_PACK_IDS } from './whole-journey-order.mjs';
 export function createAuthoredJourneyRouteDefinition(
   id,
   {
+    createDuelExpansionCandidates,
+    createPursuitPilotCandidates,
+    createPursuitCampaignCandidates,
     createOpeningCandidates,
+    createHuntTrainingCandidates,
+    createSnakeHuntCandidates,
     createBorderCandidates,
     createWholeJourneyCandidates,
     createWholeSpatialCandidates,
@@ -45,11 +50,116 @@ export function createAuthoredJourneyRouteDefinition(
     createBorderFrontierPocketCandidates,
     createCulturalTimedBonusPressureCandidates,
     createCulturalPressureTriptychCandidates,
+    createCurrentRemixPressureCandidates,
+    createContestedWallTriptychCandidates,
+    createPressureCorridorTriptychCandidates,
+    createCoolingLoopErosionCandidates,
     createUkrainianOrnamentJourney,
     createUkrainianOrnamentAtlasJourney,
   },
 ) {
   if (!isAuthoredJourneyRouteId(id)) return null;
+  if (id === 'duel-expedition-v1') {
+    const source = createDuelExpansionCandidates();
+    return freezeDesign({
+      id,
+      label: 'Duel Expeditions',
+      sessionKey: 'revealline.suspended.duel-expedition.v1',
+      profileKey: 'duel-expedition-v1',
+      source,
+      corePackIds: source.packs.map((pack) => pack.id),
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  }
+  if (id === 'pursuit-campaigns-v1')
+    return freezeDesign({
+      id,
+      label: 'Pursuit routes · four prototype chapters',
+      sessionKey: 'revealline.suspended.journey-pursuit-campaigns.v1',
+      profileKey: 'journey-pursuit-campaigns-v1',
+      source: createPursuitCampaignCandidates(),
+      corePackIds: ['journey-pursuit-solo-campaigns'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'pursuit-pilots-v1')
+    return freezeDesign({
+      id,
+      label: 'Pursuit routes · prototype',
+      sessionKey: 'revealline.suspended.journey-pursuit-pilots.v1',
+      profileKey: 'journey-pursuit-pilots-v1',
+      source: createPursuitPilotCandidates(),
+      corePackIds: ['journey-pursuit-solo'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'snake-hunt-v1')
+    return freezeDesign({
+      id,
+      label: 'Snake Hunt · eight chapters',
+      sessionKey: 'revealline.suspended.journey-snake-hunt.v1',
+      profileKey: 'journey-snake-hunt-v1',
+      source: createSnakeHuntCandidates({ artwork: true }),
+      corePackIds: ['journey-snake-hunt'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'humanoid-hunt-v1')
+    return freezeDesign({
+      id,
+      label: 'Hunt lessons · six familiar boards',
+      sessionKey: 'revealline.suspended.journey-humanoid-hunt.v1',
+      profileKey: 'journey-humanoid-hunt-v1',
+      source: createHuntTrainingCandidates({ artwork: true }),
+      corePackIds: ['journey-humanoid-hunt'],
+      optionalCampaignIds: [],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v38')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Cooling loop earned-return pressure · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v38',
+      profileKey: 'journey-whole-spatial-v38',
+      source: createCoolingLoopErosionCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v37')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey Ukrainian pressure corridor triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v37',
+      profileKey: 'journey-whole-spatial-v37',
+      source: createPressureCorridorTriptychCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v36')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey contested Ukrainian wall triptych · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v36',
+      profileKey: 'journey-whole-spatial-v36',
+      source: createContestedWallTriptychCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
+  if (id === 'whole-spatial-v35')
+    return freezeDesign({
+      id,
+      label: 'Whole Journey finite Remix pressure pair · balance pending',
+      sessionKey: 'revealline.suspended.journey-whole-spatial.v35',
+      profileKey: 'journey-whole-spatial-v35',
+      source: createCurrentRemixPressureCandidates({ artwork: true }),
+      corePackIds: [...WHOLE_JOURNEY_CORE_PACK_IDS],
+      optionalCampaignIds: ['ornament-crossings', 'workshop-routing'],
+      preserveOriginalThemes: true,
+    });
   if (id === 'whole-spatial-v34')
     return freezeDesign({
       id,

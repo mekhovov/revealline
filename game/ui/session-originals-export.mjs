@@ -65,7 +65,7 @@ export function attachSessionOriginalsExport({
         next = null;
         preparedRevision = revision;
         download.href = url;
-        download.download = 'RevealLine-session-originals.rlmedia';
+        download.download = 'fpv-line-session-originals.rlmedia';
         download.hidden = false;
         setStatus(
           t('interface:sessionOriginalsVerifiedChooseDownloadSessionOriginalsThenExportGame'),

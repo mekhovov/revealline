@@ -1,0 +1,7 @@
+{
+  "status": "historical fixture correction, not accepted art",
+  "issues": [
+    "First CPU material equality was object-key-order sensitive: expected extras followed pbr, source extras preceded it. Fixed by validating the exact hint then comparing remaining material definition unchanged.",
+    "First generated build summary retained runtimeChanges:0 despite explicit two-module prerequisite. Regenerated v2 with runtimeChanges:2 and precise prerequisite; source/prepared/pack bytes identical."
+  ]
+}

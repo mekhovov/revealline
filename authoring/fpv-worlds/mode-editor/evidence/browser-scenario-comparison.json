@@ -1,0 +1,33 @@
+{
+  "format": "FPVEditorModesScenarioComparison.v1",
+  "source": {
+    "path": "fpv-editor-mode-source-browser-r4.json",
+    "bytes": 376913,
+    "sha256": "aca9d646a2c272097e04eb640fe89aba44082c25e05212547f4a04e7ef8dabc6"
+  },
+  "admitted": {
+    "path": "fpv-editor-mode-admitted-browser-r1.json",
+    "bytes": 376963,
+    "sha256": "d1fe14a72099de9cad7b35320f5aa5cbd588a2645f94b79f2cb2b645db79e341"
+  },
+  "sourceChecks": 230,
+  "admittedChecks": 230,
+  "allPassed": true,
+  "identicalCheckRecords": 229,
+  "provenanceCheckDifferences": [
+    {
+      "index": 72,
+      "source": {
+        "name": "Source overlay checksum: optional-practice/civilian-fpv/world-app.mjs",
+        "passed": true
+      },
+      "admitted": {
+        "name": "Baseline admitted checksum: optional-practice/civilian-fpv/world-app.mjs",
+        "passed": true
+      }
+    }
+  ],
+  "exportsExactlyEqual": true,
+  "packRevisionsExactlyEqual": true,
+  "scope": "Matching public UI functional scenarios; provenance, timing, origin, storage-prefix and trusted pointer trajectories differ. Does not qualify offline, controllers, performance or completion of edited routes."
+}

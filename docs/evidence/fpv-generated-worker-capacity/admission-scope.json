@@ -1,0 +1,94 @@
+{
+  "format": "FPVWorkerProjectionAdmissionScope.v1",
+  "baseline": "f3764070e22f0b33b63fd0f7434690fa7455dc64",
+  "source": "b452a0cac273ed290ac7ee14609dde4f87984df3",
+  "sourceTree": "e2efed4bc4a574a8f655e14bbf9ee9b77003f774",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "originalInputs": 41,
+      "originalInputBytes": 1902195,
+      "baselineBytes": 1902195,
+      "changed": [],
+      "distribution": {
+        "bytes": 686136,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "399dcfbab04a1825baafb402db987eb712d1b6ecfb34656f2ef66d579664d514"
+      },
+      "sourceInventory": {
+        "bytes": 14052,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "c49f74e59fb95701975f8162d5d74ae36934a1d165dc2dd97be51a4b8c0c83a6"
+      }
+    },
+    {
+      "id": "civilian-fpv",
+      "originalInputs": 62,
+      "originalInputBytes": 5621133,
+      "baselineBytes": 5622849,
+      "changed": [
+        {
+          "path": "optional-practice/worker-template.mjs",
+          "beforeBytes": 6528,
+          "beforeSHA256": "ae18471ac69798c91c89fed1dd6ff7f8db4db59cb61ce1d9f6946b8f9260212e",
+          "afterBytes": 4812,
+          "afterSHA256": "59b0b73b90ff5970e1cfba997f1d42bc8d3164e6b4e6115524d46cf6eee26f55"
+        }
+      ],
+      "distribution": {
+        "bytes": 4411981,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "f44dbfefcf61040c64409051b3991749ca517491341b03a5d452470ae501c474"
+      },
+      "sourceInventory": {
+        "bytes": 21034,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "45a76ee950e2f4be7f4a6dbe714ba3ce4c02629bb75bffd72db349586f42b287"
+      },
+      "deliveredFiles": 69,
+      "packedWorker": {
+        "path": "optional-practice/civilian-fpv/worker.js",
+        "bytes": 13083,
+        "sha256": "b9d6e971ad23a56c0c1003543b3c90b5ecb1677a136b1abf1ad040e17c0de26a",
+        "installerByteExact": true,
+        "installerSHA256": "f95ecf14f4ff9a2c016e5e9bc0a03340a822f39729ad3177e470fe9f51938101"
+      }
+    },
+    {
+      "id": "fpv-worlds",
+      "originalInputs": 95,
+      "originalInputBytes": 16767026,
+      "baselineBytes": 16768742,
+      "changed": [
+        {
+          "path": "optional-practice/worker-template.mjs",
+          "beforeBytes": 6528,
+          "beforeSHA256": "ae18471ac69798c91c89fed1dd6ff7f8db4db59cb61ce1d9f6946b8f9260212e",
+          "afterBytes": 4812,
+          "afterSHA256": "59b0b73b90ff5970e1cfba997f1d42bc8d3164e6b4e6115524d46cf6eee26f55"
+        }
+      ],
+      "distribution": {
+        "bytes": 15575254,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "3b6795e613a11e22f58d98e749792c2a0da9583a9a82d8bd847c947a5f41bbc7"
+      },
+      "sourceInventory": {
+        "bytes": 32166,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "30f26a5ba959dbfe9905f0690d1622aa40a39c63017d172dc3e13b9fe789f7fe"
+      },
+      "deliveredFiles": 102,
+      "packedWorker": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 18193,
+        "sha256": "6acafdc42947293c72a1dc26b79357374f6af83ba31b0b8fb7a3df77a9cdc676",
+        "installerByteExact": true,
+        "installerSHA256": "f95ecf14f4ff9a2c016e5e9bc0a03340a822f39729ad3177e470fe9f51938101"
+      }
+    }
+  ],
+  "limitsUnchanged": true,
+  "runtimeModulesOutsideWorkerUnchanged": true,
+  "browser": "Pending actual admitted install/reopen; this is static/admission evidence only."
+}

@@ -1,0 +1,150 @@
+TAP version 13
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 1 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.782917
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 2 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.064458
+  ...
+# Subtest: modal and controller inputs stay blocked until a physical neutral observation
+ok 3 - modal and controller inputs stay blocked until a physical neutral observation
+  ---
+  duration_ms: 0.292458
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 4 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.093
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 5 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 1.983833
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 6 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.174667
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 7 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.093334
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 8 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.194208
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 9 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 8.066583
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 10 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 4.361583
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 11 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 0.57375
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 12 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.10775
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 13 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.130958
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 14 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.159125
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 15 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.262209
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 16 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.174375
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 17 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.051833
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 18 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.545083
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 19 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 1.921916
+  ...
+# Subtest: Rush instrument describes charge, stored activation and remaining time without stale accessible values
+ok 20 - Rush instrument describes charge, stored activation and remaining time without stale accessible values
+  ---
+  duration_ms: 17.090916
+  ...
+# Subtest: polite status announces milestones once rather than streaming score and countdown changes
+ok 21 - polite status announces milestones once rather than streaming score and countdown changes
+  ---
+  duration_ms: 3.078708
+  ...
+# Subtest: Raid Studio messages require the exact parent, origin, protocol and request identity
+ok 22 - Raid Studio messages require the exact parent, origin, protocol and request identity
+  ---
+  duration_ms: 0.160083
+  ...
+# Subtest: all eighteen Raid upgrades compare live rank parameters without changing the build
+ok 23 - all eighteen Raid upgrades compare live rank parameters without changing the build
+  ---
+  duration_ms: 3.177292
+  ...
+# Subtest: native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+ok 24 - native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+  ---
+  duration_ms: 3.948334
+  ...
+# Subtest: native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+ok 25 - native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+  ---
+  duration_ms: 3.73525
+  ...
+# Subtest: contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+ok 26 - contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+  ---
+  duration_ms: 0.253167
+  ...
+# Subtest: Raid localization keys match and preview rejects impossible ranks or systems
+ok 27 - Raid localization keys match and preview rejects impossible ranks or systems
+  ---
+  duration_ms: 0.147375
+  ...
+# Subtest: boost streaks reflect offensive width only while striking and preserve body size
+ok 28 - boost streaks reflect offensive width only while striking and preserve body size
+  ---
+  duration_ms: 0.111542
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 209.534875

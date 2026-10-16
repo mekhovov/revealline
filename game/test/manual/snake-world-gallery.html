@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Snake world comparison</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 15px system-ui;
+      background: #172329;
+      color: #f5efd9;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 12px;
+    }
+    main {
+      max-width: 1500px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0 0 8px;
+    }
+    p {
+      max-width: 80ch;
+      line-height: 1.5;
+    }
+    [hidden] {
+      display: none !important;
+    }
+    select {
+      max-width: 100%;
+    }
+    label {
+      max-width: 100%;
+    }
+    nav.controls {
+      margin-top: 12px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: end;
+    }
+    label {
+      display: grid;
+      gap: 4px;
+    }
+    button,
+    select {
+      font: inherit;
+      min-height: 44px;
+      background: #31474d;
+      color: inherit;
+      border: 1px solid #a9b3a2;
+      padding: 8px;
+    }
+    button:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #edc677;
+    }
+    #boards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    article {
+      min-width: 0;
+      padding: 8px;
+      background: #25383b;
+      border: 1px solid #6d827b;
+    }
+    h2 {
+      font-size: 1rem;
+      margin: 0 0 8px;
+    }
+    body[data-gray='true'] canvas {
+      filter: grayscale(1);
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      image-rendering: pixelated;
+    }
+    small {
+      display: block;
+      margin-top: 6px;
+      color: #ced2bc;
+    }
+    body[data-width='mobile'] #boards {
+      grid-template-columns: repeat(auto-fit, minmax(0, 296px));
+    }
+    body[data-labels='hide'] h2,
+    body[data-labels='hide'] small {
+      visibility: hidden;
+    }
+  </style>
+  <main>
+    <h1>Snake · six worlds, four looks</h1>
+    <p>
+      Actual mission geometry and production renderer. Appearance never changes the route. The
+      jammer panel uses a verified recording at an active burst; hidden enemies keep their original
+      simulation state. This review page does not save progress.
+    </p>
+    <p>
+      <a href="?review=authored">Compare the authored catalogue across four looks</a> ·
+      <a href="?">Representative gameplay states</a>
+    </p>
+    <div class="controls">
+      <label id="chapter-control" hidden
+        >Chapter<select id="chapter">
+          <option value="all">All chapters</option>
+        </select></label
+      >
+      <label
+        >Look<select id="look">
+          <option value="all">All four looks</option>
+          <option value="living-circuit">Lively FPV</option>
+          <option value="toybox">Toybox</option>
+          <option value="atmospheric-ruins">Atmospheric Ruins</option>
+          <option value="night-arcade">Night Arcade</option>
+        </select></label
+      >
+      <label
+        >Board width<select id="width">
+          <option value="desktop">Responsive</option>
+          <option value="mobile">320px screen equivalent</option>
+        </select></label
+      >
+      <label
+        >Titles<select id="labels">
+          <option value="show">Show</option>
+          <option value="hide">Hide for recognition review</option>
+        </select></label
+      >
+      <label><input type="checkbox" id="gray" />Grayscale</label>
+      <label><input type="checkbox" id="geometry" />Collision outlines</label>
+      <button id="benchmark">Measure redraw cost</button>
+      <button id="frameBenchmark">Measure frame intervals</button>
+    </div>
+    <nav class="controls" id="page-controls" aria-label="Comparison pages" hidden>
+      <button id="previous">Previous missions</button>
+      <span id="page-summary" aria-live="polite"></span>
+      <button id="next">Next missions</button>
+    </nav>
+    <p id="status" role="status">Loading the comparison…</p>
+    <section id="boards" aria-label="World comparison"></section>
+    <script type="module" src="./snake-world-gallery.mjs?review=tactical-remaster-1"></script>
+  </main>
+</html>

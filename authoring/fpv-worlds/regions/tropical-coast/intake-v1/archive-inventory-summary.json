@@ -1,0 +1,53 @@
+{
+  "archive": "Tropical_Environment_Pack_v2.0.zip",
+  "bytes": 135821309,
+  "sha256": "32c9a3fcf2dea6e8094742c08b9dcc59cdfd0d6806b0906541eecc0bcf0f76ec",
+  "files": 468,
+  "uncompressedBytes": 380546034,
+  "groups": {
+    ".rtf": {
+      "files": 1,
+      "bytes": 2593
+    },
+    ".pdf": {
+      "files": 1,
+      "bytes": 528596
+    },
+    ".png": {
+      "files": 98,
+      "bytes": 41734375
+    },
+    ".cs": {
+      "files": 65,
+      "bytes": 185233
+    },
+    ".dml": {
+      "files": 1,
+      "bytes": 6
+    },
+    ".dts": {
+      "files": 36,
+      "bytes": 1988410
+    },
+    ".dae": {
+      "files": 36,
+      "bytes": 8792249
+    },
+    ".dds": {
+      "files": 131,
+      "bytes": 291686296
+    },
+    ".jpg": {
+      "files": 82,
+      "bytes": 27234232
+    },
+    ".ogg": {
+      "files": 11,
+      "bytes": 3709978
+    },
+    ".tif": {
+      "files": 6,
+      "bytes": 4684066
+    }
+  }
+}

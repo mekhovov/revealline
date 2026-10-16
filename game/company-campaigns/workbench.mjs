@@ -4,6 +4,8 @@ import {
   validateCompanyLesson,
   verifyLearningAttempt,
 } from './learning.mjs';
+import { getLocale, onLocaleChange, t } from '../i18n/index.mjs';
+import { localizeCompanyLesson, localizeLearningFeedback } from './lesson-localization.mjs';
 
 let sequence = 0;
 
@@ -20,6 +22,7 @@ export function mountCompanyWorkbench(
   },
 ) {
   const lesson = validateCompanyLesson(input);
+  const tr = (key, values) => t('interface:learningWorkbench.' + key, values);
   const checked = verifyLearningAttempt(lesson, initial ?? createLearningAttempt(lesson));
   if (!checked.valid) throw new TypeError(checked.reason);
   const document = container.ownerDocument;
@@ -58,48 +61,53 @@ export function mountCompanyWorkbench(
     onChange(attempt);
   }
   function render() {
+    const copy = localizeCompanyLesson(lesson, getLocale());
     const facts = pinned ? currentEvidence() : null;
     const safe = !pinned || !!facts?.boundary;
     const focused = root?.contains(document.activeElement)
       ? document.activeElement?.dataset?.control
       : null;
+    const feedbackFocused = root?.querySelector('[data-feedback]') === document.activeElement;
     root = element('section', 'company-workbench');
     root.dataset.lessonId = lesson.id;
     root.setAttribute('aria-labelledby', `${prefix}-title`);
-    const title = element('h2', 'company-workbench-title', lesson.title);
+    const title = element('h2', 'company-workbench-title', copy.title);
     title.id = `${prefix}-title`;
     root.append(
       title,
       element(
         'p',
         'company-workbench-role',
-        `${lesson.role} · ${lesson.kind === 'reflection' ? 'Reflection' : 'Local practice'}`,
+        `${copy.role} · ${tr(lesson.kind === 'reflection' ? 'reflection' : 'practice')}`,
       ),
-      element('p', 'company-workbench-brief', lesson.brief),
-      element('p', 'company-workbench-notice', lesson.notice),
+      element('p', 'company-workbench-brief', copy.brief),
+      element('p', 'company-workbench-notice', copy.notice),
     );
     const evidenceSection = element('section', 'company-workbench-evidence');
-    evidenceSection.append(element('h3', null, '1. Inspect the evidence'));
+    evidenceSection.append(element('h3', null, tr('inspect')));
     if (pinned)
       evidenceSection.append(
         element(
           'p',
           'company-workbench-evidence-status',
           safe
-            ? `${facts.availableRecordIds.length} of ${lesson.records.length} records recovered. Finish a line on safe ground or connect a marked objective to recover the next record. Winning recovers the rest.`
-            : 'Return to safe ground before working on the handoff.',
+            ? tr('evidence', {
+                count: facts.availableRecordIds.length,
+                total: lesson.records.length,
+              })
+            : tr('safeGround'),
         ),
       );
-    for (const record of lesson.records) {
+    for (const record of copy.records) {
       const card = element('article', 'company-workbench-record');
       const available = !pinned || facts?.availableRecordIds.includes(record.id);
       const inspected = attempt.inspected.includes(record.id);
       const inspect = button(
         !available
-          ? `${record.title} — recover on the board`
+          ? tr('recover', { title: record.title })
           : inspected
-            ? `${record.title} — inspected`
-            : `Inspect ${record.title}`,
+            ? tr('inspected', { title: record.title })
+            : tr('inspectRecord', { title: record.title }),
         `inspect-${record.id}`,
         () => {
           if (!inspected) apply({ type: 'inspect', recordId: record.id });
@@ -114,9 +122,9 @@ export function mountCompanyWorkbench(
     }
     root.append(evidenceSection);
     const configure = element('fieldset', 'company-workbench-configuration');
-    configure.append(element('legend', null, '2. Configure the handoff'));
+    configure.append(element('legend', null, tr('configure')));
     configure.disabled = attempt.status === 'complete' || !safe;
-    for (const field of lesson.fields) {
+    for (const field of copy.fields) {
       const row = element('div', 'company-workbench-field');
       const label = element('label', null, field.label);
       label.htmlFor = `${prefix}-${field.id}`;
@@ -124,7 +132,7 @@ export function mountCompanyWorkbench(
       select.required = true;
       select.id = label.htmlFor;
       select.setAttribute('data-control', `field-${field.id}`);
-      const placeholder = element('option', null, 'Choose an action');
+      const placeholder = element('option', null, tr('choose'));
       placeholder.value = '';
       placeholder.disabled = true;
       select.append(placeholder);
@@ -146,32 +154,27 @@ export function mountCompanyWorkbench(
     feedback.setAttribute('tabindex', '-1');
     feedback.setAttribute('role', 'status');
     feedback.setAttribute('aria-live', 'polite');
-    for (const line of attempt.feedback) feedback.append(element('p', null, line));
+    for (const line of localizeLearningFeedback(lesson, attempt, getLocale(), tr))
+      feedback.append(element('p', null, line));
     root.append(feedback);
     const controls = element('div', 'company-workbench-controls');
-    const commit = button(
-      attempt.status === 'complete' ? 'Practice complete' : '3. Commit local handoff',
-      'commit',
-      () => apply({ type: 'commit' }),
+    const commit = button(tr(attempt.status === 'complete' ? 'complete' : 'commit'), 'commit', () =>
+      apply({ type: 'commit' }),
     );
     if (attempt.status === 'complete' && lesson.kind === 'reflection')
-      commit.textContent = 'Reflection saved';
+      commit.textContent = tr('reflectionSaved');
     commit.disabled = attempt.status === 'complete' || !safe;
     controls.append(
       commit,
-      button('Return to journey', 'close', () => {
+      button(tr('return'), 'close', () => {
         if (active) onClose(attempt);
       }),
     );
     root.append(controls);
     const references = element('details', 'company-workbench-sources');
     references.append(
-      element('summary', null, `Source notes · reviewed ${lesson.sourceReviewedAt}`),
-      element(
-        'p',
-        null,
-        'A frozen illustrative exercise, not a replica of a live customer configuration.',
-      ),
+      element('summary', null, tr('sources', { date: lesson.sourceReviewedAt })),
+      element('p', null, tr('sourceNote')),
     );
     for (const source of lesson.sources) {
       const row = element('p');
@@ -184,17 +187,22 @@ export function mountCompanyWorkbench(
     }
     root.append(references);
     container.replaceChildren(root);
-    if (focused) {
+    if (feedbackFocused) root.querySelector('[data-feedback]')?.focus();
+    else if (focused) {
       const control = root.querySelector(`[data-control="${focused}"]`);
       if (!control?.disabled) control?.focus();
       else root.querySelector('[data-control="close"]')?.focus();
     }
   }
   render();
+  const stopLocale = onLocaleChange(() => {
+    if (active) render();
+  });
   return Object.freeze({
     getAttempt: () => attempt,
     destroy() {
       active = false;
+      stopLocale();
       root.remove();
     },
   });

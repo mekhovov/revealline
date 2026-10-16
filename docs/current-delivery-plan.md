@@ -1,10 +1,15 @@
 # RevealLine: detailed delivery history
 
+> **3 October implementation update:** [Unified gameplay and industrial art](unified-industrial-plan.md) records the newly approved priorities, bounded budget increases, implemented scope and remaining art/device gates.
+
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status and execution order:** use the
-> [28 September completion and remaining delivery plan](plan-status-2026-09-28.md).
-> It records deployed v0.141.7, the remaining acceptance gates, the active touch
-> follow-up and independently owned PR #716, and the sole coordinator's current
-> main-only batching policy. Every dated checkpoint and “next” label below is
+> [30 September source reconciliation and remaining delivery plan](plan-status-2026-09-30.md).
+> It separates merged source, the publisher's pending queue, retained local work
+> and deferred qualification. Every dated checkpoint and “next” label below is
 > preserved historical evidence, not today's release queue.
 
 ## Current scoped handoff — 28 September 2026

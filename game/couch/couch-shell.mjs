@@ -1,3 +1,5 @@
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { gameplayStatsLabel } from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
@@ -6,6 +8,8 @@ import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
+import { prepareNativeMenus } from '../ui/native-menus.mjs';
+import { commitMenuRetune } from '../ui/menu-retune.mjs';
 import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
 import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
 
@@ -68,7 +72,10 @@ export function createCouchShell({
   getSoloJourneyRoute = () => null,
   getTeamJourneyRoute = () => null,
   onMissions = null,
+  controllerNeedsTouch = () => false,
+  getSceneContext = () => ({}),
 } = {}) {
+  const nativeMenu = prepareNativeMenus({ document: doc, mode: 'versus', getSceneContext });
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
     pads = [...doc.querySelectorAll('.race-pad')],
@@ -85,32 +92,68 @@ export function createCouchShell({
   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
   const libraryLabel = () => (isJourney ? t('interface:legacyLibrary') : t('interface:newJourney'));
-  $('race-library-switch').setAttribute('href', libraryHref);
+  $('race-library-switch').setAttribute(
+    'href',
+    nativeArtReviewURL(libraryHref, view?.location?.href ?? globalThis.location?.href),
+  );
   localizedText($('race-library-switch'), () =>
     onMissions ? t('interface:allMissions') : libraryLabel(),
   );
   doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
-    $('race-solo-return').setAttribute('href', authoredDestinations.solo);
-    $('race-coop').setAttribute('href', authoredDestinations.team);
+    $('race-solo-return').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.solo,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
+    $('race-coop').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.team,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
   }
-  mountModeChoices({
+  const modeChoices = mountModeChoices({
     root: $('race-mode-choices'),
+    pause: () => onTransition({ from: screen, to: screen }),
     current: 'versus',
     separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
   });
-  if (authoredRoute === DEFAULT_JOURNEY_ROUTES.versus)
-    localizedText($('race-coop').querySelector('.game-mode-description'), () =>
-      t('common:counts.teamMissions', { count: 12 }),
-    );
+  nativeMenu?.refreshLandingNavigation();
+  const pauseMenu = createPauseMenu({
+    document: doc,
+    root: $('race-main').querySelector('.race-menu-actions'),
+    resume: $('race-start'),
+    missions: [
+      { element: $('race-retry'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('race-journey-skip'), icon: 'skip' },
+      { element: $('race-journey-random'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('race-chapters'), icon: 'missions' },
+    ],
+    audio: [{ element: $('race-quick-sound'), icon: 'sound' }, pauseMusicAction(doc, 'race')],
+    config: [
+      { element: $('race-options'), icon: 'settings' },
+      { element: $('versus-landing-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('race-home'),
+    notices: [
+      { element: $('race-journey-save-options'), icon: 'info' },
+      { element: $('versus-landing-fullscreen-status') },
+    ],
+  });
   let screen = 'main',
     status = null,
     opener = null,
     departure = null,
+    briefingOwner = null,
     destroyed = false,
     revealingResize = false,
     equipment = [];
+  const returnScreens = new Map();
   const setText = (id, text) => {
     localizedText($(id), text);
   };
@@ -119,6 +162,7 @@ export function createCouchShell({
     removers.push(() => element.removeEventListener(type, fn));
   };
   function primary() {
+    if (modeChoices.simulatorRoot()) return modeChoices.simulatorPrimary();
     if (screen === 'options' && settings.primary()) return settings.primary();
     if (screen === 'main' && $('race-start').disabled) {
       const retry = $('race-chapter-retry');
@@ -237,7 +281,9 @@ export function createCouchShell({
   function renderPads() {
     for (let i = 0; i < 2; i++) {
       const wanted =
-        preferences[i] === 'always' || (preferences[i] === 'auto' && modality[i] === 'touch');
+        preferences[i] === 'always' ||
+        (preferences[i] === 'auto' &&
+          (modality[i] === 'touch' || (coarse && controllerNeedsTouch(i))));
       // A held physical control may not vanish mid-round. Collapse at pause,
       // after the host has called its existing clearPhysical lifecycle guard.
       shown[i] = status === 'running' && (wanted || shown[i]);
@@ -272,28 +318,45 @@ export function createCouchShell({
   function show(next, { restore = null, remember = false, restoreFocus = true } = {}) {
     if (destroyed || status === 'running' || (!Object.hasOwn(SCREENS, next) && next !== 'review'))
       return;
-    if (remember) opener = remember === true ? doc.activeElement : remember;
+    if (remember) {
+      opener = remember === true ? doc.activeElement : remember;
+      returnScreens.set(next, { screen, opener });
+    }
+    const previous = screen;
     onTransition({ from: screen, to: next });
     screen = next;
     renderScreens();
     renderPads();
     if (restoreFocus) focus(restore || primary());
+    if (
+      status === 'ready' &&
+      ((previous === 'main' && next === 'setup') || (previous === 'setup' && next === 'main'))
+    )
+      commitMenuRetune($(SCREENS[previous][0]), $(SCREENS[next][0]));
   }
   function back() {
+    if (modeChoices.simulatorRoot()) {
+      modeChoices.closeSimulator();
+      return;
+    }
+    if (modeChoices.closeMore()) return;
     departure = null;
+    const more = $('race-more');
+    if (more.open && actionCurrent($('race-more-toggle'))()) {
+      more.open = false;
+      $('race-more-toggle').focus({ preventScroll: true });
+      return;
+    }
     if (screen === 'main') {
-      const more = $('race-more');
-      if (more.open) {
-        more.open = false;
-        $('race-more-toggle').focus({ preventScroll: true });
-        return;
-      }
       onTransition({ from: screen, to: screen, back: true });
       return focus();
     }
-    const target = opener;
+    const previous = returnScreens.get(screen);
+    returnScreens.delete(screen);
+    const target = previous?.opener ?? opener;
     opener = null;
-    show('main', { restore: target });
+    const returnScreen = previous?.screen ?? 'main';
+    show(returnScreen, { restore: target });
   }
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
@@ -328,15 +391,20 @@ export function createCouchShell({
     }
   }
   const destinationHref = (kind, token, routeId, teamRouteId = teamJourneyRoute()) =>
-    (kind === 'library' && libraryHref) ||
-    (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
-    (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
-    (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
-    (kind === 'team' && teamRouteId && `relay-rescue.html?journey=${teamRouteId}&return=versus`) ||
-    secondaryDestinations[kind] ||
-    (isJourney && authoredDestinations?.[kind]) ||
-    authoredDestinations?.[kind] ||
-    DESTINATIONS[kind];
+    nativeArtReviewURL(
+      (kind === 'library' && libraryHref) ||
+        (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
+        (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
+        (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
+        (kind === 'team' &&
+          teamRouteId &&
+          `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
+        secondaryDestinations[kind] ||
+        (isJourney && authoredDestinations?.[kind]) ||
+        authoredDestinations?.[kind] ||
+        DESTINATIONS[kind],
+      view?.location?.href ?? globalThis.location?.href,
+    );
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -354,8 +422,11 @@ export function createCouchShell({
     const target = departure.opener;
     departure = null;
     opener = null;
-    if (screen === 'leave')
-      show('main', { restore: target, restoreFocus: restore && foreground() });
+    if (screen === 'leave') {
+      const previous = returnScreens.get('leave');
+      returnScreens.delete('leave');
+      show(previous?.screen ?? 'main', { restore: target, restoreFocus: restore && foreground() });
+    }
   }
   function requestLeave(kind, element, event) {
     if (
@@ -369,7 +440,8 @@ export function createCouchShell({
       return;
     if (kind === 'library' && onMissions) {
       event.preventDefault();
-      if (!destroyed && screen === 'main' && foreground()) return onMissions(element);
+      if (['main', 'options'].includes(screen) && actionCurrent(element)())
+        return onMissions(element);
       return;
     }
     // Fixed routes are owned here; no target is accepted from a URL or control.
@@ -381,7 +453,13 @@ export function createCouchShell({
       destinationHref(kind, returnToken, journeyRouteId, teamJourneyRouteId),
     );
     const before = getDepartureState();
-    if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
+    if (
+      destroyed ||
+      departure ||
+      !['main', 'options'].includes(screen) ||
+      !actionCurrent(element)() ||
+      !before?.match
+    ) {
       event.preventDefault();
       return;
     }
@@ -540,6 +618,7 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    $('race-briefing').hidden = status !== 'ready' || contentBusy || match !== briefingOwner;
     doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
@@ -558,19 +637,23 @@ export function createCouchShell({
       () =>
         `${series ? t('interface:couch.firstClearRound') : t('interface:couch.firstClearRace')} ${match.limitTicks === null ? t('interface:noRaceCountdownIfBothFlightsEndCoverageThenLives') : t('interface:atTheTimeLimitCoverageThenLivesThenScoreDecide')} ${series ? t('interface:firstToTwoRoundWinsTakesTheMatchDrawsAward') : t('interface:oneRaceEndsAfterThisResultRematchPlaysTheSame')}`,
     );
-    setText('race-title', () =>
-      contentBusy
-        ? t('interface:loadingTheSharedPicture')
-        : status === 'paused'
-          ? t('interface:bothBoardsPaused')
-          : status === 'finished'
-            ? !series
-              ? t('interface:raceComplete')
-              : won.some((n) => n >= 2)
-                ? t('interface:matchComplete')
-                : t('interface:roundComplete')
-            : t('interface:twoBoardsOneRace2'),
-    );
+    if (status === 'ready' && nativeMenu) nativeMenu.showBrandTitle();
+    else {
+      nativeMenu?.hideBrandTitle();
+      setText('race-title', () =>
+        contentBusy
+          ? t('interface:loadingTheSharedPicture')
+          : status === 'paused'
+            ? t('interface:paused3')
+            : status === 'finished'
+              ? !series
+                ? t('interface:raceComplete')
+                : won.some((n) => n >= 2)
+                  ? t('interface:matchComplete')
+                  : t('interface:roundComplete')
+              : 'FPV / LINE',
+      );
+    }
     $('race-review').hidden = status !== 'finished';
     const paused = status === 'paused';
     $('race-retry').hidden = !paused;
@@ -578,8 +661,9 @@ export function createCouchShell({
     $('race-home').hidden = !paused;
     $('race-optional-setup').hidden = paused;
     setText('race-chapters', () =>
-      paused ? t('interface:missions') : t('interface:browseMissions'),
+      t(paused ? 'interface:nativeMenu.pauseChoose' : 'interface:nativeMenu.missions'),
     );
+    pauseMenu?.setActive(paused);
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', () =>
@@ -635,22 +719,39 @@ export function createCouchShell({
       focus();
   }
   renderScreens();
+  nativeMenu?.refreshGlobalSettings();
   if (view?.addEventListener) listen(view, 'resize', revealResizedAction);
   return {
     update,
     back,
     setup,
+    briefing(owner, { title, description }) {
+      briefingOwner = owner;
+      setText('race-briefing-title', title);
+      setText('race-briefing-copy', description);
+      $('race-briefing').hidden = status !== 'ready';
+      show('main');
+    },
     observe,
     root,
     primary,
     focus,
     scope: () => screen,
+    refreshGlobalSettings: (options) => nativeMenu?.refreshGlobalSettings(options),
+    openSettings(category = 'data', focusTarget = null) {
+      show('options', { remember: doc.activeElement });
+      settings.select(`race-settings-tab-${category}`, { drill: true });
+      if (focusTarget && !focusTarget.closest('[hidden],[inert]')) focusTarget.focus();
+    },
     controllerHint: () => $('race-controller-help').textContent,
     cancelDeparture,
     destroy() {
       departure = null;
       destroyed = true;
       settings.destroy();
+      modeChoices.dispose();
+      pauseMenu?.destroy();
+      nativeMenu?.destroy();
       for (const remove of removers) remove();
     },
   };

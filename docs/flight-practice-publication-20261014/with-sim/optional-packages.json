@@ -1,0 +1,89 @@
+{
+  "format": "revealline-optional-packages.v1",
+  "packages": [
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 3630836,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "52fe657a764f0013416bb28863b33c35653ae2e307357a65f849ad48f7d79fb2"
+      },
+      "entry": "optional-practice/civilian-flight/index.html",
+      "id": "civilian-flight",
+      "manifest": {
+        "bytes": 15177,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "eca84a5639b897b25186ede4b928e3fd71936ddedd5a9ed6ca0c866859c4399e"
+      },
+      "revision": "0f1c34de5a4839b44d308fa394bcf8ea6e5299e3200569dcf19c153e022bd640",
+      "sourceArchive": {
+        "bytes": 3661398,
+        "path": "source-optional-civilian-flight.zip",
+        "sha256": "8df237f04514f7647b109cb1fc60a33e852e34529b4a3e8cae4a9fcf2989c4bd"
+      },
+      "sourceInventory": {
+        "bytes": 24926,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "18742598124f30ed366762744743a0a9f83b842b737b78672799ef7a68b9c787"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 6628366,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "442a64fdcc5986a78276fe10341b710ce655ba54a573fd33a942b032b3a2bd24"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 16323,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "b1dedbdac890ba98720de4e3761f5fbd14cf10465c58efb2f89ff24fc8e8471b"
+      },
+      "revision": "c9ca4f436841136b1292c5e8c46305da13c3042a0b632ce25ca212ee95fdd3cf",
+      "sourceArchive": {
+        "bytes": 6659924,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "0a99a2f5b40003f8a5cee1a36a827ddb51ef3c1a388e2e253ca7a3a449718776"
+      },
+      "sourceInventory": {
+        "bytes": 27174,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "dcaaac708ba1ee26075284fa1162b722ebcee3476e38a94a58d3d6b1af71f4a7"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 17046144,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "9e9824813d874e052d6fba428625ab4bba409c64de116116d10a5cbfd4b9b904"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 22892,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "6c6e9e7ee191a2e09237a4eb810e3d508e285f6fa0cb523e0d43d797d2fa24c7"
+      },
+      "revision": "6d4751f15cea435499bcfdd2818ebb165e9680b3bac64426c0a3731ea645e640",
+      "sourceArchive": {
+        "bytes": 17082923,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "df1162e3e2066f9e3fccf29ddbb21fffa4dc15235e94b28ed4ac5584d2ac2735"
+      },
+      "sourceInventory": {
+        "bytes": 38956,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "2a3903a150463feee464705df296bb291b2554ec0a9067c56c7ee84c539c8f7f"
+      }
+    }
+  ],
+  "sourceRevision": "8718babd1827383a22596c5a0156b280a594929d",
+  "sourceTree": "d273f838502df900215e50c9b7e33275b45c8c20",
+  "version": "v0.151.1"
+}

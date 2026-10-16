@@ -1,0 +1,222 @@
+{
+  "passed": true,
+  "sourceManifestSHA256": "0d2f74e20cae601bf79dbcc4a5fa4819aadf4ee14c08eac59d43454848ea358a",
+  "footprints": [
+    {
+      "cell": "town-0-0",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 0
+    },
+    {
+      "cell": "town-0-0",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 0
+    },
+    {
+      "cell": "town-1-0",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 0
+    },
+    {
+      "cell": "town-1-0",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 0
+    },
+    {
+      "cell": "town-2-0",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 0
+    },
+    {
+      "cell": "town-2-0",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 0
+    },
+    {
+      "cell": "town-0-1",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 12000
+    },
+    {
+      "cell": "town-0-1",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 12000
+    },
+    {
+      "cell": "town-1-1",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 12000
+    },
+    {
+      "cell": "town-1-1",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 12000
+    },
+    {
+      "cell": "town-2-1",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 12000
+    },
+    {
+      "cell": "town-2-1",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 12000
+    },
+    {
+      "cell": "town-0-2",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 24000
+    },
+    {
+      "cell": "town-0-2",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 24000
+    },
+    {
+      "cell": "town-1-2",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 24000
+    },
+    {
+      "cell": "town-1-2",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 24000
+    },
+    {
+      "cell": "town-2-2",
+      "kind": "court",
+      "footprint": [
+        48,
+        48,
+        5.25,
+        5.125
+      ],
+      "groundMm": 24000
+    },
+    {
+      "cell": "town-2-2",
+      "kind": "street",
+      "footprint": [
+        90,
+        82,
+        5.25,
+        5.125
+      ],
+      "groundMm": 24000
+    }
+  ],
+  "tiers": [
+    {
+      "quality": "performance",
+      "uniforms": 2,
+      "textureAdded": false
+    },
+    {
+      "quality": "balanced",
+      "uniforms": 2,
+      "textureAdded": false
+    },
+    {
+      "quality": "quality",
+      "uniforms": 2,
+      "textureAdded": false
+    }
+  ],
+  "scope": "Source-derived material-only footprint contract; native appearance and shader compilation remain pending. No geometry/collision/shadow-map changes."
+}

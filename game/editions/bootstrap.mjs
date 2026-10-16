@@ -1,8 +1,19 @@
 import { boundedJSON, canonicalJSON, required } from '../data-json.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
-import { validateEditionCampaignProject, validateEditionLessonBundle } from './project.mjs';
+import {
+  validateEditionCampaignProject,
+  validateEditionLessonBundle,
+  validateEditionRewardBundle,
+} from './project.mjs';
+import { validateCompletionRewards } from '../rewards/model.mjs';
+import { verifyCampaignLocalization } from './localization.mjs';
 import { validateEditionPresentation } from './presets.mjs';
-import { freezeEdition, resolveEditionSelection, validateEditionRuntimeCatalog } from './model.mjs';
+import {
+  freezeEdition,
+  resolveEditionSelection,
+  resolveEditionAssets,
+  validateEditionRuntimeCatalog,
+} from './model.mjs';
 
 /** Merge only already-selected, individually validated projects. Conflicting
  * immutable records fail rather than letting fetch order change a campaign. */
@@ -109,6 +120,43 @@ export async function loadEditionBootstrap({
         ]),
     ),
   );
+  const rewards = Object.fromEntries(
+    await Promise.all(
+      selection.campaigns
+        .filter((campaign) => campaign.rewardPath)
+        .map(async (campaign) => [
+          campaign.id,
+          validateEditionRewardBundle(
+            await read(campaign.rewardPath),
+            sources[selection.campaigns.indexOf(campaign)],
+            {
+              descriptor: campaign,
+              editionId: selection.edition.id,
+              presets: boot?.presets,
+              themes: boot?.themes?.themes ?? [],
+              editionProject: source,
+              lessons: Object.values(lessons).flat(),
+              assets: resolveEditionAssets(catalog, { editionId: selection.edition.id }),
+            },
+          ),
+        ]),
+    ),
+  );
+  validateCompletionRewards(Object.values(rewards).flat());
+  const localizations = Object.fromEntries(
+    await Promise.all(
+      selection.campaigns
+        .filter((campaign) => campaign.localizationPath)
+        .map(async (campaign) => [
+          campaign.id,
+          await verifyCampaignLocalization(
+            await read(campaign.localizationPath),
+            sources[selection.campaigns.indexOf(campaign)],
+            campaign,
+          ),
+        ]),
+    ),
+  );
   if (boot)
     validateEditionPresentation({
       catalog,
@@ -126,5 +174,15 @@ export async function loadEditionBootstrap({
     preserveOriginalThemes: true,
     source,
   });
-  return freezeEdition({ catalog, selection, sources, source, boot, lessons, route });
+  return freezeEdition({
+    catalog,
+    selection,
+    sources,
+    source,
+    boot,
+    lessons,
+    route,
+    ...(Object.keys(rewards).length ? { rewards } : {}),
+    ...(Object.keys(localizations).length ? { localizations } : {}),
+  });
 }

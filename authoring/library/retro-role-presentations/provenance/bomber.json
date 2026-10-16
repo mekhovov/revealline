@@ -1,0 +1,50 @@
+{
+  "format": "retro-player-body-original.v1",
+  "role": "bomber",
+  "proposedSourceId": "retro-bomber-v1",
+  "tool": "image_gen.imagegen",
+  "generationMode": "Fresh text-only built-in original, no image reference input",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-2f9013d2-f173-4f36-bca7-b48994831fc9.png",
+  "original": {
+    "path": "originals/bomber.png",
+    "bytes": 925255,
+    "sha256": "5e553cfe6578e5acd3b0bdd6dce761f1db41225d976356d61f82cdfdb5d6c96c",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/bomber.txt",
+    "sha256": "01124284fb46fd3eeefe789303d51f47b9e9943fc2ede6da2fa9299cffd1d2e4"
+  },
+  "copy": {
+    "mode": "APFS fclonefileat, exclusive destination, no fallback or transformation",
+    "toolInode": 76058557,
+    "worktreeInode": 76059164
+  },
+  "transforms": [],
+  "runtimeBinding": null,
+  "inspection": "Full source and alpha checks recorded in full-image-inspection.json and alpha-inspection.json; completed native CSS compositing and its limits are in ../inspection/game-scale-receipt.json."
+}

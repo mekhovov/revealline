@@ -1,0 +1,198 @@
+{
+  "capturedAt": "2026-10-15T23:36:16.550155+00:00",
+  "sourceRevision": "fac28c1d6149ee4801b9b5353c1084c5ff295576",
+  "pr": "https://github.com/mekhovov/revealline/pull/1531",
+  "exactCloudRun": 38822073858,
+  "allOptionalAndSelectedCompanyMembersVerified": true,
+  "optionalArchives": 6,
+  "optionalClosures": 3,
+  "packagedCapacityCases": 9,
+  "logical23OfferBytes": 404703892,
+  "normalNativeStageHTTPFiles": 181,
+  "nativeAccepted": false,
+  "all23NativeCoexistenceAccepted": false,
+  "originalPublicProfileRetentionAccepted": false,
+  "publicAccepted": false,
+  "files": [
+    {
+      "path": "qualification-receipt.json",
+      "bytes": 1601,
+      "sha256": "bc2b0ac485e813897256021a8b5ebed6a06270f8dfb4ad473a9d7feed3004f17"
+    },
+    {
+      "path": "all-package-members-receipt.json",
+      "bytes": 2260,
+      "sha256": "736c11509d467d18a99b6e16d2e5925fbbd33a7be689c803b18abac3043ff8ce"
+    },
+    {
+      "path": "archive-import-closure-receipt.json",
+      "bytes": 424,
+      "sha256": "20386cde0bbfc6d297e02ad33aacd74c164c8bba5f8adea70a2856775e59965a"
+    },
+    {
+      "path": "packaged-capacity-checks.tap",
+      "bytes": 2320,
+      "sha256": "7ffe96b6485e4e0ae763d318b0b84ad6e6b5962083e3250eb5fc2dc401e62c4e"
+    },
+    {
+      "path": "all-regional-offers-accounting-receipt.json",
+      "bytes": 13264,
+      "sha256": "fa96f5af95edef4533480da82cbc5e4efbd874738a18d2a80c66e6e2fe8552f7"
+    },
+    {
+      "path": "company-original-members-receipt.json",
+      "bytes": 1555,
+      "sha256": "e83721897b4fa96c0806e29ecf7d38001ffdec0efe1c23103fb74946e5de3a1b"
+    },
+    {
+      "path": "cloud-job-final-state.json",
+      "bytes": 9805,
+      "sha256": "81f13b8908df8ac57f5ffa34a4d67c3bd9798ac62fd7e6bb6a63cd4b55bb7c72"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-capacity-player-9210/review-identity.json",
+      "bytes": 52444,
+      "sha256": "867a3d1eb52e3aeb0390e5ba5937ae9b7a07ec9a7de2df346e358abbfd61e904"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-capacity-player-9210/http-identity-receipt.json",
+      "bytes": 45976,
+      "sha256": "332579bbc34e97278f96a47ef2e777637c69d339f89ef65a4319d21123a2aeaa"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-capacity-player-9210/native-handoff.txt",
+      "bytes": 1800,
+      "sha256": "f4a32be4585c3496882ead22573744d6cea5a1a442c68fe5b1d0b72da5d60648"
+    }
+  ],
+  "cloudSteps": [
+    {
+      "name": "candidate",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "conclusion": "success"
+        },
+        {
+          "name": "Read explicit automated-suite policy",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify generated source and public media eligibility",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run focused company, persistence, offline and artifact tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify both source release formats and edition admission",
+          "conclusion": "success"
+        },
+        {
+          "name": "Compile twice and inspect original candidate ZIP members",
+          "conclusion": "success"
+        },
+        {
+          "name": "Save small capacity metadata for review",
+          "conclusion": "success"
+        },
+        {
+          "name": "Save immutable candidates for review",
+          "conclusion": "success"
+        },
+        {
+          "name": "Report qualification boundary",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "optional-practice",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "conclusion": "success"
+        },
+        {
+          "name": "Read explicit automated-suite policy",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify optional routes, replay, input and installation isolation",
+          "conclusion": "success"
+        },
+        {
+          "name": "Freeze twice and verify optional package artifacts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f",
+          "conclusion": "success"
+        },
+        {
+          "name": "Report optional-package boundary",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "remaining": [
+    "Independent exact9210 native result and receipt",
+    "Normal PR candidate/check tail",
+    "All23 actual coexistence under adequate stable device storage",
+    "Original public closing-connection/zero-visible-saves diagnosis and retention evidence",
+    "Normal public rollout and remaining-map first-launch checks"
+  ],
+  "scope": "All evidence is exact-head/cloud/archive/test/HTTP preparation only. Existing runtime/package budgets unchanged except directly approved regional retained512MiB; Worldpack default256MiB/revision ceiling256 remain. Existing stages, failed packages and player data preserved. No browser opened or storage mutated by this lane."
+}

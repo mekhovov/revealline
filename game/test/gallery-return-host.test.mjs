@@ -1,3 +1,5 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 // Actual Solo, Collection markup, earned originals and picture close handlers.
 // Native default/queued dialog events, IndexedDB completion and decoding are
 // modeled boundaries; these tests do not establish browser layout or pixels.
@@ -145,17 +147,19 @@ async function setup(t) {
       this.released++;
     }
   }
-  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  // Keep the shared complete inert Canvas boundary: the live field guide also
+  // paints during startup. Only gallery rendering is modeled below.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const h = await soloPage(t, {
     storage,
     soundtrackIndexedDB: reads.indexedDB,
     pictures: { Image },
+    waitForPictures: false,
   });
   // Real browser document.defaultView and global window have one identity.
   Object.assign(h.win, h.doc.defaultView);
   h.doc.defaultView = h.win;
-  h.$('start-button').click();
+  await activateHostAction(h.$('start-button'));
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
@@ -166,7 +170,8 @@ async function setup(t) {
   h.frame(0);
   await settle(
     () =>
-      JSON.parse(storage.getItem('revealline.suspended.dev.v1') ?? 'null')?.replay?.ticks === 20,
+      nativeSession(JSON.parse(storage.getItem('revealline.suspended.dev.v1') ?? 'null'))?.replay
+        ?.ticks === 20,
   );
   h.$('collection-button').focus();
   h.$('collection-button').click();

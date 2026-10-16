@@ -1,24 +1,85 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script
+      src="../presentation/theme-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="interface:creator.pageTitle">Create a picture campaign · RevealLine</title>
+    <title data-i18n="interface:creator.pageTitle">Create a picture campaign · FPV / LINE</title>
     <link rel="stylesheet" href="./creator.css" />
-    <script type="module" src="./studio.mjs"></script>
+    <script
+      src="./studio.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
+    <link rel="stylesheet" href="../ui/brand-identity.css" />
   </head>
   <body>
     <div data-language-control></div>
     <header>
-      <a href="../" data-i18n="interface:creator.backToRevealLine">← RevealLine</a
+      <a class="fpv-line-brand fpv-line-brand--compact" href="../"
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE" /></a
       ><a href="../studio/" data-i18n="tools:contentStudio">Content Studio</a
       ><a href="#installed" data-i18n="interface:creator.myInstalledCreations"
         >My installed creations</a
-      ><a href="../community/" data-i18n="interface:creator.communityCampaigns"
+      ><a href="../community/store.html" data-i18n="interface:creator.communityCampaigns"
         >Community campaigns</a
       ><a href="./team.html" data-i18n="interface:creator.teamStudio.openCreator"
         >Create a Team campaign</a
@@ -42,6 +103,56 @@
         Choose one PNG, JPEG or WebP picture to begin.
       </p>
       <p id="save-status" role="status"></p>
+      <p>
+        <a href="../playground/#symbol-generator" data-i18n="tools:symbolLink"
+          >Create a level from text or a symbol image →</a
+        >
+      </p>
+      <section class="panel">
+        <h2>Social Drone · Sky Watch</h2>
+        <p data-i18n="interface:creator.socialDroneExampleHelp">
+          Try a complete video-reward level, then edit it to learn how posters and victory clips
+          work.
+        </p>
+        <button
+          id="social-drone-example"
+          disabled
+          data-i18n="interface:creator.socialDroneExampleOpen"
+        >
+          Open Social Drone video example
+        </button>
+        <div class="creator-video-recipe" aria-labelledby="video-recipe-title">
+          <p class="eyebrow" data-i18n="interface:creator.videoRecipeEyebrow">VIDEO LEVEL RECIPE</p>
+          <h3 id="video-recipe-title" data-i18n="interface:creator.videoRecipeTitle">
+            From recording to a mobile-ready victory
+          </h3>
+          <ol>
+            <li data-i18n="interface:creator.videoRecipeChoose">
+              Choose an MP4 or WebM recording. The Studio prepares a fast-start H.264/AAC MP4 for
+              iPhone and Android while keeping the work on this device.
+            </li>
+            <li data-i18n="interface:creator.videoRecipePoster">
+              Add a matching picture with the same filename, or let the Studio capture a poster
+              frame. This is the fully revealed image players enjoy before the video begins.
+            </li>
+            <li data-i18n="interface:creator.videoRecipeInspect">
+              Select Inspect media, review the poster and playback range, then generate the level.
+            </li>
+            <li data-i18n="interface:creator.videoRecipeChallenge">
+              Playtest the generated route. Adjust coverage, obstacles and enemies until the win
+              feels earned and remains fair on touch controls.
+            </li>
+            <li data-i18n="interface:creator.videoRecipeCelebrate">
+              Win once in Preview and watch the whole sequence: completed board, celebration, poster
+              transition, video, captions and sound.
+            </li>
+            <li data-i18n="interface:creator.videoRecipePublish">
+              Approve the picture and level, then install or export the .rlpack. Reopen it from My
+              installed creations for one final mobile check.
+            </li>
+          </ol>
+        </div>
+      </section>
       <section class="panel" aria-labelledby="choose-title">
         <h2 id="choose-title" data-i18n="interface:creator.choosePictureHeading">
           1. Choose your picture
@@ -52,6 +163,8 @@
             <input
               id="image"
               type="file"
+              multiple
+              disabled
               accept="image/png,image/jpeg,image/webp,video/mp4,video/webm"
           /></label>
           <p id="intake-help" class="muted" data-i18n="interface:creator.dropPictureHelp">
@@ -60,19 +173,19 @@
         </div>
         <label
           ><span data-i18n="interface:creator.collectionName">Collection name</span>
-          <input id="name" maxlength="160" value="My picture campaign"
+          <input id="name" disabled maxlength="160" value="My picture campaign"
         /></label>
         <label
           ><span data-i18n="interface:creator.levelTitle">Level title</span>
-          <input id="mission-title" maxlength="160" value="First picture"
+          <input id="mission-title" disabled maxlength="160" value="First picture"
         /></label>
         <label
           ><span data-i18n="interface:pictureDescription">Picture description</span>
-          <input id="description" maxlength="512" value="My reveal picture"
+          <input id="description" disabled maxlength="512" value="My reveal picture"
         /></label>
         <label
           ><span data-i18n="interface:creator.pictureFitting">Picture fitting</span>
-          <select id="fit">
+          <select id="fit" disabled>
             <option value="contain" data-i18n="interface:creator.fitWholePicture">
               Fit whole picture
             </option>
@@ -109,15 +222,15 @@
           </summary>
           <label
             ><span data-i18n="tools:creator">Creator</span>
-            <input id="creator-credit" maxlength="512" value="Anonymous creator"
+            <input id="creator-credit" disabled maxlength="512" value="Anonymous creator"
           /></label>
           <label
             ><span data-i18n="interface:creator.pictureCredit">Picture credit</span>
-            <input id="picture-credit" maxlength="512" value="Creator supplied picture"
+            <input id="picture-credit" disabled maxlength="512" value="Creator supplied picture"
           /></label>
           <label
             ><span data-i18n="interface:creator.licenseTerms">License or sharing terms</span>
-            <input id="license" maxlength="512" value="No additional license granted"
+            <input id="license" disabled maxlength="512" value="No additional license granted"
           /></label>
         </details>
         <div class="actions">
@@ -281,7 +394,7 @@
           ><span data-i18n="interface:creator.portableOrSourceBackup"
             >Portable campaign or private source backup</span
           >
-          <input id="import" type="file" accept=".rlpack,.rlsource"
+          <input id="import" disabled type="file" accept=".rlpack,.rlsource"
         /></label>
         <p data-i18n="interface:creator.backupExplanation">
           A .rlpack includes reviewed runtime posters and its selected complete victory videos. A
@@ -311,5 +424,44 @@
         </div>
       </section>
     </main>
+    <aside
+      class="creator-retention"
+      aria-label="Download retention"
+      data-i18n-aria-label="interface:downloadRetention"
+    >
+      <details id="creator-retention" class="panel">
+        <summary data-i18n="interface:downloadRetention">Download retention</summary>
+        <p
+          id="creator-retention-help"
+          data-i18n="interface:askThisBrowserToProtectThisSiteSSavedData"
+        >
+          Ask this browser to protect this site's saved data from automatic removal. This does not
+          download files or replace backups.
+        </p>
+        <button
+          id="creator-retention-button"
+          type="button"
+          disabled
+          aria-describedby="creator-retention-help creator-retention-status"
+          data-i18n="interface:keepDownloadsOnThisDevice"
+        >
+          Keep downloads on this device
+        </button>
+        <p
+          id="creator-retention-status"
+          role="status"
+          aria-live="polite"
+          data-i18n="interface:retentionHasNotBeenChecked"
+        >
+          Retention has not been checked.
+        </p>
+      </details>
+    </aside>
+
+    <script
+      src="../ui/authoring-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </body>
 </html>

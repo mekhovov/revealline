@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-28T15:05:16.532635+00:00",
+  "parentSource": "9a86e8f50621473a7508c9e723f86bf48bcd38eb",
+  "draftPullRequest": 761,
+  "published": false,
+  "focused": {
+    "tests": 105,
+    "pass": 105,
+    "fail": 0,
+    "skip": 0,
+    "cancelled": 0
+  },
+  "gates": {
+    "lint": "pass",
+    "format": "pass",
+    "nativeFormat": "pass",
+    "validate": "pass",
+    "motionSyntax": "pass",
+    "authoringLint": "pass",
+    "authoringFormat": "pass",
+    "fullSuite": "waived-not-passed",
+    "ordinaryBuild": "required-on-integrated-source-not-rerun",
+    "teamProductionReview": "prior-one-pass-one-failure-unresolved"
+  },
+  "optionalCandidateBytes": 23583,
+  "coreClosureChange": {
+    "solo": 0,
+    "versus": 0,
+    "team": 0
+  },
+  "browserEvidence": {
+    "viewports": [
+      [1280, 800],
+      [390, 844],
+      [844, 390]
+    ],
+    "candidateMissionWin": {
+      "mission": "first-return",
+      "tick": 442,
+      "seconds": 3.68,
+      "coverage": 0.343,
+      "target": 0.3,
+      "lives": 3,
+      "score": 8160
+    },
+    "physicalDevices": false,
+    "productionArtApproval": false
+  },
+  "files": [
+    {
+      "path": "authoring-format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "authoring-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "benchmark-landscape.png",
+      "bytes": 26225,
+      "sha256": "0dc8cd330dc24e0cb0c8f09bcf4a3d93c00b53308f682cffbd556609794f6a37"
+    },
+    {
+      "path": "benchmark-win.png",
+      "bytes": 130669,
+      "sha256": "53fc2264be01e734eb15f3995c00fee434c9e0abf177af2b04b9da84b97324b3"
+    },
+    {
+      "path": "default-command-comparison.log",
+      "bytes": 84,
+      "sha256": "a3ce4573493735c33763173969d7c4d9639f9c697e735863fb0265864d72f940"
+    },
+    {
+      "path": "focused.tap",
+      "bytes": 24631,
+      "sha256": "c71977910cf97ecd341be0d43d4fdf293b48989370f3bc4f35bb37193717c4e4"
+    },
+    {
+      "path": "format.log",
+      "bytes": 216,
+      "sha256": "546026481d5775f491de85cfb08571c5dded91e55565ecc1293188f4ba42bca2"
+    },
+    {
+      "path": "lint.log",
+      "bytes": 166,
+      "sha256": "2332746d8c32d876c776d93502d4771ce1b9738bc5bc423391540941a0ddd95a"
+    },
+    {
+      "path": "native-format.log",
+      "bytes": 255,
+      "sha256": "074b697b506d8b888ba2b284391a2aec86c3c70b9432a93e981bc65d2f58e08c"
+    },
+    {
+      "path": "scout-board-comparison.png",
+      "bytes": 81095,
+      "sha256": "68f5cff7dc6ea8e75f836ba3930343b462273e1f42266803d060bdc47daa6507"
+    },
+    {
+      "path": "studio-rotors-desktop.png",
+      "bytes": 80792,
+      "sha256": "12602f2f944582bd0ff70ae654745df084e8664f6a13b20360dbc3c1b3d8084b"
+    },
+    {
+      "path": "studio-rotors-uk-phone.png",
+      "bytes": 45638,
+      "sha256": "b016fc438138ae5d2b33bef6b823adfc2791655f7146e43ed441cbdb7d32ec72"
+    },
+    {
+      "path": "validate.log",
+      "bytes": 1182,
+      "sha256": "8ae3073c51590c1393f0f08c1387d6314bc143f365a9d70acc70cf36a4714c81"
+    },
+    {
+      "path": "focused-followup.tap",
+      "bytes": 27409,
+      "sha256": "48b41c19af32c02073aaa8b52e84b213e81789f9b261feab67c908effcdf12c9"
+    },
+    {
+      "path": "cancel-initial-focus.png",
+      "bytes": 39268,
+      "sha256": "a9dd13fb2dc5fca45ed0f3b9a2bda867351a68880b2917d9f8e8d4d5389a6764"
+    }
+  ],
+  "logNormalization": {
+    "lint.log": {
+      "rawBytes": 167,
+      "rawSha256": "e370760101251ff05f1cd882320d73cd50099f4b574ab292d4da3e38b10d74f5",
+      "change": "Removed one trailing blank line from successful command output; no diagnostic lines changed."
+    }
+  },
+  "followup": {
+    "parentSource": "0b43aaa06e50bf4ca78cbd90c3c6e05afe631269",
+    "scope": "Operation-aware Cancel focus and accurate first-load cancellation status",
+    "focused": {
+      "tests": 110,
+      "pass": 110,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0
+    },
+    "gates": {
+      "scopedLint": "pass",
+      "scopedFormat": "pass",
+      "syntax": "pass",
+      "diffCheck": "pass"
+    },
+    "browser": "Actual app with controlled 9-second theme/candidate-manifest delay: initial, appearance, collapsed setup and late response; keyboard/native select actions; not physical controller or touch certification."
+  }
+}

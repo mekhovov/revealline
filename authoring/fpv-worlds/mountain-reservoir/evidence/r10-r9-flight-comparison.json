@@ -1,0 +1,419 @@
+{
+  "format": "FPVReservoirR9R10FlightComparison.v1",
+  "status": "passed",
+  "candidateSource": "60b5161950563d76ef4bf87c97ed6f6d3f716632",
+  "scope": "Fresh r10 ordinary flight and independent replay qualification; all retained r9 physical fields and recorded inputs remain exact. Only courseIdentity differs inside each proof because the course revision changes. Visual, native browser, offline and hardware acceptance remain separate.",
+  "r9PackSHA256": "28a50cb742ce0825edbf760d42fb93fb4147daee1b23f590ef7baf59a4023894",
+  "r10PackSHA256": "172582b23ccdfa251d379dd3875cf90eba0a114593827b7bcb01bc000707b145",
+  "qualificationChecks": 575,
+  "archives": [
+    {
+      "path": "mountain-reservoir-r10-proof-part-1-of-1.json",
+      "bytes": 908574,
+      "sha256": "231479765bfd49f1663c5caeb98de695f3d4f7ed28f318e74729b91489fddd78",
+      "records": 16
+    }
+  ],
+  "checks": [
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ],
+      "proofChanges": [
+        "courseIdentity"
+      ],
+      "recordedInputsExact": true
+    }
+  ]
+}

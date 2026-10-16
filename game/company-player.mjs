@@ -1,6 +1,12 @@
+import {
+  resolveEditionAppearanceDefault,
+  resolveEditionAppearanceThemes,
+} from './editions/model.mjs';
+import { installThemeHost } from './presentation/theme-host.mjs';
+import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
-import { resolveEditionContext } from './edition-context.mjs';
+import { editionPublicSlug, resolveEditionContext } from './edition-context.mjs';
 import { createCompanyStorage } from './company-storage.mjs';
 import { createCandidateSoloHost } from './content-design/solo-host.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
@@ -8,6 +14,7 @@ import { claimProfileWriter } from './profile-writer.mjs';
 import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
 import { attachInput } from './ui/input.mjs';
 import { Soundscape } from './ui/audio.mjs';
+import { attachDefeatSoundControls } from './ui/defeat-sound-controls.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
 import { createTouchPreferences } from './touch-preferences.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
@@ -35,6 +42,12 @@ import {
   selectPreparedEdition,
 } from './editions/offline-client.mjs';
 import { localizedAttribute, localizedText, t } from './i18n/index.mjs';
+import { canonicalCompanyLevelKey, officialLevelNumber } from './level-numbering.mjs';
+import {
+  applyLevelCardPresentation,
+  createLevelCardView,
+  levelCardPresentation,
+} from './ui/level-card.mjs';
 
 const $ = (id) => document.getElementById(id);
 const BACKUP_LIMITS = Object.freeze({
@@ -227,10 +240,23 @@ async function main() {
       if (message) report(message, true);
     },
   });
+  const themeHost = installThemeHost({
+    document,
+    window,
+    displayPreferences,
+    appearanceDefault: resolveEditionAppearanceDefault(selection),
+    appearanceThemes: resolveEditionAppearanceThemes(catalog, {
+      editionIds: [selection.edition.id],
+    }),
+    getStorage: () => storage,
+  });
+  await themeHost.ready;
   displayPreferences.subscribe((value) => {
     preferences.reduced = value.effectiveReducedEffects;
     $('reduced-motion').checked = value.effectiveReducedEffects;
     document.documentElement.dataset.reducedMotion = String(value.effectiveReducedEffects);
+    document.documentElement.dataset.textSize = value.textSize;
+    document.body.dataset.textFace = value.textFace;
   });
   $('show-grid').checked = preferences.grid;
   $('difficulty').value = preferences.difficulty;
@@ -253,6 +279,8 @@ async function main() {
       if (message) report(message, true);
     },
   });
+  painter.setArcadeProvider(() => themeHost.effectivePreferences());
+  painter.setInterfaceProvider(() => themeHost.snapshot());
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({
     audioMaster,
@@ -261,6 +289,18 @@ async function main() {
     },
   });
   const sound = new Soundscape({ audioMaster });
+  const defeatSounds = attachDefeatSoundControls({
+    document,
+    window,
+    container: $('settings-dialog'),
+    prefix: 'company-',
+  });
+  sound.setDestructionPreferences(() => defeatSounds.snapshot());
+  const menuAudio = attachPublishedAudio({
+    sound,
+    ready: Promise.resolve(null),
+    getHost: () => null,
+  });
   if (theme.soundtrack) sound.setTrack(theme.soundtrack);
   let current = null,
     pendingSession = null,
@@ -306,6 +346,13 @@ async function main() {
   };
   const completed = (id) =>
     arcadeCleared(id) && (!lessonFor(id) || assignment(id)?.status === 'complete');
+  const progressState = (id) => {
+    if (!completed(id)) return { state: 'new', bestStars: null };
+    return {
+      state: 'completed',
+      bestStars: profile.bestStars('solo', missionFor(id)?.id),
+    };
+  };
   const unlocked = (id) => {
     const campaign = source.campaigns.find((c) => c.missionIds.includes(id));
     const i = campaign?.missionIds.indexOf(id);
@@ -368,6 +415,7 @@ async function main() {
         runId: current.runId,
         gameplayId: companySimulationIdentity(current.run),
         difficulty: current.selection.difficulty,
+        stars: current.run.medal === 'gold' ? 3 : current.run.medal === 'silver' ? 2 : 1,
       });
     } catch (error) {
       report(() => t('interface:companyPlayer.completedInTab', { error: error.message }), true);
@@ -407,6 +455,7 @@ async function main() {
   }
   function resume() {
     if (!current || preparing || ['won', 'lost'].includes(current.run.status)) return;
+    if (sound.enabled) void sound.resume();
     input.clear();
     paused = false;
     accumulator = 0;
@@ -474,7 +523,12 @@ async function main() {
           if (message) report(message, true);
         },
       });
-      staged.setLevel(run.level, { seed: run.seed });
+      staged.setArcadeProvider(() => themeHost.effectivePreferences());
+      staged.setInterfaceProvider(() => themeHost.snapshot());
+      staged.setLevel(run.level, {
+        seed: run.seed,
+        ...(restored ? { arcadeCollection: null } : {}),
+      });
       await staged.setLook(attempt.theme, attempt.theme.player, attempt.visualOverrides);
       if (staged.lookWarning) throw new Error(staged.lookWarning);
       if (ticket !== generation) {
@@ -569,25 +623,88 @@ async function main() {
         }),
       );
       content.append(number, node('h3', campaign.name), node('p', first.design.lesson));
-      const select = node('select');
-      localizedAttribute(select, 'aria-label', () =>
-        t('interface:companyPlayer.missionInCampaign', { campaign: campaign.name }),
-      );
+      const levels = node('div', undefined, 'company-level-list');
       campaign.missionIds.forEach((id, i) => {
-        const m = source.missions.find((m) => m.id === id),
-          option = node('option', `${i + 1}. ${m.name}${completed(id) ? ' ✓' : ''}`);
-        option.value = id;
-        option.disabled = !unlocked(id);
-        select.append(option);
+        const mission = source.missions.find((candidate) => candidate.id === id);
+        const canonicalLevelKey = canonicalCompanyLevelKey({
+          campaignId: campaign.id,
+          missionId: id,
+        });
+        const presentation = levelCardPresentation({
+          globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+          campaignLevelNumber: i + 1,
+          campaignLevelCount: campaign.missionIds.length,
+          collection: campaign.name,
+          progressState: progressState(id),
+        });
+        const view = createLevelCardView({
+          document,
+          className: 'company-level-card',
+          classes: {
+            campaignHeading: 'company-level-campaign-heading',
+            meta: 'company-level-meta',
+            number: 'company-level-number',
+            position: 'company-level-position',
+            title: 'company-level-title',
+            campaign: 'company-level-campaign',
+            progressGroup: 'company-level-status',
+            progress: 'company-level-status-text',
+            stars: 'company-level-stars',
+            status: 'company-level-action',
+            preview: 'company-level-preview',
+            check: 'company-level-check',
+          },
+        });
+        const level = view.button;
+        level.disabled = !unlocked(id);
+        applyLevelCardPresentation(view, presentation);
+        localizedText(view.number, () =>
+          t('interface:missionLibrary.levelNumber', {
+            number: presentation.globalLevelNumber,
+          }),
+        );
+        localizedText(view.position, () =>
+          t('interface:missionLibrary.campaignPosition', {
+            position: i + 1,
+            total: campaign.missionIds.length,
+          }),
+        );
+        localizedText(view.title, mission.name);
+        localizedText(view.campaign, campaign.name);
+        localizedText(view.campaignHeading, campaign.name);
+        view.campaign.hidden = true;
+        view.campaignHeading.hidden = true;
+        view.preview.hidden = true;
+        view.status.hidden = true;
+        view.stars.setAttribute('aria-hidden', 'true');
+        localizedText(view.progress, () =>
+          !unlocked(id)
+            ? t('common:status.locked')
+            : presentation.completed
+              ? presentation.bestStars === null
+                ? t('interface:missionLibrary.completedStarsUnknown')
+                : t('interface:missionLibrary.completedStars', {
+                    stars: presentation.bestStars,
+                  })
+              : t('interface:missionLibrary.notCompleted'),
+        );
+        localizedAttribute(level, 'aria-label', () => {
+          const completion = !unlocked(id)
+            ? t('common:status.locked')
+            : presentation.completed
+              ? presentation.bestStars === null
+                ? t('interface:missionLibrary.completedStarsUnknown')
+                : t('interface:missionLibrary.completedStars', {
+                    stars: presentation.bestStars,
+                  })
+              : t('interface:missionLibrary.notCompleted');
+          return `${t('interface:missionLibrary.levelNumber', {
+            number: presentation.globalLevelNumber,
+          })}. ${mission.name}. ${campaign.name}, ${presentation.campaignLabel}. ${completion}. ${mission.design.lesson}`;
+        });
+        level.onclick = guard(() => start(id));
+        levels.append(level);
       });
-      select.value =
-        campaign.missionIds.find((id) => !completed(id) && unlocked(id)) ?? campaign.missionIds[0];
-      const button = node('button', undefined, 'primary');
-      localizedText(button, () => t('interface:companyPlayer.enterJourney'));
-      localizedAttribute(button, 'aria-label', () =>
-        t('interface:companyPlayer.enterJourneyNamed', { campaign: campaign.name }),
-      );
-      button.onclick = guard(() => start(select.value));
       const footer = node('div', undefined, 'campaign-footer');
       const connected = node('span'),
         kind = node('span'),
@@ -604,7 +721,7 @@ async function main() {
           : t('interface:companyPlayer.adventure'),
       );
       footer.append(connected, kind);
-      content.append(select, button, footer);
+      content.append(levels, footer);
       card.append(content);
       $('campaigns').append(card);
     });
@@ -743,7 +860,7 @@ async function main() {
     }
     const url = new URL(location.href);
     url.search = '';
-    url.searchParams.set('edition', editionId);
+    url.searchParams.set('edition', editionPublicSlug(editionId));
     location.assign(url.href);
   });
   for (const [button, id] of [
@@ -1016,10 +1133,11 @@ async function main() {
           if (current.run.status === 'respawning')
             command = { direction: null, boost: false, action: false, pickup: false };
           stepRun(current.run, command, FIXED_DT);
+          sound.feedback(true, current.theme, current.run, { command });
           recordInput(current.recorder, command);
           current.evidenceObserver?.observe(current.run);
           accumulator -= FIXED_DT;
-          for (const event of current.run.events) sound.event(event.type, event);
+          sound.events(current.run.events, current.run, current.theme);
           if (current.run.events.some((e) => e.type === 'capture.stopped')) {
             input.clear();
             command = { direction: null, boost: false, action: false, pickup: false };
@@ -1037,8 +1155,12 @@ async function main() {
         showGrid: preferences.grid,
         fullReveal: current.run.status === 'won',
         displayCSSWidth: canvas.clientWidth,
-        textFace: 'plain',
+        textFace:
+          (themeHost.snapshot()?.familyId ?? 'legacy') === 'legacy'
+            ? 'plain'
+            : displayPreferences.snapshot().textFace,
       });
+      sound.feedback(isPlaying(), current.theme, current.run);
       sound.update(isPlaying(), current.theme, current.run);
       refresh();
       if (now - autosave > 5000) {
@@ -1049,7 +1171,10 @@ async function main() {
     frame = requestAnimationFrame(update);
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) pause();
+    if (document.hidden) {
+      pause();
+      sound.suspend();
+    }
   });
   window.addEventListener('pagehide', (event) => {
     pause();
@@ -1059,7 +1184,11 @@ async function main() {
     input.destroy();
     current?.picture?.release();
     host.preparer.dispose();
+    menuAudio.close();
+    defeatSounds.dispose();
     sound.dispose?.();
+    painter.dispose();
+    themeHost.dispose();
     displayPreferences.dispose();
     touchPreferences.destroy();
     audioPreferences.dispose();

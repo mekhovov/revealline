@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 import { decideReleaseObjects, inspectReleaseObjects } from './fastline-release-objects.mjs';
 import { verifyEditionReview } from './edition-promotion.mjs';
+import { verifyOptionalPackageReview } from './optional-package-admission.mjs';
 
 const SHA = /^[0-9a-f]{40}$/u;
 const VERSION = /^v[0-9]+\.[0-9]+\.[0-9]+$/u;
@@ -27,6 +28,67 @@ export function releaseAssetNames(formatVersion = 1) {
   return RELEASE_ASSET_NAMES.map((name) =>
     formatVersion === 2 && name === 'source.tar' ? 'source-manifest.json' : name,
   );
+}
+
+export const ADDITIVE_RELEASE_ASSET_BYTE_LIMIT = 950_000_000;
+
+/** Metadata-only upload preflight. This does not admit an envelope, source,
+ * evidence or original bytes; the publisher still performs those checks. */
+export function additiveReleaseAssetBudget({ existing = [], proposed = [] } = {}) {
+  if (!Array.isArray(existing) || !Array.isArray(proposed))
+    throw new Error('additive release budget needs asset inventories');
+  const legacyCore = releaseAssetNames(1),
+    currentCore = releaseAssetNames(2),
+    reservedCore = new Set([...legacyCore, ...currentCore]),
+    remote = new Map();
+  const pin = (asset) => {
+    if (
+      !asset ||
+      typeof asset.name !== 'string' ||
+      !/^[A-Za-z0-9_.-]+$/u.test(asset.name) ||
+      asset.name === '.' ||
+      asset.name === '..' ||
+      !Number.isSafeInteger(asset.size) ||
+      asset.size <= 0
+    )
+      throw new Error('invalid additive release budget descriptor');
+    return {
+      name: asset.name,
+      size: asset.size,
+      digest: normalizeAssetDigest(asset.digest),
+    };
+  };
+  for (const asset of existing) {
+    const value = pin(asset);
+    if (remote.has(value.name)) throw new Error('duplicate release asset name');
+    remote.set(value.name, value);
+  }
+  if (remote.has('source.tar') && remote.has('source-manifest.json'))
+    throw new Error('mixed core source contracts in additive release budget');
+  const core = new Set(remote.has('source-manifest.json') ? currentCore : legacyCore);
+  const additions = new Map([...remote].filter(([name]) => !core.has(name)));
+  for (const asset of proposed) {
+    const value = pin(asset);
+    if (reservedCore.has(value.name))
+      throw new Error('proposed additive asset collides with the core release contract');
+    const previous = additions.get(value.name);
+    if (previous && (previous.size !== value.size || previous.digest !== value.digest))
+      throw new Error('Existing additive release asset differs; overwrite is forbidden.');
+    additions.set(value.name, value);
+  }
+  let bytes = 0;
+  for (const asset of additions.values()) {
+    bytes += asset.size;
+    if (!Number.isSafeInteger(bytes) || bytes > ADDITIVE_RELEASE_ASSET_BYTE_LIMIT)
+      throw new Error('additive edition assets exceed byte budget');
+  }
+  return Object.freeze({
+    files: additions.size,
+    bytes,
+    limitBytes: ADDITIVE_RELEASE_ASSET_BYTE_LIMIT,
+    remainingBytes: ADDITIVE_RELEASE_ASSET_BYTE_LIMIT - bytes,
+    publicEligible: false,
+  });
 }
 
 function assertRequest({ repository, version, sourceSha }) {
@@ -307,11 +369,20 @@ export async function verifyAdditiveEditionAssets({
   if (release.tag_name !== version || release.target_commitish !== sourceSha)
     throw new Error('edition release identity differs from the exact source request');
   const byName = new Map(additions.map((asset) => [asset.name, asset]));
-  if (!byName.has('editions.json') || !byName.has('edition-review.json'))
-    throw new Error('unexpected release assets lack a complete edition envelope and review');
+  const envelopes = [
+    ['editions.json', 'edition-review.json', verifyEditionReview],
+    ['optional-packages.json', 'optional-package-review.json', verifyOptionalPackageReview],
+  ].filter(([envelope, review]) => byName.has(envelope) || byName.has(review));
+  if (
+    !envelopes.length ||
+    envelopes.some(([envelope, review]) => !byName.has(envelope) || !byName.has(review))
+  )
+    throw new Error(
+      'unexpected release assets lack a complete edition envelope and review or optional package envelope and review',
+    );
   let bytesRead = 0;
   const consumed = new Map();
-  const read = async (name, limit = 950_000_000) => {
+  const read = async (name, limit = ADDITIVE_RELEASE_ASSET_BYTE_LIMIT) => {
     if (!/^[A-Za-z0-9_.-]+$/u.test(name) || name === '.' || name === '..')
       throw new Error('invalid additive edition asset path');
     if (consumed.has(name)) return consumed.get(name);
@@ -319,7 +390,8 @@ export async function verifyAdditiveEditionAssets({
     if (!asset || !Number.isSafeInteger(asset.size) || asset.size <= 0 || asset.size > limit)
       throw new Error(`missing or oversized edition asset: ${name}`);
     bytesRead += asset.size;
-    if (bytesRead > 950_000_000) throw new Error('additive edition assets exceed byte budget');
+    if (bytesRead > ADDITIVE_RELEASE_ASSET_BYTE_LIMIT)
+      throw new Error('additive edition assets exceed byte budget');
     const digest = normalizeAssetDigest(asset.digest);
     const bytes = await readAsset({
       repository,
@@ -335,23 +407,23 @@ export async function verifyAdditiveEditionAssets({
     consumed.set(name, bytes);
     return bytes;
   };
-  const envelopeBytes = await read('editions.json', 8_000_000);
-  const envelope = JSON.parse(Buffer.from(envelopeBytes).toString('utf8'));
-  const review = JSON.parse(
-    Buffer.from(await read('edition-review.json', 8_000_000)).toString('utf8'),
-  );
   const commit = await request(`/repos/${repository}/git/commits/${sourceSha}`);
-  if (
-    commit.sha !== sourceSha ||
-    !SHA.test(commit.tree?.sha || '') ||
-    envelope.version !== version ||
-    envelope.sourceRevision !== sourceSha ||
-    envelope.sourceTree !== commit.tree.sha
-  )
+  if (commit.sha !== sourceSha || !SHA.test(commit.tree?.sha || ''))
     throw new Error('edition envelope differs from the exact release source commit and tree');
-  await verifyEditionReview(envelopeBytes, review, {
-    read: (descriptor) => read(descriptor.path, descriptor.bytes),
-  });
+  for (const [envelopeName, reviewName, verify] of envelopes) {
+    const envelopeBytes = await read(envelopeName, 8_000_000);
+    const envelope = JSON.parse(Buffer.from(envelopeBytes).toString('utf8'));
+    const review = JSON.parse(Buffer.from(await read(reviewName, 8_000_000)).toString('utf8'));
+    if (
+      envelope.version !== version ||
+      envelope.sourceRevision !== sourceSha ||
+      envelope.sourceTree !== commit.tree.sha
+    )
+      throw new Error('edition envelope differs from the exact release source commit and tree');
+    await verify(envelopeBytes, review, {
+      read: (descriptor) => read(descriptor.path, descriptor.bytes),
+    });
+  }
   if (consumed.size !== additions.length)
     throw new Error('unexpected release asset outside the admitted edition closure');
   return [...consumed.keys()].sort();

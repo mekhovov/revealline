@@ -1,0 +1,25 @@
+{
+  "sourceHead": "69c8dd10148b657db32da04219ada71e864156a9",
+  "method": "A Node ESM load hook replaced every changed .mjs file import with git show HEAD:<path>, including game/i18n/catalogs.mjs. Worktree files were not modified.",
+  "interceptedPathSet": [
+    "game/i18n/catalogs.mjs",
+    "game/presentation/industrial-arcade.mjs",
+    "game/presentation/theme-bootstrap.mjs",
+    "game/presentation/theme-system.mjs",
+    "game/test/theme-collection-expansion.test.mjs",
+    "game/test/unified-appearance.test.mjs",
+    "optional-practice/civilian-fpv/sim-presentation.mjs",
+    "optional-practice/civilian-fpv/world-visuals.mjs",
+    "scripts/refresh-interface-material-grain.mjs"
+  ],
+  "testFile": "game/test/coop-shared-settings.test.mjs",
+  "testNamePattern": "a controller selects Team Settings and paused quick sound without resuming",
+  "result": {
+    "exitCode": 1,
+    "pass": 0,
+    "fail": 1,
+    "skipped": 15
+  },
+  "failure": "Unexpected storage write: revealline.couch-radio-setup.v1 = {\"entries\":[],\"format\":\"RadioSetup.v1\"}",
+  "limitation": "This verifies HEAD JavaScript runtime imports; filesystem-read CSS and fixture assets remain the current unchanged or shared files."
+}

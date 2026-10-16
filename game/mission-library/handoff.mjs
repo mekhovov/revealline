@@ -2,6 +2,7 @@ import { isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
 import { LIBRARY_COLLECTIONS, LIBRARY_LIFECYCLES, LIBRARY_MODES } from './library.mjs';
 
 export const MISSION_LIBRARY_HANDOFF_PARAM = 'library-mission';
+export const MISSION_LIBRARY_INTENT_PARAM = 'library-intent';
 export const MISSION_LIBRARY_STATE_PREFIX = 'revealline.mission-library.selector.v1';
 const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
 const UNPAIRED_SURROGATE = /[\ud800-\udfff]/u;
@@ -25,12 +26,16 @@ function modeId(value) {
 const journeyForMode = (journey, mode) =>
   journey === 'legacy' ||
   (mode === 'team'
-    ? journey === 'team-cultural-specialist-originals-2'
+    ? ['team-cultural-specialist-originals-2', 'team-expedition-v1', 'humanoid-hunt-v1'].includes(
+        journey,
+      )
     : isAuthoredJourneyRouteId(journey));
 // These finite historical Team routes are retained by relay-rescue's entry
 // factory. Source navigation may return to them; this does not qualify any new
 // destination mission for the unified library or fabricate a Team edition.
 const TEAM_SOURCE_ROUTES = Object.freeze([
+  'humanoid-hunt-v1',
+  'team-expedition-v1',
   'team-greybox',
   'team-originals',
   'team-pressure-originals-1',
@@ -61,6 +66,34 @@ export function readMissionLibraryHandoff(params) {
   if (!values.length) return null;
   if (values.length !== 1) throw new TypeError('Duplicate mission handoff parameters.');
   return missionId(values[0]);
+}
+
+/** Explicit Solo briefing intent; it never grants installation or progression. */
+export function readMissionLibraryReady(params) {
+  if (!(params instanceof URLSearchParams))
+    throw new TypeError('Mission handoff needs URLSearchParams.');
+  const values = params.getAll('library-ready');
+  if (!values.length) return false;
+  if (
+    values.length !== 1 ||
+    values[0] !== '1' ||
+    !readMissionLibraryHandoff(params) ||
+    params.getAll('journey').length !== 1 ||
+    params.get('journey') !== 'legacy'
+  )
+    throw new TypeError('Ready handoff needs one exact Legacy mission request.');
+  return true;
+}
+
+/** Existing links are explicit Play requests. A mode switch may only select a
+ * row; malformed intent never silently upgrades that request into Play. */
+export function readMissionLibraryIntent(params) {
+  const id = readMissionLibraryHandoff(params),
+    values = params.getAll(MISSION_LIBRARY_INTENT_PARAM);
+  if (!values.length) return 'play';
+  if (!id || values.length !== 1 || !['play', 'select'].includes(values[0]))
+    throw new TypeError('Mission handoff needs one valid intent and an exact mission identity.');
+  return values[0];
 }
 
 /** Independent, finite source navigation for an exact library handoff. Invalid
@@ -114,12 +147,18 @@ export function missionLibraryHref({
   mode,
   journey,
   missionId: id,
+  intent = 'play',
   sourceJourney,
   returnToken,
+  ready = false,
 }) {
   modeId(currentMode);
   modeId(mode);
   missionId(id);
+  if (!['play', 'select'].includes(intent) || (intent === 'select' && mode !== 'versus'))
+    throw new TypeError('Select-only mission handoff is supported in Versus.');
+  if (typeof ready !== 'boolean' || (ready && (mode !== 'solo' || journey !== 'legacy')))
+    throw new TypeError('Ready handoff is supported only for Solo Legacy missions.');
   if (!journeyForMode(journey, mode))
     throw new TypeError('Mission handoff needs a registered destination Journey route.');
   if (sourceJourney !== undefined && !isMissionLibrarySourceJourney(sourceJourney, currentMode))
@@ -142,6 +181,8 @@ export function missionLibraryHref({
   );
   target.searchParams.set('journey', journey);
   target.searchParams.set(MISSION_LIBRARY_HANDOFF_PARAM, id);
+  if (intent === 'select') target.searchParams.set(MISSION_LIBRARY_INTENT_PARAM, intent);
+  if (ready) target.searchParams.set('library-ready', '1');
   if (sourceJourney !== undefined && currentMode !== mode) {
     target.searchParams.set('return', currentMode);
     target.searchParams.set('journey-return', sourceJourney);

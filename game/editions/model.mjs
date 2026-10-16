@@ -1,15 +1,21 @@
 import { boundedJSON, exactKeys, required, stableId } from '../data-json.mjs';
+import { editionIdentityId } from '../edition-context.mjs';
+import { validateCuratedAppearanceInventory } from '../presentation/theme-system.mjs';
 
 export const EDITION_FORMATS = Object.freeze({
   brand: 'revealline-brand-pack.v1',
+  appearanceBrand: 'revealline-brand-pack.v2',
   edition: 'revealline-edition.v1',
   catalog: 'revealline-edition-catalog.v1',
+  appearanceCatalog: 'revealline-edition-catalog.v2',
+  curatedAppearanceCatalog: 'revealline-edition-catalog.v3',
 });
 export const EDITION_LIMITS = Object.freeze({
   brands: 32,
   editions: 128,
   campaigns: 512,
   assets: 4096,
+  appearanceThemes: 64,
 });
 export const EDITION_BOOT_KEYS = Object.freeze([
   'campaign',
@@ -21,6 +27,11 @@ export const EDITION_BOOT_KEYS = Object.freeze([
 ]);
 const publications = ['public', 'restricted'];
 const modes = ['solo', 'versus', 'team'];
+// Only this module's completely validated, deeply frozen results are reusable.
+// A caller's frozen object or a mutable imported catalogue is never trusted.
+// Weak ownership lets an old presentation and all its derived closures retire.
+const validatedCatalogs = new WeakSet();
+const assetClosures = new WeakMap();
 const own = (source) =>
   boundedJSON(source, { maxBytes: 4 * 1024 * 1024, maxNodes: 100000, maxArray: 4096 });
 const text = (value, max = 512) =>
@@ -78,6 +89,25 @@ function modeList(value) {
 }
 
 /** Data only. A registered brand never supplies CSS, scripts or fetch URLs. */
+export function validateAppearanceDefault(source) {
+  const value = own(source);
+  fields(value, ['familyId', 'revision'], 'Appearance default');
+  required(
+    typeof value.familyId === 'string' &&
+      /^[a-z][a-z0-9-]{0,63}$/.test(value.familyId) &&
+      typeof value.revision === 'string' &&
+      /^r[1-9][0-9]{0,8}$/.test(value.revision),
+    'Invalid appearance default pin.',
+  );
+  // Availability is a renderer concern. Preserve an unavailable immutable pin
+  // so an older installed player can fall back without rewriting author intent.
+  return freezeEdition(value);
+}
+
+export function resolveEditionAppearanceDefault(selection) {
+  return selection?.campaign?.appearanceDefault ?? selection?.brand?.appearanceDefault ?? null;
+}
+
 export function validateBrandPack(source) {
   const value = own(source);
   fields(
@@ -96,9 +126,18 @@ export function validateBrandPack(source) {
       'assetIds',
     ],
     'Brand pack',
-    ['sources', 'iconAssetId', 'fontAssetId', 'themeIds'],
+    ['sources', 'iconAssetId', 'fontAssetId', 'themeIds', 'appearanceDefault'],
   );
-  identity(value, EDITION_FORMATS.brand);
+  required(
+    [EDITION_FORMATS.brand, EDITION_FORMATS.appearanceBrand].includes(value.format),
+    'Unknown brand pack.',
+  );
+  identity(value, value.format);
+  required(
+    value.appearanceDefault === undefined || value.format === EDITION_FORMATS.appearanceBrand,
+    'Appearance defaults require brand pack v2.',
+  );
+  if (value.appearanceDefault !== undefined) validateAppearanceDefault(value.appearanceDefault);
   publication(value.publication);
   required(
     text(value.description, 2048) && stableId(value.themeId) && stableId(value.actorSetId),
@@ -154,7 +193,14 @@ export function validateCampaignDescriptor(source) {
     value,
     ['id', 'revision', 'name', 'brandId', 'publication', 'sourcePath', 'assetIds', 'modes'],
     'Campaign descriptor',
-    ['lessonPath'],
+    [
+      'lessonPath',
+      'rewardPath',
+      'localizationPath',
+      'localizationSha256',
+      'heroAssetId',
+      'appearanceDefault',
+    ],
   );
   required(
     stableId(value.id) &&
@@ -164,6 +210,7 @@ export function validateCampaignDescriptor(source) {
     'Invalid campaign identity.',
   );
   publication(value.publication);
+  if (value.appearanceDefault !== undefined) validateAppearanceDefault(value.appearanceDefault);
   required(
     editionRelativePath(value.sourcePath) && value.sourcePath.endsWith('.json'),
     'Campaigns require individual project JSON paths.',
@@ -173,7 +220,24 @@ export function validateCampaignDescriptor(source) {
       editionRelativePath(value.lessonPath) && value.lessonPath.endsWith('.json'),
       'Lessons require a bounded JSON path.',
     );
+  if (value.rewardPath !== undefined)
+    required(
+      editionRelativePath(value.rewardPath) && value.rewardPath.endsWith('.json'),
+      'Completion rewards require a bounded JSON path.',
+    );
+  if (value.localizationPath !== undefined || value.localizationSha256 !== undefined)
+    required(
+      editionRelativePath(value.localizationPath) &&
+        value.localizationPath.endsWith('.json') &&
+        /^[a-f0-9]{64}$/.test(value.localizationSha256),
+      'Campaign localization requires a local JSON path and SHA-256 pin.',
+    );
   list(value.assetIds, EDITION_LIMITS.assets, 'campaign assets');
+  if (value.heroAssetId !== undefined)
+    required(
+      stableId(value.heroAssetId) && value.assetIds.includes(value.heroAssetId),
+      'Campaign artwork must be one of its declared assets.',
+    );
   modeList(value.modes);
   return freezeEdition(value);
 }
@@ -333,6 +397,8 @@ export function createEditionRuntimeCatalog(source) {
   fields(value, ['brands', 'editions', 'campaigns', 'defaultEditionId'], 'Edition registry', [
     'assets',
     'publication',
+    'format',
+    'appearanceThemes',
   ]);
   const {
     brands,
@@ -357,6 +423,33 @@ export function createEditionRuntimeCatalog(source) {
     ),
     assets: records(assets, 'assets', EDITION_LIMITS.assets, validateEditionAsset),
   };
+  const appearance =
+    result.brands.some((brand) => brand.format === EDITION_FORMATS.appearanceBrand) ||
+    result.campaigns.some((campaign) => campaign.appearanceDefault !== undefined);
+  result.format =
+    value.format ??
+    (value.appearanceThemes
+      ? EDITION_FORMATS.curatedAppearanceCatalog
+      : appearance
+        ? EDITION_FORMATS.appearanceCatalog
+        : EDITION_FORMATS.catalog);
+  required(
+    [
+      EDITION_FORMATS.catalog,
+      EDITION_FORMATS.appearanceCatalog,
+      EDITION_FORMATS.curatedAppearanceCatalog,
+    ].includes(result.format),
+    'Unknown edition catalog.',
+  );
+  required(
+    !appearance || result.format !== EDITION_FORMATS.catalog,
+    'Appearance defaults require edition catalog v2.',
+  );
+  if (value.appearanceThemes !== undefined)
+    result.appearanceThemes = validateCuratedAppearanceInventory({
+      ...result,
+      appearanceThemes: value.appearanceThemes,
+    });
   const byBrand = new Map(result.brands.map((item) => [item.id, item]));
   const byCampaign = new Map(result.campaigns.map((item) => [item.id, item]));
   const byAsset = new Map(result.assets.map((item) => [item.id, item]));
@@ -376,8 +469,14 @@ export function createEditionRuntimeCatalog(source) {
     if (visibility === 'public')
       required(item.publication === 'public', 'Restricted content cannot enter a public catalog.');
   }
-  for (const campaign of result.campaigns)
+  for (const campaign of result.campaigns) {
     required(byBrand.has(campaign.brandId), 'Campaign brand is missing.');
+    if (campaign.heroAssetId)
+      required(
+        /\.(?:png|jpe?g|webp)$/i.test(byAsset.get(campaign.heroAssetId).path),
+        'Campaign artwork requires a supported static raster image.',
+      );
+  }
   for (const brand of result.brands) {
     if (brand.fontAssetId)
       required(
@@ -463,26 +562,58 @@ export function createEditionRuntimeCatalog(source) {
     );
     paths.set(asset.path, asset);
   }
-  return freezeEdition(result);
+  freezeEdition(result);
+  validatedCatalogs.add(result);
+  return result;
 }
 
 export function validateEditionRuntimeCatalog(source) {
+  if (validatedCatalogs.has(source)) return source;
   const value = own(source);
   fields(
     value,
     ['format', 'publication', 'defaultEditionId', 'brands', 'editions', 'campaigns', 'assets'],
     'Edition catalog',
+    ['appearanceThemes'],
   );
-  required(value.format === EDITION_FORMATS.catalog, 'Unknown edition catalog.');
-  const { format: _format, ...options } = value;
-  return createEditionRuntimeCatalog(options);
+  required(
+    [
+      EDITION_FORMATS.catalog,
+      EDITION_FORMATS.appearanceCatalog,
+      EDITION_FORMATS.curatedAppearanceCatalog,
+    ].includes(value.format),
+    'Unknown edition catalog.',
+  );
+  return createEditionRuntimeCatalog(value);
+}
+
+/** Select only cosmetic records referenced by this admitted audience. An unused
+ * private authoring candidate must not leak into another community's package. */
+export function resolveEditionAppearanceThemes(source, { editionIds } = {}) {
+  const catalog = validateEditionRuntimeCatalog(source);
+  const editions = editionIds
+    ? editionIds.map((id) => resolveEditionSelection(catalog, { editionId: id }).edition)
+    : catalog.editions;
+  const brands = new Set(editions.map((row) => row.brandId));
+  const campaigns = new Set(editions.flatMap((row) => row.campaignIds));
+  const pins = [
+    ...catalog.brands.filter((row) => brands.has(row.id)),
+    ...catalog.campaigns.filter((row) => campaigns.has(row.id)),
+  ]
+    .map((row) => row.appearanceDefault)
+    .filter(Boolean);
+  return Object.freeze(
+    (catalog.appearanceThemes ?? []).filter((row) =>
+      pins.some((pin) => pin.familyId === row.family.id && pin.revision === row.family.revision),
+    ),
+  );
 }
 
 /** The compiled allowlist is authoritative; a URL or preference cannot extend it. */
 export function resolveEditionSelection(source, { editionId, campaignId } = {}) {
   const catalog = validateEditionRuntimeCatalog(source);
   const edition = catalog.editions.find(
-    (item) => item.id === (editionId ?? catalog.defaultEditionId),
+    (item) => item.id === editionIdentityId(editionId ?? catalog.defaultEditionId),
   );
   required(edition, 'This edition is not included in this build.');
   const campaigns = edition.campaignIds.map((id) =>
@@ -503,6 +634,9 @@ export function resolveEditionSelection(source, { editionId, campaignId } = {}) 
  * The registry owns all references, including edition-specific additions. */
 export function resolveEditionAssets(source, { editionId } = {}) {
   const catalog = validateEditionRuntimeCatalog(source);
+  const selectedId = editionId ?? catalog.defaultEditionId;
+  const closures = assetClosures.get(catalog);
+  if (closures?.has(selectedId)) return closures.get(selectedId);
   const selection = resolveEditionSelection(catalog, { editionId });
   const byId = new Map(catalog.assets.map((asset) => [asset.id, asset]));
   const ids = new Set([
@@ -515,5 +649,9 @@ export function resolveEditionAssets(source, { editionId } = {}) {
     required(asset, 'An edition asset is unavailable.');
     asset.dependencies.forEach((dependency) => ids.add(dependency));
   }
-  return freezeEdition(catalog.assets.filter((asset) => ids.has(asset.id)));
+  const closure = freezeEdition(catalog.assets.filter((asset) => ids.has(asset.id)));
+  const cache = closures ?? new Map();
+  cache.set(selectedId, closure);
+  assetClosures.set(catalog, cache);
+  return closure;
 }

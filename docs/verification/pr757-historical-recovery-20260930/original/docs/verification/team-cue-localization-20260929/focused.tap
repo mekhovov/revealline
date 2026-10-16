@@ -1,0 +1,412 @@
+TAP version 13
+# Subtest: tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+ok 1 - tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+  ---
+  duration_ms: 19.280708
+  type: 'test'
+  ...
+# Subtest: six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 2 - six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 9.649541
+  type: 'test'
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 3 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 2.222416
+  type: 'test'
+  ...
+# Subtest: Team prepared enemies reuse catalog surface motion without loading another body image
+ok 4 - Team prepared enemies reuse catalog surface motion without loading another body image
+  ---
+  duration_ms: 1.430792
+  type: 'test'
+  ...
+# Subtest: qualified Team roamers borrow the tracked body and its bounded motion treatment
+ok 5 - qualified Team roamers borrow the tracked body and its bounded motion treatment
+  ---
+  duration_ms: 25.511125
+  type: 'test'
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 6 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.789584
+  type: 'test'
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 7 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.372875
+  type: 'test'
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 8 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.315916
+  type: 'test'
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 9 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 5.576084
+  type: 'test'
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 10 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.975167
+  type: 'test'
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 11 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.419542
+  type: 'test'
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 12 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 8.825084
+  type: 'test'
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 13 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 1.095416
+  type: 'test'
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 14 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 3.454459
+  type: 'test'
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 15 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 1.15225
+  type: 'test'
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 16 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 0.976209
+  type: 'test'
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 17 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 0.998042
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+ok 18 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+  ---
+  duration_ms: 17.403417
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+ok 19 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+  ---
+  duration_ms: 7.255542
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+ok 20 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+  ---
+  duration_ms: 2.304
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+ok 21 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+  ---
+  duration_ms: 5.021417
+  type: 'test'
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 22 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 64.78875
+  type: 'test'
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 23 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 2.477958
+  type: 'test'
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 24 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 1.661375
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+ok 25 - exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+  ---
+  duration_ms: 2.470125
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+ok 26 - exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+  ---
+  duration_ms: 7.547084
+  type: 'test'
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 27 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 1.632917
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (current progress)
+ok 28 - actual rescue of player 1 has one legible cue (current progress)
+  ---
+  duration_ms: 77.284917
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (legacy static role)
+ok 29 - actual rescue of player 1 has one legible cue (legacy static role)
+  ---
+  duration_ms: 58.735583
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (current progress)
+ok 30 - actual rescue of player 2 has one legible cue (current progress)
+  ---
+  duration_ms: 52.21525
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (legacy static role)
+ok 31 - actual rescue of player 2 has one legible cue (legacy static role)
+  ---
+  duration_ms: 38.949583
+  type: 'test'
+  ...
+# Subtest: public timed pickup paints Slowed despite unchanged Support fields, and exact expiry removes it
+ok 32 - public timed pickup paints Slowed despite unchanged Support fields, and exact expiry removes it
+  ---
+  duration_ms: 97.91275
+  type: 'test'
+  ...
+# Subtest: public Support and pickup overlap keeps one cue when Support expires first
+ok 33 - public Support and pickup overlap keeps one cue when Support expires first
+  ---
+  duration_ms: 44.088416
+  type: 'test'
+  ...
+# Subtest: public Support and pickup overlap keeps one cue when the pickup expires first
+ok 34 - public Support and pickup overlap keeps one cue when the pickup expires first
+  ---
+  duration_ms: 40.894125
+  type: 'test'
+  ...
+# Subtest: a second real freeze pickup holds movement without hiding or duplicating the still-active slow cue
+ok 35 - a second real freeze pickup holds movement without hiding or duplicating the still-active slow cue
+  ---
+  duration_ms: 27.550792
+  type: 'test'
+  ...
+# Subtest: real Hunter warning, commitment and recovery retain their full compact captions alongside pickup slowdown
+ok 36 - real Hunter warning, commitment and recovery retain their full compact captions alongside pickup slowdown
+  ---
+  duration_ms: 126.094208
+  type: 'test'
+  ...
+# Subtest: a removed actor is excluded even while a real collected slow effect remains active
+ok 37 - a removed actor is excluded even while a real collected slow effect remains active
+  ---
+  duration_ms: 17.118292
+  type: 'test'
+  ...
+# Subtest: freeze alone is never relabelled as a slow pickup
+ok 38 - freeze alone is never relabelled as a slow pickup
+  ---
+  duration_ms: 10.915417
+  type: 'test'
+  ...
+# Subtest: legacy boards without bonuses retain the exact pre-change painter commands
+ok 39 - legacy boards without bonuses retain the exact pre-change painter commands
+  ---
+  duration_ms: 15.508208
+  type: 'test'
+  ...
+# Subtest: clear historical cue placements remain exact and input measurements are untouched
+ok 40 - clear historical cue placements remain exact and input measurements are untouched
+  ---
+  duration_ms: 0.896
+  type: 'test'
+  ...
+# Subtest: group packing repairs overlapping greedy positions without shrinking or covering heads
+ok 41 - group packing repairs overlapping greedy positions without shrinking or covering heads
+  ---
+  duration_ms: 1.015625
+  type: 'test'
+  ...
+# Subtest: oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+ok 42 - oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+  ---
+  duration_ms: 0.179542
+  type: 'test'
+  ...
+# Subtest: a malformed original rectangle cannot bypass the group head exclusion
+ok 43 - a malformed original rectangle cannot bypass the group head exclusion
+  ---
+  duration_ms: 0.081792
+  type: 'test'
+  ...
+# Subtest: real rescue of player 1 changes language in place (legacy role)
+ok 44 - real rescue of player 1 changes language in place (legacy role)
+  ---
+  duration_ms: 131.402791
+  type: 'test'
+  ...
+# Subtest: real rescue of player 1 changes language in place (progress)
+ok 45 - real rescue of player 1 changes language in place (progress)
+  ---
+  duration_ms: 114.500375
+  type: 'test'
+  ...
+# Subtest: real rescue of player 2 changes language in place (legacy role)
+ok 46 - real rescue of player 2 changes language in place (legacy role)
+  ---
+  duration_ms: 115.723875
+  type: 'test'
+  ...
+# Subtest: real rescue of player 2 changes language in place (progress)
+ok 47 - real rescue of player 2 changes language in place (progress)
+  ---
+  duration_ms: 78.473458
+  type: 'test'
+  ...
+# Subtest: actual Hunter lock names player 1 in the chosen language through pause
+ok 48 - actual Hunter lock names player 1 in the chosen language through pause
+  ---
+  duration_ms: 119.5055
+  type: 'test'
+  ...
+# Subtest: actual Hunter lock names player 2 in the chosen language through pause
+ok 49 - actual Hunter lock names player 2 in the chosen language through pause
+  ---
+  duration_ms: 115.663083
+  type: 'test'
+  ...
+# Subtest: reserve recovery of player 1 cannot retain a translated contact-rescue label
+ok 50 - reserve recovery of player 1 cannot retain a translated contact-rescue label
+  ---
+  duration_ms: 31.15375
+  type: 'test'
+  ...
+# Subtest: reserve recovery of player 2 cannot retain a translated contact-rescue label
+ok 51 - reserve recovery of player 2 cannot retain a translated contact-rescue label
+  ---
+  duration_ms: 33.665458
+  type: 'test'
+  ...
+# Subtest: a real slow pickup retains the compact downward marker on the localized locked target
+ok 52 - a real slow pickup retains the compact downward marker on the localized locked target
+  ---
+  duration_ms: 22.811084
+  type: 'test'
+  ...
+# Subtest: overflow admission requires an actual compact unplaced result
+ok 53 - overflow admission requires an actual compact unplaced result
+  ---
+  duration_ms: 0.371583
+  type: 'test'
+  ...
+# Subtest: complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+ok 54 - complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+  ---
+  duration_ms: 11.863042
+  type: 'test'
+  ...
+# Subtest: phase and half-open status expiry remain truthful while paused and translate through the current locale
+ok 55 - phase and half-open status expiry remain truthful while paused and translate through the current locale
+  ---
+  duration_ms: 1.751208
+  type: 'test'
+  ...
+# Subtest: player 1 rescue uses real state and preserves fixed identity cues
+ok 56 - player 1 rescue uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 48.78125
+  type: 'test'
+  ...
+# Subtest: player 1 recovered uses real state and preserves fixed identity cues
+ok 57 - player 1 recovered uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 22.951
+  type: 'test'
+  ...
+# Subtest: player 2 rescue uses real state and preserves fixed identity cues
+ok 58 - player 2 rescue uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 25.211083
+  type: 'test'
+  ...
+# Subtest: player 2 recovered uses real state and preserves fixed identity cues
+ok 59 - player 2 recovered uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 16.91425
+  type: 'test'
+  ...
+# Subtest: decoration is below shared actor artwork; normal and reduced modes use the same actual rescue percentage
+ok 60 - decoration is below shared actor artwork; normal and reduced modes use the same actual rescue percentage
+  ---
+  duration_ms: 13.601042
+  type: 'test'
+  ...
+# Subtest: historical frames stay procedural; inactive and completed scenes show no custom rescue decoration
+ok 61 - historical frames stay procedural; inactive and completed scenes show no custom rescue decoration
+  ---
+  duration_ms: 115.28375
+  type: 'test'
+  ...
+# Subtest: released contact rescue state disappears on real pause and returns only through public commands
+ok 62 - released contact rescue state disappears on real pause and returns only through public commands
+  ---
+  duration_ms: 19.395791
+  type: 'test'
+  ...
+# Subtest: full Team upgrade adds rescue slots atomically without replacing existing roles or exact historical revisions
+ok 63 - full Team upgrade adds rescue slots atomically without replacing existing roles or exact historical revisions
+  ---
+  duration_ms: 472.2635
+  type: 'test'
+  ...
+# Subtest: Rescue team.rescue.progress preserves uploaded original bytes and history in bundle round trips
+ok 64 - Rescue team.rescue.progress preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 290.439542
+  type: 'test'
+  ...
+# Subtest: Rescue team.player.recovery preserves uploaded original bytes and history in bundle round trips
+ok 65 - Rescue team.player.recovery preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 284.370666
+  type: 'test'
+  ...
+# Subtest: recovered player 1 advances through actual grace expiry before reset
+ok 66 - recovered player 1 advances through actual grace expiry before reset
+  ---
+  duration_ms: 16.38825
+  type: 'test'
+  ...
+# Subtest: recovered player 2 advances through actual grace expiry before reset
+ok 67 - recovered player 2 advances through actual grace expiry before reset
+  ---
+  duration_ms: 12.256959
+  type: 'test'
+  ...
+1..67
+# tests 67
+# suites 0
+# pass 67
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1628.947625

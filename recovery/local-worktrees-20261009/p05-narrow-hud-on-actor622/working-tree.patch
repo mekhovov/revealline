@@ -1,0 +1,130 @@
+diff --git a/authoring/skills/xonix-runtime-maintainer/SKILL.md b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+index 8948eb3a2..7365a4980 100644
+--- a/authoring/skills/xonix-runtime-maintainer/SKILL.md
++++ b/authoring/skills/xonix-runtime-maintainer/SKILL.md
+@@ -5,6 +5,28 @@ description: Maintain, test, build and archive this project's playable Xonix run
+ 
+ # Xonix Runtime Maintainer
+ 
++For [narrow HUD layout](../../../docs/narrow-hud-layout.md), reflow complete values
++and glyphs while preserving Large text, DOM order, 44-pixel targets, Solo
++portrait CSS flow and the Versus board fitter. Solo has no telemetry resize
++observer; qualify timer-driven row growth against actual arena bounds after
++startup. Do not repair intrinsic overflow with cropping, font
++reduction or canvas/simulation changes. Verify actual browser bounds through
++narrow-to-wide-to-narrow resize and both text faces; finite host rectangles do
++not prove CSS fit. Preserve the 20-case HUD matrix and ten native keyboard Pause
++checks as separate local evidence, including corrected stale captures and the
++original Solo outline failure. Keep the Pause indicator inside its unchanged
++target; defensive `.controller-focus` styling does not make Solo Pause a menu
++navigation target. Preserve the later numeric overflow originals separately:
++long Solo time values need intrinsic wrapping, and fractional HUD scores use
++the existing result convention of at most three fraction digits, without
++grouping. Pad only integers. Never write display rounding back to core, saves,
++replay or ranking; nearby raw fractions may share a label. Keep the floored,
++uncapped m:ss timer and existing fonts. Test a real fractional capture and its
++raw replay, then qualify numeric CSS specimens separately in the browser.
++Retain the scoped native numeric/markup specimen pass separately from real
++Phaser gameplay and final-source actor composition. Physical/integrated/public
++gates remain open. Use the guide's scoped regression and authoring example.
++
+ Current sequencing is [the revised whole-game UX plan](../../../docs/whole-game-ux-plan.md). Settings is a host-local surface with shared Controls, Audio, Appearance & accessibility and Game data categories. Use `attachSettingsPanels` for categories and compose `settingsTabOwnsKey` into the host navigation capture boundary; never add a second preference or controller owner. Enter the real category before editing or asserting control reachability. Preserve input release, paused checkpoints, actual opener return, retained category and explicit Resume. Team Settings is a native dialog, not an Options disclosure; model native Tab/default cancel locally in host fixtures without inventing application return focus. Quick Sound controls operate the existing master authority; their visible labels and pressed state agree across modes.
+ 
+ Menu/audio `pageshow.persisted` reconciliation reads validated current storage and preserves unsaved/session-only local intent. Storage reads, listeners and dialog close callbacks can retire their owner or produce newer intent. Recheck ownership before writes/focus; terminal cleanup retires before closing native surfaces. Test late audio activation after mute, stale restoration, failed saves and actual browser Back separately. A cold Back page load is not BFCache proof. Interface appearance does not pin a complete game theme or change existing map/art identity; exact complete-theme restoration remains a later qualified contract.
+diff --git a/game/app.mjs b/game/app.mjs
+index e0f6c5bb8..216b2fa60 100644
+--- a/game/app.mjs
++++ b/game/app.mjs
+@@ -6,6 +6,7 @@ import {
+ } from './presentation/release-pictures.mjs';
+ import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
+ import { drawResultPicture } from './ui/result-picture.mjs';
++import { soloScoreLabel } from './ui/hud-values.mjs';
+ import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
+ import { createExternalChapterHost } from './external-chapter-host.mjs';
+ import { createExternalChapterBackup } from './external-chapter-backup.mjs';
+@@ -5788,7 +5789,7 @@ try {
+       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
+     $('lives').setAttribute('aria-label', `${run.lives} lives`);
+     $('time').textContent = timeLabel(run.time);
+-    $('score').textContent = String(run.score).padStart(5, '0');
++    $('score').textContent = soloScoreLabel(run.score);
+     const required = run.objectives.filter((o) => o.required),
+       done = required.filter((o) => o.captured);
+     $('objective-state').textContent = campaignOverview
+diff --git a/game/couch/couch.css b/game/couch/couch.css
+index 8f4618ecb..d4a2e3996 100644
+--- a/game/couch/couch.css
++++ b/game/couch/couch.css
+@@ -418,6 +418,30 @@ body.race-focus #couch-app {
+     font-size: 23px;
+   }
+ }
++/* Reflow the HUD before its intrinsic width can widen both fitted arenas.
++   Pause, series score and clock keep their DOM order and existing type sizes. */
++@media (max-width: 320px) {
++  body.race-focus #couch-app {
++    grid-template-columns: minmax(0, 1fr);
++  }
++  .race-hud {
++    display: grid;
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    row-gap: 6px;
++  }
++  #race-pause {
++    grid-column: 1 / -1;
++    justify-self: start;
++    white-space: nowrap;
++  }
++  .race-score {
++    min-width: 0;
++    justify-self: start;
++  }
++  #race-clock {
++    justify-self: end;
++  }
++}
+ @media (max-height: 500px) and (min-width: 701px) {
+   .race-hud {
+     min-height: 50px;
+diff --git a/game/ui/field-kit-compiled.css b/game/ui/field-kit-compiled.css
+index 3b198e87d..81d87b567 100644
+--- a/game/ui/field-kit-compiled.css
++++ b/game/ui/field-kit-compiled.css
+@@ -580,6 +580,25 @@
+     padding-left: 8px;
+   }
+ }
++/* Keep Large values and their glyphs intact on the smallest portrait boards.
++   Lives and time wrap at their intrinsic widths, retaining their DOM order. */
++@media (max-width: 320px) and (orientation: portrait) {
++  .field-kit.game-shell .telemetry {
++    display: flex;
++    flex-wrap: wrap;
++  }
++  .field-kit.game-shell .telemetry > div {
++    flex: 1 1 max-content;
++    min-width: max-content;
++    border-left: 0;
++    padding-left: 0;
++  }
++  .field-kit.game-shell .telemetry > .coverage,
++  .field-kit.game-shell .telemetry > :has(> #score) {
++    flex-basis: 100%;
++    min-width: 0;
++  }
++}
+ /* Keep the starting border and actors clear of the HUD in short landscape. */
+ @media (orientation: landscape) and (max-height: 600px),
+   (orientation: landscape) and (any-pointer: coarse) {
+@@ -651,3 +670,10 @@
+     );
+   }
+ }
++
++/* Solo Pause can sit 4px from the viewport edge. Keep both native keyboard
++   and controller focus fully inside its existing 44px target. */
++.field-kit.game-shell #pause-button:is(:focus-visible, .controller-focus) {
++  outline-offset: -3px;
++  box-shadow: inset 0 0 0 6px var(--fk-bg);
++}

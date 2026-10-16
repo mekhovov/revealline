@@ -15,7 +15,11 @@ import {
   PRESSURE_DIFFICULTY_CATALOG,
 } from '../game/content-design/catalogs.mjs';
 import { CLASSES } from '../game/core/index.mjs';
-import { REPORT_FORMAT, STUDIO_REPORT_CHECKS } from '../authoring/company-studio/model.mjs';
+import {
+  REPORT_FORMAT,
+  STUDIO_REPORT_CHECKS,
+  validateStudioDraft,
+} from '../authoring/company-studio/model.mjs';
 import { createStarterProject } from '../game/content-design/starter.mjs';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import {
@@ -198,7 +202,7 @@ export function createCompanyWorkspaceFiles({
   files.set(
     'README.md',
     Buffer.from(
-      `# ${name} company workspace\n\nEdit the existing ContentProjectV1 source for maps and missions. Boot themes define palette, labels and actor presets. Add approved original media to the asset ledger in game/editions/catalog.json with exact SHA-256, byte count and dependencies; reference it from the brand or campaign assetIds. Add a per-campaign lessonPath for validated learning records. Open source-draft.json in the Company Studio to edit the whole initial workspace.\n\nValidate and create a whole-game preview from the Reveal / Line repository:\n\n\`node scripts/company-studio.mjs validate --workspace PATH --edition ${editionId}\`\n\n\`node scripts/company-studio.mjs preview --workspace PATH --edition ${editionId} --out dist/company-previews/${editionId}\`\n\nChoose a fresh output directory for each preview. Hidden directories cannot be served by the standard development server. The neutral mission is a starting design, not route-qualified content. Review accessibility, company asset rights, lesson facts and route proofs before publishing. The compiler produces a sidecar exclusion report and does not publish anything.\n`,
+      `# ${name} company workspace\n\nEdit the existing ContentProjectV1 source for maps and missions. Boot themes define palette, labels and actor presets. Add approved original media to the asset ledger in game/editions/catalog.json with exact SHA-256, byte count and dependencies; reference it from the brand or campaign assetIds. Add a per-campaign lessonPath for validated learning records. Open source-draft.json in the Company Studio to edit the whole initial workspace.\n\nValidate and create a whole-game preview from the FPV / LINE repository:\n\n\`node scripts/company-studio.mjs validate --workspace PATH --edition ${editionId}\`\n\n\`node scripts/company-studio.mjs preview --workspace PATH --edition ${editionId} --out dist/company-previews/${editionId}\`\n\nChoose a fresh output directory for each preview. Hidden directories cannot be served by the standard development server. The neutral mission is a starting design, not route-qualified content. Review accessibility, company asset rights, lesson facts and route proofs before publishing. The compiler produces a sidecar exclusion report and does not publish anything.\n`,
     ),
   );
   return { files, catalog };
@@ -219,6 +223,8 @@ export function companySourceDraft({ catalog, files }) {
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
   return {
@@ -264,6 +270,8 @@ export function companyDraftFiles(source) {
     ...catalog.campaigns.flatMap((campaign) => [
       campaign.sourcePath,
       ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+      ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+      ...(campaign.localizationPath ? [campaign.localizationPath] : []),
     ]),
   ]);
   const files = new Map([['game/editions/catalog.json', json(catalog)]]);
@@ -282,6 +290,8 @@ export function companyDraftFiles(source) {
     } else files.set(entry.path, json(entry.data));
   }
   editionPublicationAssets(catalog, files);
+  if (catalog.campaigns.some((campaign) => campaign.rewardPath || campaign.localizationPath))
+    validateStudioDraft(draft);
   return { catalog, files };
 }
 
@@ -340,6 +350,16 @@ export function companyStudioReport(sourceCatalog, result, { previewURL = null }
           sum + (campaign.lessonPath ? decode(result.files.get(campaign.lessonPath)).length : 0),
         0,
       ),
+      ...(selected.campaigns.some((campaign) => campaign.rewardPath)
+        ? {
+            rewards: selected.campaigns.reduce(
+              (sum, campaign) =>
+                sum +
+                (campaign.rewardPath ? decode(result.files.get(campaign.rewardPath)).length : 0),
+              0,
+            ),
+          }
+        : {}),
       assets: assets.length,
       runtimeFiles: result.files.size,
       runtimeBytes: [...result.files.values()].reduce((sum, bytes) => sum + bytes.length, 0),

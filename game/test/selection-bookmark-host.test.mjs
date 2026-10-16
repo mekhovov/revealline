@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
@@ -42,7 +43,7 @@ test('retained chapter selector persists its choice while the other saved flight
       p.frame(0);
       originalCheckpoint = authoritativeCheckpoint(p.rendered.run);
       originalSave = storage.getItem(sessionKey);
-      assert.equal(JSON.parse(originalSave).replay.ticks, 12);
+      assert.equal(nativeSession(JSON.parse(originalSave)).replay.ticks, 12);
       p.$('shell-menu').click();
       // Ordinary Missions now opens the unified Download/Play catalogue.
       // This retained selector test mounts only its native dialog boundary;
@@ -78,10 +79,8 @@ test('retained chapter selector persists its choice while the other saved flight
       assert.equal(JSON.parse(selection).levelId, p.rendered.run.level.id);
       // The existing menu pause may refresh savedAt; the complete saved flight stays exact.
       const after = JSON.parse(storage.getItem(sessionKey));
-      assert.deepEqual(
-        { ...after, savedAt: JSON.parse(originalSave).savedAt },
-        JSON.parse(originalSave),
-      );
+      nativeSession(after).savedAt = nativeSession(JSON.parse(originalSave)).savedAt;
+      assert.deepEqual(after, JSON.parse(originalSave));
       originalSave = storage.getItem(sessionKey);
       assert.deepEqual(p.errors, []);
     },

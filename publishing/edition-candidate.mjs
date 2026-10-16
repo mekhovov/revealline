@@ -41,7 +41,7 @@ export function createEditionCandidate({
     const output = runtime.get(name);
     if (!output || editionHash(original) === editionHash(output)) continue;
     const kind =
-      /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater)\/index\.html)$/.test(
+      /^game\/(?:company\.html|index\.html|(?:controller-lab|replay-theater|snake)\/index\.html|snake\/play\.html)$/.test(
         name,
       )
         ? 'selected-entry'
@@ -89,7 +89,7 @@ export function createEditionCandidate({
     publication: 'public',
     eligible: true,
     description:
-      'Selected engine, campaign, lesson, boot and approved media inputs. Aggregate locale, theme, guide-presentation, entry and runtime-import inputs use exact compiler projections where listed; each projection records its original committed-input hash and output hash. Build tooling and unrelated repository sources are not included.',
+      'Selected engine, campaign, lesson, boot and approved media inputs. Aggregate locale, theme, guide-presentation, entry and runtime-import inputs use exact compiler projections where listed; runtime engine JavaScript also removes indentation outside tokens and comments while preserving every line break. Each projection records its original committed-input hash and output hash. Build tooling and unrelated repository sources are not included.',
     ...(projections.length ? { projections } : {}),
     assets,
     files: sourceRows,

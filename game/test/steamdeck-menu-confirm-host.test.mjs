@@ -1,16 +1,41 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { settle, soloPage } from './helpers/solo-dom.mjs';
+import { settle, SoloElement, soloPage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+
+function nativeConfirmDown(target) {
+  const down = target.emit('keydown', {
+    key: 'Enter',
+    code: 'Enter',
+    repeat: false,
+    isTrusted: true,
+  });
+  if (!down.defaultPrevented && target.tagName === 'BUTTON')
+    target.emit('click', {
+      button: -1,
+      pointerId: -1,
+      pointerType: '',
+      detail: 0,
+      isTrusted: true,
+    });
+  return down;
+}
 
 function nativeConfirm(page) {
   const target = page.doc.activeElement,
-    down = target.emit('keydown', { key: 'Enter', code: 'Enter', repeat: false });
-  if (!down.defaultPrevented && target.tagName === 'BUTTON') target.click();
-  target.emit('keyup', { key: 'Enter', code: 'Enter' });
+    down = nativeConfirmDown(target);
+  target.emit('keyup', { key: 'Enter', code: 'Enter', isTrusted: true });
   return down;
 }
 
 test('Steam Deck A owns its delayed Chrome activation across quick actions and dialogs', async (t) => {
+  const showModal = SoloElement.prototype.showModal;
+  t.mock.method(SoloElement.prototype, 'showModal', function () {
+    if (this.open) return;
+    // Preserve native opening order when Creator Tools opens above Settings.
+    this.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
+    showModal.call(this);
+  });
   let time = 1000;
   t.mock.method(performance, 'now', () => time);
   const pad = {
@@ -36,8 +61,8 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
       pad.buttons[index] = { pressed: false, value: 0 };
       frame();
     },
-    reach = (id, limit = 80) => {
-      for (let step = 0; step < limit && page.doc.activeElement.id !== id; step++) pulse(13);
+    reach = (id, direction = 13, limit = 30) => {
+      for (let step = 0; step < limit && page.doc.activeElement.id !== id; step++) pulse(direction);
       assert.equal(page.doc.activeElement.id, id, `${id} must be controller reachable`);
     },
     echo = () => {
@@ -74,7 +99,8 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   echo();
   assert.equal(page.$('shell-sound').textContent, afterSound, 'Sound changes exactly once');
 
-  reach('shell-options');
+  // Native action lists stop at their edges: Settings is above Sound.
+  reach('shell-options', 12);
   pulse(0);
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(
@@ -84,20 +110,30 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
   );
   echo();
   assert.equal(page.$('settings-dialog').open, true, 'Settings stays open after the native echo');
-  time += 1300;
-  page.doc.querySelector('button[data-close="settings-dialog"]').click();
-  frame();
-  assert.equal(page.$('settings-dialog').open, false);
-
+  // The former Home More action now lives in Settings → Extras → Creator Tools.
+  reach('settings-tab-extras');
+  pulse(0);
+  assert.equal(page.$('settings-panel-extras').hidden, false);
+  pulse(15);
   reach('shell-workshop');
   pulse(0);
   assert.equal(page.$('shell-workshop-dialog').open, true);
   echo();
-  assert.equal(page.$('shell-workshop-dialog').open, true, 'More stays on its intended menu');
+  assert.equal(
+    page.$('shell-workshop-dialog').open,
+    true,
+    'Creator Tools stays on its intended menu',
+  );
   time += 1300;
-  page.doc.querySelector('button[data-close="shell-workshop-dialog"]').click();
+  pulse(1);
+  await Promise.resolve();
   frame();
   assert.equal(page.$('shell-workshop-dialog').open, false);
+  assert.equal(page.$('settings-dialog').open, true, 'Back restores the Settings parent');
+  pulse(1);
+  await Promise.resolve();
+  frame();
+  assert.equal(page.$('settings-dialog').open, false);
 
   reach('shell-sound');
   time += 1300;
@@ -132,7 +168,7 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
       axes: [0, 0, 0, 0],
       buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
     },
-    page = await soloPage(t, { readPads: () => [pad] });
+    page = await soloPage(t, { readPads: () => [pad], initialReadyTimeoutMs: 30000 });
   const frame = (milliseconds = 20) => {
       time += milliseconds;
       page.frame(milliseconds);
@@ -228,7 +264,7 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
   assert.equal(page.$('shell-home').open, true, 'paused Home remains open after A release');
 });
 
-test('every primary Pause action ignores a touch-derived A release echo', async (t) => {
+test('Pause and mission actions ignore a touch-derived A release echo', async (t) => {
   const cases = [
     {
       name: 'Resume',
@@ -241,14 +277,15 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
       applied: (page) => page.$('restart-dialog').open,
     },
     {
+      name: 'Skip mission',
+      id: 'journey-skip',
+      timeoutMs: 30000,
+      applied: (page) => page.$('journey-skip').textContent === 'Confirm skip',
+    },
+    {
       name: 'Missions',
       id: 'overlay-missions',
       applied: (page) => page.$('journey-chooser')?.open === true || page.$('shell-missions').open,
-    },
-    {
-      name: 'How to play',
-      id: 'overlay-help',
-      applied: (page) => page.$('help-dialog').open,
     },
     {
       name: 'Settings',
@@ -277,7 +314,11 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
           axes: [0, 0, 0, 0],
           buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
         },
-        page = await soloPage(t, { readPads: () => [pad] });
+        page = await soloPage(t, {
+          readPads: () => [pad],
+          initialReadyTimeoutMs: 30000,
+          ...entry.options,
+        });
       page.frame();
       page.frame();
       page.$('start-button').click();
@@ -286,6 +327,13 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
       page.frame();
       page.frame();
       assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+      if (entry.id === 'pause-mission-info-toggle') {
+        assert.equal(
+          page.$(entry.id).closest('dialog'),
+          null,
+          'Mission info remains part of the paused result panel; the separate library owns its dialog.',
+        );
+      }
 
       const target = page.$(entry.id),
         originalHandler = target.onclick;
@@ -294,8 +342,15 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         target.onclick = (...args) => (pending = originalHandler.apply(target, args));
       target.focus();
       pad.buttons[0] = { pressed: true, value: 1 };
+      assert.equal(
+        nativeConfirmDown(target).defaultPrevented,
+        true,
+        `${entry.name} captures native Enter before its first A frame`,
+      );
+      assert.equal(entry.applied(page), false, `${entry.name} waits for A release`);
       page.frame();
       pad.buttons[0] = { pressed: false, value: 0 };
+      target.emit('keyup', { key: 'Enter', code: 'Enter', isTrusted: true });
       page.frame();
       const pointer = {
         button: 0,
@@ -314,7 +369,12 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         assert(pending instanceof Promise, 'Missions exposes its owned opening operation');
         await pending;
       }
-      await settle(() => entry.applied(page), `${entry.name} applies on A press`);
+      if (entry.timeoutMs)
+        await waitFor(() => entry.applied(page), {
+          message: `${entry.name} applies on A release`,
+          timeoutMs: entry.timeoutMs,
+        });
+      else await settle(() => entry.applied(page), `${entry.name} applies on A release`);
       assert.equal(entry.applied(page), true, `${entry.name} remains applied after A release`);
       assert.deepEqual(page.errors, []);
     });
@@ -328,7 +388,7 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
         axes: [0, 0, 0, 0],
         buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
       },
-      page = await soloPage(t, { readPads: () => [pad] });
+      page = await soloPage(t, { readPads: () => [pad], initialReadyTimeoutMs: 30000 });
     page.frame();
     page.frame();
     page.$('start-button').click();
@@ -340,8 +400,11 @@ test('every primary Pause action ignores a touch-derived A release echo', async 
       before = target.getAttribute('aria-pressed');
     target.focus();
     pad.buttons[0] = { pressed: true, value: 1 };
+    assert.equal(nativeConfirmDown(target).defaultPrevented, true);
+    assert.equal(target.getAttribute('aria-pressed'), before, 'Sound waits for A release');
     page.frame();
     pad.buttons[0] = { pressed: false, value: 0 };
+    target.emit('keyup', { key: 'Enter', code: 'Enter', isTrusted: true });
     page.frame();
     const applied = target.getAttribute('aria-pressed');
     assert.notEqual(applied, before);

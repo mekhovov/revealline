@@ -1,10 +1,25 @@
 import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { buildLauncherNavigationFiles } from './offline-launcher.mjs';
 import { createHash } from 'node:crypto';
 import { editionAppIdentity, validateEditionId } from '../game/edition-context.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
+import {
+  COMPANY_PACKAGE_BUDGET,
+  assertCompanyPackageBudget,
+} from '../game/editions/package-budget.mjs';
 
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 const json = (value) => Buffer.from(`${JSON.stringify(value)}\n`);
+export function editionOfflineOptionalPath(path) {
+  return (
+    (path.startsWith('game/demo-data/') && path.endsWith('.replay.json')) ||
+    /^game\/audio\/reactions\/actors-v1\/actor-[a-z-]+-(?:notice|caught)-(?:en|uk)\.m4a$/.test(
+      path,
+    ) ||
+    path === 'game/ui/art/menu-scenes/droneaid-main-background.webp'
+  );
+}
 const safe = (path) =>
   typeof path === 'string' &&
   /^[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*$/.test(path);
@@ -18,6 +33,15 @@ const htmlText = (value) =>
 
 function workerSource(inventory) {
   return `const INVENTORY = ${scriptJSON(inventory)};
+const BUDGET = ${scriptJSON(COMPANY_PACKAGE_BUDGET)};
+if (!Array.isArray(INVENTORY.files) || !INVENTORY.files.length || INVENTORY.files.length > BUDGET.maxFiles) throw new Error('Company offline file budget exceeded.');
+const inventoryPaths = new Set();
+let inventoryBytes = 0;
+for (const row of INVENTORY.files) {
+  if (!row || typeof row.path !== 'string' || !/^[A-Za-z0-9_-][A-Za-z0-9_.-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*$/.test(row.path) || inventoryPaths.has(row.path) || !Number.isSafeInteger(row.bytes) || row.bytes < 0 || row.bytes > BUDGET.maxBytes || !/^[a-f0-9]{64}$/.test(row.sha256)) throw new Error('Invalid Company offline file.');
+  inventoryPaths.add(row.path); inventoryBytes += row.bytes;
+}
+if (!Number.isSafeInteger(inventoryBytes) || inventoryBytes !== INVENTORY.totalBytes || inventoryBytes > BUDGET.maxBytes) throw new Error('Company offline byte budget exceeded.');
 const SCOPE = self.registration.scope;
 const CACHE = 'revealline-company-' + encodeURIComponent(SCOPE) + '-' + INVENTORY.buildId;
 const rows = new Map(INVENTORY.files.map(row => [new URL(row.path, SCOPE).href, row]));
@@ -199,20 +223,26 @@ export async function buildEditionOfflineFiles({
   put(
     'app/index.html',
     Buffer.from(
-      `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="${colors.ink}"><link rel="manifest" href="./manifest.webmanifest"><title>${htmlText(name)} · Installation</title><style>${fontCSS}:root{color-scheme:light;font-family:${fontPath ? '"Company Brand",' : ''}system-ui,sans-serif;color:${colors.ink};background:${colors.paper}}body{margin:0;padding:clamp(1.5rem,6vw,5rem)}main{max-width:44rem;margin:auto}img{max-width:5rem;max-height:5rem}h1{font-size:clamp(2rem,7vw,4rem);line-height:1.1}a,button{display:block;margin:1rem 0;padding:.8rem 1rem;border:2px solid ${colors.accent};border-radius:.6rem;color:${colors.ink};background:${colors.paper};font:inherit;text-decoration:underline;cursor:pointer}[hidden]{display:none}a:focus-visible,button:focus-visible{outline:3px solid ${colors.accent};outline-offset:3px}</style><main>${icons.length ? `<img src="${icons.at(-1).src}" alt="">` : ''}<h1 id="name">${htmlText(name)}</h1><p id="status">Your previous edition stays available.</p><a id="play" hidden>Open installed game</a><button id="check">Check available edition</button><a id="prepare" hidden>Open game to prepare offline</a><a id="previous" hidden>Open previous edition</a></main><script type="module" src="./app.mjs"></script></html>`,
+      `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="${colors.ink}"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./navigation.css"><title>${htmlText(name)} · Installation</title><style>${fontCSS}:root{--launcher-focus:${colors.ink};color-scheme:light;font-family:${fontPath ? '"Company Brand",' : ''}system-ui,sans-serif;color:${colors.ink};background:${colors.paper}}body{margin:0;padding:clamp(1.5rem,6vw,5rem)}main{max-width:44rem;margin:auto}img{max-width:5rem;max-height:5rem}h1{font-size:clamp(2rem,7vw,4rem);line-height:1.1}a,button{display:block;margin:1rem 0;padding:.8rem 1rem;border:2px solid ${colors.accent};border-radius:.6rem;color:${colors.ink};background:${colors.paper};font:inherit;text-decoration:underline;cursor:pointer}[hidden]{display:none}a:focus-visible,button:focus-visible{outline:3px solid ${colors.accent};outline-offset:3px}</style><body class="offline-launcher"><main>${icons.length ? `<img src="${icons.at(-1).src}" alt="">` : ''}<h1 id="name">${htmlText(name)}</h1><p id="status">Your previous edition stays available.</p><a id="play" hidden>Open installed game</a><button id="check">Check available edition</button><a id="prepare" hidden>Open game to prepare offline</a><a id="previous" hidden>Open previous edition</a></main><script type="module" src="./app.mjs"></script></body></html>`,
     ),
   );
   put(
     'app/app.mjs',
     Buffer.from(`import { validateCompanyInstallationReference } from './edition-context.mjs';
+import { attachLauncherNavigation } from './ui/launcher-navigation.mjs';
 const ID=${scriptJSON(editionId)}, ROOT=${scriptJSON(identity.scope)}, NAME=${scriptJSON(name)}, KEY='revealline.company-installed.'+ID+'.v1';
 const $=id=>document.getElementById(id); $('name').textContent=NAME;
+attachLauncherNavigation();
 const validate=value=>validateCompanyInstallationReference(value,{editionId:ID,baseURL:location.href,editionRoot:ROOT});
 try{const state=JSON.parse(localStorage.getItem(KEY)||'{}');if(state.active){const a=validate(state.active);$('play').href=new URL(a.entry,a.scope);$('play').hidden=false;}if(state.previous){const p=validate(state.previous);$('previous').href=new URL(p.entry,p.scope);$('previous').hidden=false;}}catch(error){$('status').textContent=error.message;}
 $('check').onclick=async()=>{try{const response=await fetch('./current.json',{cache:'no-store'});if(!response.ok)throw new Error('Update check unavailable.');const candidate=validate(await response.json());$('prepare').href=new URL(candidate.entry,candidate.scope);$('prepare').hidden=false;$('status').textContent='Open this edition and choose Prepare offline. Existing progress is preserved.';}catch(error){$('status').textContent=error.message;}};
 // The game records a verified edition only after explicit preparation succeeds.
 navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCache:'none'}).catch(error=>{$('status').textContent=error.message;});\n`),
   );
+  for (const [path, bytes] of await buildLauncherNavigationFiles(
+    fileURLToPath(new URL('..', import.meta.url)),
+  ))
+    put('app/' + path, bytes);
   const contextSource = await fs.readFile(new URL('../game/edition-context.mjs', import.meta.url));
   put('app/edition-context.mjs', contextSource);
   if (!result.has('game/edition-context.mjs')) put('game/edition-context.mjs', contextSource);
@@ -220,6 +250,11 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
     put(
       'game/editions/offline-client.mjs',
       await fs.readFile(new URL('../game/editions/offline-client.mjs', import.meta.url)),
+    );
+  if (!result.has('game/editions/package-budget.mjs'))
+    put(
+      'game/editions/package-budget.mjs',
+      await fs.readFile(new URL('../game/editions/package-budget.mjs', import.meta.url)),
     );
   const launcher = [...result]
     .filter(([path]) => path.startsWith('app/') && path !== 'app/current.json')
@@ -233,6 +268,10 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
   };
   put('app/service-worker.js', Buffer.from(workerSource(launcherInventory)));
   const inventory = [...result]
+    // These optional bodies remain in the hosted edition and its ZIP, but do not
+    // belong to the mandatory offline core. This matches the root Pages cache
+    // boundary without deleting source, media, recordings, or their public URLs.
+    .filter(([path]) => !editionOfflineOptionalPath(path))
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
     .map(([path, bytes]) => {
       if (!safe(path) || !(bytes instanceof Uint8Array))
@@ -240,8 +279,7 @@ navigator.serviceWorker?.register('./service-worker.js',{scope:'./',updateViaCac
       return { path, bytes: bytes.byteLength, sha256: sha(bytes) };
     });
   const totalBytes = inventory.reduce((sum, row) => sum + row.bytes, 0);
-  if (inventory.length > 2000 || totalBytes > 64 * 1024 * 1024)
-    throw new Error('Edition offline core exceeds 2000 files or 64 MiB.');
+  assertCompanyPackageBudget(inventory.length, totalBytes, 'Edition offline core');
   const config = {
     format: 'revealline-company-offline.v1',
     editionId,

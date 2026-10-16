@@ -50,7 +50,7 @@ function compatiblePolicy(value) {
     if (!tokens?.length || tokens.some((token) => !allowed.includes(token))) return false;
   }
   return (
-    actual.get('script-src')?.join(' ') === "'self'" &&
+    actual.get('script-src')?.join(' ') === "'self' 'wasm-unsafe-eval'" &&
     actual.get('connect-src')?.join(' ') === "'self'"
   );
 }
@@ -190,7 +190,7 @@ export async function verifySite(site, { native = false } = {}) {
   const bytes = await boundedFile(await noLinks(site, 'manifest.json'), 1024 * 1024);
   const manifest = JSON.parse(bytes);
   if (manifest.formatVersion !== 1 || manifest.entry !== 'game/index.html')
-    fail('Expected a Reveal Line web distribution');
+    fail('Expected an FPV / LINE web distribution');
   safeVersion(manifest.version);
   if (
     !Array.isArray(manifest.files) ||

@@ -1,0 +1,150 @@
+{
+  "format": "FPVSchoolTierBrowserEvidence.v1",
+  "passed": true,
+  "createdAt": "2026-10-02T02:01:52.163Z",
+  "checks": [
+    {
+      "name": "Prepare isolated exact-revision completion evidence",
+      "passed": true,
+      "verified": 17,
+      "primaryCompletions": 14,
+      "wrongRevisionExcluded": "beginner-27",
+      "demonstrationExcluded": "beginner-35"
+    },
+    {
+      "name": "Load production source with the isolated profile",
+      "passed": true,
+      "catalogue": 102,
+      "frameUrl": "http://127.0.0.1:8789/optional-practice/fpv-worlds/#learn",
+      "productionHtmlSha256": "d68e2415cdeb28b35109b2f23833041d2aec99f8dc292216d24266a2f7a1b246"
+    },
+    {
+      "name": "Primary progress is30; old14 completions survive and unrelated evidence does not count",
+      "passed": true,
+      "title": "14 of 30 Acro lessons complete",
+      "continue": "Continue · Braking marks"
+    },
+    {
+      "name": "Filter beginner preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-15",
+        "beginner-16",
+        "beginner-13",
+        "beginner-17",
+        "beginner-14",
+        "beginner-18",
+        "beginner-19",
+        "beginner-20",
+        "beginner-21",
+        "beginner-22",
+        "beginner-23",
+        "beginner-24",
+        "beginner-25",
+        "beginner-26"
+      ]
+    },
+    {
+      "name": "Filter experienced preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-27",
+        "beginner-28",
+        "beginner-29",
+        "beginner-30",
+        "beginner-31",
+        "beginner-32",
+        "beginner-33",
+        "beginner-34"
+      ]
+    },
+    {
+      "name": "Filter advanced preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-35",
+        "beginner-36",
+        "beginner-37",
+        "beginner-38",
+        "beginner-39",
+        "beginner-40",
+        "beginner-41",
+        "beginner-42"
+      ]
+    },
+    {
+      "name": "Filter self-level preserves exact lesson order and open access",
+      "passed": true,
+      "ids": [
+        "beginner-01",
+        "beginner-02",
+        "beginner-03",
+        "beginner-04",
+        "beginner-05",
+        "beginner-06",
+        "beginner-07",
+        "beginner-08",
+        "beginner-09",
+        "beginner-10",
+        "beginner-11",
+        "beginner-12"
+      ]
+    },
+    {
+      "name": "All lessons groups beginner chapters then experienced, advanced and optional",
+      "passed": true,
+      "groups": [
+        "beginner",
+        "beginner",
+        "beginner",
+        "beginner",
+        "experienced",
+        "advanced",
+        "self-level"
+      ]
+    },
+    {
+      "name": "Continue crosses into Experienced without altering filter or arming real flight",
+      "passed": true,
+      "heading": "EXPERIENCED · 01/8 · ACRO 15/30"
+    },
+    {
+      "name": "Exiting a filtered lesson restores preferences and keyboard focus",
+      "passed": true,
+      "focusTrace": [
+        {
+          "tag": "H1",
+          "id": "",
+          "text": "Every pilot starts here."
+        },
+        {
+          "tag": "BUTTON",
+          "id": "school-continue",
+          "text": "Continue · Braking marks"
+        }
+      ],
+      "active": {
+        "tag": "BUTTON",
+        "id": "school-continue",
+        "text": "Continue · Braking marks"
+      }
+    },
+    {
+      "name": "Ukrainian tier labels, counts and newest lesson header",
+      "passed": true,
+      "heading": "ПОГЛИБЛЕНИЙ · 08/8 · ACRO 30/30",
+      "title": "Маршрут точного пілотування"
+    },
+    {
+      "name": "Guide fullscreen callback remains isolated; closing preserves primary progress",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/world-app.mjs": "8fb1026c2fd2cf51170576ee16fb3c017a7c01695c8c80134758c2b013055fe1",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "10d4f8919d27661a974a0e58c97ba84e3c81dad40aeb3d0ffdaa5fd171876292",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "24fad6dae237c24a34881c8ff3c906c8574b203d3c5c07644b6b4c10601f864d",
+    "optional-practice/fpv-worlds/index.html": "d68e2415cdeb28b35109b2f23833041d2aec99f8dc292216d24266a2f7a1b246"
+  },
+  "scope": "Production source/real browser DOM, isolated IndexedDB and preferences, independently verified seed proofs. No physical-radio or player acceptance claim."
+}

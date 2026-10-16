@@ -6,10 +6,17 @@ import { soundtrackRights } from '../game/soundtrack.mjs';
 import { authoredPackageId } from '../game/content-design/offline-packages.mjs';
 import { classifyContent } from '../game/content-design/content-lifecycle.mjs';
 import { addAuthoredRuntimeSnapshots } from './authored-runtime-snapshots.mjs';
-import { selectOfflineCore } from './offline-core-closure.mjs';
-import { downloadFiles } from '../game/download-catalogue.mjs';
+import {
+  isOptionalSpatialAudioBody,
+  isOptionalReactionVoiceBody,
+  isOptionalTeamImportManifest,
+  selectOfflineCore,
+} from './offline-core-closure.mjs';
+import { downloadFiles, validateDownloadCatalogue } from '../game/download-catalogue.mjs';
+import { validateInstalledSelection } from '../game/installed-app.mjs';
 import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-destinations.mjs';
 import { readFileSync } from 'node:fs';
+import { addOfflineExperiences } from './offline-experiences.mjs';
 
 const contentMessages = JSON.parse(
   readFileSync(new URL('../game/locales/en/content.json', import.meta.url), 'utf8'),
@@ -36,15 +43,83 @@ export const CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
   ].map(Object.freeze),
 );
 
+export const TEAM_OFFLINE_PROJECT_FACTORIES = Object.freeze(
+  [
+    ['team-journey-candidates', 'createTeamJourneyCandidates', 'team-originals'],
+    [
+      'team-pressure-originals',
+      'createTeamPressureOriginalCandidates',
+      'team-pressure-originals-1',
+    ],
+    ['team-spatial-originals', 'createTeamSpatialOriginalCandidates', 'team-spatial-originals-1'],
+    [
+      'team-impact-originals',
+      'createTeamImpactOriginalCandidates',
+      'team-trail-impact-originals-1',
+    ],
+    [
+      'team-specialist-originals',
+      'createTeamSpecialistOriginalCandidates',
+      'team-specialist-originals-1',
+    ],
+    [
+      'team-complete-specialist-originals',
+      'createTeamCompleteSpecialistOriginalCandidates',
+      'team-complete-specialist-originals-1',
+    ],
+    ...CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES,
+    ['multiplayer-expansion', 'createTeamExpansionCandidates', 'team-expedition-v1'],
+    ['team-hunt-training-candidates', 'createTeamHuntTrainingCandidates', 'humanoid-hunt-v1'],
+    ['team-timed-originals', 'createTeamTimedOriginalCandidates', 'team-timed-originals'],
+    [
+      'team-window-spatial-candidates',
+      'createTeamWindowSpatialCandidates',
+      'team-window-spatial-1',
+    ],
+    ['team-depot-spatial-candidates', 'createTeamDepotSpatialCandidates', 'team-depot-spatial-1'],
+  ].map(Object.freeze),
+);
+
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 /** Built from the exact frozen bytes, never a second, independently maintained asset list. */
-export async function buildOfflineContent(entries, excluded, version) {
+export async function buildOfflineContent(
+  entries,
+  excluded,
+  version,
+  { bundledPackages = [] } = {},
+) {
   const snapshots = await addAuthoredRuntimeSnapshots(entries);
   for (const chapter of snapshots?.chapters || [])
     if (!chapter.descriptor.core) excluded.add(chapter.path);
   for (const item of snapshots?.routes || [])
     excluded.add(`game/content-design/${item.descriptor.path}`);
   const byPath = new Map(entries.map((entry) => [entry.name, entry]));
+  const teamImportManifests = entries.filter((entry) => isOptionalTeamImportManifest(entry.name));
+  const teamImportAssets = new Set();
+  for (const entry of teamImportManifests) {
+    if (
+      entries.filter((item) => item.name === entry.name).length !== 1 ||
+      entry.name !== `game/presentation/compiled/runtime.${digest(entry.bytes)}.json`
+    )
+      throw new Error('Older Team import theme differs from its exact shipped manifest.');
+    const manifest = JSON.parse(entry.bytes);
+    for (const asset of Object.values(manifest.resolved.assets)) {
+      if (!asset.file) continue;
+      const relative = manifest.urls[asset.file.sha256];
+      if (!/^\.\/assets\/[a-f0-9]{64}\.(?:png|woff2)$/.test(relative))
+        throw new Error('Older Team import theme has an unsupported asset dependency.');
+      const name = `game/presentation/compiled/${relative.slice(2)}`;
+      const body = byPath.get(name);
+      if (
+        entries.filter((item) => item.name === name).length !== 1 ||
+        body?.bytes.length !== asset.file.bytes ||
+        digest(body.bytes) !== asset.file.sha256
+      )
+        throw new Error(`Older Team import theme has no exact shipped asset: ${name}`);
+      teamImportAssets.add(name);
+    }
+    excluded.add(entry.name);
+  }
   const parse = (name, fallback) =>
     byPath.has(name) ? JSON.parse(byPath.get(name).bytes) : fallback;
   const classicIndex = parse('game/content/mission-library-index.json', { missions: [] });
@@ -102,14 +177,16 @@ export async function buildOfflineContent(entries, excluded, version) {
           : authoredPackageId(routeId, mode, pack.id);
         const snapshot = current && !team ? currentChapter.get(pack.id) : null;
         const modeLabel = mode === 'versus' ? 'Versus' : mode === 'team' ? 'Team' : 'Solo';
-        const chapterTitle =
-          pack.id === 'journey-opening'
+        const expedition = ['team-expedition-v1', 'duel-expedition-v1'].includes(routeId);
+        const chapterTitle = expedition
+          ? pack.name
+          : pack.id === 'journey-opening'
             ? 'Horizon'
             : campaigns.map((campaign) => campaign.name.replace(/ · optional$/, '')).join(' · ');
         addGroup({
           id,
           title: current
-            ? `${modeLabel} · ${chapterTitle}`
+            ? `${expedition && mode === 'versus' ? 'Duel' : modeLabel} · ${chapterTitle}`
             : `${team ? 'Team' : 'Journey'} · ${(routeLabel || source.name).replace(/ · (?:balance pending|test candidates|unvalidated.*)$/, '')} · ${classification === 'tooling' ? 'Studio' : 'Archive'}`,
           kind: 'gameplay',
           category: current
@@ -129,7 +206,7 @@ export async function buildOfflineContent(entries, excluded, version) {
               : ['shared'],
           files: [
             ...(snapshot && !snapshot.descriptor.core ? [snapshot.path] : []),
-            ...(!current && !team && routeSnapshots.has(routeId)
+            ...(!team && routeId !== snapshots?.route.id && routeSnapshots.has(routeId)
               ? [routeSnapshots.get(routeId)]
               : []),
             ...(source.assets || [])
@@ -165,38 +242,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         routeLabel: route.label,
       });
     }
-    for (const [module, factory, routeId] of [
-      ['team-journey-candidates', 'createTeamJourneyCandidates', 'team-originals'],
-      [
-        'team-pressure-originals',
-        'createTeamPressureOriginalCandidates',
-        'team-pressure-originals-1',
-      ],
-      ['team-spatial-originals', 'createTeamSpatialOriginalCandidates', 'team-spatial-originals-1'],
-      [
-        'team-impact-originals',
-        'createTeamImpactOriginalCandidates',
-        'team-trail-impact-originals-1',
-      ],
-      [
-        'team-specialist-originals',
-        'createTeamSpecialistOriginalCandidates',
-        'team-specialist-originals-1',
-      ],
-      [
-        'team-complete-specialist-originals',
-        'createTeamCompleteSpecialistOriginalCandidates',
-        'team-complete-specialist-originals-1',
-      ],
-      ...CULTURAL_TEAM_OFFLINE_PROJECT_FACTORIES,
-      ['team-timed-originals', 'createTeamTimedOriginalCandidates', 'team-timed-originals'],
-      [
-        'team-window-spatial-candidates',
-        'createTeamWindowSpatialCandidates',
-        'team-window-spatial-1',
-      ],
-      ['team-depot-spatial-candidates', 'createTeamDepotSpatialCandidates', 'team-depot-spatial-1'],
-    ]) {
+    for (const [module, factory, routeId] of TEAM_OFFLINE_PROJECT_FACTORIES) {
       const source = (await import(`../game/content-design/${module}.mjs`))[factory]({
         artwork: true,
       });
@@ -298,7 +344,11 @@ export async function buildOfflineContent(entries, excluded, version) {
         files,
       });
     }
-  const toolingPaths = new Set((coreGraph?.optional || []).filter((path) => !modePaths.has(path)));
+  const toolingPaths = new Set(
+    (coreGraph?.optional || []).filter(
+      (path) => !modePaths.has(path) && !isOptionalTeamImportManifest(path),
+    ),
+  );
   if (toolingPaths.size) {
     for (const name of toolingPaths) excluded.add(name);
     groups.push({
@@ -320,6 +370,64 @@ export async function buildOfflineContent(entries, excluded, version) {
       sha256: digest(entry.bytes),
       kind: 'gameplay',
     }));
+  // Hosted extras are not shared runtime dependencies. Keep them selectable
+  // without charging every starter/chapter download for their optional bodies.
+  const extraPaths = new Set();
+  if (teamImportManifests.length) {
+    const owned = teamImportManifests.map((entry) => entry.name);
+    owned.forEach((name) => extraPaths.add(name));
+    groups.push({
+      id: 'archive:team-import-themes',
+      title: 'Older Team import themes',
+      kind: 'gameplay',
+      category: 'archive',
+      current: false,
+      modes: ['team'],
+      requires: [
+        'shared',
+        ...(groups.some((group) => group.id === 'runtime:team') ? ['runtime:team'] : []),
+      ],
+      files: owned,
+    });
+  }
+  for (const [id, title, matches] of [
+    ['practice', 'Optional flight practice', (name) => name.startsWith('optional-practice/')],
+    [
+      'demo',
+      'Optional Demo recordings',
+      (name) => name.startsWith('game/demo-data/') && name.endsWith('.replay.json'),
+    ],
+    [
+      'menu-art',
+      'Optional landing artwork',
+      (name) => name === 'game/ui/art/menu-scenes/droneaid-main-background.webp',
+    ],
+    ['spatial-audio', 'Optional spatial sound effects', isOptionalSpatialAudioBody],
+    [
+      'character-voices-en',
+      'Character voices · English',
+      (name) => isOptionalReactionVoiceBody(name) && name.endsWith('-en.m4a'),
+    ],
+    [
+      'character-voices-uk',
+      'Character voices · Ukrainian',
+      (name) => isOptionalReactionVoiceBody(name) && name.endsWith('-uk.m4a'),
+    ],
+  ]) {
+    const owned = files.filter((file) => matches(file.path)).map((file) => file.path);
+    if (!owned.length) continue;
+    owned.forEach((name) => extraPaths.add(name));
+    groups.push({
+      id: `extras:${id}`,
+      title,
+      kind: 'gameplay',
+      category: 'extra',
+      current: false,
+      modes: [],
+      requires: ['shared'],
+      files: owned,
+    });
+  }
   const assigned = new Set(groups.flatMap((group) => group.files));
   const unownedArtwork = files.filter(
     (file) => file.path.startsWith('game/content-design/assets/') && !assigned.has(file.path),
@@ -353,11 +461,20 @@ export async function buildOfflineContent(entries, excluded, version) {
           !authoredSnapshotPaths.has(file.path) &&
           !file.path.startsWith('game/content-design/assets/') &&
           !toolingPaths.has(file.path) &&
+          !extraPaths.has(file.path) &&
           !modePaths.has(file.path) &&
           ![...routeSnapshots.values()].includes(file.path),
       )
       .map((file) => file.path),
   });
+  const teamRuntimeFiles = new Set(
+    groups
+      .filter((group) => ['shared', 'runtime:team'].includes(group.id))
+      .flatMap((group) => group.files),
+  );
+  for (const name of teamImportAssets)
+    if (excluded.has(name) && !teamRuntimeFiles.has(name))
+      throw new Error(`Older Team import asset is outside its offline dependencies: ${name}`);
   if (snapshots)
     groups.unshift({
       id: 'base',
@@ -387,6 +504,7 @@ export async function buildOfflineContent(entries, excluded, version) {
         files: tracks.map((track) => `soundtrack:${track.id}`),
       });
   }
+  addOfflineExperiences(groups, files, bundledPackages, coreGraph?.retained);
   // Stable sort preserves authored chapter order within a mode while keeping
   // historical editions and Studio packages below current playable choices.
   const groupRank = (group) =>
@@ -437,7 +555,12 @@ export async function buildOfflineContent(entries, excluded, version) {
     }
     if (offset !== entry.bytes.length) throw new Error('Official media bundle has trailing bytes.');
   }
-  return {
+  // Every selectable gameplay package must fit the installed-state contract,
+  // including archives/tools that a player can opt into individually.
+  validateInstalledSelection(
+    groups.filter((group) => group.kind === 'gameplay').map((group) => group.id),
+  );
+  return validateDownloadCatalogue({
     format: snapshots ? 'revealline-offline-content.v2' : 'revealline-offline-content.v1',
     version,
     files,
@@ -483,7 +606,7 @@ export async function buildOfflineContent(entries, excluded, version) {
     ],
     sharedPolicy:
       'The current lightweight catalogue keeps every mission visible. Original artwork belongs to its chapter; archives and soundtracks are separate optional downloads.',
-  };
+  });
 }
 
 /** Publication evidence, generated after the worker to avoid a recursive content hash. */

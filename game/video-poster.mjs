@@ -47,7 +47,7 @@ function vint(bytes, offset, keepMarker = false) {
 }
 
 // Recognize a bounded local container header. The browser still has to decode it.
-function containerMime(bytes) {
+export function inspectVideoContainerBytes(bytes) {
   const ascii = (a, b) => String.fromCharCode(...bytes.subarray(a, b));
   if (bytes.length >= 16 && ascii(4, 8) === 'ftyp') {
     const size = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(0);
@@ -88,7 +88,7 @@ function containerMime(bytes) {
   throw fail('Unsupported video container. Select a browser-decodable MP4 or WebM file.');
 }
 
-function dimensions(video) {
+export function inspectVideoMetadata(video) {
   const width = video.videoWidth,
     height = video.videoHeight,
     durationSeconds = video.duration;
@@ -243,7 +243,7 @@ function createMedia(scope, blob, env, beforeLoad = () => {}) {
     scope.fail(fail('Browser could not decode this video container or codec.')),
   );
   const ready = waitFor(scope, video, ['loadedmetadata', 'loadeddata', 'durationchange'], () =>
-    video.readyState >= 1 ? dimensions(video) : null,
+    video.readyState >= 1 ? inspectVideoMetadata(video) : null,
   );
   beforeLoad(video);
   scope.guard();
@@ -253,7 +253,7 @@ function createMedia(scope, blob, env, beforeLoad = () => {}) {
 }
 
 function canvasFrame(scope, video, env, inspected) {
-  const facts = dimensions(video);
+  const facts = inspectVideoMetadata(video);
   required(
     Object.keys(facts).every((key) => facts[key] === inspected[key]),
     'Video metadata changed before poster capture.',
@@ -448,7 +448,7 @@ export async function openVideoPosterSource(
   const result = await operation(signal, timeoutMs, timers, async (scope) => {
     const prefix = new Uint8Array(await Blob.prototype.slice.call(raw, 0, 65536).arrayBuffer());
     scope.guard();
-    const mime = containerMime(prefix),
+    const mime = inspectVideoContainerBytes(prefix),
       original = Blob.prototype.slice.call(raw, 0, raw.size, mime);
     const { ready } = createMedia(scope, original, env);
     const facts = await ready;

@@ -117,7 +117,7 @@ export function createTimedBonusEditor({ document, getSource, getMission, apply 
         }
       }
       const next = editTimedBonus(getSource(), getMission()?.id, command);
-      if (apply(next) === false) return;
+      if (apply(next, () => commit(action)) === false) return;
       key = null;
       sync();
       $('select').value = action === 'remove' ? '' : id;

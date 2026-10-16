@@ -1,22 +1,41 @@
+import { mountActorAnimationControls } from './animation-controls.mjs';
 import {
   t,
+  getLocale,
   localizedText,
   localizedAttribute,
   localizedMessage,
   formatNumber,
 } from '../../game/i18n/index.mjs';
 import { assetStudioErrorMessage } from './error-copy.mjs';
+import { mountRewardAssetExport } from '../../game/studio/reward-asset-export.mjs';
 import { createStudioDownload } from './download.mjs';
+import { exportRuntimeTheme } from '../../game/presentation/runtime-transfer.mjs';
+import {
+  createThemeCandidate,
+  saveThemePreview,
+  unsupportedThemeAssignmentSlots,
+} from '../../game/presentation/theme-preview.mjs';
 import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
 import {
   addTeamPresentationSlots,
   needsTeamPresentationSlots,
 } from '../../game/presentation/team-anchor-upgrade.mjs';
+import {
+  addDestructionAudioSlots,
+  needsDestructionAudioSlots,
+} from '../../game/presentation/destruction-audio-upgrade.mjs';
+import {
+  addOverflightArtworkSlots,
+  needsOverflightArtworkSlots,
+  OVERFLIGHT_ARTWORK_SLOTS,
+} from '../../game/presentation/overflight-artwork-upgrade.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
   FORMATS,
   LIMITS,
+  TOKEN_DEFAULTS,
   resolvePresentation,
   validateThemeBundle,
   presentationCoverage,
@@ -30,11 +49,13 @@ import {
 } from '../../game/presentation/bundle.mjs';
 import {
   reviseStudioTheme,
+  setStudioAppearanceBasis,
   replaceStudioCollection,
   adoptStudioBundle,
   generateAssetPrompt,
   nextAssetRevision,
   studioSlotHistory,
+  duplicateStudioSnapshot,
 } from '../../game/presentation/studio-session.mjs';
 import { createStudioStore } from '../../game/presentation/studio-store.mjs';
 import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
@@ -51,7 +72,41 @@ import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
 import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
+import { studioEntryView } from './entry-view.mjs';
+import { mountStudioRotorControls } from './rotor-controls.mjs';
+import { mountArtworkCollectionPanel } from './artwork-panel.mjs';
+import { mountThemeWorkbench } from './theme-workbench.mjs';
+import { getInterfaceTheme, getThemeFamily } from '../../game/presentation/theme-system.mjs';
+mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
+const destructionAdmissionCopy = (key) =>
+  ({
+    label: ['Add destruction sounds', 'Додати звуки знищення'],
+    preparing: ['Adding editable destruction sounds…', 'Додаємо звуки знищення для редагування…'],
+    complete: [
+      'Destruction sounds added to this draft. Existing assets are retained. Save a local revision or export to keep this change.',
+      'Звуки знищення додано до чернетки. Наявні ресурси збережено. Збережіть локальну версію або експортуйте зміни.',
+    ],
+  })[key][getLocale() === 'uk' ? 1 : 0];
+localizedText($('add-destruction-audio'), () => destructionAdmissionCopy('label'));
+const overflightAdmissionCopy = (key) =>
+  ({
+    label: ['Add FPV Survivals artwork slots', 'Додати графіку FPV Survivals'],
+    preparing: ['Adding editable battlefield artwork…', 'Додаємо графіку поля для редагування…'],
+    complete: [
+      'FPV Survivals artwork added to this draft. Existing artwork and animation remain selected. Save a local revision or export to keep this change.',
+      'Графіку FPV Survivals додано до чернетки. Наявну графіку й анімацію збережено. Збережіть локальну версію або експортуйте зміни.',
+    ],
+  })[key][getLocale() === 'uk' ? 1 : 0];
+localizedText($('add-overflight-artwork'), () => overflightAdmissionCopy('label'));
+localizedText($('industrial-art-review'), () =>
+  getLocale() === 'uk' ? 'Огляд індустріальної графіки' : 'Industrial art review',
+);
+localizedAttribute(
+  $('industrial-art-review'),
+  'href',
+  () => `../industrial-art-review/?lang=${getLocale()}`,
+);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
   localizedText(el, typeof value === 'function' ? value : () => value);
@@ -65,6 +120,11 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
   storageReady = false;
+let workspaceLibrary = { entries: [] },
+  activeWorkspaceId = null,
+  themeWorkbench = null;
+let assetHandoffExport = null,
+  actorAnimationControls = null;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
@@ -79,9 +139,12 @@ function rememberView() {
   if (!initialWorkspaceLoad) viewMemory.write(selected, filters());
 }
 function restoreView() {
-  if (!initialWorkspaceLoad || !pendingViewRestore) return;
+  if (!initialWorkspaceLoad) return;
+  const requestedView =
+    pendingViewRestore ?? studioEntryView(window.location.href, working.document.slots);
+  if (!requestedView) return;
   const view = resolveStudioView(
-    pendingViewRestore,
+    requestedView,
     working.document.slots.map((slot) => slot.id),
     Object.fromEntries(
       ['screen', 'state', 'kind', 'quality'].map((key) => [
@@ -104,16 +167,20 @@ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) =>
   control.disabled = false;
   control.removeAttribute('data-studio-startup-disabled');
 });
-let operationFocus = null;
+let operationFocus = null,
+  invalidOperationFocus = null;
 const operations = createStudioOperations({
   target: $('studio-status'),
   cancelButton: $('cancel-studio-operation'),
   setBusy(value) {
-    if (value) operationFocus = document.activeElement;
+    if (value) {
+      operationFocus = document.activeElement;
+      invalidOperationFocus = null;
+    }
     // Escape and preview observation controls stay outside these mutation regions.
     document
       .querySelectorAll(
-        '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
+        '.workspace-actions,.workspace-state,.theme-library-controls,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
       )
       .forEach((el) => {
         el.inert = value;
@@ -123,13 +190,16 @@ const operations = createStudioOperations({
     // Preserve the ordinary return owner on errors; only a consumed Stage
     // advances to the next available authoring action.
     const returnTarget =
-      operationFocus === $('stage-asset') && operationFocus.disabled
+      invalidOperationFocus ||
+      (operationFocus === $('stage-asset') && operationFocus.disabled
         ? $('save-workspace')
-        : operationFocus;
+        : operationFocus);
     if (
       !value &&
       document.hasFocus() &&
-      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
+      [document.body, $('cancel-studio-operation'), operationFocus].includes(
+        document.activeElement,
+      ) &&
       returnTarget?.isConnected &&
       !returnTarget.disabled
     )
@@ -143,6 +213,7 @@ const interfacePreferences = mountInterfacePreferences({
   window,
   getStorage: () => localStorage,
 });
+themeWorkbench = mountThemeWorkbench({ document, window, onAction: workspaceAction });
 const studioGuide = mountStudioGuide({ document });
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
@@ -205,6 +276,7 @@ function discardPreparation() {
   localizedText($('upload-summary'), () => t('tools:noReplacementSelected'));
   $('image-preparation').hidden = true;
   $('geometry-panel').hidden = true;
+  rotorControls.refresh();
   $('stage-asset').disabled = true;
   $('discard-asset').disabled = true;
 }
@@ -290,8 +362,12 @@ function updateCollectionCount() {
 }
 function refresh() {
   if (!working.document.slots.some((slot) => slot.id === selected))
-    selected = working.document.slots[0].id;
+    selected =
+      studioEntryView(window.location.href, working.document.slots)?.selected ??
+      working.document.slots[0].id;
   $('add-team-anchors').disabled = !needsTeamPresentationSlots(working.document);
+  $('add-destruction-audio').disabled = !needsDestructionAudioSlots(working.document);
+  $('add-overflight-artwork').disabled = !needsOverflightArtworkSlots(working.document);
   const view = resolved();
   const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
   $('filter-theme').replaceChildren(
@@ -318,8 +394,17 @@ function refresh() {
   refreshInspector();
   refreshTokens();
   updateCollectionCount();
+  themeWorkbench?.update({
+    library: workspaceLibrary,
+    activeId: activeWorkspaceId,
+    document: working.document,
+    assets: working.assets,
+    selected,
+  });
 }
 function refreshInspector() {
+  assetHandoffExport?.reset();
+  actorAnimationControls?.refresh();
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
@@ -603,6 +688,20 @@ function fileMime(file) {
   );
 }
 const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
+assetHandoffExport = mountRewardAssetExport({
+  container: $('asset-history').parentElement,
+  getOriginal() {
+    requireSettled();
+    const asset = resolved().assets[selected];
+    if (!asset?.file) throw new Error(t('tools:fileBytesAreUnavailable'));
+    return {
+      blob: working.assets.get(asset.file.sha256),
+      sha256: asset.file.sha256,
+      mime: asset.file.mime,
+      name: `${asset.id}-${asset.revision}`,
+    };
+  },
+});
 function download(blob, filename) {
   if (!blob) {
     report(new Error(t('tools:fileBytesAreUnavailable')));
@@ -850,7 +949,10 @@ async function prepareCrop(task) {
 function populateGeometry() {
   const geometry = pending?.candidate?.geometry;
   $('geometry-panel').hidden = !geometry;
-  if (!geometry) return;
+  if (!geometry) {
+    rotorControls.refresh();
+    return;
+  }
   const controls = presentationGeometryControls(currentSlot());
   $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
   $('rotor-anchors').disabled = !controls.rotors;
@@ -864,7 +966,25 @@ function populateGeometry() {
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
   $('nine-slice').value = JSON.stringify(geometry.nineSlice);
+  rotorControls.refresh();
 }
+const rotorControls = mountStudioRotorControls({
+  document,
+  getContext: () => ({
+    owner: pending,
+    asset: pending?.candidate,
+    slot: currentSlot(),
+    geometryText: JSON.stringify(
+      ['pivot-x', 'pivot-y', 'rotor-anchors', 'nine-slice'].map((id) => $(id).value),
+    ),
+  }),
+  onApply: (anchors, checkCurrent) =>
+    operation(t('tools:checkingPreviewGeometry'), (task) => {
+      checkCurrent();
+      return validatePending(true, task, anchors);
+    }),
+  onError: report,
+});
 function editedGeometry() {
   const current = pending.candidate.geometry;
   return {
@@ -874,7 +994,7 @@ function editedGeometry() {
     nineSlice: JSON.parse($('nine-slice').value),
   };
 }
-async function validatePending(geometryOnly = false, task) {
+async function validatePending(geometryOnly = false, task, rotorAnchors = null) {
   if (!pending?.candidate) throw new Error(t('tools:prepareAnImageCropOrChooseMediaFirst'));
   if (pending.bitmap) {
     const crop = getCrop();
@@ -883,10 +1003,13 @@ async function validatePending(geometryOnly = false, task) {
   }
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
+  if (rotorAnchors !== null) asset.geometry.rotorAnchors = rotorAnchors;
   if (!geometryOnly) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
-        $(id).focus();
+        // The operation has made this panel inert. Defer the correction target
+        // until unlock, which also checks foreground and current focus ownership.
+        invalidOperationFocus = $(id);
         throw new Error(t('tools:enterTheActualCreatorSourceAndLicenseRightsStatement'));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;
@@ -910,7 +1033,9 @@ async function validatePending(geometryOnly = false, task) {
     bindings: { [selected]: ref(asset) },
   });
   if (geometryOnly) {
+    task.check();
     pending.candidate = asset;
+    populateGeometry();
     refreshPreviews();
     status(t('tools:geometryCheckedAndAppliedToTheDraftPreview'));
     return;
@@ -1002,6 +1127,34 @@ editGeometry.onclick = () =>
       t('tools:editingMetadataExistingBytesRemainUnchanged'),
     );
   });
+actorAnimationControls = mountActorAnimationControls({
+  document,
+  after: editGeometry,
+  getContext: () => ({
+    document: working.document,
+    asset: resolved().assets[selected],
+    slot: currentSlot(),
+    blob: working.assets.get(resolved().assets[selected]?.file?.sha256),
+  }),
+  onError: report,
+  onApply: (animation, original) => {
+    requireSettled();
+    const asset = {
+      ...structuredClone(original),
+      ...nextAssetRevision(working.document, selected),
+      format: FORMATS.animatedAsset,
+      animation,
+      provenance: { ...original.provenance, parent: ref(original) },
+      quality: { stage: 'source', evidence: [] },
+    };
+    stage(
+      reviseStudioTheme(working.document, {
+        assets: [asset],
+        bindings: { [selected]: ref(asset) },
+      }),
+    );
+  },
+});
 const sprite = mountSpritePanel({
   onError: report,
   runOperation: operation,
@@ -1202,6 +1355,26 @@ $('add-team-anchors').onclick = () =>
       t('tools:teamPresentationSlotsAddedToThisDraftChooseCouchTeam'),
     );
   });
+$('add-destruction-audio').onclick = () =>
+  operation(destructionAdmissionCopy('preparing'), () => {
+    requireSettled();
+    const next = addDestructionAudioSlots(working.document);
+    selected = 'audio.destroy-soft';
+    $('filter-search').value = 'audio.';
+    for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
+    stage(next, working.assets, destructionAdmissionCopy('complete'));
+    rememberView();
+  });
+$('add-overflight-artwork').onclick = () =>
+  operation(overflightAdmissionCopy('preparing'), () => {
+    requireSettled();
+    const next = addOverflightArtworkSlots(working.document);
+    selected = OVERFLIGHT_ARTWORK_SLOTS[0];
+    $('filter-search').value = 'overflight.';
+    for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
+    stage(next, working.assets, overflightAdmissionCopy('complete'));
+    rememberView();
+  });
 $('undo-draft').onclick = () =>
   operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
@@ -1267,7 +1440,7 @@ $('save-workspace').onclick = () =>
     if (!storageReady)
       throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
     task.commit();
-    const result = await store.save(working.document, working.assets, {
+    const result = await store.saveWorkspace(activeWorkspaceId, working.document, working.assets, {
       expectedGeneration: generation,
     });
     task.check();
@@ -1311,17 +1484,29 @@ $('import-workspace').onchange = () => {
 async function loadWorkspace(task) {
   requireSettled();
   if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
-  const result = await store.load();
+  workspaceLibrary = await store.migrateLegacyWorkspace();
+  task.check();
+  const workspaceId = activeWorkspaceId ?? workspaceLibrary.activeId;
+  const result = workspaceId ? await store.loadWorkspace(workspaceId) : null;
   task.check();
   if (!result)
     task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
   const published = result ? null : await loadPublishedStudio({ signal: task.signal });
   task.check();
-  storageReady = true;
-  generation = result?.generation || 0;
-  working = result
+  let accepted = result
     ? { document: result.document, assets: result.assets }
     : (published ?? { document: createDefaultThemeBundle(), assets: new Map() });
+  if (!result) {
+    task.commit();
+    accepted = await store.createWorkspace(accepted.document, accepted.assets);
+    task.check();
+    workspaceLibrary = await store.listWorkspaces();
+    task.check();
+  }
+  storageReady = true;
+  generation = result?.generation ?? accepted.generation;
+  activeWorkspaceId = workspaceId ?? accepted.id;
+  working = { document: accepted.document, assets: accepted.assets };
   saved = working;
   undo = [];
   redo = [];
@@ -1337,6 +1522,189 @@ async function loadWorkspace(task) {
         ? t('tools:currentReleaseAssetsLoadedChangesStayInThisLocalStudio')
         : t('tools:sourceRegistryLoadedACompiledReleaseCollectionIsNotPresent'),
   );
+}
+function requireSavedWorkspace() {
+  requireSettled();
+  if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
+}
+function acceptWorkspace(record, id) {
+  previewGeneration++;
+  for (const target of ['current-preview', 'draft-preview']) $(target).previewCleanup?.();
+  generation = record.generation;
+  activeWorkspaceId = id;
+  working = { document: record.document, assets: record.assets };
+  saved = working;
+  undo = [];
+  redo = [];
+  collectionSlots.clear();
+  sprite.reset();
+  refresh();
+  rememberView();
+}
+function workspaceAction(action, options = {}) {
+  if (action === 'set-basis') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      requireSettled();
+      stage(
+        setStudioAppearanceBasis(working.document, options),
+        working.assets,
+        t('tools:studio.themes.basisStaged'),
+      );
+    });
+    return;
+  }
+  if (action === 'configure-defaults') {
+    operation(t('tools:studio.themes.preparing'), async (task) => {
+      requireSavedWorkspace();
+      const source = working.document;
+      const published = await loadPublishedStudio({ signal: task.signal });
+      task.check();
+      const unsupported = unsupportedThemeAssignmentSlots(
+        source,
+        published?.document ?? createDefaultThemeBundle(),
+      );
+      if (unsupported.length)
+        throw new Error(
+          t('tools:studio.themes.assignmentUnsupported', {
+            slots: unsupported.slice(0, 5).join(', '),
+          }),
+        );
+      await verifyThemeAssets(source, working.assets, { signal: task.signal });
+      task.check();
+      const candidate = createThemeCandidate(source, options);
+      const id = saveThemePreview(window.sessionStorage, candidate);
+      const target = new URL('../company-studio/', import.meta.url);
+      target.searchParams.set('appearanceCandidate', id);
+      window.location.assign(target.href);
+    });
+    return;
+  }
+  if (action === 'preview-sim') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      // The preview leaves this tab. Preserve staged pixel edits and unsaved
+      // workspace history before handing off only the bounded candidate data.
+      requireSavedWorkspace();
+      const id = saveThemePreview(
+        window.sessionStorage,
+        createThemeCandidate(working.document, options),
+      );
+      const target = new URL('../fpv-worlds/calibration.html', import.meta.url);
+      target.searchParams.set('themePreview', id);
+      window.location.assign(target.href);
+    });
+    return;
+  }
+  if (action === 'export-runtime') {
+    operation(t('tools:verifyingOriginalBytesForExport'), async (task) => {
+      requireSettled();
+      const source = working.document;
+      const bundle = await exportRuntimeTheme(source, working.assets, {
+        signal: task.signal,
+        familyId: options.familyId,
+        familyRevision: options.familyRevision,
+        interfaceId: options.interfaceId,
+        interfaceRevision: options.interfaceRevision,
+      });
+      task.check();
+      download(bundle, `revealline-${source.id}-r${source.revision}.rlruntime`);
+      status(t('tools:studio.themes.runtimeExported'), 'success');
+    });
+    return;
+  }
+  if (action === 'preview') {
+    $('preview-mode').value = 'context';
+    refreshPreviews();
+    $('draft-preview').scrollIntoView({ block: 'center' });
+    return;
+  }
+  operation(t('tools:studio.themes.preparing'), async (task) => {
+    requireSettled();
+    if (!storageReady)
+      throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
+    if (action !== 'duplicate') requireSavedWorkspace();
+    const identity = () => `theme-${globalThis.crypto.randomUUID()}`;
+    let record, id;
+    if (action === 'select') {
+      id = options.id;
+      record = await store.loadWorkspace(id);
+      task.check();
+      if (!record) throw new Error(t('tools:studio.themes.unavailable'));
+      task.commit();
+      workspaceLibrary = await store.selectWorkspace(id);
+    } else {
+      let source, assets;
+      if (action === 'import') {
+        const incoming = await importThemeBundle(options.file, { signal: task.signal });
+        task.check();
+        source = incoming.document;
+        assets = incoming.assets;
+        if (options.mode === 'duplicate')
+          source = duplicateStudioSnapshot(source, {
+            id: identity(),
+            name: options.name || resolvePresentation(source).theme.name,
+          });
+      } else if (action === 'duplicate') {
+        source = duplicateStudioSnapshot(working.document, { id: identity(), name: options.name });
+        assets = working.assets;
+      } else {
+        task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
+        const published = await loadPublishedStudio({ signal: task.signal });
+        task.check();
+        const family = getThemeFamily(
+          options.familyId ?? 'industrial-workshop',
+          options.familyRevision,
+        );
+        if (!family) throw new Error(t('tools:studio.themes.basisUnavailable'));
+        const tokens = getInterfaceTheme(family.interface.id, family.interface.revision).tokens;
+        const shared = Object.fromEntries(
+          Object.entries(tokens).filter(([name]) => Object.hasOwn(TOKEN_DEFAULTS, name)),
+        );
+        source = duplicateStudioSnapshot(published?.document ?? createDefaultThemeBundle(), {
+          id: identity(),
+          name: options.name,
+          tokens: { ...shared, amber: tokens.accent, success: tokens.safe },
+          appearanceBasis: {
+            familyId: family.id,
+            familyRevision: family.revision,
+            interfaceId: family.interface.id,
+            interfaceRevision: family.interface.revision,
+          },
+        });
+        assets = published?.assets ?? new Map();
+      }
+      // Snapshot duplication retains only selected assets and provenance parents.
+      const hashes = new Set(
+        source.assets.filter((asset) => asset.file).map((asset) => asset.file.sha256),
+      );
+      const retainedAssets = new Map([...assets].filter(([hash]) => hashes.has(hash)));
+      const verified = await verifyThemeAssets(source, retainedAssets, { signal: task.signal });
+      task.check();
+      if (action === 'import' && options.mode === 'replace') {
+        const library = await store.listWorkspaces();
+        task.check();
+        const entry = library.entries.find(
+          (item) => item.documentId === source.id && !item.recovery,
+        );
+        if (!entry) throw new Error(t('tools:studio.themes.noMatchingWorkspace'));
+        id = entry.id;
+        const prior = await store.loadWorkspace(id);
+        task.check();
+        task.commit();
+        record = await store.replaceWorkspace(id, source, verified, {
+          expectedGeneration: prior.generation,
+        });
+      } else {
+        task.commit();
+        record = await store.createWorkspace(source, verified);
+        id = record.id;
+      }
+      task.check();
+      workspaceLibrary = await store.listWorkspaces();
+    }
+    task.check();
+    acceptWorkspace(record, id);
+    status(t('tools:studio.themes.ready'), 'success');
+  });
 }
 $('reload-workspace').onclick = () =>
   operation(t('tools:loadingSavedStudioWorkspace'), loadWorkspace);
@@ -1357,6 +1725,8 @@ $('load-release').onclick = () =>
   });
 window.addEventListener('pagehide', (event) => {
   rememberView();
+  assetHandoffExport?.reset();
+  actorAnimationControls?.suspend();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1368,9 +1738,14 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    assetHandoffExport?.dispose();
+    actorAnimationControls?.dispose();
+    rotorControls.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();
+    themeWorkbench?.dispose();
+    void store.close();
     stopMasterView();
     audioRestoration.dispose();
     audioPreferences.dispose();

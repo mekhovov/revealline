@@ -1,0 +1,80 @@
+{
+  "format": "FPVCatalogueAdmittedNativeQualification.v1",
+  "sourceRevision": "add835c7b84a225ca1742760b8837e64bd2b518c",
+  "sourceTree": "8156530107de9b166f762e6360157e678f92de7b",
+  "checksPassed": 424,
+  "samples": 14,
+  "overlays": [],
+  "runtimeMembers": 102,
+  "sourceInputs": 95,
+  "modeObservation": {
+    "before": [
+      {
+        "title": "catalogue-mode-split",
+        "metadata": "Follow a subject",
+        "watch": false
+      },
+      {
+        "title": "catalogue-mixed",
+        "metadata": "Authored challenge",
+        "watch": false
+      },
+      {
+        "title": "catalogue-gate",
+        "metadata": "Authored challenge",
+        "watch": false
+      }
+    ],
+    "after": [
+      {
+        "title": "catalogue-mode-split",
+        "metadata": "Observe a subject",
+        "watch": false
+      },
+      {
+        "title": "catalogue-mixed",
+        "metadata": "Authored challenge",
+        "watch": false
+      },
+      {
+        "title": "catalogue-gate",
+        "metadata": "Authored challenge",
+        "watch": false
+      }
+    ],
+    "selectedMode": "acro",
+    "expected": "Observe a subject",
+    "actual": "Observe a subject",
+    "stale": false
+  },
+  "comparison": {
+    "sourceChecksSameNamesAndPasses": true,
+    "modeObservationExact": true,
+    "samplesExact": true,
+    "allHostErrorsWarningsEmpty": true
+  },
+  "files": [
+    {
+      "path": "fpv-imported-catalogue-8977-admitted-passed.json.gz",
+      "bytes": 437554,
+      "sha256": "4aaea4901be1a1ef70ed718560b93ba25f1f56a92eb065ff13fd0451eab8cbd3",
+      "storedBytes": 55925,
+      "storedSHA256": "60faa771783a33e0241e977719a27d91838b303e03c5bc028dfe5f1f01fb3724"
+    },
+    {
+      "path": "fpv-imported-catalogue-8977-admitted-passed.png",
+      "bytes": 8394,
+      "sha256": "a4ff22c0806f6c9fae2e57dae5d6822de5783ca1eeb9c6a009ce6a39e49f2816",
+      "storedBytes": 8394,
+      "storedSHA256": "a4ff22c0806f6c9fae2e57dae5d6822de5783ca1eeb9c6a009ce6a39e49f2816"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 71330,
+      "sha256": "36ca90042edab45899ab6d0f7d03b0294f8da3aa4f902f1c0fb2c9c3be73807b",
+      "storedBytes": 18866,
+      "storedSHA256": "88b08f4a1f89ee57356107cb749b047b19e2f58dd5a60744fcdb7bd6aa1302fc"
+    }
+  ],
+  "scope": "Exact zero-overlay admitted player with native clocks, real renderer/IDB and public file-import/menu/Watch controls. Same bounded criteria, locales, modes, filters, retention and reopen matrix as source8976. No published Browse, uninstrumented entry, offline, whole replay completion or performance claim."
+}

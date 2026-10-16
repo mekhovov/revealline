@@ -1,0 +1,45 @@
+{
+  "schema": "OverflightBuildComparisonV1",
+  "sourceRevision": "3a1e1f7d916fa8685b2338894229d8700b94fa10",
+  "world": "chalk-quarry",
+  "layout": "chalk-quarry-haul-switchbacks",
+  "seed": 17031991,
+  "operation": "Single Drone",
+  "difficulty": "Standard",
+  "airframes": 3,
+  "character": "Scout",
+  "handling": false,
+  "quality": "normal",
+  "audio": "master muted",
+  "pilot": "native tight review pilot; earned upgrades; no checkpoint injection",
+  "boundary": "Same map, seed and pilot, different builds and start times. Not synchronized paths or performance trials. Fan reaches victory roughly four gameplay seconds after recording starts; the remaining recorded battlefield is static. Later HUD observations occur after clip completion and are not asserted to be final clip frames.",
+  "clips": [
+    {
+      "file": "quarry-fan-final.webm",
+      "sha256": "253dc11ccaa748a510df66887db196d8b1ffbc7396597c296de52ad6c43d8a4a",
+      "lastPacketEndSeconds": 20.025,
+      "hudAtStartSeconds": 319,
+      "laterObservationSeconds": 323,
+      "laterOutcome": "won",
+      "laterKills": 2919
+    },
+    {
+      "file": "quarry-echo-late.webm",
+      "sha256": "cd96119d44cd6d65e1238d76105b56beb8873cc7af932e3390df3de653496fa0",
+      "lastPacketEndSeconds": 20.016,
+      "hudAtStartSeconds": 309,
+      "laterObservationSeconds": 339,
+      "laterOutcome": "lost",
+      "laterKills": 2707
+    },
+    {
+      "file": "quarry-systems-late.webm",
+      "sha256": "806538b395941eb1326fb14967b26e10d3728adf5f62a8c9592e3f46d0f86db5",
+      "lastPacketEndSeconds": 20.006,
+      "hudAtStartSeconds": 290,
+      "laterObservationSeconds": 338,
+      "laterOutcome": "still-playing",
+      "laterKills": 3203
+    }
+  ]
+}

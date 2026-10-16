@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+ok 1 - BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+  ---
+  duration_ms: 1.063125
+  type: 'test'
+  ...
+# Subtest: facing uses newly observed tick positions instead of a stale velocity field
+ok 2 - facing uses newly observed tick positions instead of a stale velocity field
+  ---
+  duration_ms: 0.46075
+  type: 'test'
+  ...
+# Subtest: contour and outer patrols face their measured path without velocity fields
+ok 3 - contour and outer patrols face their measured path without velocity fields
+  ---
+  duration_ms: 0.330542
+  type: 'test'
+  ...
+# Subtest: pause and classic freeze retain heading, banking and animation clocks
+ok 4 - pause and classic freeze retain heading, banking and animation clocks
+  ---
+  duration_ms: 0.707208
+  type: 'test'
+  ...
+# Subtest: stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+ok 5 - stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+  ---
+  duration_ms: 0.158209
+  type: 'test'
+  ...
+# Subtest: stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+ok 6 - stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+  ---
+  duration_ms: 0.094291
+  type: 'test'
+  ...
+# Subtest: cosmetic size targets desktop/phone readability without altering contact radius
+ok 7 - cosmetic size targets desktop/phone readability without altering contact radius
+  ---
+  duration_ms: 0.152666
+  type: 'test'
+  ...
+# Subtest: prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding
+ok 8 - prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding
+  ---
+  duration_ms: 0.229667
+  type: 'test'
+  ...
+# Subtest: minimum-aware normal, boss and compact player frames remain finite and bounded
+ok 9 - minimum-aware normal, boss and compact player frames remain finite and bounded
+  ---
+  duration_ms: 0.498625
+  type: 'test'
+  ...
+# Subtest: four themes have distinct geometric silhouettes even with identical colors
+ok 10 - four themes have distinct geometric silhouettes even with identical colors
+  ---
+  duration_ms: 1.135541
+  type: 'test'
+  ...
+# Subtest: compact and detailed recipes differ; custom families resolve to the matching visual theme
+ok 11 - compact and detailed recipes differ; custom families resolve to the matching visual theme
+  ---
+  duration_ms: 0.1835
+  type: 'test'
+  ...
+# Subtest: every actor override keeps its own body slot, facing and unscaled collision cue
+ok 12 - every actor override keeps its own body slot, facing and unscaled collision cue
+  ---
+  duration_ms: 0.334792
+  type: 'test'
+  ...
+# Subtest: history is bounded and reset removes old headings; published frames cannot mutate history
+ok 13 - history is bounded and reset removes old headings; published frames cannot mutate history
+  ---
+  duration_ms: 6.756167
+  type: 'test'
+  ...
+# Subtest: trail core and head remain visible with reduced effects; animated packet stays on the cut
+ok 14 - trail core and head remain visible with reduced effects; animated packet stays on the cut
+  ---
+  duration_ms: 0.391417
+  type: 'test'
+  ...
+# Subtest: capture pulse touches only newly secured cells and is absent for reduced motion
+ok 15 - capture pulse touches only newly secured cells and is absent for reduced motion
+  ---
+  duration_ms: 0.147833
+  type: 'test'
+  ...
+# Subtest: integrated renderer animates observed actors and capture effects without changing replay authority
+ok 16 - integrated renderer animates observed actors and capture effects without changing replay authority
+  ---
+  duration_ms: 27.060083
+  type: 'test'
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 240px
+ok 17 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 240px
+  ---
+  duration_ms: 16.985708
+  type: 'test'
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 390px
+ok 18 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 390px
+  ---
+  duration_ms: 9.844542
+  type: 'test'
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 1152px
+ok 19 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 1152px
+  ---
+  duration_ms: 8.862417
+  type: 'test'
+  ...
+# Subtest: explicit original player pixels never inherit the prepared snapshot rotor rig
+ok 20 - explicit original player pixels never inherit the prepared snapshot rotor rig
+  ---
+  duration_ms: 4.8855
+  type: 'test'
+  ...
+# Subtest: foundation craft keeps its contact cue without detached corner brackets
+ok 21 - foundation craft keeps its contact cue without detached corner brackets
+  ---
+  duration_ms: 186.408166
+  type: 'test'
+  ...
+# Subtest: legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 22 - legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 27.153125
+  type: 'test'
+  ...
+# Subtest: wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 23 - wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 38.543334
+  type: 'test'
+  ...
+# Subtest: custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling
+ok 24 - custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling
+  ---
+  duration_ms: 1.3555
+  type: 'test'
+  ...
+# Subtest: player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+ok 25 - player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+  ---
+  duration_ms: 3.438834
+  type: 'test'
+  ...
+# Subtest: the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+ok 26 - the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+  ---
+  duration_ms: 2.508083
+  type: 'test'
+  ...
+# Subtest: explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+ok 27 - explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+  ---
+  duration_ms: 8.061208
+  type: 'test'
+  ...
+# Subtest: six reusable quad silhouettes each retain four bounded motors and a distinct drawing
+ok 28 - six reusable quad silhouettes each retain four bounded motors and a distinct drawing
+  ---
+  duration_ms: 1.831042
+  type: 'test'
+  ...
+# Subtest: props consume only the shared held rotor phase and stop with reduced motion
+ok 29 - props consume only the shared held rotor phase and stop with reduced motion
+  ---
+  duration_ms: 10.067958
+  type: 'test'
+  ...
+# Subtest: all six procedural quads paint alias-safe diagonal props-in pairs at 10/30/60/120 FPS
+ok 30 - all six procedural quads paint alias-safe diagonal props-in pairs at 10/30/60/120 FPS
+  ---
+  duration_ms: 6.547958
+  type: 'test'
+  ...
+# Subtest: procedural blade handedness follows its motor direction and keeps the original bounded geometry
+ok 31 - procedural blade handedness follows its motor direction and keeps the original bounded geometry
+  ---
+  duration_ms: 0.77325
+  type: 'test'
+  ...
+# Subtest: legacy or invalid frames use a finite static prop pose instead of the unsafe idle clock
+ok 32 - legacy or invalid frames use a finite static prop pose instead of the unsafe idle clock
+  ---
+  duration_ms: 7.673667
+  type: 'test'
+  ...
+# Subtest: the current DroneAid theme uses corrected procedural props in the actual board painter without changing its run
+ok 33 - the current DroneAid theme uses corrected procedural props in the actual board painter without changing its run
+  ---
+  duration_ms: 27.159084
+  type: 'test'
+  ...
+# Subtest: every family keeps all seven canonical role badges and physical contact cues unchanged
+ok 34 - every family keeps all seven canonical role badges and physical contact cues unchanged
+  ---
+  duration_ms: 6.59525
+  type: 'test'
+  ...
+# Subtest: seven exact image objects paint before retained heading badges and physical contact rings
+ok 35 - seven exact image objects paint before retained heading badges and physical contact rings
+  ---
+  duration_ms: 2.132708
+  type: 'test'
+  ...
+# Subtest: surface marks remain contained at16/24/32 and use held frame clocks under pause/freeze
+ok 36 - surface marks remain contained at16/24/32 and use held frame clocks under pause/freeze
+  ---
+  duration_ms: 0.719459
+  type: 'test'
+  ...
+# Subtest: travel and idle treatments use separate clocks; baked rotors and relay have no false parts
+ok 37 - travel and idle treatments use separate clocks; baked rotors and relay have no false parts
+  ---
+  duration_ms: 0.142458
+  type: 'test'
+  ...
+# Subtest: rotor blades and sweep preserve inherited downed opacity and restore caller state
+ok 38 - rotor blades and sweep preserve inherited downed opacity and restore caller state
+  ---
+  duration_ms: 0.729042
+  type: 'test'
+  ...
+# Subtest: swept blades originate at each hub and stay inside its declared sweep
+ok 39 - swept blades originate at each hub and stay inside its declared sweep
+  ---
+  duration_ms: 0.570958
+  type: 'test'
+  ...
+# Subtest: tapered blades originate at each hub and stay inside its declared sweep
+ok 40 - tapered blades originate at each hub and stay inside its declared sweep
+  ---
+  duration_ms: 0.178792
+  type: 'test'
+  ...
+# Subtest: paddle blades originate at each hub and stay inside its declared sweep
+ok 41 - paddle blades originate at each hub and stay inside its declared sweep
+  ---
+  duration_ms: 0.076625
+  type: 'test'
+  ...
+# Subtest: prepared geometry keeps exact radii and uses the densest declared blade pattern without mutating source recipes
+ok 42 - prepared geometry keeps exact radii and uses the densest declared blade pattern without mutating source recipes
+  ---
+  duration_ms: 0.500833
+  type: 'test'
+  ...
+# Subtest: swept counter-rotating blades and tips mirror in their radial frame without moving the hub
+ok 43 - swept counter-rotating blades and tips mirror in their radial frame without moving the hub
+  ---
+  duration_ms: 1.832541
+  type: 'test'
+  ...
+# Subtest: tapered counter-rotating blades and tips mirror in their radial frame without moving the hub
+ok 44 - tapered counter-rotating blades and tips mirror in their radial frame without moving the hub
+  ---
+  duration_ms: 0.343417
+  type: 'test'
+  ...
+# Subtest: paddle counter-rotating blades and tips mirror in their radial frame without moving the hub
+ok 45 - paddle counter-rotating blades and tips mirror in their radial frame without moving the hub
+  ---
+  duration_ms: 0.336583
+  type: 'test'
+  ...
+# Subtest: character paints signed rotation and matching handedness while preserving authored offsets and anchors
+ok 46 - character paints signed rotation and matching handedness while preserving authored offsets and anchors
+  ---
+  duration_ms: 2.4755
+  type: 'test'
+  ...
+# Subtest: enemy paints signed rotation and matching handedness while preserving authored offsets and anchors
+ok 47 - enemy paints signed rotation and matching handedness while preserving authored offsets and anchors
+  ---
+  duration_ms: 2.550459
+  type: 'test'
+  ...
+# Subtest: legacy character tuples and object anchors retain their established direction defaults
+ok 48 - legacy character tuples and object anchors retain their established direction defaults
+  ---
+  duration_ms: 1.435458
+  type: 'test'
+  ...
+# Subtest: procedural patrol rotors retain signed motion and mirror their opposite blades
+ok 49 - procedural patrol rotors retain signed motion and mirror their opposite blades
+  ---
+  duration_ms: 0.647792
+  type: 'test'
+  ...
+# Subtest: procedural contour rotors retain signed motion and mirror their opposite blades
+ok 50 - procedural contour rotors retain signed motion and mirror their opposite blades
+  ---
+  duration_ms: 0.122542
+  type: 'test'
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 707.11225

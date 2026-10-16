@@ -6,8 +6,15 @@ import { editionDepartureDestinationAllowed } from '../editions/departure-destin
 const baseURL = 'https://example.test/revealline/game/index.html?edition=alpha';
 const provider = {
   editionId: 'alpha',
+  selection: { brand: { id: 'one-company' } },
   retainedPresentationId: null,
-  currentCatalog: { editions: [{ id: 'alpha' }, { id: 'beta' }] },
+  currentCatalog: {
+    editions: [
+      { id: 'alpha', brandId: 'one-company' },
+      { id: 'beta', brandId: 'one-company' },
+      { id: 'other-community', brandId: 'another-company' },
+    ],
+  },
   presentationHistory: [{ id: 'earlier' }],
   href(parameters = {}) {
     const url = new URL(baseURL);
@@ -24,11 +31,16 @@ const retainedTicket = { kind: 'catalogue', presentationId: 'earlier' };
 const allowed = (ticket, destination, source = provider) =>
   editionDepartureDestinationAllowed(source, ticket, destination, baseURL);
 
-test('an authenticated catalogue switch selects another edition without retaining old artwork', () => {
+test('an authenticated catalogue switch selects an edition within its company without retaining old artwork', () => {
   assert.equal(
     allowed(editionTicket, provider.href({ edition: 'beta', presentation: null })),
     true,
   );
+});
+test('a declared edition in another company cannot be a main-game departure destination', () => {
+  const ticket = { kind: 'catalogue', destinationEditionId: 'other-community' };
+  const destination = provider.href({ edition: 'other-community', presentation: null });
+  assert.equal(allowed(ticket, destination), false);
 });
 test('an authenticated artwork switch selects its retained presentation', () => {
   assert.equal(allowed(retainedTicket, provider.href({ presentation: 'earlier' })), true);
@@ -136,4 +148,15 @@ test('the actual host boundary rejects invalid destinations before successful ow
     /thisContentHasNoAcceptedActorAppearanceOwner/,
   );
   assert.equal(checks, 1);
+});
+test('the actual host boundary rejects a declared destination owned by another company', async () => {
+  const ticket = {
+    kind: 'catalogue',
+    destinationEditionId: 'other-community',
+    destinationHref: provider.href({ edition: 'other-community', presentation: null }),
+  };
+  await assert.rejects(
+    prepare(ticket, () => {}),
+    /thisContentHasNoAcceptedActorAppearanceOwner/,
+  );
 });

@@ -1,6 +1,11 @@
 // The explicit review routes, not arbitrary imported project IDs or URLs.
 export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
+  'duel-expedition-v1',
   'opening',
+  'humanoid-hunt-v1',
+  'pursuit-pilots-v1',
+  'pursuit-campaigns-v1',
+  'snake-hunt-v1',
   'authored',
   'whole-originals',
   'whole-originals-v2',
@@ -40,6 +45,10 @@ export const AUTHORED_JOURNEY_ROUTE_IDS = Object.freeze([
   'whole-spatial-v32',
   'whole-spatial-v33',
   'whole-spatial-v34',
+  'whole-spatial-v35',
+  'whole-spatial-v36',
+  'whole-spatial-v37',
+  'whole-spatial-v38',
   'whole-ornament-v1',
   'whole-ornament-v2',
 ]);
@@ -81,6 +90,10 @@ export const authoredJourneyUsesActorMaterials = (id) =>
     'whole-spatial-v32',
     'whole-spatial-v33',
     'whole-spatial-v34',
+    'whole-spatial-v35',
+    'whole-spatial-v36',
+    'whole-spatial-v37',
+    'whole-spatial-v38',
     'whole-ornament-v1',
     'whole-ornament-v2',
   ].includes(id);
@@ -90,7 +103,11 @@ export const authoredJourneyUsesActorMaterials = (id) =>
  * no save, token, mission completion or cross-mode progress transfer. */
 export function authoredJourneyModeHref(routeId, destination) {
   if (!isAuthoredJourneyRouteId(routeId)) return null;
-  if (destination === 'versus') return `couch/?journey=${routeId}&return=solo`;
-  if (destination === 'solo') return `../?journey=${routeId}`;
+  if (routeId === 'duel-expedition-v1' && destination === 'solo') return '../';
+  // This helper belongs to the retained territory hosts. The default Snake
+  // entry redirects before they boot, so their mode switches keep the remix.
+  const style = routeId === 'snake-hunt-v1' ? '&snake-style=capture' : '';
+  if (destination === 'versus') return `couch/?journey=${routeId}&return=solo${style}`;
+  if (destination === 'solo') return `../?journey=${routeId}${style}`;
   return null;
 }

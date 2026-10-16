@@ -1,0 +1,49 @@
+{
+  "format": "retro-player-body-original.v1",
+  "role": "impact",
+  "proposedSourceId": "retro-impact-v1",
+  "tool": "image_gen.imagegen",
+  "generationMode": "Fresh text-only built-in original, no image reference input",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-28177973-4892-4068-8f60-37e0df6e68c3.png",
+  "original": {
+    "path": "originals/impact.png",
+    "bytes": 831788,
+    "sha256": "1e9a410fdf3e82cf35ad7731ca06a12bb8971762f09c9697bc7a647a1183c5e3",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/impact.txt",
+    "sha256": "5b970d951cfd6b3f1fb0fddff32cd023aac9894ffa9e63c585ae0e0ac41d0242"
+  },
+  "copy": {
+    "mode": "APFS fclonefileat, exclusive destination, no fallback or transformation",
+    "toolInode": 76069414,
+    "worktreeInode": 76071266
+  },
+  "transforms": [],
+  "runtimeBinding": null,
+  "inspection": "Full source and alpha checks recorded in full-image-inspection.json and alpha-inspection.json; completed native CSS compositing and its limits are in ../inspection/game-scale-receipt.json."
+}

@@ -1,4 +1,8 @@
+import { Soundscape } from '../ui/audio.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
+import { createAudioPreferences } from '../audio-preferences.mjs';
 import { REPLAY_EXAMPLES as examples } from './examples.mjs';
+import { editionPublicSlug } from '../edition-context.mjs';
 import { loadEditionToolProvider, editionToolPresentation } from '../ui/edition-tool-provider.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
@@ -17,14 +21,47 @@ import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
+import { soloReactionDanger } from '../ui/reaction-danger.mjs';
+import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
 import { mountReplayDisplay } from './display.mjs';
 import { replayEventRecord, replayEventText } from './event-copy.mjs';
 
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
+const replayMaster = createAudioMaster();
+const replayAudioPreferences = createAudioPreferences({ audioMaster: replayMaster });
+const replaySound = new Soundscape({ audioMaster: replayMaster });
+replaySound.configure({ master: 1, music: 0 });
+const releaseAudioLabel = replayMaster.subscribe(({ muted }) =>
+  localizedText($('replay-audio'), () =>
+    muted ? t('common:audio.unmute') : t('interface:muteSound'),
+  ),
+);
+$('replay-audio').addEventListener('click', () => {
+  replayAudioPreferences.setMuted(!replayMaster.snapshot().muted);
+  if (!replayMaster.snapshot().muted)
+    void replaySound.enable().then(() => replayReactions.prepare());
+});
 let theaterDisposed = false;
 let disposeRecording = () => {};
 const replayDisplay = mountReplayDisplay();
+const encounterDisplay = attachEncounterDisplayControls({
+  window,
+  prefix: 'replay-',
+  getStorage: () => localStorage,
+});
+replaySound.setDestructionPreferences(() => encounterDisplay.snapshot());
+const replayReactionSettings = attachJourneyReactions({ prefix: 'replay-' });
+const replayReactions = attachContextualReactions({
+  sound: replaySound,
+  container: $('replay-hunt-feedback'),
+  settingsContainer: $('replay-presentation-settings'),
+  getReduced: () => replayDisplay.snapshot().effectiveReducedEffects,
+});
+const replayHuntStatus = attachHuntStatus({ container: $('replay-hunt-feedback'), record: false });
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({
   message: t('interface:preparingTheTheater'),
@@ -37,8 +74,15 @@ let runtimeContent = null,
 const closeTheater = (event = {}) => {
   if (event.persisted || theaterDisposed) return;
   theaterDisposed = true;
+  releaseAudioLabel();
+  replayAudioPreferences.dispose();
+  void replaySound.dispose();
   disposeRecording();
   replayDisplay.dispose();
+  encounterDisplay.dispose();
+  replayReactionSettings.dispose();
+  replayReactions.dispose();
+  replayHuntStatus.dispose();
   bootStatus.dispose();
   presentationFeedback.dispose();
   presentationPage?.close();
@@ -158,10 +202,35 @@ try {
     frameId = null,
     nativeUnsubscribe = null;
   const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
+  // Keep feedback beside the import controls when the global live region is
+  // above the viewport. Only that existing region announces the operation.
+  function beginImportStatus(options) {
+    const lease = importStatus.begin(options),
+      feedback = $('replay-import-feedback');
+    const paint = ({ message, state = 'busy' }) => {
+      if (message !== undefined) {
+        localizedText(feedback, message);
+        feedback.hidden = !message;
+      }
+      feedback.dataset.error = String(state === 'error');
+      feedback.dataset.uiTone = state === 'error' ? 'danger' : 'neutral';
+    };
+    paint(options);
+    return {
+      update(next) {
+        if (lease.update(next)) paint(next);
+      },
+      finish(next) {
+        if (lease.finish(next)) paint({ ...next, state: next.state ?? 'ready' });
+      },
+    };
+  }
   let retainedRecovery = null;
   disposeRecording = () => {
     if (disposed) return;
     disposed = true;
+    replaySound.reset();
+    painter?.dispose();
     controller?.abort();
     epoch++;
     importStatus.dispose();
@@ -186,6 +255,7 @@ try {
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
   function updateControls() {
     const previousFocus = document.activeElement;
+    const finishedLoadControl = !disposed && !pending && previousFocus === $('cancel-load');
     const completedControl =
       !disposed &&
       !pending &&
@@ -204,8 +274,28 @@ try {
     $('theme').disabled = pending || !!actorLease?.pin().authoredPresentationSha256;
     $('cancel-load').hidden = !pending;
     localizedText($('playback-phase'), () =>
-      pending ? t('interface:verifying') : player?.phase || t('interface:empty'),
+      pending
+        ? t('interface:verifying')
+        : player
+          ? t(`interface:replay.phase.${player.phase}`)
+          : t('interface:empty'),
     );
+    if (
+      finishedLoadControl &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      [previousFocus, document.body, null].includes(document.activeElement)
+    ) {
+      const target = !$('play-pause').disabled
+        ? $('play-pause')
+        : !$('restart').disabled
+          ? $('restart')
+          : !$('load-example').disabled
+            ? $('load-example')
+            : $('load-text');
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
     // Native disabling can move Play/Step focus to BODY. Keep this completed
     // transport journey local without moving focus out of another editor.
     if (
@@ -220,6 +310,7 @@ try {
   function readouts() {
     if (!player) return;
     const { state, info } = player;
+    replayHuntStatus.render(state);
     const encounter = encounterView(state);
     $('encounter-cue').hidden = !encounter;
     localizedText($('encounter-title'), () => contentText(encounter, 'title') ?? '');
@@ -278,6 +369,16 @@ try {
   }
   function consume(result) {
     painter.effectsFor(result.events, player.state);
+    if (player.phase === 'playing') {
+      replaySound.events(result.events, player.state, chosenTheme());
+      replayReactions.events(result.events, {
+        attemptId: `replay-${epoch}`,
+        mode: 'solo',
+        board: 0,
+        encounter: !!(player.state.level.runningEnemies?.hunt ?? player.state.level.classic?.hunt),
+        danger: soloReactionDanger(player.state),
+      });
+    } else replayReactions.suspend();
     if (result.events.length) displayEvents(result.events);
     if (lastClass !== player.state.activeClassId) {
       lastClass = player.state.activeClassId;
@@ -299,7 +400,7 @@ try {
     if (!pending) return;
     importDisplay?.finish({
       state: 'cancelled',
-      message: t('interface:loadCancelledThePreviousRecordingIsUnchanged'),
+      message: () => t('interface:loadCancelledThePreviousRecordingIsUnchanged'),
     });
     importDisplay = null;
     controller?.abort();
@@ -317,21 +418,27 @@ try {
     controller = nextController;
     pending = true;
     player?.pause();
+    replaySound.stopVoices('sfx');
+    replayReactions.suspend();
     updateControls();
-    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted;
-    const display = importStatus.begin({
-      message: () => t('gameplay:reading2', { value1: clipped(label) }),
+    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted,
+      loadLabel = () => clipped(typeof label === 'function' ? label() : label);
+    const display = beginImportStatus({
+      message: () => t('gameplay:reading2', { value1: loadLabel() }),
       stage: 'reading',
       isCurrent: current,
     });
     importDisplay = display;
     let stagedActors = null,
+      stagedPainter = null,
       stagedPicture = null,
       stagedPainterRelease = null,
       retainedRequest = null;
     const releaseStaged = () => {
       stagedPainterRelease?.();
       stagedPainterRelease = null;
+      stagedPainter?.dispose();
+      stagedPainter = null;
       stagedActors?.release();
       stagedActors = null;
       stagedPicture?.release();
@@ -346,7 +453,7 @@ try {
       if (runtimeContent && receipt !== runtimeContent.authoredPresentationSha256)
         retainedRequest = runtimeContent.presentationHistory.find((item) => item.id === receipt);
       display.update({
-        message: t('interface:verifyingTheRecordingSExactInputTicks'),
+        message: () => t('interface:verifyingTheRecordingSExactInputTicks'),
         stage: 'verifying',
       });
       const nextPlayer = await prepareReplayPlayer(replay, {
@@ -362,7 +469,7 @@ try {
         if (runtimeContent && envelope.actorAppearancePin.style !== 'campaign')
           throw new Error(t('interface:replay.actorStyleUnavailable'));
         display.update({
-          message: t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
+          message: () => t('interface:checkingTheRecordedMissionOwnerAndExactFpvActors'),
           stage: 'verifying',
           progress: null,
         });
@@ -399,18 +506,19 @@ try {
         }
       }
       let assetMessage = '';
-      const nextPainter = new BoardPainter(presets, {
+      stagedPainter = new BoardPainter(presets, {
         onAsset: (message) => {
           assetMessage = message;
           if (!disposed && painter === nextPainter) localizedText($('asset-status'), () => message);
         },
       });
+      const nextPainter = stagedPainter;
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
       const theme = envelope?.actorAppearancePin.authoredPresentationSha256
         ? themes.find((item) => item.id === envelope.actorAppearancePin.content.contentThemeId)
         : chosenTheme();
       display.update({
-        message: t('interface:preparingTheRecordingSArtwork'),
+        message: () => t('interface:preparingTheRecordingSArtwork'),
         stage: 'decoding',
         progress: null,
       });
@@ -425,10 +533,14 @@ try {
       $('board').parentElement.style.setProperty('--board-ratio', String(size.width / size.height));
       $('board').parentElement.style.setProperty('--board-width', `${size.width}px`);
       player = nextPlayer;
+      replayReactions.reset(`replay-${epoch}`);
+      replayReactions.suspend();
       releasePresentationPainter?.();
+      painter?.dispose();
       actorLease?.release();
       pictureLease?.release();
       painter = nextPainter;
+      stagedPainter = null;
       releasePresentationPainter = stagedPainterRelease;
       stagedPainterRelease = null;
       actorLease = stagedActors;
@@ -452,7 +564,7 @@ try {
           : t('interface:rawReplayPreviewActorsAndSceneNoRecordedAppearanceIs'),
       );
       display.finish({
-        message: () => t('gameplay:verifiedAndLoadedReadyToWatch', { value1: clipped(label) }),
+        message: () => t('gameplay:verifiedAndLoadedReadyToWatch', { value1: loadLabel() }),
       });
       localizedText($('transport-status'), () =>
         player.phase === 'complete'
@@ -472,7 +584,7 @@ try {
         if (retainedRequest) {
           const link = document.createElement('a'),
             target = new URL(location.href);
-          target.searchParams.set('edition', runtimeContent.editionId);
+          target.searchParams.set('edition', editionPublicSlug(runtimeContent.editionId));
           target.searchParams.set('presentation', retainedRequest.id);
           link.href = target.href;
           link.id = 'retained-recording-artwork';
@@ -506,6 +618,14 @@ try {
   }
   function togglePlay() {
     if (!player || pending || ['complete', 'error'].includes(player.phase)) return;
+    if (player.phase !== 'playing') {
+      replayReactions.resume();
+      if (!replayMaster.snapshot().muted)
+        void replaySound.enable().then(() => replayReactions.prepare());
+    } else {
+      replaySound.stopVoices('sfx');
+      replayReactions.suspend();
+    }
     consume(player.phase === 'playing' ? player.pause() : player.play());
     lastFrame = 0;
     localizedText($('transport-status'), () =>
@@ -520,6 +640,8 @@ try {
       action();
     } catch (error) {
       player?.pause();
+      replaySound.stopVoices('sfx');
+      replayReactions.suspend();
       localizedText($('transport-status'), () => clipped(error.message, 300));
       updateControls();
       readouts();
@@ -527,13 +649,16 @@ try {
   }
   $('load-example').addEventListener(
     'click',
-    () => void load(fetchExample, t('interface:fieldcraftExample')),
+    () => void load(fetchExample, () => t('interface:fieldcraftExample')),
   );
   $('example').addEventListener('change', exampleBrief);
   $('cancel-load').addEventListener('click', cancelLoad);
   $('load-text').addEventListener('click', () => {
     const text = $('replay-text').value;
-    return load(async () => text, t('interface:pastedReplay'));
+    return load(
+      async () => text,
+      () => t('interface:pastedReplay'),
+    );
   });
   $('replay-file').addEventListener('change', () => {
     const file = $('replay-file').files?.[0];
@@ -549,6 +674,9 @@ try {
   $('restart').addEventListener('click', () =>
     safely(() => {
       if (!player || pending) return;
+      replaySound.reset();
+      replayReactions.reset(`replay-${epoch}`);
+      replayReactions.suspend();
       player.reset();
       painter.setLevel(player.state.level, { seed: player.info.seed });
       eventHistory = [];
@@ -597,6 +725,8 @@ try {
     togglePlay: () => safely(togglePlay),
     step: () => safely(step),
     onInactive: () => {
+      replaySound.suspend();
+      replayReactions.suspend();
       lastFrame = 0;
       localizedText($('transport-status'), () => t('interface:playbackPausedChoosePlayToContinue'));
     },
@@ -624,10 +754,18 @@ try {
     safely(() => {
       if (player && painter) {
         if (player.phase === 'playing' && !pending) consume(player.advance(dt));
+        replaySound.feedback(player.phase === 'playing' && !pending, chosenTheme(), player.state, {
+          bodyId: bodyFor(chosenTheme(), player.state),
+          actorStyle: actorLease?.pin().style,
+          silentStart: true,
+        });
         const display = replayDisplay.snapshot();
         painter.draw(context, player.state, Math.min(dt, 0.1), {
           paused: player.phase !== 'playing',
           reduced: display.effectiveReducedEffects,
+          showCombatScrap: encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
           textFace: display.textFace,
           showGrid: $('grid').checked,
           fullReveal: player.phase === 'complete' && player.state.status === 'won',
@@ -646,7 +784,7 @@ try {
   document.querySelector('main').removeAttribute('aria-busy');
   bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
-  if (!runtimeContent) void load(fetchExample, t('interface:copperCrossingExample'));
+  if (!runtimeContent) void load(fetchExample, () => t('interface:copperCrossingExample'));
 } catch (error) {
   if (!theaterDisposed)
     bootDisplay.finish({

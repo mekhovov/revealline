@@ -25,10 +25,10 @@ test('Tiny5 keeps its exact vendored provenance, license and Ukrainian glyph met
   assert.match(await readFile(new URL('OFL.txt', fonts), 'utf8'), /SIL OPEN FONT LICENSE/);
 });
 
-test('the shared shell self-hosts Tiny5 and Plain remains a complete accessibility override', async () => {
+test('the shared shell self-hosts Departure Mono and Plain remains a complete accessibility override', async () => {
   const css = await readFile(new URL('../ui/field-kit-fonts.css', import.meta.url), 'utf8');
   assert.match(css, /font-family: 'Reveal Line Pixel'/);
-  assert.match(css, /url\('\.\/fonts\/Tiny5-Regular\.ttf'\)/);
+  assert.match(css, /url\('\.\/fonts\/departure-mono\/DepartureMono-Regular\.woff2'\)/);
   assert.doesNotMatch(css, /https?:\/\//);
   const tokens = await readFile(new URL('../ui/field-kit-tokens.css', import.meta.url), 'utf8');
   assert.match(tokens, /--fk-font-pixel: 'Reveal Line Pixel'/);
@@ -44,7 +44,7 @@ test('the shared shell self-hosts Tiny5 and Plain remains a complete accessibili
   );
 });
 
-test('pixel canvas labels use Tiny5 while counters and Plain keep readable independent faces', () => {
+test('pixel canvas labels use the shared pixel role while counters and Plain keep independent faces', () => {
   const theme = { ui: 'Theme UI', numeric: 'Theme Numeric' };
   assert.deepEqual(canvasTextFonts('pixel', theme), {
     ui: "'Reveal Line Pixel', 'Field Kit UI', system-ui, sans-serif",

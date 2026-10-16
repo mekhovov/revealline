@@ -1,0 +1,6875 @@
+{
+  "format": "snake-level-audit.v2",
+  "scope": "Current authored catalogue metadata; qualification evidence reported separately.",
+  "baseline": "encounter-audit-before.json",
+  "counts": {
+    "levels": 144,
+    "chapters": 23,
+    "campaigns": 9,
+    "versions": {
+      "v1": 48,
+      "v2": 36,
+      "v3": 12,
+      "v4": 48
+    },
+    "singleTarget": 93,
+    "stationaryFoundation": 21,
+    "samePlayerOneSpawn": 120,
+    "identicalTwoPlayerSpawn": 117,
+    "shutterLevels": 16,
+    "powerLevels": 22,
+    "courierLevels": 4,
+    "wrapLevels": 12,
+    "clearOuterBoundary": 134,
+    "v4Shutters": 5,
+    "v4Powers": 10,
+    "v4Wrap": 2
+  },
+  "added": [
+    {
+      "id": "classic-expedition-orchard-fork",
+      "title": "Orchard Fork",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["patroller", "runner", "patroller", "runner"],
+      "maxActive": 2,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-switchback-courts",
+      "title": "Switchback Courts",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["switchback", "refuge"],
+      "maxActive": 2,
+      "wallCount": 32,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-opposite-platforms",
+      "title": "Opposite Platforms",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["pair"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-boundary-exchange",
+      "title": "Boundary Exchange",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["runner", "perimeter"],
+      "maxActive": 2,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-mirror-returns",
+      "title": "Mirror Returns",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["ricochet", "switchback", "ricochet", "switchback"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-inner-outer-transfer",
+      "title": "Inner–Outer Transfer",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["contour", "patroller"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-shutter-split",
+      "title": "Shutter Split",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 10,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-pulse-detour",
+      "title": "Pulse Detour",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["refuge", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-tail-workshop",
+      "title": "Tail Workshop",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["brace", "runner"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "reel",
+          "at": 3,
+          "pads": [
+            {
+              "x": 4,
+              "y": 12
+            },
+            {
+              "x": 19,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-courier-overpass",
+      "title": "Courier Overpass",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["patroller", "runner"],
+      "maxActive": 2,
+      "wallCount": 21,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 3,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 19,
+              "y": 13
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": {
+        "at": [4, 8],
+        "policy": {
+          "kind": "courier",
+          "every": 4,
+          "path": [
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "x": 2,
+              "y": 1
+            },
+            {
+              "x": 3,
+              "y": 1
+            },
+            {
+              "x": 4,
+              "y": 1
+            },
+            {
+              "x": 5,
+              "y": 1
+            },
+            {
+              "x": 6,
+              "y": 1
+            },
+            {
+              "x": 7,
+              "y": 1
+            },
+            {
+              "x": 8,
+              "y": 1
+            },
+            {
+              "x": 9,
+              "y": 1
+            },
+            {
+              "x": 10,
+              "y": 1
+            },
+            {
+              "x": 11,
+              "y": 1
+            },
+            {
+              "x": 12,
+              "y": 1
+            },
+            {
+              "x": 13,
+              "y": 1
+            },
+            {
+              "x": 14,
+              "y": 1
+            },
+            {
+              "x": 15,
+              "y": 1
+            },
+            {
+              "x": 16,
+              "y": 1
+            },
+            {
+              "x": 17,
+              "y": 1
+            },
+            {
+              "x": 18,
+              "y": 1
+            },
+            {
+              "x": 19,
+              "y": 1
+            },
+            {
+              "x": 20,
+              "y": 1
+            },
+            {
+              "x": 21,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 2
+            },
+            {
+              "x": 22,
+              "y": 3
+            },
+            {
+              "x": 22,
+              "y": 4
+            },
+            {
+              "x": 22,
+              "y": 5
+            },
+            {
+              "x": 22,
+              "y": 6
+            },
+            {
+              "x": 22,
+              "y": 7
+            },
+            {
+              "x": 22,
+              "y": 8
+            },
+            {
+              "x": 22,
+              "y": 9
+            },
+            {
+              "x": 22,
+              "y": 10
+            },
+            {
+              "x": 22,
+              "y": 11
+            },
+            {
+              "x": 22,
+              "y": 12
+            },
+            {
+              "x": 22,
+              "y": 13
+            },
+            {
+              "x": 22,
+              "y": 14
+            },
+            {
+              "x": 22,
+              "y": 15
+            },
+            {
+              "x": 22,
+              "y": 16
+            },
+            {
+              "x": 21,
+              "y": 16
+            },
+            {
+              "x": 20,
+              "y": 16
+            },
+            {
+              "x": 19,
+              "y": 16
+            },
+            {
+              "x": 18,
+              "y": 16
+            },
+            {
+              "x": 17,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 15,
+              "y": 16
+            },
+            {
+              "x": 14,
+              "y": 16
+            },
+            {
+              "x": 13,
+              "y": 16
+            },
+            {
+              "x": 12,
+              "y": 16
+            },
+            {
+              "x": 11,
+              "y": 16
+            },
+            {
+              "x": 10,
+              "y": 16
+            },
+            {
+              "x": 9,
+              "y": 16
+            },
+            {
+              "x": 8,
+              "y": 16
+            },
+            {
+              "x": 7,
+              "y": 16
+            },
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 5,
+              "y": 16
+            },
+            {
+              "x": 4,
+              "y": 16
+            },
+            {
+              "x": 3,
+              "y": 16
+            },
+            {
+              "x": 2,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 15
+            },
+            {
+              "x": 1,
+              "y": 14
+            },
+            {
+              "x": 1,
+              "y": 13
+            },
+            {
+              "x": 1,
+              "y": 12
+            },
+            {
+              "x": 1,
+              "y": 11
+            },
+            {
+              "x": 1,
+              "y": 10
+            },
+            {
+              "x": 1,
+              "y": 9
+            },
+            {
+              "x": 1,
+              "y": 8
+            },
+            {
+              "x": 1,
+              "y": 7
+            },
+            {
+              "x": 1,
+              "y": 6
+            },
+            {
+              "x": 1,
+              "y": 5
+            },
+            {
+              "x": 1,
+              "y": 4
+            },
+            {
+              "x": 1,
+              "y": 3
+            },
+            {
+              "x": 1,
+              "y": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "classic-expedition-breaking-bridge",
+      "title": "Breaking Bridge",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["eroder", "refuge", "eroder", "ricochet"],
+      "maxActive": 2,
+      "wallCount": 14,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-clockwork-intercepts",
+      "title": "Clockwork Intercepts",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["shield", "refuge", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 14,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "kind": "reel",
+          "at": 5,
+          "pads": [
+            {
+              "x": 4,
+              "y": 3
+            },
+            {
+              "x": 19,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-edge-of-reception",
+      "title": "Edge of Reception",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["jammer", "runner", "jammer", "refuge", "jammer", "runner"],
+      "maxActive": 2,
+      "wallCount": 16,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-blind-bend",
+      "title": "Blind Bend",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["jammer", "switchback", "jammer", "refuge"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-moving-shadow",
+      "title": "Moving Shadow",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["jammer", "perimeter", "jammer", "runner", "jammer", "contour"],
+      "maxActive": 2,
+      "wallCount": 29,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-quiet-relay",
+      "title": "Quiet Relay",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["jammer", "relay", "runner", "refuge"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-clear-ground",
+      "title": "Clear Ground",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["jammer", "sprinter", "jammer", "runner", "jammer", "refuge"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": true,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-radio-chase",
+      "title": "Radio Chase",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": [
+        "jammer",
+        "runner",
+        "jammer",
+        "switchback",
+        "jammer",
+        "refuge",
+        "runner",
+        "sprinter"
+      ],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "reel",
+          "at": 4,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-outpost-circuit",
+      "title": "Outpost Circuit",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["guard", "runner", "guard", "refuge", "guard", "guard"],
+      "maxActive": 2,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-crosswind-gates",
+      "title": "Crosswind Gates",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["lane", "runner", "lane", "switchback", "lane", "refuge"],
+      "maxActive": 2,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-relay-islands",
+      "title": "Relay Islands",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["relay", "refuge", "relay", "switchback", "runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-waking-junction",
+      "title": "Waking Junction",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["rover", "shield", "contour", "runner", "rover", "refuge"],
+      "maxActive": 2,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 3,
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-signal-workshop",
+      "title": "Signal Workshop",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["eroder", "jammer", "runner", "guard", "eroder", "refuge"],
+      "maxActive": 2,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "reel",
+          "at": 3,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 19,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-four-routes-home",
+      "title": "Four Routes Home",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["jammer", "runner", "relay", "lane", "refuge", "guard", "switchback", "ricochet"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "kind": "reel",
+          "at": 5,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 19,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 2,
+      "bonus": null
+    }
+  ],
+  "inventory": [
+    {
+      "id": "classic-snake-open-loop",
+      "title": "Open Loop",
+      "chapterId": "classic-snake-first-coils",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 0,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-two-landings",
+      "title": "Twin Islands",
+      "chapterId": "classic-snake-first-coils",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-first-baffle",
+      "title": "First Baffle",
+      "chapterId": "classic-snake-first-coils",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 9,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 10,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-offset-docks",
+      "title": "Offset Blocks",
+      "chapterId": "classic-snake-first-coils",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 9,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 10,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-room-to-follow",
+      "title": "Room to Follow",
+      "chapterId": "classic-snake-first-coils",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 15,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-first-circuit",
+      "title": "First Circuit",
+      "chapterId": "classic-snake-first-coils",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 17,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-open-elbow",
+      "title": "Open Elbow",
+      "chapterId": "classic-snake-wide-turns",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 8,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-u-turn-yard",
+      "title": "U-turn Yard",
+      "chapterId": "classic-snake-wide-turns",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 8,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 23,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-staggered-elbows",
+      "title": "Staggered Elbows",
+      "chapterId": "classic-snake-wide-turns",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 8,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 26,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-turning-pockets",
+      "title": "Turning Pockets",
+      "chapterId": "classic-snake-wide-turns",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 9,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 25,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-s-bend",
+      "title": "S-bend",
+      "chapterId": "classic-snake-wide-turns",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 8,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-elbow-exchange",
+      "title": "Elbow Exchange",
+      "chapterId": "classic-snake-wide-turns",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 10,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-long-island",
+      "title": "Long Island",
+      "chapterId": "classic-snake-island-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 8,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-split-islands",
+      "title": "Split Islands",
+      "chapterId": "classic-snake-island-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 10,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 15,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-bent-causeway",
+      "title": "Bent Causeway",
+      "chapterId": "classic-snake-island-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 9,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-three-detours",
+      "title": "Three Detours",
+      "chapterId": "classic-snake-island-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 11,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 41,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-inner-or-outer",
+      "title": "Inner or Outer",
+      "chapterId": "classic-snake-island-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 10,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-long-circuit",
+      "title": "Long Circuit",
+      "chapterId": "classic-snake-island-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 12,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-forked-chase",
+      "title": "Forked Chase",
+      "chapterId": "classic-snake-moving-quarry",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 17,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-parallel-paths",
+      "title": "Parallel Paths",
+      "chapterId": "classic-snake-moving-quarry",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-crossroads",
+      "title": "Crossroads",
+      "chapterId": "classic-snake-moving-quarry",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 13,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-broken-divider",
+      "title": "Broken Divider",
+      "chapterId": "classic-snake-moving-quarry",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 13,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 11,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-runner-triangle",
+      "title": "Runner Triangle",
+      "chapterId": "classic-snake-moving-quarry",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-cutoff-network",
+      "title": "Cutoff Network",
+      "chapterId": "classic-snake-moving-quarry",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-keep-the-tail",
+      "title": "Across the Edge",
+      "chapterId": "classic-snake-borderless-routes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 10,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-lighten-at-home",
+      "title": "Two Shores",
+      "chapterId": "classic-snake-borderless-routes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 12,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 13,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-banking-steps",
+      "title": "Edge Steps",
+      "chapterId": "classic-snake-borderless-routes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 11,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 15,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-persistent-hub",
+      "title": "Borderless Hub",
+      "chapterId": "classic-snake-borderless-routes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 13,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 23,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-two-return-rhythm",
+      "title": "Two-way Rhythm",
+      "chapterId": "classic-snake-borderless-routes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 12,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 29,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-return-weave",
+      "title": "Edge Weave",
+      "chapterId": "classic-snake-borderless-routes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-one-warning",
+      "title": "Single Chicane",
+      "chapterId": "classic-snake-chicanes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 12,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 11,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-warning-courtyard",
+      "title": "Open Courtyard",
+      "chapterId": "classic-snake-chicanes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-crossed-sightlines",
+      "title": "Crossed Passages",
+      "chapterId": "classic-snake-chicanes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 13,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 19,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-screened-approach",
+      "title": "Screened Approach",
+      "chapterId": "classic-snake-chicanes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 23,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-guarded-returns",
+      "title": "Twin Chicanes",
+      "chapterId": "classic-snake-chicanes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 19,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-garden-crossfire",
+      "title": "Garden Weave",
+      "chapterId": "classic-snake-chicanes",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-opposite-arrivals",
+      "title": "Opposite Arrivals",
+      "chapterId": "classic-snake-shared-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 12,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-crossing-schedule",
+      "title": "Crossing Schedule",
+      "chapterId": "classic-snake-shared-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 26,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-paired-loops",
+      "title": "Paired Loops",
+      "chapterId": "classic-snake-shared-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 13,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-shared-detour",
+      "title": "Shared Detour",
+      "chapterId": "classic-snake-shared-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-support-corridor",
+      "title": "Passing Corridor",
+      "chapterId": "classic-snake-shared-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["still"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-shared-circuit",
+      "title": "Shared Circuit",
+      "chapterId": "classic-snake-shared-circuits",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-long-opening",
+      "title": "Long Opening",
+      "chapterId": "classic-snake-final-weave",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-fork-and-warning",
+      "title": "Moving Fork",
+      "chapterId": "classic-snake-final-weave",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 21,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-ordered-islands",
+      "title": "Borderless Islands",
+      "chapterId": "classic-snake-final-weave",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-last-shedding-bank",
+      "title": "Final Hub",
+      "chapterId": "classic-snake-final-weave",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 19,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 30,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-woven-gauntlet",
+      "title": "Woven Gauntlet",
+      "chapterId": "classic-snake-final-weave",
+      "version": "classic-snake-level.v1",
+      "revision": "2",
+      "goal": 14,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 29,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-snake-final-weave",
+      "title": "Final Weave",
+      "chapterId": "classic-snake-final-weave",
+      "version": "classic-snake-level.v1",
+      "revision": "1",
+      "goal": 20,
+      "targets": ["flee"],
+      "maxActive": 1,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-oval-intercept",
+      "title": "Oval Intercept",
+      "chapterId": "classic-snake-patrol-routes",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 30,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-split-yard",
+      "title": "Split Yard",
+      "chapterId": "classic-snake-patrol-routes",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 26,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-island-clock",
+      "title": "Island Clock",
+      "chapterId": "classic-snake-patrol-routes",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-passing-bays",
+      "title": "Passing Bays",
+      "chapterId": "classic-snake-patrol-routes",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 40,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-crossroads",
+      "title": "Crossroads",
+      "chapterId": "classic-snake-patrol-routes",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 30,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-inner-shortcut",
+      "title": "Inner Shortcut",
+      "chapterId": "classic-snake-patrol-routes",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-open-intercept",
+      "title": "Open Intercept",
+      "chapterId": "classic-snake-escape-lines",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 21,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-blind-corner",
+      "title": "Blind Corner",
+      "chapterId": "classic-snake-escape-lines",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 40,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-zigzag-exit",
+      "title": "Zigzag Exit",
+      "chapterId": "classic-snake-escape-lines",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 42,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-broken-ring",
+      "title": "Broken Ring",
+      "chapterId": "classic-snake-escape-lines",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 31,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-border-cutoff",
+      "title": "Border Cutoff",
+      "chapterId": "classic-snake-escape-lines",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 50,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 11,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-three-way-escape",
+      "title": "Three-way Escape",
+      "chapterId": "classic-snake-escape-lines",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 54,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-first-dash",
+      "title": "First Dash",
+      "chapterId": "classic-snake-burst-timing",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["sprinter"],
+      "maxActive": 1,
+      "wallCount": 56,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-corner-pause",
+      "title": "Corner Pause",
+      "chapterId": "classic-snake-burst-timing",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["sprinter"],
+      "maxActive": 1,
+      "wallCount": 38,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-alternating-straights",
+      "title": "Alternating Straights",
+      "chapterId": "classic-snake-burst-timing",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["sprinter"],
+      "maxActive": 1,
+      "wallCount": 63,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-staggered-cover",
+      "title": "Staggered Cover",
+      "chapterId": "classic-snake-burst-timing",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["sprinter"],
+      "maxActive": 1,
+      "wallCount": 39,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-crossing-bursts",
+      "title": "Crossing Bursts",
+      "chapterId": "classic-snake-burst-timing",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["sprinter"],
+      "maxActive": 2,
+      "wallCount": 48,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-long-way-round",
+      "title": "Long Way Round",
+      "chapterId": "classic-snake-burst-timing",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["sprinter"],
+      "maxActive": 1,
+      "wallCount": 42,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-first-shutter",
+      "title": "First Shutter",
+      "chapterId": "classic-snake-route-windows",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 16,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-split-corridor",
+      "title": "Split Corridor",
+      "chapterId": "classic-snake-route-windows",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 52,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-offset-windows",
+      "title": "Offset Windows",
+      "chapterId": "classic-snake-route-windows",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 32,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-clockwork-ring",
+      "title": "Clockwork Ring",
+      "chapterId": "classic-snake-route-windows",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["patroller"],
+      "maxActive": 1,
+      "wallCount": 26,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-boundary-detour",
+      "title": "Boundary Detour",
+      "chapterId": "classic-snake-route-windows",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 38,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-return-junction",
+      "title": "Return Junction",
+      "chapterId": "classic-snake-route-windows",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["runner"],
+      "maxActive": 2,
+      "wallCount": 44,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-first-pulse",
+      "title": "First Pulse",
+      "chapterId": "classic-snake-field-supplies",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-cable-service",
+      "title": "Cable Service",
+      "chapterId": "classic-snake-field-supplies",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 44,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-choose-the-detour",
+      "title": "Choose the Detour",
+      "chapterId": "classic-snake-field-supplies",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 56,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-courier-crossing",
+      "title": "Courier Crossing",
+      "chapterId": "classic-snake-field-supplies",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["runner"],
+      "maxActive": 2,
+      "wallCount": 32,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": {
+        "at": [4, 8],
+        "policy": {
+          "kind": "courier",
+          "every": 4,
+          "path": [
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "x": 2,
+              "y": 1
+            },
+            {
+              "x": 3,
+              "y": 1
+            },
+            {
+              "x": 4,
+              "y": 1
+            },
+            {
+              "x": 5,
+              "y": 1
+            },
+            {
+              "x": 6,
+              "y": 1
+            },
+            {
+              "x": 7,
+              "y": 1
+            },
+            {
+              "x": 8,
+              "y": 1
+            },
+            {
+              "x": 9,
+              "y": 1
+            },
+            {
+              "x": 10,
+              "y": 1
+            },
+            {
+              "x": 11,
+              "y": 1
+            },
+            {
+              "x": 12,
+              "y": 1
+            },
+            {
+              "x": 13,
+              "y": 1
+            },
+            {
+              "x": 14,
+              "y": 1
+            },
+            {
+              "x": 15,
+              "y": 1
+            },
+            {
+              "x": 16,
+              "y": 1
+            },
+            {
+              "x": 17,
+              "y": 1
+            },
+            {
+              "x": 18,
+              "y": 1
+            },
+            {
+              "x": 19,
+              "y": 1
+            },
+            {
+              "x": 20,
+              "y": 1
+            },
+            {
+              "x": 21,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 2
+            },
+            {
+              "x": 22,
+              "y": 3
+            },
+            {
+              "x": 22,
+              "y": 4
+            },
+            {
+              "x": 22,
+              "y": 5
+            },
+            {
+              "x": 22,
+              "y": 6
+            },
+            {
+              "x": 22,
+              "y": 7
+            },
+            {
+              "x": 22,
+              "y": 8
+            },
+            {
+              "x": 22,
+              "y": 9
+            },
+            {
+              "x": 22,
+              "y": 10
+            },
+            {
+              "x": 22,
+              "y": 11
+            },
+            {
+              "x": 22,
+              "y": 12
+            },
+            {
+              "x": 22,
+              "y": 13
+            },
+            {
+              "x": 22,
+              "y": 14
+            },
+            {
+              "x": 22,
+              "y": 15
+            },
+            {
+              "x": 22,
+              "y": 16
+            },
+            {
+              "x": 21,
+              "y": 16
+            },
+            {
+              "x": 20,
+              "y": 16
+            },
+            {
+              "x": 19,
+              "y": 16
+            },
+            {
+              "x": 18,
+              "y": 16
+            },
+            {
+              "x": 17,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 15,
+              "y": 16
+            },
+            {
+              "x": 14,
+              "y": 16
+            },
+            {
+              "x": 13,
+              "y": 16
+            },
+            {
+              "x": 12,
+              "y": 16
+            },
+            {
+              "x": 11,
+              "y": 16
+            },
+            {
+              "x": 10,
+              "y": 16
+            },
+            {
+              "x": 9,
+              "y": 16
+            },
+            {
+              "x": 8,
+              "y": 16
+            },
+            {
+              "x": 7,
+              "y": 16
+            },
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 5,
+              "y": 16
+            },
+            {
+              "x": 4,
+              "y": 16
+            },
+            {
+              "x": 3,
+              "y": 16
+            },
+            {
+              "x": 2,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 15
+            },
+            {
+              "x": 1,
+              "y": 14
+            },
+            {
+              "x": 1,
+              "y": 13
+            },
+            {
+              "x": 1,
+              "y": 12
+            },
+            {
+              "x": 1,
+              "y": 11
+            },
+            {
+              "x": 1,
+              "y": 10
+            },
+            {
+              "x": 1,
+              "y": 9
+            },
+            {
+              "x": 1,
+              "y": 8
+            },
+            {
+              "x": 1,
+              "y": 7
+            },
+            {
+              "x": 1,
+              "y": 6
+            },
+            {
+              "x": 1,
+              "y": 5
+            },
+            {
+              "x": 1,
+              "y": 4
+            },
+            {
+              "x": 1,
+              "y": 3
+            },
+            {
+              "x": 1,
+              "y": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "classic-pursuit-shared-supply",
+      "title": "Shared Supply",
+      "chapterId": "classic-snake-field-supplies",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["runner"],
+      "maxActive": 2,
+      "wallCount": 64,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-last-offer",
+      "title": "Last Offer",
+      "chapterId": "classic-snake-field-supplies",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["runner"],
+      "maxActive": 2,
+      "wallCount": 48,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": {
+        "at": [4, 8],
+        "policy": {
+          "kind": "courier",
+          "every": 4,
+          "path": [
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "x": 2,
+              "y": 1
+            },
+            {
+              "x": 3,
+              "y": 1
+            },
+            {
+              "x": 4,
+              "y": 1
+            },
+            {
+              "x": 5,
+              "y": 1
+            },
+            {
+              "x": 6,
+              "y": 1
+            },
+            {
+              "x": 7,
+              "y": 1
+            },
+            {
+              "x": 8,
+              "y": 1
+            },
+            {
+              "x": 9,
+              "y": 1
+            },
+            {
+              "x": 10,
+              "y": 1
+            },
+            {
+              "x": 11,
+              "y": 1
+            },
+            {
+              "x": 12,
+              "y": 1
+            },
+            {
+              "x": 13,
+              "y": 1
+            },
+            {
+              "x": 14,
+              "y": 1
+            },
+            {
+              "x": 15,
+              "y": 1
+            },
+            {
+              "x": 16,
+              "y": 1
+            },
+            {
+              "x": 17,
+              "y": 1
+            },
+            {
+              "x": 18,
+              "y": 1
+            },
+            {
+              "x": 19,
+              "y": 1
+            },
+            {
+              "x": 20,
+              "y": 1
+            },
+            {
+              "x": 21,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 2
+            },
+            {
+              "x": 22,
+              "y": 3
+            },
+            {
+              "x": 22,
+              "y": 4
+            },
+            {
+              "x": 22,
+              "y": 5
+            },
+            {
+              "x": 22,
+              "y": 6
+            },
+            {
+              "x": 22,
+              "y": 7
+            },
+            {
+              "x": 22,
+              "y": 8
+            },
+            {
+              "x": 22,
+              "y": 9
+            },
+            {
+              "x": 22,
+              "y": 10
+            },
+            {
+              "x": 22,
+              "y": 11
+            },
+            {
+              "x": 22,
+              "y": 12
+            },
+            {
+              "x": 22,
+              "y": 13
+            },
+            {
+              "x": 22,
+              "y": 14
+            },
+            {
+              "x": 22,
+              "y": 15
+            },
+            {
+              "x": 22,
+              "y": 16
+            },
+            {
+              "x": 21,
+              "y": 16
+            },
+            {
+              "x": 20,
+              "y": 16
+            },
+            {
+              "x": 19,
+              "y": 16
+            },
+            {
+              "x": 18,
+              "y": 16
+            },
+            {
+              "x": 17,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 15,
+              "y": 16
+            },
+            {
+              "x": 14,
+              "y": 16
+            },
+            {
+              "x": 13,
+              "y": 16
+            },
+            {
+              "x": 12,
+              "y": 16
+            },
+            {
+              "x": 11,
+              "y": 16
+            },
+            {
+              "x": 10,
+              "y": 16
+            },
+            {
+              "x": 9,
+              "y": 16
+            },
+            {
+              "x": 8,
+              "y": 16
+            },
+            {
+              "x": 7,
+              "y": 16
+            },
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 5,
+              "y": 16
+            },
+            {
+              "x": 4,
+              "y": 16
+            },
+            {
+              "x": 3,
+              "y": 16
+            },
+            {
+              "x": 2,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 15
+            },
+            {
+              "x": 1,
+              "y": 14
+            },
+            {
+              "x": 1,
+              "y": 13
+            },
+            {
+              "x": 1,
+              "y": 12
+            },
+            {
+              "x": 1,
+              "y": 11
+            },
+            {
+              "x": 1,
+              "y": 10
+            },
+            {
+              "x": 1,
+              "y": 9
+            },
+            {
+              "x": 1,
+              "y": 8
+            },
+            {
+              "x": 1,
+              "y": 7
+            },
+            {
+              "x": 1,
+              "y": 6
+            },
+            {
+              "x": 1,
+              "y": 5
+            },
+            {
+              "x": 1,
+              "y": 4
+            },
+            {
+              "x": 1,
+              "y": 3
+            },
+            {
+              "x": 1,
+              "y": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "classic-pursuit-patrol-into-sprint",
+      "title": "Patrol into Sprint",
+      "chapterId": "classic-snake-combined-pursuit",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["patroller", "sprinter", "runner"],
+      "maxActive": 2,
+      "wallCount": 40,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-runner-at-the-window",
+      "title": "Runner at the Window",
+      "chapterId": "classic-snake-combined-pursuit",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["runner"],
+      "maxActive": 1,
+      "wallCount": 39,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-border-relay",
+      "title": "Border Relay",
+      "chapterId": "classic-snake-combined-pursuit",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 50,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 12,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-forked-interception",
+      "title": "Forked Interception",
+      "chapterId": "classic-snake-combined-pursuit",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 58,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-pursuit-supply-circuit",
+      "title": "Supply Circuit",
+      "chapterId": "classic-snake-combined-pursuit",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["runner"],
+      "maxActive": 2,
+      "wallCount": 52,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 1,
+      "bonus": {
+        "at": [4, 8],
+        "policy": {
+          "kind": "courier",
+          "every": 4,
+          "path": [
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "x": 2,
+              "y": 1
+            },
+            {
+              "x": 3,
+              "y": 1
+            },
+            {
+              "x": 4,
+              "y": 1
+            },
+            {
+              "x": 5,
+              "y": 1
+            },
+            {
+              "x": 6,
+              "y": 1
+            },
+            {
+              "x": 7,
+              "y": 1
+            },
+            {
+              "x": 8,
+              "y": 1
+            },
+            {
+              "x": 9,
+              "y": 1
+            },
+            {
+              "x": 10,
+              "y": 1
+            },
+            {
+              "x": 11,
+              "y": 1
+            },
+            {
+              "x": 12,
+              "y": 1
+            },
+            {
+              "x": 13,
+              "y": 1
+            },
+            {
+              "x": 14,
+              "y": 1
+            },
+            {
+              "x": 15,
+              "y": 1
+            },
+            {
+              "x": 16,
+              "y": 1
+            },
+            {
+              "x": 17,
+              "y": 1
+            },
+            {
+              "x": 18,
+              "y": 1
+            },
+            {
+              "x": 19,
+              "y": 1
+            },
+            {
+              "x": 20,
+              "y": 1
+            },
+            {
+              "x": 21,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 2
+            },
+            {
+              "x": 22,
+              "y": 3
+            },
+            {
+              "x": 22,
+              "y": 4
+            },
+            {
+              "x": 22,
+              "y": 5
+            },
+            {
+              "x": 22,
+              "y": 6
+            },
+            {
+              "x": 22,
+              "y": 7
+            },
+            {
+              "x": 22,
+              "y": 8
+            },
+            {
+              "x": 22,
+              "y": 9
+            },
+            {
+              "x": 22,
+              "y": 10
+            },
+            {
+              "x": 22,
+              "y": 11
+            },
+            {
+              "x": 22,
+              "y": 12
+            },
+            {
+              "x": 22,
+              "y": 13
+            },
+            {
+              "x": 22,
+              "y": 14
+            },
+            {
+              "x": 22,
+              "y": 15
+            },
+            {
+              "x": 22,
+              "y": 16
+            },
+            {
+              "x": 21,
+              "y": 16
+            },
+            {
+              "x": 20,
+              "y": 16
+            },
+            {
+              "x": 19,
+              "y": 16
+            },
+            {
+              "x": 18,
+              "y": 16
+            },
+            {
+              "x": 17,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 15,
+              "y": 16
+            },
+            {
+              "x": 14,
+              "y": 16
+            },
+            {
+              "x": 13,
+              "y": 16
+            },
+            {
+              "x": 12,
+              "y": 16
+            },
+            {
+              "x": 11,
+              "y": 16
+            },
+            {
+              "x": 10,
+              "y": 16
+            },
+            {
+              "x": 9,
+              "y": 16
+            },
+            {
+              "x": 8,
+              "y": 16
+            },
+            {
+              "x": 7,
+              "y": 16
+            },
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 5,
+              "y": 16
+            },
+            {
+              "x": 4,
+              "y": 16
+            },
+            {
+              "x": 3,
+              "y": 16
+            },
+            {
+              "x": 2,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 15
+            },
+            {
+              "x": 1,
+              "y": 14
+            },
+            {
+              "x": 1,
+              "y": 13
+            },
+            {
+              "x": 1,
+              "y": 12
+            },
+            {
+              "x": 1,
+              "y": 11
+            },
+            {
+              "x": 1,
+              "y": 10
+            },
+            {
+              "x": 1,
+              "y": 9
+            },
+            {
+              "x": 1,
+              "y": 8
+            },
+            {
+              "x": 1,
+              "y": 7
+            },
+            {
+              "x": 1,
+              "y": 6
+            },
+            {
+              "x": 1,
+              "y": 5
+            },
+            {
+              "x": 1,
+              "y": 4
+            },
+            {
+              "x": 1,
+              "y": 3
+            },
+            {
+              "x": 1,
+              "y": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "classic-pursuit-final-airfield",
+      "title": "Final Airfield",
+      "chapterId": "classic-snake-combined-pursuit",
+      "version": "classic-snake-level.v2",
+      "revision": "1",
+      "goal": 18,
+      "targets": ["runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 50,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-refuge-bays",
+      "title": "Refuge Bays",
+      "chapterId": "classic-snake-twin-intercepts",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["refuge"],
+      "maxActive": 1,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-switchback-yard",
+      "title": "Switchback Yard",
+      "chapterId": "classic-snake-twin-intercepts",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["switchback"],
+      "maxActive": 1,
+      "wallCount": 26,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-rendezvous-crossing",
+      "title": "Rendezvous Crossing",
+      "chapterId": "classic-snake-twin-intercepts",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["pair"],
+      "maxActive": 2,
+      "wallCount": 30,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-cable-cutoff",
+      "title": "Cable Cutoff",
+      "chapterId": "classic-snake-twin-intercepts",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["refuge", "switchback"],
+      "maxActive": 2,
+      "wallCount": 36,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-return-pincer",
+      "title": "Return Pincer",
+      "chapterId": "classic-snake-twin-intercepts",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["pair"],
+      "maxActive": 2,
+      "wallCount": 32,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-twin-intercepts",
+      "title": "Twin Intercepts",
+      "chapterId": "classic-snake-twin-intercepts",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["refuge", "runner", "switchback"],
+      "maxActive": 2,
+      "wallCount": 34,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-shield-window",
+      "title": "Shield Window",
+      "chapterId": "classic-snake-moving-windows",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["shield"],
+      "maxActive": 1,
+      "wallCount": 30,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-brace-break",
+      "title": "Brace Break",
+      "chapterId": "classic-snake-moving-windows",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["brace"],
+      "maxActive": 1,
+      "wallCount": 50,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-shutter-flank",
+      "title": "Shutter Flank",
+      "chapterId": "classic-snake-moving-windows",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["shield", "runner"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-frozen-opening",
+      "title": "Frozen Opening",
+      "chapterId": "classic-snake-moving-windows",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 12,
+      "targets": ["brace", "switchback"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            },
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-supply-flanks",
+      "title": "Supply Flanks",
+      "chapterId": "classic-snake-moving-windows",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 14,
+      "targets": ["shield", "refuge", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 32,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            },
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            },
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-living-living-airfield",
+      "title": "Living Airfield",
+      "chapterId": "classic-snake-moving-windows",
+      "version": "classic-snake-level.v3",
+      "revision": "1",
+      "goal": 16,
+      "targets": ["refuge", "shield", "switchback", "brace"],
+      "maxActive": 2,
+      "wallCount": 34,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 2,
+          "kind": "pulse",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            },
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "at": 6,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            },
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-signal-check",
+      "title": "Signal Check",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "4",
+      "goal": 2,
+      "targets": ["jammer", "jammer"],
+      "maxActive": 1,
+      "wallCount": 9,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-quiet-return",
+      "title": "Quiet Return",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "4",
+      "goal": 6,
+      "targets": ["jammer", "patroller", "runner", "refuge", "runner", "switchback"],
+      "maxActive": 2,
+      "wallCount": 19,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 5,
+          "y": 15,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-lane-window",
+      "title": "Lane Window",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 3,
+      "targets": ["lane", "lane", "lane"],
+      "maxActive": 1,
+      "wallCount": 8,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-two-returns",
+      "title": "Two Returns",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 4,
+      "targets": ["lane", "runner", "lane", "refuge"],
+      "maxActive": 2,
+      "wallCount": 14,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-relay-key",
+      "title": "Relay Key",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 1,
+      "targets": ["relay"],
+      "maxActive": 1,
+      "wallCount": 16,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-linked-courts",
+      "title": "Linked Courts",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 1,
+      "targets": ["relay"],
+      "maxActive": 1,
+      "wallCount": 16,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-broadcast-check",
+      "title": "Broadcast Check",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 3,
+      "targets": ["jammer", "jammer", "jammer"],
+      "maxActive": 1,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-quiet-channel",
+      "title": "Quiet Channel",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 6,
+      "targets": ["jammer", "runner", "jammer", "switchback", "jammer", "refuge"],
+      "maxActive": 2,
+      "wallCount": 21,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-signal-crossing",
+      "title": "Signal Crossing",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "4",
+      "goal": 6,
+      "targets": ["jammer", "runner", "lane", "jammer", "lane", "refuge"],
+      "maxActive": 2,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-relay-airfield",
+      "title": "Relay Airfield",
+      "chapterId": "classic-snake-signal-tactics",
+      "version": "classic-snake-level.v4",
+      "revision": "3",
+      "goal": 6,
+      "targets": ["jammer", "runner", "relay", "lane", "relay", "refuge"],
+      "maxActive": 2,
+      "wallCount": 15,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-border-watch",
+      "title": "Border Watch",
+      "chapterId": "classic-snake-patrol-frontiers",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["perimeter"],
+      "maxActive": 1,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-border-cutoff",
+      "title": "Border Cutoff",
+      "chapterId": "classic-snake-patrol-frontiers",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["perimeter", "runner"],
+      "maxActive": 1,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-contour-orbit",
+      "title": "Contour Orbit",
+      "chapterId": "classic-snake-patrol-frontiers",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["contour"],
+      "maxActive": 1,
+      "wallCount": 36,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-contour-transfer",
+      "title": "Contour Transfer",
+      "chapterId": "classic-snake-patrol-frontiers",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["contour", "perimeter"],
+      "maxActive": 1,
+      "wallCount": 42,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-wake-watch",
+      "title": "Wake Watch",
+      "chapterId": "classic-snake-patrol-frontiers",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["rover"],
+      "maxActive": 1,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-wake-courtyard",
+      "title": "Wake Courtyard",
+      "chapterId": "classic-snake-patrol-frontiers",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["rover", "perimeter"],
+      "maxActive": 1,
+      "wallCount": 25,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-ricochet-line",
+      "title": "Ricochet Line",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["ricochet"],
+      "maxActive": 1,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-ricochet-yard",
+      "title": "Ricochet Yard",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["ricochet", "rover"],
+      "maxActive": 1,
+      "wallCount": 19,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-open-seam",
+      "title": "Open Seam",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 2,
+      "targets": ["eroder", "runner"],
+      "maxActive": 1,
+      "wallCount": 5,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-seam-return",
+      "title": "Seam Return",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 4,
+      "targets": ["eroder", "ricochet", "eroder", "refuge"],
+      "maxActive": 2,
+      "wallCount": 14,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-guard-line",
+      "title": "Guard Line",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 3,
+      "targets": ["guard", "guard", "guard"],
+      "maxActive": 1,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-guard-return",
+      "title": "Guard Return",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 6,
+      "targets": ["guard", "rover", "guard", "rover", "guard", "runner"],
+      "maxActive": 2,
+      "wallCount": 21,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-field-links",
+      "title": "Field Links",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "4",
+      "goal": 6,
+      "targets": ["jammer", "patroller", "eroder", "guard", "eroder", "refuge"],
+      "maxActive": 2,
+      "wallCount": 9,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-field-field-finale",
+      "title": "Field Finale",
+      "chapterId": "classic-snake-field-mastery",
+      "version": "classic-snake-level.v4",
+      "revision": "2",
+      "goal": 8,
+      "targets": ["lane", "relay", "guard", "ricochet", "lane", "relay", "guard", "runner"],
+      "maxActive": 2,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 5,
+          "y": 2,
+          "direction": "right"
+        },
+        {
+          "x": 18,
+          "y": 15,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "at": 4,
+          "kind": "reel",
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 4
+            },
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-orchard-fork",
+      "title": "Orchard Fork",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["patroller", "runner", "patroller", "runner"],
+      "maxActive": 2,
+      "wallCount": 18,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-switchback-courts",
+      "title": "Switchback Courts",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["switchback", "refuge"],
+      "maxActive": 2,
+      "wallCount": 32,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-opposite-platforms",
+      "title": "Opposite Platforms",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["pair"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-boundary-exchange",
+      "title": "Boundary Exchange",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["runner", "perimeter"],
+      "maxActive": 2,
+      "wallCount": 20,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": true,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-mirror-returns",
+      "title": "Mirror Returns",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["ricochet", "switchback", "ricochet", "switchback"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-inner-outer-transfer",
+      "title": "Inner–Outer Transfer",
+      "chapterId": "classic-snake-crossing-routes",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["contour", "patroller"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-shutter-split",
+      "title": "Shutter Split",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 10,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-pulse-detour",
+      "title": "Pulse Detour",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["refuge", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 22,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 14
+            },
+            {
+              "x": 20,
+              "y": 3
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-tail-workshop",
+      "title": "Tail Workshop",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["brace", "runner"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "reel",
+          "at": 3,
+          "pads": [
+            {
+              "x": 4,
+              "y": 12
+            },
+            {
+              "x": 19,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-courier-overpass",
+      "title": "Courier Overpass",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 10,
+      "targets": ["patroller", "runner"],
+      "maxActive": 2,
+      "wallCount": 21,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 3,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 19,
+              "y": 13
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": {
+        "at": [4, 8],
+        "policy": {
+          "kind": "courier",
+          "every": 4,
+          "path": [
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "x": 2,
+              "y": 1
+            },
+            {
+              "x": 3,
+              "y": 1
+            },
+            {
+              "x": 4,
+              "y": 1
+            },
+            {
+              "x": 5,
+              "y": 1
+            },
+            {
+              "x": 6,
+              "y": 1
+            },
+            {
+              "x": 7,
+              "y": 1
+            },
+            {
+              "x": 8,
+              "y": 1
+            },
+            {
+              "x": 9,
+              "y": 1
+            },
+            {
+              "x": 10,
+              "y": 1
+            },
+            {
+              "x": 11,
+              "y": 1
+            },
+            {
+              "x": 12,
+              "y": 1
+            },
+            {
+              "x": 13,
+              "y": 1
+            },
+            {
+              "x": 14,
+              "y": 1
+            },
+            {
+              "x": 15,
+              "y": 1
+            },
+            {
+              "x": 16,
+              "y": 1
+            },
+            {
+              "x": 17,
+              "y": 1
+            },
+            {
+              "x": 18,
+              "y": 1
+            },
+            {
+              "x": 19,
+              "y": 1
+            },
+            {
+              "x": 20,
+              "y": 1
+            },
+            {
+              "x": 21,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 1
+            },
+            {
+              "x": 22,
+              "y": 2
+            },
+            {
+              "x": 22,
+              "y": 3
+            },
+            {
+              "x": 22,
+              "y": 4
+            },
+            {
+              "x": 22,
+              "y": 5
+            },
+            {
+              "x": 22,
+              "y": 6
+            },
+            {
+              "x": 22,
+              "y": 7
+            },
+            {
+              "x": 22,
+              "y": 8
+            },
+            {
+              "x": 22,
+              "y": 9
+            },
+            {
+              "x": 22,
+              "y": 10
+            },
+            {
+              "x": 22,
+              "y": 11
+            },
+            {
+              "x": 22,
+              "y": 12
+            },
+            {
+              "x": 22,
+              "y": 13
+            },
+            {
+              "x": 22,
+              "y": 14
+            },
+            {
+              "x": 22,
+              "y": 15
+            },
+            {
+              "x": 22,
+              "y": 16
+            },
+            {
+              "x": 21,
+              "y": 16
+            },
+            {
+              "x": 20,
+              "y": 16
+            },
+            {
+              "x": 19,
+              "y": 16
+            },
+            {
+              "x": 18,
+              "y": 16
+            },
+            {
+              "x": 17,
+              "y": 16
+            },
+            {
+              "x": 16,
+              "y": 16
+            },
+            {
+              "x": 15,
+              "y": 16
+            },
+            {
+              "x": 14,
+              "y": 16
+            },
+            {
+              "x": 13,
+              "y": 16
+            },
+            {
+              "x": 12,
+              "y": 16
+            },
+            {
+              "x": 11,
+              "y": 16
+            },
+            {
+              "x": 10,
+              "y": 16
+            },
+            {
+              "x": 9,
+              "y": 16
+            },
+            {
+              "x": 8,
+              "y": 16
+            },
+            {
+              "x": 7,
+              "y": 16
+            },
+            {
+              "x": 6,
+              "y": 16
+            },
+            {
+              "x": 5,
+              "y": 16
+            },
+            {
+              "x": 4,
+              "y": 16
+            },
+            {
+              "x": 3,
+              "y": 16
+            },
+            {
+              "x": 2,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 16
+            },
+            {
+              "x": 1,
+              "y": 15
+            },
+            {
+              "x": 1,
+              "y": 14
+            },
+            {
+              "x": 1,
+              "y": 13
+            },
+            {
+              "x": 1,
+              "y": 12
+            },
+            {
+              "x": 1,
+              "y": 11
+            },
+            {
+              "x": 1,
+              "y": 10
+            },
+            {
+              "x": 1,
+              "y": 9
+            },
+            {
+              "x": 1,
+              "y": 8
+            },
+            {
+              "x": 1,
+              "y": 7
+            },
+            {
+              "x": 1,
+              "y": 6
+            },
+            {
+              "x": 1,
+              "y": 5
+            },
+            {
+              "x": 1,
+              "y": 4
+            },
+            {
+              "x": 1,
+              "y": 3
+            },
+            {
+              "x": 1,
+              "y": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "classic-expedition-breaking-bridge",
+      "title": "Breaking Bridge",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["eroder", "refuge", "eroder", "ricochet"],
+      "maxActive": 2,
+      "wallCount": 14,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-clockwork-intercepts",
+      "title": "Clockwork Intercepts",
+      "chapterId": "classic-snake-changing-shortcuts",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["shield", "refuge", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 14,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "kind": "reel",
+          "at": 5,
+          "pads": [
+            {
+              "x": 4,
+              "y": 3
+            },
+            {
+              "x": 19,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 2,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-edge-of-reception",
+      "title": "Edge of Reception",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["jammer", "runner", "jammer", "refuge", "jammer", "runner"],
+      "maxActive": 2,
+      "wallCount": 16,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-blind-bend",
+      "title": "Blind Bend",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["jammer", "switchback", "jammer", "refuge"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-moving-shadow",
+      "title": "Moving Shadow",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["jammer", "perimeter", "jammer", "runner", "jammer", "contour"],
+      "maxActive": 2,
+      "wallCount": 29,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-quiet-relay",
+      "title": "Quiet Relay",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 4,
+      "targets": ["jammer", "relay", "runner", "refuge"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-clear-ground",
+      "title": "Clear Ground",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["jammer", "sprinter", "jammer", "runner", "jammer", "refuge"],
+      "maxActive": 2,
+      "wallCount": 28,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": true,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-radio-chase",
+      "title": "Radio Chase",
+      "chapterId": "classic-snake-hidden-signals",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": [
+        "jammer",
+        "runner",
+        "jammer",
+        "switchback",
+        "jammer",
+        "refuge",
+        "runner",
+        "sprinter"
+      ],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "reel",
+          "at": 4,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-outpost-circuit",
+      "title": "Outpost Circuit",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["guard", "runner", "guard", "refuge", "guard", "guard"],
+      "maxActive": 2,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-crosswind-gates",
+      "title": "Crosswind Gates",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["lane", "runner", "lane", "switchback", "lane", "refuge"],
+      "maxActive": 2,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 4,
+          "y": 3,
+          "direction": "right"
+        },
+        {
+          "x": 19,
+          "y": 14,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-relay-islands",
+      "title": "Relay Islands",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["relay", "refuge", "relay", "switchback", "runner", "sprinter"],
+      "maxActive": 2,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 20,
+          "y": 6,
+          "direction": "left"
+        },
+        {
+          "x": 3,
+          "y": 12,
+          "direction": "right"
+        }
+      ],
+      "wrap": false,
+      "pickups": [],
+      "shutters": 1,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-waking-junction",
+      "title": "Waking Junction",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["rover", "shield", "contour", "runner", "rover", "refuge"],
+      "maxActive": 2,
+      "wallCount": 27,
+      "spawns": [
+        {
+          "x": 8,
+          "y": 14,
+          "direction": "up"
+        },
+        {
+          "x": 16,
+          "y": 3,
+          "direction": "down"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 3,
+          "pads": [
+            {
+              "x": 3,
+              "y": 4
+            },
+            {
+              "x": 20,
+              "y": 13
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-signal-workshop",
+      "title": "Signal Workshop",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 6,
+      "targets": ["eroder", "jammer", "runner", "guard", "eroder", "refuge"],
+      "maxActive": 2,
+      "wallCount": 12,
+      "spawns": [
+        {
+          "x": 3,
+          "y": 9,
+          "direction": "right"
+        },
+        {
+          "x": 20,
+          "y": 9,
+          "direction": "left"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "reel",
+          "at": 3,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 19,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 0,
+      "bonus": null
+    },
+    {
+      "id": "classic-expedition-four-routes-home",
+      "title": "Four Routes Home",
+      "chapterId": "classic-snake-expedition-circuits",
+      "version": "classic-snake-level.v4",
+      "revision": "1",
+      "goal": 8,
+      "targets": ["jammer", "runner", "relay", "lane", "refuge", "guard", "switchback", "ricochet"],
+      "maxActive": 2,
+      "wallCount": 24,
+      "spawns": [
+        {
+          "x": 12,
+          "y": 3,
+          "direction": "down"
+        },
+        {
+          "x": 11,
+          "y": 14,
+          "direction": "up"
+        }
+      ],
+      "wrap": false,
+      "pickups": [
+        {
+          "kind": "pulse",
+          "at": 2,
+          "pads": [
+            {
+              "x": 3,
+              "y": 13
+            },
+            {
+              "x": 20,
+              "y": 4
+            }
+          ]
+        },
+        {
+          "kind": "reel",
+          "at": 5,
+          "pads": [
+            {
+              "x": 4,
+              "y": 4
+            },
+            {
+              "x": 19,
+              "y": 14
+            }
+          ]
+        }
+      ],
+      "shutters": 2,
+      "bonus": null
+    }
+  ],
+  "baselineCounts": {
+    "levels": 120,
+    "chapters": 19,
+    "campaigns": 8,
+    "versions": {
+      "v1": 48,
+      "v2": 36,
+      "v3": 12,
+      "v4": 24
+    },
+    "singleTarget": 97,
+    "stationaryFoundation": 39,
+    "samePlayerOneSpawn": 120,
+    "identicalTwoPlayerSpawn": 118,
+    "shutterLevels": 11,
+    "powerLevels": 12,
+    "courierLevels": 3,
+    "wrapLevels": 10,
+    "clearOuterBoundary": 112,
+    "v4Shutters": 0,
+    "v4Powers": 0,
+    "v4Wrap": 0
+  },
+  "addedVariety": {
+    "distinctWallLayouts": 24,
+    "distinctSpawnPairs": 5,
+    "twoActive": 24,
+    "multipleRequiredKinds": 23,
+    "goals": [4, 6, 8, 10]
+  }
+}

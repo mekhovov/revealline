@@ -2,16 +2,20 @@ import { t } from '../i18n/index.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { CLASSES } from '../core/registry.mjs';
-import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { createExecutionCatalog, isOwnedExecutionEntries } from '../campaign-contexts.mjs';
 import { createMediaIdentityCatalog } from '../media-library.mjs';
 import { hydrateStoredStillMedia } from '../media-storage-record.mjs';
 import { campaignKey } from '../library.mjs';
 import { resolvePackCampaign } from '../packs.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 
+const ownedPictureCatalogs = new WeakMap();
+
 /** Presentation owners only: strip art, merge exact bases and real theme IDs.
  * Retained owners provide validation context, never install playable content. */
 export function createPictureIdentityCatalog({ entries = [], metadata } = {}) {
+  const cacheable = metadata === undefined && isOwnedExecutionEntries(entries);
+  if (cacheable && ownedPictureCatalogs.has(entries)) return ownedPictureCatalogs.get(entries);
   const owners = new Map();
   const add = (source, themes) => {
     const effective = createDifficultyContext(source).campaign;
@@ -48,7 +52,7 @@ export function createPictureIdentityCatalog({ entries = [], metadata } = {}) {
         owner.campaign,
         owner.themeIds.map((id) => ({ id })),
       );
-  return createMediaIdentityCatalog(
+  const result = createMediaIdentityCatalog(
     createExecutionCatalog(
       [...owners.values()].map((owner) => ({
         campaign: owner.campaign,
@@ -56,6 +60,8 @@ export function createPictureIdentityCatalog({ entries = [], metadata } = {}) {
       })),
     ),
   );
+  if (cacheable) ownedPictureCatalogs.set(entries, result);
+  return result;
 }
 
 /** Capture awaited media metadata, then return prepareBackup's synchronous hook.

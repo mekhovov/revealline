@@ -1,0 +1,57 @@
+{
+  "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+  "sourceTree": "71bf69c8df5ad02bc75cd46cc01c6893e40e9192",
+  "version": "v0.151.1",
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "revision": "fff1c41f5e63e04848c3e20070383bece6834939e6b117446aa2931b3bcb518d",
+  "cloudRun": 38615162179,
+  "githubArtifactId": 11919610810,
+  "topLevelChecksumsVerified": 15,
+  "worldsMembersVerified": 133,
+  "worldsBytes": 17132123,
+  "browserOfflineVerified": false,
+  "files": {
+    "github-artifact.zip": {
+      "bytes": 22914303,
+      "sha256": "23ba541d7d494b6df6eb13fc39e10836c1b606154edd6da5d2d21d354f4e29d3"
+    },
+    "distribution-optional-fpv-worlds.zip": {
+      "bytes": 17177382,
+      "sha256": "8b1cd5e2d143f594c85b9f9d96aa3fb2b6d9b7631a664147c4ad48c960494110"
+    },
+    "manifest-optional-fpv-worlds.json": {
+      "bytes": 24295,
+      "sha256": "24b58c6b0300bc092255fdd77f4c4616b5276e3ed1da61e57eadb66a73b65038"
+    }
+  },
+  "artifactURL": "https://github.com/mekhovov/revealline/actions/runs/38615162179/artifacts/11919610810",
+  "origin": "http://127.0.0.1:9019",
+  "installationRoot": "/revealline/practice/fpv-worlds/",
+  "method": "Fresh isolated origin, unchanged cloud-built canonical launcher and immutable player. Native Codex in-app browser UI preparation, actual rendered home, same-URL reload while only the dedicated origin server was stopped.",
+  "artwork": {
+    "path": "releases/v0.151.1/site/game/ui/art/menu-scenes/fpv.webp",
+    "bytes": 514190,
+    "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+  },
+  "nativeJourney": {
+    "status": "passed-bounded-home-artwork-origin-unavailable-reload",
+    "originUnavailableReopenVerified": true,
+    "networkWideOfflineVerified": false,
+    "browserRestartVerified": false,
+    "observations": [
+      "Canonical Download completed and reported Ready offline.",
+      "Open prepared practice launched the exact immutable v0.151.1 player. Its native home showed the full hangar/orchard sunset background and home controls.",
+      "Only the dedicated origin server PID 89544 was stopped. An independent transport probe confirmed connection refusal (curl exit 7). No browser storage or service-worker registrations were changed.",
+      "Reloading the same exact player URL while its origin was unavailable restored the complete background and home controls.",
+      "The dedicated server was restored as PID 94249; canonical launcher HTTP 200 was confirmed."
+    ],
+    "screenshots": ["/Volumes/alex/CodexMigrationStaging/fpv-temp/package-home-artwork-offline.png"]
+  },
+  "cloudChecks": {
+    "run": 38615162179,
+    "optionalPractice": "success",
+    "companyCandidate": "in_progress_at_receipt"
+  }
+}

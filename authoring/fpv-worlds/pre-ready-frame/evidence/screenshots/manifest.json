@@ -1,0 +1,35 @@
+{
+  "files": [
+    {
+      "file": "fpv-pre-ready-baseline-8938.png",
+      "bytes": 22987,
+      "sha256": "6ef44b63816a382f8ab511460f6d6615162e90faa5d812bcf6af03bf9c72adee"
+    },
+    {
+      "file": "fpv-pre-ready-candidate-8937.png",
+      "bytes": 22987,
+      "sha256": "6ef44b63816a382f8ab511460f6d6615162e90faa5d812bcf6af03bf9c72adee"
+    },
+    {
+      "file": "fpv-warm-lifecycle-8944-passed.png",
+      "bytes": 24644,
+      "sha256": "a17f59d849eb8674b4148b857bd4376088dd1d293befa19183c5593ba362bd84"
+    },
+    {
+      "file": "fpv-warm-lifecycle-restored-yard.png",
+      "bytes": 68691,
+      "sha256": "e01a30acc54bc2565b4506e6d49fc9fad100629d41cb7cdc1f022c9bf8adbf57"
+    },
+    {
+      "file": "fpv-warm-lifecycle-8942-failed.png",
+      "bytes": 32596,
+      "sha256": "908809db2971e7684a8bf06617672a7f052adefc0b1ec049adb4db1682c2e32f"
+    },
+    {
+      "file": "fpv-warm-lifecycle-8943-failed.png",
+      "bytes": 34878,
+      "sha256": "5c464e725be92007d3d6dc6c86d8fa05576eb302b822796e7bc3db8cc1456074"
+    }
+  ],
+  "scope": "Historical source browser captures; lifecycle passed/failed status follows the matching receipt."
+}

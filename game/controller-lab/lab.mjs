@@ -3,6 +3,9 @@ import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
+import { mountControlLab } from '../ui/control-lab.mjs';
+import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
+import { FOUR_CONTROLS_FIXTURE } from '../learning/control-lab-fixture.mjs';
 import {
   CONTROLLER_PREVIEW_FORMAT,
   parseControllerPreviewStatus,
@@ -46,6 +49,22 @@ const practiceExit = attachControllerPracticeExit({
   isReady: () => loaded && !disposed,
   getTarget: (backward) => $(backward ? 'focus-game' : 'mission'),
   releaseInputs: releaseAll,
+});
+const conceptsButton = $('control-concepts-open');
+const concepts = conceptsButton
+  ? mountControlLab({
+      document,
+      window,
+      fixture: FOUR_CONTROLS_FIXTURE,
+      beforeOpen: disconnect,
+    })
+  : null;
+if (conceptsButton) conceptsButton.onclick = () => concepts.open(conceptsButton);
+const optionalPractice = mountOptionalPracticePanel({
+  document,
+  container: $('control-practice-packages'),
+  pause: disconnect,
+  href: window.location.href,
 });
 const status = (message, error = false, busy = false) => {
   const lease = presenter.begin({ message });
@@ -391,12 +410,15 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('pagehide', (event) => {
   disconnect();
+  optionalPractice.close?.({ restoreFocus: false });
   loadEpoch++;
   // A history-cache return reuses this page and its iframe. Preserve the
   // listeners, but never resume a held virtual button on return.
   if (event.persisted) return;
   disposed = true;
   practiceExit.destroy();
+  concepts?.dispose();
+  optionalPractice.dispose();
   clearInterval(heartbeat);
   observer.disconnect();
   window.removeEventListener('message', receiveStatus);
