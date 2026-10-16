@@ -29,224 +29,38 @@ jobs:
       matrix:
         include:
           - label: candidate
-            case: controller-practice-pause-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            case: shared-settings-reading
+            source: d12fcb94535fdb87619da18d63df7e76ee178610
           - label: candidate
-            case: coop-shared-settings
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            case: storage-retention-host
+            source: d12fcb94535fdb87619da18d63df7e76ee178610
           - label: candidate
-            case: coop-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            case: optional-chapters-navigation-host
+            source: d12fcb94535fdb87619da18d63df7e76ee178610
           - label: candidate
-            case: couch-gameplay-pressure-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            case: settings-panels-locale-host
+            source: d12fcb94535fdb87619da18d63df7e76ee178610
           - label: candidate
-            case: field-kit-retained-runtime
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: couch-installed-chapters
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: touchscreen-controller-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: mission-library-solo-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            case: settings-restoration-host
+            source: d12fcb94535fdb87619da18d63df7e76ee178610
           - label: baseline
-            case: couch-encounter-help-case3-comparison
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-encounter-help-case3-comparison
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: shared-settings-reading-identity-diagnostic
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: shared-settings-reading-identity-diagnostic
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: storage-retention-host-identity-diagnostic
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: storage-retention-host-identity-diagnostic
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: optional-chapters-navigation-host-withheld-stage
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: optional-chapters-navigation-host-withheld-stage
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: settings-panels-locale-host-withheld-stage
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: settings-panels-locale-host-withheld-stage
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: settings-restoration-host-withheld-stage
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: settings-restoration-host-withheld-stage
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: couch-static-picture-host-withheld-stage
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-static-picture-host-withheld-stage
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: story-flight-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-inner-landing-continuations
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-journey-difficulty-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-journey-search-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-pressure-foundation-routes
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-pressure-originals
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-production-review
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: team-window-spatial
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: touchscreen-controller-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: ukrainian-ornament-clear-routes
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: versus-default-entry
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: creator-guide-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: timed-bonus-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: video-poster-workshop
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
             case: viewport-startup-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
             case: visual-theme-lease
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
             case: whole-timed-host
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: wide-content
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
             case: workshop-art-integration
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: couch-encounter-case5-stages
+            source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
-            case: package-security
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: policy
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: bridge
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: brand-icons
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: source-manifest-snapshot
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-actor-coverage
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-analyze-discovery-heap
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-analyze-fpv-heap
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-build-workshop-pack
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-company-artwork-screening
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-demo-authoring
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-edition-code-indentation
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-external-distribution
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-fpv-observation-artifact
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-frozen-source
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-hosted-soundtrack-publication
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-industrial-verifier
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-observe-discovery-runtime
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-offline-destinations
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-optional-artwork
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-optional-installation-observer
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-pack-indexes
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-pages-current-entry
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-practice-directory-accessibility
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-production-countercurrent
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-production-input
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-release-catalog
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-reviewed-soundtrack-batches
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-snake-rating-publication
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-soundtrack-distribution
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-source-identity
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
-          - label: candidate
-            case: test-ua-fpv-publication
-            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+            case: couch-encounter-case5-stages
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
@@ -441,10 +255,14 @@ jobs:
           else:
               assert entry['mode'] == 'original'
           if entry.get('testNamePattern'):
-              assert entry['mode'] == 'declared-source-diagnostic' and entry['role'] == 'diagnostic-only'
-              assert not entry['originalInventoryCoverageEligible']
-              assert entry['file'] == 'game/test/couch-static-picture-host.test.mjs'
-              assert entry['testNamePattern'] == '^required decode failure blocks Start; Retry retains the same attempt and chosen original$'
+              assert entry['role'] == 'diagnostic-only' and not entry['originalInventoryCoverageEligible']
+              allowed_filter = (
+                  entry['mode'], entry['file'], entry['testNamePattern']
+              ) in {
+                  ('declared-source-diagnostic', 'game/test/couch-static-picture-host.test.mjs', '^required decode failure blocks Start; Retry retains the same attempt and chosen original$'),
+                  ('selected-comparison-stages', 'game/test/couch-encounter-help.test.mjs', '^reading encounter guidance after the real time limit retains both result boards$'),
+              }
+              assert allowed_filter
           receipt = {'format': 'SoloBoundedMemorySelectionV1', 'sourceRevision': head,
                      'sourceTree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
                      'workflowSourceRevision': workflow_head, 'workflowSHA256': digest(wp.read_bytes()),
