@@ -5,6 +5,72 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Fresh guide candidate and real browser-eviction capability
+
+The [guide-warning candidate](flight-practice-continuation-20261016/eviction-guides-candidate-verification.json)
+at source `11aa297825203fdd0dd4db075f5eaeb9aa34660e`, tree
+`13654b1fe99d3fd147fd20ecbfcd30721d1703df`, reproduces all three packages
+twice, verifies committed inputs/complete ZIP members and passes admission.
+[Envelope](flight-practice-continuation-20261016/eviction-guides-candidate-envelope.json)
+SHA-256: `4258044c72b2ef697134d239910f83f77e85e3b3034c337c28ba6d0930d24ba9`.
+The retained external copy also passes [complete admission](flight-practice-continuation-20261016/eviction-guides-external-admission.json).
+Against `1b339bfe6`, each distribution changes exactly its guide HTML, generated
+worker and manifest; the same 94/101/162 members remain, with no simulator code
+change. Package revisions are Gym `b27b320f…`, Academy `94b45cbe…`, Worlds
+`87378f9c…`; full identities remain in the linked originals. The candidate stays
+`publicEligible: false`; `v0.151.1` is still a development identity, not an allocated
+or uploaded release. External originals:
+`/Volumes/alex/CodexMigrationStaging/flight-practice-eviction-guides-20261016-candidate`.
+
+All six **actual packaged EN/UK guide journeys pass**, including all visible
+localized sections, four warning phrases, directory navigation and actual main
+return language. The [independent audit](flight-practice-continuation-20261016/eviction-guides-independent-audit.json)
+matches nine helper pins, 745 served Git files, both original admissions, all
+394 overlay members and every changed ZIP member; cleanup/profile removal and
+zero pending operations pass. Six warning PNGs have two unique hashes; both
+were visually inspected and show the complete warning at the tested headless
+1280×900/DPR 1 viewport, not a physical-device/readability certification.
+[Passing originals, exact temporary observer and repeatable audit](flight-practice-continuation-20261016/eviction-guides-passed-originals.tgz)
+SHA-256: `aa93e2a87b9db1ce052b4e7abf43c90c6c218854a0ef81320721d4298e095732`.
+The [first failed run](flight-practice-continuation-20261016/eviction-guides-first-failed-originals.tgz)
+remains failed: its observer incorrectly assumes one English section, while the
+actual guide has two. The corrected collection predicate has five explicit
+positive/negative regressions. No guide/app change was made for this test repair.
+This is guide/navigation evidence, not new flight, offline-install or eviction
+recovery qualification for these changed package bytes.
+
+A separate **browser-managed eviction capability** passes in 307.65 seconds on
+Chrome 155.0.8059.80. One fresh headless profile stores a bounded 1 MiB loopback
+cache, verifies its original SHA after browser restart, then uses a verified
+512 KiB temporary pool. Chrome's unchanged five-minute startup timer runs one
+eviction round, reports one evicted bucket, and the exact previously populated
+bucket/cache disappears. No simulated pressure, clearing/deletion API, timer
+override, filler writes, user profile, authentication or practice app is used.
+All owned processes/server/profile are closed/removed.
+[Capability audit](flight-practice-continuation-20261016/browser-eviction-capability-audit.json)
+and [all original failed/inconclusive/passing runs, exact Chrome source, images and limits](flight-practice-continuation-20261016/browser-eviction-capability-originals.tgz)
+SHA-256: `1b46589953455b766aee8aa946a44ae3606146262181a2b26dfc249acc148c5d`.
+Numeric counters are unavailable before the evictor exists, not zero: this does
+not claim an observed numeric counter delta. Ambient free disk was 1.05 GB then
+962.99 MB; no physical pressure was induced, but low space remains a confounder.
+This establishes neither sole-pool causality, default-policy behavior nor actual
+practice-data recovery. The archive's separate recovery proposal preserves these
+limits and requires public backups/restoration, not impossible whole-database
+byte equality after legitimate restore timestamps change. Host inspected after
+the runs: macOS 26.7.1 / arm64; no performance or broader-device claim.
+
+Before extending active-session coverage, its observer-only deadline guard now
+rejects late successful results even if a stalled event loop delays the timer.
+Document-handle ownership is captured before that rejection so cleanup can still
+dispose it. The existing five-second operation ceiling, shared thirty-second
+session, 1.5-second focus-transfer and independent one-second cleanup budgets
+remain unchanged. All 16 focused tests pass; the original helper fails all three
+new regressions, including a falsely successful late cleanup.
+[Original proposal and before/after logs](flight-practice-continuation-20261016/active-session-deadline-originals.tgz)
+SHA-256: `3a1d4f43a3943cc33da65a596dac46c44d78155109aa10d5bfa04d2a0785704e`.
+The expanded observer suite passes **370 tests plus one explicit historical
+fixture skip**. These are tool regressions, not expanded native C5 coverage.
+
 ### Native software matrix passes; hardware still deferred
 
 At clean observer `8c93b49ee7a18d01aadbe4b9d5ccf481addcfa74`, tree
@@ -50,8 +116,8 @@ warn that browser-managed origin eviction can remove records/imported worlds,
 unlike the launcher's scoped removal. Recovery requires previously exported
 backups outside browser storage; re-downloading cannot recreate lost records.
 Six guide-copy tests bind both languages. This guide-only follow-up changes
-package inputs, so the `1b339bfe6` receipts above remain tied to their original
-bytes; a fresh reproduced/admitted candidate and affected-guide checks are next.
+package inputs; the fresh candidate and affected-guide checks now pass as recorded
+above. The `1b339bfe6` flight/zoom receipts remain tied to their original bytes.
 
 ### Hardware deferred; fractional native focus geometry follow-up
 
@@ -837,8 +903,9 @@ The acceptance checklist and the current-priority table at the top of the
 [completion plan](flight-practice-completion-plan-2026-10-14.md) remain authoritative.
 Original-production journeys, descriptor synchronization and the software native
 zoom/keyboard/reduced-motion matrix now have the scoped passes above; they are
-not still missing. Next: freeze the guide-only warning follow-up, extend active
-update continuity beyond Academy, and distinguish genuine origin eviction/backup
+not still missing. The guide-only warning follow-up is also reproduced/admitted
+and browser-checked. Next: extend active update continuity beyond Academy, and
+distinguish actual app origin-eviction/backup
 recovery and native outstanding-hash cancellation from their existing controlled
 and unit coverage. The current-main generated build also needs its own affected
 checks; old `3a1b5e3c3` output is not relabelled. Measured performance needs an
