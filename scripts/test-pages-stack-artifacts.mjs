@@ -48,22 +48,22 @@ const script = path.join(path.dirname(fileURLToPath(import.meta.url)), 'pages-st
 async function fixture(rows, kind, wrongHash = false) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-stack-zip-'));
   const zip = path.join(directory, 'input.zip');
-  const generated = spawnSync(
-    'python3',
-    [
-      '-c',
-      `import json,sys,zipfile
+  const args = [
+    '-c',
+    `import json,sys,zipfile
 with zipfile.ZipFile(sys.argv[1], 'w') as archive:
- for row in json.loads(sys.argv[2]):
+ for row in json.load(sys.stdin):
   info=zipfile.ZipInfo(row[0])
   if len(row)>2: info.external_attr=row[2]<<16
   archive.writestr(info,row[1])`,
-      zip,
-      JSON.stringify(rows),
-    ],
-    { encoding: 'utf8' },
+    zip,
+  ];
+  assert.ok(
+    args.every((arg) => Buffer.byteLength(arg) < 131072),
+    'Fixture must respect Linux single-argument bounds',
   );
-  assert.equal(generated.status, 0, generated.stderr);
+  const generated = spawnSync('python3', args, { encoding: 'utf8', input: JSON.stringify(rows) });
+  assert.equal(generated.status, 0, generated.error?.message || generated.stderr);
   const hash = createHash('sha256')
     .update(await fs.readFile(zip))
     .digest('hex');
