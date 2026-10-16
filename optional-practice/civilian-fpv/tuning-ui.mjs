@@ -5,15 +5,16 @@ import {
   createRateEvaluator,
   RATE_ALGORITHMS,
   RATE_PARAMETER_LIMITS,
+  rateProfileIdentity,
 } from './rates.mjs';
 import { profileUsers, TUNING_LIBRARY_BYTES } from './tuning-library.mjs';
 import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
 import {
-  parseBetaflightConfiguration,
+  previewBetaflightImport,
+  previewNativeRateImport,
   betaflightDefaultRateProfile,
   exportBetaflightRates,
   exportNativeRateProfile,
-  importNativeRateProfile,
   resolveBetaflightPresetBundle,
 } from './betaflight-import.mjs';
 
@@ -70,6 +71,8 @@ export function mountFlightTuning({
     evaluator,
     savedEvaluator,
     imported = null,
+    hashingImport = null,
+    draftProvenance = null,
     frame = null,
     disposed = false,
     opener = null,
@@ -155,6 +158,16 @@ export function mountFlightTuning({
   function report(failure) {
     status.textContent = `${t('Could not apply: ', 'Не вдалося застосувати: ')}${failure.message}`;
   }
+  function clearImportPreview() {
+    imported = null;
+    if (hashingImport !== null) {
+      hashingImport = null;
+      status.textContent = t(
+        'Import changed. Preview again.',
+        'Імпорт змінено. Перегляньте знову.',
+      );
+    }
+  }
   const toolbar = el('div');
   toolbar.className = 'tuning-toolbar';
   const setupSelect = select(t('Drone setup', 'Налаштування дрона'), [], toolbar);
@@ -184,7 +197,12 @@ export function mountFlightTuning({
       const nextId = id();
       await mutate(() =>
         store.createProfile(
-          { id: nextId, name: `${profileName.value} ${t('copy', 'копія')}`, response: draft },
+          {
+            id: nextId,
+            name: `${profileName.value} ${t('copy', 'копія')}`,
+            response: draft,
+            ...(currentReceipt() ? { provenance: currentReceipt() } : {}),
+          },
           library.revision,
         ),
       );
@@ -225,12 +243,30 @@ export function mountFlightTuning({
         .history.find((p) => p.revision === Number(history.value));
       if (!previous) throw new Error(t('Choose a saved revision', 'Виберіть збережену версію'));
       draft = clone(previous.response);
+      draftProvenance = clone(previous.provenance ?? null);
       profileName.value = previous.name;
       algorithmDrafts = {};
       paintFields();
     },
     management,
   );
+
+  const receiptDetails = el('details', undefined, management);
+  el('summary', t('Import receipt', 'Квитанція імпорту'), receiptDetails);
+  const receiptView = el('pre', undefined, receiptDetails);
+  function currentReceipt() {
+    return draft?.rates && draftProvenance?.rateIdentity === rateProfileIdentity(draft.rates)
+      ? draftProvenance
+      : null;
+  }
+  function paintReceipt() {
+    receiptView.textContent = currentReceipt()
+      ? JSON.stringify(currentReceipt(), null, 2)
+      : t(
+          'No import receipt for these draft rates. Earlier receipts remain in saved revisions. Receipts describe rate/throttle transfer only.',
+          'Для цих рейтів чернетки немає квитанції імпорту. Попередні квитанції збережені у версіях. Квитанції описують лише перенесення рейтів і газу.',
+        );
+  }
 
   const editor = el('section');
   const algorithm = select(
@@ -402,29 +438,39 @@ export function mountFlightTuning({
   );
   const file = field(t('Upload text / JSON', 'Завантажити текст / JSON'), 'file', transfer);
   file.accept = '.txt,.json,.cli';
-  let uploadGeneration = 0;
+  let uploadGeneration = 0,
+    uploadedSource = null,
+    resolvedPreset = null;
+  const readImportText = async (picked) =>
+    picked.arrayBuffer
+      ? new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(
+          await picked.arrayBuffer(),
+        )
+      : picked.text();
   listen(file, 'change', async () => {
     const generation = ++uploadGeneration;
-    imported = null;
+    clearImportPreview();
+    uploadedSource = null;
+    resolvedPreset = null;
     importReview.textContent = '';
     text.value = '';
     try {
       const picked = file.files?.[0];
       if (!picked) return;
       if (picked.size > TUNING_LIBRARY_BYTES) throw new Error('File exceeds 512 KiB');
-      const contents = await picked.text();
+      const contents = await readImportText(picked);
       if (disposed || generation !== uploadGeneration) return;
       text.value = contents;
+      uploadedSource = contents;
     } catch (error) {
       if (!disposed && generation === uploadGeneration) report(error);
     }
   });
   const importReview = el('pre', undefined, transfer);
-  function parseImport(source = text.value) {
+  function parseImport(source = uploadedSource ?? text.value) {
     const baseline = draft.format === TUNED_RESPONSE_FORMAT ? draft.rates : null;
-    if (source.trim().startsWith('{'))
-      return { profile: importNativeRateProfile(source), warnings: [], unapplied: [] };
-    return parseBetaflightConfiguration(source, {
+    if (source.trim().startsWith('{')) return previewNativeRateImport(source);
+    return previewBetaflightImport(source, {
       kind: importKind.value,
       sourceVersion: version.value || undefined,
       baseline:
@@ -434,12 +480,28 @@ export function mountFlightTuning({
             : betaflightDefaultRateProfile(version.value)
           : undefined,
       ...(sourceProfile.value !== '' ? { selectedProfile: Number(sourceProfile.value) } : {}),
+      baselineKind:
+        importKind.value === 'patch' && importBaseline.value === 'draft'
+          ? 'draft'
+          : 'firmware-defaults',
+      ...(importKind.value === 'patch' && importBaseline.value === 'draft'
+        ? {
+            baselineIdentity: {
+              profileId: selected,
+              revision: library.profiles.find((p) => p.id === selected).revision,
+            },
+          }
+        : {}),
+      ...(resolvedPreset && resolvedPreset.text === source
+        ? { presetBundle: resolvedPreset.bundle }
+        : {}),
     });
   }
   function showImport(result) {
     imported = result;
     importReview.textContent = JSON.stringify(result, null, 2);
     draft = createTunedResponse(result.profile, draft);
+    draftProvenance = clone(result.provenance);
     algorithmDrafts = {};
     paintFields();
     status.textContent = t(
@@ -448,15 +510,48 @@ export function mountFlightTuning({
     );
   }
   for (const node of [text, importKind, version, importBaseline, sourceProfile])
-    listen(node, 'input', () => {
-      imported = null;
-      if (node === text) uploadGeneration++;
-    });
+    for (const event of ['input', 'change'])
+      listen(node, event, () => {
+        clearImportPreview();
+        uploadGeneration++;
+        if (node === text) {
+          uploadedSource = null;
+          resolvedPreset = null;
+        }
+      });
   action(
     t('Preview import', 'Переглянути імпорт'),
-    () => {
-      imported = null;
-      showImport(parseImport());
+    async () => {
+      clearImportPreview();
+      const generation = ++uploadGeneration,
+        epoch = openEpoch,
+        originalDraft = JSON.stringify(draft);
+      hashingImport = generation;
+      status.textContent = t('Checking import source…', 'Перевірка джерела імпорту…');
+      try {
+        const result = await parseImport();
+        if (
+          disposed ||
+          hashingImport !== generation ||
+          generation !== uploadGeneration ||
+          epoch !== openEpoch ||
+          originalDraft !== JSON.stringify(draft)
+        ) {
+          if (hashingImport === generation) clearImportPreview();
+          return;
+        }
+        showImport(result);
+      } catch (error) {
+        if (
+          !disposed &&
+          hashingImport === generation &&
+          generation === uploadGeneration &&
+          epoch === openEpoch
+        )
+          report(error);
+      } finally {
+        if (hashingImport === generation) hashingImport = null;
+      }
     },
     transfer,
   );
@@ -471,11 +566,12 @@ export function mountFlightTuning({
             id: nextId,
             name: profileName.value || 'Imported rates',
             response: createTunedResponse(imported.profile, draft),
+            provenance: imported.provenance,
           },
           library.revision,
         ),
       );
-      imported = null;
+      clearImportPreview();
       load(nextId);
     },
     transfer,
@@ -489,14 +585,18 @@ export function mountFlightTuning({
     transfer,
   );
   listen(bundleEntry, 'input', () => {
-    imported = null;
+    clearImportPreview();
+    resolvedPreset = null;
+    uploadGeneration++;
   });
   const bundleOptions = el('div', undefined, transfer);
   let bundle = {},
     optionSelection = {};
   listen(bundleFiles, 'change', async () => {
     const generation = ++uploadGeneration;
-    imported = null;
+    clearImportPreview();
+    uploadedSource = null;
+    resolvedPreset = null;
     importReview.textContent = '';
     text.value = '';
     bundle = {};
@@ -517,7 +617,7 @@ export function mountFlightTuning({
       const entries = [];
       for (const [index, item] of files.entries()) {
         const path = stripDirectory ? paths[index].slice(directory.length + 1) : paths[index];
-        const contents = await item.text();
+        const contents = await readImportText(item);
         if (disposed || generation !== uploadGeneration) return;
         entries.push([path, contents]);
       }
@@ -531,6 +631,10 @@ export function mountFlightTuning({
   action(
     t('Resolve preset and review options', 'Розгорнути пресет і переглянути опції'),
     () => {
+      clearImportPreview();
+      resolvedPreset = null;
+      uploadedSource = null;
+      uploadGeneration++;
       const result = resolveBetaflightPresetBundle({
         files: bundle,
         entry: bundleEntry.value,
@@ -543,13 +647,19 @@ export function mountFlightTuning({
         box.checked = option.checked ?? false;
         listen(box, 'change', () => {
           optionSelection[option.name] = box.checked;
-          imported = null;
+          clearImportPreview();
+          resolvedPreset = null;
+          uploadGeneration++;
         });
       }
       text.value = result.text;
+      resolvedPreset = {
+        text: result.text,
+        bundle: { files: clone(bundle), entry: bundleEntry.value, options: clone(optionSelection) },
+      };
       importKind.value = 'patch';
       importReview.textContent = JSON.stringify(result, null, 2);
-      imported = null;
+      clearImportPreview();
       status.textContent = t(
         'Review options, resolve again after changes, then preview the patch against its baseline.',
         'Перевірте опції, повторно розгорніть після змін і перегляньте патч на вибраній основі.',
@@ -570,21 +680,30 @@ export function mountFlightTuning({
   action(
     t('Export SIM rates', 'Експортувати рейти SIM'),
     () => {
+      if (hashingImport !== null) clearImportPreview();
       text.value = exportNativeRateProfile(portable());
+      uploadedSource = null;
+      resolvedPreset = null;
     },
     transfer,
   );
   action(
     t('Export rate-only CLI', 'Експортувати CLI лише рейтів'),
     () => {
+      if (hashingImport !== null) clearImportPreview();
       text.value = exportBetaflightRates(portable(), { targetVersion: version.value });
+      uploadedSource = null;
+      resolvedPreset = null;
     },
     transfer,
   );
   action(
     t('Backup complete library', 'Резервна копія всієї бібліотеки'),
     () => {
+      if (hashingImport !== null) clearImportPreview();
       text.value = store.export();
+      uploadedSource = null;
+      resolvedPreset = null;
     },
     transfer,
   );
@@ -653,6 +772,14 @@ export function mountFlightTuning({
   el(
     'p',
     t(
+      'For a repeatable check, use the same launch point and flight mode: hover briefly, make one turn and centre the stick, then try a short throttle pulse. Return here to compare saved and draft curves, then save or revert. Advanced reference practice offers timed cues and a verified, unscored comparison ghost.',
+      'Для повторюваної перевірки використовуйте ту саму точку старту й режим: ненадовго зависніть, виконайте один поворот і центруйте стік, потім зробіть короткий імпульс газу. Поверніться сюди, щоб порівняти збережені криві з чернеткою та зберегти або скасувати зміни. Еталонна практика Advanced має часові підказки й перевірену примару для порівняння без заліку.',
+    ),
+    actions,
+  );
+  el(
+    'p',
+    t(
       'Apply & restart assigns the selected profile to this drone. Saved changes are used only by new flights. Portable rates use direct touch input; Legacy feel retains your touch response preference.',
       'Застосування з перезапуском призначає вибраний профіль цьому дрону. Зміни діють лише в нових польотах. Переносні рейти використовують прямий сенсорний ввід; класична реакція зберігає налаштування чутливості дотику.',
     ),
@@ -660,7 +787,11 @@ export function mountFlightTuning({
   );
   async function save() {
     const profileId = selected,
-      changes = { name: profileName.value, response: clone(draft) },
+      changes = {
+        name: profileName.value,
+        response: clone(draft),
+        provenance: clone(currentReceipt()),
+      },
       setup = readSetup(),
       revision = editRevision;
     await mutate(() => store.saveEditing(profileId, changes, setup, revision));
@@ -764,6 +895,7 @@ export function mountFlightTuning({
     if (selected && draft)
       drafts.set(selected, {
         response: clone(draft),
+        provenance: clone(draftProvenance),
         name: profileName.value,
         algorithms: clone(algorithmDrafts),
         baseRevision: editRevision,
@@ -779,6 +911,8 @@ export function mountFlightTuning({
     node.value = value;
   }
   function load(profileId) {
+    clearImportPreview();
+    uploadGeneration++;
     library = store.snapshot();
     const setup = library.setups.find((item) => item.id === library.selectedSetupId);
     selected = profileId ?? setup.profileId ?? library.defaultProfileId;
@@ -786,6 +920,7 @@ export function mountFlightTuning({
     selected = saved.id;
     const cached = drafts.get(selected);
     draft = clone(cached?.response ?? saved.response);
+    draftProvenance = clone(cached ? (cached.provenance ?? null) : (saved.provenance ?? null));
     algorithmDrafts = clone(cached?.algorithms ?? {});
     editRevision = cached?.baseRevision ?? library.revision;
     profileName.value = cached?.name ?? saved.name;
@@ -1103,6 +1238,7 @@ export function mountFlightTuning({
   function paintPreview() {
     if (!draft) return;
     try {
+      paintReceipt();
       evaluator = compile(draft);
       savedEvaluator = compile(library.profiles.find((p) => p.id === selected).response);
       svg.replaceChildren();
@@ -1171,6 +1307,26 @@ export function mountFlightTuning({
       lastDiagnostic = time;
       const info = getDiagnostics(),
         available = (value) => (value == null ? t('unavailable', 'недоступно') : value);
+      const source =
+        {
+          keyboard: t('Keyboard', 'Клавіатура'),
+          touch: t('Touch', 'Дотик'),
+          controller: t('Game controller', 'Ігровий контролер'),
+          radio: t('Calibrated radio', 'Калібрований пульт'),
+          recording: t('Recording', 'Запис'),
+        }[info.source] ?? available(null);
+      const context =
+        info.context === 'live-preview'
+          ? t('Live input preview; flight is paused', 'Попередній перегляд вводу; політ на паузі')
+          : info.context === 'last-flight-sample'
+            ? t(
+                'Last committed flight input; flight is paused',
+                'Останній прийнятий ввід польоту; політ на паузі',
+              )
+            : t(
+                'No flight input captured for this source',
+                'Ще немає вводу польоту для цього джерела',
+              );
       const requested =
         info.calibrated && evaluator
           ? Object.fromEntries(
@@ -1180,7 +1336,7 @@ export function mountFlightTuning({
               ]),
             )
           : null;
-      diagnostics.textContent = `${t('Raw input', 'Сире введення')}: ${JSON.stringify(available(info.raw))}\n${t('Calibrated', 'Каліброване')}: ${JSON.stringify(available(info.calibrated))}\n${t('Requested rotation (draft °/s)', 'Задане обертання (чернетка °/с)')}: ${JSON.stringify(available(requested))}\n${t('Achieved rotation (flight °/s)', 'Досягнуте обертання (політ °/с)')}: ${JSON.stringify(available(info.achieved))}\n${t('Browser sample age (ms)', 'Вік зразка браузера (мс)')}: ${available(info.sampleAgeMs)} · ${t('Observed timestamp cadence (Hz)', 'Спостережувана частота міток (Гц)')}: ${available(info.cadenceHz)}`;
+      diagnostics.textContent = `${t('Input source', 'Джерело вводу')}: ${source}\n${context}\n${t('Raw input', 'Сире введення')}: ${JSON.stringify(available(info.raw))}\n${t('Calibrated', 'Каліброване')}: ${JSON.stringify(available(info.calibrated))}\n${t('Requested rotation (draft °/s)', 'Задане обертання (чернетка °/с)')}: ${JSON.stringify(available(requested))}\n${t('Achieved rotation (last committed flight °/s)', 'Досягнуте обертання (останній прийнятий крок польоту °/с)')}: ${JSON.stringify(available(info.achieved))}\n${t('Flight tick', 'Крок польоту')}: ${available(info.flightTick)}\n${t('Browser sample age (ms)', 'Вік зразка браузера (мс)')}: ${available(info.sampleAgeMs)} · ${t('Observed timestamp cadence (Hz)', 'Спостережувана частота міток (Гц)')}: ${available(info.cadenceHz)}`;
     }
     frame = win.requestAnimationFrame(animate);
   }
@@ -1204,6 +1360,7 @@ export function mountFlightTuning({
   }
   function close() {
     openEpoch++;
+    clearImportPreview();
     remember();
     if (root.open) root.close();
     if (frame !== null) win.cancelAnimationFrame(frame);
