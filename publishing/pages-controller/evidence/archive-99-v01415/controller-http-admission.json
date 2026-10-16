@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-public-http-audit.v1",
+  "status": "PASS",
+  "archiveId": "archive-99",
+  "base": "https://mekhovov.github.io/revealline-archive-99/",
+  "files": 1317,
+  "expectedBytes": 612092320,
+  "verifiedBytes": 612092320,
+  "failedFiles": 0,
+  "failures": [],
+  "skipped": [],
+  "expectedInventorySha256": "573935df8f1ba3c6f0d81d7d358cfb1ecc8bb8751ea14081afd119be4c725bc0",
+  "allFinalURLsExact": true,
+  "archiveCommit": "5f85cef5928d8bb594e954782b9429aa43653038",
+  "archiveTree": "6d3551556d6db09a60ce8830e5ce1f2eb6a51a52",
+  "sourceAuthority": {
+    "path": "http-report.json",
+    "sha256": "f9fda5cb50aef20db567778b1f2a1d213d9dd18bf9d681817acff7335a3ebb83"
+  },
+  "scope": "Controller normalization of the byte-exact Archive99 full-body and final-URL audit; the source authority remains pinned separately without mutation."
+}

@@ -1,7 +1,9 @@
+import { t } from '../i18n/index.mjs';
 // The Team lease verifies the original bytes before this browser-only decoder.
 // One returned handle owns both the decoded image and its temporary Blob URL.
 export function decodeCoopPicture(blob, { signal } = {}) {
-  if (signal?.aborted) return Promise.reject(new DOMException('Cancelled.', 'AbortError'));
+  if (signal?.aborted)
+    return Promise.reject(new DOMException(t('interface:cancelled'), 'AbortError'));
   return new Promise((resolve, reject) => {
     let image,
       source,
@@ -28,17 +30,17 @@ export function decodeCoopPicture(blob, { signal } = {}) {
         reject(error);
       } else resolve({ image, release });
     };
-    const abort = () => finish(new DOMException('Team picture cancelled.', 'AbortError'));
+    const abort = () => finish(new DOMException(t('interface:teamPictureCancelled'), 'AbortError'));
     try {
       image = new Image();
       source = URL.createObjectURL(blob);
-      timer = setTimeout(() => finish(new Error('Team picture decode timed out.')), 15000);
+      timer = setTimeout(() => finish(new Error(t('interface:teamPictureDecodeTimedOut'))), 15000);
       signal?.addEventListener('abort', abort, { once: true });
-      image.onerror = () => finish(new Error('The Team original could not decode.'));
+      image.onerror = () => finish(new Error(t('interface:theTeamOriginalCouldNotDecode')));
       image.onload = async () => {
         try {
           if (typeof image.decode !== 'function')
-            throw new Error('Complete picture decoding is unavailable.');
+            throw new Error(t('interface:completePictureDecodingIsUnavailable'));
           await image.decode();
           if (signal?.aborted) return abort();
           finish();

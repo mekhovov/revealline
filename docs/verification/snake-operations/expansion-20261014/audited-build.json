@@ -1,0 +1,12 @@
+{
+  "buildResult": {
+    "out": "/private/tmp/snake-expansion-audited-20261014",
+    "version": "snake-expansion-review",
+    "files": 3262,
+    "sha256": "d707bb1902798febda5ceb6c9041e2b80155518f8a7f9f6ae42b96e709fa74c4",
+    "sourceRevision": "c636724b368cc60063482b5b4c8da0e62af3df3a"
+  },
+  "manifestSha256": "5884e4eedc59d0d045ed1323754dd922004865f5f5a7fcce85580218543a1774",
+  "distribution": "d707bb1902798febda5ceb6c9041e2b80155518f8a7f9f6ae42b96e709fa74c4  distribution.zip\n",
+  "note": "Successful clean committed-source distribution including final capacity, effect-clock and aggregate-cache fixes. The sourceRevision is explicitly embedded. Only this task-generated output was removed after preserving this receipt to recover space."
+}

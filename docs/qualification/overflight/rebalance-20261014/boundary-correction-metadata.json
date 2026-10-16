@@ -1,0 +1,598 @@
+{
+  "format": "OverflightBoundaryQualificationV1",
+  "sourceCommit": "ca03d7d7d84dcf50bbab6d2734a6d09097e27ed6",
+  "source": [
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "256ece10c86a0246912285f3aa94440f853f957a2ef35de99e747214a8843e95"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+    },
+    {
+      "path": "game/overflight/riy-upgrades.mjs",
+      "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    }
+  ],
+  "sourceStable": true,
+  "coverage": {
+    "configurations": 8,
+    "configurationResults": 8,
+    "routeResults": 40,
+    "earlyFailures": 0
+  },
+  "environment": {
+    "rulesVersion": 3,
+    "focus": true,
+    "matrix": true,
+    "mode": null,
+    "build": null,
+    "stop": null,
+    "configIndices": "0,7,16,21,25,32,37,46"
+  },
+  "activeWins": 5,
+  "repetitiveOrUnattendedWins": 0,
+  "rows": [
+    {
+      "config": {
+        "mode": "survivor",
+        "build": "fan-shield",
+        "encounterSet": "front",
+        "difficulty": "standard",
+        "airframes": 3,
+        "seed": 17031991
+      },
+      "before": {
+        "outcome": "won",
+        "time": 327.48333333333335,
+        "peakAlive": 1188,
+        "peakVisible": 415
+      },
+      "after": {
+        "outcome": "won",
+        "time": 334.28333333333336,
+        "peakAlive": 611,
+        "peakVisible": 379,
+        "spawnDeferred": 0,
+        "firstChoice": 19.25,
+        "evolution": 67.08333333333333,
+        "tenthChoice": 251.61666666666667,
+        "largestChoiceGap": 60.583333333333314,
+        "xpEarned": 5077,
+        "xpCollected": 3923,
+        "xpOnGround": 1154,
+        "shieldBlocks": 0,
+        "damageCauses": {
+          "contact": 20,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "survivor",
+        "build": "echo",
+        "encounterSet": "front",
+        "difficulty": "veteran",
+        "airframes": 1,
+        "seed": 17031991
+      },
+      "before": {
+        "outcome": "lost",
+        "time": 198.96666666666667,
+        "peakAlive": 435,
+        "peakVisible": 248
+      },
+      "after": {
+        "outcome": "lost",
+        "time": 204.61666666666667,
+        "peakAlive": 311,
+        "peakVisible": 248,
+        "spawnDeferred": 0,
+        "firstChoice": 17.166666666666668,
+        "evolution": 71.23333333333333,
+        "tenthChoice": null,
+        "largestChoiceGap": 44.80000000000001,
+        "xpEarned": 1826,
+        "xpCollected": 1440,
+        "xpOnGround": 386,
+        "shieldBlocks": 0,
+        "damageCauses": {
+          "contact": 80,
+          "lane": 20,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "survivor",
+        "build": "echo-shield",
+        "encounterSet": "mixed",
+        "difficulty": "standard",
+        "airframes": 3,
+        "seed": 7
+      },
+      "before": {
+        "outcome": "won",
+        "time": 379.68333333333334,
+        "peakAlive": 1499,
+        "peakVisible": 995
+      },
+      "after": {
+        "outcome": "won",
+        "time": 388.6666666666667,
+        "peakAlive": 1071,
+        "peakVisible": 905,
+        "spawnDeferred": 0,
+        "firstChoice": 17.483333333333334,
+        "evolution": 47.733333333333334,
+        "tenthChoice": 351.3833333333333,
+        "largestChoiceGap": 126.68333333333331,
+        "xpEarned": 5482,
+        "xpCollected": 3862,
+        "xpOnGround": 1620,
+        "shieldBlocks": 5,
+        "damageCauses": {
+          "contact": 140,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "survivor",
+        "build": "systems",
+        "encounterSet": "crossing",
+        "difficulty": "veteran",
+        "airframes": 3,
+        "seed": 42
+      },
+      "before": {
+        "outcome": "won",
+        "time": 357.4166666666667,
+        "peakAlive": 1469,
+        "peakVisible": 462
+      },
+      "after": {
+        "outcome": "lost",
+        "time": 317.68333333333334,
+        "peakAlive": 797,
+        "peakVisible": 444,
+        "spawnDeferred": 0,
+        "firstChoice": 15.45,
+        "evolution": null,
+        "tenthChoice": 234.53333333333333,
+        "largestChoiceGap": 44.68333333333335,
+        "xpEarned": 4552,
+        "xpCollected": 4476,
+        "xpOnGround": 76,
+        "shieldBlocks": 0,
+        "damageCauses": {
+          "contact": 300,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "riy",
+        "build": "fan-shield",
+        "encounterSet": "front",
+        "difficulty": "veteran",
+        "airframes": 3,
+        "seed": 17031991
+      },
+      "before": {
+        "outcome": "won",
+        "time": 327.48333333333335,
+        "peakAlive": 1402,
+        "peakVisible": 405
+      },
+      "after": {
+        "outcome": "won",
+        "time": 392.0833333333333,
+        "peakAlive": 964,
+        "peakVisible": 489,
+        "spawnDeferred": 0,
+        "firstChoice": 19.883333333333333,
+        "evolution": 64.5,
+        "tenthChoice": 272.3333333333333,
+        "largestChoiceGap": 55.39999999999998,
+        "xpEarned": 7008,
+        "xpCollected": 4652,
+        "xpOnGround": 2356,
+        "shieldBlocks": 7,
+        "damageCauses": {
+          "contact": 180,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "riy",
+        "build": "echo",
+        "encounterSet": "crossing",
+        "difficulty": "standard",
+        "airframes": 3,
+        "seed": 42
+      },
+      "before": {
+        "outcome": "won",
+        "time": 390.18333333333334,
+        "peakAlive": 1565,
+        "peakVisible": 702
+      },
+      "after": {
+        "outcome": "won",
+        "time": 412,
+        "peakAlive": 957,
+        "peakVisible": 601,
+        "spawnDeferred": 0,
+        "firstChoice": 19.516666666666666,
+        "evolution": 81.18333333333334,
+        "tenthChoice": 284.21666666666664,
+        "largestChoiceGap": 55.633333333333354,
+        "xpEarned": 5169,
+        "xpCollected": 3822,
+        "xpOnGround": 1347,
+        "shieldBlocks": 5,
+        "damageCauses": {
+          "contact": 140,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "riy",
+        "build": "echo-shield",
+        "encounterSet": "front",
+        "difficulty": "veteran",
+        "airframes": 3,
+        "seed": 17031991
+      },
+      "before": {
+        "outcome": "won",
+        "time": 395.3833333333333,
+        "peakAlive": 2500,
+        "peakVisible": 918
+      },
+      "after": {
+        "outcome": "lost",
+        "time": 324.55,
+        "peakAlive": 1096,
+        "peakVisible": 731,
+        "spawnDeferred": 0,
+        "firstChoice": 19.883333333333333,
+        "evolution": 71.45,
+        "tenthChoice": null,
+        "largestChoiceGap": 96.13333333333335,
+        "xpEarned": 4829,
+        "xpCollected": 2144,
+        "xpOnGround": 2685,
+        "shieldBlocks": 8,
+        "damageCauses": {
+          "contact": 315,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    },
+    {
+      "config": {
+        "mode": "riy",
+        "build": "systems",
+        "encounterSet": "mixed",
+        "difficulty": "standard",
+        "airframes": 1,
+        "seed": 7
+      },
+      "before": {
+        "outcome": "won",
+        "time": 324.98333333333335,
+        "peakAlive": 851,
+        "peakVisible": 490
+      },
+      "after": {
+        "outcome": "won",
+        "time": 321.6333333333333,
+        "peakAlive": 715,
+        "peakVisible": 486,
+        "spawnDeferred": 0,
+        "firstChoice": 18.683333333333334,
+        "evolution": 91.18333333333334,
+        "tenthChoice": 260.1,
+        "largestChoiceGap": 62.56666666666669,
+        "xpEarned": 4531,
+        "xpCollected": 4206,
+        "xpOnGround": 325,
+        "shieldBlocks": 0,
+        "damageCauses": {
+          "contact": 40,
+          "lane": 0,
+          "fan": 0,
+          "ground": 0
+        }
+      }
+    }
+  ],
+  "namedPairs": [
+    {
+      "environment": {
+        "rulesVersion": 3,
+        "focus": false,
+        "matrix": false,
+        "mode": "riy",
+        "build": "echo",
+        "stop": 210
+      },
+      "results": [
+        {
+          "route": "active",
+          "outcome": "won",
+          "time": 418.28333333333336,
+          "checkpoint": {
+            "time": 210,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 2,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 25,
+            "airframes": 3,
+            "choices": 7,
+            "heading": -1.0471975511965976
+          },
+          "airframesRemaining": 1
+        },
+        {
+          "route": "none",
+          "outcome": "lost",
+          "time": 222.41666666666666,
+          "checkpoint": {
+            "time": 210,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 2,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 25,
+            "airframes": 3,
+            "choices": 7,
+            "heading": -1.0471975511965976
+          },
+          "airframesRemaining": 0
+        }
+      ]
+    },
+    {
+      "environment": {
+        "rulesVersion": 3,
+        "focus": false,
+        "matrix": false,
+        "mode": "riy",
+        "build": "echo",
+        "stop": 240,
+        "configIndices": null
+      },
+      "results": [
+        {
+          "route": "active",
+          "outcome": "won",
+          "time": 418.28333333333336,
+          "checkpoint": {
+            "time": 240,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 3,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 5,
+            "airframes": 3,
+            "choices": 8,
+            "heading": -1.832595714594046
+          },
+          "airframesRemaining": 1
+        },
+        {
+          "route": "none",
+          "outcome": "lost",
+          "time": 250.16666666666666,
+          "checkpoint": {
+            "time": 240,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 3,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 5,
+            "airframes": 3,
+            "choices": 8,
+            "heading": -1.832595714594046
+          },
+          "airframesRemaining": 0
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "passed": 83,
+    "failed": 0,
+    "includes": [
+      "core",
+      "balance",
+      "balance integration",
+      "Riy project/community/squad/compatibility",
+      "four boundary regressions"
+    ],
+    "lint": "clean",
+    "runtimeFormatting": "single quote, print width 100"
+  },
+  "artifacts": [
+    {
+      "path": "balance-matrix.json.gz",
+      "sha256": "118195b6c1a7a19646c67adcd2d2f724a983d8dcc6d55756b22ba882b8de51c3"
+    },
+    {
+      "path": "balance-matrix-after-boundary.json.gz",
+      "sha256": "2093ee828170914b3ed47ed39ff1b45420052056b122eb921b94e53e30e408e7"
+    },
+    {
+      "path": "density-before-boundary.json.gz",
+      "sha256": "9f3751fa82539025abe42f0427dd3bff8009891493fb7360e56d4a852a459af6"
+    },
+    {
+      "path": "density-after-boundary.json.gz",
+      "sha256": "13a53b5c2006de1e6a48b1d8891071d45ac8f9fcbd0e2e6d4484d5018bff982e"
+    },
+    {
+      "path": "named-regression-after-boundary.json.gz",
+      "sha256": "03e2fc8d30657d907ab5a6712aba303ed1e226eb0dc718969cb46ffd63419475"
+    },
+    {
+      "path": "named-regression-after-boundary-stop240.json.gz",
+      "sha256": "ecd2ec7d82e48958f0c70760180ad60237d54083d9bfcc04aaeffde3289206a2"
+    }
+  ],
+  "limitations": [
+    "The prior 48-configuration matrix remains tied to commit14649912b; post-correction sampling covers eight configurations and the separate named no-Focus pair only.",
+    "Seed/encounter/airframes/checkpoints remain coupled according to their original matrix indices.",
+    "The pilot uses ordinary inputs and earned cards but predictive state access; no human difficulty, enjoyment or render-performance claim follows.",
+    "Late return-pass salvage collection still produces long gaps in some policies; XP thresholds were deliberately left unchanged."
+  ]
+}

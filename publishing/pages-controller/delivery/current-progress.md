@@ -1,3 +1,57 @@
+# Current delivery register — 24 September 2026
+
+**v0.97.0 is deployed and accepted within a bounded public scope.**
+[Play](https://mekhovov.github.io/revealline/) ·
+[Exact delivery evidence and remaining plan](v0970-publication.md).
+Game source `1518e15e248b59c6470cc6931023eaf6f1ac363c`,
+selector `ca3f3fd638e02e1907a0811d7759d24ba8f726b6`,
+Pages run `35962558115` and deployment `6631370106` are verified.
+
+## Completed now
+
+- PR341 and production passed the complete publisher preview, artifact extraction
+  and independent reread; the PR's 64 Node and 5 Python infrastructure tests passed.
+- The main public audit passed **4,271 files / 625,227,678 bytes**, with no failed
+  files, retries or skipped paths. Existing v0.97 release bytes are unchanged;
+  Archive65 preserves v0.96 and Archive66 separately preserves v0.97.
+- Native main-origin keyboard checks cover ordinary root entry, Missions loading
+  and exact Back focus, a real Team capture/Pause, guarded mode departure, and
+  Versus movement/life-loss/Pause. The user's Solo Continue remains untouched.
+
+The full physical test disk caused visible saving failures. Persistence, successful
+recovery and offline readiness are not accepted. Main play did not include a
+win/Next; the real Archive66 Versus win/Next is separate evidence. Hardware,
+comprehensive accessibility, balance and performance remain open. The historical
+v0.97 gameplay-suite waiver is unchanged, never relabeled as a pass.
+
+## Remaining, in delivery order
+
+1. **UX0 / PR320 / v0.98.0:** finish the mandatory complete suites on the final
+   reviewed source, then exact-source qualification, immutable release, Pages and
+   public input/play verification. Current PR head `26fe20f8` has passing
+   preflight/build and four pending test shards. Reviewed follow-up `b3963c54`
+   still requires integration and qualification. UX0 is not publicly delivered.
+2. **UX1-A then UX1-B:** completed Journey pictures and exact-art rewards, then
+   compact campaign-grouped missions with previews, one-action play and retained
+   selection. Preserve separate mode completion and historical originals.
+3. **UX2–UX4:** shared Home/lobbies/Pause and return behavior; responsive objective
+   HUD/controls and teaching; countdown, deliberate Retry and named continuation.
+4. **UX5–UX6:** remaining player screens/recovery, complete journeys, accessibility,
+   performance and public regression. Keep hardware and offline proof separate.
+5. Resume unfinished map parity, themes/Studio, campaign offline and recovery,
+   audio/encounters, community production and guide work after reliable player
+   flows. No new bulk missions/artwork enter the current critical path.
+
+Finish and release one feature at a time; a passing partial cohort or merged PR
+does not count as a public release. ETA for UX0 remains conditional on full-suite
+completion and any correction cycle. The linked delivery note records concrete
+remaining gates and open limitations.
+
+---
+
+The following 22 September record is retained unchanged as historical evidence;
+its then-current version and active queue do not override the dated status above.
+
 # Current delivery register — 22 September 2026
 
 The current public release is **v0.84.0**. It is available at

@@ -34,9 +34,16 @@ async function fixture(t, index) {
   const original = await readFile(
     new URL(`../presentation/compiled/${compiled.urls[row.picture.sha256]}`, import.meta.url),
   );
+  // A picture-only lease fixture prepares the approved original below. Do not
+  // advertise unrelated actor/objective images without their decoded frames;
+  // cross-mode presentation suites cover those production bindings separately.
+  const resolved = {
+    ...compiled.resolved,
+    assets: { [row.picture.slot]: compiled.resolved.assets[row.picture.slot] },
+  };
   const snapshot = {
-    resolved: compiled.resolved,
-    canvas: canvasPresentation(compiled.resolved),
+    resolved,
+    canvas: canvasPresentation(resolved),
     fonts: { ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] },
   };
   const counts = { reads: 0, decodes: 0, releases: 0 };

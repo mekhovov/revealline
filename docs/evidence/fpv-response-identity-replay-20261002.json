@@ -1,0 +1,121 @@
+{
+  "preservedCourseAndPackIdentities": true,
+  "verifiedProofs": [
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "frames": 654,
+      "state": "complete",
+      "sourceIdentity": "69bdf9a4ac73a31e",
+      "finalStateIdentity": "11f9978ff8f10766"
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "frames": 757,
+      "state": "complete",
+      "sourceIdentity": "cea3c2b2d9a5dc24",
+      "finalStateIdentity": "fe32539fa7036a87"
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "frames": 360,
+      "state": "complete",
+      "sourceIdentity": "451ad6d46ab40e85",
+      "finalStateIdentity": "a263ee9df3245fc6"
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "frames": 712,
+      "state": "complete",
+      "sourceIdentity": "5f480be5552a4896",
+      "finalStateIdentity": "98a71c96624ef754"
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "frames": 608,
+      "state": "complete",
+      "sourceIdentity": "1cefa1a39dc2964d",
+      "finalStateIdentity": "e31f382df014b710"
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "frames": 961,
+      "state": "complete",
+      "sourceIdentity": "01b84b1aaae8d520",
+      "finalStateIdentity": "c3cb25ef47210af2"
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "frames": 973,
+      "state": "complete",
+      "sourceIdentity": "80dc8d60a229d28f",
+      "finalStateIdentity": "4278125617729278"
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "frames": 908,
+      "state": "complete",
+      "sourceIdentity": "1b0ad0ea2b94f32f",
+      "finalStateIdentity": "85322821714cc6d5"
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "frames": 959,
+      "state": "complete",
+      "sourceIdentity": "6e525e60ae7a9fd7",
+      "finalStateIdentity": "f68bc332fde2cd48"
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "frames": 1763,
+      "state": "complete",
+      "sourceIdentity": "f2fee45d782060e4",
+      "finalStateIdentity": "1eed4ab679368ff7"
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "frames": 1057,
+      "state": "complete",
+      "sourceIdentity": "ed45d8e143324668",
+      "finalStateIdentity": "2845a2ff4aec8315"
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "frames": 1031,
+      "state": "complete",
+      "sourceIdentity": "89edd7ed96c134ec",
+      "finalStateIdentity": "7524261f630f7a40"
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "frames": 676,
+      "state": "complete",
+      "sourceIdentity": "5b7fdad9ec9b8949",
+      "finalStateIdentity": "d8840ecf804778f1"
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "frames": 1407,
+      "state": "complete",
+      "sourceIdentity": "616326c6a2c3dcc6",
+      "finalStateIdentity": "e0364f091e3eb2a4"
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "a85413afca83981472abd2f6a5603ff36aa272e9799162dd82342c3693ffaaa4",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "6b0804152563ee67e1f9010d1e499fbe671a5dd7b17f0a71581f215af25a9cbe"
+  }
+}

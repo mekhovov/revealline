@@ -1,0 +1,185 @@
+{
+  "schema": "OverflightExpandedEarnedSourceProvenanceV1",
+  "candidateCommit": "ed46c2b72e1735940acd70337f4ca5826506b1cc",
+  "previousCombatCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "dependencyCount": 33,
+  "actualEntrypoints": ["project.mjs", "core.mjs", "riy-mode.mjs", "review-pilot.mjs"],
+  "workingTreeMatchesCandidate": true,
+  "changedDependencies": ["game/overflight/worlds.mjs"],
+  "review": {
+    "path": "game/overflight/worlds.mjs",
+    "classification": "Additive cosmetic ground-presentation helper for other modes; no edits to existing world construction/validation or Survivor/Riy combat rules.",
+    "existingCodeByteIdenticalAfterRemovingAddedHelper": true,
+    "newExport": "createOverflightGroundPresentation",
+    "newHelperCallersInsideSimulationDependencyClosure": [],
+    "reasonSimulationEvidenceApplies": "The only changed imported file adds an uncalled export. Its existing exports and module initialization are unchanged; no selected-run combat, layout, progression or random stream code is modified.",
+    "limits": "This is source equivalence for the headless simulation, not a claim that earlier native recordings measured this new integration commit."
+  },
+  "sourceHashes": {
+    "game/community/native-project-library.mjs": {
+      "previous": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3",
+      "candidate": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3",
+      "workingTree": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3"
+    },
+    "game/creator/bytes.mjs": {
+      "previous": "d253fce7189617d2a9bd7a760a8ce9b7c860d9b5956b689fba52b6e3e9eade34",
+      "candidate": "d253fce7189617d2a9bd7a760a8ce9b7c860d9b5956b689fba52b6e3e9eade34",
+      "workingTree": "d253fce7189617d2a9bd7a760a8ce9b7c860d9b5956b689fba52b6e3e9eade34"
+    },
+    "game/data-json.mjs": {
+      "previous": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "candidate": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "workingTree": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    "game/i18n/bootstrap.mjs": {
+      "previous": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "candidate": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+      "workingTree": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    "game/i18n/catalogs.mjs": {
+      "previous": "4b30c5c22604ee6a2a6fbac4d6531eaab14f8f65df5b79403e38f67340d3e761",
+      "candidate": "4b30c5c22604ee6a2a6fbac4d6531eaab14f8f65df5b79403e38f67340d3e761",
+      "workingTree": "4b30c5c22604ee6a2a6fbac4d6531eaab14f8f65df5b79403e38f67340d3e761"
+    },
+    "game/i18n/index.mjs": {
+      "previous": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "candidate": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "workingTree": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    "game/overflight/battlefields.mjs": {
+      "previous": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4",
+      "candidate": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4",
+      "workingTree": "f543fd618fd3420ed16d20bb4cb4b89d881b789f692dea1dd43d70971a47b1a4"
+    },
+    "game/overflight/combat-profile.mjs": {
+      "previous": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185",
+      "candidate": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185",
+      "workingTree": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    "game/overflight/coordinated-movement.mjs": {
+      "previous": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0",
+      "candidate": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0",
+      "workingTree": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0"
+    },
+    "game/overflight/core.mjs": {
+      "previous": "08cca38201299c4215cf4a4efb8e0a3e4604533e699df8a0afa5a7a2ac77551a",
+      "candidate": "08cca38201299c4215cf4a4efb8e0a3e4604533e699df8a0afa5a7a2ac77551a",
+      "workingTree": "08cca38201299c4215cf4a4efb8e0a3e4604533e699df8a0afa5a7a2ac77551a"
+    },
+    "game/overflight/defeat-feed.mjs": {
+      "previous": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8",
+      "candidate": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8",
+      "workingTree": "8c8415abfecff6728c95c751e9bd0f346dbe649f1e7c12387ebb2cd386d500c8"
+    },
+    "game/overflight/flight-profile.mjs": {
+      "previous": "2d59a8e49674779e9eb0f088efa118aa704be5ecca5b22ee83f93c98cd016af7",
+      "candidate": "2d59a8e49674779e9eb0f088efa118aa704be5ecca5b22ee83f93c98cd016af7",
+      "workingTree": "2d59a8e49674779e9eb0f088efa118aa704be5ecca5b22ee83f93c98cd016af7"
+    },
+    "game/overflight/grid.mjs": {
+      "previous": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30",
+      "candidate": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30",
+      "workingTree": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    "game/overflight/host-loop.mjs": {
+      "previous": "e8b4b3e07884bc097a2a8e261638b13f3cc1a99b4c47e123fd9c55d64908bfef",
+      "candidate": "e8b4b3e07884bc097a2a8e261638b13f3cc1a99b4c47e123fd9c55d64908bfef",
+      "workingTree": "e8b4b3e07884bc097a2a8e261638b13f3cc1a99b4c47e123fd9c55d64908bfef"
+    },
+    "game/overflight/motion.mjs": {
+      "previous": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153",
+      "candidate": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153",
+      "workingTree": "23e7fe82ede836b66d17d27cdf2f1eb6ae8bb52960a18fe547713fa3a2756153"
+    },
+    "game/overflight/project-upgrade.mjs": {
+      "previous": "08545d66a8288aca9b7c0e88bb097146706262d958f20fe4ab948776d8d937e9",
+      "candidate": "08545d66a8288aca9b7c0e88bb097146706262d958f20fe4ab948776d8d937e9",
+      "workingTree": "08545d66a8288aca9b7c0e88bb097146706262d958f20fe4ab948776d8d937e9"
+    },
+    "game/overflight/project.mjs": {
+      "previous": "63870b8e2bedbe603748608a3dc4f18c22385ed22c5e6ed3fea288da68d7aa9c",
+      "candidate": "63870b8e2bedbe603748608a3dc4f18c22385ed22c5e6ed3fea288da68d7aa9c",
+      "workingTree": "63870b8e2bedbe603748608a3dc4f18c22385ed22c5e6ed3fea288da68d7aa9c"
+    },
+    "game/overflight/raid-project.mjs": {
+      "previous": "b2ef93cf727ebda0e541883704a457b22e42c5423c3da346c1eef1e8564cc870",
+      "candidate": "b2ef93cf727ebda0e541883704a457b22e42c5423c3da346c1eef1e8564cc870",
+      "workingTree": "b2ef93cf727ebda0e541883704a457b22e42c5423c3da346c1eef1e8564cc870"
+    },
+    "game/overflight/review-pilot.mjs": {
+      "previous": "230dcb49bbd658043c5b99cc55615f235856d139d06aa870507960b40de6f225",
+      "candidate": "230dcb49bbd658043c5b99cc55615f235856d139d06aa870507960b40de6f225",
+      "workingTree": "230dcb49bbd658043c5b99cc55615f235856d139d06aa870507960b40de6f225"
+    },
+    "game/overflight/riy-community.mjs": {
+      "previous": "47e4a28e6611fc5e68f1ce763f068d7caf5b013fcfd690546b72089e5cb58050",
+      "candidate": "47e4a28e6611fc5e68f1ce763f068d7caf5b013fcfd690546b72089e5cb58050",
+      "workingTree": "47e4a28e6611fc5e68f1ce763f068d7caf5b013fcfd690546b72089e5cb58050"
+    },
+    "game/overflight/riy-core.mjs": {
+      "previous": "a1e7d54cb2f704244111767843396a70061fc423bcd396de3562895354306260",
+      "candidate": "a1e7d54cb2f704244111767843396a70061fc423bcd396de3562895354306260",
+      "workingTree": "a1e7d54cb2f704244111767843396a70061fc423bcd396de3562895354306260"
+    },
+    "game/overflight/riy-mode.mjs": {
+      "previous": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8",
+      "candidate": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8",
+      "workingTree": "c71aec90e4bed54160b2b61990d3ee9e5f9b4bc5e50e3188176d6c35c58740f8"
+    },
+    "game/overflight/riy-project.mjs": {
+      "previous": "a45da437873f95c02ff981a128306d1ccdf3e715215cd72798610816b58b3291",
+      "candidate": "a45da437873f95c02ff981a128306d1ccdf3e715215cd72798610816b58b3291",
+      "workingTree": "a45da437873f95c02ff981a128306d1ccdf3e715215cd72798610816b58b3291"
+    },
+    "game/overflight/riy-upgrades.mjs": {
+      "previous": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd",
+      "candidate": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd",
+      "workingTree": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    "game/overflight/tactics.mjs": {
+      "previous": "b260abe4451b853c677208b11eff8a6dddadbe1066f1f7c5c159114544042c93",
+      "candidate": "b260abe4451b853c677208b11eff8a6dddadbe1066f1f7c5c159114544042c93",
+      "workingTree": "b260abe4451b853c677208b11eff8a6dddadbe1066f1f7c5c159114544042c93"
+    },
+    "game/overflight/terrain.mjs": {
+      "previous": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "candidate": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146",
+      "workingTree": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+    },
+    "game/overflight/upgrades.mjs": {
+      "previous": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee",
+      "candidate": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee",
+      "workingTree": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    "game/overflight/world-layout-presentation.mjs": {
+      "previous": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "candidate": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3",
+      "workingTree": "4b2cdcedc2c9c76714293690a4230b52e53a4c676cbc71866d3ac9a473a2d0b3"
+    },
+    "game/overflight/worlds.mjs": {
+      "previous": "c683266f7d66586cc6916f5447d6b8a3defa1fd9bccf501226ec9ba5cee23a5a",
+      "candidate": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c",
+      "workingTree": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c"
+    },
+    "game/presentation/overflight-world-slots.mjs": {
+      "previous": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "candidate": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94",
+      "workingTree": "6026c6d330bd5b69ef9f233199878ae9abf6db5105e67514896785caa379dd94"
+    },
+    "game/profile-database.mjs": {
+      "previous": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "candidate": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "workingTree": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+    },
+    "game/profile-storage.mjs": {
+      "previous": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "candidate": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "workingTree": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+    },
+    "game/vendor/i18next-26.4.2.min.js": {
+      "previous": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "candidate": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "workingTree": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    }
+  }
+}

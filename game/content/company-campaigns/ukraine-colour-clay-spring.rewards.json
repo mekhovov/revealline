@@ -1,0 +1,1106 @@
+[
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A flower-filled tradition reaches beyond a framed picture.",
+        "title": "A Painted Home"
+      },
+      "uk": {
+        "teaser": "Квіткова традиція виходить за межі картини в рамі.",
+        "title": "Розписана оселя"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-01-reveal-v1",
+          "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655"
+        },
+        "id": "ukraine-colour-clay-spring-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated spring courtyard with different invented floral paintings on a whitewashed wall, a wooden household box and paper studies.",
+            "title": "A Painted Home"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований весняний двір із різними вигаданими квітковими розписами на білій стіні, дерев’яній скриньці та паперових етюдах.",
+            "title": "Розписана оселя"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO’s Petrykivka record describes painting on homes, household belongings and musical instruments. Its imaginative floral forms draw on close observation of local plants and animals. The practice was inscribed in 2013.",
+              "Imagine three exhibit labels: a painted wall, a decorated household object and a paper study. The support changes how an artwork is seen. Describe the surface before guessing a flower’s meaning; our illustrated courtyard is an original scene, not a copied historic home."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Petrykivka decorative painting, inscription decision 2013",
+                "url": "https://ich.unesco.org/en/Decisions/8.COM/8.29"
+              }
+            ],
+            "title": "A Painted Home"
+          },
+          "uk": {
+            "paragraphs": [
+              "Запис ЮНЕСКО про петриківський розпис описує оздоблення осель, побутових речей і музичних інструментів. Уявні квіткові форми спираються на спостереження місцевих рослин і тварин. Традицію внесено до списку 2013 року.",
+              "Уявіть три підписи: розписана стіна, оздоблена побутова річ і паперовий етюд. Основа впливає на сприйняття твору. Опишіть поверхню перед здогадками про значення квітки; наше подвір’я — оригінальна ілюстрація, а не копія історичної оселі."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Petrykivka decorative painting, inscription decision 2013",
+                "url": "https://ich.unesco.org/en/Decisions/8.COM/8.29"
+              }
+            ],
+            "title": "Розписана оселя"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name the painted support before discussing the ornament. Keep the source’s description of Petrykivka separate from this invented courtyard."
+              ],
+              "title": "Make a distinction: A Painted Home"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть розписану основу перед обговоренням орнаменту. Відокремте опис Петриківки в джерелі від цього вигаданого двору."
+              ],
+              "title": "Розрізнімо: Розписана оселя"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine the same new flower on a wall, a cup and paper. Tell each other how the surface changes what you notice."
+              ],
+              "title": "Look together: A Painted Home"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть ту саму нову квітку на стіні, чашці й папері. Розкажіть одне одному, як поверхня змінює сприйняття."
+              ],
+              "title": "Погляньмо разом: Розписана оселя"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two source-supported uses of the painting practice. Which observation concerns the surface, and which interpretation would need a maker’s account?"
+              ],
+              "title": "Explore the evidence: A Painted Home"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте два підтверджені джерелом застосування розпису. Що стосується поверхні, а яке тлумачення потребує розповіді майстра?"
+              ],
+              "title": "Дослідімо докази: Розписана оселя"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c39c64e1c8f6721a" },
+            { "difficulty": "standard", "gameplayId": "8cb36efe40ce862e" },
+            { "difficulty": "expert", "gameplayId": "1c5884ad8ac0805c" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-01"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "One museum record connects a teacher and her student.",
+        "title": "The Teacher in the Portrait"
+      },
+      "uk": {
+        "teaser": "Один музейний запис поєднує вчительку та її учня.",
+        "title": "Учителька на портреті"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-02-reveal-v1",
+          "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1"
+        },
+        "id": "ukraine-colour-clay-spring-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated art-school gallery with an empty portrait frame, two distinct worktables, blank record cards and invented colour studies.",
+            "title": "The Teacher in the Portrait"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована художня галерея з порожньою портретною рамою, двома різними робочими столами, порожніми картками й вигаданими кольоровими етюдами.",
+            "title": "Учителька на портреті"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Dnipro National Historical Museum records Fedir Panko’s 1980 portrait My Teacher, depicting the Petrykivka artist Tetyana Pata. The museum identifies Panko as her student.",
+              "An accurate label distinguishes the person pictured from the person who made the picture: “Tetyana Pata, portrayed by Fedir Panko.” Try describing what this relationship adds to a craft’s story. The linked museum image is a reference; the game’s gallery is a new illustration."
+            ],
+            "sources": [
+              {
+                "title": "Dnipro National Historical Museum — Fedir Panko, My Teacher, 1980",
+                "url": "https://www.museum.dp.ua/uk/object_8-8/"
+              }
+            ],
+            "title": "The Teacher in the Portrait"
+          },
+          "uk": {
+            "paragraphs": [
+              "Дніпропетровський національний історичний музей описує портрет Федора Панка «Вчителька моя» 1980 року, на якому зображена петриківська майстриня Тетяна Пата. Музей називає Панка її учнем.",
+              "Точний підпис розрізняє зображену людину й автора твору: «Тетяна Пата на портреті Федора Панка». Спробуйте пояснити, що цей зв’язок додає до історії ремесла. Музейне зображення доступне за посиланням; ігрова галерея — нова ілюстрація."
+            ],
+            "sources": [
+              {
+                "title": "Dnipro National Historical Museum — Fedir Panko, My Teacher, 1980",
+                "url": "https://www.museum.dp.ua/uk/object_8-8/"
+              }
+            ],
+            "title": "Учителька на портреті"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Try the label “Tetyana Pata, portrayed by Fedir Panko.” Keep the portrait’s 1980 date with the work, not with an invented biography."
+              ],
+              "title": "Make a distinction: The Teacher in the Portrait"
+            },
+            "uk": {
+              "paragraphs": [
+                "Спробуйте підпис «Тетяна Пата, зображена Федором Панком». Збережіть 1980 рік біля твору, не додаючи вигаданої біографії."
+              ],
+              "title": "Розрізнімо: Учителька на портреті"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Take turns pointing out the person pictured and the person who painted the portrait in the record. They are different roles."
+              ],
+              "title": "Look together: The Teacher in the Portrait"
+            },
+            "uk": {
+              "paragraphs": [
+                "По черзі назвіть за записом зображену людину й автора портрета. Це різні ролі."
+              ],
+              "title": "Погляньмо разом: Учителька на портреті"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare a subject-only label with one that also names the artist and teacher–student relationship. Which additional statements are supported by the museum record?"
+              ],
+              "title": "Explore the evidence: The Teacher in the Portrait"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте підпис лише з ім’ям зображеної людини та підпис з автором і зв’язком учительки й учня. Які доповнення підтримує музейний запис?"
+              ],
+              "title": "Дослідімо докази: Учителька на портреті"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c92e49bc42010149" },
+            { "difficulty": "standard", "gameplayId": "7d610bbda00a887f" },
+            { "difficulty": "expert", "gameplayId": "95df64ac12165f68" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-02"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Green, yellow and brown lead to Kosiv, but colour alone cannot attribute an object.",
+        "title": "Clay, Glaze and Place"
+      },
+      "uk": {
+        "teaser": "Зелений, жовтий і коричневий ведуть до Косова, та самого кольору для атрибуції замало.",
+        "title": "Глина, полива і місце"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-03-reveal-v1",
+          "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547"
+        },
+        "id": "ukraine-colour-clay-spring-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated ceramic courtyard with three different display bays, cream vessels with invented green, yellow and brown glaze marks, and separate blank cards.",
+            "title": "Clay, Glaze and Place"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований керамічний двір із трьома різними виставковими нішами, світлими посудинами з вигаданими зеленими, жовтими й коричневими розписами та окремими порожніми картками.",
+            "title": "Глина, полива і місце"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The Ukrainian Museum of Canada describes Kosiv painted ceramics as Hutsul folk art, often using green, yellow and brown on a white ground. Its exhibition includes useful vessels as well as decorative works. UNESCO inscribed the tradition in 2019.",
+              "Our fictional cabinet contains two similarly coloured objects with different labels. A palette is a clue, not proof of maker, date or origin. Compare the recorded place and material before grouping the objects together."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Museum of Canada, Ontario — Kosiv Bazaar objects and makers",
+                "url": "https://www.umcontario.com/kosiv-bazaar"
+              },
+              {
+                "title": "UNESCO — Tradition of Kosiv painted ceramics",
+                "url": "https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456"
+              }
+            ],
+            "title": "Clay, Glaze and Place"
+          },
+          "uk": {
+            "paragraphs": [
+              "Український музей Канади описує косівську мальовану кераміку як гуцульське народне мистецтво, часто із зеленим, жовтим і коричневим на білому тлі. На виставці є ужитковий посуд і декоративні твори. ЮНЕСКО внесло традицію до списку 2019 року.",
+              "У вигаданій вітрині два подібні за кольором предмети мають різні підписи. Палітра — підказка, а не доказ авторства, дати чи походження. Порівняйте зазначені місце та матеріал, перш ніж об’єднувати предмети."
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Museum of Canada, Ontario — Kosiv Bazaar objects and makers",
+                "url": "https://www.umcontario.com/kosiv-bazaar"
+              },
+              {
+                "title": "UNESCO — Tradition of Kosiv painted ceramics",
+                "url": "https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456"
+              }
+            ],
+            "title": "Глина, полива і місце"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Use colour as a clue, then check material, place and maker in the record. Similar colours alone do not establish Kosiv provenance."
+              ],
+              "title": "Make a distinction: Clay, Glaze and Place"
+            },
+            "uk": {
+              "paragraphs": [
+                "Використайте колір як підказку, а потім перевірте матеріал, місце й автора в записі. Самі схожі кольори не встановлюють косівського походження."
+              ],
+              "title": "Розрізнімо: Глина, полива і місце"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Find similar colours in the two imaginary objects. What else would you ask before deciding where either object came from?"
+              ],
+              "title": "Look together: Clay, Glaze and Place"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть схожі кольори у двох уявних предметах. Про що ще запитаєте, перш ніж визначати їхнє походження?"
+              ],
+              "title": "Погляньмо разом: Глина, полива і місце"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare an exhibition’s general description with an individual ceramic-object label. Keep tradition-level statements separate from the evidence for a particular piece."
+              ],
+              "title": "Explore the evidence: Clay, Glaze and Place"
+            },
+            "uk": {
+              "paragraphs": [
+                "Зіставте загальний опис виставки з підписом окремого керамічного предмета. Відокремте твердження про традицію від доказів щодо конкретного твору."
+              ],
+              "title": "Дослідімо докази: Глина, полива і місце"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "ac655281f9ad8b3f" },
+            { "difficulty": "standard", "gameplayId": "d1e12d84ea93cbaa" },
+            { "difficulty": "expert", "gameplayId": "d58de3e825927f79" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-03"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Meet a 1997 vase and a 2004 plate through their museum labels.",
+        "title": "Two Objects, Two Makers"
+      },
+      "uk": {
+        "teaser": "Познайомтеся з вазою 1997 року та тарелею 2004 року через музейні підписи.",
+        "title": "Два предмети — два автори"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-04-reveal-v1",
+          "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d"
+        },
+        "id": "ukraine-colour-clay-spring-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated spacious gallery with a fictional tall vase and a separate circular plate display, each with its own blank record card.",
+            "title": "Two Objects, Two Makers"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована простора галерея з вигаданою високою вазою та окремою круглою таріллю, кожна зі своєю порожньою карткою.",
+            "title": "Два предмети — два автори"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Kosiv Bazaar labels a clay-and-glaze vase by Oleksandra Shvets, dated 1997, and a decorative plate by Oksana Verbivska-Kabyn, dated 2004. These specific records reveal individual makers within a shared ceramic tradition.",
+              "Read each source image with its own label. Shape, maker and date are three separate observations: a plate does not become a vase because its colours are similar. Which detail would you keep if a tiny mobile card had room for only one identifying sentence?"
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Museum of Canada, Ontario — Kosiv Bazaar objects and makers",
+                "url": "https://www.umcontario.com/kosiv-bazaar"
+              }
+            ],
+            "title": "Two Objects, Two Makers"
+          },
+          "uk": {
+            "paragraphs": [
+              "Виставка Kosiv Bazaar підписує вазу з глини й поливи Олександри Швець 1997 року та декоративну таріль Оксани Вербівської-Кабин 2004 року. Конкретні записи показують окремих майстринь у спільній керамічній традиції.",
+              "Читайте кожне зображення джерела разом із його підписом. Форма, автор і дата — три окремі спостереження: таріль не стає вазою через подібні кольори. Яку деталь ви збережете, якщо на малій мобільній картці є місце лише для одного речення?"
+            ],
+            "sources": [
+              {
+                "title": "Ukrainian Museum of Canada, Ontario — Kosiv Bazaar objects and makers",
+                "url": "https://www.umcontario.com/kosiv-bazaar"
+              }
+            ],
+            "title": "Два предмети — два автори"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Keep Oleksandra Shvets’s 1997 vase separate from Oksana Verbivska-Kabyn’s 2004 plate. Choose one clear identifying sentence for each."
+              ],
+              "title": "Make a distinction: Two Objects, Two Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізняйте вазу Олександри Швець 1997 року й таріль Оксани Вербівської-Кабин 2004 року. Оберіть по одному чіткому реченню для кожного."
+              ],
+              "title": "Розрізнімо: Два предмети — два автори"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Match vase and plate to their separate maker-and-date cards. Explain why a shared palette does not make them the same object."
+              ],
+              "title": "Look together: Two Objects, Two Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Поєднайте вазу й таріль з окремими картками авторства й дати. Поясніть, чому спільна палітра не робить їх одним предметом."
+              ],
+              "title": "Погляньмо разом: Два предмети — два автори"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Design a compact comparison card with shape, maker, date and source. Which detail must remain visible when the card is reduced to a narrow screen?"
+              ],
+              "title": "Explore the evidence: Two Objects, Two Makers"
+            },
+            "uk": {
+              "paragraphs": [
+                "Створіть стислу картку порівняння з формою, авторством, датою й джерелом. Що має залишитися видимим на вузькому екрані?"
+              ],
+              "title": "Дослідімо докази: Два предмети — два автори"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "bf88d8cc57f1743b" },
+            { "difficulty": "standard", "gameplayId": "e7a48433001261fe" },
+            { "difficulty": "expert", "gameplayId": "13813e800591de01" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-04"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A covered part of the egg keeps its earlier colour.",
+        "title": "What the Wax Keeps"
+      },
+      "uk": {
+        "teaser": "Вкрита воском частина яйця зберігає попередній колір.",
+        "title": "Що зберігає віск"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-05-reveal-v1",
+          "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b"
+        },
+        "id": "ukraine-colour-clay-spring-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated paper display with three egg-shaped studies, cobalt backgrounds and an ivory diamond showing an area that keeps its earlier colour.",
+            "title": "What the Wax Keeps"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована паперова виставка з трьома яйцеподібними етюдами, кобальтовим тлом і світлим ромбом, що показує збереження попереднього кольору.",
+            "title": "Що зберігає віск"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "UNESCO describes pysanka as egg decoration using wax to reserve areas while dye colours the uncovered surface. Repeated layers build a design. This is a description of the craft principle, not instructions for using heated wax.",
+              "In our paper-only comparison, imagine a white shape protected while its surroundings turn blue. Removing the imaginary cover reveals the earlier white. Predict which part stays unchanged before looking at the next card; no real wax, dye or heat is needed."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Pysanka, Ukrainian tradition and art of decorating eggs",
+                "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+              }
+            ],
+            "title": "What the Wax Keeps"
+          },
+          "uk": {
+            "paragraphs": [
+              "ЮНЕСКО описує писанкарство як оздоблення яєць воском, що захищає ділянки, поки барвник забарвлює відкриту поверхню. Повторні шари утворюють малюнок. Це пояснення принципу ремесла, а не інструкція роботи з гарячим воском.",
+              "У нашому уявному паперовому порівнянні біла фігура захищена, поки тло стає синім. Коли уявний захист знято, залишається попередній білий колір. Перед наступною карткою передбачте, яка частина не зміниться; справжні віск, барвник чи нагрівання не потрібні."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Pysanka, Ukrainian tradition and art of decorating eggs",
+                "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+              }
+            ],
+            "title": "Що зберігає віск"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Distinguish the protected area from the area receiving colour in the paper-only example. Explain the principle without treating it as a heated-wax activity."
+              ],
+              "title": "Make a distinction: What the Wax Keeps"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть захищену ділянку й ту, що отримує колір, у паперовому прикладі. Поясніть принцип, не перетворюючи його на вправу з гарячим воском."
+              ],
+              "title": "Розрізнімо: Що зберігає віск"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Imagine covering a white paper shape while the area around it becomes blue. Predict together which area stays white. No real wax or heat is needed."
+              ],
+              "title": "Look together: What the Wax Keeps"
+            },
+            "uk": {
+              "paragraphs": [
+                "Уявіть закриту білу фігуру на папері, довкола якої з’являється синій колір. Разом передбачте, що залишиться білим. Справжній віск і нагрівання не потрібні."
+              ],
+              "title": "Погляньмо разом: Що зберігає віск"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Transfer the reserve principle to a new imaginary paper pattern. State your prediction, then explain how the comparison is limited compared with an actual maker’s practice."
+              ],
+              "title": "Explore the evidence: What the Wax Keeps"
+            },
+            "uk": {
+              "paragraphs": [
+                "Перенесіть принцип резервування на новий уявний паперовий візерунок. Назвіть прогноз і поясніть межі такого порівняння зі справжньою практикою майстра."
+              ],
+              "title": "Дослідімо докази: Що зберігає віск"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e1f3e80a3fbca236" },
+            { "difficulty": "standard", "gameplayId": "b62b07d3dd966586" },
+            { "difficulty": "expert", "gameplayId": "6658e063d5471479" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-05"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A craft travels with its people, its maker and its message.",
+        "title": "A Gift with a Story"
+      },
+      "uk": {
+        "teaser": "Ремесло подорожує разом із людьми, автором і повідомленням.",
+        "title": "Подарунок з історією"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-06-reveal-v1",
+          "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27"
+        },
+        "id": "ukraine-colour-clay-spring-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated spring exhibition with separate painting, ceramic and paper-egg displays, plus a gift box and blank personal card in the foreground.",
+            "title": "A Gift with a Story"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована весняна виставка з окремими розписами, керамікою та паперовими яйцеподібними етюдами, подарунковою коробкою й порожньою особистою карткою попереду.",
+            "title": "Подарунок з історією"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The 2024 UNESCO inscription for pysanka is shared by Estonia and Ukraine. The Ukrainian Institute of America’s Pysanka: A Symbol of Hope presents a collective installation curated by artist Sofika Zielyk.",
+              "For our fictional exhibition gift, choose an honest message such as “I made this new design for you.” Record your name and inspiration. Do not assign a traditional meaning to an invented mark. Your six discoveries now form a cabinet of distinct practices and people, ready to revisit."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Pysanka, Ukrainian tradition and art of decorating eggs",
+                "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+              },
+              {
+                "title": "Ukrainian Institute of America — Pysanka: A Symbol of Hope",
+                "url": "https://pysanka.ukrainianinstitute.org/"
+              }
+            ],
+            "title": "A Gift with a Story"
+          },
+          "uk": {
+            "paragraphs": [
+              "Внесення писанкарства до списку ЮНЕСКО 2024 року є спільним для Естонії та України. Проєкт Українського інституту Америки Pysanka: A Symbol of Hope представляє колективну інсталяцію, кураторкою якої є мисткиня Софійка Зелик.",
+              "Для подарунка вигаданої виставки оберіть чесне повідомлення: «Я створив цей новий малюнок для тебе». Зазначте своє ім’я та натхнення. Не приписуйте традиційного значення вигаданому знаку. Шість відкриттів утворюють вітрину окремих практик і людей, до якої можна повернутися."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Pysanka, Ukrainian tradition and art of decorating eggs",
+                "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+              },
+              {
+                "title": "Ukrainian Institute of America — Pysanka: A Symbol of Hope",
+                "url": "https://pysanka.ukrainianinstitute.org/"
+              }
+            ],
+            "title": "Подарунок з історією"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the shared UNESCO inscription, the named curated installation and your new design. Each needs its own attribution and context."
+              ],
+              "title": "Make a distinction: A Gift with a Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть спільний запис ЮНЕСКО, названу кураторську інсталяцію та свій новий дизайн. Кожен потребує власного авторства й контексту."
+              ],
+              "title": "Розрізнімо: Подарунок з історією"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Invent a gift design together and tell its recipient why you chose it. Describe your own intention without calling it a traditional meaning."
+              ],
+              "title": "Look together: A Gift with a Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Придумайте разом дизайн подарунка й поясніть адресату свій вибір. Опишіть власний задум, не називаючи його традиційним значенням."
+              ],
+              "title": "Погляньмо разом: Подарунок з історією"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Curate the six discoveries with makers, practices and sources visible. How would you describe a contemporary gift without claiming a universal symbolism or copying an installation?"
+              ],
+              "title": "Explore the evidence: A Gift with a Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Упорядкуйте шість відкриттів, зберігши видимими майстрів, практики й джерела. Як описати сучасний подарунок без універсальної символіки чи копіювання інсталяції?"
+              ],
+              "title": "Дослідімо докази: Подарунок з історією"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "60889a9e7bffe77c" },
+            { "difficulty": "standard", "gameplayId": "0c1bca3cabbf5099" },
+            { "difficulty": "expert", "gameplayId": "a4699280c7aaf201" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-06"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "ukraine-culture",
+    "campaignId": "ukraine-colour-clay-spring",
+    "format": "revealline-completion-reward.v1",
+    "id": "ukraine-colour-clay-spring-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "A Cabinet of Living Crafts"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Вітрина живих ремесел"
+      }
+    },
+    "payloads": [
+      {
+        "id": "ukraine-colour-clay-spring-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Arrange six discoveries as three related but distinct traditions: Petrykivka painting, Kosiv ceramics and pysanka. Keep a maker, material and source beside each example. The collection is a starting point for looking and asking questions, not a universal dictionary of Ukrainian symbols or a certificate of craft skill."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Pysanka, Ukrainian tradition and art of decorating eggs",
+                "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+              }
+            ],
+            "title": "A Cabinet of Living Crafts"
+          },
+          "uk": {
+            "paragraphs": [
+              "Розташуйте шість відкриттів як три споріднені, але окремі традиції: петриківський розпис, косівська кераміка та писанкарство. Залиште поруч із кожним прикладом автора, матеріал і джерело. Колекція допомагає спостерігати й ставити запитання, а не замінює всі значення українських символів чи засвідчує ремісничу майстерність."
+            ],
+            "sources": [
+              {
+                "title": "UNESCO — Pysanka, Ukrainian tradition and art of decorating eggs",
+                "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+              }
+            ],
+            "title": "Вітрина живих ремесел"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-01-reveal-v1",
+          "sha256": "76afafc6aee7efbbb84b8b97ac96768465023c8cd3acdd7093f7de08b9c3f655"
+        },
+        "id": "ukraine-colour-clay-spring-01-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated spring courtyard with different invented floral paintings on a whitewashed wall, a wooden household box and paper studies.",
+            "title": "A Painted Home"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований весняний двір із різними вигаданими квітковими розписами на білій стіні, дерев’яній скриньці та паперових етюдах.",
+            "title": "Розписана оселя"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-02-reveal-v1",
+          "sha256": "eac1252d6cf2e6b6084f3c00cbc0d07d0278aa1a2f27badf2418b95856caaab1"
+        },
+        "id": "ukraine-colour-clay-spring-02-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated art-school gallery with an empty portrait frame, two distinct worktables, blank record cards and invented colour studies.",
+            "title": "The Teacher in the Portrait"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована художня галерея з порожньою портретною рамою, двома різними робочими столами, порожніми картками й вигаданими кольоровими етюдами.",
+            "title": "Учителька на портреті"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-03-reveal-v1",
+          "sha256": "7df81716961ae08ed04adf4d4359edbad08e9010190563fbd8ef3da3e01a2547"
+        },
+        "id": "ukraine-colour-clay-spring-03-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated ceramic courtyard with three different display bays, cream vessels with invented green, yellow and brown glaze marks, and separate blank cards.",
+            "title": "Clay, Glaze and Place"
+          },
+          "uk": {
+            "alt": "Оригінальний ілюстрований керамічний двір із трьома різними виставковими нішами, світлими посудинами з вигаданими зеленими, жовтими й коричневими розписами та окремими порожніми картками.",
+            "title": "Глина, полива і місце"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-04-reveal-v1",
+          "sha256": "c3ea48e72d2cc67dee8a8bb611580286aa1c1b0afccf1e2ee0bfb97a16e68d2d"
+        },
+        "id": "ukraine-colour-clay-spring-04-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated spacious gallery with a fictional tall vase and a separate circular plate display, each with its own blank record card.",
+            "title": "Two Objects, Two Makers"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована простора галерея з вигаданою високою вазою та окремою круглою таріллю, кожна зі своєю порожньою карткою.",
+            "title": "Два предмети — два автори"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-05-reveal-v1",
+          "sha256": "3ce2f25907dc3a3aac911729deb7be72180ee39b4510c6d69a8c821c27796b3b"
+        },
+        "id": "ukraine-colour-clay-spring-05-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated paper display with three egg-shaped studies, cobalt backgrounds and an ivory diamond showing an area that keeps its earlier colour.",
+            "title": "What the Wax Keeps"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована паперова виставка з трьома яйцеподібними етюдами, кобальтовим тлом і світлим ромбом, що показує збереження попереднього кольору.",
+            "title": "Що зберігає віск"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "ukraine-colour-clay-spring-06-reveal-v1",
+          "sha256": "3906cda63a720416d840efb79ceb5acd2cda31f9d8f9b8fcbacdca776651ea27"
+        },
+        "id": "ukraine-colour-clay-spring-06-image",
+        "locales": {
+          "en": {
+            "alt": "Original illustrated spring exhibition with separate painting, ceramic and paper-egg displays, plus a gift box and blank personal card in the foreground.",
+            "title": "A Gift with a Story"
+          },
+          "uk": {
+            "alt": "Оригінальна ілюстрована весняна виставка з окремими розписами, керамікою та паперовими яйцеподібними етюдами, подарунковою коробкою й порожньою особистою карткою попереду.",
+            "title": "Подарунок з історією"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "ukraine-colour-clay-spring-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://ich.unesco.org/en/RL/pysanka-ukrainian-tradition-and-art-of-decorating-eggs-02134"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c39c64e1c8f6721a" },
+            { "difficulty": "standard", "gameplayId": "8cb36efe40ce862e" },
+            { "difficulty": "expert", "gameplayId": "1c5884ad8ac0805c" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "c92e49bc42010149" },
+            { "difficulty": "standard", "gameplayId": "7d610bbda00a887f" },
+            { "difficulty": "expert", "gameplayId": "95df64ac12165f68" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "ac655281f9ad8b3f" },
+            { "difficulty": "standard", "gameplayId": "d1e12d84ea93cbaa" },
+            { "difficulty": "expert", "gameplayId": "d58de3e825927f79" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "bf88d8cc57f1743b" },
+            { "difficulty": "standard", "gameplayId": "e7a48433001261fe" },
+            { "difficulty": "expert", "gameplayId": "13813e800591de01" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e1f3e80a3fbca236" },
+            { "difficulty": "standard", "gameplayId": "b62b07d3dd966586" },
+            { "difficulty": "expert", "gameplayId": "6658e063d5471479" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "60889a9e7bffe77c" },
+            { "difficulty": "standard", "gameplayId": "0c1bca3cabbf5099" },
+            { "difficulty": "expert", "gameplayId": "a4699280c7aaf201" }
+          ],
+          "missionId": "ukraine-colour-clay-spring-06"
+        }
+      ]
+    },
+    "revision": "3",
+    "scope": { "id": "ukraine-colour-clay-spring", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "ukraine-colour-clay-spring-key-v1",
+        "sha256": "5e934f67d22763bb0d4b2d8d139ab03a18099d97618a610e6584abeabe2b73a4"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional spring studio with separate painting, pottery and egg-decoration work areas beneath an open window."
+        },
+        "uk": {
+          "alt": "Уявна весняна майстерня з окремими місцями для малювання, гончарства та оздоблення яєць під відчиненим вікном."
+        }
+      }
+    }
+  }
+]

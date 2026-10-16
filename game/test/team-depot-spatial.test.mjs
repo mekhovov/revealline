@@ -8,6 +8,10 @@ import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { assessTeamTimedRoute } from './helpers/team-timed-route.mjs';
 import { page } from './helpers/coop-host.mjs';
+import {
+  playSpecializedTeamRoute,
+  playSpecializedTeamBonusRoute,
+} from './helpers/team-specialized-host-route.mjs';
 import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
 
 const evidence = JSON.parse(
@@ -226,31 +230,10 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    const expected = row.checks.find((c) => !c.options.swapped && c.options.jointCuts).result;
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1;
-    for (const s of row.log) {
-      for (const [seat, direction] of [s.a, s.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${expected.initialReserves} reserve${expected.initialReserves === 1 ? '' : 's'}`,
-        );
-      }
-      if (!f.$('coop-overlay').hidden) break;
+    if (row.kind === 'pickup-free') {
+      playSpecializedTeamRoute(f, source, 'depot-dash', row.difficulty, 'depot-pickup-free');
+      return;
     }
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(frames, expected.tick);
-    assert.equal(f.$('coop-coverage').textContent, `${(expected.coverage * 100).toFixed(1)}%`);
-    assert.deepEqual(f.visits, []);
+    playSpecializedTeamBonusRoute(f, source, 'depot-dash', row.difficulty, 'depot-relocation');
   });
 }

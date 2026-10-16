@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 export const PREVIEW_SIZE_LIMITS = Object.freeze({ min: 240, max: 2560 });
 
 /** Dimensions affect only the existing preview viewport, never scenario or run data. */
@@ -10,8 +11,11 @@ export function resolvePreviewSize(width, height) {
       value < PREVIEW_SIZE_LIMITS.min ||
       value > PREVIEW_SIZE_LIMITS.max
     )
-      throw new Error(`${name} must be a whole number from 240 to 2560 CSS pixels.`);
+      throw new Error(t('tools:mustBeAWholeNumberFrom240To2560Css', { value1: name }));
     return value;
   };
-  return { width: dimension(width, 'Width'), height: dimension(height, 'Height') };
+  return {
+    width: dimension(width, t('tools:width')),
+    height: dimension(height, t('tools:height')),
+  };
 }

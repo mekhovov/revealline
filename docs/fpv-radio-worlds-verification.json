@@ -1,0 +1,246 @@
+{
+  "format": "FPVRadioVerification.v1",
+  "date": "2026-10-01",
+  "qualification": "development-playtest",
+  "method": "Controlled Gamepad API in real Chrome with the built package; actual requestAnimationFrame flight stepping and lift. Physical TX15 verification is separate.",
+  "physicalDevice": {
+    "device": "TX15 Joystick (Vendor: 1209 Product: 4f54)",
+    "verification": "Owner confirmed physical radio flight on source World Studio after deliberate arming and raising throttle.",
+    "otherPhysicalDevices": "not verified"
+  },
+  "catalogue": {
+    "status": "passed",
+    "cases": 120,
+    "challengeIds": [
+      "flight-01",
+      "flight-02",
+      "flight-03",
+      "flight-04",
+      "flight-05",
+      "flight-06",
+      "flight-07",
+      "flight-08",
+      "flight-09",
+      "flight-10",
+      "flight-11",
+      "flight-12",
+      "woodland-01",
+      "woodland-02",
+      "woodland-03",
+      "woodland-04",
+      "woodland-05",
+      "woodland-06",
+      "woodland-07",
+      "woodland-08",
+      "courtyard-01",
+      "courtyard-02",
+      "courtyard-03",
+      "courtyard-04",
+      "courtyard-05",
+      "courtyard-06",
+      "courtyard-07",
+      "courtyard-08",
+      "warehouse-01",
+      "warehouse-02",
+      "warehouse-03",
+      "warehouse-04",
+      "warehouse-05",
+      "warehouse-06",
+      "warehouse-07",
+      "warehouse-08",
+      "stadium-01",
+      "stadium-02",
+      "stadium-03",
+      "stadium-04",
+      "stadium-05",
+      "stadium-06",
+      "stadium-07",
+      "stadium-08",
+      "container-yard-01",
+      "container-yard-02",
+      "container-yard-03",
+      "container-yard-04",
+      "container-yard-05",
+      "container-yard-06",
+      "container-yard-07",
+      "container-yard-08",
+      "garage-01",
+      "garage-02",
+      "garage-03",
+      "garage-04",
+      "garage-05",
+      "garage-06",
+      "garage-07",
+      "garage-08"
+    ],
+    "modes": ["self-level", "acro"],
+    "minimumLiftMillimetres": 456,
+    "allVerified": true,
+    "allConsumedThrottle850": true
+  },
+  "browserChecks": [
+    "defaultRestoration",
+    "firstLift",
+    "pickupBlocked",
+    "pickupResumed",
+    "retry",
+    "disconnected",
+    "reconnected",
+    "reconnectedResumed",
+    "displayPersistence",
+    "stickModes",
+    "playlist",
+    "playlistNext",
+    "creator",
+    "checkpoint",
+    "freeFlight",
+    "demonstration",
+    "flyAfterDemo",
+    "v2Recording",
+    "keyboard",
+    "touch",
+    "touchLeft",
+    "touchThrottleHeld",
+    "mobile",
+    "deviceCases",
+    "savedCustom",
+    "unverifiedSaved"
+  ],
+  "browserErrors": [],
+  "matrixBuild": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 75,
+    "bytes": 10184399,
+    "zipSha256": "0f6efc83f2340638f5ad1deb404be05a6533a83f2be074809882a6dfc19ccded",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "finalBuild": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 75,
+    "bytes": 10184605,
+    "zipSha256": "f76926832b33036ab687a1214c83d8973c73ddec5cd071271499753baa0ff4e9",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "finalChanges": "Final build additionally contains restoration-disconnect race handling and mobile stick/coaching spacing. Final targeted verification is recorded separately below.",
+  "sharedRuntime": {
+    "checks": [
+      "initialRestore",
+      "afterRestore",
+      "armOffResult",
+      "armOffReason",
+      "afterDeliberateOn",
+      "disconnected",
+      "reconnect",
+      "afterReconnect",
+      "heldOnActive",
+      "afterReconnectOffOn",
+      "freshReset",
+      "recoveryPickup",
+      "editedRestore",
+      "editedStatus",
+      "closedUnsavedRestore",
+      "invalidPreview",
+      "unknownDevice",
+      "duplicateDevices"
+    ],
+    "restoreRace": "Disconnect during restoration stays recoverable without marking a user edit; later unique device index restored without automatic arming."
+  },
+  "persistedCalibration": {
+    "stickMode": 4,
+    "rollAxis": 5,
+    "throttleAxis": 6,
+    "academyLiftMetres": 1.2,
+    "worldLiftMillimetres": 1036,
+    "storedBytesUnchanged": true,
+    "browserErrors": []
+  },
+  "legacyPackage": {
+    "files": 53,
+    "bytes": 3136430,
+    "withinExistingLimits": true
+  },
+  "evidence": [
+    {
+      "file": "/tmp/fpv-radio-functional-20261001.json",
+      "sha256": "d9ab69a49530d2ded5e31286867e5875170e85a3f13bc62c955250b201adef3d"
+    },
+    {
+      "file": "/tmp/fpv-radio-audit-20261001/shared-runtime-browser-check.json",
+      "sha256": "fdf7a5d7a2128db6f11cbe1c21a3758c30795238feb7d82bcb134b16c0b76580"
+    },
+    {
+      "file": "/tmp/fpv-radio-audit-20261001/legacy-setup-browser-check.json",
+      "sha256": "80bc7f4545d2adcf2eb4b4804978de044ae15f37ca1feaa3c14ab8432a28ba75"
+    },
+    {
+      "file": "/tmp/fpv-radio-audit-20261001/persisted-calibration-two-sims.json",
+      "sha256": "e56a059868f4ff7ebd38705cac960073df8a56e844bbf83365b2f23cb417df14"
+    },
+    {
+      "file": "/tmp/fpv-radio-audit-20261001/restore-disconnect-browser.json",
+      "sha256": "a80e9a4765b8fe398e65efd9aafed1a4db908c095376ba81db0934ce9bbd6b5e"
+    },
+    {
+      "file": "/tmp/fpv-radio-final-20261001.json",
+      "sha256": "2be2e5fd082311dbfe5d22d6c7569eed8a0b23c79b97138ae339d7c23c5c9a62"
+    },
+    {
+      "file": "/tmp/fpv-stadium-radio-artifact-check-20261001.json",
+      "sha256": "684a86cad43108dd2fbc279cc11e1496914b3d9fa217d8c85ee7571266e3302e"
+    },
+    {
+      "file": "/tmp/fpv-radio-stadium-20261001.json",
+      "sha256": "b80cefe96649d806c948b0196b7d07273b2c03751fece9614c26a22a8e6b7cf8"
+    },
+    {
+      "file": "/tmp/fpv-radio-stadium-final-20261001.json",
+      "sha256": "7bcb02b49f45039dd6d441a9fb92c16607a735262a5baceb504a486ec4c206e0"
+    }
+  ],
+  "newUnitCoverage": "deferred-to-final-qualification",
+  "hardwarePerformance": "not qualified",
+  "releaseQualified": false,
+  "finalTargetedChecks": {
+    "status": "passed",
+    "checks": ["finalLift", "heldOn", "resumed", "mobile", "setupOnly"],
+    "browserErrors": [],
+    "build": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 75,
+      "bytes": 10184605,
+      "zipSha256": "f76926832b33036ab687a1214c83d8973c73ddec5cd071271499753baa0ff4e9",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    }
+  },
+  "stadiumBuild": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 76,
+    "bytes": 11694968,
+    "zipSha256": "358bf7dbc6ae247f6afac51d89d8b0758731f47e0bff170217a36da6af680b0a",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "stadiumTargetedChecks": {
+    "status": "passed",
+    "checks": ["radioFlights", "coverage", "replays", "demonstration", "flyAfterDemo"],
+    "browserErrors": []
+  },
+  "stadiumFinalChecks": {
+    "status": "passed",
+    "checks": ["finalLift", "heldOn", "resumed", "mobile", "setupOnly"],
+    "browserErrors": [],
+    "demonstrations": 88,
+    "allDemonstrationsReplayComplete": true
+  }
+}

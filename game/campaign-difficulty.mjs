@@ -23,6 +23,11 @@ export const CAMPAIGN_DIFFICULTY_LIMITS = Object.freeze({
   levels: 128,
 });
 
+// Exact keys belong only to campaigns this module validated, copied and froze.
+// Caller-frozen campaigns never enter this registry.
+const ownedCampaignKeys = new WeakMap();
+export const ownedDifficultyCampaignKey = (campaign) => ownedCampaignKeys.get(campaign);
+
 const freeze = (value) => {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freeze(child);
@@ -176,13 +181,15 @@ function contextFor(base, mode, baseCampaignKey) {
     campaign.revision = '1';
     campaign.levels = base.levels.map((level) => gentleLevel(level, token, classic));
   }
-  return freeze({
+  const context = freeze({
     mode,
     policyVersion: mode === 'gentle' ? policyVersion : null,
     baseCampaignKey,
     campaign,
     campaignKey: mode === 'standard' ? baseCampaignKey : keyFor(campaign),
   });
+  ownedCampaignKeys.set(context.campaign, context.campaignKey);
+  return context;
 }
 
 /** Pure setup projection; neither context nor a local identity grants an award. */

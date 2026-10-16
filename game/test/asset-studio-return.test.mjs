@@ -56,6 +56,28 @@ test('navigation hints cannot supply arbitrary destinations, launch commands or 
   assert.equal(isAssetStudioReturn('?journey=opening&workshop=asset-studio'), true);
 });
 
+test('Studio round trips keep a single supported language and reject ambiguous locale hints', () => {
+  for (const lang of ['en', 'uk']) {
+    const target = assetStudioHref(
+      `https://example.test/game/?journey=opening&lang=${lang}&mode=team`,
+    );
+    assert.equal(
+      target,
+      `https://example.test/authoring/asset-studio/?journey=opening&lang=${lang}`,
+    );
+    assert.equal(
+      studioReturnLinks(target).game,
+      `https://example.test/game/?journey=opening&lang=${lang}`,
+    );
+  }
+  for (const query of ['lang=en&lang=uk', 'lang=other', 'lang=../../admin']) {
+    assert.equal(
+      assetStudioHref(`https://example.test/game/?${query}`),
+      'https://example.test/authoring/asset-studio/',
+    );
+  }
+});
+
 test('consuming the UI hint preserves history state and the Journey route, without storage', () => {
   const state = { existing: 'state' };
   const calls = [];

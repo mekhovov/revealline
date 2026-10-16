@@ -1,0 +1,580 @@
+{
+  "format": "revealline-fpv-flight-hud-package-qualification.v1",
+  "date": "2026-10-05",
+  "sourceRevision": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+  "sourceTree": "9b2883396f8044a297f884be091d2fb364b89625",
+  "node": "v22.22.2",
+  "qualification": "Current frozen-source package admission and validation passed; current existing offline/package regression remains not run because of the disk floor.",
+  "frozenSourceAdmission": {
+    "status": "passed",
+    "exitCode": 0,
+    "command": "node scripts/bundle-optional-practice.mjs --out .cache/fpv-graphical-hud-qualification-614adef/optional-bundle --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds",
+    "reproducibleBuildsPerPackage": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "envelopeSha256": "75c12cadea1134c2f1bfd364dca37629229c876bd861b3aa8d0d2a2355bc6cdf",
+    "publicEligible": false,
+    "bundleDirectory": ".cache/fpv-graphical-hud-qualification-614adef/optional-bundle"
+  },
+  "validation": {
+    "status": "passed",
+    "exitCode": 0,
+    "command": "PATH=/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin:$PATH npm run validate",
+    "localization": {
+      "locales": [
+        "en",
+        "uk"
+      ],
+      "messages": 13011,
+      "references": 9017
+    },
+    "validatedFiles": 2876,
+    "generatedSourceIdentityChecks": "all passed",
+    "nonfatalNavigationWarnings": 7
+  },
+  "existingOfflineRegression": {
+    "status": "not-run",
+    "exitCode": null,
+    "command": "node --test game/test/optional-installation.test.mjs game/test/optional-offline-lifecycle.test.mjs game/test/fpv-offline-controls.test.mjs scripts/test-optional-practice.mjs scripts/test-optional-fpv-package.mjs",
+    "expectedExistingTests": 53,
+    "testsRun": 0,
+    "reason": "The unchanged 3 GiB disk preflight failed before Node started. Later safe recovery did not restore a stable floor because of concurrent allocation.",
+    "failedPreflightAvailableBytes": 2175356928,
+    "historicalPassedSourceRevision": "3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852",
+    "historicalReceipt": "docs/fpv-flight-hud-package-qualification.json",
+    "historicalResult": "53/53 passed on 3bbdc8; not transferred to current source identity."
+  },
+  "diskFloor": {
+    "requiredBytes": 3221225472,
+    "phases": [
+      {
+        "phase": "admission",
+        "availableBytes": 3376193536,
+        "minimumBytes": 3221225472,
+        "passed": true
+      },
+      {
+        "phase": "validate",
+        "availableBytes": 3328122880,
+        "minimumBytes": 3221225472,
+        "passed": true
+      },
+      {
+        "phase": "browser-stage",
+        "availableBytes": 3310133248,
+        "minimumBytes": 3221225472,
+        "passed": true
+      },
+      {
+        "phase": "offline-tests",
+        "availableBytes": 2175356928,
+        "minimumBytes": 3221225472,
+        "passed": false
+      }
+    ],
+    "recoverySummary": {
+      "format": "revealline-fpv-hud-space-recovery.v1",
+      "date": "2026-10-05",
+      "minimumFreeBytes": 3221225472,
+      "initialStableFloor": {
+        "purpose": "Recover safe package-build allowance without source/evidence/worktree deletion",
+        "removedAllocatedBytes": 480579584,
+        "removedFiles": 1810,
+        "minimumBytes": 3221225472,
+        "stabilitySamples": [
+          {
+            "time": 1791201254.2651148,
+            "availableBytes": 3378397184,
+            "minimumBytes": 3221225472,
+            "head": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+            "status": ""
+          },
+          {
+            "time": 1791201292.2552378,
+            "availableBytes": 3368701952,
+            "minimumBytes": 3221225472,
+            "head": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+            "status": ""
+          }
+        ],
+        "stableSeconds": 37.99012303352356,
+        "allSamplesAboveFloor": true,
+        "sourceAtLastSample": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+        "trackedStatusAtLastSample": "",
+        "auditPaths": [
+          "audit-first.json",
+          "audit-second.json",
+          "deletions.jsonl",
+          "cleanup-receipt.json",
+          "cache-leaves-first.json",
+          "cache-leaves-second.json",
+          "cache-leaf-deletions.jsonl",
+          "cache-leaves-cleanup.json"
+        ],
+        "preserved": "All source, tracked/uncommitted work, Git objects, registered worktrees, installed extensions/components, profiles/offline browser data, and unique evidence."
+      },
+      "disposableAllocatedBytesRemoved": 1424130048,
+      "losslesslyCompressedReceiptCount": 1062,
+      "losslessAllocatedBytesSaved": 300011520,
+      "restorationManifests": [
+        {
+          "path": "/private/tmp/fpv-hud-preserved-raw-receipts-20261005/restoration-manifest.json",
+          "bytes": 110638,
+          "sha256": "999daefc64fab822a3a5c19d35aa15365ee18c8d41a192bba7952f6aac2cdcef",
+          "files": 86
+        },
+        {
+          "path": "/private/tmp/fpv-hud-preserved-inactive-logs-20261005/restoration-manifest.json",
+          "bytes": 271121,
+          "sha256": "2752117bc3323215e88aa754706fe9bd726d30826873728c47403337d4de92e0",
+          "files": 406
+        },
+        {
+          "path": "/private/tmp/fpv-hud-preserved-older-test-logs-20261005/restoration-manifest.json",
+          "bytes": 374459,
+          "sha256": "74e3f6e67d4c9899195e06fa0bb92d127e09a58290cc3085aea369c1674ea2b0",
+          "files": 570
+        }
+      ],
+      "latestAvailableBytes": 2909036544,
+      "laterFloorRecovered": false,
+      "furtherCleanupStopped": true,
+      "observations": "Initial stable floor permitted admission, validation and exact-byte browser staging. Later concurrent allocations repeatedly reduced free space; offline regression never started. Active Codex databases/session logs and development-service files were observed open and were preserved. Recent snapshots do not conclusively attribute the earlier approximately 1 GiB drop.",
+      "protected": "No source, uncommitted work, unpushed commits, registered worktrees, valid Git packs, active build files, or unique evidence bytes removed. Temporary raw receipt bytes remain restorable from hash-verified gzip.",
+      "allocationAccounting": "Allocated-byte totals describe audited files, not a claim of equal net free-space gain; APFS sharing and concurrent writes affect actual availability."
+    }
+  },
+  "stagingHttpVerification": {
+    "sourceRevision": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+    "sourceTree": "9b2883396f8044a297f884be091d2fb364b89625",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "verified": 48,
+        "bytes": 692145,
+        "launcherAliases": 8,
+        "proofManifestVerified": true
+      },
+      {
+        "id": "civilian-fpv",
+        "verified": 75,
+        "bytes": 4541690,
+        "launcherAliases": 8,
+        "proofManifestVerified": true
+      },
+      {
+        "id": "fpv-worlds",
+        "verified": 111,
+        "bytes": 15875056,
+        "launcherAliases": 8,
+        "proofManifestVerified": true
+      }
+    ],
+    "allPinnedHttpBytesMatch": true,
+    "nativeBrowserAcceptance": false
+  },
+  "boundedBrowserOutage": {
+    "status": "passed",
+    "receipt": "docs/fpv-flight-hud-overlay-admitted-review.json",
+    "sourceRevision": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+    "scope": "Exact admitted Academy and World Studio at 1280x720; both prepared, then reloaded with dedicated origin stopped and connection refusal confirmed before and after. Academy Explain remained paused; full World Studio Acro recording reached clean terminal results.",
+    "warnings": 0,
+    "errors": 0,
+    "freshMobileAcceptance": false,
+    "browserWideOffline": false
+  },
+  "packages": [
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 708152,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "8876c58ee98277600bdbdf8d5c10f95230a851d6c0774cccf839499288744edf"
+      },
+      "entry": "optional-practice/civilian-flight/index.html",
+      "id": "civilian-flight",
+      "manifest": {
+        "bytes": 9007,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "f2371ce9aca711d859e10b210944b0490c0dd5215a6af29d1969e2190d2d2de5"
+      },
+      "revision": "4623190e8e38c87d9b371ec58f146dea71661010bd9ef00218da6ce0a34f7529",
+      "sourceArchive": {
+        "bytes": 734262,
+        "path": "source-optional-civilian-flight.zip",
+        "sha256": "a106e42881b52ebfa8739ab7bfc86a031e1c677eb09c8a74af525198cdc9ce26"
+      },
+      "sourceInventory": {
+        "bytes": 14304,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "fc8187eb66f31b9f77bbe9337736b718fe1300cfea3ff96994e9799c1763ded7"
+      },
+      "admission": {
+        "bytes": 701152,
+        "files": 49,
+        "id": "civilian-flight",
+        "revision": "4623190e8e38c87d9b371ec58f146dea71661010bd9ef00218da6ce0a34f7529"
+      },
+      "sourceFiles": 50,
+      "originalInputs": 42,
+      "originalInputBytes": 1921782,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 4566848,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "8d265d40f9b0657678334527c9c8bbd7f0a7cb20a6ab3f3385de6caf25b83a5f"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 13816,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "712da40bebc1e02a4086a6095c8cfcc0fdc54cbbdb80c2d514b7586c7b84d2c7"
+      },
+      "revision": "ef5fa1201f4de994638b7ff86a437561c798934806800b54944643bc5faab193",
+      "sourceArchive": {
+        "bytes": 4596792,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "60ecdb855c3b582e736f2da1685cd5585caade648833ad7dbaf33af921e9c1fe"
+      },
+      "sourceInventory": {
+        "bytes": 23050,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "588213cfcfa346bc510edf942b3b5581f079297202c5e65be26eecf12ef6ae44"
+      },
+      "admission": {
+        "bytes": 4555506,
+        "files": 76,
+        "id": "civilian-fpv",
+        "revision": "ef5fa1201f4de994638b7ff86a437561c798934806800b54944643bc5faab193"
+      },
+      "sourceFiles": 77,
+      "originalInputs": 69,
+      "originalInputBytes": 5769003,
+      "limits": {
+        "files": 96,
+        "bytes": 8388608
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 15913343,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "286e891978b48c8b8a007803cf3f00c491520b10c53da57a9a9060e1950e9e41"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 20541,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "9cea7dc1fa5b8ef9cc275e24b272ab8ad5f3734b1e46bfb3d8ebe5bbb5e5b4f7"
+      },
+      "revision": "780ec41510a051a9d4a4d896910fff4e017c22116a8f00fc0e28462bc1f2cf76",
+      "sourceArchive": {
+        "bytes": 15948596,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "322e129226c33fdf62a0abc36caacfbfeec28d65ac48e27a550ab2e4faa235cd"
+      },
+      "sourceInventory": {
+        "bytes": 35076,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "1f83ea8410db7757bb027d0194234298f73b3c6c118e04099dd85ce206d224c6"
+      },
+      "admission": {
+        "bytes": 15895597,
+        "files": 112,
+        "id": "fpv-worlds",
+        "revision": "780ec41510a051a9d4a4d896910fff4e017c22116a8f00fc0e28462bc1f2cf76"
+      },
+      "sourceFiles": 113,
+      "originalInputs": 105,
+      "originalInputBytes": 17096602,
+      "limits": {
+        "files": 128,
+        "bytes": 20971520
+      }
+    }
+  ],
+  "parentExactHeadCI": [
+    {
+      "pr": 1104,
+      "sourceRevision": "55493cb94783d279142823cff94843d682cabc54",
+      "sourceTree": "2943b53f805a38255fe10589c279b9b201fb65e6",
+      "runId": 37305915135,
+      "artifactId": "11343159451",
+      "archiveSha256": "b4693f5b95bfae10c240a91f46e911770800849b881100f994a916cc9fac8fbd",
+      "artifactDigestVerifiedInMemory": true,
+      "allThreePackagesAdmitted": true,
+      "reproducibleBuilds": 2,
+      "committedInputsVerified": true,
+      "zipMembersVerified": true,
+      "limit": "Receipt metadata inspected; full nested artifact admission was performed by successful exact-head CI job, not rerun locally.",
+      "publicationQualified": false
+    },
+    {
+      "pr": 1105,
+      "sourceRevision": "0e3cc79c89f604068542539391b0ab38dc6735c9",
+      "sourceTree": "cb80026f512414c8b36a7069bb599db0c3e18074",
+      "runId": 37305916671,
+      "artifactId": "11344200720",
+      "archiveSha256": "6c845577b505de7e0d148320e87aba0ac97bf38b6963ebba939ef9188f3deade",
+      "artifactDigestVerifiedInMemory": true,
+      "allThreePackagesAdmitted": true,
+      "reproducibleBuilds": 2,
+      "committedInputsVerified": true,
+      "zipMembersVerified": true,
+      "limit": "Receipt metadata inspected; full nested artifact admission was performed by successful exact-head CI job, not rerun locally.",
+      "publicationQualified": false
+    }
+  ],
+  "limitations": [
+    "The 53 existing package/offline cases were not run on source 614adef because the disk floor blocked startup; the historical 3bbdc8 pass is retained separately.",
+    "The exact-byte local origin outage is bounded; it does not establish browser-wide offline, eviction, arbitrary old-cache updates, installed-app/device behavior, physical-radio acceptance, sustained performance or human learning.",
+    "Requested phone viewport override was ineffective; no fresh mobile acceptance is claimed.",
+    "Parent CI receipts bind their own frozen source heads and cannot be replaced by the combined top artifact. Artifact admission leaves native review and public release gates pending.",
+    "Additional unit coverage remains deferred."
+  ],
+  "evidence": {
+    "admission.stdout.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/admission.stdout.json.gz",
+      "bytes": 506,
+      "sha256": "fcffed3ef9f314088fb3a04af4f44282c06072d18be92a798775a70f55190286",
+      "gzipBytes": 345,
+      "gzipSha256": "1f15ce95289e77484c7cfa3b59b092854fa9733bba3c6e33a3c976ebd1f48c81"
+    },
+    "admission.stderr.log": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/admission.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzipBytes": 20,
+      "gzipSha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    "validate.log": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/validate.log.gz",
+      "bytes": 3676,
+      "sha256": "be1ccb141c0b94da6d50afd1eee1af2c73c7163f4a4e3eff982bc4d5a084f8aa",
+      "gzipBytes": 1534,
+      "gzipSha256": "da26c0e62def8efb256c01f869294282014b5f4c15e723cdf84aa95eab7987d4"
+    },
+    "disk-before-admission.txt": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-before-admission.txt.gz",
+      "bytes": 186,
+      "sha256": "464135e46b4ddcd62ffef36884bf24314e9db541a8267ad2210026ce879d6a82",
+      "gzipBytes": 164,
+      "gzipSha256": "728fba19a53322a4bf811c5dba8ace745f5482ffcf93f4e6f2e4e93629c328c8"
+    },
+    "disk-before-validate.txt": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-before-validate.txt.gz",
+      "bytes": 186,
+      "sha256": "9d61adae891597d38eda919c892968003df986c8ca6f8f7424761a3dd8ad6b96",
+      "gzipBytes": 163,
+      "gzipSha256": "a612c7a4947341b3a2dcb4777446cf93a8ea7765f76ce77d54c36af47236af08"
+    },
+    "disk-before-offline-tests.txt": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-before-offline-tests.txt.gz",
+      "bytes": 186,
+      "sha256": "0182f0c4d014da0e858e36df9a58becc40d3395c8f04c7c3d54fdef0557f1e33",
+      "gzipBytes": 165,
+      "gzipSha256": "36796e68b2510ec1835ff3b0497561a3455aa31712e610e4d05952bd7c35f87c"
+    },
+    "disk-before-browser-stage.txt": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-before-browser-stage.txt.gz",
+      "bytes": 186,
+      "sha256": "df4907b6d90a6737946aa44f447caaf0834bfbab349f5a9a028f9ae525e1102d",
+      "gzipBytes": 165,
+      "gzipSha256": "fcda98f8eef710c980ed46be8e6c4d366504e12229fc013961dae0f822aead59"
+    },
+    "browser-staging.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/browser-staging.json.gz",
+      "bytes": 2390,
+      "sha256": "618ae0dbe896672ec0e2a3f1b72cbf8a4ec602aa6a7e61e877b8c6df10bc50da",
+      "gzipBytes": 941,
+      "gzipSha256": "a7e11126702dcf135abad2981502d80f491c53b5dd1a4bbada114b0f9d809865"
+    },
+    "staging-http-verification.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/staging-http-verification.json.gz",
+      "bytes": 673,
+      "sha256": "57c7bcb8e01c1e908569bc5dc5f9c4518bbc1022a94e2a544090c529382bb5a9",
+      "gzipBytes": 310,
+      "gzipSha256": "e226f891a9688f8213bf1a2e19a5680525c45a5928408c206c81ba8c5463f5fa"
+    },
+    "serve-admitted.mjs": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/serve-admitted.mjs.gz",
+      "bytes": 4196,
+      "sha256": "06372de777f12c625f502a3f381e42428328897496e1609ba9bfea2fe5d96cf4",
+      "gzipBytes": 1749,
+      "gzipSha256": "559d3ccc7aaeff529aafd15a706f364421887add5ac8b8712dfac48fd601081c"
+    },
+    "optional-packages.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/optional-packages.json.gz",
+      "bytes": 2633,
+      "sha256": "75c12cadea1134c2f1bfd364dca37629229c876bd861b3aa8d0d2a2355bc6cdf",
+      "gzipBytes": 1073,
+      "gzipSha256": "c2230cf04e2152a6b7f78547528d17b22041b96e863b6e06cba31cd3b895b89f"
+    },
+    "optional-package-review.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/optional-package-review.json.gz",
+      "bytes": 2838,
+      "sha256": "1f226833fabddc6d8ded7c4e05781f8d5d07a3db158948d0fe6b6da7e56ba806",
+      "gzipBytes": 462,
+      "gzipSha256": "7aba3b3a138c3c803c688a1492a8466955851a31f243c944e2b4d10312358826"
+    },
+    "optional-checksums.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "2d1a60284a2d19cd3d4c29125fa10e3459d925d3f5f215a92d32ae16431b5810",
+      "gzipBytes": 919,
+      "gzipSha256": "76a515ae18ed9773d04c8032c894f5316fc53d03e22352eb2d2be932b8979d13"
+    },
+    "parent-1104-ci/inspection.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1104-ci/inspection.json.gz",
+      "bytes": 2558,
+      "sha256": "125ed2e95e34df107f888ff197ef6bc2ca96056592ee4c22967792d31e45a12e",
+      "gzipBytes": 1080,
+      "gzipSha256": "36006c0955970d4de63d6f59ece4fc34dd6802b2ebe11ce0553c84f6786bb9e7"
+    },
+    "parent-1104-ci/optional-candidate-verification.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1104-ci/optional-candidate-verification.json.gz",
+      "bytes": 1142,
+      "sha256": "2621d1e34bdc20567e314f6a51903f3e7e8c2a1da05079b6f207353ffbec3133",
+      "gzipBytes": 611,
+      "gzipSha256": "9c8e491418775e6f7ae41b6b112c4d49bccf623bd11d6612073db081a2ad3d10"
+    },
+    "parent-1104-ci/optional-checksums.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1104-ci/optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "662f649b076f3ecbbf853506e97cb2b87597bd880e2b42872030b59b0619058e",
+      "gzipBytes": 923,
+      "gzipSha256": "a0f964c91ed95c020ee53a9a6b3b5778e9fcca9ee402a70169403fdd103cff8b"
+    },
+    "parent-1104-ci/optional-package-review.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1104-ci/optional-package-review.json.gz",
+      "bytes": 2838,
+      "sha256": "42030bb3b959d26cdd23d951a0263e54c030ab634965845285b5e3b301f65bac",
+      "gzipBytes": 458,
+      "gzipSha256": "29053b6da1fc50bf3aded24695abfa7e07174f978d4ad370438f4126f4237d6e"
+    },
+    "parent-1104-ci/optional-packages.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1104-ci/optional-packages.json.gz",
+      "bytes": 2633,
+      "sha256": "e5ca0f5d74f1bfe92ae9e4a25d1245a8e78bc8b2ff37c016a5f9260a178c1722",
+      "gzipBytes": 1075,
+      "gzipSha256": "ff5ce01dad3b8e98a48e02e51e81c0068a04557832e5dd07b464f0a619291b1b"
+    },
+    "parent-1105-ci/inspection.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1105-ci/inspection.json.gz",
+      "bytes": 2558,
+      "sha256": "e599662ae3827b31e82568b7f087f8cd47887c75898b722b7a716f3ab3cec01e",
+      "gzipBytes": 1085,
+      "gzipSha256": "ea3c2330b1288819be9b877b8efac42262659e48b4956dba97e46689ed5bbd31"
+    },
+    "parent-1105-ci/optional-candidate-verification.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1105-ci/optional-candidate-verification.json.gz",
+      "bytes": 1142,
+      "sha256": "7bf3dbed6c56563d41be87b6c4353a74c1aff0860b546cb85dbf6fd55d30afea",
+      "gzipBytes": 610,
+      "gzipSha256": "4a7934c07abd07499f95c0dea97b8ec70ec179b9b1f4a9259d9f977bc0ef9614"
+    },
+    "parent-1105-ci/optional-checksums.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1105-ci/optional-checksums.json.gz",
+      "bytes": 2136,
+      "sha256": "d88c9d68e20f9f8c531bb3086f08917555594f52ca18d42d5a4a99835b92b95c",
+      "gzipBytes": 925,
+      "gzipSha256": "d0b5ab0845f4c95566757ad6bf2d6f98ca913ee0831949547ba7126ac06c62bb"
+    },
+    "parent-1105-ci/optional-package-review.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1105-ci/optional-package-review.json.gz",
+      "bytes": 2838,
+      "sha256": "cfb0e56606c2140b561129492c5a6a3514ab3b69103bb15227f1d8a87a1ab3e2",
+      "gzipBytes": 462,
+      "gzipSha256": "7ab2bda43df11c34bf3f2a5275c56d51733ac295656dd91fcf53dfb950effc93"
+    },
+    "parent-1105-ci/optional-packages.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/parent-1105-ci/optional-packages.json.gz",
+      "bytes": 2633,
+      "sha256": "f3006bd5e2768c76aa0728a4a2f35c451e588286a7097e904ff2e8d557fb5cae",
+      "gzipBytes": 1078,
+      "gzipSha256": "c544d82870a17ae37b33c42aa520783b5b6bbdff05304cf2c1e91c556f590350"
+    },
+    "disk-recovery/final-summary.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/final-summary.json.gz",
+      "bytes": 3196,
+      "sha256": "af6bcd734cc1a1f7793180e92086093f032a952335d412205332f35edf4994d1",
+      "gzipBytes": 1384,
+      "gzipSha256": "e64093c7705311621ea0abd9e7bb5eaecee06239edb1fcf16da7b54a74febeff"
+    },
+    "disk-recovery/cleanup-receipt.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/cleanup-receipt.json.gz",
+      "bytes": 37230,
+      "sha256": "ae01e0c788738ac01108ae32d75f9fd6127e12fd3700583940f3ac6812fa46a9",
+      "gzipBytes": 5734,
+      "gzipSha256": "fabde0095b6ab71693fed45364fb79885b9d8a4cac3eb7299f32d3177cc3cf49"
+    },
+    "disk-recovery/cache-leaves-cleanup.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/cache-leaves-cleanup.json.gz",
+      "bytes": 852553,
+      "sha256": "e034848a8680c110ed07cf5f3892ba3fef1d28a3c6e30d56be494624ae9d7b78",
+      "gzipBytes": 132149,
+      "gzipSha256": "801702404e1198902b6e4b0fea38e80a92c3af630ac18ec6032bc92ed022d5c4"
+    },
+    "disk-recovery/other-temp-pack-cleanup.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/other-temp-pack-cleanup.json.gz",
+      "bytes": 6738,
+      "sha256": "7964beced4448d50ddac93c9f07666c9a4a91eb9c558d6f8ffbb6490c8d1a892",
+      "gzipBytes": 1488,
+      "gzipSha256": "123da85ee322bea7f89701ebbba8bdc64cbe1c384380e709a65fe44c669b298d"
+    },
+    "disk-recovery/preservation-result.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/preservation-result.json.gz",
+      "bytes": 1621,
+      "sha256": "acce7b07725aec24f83f0bc434ef202cd1dd5f9d42701d322b7b2bb4cfc53d5d",
+      "gzipBytes": 725,
+      "gzipSha256": "d1a92c80d4207b545fc74a1be38d7c12510e707f8188b1f5c6abb8658fbf5e8c"
+    },
+    "disk-recovery/inactive-receipt-preservation-result.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/inactive-receipt-preservation-result.json.gz",
+      "bytes": 523,
+      "sha256": "537dd22dddc921178f8d7aa4cd33eeade8181bc53a7d586ae577d6524651b9e6",
+      "gzipBytes": 321,
+      "gzipSha256": "25863c49eb633d9e08ae1f9966d33d092b10e634ef248ee68a2d213d64491cd1"
+    },
+    "disk-recovery/remaining-receipt-preservation-result.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/remaining-receipt-preservation-result.json.gz",
+      "bytes": 523,
+      "sha256": "a7ea5decdff5e8d891000e8af8388b10f27842154d31384cebbf9ba47544d2d6",
+      "gzipBytes": 323,
+      "gzipSha256": "4f9fa5c40e9a085ba311a3be25e060680312fff7da237957913e375a42962b52"
+    },
+    "disk-recovery/restoration-1/restoration-manifest.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/restoration-1/restoration-manifest.json.gz",
+      "bytes": 110638,
+      "sha256": "999daefc64fab822a3a5c19d35aa15365ee18c8d41a192bba7952f6aac2cdcef",
+      "gzipBytes": 16216,
+      "gzipSha256": "d9d3ce62c6a696fa70bc84689f316c5d86a0b4a4be576747ced20dedf04c8e53"
+    },
+    "disk-recovery/restoration-2/restoration-manifest.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/restoration-2/restoration-manifest.json.gz",
+      "bytes": 271121,
+      "sha256": "2752117bc3323215e88aa754706fe9bd726d30826873728c47403337d4de92e0",
+      "gzipBytes": 51632,
+      "gzipSha256": "bef70aabb683a5b24ff6dc775d8e55eae87b5d01ea91461b55497bc06c1803de"
+    },
+    "disk-recovery/restoration-3/restoration-manifest.json": {
+      "path": "docs/evidence/fpv-flight-hud-package-qualification-614adef/disk-recovery/restoration-3/restoration-manifest.json.gz",
+      "bytes": 374459,
+      "sha256": "74e3f6e67d4c9899195e06fa0bb92d127e09a58290cc3085aea369c1674ea2b0",
+      "gzipBytes": 71474,
+      "gzipSha256": "1a8cc189714cadea7dba6f377328d8a9a317c976076bea6d6d0aa1a83406a0be"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { localizedText, t, localizedAttribute, render as renderMessage } from '../i18n/index.mjs';
 import {
   KEY_BINDING_ACTIONS,
   KEY_ACTION_LABELS,
@@ -21,7 +22,7 @@ export function attachKeySettings({
 }) {
   const required = (id) => {
     const element = document.getElementById(id);
-    if (!element) throw new Error(`Keyboard settings need #${id}.`);
+    if (!element) throw new Error(t('gameplay:keyboardSettingsNeed', { value1: id }));
     return element;
   };
   const list = required('key-binding-list'),
@@ -39,7 +40,7 @@ export function attachKeySettings({
     listeners.push(() => target.removeEventListener(type, fn, options));
   };
   const announce = (message) => {
-    status.textContent = message;
+    localizedText(status, () => message);
   };
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
@@ -52,18 +53,23 @@ export function attachKeySettings({
     );
   function render() {
     if (destroyed) return;
-    const config = resolveKeyBindings(getBindings()),
-      labels = bindingLabels(config);
+    const config = resolveKeyBindings(getBindings());
     for (const action of KEY_BINDING_ACTIONS) {
       const button = buttons.get(action),
         active = capturing === action;
-      button.textContent = active ? 'Press a key…' : `${labels[action]} · Change`;
-      button.setAttribute('aria-pressed', String(active));
-      button.setAttribute(
-        'aria-label',
+      localizedText(button, () =>
         active
-          ? `Listening for ${KEY_ACTION_LABELS[action]}. Escape or Tab cancels.`
-          : `Change ${KEY_ACTION_LABELS[action]} key binding. Current keys: ${labels[action]}.`,
+          ? t('interface:pressAKey')
+          : t('gameplay:change', { value1: bindingLabels(config)[action] }),
+      );
+      button.setAttribute('aria-pressed', String(active));
+      localizedAttribute(button, 'aria-label', () =>
+        active
+          ? t('gameplay:listeningForEscapeOrTabCancels', { value1: KEY_ACTION_LABELS[action] })
+          : t('gameplay:changeKeyBindingCurrentKeys', {
+              value1: KEY_ACTION_LABELS[action],
+              value2: bindingLabels(config)[action],
+            }),
       );
     }
     preset.value =
@@ -79,7 +85,10 @@ export function attachKeySettings({
     const action = capturing;
     capturing = null;
     render();
-    if (message) announce(`${KEY_ACTION_LABELS[action]} unchanged. Key capture cancelled.`);
+    if (message)
+      announce(() =>
+        t('gameplay:unchangedKeyCaptureCancelled', { value1: KEY_ACTION_LABELS[action] }),
+      );
     if (focus && dialog.open) buttons.get(action).focus({ preventScroll: true });
   }
   function apply(config, message) {
@@ -89,8 +98,11 @@ export function attachKeySettings({
     capturing = null;
     render();
     onChanged();
+    const sessionOnly = result?.ok === false,
+      warning = result?.warning;
     announce(
-      `${message}${result?.ok === false ? ` ${result.warning || 'This keyboard map applies to this session only.'}` : ''}`,
+      () =>
+        `${renderMessage(message)}${sessionOnly ? ` ${warning || t('interface:thisKeyboardMapAppliesToThisSessionOnly')}` : ''}`,
     );
   }
   list.replaceChildren();
@@ -101,7 +113,7 @@ export function attachKeySettings({
     row.className = 'key-binding-row';
     row.hidden = continuousSteering && action === 'stop';
     label.className = 'key-binding-label';
-    label.textContent = KEY_ACTION_LABELS[action];
+    localizedText(label, () => KEY_ACTION_LABELS[action]);
     button.type = 'button';
     button.className = 'button secondary';
     button.dataset.keyAction = action;
@@ -111,8 +123,10 @@ export function attachKeySettings({
       if (destroyed || !dialog.open) return;
       capturing = action;
       render();
-      announce(
-        `Choose one physical key for ${KEY_ACTION_LABELS[action]}. Escape or Tab cancels. Existing bindings remain unchanged until a valid key is chosen.`,
+      announce(() =>
+        t('gameplay:chooseOnePhysicalKeyForEscapeOrTabCancelsExisting', {
+          value1: KEY_ACTION_LABELS[action],
+        }),
       );
     });
     row.append(label, button);
@@ -123,10 +137,13 @@ export function attachKeySettings({
     'keydown',
     (event) => {
       if (capturing === null || destroyed || !dialog.open) return;
-      const code = keyCodeForEvent(event);
+      const action = capturing,
+        code = keyCodeForEvent(event);
       if (event.isComposing || event.keyCode === 229 || ['Dead', 'Process'].includes(event.key)) {
-        announce(
-          `Text composition cannot be a game key. ${KEY_ACTION_LABELS[capturing]} is unchanged. Finish composition, then press one physical key, or cancel.`,
+        announce(() =>
+          t('gameplay:textCompositionCannotBeAGameKeyIsUnchangedFinish', {
+            value1: KEY_ACTION_LABELS[action],
+          }),
         );
         return; // Composition owns its own Escape/candidate keys.
       }
@@ -140,8 +157,10 @@ export function attachKeySettings({
         event.altKey ||
         (event.shiftKey && !['ShiftLeft', 'ShiftRight'].includes(code))
       ) {
-        announce(
-          `Cannot bind a modifier combination. ${KEY_ACTION_LABELS[capturing]} is unchanged. Press one key; Shift alone is allowed. Escape or Tab cancels.`,
+        announce(() =>
+          t('gameplay:cannotBindAModifierCombinationIsUnchangedPressOneKey', {
+            value1: KEY_ACTION_LABELS[action],
+          }),
         );
         return; // Preserve browser and operating-system shortcuts.
       }
@@ -154,17 +173,23 @@ export function attachKeySettings({
       event.preventDefault();
       event.stopPropagation();
       if (event.repeat) return;
-      const action = capturing;
       try {
         const candidate = replaceKeyBinding(getBindings(), action, code);
-        apply(
-          candidate,
-          `${KEY_ACTION_LABELS[action]} changed to ${bindingLabels(candidate)[action]}. Escape always pauses the game.`,
+        apply(candidate, () =>
+          t('gameplay:changedToEscapeAlwaysPausesTheGame', {
+            value1: KEY_ACTION_LABELS[action],
+            value2: bindingLabels(candidate)[action],
+          }),
         );
         buttons.get(action).focus({ preventScroll: true });
       } catch (error) {
-        announce(
-          `${keyLabel(code) || 'This key'} was not assigned. ${error.message} ${KEY_ACTION_LABELS[action]} is unchanged. Choose another key, or press Escape or Tab to cancel.`,
+        const detail = error.message;
+        announce(() =>
+          t('gameplay:wasNotAssignedIsUnchangedChooseAnotherKeyOrPress', {
+            value1: keyLabel(code) || t('interface:thisKey'),
+            value2: detail,
+            value3: KEY_ACTION_LABELS[action],
+          }),
         );
       }
     },
@@ -195,22 +220,25 @@ export function attachKeySettings({
       return;
     }
     try {
-      apply(
-        id === 'default' ? null : KEY_BINDING_PRESETS[id],
-        `${KEY_BINDING_PRESET_LABELS[id]} keyboard preset applied. Escape always pauses the game.`,
+      apply(id === 'default' ? null : KEY_BINDING_PRESETS[id], () =>
+        t('gameplay:keyboardPresetAppliedEscapeAlwaysPausesTheGame', {
+          value1: KEY_BINDING_PRESET_LABELS[id],
+        }),
       );
     } catch (error) {
       render();
-      announce(`Keyboard preset was not applied. ${error.message}`);
+      const detail = error.message;
+      announce(() => t('gameplay:keyboardPresetWasNotApplied', { value1: detail }));
     }
   });
   listen(reset, 'click', () => {
     cancel({ message: false });
     try {
-      apply(null, 'Default keyboard bindings restored. Escape always pauses the game.');
+      apply(null, () => t('interface:defaultKeyboardBindingsRestoredEscapeAlwaysPausesTheGame'));
     } catch (error) {
       render();
-      announce(`Keyboard bindings were not reset. ${error.message}`);
+      const detail = error.message;
+      announce(() => t('gameplay:keyboardBindingsWereNotReset', { value1: detail }));
     }
   });
   function refresh() {
@@ -219,7 +247,7 @@ export function attachKeySettings({
     render();
   }
   render();
-  announce('Choose Change to assign one physical key. Escape always pauses the game.');
+  announce(() => t('interface:chooseChangeToAssignOnePhysicalKeyEscapeAlwaysPauses'));
   return {
     refresh,
     destroy() {

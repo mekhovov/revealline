@@ -1,0 +1,206 @@
+{
+  "campaignId": "fpv-drones-ukraine",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Drones in Ukraine", "uk": "Дрони в Україні" } },
+      "id": "fpv-drones-ukraine",
+      "identity": "6d1af638e19a0453",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.lesson": {
+          "en": "Connect the fictional archive rooms and distinguish a source image from a recovery decision. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте зали вигаданого архіву й відрізніть знімок від рішення про відбудову. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original blue-and-gold civilian recovery archive with fictional community-hall before-and-after drawings, source/date cards, no real damaged site imagery.",
+          "uk": "Оригінальний синьо-золотий цивільний архів відновлення з вигаданими малюнками громадської зали до й після та картками джерела й дати; без зображень реального пошкодженого місця."
+        },
+        "design.routeDecision": {
+          "en": "Capture the two archive wings separately or join the shared source desk first. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Захопіть два крила архіву окремо або спершу приєднайте спільний стіл джерел. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Map for Recovery", "uk": "Карта для відбудови" }
+      },
+      "id": "fpv-drones-ukraine-01",
+      "identity": "8b92e8401f884ef7",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.lesson": {
+          "en": "Connect the humanitarian exhibit; never approach suspicious debris or attempt a real survey. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте гуманітарну експозицію; не наближайтеся до підозрілих уламків і не проводьте реальне обстеження. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original humanitarian museum document exhibit with trained-specialist symbol and separate observation/review/decision cards, no minefield or detection equipment diagram.",
+          "uk": "Оригінальна гуманітарна музейна експозиція документів із символом навченого фахівця та окремими картками спостереження, перевірки й рішення; без мінного поля чи схеми обладнання виявлення."
+        },
+        "design.routeDecision": {
+          "en": "Use the expert-review island or the longer document-gallery return. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Скористайтеся островом експертного розгляду або довшим поверненням галереї документів. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Survey Is Not Clearance", "uk": "Обстеження — не очищення" }
+      },
+      "id": "fpv-drones-ukraine-02",
+      "identity": "9c2b48c05204a196",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.lesson": {
+          "en": "Connect the research panels and keep a reported experiment separate from a guaranteed result. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте дослідницькі панелі й відділіть повідомлений експеримент від гарантованого результату. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original research-gallery panels with abstract dataset tiles, bounded claim cards and clear question marks, no operational aerial imagery.",
+          "uk": "Оригінальні панелі дослідницької галереї з абстрактними плитками даних, картками обмежених тверджень і чіткими знаками запитання; без оперативних аерознімків."
+        },
+        "design.routeDecision": {
+          "en": "Compare the two evidence shelves through the centre or clear the separate question alcove. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Порівняйте дві полиці доказів через центр або відкрийте окрему нішу запитань. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Pilot Study Has Limits", "uk": "Пілотне дослідження має межі" }
+      },
+      "id": "fpv-drones-ukraine-03",
+      "identity": "ddf25c95bfa2ce13",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа."
+        },
+        "design.lesson": {
+          "en": "Open the quiet community-library exhibit and connect complementary learning roles. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте спокійну бібліотечну експозицію й з’єднайте взаємодоповнювальні навчальні ролі. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original warm Ukrainian community library with fictional empty learning stations, diagram boards and open books; no employee or volunteer likenesses.",
+          "uk": "Оригінальна тепла українська громадська бібліотека з вигаданими порожніми навчальними станціями, дошками схем і відкритими книжками; без зображень реальних працівників чи волонтерів."
+        },
+        "design.routeDecision": {
+          "en": "Explore the broad reading terrace or link the two smaller contribution desks. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Дослідіть широку терасу читання або з’єднайте два менші столи внесків. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Learning Has Many Roles", "uk": "Навчання має багато ролей" }
+      },
+      "id": "fpv-drones-ukraine-04",
+      "identity": "9109395ec8a3a8d2",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа."
+        },
+        "design.lesson": {
+          "en": "Connect dated public records without adding tactical details or turning them into instructions. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте датовані публічні записи без тактичних подробиць чи перетворення їх на інструкції. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original sober historical reading room with dated document facsimile-style cards created from scratch, no weapons, unit locations or battlefield imagery.",
+          "uk": "Оригінальна стримана історична читальня з датованими картками у стилі документів, створеними з нуля; без зброї, розташування підрозділів чи бойових зображень."
+        },
+        "design.routeDecision": {
+          "en": "Join the date and issuer islands before the wide context capture. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Поєднайте острови дати й автора перед широким захопленням контексту. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Read the Historical Caption", "uk": "Прочитайте історичний підпис" }
+      },
+      "id": "fpv-drones-ukraine-05",
+      "identity": "0eb7de8fe0184c1f",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Complete the exhibit. Do not approach or touch suspicious debris; in Ukraine contact SESU on 101 from safety. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Завершіть виставку. Не наближайтеся й не торкайтеся підозрілих уламків; в Україні повідомляйте ДСНС за 101 із безпечного місця. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original completed blue-and-gold civilian evidence museum with dated cards, source bookshelf and visible safety information, no dangerous objects depicted.",
+          "uk": "Оригінальний завершений синьо-золотий цивільний музей доказів із датованими картками, полицею джерел і видимою інформацією про безпеку; небезпечні предмети не зображені."
+        },
+        "design.routeDecision": {
+          "en": "Connect the six exhibit plinths by safe interior returns or close the archive’s outer court. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "З’єднайте шість стендів через внутрішні повернення або замкніть зовнішній двір архіву. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "An Exhibit with Boundaries", "uk": "Виставка з чіткими межами" }
+      },
+      "id": "fpv-drones-ukraine-06",
+      "identity": "78648842f2a77bfd",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

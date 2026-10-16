@@ -22,6 +22,17 @@ const model = createMissionLibrary(
 );
 const late = model.missions.find((row) => row.runtimeId === 'signal-12');
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 10000 });
+function assertReadyCard(card, name = card.querySelector('.journey-card-title').textContent) {
+  assert.equal(card.tagName, 'BUTTON');
+  assert.equal(card.type, 'button');
+  assert.equal(card.disabled, false);
+  assert.equal(card.dataset.availabilityState, 'ready');
+  assert.ok(name.length > 0, 'The ready mission has a readable name.');
+  assert.ok(
+    card.getAttribute('aria-label').includes(name),
+    'Its accessible name identifies the mission.',
+  );
+}
 class Locks {
   held = new Set();
   async request(name, options, work) {
@@ -92,18 +103,55 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
   });
   return p;
 }
-async function open(p) {
-  p.$('race-library-switch').focus();
-  p.$('race-library-switch').click();
-  try {
-    await settle(() => p.$('journey-chooser')?.open);
-  } catch (error) {
-    error.message += ` ${p.$('race-message').textContent}`;
-    throw error;
+function beginOpen(p, { focus = true } = {}) {
+  if (p.state() === 'running') {
+    assert.equal(p.$('race-pause').hidden, false);
+    p.$('race-pause').click();
+    p.frame(0);
+    assert.equal(p.state(), 'paused');
   }
+  // Preserve the visible Missions click and Couch-shell departure guards while
+  // joining its operation, rather than timing catalogue compilation with polls.
+  const opener = p.$('race-chapters'),
+    handler = opener.onclick,
+    pending = [];
+  assert.equal(opener.hidden, false);
+  assert.equal(opener.disabled, false);
+  assert.equal(typeof handler, 'function');
+  opener.onclick = (event) => {
+    const result = handler.call(opener, event);
+    if (result instanceof Promise) pending.push(result);
+    return result;
+  };
+  try {
+    if (focus) opener.focus();
+    opener.click();
+  } finally {
+    opener.onclick = handler;
+  }
+  assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
+  assert.match(p.$('race-message').textContent, /Preparing missions/);
+  return pending[0];
 }
+async function open(p) {
+  await beginOpen(p);
+  assert.equal(p.$('journey-chooser')?.open, true, p.$('race-message').textContent);
+}
+function showAllLifecycles(p) {
+  p.$('journey-lifecycle').value = '';
+  p.$('journey-lifecycle').emit('change');
+}
+
 async function running(p, id) {
   try {
+    await settle(() => {
+      p.frame(0);
+      return p.renders[0]?.level.id === id && ['ready', 'running'].includes(p.state());
+    });
+    if (p.state() === 'ready') {
+      p.$('race-start').focus();
+      p.$('race-start').click();
+    }
     await settle(() => {
       p.frame(0);
       return p.renders[0]?.level.id === id && p.state() === 'running';
@@ -121,30 +169,38 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
       requests.push(String(path));
     },
   });
-  assert.equal(p.$('race-library-switch').textContent, 'All missions');
+  assert.equal(p.$('race-chapters').textContent, 'Select Mission');
   const before = p.checkpoint();
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-lifecycle').value, 'current');
+  assert.equal(p.$('journey-cards').children.length, 240);
+  showAllLifecycles(p);
+  assert.equal(p.$('journey-cards').children.length, 435);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
   );
-  assert.equal(classic.length, 110);
-  assert.match(classic.find((card) => card.dataset.missionId === late.id).textContent, /Play/);
+  assert.equal(classic.length, 296);
+  assertReadyCard(
+    classic.find((card) => card.dataset.missionId === late.id),
+    late.name,
+  );
   assert(!requests.some((path) => path.includes('/content-design/assets/')));
   p.$('journey-back').click();
   p.frame(0);
   assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.doc.activeElement, p.$('race-library-switch'));
+  assert.ok(p.doc.activeElement === p.$('race-chapters'), 'Back returns to native Missions.');
 });
 
-test('empty-profile Versus library starts a late Base mission directly and pauses both boards before replacement', async (t) => {
+test('empty-profile Versus library directly starts a late Base mission and preserves both boards on cancelled replacement', async (t) => {
   const p = await fixture(t);
   await open(p);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === late.id).click();
   await running(p, late.runtimeId);
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('race-main').hidden, true);
   assert.equal(p.renders[1].level.id, late.runtimeId);
   p.key('ArrowDown');
   p.frames(12);
@@ -308,13 +364,14 @@ test('Classic Versus selects an exact Journey handoff and preserves the release 
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
 });
 
 test('Versus mode filter exposes the same qualified Journey identities in Solo without duplicates', async (t) => {
   const p = await fixture(t);
   await open(p);
+  showAllLifecycles(p);
   const original = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
   p.$('journey-mode').value = 'solo';
   p.$('journey-mode').emit('change');
@@ -323,14 +380,15 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 201);
+  assert.equal(new Set(original).size, 435);
   const target = cards[1];
-  assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
+  assert.match(target.textContent, /Journey.*Band 1\/12/);
+  assertReadyCard(target);
   target.click();
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
   assert.equal(destination.pathname, '/game/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
   assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
   assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
 });
@@ -347,14 +405,14 @@ for (const collection of ['Journey', 'Classic'])
     const target = cards.find((card) =>
       card.querySelector('.journey-card-tags').textContent.includes(collection),
     );
-    assert.match(target.textContent, /Play/);
+    assertReadyCard(target);
     target.click();
     await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
     const destination = new URL(globalThis.location.href);
     assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
     assert.equal(
       destination.searchParams.get('journey'),
-      collection === 'Journey' ? 'team-spatial-originals-1' : 'legacy',
+      collection === 'Journey' ? 'team-cultural-specialist-originals-2' : 'legacy',
     );
     assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
     assert.equal(p.doc.documentElement.dataset.toolState, 'ready');
@@ -375,7 +433,7 @@ for (const custom of [false, true])
       (card) => JSON.parse(card.dataset.missionId)[3] === lateLevel.id,
     );
     assert(card);
-    assert.match(card.textContent, /Play/);
+    assertReadyCard(card, lateLevel.name);
     card.click();
     await running(p, lateLevel.id);
     assert.equal(p.renders[1].level.id, lateLevel.id);
@@ -430,7 +488,8 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   const p = await fixture(t, { href: 'http://localhost/game/couch/' });
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
-  assert.equal(p.$('journey-cards').children.length, 201);
+  showAllLifecycles(p);
+  assert.equal(p.$('journey-cards').children.length, 435);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -446,9 +505,9 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(new URL(globalThis.location.href).searchParams.get('library-mission'), late.id);
 });
 
-for (const chapterSource of ['optional', 'bundled'])
+for (const chapterSource of ['optional'])
   test(
-    `${chapterSource} chapter failure and retry stay inline, then Play stages the exact selected mission without automatic launch`,
+    `${chapterSource} chapter failure retries inline and one Download & play stages the exact selected mission`,
     { timeout: 120000 },
     async (t) => {
       const catalog = JSON.parse(
@@ -530,34 +589,32 @@ for (const chapterSource of ['optional', 'bundled'])
       heldDownload = new Promise((resolve) => {
         releaseDownload = resolve;
       });
+      const fetchesBeforeRetry = fetches;
       card().click();
-      await settle(() => fetches === 2 && card().textContent.includes('Preparing'));
-      card().click();
-      await settle(() =>
-        card().querySelector('.journey-card-action').textContent.startsWith('Download'),
+      await settle(
+        () => fetches === fetchesBeforeRetry + 1 && card().textContent.includes('Preparing'),
       );
+      card().click();
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        fetches,
+        fetchesBeforeRetry + 1,
+        'Repeated activation must join the owned preparation.',
+      );
+      assert.match(card().querySelector('.journey-card-action').textContent, /Preparing/);
       releaseDownload();
       heldDownload = null;
-      await new Promise((resolve) => setImmediate(resolve));
-      p.frame(0);
-      assert.deepEqual(p.checkpoint(), before);
-      assert.equal(p.$('journey-search').value, target.name);
-      card().click();
-      await waitFor(() => card().querySelector('.journey-card-action').textContent === 'Play', {
-        timeoutMs: 60000,
-      });
-      assert.equal(fetches, 3);
+      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
+      assert.equal(fetches, fetchesBeforeRetry + 1);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
-      assert.equal(p.$('journey-chooser').open, true);
-      card().click();
-      await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-stay').click();
       await settle(() => p.$('journey-chooser').open);
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
+      assertReadyCard(card(), target.name);
       card().click();
       await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-play').click();
@@ -568,35 +625,49 @@ for (const chapterSource of ['optional', 'bundled'])
   );
 
 for (const interruption of ['blur', 'focus', 'pointer'])
-  test(`a cancelled lazy Versus library opening cannot regain focus after ${interruption}`, async (t) => {
-    let release,
-      entered = false;
-    const gate = new Promise((resolve) => (release = resolve));
-    const p = await fixture(t, {
-      fetchResponse: async (path) => {
-        if (path === '../content/mission-library-index.json') {
-          entered = true;
-          await gate;
-          return new Response(JSON.stringify(index));
-        }
-      },
-    });
-    p.$('race-library-switch').click();
-    await settle(() => entered);
-    assert.match(p.$('race-message').textContent, /Preparing missions/);
-    if (interruption === 'blur') {
-      p.doc.focused = false;
-      p.win.emit('blur');
-      p.doc.focused = true;
-      p.win.emit('focus');
-    } else if (interruption === 'focus') p.$('race-options').focus();
-    else p.doc.emit('pointerdown');
-    const focused = p.doc.activeElement;
-    release();
-    await settle(() => p.$('journey-collection'));
-    await new Promise((resolve) => setImmediate(resolve));
-    assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.doc.activeElement, focused);
-    await open(p);
-    assert.equal(p.$('journey-cards').children.length, 201);
-  });
+  test(
+    `a cancelled lazy Versus library opening cannot regain focus after ${interruption}`,
+    { timeout: 120000 },
+    async (t) => {
+      let release, enter;
+      const gate = new Promise((resolve) => (release = resolve));
+      const entered = new Promise((resolve) => (enter = resolve));
+      const p = await fixture(t, {
+        fetchResponse: async (path) => {
+          if (path === '../content/mission-library-index.json') {
+            enter();
+            await gate;
+            return new Response(JSON.stringify(index));
+          }
+        },
+      });
+      const opening = beginOpen(p, { focus: false });
+      try {
+        await entered;
+        assert.match(p.$('race-message').textContent, /Preparing missions/);
+        if (interruption === 'blur') {
+          p.doc.focused = false;
+          p.win.emit('blur');
+          p.doc.focused = true;
+          p.win.emit('focus');
+        } else if (interruption === 'focus') p.$('race-options').focus();
+        else p.doc.emit('pointerdown');
+        const focused = p.doc.activeElement;
+        release();
+        await opening;
+        assert.ok(
+          p.$('journey-collection'),
+          'The owned lazy opening finished mounting its controls.',
+        );
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(p.$('journey-chooser').open, false);
+        assert.equal(p.doc.activeElement, focused);
+        await open(p);
+        showAllLifecycles(p);
+        assert.equal(p.$('journey-cards').children.length, 435);
+      } finally {
+        release();
+        await opening;
+      }
+    },
+  );

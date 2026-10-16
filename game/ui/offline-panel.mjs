@@ -1,5 +1,7 @@
+import { t, localizedText } from '../i18n/index.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
 import { createOperationStatus } from './operation-status.mjs';
+import { offlineStatusText, offlineOptionalText, offlineErrorText } from './offline-copy.mjs';
 
 /** Observes the release worker; leaving this screen never owns its installation. */
 export function attachOfflinePanel({
@@ -18,24 +20,28 @@ export function attachOfflinePanel({
   let action = 'prepare';
   const feedback = createOperationStatus($('offline-status'), { isCurrent: () => !disposed });
   const available = availability();
+  const legacyControls = $('offline-legacy-controls');
+  if (legacyControls) legacyControls.hidden = available.packageConsent === true;
   const note = $('offline-optional-note');
-  note.textContent = available.note ?? '';
+  localizedText(note, () => offlineOptionalText(available));
   note.hidden = !available.note;
   button.hidden = !available.available;
   feedback.begin({ message: '' }).finish({
-    message: available.available
-      ? 'Download this release for offline play on this device.'
-      : available.reason,
+    message: () =>
+      available.available
+        ? t('interface:prepareSharedRuntimeUseDownloadsForCompleteOfflineGameplay')
+        : offlineStatusText(available),
   });
   function controls() {
     button.disabled = !!observation;
     stop.hidden = !observation;
-    button.textContent =
+    localizedText(button, () =>
       action === 'verify'
-        ? 'Verify offline files'
+        ? t('interface:verifyOfflineFiles')
         : action === 'check'
-          ? 'Check progress'
-          : 'Prepare offline play';
+          ? t('interface:checkProgress')
+          : t('interface:prepareSharedRuntime'),
+    );
   }
   function detach({ focus = false } = {}) {
     if (!observation) return;
@@ -45,8 +51,7 @@ export function attachOfflinePanel({
     owned.controller.abort();
     owned.status.finish({
       state: 'detached',
-      message:
-        'Stopped waiting. Offline preparation may still be running. Check progress to confirm its result.',
+      message: () => t('interface:stoppedWaitingOfflinePreparationMayStillBeRunningCheckProgress'),
     });
     action = 'check';
     controls();
@@ -55,10 +60,12 @@ export function attachOfflinePanel({
   }
   async function run() {
     if (disposed || observation || !available.available) return;
+    const preparing = action === 'prepare';
     const owned = {
       controller: new AbortController(),
       status: feedback.begin({
-        message: action === 'prepare' ? 'Preparing offline play…' : 'Checking offline files…',
+        message: () =>
+          preparing ? t('interface:offline.preparing') : t('interface:offline.checkingFiles'),
         stage: action === 'prepare' ? 'connecting' : 'verifying',
       }),
     };
@@ -71,7 +78,7 @@ export function attachOfflinePanel({
         onStatus(status) {
           if (!current() || !['preparing', 'checking'].includes(status.status)) return;
           owned.status.update({
-            message: status.summary ?? status.message,
+            message: () => offlineStatusText(status),
             stage: status.stage,
             progress: status.progress ?? null,
           });
@@ -83,13 +90,23 @@ export function attachOfflinePanel({
       action = ready ? 'verify' : pending ? 'check' : 'prepare';
       owned.status.finish({
         state: ready ? 'ready' : pending ? 'detached' : 'error',
-        message: `${result.summary || result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`,
+        message: () => offlineStatusText(result),
       });
-      $('offline-details').textContent = JSON.stringify(result, null, 2);
+      localizedText($('offline-details'), () => JSON.stringify(result, null, 2));
     } catch (error) {
       if (!current()) return;
       action = 'prepare';
-      owned.status.finish({ state: 'error', message: error.message });
+      owned.status.finish({ state: 'error', message: () => offlineErrorText(error) });
+      localizedText($('offline-details'), () =>
+        JSON.stringify(
+          {
+            message: error.message,
+            code: error.offlineCode ?? null,
+          },
+          null,
+          2,
+        ),
+      );
     } finally {
       if (current()) {
         const restoreFocus = doc.activeElement === stop;

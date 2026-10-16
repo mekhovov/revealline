@@ -1,0 +1,44 @@
+{
+  "file": "game/test/authored-mode-entry-host.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/authored-mode-entry-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 23.67,
+  "failures": [
+    {
+      "test": "opening: ready Solo opens the corresponding Versus library without save/hint conversion",
+      "location": "game/test/authored-mode-entry-host.test.mjs:123:3",
+      "detail": "\n  ---\n  duration_ms: 810.456083\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:123:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /Separate Team arenas/. Input:\n    \n    'Team'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Team'\n  operator: 'match'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:131:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "opening: ready Versus keeps authored Solo entry and explicitly separates Team",
+      "location": "game/test/authored-mode-entry-host.test.mjs:143:3",
+      "detail": "\n  ---\n  duration_ms: 549.689042\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:143:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /Separate Team arenas/. Input:\n    \n    'Team'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Team'\n  operator: 'match'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:147:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "authored: ready Solo opens the corresponding Versus library without save/hint conversion",
+      "location": "game/test/authored-mode-entry-host.test.mjs:123:3",
+      "detail": "\n  ---\n  duration_ms: 695.030541\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:123:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /Separate Team arenas/. Input:\n    \n    'Team'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Team'\n  operator: 'match'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:131:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "authored: ready Versus keeps authored Solo entry and explicitly separates Team",
+      "location": "game/test/authored-mode-entry-host.test.mjs:143:3",
+      "detail": "\n  ---\n  duration_ms: 736.904292\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:143:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /Separate Team arenas/. Input:\n    \n    'Team'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Team'\n  operator: 'match'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/authored-mode-entry-host.test.mjs:147:12)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 16",
+    "# pass 12",
+    "# fail 4",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 23643.326291"
+  ]
+}

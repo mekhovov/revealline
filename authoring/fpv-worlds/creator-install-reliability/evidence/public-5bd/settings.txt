@@ -1,0 +1,190 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Resume"
+  - paragraph: Lift and land
+  - button "Arm / resume"
+  - generic: +
+  - generic: 0.0 m · 0 m/s · 13.7 s
+  - strong: 1/2 · Hold position
+  - status: Paused. Arm deliberately to continue.
+  - generic "Yaw 0%, Throttle 0%":
+    - generic: Yaw / Throttle
+    - status: 0% · held
+  - generic "Roll 0%, Pitch 0%":
+    - generic: Roll / Pitch
+  - complementary "Drone response. Paused · actual pose retained vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift":
+    - button "Hide drone response": ×
+    - status: Paused · actual pose retained · Drone upright
+- dialog:
+  - banner:
+    - paragraph: MAKE IT YOURS
+    - heading "Settings" [level=2]
+    - button "Close" [active]
+    - button "Fullscreen"
+  - paragraph: Your controls and flight preferences carry across worlds and playlists.
+  - text: Language / Мова
+  - combobox "Language / Мова":
+    - option "English" [selected]
+    - option "Українська"
+  - generic: Flight mode
+  - combobox "Flight mode":
+    - option "Self-level" [selected]
+    - option "Acro"
+  - generic: Controls
+  - combobox "Control source":
+    - option "Keyboard"
+    - option "Touch" [selected]
+    - option "Controller / Steam Deck"
+    - option "USB radio"
+  - button "Radio setup"
+  - generic: Touch response
+  - combobox "Touch response":
+    - option "Precise — small corrections" [selected]
+    - option "Direct — linear response"
+  - generic: Keyboard layout
+  - combobox "Keyboard layout":
+    - option "Two-stick · WASD + arrows" [selected]
+    - option "Classic · W/S pitch"
+  - generic: Camera
+  - combobox "Camera":
+    - option "FPV" [selected]
+    - option "Chase"
+    - option "Overview"
+  - generic: Aircraft
+  - combobox "Drone":
+    - option "Racer" [selected]
+    - option "Pixel"
+    - option "Utility"
+  - button "Inspect drone"
+  - generic: Graphics
+  - combobox "Visual quality":
+    - option "Balanced" [selected]
+    - option "Performance"
+    - option "Quality"
+  - generic: Live sticks
+  - combobox "Stick display":
+    - option "Compact sticks" [selected]
+    - option "Expanded sticks"
+    - option "Sticks in setup only"
+  - generic: Drone response
+  - combobox "Drone response":
+    - option "Compact" [selected]
+    - option "Learning"
+    - option "Off"
+  - generic: Guide text
+  - combobox "Guide text":
+    - option "Standard" [selected]
+    - option "Large"
+  - text: FOV
+  - slider "FOV": "82"
+  - generic: Camera tilt
+  - slider "Camera tilt": "10"
+  - group "Appearance":
+    - generic: Appearance
+    - generic: SIM interface
+    - combobox "SIM interface":
+      - option "Follow game" [selected]
+      - option "Authored appearance"
+      - option "Signal Blue"
+      - option "Flight Deck"
+      - option "Military Field"
+      - option "Ember Foundry"
+      - option "Polar Relay"
+      - option "Vyshyvanka"
+      - option "Dnipro Porcelain"
+      - option "Tryzub"
+      - option "Desktop 98"
+      - option "DOS Navigator"
+      - option "Orchard Workshop"
+      - option "Neon Ruins"
+      - option "Pocket LCD"
+      - option "Copper Observatory"
+      - option "Sakura Station"
+      - option "Obsidian Reliquary"
+      - option "Deep Space"
+      - option "Moonlit Grove"
+    - generic: World appearance
+    - combobox "World appearance":
+      - option "Follow game" [selected]
+      - option "Authored appearance"
+      - option "Flight Deck"
+      - option "Military Field"
+      - option "Ember Foundry"
+      - option "Polar Relay"
+      - option "Vyshyvanka"
+      - option "Dnipro Porcelain"
+      - option "Tryzub"
+      - option "Desktop 98"
+      - option "DOS Navigator"
+      - option "Orchard Workshop"
+      - option "Neon Ruins"
+      - option "Pocket LCD"
+      - option "Copper Observatory"
+      - option "Sakura Station"
+      - option "Obsidian Reliquary"
+      - option "Deep Space"
+      - option "Moonlit Grove"
+    - status: Interface changes preserve your flight controls.
+  - group "Hunt presentation":
+    - generic: Hunt presentation
+    - checkbox "Brutal humanoid destruction" [checked]
+    - generic: Brutal humanoid destruction
+    - checkbox "Blood and body parts" [checked]
+    - generic: Blood and body parts
+    - checkbox "Show enemy remains" [checked]
+    - generic: Show enemy remains
+    - paragraph: Shared with the arcade. Brutal off uses clean catch effects. Hiding remains keeps brief catch feedback. Solid echo trails, targets and flight physics stay the same.
+  - generic "Hunt target reactions"
+  - option "100%" [selected]
+  - option "150%"
+  - option "200%"
+  - button "Sound off"
+  - button "Show personal best" [disabled]
+  - generic: Text style
+  - combobox "Text style":
+    - option "Game typography" [selected]
+    - option "Plain text"
+  - generic: Menu motion
+  - combobox "Menu motion":
+    - option "Follow device preference" [selected]
+    - option "Reduced motion"
+  - generic: Interface & feedback
+  - slider "Interface & feedback": "100"
+  - status: 100%
+  - generic: Drone motors
+  - slider "Drone motors": "100"
+  - status: 100%
+  - generic: Environment & wind
+  - slider "Environment & wind": "100"
+  - status: 100%
+  - paragraph: Adjust sound without changing your master mute. Interface & feedback includes gate, impact and combat cues. Your mix is shared across simulator views.
+  - paragraph: Changing settings keeps your flight paused. Resume when you are ready.
+  - paragraph: "Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."
+- status: Preparing flight…
+- dialog "FPV / LINE":
+  - heading "FPV / LINE" [level=1]:
+    - img "FPV / LINE"
+  - paragraph: FPV SIM · Worlds
+  - navigation "Choose game mode":
+    - navigation:
+      - link "Solo":
+        - /url: https://mekhovov.github.io/revealline/game/?lang=en
+      - link "Versus":
+        - /url: https://mekhovov.github.io/revealline/game/couch/?lang=en
+      - link "Team":
+        - /url: https://mekhovov.github.io/revealline/game/couch/relay-rescue.html?lang=en
+      - button "FPV SIM"
+      - link "Snake":
+        - /url: https://mekhovov.github.io/revealline/game/snake/play.html?lang=en
+  - paragraph: Lift and land
+  - navigation "Main menu":
+    - button "Continue"
+    - button "Select Mission"
+    - button "Settings"
+    - button "Full screen"
+    - 'button "Sound: off"'
+  - button "Retry"

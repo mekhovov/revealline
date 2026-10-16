@@ -41,6 +41,13 @@ Each iOS HTML page also receives an early Content Security Policy meta element, 
 
 `.revealline-native.json` records both the original manifest hash and resulting native manifest hash, version, entry and fixed platform origin. The output is assembled and verified in a temporary directory before an owned output is replaced. Keep the original release directory and source archive untouched; the iOS manifest has a distinct identity because it includes additional files and transformed HTML.
 
+Current distributions include the shipped optional chapter and soundtrack originals.
+The native stager and desktop resource reader accept at most 4,096 files and 768 MiB
+for the full site. Every file remains limited to 64 MiB and must match its recorded
+size and SHA-256. The web offline cache keeps its separate 2,000-file / 64 MiB limit.
+Localization source JSON remains in the distribution while offline play caches the
+complete generated translation bundle once.
+
 ## Use the isolated native toolchain
 
 The root game's Node and npm dependencies are independent of native wrappers. With mise installed, run a pinned Node version per command instead of changing a global default:

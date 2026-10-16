@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mountSpritePanel } from '../../authoring/asset-studio/sprite-panel.mjs';
+import { resolveAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { Document, Element } from './helpers/couch-dom.mjs';
 
 function fixture(t) {
@@ -112,6 +113,30 @@ function fixture(t) {
     },
   };
 }
+
+test('controller sprite commands share pixel history and cancel a shape anchor without painting', (t) => {
+  const f = fixture(t),
+    adapter = resolveAuthoringEditor(f.$('sprite-canvas')),
+    blank = f.pixels();
+  assert.equal(adapter.enter(), true);
+  f.$('sprite-tool').value = 'line';
+  adapter.handle({ confirm: true });
+  adapter.handle({ direction: 'right' });
+  assert.deepEqual(f.pixels(), blank);
+  assert.equal(adapter.handle({ back: true }), undefined);
+  assert.deepEqual(f.pixels(), blank);
+  adapter.handle({ confirm: true });
+  adapter.handle({ direction: 'down' });
+  adapter.handle({ confirm: true });
+  const painted = f.pixels();
+  assert.notDeepEqual(painted, blank);
+  f.$('sprite-undo').click();
+  assert.deepEqual(f.pixels(), blank);
+  f.$('sprite-redo').click();
+  assert.deepEqual(f.pixels(), painted);
+  assert.equal(adapter.handle({ back: true }), 'cancel');
+  adapter.exit({ commit: false });
+});
 
 for (const action of ['undo', 'redo']) {
   test(`focused ${action} endpoint transfers to enabled opposite history action without changing pixels`, (t) => {

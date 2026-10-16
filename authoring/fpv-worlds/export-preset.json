@@ -1,0 +1,11 @@
+{
+  "blender": "4.5.14 LTS",
+  "export_format": "GLB",
+  "export_extras": true,
+  "export_yup": true,
+  "export_animations": true,
+  "export_apply": false,
+  "semanticNamespace": "extras.rl",
+  "units": "metres",
+  "note": "Keep gameplay markers outside animated hierarchies. Keep original source files and author/license metadata."
+}

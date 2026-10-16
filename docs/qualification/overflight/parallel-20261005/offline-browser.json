@@ -1,0 +1,25 @@
+{
+  "runtimeSource": "a4d9b96757a467b2771f686b5db614ce9ef51473",
+  "origin": "http://localhost:8884",
+  "firstVisitToNativeModeAfterServerStop": true,
+  "selection": "Solo Starter only; no soundtracks or authoring tools selected",
+  "installationStatus": [
+    "",
+    "Check the latest published game. Review the download size before updating; your progress is kept.",
+    "Playing in the browser",
+    "Solo starter ready offline",
+    "Your selected game is verified and ready offline. Recorded soundtracks remain optional.",
+    "This edition will open from the app icon at the next launch. Your saved progress is kept.",
+    "Soundtracks: 0 downloaded of 77.",
+    ""
+  ],
+  "readyAt": "2026-10-05T12:40:36.350Z",
+  "serverStoppedAt": "2026-10-05T12:40:50.392Z",
+  "serverProbe": "curl connection refused (exit 7) after stopping only the dedicated build server",
+  "playState": "- main:\n  - button \"Menu\"\n  - generic: Overflight\n  - button \"Resume\"\n  - region \"Overflight battlefield\":\n    - generic: Hull 100/100 · Airframes 2\n    - strong: 00:18\n    - generic: Level 1\n    - generic: Overflight payload 1\n    - generic: Boost Ready\n  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄\n- dialog \"Choose an upgrade\":\n  - banner:\n    - heading \"Choose an upgrade\" [level=1]\n    - paragraph: Combat is paused. Compare the patterns, then choose your next upgrade.\n  - 'button \"Wide Fan. Combat. Level 1 → 2. Now: A stationary charge dropped behind the drone. Next: Three impacts spread across your flight direction. Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 3 charges · 1 hit; R 40 · 30 dmg · 1s\" [active]':\n    - generic: Combat · Level 1 → 2\n    - strong: Wide Fan\n    - 'img \"Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 3 charges · 1 hit; R 40 · 30 dmg · 1s\"':\n      - generic: NOW\n      - generic: 1 charge · 1 hit\n      - generic: R 48 · 30 dmg · 1.2s\n      - generic: NEXT\n      - generic: 3 charges · 1 hit\n      - generic: R 40 · 30 dmg · 1s\n    - generic: Three impacts spread across your flight direction\n    - generic: Saturation Fan · 2/4\n  - 'button \"Double Pulse. Combat. Level 1 → 2. Now: A stationary charge dropped behind the drone. Next: A second, wider pulse follows each impact. Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 1 charge · 2 hits; R 44 · 40 dmg · 1.3s\"':\n    - generic: Combat · Level 1 → 2\n    - strong: Double Pulse\n    - 'img \"Visual comparison. NOW: 1 charge · 1 hit; R 48 · 30 dmg · 1.2s. NEXT: 1 charge · 2 hits; R 44 · 40 dmg · 1.3s\"':\n      - generic: NOW\n      - generic: 1 charge · 1 hit\n      - generic: R 48 · 30 dmg · 1.2s\n      - generic: NEXT\n      - generic: 1 charge · 2 hits\n      - generic: R 44 · 40 dmg · 1.3s\n    - generic: A second, wider pulse follows each impact\n    - generic: Echo Cascade · 2/4\n  - 'button \"Salvage scanner. Support. Level 0 → 1. Now: Empty slot. Next: Mark priority threats for extra damage and collect salvage farther away. Visual comparison. NOW: Empty slot; No effect yet. NEXT: Collect R 85; 2s priority mark\"':\n    - generic: Support · Level 0 → 1\n    - strong: Salvage scanner\n    - 'img \"Visual comparison. NOW: Empty slot; No effect yet. NEXT: Collect R 85; 2s priority mark\"':\n      - generic: NOW\n      - generic: Empty slot\n      - generic: No effect yet\n      - generic: NEXT\n      - generic: Collect R 85\n      - generic: 2s priority mark\n    - generic: Mark priority threats for extra damage and collect salvage farther away\n  - contentinfo:\n    - button \"Reroll\"\n    - generic: 2 rerolls left\n- text: + + + + + + + + +",
+  "playTime": "00:18",
+  "canvasCount": 1,
+  "errors": [],
+  "pausedForEarnedUpgrade": true,
+  "recordedAt": "2026-10-05T12:41:56.979Z"
+}

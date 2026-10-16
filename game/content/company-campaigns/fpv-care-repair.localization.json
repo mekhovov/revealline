@@ -1,0 +1,211 @@
+{
+  "campaignId": "fpv-care-repair",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": {
+        "name": {
+          "en": "Care, Diagnosis and Repair Decisions",
+          "uk": "Догляд, діагностика та рішення про ремонт"
+        }
+      },
+      "id": "fpv-care-repair",
+      "identity": "eed34ef439d015a5",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Connect the observation cards before proposing a cause for the unpowered model. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте картки спостережень перед припущенням про причину в моделі без живлення. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original repair-notebook scene with a loose paper label on an inert classroom model and separate observation/hypothesis cards.",
+          "uk": "Оригінальна сцена з ремонтного зошита: незакріплена паперова етикетка на знеструмленій навчальній моделі та окремі картки спостереження й припущення."
+        },
+        "design.routeDecision": {
+          "en": "Capture the observation shelf before the cause shelf or connect both through the central return. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Захопіть полицю спостережень перед полицею причин або з’єднайте їх через центр. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Describe the Symptom", "uk": "Опишіть симптом" }
+      },
+      "id": "fpv-care-repair-01",
+      "identity": "4f4ff9edb7381e97",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Open inspection alcoves; do not connect a battery or spin propellers to answer the fixture. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте ніші огляду; не підключайте акумулятор і не обертайте пропелери для відповіді. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original magnified inert display bracket, unreadable ID card and intact cover with distinct observation fields, no energized electronics.",
+          "uk": "Оригінальний збільшений знеструмлений демонстраційний кронштейн, нечитабельна ідентифікаційна картка й ціла кришка з окремими полями спостережень; без електроніки під напругою."
+        },
+        "design.routeDecision": {
+          "en": "Use each small inspection alcove or reach the long well-lit return first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Скористайтеся малими нішами огляду або спершу досягніть довгого освітленого повернення. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "An Unpowered Inspection", "uk": "Огляд без живлення" }
+      },
+      "id": "fpv-care-repair-02",
+      "identity": "d01d819a16c19c78",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Join the comparison benches and keep the fictional test bounded to a paper model. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте столи порівняння й обмежте вигадану перевірку паперовою моделлю. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original controlled-comparison desk with two lamps over identical paper labels, labelled unchanged distance and one changed variable.",
+          "uk": "Оригінальний стіл контрольованого порівняння з двома лампами над однаковими паперовими етикетками, підписаною незмінною відстанню та однією зміненою величиною."
+        },
+        "design.routeDecision": {
+          "en": "Join adjacent comparison islands or cross to the unchanged-reference island first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Поєднайте сусідні острови порівняння або спершу перейдіть до незмінного зразка. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Change One Question", "uk": "Змініть одне питання" }
+      },
+      "id": "fpv-care-repair-03",
+      "identity": "8c521b118e0b9c37",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Reveal the safety desk; a damaged or swollen battery is not a beginner repair exercise. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Відкрийте стіл безпеки; пошкоджений чи здутий акумулятор не є вправою ремонту для початківця. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original calm safety-reference desk with a flat battery warning pictogram, stop marker and professional-help card, no handling demonstration.",
+          "uk": "Оригінальний спокійний стіл довідок із пласким попереджувальним значком акумулятора, позначкою зупинки й карткою професійної допомоги; без демонстрації поводження з акумулятором."
+        },
+        "design.routeDecision": {
+          "en": "Take the broad quiet safety terrace or connect the small guidance desk first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Оберіть широку спокійну терасу безпеки або спершу приєднайте малий стіл вказівок. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "A Battery Stop Card", "uk": "Картка зупинки через акумулятор" }
+      },
+      "id": "fpv-care-repair-04",
+      "identity": "b841a5b49fcddf15",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Connect the decision stations and preserve the evidence behind each fictional choice. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "З’єднайте станції рішень і збережіть підстави кожного вигаданого вибору. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original three-way decision exhibit with paper label, generic board silhouette and warning card, clear replace/ask/stop symbols.",
+          "uk": "Оригінальна виставка трьох рішень із паперовою етикеткою, узагальненим силуетом плати й попереджувальною карткою; чіткі символи заміни, запитання та зупинки."
+        },
+        "design.routeDecision": {
+          "en": "Compare the three decision bays using interior returns or join the evidence spine first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Порівняйте три зони рішень через внутрішні повернення або спершу з’єднайте вісь доказів. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Repair, Replace, Ask", "uk": "Ремонтувати, замінити, запитати" }
+      },
+      "id": "fpv-care-repair-05",
+      "identity": "0664a4fb119dc34c",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+          "uk": "Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення. У незахопленому полі стрілки прискорюють рух за потоком і сповільнюють рух проти нього. Захоплення нейтралізує їх."
+        },
+        "design.lesson": {
+          "en": "Complete the care notebook with a handoff and an appropriate disposal question. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Завершіть щоденник догляду передачею справ і питанням належної утилізації. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original completed care notebook with six evidence tabs, local-specialist contact placeholder and separate collection-service symbol, no real shipping labels.",
+          "uk": "Оригінальний завершений зошит догляду із шістьма вкладками доказів, місцем для контакту місцевого фахівця й окремим символом служби збору; без справжніх поштових етикеток."
+        },
+        "design.routeDecision": {
+          "en": "Complete the handoff chain from the centre or join the final two collection desks first. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Завершіть ланцюг передачі від центру або спершу приєднайте останні два столи збору. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "A Responsible Last Step", "uk": "Відповідальний останній крок" }
+      },
+      "id": "fpv-care-repair-06",
+      "identity": "9296cd8c37d93c0a",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

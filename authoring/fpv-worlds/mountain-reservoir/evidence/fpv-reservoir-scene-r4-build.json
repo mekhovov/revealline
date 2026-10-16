@@ -1,0 +1,44 @@
+{
+  "format": "FPVMountainReservoirCheckpointBuild.v1",
+  "stage": "one course, visual review and two-mode flight proofs pending",
+  "sourceScript": {
+    "path": "authoring/fpv-worlds/mountain-reservoir/source/scene.mjs",
+    "sha256": "5be98bac855afac41f2dd77f87bda18380f0ccd2b2f70f6221a19d14b48d8dde"
+  },
+  "materialSource": {
+    "path": "authoring/fpv-worlds/mountain-reservoir/source/mineral.mjs",
+    "sha256": "88617c0ed0b19378795a9788083c7a8b50c0e473e6e15fe7beeb2d3628f7c118"
+  },
+  "source": {
+    "bytes": 1133408,
+    "sha256": "f2310ab13408f38958341222ca5b7464e164ebdc240a6791a398c9ff7aef9829",
+    "triangles": 11572,
+    "materials": 13,
+    "nodes": 46,
+    "textures": 1,
+    "colliders": 34,
+    "collisionTriangles": 108
+  },
+  "prepared": {
+    "bytes": 1131784,
+    "sha256": "dfd964aedd7051450b4440cca590e1f17606282ffdc1607eef0477066e591ac1",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 1158277,
+    "sha256": "4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c",
+    "identity": "fpv-pack:4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c"
+  },
+  "zip": {
+    "bytes": 1158338,
+    "sha256": "764172737b8aff0ab5bbdf74c50f85365eddfc10e1378b8a5c61e70684eb0238"
+  },
+  "courses": [
+    "mountain-reservoir-01"
+  ],
+  "runtimeChanges": 0,
+  "textures": 1,
+  "limitsUnchanged": true,
+  "sourcePipeline": "scripts/fpv-content.mjs prepareWorldFile; pinned glTF Transform 4.5.1 and Khronos Validator 2.0.0-dev.3.10",
+  "output": "/tmp/fpv-mountain-reservoir-scene-r4/prepared/"
+}

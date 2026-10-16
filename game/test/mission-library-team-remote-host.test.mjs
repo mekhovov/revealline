@@ -3,8 +3,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
+import { Element } from './helpers/couch-dom.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 
+const enemyCatalogURL = new URL('../content/enemy-presentations.json', import.meta.url);
+const enemyCatalogBytes = await readFile(enemyCatalogURL);
 const files = new Map(
   await Promise.all(
     [
@@ -17,45 +20,93 @@ const files = new Map(
 );
 async function fixture(t, { read = async () => null, returnStorage } = {}) {
   const reads = [];
+  let remoteCompletion = Promise.resolve(),
+    finishRemote;
   const f = await page(t, {
     nativeFocus: true,
     nativeVisibility: true,
     returnStorage,
-    beforeImport({ install }) {
+    beforeImport({ install, doc }) {
+      // The host deliberately starts remote refresh without returning it from
+      // discovery.open(). Observe its real named status completion instead of
+      // imposing a wall-clock deadline on synchronous catalogue compilation.
+      // This never changes the text, focus, event dispatch or remote owner.
+      const createElement = doc.createElement;
+      const text = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
+      t.mock.method(doc, 'createElement', function (...args) {
+        const element = createElement.apply(this, args);
+        if (element.tagName === 'P')
+          Object.defineProperty(element, 'textContent', {
+            configurable: true,
+            get: () => text.get.call(element),
+            set(value) {
+              text.set.call(element, value);
+              if (element.id !== 'coop-library-remote-status') return;
+              if (value === 'Loading Solo and Versus mission metadata…') {
+                finishRemote?.();
+                remoteCompletion = new Promise((resolve) => (finishRemote = resolve));
+              } else {
+                finishRemote?.();
+                finishRemote = null;
+              }
+            },
+          });
+        return element;
+      });
       install('crypto', { value: webcrypto });
+      const actorFetch = globalThis.fetch;
       install('fetch', {
         value: async (url) => {
+          if (new URL(url).href === enemyCatalogURL.href) return new Response(enemyCatalogBytes);
           const path = new URL(url).pathname.split('/game/')[1];
-          assert(
-            files.has(path),
-            'Other-mode browsing only reads bounded metadata, never pictures',
-          );
+          if (!files.has(path)) return actorFetch(url);
           reads.push(path);
           return (await read(path)) ?? new Response(files.get(path));
         },
       });
     },
   });
-  return Object.assign(f, { reads });
+  return Object.assign(f, { reads, remoteReady: () => remoteCompletion });
 }
 async function open(f, paused = false) {
-  f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open').focus();
-  f.tap('Enter');
-  await waitFor(() => f.$('journey-chooser')?.open);
+  const opener = f.$(paused ? 'coop-discovery-paused' : 'coop-discovery-open'),
+    original = opener.onclick;
+  let pending;
+  opener.onclick = (...args) => (pending = original.apply(opener, args));
+  try {
+    opener.focus();
+    f.tap('Enter');
+  } finally {
+    opener.onclick = original;
+  }
+  assert(pending instanceof Promise, 'Real keyboard activation owns Team discovery.');
+  await pending;
+  assert.equal(f.$('journey-chooser').open, true);
 }
+
 const cards = (f) => [...f.$('journey-cards').querySelectorAll('.journey-card')];
 function mode(f, value) {
   f.$('journey-mode').focus();
   f.$('journey-mode').value = value;
   f.$('journey-mode').emit('change');
 }
-const loaded = (f) =>
-  waitFor(
-    () => cards(f).length === 201,
-    () => f.$('coop-library-remote-status').textContent,
-  );
+const loaded = async (f) => {
+  await f.remoteReady();
+  const rows = cards(f);
+  assert.equal(rows.length, 240, f.$('coop-library-remote-status').textContent);
+  const identities = rows.map((row) => JSON.parse(row.dataset.missionId));
+  assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v25').length, 91);
+  for (let edition = 9; edition <= 24; edition++) {
+    assert.equal(
+      identities.filter((identity) => identity[1] === `whole-spatial-v${edition}`).length,
+      0,
+      `Historical v${edition} is not a current mission.`,
+    );
+  }
+  assert.equal(identities.filter((identity) => identity[0].startsWith('["classic",')).length, 149);
+};
 
-test('Team loads all201 Solo/Versus metadata rows only after selecting another mode and never decodes rewards', async (t) => {
+test('Team lazily loads 240 current and 195 archived Solo/Versus rows without decoding rewards', async (t) => {
   const f = await fixture(t);
   await open(f);
   assert.equal(cards(f).length, 14);
@@ -73,10 +124,34 @@ test('Team loads all201 Solo/Versus metadata rows only after selecting another m
   assert.equal(f.doc.activeElement.id, 'journey-mode');
   assert(f.$('coop-library-remote-status').textContent.length < 80);
   assert.equal(f.artwork.calls.reads.length, pictureReads);
-  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 98);
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 87);
+  const lifecycle = f.$('journey-lifecycle');
+  lifecycle.focus();
+  lifecycle.value = 'archive';
+  lifecycle.emit('change');
+  const archived = cards(f).map((row) => JSON.parse(row.dataset.missionId));
+  assert.equal(archived.length, 195);
+  for (let edition = 11; edition <= 24; edition++) {
+    assert.equal(
+      archived.filter((identity) => identity[1] === `whole-spatial-v${edition}`).length,
+      3,
+      `Historical v${edition} remains accessible in Archive.`,
+    );
+  }
+  assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
+  assert.equal(archived.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
+  assert.equal(archived.filter((identity) => identity[0].startsWith('["classic",')).length, 147);
+  lifecycle.value = '';
+  lifecycle.emit('change');
+  assert.equal(cards(f).length, 435, 'All historical identities remain available in All.');
+  assert.equal(cards(f).filter((row) => row.textContent.includes('Unavailable')).length, 184);
   mode(f, 'versus');
-  assert.equal(cards(f).length, 201);
+  assert.equal(cards(f).length, 435);
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
+  assert.equal(cards(f).length, 240);
   assert.equal(f.reads.length, 4);
+  assert.equal(f.artwork.calls.reads.length, pictureReads);
   mode(f, 'team');
   assert.equal(cards(f).length, 14);
   assert.equal(f.$('coop-library-remote-status').hidden, true);
@@ -111,7 +186,7 @@ test('Team exact nonfirst Versus handoff keeps its attempt on Stay and only depa
   await waitFor(() => f.visits.length === 1);
   const destination = new URL(f.visits[0]);
   assert.equal(destination.pathname, '/game/couch/');
-  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v5');
+  assert.equal(destination.searchParams.get('journey'), 'whole-spatial-v25');
   assert.equal(destination.searchParams.get('library-mission'), exactId);
   assert.equal(destination.searchParams.get('return'), 'team');
   assert.equal(destination.searchParams.get('journey-return'), 'legacy');
@@ -187,7 +262,8 @@ test('typing and filtering in the open Team chooser filters arriving remote rows
   assert.match(f.$('coop-library-remote-status').textContent, /Loading/);
   assert.equal(f.$('coop-library-remote-retry').hidden, true);
   gate.resolve();
-  await waitFor(() => cards(f).length === 1);
+  await f.remoteReady();
+  assert.equal(cards(f).length, 1);
   assert.match(cards(f)[0].textContent, /Voltage Garden/);
   assert.equal(search.value, 'Voltage Garden');
   assert.equal(f.$('journey-collection').value, 'Classic');
@@ -269,6 +345,10 @@ for (const interrupt of ['blur', 'Escape'])
       assert.match(f.$('coop-library-remote-status').textContent, /interrupted/i);
       assert.equal(f.$('coop-library-remote-retry').hidden, false);
       f.win.emit('focus');
+      // Blur deliberately rearms the controller-confirm lifecycle. Let one
+      // neutral poll clear its Steam Input echo guard before modeling a fresh
+      // native Back activation.
+      f.tick();
       f.$('journey-back').click();
     } else f.tap('Escape');
     assert.equal(f.$('journey-chooser').open, false);
@@ -311,7 +391,9 @@ test('saved other-mode browsing restores Team’s own filter and lazily loads ma
   await open(f);
   assert.equal(f.$('journey-mode').value, 'solo');
   assert.equal(f.$('journey-search').value, 'Two keepers');
-  await waitFor(() => cards(f).length === 3);
+  assert.equal(f.$('journey-lifecycle').value, 'current');
+  await f.remoteReady();
+  assert.equal(cards(f).length, 1);
   assert(cards(f).some((card) => card.querySelector('strong').textContent === 'Two keepers'));
   assert.equal(f.$('coop-library-preview').hidden, true);
   assert.equal(f.reads.length, 4);
@@ -334,7 +416,8 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await loaded(f);
     f.$('journey-search').value = 'Two keepers';
     f.$('journey-search').emit('input');
-    assert.equal(cards(f).length, 3);
+    assert.equal(f.$('journey-lifecycle').value, 'current');
+    assert.equal(cards(f).length, 1);
     const button = cards(f).find(
       (card) => card.querySelector('strong').textContent === 'Two keepers',
     );
@@ -351,6 +434,7 @@ test('a Team page return restores the actual departing Solo search and campaign 
     const saved = JSON.parse(values.get('revealline.mission-library.selector.v1.team'));
     assert.equal(saved.mode, 'solo');
     assert.equal(saved.search, 'Two keepers');
+    assert.equal(saved.lifecycle, 'current');
     assert.equal(saved.campaign, campaign);
     assert.equal(saved.selectedId, missionId);
     assert.equal(saved.scroll, 37);
@@ -361,7 +445,9 @@ test('a Team page return restores the actual departing Solo search and campaign 
     await open(f);
     assert.equal(f.$('journey-mode').value, 'solo');
     assert.equal(f.$('journey-search').value, 'Two keepers');
-    await waitFor(() => cards(f).length === 1);
+    assert.equal(f.$('journey-lifecycle').value, 'current');
+    await f.remoteReady();
+    assert.equal(cards(f).length, 1);
     assert.equal(f.$('journey-campaign').value, campaign);
     assert.equal(cards(f)[0].dataset.missionId, missionId);
     assert.equal(f.reads.length, 4);

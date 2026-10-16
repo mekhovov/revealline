@@ -1,0 +1,31 @@
+{
+  "format": "FPVRegionalDeliveryReceipt.v1",
+  "id": "railway-valley-study",
+  "revision": "structure-r1",
+  "descriptor": {
+    "bytes": 6661,
+    "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15"
+  },
+  "files": 38,
+  "totalBytes": 5684606,
+  "sourceCommit": "3794177fe",
+  "sourceManifestHashes": {
+    "terrain": "ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c",
+    "scenery": "1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d"
+  },
+  "sourceLicenseSHA256": "8ad3a0453dc1416d54e9af692dafe875a24069d577fe64edb193d3c8d868881a",
+  "sourceProvenanceSHA256": "7ff863d7bb7f088bd0db536cd7c8a36f64df678132c93ce28d909273acb50833",
+  "sizeMetres": [384, 384],
+  "checks": [
+    "runtime downloader verified all 39 requests (descriptor and 38 payload files)",
+    "copied payload bytes match verified source closure exactly",
+    "strict delivery v1: no unrecognized presentation fields",
+    "source license and preparation/provenance retained beside payload"
+  ],
+  "playerAdmission": false,
+  "limitations": [
+    "actual normal-host download/play and final presentation admission are separate",
+    "384 m structural study, not a 4 km finished region",
+    "no moving subjects or long-session device performance claim"
+  ]
+}

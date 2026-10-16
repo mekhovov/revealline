@@ -1,0 +1,184 @@
+{
+  "id": "sorting-yard",
+  "difficulty": "standard",
+  "turnPolicy": "immediate",
+  "delaySeconds": 0,
+  "seed": 1,
+  "status": "won",
+  "ticks": 3920,
+  "lives": 3,
+  "coverage": 0.8064864864864865,
+  "cuts": 7,
+  "searchSteps": 7,
+  "searchWaitTicks": [0],
+  "checkpoint": "3840b8ae30762b14",
+  "events": [
+    [319, "cut.closed", null],
+    [646, "cut.closed", null],
+    [1163, "cut.closed", null],
+    [1842, "cut.closed", null],
+    [2643, "cut.closed", null],
+    [3363, "cut.closed", null],
+    [3920, "cut.closed", null]
+  ],
+  "closures": [
+    [319, 0.21945945945945947],
+    [646, 0.36324324324324325],
+    [1163, 0.492972972972973],
+    [1842, 0.6389189189189189],
+    [2643, 0.6972972972972973],
+    [3363, 0.745945945945946],
+    [3920, 0.8064864864864865]
+  ],
+  "segments": [
+    {
+      "direction": "up",
+      "ticks": 27
+    },
+    {
+      "direction": "right",
+      "ticks": 95
+    },
+    {
+      "direction": "up",
+      "ticks": 197
+    },
+    {
+      "direction": "down",
+      "ticks": 7
+    },
+    {
+      "direction": "up",
+      "ticks": 14
+    },
+    {
+      "direction": "left",
+      "ticks": 244
+    },
+    {
+      "direction": "down",
+      "ticks": 259
+    },
+    {
+      "direction": "left",
+      "ticks": 109
+    },
+    {
+      "direction": "down",
+      "ticks": 218
+    },
+    {
+      "direction": "up",
+      "ticks": 217
+    },
+    {
+      "direction": "right",
+      "ticks": 244
+    },
+    {
+      "direction": "down",
+      "ticks": 218
+    },
+    {
+      "direction": "up",
+      "ticks": 217
+    },
+    {
+      "direction": "right",
+      "ticks": 245
+    },
+    {
+      "direction": "down",
+      "ticks": 81
+    },
+    {
+      "direction": "right",
+      "ticks": 258
+    },
+    {
+      "direction": "up",
+      "ticks": 81
+    },
+    {
+      "direction": "left",
+      "ticks": 421
+    },
+    {
+      "direction": "down",
+      "ticks": 218
+    },
+    {
+      "direction": "up",
+      "ticks": 271
+    },
+    {
+      "direction": "left",
+      "ticks": 81
+    },
+    {
+      "direction": "up",
+      "ticks": 198
+    }
+  ],
+  "format": "WholeSortingTunedHostRouteV1",
+  "scope": "Fresh Standard pressure.v4 keyboard host route; lossless technical feasibility and same-runtime replay verified by bounded pure simulation. Historical authored routes stay unchanged. Not human balance evidence.",
+  "authoredIdentity": "6d61fa6425f73916",
+  "gameplayIdentity": "75f5b40b857bc7f1",
+  "rawCheckpointWitness": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "20.19.5",
+    "v8": "11.3.244.8-node.30"
+  },
+  "routeEvidence": {
+    "format": "RouteEvidenceCheckpointV1",
+    "maxAbsoluteError": 1e-12,
+    "paths": [
+      "player.x",
+      "player.y",
+      "enemies[].x",
+      "enemies[].y",
+      "enemies[].vx",
+      "enemies[].vy",
+      "enemies[].perimeter",
+      "classic.actorTime",
+      "time",
+      "result.time"
+    ],
+    "checkpoints": {
+      "sorting-yard": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "5b5e982256d1fcf5",
+          "sections": {
+            "identity": "d293bb104924f13f",
+            "configuration": "190659f6c18c0031",
+            "board": "2eeed32b1503bf69",
+            "player": "265eb43e2f8d589e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "2510d68d8eeb9184",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "e6f0732fcf9804f0",
+            "continuation": "a9d828ced6380d30",
+            "result": "82fd9cc9ff320f6a",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "f3dd40b6f35f58f0",
+            "foundations": "dd84cdb2bac08b7a"
+          }
+        },
+        "scalars": [
+          {
+            "path": "enemies[5].vx",
+            "value": 9.329344211942589
+          },
+          {
+            "path": "enemies[5].vy",
+            "value": -5.921641375082891
+          }
+        ]
+      }
+    }
+  }
+}

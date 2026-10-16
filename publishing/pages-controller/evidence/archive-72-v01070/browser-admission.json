@@ -1,0 +1,25 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-72",
+  "infrastructureCommit": "12f9b350f9461d7721ba389af9c7590d6b5f621f",
+  "deploymentId": 6649956472,
+  "versions": [
+    "v0.107.0"
+  ],
+  "scope": "Historical online preservation only: the exact original-byte archive plus fresh coordinator in-app-browser title/version, real Releases route, browser Back and one keyboard focus transition. This does not renew v0.107 feature or gameplay qualification.",
+  "evidence": [
+    {
+      "path": "evidence/archive-72-v01070/public-observation.json",
+      "sha256": "d1366fb2d596ee8b895abb08fbc4f2bba4278b7def772aee2bbd256ee74cedd2"
+    }
+  ],
+  "limitations": [
+    "Historical online preservation and bounded native navigation only; no renewed v0.107 feature, gameplay, balance or performance acceptance.",
+    "The v0.107 long product automated suites were explicitly waived; finite archive infrastructure checks do not replace them.",
+    "No renewed physical-device/controller, physical touch, screen-reader, full offline, full-mission or exhaustive gameplay qualification is claimed.",
+    "Viewport dimensions were not measured or certified in this observation.",
+    "Native observations were provided as a written coordinator handoff; no exported screenshot files or screenshot hashes are claimed.",
+    "Save-owner contention remained visible and was not resolved by clearing or rewriting player data."
+  ]
+}
