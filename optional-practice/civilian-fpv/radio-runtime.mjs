@@ -100,7 +100,7 @@ export function createRadioRuntime({
       const timestamp = Number.isFinite(pad.timestamp) && pad.timestamp > 0 ? pad.timestamp : null;
       if (timestamp !== null && previousTimestamp !== null && timestamp > previousTimestamp)
         timestampIntervals = [...timestampIntervals, timestamp - previousTimestamp].slice(-20);
-      if (timestamp !== null && previousTimestamp !== null && timestamp < previousTimestamp)
+      if (timestamp === null || (previousTimestamp !== null && timestamp < previousTimestamp))
         timestampIntervals = [];
       previousTimestamp = timestamp;
       diagnostic = {
@@ -108,6 +108,7 @@ export function createRadioRuntime({
           FLIGHT_CONTROLS.map((axis) => [axis, pad.axes[profile.channels[axis].axis]]),
         ),
         calibrated: { ...controls },
+        sampledAtMs: now(),
         sampleAgeMs: timestamp === null ? null : Math.max(0, now() - timestamp),
         cadenceHz: timestampIntervals.length
           ? Math.round(
@@ -253,8 +254,8 @@ export function createRadioRuntime({
         verified: !!controls && verified,
       };
     },
-    diagnostics() {
-      sample();
+    diagnostics({ refresh = true } = {}) {
+      if (refresh) sample();
       return diagnostic
         ? structuredClone(diagnostic)
         : { raw: null, calibrated: null, sampleAgeMs: null, cadenceHz: null };

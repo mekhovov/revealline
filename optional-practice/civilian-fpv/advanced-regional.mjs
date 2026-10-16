@@ -428,12 +428,12 @@ export function createAdvancedRegionalSession(
       )
         return { accepted: false, reason: 'region-edge' };
       if (from) {
-        const query = terrain.castMotion(
+        const query = terrain.motionCoverage(
           from,
           Object.fromEntries(axes.map((key) => [key, point[key] - from[key]])),
           radius,
         );
-        if (!['motion-clear', 'motion-hit'].includes(query.status))
+        if (query.status !== 'motion-covered')
           return { accepted: false, reason: 'terrain-required', target: point };
       }
       from = point;

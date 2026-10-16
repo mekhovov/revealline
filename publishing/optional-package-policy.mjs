@@ -615,6 +615,11 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
       id,
       Object.freeze({
         ...policy,
+        // Original aggregate locale files are retained as source hashes, while
+        // only selected messages ship. Academy's reviewed input inventory is
+        // 12,603,530 bytes; this separate 12 MiB + 128 KiB accounting allowance
+        // leaves runtime and complete published-source output capped at 12 MiB.
+        ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 128 * 1024 } : {}),
         // The canonical browser is projected into an existing package module.
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({

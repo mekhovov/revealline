@@ -66,6 +66,7 @@ import {
 } from './sim-presentation.mjs';
 import {
   createFlightInput,
+  createFlightInputDiagnostics,
   createFlightMenuNavigation,
   createFlightGamepad,
   keyboardFlightPreset,
@@ -396,6 +397,7 @@ export function mountFlightApp({
     document: doc,
     onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
   });
+  const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('touch-response').value);
   input.keyboardPreset($('keyboard-preset').value);
   const controllerHint = doc.createElement('p');
@@ -473,6 +475,7 @@ export function mountFlightApp({
     }
   }
   const radio = createRadioRuntime({
+    now: () => win.performance.now(),
     getGamepads:
       typeof win.navigator?.getGamepads === 'function'
         ? () => win.navigator.getGamepads()
@@ -1418,7 +1421,19 @@ export function mountFlightApp({
           audio.update(flight.snapshot(), { active: true });
           flight.step(command);
           audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
-          if (flight.snapshot().ticks !== before) recorder?.record(command);
+          if (flight.snapshot().ticks !== before) {
+            inputDiagnostics.record(
+              flight,
+              input.owner(),
+              command,
+              input.owner() === 'radio'
+                ? radio.diagnostics({ refresh: false })
+                : input.owner() === 'controller'
+                  ? gamepad.diagnostics()
+                  : input.diagnostics(),
+            );
+            recorder?.record(command);
+          }
           completed();
         }
       }
@@ -2168,14 +2183,12 @@ export function mountFlightApp({
       playShell?.enterPlay();
       reset(selected, mode, authoringCourse, configuration);
     },
-    getDiagnostics: () => ({
-      ...radio.diagnostics(),
-      achieved: flight
-        ? Object.fromEntries(
-            Object.entries(flight.snapshot().angular).map(([axis, value]) => [axis, value / 100]),
-          )
-        : null,
-    }),
+    getDiagnostics: () =>
+      inputDiagnostics.read(
+        flight,
+        replay ? 'recording' : input.owner(),
+        !replay && input.owner() === 'radio' ? radio.diagnostics() : null,
+      ),
     onAdvanced(configuration) {
       pause();
       const container = doc.createElement('dialog');

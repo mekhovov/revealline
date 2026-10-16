@@ -6,11 +6,21 @@ export function createAdvancedWorkerClient({
   Worker: WorkerClass = globalThis.Worker,
   url = new URL('./advanced-worker.mjs', import.meta.url),
   watchdogMs = 10000,
+  verificationWatchdogMs = 420000,
 } = {}) {
   if (typeof WorkerClass !== 'function')
     throw new Error('Advanced practice requires Web Workers on this platform.');
   if (!Number.isFinite(watchdogMs) || watchdogMs < 1 || watchdogMs > 60000)
     throw new Error('Invalid Advanced worker deadline');
+  // A complete twelve-minute recording may need six minutes at the minimum
+  // qualified 2x capacity, plus one minute of setup margin. Flight/init requests
+  // keep their short watchdog; only explicit replay verification uses this bound.
+  if (
+    !Number.isFinite(verificationWatchdogMs) ||
+    verificationWatchdogMs < 1 ||
+    verificationWatchdogMs > 420000
+  )
+    throw new Error('Invalid Advanced verification deadline');
   const session = `advanced-${Date.now()}-${++serial}`;
   const worker = new WorkerClass(url, { type: 'module' });
   let requestId = 0,
@@ -52,7 +62,7 @@ export function createAdvancedWorkerClient({
     return new Promise((resolve, reject) => {
       const timer = setTimeout(
         () => dispose(new Error('Advanced worker did not respond. Practice is paused.')),
-        watchdogMs,
+        type === 'verify-recording' ? verificationWatchdogMs : watchdogMs,
       );
       waiting.set(id, { resolve, reject, timer });
       try {
@@ -78,6 +88,7 @@ export function createAdvancedWorkerClient({
     snapshot: () => request('snapshot'),
     restore: (snapshot) => request('restore', { snapshot }),
     recording: () => request('recording'),
+    verifyRecording: (recording) => request('verify-recording', { recording }),
     reset: () => request('reset'),
     dispose,
   };
