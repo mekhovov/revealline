@@ -228,6 +228,7 @@ function policyFixture() {
     candidatePolicyBlobs: approval.candidatePolicyBlobs,
     changedPaths: approval.paths,
     receiptPaths: approval.paths,
+    trustedPolicyDigest: approval.trustedPolicyDigest,
   };
 }
 
@@ -267,9 +268,11 @@ test("actual receipt verification retains trusted policy, provenance and complet
       },
     };
     const policyDigest = await validationPolicyDigest(root);
+    approval.trustedPolicyDigest = policyDigest;
+    approval.approvedPolicyDigest = "e".repeat(64);
     const originalReceipt = admissionBinding(pull, {
       workflowRevision: SHA,
-      policyDigest,
+      policyDigest: approval.approvedPolicyDigest,
       paths: approval.paths,
     });
     const run = {
@@ -367,6 +370,7 @@ test("actual receipt verification retains trusted policy, provenance and complet
     run.head_sha = pull.head.sha;
     candidate = approval.trustedPolicyBlobs;
     options.approvals = [];
+    receipt = { ...originalReceipt, policyDigest };
     assert.equal(
       await verify(),
       true,
@@ -390,6 +394,7 @@ test("only the exact reviewed source, complete policy and actual changed paths a
     (x) => (x.trustedPolicyBlobs[0][1] = "a".repeat(40)),
     (x) => (x.candidatePolicyBlobs[0][1] = "a".repeat(40)),
     (x) => (x.candidatePolicyBlobs[4][1] = "b".repeat(40)),
+    (x) => (x.trustedPolicyDigest = "f".repeat(64)),
     (x) => x.trustedPolicyBlobs.pop(),
     (x) => x.candidatePolicyBlobs.push(x.candidatePolicyBlobs[0]),
     (x) => (x.candidatePolicyBlobs[0][0] = "../policy"),
@@ -440,7 +445,7 @@ test("final mutation snapshot rechecks exact approval identities, main, checks a
     mergeable: true,
     mergeable_state: "clean",
   };
-  const policyDigest = "d".repeat(64);
+  const policyDigest = REVIEWED_POLICY_CHANGES[0].approvedPolicyDigest;
   const receipt = admissionBinding(pull, {
     workflowRevision: SHA,
     policyDigest,

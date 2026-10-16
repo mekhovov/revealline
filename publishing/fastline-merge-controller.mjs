@@ -45,6 +45,10 @@ export const REVIEWED_POLICY_CHANGES = [
     number: 1553,
     headSha: "717f2ba6fec280d8bbf9ff3ac495648b95c5e4f2",
     baseSha: "facf1627e2bb039ee7e5a3b9d662ded4c4ef3368",
+    trustedPolicyDigest:
+      "730c6d2aff774640f4275ee7f24cf1bee46d0f9d5a130e91f075c162890a0e22",
+    approvedPolicyDigest:
+      "533b2fbc30efdf12a2d5ea578a4360239e284ff8200107f1f7765b9f6210489b",
     paths: [
       "docs/pages-capacity-safe-plan-2026-10-15.md",
       "publishing/focused-test-map.json",
@@ -155,6 +159,7 @@ export function reviewedPolicyChangeMatches(
       "candidatePolicyBlobs",
       "changedPaths",
       "receiptPaths",
+      "trustedPolicyDigest",
     ]) ||
     !Array.isArray(approvals) ||
     approvals.length !== 1 ||
@@ -174,11 +179,15 @@ export function reviewedPolicyChangeMatches(
       "paths",
       "trustedPolicyBlobs",
       "candidatePolicyBlobs",
+      "trustedPolicyDigest",
+      "approvedPolicyDigest",
     ]) ||
     !Number.isSafeInteger(approval.number) ||
     approval.number < 1 ||
     !exactSha(approval.headSha) ||
     !exactSha(approval.baseSha) ||
+    !/^[a-f0-9]{64}$/u.test(approval.trustedPolicyDigest || "") ||
+    !/^[a-f0-9]{64}$/u.test(approval.approvedPolicyDigest || "") ||
     !pathsValid(approval.paths) ||
     !policyBlobsValid(approval.trustedPolicyBlobs) ||
     !policyBlobsValid(approval.candidatePolicyBlobs)
@@ -200,6 +209,7 @@ export function reviewedPolicyChangeMatches(
   const pull = input.pullRequest;
   return (
     input.repository === approval.repository &&
+    input.trustedPolicyDigest === approval.trustedPolicyDigest &&
     pull?.number === approval.number &&
     pull.head?.sha === approval.headSha &&
     pull.base?.sha === approval.baseSha &&
@@ -780,6 +790,8 @@ export async function checkedAdmission(
     candidatePolicyBlobs.push([name, policy.repository[`p${index}`]?.oid]);
   }
   const ordinaryPolicyMatch = equal(trustedPolicyBlobs, candidatePolicyBlobs);
+  const trustedPolicyDigest = await validationPolicyDigest(root);
+  let policyDigest = trustedPolicyDigest;
   const result = await api(
     `${prefix}/actions/runs/${run.id}/artifacts?per_page=100`,
   );
@@ -836,6 +848,7 @@ export async function checkedAdmission(
             candidatePolicyBlobs,
             changedPaths,
             receiptPaths: receipt.paths,
+            trustedPolicyDigest,
           },
           approvals,
         )
@@ -847,9 +860,13 @@ export async function checkedAdmission(
         candidatePolicyBlobs,
         changedPaths,
         receiptPaths: receipt.paths,
+        trustedPolicyDigest,
       };
+      // This digest was independently derived from every reviewed candidate
+      // policy blob and installed with the trusted approval, never taken from
+      // the untrusted receipt. All executable policy blobs still match main.
+      policyDigest = approvals[0].approvedPolicyDigest;
     }
-    const policyDigest = await validationPolicyDigest(root);
     check.admissionReceipt = receipt;
     check.policyDigest = policyDigest;
     return sameAdmission(receipt, pullRequest, policyDigest);
