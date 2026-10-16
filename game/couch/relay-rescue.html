@@ -1,15 +1,67 @@
 <!doctype html>
-<html lang="en" data-tool-state="loading">
+<html
+  lang="en"
+  data-build-version="__REVEALLINE_VERSION__"
+  data-tool-state="loading"
+  data-access-state="locked"
+>
   <head>
     <meta charset="UTF-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link rel="stylesheet" href="../ui/mode-boot.css" />
+    <script
+      src="../snake/route.js"
+      data-mode="team"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1a24" />
-    <title data-i18n="interface:relayRescueRevealline">Relay Rescue · RevealLine</title>
+    <title data-i18n="interface:relayRescueRevealline">Relay Rescue · FPV / LINE</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="relay-rescue.css" />
@@ -23,14 +75,46 @@
     <link rel="stylesheet" href="../ui/journey-save-cue.css" />
     <link rel="stylesheet" href="../ui/journey.css" />
     <link rel="stylesheet" href="../ui/quick-music-controls.css" />
+    <link rel="stylesheet" href="../ui/menu-scenes.css" />
+    <link rel="stylesheet" href="../ui/native-menu.css" />
+    <link rel="stylesheet" href="../ui/pause-menu.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
+    <link rel="stylesheet" href="../ui/hunt-feedback.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <div data-language-control data-language-launch></div>
 
+    <section id="mode-boot" class="mode-boot" aria-label="FPV / LINE">
+      <div class="mode-boot-card">
+        <img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+        />
+        <p id="coop-boot" class="operation-status" data-state="busy" role="status">
+          <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+            ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+            ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+            ><i
+              style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+            ></i></span
+          ><span data-i18n="interface:loadingRelayRescue">Loading Relay Rescue.</span>
+        </p>
+        <a id="mode-boot-return" href="../" data-i18n="interface:backToTheGame2"
+          >Back to the game</a
+        >
+      </div>
+    </section>
+
     <main id="coop-app">
       <header class="masthead">
         <a id="coop-home" href="../" class="brand" data-i18n-rich="interface:reveal"
-          >REVEAL<span data-i18n="interface:line2" data-i18n-slot="slot0">LINE</span></a
+          >FPV<span data-i18n="interface:line2" data-i18n-slot="slot0">/ LINE</span></a
         >
         <span class="mode-label" data-i18n-rich="interface:couchCoOp"
           >COUCH CO-OP
@@ -56,20 +140,12 @@
           >
             Start with a small loop. Cover each other, then meet to join a larger cut.
           </p>
-          <p id="coop-boot" class="operation-status" data-state="busy" role="status">
-            <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i
-              ><i
-                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-              ></i></span
-            ><span data-i18n="interface:loadingRelayRescue">Loading Relay Rescue.</span>
-          </p>
-          <script src="team-entry.js"></script>
+          <span id="coop-boot-slot" hidden></span>
+          <script
+            src="team-entry.js"
+            type="application/x-revealline-locked"
+            data-access-type=""
+          ></script>
           <p id="coop-selection-status" class="setup-note" role="status" hidden></p>
           <div class="coop-launch-grid">
             <figure id="coop-picture-preview" class="coop-picture-preview" data-state="preparing">
@@ -120,9 +196,18 @@
               >
                 Browse Team arenas
               </button>
+              <button
+                id="coop-offline-main"
+                type="button"
+                data-i18n="interface:installAppGameAndSoundtrackDownloads"
+              >
+                Install &amp; offline play
+              </button>
+              <p id="coop-offline-status" class="setup-note" role="status"></p>
             </div>
           </div>
           <div id="coop-language" data-language-control></div>
+          <div id="coop-hunt-save"></div>
           <details id="coop-optional-setup" class="optional-setup">
             <summary id="coop-optional-setup-toggle" data-i18n="interface:couch.teamOptions">
               Arena &amp; team options
@@ -144,6 +229,7 @@
                 </select></label
               >
             </div>
+            <div id="coop-encounter-variant"></div>
             <p id="coop-advanced-note" class="setup-note"></p>
             <div class="setup">
               <label
@@ -256,10 +342,15 @@
             >
           </div>
         </div>
-        <p id="coop-objective" class="live-objective" data-i18n="interface:reveal65Together">
-          Reveal 65% together
-        </p>
-        <p id="coop-bonus-live" class="micro-note" hidden></p>
+        <div class="coop-mission-feedback">
+          <p id="coop-objective" class="live-objective" data-i18n="interface:reveal65Together">
+            Reveal 65% together
+          </p>
+          <div id="coop-hunt-status"></div>
+          <p id="coop-hunt-attempt-status" class="micro-note" role="status" hidden></p>
+          <div id="coop-contextual-reactions"></div>
+          <p id="coop-bonus-live" class="micro-note" hidden></p>
+        </div>
         <div class="coop-board-slot">
           <div class="arena-wrap">
             <canvas
@@ -287,6 +378,7 @@
                 >
                   Release your controls, then choose Resume together.
                 </p>
+                <div id="coop-hunt-result"></div>
                 <section
                   id="coop-bonus-details"
                   aria-label="Pickup field details"
@@ -340,6 +432,9 @@
                   >
                     Next arena
                   </button>
+                  <button id="coop-random-level" type="button" data-i18n="interface:randomLevel">
+                    Random level
+                  </button>
                   <button
                     id="coop-next-cancel"
                     type="button"
@@ -380,6 +475,25 @@
                   >
                     View picture
                   </button>
+                  <button id="coop-export-recording" type="button" hidden>
+                    Export Team recording
+                  </button>
+                  <p id="coop-recording-status" role="status" hidden></p>
+                  <div id="coop-recording-copy" class="recording-copy" hidden></div>
+                  <p id="coop-recording-help" class="recording-help" hidden>
+                    <a
+                      id="coop-verify-recording"
+                      href="../playground/#recording-verification"
+                      target="_blank"
+                      rel="noopener"
+                      data-i18n="interface:recording.verifyExported"
+                      >Verify exported recording ↗</a
+                    >
+                    <span data-i18n="interface:recording.exportHelp"
+                      >Choose your exported file in the new tab. Wins and losses can be verified;
+                      this grants no progress or rewards.</span
+                    >
+                  </p>
                   <button id="coop-retry" type="button" data-i18n="interface:retrySameArena">
                     Retry same arena
                   </button>
@@ -415,8 +529,20 @@
               </div>
             </div>
           </div>
+          <div id="coop-cue-overflow" aria-live="off" hidden>
+            <button id="coop-field-details" type="button" hidden>
+              <span data-i18n="interface:fieldDetails">Field details</span>
+              <span id="coop-cue-summary"></span>
+            </button>
+          </div>
         </div>
         <div class="board-footer">
+          <span
+            id="coop-cue-announcement"
+            class="coop-cue-announcement"
+            role="status"
+            aria-live="polite"
+          ></span>
           <p
             id="coop-message"
             role="status"
@@ -779,6 +905,7 @@
           </div>
         </section>
         <section
+          id="coop-picture-preparation"
           class="coop-picture"
           aria-label="Arena picture"
           data-i18n-aria-label="interface:arenaPicture"
@@ -868,6 +995,10 @@
               data-game-reading
               data-i18n-aria-label="interface:relayRescueControls"
             >
+              <section id="coop-field-details-section" aria-live="off" hidden>
+                <h3 data-i18n="interface:fieldDetails">Field details</h3>
+                <ul id="coop-field-details-list"></ul>
+              </section>
               <div class="briefing field-kit-panel">
                 <p
                   class="eyebrow"
@@ -969,6 +1100,7 @@
               <p id="coop-help-support" data-i18n="interface:preparingSupportAndRescueGuidance">
                 Preparing Support and rescue guidance.
               </p>
+              <p id="coop-slowed-legend">↓ — <span data-i18n="interface:slowed">Slowed</span></p>
               <p
                 id="coop-support-0"
                 class="support-status"
@@ -988,6 +1120,13 @@
         </details>
         <button id="coop-settings-open" type="button" data-i18n="common:navigation.settings">
           Settings
+        </button>
+        <button
+          id="coop-offline"
+          type="button"
+          data-i18n="interface:installAppGameAndSoundtrackDownloads"
+        >
+          Install &amp; offline play
         </button>
         <button
           id="coop-quick-sound"
@@ -1178,6 +1317,30 @@
             ><input id="coop-reduced" type="checkbox" />
             <span data-i18n="interface:reduceEffects">Reduce effects</span></label
           >
+          <label class="settings-check"
+            ><input
+              id="coop-enemy-remains"
+              type="checkbox"
+              aria-describedby="coop-enemy-remains-hint"
+            /><span data-i18n="common:preferences.enemyRemains">Show enemy remains</span></label
+          >
+          <p
+            id="coop-enemy-remains-hint"
+            class="micro-note"
+            data-i18n="common:preferences.enemyRemainsHint"
+          >
+            Show defeated optional enemies where supported. Warnings, shots and brief hit effects
+            stay visible.
+          </p>
+          <p id="coop-enemy-remains-status" class="micro-note" role="status" hidden></p>
+          <button
+            id="coop-enemy-remains-retry"
+            type="button"
+            data-i18n="common:preferences.retryEncounterSave"
+            hidden
+          >
+            Retry saving
+          </button>
           <p id="coop-system-reduction" class="setting-note"></p>
           <p id="coop-display-status" class="setting-note" role="status"></p>
           <label
@@ -1193,7 +1356,8 @@
             class="micro-note"
             data-i18n="interface:optionalCaptionsAfterCompletedJourneyMissionsNoVoiceOrAnimation"
           >
-            Optional captions after completed Journey missions. No voice or animation.
+            Optional character captions, sound and brief reactions during play and after Journey
+            missions. Sound follows your audio settings.
           </p>
           <p id="coop-journey-reactions-status" class="micro-note" role="status" hidden></p>
           <button
@@ -1259,12 +1423,20 @@
         </section>
       </dialog>
     </main>
-    <script defer src="./mode-entry.js" data-mode="team"></script>
+    <script
+      defer
+      src="./mode-entry.js"
+      data-mode="team"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <script
       defer
       src="../ui/direct-tool-launch.js"
       data-module="./relay-rescue.mjs"
       data-status="coop-boot"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
   </body>
 </html>

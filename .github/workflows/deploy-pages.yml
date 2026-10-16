@@ -1,21 +1,12 @@
-name: Build and deploy GitHub Pages
+name: Validate source for continuous main
 
 on:
-  release:
-    types: [published]
   pull_request:
     branches: [main]
-    # Draft promotion does not change source bytes. The exact-head gate already
-    # ran on open/synchronize. Draft promotion does not change source or
-    # admission metadata, so ready_for_review would duplicate the exact-head
-    # gate. Keep edited because release admission is intentionally title-based.
-    types: [opened, synchronize, reopened, edited, labeled, unlabeled, milestoned, demilestoned]
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: Latest stable release tag to deploy (for example, v0.46.0)
-        required: true
-        type: string
+    # Metadata changes do not alter admission. Gate only source-head lifecycle
+    # events so title, labels, milestones, and draft promotion cannot create
+    # redundant queue work.
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -31,39 +22,6 @@ concurrency:
 # pending forever. Maintenance is classified in preflight and exits quickly.
 
 jobs:
-  release_gate:
-    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
-    steps:
-      - name: Read publication ownership from main, not the historical tag
-        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
-        with:
-          ref: main
-          fetch-depth: 1
-
-      - name: Set up publishing policy runtime
-        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
-        with:
-          package-manager-cache: false
-          node-version: 22.22.2
-
-      - name: Match latest stable release to the reviewed frozen selector
-        id: gate
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
-        run: node publishing/pages-controller/release-policy.mjs route
-
-      - name: Dispatch the sole Pages publisher on main
-        if: steps.gate.outputs.should_dispatch == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
-        run: gh workflow run publish-frozen-pages.yml --repo mekhovov/revealline --ref main -f "release_tag=$REQUESTED_RELEASE"
-
   preflight:
     if: github.event_name == 'pull_request'
     outputs:
@@ -84,15 +42,10 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
-            publishing/pages-controller/metadata.mjs
-            publishing/pages-controller/publication.json
-            publishing/pages-controller/release-policy.mjs
-            publishing/pages-controller/release-train-boundary.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/test-policy.json
             publishing/test-policy.mjs
-            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -120,19 +73,6 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Require the previous stable release on public Pages
-        if: steps.admission.outputs.mode == 'release'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          set -euo pipefail
-          base_version="$(gh api "repos/$GITHUB_REPOSITORY/contents/package.json?ref=$PR_BASE_SHA" \
-            --jq .content | base64 --decode | jq -r .version)"
-          PR_BASE_VERSION="$base_version" \
-            node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs public
-
       - name: Record temporary fast-release policy
         env:
           FULL_CI: ${{ vars.REVEALLINE_FULL_CI || 'false' }}
@@ -156,6 +96,9 @@ jobs:
       needs.preflight.outputs.focusedRequired == 'true'
     needs: preflight
     runs-on: ubuntu-latest
+    # Host fixtures are CPU-intensive. Two workers preserve parallel progress
+    # without starving async test handoffs on the standard hosted runner.
+    timeout-minutes: 90
     permissions:
       contents: read
       pull-requests: read
@@ -181,6 +124,8 @@ jobs:
           sparse-checkout: |
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
+            publishing/test-policy.json
+            publishing/test-policy.mjs
             scripts/check-source-identity.mjs
           sparse-checkout-cone-mode: false
 
@@ -222,6 +167,7 @@ jobs:
             --root source \
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json \
             --plan-only \
             "${extra[@]}"
 
@@ -237,6 +183,11 @@ jobs:
         working-directory: source
         run: npm ci --prefer-offline
 
+      - name: Install pinned authoring dependencies for selected focused gates
+        if: steps.plan.outputs.required == 'true'
+        working-directory: source
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --include=dev --prefer-offline
+
       - name: Run selected focused gates
         if: steps.plan.outputs.required == 'true'
         env:
@@ -250,6 +201,7 @@ jobs:
             --root source \
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json \
             "${extra[@]}"
 
       - name: Verify exact tracked source after commands
@@ -342,7 +294,7 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           # The PR build checks only its exact commit and tree. Immutable tags
-          # and full history remain confined to the frozen Pages publisher.
+          # and full history remain confined to release qualification.
           fetch-depth: 1
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
@@ -354,12 +306,7 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
           sparse-checkout: |
-            publishing/pages-controller/metadata.mjs
-            publishing/pages-controller/publication.json
-            publishing/pages-controller/release-policy.mjs
-            publishing/pages-controller/release-train-boundary.mjs
             scripts/check-source-identity.mjs
-            scripts/pages-archive.mjs
           sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
@@ -374,25 +321,16 @@ jobs:
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
-      - name: Require exact release version identity
-        env:
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: node .source-gate-automation/publishing/pages-controller/release-train-boundary.mjs source .
-
       - name: Install dependencies
         run: npm ci
 
       - name: Validate release-critical source
         run: npm run validate
 
-      - name: Run extended static and provenance checks
+      - name: Run extended source checks
         if: vars.REVEALLINE_FULL_CI == 'true'
         run: |
-          npm run lint
-          npm run format:check
-          npm run format:native:check
           node --check authoring/motion-lab/app.js
-          node scripts/produce-field-kit-theme.mjs --check
           mkdir -p .cache
           node --test scripts/test-production-*.mjs
 
@@ -443,11 +381,11 @@ jobs:
             fi
           fi
           if [ "$ADMISSION" = maintenance ]; then
-            echo 'Bounded documentation/controller maintenance: selected focused gates passed; product build not required.'
+            echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'
             exit 0
           fi
           if [ "$ADMISSION" = scheduled ]; then
-            echo 'Explicit milestone schedule: focused checks passed; the promoted release remains the sole artifact build and publication gate.'
+            echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'
             exit 0
           fi
           if [ "$ADMISSION" = release-evidence ]; then

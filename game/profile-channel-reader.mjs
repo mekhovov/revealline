@@ -1,3 +1,5 @@
+import { editionIdFromLocation } from './edition-context.mjs';
+import { profileWriterOwns } from './profile-writer.mjs';
 import { importLibrary, LIBRARY_LIMITS } from './library.mjs';
 import { PACK_LIMITS } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
@@ -66,9 +68,11 @@ export function createProfileChannelReader({
   indexedDB = globalThis.indexedDB,
   lockManager = globalThis.navigator?.locks,
   currentVersion,
+  editionId = editionIdFromLocation(),
   origin = globalThis.location?.origin ?? 'unknown origin',
   timeoutMs = PROFILE_READER_LIMITS.timeoutMs,
   recoveryCatalogs = [],
+  heldWriter,
   decodeStillImage,
 } = {}) {
   targetVersion(currentVersion);
@@ -93,7 +97,7 @@ export function createProfileChannelReader({
   if (!Array.isArray(recoveryCatalogs) || recoveryCatalogs.length > PROFILE_READER_LIMITS.channels)
     throw new TypeError(t('errors:profileReader.trustedRegistry'));
   for (const entry of recoveryCatalogs) {
-    const channel = recoveryChannel(entry?.channelId, currentVersion);
+    const channel = recoveryChannel(entry?.channelId, currentVersion, { editionId });
     if (!channel || channel.support === 'protected-unknown' || catalogs.has(channel.id))
       throw new TypeError(t('errors:profileReader.unsupportedRegistryChannel'));
     if (!Array.isArray(entry.registeredEntries) || !Array.isArray(entry.knownDescriptors))
@@ -148,11 +152,19 @@ export function createProfileChannelReader({
       throw new Error(t('errors:profileReader.webLocksRequired'));
     const hold = (key, next) =>
       untilCancelled(signal, () =>
-        lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
-          check(signal);
-          if (!lock) throw new Error(t('errors:profileReader.profileBusy'));
-          return next();
-        }),
+        key === channel.writerKey && profileWriterOwns(heldWriter, key)
+          ? (async () => {
+              const result = await next();
+              check(signal);
+              if (!profileWriterOwns(heldWriter, key))
+                throw new Error(t('errors:profileReader.profileBusy'));
+              return result;
+            })()
+          : lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
+              check(signal);
+              if (!lock) throw new Error(t('errors:profileReader.profileBusy'));
+              return next();
+            }),
       );
     return hold(channel.writerKey, () => hold(channel.lockKey, body));
   }
@@ -374,7 +386,7 @@ export function createProfileChannelReader({
             diagnostics.push(problem('discovery', t('errors:profileReader.unsupportedStorageKey')));
             return;
           }
-          const channel = channelFromStorageKey(key, currentVersion);
+          const channel = channelFromStorageKey(key, currentVersion, { editionId });
           if (channel) {
             byId.set(channel.id, channel);
             if (byId.size > PROFILE_READER_LIMITS.channels)

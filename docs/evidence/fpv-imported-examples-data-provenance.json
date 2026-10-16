@@ -1,0 +1,47 @@
+{
+  "format": "FPVImportedExamplesData.v1",
+  "preparationSha256": "c12b123be8466e9516abe90532710ba1b4740670cba27e737d0e8d61bce2d416",
+  "files": [
+    {
+      "source": "original.rlpack",
+      "artifact": "fpv-imported-examples-original.rlpack.gz",
+      "bytes": 17072,
+      "sha256": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+      "compressedBytes": 3144,
+      "compressedSha256": "8200edb9a9edb344a8747f5177a3fd673ca359f4e3bac471c782e03031a552f0"
+    },
+    {
+      "source": "revision-b.rlpack",
+      "artifact": "fpv-imported-examples-revision-b.rlpack.gz",
+      "bytes": 17086,
+      "sha256": "e88b30d6d4610be99c6e58734d75482de81d7c16d19b3ae6bdd8b5639e91cd44",
+      "compressedBytes": 3149,
+      "compressedSha256": "51da3c67a81da8f9495c9ff740176e0dbdcd22287832f2fcec3a24cec561e67a"
+    },
+    {
+      "source": "copied-builtin.rlpack",
+      "artifact": "fpv-imported-examples-copied-builtin.rlpack.gz",
+      "bytes": 3926,
+      "sha256": "6bd0147d711ee3ce859bcd62004458621e833814427a3c1121908e06b638e883",
+      "compressedBytes": 1203,
+      "compressedSha256": "c533137b6fa7ca57dc0c763a5d9efc951b3d457573f1633ab653da12ff1a355b"
+    },
+    {
+      "source": "valid-examples.json",
+      "artifact": "fpv-imported-examples-valid-examples.json.gz",
+      "bytes": 145219,
+      "sha256": "d783b6c01ab7ffc058f869bf6a9a6ff1cf997b5a0878fdce9bc050949f5d2980",
+      "compressedBytes": 24133,
+      "compressedSha256": "d3649c74d4f2041fc0a0de14fbb747dc334d51146bc0c32427ee138df9624328"
+    },
+    {
+      "source": "unavailable-examples.json",
+      "artifact": "fpv-imported-examples-unavailable-examples.json.gz",
+      "bytes": 145214,
+      "sha256": "de6a959aa942bfc1ade1c43d9267b901775d45519cd7e97944d095f3f4b9947e",
+      "compressedBytes": 24089,
+      "compressedSha256": "26a7eb532e1dbda3cb07ba1315ffa2151696c77e66b4565b0550f3af25f6b131"
+    }
+  ],
+  "note": "Lossless fixture inputs; decompress each gzip to its source name for --data. Session-only conversion of retained D4 ordinary controls is documented in preparation.json."
+}

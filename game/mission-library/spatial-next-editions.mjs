@@ -255,9 +255,36 @@ const EDITION_HISTORY = Object.freeze({
   ]),
 });
 
+// Each successor retains only the missions it changes from its immediate
+// predecessor. Inheriting the existing list keeps older distinct versions
+// selectable without adding every unchanged mission from every edition.
+const CANDIDATE_EDITION_HISTORY = { ...EDITION_HISTORY };
+for (const [version, missionIds] of [
+  [26, ['spiral-stores', 'nested-relays', 'watchpost-exchange']],
+  [27, ['survey-markers', 'compass-array', 'outer-loop']],
+  [28, ['bank-the-crossing', 'five-anchors', 'final-broadcast']],
+  [29, ['folded-corner', 'inside-out', 'four-quarters']],
+  [30, ['split-berths', 'stepped-return']],
+  [31, ['second-landing', 'long-rail', 'new-frontier']],
+  [32, ['turn-the-corner', 'return-pocket']],
+  [33, ['two-ways-home', 'read-the-lock', 'returning-light']],
+  [34, ['garden-refuges', 'broken-yard', 'island-reserve']],
+  [35, ['phase-remix', 'livewire-remix']],
+  [36, ['side-door-bays', 'staggered-reserve', 'crossbar-depot']],
+  [37, ['pressure-ladder', 'cooling-loop', 'relay-remix']],
+  [38, ['cooling-loop']],
+]) {
+  const predecessor = `whole-spatial-v${version - 1}`;
+  CANDIDATE_EDITION_HISTORY[`whole-spatial-v${version}`] = Object.freeze([
+    Object.freeze({ routeId: predecessor, missionIds: Object.freeze(missionIds) }),
+    ...CANDIDATE_EDITION_HISTORY[predecessor],
+  ]);
+}
+Object.freeze(CANDIDATE_EDITION_HISTORY);
+
 /** Shared registration for the prior cards the current route actually exposes. */
 export function spatialNextPriorEditions(activeRouteId) {
-  return EDITION_HISTORY[activeRouteId] || Object.freeze([]);
+  return CANDIDATE_EDITION_HISTORY[activeRouteId] || Object.freeze([]);
 }
 
 /** Bound the display projection before compilation. compileContentProject
@@ -352,7 +379,7 @@ export async function createSpatialNextEditionSources({
   let disposed = false;
   const sources = [];
   for (const [historyIndex, edition] of history.entries()) {
-    const route = await loadAuthoredJourneyRoute(edition.routeId);
+    const route = await loadAuthoredJourneyRoute(edition.routeId, { fullSource: true });
     const themes = journeyActorThemeCandidates(originals, {
       includeOriginals: route.preserveOriginalThemes === true,
     });
@@ -411,6 +438,7 @@ export async function createSpatialNextEditionSources({
           );
         }
       const source = journeyLibrarySource({
+        lifecycle: 'archive',
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
         editionLabel: () =>

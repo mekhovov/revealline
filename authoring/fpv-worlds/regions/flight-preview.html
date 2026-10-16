@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Regional flight · authoring prototype</title>
+    <script
+      src="../../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 16px var(--iw-font-ui, system-ui);
+        background: var(--iw-bg, #101922);
+        color: var(--iw-text, #f6f0df);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      main {
+        position: relative;
+        height: 100dvh;
+        overflow: hidden;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      header {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 12px;
+        background: var(--iw-panel, #101922e8);
+        max-width: 650px;
+        border: 1px solid var(--iw-line, #53636d);
+        border-radius: 8px;
+      }
+      header,
+      #status {
+        max-height: calc((100dvh - 36px - var(--preview-touch-reserve, 0px)) / 2);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--iw-accent, #ffcb71);
+      }
+      form {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding-top: 12px;
+      }
+      input {
+        flex: 1;
+        min-width: 160px;
+      }
+      input,
+      button,
+      select {
+        font: inherit;
+        padding: 9px;
+        border: 1px solid var(--iw-control-line, #647c89);
+        border-radius: 4px;
+        background: var(--iw-panel-raised, #182a36);
+        color: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid var(--iw-focus, #77d8e1);
+      }
+      p {
+        margin: 8px 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      #status {
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        background: var(--iw-panel, #101922df);
+        max-width: min(480px, calc(100% - 24px));
+        padding: 12px;
+        border-radius: 6px;
+      }
+      nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      #message {
+        color: var(--iw-accent, #ffcb71);
+      }
+      #touch-controls {
+        position: absolute;
+        inset: auto 12px 12px;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      #touch-controls[hidden] {
+        display: none;
+      }
+      .touch-stick {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border: 2px solid #91a6b3;
+        border-radius: 50%;
+        background: #10192270;
+        touch-action: none;
+        pointer-events: auto;
+      }
+      .touch-stick::before,
+      .touch-stick::after {
+        content: "";
+        position: absolute;
+        background: #91a6b366;
+      }
+      .touch-stick::before {
+        left: 50%;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+      }
+      .touch-stick::after {
+        top: 50%;
+        left: 8px;
+        right: 8px;
+        height: 1px;
+      }
+      .touch-stick i {
+        position: absolute;
+        left: calc(50% - 7px);
+        top: calc(50% - 7px);
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #ffcb71;
+      }
+      .touch-stick span {
+        position: absolute;
+        top: -22px;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        background: #101922b0;
+      }
+      body[data-input="touch"] {
+        --preview-touch-reserve: 150px;
+      }
+      body[data-input="touch"] #status {
+        bottom: 162px;
+      }
+      #credit {
+        opacity: 0.7;
+      }
+      @media (max-height: 500px) {
+        header {
+          max-width: 520px;
+        }
+        p {
+          font-size: 12px;
+        }
+        #status {
+          left: auto;
+          right: 12px;
+          max-width: 330px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <canvas
+        tabindex="0"
+        aria-label="Detached regional flight preview"
+      ></canvas>
+      <header>
+        <details open>
+          <summary>Regional flight · authoring prototype</summary>
+          <p>
+            Verified geometry development preview. Not a playable SIM release.
+            No scoring or recordings. Region edges stop the preview.
+          </p>
+          <form>
+            <select
+              id="geometry-profile"
+              aria-label="Verified geometry profile"
+            >
+              <option value="terrain-v1">Terrain cells</option>
+              <option value="scenery-v1">Scenery with ground</option>
+              <option value="terrain-scenery-v1">
+                Terrain + companion scenery
+              </option>
+            </select>
+            <select id="spawn" aria-label="Authored starting position" disabled>
+              <option value="">Default authored start</option>
+            </select>
+            <select id="heading" aria-label="Initial heading">
+              <option value="region-centre">Face region centre</option>
+              <option value="0">North</option>
+              <option value="9000">East</option>
+              <option value="18000">South</option>
+              <option value="27000">West</option>
+            </select>
+            <select id="surface" aria-label="Terrain appearance">
+              <option value="auto">Authored appearance</option>
+              <option value="plain">Plain terrain</option>
+              <option value="canyon">Canyon sediment</option>
+              <option value="railway-expanse">Railway valley districts (4 km study)</option>
+              <option value="desert">Desert sand, salt and stone</option>
+            </select>
+            <select
+              id="surface-quality"
+              aria-label="Terrain appearance quality"
+            >
+              <option value="performance">Performance</option>
+              <option value="balanced" selected>Balanced</option>
+              <option value="quality">Quality</option>
+            </select>
+            <input
+              id="manifest"
+              aria-label="Region manifest URL"
+              placeholder="Region manifest URL"
+              required
+            />
+            <input
+              id="scenery-manifest"
+              aria-label="Companion scenery manifest URL"
+              placeholder="Companion scenery manifest URL"
+              hidden
+            />
+            <button>Load / restart region</button>
+            <button id="cancel-load" type="button">Cancel loading</button>
+          </form>
+          <p id="credit">
+            Companion layers load and adopt together. Production host
+            integration and collision qualification remain required.
+          </p>
+        </details>
+      </header>
+      <section id="status">
+        <nav>
+          <button id="prepare">Prepare region</button
+          ><button id="arm">Arm</button><button id="pause">Pause</button
+          ><button id="reset">Reset</button
+          ><select id="source" aria-label="Controls">
+            <option value="keyboard">Keyboard</option>
+            <option value="touch">Touch</option>
+            <option value="controller">Controller</option></select
+          ><select id="mode" aria-label="Flight mode">
+            <option value="self-level">Self-level</option>
+            <option value="acro">Acro</option></select
+          ><select id="view" aria-label="Camera">
+            <option value="chase">Chase</option>
+            <option value="fpv">FPV</option>
+            <option value="overview">Loaded area</option>
+          </select>
+        </nav>
+        <p id="message" role="status">Load a region manifest to begin.</p>
+        <details>
+          <summary>Controls</summary>
+          <p id="keyboard-help"></p>
+          <p>
+            A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera.
+            Left stick changes throttle/yaw; right stick or D-pad tilts. Steam
+            Input: Gamepad layout.
+          </p>
+          <p>
+            Terrain transitions prepare automatically and stay paused. Release
+            controls, then Arm to continue. USB radio calibration is not
+            connected to this authoring preview yet.
+          </p>
+        </details>
+        <p id="telemetry"></p>
+      </section>
+      <div id="touch-controls" hidden>
+        <div
+          id="left-stick"
+          class="touch-stick"
+          aria-label="Touch yaw and throttle"
+        >
+          <span>Yaw / Throttle</span><i></i>
+        </div>
+        <div
+          id="right-stick"
+          class="touch-stick"
+          aria-label="Touch roll and pitch"
+        >
+          <span>Roll / Pitch</span><i></i>
+        </div>
+      </div>
+    </main>
+    <script
+      type="module"
+      src="../../../game/presentation/theme-entry.mjs"
+    ></script>
+    <script type="module" src="./flight-preview.mjs"></script>
+  </body>
+</html>

@@ -7,6 +7,8 @@ import { readPlayableTeamCampaign } from '../couch/creator-team-import.mjs';
 import { generateCreatorTeamCampaign, prepareCreatorTeamCampaign } from '../creator/team.mjs';
 import { createInstalledTeamCampaignStore } from '../creator/team-installed.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { createCoop } from '../coop/core.mjs';
+import { createCoopPainter } from '../couch/coop-view.mjs';
 import {
   CREATOR_TEAM_MEDIA_FORMAT,
   CREATOR_TEAM_MEDIA_LIMITS,
@@ -218,7 +220,27 @@ test('runtime picture lease rechecks exact bytes and releases replaced decoded i
   const f = await fixture(),
     prepared = await prepareCreatorTeamMediaCampaign(f.gameplay, f.bindings, f.assets, f.options);
   let releases = 0;
+  const presentation = Object.freeze({
+    canvas: {
+      palette: {
+        ink: '#f6f3e8',
+        paper: '#071527',
+        muted: '#a8b8cc',
+        accent: '#ffd64a',
+        safe: '#67aaff',
+        danger: '#ff7169',
+        field: '#10243e',
+        grid: '#182b43',
+        sky: '#233950',
+        land: '#526e67',
+      },
+      motionScale: 1,
+    },
+    fonts: { ui: 'sans-serif', numeric: 'monospace' },
+  });
+  let currentPresentation = presentation;
   const lease = createCreatorTeamMediaPictureLease(prepared, {
+      getSnapshot: () => currentPresentation,
       decodeImage: async () => ({
         image: { naturalWidth: 1152, naturalHeight: 576 },
         release: () => releases++,
@@ -230,8 +252,40 @@ test('runtime picture lease rechecks exact bytes and releases replaced decoded i
   assert.equal(binding.choice.kind, 'image');
   assert.equal(binding.choice.sourceKind, 'creator-team-media');
   assert.equal(binding.choice.picture.sha256, f.firstHash);
+  assert.equal(binding.snapshot, presentation);
+  assert.equal(binding.choice.levelId, first.levelId);
+  assert.equal(binding.choice.levelRevision, prepared.pack.levels[0].revision);
+  // Exercise the real renderer boundary, not a hand-built substitute binding.
+  const calls = [];
+  const context = new Proxy(
+    {},
+    {
+      get: (target, name) => target[name] ?? ((...args) => calls.push([name, ...args])),
+      set: (target, name, value) => ((target[name] = value), true),
+    },
+  );
+  const painter = createCoopPainter({ width: 1152, height: 576, getContext: () => context });
+  painter.setPresentation(presentation);
+  const run = createCoop(prepared.pack.levels[0]);
+  assert.doesNotThrow(() => painter.paint(run, { picture: binding }));
+  assert(calls.some(([name, image]) => name === 'drawImage' && image === binding.image));
+  assert.throws(
+    () => painter.paint(createCoop(prepared.pack.levels[1]), { picture: binding }),
+    /picture/i,
+  );
+  currentPresentation = { ...presentation };
+  assert.equal(
+    lease.confirm(first).snapshot,
+    presentation,
+    'Existing binding retains its prepared look',
+  );
+  painter.setPresentation(currentPresentation);
+  assert.throws(() => painter.paint(run, { picture: binding }), /presentation/i);
+  painter.dispose();
   assert.equal(lease.confirm(first), binding);
-  await lease.select(second);
+  const next = await lease.select(second);
+  assert.equal(next.snapshot, currentPresentation);
+  assert.equal(next.choice.levelId, second.levelId);
   assert.equal(releases, 1);
   assert.throws(() => lease.confirm(first), /differs from its preparation/);
   lease.dispose();

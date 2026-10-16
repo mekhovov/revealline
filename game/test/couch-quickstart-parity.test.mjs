@@ -31,7 +31,7 @@ function nativeConfirm(target) {
   return down;
 }
 
-test('Versus and Team keep tuning and imports in closed optional setup surfaces', async () => {
+test('Versus and Team retain tuning and import controls for the shared Settings surface', async () => {
   const [versus, team] = await Promise.all([
     readFile(new URL('../couch/index.html', import.meta.url), 'utf8'),
     readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8'),
@@ -52,16 +52,20 @@ test('prepared Versus defaults need one assigned-controller Confirm and never ro
   const controller = pad();
   const f = await couchPage(t, { pads: [controller], initialLevel: null });
   assert.equal(f.doc.activeElement.id, 'race-start');
-  assert.equal(f.$('race-optional-setup').open, false);
+  assert.equal(f.$('race-options-panel').hidden, true);
+  assert.equal(
+    f.$('race-optional-setup').closest('[role="tabpanel"]'),
+    f.$('race-settings-panel-gameplay'),
+  );
   assert.equal(f.$('race-actor-style').closest('details'), f.$('race-optional-setup'));
   f.join(0);
   assert.equal(f.doc.activeElement.id, 'race-start');
   f.pulse(0, 0);
-  assert.equal(f.state(), 'running');
+  await waitFor(() => f.state() === 'running');
   assert.notEqual(f.doc.activeElement.id, 'race-picture-cancel');
 });
 
-test('Steam Deck Confirm opens Versus optional setup and starts exactly once despite its native echo', async (t) => {
+test('Steam Deck Confirm opens Versus Settings and starts exactly once despite its native echo', async (t) => {
   let time = 1000;
   t.mock.method(performance, 'now', () => time);
   const controller = pad();
@@ -75,34 +79,49 @@ test('Steam Deck Confirm opens Versus optional setup and starts exactly once des
   f.pulse(0, 13);
   assert.equal(f.doc.activeElement.id, 'race-chapters');
   f.pulse(0, 13);
-  assert.equal(f.doc.activeElement.id, 'race-optional-setup-toggle');
+  assert.equal(f.doc.activeElement.id, 'race-options');
   f.pulse(0, 0);
-  assert.equal(f.$('race-optional-setup').open, true);
+  assert.equal(f.$('race-options-panel').hidden, false);
   time += 120;
-  assert.equal(nativeConfirm(f.$('race-optional-setup-toggle')).defaultPrevented, true);
-  assert.equal(f.$('race-optional-setup').open, true, 'native echo must not close setup');
+  assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
+  assert.equal(f.$('race-options-panel').hidden, false, 'native echo must not leave Settings');
+  f.$('race-settings-tab-gameplay').click();
+  assert.equal(f.$('race-settings-panel-gameplay').hidden, false);
+  assert.equal(
+    f.$('race-actor-style').closest('[role="tabpanel"]'),
+    f.$('race-settings-panel-gameplay'),
+  );
+  assert.equal(f.state(), 'ready');
 
-  f.$('race-optional-setup-toggle').click();
+  f.$('race-options-back').click();
+  assert.equal(f.$('race-options-panel').hidden, true);
   time += 600;
   f.focus('race-start');
   f.frame(); // Admit the changed menu scope only after a neutral sample.
   f.pulse(0, 0);
-  assert.equal(f.state(), 'running');
   time += 120;
   assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
+  await waitFor(() => f.state() === 'running');
   assert.equal(f.state(), 'running', 'native echo must not trigger another start action');
 });
 
-test('prepared Team defaults need one assigned-controller Confirm and optional setup stays reachable', async (t) => {
+test('prepared Team defaults need one assigned-controller Confirm and gameplay Settings stay reachable', async (t) => {
   const f = await teamPage(t, { nativeFocus: true });
   assert.equal(f.doc.activeElement.id, 'coop-start');
-  assert.equal(f.$('coop-optional-setup').open, false);
-  assert.equal(f.$('coop-level').closest('details'), f.$('coop-optional-setup'));
-  assert.equal(f.$('coop-difficulty').closest('details'), f.$('coop-optional-setup'));
-  f.disclose('coop-optional-setup');
+  assert.equal(f.$('coop-options').open, false);
+  assert.equal(f.$('coop-level').closest('[role="tabpanel"]'), f.$('coop-settings-panel-gameplay'));
+  assert.equal(
+    f.$('coop-difficulty').closest('[role="tabpanel"]'),
+    f.$('coop-settings-panel-gameplay'),
+  );
+  f.$('coop-settings-open').click();
+  assert.equal(f.$('coop-options').open, true);
+  f.$('coop-settings-tab-gameplay').click();
+  assert.equal(f.$('coop-settings-panel-gameplay').hidden, false);
   f.$('coop-difficulty').focus();
   assert.equal(f.doc.activeElement.id, 'coop-difficulty');
-  f.$('coop-optional-setup').open = false;
+  f.$('coop-settings-close').click();
+  assert.equal(f.$('coop-options').open, false);
   f.pads.push(pad());
   f.tick(1);
   pulseTeam(f); // Assign this controller to the menu without starting.
@@ -113,17 +132,19 @@ test('prepared Team defaults need one assigned-controller Confirm and optional s
   assert.equal(f.doc.activeElement.id, 'coop-canvas');
 });
 
-test('Team pointer quick start keeps arena selection behind one optional disclosure', async (t) => {
+test('Team pointer quick start keeps arena selection inside gameplay Settings', async (t) => {
   const f = await teamPage(t, { nativeFocus: true });
-  const options = f.$('coop-optional-setup');
+  const options = f.$('coop-options');
   assert.equal(options.open, false);
-  assert.equal(f.$('coop-level').closest('details'), options);
-  f.$('coop-optional-setup-toggle').emit('pointerdown', {
+  assert.equal(f.$('coop-level').closest('[role="tabpanel"]'), f.$('coop-settings-panel-gameplay'));
+  f.$('coop-settings-open').emit('pointerdown', {
     pointerType: 'touch',
     button: 0,
     isPrimary: true,
   });
-  f.disclose('coop-optional-setup');
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-gameplay').click();
+  assert.equal(f.$('coop-settings-panel-gameplay').hidden, false);
   await f.choose('coop-level', 'relay-yard');
   assert.equal(options.open, true);
   assert.equal(f.$('coop-level').value, 'relay-yard');
@@ -151,7 +172,7 @@ test('prepared Team Start remains visible after short-landscape layout settles',
   assert.equal(f.doc.activeElement, start);
 });
 
-test('Steam Deck Confirm opens Team optional setup and starts exactly once despite its native echo', async (t) => {
+test('Steam Deck Confirm opens Team Settings and starts exactly once despite its native echo', async (t) => {
   let time = 1000;
   t.mock.method(performance, 'now', () => time);
   const f = await teamPage(t, { nativeFocus: true });
@@ -160,16 +181,20 @@ test('Steam Deck Confirm opens Team optional setup and starts exactly once despi
   pulseTeam(f); // Assign without activating the focused Start action.
 
   time += 600;
-  f.$('coop-optional-setup-toggle').focus();
+  f.$('coop-settings-open').focus();
   pulseTeam(f);
-  assert.equal(f.$('coop-optional-setup').open, true);
+  assert.equal(f.$('coop-options').open, true);
   time += 120;
-  assert.equal(nativeConfirm(f.$('coop-optional-setup-toggle')).defaultPrevented, true);
-  assert.equal(f.$('coop-optional-setup').open, true, 'native echo must not close setup');
+  assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
+  assert.equal(f.$('coop-options').open, true, 'native echo must not close Settings');
+  f.$('coop-settings-tab-gameplay').click();
+  assert.equal(f.$('coop-settings-panel-gameplay').hidden, false);
 
-  f.$('coop-optional-setup-toggle').click();
+  f.$('coop-settings-close').click();
+  assert.equal(f.$('coop-options').open, false);
   time += 600;
   f.$('coop-start').focus();
+  f.tick(1); // A neutral sample admits the return from the Settings scope.
   pulseTeam(f);
   assert.equal(f.$('coop-play').hidden, false);
   time += 120;
@@ -209,8 +234,9 @@ test('Steam Deck Confirm echo cannot activate Cancel during initial Team picture
   f.pads.push(pad());
   f.tick(1);
   pulseTeam(f);
-  assert.equal(f.doc.activeElement.id, 'coop-optional-setup-toggle');
-  assert.equal(f.$('coop-optional-setup').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-home');
+  assert.equal(f.$('coop-options').open, false);
+  assert.notEqual(f.doc.activeElement.id, 'coop-picture-cancel');
   time += 120;
   assert.equal(nativeConfirm(f.doc.activeElement).defaultPrevented, true);
   assert.equal(f.$('coop-picture-status').dataset.state, 'preparing');

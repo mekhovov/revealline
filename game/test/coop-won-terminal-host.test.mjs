@@ -122,7 +122,8 @@ for (const level of ['first-connection', 'relay-yard'])
     const { f, terminal } = await win(t, { level });
     if (level === 'relay-yard') {
       assert.equal(f.$('coop-next').hidden, true, 'The last arena has no invented Next.');
-      assert.equal(f.doc.activeElement.textContent, 'Browse Team arenas');
+      assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
+      assert.equal(f.doc.activeElement.textContent.trim(), 'Choose');
       f.tap('Enter');
       await waitFor(() => f.$('journey-chooser')?.open);
       tabTo(f, 'journey-back');
@@ -196,6 +197,9 @@ test('Team earned picture: controller Back and Confirm require fresh edges and n
     'coop-next',
     'First deliberate edge joins without activating the recommended next arena',
   );
+  edge(15, true);
+  edge(15, false);
+  assert.equal(f.doc.activeElement.id, 'coop-random-level');
   edge(15, true);
   edge(15, false);
   assert.equal(f.doc.activeElement.id, 'coop-view-picture');

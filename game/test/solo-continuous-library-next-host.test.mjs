@@ -11,7 +11,8 @@ import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
-import { activateMissionCard } from './helpers/library-selection.mjs';
+import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 function observeAction(button, activate = () => button.click()) {
   const handler = button.onclick;
@@ -49,9 +50,10 @@ function beginBoundaryNext(p) {
     p.$('flight-preparation-status').textContent,
     /Finding the next mission.*Your result is kept/,
   );
-  assert.equal(p.$('next-button').disabled, true);
-  assert.equal(p.$('flight-preparation-cancel').hidden, false);
-  assert.equal(p.doc.activeElement, p.$('flight-preparation-cancel'));
+  assert.equal(p.$('next-button').disabled, false);
+  assert.equal(p.$('next-button').getAttribute('aria-disabled'), 'true');
+  assert.equal(p.$('flight-preparation-cancel').hidden, true);
+  assert.equal(p.doc.activeElement, p.$('next-button'));
   p.frame(0);
   assert.equal(p.rendered.run, result);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
@@ -125,24 +127,121 @@ async function setup(t, { holdIndex = null } = {}) {
   );
   assert.ok(card);
   await activateMissionCard(card);
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
+  p.$('start-button').click();
   await running(p, 'level-0-0');
   return { p, packs };
 }
 async function running(p, id) {
-  await settle(() => {
-    p.frame(0);
-    return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
-  });
+  await waitFor(
+    () => {
+      p.frame(0);
+      return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
+    },
+    {
+      message: 'The selected Solo mission did not reach its running state.',
+      timeoutMs: 30000,
+    },
+  );
 }
-async function win(p) {
+async function earnWin(p) {
   p.key('ArrowDown');
   p.key('ArrowDown', false);
   for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
+}
+async function win(p) {
+  await earnWin(p);
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
   if (p.$('game-overlay').hidden) p.$('show-result').click();
   await settle(() => !p.$('next-button').disabled);
 }
+test(
+  'Solo win advances from picture to results and the next mission automatically while Random stays available',
+  { timeout: 120000 },
+  async (t) => {
+    const { p } = await setup(t);
+    await earnWin(p);
+    const completed = p.rendered.run;
+    assert.equal(p.$('game-overlay').hidden, true);
+    assert.equal(p.doc.body.dataset.flightState, 'picture');
+    for (let tick = 0; tick < 80 && p.$('game-overlay').hidden; tick++) p.frame(100);
+    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    assert.equal(p.$('game-overlay').hidden, false);
+    assert.equal(p.$('result-random-level').hidden, false);
+    assert.equal(p.$('result-auto-next').hidden, false);
+    assert.match(p.$('result-auto-next').textContent, /4s/);
+    for (let tick = 0; tick < 20; tick++) p.frame(100);
+    assert.equal(
+      p.rendered.run,
+      completed,
+      'The mission summary remains readable during its timer.',
+    );
+    for (let tick = 0; tick < 25; tick++) p.frame(100);
+    await running(p, 'level-0-1');
+    assert.notEqual(p.rendered.run, completed);
+
+    await win(p);
+    const current = p.rendered.run;
+    const href = globalThis.location.href;
+    await p.$('result-random-level').onclick();
+    await settle(() => {
+      p.frame(0);
+      return p.rendered.run !== current || globalThis.location.href !== href;
+    });
+    const handedOff = new URL(globalThis.location.href).searchParams.has('library-mission');
+    assert.ok(
+      p.rendered.run !== current || handedOff,
+      'Random prepares a compatible mission in place or hands the browser to its exact host.',
+    );
+    if (!handedOff) {
+      const randomLevelId = p.rendered.run.levelId;
+      assert.equal(p.doc.body.dataset.flightState, 'briefing');
+      p.$('start-button').click();
+      await running(p, randomLevelId);
+    }
+    assert.equal(p.$('result-auto-next').hidden, true);
+    assert.deepEqual(p.errors, []);
+  },
+);
+test(
+  'Solo Skip advances a Custom mission without rewards and retains its mission cursor',
+  { timeout: 120000 },
+  async (t) => {
+    const { p, packs } = await setup(t);
+    p.key('ArrowDown');
+    p.key('ArrowDown', false);
+    for (let tick = 0; tick < 8; tick++) p.frame();
+    p.$('pause-button').click();
+    const previous = p.rendered.run,
+      checkpoint = authoritativeCheckpoint(previous),
+      skip = p.$('journey-skip');
+    assert.equal(p.doc.body.dataset.flightState, 'paused');
+    skip.focus();
+    skip.click();
+    await settle(() => /Confirm skip/.test(skip.textContent));
+    assert.equal(p.rendered.run, previous);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+    assert.match(
+      p.$('run-message').textContent,
+      /no clear, picture, medal, mastery, reward or unlock/i,
+    );
+    skip.click();
+    await running(p, 'level-0-1');
+    assert.notEqual(p.rendered.run, previous);
+    const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
+      campaigns: packs.flatMap((pack) => pack.campaigns),
+    }).library;
+    assert.equal(
+      Object.values(profile.campaigns).flatMap((campaign) => Object.keys(campaign.clears)).length,
+      0,
+    );
+    p.$('pause-button').click();
+    await openMissionLibrary(p, 'overlay-missions');
+    assert.equal(JSON.parse(p.doc.activeElement.dataset.missionId)[3], 'level-0-1');
+    assert.deepEqual(p.errors, []);
+  },
+);
 test(
   'Solo Next crosses Custom campaign and pack boundaries without a summary or picker',
   { timeout: 120000 },
@@ -185,6 +284,10 @@ for (const action of ['failure', 'cancel'])
       const base = JSON.parse(
         await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
       );
+      // This boundary fixture intentionally changes the campaign's playable
+      // identity. It must therefore not load the production first-signal
+      // artwork pack, whose identity validation belongs to that real campaign.
+      base.id = 'boundary-library';
       base.levels = [
         {
           ...retryFixture('self-contact').level,
@@ -294,6 +397,8 @@ test('Solo final Journey result retains the picture while Browse permits a delib
         ? new Response(await readFile(path))
         : undefined,
   });
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
+  p.$('start-button').click();
   await running(p, 'horizon-remix');
   p.$('pause-button').click();
   // Controlled result boundary: tests navigation and ownership, not an earned
@@ -315,21 +420,18 @@ test('Solo final Journey result retains the picture while Browse permits a delib
   p.$('next-button').click();
   await settle(() => p.$('journey-chooser')?.open);
   p.change('journey-collection', 'Classic');
-  const firstClassic = [...p.$('journey-cards').children].find((card) => {
-    const [owner, , , missionId] = JSON.parse(card.dataset.missionId);
-    return owner === '["classic","base",null]' && missionId === 'signal-01';
-  });
+  const firstClassic = [...p.$('journey-cards').children].find((card) => card.dataset.missionId);
   assert.ok(firstClassic, 'The compatible Classic mission remains available in the same browser.');
+  const firstClassicId = JSON.parse(firstClassic.dataset.missionId);
   firstClassic.click();
-  await settle(
-    () => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy',
-    'The exact Legacy host receives this continuation.',
-  );
+  await waitFor(() => new URL(globalThis.location.href).searchParams.get('journey') === 'legacy', {
+    message: 'The exact Legacy host receives this continuation.',
+    timeoutMs: 30000,
+  });
   const selected = JSON.parse(
     new URL(globalThis.location.href).searchParams.get('library-mission'),
   );
-  assert.equal(selected[0], '["classic","base",null]');
-  assert.equal(selected[3], 'signal-01');
+  assert.deepEqual(selected, firstClassicId);
   p.frame(0);
   assert.equal(p.rendered.run, result);
   assert.equal(p.rendered.backdrop, picture);

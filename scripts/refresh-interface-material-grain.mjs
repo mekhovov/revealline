@@ -1,0 +1,167 @@
+import { readFile, writeFile } from 'node:fs/promises';
+
+// Original, deterministic pixel clusters. No turbulence filter, blur, raster
+// scaling or runtime generation: the browser repeats these at native CSS size.
+// This layer is separate from immutable theme documents and nine-slice frames.
+const target = new URL('../game/presentation/industrial-workshop.css', import.meta.url);
+let state = 0x6578706f;
+const random = (max) => {
+  state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+  return Math.floor((state / 0x100000000) * max);
+};
+const rect = (x, y, w = 1, h = 1) => `M${x} ${y}h${w}v${h}h-${w}z`;
+const layer = (fill, opacity, d) => `<path fill='${fill}' opacity='${opacity}' d='${d}'/>`;
+const tile = (width, height, layers) => {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}' shape-rendering='crispEdges'>${layers.join('')}</svg>`;
+  return `url("data:image/svg+xml,${svg.replaceAll('%', '%25').replaceAll('#', '%23').replaceAll('<', '%3C').replaceAll('>', '%3E')}")`;
+};
+const powder = ['', '', ''];
+for (let i = 0; i < 112; i++) {
+  const x = 2 + random(186),
+    y = 2 + random(122);
+  powder[i % 2] += rect(x, y, 1 + random(2));
+  if (i % 4 === 0) powder[(i + 1) % 2] += rect(x + 1, y + 1, 2);
+}
+for (let i = 0; i < 18; i++) {
+  const x = 4 + random(160),
+    y = 4 + random(110),
+    w = 5 + random(14);
+  powder[2] += rect(x, y, w, 2) + rect(x + 2, y + 2, w - 3, 2);
+}
+const brush = ['', ''];
+for (let i = 0; i < 26; i++) {
+  const x = random(146),
+    y = 2 + random(91),
+    w = 5 + random(29);
+  brush[i % 2] += rect(x, y, w);
+}
+const thread = ['', '', ''];
+for (let y = 0; y < 48; y += 4) {
+  for (let x = 0; x < 48; x += 4) {
+    const even = ((x + y) / 4) % 2 === 0;
+    // A plain weave with small yarn-length variations, not a uniform checker.
+    // The index is independent of the other materials' random sequence.
+    const yarn = (x * 7 + y * 11) % 19;
+    const length = yarn < 5 ? 2 : 3;
+    thread[0] += rect(x, y, even ? length : 1, even ? 1 : length);
+    thread[1] += rect(x + 2, y + 2, even ? 1 : 2, even ? 2 : 1);
+    if (yarn === 0) thread[2] += rect(x + 1, y, even ? 2 : 1, even ? 1 : 2);
+  }
+}
+const wood = ['', ''];
+// Broken contours bend around growth knots; varying spacing/length prevents
+// the even scanline rhythm of the earlier gradient-based wood finish.
+for (let i = 0; i < 14; i++) {
+  let x = 2 + random(82),
+    y = 4 + random(115),
+    d = `M${x} ${y}`;
+  const segments = 3 + random(9);
+  for (let j = 0; j < segments && x < 183; j++) {
+    const dx = Math.min(6 + random(12), 188 - x);
+    const dy = Math.round(Math.sin((x - 58) / 22) * (i % 3 === 0 ? 3 : 1));
+    d += `h${dx}v${dy}`;
+    x += dx;
+  }
+  wood[i % 2] +=
+    `<path fill='none' stroke='${i % 2 ? '#fff' : '#000'}' stroke-opacity='${i % 2 ? '.028' : '.045'}' d='${d}'/>`;
+}
+const stone = ['', ''];
+for (let i = 0; i < 32; i++) {
+  const x = 3 + random(180),
+    y = 3 + random(116),
+    w = 2 + random(5);
+  stone[i % 2] +=
+    i % 3 === 0 ? `M${x} ${y}h${w}v1h2v1h-${w + 1}v-1h-1z` : rect(x, y, w, 1 + random(2));
+}
+const fiber = ['', ''];
+for (let i = 0; i < 25; i++) {
+  const x = 3 + random(166),
+    y = 3 + random(116);
+  fiber[i % 2] += `M${x} ${y}h${3 + random(7)}v1h-3v1h-2v-1h-2z`;
+}
+const tiles = {
+  powder: tile(192, 128, [
+    layer('#fff', '.055', powder[0]),
+    layer('#000', '.09', powder[1]),
+    layer('#000', '.023', powder[2]),
+  ]),
+  brush: tile(192, 96, [layer('#fff', '.045', brush[0]), layer('#000', '.055', brush[1])]),
+  thread: tile(48, 48, [
+    layer('#fff', '.021', thread[0]),
+    layer('#000', '.065', thread[1]),
+    layer('#fff', '.018', thread[2]),
+  ]),
+  // Sparse mineral inclusions in glaze. Unlike paper fiber these are tiny paired
+  // pits/catchlights, with long clean areas and no directional scratch marks.
+  glaze: tile(256, 192, [
+    layer(
+      '#183858',
+      '.045',
+      'M19 27h1v1h-1zM107 68h1v1h-1zM214 21h1v1h-1zM64 143h1v1h-1zM182 155h1v1h-1zM236 108h1v1h-1z',
+    ),
+    layer(
+      '#fff',
+      '.18',
+      'M20 28h1v1h-1zM108 69h1v1h-1zM215 22h1v1h-1zM65 144h1v1h-1zM183 156h1v1h-1zM237 109h1v1h-1z',
+    ),
+  ]),
+  timber: tile(192, 128, wood),
+  stone: tile(192, 128, [layer('#fff', '.028', stone[0]), layer('#000', '.04', stone[1])]),
+  fiber: tile(192, 128, [layer('#fff', '.035', fiber[0]), layer('#000', '.033', fiber[1])]),
+  // Industrial machining is authored geometry, separate from powdercoat.
+  // Directional tool marks come in light/recess pairs; long quiet intervals
+  // leave labels readable. Edge wear and vent ribs never tile over the face.
+  machining: tile(256, 128, [
+    layer(
+      '#000',
+      '.075',
+      'M12 18h34v1H12zM91 43h19v1H91zM164 12h47v1h-47zM37 95h31v1H37zM146 103h18v1h-18zM208 74h26v1h-26zM118 65h8v1h-8zM68 28h6v1h-6z',
+    ),
+    layer(
+      '#fff',
+      '.045',
+      'M13 19h30v1H13zM92 44h16v1H92zM167 13h40v1h-40zM39 96h26v1H39zM147 104h15v1h-15zM209 75h22v1h-22z',
+    ),
+  ]),
+  'edge-wear': tile(128, 6, [
+    layer('#fff', '.20', 'M7 1h12v1H7zM42 2h5v1h-5zM76 1h17v1H76zM111 2h8v1h-8z'),
+    layer('#000', '.26', 'M8 2h9v1H8zM42 3h4v1h-4zM78 2h13v1H78zM111 3h6v1h-6z'),
+  ]),
+  vent: tile(96, 8, [
+    layer('#000', '.45', Array.from({ length: 15 }, (_, i) => rect(4 + i * 6, 2, 3, 4)).join('')),
+    layer('#fff', '.14', Array.from({ length: 15 }, (_, i) => rect(4 + i * 6, 6, 3)).join('')),
+  ]),
+  bulkhead: tile(256, 192, [
+    layer('#000', '.42', 'M0 0h256v2H0zM0 2h2v190H0z'),
+    layer('#fff', '.07', 'M2 2h254v1H2zM2 3h1v189H2z'),
+    layer('#000', '.32', 'M9 9h6v6H9zM241 9h6v6h-6zM9 177h6v6H9zM241 177h6v6h-6z'),
+    layer('#fff', '.12', 'M10 10h4v1h-4zM242 10h4v1h-4zM10 178h4v1h-4zM242 178h4v1h-4z'),
+    layer('#fff', '.055', 'M34 3h26v1H34zM186 3h39v1h-39zM3 88h1v12H3z'),
+  ]),
+};
+const start =
+  '/* BEGIN ORIGINAL MATERIAL GRAIN — generated by scripts/refresh-interface-material-grain.mjs */';
+const end = '/* END ORIGINAL MATERIAL GRAIN */';
+const block = `${start}\n[data-theme-family] {\n${Object.entries(tiles)
+  .map(([name, url]) => `  --ui-grain-${name}: ${url};`)
+  .join('\n')}\n}\n${end}`;
+const source = await readFile(target, 'utf8');
+const first = source.indexOf(start),
+  last = source.indexOf(end);
+if (first < 0 !== last < 0 || (first >= 0 && last < first))
+  throw new Error('Material generation markers are incomplete.');
+if (first < 0 && !source.includes('/* Material finishes are independent'))
+  throw new Error('Material insertion point is missing.');
+const updated =
+  first < 0
+    ? source.replace(
+        '/* Material finishes are independent',
+        `${block}\n\n/* Material finishes are independent`,
+      )
+    : source.slice(0, first) + block + source.slice(last + end.length);
+if (process.argv.slice(2).some((arg) => arg !== '--check'))
+  throw new Error('Usage: node scripts/refresh-interface-material-grain.mjs [--check]');
+if (process.argv.includes('--check')) {
+  if (source !== updated) throw new Error('Material grain differs; run the refresh command.');
+} else await writeFile(target, updated);
+console.log(JSON.stringify({ tiles: Object.keys(tiles), bytes: Buffer.byteLength(block) }));

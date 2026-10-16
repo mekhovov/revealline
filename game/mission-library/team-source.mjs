@@ -2,9 +2,15 @@ import { journeyLibrarySource } from './journey-source.mjs';
 import { journeyMissionDetails, authoredJourneyMissionTags } from './journey-presentation.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { t } from '../i18n/index.mjs';
+import { classifyContent } from '../content-design/content-lifecycle.mjs';
+import { canonicalMissionLevelKey, officialLevelNumber } from '../level-numbering.mjs';
 
 export const TEAM_LIBRARY_JOURNEY_EDITION = 'team-cultural-specialist-originals-2';
 export const TEAM_LIBRARY_CLASSIC_SOURCE = 'team-classic:relay-rescue-starter';
+// Hunt has different Team and Duel campaigns behind the same route URL. Their
+// library owners must coexist without one mode replacing the other's rows.
+export const teamJourneyLibraryOwner = (editionId) =>
+  `${editionId === 'humanoid-hunt-v1' ? 'team-journey' : 'journey'}:${editionId}`;
 const difficultyKeys = Object.freeze({
   gentle: 'interface:missionLibrary.team.difficulty.gentle',
   standard: 'interface:missionLibrary.team.difficulty.standard',
@@ -22,17 +28,22 @@ export function teamJourneyLibrarySource({
   // Historical readers keep authored receipt semantics unless they opt in.
   gameplayIdentity = (row) => row.simulationIdentity,
   difficulty = () => 'standard',
+  encounterVariant = () => 'authored',
   launch,
 }) {
+  const presentation = (mission) =>
+    journey.presentation?.(mission, difficulty(), { encounterVariant: encounterVariant() });
   const source = journeyLibrarySource({
     editionId,
     edition,
+    lifecycle:
+      classifyContent({ family: 'team', id: editionId }) === 'archived' ? 'archive' : 'current',
     editionLabel: () =>
       edition === 'Team Journey' ? t('interface:missionLibrary.team.journeyEdition') : edition,
     catalog: journey.catalog,
     profile: progress ?? { snapshot: () => ({ clears: {}, skipped: {} }) },
     tags: (mission) => authoredJourneyMissionTags(mission, journey.manifest(mission, difficulty())),
-    card: (mission) => journey.card(mission, difficulty()),
+    card: (mission) => presentation(mission)?.card ?? journey.card(mission, difficulty()),
     launch(mission, context) {
       const row = journey.row(mission, difficulty());
       if (!row || !journey.owns(row))
@@ -42,7 +53,12 @@ export function teamJourneyLibrarySource({
   });
   return {
     ...source,
-    details: (mission) => journeyMissionDetails(journey.manifest(mission, difficulty())),
+    id: teamJourneyLibraryOwner(editionId),
+    details: (mission) => {
+      const manifest = journey.manifest(mission, difficulty()),
+        design = presentation(mission)?.design;
+      return journeyMissionDetails(design ? { ...manifest, design } : manifest);
+    },
     progress(mission) {
       if (!progress) return '';
       const profile = progress.snapshot(),
@@ -79,6 +95,7 @@ export function teamArenaLibrarySource({
   collection = 'Classic',
   isCurrent = (row) => rows.includes(row),
   progress = () => '',
+  progressState = () => ({ state: 'new', bestStars: null }),
   launch,
 }) {
   const editionLabel = () => (typeof edition === 'function' ? edition() : edition);
@@ -123,16 +140,28 @@ export function teamArenaLibrarySource({
     edition: editionLabel(),
     collection,
     entries: rows,
-    describe: (row) => ({
-      id: row.levelId,
-      revision: row.pack.revision,
-      campaignKey: row.pack.id,
-      campaignTitle: row.packName,
-      name: row.title,
-      levelIndex: row.pack.levels.indexOf(row.level),
-      modes: ['team'],
-      rules: row.goal,
-    }),
+    describe: (row) => {
+      const canonicalLevelKey =
+        sourceId === TEAM_LIBRARY_CLASSIC_SOURCE && collection === 'Classic'
+          ? canonicalMissionLevelKey({
+              packId: row.pack.id,
+              campaignId: row.pack.id,
+              levelId: row.levelId,
+            })
+          : undefined;
+      return {
+        id: row.levelId,
+        revision: row.pack.revision,
+        campaignKey: row.pack.id,
+        campaignTitle: row.packName,
+        name: row.title,
+        levelIndex: row.pack.levels.indexOf(row.level),
+        canonicalLevelKey,
+        globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+        modes: ['team'],
+        rules: row.goal,
+      };
+    },
     presentation: () => ({ edition: editionLabel() }),
     availability: (row) =>
       current(row)
@@ -142,6 +171,7 @@ export function teamArenaLibrarySource({
             reason: t('interface:missionLibrary.team.packUnavailableThisVisit'),
           },
     progress: (row) => (current(row) ? progress(row) : ''),
+    progressState: (row) => (current(row) ? progressState(row) : { state: 'new', bestStars: null }),
     launch(row, context) {
       if (!current(row)) throw new Error(t('errors:missionLibrary.teamPackSelectionChanged'));
       return launch(row, context);

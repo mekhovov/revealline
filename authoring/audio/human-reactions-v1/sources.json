@@ -1,0 +1,43 @@
+{
+  "author": "Exewin",
+  "source": "https://opengameart.org/content/death-sounds-0",
+  "download": "https://opengameart.org/sites/default/files/exewinDeathSoundsPack.zip",
+  "license": "CC0-1.0",
+  "archiveSha256": "a8325b40204641ee890f7d92538ad4db637275cb8c12c481772d82efa7753bd1",
+  "licenseSha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+  "sourcePageSha256": "9f9a054aa3cfb25857959c0adc64fb5c1535d27f3b821ea9b25f5517c47faada",
+  "files": {
+    "1.ogg": {
+      "bytes": 15422,
+      "sha256": "8d772bc252baf058887877cddf99090fb8149aaa41672e5178cbd2d8874f73be"
+    },
+    "2.ogg": {
+      "bytes": 14713,
+      "sha256": "283b8f19a2de2808f1a27be4fd6551644ab8b418bfa7c35a3cc42cbd8bf94783"
+    },
+    "3.ogg": {
+      "bytes": 10818,
+      "sha256": "0a841804764f30887861224d7f3a1b8e1922f7574e42c16f221d29ecfd348e0f"
+    },
+    "4.ogg": {
+      "bytes": 15469,
+      "sha256": "dfc67cd0aa6a1d71cd9ec8eea07f64dbbf301e23817331687c66cb42e409b503"
+    },
+    "7.ogg": {
+      "bytes": 12683,
+      "sha256": "70c60da09a7b0b5252cc067f08d46f286504e0cf2945fddf3f71989623d55c5e"
+    },
+    "8.ogg": {
+      "bytes": 15906,
+      "sha256": "6a26b40b153682581ec18dfcf1a61d3e623396b718a19c5dbeafa0a1d1f063b7"
+    },
+    "9.ogg": {
+      "bytes": 15815,
+      "sha256": "1c4424ef4b6479b48abab901d63effae54c3e539831ee5b1dfb5e89b26736e35"
+    },
+    "10.ogg": {
+      "bytes": 15621,
+      "sha256": "58ddbe590c26c3f54b2ec69991bc0087bdaca2b09acd3e8692a96f570dcf0e10"
+    }
+  }
+}

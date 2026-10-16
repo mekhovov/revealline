@@ -1,0 +1,24 @@
+{
+  "format": "FPVReservoirNativeSmoke.v1",
+  "revision": "r9",
+  "authoringCommit": "ab3a3585df48e09eb233f46c15112a60713b5d46",
+  "admittedSource": "248b8d9af1b082c283a2cbd9501ea8d906f83374",
+  "admittedMembers": 102,
+  "hostOverlay": false,
+  "entry": "http://127.0.0.1:8930/player/optional-practice/fpv-worlds/index.html#creator",
+  "method": "Root agent directly observed the unmodified native player through actual browser UI; this compact receipt transcribes the reported observations.",
+  "observations": [
+    "The visible Library file chooser imported world.rlpack as eight challenges with pack digest prefix 28a50.",
+    "The recording file chooser reported Imported 16/16 and 16 verified.",
+    "The native Fly catalogue showed Mountain Reservoir with eight courses and Watch demo controls.",
+    "Shoreline check-in advanced through Fly, Ready, deliberate Arm at zero time, Flight active, and Pause."
+  ],
+  "packSHA256": "28a50cb742ce0825edbf760d42fb93fb4147daee1b23f590ef7baf59a4023894",
+  "proofSHA256": "c8b50e0ae00450c0b3c0af623de92f5eb6ac3b63f095d39603d3d1e8ce542641",
+  "screenshot": {
+    "path": "r9-native-active.png",
+    "bytes": 69196,
+    "sha256": "275fa93d720f3802c5d740ca5125c975b079f998cc7795531137f8a6681e1c89"
+  },
+  "scope": "Bounded exact-pack native import, recording arrival and flight smoke. This run does not establish all sixteen Watch replays, offline behavior, hardware performance or broader artistic acceptance."
+}

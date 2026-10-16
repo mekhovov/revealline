@@ -1,0 +1,420 @@
+TAP version 13
+# Subtest: Raid V3 round-trips authored escort links, medal budgets and balance identity without changing old defaults
+ok 1 - Raid V3 round-trips authored escort links, medal budgets and balance identity without changing old defaults
+  ---
+  duration_ms: 120.693125
+  ...
+# Subtest: guarded machinery has a readable rear-half opening; recovery exposes all sides
+ok 2 - guarded machinery has a readable rear-half opening; recovery exposes all sides
+  ---
+  duration_ms: 5.306375
+  ...
+# Subtest: fresh boosted passes can remove two plates in one opening; the same boost cannot repeat after exiting
+ok 3 - fresh boosted passes can remove two plates in one opening; the same boost cannot repeat after exiting
+  ---
+  duration_ms: 19.450875
+  ...
+# Subtest: frontal machinery contact still hurts and width does not expand the rear angle
+ok 4 - frontal machinery contact still hurts and width does not expand the rear angle
+  ---
+  duration_ms: 4.56675
+  ...
+# Subtest: guard interruption opens a shield or brace but never machinery or independent fired projectiles
+ok 5 - guard interruption opens a shield or brace but never machinery or independent fired projectiles
+  ---
+  duration_ms: 5.429208
+  ...
+# Subtest: an objective restores only one shield charge and escorts move with the defended target
+ok 6 - an objective restores only one shield charge and escorts move with the defended target
+  ---
+  duration_ms: 31.323917
+  ...
+# Subtest: Marathon refits preserve eight invested ranks, compatibility and useful choices
+ok 7 - Marathon refits preserve eight invested ranks, compatibility and useful choices
+  ---
+  duration_ms: 129.098792
+  ...
+# Subtest: authored provisional medals and V3 records retain raw/adjusted time in a separate bucket
+ok 8 - authored provisional medals and V3 records retain raw/adjusted time in a separate bucket
+  ---
+  duration_ms: 9.714542
+  ...
+# Subtest: interrupted shields recover their committed facing rather than staying permanently open
+ok 9 - interrupted shields recover their committed facing rather than staying permanently open
+  ---
+  duration_ms: 12.590125
+  ...
+# Subtest: capped Marathon opens native refit drafts and carries the budget to the next contract
+ok 10 - capped Marathon opens native refit drafts and carries the budget to the next contract
+  ---
+  duration_ms: 12.044125
+  ...
+# Subtest: Raid reports actual hull loss for contact, lane, fan and ground result breakdowns
+ok 11 - Raid reports actual hull loss for contact, lane, fan and ground result breakdowns
+  ---
+  duration_ms: 11.947458
+  ...
+# Subtest: Raid starts explicitly and preserves deterministic paused clocks and confirmation gating
+ok 12 - Raid starts explicitly and preserves deterministic paused clocks and confirmation gating
+  ---
+  duration_ms: 16.781125
+  ...
+# Subtest: sweep detects fast crossings even when neither endpoint overlaps, including both moving bodies
+ok 13 - sweep detects fast crossings even when neither endpoint overlaps, including both moving bodies
+  ---
+  duration_ms: 5.176291
+  ...
+# Subtest: exposed contact preserves hull and exactly-once death rewards and remains
+ok 14 - exposed contact preserves hull and exactly-once death rewards and remains
+  ---
+  duration_ms: 5.460834
+  ...
+# Subtest: shield front blocks and rear exposes; guard orientation stays committed during approach
+ok 15 - shield front blocks and rear exposes; guard orientation stays committed during approach
+  ---
+  duration_ms: 3.749291
+  ...
+# Subtest: protection uses the visible pre-movement phase rather than transitioning on collision
+ok 16 - protection uses the visible pre-movement phase rather than transitioning on collision
+  ---
+  duration_ms: 2.918333
+  ...
+# Subtest: arrival warnings give a full harmless interval before contact becomes active
+ok 17 - arrival warnings give a full harmless interval before contact becomes active
+  ---
+  duration_ms: 12.886959
+  ...
+# Subtest: machinery requires boosted passes and cannot lose several segments while overlapping
+ok 18 - machinery requires boosted passes and cannot lose several segments while overlapping
+  ---
+  duration_ms: 3.259458
+  ...
+# Subtest: blocking contact stops attacks against bodies behind a shield
+ok 19 - blocking contact stops attacks against bodies behind a shield
+  ---
+  duration_ms: 4.861708
+  ...
+# Subtest: wider offensive strike does not enlarge damage exposure
+ok 20 - wider offensive strike does not enlarge damage exposure
+  ---
+  duration_ms: 2.572541
+  ...
+# Subtest: independent projectile survives owner death and can damage the player in the same tick
+ok 21 - independent projectile survives owner death and can damage the player in the same tick
+  ---
+  duration_ms: 5.418292
+  ...
+# Subtest: priority warnings are bounded and a dead windup owner does not fire
+ok 22 - priority warnings are bounded and a dead windup owner does not fire
+  ---
+  duration_ms: 2.685125
+  ...
+# Subtest: each boost refunds once even for a full formation; passive recovery and hard floor remain
+ok 23 - each boost refunds once even for a full formation; passive recovery and hard floor remain
+  ---
+  duration_ms: 11.981625
+  ...
+# Subtest: Rush stores until a fresh boost, does not refill during active Rush, and survives damage
+ok 24 - Rush stores until a fresh boost, does not refill during active Rush, and survives damage
+  ---
+  duration_ms: 5.332791
+  ...
+# Subtest: eight choices remain three distinct legal cards and optional choices are awarded once
+ok 25 - eight choices remain three distinct legal cards and optional choices are awarded once
+  ---
+  duration_ms: 6.939709
+  ...
+# Subtest: draft waits for the boost transaction to finish and confirmation cannot trigger a boost
+ok 26 - draft waits for the boost transaction to finish and confirmation cannot trigger a boost
+  ---
+  duration_ms: 18.818458
+  ...
+# Subtest: courier escape starts only after reveal and required targets never expire
+ok 27 - courier escape starts only after reveal and required targets never expire
+  ---
+  duration_ms: 115.307083
+  ...
+# Subtest: replacement preserves the build and finite world and ends after the last airframe
+ok 28 - replacement preserves the build and finite world and ends after the last airframe
+  ---
+  duration_ms: 13.08425
+  ...
+# Subtest: all rank values used by previews are identical to simulation parameters
+ok 29 - all rank values used by previews are identical to simulation parameters
+  ---
+  duration_ms: 0.88425
+  ...
+# Subtest: same compiled seed and inputs produce byte-identical summaries and enemy states
+ok 30 - same compiled seed and inputs produce byte-identical summaries and enemy states
+  ---
+  duration_ms: 577.234083
+  ...
+# Subtest: initial machinery objectives require a telegraphed attack before their first opening
+ok 31 - initial machinery objectives require a telegraphed attack before their first opening
+  ---
+  duration_ms: 8.686584
+  ...
+# Subtest: one exposed base-kit tank takes exactly three distinct boosted passes
+ok 32 - one exposed base-kit tank takes exactly three distinct boosted passes
+  ---
+  duration_ms: 19.858084
+  ...
+# Subtest: small cosmetic pools can exhaust without losing casualties or rewards
+ok 33 - small cosmetic pools can exhaust without losing casualties or rewards
+  ---
+  duration_ms: 2.192334
+  ...
+# Subtest: an exhausted projectile pool defers shots without corrupting ownership or warning slots
+ok 34 - an exhausted projectile pool defers shots without corrupting ownership or warning slots
+  ---
+  duration_ms: 1.719042
+  ...
+# Subtest: stationary waiting cannot clear required objectives or replenish finite packs
+ok 35 - stationary waiting cannot clear required objectives or replenish finite packs
+  ---
+  duration_ms: 241.615833
+  ...
+# Subtest: the final fractional projectile flight segment collides, without flying past its lifetime
+ok 36 - the final fractional projectile flight segment collides, without flying past its lifetime
+  ---
+  duration_ms: 1.863208
+  ...
+# Subtest: formation-derived edge waypoints remain reachable inside the arena
+ok 37 - formation-derived edge waypoints remain reachable inside the arena
+  ---
+  duration_ms: 3.384083
+  ...
+# Subtest: Raid technical workload sustains actual contact effects and exact populations without a game result
+ok 38 - Raid technical workload sustains actual contact effects and exact populations without a game result
+  ---
+  duration_ms: 2277.485167
+  ...
+# Subtest: boost ranks, Rush and chain expiry obey exact fixed tick durations without floating residue
+ok 39 - boost ranks, Rush and chain expiry obey exact fixed tick durations without floating residue
+  ---
+  duration_ms: 28.144083
+  ...
+# Subtest: lethal independent projectile contact wins chronological precedence over a later prey hit
+ok 40 - lethal independent projectile contact wins chronological precedence over a later prey hit
+  ---
+  duration_ms: 2.552542
+  ...
+# Subtest: a tracked-tank appearance on an authored column objective still grants its guaranteed upgrade
+ok 41 - a tracked-tank appearance on an authored column objective still grants its guaranteed upgrade
+  ---
+  duration_ms: 4.85
+  ...
+# Subtest: Rush instrument describes charge, stored activation and remaining time without stale accessible values
+ok 42 - Rush instrument describes charge, stored activation and remaining time without stale accessible values
+  ---
+  duration_ms: 29.693375
+  ...
+# Subtest: polite status announces milestones once rather than streaming score and countdown changes
+ok 43 - polite status announces milestones once rather than streaming score and countdown changes
+  ---
+  duration_ms: 9.362917
+  ...
+# Subtest: Raid Studio messages require the exact parent, origin, protocol and request identity
+ok 44 - Raid Studio messages require the exact parent, origin, protocol and request identity
+  ---
+  duration_ms: 0.147
+  ...
+# Subtest: every Raid upgrade compare live rank parameters without changing the build
+ok 45 - every Raid upgrade compare live rank parameters without changing the build
+  ---
+  duration_ms: 4.885667
+  ...
+# Subtest: native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+ok 46 - native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+  ---
+  duration_ms: 8.874667
+  ...
+# Subtest: native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+ok 47 - native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+  ---
+  duration_ms: 8.562625
+  ...
+# Subtest: contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+ok 48 - contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+  ---
+  duration_ms: 0.372417
+  ...
+# Subtest: Raid localization keys match and preview rejects impossible ranks or systems
+ok 49 - Raid localization keys match and preview rejects impossible ranks or systems
+  ---
+  duration_ms: 2.6645
+  ...
+# Subtest: boost streaks reflect offensive width only while striking and preserve body size
+ok 50 - boost streaks reflect offensive width only while striking and preserve body size
+  ---
+  duration_ms: 0.20725
+  ...
+# Subtest: Raid records keep score and fastest successful clear independent
+ok 51 - Raid records keep score and fastest successful clear independent
+  ---
+  duration_ms: 1.88575
+  ...
+# Subtest: record identity separates content, seed and gameplay settings but shares cosmetics
+ok 52 - record identity separates content, seed and gameplay settings but shares cosmetics
+  ---
+  duration_ms: 2.416833
+  ...
+# Subtest: storage failure is session-only and can recover without losing the previous record
+ok 53 - storage failure is session-only and can recover without losing the previous record
+  ---
+  duration_ms: 0.954125
+  ...
+# Subtest: nonterminal, nonfinite and review attempts cannot set records
+ok 54 - nonterminal, nonfinite and review attempts cannot set records
+  ---
+  duration_ms: 0.666416
+  ...
+# Subtest: failed writes preserve stronger durable records in session results and later reads
+ok 55 - failed writes preserve stronger durable records in session results and later reads
+  ---
+  duration_ms: 2.677708
+  ...
+# Subtest: Raid launch preserves same-build locale and artwork, rejects unknown paths
+ok 56 - Raid launch preserves same-build locale and artwork, rejects unknown paths
+  ---
+  duration_ms: 1.40675
+  ...
+# Subtest: Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+ok 57 - Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+  ---
+  duration_ms: 2.126417
+  ...
+# Subtest: Raid commentator never promises salvage on the ground and only announces first earned Rush
+ok 58 - Raid commentator never promises salvage on the ground and only announces first earned Rush
+  ---
+  duration_ms: 0.309833
+  ...
+# Subtest: V2 records write durably beside untouched legacy history and isolate difficulty
+ok 59 - V2 records write durably beside untouched legacy history and isolate difficulty
+  ---
+  duration_ms: 1.15475
+  ...
+# Subtest: Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+ok 60 - Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+  ---
+  duration_ms: 10.747541
+  ...
+# Subtest: bank/continue transactions settle once and preserve resources without free repairs
+ok 61 - bank/continue transactions settle once and preserve resources without free repairs
+  ---
+  duration_ms: 22.456833
+  ...
+# Subtest: losing the last airframe forfeits the entire unbanked chain, retry restarts it
+ok 62 - losing the last airframe forfeits the entire unbanked chain, retry restarts it
+  ---
+  duration_ms: 7.048125
+  ...
+# Subtest: five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+ok 63 - five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+  ---
+  duration_ms: 63.963584
+  ...
+# Subtest: variant records have independent contexts and shared durable/session storage semantics
+ok 64 - variant records have independent contexts and shared durable/session storage semantics
+  ---
+  duration_ms: 9.007083
+  ...
+# Subtest: pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+ok 65 - pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+  ---
+  duration_ms: 8.067583
+  ...
+# Subtest: an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+ok 66 - an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+  ---
+  duration_ms: 822.015084
+  ...
+# Subtest: Marathon buttons bank once, refresh results and continue only with the host guard
+ok 67 - Marathon buttons bank once, refresh results and continue only with the host guard
+  ---
+  duration_ms: 10.008375
+  ...
+# Subtest: Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+ok 68 - Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+  ---
+  duration_ms: 6.935042
+  ...
+# Subtest: medal formatting carries rounded hundredths across minute boundaries
+ok 69 - medal formatting carries rounded hundredths across minute boundaries
+  ---
+  duration_ms: 0.142166
+  ...
+# Subtest: the last legal three-card choice cannot immediately open an exhausted queued draft
+ok 70 - the last legal three-card choice cannot immediately open an exhausted queued draft
+  ---
+  duration_ms: 2.641041
+  ...
+# Subtest: Community admission and publisher identify Raid separately and preserve exact UTF-8 bytes
+ok 71 - Community admission and publisher identify Raid separately and preserve exact UTF-8 bytes
+  ---
+  duration_ms: 48.187125
+  ...
+# Subtest: global install → launch → exact recovery → offload → reinstall retains Raid identity and independent Survivor data
+ok 72 - global install → launch → exact recovery → offload → reinstall retains Raid identity and independent Survivor data
+  ---
+  duration_ms: 317.873417
+  ...
+# Subtest: Raid Studio ownership survives Community offload and stale reviews cannot remove a new owner
+ok 73 - Raid Studio ownership survives Community offload and stale reviews cannot remove a new owner
+  ---
+  duration_ms: 257.903167
+  ...
+# Subtest: Raid native and Studio compile the same immutable source and exact resource closure
+ok 74 - Raid native and Studio compile the same immutable source and exact resource closure
+  ---
+  duration_ms: 14.70825
+  ...
+# Subtest: three finite sets cover shared roster and guarantee six milestone upgrades before the final tank
+ok 75 - three finite sets cover shared roster and guarantee six milestone upgrades before the final tank
+  ---
+  duration_ms: 9.1295
+  ...
+# Subtest: Raid rejects impossible objectives, resource drift, route mistakes and executable data
+ok 76 - Raid rejects impossible objectives, resource drift, route mistakes and executable data
+  ---
+  duration_ms: 14.0565
+  ...
+# Subtest: formation routes account for every member offset and cannot strand edge actors
+ok 77 - formation routes account for every member offset and cannot strand edge actors
+  ---
+  duration_ms: 0.82275
+  ...
+# Subtest: surviving escorts cannot overlap a later sector beyond the visible specialist budget
+ok 78 - surviving escorts cannot overlap a later sector beyond the visible specialist budget
+  ---
+  duration_ms: 2.227708
+  ...
+# Subtest: Raid and Survivor portable formats cannot be silently interchanged
+ok 79 - Raid and Survivor portable formats cannot be silently interchanged
+  ---
+  duration_ms: 8.817584
+  ...
+# Subtest: author → preview → export → fresh-profile import → native play preserves definition
+ok 80 - author → preview → export → fresh-profile import → native play preserves definition
+  ---
+  duration_ms: 26.10175
+  ...
+# Subtest: paired specialist wings preserve budgets while objective routes distinguish all sets
+ok 81 - paired specialist wings preserve budgets while objective routes distinguish all sets
+  ---
+  duration_ms: 26.74275
+  ...
+# Subtest: small V2 specialist wings do not admit tiny ordinary packs or change legacy escorts
+ok 82 - small V2 specialist wings do not admit tiny ordinary packs or change legacy escorts
+  ---
+  duration_ms: 3.013833
+  ...
+1..82
+# tests 82
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3679.836375

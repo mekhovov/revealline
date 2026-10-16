@@ -10,6 +10,9 @@ import {
 } from '../../game/i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
+import { attachAtlasInput } from './atlas-input.mjs';
+import { attachAtlasBriefDownload } from './atlas-brief-download.mjs';
+let atlasInput = null;
 // Original review mockups only. This module never imports the game or writes player storage.
 const $ = (selector) => document.querySelector(selector);
 
@@ -85,8 +88,8 @@ function missionCards(count = 6, unknown = false) {
 
 function titleScreen(state) {
   const first = state === 'first-visit';
-  return `<div class="mock-screen">${top('REVEALLINE', copy(localizedMessage('tools:soloFieldKit')))}
-    <div class="mock-title-content"><div><p class="mock-logo">REVEAL<br /><span>LINE</span></p><p class="mock-subtitle"><span data-i18n="tools:atlas.subtitle"></span></p>
+  return `<div class="mock-screen">${top('FPV / LINE', copy(localizedMessage('tools:soloFieldKit')))}
+    <div class="mock-title-content"><div><p class="mock-logo">FPV<br /><span>/ LINE</span></p><p class="mock-subtitle"><span data-i18n="tools:atlas.subtitle"></span></p>
     <div class="mock-menu"><button type="button" class="menu-focus" data-screen="${first ? 'missions' : 'briefing'}">${first ? copy(localizedMessage('common:actions.deploy')) : copy(localizedMessage('common:actions.continue'))}</button><button type="button" data-screen="missions"><span data-i18n="interface:missions"></span></button><button type="button" data-screen="collection"><span data-i18n="interface:collection"></span></button><button type="button" data-screen="settings"><span data-i18n="common:navigation.settings"></span></button><button type="button" data-screen="workshop"><span data-i18n="tools:atlas.workshop"></span></button></div>
     <p class="menu-destination">${first ? copy(localizedMessage('tools:yourFirstRouteIsWaiting')) : copy(localizedMessage('tools:firstLightRiverCrossingScout'))}</p></div><div class="title-art">${drone}</div></div>
     <div class="mock-command"><span><span data-i18n="tools:atlas.originalWorld"></span></span><span class="desktop-hints"><kbd>↑↓</kbd> <span data-i18n="tools:atlas.move"></span> <kbd>Enter</kbd> <span data-i18n="tools:atlas.choose"></span></span><span><span data-i18n="tools:atlas.proposedTitle"></span></span></div></div>`;
@@ -247,6 +250,7 @@ let currentScreen = 'title';
 let currentState = 'returning';
 
 function renderScreen() {
+  atlasInput?.invalidate();
   const screen = screens[currentScreen];
   $('#screen-preview').innerHTML = screen.render(currentState);
   bindCopies($('#screen-preview'));
@@ -266,6 +270,7 @@ function renderScreen() {
       value2: render(screen.states.find(([id]) => id === currentState)[1]),
     }),
   );
+  atlasInput?.refresh();
 }
 
 function chooseScreen(name, state) {
@@ -316,6 +321,7 @@ const viewportLabel = (view) =>
 document.querySelectorAll('[data-viewport]').forEach((button) => {
   if (button.tagName !== 'BUTTON') return;
   button.addEventListener('click', () => {
+    atlasInput?.invalidate();
     const view = button.dataset.viewport;
     $('#screen-stage').dataset.viewport = view;
     document
@@ -595,6 +601,7 @@ const inventory = [
 ];
 
 function renderInventory() {
+  atlasInput?.invalidate();
   const filter = $('#inventory-filter').value;
   const rows = inventory.filter(([group]) => filter === 'all' || group === filter);
   $('#screen-matrix-body').innerHTML = rows
@@ -620,8 +627,17 @@ $('#copy-prompt').addEventListener('click', async () => {
       message: localizedMessage('tools:copyingTheExampleBrief'),
       isCurrent: () => generation === copyGeneration,
     });
+  let deadline;
   try {
-    await navigator.clipboard.writeText($('#prompt-example-text').textContent);
+    // Start within native activation, but bound only our status wait. The OS
+    // write cannot be canceled; a late settlement must not publish success.
+    const write = navigator.clipboard.writeText($('#prompt-example-text').textContent);
+    await Promise.race([
+      write,
+      new Promise((_, reject) => {
+        deadline = setTimeout(() => reject(new Error('Clipboard status timed out')), 2000);
+      }),
+    ]);
     lease.finish({ message: localizedMessage('tools:exampleBriefCopied') });
   } catch {
     if (generation !== copyGeneration) return;
@@ -644,6 +660,8 @@ $('#copy-prompt').addEventListener('click', async () => {
         message: localizedMessage('tools:copyWasUnavailableSelectTheExampleBriefAndUseYour'),
         state: 'error',
       });
+  } finally {
+    clearTimeout(deadline);
   }
 });
 
@@ -659,7 +677,7 @@ async function checkFonts() {
   const results = await Promise.allSettled(
     required.map(([family, weight]) =>
       Promise.resolve().then(() =>
-        document.fonts.load(`${weight} 20px "${family}"`, 'Ґґ Єє Іі Її RevealLine'),
+        document.fonts.load(`${weight} 20px "${family}"`, 'Ґґ Єє Іі Її FPV / LINE'),
       ),
     ),
   );
@@ -711,5 +729,7 @@ async function revealLocalReferences() {
 
 chooseScreen('title');
 renderInventory();
+atlasInput = attachAtlasInput();
+attachAtlasBriefDownload();
 checkFonts();
 revealLocalReferences();

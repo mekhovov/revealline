@@ -1,0 +1,177 @@
+{
+  "format": "fpv-native-package-journey-v1",
+  "installationOrigin": "http://127.0.0.1:9016",
+  "installationRoot": "/revealline/practice/fpv-worlds/",
+  "candidates": [
+    {
+      "label": "old",
+      "folder": "main-v01424",
+      "sourceRevision": "b309f8232ab38b27fe4081466d550f22c63673d3",
+      "sourceTree": "6309f853ae5db6697cdd3271d726898e4e84385c",
+      "version": "v0.142.4",
+      "revision": "923f391477e06ecba67b129fb83f47952c8b8fb958be349e6742bfc1e4a08199",
+      "cloudRun": 37455244806,
+      "githubArtifactId": 11409047096,
+      "publicEligible": false,
+      "reproducibleBuilds": 2,
+      "committedInputsVerified": true,
+      "topLevelChecksumsVerified": 15,
+      "worldsMembersVerified": 112,
+      "worldsBytes": 15822040,
+      "browserOfflineVerified": false,
+      "files": {
+        "github-artifact.zip": {
+          "bytes": 16048581,
+          "sha256": "5c6c7cbf5ba30ca09fe277e5455bfb3ff1b23fe40ef90d8738e03b575b1a0743"
+        },
+        "distribution-optional-fpv-worlds.zip": {
+          "bytes": 15839786,
+          "sha256": "26953687a9d700c456a151116b36a53e2a2582cbadfb6636cbbe98f9024522e3"
+        },
+        "manifest-optional-fpv-worlds.json": {
+          "bytes": 20541,
+          "sha256": "7dd3b60aff57cf7c2e0cb2c1640fec89d4f929714a157c346b786d20b4f4f44c"
+        }
+      }
+    },
+    {
+      "label": "new",
+      "folder": "pr1225",
+      "sourceRevision": "347aee8a0e70945c1fdb742dd41fc4317b5e2908",
+      "sourceTree": "24bc92e1f7d191c68161edfc56e9afc1bbd31812",
+      "version": "v0.151.1",
+      "revision": "3b8006d011d4be85f8fb88244112cf86d1059dd88ed97d6e91722a073b1174df",
+      "cloudRun": 38588241770,
+      "githubArtifactId": 11906860991,
+      "publicEligible": false,
+      "reproducibleBuilds": 2,
+      "committedInputsVerified": true,
+      "topLevelChecksumsVerified": 15,
+      "worldsMembersVerified": 126,
+      "worldsBytes": 17040477,
+      "browserOfflineVerified": false,
+      "files": {
+        "github-artifact.zip": {
+          "bytes": 22718498,
+          "sha256": "b412a3c8cf73bb770f517d0534d722d941fdd3a7f162d2f932ebb08c301bf74e"
+        },
+        "distribution-optional-fpv-worlds.zip": {
+          "bytes": 17060197,
+          "sha256": "8ad146295cc35dc9bc18ca380bcd8244f35128090bcb601c97201d91cdcf84f2"
+        },
+        "manifest-optional-fpv-worlds.json": {
+          "bytes": 22892,
+          "sha256": "49bc7f5b4e65a3515ff00fc2d6df4858b796e37f63be8379d67f590e9da3c007"
+        }
+      }
+    }
+  ],
+  "world": {
+    "id": "mountain-reservoir",
+    "revision": "r16",
+    "bytes": 1379988,
+    "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+    "courses": 8
+  },
+  "nativeObservations": [
+    {
+      "phase": "old-baseline",
+      "reportedBy": "parent /root through native CUA",
+      "packageVersion": "v0.142.4",
+      "offlineStatus": "Ready offline",
+      "library": "Reservoir r16 saved, 8 challenges, visible digest 50ffbb0e5da7",
+      "launch": "Shoreline check-in rendered; Ready / Choose controls then arm; 0.0 seconds; motors off"
+    },
+    {
+      "phase": "advertise-update",
+      "operation": "Copied exact canonical launcher bytes; changed current.json to v0.151.1; retained both immutable releases",
+      "httpPointerVerified": true,
+      "browserStorageMutatedByFixture": false
+    },
+    {
+      "phase": "updated-package",
+      "reportedBy": "parent /root through native CUA",
+      "packageVersion": "v0.151.1",
+      "offlineStatus": "Ready offline",
+      "previousLink": "Open previous v0.142.4 initially visible immediately after Download",
+      "library": "Reservoir r16 retained, all 8 missions",
+      "launch": "Direct Custom level / Shoreline click started active flight; 38.7 seconds observed, then paused",
+      "interpretation": "Intentional direct mission Play behavior introduced by 91d0a94d2, distinct from catalogue preparation and recovery; no updated disarmed-launch claim"
+    },
+    {
+      "phase": "rollback-navigation",
+      "reportedBy": "parent /root through native CUA",
+      "packageVersion": "v0.142.4",
+      "method": "Known immutable old URL, because launcher previous link disappeared after returning and Check",
+      "library": "Reservoir r16 / 8 challenges / visible digest 50ffbb0e5da7 retained",
+      "interpretation": "Data survival and old-version compatibility observed; user-facing rollback link reliability under investigation"
+    },
+    {
+      "phase": "read-only-readiness-diagnostic",
+      "reportedBy": "parent /root through native CUA",
+      "active": {
+        "version": "v0.151.1",
+        "ready": true,
+        "revision": "3b8006d011d4be85f8fb88244112cf86d1059dd88ed97d6e91722a073b1174df",
+        "total": 16993709
+      },
+      "previous": {
+        "version": "v0.142.4",
+        "ready": true,
+        "revision": "923f391477e06ecba67b129fb83f47952c8b8fb958be349e6742bfc1e4a08199",
+        "total": 15779904
+      },
+      "pointers": "Both active and previous references intact",
+      "latency": "Native hash verification took several seconds; no exact duration measured",
+      "interpretation": "No lost cache/data observed. Link disappearance is not evidence of package loss."
+    },
+    {
+      "phase": "corrected-launcher-mixed-harness",
+      "reportedBy": "parent /root through native CUA",
+      "launcherSourceRevision": "4c7813e8e",
+      "launcherSourceSha256": "6f5a76bda079f54c46ea6df4a13130002654ef46b4840e02aecbd08bf3889584",
+      "reviewScriptSha256": "13a6cabbea739a7584d9cb2476e0980948f5eabb040295c2d4e872346695230a",
+      "reviewHtmlSha256": "b584911388dcaf5cf729cb67e8e1268216b410ed7660914a951c827a44353804",
+      "beforeCheck": "Prepared and previous links visible",
+      "duringCheck": "Check disabled; Checking prepared versions displayed; both launch links retained",
+      "afterCheck": "Ready offline; both launch links retained",
+      "rollback": "Open previous practice successfully opened actual v0.142.4 player",
+      "screenshotName": "update-stable-recovery-controls.jpg",
+      "immutablePlayerMembersRecheckedUnchanged": true,
+      "limitation": "Mixed source launcher with frozen players; not an admitted corrected package"
+    },
+    {
+      "phase": "upgraded-origin-unavailable-reopen",
+      "reportedBy": "parent /root through native CUA",
+      "origin": "http://127.0.0.1:9016",
+      "serverStoppedPid": 11295,
+      "connectionRefusedBeforeReopen": true,
+      "observations": [
+        {
+          "version": "v0.151.1",
+          "navigation": "Known new URL reopened cached home page",
+          "continue": "Restored Reservoir at 57.2 seconds, retained actual pose, paused, explicit Arm required",
+          "rendered": true,
+          "screenshotName": "upgraded-origin-unavailable.jpg"
+        },
+        {
+          "version": "v0.142.4",
+          "navigation": "Old URL reload reopened cached home page",
+          "continue": "Restored same Reservoir at 57.2 seconds, retained actual pose, paused, explicit Arm required",
+          "rendered": true,
+          "screenshotName": "previous-origin-unavailable.jpg"
+        }
+      ],
+      "serverRestored": true,
+      "limitation": "Own HTTP origin unavailable only; not network-wide offline, browser restart or storage eviction"
+    }
+  ],
+  "completed": false,
+  "limitations": [
+    "Corrected mixed-source launcher verified; fresh corrected-package admission and browser qualification pending",
+    "Candidates remain non-public; no publication admission override",
+    "No network-wide offline, browser restart, real quota/eviction or target-device qualification",
+    "Frozen 9012 installation untouched"
+  ],
+  "mixedLauncherQualificationPassed": true
+}

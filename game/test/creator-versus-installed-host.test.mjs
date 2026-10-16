@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { pngBytes } from './helpers/media-fixtures.mjs';
+import { pngBytes, deferred } from './helpers/media-fixtures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { activateMissionCard } from './helpers/library-selection.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { generateCreatorProject } from '../creator/templates.mjs';
@@ -14,7 +15,8 @@ import {
   installPreparedCreatorBundle,
   reviewCreatorInstallation,
 } from '../creator/installed.mjs';
-import { creatorProfileKey } from '../creator/runtime.mjs';
+import { creatorAttemptKey, creatorProfileKey } from '../creator/runtime.mjs';
+import { creatorVersusHref } from '../creator/player-menu.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 
 const themes = JSON.parse(
@@ -44,10 +46,15 @@ function indexedDatabases() {
   };
 }
 
-async function creatorCampaign() {
+async function creatorCampaign({ firstMissionId = 'picture-1' } = {}) {
   const first = generateCreatorProject({ id: 'versus-installed', name: 'Picture race', seed: 8 });
   const second = generateCreatorProject({ id: 'versus-next', name: 'Picture race', seed: 9 });
   const project = structuredClone(first.project);
+  const firstMission = project.missions[0];
+  firstMission.id = firstMissionId;
+  if (firstMissionId !== 'picture-1') firstMission.name = 'Custom first return';
+  project.campaigns[0].missionIds = [firstMission.id];
+  const firstProvenance = { ...first.provenance, missionId: firstMission.id };
   const secondMap = structuredClone(second.project.maps[0]);
   secondMap.id = 'picture-map-2';
   const secondMission = structuredClone(second.project.missions[0]);
@@ -80,7 +87,7 @@ async function creatorCampaign() {
       project,
       packId: 'collection',
       themes,
-      provenance: [first.provenance, { ...second.provenance, missionId: secondMission.id }],
+      provenance: [firstProvenance, { ...second.provenance, missionId: secondMission.id }],
       credits: {
         creator: 'Creator host fixture',
         picture: 'Original fixture',
@@ -91,13 +98,13 @@ async function creatorCampaign() {
     { decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }) },
   );
   const route = pack.manifest.evidence
-    .find((entry) => entry.missionId === first.provenance.missionId)
+    .find((entry) => entry.missionId === firstProvenance.missionId)
     .routes.find((entry) => entry.difficulty === 'standard' && entry.turnPolicy === 'immediate');
   assert(route?.replay, 'the installed mission needs its verified route recording');
   return { pack, route };
 }
 
-async function openCreatorHost(t, indexedDB, storage) {
+async function openCreatorHost(t, indexedDB, storage, options = {}) {
   return couchPage(t, {
     initialLevel: null,
     storage,
@@ -111,10 +118,11 @@ async function openCreatorHost(t, indexedDB, storage) {
       if (path === '../content/packs/fpv-arcade-r5.json')
         return new Response('Fixture isolates installed creator content', { status: 503 });
     },
+    ...options,
   });
 }
 
-async function fixture() {
+async function fixture(options) {
   const indexedDB = indexedDatabases(),
     local = new Map(),
     storage = {
@@ -122,7 +130,7 @@ async function fixture() {
       setItem: (key, value) => local.set(key, value),
       removeItem: (key) => local.delete(key),
     },
-    { pack, route } = await creatorCampaign(),
+    { pack, route } = await creatorCampaign(options),
     store = createCreatorStore({ indexedDB }),
     approval = approveCreatorBundle(pack);
   await installPreparedCreatorBundle(
@@ -134,6 +142,28 @@ async function fixture() {
   );
   store.close();
   return { pack, route, indexedDB, storage };
+}
+
+function reachMissionGo(page) {
+  assert.equal(page.$('race-start-cue').hidden, false);
+  assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(page.$('race-start-cue-label').textContent, '3');
+  page.frame(0, { preserveStartCue: true });
+  assert.equal(page.tick(), 0);
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, '2');
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, '1');
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(page.tick(), 0);
+  page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.tick(), 1);
+}
+function finishMissionCue(page) {
+  for (let tick = 1; tick < 42; tick++) page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.tick(), 42);
 }
 
 function replayPlayerOne(page, replay) {
@@ -150,15 +180,19 @@ function replayPlayerOne(page, replay) {
       if (direction) page.key(directionKeys[direction]);
       heldDirection = direction;
     }
-    page.frames(segment.ticks);
+    for (let tick = 0; tick < segment.ticks; tick++)
+      page.frame(1000 / 120, { preserveStartCue: true });
   }
   if (heldDirection) page.key(directionKeys[heldDirection], false);
 }
 
 async function openMissionLibrary(page) {
+  page.$('race-options').click();
+  page.$('race-settings-tab-content').click();
   const opener = page.$('race-library-switch'),
     listeners = opener.listeners.get('click'),
     pending = [];
+  assert(opener.getClientRects().length, 'the moved library action is visible in Settings');
   opener.listeners.set(
     'click',
     new Set(
@@ -180,6 +214,78 @@ async function openMissionLibrary(page) {
   assert.equal(page.$('journey-chooser').open, true);
 }
 
+test('installed Creator launch does not evaluate an absent authored Journey route', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    page = await openCreatorHost(t, indexedDB, storage);
+  await openMissionLibrary(page);
+  const card = [...page.$('journey-cards').children].find((candidate) => {
+    const [owner, edition] = JSON.parse(candidate.dataset.missionId);
+    return owner === 'creator:' + pack.editionId && edition === pack.editionId;
+  });
+  assert(card, 'the installed Creator mission must be selectable without a Journey route');
+  await activateMissionCard(card);
+  page.frame(0);
+  assert.equal(
+    page.renders[0].level.id,
+    'picture-1',
+    page.$('race-message').textContent + ' ' + page.$('journey-chooser-status').textContent,
+  );
+});
+
+for (const interruption of ['Settings Back', 'foreground loss'])
+  test(`installed Creator launch from Settings retires after ${interruption} during picture preparation`, async (t) => {
+    const { pack, indexedDB, storage } = await fixture(),
+      gate = deferred();
+    let held = null,
+      armed = false;
+    class HeldPicture extends PNGImage {
+      async decode() {
+        await super.decode();
+        if (
+          armed &&
+          !held &&
+          globalThis.document.getElementById('race-preparation')?.dataset.state === 'busy'
+        ) {
+          held = this;
+          await gate.promise;
+        }
+      }
+    }
+    t.after(() => gate.resolve());
+    const page = await openCreatorHost(t, indexedDB, storage, { ImageClass: HeldPicture });
+    page.frame(0);
+    const before = [...page.renders],
+      wasStartDisabled = page.$('race-start').disabled;
+    await openMissionLibrary(page);
+    const card = [...page.$('journey-cards').children].find((candidate) => {
+      const [owner, edition] = JSON.parse(candidate.dataset.missionId);
+      return owner === `creator:${pack.editionId}` && edition === pack.editionId;
+    });
+    assert(card);
+    armed = true;
+    const pending = activateMissionCard(card);
+    await waitFor(() => held, { message: 'Installed picture preparation did not begin.' });
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.$('race-options-panel').hidden, false);
+    if (interruption === 'Settings Back') {
+      page.$('race-options-back').focus();
+      page.$('race-options-back').click();
+    } else {
+      page.doc.focused = false;
+      page.win.emit('blur');
+    }
+    const focused = page.doc.activeElement;
+    gate.resolve();
+    await pending;
+    page.frame(0);
+    assert.notEqual(page.state(), 'running');
+    assert.ok(page.renders[0] === before[0], 'Player one keeps the preceding board.');
+    assert.ok(page.renders[1] === before[1], 'Player two keeps the preceding board.');
+    assert.equal(page.$('race-start').disabled, wasStartDisabled);
+    assert.equal(page.doc.activeElement, focused);
+    assert.equal(page.$('journey-chooser').open, false);
+  });
+
 test('installed creator campaigns continue and restore their earned state in a fresh Versus host', async (t) => {
   const { pack, route, indexedDB, storage } = await fixture();
   let firstMissionId;
@@ -195,7 +301,7 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.match(cards[0].textContent, /Custom/);
     firstMissionId = cards[0].dataset.missionId;
     await activateMissionCard(cards[0]);
-    page.frame(0);
+    reachMissionGo(page);
     assert.equal(
       page.renders[0].level.id,
       'picture-1',
@@ -211,9 +317,8 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.equal(page.$('race-journey-difficulty').value, 'standard');
     assert.equal(page.renders[0].level.revision, exactRevision);
 
-    // The host consumes one neutral resume tick before accepting player input.
-    page.frame();
     replayPlayerOne(page, route.replay);
+    assert.equal(page.$('race-start-cue').hidden, true);
     assert.equal(
       page.renders[0].status,
       'won',
@@ -248,7 +353,8 @@ test('installed creator campaigns continue and restore their earned state in a f
       undefined,
       `${page.$('race-message').textContent} ${page.$('journey-chooser-status').textContent}`,
     );
-    page.frame(0);
+    reachMissionGo(page);
+    finishMissionCue(page);
     assert.equal(
       page.renders[0].level.id,
       'picture-2',
@@ -276,3 +382,184 @@ test('installed creator campaigns continue and restore their earned state in a f
     assert.match(cleared.textContent, /Cleared/);
   });
 });
+
+test('installed Creator mission identity collision cannot resolve a Journey successor', async (t) => {
+  const { pack, route, indexedDB, storage } = await fixture({ firstMissionId: 'first-return' });
+  const page = await openCreatorHost(t, indexedDB, storage, {
+    href: 'http://localhost/game/couch/?journey=opening',
+  });
+  await openMissionLibrary(page);
+  const lifecycle = page.$('journey-lifecycle');
+  assert.equal(lifecycle.value, 'archive');
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
+  const card = [...page.$('journey-cards').children].find((candidate) => {
+    const identity = JSON.parse(candidate.dataset.missionId);
+    return (
+      identity[0] === 'creator:' + pack.editionId &&
+      identity[1] === pack.editionId &&
+      identity.includes('first-return')
+    );
+  });
+  assert(card, 'the colliding installed mission remains separately selectable');
+  await activateMissionCard(card);
+  reachMissionGo(page);
+  assert.equal(page.renders[0].level.id, 'first-return');
+
+  replayPlayerOne(page, route.replay);
+  assert.equal(page.renders[0].status, 'won');
+  assert.equal(page.renders[1].status, 'running');
+  assert.equal(page.$('race-journey-next').hidden, false);
+  assert.equal(page.$('race-journey-next').textContent, 'Next mission');
+  assert.doesNotMatch(page.$('race-journey-next').textContent, /Choose your share/);
+
+  const next = page.$('race-journey-next'),
+    nextHandler = next.onclick;
+  let continuation;
+  next.onclick = (...args) => (continuation = nextHandler.apply(next, args));
+  try {
+    next.click();
+  } finally {
+    next.onclick = nextHandler;
+  }
+  assert(continuation instanceof Promise);
+  assert.equal(
+    await continuation,
+    undefined,
+    page.$('race-message').textContent + ' ' + page.$('journey-chooser-status').textContent,
+  );
+  reachMissionGo(page);
+  finishMissionCue(page);
+  assert.equal(page.renders[0].level.id, 'picture-2');
+  assert.notEqual(page.renders[0].level.id, 'choose-your-share');
+  assert.equal(page.renders[1].level.id, 'picture-2');
+});
+
+test('Custom Versus mode switch selects the exact installed mission without starting; Back keeps lobby and explicit Play starts', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    sourceSaveKey = creatorAttemptKey(pack.editionId),
+    href = creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html');
+  storage.setItem(sourceSaveKey, 'Source Custom Solo checkpoint remains owned by Solo');
+  const page = await openCreatorHost(t, indexedDB, storage, { href });
+  assert.notEqual(page.state(), 'running', 'choosing a mode never means Play');
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.$('journey-chooser').open, true);
+  const targetId = new URL(href).searchParams.get('library-mission'),
+    card = [...page.$('journey-cards').children].find((row) => row.dataset.missionId === targetId),
+    initialRuns = [...page.renders],
+    initialCheckpoint = page.checkpoint(),
+    initialStartDisabled = page.$('race-start').disabled;
+  assert(card, 'qualified edition/campaign/mission/revision resolves its exact installed row');
+  assert.equal(page.doc.activeElement, card);
+  assert.notEqual(initialRuns[0].level.id, 'picture-2', 'selection does not replace either board');
+  page.frames(5);
+  assert.deepEqual(page.checkpoint(), initialCheckpoint);
+  page.$('journey-back').click();
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.$('race-main').hidden, false);
+  assert.equal(page.doc.activeElement, page.$('race-chapters'), 'Back has a visible lobby origin');
+  assert.equal(
+    page.$('race-start').disabled,
+    initialStartDisabled,
+    'unused failed opener remains unchanged',
+  );
+  assert.deepEqual(page.renders, initialRuns);
+  assert.deepEqual(page.checkpoint(), initialCheckpoint);
+  await page.$('race-chapters').onclick();
+  const exact = [...page.$('journey-cards').children].find(
+    (row) => row.dataset.missionId === targetId,
+  );
+  await activateMissionCard(exact);
+  reachMissionGo(page);
+  assert.equal(page.renders[0].level.id, 'picture-2');
+  assert.equal(page.renders[1].level.id, 'picture-2');
+  assert.equal(
+    storage.getItem(sourceSaveKey),
+    'Source Custom Solo checkpoint remains owned by Solo',
+  );
+});
+
+test('existing incoming installed Play links without an intent still launch their exact mission', async (t) => {
+  const { pack, indexedDB, storage } = await fixture(),
+    href = new URL(
+      creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html'),
+    );
+  href.searchParams.delete('library-intent');
+  const page = await openCreatorHost(t, indexedDB, storage, { href: href.href });
+  assert.equal(page.state(), 'running');
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.renders[0].level.id, 'picture-2');
+  assert.equal(page.renders[1].level.id, 'picture-2');
+});
+
+for (const intent of ['unknown', 'select&library-intent=play'])
+  test(`malformed incoming selection intent ${intent} cannot fall back to Play`, async (t) => {
+    const { pack, indexedDB, storage } = await fixture(),
+      href = new URL(
+        creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html'),
+      );
+    href.searchParams.set('library-intent', intent === 'unknown' ? intent : 'select');
+    if (intent !== 'unknown') href.searchParams.append('library-intent', 'play');
+    const page = await openCreatorHost(t, indexedDB, storage, {
+      href: href.href,
+      expectBootFailure: true,
+    });
+    assert.equal(page.doc.documentElement.dataset.toolState, 'error');
+    assert.equal(page.$('race-start').disabled, true);
+    assert.equal(page.$('race-start-cue').hidden, true);
+    assert.match(page.$('race-message').textContent, /intent/);
+    assert.equal(
+      page.renders.length,
+      0,
+      'invalid intent does not create or start substitute boards',
+    );
+  });
+
+for (const interruption of ['newer focus', 'blur and return'])
+  test(`select-only incoming Custom mode yields to ${interruption} during metadata loading`, async (t) => {
+    const { pack, indexedDB, storage } = await fixture(),
+      gate = deferred(),
+      href = creatorVersusHref(pack, 'picture-2', 'http://localhost/game/creator/player.html');
+    let entered = false;
+    t.after(() => gate.resolve());
+    const pending = openCreatorHost(t, indexedDB, storage, {
+      href,
+      fetchResponse: async (path) => {
+        if (path === '../content/mission-library-index.json') {
+          entered = true;
+          await gate.promise;
+          return new Response(
+            await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
+          );
+        }
+        if (String(path).includes('/content-design/assets/'))
+          return new Response(await readFile(path));
+        if (path === '../content/packs/fpv-arcade-r5.json')
+          return new Response('Unused default pack is unavailable', { status: 503 });
+      },
+    });
+    await waitFor(() => entered, {
+      message: 'Incoming mode selection did not request library metadata.',
+    });
+    const doc = globalThis.document,
+      win = globalThis.window,
+      focus = doc.getElementById('race-options');
+    if (interruption === 'blur and return') {
+      doc.focused = false;
+      win.emit('blur');
+      doc.focused = true;
+    }
+    focus.focus();
+    gate.resolve();
+    const page = await pending;
+    assert.notEqual(page.state(), 'running');
+    assert.equal(page.$('race-start-cue').hidden, true);
+    assert.equal(
+      page.$('journey-chooser').open,
+      false,
+      'late metadata does not reclaim an abandoned mode selection',
+    );
+    assert.equal(doc.activeElement, focus);
+    assert.notEqual(page.renders[0].level.id, 'picture-2');
+    assert.notEqual(page.renders[1].level.id, 'picture-2');
+  });

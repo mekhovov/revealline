@@ -1,0 +1,11 @@
+
+> revealline@0.141.7 build
+> node scripts/game-cli.mjs build
+
+{
+  "out": "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/dist",
+  "version": "0.141.7",
+  "files": 1776,
+  "sha256": "bf30ca6d1915018607ffbb1fcf593650630a53b101fdf6fffd7f0e380172a967",
+  "sourceRevision": null
+}

@@ -1,0 +1,215 @@
+{
+  "capturedAt": "2026-10-14T03:29:25.939Z",
+  "baseCommit": "29e3bd4a831834c55b8ecf14a204b14784252f38",
+  "sourceState": "working tree; final source manifest recorded separately",
+  "nativeExportMode": "marathon",
+  "nativeInstalledMode": "time-attack",
+  "nativeImportStorage": "Separate localhost:8899 origin; empty Raid installed library observed before import. This is origin isolation, not a new browser profile.",
+  "relayRoundTripIdentical": true,
+  "entries": [
+    {
+      "world": "field-crossing",
+      "file": "docs/qualification/overflight/worlds-20261014/studio-field-crossing.raid.json",
+      "sha256": "6609c00c8fa49ba5777fb4a96b9f3b81c81583961a9bc0972b8e8d834333f43e",
+      "packageIdentity": "779d307646202326",
+      "visualIdentity": "59eb134fbdd5bf35",
+      "rulesVersion": 3,
+      "encounterProfile": "field-crossing.v1",
+      "projectIdentity": "e609b459f98cb837",
+      "dependencies": {
+        "actorArtRevision": "industrial-roster-v3",
+        "effects": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "machinery": [
+          "utility-car",
+          "cargo-truck",
+          "armored-carrier",
+          "scout-car",
+          "tracked-tank",
+          "radar-truck"
+        ],
+        "motion": {
+          "id": "overflight-field-kit-motion",
+          "revision": 1
+        },
+        "pools": {
+          "effects": 512,
+          "pickups": 2048,
+          "projectiles": 512
+        },
+        "profile": "board",
+        "soldiers": [
+          "lookout",
+          "patroller",
+          "runner",
+          "sprinter",
+          "courier",
+          "guard",
+          "refuge-seeker",
+          "switchback",
+          "rendezvous-pair",
+          "shield-bearer",
+          "brace-trooper",
+          "relay-warden"
+        ],
+        "wardrobes": [
+          "tactical",
+          "rivals",
+          "arcade"
+        ],
+        "world": {
+          "id": "overflight-worlds",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "world": "freight-depot",
+      "file": "docs/qualification/overflight/worlds-20261014/studio-freight-depot.raid.json",
+      "sha256": "9f5ecd8679b09230394e3235c47a1a989cd0381a5329f908de795af1f183eb53",
+      "packageIdentity": "a8bac02378d54b0b",
+      "visualIdentity": "c56e73591bd28293",
+      "rulesVersion": 3,
+      "encounterProfile": "freight-depot.v1",
+      "projectIdentity": "1b6573d7b15bc8d2",
+      "dependencies": {
+        "actorArtRevision": "industrial-roster-v3",
+        "effects": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "machinery": [
+          "utility-car",
+          "cargo-truck",
+          "armored-carrier",
+          "scout-car",
+          "tracked-tank",
+          "radar-truck"
+        ],
+        "motion": {
+          "id": "overflight-field-kit-motion",
+          "revision": 1
+        },
+        "pools": {
+          "effects": 512,
+          "pickups": 2048,
+          "projectiles": 512
+        },
+        "profile": "board",
+        "soldiers": [
+          "lookout",
+          "patroller",
+          "runner",
+          "sprinter",
+          "courier",
+          "guard",
+          "refuge-seeker",
+          "switchback",
+          "rendezvous-pair",
+          "shield-bearer",
+          "brace-trooper",
+          "relay-warden"
+        ],
+        "wardrobes": [
+          "tactical",
+          "rivals",
+          "arcade"
+        ],
+        "world": {
+          "id": "overflight-worlds",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "world": "relay-ruins",
+      "file": "docs/qualification/overflight/worlds-20261014/studio-relay-ruins.raid.json",
+      "sha256": "95a53594712a5f33f2d57073c928e09c84f1bf3ba8103dda1fe211eeb5d42368",
+      "packageIdentity": "ee35f43b1bfb9671",
+      "visualIdentity": "3ab73dc76b8f3657",
+      "rulesVersion": 3,
+      "encounterProfile": "relay-ruins.v1",
+      "projectIdentity": "091cea7f1127bd48",
+      "dependencies": {
+        "actorArtRevision": "industrial-roster-v3",
+        "effects": {
+          "id": "overflight-field-kit",
+          "revision": 1
+        },
+        "machinery": [
+          "utility-car",
+          "cargo-truck",
+          "armored-carrier",
+          "scout-car",
+          "tracked-tank",
+          "radar-truck"
+        ],
+        "motion": {
+          "id": "overflight-field-kit-motion",
+          "revision": 1
+        },
+        "pools": {
+          "effects": 512,
+          "pickups": 2048,
+          "projectiles": 512
+        },
+        "profile": "board",
+        "soldiers": [
+          "lookout",
+          "patroller",
+          "runner",
+          "sprinter",
+          "courier",
+          "guard",
+          "refuge-seeker",
+          "switchback",
+          "rendezvous-pair",
+          "shield-bearer",
+          "brace-trooper",
+          "relay-warden"
+        ],
+        "wardrobes": [
+          "tactical",
+          "rivals",
+          "arcade"
+        ],
+        "world": {
+          "id": "overflight-worlds",
+          "revision": 1
+        }
+      }
+    }
+  ],
+  "sourceFingerprintAfterReview": {
+    "game/overflight/app.mjs": "2ace84a7a8efca66b682a4e894418d3aa9460004b08533795b374b92e6f874a5",
+    "game/overflight/operation-view.mjs": "5b43b3b13206e41891b99f5b6167a76ca4c0f06eda71567bca8097bbcb744605",
+    "game/overflight/raid-mode.mjs": "3b0b31fd8a545aa85744b5d6672ff3737f8658e281bcd21fd1d342770bb83f59",
+    "game/overflight/raid-variants.mjs": "ecfc6766c4848af0244a34153d4ab9675ca036850c9373e7b1a4efacd57c6e67",
+    "game/overflight/riy-mode.mjs": "554c6ee4359269a57c0373cfa141855a3375826e106e5584778171c8da68d7f6",
+    "game/overflight/riy-core.mjs": "d357d3c874a4d31dfdbe5f37581592756b06c59ad07dec2155c17b08954b6f69",
+    "game/overflight/raid-project.mjs": "6593b01f30f4ee3b05fe1107038e7b3e730f4ef7f0eec573a4457c8163cc88c7",
+    "game/overflight/raid-core.mjs": "908a52df499f30138cafe2fbaa23718c242c3f5c6e7f186d0ca409c1c86719cd",
+    "game/overflight/renderer.mjs": "b005a95476891b5ac107f4cb2ed83fcb4ea433a3f7668f9e7e2630c6c929dfea",
+    "game/overflight/atlas.mjs": "137db45cb34aee8d6680dc4e7adf523b600f3a4f545baf344ebba6843fd5bdf4",
+    "game/overflight/worlds.mjs": "73e91d5a3bf89fce1fc1fb37e91f463a55d20fcee75845a194da40ed23050a90",
+    "game/overflight/terrain.mjs": "0a1cef102e82badeb0c032e1e15e8c0997d2d59b03267063726018397b39e857",
+    "game/presentation/overflight-world-art.mjs": "c903158727b56b439edb612fa2df058fc523a69b2caf606fe63c93776475fc75",
+    "game/studio/raid.mjs": "f6d9ba218e0a30c43e32f6e99d9adc4942de6437dcccdbfc39f520abc4218868",
+    "game/studio/raid-preview-mode.mjs": "e4de12e558d5980375632229a88757b7cde313b9698835d266edf6775c4e4749",
+    "game/studio/overflight-world-editor.mjs": "4ac0c01d8ca8b40ed5918d34e32b7a1d237ab52efc3b20fd9627c895deb97c57",
+    "game/overflight/mastery.mjs": "47f70743d7204b44d7d4e43224e0e3bfe5eebbb398ab1e739dc824ea632280e6",
+    "game/overflight/mastery-view.mjs": "ef53994707c5aff6735c18769229b80f5d789a010bff7fff2968edf5f9e68412"
+  },
+  "sourceFingerprintCapturedAt": "2026-10-14T03:34:17.724Z",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "limitations": [
+    "UI captures used a working tree, not a final qualification commit.",
+    "Native previews and imported launch are smoke checks; full sortie completion, offline execution and benchmark measurements are separate evidence.",
+    "Origin-isolated empty mission library is not a completely new browser profile."
+  ]
+}

@@ -6,6 +6,7 @@ import {
 } from './presentation/actor-appearance-pin.mjs';
 
 export const REPLAY_PRESENTATION_FORMAT = 'revealline-replay-presentation.v1';
+export const AUTHORED_REPLAY_PRESENTATION_FORMAT = 'revealline-replay-presentation.v2';
 export const REPLAY_PRESENTATION_METADATA_BYTES = 4096;
 export const MAX_REPLAY_PRESENTATION_BYTES =
   MAX_REPLAY_BYTES + ACTOR_APPEARANCE_PIN_BYTES + REPLAY_PRESENTATION_METADATA_BYTES;
@@ -61,7 +62,10 @@ export function snapshotReplayPresentation(source) {
     }
   }
   const value = fields(source, ['format', 'execution', 'actorAppearancePin', 'replay']);
-  required(value.format === REPLAY_PRESENTATION_FORMAT, 'Unsupported replay presentation format.');
+  required(
+    [REPLAY_PRESENTATION_FORMAT, AUTHORED_REPLAY_PRESENTATION_FORMAT].includes(value.format),
+    'Unsupported replay presentation format.',
+  );
   required(
     plainObject(value.execution) &&
       plainObject(value.actorAppearancePin) &&
@@ -91,8 +95,12 @@ export function snapshotReplayPresentation(source) {
   );
   const actorAppearancePin = snapshotActorAppearancePin(value.actorAppearancePin);
   required(
-    actorAppearancePin.style === 'fpv' && actorAppearancePin.content.mode === 'solo',
-    'Replay presentation v1 supports recorded Solo FPV actors only.',
+    actorAppearancePin.content.mode === 'solo' &&
+      (value.format === REPLAY_PRESENTATION_FORMAT
+        ? actorAppearancePin.style === 'fpv'
+        : actorAppearancePin.style === 'campaign' &&
+          !!actorAppearancePin.authoredPresentationSha256),
+    'Replay presentation needs recorded Solo FPV actors or an exact authored actor receipt.',
   );
   // Reuse the replay module's semantic version, level, class, input, tick and
   // checkpoint validation. It deliberately does not replay/approve the outcome.
@@ -110,5 +118,12 @@ export function snapshotReplayPresentation(source) {
  */
 export function exportReplayPresentation(source) {
   const value = fields(source, ['execution', 'actorAppearancePin', 'replay']);
-  return snapshotReplayPresentation({ format: REPLAY_PRESENTATION_FORMAT, ...value });
+  const actorAppearancePin = snapshotActorAppearancePin(value.actorAppearancePin);
+  return snapshotReplayPresentation({
+    format: actorAppearancePin.authoredPresentationSha256
+      ? AUTHORED_REPLAY_PRESENTATION_FORMAT
+      : REPLAY_PRESENTATION_FORMAT,
+    ...value,
+    actorAppearancePin,
+  });
 }

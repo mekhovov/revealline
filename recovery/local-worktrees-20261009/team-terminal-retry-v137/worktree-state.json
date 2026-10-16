@@ -1,0 +1,33 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/team-terminal-retry-v137/go_test",
+  "branch": "codex/v1418-failure-continuation",
+  "head": "22d187db746e2b246485eafa9a1c268c51b74f5e",
+  "status": [
+    "A  docs/player-first-ux4-versus-start-cue.md",
+    "M  game/couch/couch.css",
+    "UU game/couch/couch.mjs",
+    "M  game/couch/index.html",
+    "A  game/couch/start-cue.mjs",
+    "UU game/i18n/catalogs.mjs",
+    "M  game/locales/en/interface.json",
+    "M  game/locales/uk/interface.json",
+    "A  game/test/couch-start-cue-host.test.mjs",
+    "A  game/test/couch-start-cue.test.mjs",
+    "M  game/test/helpers/couch-host.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 1,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "2744821805ea3e5d6ab430d544c8e329413d48763e43af2b0419680e4e52a387",
+      "bytes": 2655128
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": {
+      "path": "local-commits.patch",
+      "sha256": "177a52b647826e42c71010d1f8fb88eb3db2068187f65e575a3c8893d802eb2c",
+      "bytes": 21268
+    },
+    "conflictStages": 6
+  }
+}

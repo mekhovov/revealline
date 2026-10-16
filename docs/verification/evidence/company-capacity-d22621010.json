@@ -1,0 +1,236 @@
+{
+  "format": "RevealLineCandidateCapacityObservation.v2",
+  "sourceRevision": "d226210105de1011f8dab18fcf0ac7ca196b974c",
+  "sourceTree": "cd080fc590dfea19cf96b2f93c52b1ae31c890f3",
+  "version": "v0.142.1",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "ci": {
+    "url": "https://github.com/mekhovov/revealline/actions/runs/36487477378",
+    "status": "completed",
+    "conclusion": "success",
+    "head": "d226210105de1011f8dab18fcf0ac7ca196b974c"
+  },
+  "artifact": {
+    "id": 11000572102,
+    "name": "company-capacity-d226210105de1011f8dab18fcf0ac7ca196b974c",
+    "path": "company-capacity-d226.zip",
+    "bytes": 584766,
+    "sha256": "f7e478c6edf823d57c4142d12101032c751223755ce8874363595ef6c1a1d194",
+    "githubDigestVerified": true
+  },
+  "packet": {
+    "files": 22,
+    "bytes": 1540921,
+    "validatedWith": "publishing/edition-capacity.mjs#editionCapacityPacket",
+    "inputs": [
+      {
+        "path": "capacity-inventory.json",
+        "bytes": 11094,
+        "sha256": "d687ce8ada3969c7b3fa1537c3b87576e485a3b23d7d3053f0c77c2f13aefd92"
+      },
+      {
+        "path": "candidate-verification.json",
+        "bytes": 13692,
+        "sha256": "741c95055fbd3bc8d5a77601b47dec7e980709df32ada43cc6f79c77d7fae5ed"
+      },
+      {
+        "path": "checksums.json",
+        "bytes": 10412,
+        "sha256": "cd01a5bb9d9daaca7a2c6134ee2a91f783f72887cfb03044a560950342996a2e"
+      },
+      {
+        "path": "editions.json",
+        "bytes": 18568,
+        "sha256": "6bcda05f508c909f4f96458d7bf54294e836d92c6a107036131c4cae6750eac4"
+      }
+    ],
+    "exactManifestBindingsVerified": true,
+    "archiveBodiesDownloaded": false
+  },
+  "ordinaryCandidateVerification": {
+    "reproducibleBuilds": 2,
+    "sourceEligibility": {
+      "assets": 294,
+      "files": 20588,
+      "format": "revealline-public-source-eligibility.v1",
+      "status": "verified"
+    },
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "defaultAndOptionalObservation": {
+    "path": "default-capacity-observation.json",
+    "bytes": 4316,
+    "sha256": "21c5ff62e1982325944f431285561cda0a37b9f3b803527c265b9bd86f47d9a7"
+  },
+  "knownDefaultAndOptionalLowerBoundBytes": 802052737,
+  "editions": [
+    {
+      "id": "coupa-adventure",
+      "immutableBytes": 26048827,
+      "stableLauncherBytes": 237439,
+      "immutableAndActiveLauncherBytes": 26286266
+    },
+    {
+      "id": "coupa-all",
+      "immutableBytes": 60448628,
+      "stableLauncherBytes": 237387,
+      "immutableAndActiveLauncherBytes": 60686015
+    },
+    {
+      "id": "coupa-culture",
+      "immutableBytes": 24773408,
+      "stableLauncherBytes": 237440,
+      "immutableAndActiveLauncherBytes": 25010848
+    },
+    {
+      "id": "coupa-developers",
+      "immutableBytes": 27917196,
+      "stableLauncherBytes": 237466,
+      "immutableAndActiveLauncherBytes": 28154662
+    },
+    {
+      "id": "coupa-foundations",
+      "immutableBytes": 27240230,
+      "stableLauncherBytes": 237468,
+      "immutableAndActiveLauncherBytes": 27477698
+    },
+    {
+      "id": "coupa-operations",
+      "immutableBytes": 26298532,
+      "stableLauncherBytes": 237441,
+      "immutableAndActiveLauncherBytes": 26535973
+    },
+    {
+      "id": "droneaid-community",
+      "immutableBytes": 25624219,
+      "stableLauncherBytes": 226287,
+      "immutableAndActiveLauncherBytes": 25850506
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "immutableBytes": 27871286,
+      "stableLauncherBytes": 41866,
+      "immutableAndActiveLauncherBytes": 27913152
+    },
+    {
+      "id": "droneaid-nl-community",
+      "immutableBytes": 64915646,
+      "stableLauncherBytes": 41829,
+      "immutableAndActiveLauncherBytes": 64957475
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "immutableBytes": 27739056,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 27780902
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "immutableBytes": 28251094,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 28292940
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "immutableBytes": 28073572,
+      "stableLauncherBytes": 41834,
+      "immutableAndActiveLauncherBytes": 28115406
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "immutableBytes": 27887263,
+      "stableLauncherBytes": 41882,
+      "immutableAndActiveLauncherBytes": 27929145
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "immutableBytes": 26557235,
+      "stableLauncherBytes": 41846,
+      "immutableAndActiveLauncherBytes": 26599081
+    },
+    {
+      "id": "fpv-learning",
+      "immutableBytes": 33161283,
+      "stableLauncherBytes": 12685,
+      "immutableAndActiveLauncherBytes": 33173968
+    },
+    {
+      "id": "social-drone-ua",
+      "immutableBytes": 25355869,
+      "stableLauncherBytes": 12721,
+      "immutableAndActiveLauncherBytes": 25368590
+    },
+    {
+      "id": "ukraine-culture",
+      "immutableBytes": 42044824,
+      "stableLauncherBytes": 12761,
+      "immutableAndActiveLauncherBytes": 42057585
+    },
+    {
+      "id": "victory-drones",
+      "immutableBytes": 21629674,
+      "stableLauncherBytes": 12709,
+      "immutableAndActiveLauncherBytes": 21642383
+    }
+  ],
+  "groups": [
+    {
+      "id": "four-new-editions",
+      "ids": ["social-drone-ua", "victory-drones", "ukraine-culture", "fpv-learning"],
+      "editionComponentsBytes": 122242526,
+      "knownLowerBoundBytes": 924295263,
+      "gapBeforeOmittedComponentsBytes": 25704737
+    },
+    {
+      "id": "six-community-editions",
+      "ids": [
+        "social-drone-ua",
+        "victory-drones",
+        "ukraine-culture",
+        "fpv-learning",
+        "coupa-all",
+        "droneaid-nl-community"
+      ],
+      "editionComponentsBytes": 247886016,
+      "knownLowerBoundBytes": 1049938753,
+      "gapBeforeOmittedComponentsBytes": -99938753
+    },
+    {
+      "id": "all-eighteen-editions",
+      "ids": [
+        "coupa-adventure",
+        "coupa-all",
+        "coupa-culture",
+        "coupa-developers",
+        "coupa-foundations",
+        "coupa-operations",
+        "droneaid-community",
+        "droneaid-nl-careful-handoff",
+        "droneaid-nl-community",
+        "droneaid-nl-makers-together",
+        "droneaid-nl-parts-in-motion",
+        "droneaid-nl-shared-horizon",
+        "droneaid-nl-signals-of-support",
+        "droneaid-nl-workshop-lights",
+        "fpv-learning",
+        "social-drone-ua",
+        "ukraine-culture",
+        "victory-drones"
+      ],
+      "editionComponentsBytes": 573832595,
+      "knownLowerBoundBytes": 1375885332,
+      "gapBeforeOmittedComponentsBytes": -425885332
+    }
+  ],
+  "hostedBudgetBytes": 950000000,
+  "missingComponents": [
+    "Generated optional current.json pointers and shared practice hub",
+    "Pages root routes and publication metadata",
+    "Previously retained edition/optional versions and launcher ownership",
+    "Selected company hub including download-only links"
+  ],
+  "limits": "Same-source component lower bounds only. Candidate packet verifies exact metadata against admitted hashes; bulk archive bodies were not downloaded or reverified here. Default is one normal preparation with no ZIP or reproducible-build claim. No selector, release allocation, review or publication mutation. This d226 receipt does not cover the later app guard follow-up."
+}

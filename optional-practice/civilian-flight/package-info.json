@@ -1,0 +1,27 @@
+{
+  "format": "revealline-practice-description.v1",
+  "id": "civilian-flight",
+  "support": "https://github.com/mekhovov/revealline/issues",
+  "changelog": {
+    "en": "Initial directory release: localized launcher, offline verification, and player guide.",
+    "uk": "Перший випуск каталогу: локалізований запуск, перевірка офлайн і посібник гравця."
+  },
+  "copy": {
+    "en": {
+      "name": "Civilian flight gym",
+      "description": "Start with movement and orientation in a simple assisted model.",
+      "purpose": "Lift, turn, follow a route and land.",
+      "inputs": "Keyboard, touch or standard gamepad",
+      "requirements": "2D canvas; text position feedback available",
+      "firstFlight": "Choose Lift and return, then Start. WASD/arrows move, Q/E turn, R/F change height; Space/Escape pauses."
+    },
+    "uk": {
+      "name": "Цивільний льотний тренажер",
+      "description": "Почніть із руху й орієнтування у простій моделі з допомогою.",
+      "purpose": "Злітайте, повертайте, проходьте маршрут і приземляйтеся.",
+      "inputs": "Клавіатура, дотик або стандартний геймпад",
+      "requirements": "2D canvas; доступні текстові координати",
+      "firstFlight": "Оберіть зліт і повернення, потім «Почати». WASD/стрілки — рух, Q/E — поворот, R/F — висота; пробіл/Escape — пауза."
+    }
+  }
+}

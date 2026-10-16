@@ -59,7 +59,7 @@ test('Versus save warning uses existing pause and recovery without changing eith
   const p = await setup(t, 'standard', { assetDatabase: undefined });
   const reveals = [];
   t.mock.method(p.$('race-start'), 'scrollIntoView', (options) => reveals.push(options));
-  assert.equal(p.$('race-journey-save').parentNode, p.$('race-main'));
+  assert.equal(p.$('race-journey-save').parentNode, p.$('race-settings-panel-data'));
   assert.equal(p.$('race-journey-save').hidden, false);
   assert.equal(p.$('race-journey-save-options').hidden, false);
   assert.equal(p.$('race-pause').dataset.journeyUnsaved, 'true');
@@ -79,6 +79,8 @@ test('Versus save warning uses existing pause and recovery without changing eith
   const previous = [...p.renders],
     checkpoint = p.checkpoint();
   p.$('race-journey-save-options').click();
+  assert.equal(p.$('race-options-panel').hidden, false);
+  assert.equal(p.$('race-settings-panel-data').hidden, false);
   assert.equal(p.doc.activeElement, p.$('race-journey-save-retry'));
   assert.equal(p.state(), 'paused');
   p.$('race-journey-save-retry').click();
@@ -87,6 +89,8 @@ test('Versus save warning uses existing pause and recovery without changing eith
   p.frames(30);
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(p.state(), 'paused');
+  p.$('race-options-back').click();
+  assert.equal(p.$('race-main').hidden, false);
   p.$('race-start').click();
   p.frame();
   assert.equal(p.renders[0].status, 'running');
@@ -126,6 +130,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[1].status, 'won');
     assert.equal(p.renders[0].coverage, p.renders[1].coverage);
     assert.match(p.$('race-message').textContent, /Draw.*First clear/);
+    assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
     const previous = p.renders[0],
       picture = p.drawOptions[0].backdrop;
     assert.equal(p.$('race-journey-next').hidden, false);
@@ -296,12 +301,9 @@ test('controller can open and leave the flat chooser without starting or clearin
   await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
+  p.$('journey-lifecycle').value = 'archive';
+  p.$('journey-lifecycle').emit('change');
   const cards = [...p.$('journey-cards').children];
-  assert.equal(
-    cards.length,
-    198,
-    'the complete 66-mission opening catalogue exposes all three difficulty cards',
-  );
   const route = createAuthoredJourneyRoute('opening'),
     themes = JSON.parse(
       await readFile(new URL('../content-design/themes.json', import.meta.url)),
@@ -315,6 +317,11 @@ test('controller can open and leave the flat chooser without starting or clearin
       const [ownerId, editionId] = JSON.parse(card.dataset.missionId);
       return ownerId === 'journey:opening' && editionId === 'opening';
     });
+  assert.equal(
+    currentCards.length,
+    currentInventory.length,
+    'the archived opening owner exposes exactly one card per mission',
+  );
   assert.deepEqual(
     currentCards.map((card) => JSON.parse(card.dataset.missionId)[3]),
     currentInventory.map((mission) => mission.id),
@@ -630,3 +637,19 @@ for (const route of ['opening', 'authored'])
     assert.equal(p.doc.activeElement, p.$('race-journey-next'));
     assert.deepEqual((await p.journeyBackend.read()).clears, persisted.clears);
   });
+
+test('source pursuit greybox uses equal paired boards without acquiring an original picture', async (t) => {
+  const p = await setup(t, 'standard', {
+    href: 'http://localhost/game/couch/?journey=pursuit-pilots-v1',
+  });
+  assert.equal(p.renders[0].levelId, 'crossing-post');
+  assert.deepEqual(p.renders[0], p.renders[1]);
+  assert.equal(p.drawOptions[0].backdrop, null);
+  assert.equal(p.drawOptions[1].backdrop, null);
+  p.$('race-start').click();
+  await waitFor(() => {
+    p.frame();
+    return p.renders.every((run) => run.status === 'running');
+  });
+  assert.ok(p.renders.every((run) => run.level.pursuit.actors.length > 0));
+});

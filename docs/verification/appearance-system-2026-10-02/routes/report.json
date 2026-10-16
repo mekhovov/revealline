@@ -1,0 +1,850 @@
+[
+  {
+    "route": "game/creator/",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "",
+        "text": "Choose a source",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "fit",
+        "text": "Fit whole picture\n       ",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "generate",
+        "text": "Generate and review",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "Choose a source",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "backup",
+        "text": "Back up source project",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 41.59375
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "game/creator/team.html",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "refresh-installed",
+        "text": "Show installed packages",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "generate",
+        "text": "Generate and verify",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "game/studio/",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "undo",
+        "text": "Undo",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 41.59375
+      },
+      {
+        "id": "redo",
+        "text": "Redo",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 41.59375
+      },
+      {
+        "id": "save",
+        "text": "Save checkpoint / retry",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "export",
+        "text": "Export backup",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "Choose a source",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "authoring/company-studio/",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "Choose a source",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "export-draft",
+        "text": "Export source draft ↗",
+        "fg": "rgb(23, 25, 27)",
+        "bg": "rgb(230, 184, 92)",
+        "height": 41.59375
+      },
+      {
+        "id": "reopen-export",
+        "text": "Reopen last exported draf",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 41.59375
+      },
+      {
+        "id": "edition-select",
+        "text": "Social Drone UA / LINEVic",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "",
+        "text": "01 Identity",
+        "fg": "rgb(23, 25, 27)",
+        "bg": "rgb(230, 184, 92)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "02 Artwork",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "game/replay-theater/",
+    "theme": "industrial-workshop",
+    "density": "player",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      },
+      {
+        "id": "replay-text-face",
+        "text": "Theme\n              Plain",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      },
+      {
+        "id": "replay-text-size",
+        "text": "Standard\n              La",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      },
+      {
+        "id": "replay-audio",
+        "text": "Unmute sound",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "play-pause",
+        "text": "Play",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "restart",
+        "text": "Restart",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "step",
+        "text": "Step 1 tick",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      }
+    ],
+    "mismatches": [
+      {
+        "key": "I.",
+        "bg": "rgb(243, 237, 221)",
+        "text": ""
+      }
+    ],
+    "errors": []
+  },
+  {
+    "route": "authoring/asset-studio/",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "cancel-studio-operation",
+        "text": "Cancel",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "save-workspace",
+        "text": "Save local revision",
+        "fg": "rgb(23, 25, 27)",
+        "bg": "rgb(230, 184, 92)",
+        "height": 41.59375
+      },
+      {
+        "id": "export-workspace",
+        "text": "Export .rltheme",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "studio-interface-font",
+        "text": "Theme\n              Plain",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "studio-interface-size",
+        "text": "Standard\n              La",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      }
+    ],
+    "mismatches": [
+      {
+        "key": "I.",
+        "bg": "rgb(243, 237, 221)",
+        "text": ""
+      },
+      {
+        "key": "DIV.theme-specimen field-kit",
+        "bg": "rgb(7, 11, 18)",
+        "text": "Mission preview / 02Workshop approachFol"
+      },
+      {
+        "key": "SECTION.theme-specimen-mission",
+        "bg": "rgb(16, 25, 35)",
+        "text": "Mission preview / 02Workshop approachFol"
+      },
+      {
+        "key": "BUTTON.primary",
+        "bg": "rgb(244, 191, 98)",
+        "text": "Continue"
+      },
+      {
+        "key": "BUTTON.",
+        "bg": "rgb(24, 37, 49)",
+        "text": "Back"
+      },
+      {
+        "key": "PROGRESS.",
+        "bg": "rgb(7, 11, 18)",
+        "text": ""
+      },
+      {
+        "key": "INPUT.",
+        "bg": "rgb(7, 11, 18)",
+        "text": ""
+      },
+      {
+        "key": "SELECT.",
+        "bg": "rgb(7, 11, 18)",
+        "text": "paneldialogtoolbarbuttoninputtabslottool"
+      },
+      {
+        "key": "SECTION.",
+        "bg": "rgb(16, 25, 35)",
+        "text": "panel · Default"
+      },
+      {
+        "key": "DIV.asset-row selected",
+        "bg": "rgba(120, 220, 232, 0.05)",
+        "text": "Panel frameui.panel · source"
+      },
+      {
+        "key": "DIV.recipe-sample component-specimen",
+        "bg": "rgb(16, 25, 35)",
+        "text": "Panel frameComponent action specimenInte"
+      }
+    ],
+    "errors": []
+  },
+  {
+    "route": "game/communities/",
+    "theme": "industrial-workshop",
+    "density": "player",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "game/community/store.html",
+    "theme": "industrial-workshop",
+    "density": "player",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      },
+      {
+        "id": "filter",
+        "text": "All campaigns\n           ",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      },
+      {
+        "id": "refresh",
+        "text": "Refresh",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "account-sign-in",
+        "text": "Sign in",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "account-sign-up",
+        "text": "Create account",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      },
+      {
+        "id": "account-verify",
+        "text": "Resend verification",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "authoring/design-atlas/",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "Sections",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "atlas-read-direction",
+        "text": "Read and scroll",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "atlas-read-direction-1",
+        "text": "Read and scroll",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "atlas-read-direction-2",
+        "text": "Read and scroll",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "atlas-read-direction-3",
+        "text": "Read and scroll",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 41.59375
+      },
+      {
+        "id": "screen-select",
+        "text": "Title / landingMission ga",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      }
+    ],
+    "mismatches": [
+      {
+        "key": "I.",
+        "bg": "rgb(243, 237, 221)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.status-dot",
+        "bg": "rgb(157, 187, 122)",
+        "text": ""
+      },
+      {
+        "key": "DIV.field-horizon",
+        "bg": "rgb(38, 60, 65)",
+        "text": ""
+      },
+      {
+        "key": "DIV.preview-surround",
+        "bg": "rgb(3, 7, 11)",
+        "text": "Proposed mockupFluid desktop / up to 112"
+      },
+      {
+        "key": "DIV.screen-preview",
+        "bg": "rgb(7, 11, 18)",
+        "text": "FPV / LINESOLO / FIELD KIT\n    FPV/ LINE"
+      },
+      {
+        "key": "P.glyph-check",
+        "bg": "rgb(16, 25, 35)",
+        "text": "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ · абвг"
+      },
+      {
+        "key": "DIV.swatch-color",
+        "bg": "rgb(7, 11, 18)",
+        "text": ""
+      },
+      {
+        "key": "DIV.asset-sample",
+        "bg": "rgb(16, 25, 35)",
+        "text": "Illustrative asset slot\n            FPV "
+      }
+    ],
+    "errors": []
+  },
+  {
+    "route": "game/downloads.html",
+    "theme": "industrial-workshop",
+    "density": "player",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 44
+      },
+      {
+        "id": "download-game",
+        "text": "Checking download size…",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 44
+      },
+      {
+        "id": "pause",
+        "text": "Pause download",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 44
+      },
+      {
+        "id": "cancel",
+        "text": "Cancel remaining download",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 44
+      },
+      {
+        "id": "verify-game",
+        "text": "Verify game files",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 44
+      },
+      {
+        "id": "remove-chapters",
+        "text": "Remove chosen chapter dow",
+        "fg": "rgb(196, 193, 182)",
+        "bg": "rgb(39, 43, 46)",
+        "height": 44
+      },
+      {
+        "id": "retain",
+        "text": "Keep downloads on this de",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(54, 60, 64)",
+        "height": 44
+      }
+    ],
+    "mismatches": [],
+    "errors": []
+  },
+  {
+    "route": "site/about.html",
+    "theme": "industrial-workshop",
+    "density": "studio",
+    "bg": "rgb(23, 25, 27)",
+    "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+    "overflow": false,
+    "controls": [
+      {
+        "id": "",
+        "text": "EnglishУкраїнська",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "",
+        "text": "Standard\n          Large",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "version-picker",
+        "text": "__REVEALLINE_VERSION__ · ",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 41.59375
+      },
+      {
+        "id": "landing-pack-select",
+        "text": "FPV Front · Pressure Line",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      },
+      {
+        "id": "landing-level-select",
+        "text": "01 · Orchard Crossing02 ·",
+        "fg": "rgb(243, 237, 221)",
+        "bg": "rgb(23, 25, 27)",
+        "height": 37
+      }
+    ],
+    "mismatches": [
+      {
+        "key": "SPAN.signal-dot",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "I.",
+        "bg": "rgb(112, 219, 198)",
+        "text": ""
+      },
+      {
+        "key": "DIV.pixel-board",
+        "bg": "rgb(7, 17, 22)",
+        "text": "×\n            ×\n            \n           "
+      },
+      {
+        "key": "DIV.revealed revealed-one",
+        "bg": "rgb(22, 51, 58)",
+        "text": ""
+      },
+      {
+        "key": "DIV.revealed revealed-two",
+        "bg": "rgb(29, 52, 51)",
+        "text": ""
+      },
+      {
+        "key": "DIV.safe-edge safe-top",
+        "bg": "rgb(112, 219, 198)",
+        "text": ""
+      },
+      {
+        "key": "DIV.safe-edge safe-right",
+        "bg": "rgb(112, 219, 198)",
+        "text": ""
+      },
+      {
+        "key": "DIV.flight-path path-down",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "DIV.flight-path path-across",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.pixel-craft",
+        "bg": "rgb(243, 240, 219)",
+        "text": ""
+      },
+      {
+        "key": "DIV.board-message",
+        "bg": "rgba(6, 12, 17, 0.88)",
+        "text": "AREA SECURED45%"
+      },
+      {
+        "key": "DIV.coach-pixels",
+        "bg": "rgb(11, 22, 28)",
+        "text": "↓"
+      },
+      {
+        "key": "SPAN.coach-route",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "DIV.mode-icon solo-icon",
+        "bg": "rgb(10, 21, 27)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.",
+        "bg": "rgb(112, 219, 198)",
+        "text": ""
+      },
+      {
+        "key": "DIV.mode-icon couch-icon",
+        "bg": "rgb(10, 21, 27)",
+        "text": ""
+      },
+      {
+        "key": "DIV.mode-icon couch-icon team-icon",
+        "bg": "rgb(10, 21, 27)",
+        "text": ""
+      },
+      {
+        "key": "DIV.mode-icon network-icon",
+        "bg": "rgb(10, 21, 27)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.pack-moon",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.pack-land land-a",
+        "bg": "rgb(32, 59, 56)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.pack-land land-b",
+        "bg": "rgb(23, 45, 46)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.pack-signal",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "DIV.pack-art",
+        "bg": "rgb(9, 33, 38)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.radar-sweep",
+        "bg": "rgb(112, 219, 198)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.radar-core",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.sentinel-eye",
+        "bg": "rgb(240, 128, 112)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.sentinel-beam",
+        "bg": "rgba(240, 128, 112, 0.55)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.flower flower-a",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.flower flower-b",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      },
+      {
+        "key": "SPAN.flower flower-c",
+        "bg": "rgb(244, 205, 107)",
+        "text": ""
+      }
+    ],
+    "errors": []
+  }
+]

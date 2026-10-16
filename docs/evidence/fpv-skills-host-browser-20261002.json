@@ -1,0 +1,1564 @@
+{
+  "format": "FPVSkillHostBrowserEvidence.v1",
+  "passed": true,
+  "createdAt": "2026-10-02T02:38:18.623Z",
+  "subset": "full",
+  "checks": [
+    {
+      "name": "Load isolated real host with old self-level/chase preferences",
+      "passed": true,
+      "productionHtmlSha256": "20c6330cc050d3c0a4ba78c5f45243bcc68ded1a6baa0ddcd851cf9a003d55a9",
+      "realm": {
+        "parentObjectPrototype": false,
+        "parentArrayPrototype": false,
+        "parentReadRejected": true,
+        "rejection": "Only plain JSON data is supported.",
+        "nativeObjectPrototype": true,
+        "nativeArrayPrototype": true,
+        "nativeReadAccepted": true
+      },
+      "lessons": [
+        "beginner-43",
+        "beginner-44",
+        "beginner-45",
+        "beginner-46",
+        "beginner-47",
+        "beginner-48",
+        "beginner-49",
+        "beginner-50",
+        "beginner-51",
+        "beginner-52",
+        "beginner-53",
+        "beginner-54",
+        "beginner-55",
+        "beginner-56",
+        "beginner-57",
+        "beginner-58"
+      ],
+      "primary": 46
+    },
+    {
+      "name": "beginner-43 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 360°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll left 360°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 360°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен ліворуч 360°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-43 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-43 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-43 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 178019,
+      "frames": 1657,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-44 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Pitch forward 360°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Pitch back 360°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Тангаж уперед 360°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Тангаж назад 360°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-44 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-44 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-44 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 178079,
+      "frames": 1657,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-45 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Yaw right 360°. Enter upright at 12.0–18.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Yaw left 360°. Enter upright at 12.0–18.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Курс праворуч 360°. Почніть рівно на 12.0–18.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Курс ліворуч 360°. Почніть рівно на 12.0–18.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-45 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-45 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-45 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 117044,
+      "frames": 1045,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-46 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 2,
+          "type": "attitude-v1",
+          "locale": "en",
+          "text": "Remain inverted at 4.0–75.0 m for 0.2 s, with rotation settled."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter inverted at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 2,
+          "type": "attitude-v1",
+          "locale": "uk",
+          "text": "Залишайтеся догори дном на 4.0–75.0 м протягом 0.2 с без обертання."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть догори дном на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-46 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-46 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-46 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 164693,
+      "frames": 1527,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-47 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter upright at 4.0–95.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 3,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 180° in the marked direction, 5.0–11.0 m from the centre; stay at 3.0–95.0 m. Begin at the marked entry. Pitch back 180° along the path."
+        },
+        {
+          "step": 2,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть рівно на 4.0–95.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 3,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 180° у позначеному напрямку, 5.0–11.0 м від центра; висота 3.0–95.0 м. Почніть у позначеному вході. Тангаж назад 180° уздовж траєкторії."
+        }
+      ]
+    },
+    {
+      "name": "beginner-47 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-47 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-47 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 183263,
+      "frames": 1678,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-48 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 180° in the marked direction, 11.0–23.0 m from the centre; stay at 3.0–76.0 m. Begin at the marked entry. Pitch back 180° along the path."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter inverted at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 180° у позначеному напрямку, 11.0–23.0 м від центра; висота 3.0–76.0 м. Почніть у позначеному вході. Тангаж назад 180° уздовж траєкторії."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть догори дном на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-48 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-48 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-48 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 200731,
+      "frames": 1845,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-49 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Pitch forward 90°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 2,
+          "type": "crossing-v1",
+          "locale": "en",
+          "text": "Cross down at 55.0 m height, with the nose within 20° of travel, at least 2.0 m/s. Stay inside the marked opening."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Pitch back 90°. Enter at the shown entry attitude at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 1,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Тангаж уперед 90°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 2,
+          "type": "crossing-v1",
+          "locale": "uk",
+          "text": "Перетніть униз на висоті 55.0 м, з носом у межах 20° від напрямку руху, щонайменше 2.0 м/с. Залишайтеся в позначеному отворі."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Тангаж назад 90°. Почніть у показаному положенні входу на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-49 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-49 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-49 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 187822,
+      "frames": 1752,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-50 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 360° in the marked direction, 11.0–23.0 m from the centre; stay at 3.0–76.0 m. Begin at the marked entry. Pitch back 360° along the path."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 360° у позначеному напрямку, 11.0–23.0 м від центра; висота 3.0–76.0 м. Почніть у позначеному вході. Тангаж назад 360° уздовж траєкторії."
+        }
+      ]
+    },
+    {
+      "name": "beginner-50 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-50 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-50 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 198519,
+      "frames": 1846,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-51 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 360° in the marked direction, 11.0–23.0 m from the centre; stay at 3.0–76.0 m. Begin at the marked entry. Roll left 360° along the path. Gain 18.0–40.0 m north gradually through the path."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 360° у позначеному напрямку, 11.0–23.0 м від центра; висота 3.0–76.0 м. Почніть у позначеному вході. Крен ліворуч 360° уздовж траєкторії. Поступово пройдіть 18.0–40.0 м на північ вздовж траєкторії."
+        }
+      ]
+    },
+    {
+      "name": "beginner-51 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-51 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-51 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 217561,
+      "frames": 2018,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-52 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Orbit path: 360° in the marked direction, 6.0–14.0 m from the centre; stay at 23.0–27.0 m. Keep the nose toward the landmark."
+        },
+        {
+          "step": 4,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Orbit path: 360° in the marked direction, 6.0–14.0 m from the centre; stay at 23.0–27.0 m. Keep the nose toward the landmark."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Орбітальна траєкторія: 360° у позначеному напрямку, 6.0–14.0 м від центра; висота 23.0–27.0 м. Тримайте ніс до орієнтира."
+        },
+        {
+          "step": 4,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Орбітальна траєкторія: 360° у позначеному напрямку, 6.0–14.0 м від центра; висота 23.0–27.0 м. Тримайте ніс до орієнтира."
+        }
+      ]
+    },
+    {
+      "name": "beginner-52 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-52 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-52 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 303456,
+      "frames": 2793,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-53 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Orbit path: 720° in the marked direction, 6.0–14.0 m from the centre; stay at 18.0–32.0 m. Keep the nose toward the landmark. Gain 8.0–10.0 m up gradually through the path."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Орбітальна траєкторія: 720° у позначеному напрямку, 6.0–14.0 м від центра; висота 18.0–32.0 м. Тримайте ніс до орієнтира. Поступово пройдіть 8.0–10.0 м угору вздовж траєкторії."
+        }
+      ]
+    },
+    {
+      "name": "beginner-53 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-53 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-53 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 266340,
+      "frames": 2491,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-54 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 1,
+          "type": "crossing-v1",
+          "locale": "en",
+          "text": "Cross up at 50.0 m height, without pointing the nose against travel, at least 15.0 m/s. Stay inside the marked opening."
+        },
+        {
+          "step": 2,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Yaw right 180°. Enter inverted at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 4,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter inverted at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 1,
+          "type": "crossing-v1",
+          "locale": "uk",
+          "text": "Перетніть угору на висоті 50.0 м, не спрямовуючи ніс проти руху, щонайменше 15.0 м/с. Залишайтеся в позначеному отворі."
+        },
+        {
+          "step": 2,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Курс праворуч 180°. Почніть догори дном на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 4,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть догори дном на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-54 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-54 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-54 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 168977,
+      "frames": 1542,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-55 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 360° in the marked direction, 11.0–23.0 m from the centre; stay at 3.0–76.0 m. Begin at the marked entry. Pitch back 360° along the path."
+        },
+        {
+          "step": 4,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll left 360°. Enter upright at 8.0–70.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 360° у позначеному напрямку, 11.0–23.0 м від центра; висота 3.0–76.0 м. Почніть у позначеному вході. Тангаж назад 360° уздовж траєкторії."
+        },
+        {
+          "step": 4,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен ліворуч 360°. Почніть рівно на 8.0–70.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-55 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-55 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-55 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 225618,
+      "frames": 2075,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-56 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter upright at 4.0–95.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 3,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 180° in the marked direction, 5.0–11.0 m from the centre; stay at 3.0–95.0 m. Begin at the marked entry. Pitch back 180° along the path."
+        },
+        {
+          "step": 5,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Orbit path: 360° in the marked direction, 6.0–14.0 m from the centre; stay at 28.0–32.0 m. Keep the nose toward the landmark."
+        },
+        {
+          "step": 2,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть рівно на 4.0–95.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 3,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 180° у позначеному напрямку, 5.0–11.0 м від центра; висота 3.0–95.0 м. Почніть у позначеному вході. Тангаж назад 180° уздовж траєкторії."
+        },
+        {
+          "step": 5,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Орбітальна траєкторія: 360° у позначеному напрямку, 6.0–14.0 м від центра; висота 28.0–32.0 м. Тримайте ніс до орієнтира."
+        }
+      ]
+    },
+    {
+      "name": "beginner-56 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-56 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-56 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 284137,
+      "frames": 2622,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-57 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 4,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 360°. Enter upright at 10.0–70.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 6,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Pitch forward 90°. Enter upright at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 7,
+          "type": "crossing-v1",
+          "locale": "en",
+          "text": "Cross down at 55.0 m height, with the nose within 20° of travel, at least 2.0 m/s. Stay inside the marked opening."
+        },
+        {
+          "step": 8,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Pitch back 90°. Enter at the shown entry attitude at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 4,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 360°. Почніть рівно на 10.0–70.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 6,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Тангаж уперед 90°. Почніть рівно на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 7,
+          "type": "crossing-v1",
+          "locale": "uk",
+          "text": "Перетніть униз на висоті 55.0 м, з носом у межах 20° від напрямку руху, щонайменше 2.0 м/с. Залишайтеся в позначеному отворі."
+        },
+        {
+          "step": 8,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Тангаж назад 90°. Почніть у показаному положенні входу на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        }
+      ]
+    },
+    {
+      "name": "beginner-57 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-57 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-57 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 346549,
+      "frames": 3212,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-58 School start and readable EN/UK skill goals",
+      "passed": true,
+      "goals": [
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 180° in the marked direction, 11.0–23.0 m from the centre; stay at 3.0–76.0 m. Begin at the marked entry. Pitch back 180° along the path."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter inverted at 4.0–75.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 9,
+          "type": "rotation-v1",
+          "locale": "en",
+          "text": "Roll right 180°. Enter upright at 4.0–95.0 m. Complete the whole rotation, then stop rotating for 0.2 s."
+        },
+        {
+          "step": 10,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 180° in the marked direction, 5.0–11.0 m from the centre; stay at 3.0–95.0 m. Begin at the marked entry. Pitch back 180° along the path."
+        },
+        {
+          "step": 14,
+          "type": "path-v1",
+          "locale": "en",
+          "text": "Loop path: 360° in the marked direction, 11.0–23.0 m from the centre; stay at 3.0–76.0 m. Begin at the marked entry. Pitch back 360° along the path."
+        },
+        {
+          "step": 2,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 180° у позначеному напрямку, 11.0–23.0 м від центра; висота 3.0–76.0 м. Почніть у позначеному вході. Тангаж назад 180° уздовж траєкторії."
+        },
+        {
+          "step": 3,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть догори дном на 4.0–75.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 9,
+          "type": "rotation-v1",
+          "locale": "uk",
+          "text": "Крен праворуч 180°. Почніть рівно на 4.0–95.0 м. Виконайте весь оберт, потім зупиніть обертання на 0.2 с."
+        },
+        {
+          "step": 10,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 180° у позначеному напрямку, 5.0–11.0 м від центра; висота 3.0–95.0 м. Почніть у позначеному вході. Тангаж назад 180° уздовж траєкторії."
+        },
+        {
+          "step": 14,
+          "type": "path-v1",
+          "locale": "uk",
+          "text": "Траєкторія петлі: 360° у позначеному напрямку, 11.0–23.0 м від центра; висота 3.0–76.0 м. Почніть у позначеному вході. Тангаж назад 360° уздовж траєкторії."
+        }
+      ]
+    },
+    {
+      "name": "beginner-58 Fly entry forces Acro and restores previous settings",
+      "passed": true
+    },
+    {
+      "name": "beginner-58 Playlist entry forces Acro without replacing pinned identity",
+      "passed": true
+    },
+    {
+      "name": "beginner-58 Verified replay opens and exported proof reopens exactly",
+      "passed": true,
+      "archiveBytes": 571168,
+      "frames": 5285,
+      "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+    },
+    {
+      "name": "beginner-46 creator pack export/import keeps skill criteria and ordinary Acro mode ownership",
+      "passed": true,
+      "source": "beginner-46",
+      "custom": "custom-muqcspfh-jbazz",
+      "types": [
+        "hold",
+        "rotation-v1",
+        "attitude-v1",
+        "land"
+      ],
+      "packBytes": 10187,
+      "originalObjectivesIdentity": "4d4af2f6ce2d3c39",
+      "reimportedObjectivesIdentity": "4d4af2f6ce2d3c39",
+      "canonicalObjectivesEqual": true,
+      "sameKeyOrder": false
+    },
+    {
+      "name": "beginner-49 creator pack export/import keeps skill criteria and ordinary Acro mode ownership",
+      "passed": true,
+      "source": "beginner-49",
+      "custom": "custom-muqcspoz-o7c9q",
+      "types": [
+        "hold",
+        "rotation-v1",
+        "crossing-v1",
+        "land"
+      ],
+      "packBytes": 10233,
+      "originalObjectivesIdentity": "b5ad99d679b970a3",
+      "reimportedObjectivesIdentity": "b5ad99d679b970a3",
+      "canonicalObjectivesEqual": true,
+      "sameKeyOrder": false
+    },
+    {
+      "name": "beginner-50 creator pack export/import keeps skill criteria and ordinary Acro mode ownership",
+      "passed": true,
+      "source": "beginner-50",
+      "custom": "custom-muqcspx2-5um17",
+      "types": [
+        "hold",
+        "gate",
+        "path-v1",
+        "land"
+      ],
+      "packBytes": 10227,
+      "originalObjectivesIdentity": "bfec28593070012b",
+      "reimportedObjectivesIdentity": "bfec28593070012b",
+      "canonicalObjectivesEqual": true,
+      "sameKeyOrder": false
+    },
+    {
+      "name": "Restore all16 archived skill proofs through the real file control",
+      "passed": true,
+      "parts": 1,
+      "verified": [
+        {
+          "id": "beginner-44",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-51",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-50",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-45",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-43",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-49",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-54",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-53",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-58",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-57",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-55",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-52",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-48",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-47",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-56",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        },
+        {
+          "id": "beginner-46",
+          "status": "verified",
+          "diagnostic": "complete",
+          "packIdentity": "fpv-skills-school:ccdbc4f61adad55a"
+        }
+      ]
+    },
+    {
+      "name": "Backup and fresh-host reopen retain all16 exact verified records",
+      "passed": true,
+      "parts": 1,
+      "records": 16
+    }
+  ],
+  "costs": [
+    {
+      "id": "beginner-43",
+      "operation": "host-school-open",
+      "milliseconds": 148.09999999776483
+    },
+    {
+      "id": "beginner-43",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.900000002235174
+    },
+    {
+      "id": "beginner-43",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 18.300000000745058
+    },
+    {
+      "id": "beginner-43",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 15.299999997019768
+    },
+    {
+      "id": "beginner-43",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 17.100000001490116
+    },
+    {
+      "id": "beginner-44",
+      "operation": "host-school-open",
+      "milliseconds": 79.89999999850988
+    },
+    {
+      "id": "beginner-44",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.300000000745058
+    },
+    {
+      "id": "beginner-44",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 16.100000001490116
+    },
+    {
+      "id": "beginner-44",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.299999997019768
+    },
+    {
+      "id": "beginner-44",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 16.900000002235174
+    },
+    {
+      "id": "beginner-45",
+      "operation": "host-school-open",
+      "milliseconds": 109
+    },
+    {
+      "id": "beginner-45",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 9.199999999254942
+    },
+    {
+      "id": "beginner-45",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 10
+    },
+    {
+      "id": "beginner-45",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 10.800000000745058
+    },
+    {
+      "id": "beginner-45",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 10.300000000745058
+    },
+    {
+      "id": "beginner-46",
+      "operation": "host-school-open",
+      "milliseconds": 78.60000000149012
+    },
+    {
+      "id": "beginner-46",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.699999999254942
+    },
+    {
+      "id": "beginner-46",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.599999997764826
+    },
+    {
+      "id": "beginner-46",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.100000001490116
+    },
+    {
+      "id": "beginner-46",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.699999999254942
+    },
+    {
+      "id": "beginner-46",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.599999997764826
+    },
+    {
+      "id": "beginner-46",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.300000000745058
+    },
+    {
+      "id": "beginner-47",
+      "operation": "host-school-open",
+      "milliseconds": 79.70000000298023
+    },
+    {
+      "id": "beginner-47",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.899999998509884
+    },
+    {
+      "id": "beginner-47",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.399999998509884
+    },
+    {
+      "id": "beginner-47",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 14.5
+    },
+    {
+      "id": "beginner-47",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.700000002980232
+    },
+    {
+      "id": "beginner-48",
+      "operation": "host-school-open",
+      "milliseconds": 83.89999999850988
+    },
+    {
+      "id": "beginner-48",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.300000000745058
+    },
+    {
+      "id": "beginner-48",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 15.600000001490116
+    },
+    {
+      "id": "beginner-48",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 15.800000000745058
+    },
+    {
+      "id": "beginner-48",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 15.5
+    },
+    {
+      "id": "beginner-49",
+      "operation": "host-school-open",
+      "milliseconds": 79.69999999925494
+    },
+    {
+      "id": "beginner-49",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.699999999254942
+    },
+    {
+      "id": "beginner-49",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12
+    },
+    {
+      "id": "beginner-49",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.5
+    },
+    {
+      "id": "beginner-49",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 14.5
+    },
+    {
+      "id": "beginner-49",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.800000000745058
+    },
+    {
+      "id": "beginner-49",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.699999999254942
+    },
+    {
+      "id": "beginner-50",
+      "operation": "host-school-open",
+      "milliseconds": 83.40000000223517
+    },
+    {
+      "id": "beginner-50",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.899999998509884
+    },
+    {
+      "id": "beginner-50",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.599999997764826
+    },
+    {
+      "id": "beginner-51",
+      "operation": "host-school-open",
+      "milliseconds": 84.19999999925494
+    },
+    {
+      "id": "beginner-51",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 15
+    },
+    {
+      "id": "beginner-51",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 16.300000000745058
+    },
+    {
+      "id": "beginner-52",
+      "operation": "host-school-open",
+      "milliseconds": 121.40000000223517
+    },
+    {
+      "id": "beginner-52",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.100000001490116
+    },
+    {
+      "id": "beginner-52",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 27.399999998509884
+    },
+    {
+      "id": "beginner-52",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.699999999254942
+    },
+    {
+      "id": "beginner-52",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 28.300000000745058
+    },
+    {
+      "id": "beginner-53",
+      "operation": "host-school-open",
+      "milliseconds": 97.30000000074506
+    },
+    {
+      "id": "beginner-53",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12
+    },
+    {
+      "id": "beginner-53",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12
+    },
+    {
+      "id": "beginner-54",
+      "operation": "host-school-open",
+      "milliseconds": 74.69999999925494
+    },
+    {
+      "id": "beginner-54",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 8.899999998509884
+    },
+    {
+      "id": "beginner-54",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 9.100000001490116
+    },
+    {
+      "id": "beginner-54",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 10.600000001490116
+    },
+    {
+      "id": "beginner-54",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 12.5
+    },
+    {
+      "id": "beginner-54",
+      "step": 1,
+      "operation": "host-skill-seek",
+      "milliseconds": 10.700000002980232
+    },
+    {
+      "id": "beginner-54",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 9.299999997019768
+    },
+    {
+      "id": "beginner-54",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 10.5
+    },
+    {
+      "id": "beginner-54",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.800000000745058
+    },
+    {
+      "id": "beginner-55",
+      "operation": "host-school-open",
+      "milliseconds": 85.60000000149012
+    },
+    {
+      "id": "beginner-55",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 13
+    },
+    {
+      "id": "beginner-55",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 25.700000002980232
+    },
+    {
+      "id": "beginner-55",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 14.699999999254942
+    },
+    {
+      "id": "beginner-55",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 24.899999998509884
+    },
+    {
+      "id": "beginner-56",
+      "operation": "host-school-open",
+      "milliseconds": 96.69999999925494
+    },
+    {
+      "id": "beginner-56",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 12
+    },
+    {
+      "id": "beginner-56",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.699999999254942
+    },
+    {
+      "id": "beginner-56",
+      "step": 5,
+      "operation": "host-skill-seek",
+      "milliseconds": 22.600000001490116
+    },
+    {
+      "id": "beginner-56",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.899999998509884
+    },
+    {
+      "id": "beginner-56",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 11.800000000745058
+    },
+    {
+      "id": "beginner-56",
+      "step": 5,
+      "operation": "host-skill-seek",
+      "milliseconds": 22.100000001490116
+    },
+    {
+      "id": "beginner-57",
+      "operation": "host-school-open",
+      "milliseconds": 114.19999999925494
+    },
+    {
+      "id": "beginner-57",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 22
+    },
+    {
+      "id": "beginner-57",
+      "step": 6,
+      "operation": "host-skill-seek",
+      "milliseconds": 30.5
+    },
+    {
+      "id": "beginner-57",
+      "step": 7,
+      "operation": "host-skill-seek",
+      "milliseconds": 32
+    },
+    {
+      "id": "beginner-57",
+      "step": 8,
+      "operation": "host-skill-seek",
+      "milliseconds": 32.30000000074506
+    },
+    {
+      "id": "beginner-57",
+      "step": 4,
+      "operation": "host-skill-seek",
+      "milliseconds": 24.099999997764826
+    },
+    {
+      "id": "beginner-57",
+      "step": 6,
+      "operation": "host-skill-seek",
+      "milliseconds": 30.400000002235174
+    },
+    {
+      "id": "beginner-57",
+      "step": 7,
+      "operation": "host-skill-seek",
+      "milliseconds": 31.5
+    },
+    {
+      "id": "beginner-57",
+      "step": 8,
+      "operation": "host-skill-seek",
+      "milliseconds": 32.099999997764826
+    },
+    {
+      "id": "beginner-58",
+      "operation": "host-school-open",
+      "milliseconds": 145.29999999701977
+    },
+    {
+      "id": "beginner-58",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 13.700000002980232
+    },
+    {
+      "id": "beginner-58",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 16.099999997764826
+    },
+    {
+      "id": "beginner-58",
+      "step": 9,
+      "operation": "host-skill-seek",
+      "milliseconds": 49.5
+    },
+    {
+      "id": "beginner-58",
+      "step": 10,
+      "operation": "host-skill-seek",
+      "milliseconds": 50.69999999925494
+    },
+    {
+      "id": "beginner-58",
+      "step": 14,
+      "operation": "host-skill-seek",
+      "milliseconds": 73.30000000074506
+    },
+    {
+      "id": "beginner-58",
+      "step": 2,
+      "operation": "host-skill-seek",
+      "milliseconds": 15.200000002980232
+    },
+    {
+      "id": "beginner-58",
+      "step": 3,
+      "operation": "host-skill-seek",
+      "milliseconds": 16.399999998509884
+    },
+    {
+      "id": "beginner-58",
+      "step": 9,
+      "operation": "host-skill-seek",
+      "milliseconds": 49.30000000074506
+    },
+    {
+      "id": "beginner-58",
+      "step": 10,
+      "operation": "host-skill-seek",
+      "milliseconds": 50.100000001490116
+    },
+    {
+      "id": "beginner-58",
+      "step": 14,
+      "operation": "host-skill-seek",
+      "milliseconds": 73.69999999925494
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/world-app.mjs": "fb4315da221d0999f378ce596b2f26a3168f1a45c0d80b624bbd846abb0e517e",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "e3e368ecd50e28808941f334fff0ae9ee89475ecd39a8c47c1cbbcb346899ebb",
+    "optional-practice/civilian-fpv/world-model.mjs": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "a0111508d84e19da88bdb78c1834e8a05950d5ee04a59819dd8545209d2698fb",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "4de24b61664163cff3652894e326930c3a217ecc651233f132240d56e325d985",
+    "optional-practice/fpv-worlds/index.html": "20c6330cc050d3c0a4ba78c5f45243bcc68ded1a6baa0ddcd851cf9a003d55a9"
+  },
+  "scope": "Real host, actual menu controls/WebGL/storage/proof import and export; synthetic file selection and isolated profile. Verified replay opened and complete canonical archive retained; full route coach playback is covered separately. No physical-radio, human usability or public deployment claim."
+}

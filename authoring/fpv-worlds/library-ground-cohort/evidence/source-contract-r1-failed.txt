@@ -1,0 +1,4 @@
+Manual source contract r1 stopped at: New feed is byte-exact same empty v1 shape.
+The new empty file had equivalent53-byte multiline JSON instead of the49-byte existing empty-feed encoding.
+No runtime/worker requests or build had run yet. New data file normalized to the exact existing empty encoding before r2.
+Before bytes: b'{\n  "format": "FPVWorldLibrary.v1",\n  "worlds": []\n}\n'

@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: the release allowlist includes the Studio and its complete static module graph
+ok 1 - the release allowlist includes the Studio and its complete static module graph
+  ---
+  duration_ms: 379.570458
+  ...
+# Subtest: calibration initializes a valid course and renders every offered Academy, World and Adventure environment
+ok 2 - calibration initializes a valid course and renders every offered Academy, World and Adventure environment
+  ---
+  duration_ms: 182.24525
+  ...
+# Subtest: fixed acceptance routes cover every current environment without changing course data
+ok 3 - fixed acceptance routes cover every current environment without changing course data
+  ---
+  duration_ms: 28.417917
+  ...
+# Subtest: paired comparison rejects changed conditions or incomplete runs and retains both directional results
+ok 4 - paired comparison rejects changed conditions or incomplete runs and retains both directional results
+  ---
+  duration_ms: 0.367625
+  ...
+# Subtest: percentiles use bounded actual samples and reject missing timing data
+ok 5 - percentiles use bounded actual samples and reject missing timing data
+  ---
+  duration_ms: 0.194
+  ...
+# Subtest: snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+ok 6 - snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+  ---
+  duration_ms: 236.884334
+  ...
+# Subtest: authoring controls cannot bypass pending or failed source verification
+ok 7 - authoring controls cannot bypass pending or failed source verification
+  ---
+  duration_ms: 2.504584
+  ...
+# Subtest: failed scene changes block mislabeled reviews and recover only after a successful install
+ok 8 - failed scene changes block mislabeled reviews and recover only after a successful install
+  ---
+  duration_ms: 3.48425
+  ...
+# Subtest: closing the page while source verification waits never installs into a disposed renderer
+ok 9 - closing the page while source verification waits never installs into a disposed renderer
+  ---
+  duration_ms: 1.674833
+  ...
+# Subtest: measurement hashing failures release controls and disposal cannot reactivate them
+ok 10 - measurement hashing failures release controls and disposal cannot reactivate them
+  ---
+  duration_ms: 2.945958
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 671.14225

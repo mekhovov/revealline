@@ -1,0 +1,25 @@
+{
+  "integratedSource": "d1ebca5a2c55687b142bbff2ae6134d71cd32809",
+  "main": "5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28",
+  "admittedSource": "d1d48b2b7ad67a0915532a1489f300abccd778ae",
+  "originalInputs": 95,
+  "originalInputBytes": 16736059,
+  "sourceReserveBytes": 41157,
+  "scope": "Only world-visuals projection differs from historical admitted inputs. Canonical bytes equal that admitted module; normalized AST, tokens, comments and every line terminator remain exact. Host and other93 original inputs are byte-identical. Fresh exact-head CI is required; no fresh local package/browser claim.",
+  "files": [
+    {
+      "path": "fpv-language-phase-final-capacity-bridge.json.gz",
+      "bytes": 18109,
+      "sha256": "7179ea57dfdf3549e874809c382ca9679be3e35a1ddccd7ec8e0c2ecedc6adfa",
+      "storedBytes": 5926,
+      "storedSha256": "5496cbbfa021510dd80367b63615e8e9ea67694370bedb93d465ff47ee09306f"
+    },
+    {
+      "path": "fpv-language-phase-capacity-identity.json.gz",
+      "bytes": 584,
+      "sha256": "ab62f72ba60d800b8bec196f29758a989cc37b64c6ccd82397a24782c2aa3aa7",
+      "storedBytes": 391,
+      "storedSha256": "c314839684a4bff0ea04697b71091146f51076b28d3580411307165a59f8ffd1"
+    }
+  ]
+}

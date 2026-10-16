@@ -1,0 +1,26 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05-narrow-hud-next",
+  "branch": "codex/p05-narrow-hud-next",
+  "head": "ef1430174dfd35a9df441233988b8737d0401851",
+  "status": [
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M game/couch/couch.css",
+    " M game/ui/field-kit-compiled.css",
+    "?? docs/narrow-hud-layout.md"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "b4304c443f197ce49a1b0a0c474b65933571a32ca98e1487c0016f13ba6360e2",
+      "bytes": 4969
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "9104ceb48ab3f35f1264a5b892d8baccbcca9150f3294fea16a7c9cababb2799",
+      "bytes": 2074
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

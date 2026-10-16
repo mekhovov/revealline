@@ -8,6 +8,7 @@ import { createCommunityStateStore } from './state.mjs';
 import { createTusBrowserUpload } from './tus-upload.mjs';
 import {
   formatDate,
+  getLocale,
   formatNumber,
   localizedAttribute,
   localizedMessage,
@@ -132,6 +133,22 @@ function render() {
       ),
     );
     const flags = document.createElement('p');
+    if (edition.family)
+      flags.append(
+        text(
+          'span',
+          () =>
+            ({
+              classic: 'Snake',
+              team: 'Team',
+              fpv: 'FPV SIM',
+              overflight: getLocale() === 'uk' ? 'Проліт' : 'Overflight',
+              'overflight-hunt': getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid',
+              'overflight-riy': getLocale() === 'uk' ? 'Проліт: Рій' : 'Overflight: Riy',
+            })[edition.family],
+          'badge',
+        ),
+      );
     if (edition.installed)
       flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
     if (edition.offloaded)
@@ -141,6 +158,19 @@ function render() {
     if (edition.updateAvailable)
       flags.append(text('span', localizedMessage('interface:community.updateAvailable'), 'badge'));
     card.append(flags);
+    if (edition.localCopyRetained)
+      card.append(
+        text(
+          'p',
+          ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
+            ? () =>
+                getLocale() === 'uk'
+                  ? 'Локальна копія Studio також використовує цей виліт. Вивантаження видання збереже її.'
+                  : 'A local Studio copy also uses this sortie. Offloading this edition keeps that copy.'
+            : localizedMessage('interface:community.localSnakeCopyRetained'),
+          'meta',
+        ),
+      );
     const preview = document.createElement('figure');
     preview.className = 'preview';
     if (edition.previewAvailable)
@@ -156,7 +186,9 @@ function render() {
             localizedAttribute(
               image,
               'alt',
-              localizedMessage('interface:community.catalogPreview', { title: edition.title }),
+              localizedMessage('interface:community.catalogPreview', {
+                title: edition.title,
+              }),
             );
             preview.replaceChildren(image);
           },
@@ -192,8 +224,20 @@ function render() {
             async () => {
               const review = await library.reviewInstalledOffload(edition);
               await library.offloadInstalled(edition, review);
-              status(localizedMessage('interface:community.installedMediaOffloaded'));
               await refresh({ reset: true });
+              status(
+                review.localCopyRetained &&
+                  ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
+                  ? () =>
+                      getLocale() === 'uk'
+                        ? 'Видання вивантажено. Локальну копію та пакет відновлення збережено.'
+                        : 'Edition offloaded. The local copy and recovery package are retained.'
+                  : localizedMessage(
+                      review.localCopyRetained
+                        ? 'interface:community.snakeEditionOffloadedLocalKept'
+                        : 'interface:community.installedMediaOffloaded',
+                    ),
+              );
             },
             'secondary',
           ),
@@ -231,10 +275,16 @@ function render() {
                 : 'interface:community.downloadAndInstall',
           ),
           async () => {
-            status(localizedMessage('interface:community.downloading', { title: edition.title }));
+            status(
+              localizedMessage('interface:community.downloading', {
+                title: edition.title,
+              }),
+            );
             await library.install(edition, { offline: edition.offloaded });
             status(
-              localizedMessage('interface:community.installedOffline', { title: edition.title }),
+              localizedMessage('interface:community.installedOffline', {
+                title: edition.title,
+              }),
             );
             await refresh({ reset: true });
           },
@@ -244,7 +294,9 @@ function render() {
     localizedAttribute(
       reportReason,
       'aria-label',
-      localizedMessage('interface:community.reportReasonFor', { title: edition.title }),
+      localizedMessage('interface:community.reportReasonFor', {
+        title: edition.title,
+      }),
     );
     for (const [value, key] of [
       ['broken', 'brokenContent'],
@@ -294,10 +346,16 @@ async function refresh({ reset = true } = {}) {
     nextCursor = result.nextCursor;
     $('more').hidden = !nextCursor;
     render();
-    status(localizedMessage('interface:community.editionsShown', { count: rows.length }));
+    status(
+      localizedMessage('interface:community.editionsShown', {
+        count: rows.length,
+      }),
+    );
   } catch (error) {
     status(
-      localizedMessage('interface:community.catalogUnavailable', { error: error.message }),
+      localizedMessage('interface:community.catalogUnavailable', {
+        error: error.message,
+      }),
       true,
     );
   }
@@ -347,7 +405,9 @@ $('publish').onclick = async () => {
     submissionId = result.id;
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.submissionStatus', { status: result.status }),
+      localizedMessage('interface:community.submissionStatus', {
+        status: result.status,
+      }),
     );
     if (['queued', 'validating'].includes(result.status)) scheduleSubmissionCheck();
   } catch (error) {
@@ -378,7 +438,9 @@ async function checkSubmission() {
   } catch (error) {
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.submissionRefreshFailed', { error: error.message }),
+      localizedMessage('interface:community.submissionRefreshFailed', {
+        error: error.message,
+      }),
     );
   }
 }
@@ -388,7 +450,9 @@ $('publish-unlist').onclick = async () => {
     const current = await publisher.unlist();
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.editionStatus', { status: current.status }),
+      localizedMessage('interface:community.editionStatus', {
+        status: current.status,
+      }),
     );
     $('publish-unlist').hidden = true;
   } catch (error) {
@@ -497,6 +561,7 @@ $('account-sign-out').onclick = async () => {
 window.addEventListener('pagehide', () => {
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
+  library.close();
   creatorStore.close();
 });
 renderAccount();

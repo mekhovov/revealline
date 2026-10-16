@@ -1,3 +1,5 @@
+> Bulk integration notice (2026-09-27): this is a historical candidate receipt, not the current release plan. The original PR #539 draft is preserved in [its source receipt](history/pr539-player-first-ux2-couch-secondary-navigation.md). Current policy is all-open-PR integration, cumulative fixes/tests, then one final release; historical version publications are not prerequisites.
+
 # UX2 Couch secondary-navigation parity — v0.141.4 candidate
 
 ## Scope

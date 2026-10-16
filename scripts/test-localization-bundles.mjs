@@ -5,9 +5,27 @@ import { readFile } from 'node:fs/promises';
 import {
   compactContentRegistry,
   catalogBundle,
+  isTranslationKeyLiteral,
   readCatalogs,
   validateCatalogMessages,
 } from './localization.mjs';
+
+test('translation-key scanning accepts complete keys and rejects concatenation prefixes', () => {
+  for (const key of [
+    'common:actions.cancel',
+    'interface:downloads.offline.ready',
+    'errors:dataJson.arrayItemBudget',
+  ])
+    assert.equal(isTranslationKeyLiteral(key), true, key);
+  for (const prefix of [
+    'interface:downloads.',
+    'interface:downloads.install.',
+    'interface:downloads.offline.',
+    'interface:downloads..ready',
+    'downloads.offline.ready',
+  ])
+    assert.equal(isTranslationKeyLiteral(prefix), false, prefix);
+});
 
 test('catalog validation checks Ukrainian-only plural forms and rejects orphan translations', () => {
   const resources = {

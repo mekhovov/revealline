@@ -1,0 +1,16 @@
+- main:
+  - button "Menu"
+  - generic: Survive
+  - button "Pause"
+  - region "Survive battlefield":
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:07
+    - generic: Level 1
+    - generic: 0 Cleared
+    - generic: Overflight payload 1
+    - generic: Boost Ready
+  - text: ⌃ ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +

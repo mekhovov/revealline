@@ -114,6 +114,8 @@ async function open(p, host, mode) {
     await pending[0];
     assert.equal(p.$('journey-chooser').open, true);
   }
+  p.$('journey-lifecycle').value = '';
+  p.$('journey-lifecycle').emit('change');
   p.$('journey-mode').value = mode;
   p.$('journey-mode').emit('change');
   return [...p.$('journey-cards').children];

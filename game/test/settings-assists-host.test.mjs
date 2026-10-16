@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -79,7 +80,7 @@ test('Settings and arena assists synchronize, persist across app reload, and ret
   assert.equal(page.rendered.paused, true, 'Opening Settings performs the ordinary pause first.');
   const pausedBytes = storage.getItem(sessionKey);
   const pausedCheckpoint = authoritativeCheckpoint(run);
-  assert.equal(verifyReplay(JSON.parse(pausedBytes).replay).match, true);
+  assert.equal(verifyReplay(nativeSession(JSON.parse(pausedBytes)).replay).match, true);
   page.$('settings-tap-steering').click();
   page.$('settings-reduced-effects').click();
   checks(page, false, true);
@@ -112,8 +113,14 @@ test('Settings and arena assists synchronize, persist across app reload, and ret
   // Existing pagehide may refresh savedAt; the replay and attempt identity stay
   // exact. This lifecycle save is separate from setting-only edits above.
   const afterPageHide = storage.getItem(sessionKey);
-  assert.deepEqual(JSON.parse(afterPageHide).replay, JSON.parse(pausedBytes).replay);
-  assert.equal(JSON.parse(afterPageHide).runId, JSON.parse(pausedBytes).runId);
+  assert.deepEqual(
+    nativeSession(JSON.parse(afterPageHide)).replay,
+    nativeSession(JSON.parse(pausedBytes)).replay,
+  );
+  assert.equal(
+    nativeSession(JSON.parse(afterPageHide)).runId,
+    nativeSession(JSON.parse(pausedBytes)).runId,
+  );
   const reloaded = await soloPage(lifetime, { campaign, storage });
   checks(reloaded, true, true);
   assert.equal(reloaded.rendered.reduced, true);

@@ -1,4 +1,14 @@
-import { boundedJSON, exactKeys, plainObject, required } from './data-json.mjs';
+import {
+  requireAcceptedAttemptAppearance,
+  snapshotAttemptAppearance,
+} from './presentation/attempt-appearance.mjs';
+import {
+  restoreCaptureSession as restoreSession,
+  snapshotCaptureSession as snapshotSession,
+  nativeCaptureSession,
+  captureSessionAppearance,
+} from './capture-presentation-session.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, plainObject, required } from './data-json.mjs';
 import { CONTENT_LIMITS } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { importLibrary, campaignKey, LIBRARY_LIMITS } from './library.mjs';
@@ -9,8 +19,6 @@ import {
   PACK_LIMITS,
 } from './packs.mjs';
 import {
-  restoreSession,
-  snapshotSession,
   SESSION_IMPORT_BYTES,
   PRESENTATION_SESSION_FORMAT,
   STORY_SESSION_FORMAT,
@@ -21,17 +29,26 @@ import { MAX_REPLAY_TICKS } from './replay.mjs';
 import { isMediaIdentityCatalog } from './media-library.mjs';
 import { validatePictureReceiptOwners } from './picture-receipts.mjs';
 import { validateExternalChapterIndex } from './external-chapter.mjs';
+import { inspectEnemyStatsBackup, ENEMY_STATS_MAX_BYTES } from './enemy-stats.mjs';
 
 export const BACKUP_FORMAT = 'xonix-backup.v1';
 export const EXTERNAL_BACKUP_FORMAT = 'xonix-backup.v2';
+// The earlier envelopes keep their exact field sets and their original readers.
+export const ACHIEVEMENT_BACKUP_FORMAT = 'xonix-backup.v3';
 // The existing limits remain authoritative for each member. This outer guard
 // fits them together without requiring players to coordinate several files.
 export const MAX_BACKUP_BYTES =
-  PACK_LIMITS.libraryBytes + LIBRARY_LIMITS.maxBytes + SESSION_IMPORT_BYTES + 16384;
+  PACK_LIMITS.libraryBytes +
+  LIBRARY_LIMITS.maxBytes +
+  SESSION_IMPORT_BYTES +
+  ENEMY_STATS_MAX_BYTES +
+  16384;
 const limits = Object.freeze({
   maxBytes: MAX_BACKUP_BYTES,
   maxNodes: 3400000,
-  maxDepth: 30,
+  // One extra structural level retains the optional presentation envelope;
+  // the native session validator still enforces its unchanged inner depth.
+  maxDepth: 31,
   maxArray: MAX_REPLAY_TICKS,
   maxString: CONTENT_LIMITS.maxEncodedImageChars,
 });
@@ -82,7 +99,7 @@ function packEnvelope(value) {
 function envelope(candidate) {
   const value = boundedJSON(packEnvelope(candidate), limits);
   required(
-    [BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT].includes(value.format),
+    [BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT, ACHIEVEMENT_BACKUP_FORMAT].includes(value.format),
     'Unsupported full-backup format.',
   );
   exactKeys(
@@ -92,12 +109,18 @@ function envelope(candidate) {
       'library',
       'packs',
       'session',
-      ...(value.format === EXTERNAL_BACKUP_FORMAT ? ['externalChapters'] : []),
+      ...(value.format === EXTERNAL_BACKUP_FORMAT ||
+      (value.format === ACHIEVEMENT_BACKUP_FORMAT && Object.hasOwn(value, 'externalChapters'))
+        ? ['externalChapters']
+        : []),
+      ...(value.format === ACHIEVEMENT_BACKUP_FORMAT ? ['enemyStats'] : []),
     ],
     'backup',
   );
-  if (value.format === EXTERNAL_BACKUP_FORMAT)
+  if (value.format === EXTERNAL_BACKUP_FORMAT || Object.hasOwn(value, 'externalChapters'))
     value.externalChapters = validateExternalChapterIndex(value.externalChapters);
+  if (value.format === ACHIEVEMENT_BACKUP_FORMAT)
+    value.enemyStats = inspectEnemyStatsBackup(value.enemyStats);
   required(
     plainObject(value.library) && plainObject(value.packs),
     'A full backup must include its player library and expansion library.',
@@ -128,6 +151,7 @@ export async function prepareBackup(
     resolveCampaign,
     expandCampaigns,
     resolveMediaIdentityCatalog,
+    resolveAttemptAppearance,
     prepareExternalChapters,
   } = {},
 ) {
@@ -140,7 +164,7 @@ export async function prepareBackup(
     'External backup preparation must be a trusted capability.',
   );
   required(
-    value.format !== EXTERNAL_BACKUP_FORMAT || prepareExternalChapters,
+    !Object.hasOwn(value, 'externalChapters') || prepareExternalChapters,
     'This external backup needs the supported descriptor companion. Restore its separate originals first.',
   );
   const registered = boundedJSON(campaigns);
@@ -156,6 +180,10 @@ export async function prepareBackup(
   required(
     resolveMediaIdentityCatalog === undefined || typeof resolveMediaIdentityCatalog === 'function',
     'The picture catalog resolver must be a trusted function.',
+  );
+  required(
+    resolveAttemptAppearance === undefined || typeof resolveAttemptAppearance === 'function',
+    'The attempt artwork resolver must be a trusted function.',
   );
   const known = new Map(registered.map((campaign) => [campaignKey(campaign), campaign]));
   const originals = [...registered];
@@ -194,7 +222,7 @@ export async function prepareBackup(
     checkAbort(signal);
   }
   if (value.session !== null) {
-    const key = value.session.campaignKey;
+    const key = nativeCaptureSession(value.session).campaignKey;
     required(
       typeof key === 'string' && key.length > 0 && key.length <= 300,
       'Saved attempt campaign identity is invalid.',
@@ -219,8 +247,8 @@ export async function prepareBackup(
       STORY_SESSION_FORMAT,
       VISUAL_SESSION_FORMAT,
       ACTOR_SESSION_FORMAT,
-    ].includes(value.session?.format) &&
-      value.session?.presentationPins !== null) ||
+    ].includes(nativeCaptureSession(value.session)?.format) &&
+      nativeCaptureSession(value.session)?.presentationPins !== null) ||
     value.library.pictureReceipts?.length
   ) {
     required(
@@ -237,7 +265,22 @@ export async function prepareBackup(
     checkAbort(signal);
   }
   if (value.session !== null) {
-    const key = value.session.campaignKey;
+    const key = nativeCaptureSession(value.session).campaignKey;
+    const artwork = captureSessionAppearance(value.session);
+    if (artwork?.environmentPin) {
+      required(
+        resolveAttemptAppearance,
+        'This backup needs its exact original mission artwork owner.',
+      );
+      const resolved = requireAcceptedAttemptAppearance(
+        await resolveAttemptAppearance(nativeCaptureSession(value.session), artwork, { signal }),
+      );
+      checkAbort(signal);
+      required(
+        canonicalJSON(snapshotAttemptAppearance(resolved)) === canonicalJSON(artwork),
+        'The backup artwork differs from its authenticated mission source.',
+      );
+    }
     await restoreSession(value.session, {
       campaign: known.get(key),
       campaignKey: key,
@@ -254,9 +297,10 @@ export async function prepareBackup(
     library,
     packs,
     session: value.session,
-    ...(value.format === EXTERNAL_BACKUP_FORMAT
+    ...(Object.hasOwn(value, 'externalChapters')
       ? { externalChapters: value.externalChapters }
       : {}),
+    ...(Object.hasOwn(value, 'enemyStats') ? { enemyStats: value.enemyStats } : {}),
   });
   preparedBackups.add(prepared);
   return prepared;
@@ -268,14 +312,19 @@ export const validateBackup = prepareBackup;
 /** Produce compact, validated JSON. Member exports keep their existing formats. */
 export async function exportBackup(contents, options = {}) {
   const value = boundedJSON(packEnvelope(contents), limits);
-  const format = Object.hasOwn(value, 'externalChapters') ? EXTERNAL_BACKUP_FORMAT : BACKUP_FORMAT;
+  const format = Object.hasOwn(value, 'enemyStats')
+    ? ACHIEVEMENT_BACKUP_FORMAT
+    : Object.hasOwn(value, 'externalChapters')
+      ? EXTERNAL_BACKUP_FORMAT
+      : BACKUP_FORMAT;
   exactKeys(
     value,
     [
       'library',
       'packs',
       'session',
-      ...(format === EXTERNAL_BACKUP_FORMAT ? ['externalChapters'] : []),
+      ...(Object.hasOwn(value, 'externalChapters') ? ['externalChapters'] : []),
+      ...(format === ACHIEVEMENT_BACKUP_FORMAT ? ['enemyStats'] : []),
     ],
     'backup contents',
   );

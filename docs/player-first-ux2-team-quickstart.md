@@ -1,3 +1,5 @@
+> Bulk integration notice (2026-09-27): this is a historical candidate receipt, not the current release plan. The original PR #549 draft is preserved in [its source receipt](history/pr549-player-first-ux2-team-quickstart.md). Current policy is all-open-PR integration, cumulative fixes/tests, then one final release; historical version publications are not prerequisites.
+
 # UX2 Team quick start — v0.141.3 candidate
 
 ## Scope

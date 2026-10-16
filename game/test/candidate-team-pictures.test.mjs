@@ -26,8 +26,15 @@ const media = await loadPreviewArtwork(asset, {
   fetchAsset: async () => new Response(bytes),
   digest: (body) => webcrypto.subtle.digest('SHA-256', body),
 });
+const FIXTURE_THEME_REVISION = 987_654_321;
 const snapshot = Object.freeze({
-  resolved: { theme: structuredClone(compiled.resolved.theme), collection: null },
+  resolved: {
+    theme: {
+      ...structuredClone(compiled.resolved.theme),
+      revision: FIXTURE_THEME_REVISION,
+    },
+    collection: null,
+  },
   canvas: {
     palette: {
       ink: '#f6f3e8',
@@ -124,7 +131,12 @@ test('Team candidate verifies exact source and owns original-size draw until dis
   assert.equal(await owner.select(request()), binding);
   assert.equal(binding.choice.officialProgressEligible, false);
   assert.equal(binding.snapshot, snapshot);
-  assert.equal(binding.snapshot.resolved.theme.revision, 88);
+  assert.equal(binding.snapshot.resolved.theme.revision, FIXTURE_THEME_REVISION);
+  assert.notEqual(
+    binding.snapshot.resolved.theme.revision,
+    compiled.resolved.theme.revision,
+    'The retained snapshot uses its fixture identity, not the moving production ledger.',
+  );
   assert.equal(candidateTeamPictureFrame(binding, row.level, snapshot).sha256, asset.sha256);
   assert.equal(candidateTeamPictureFrame({ ...binding }, row.level, snapshot), null);
   const calls = [],

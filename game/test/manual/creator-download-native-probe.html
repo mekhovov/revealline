@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Creator native download probe</title>
+    <style>
+      body {
+        margin: 0;
+        background: #07111b;
+        color: #f2f6fa;
+        font: 16px system-ui;
+      }
+      h1,
+      p {
+        margin: 0.5rem 1rem;
+      }
+      iframe {
+        display: block;
+        width: 100%;
+        height: 70vh;
+        border: 0;
+      }
+      iframe[hidden] {
+        display: none;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        margin: 0.5rem 1rem;
+      }
+    </style>
+    <script type="module" src="./creator-download-native-probe.mjs"></script>
+  </head>
+  <body>
+    <h1>Creator native download probe</h1>
+    <p>
+      Open with <code>?draft=your-saved-draft-id</code> on the same origin as that draft. This
+      passive probe never focuses or activates controls. Use the embedded Creator with native
+      keyboard controls.
+    </p>
+    <iframe title="Picture Campaign Creator" hidden></iframe>
+    <pre id="probe-report" aria-label="Native download event report">Waiting for Creator…</pre>
+  </body>
+</html>

@@ -1,0 +1,371 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-support-corridor",
+    "revision": "2",
+    "name": "Passing Corridor",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 7,
+        "y": 4
+      },
+      {
+        "x": 11,
+        "y": 4
+      },
+      {
+        "x": 12,
+        "y": 4
+      },
+      {
+        "x": 16,
+        "y": 4
+      },
+      {
+        "x": 7,
+        "y": 5
+      },
+      {
+        "x": 16,
+        "y": 5
+      },
+      {
+        "x": 7,
+        "y": 6
+      },
+      {
+        "x": 16,
+        "y": 6
+      },
+      {
+        "x": 7,
+        "y": 7
+      },
+      {
+        "x": 16,
+        "y": 7
+      },
+      {
+        "x": 7,
+        "y": 8
+      },
+      {
+        "x": 16,
+        "y": 8
+      },
+      {
+        "x": 7,
+        "y": 9
+      },
+      {
+        "x": 16,
+        "y": 9
+      },
+      {
+        "x": 7,
+        "y": 10
+      },
+      {
+        "x": 16,
+        "y": 10
+      },
+      {
+        "x": 7,
+        "y": 11
+      },
+      {
+        "x": 16,
+        "y": 11
+      },
+      {
+        "x": 7,
+        "y": 12
+      },
+      {
+        "x": 16,
+        "y": 12
+      },
+      {
+        "x": 7,
+        "y": 13
+      },
+      {
+        "x": 16,
+        "y": 13
+      },
+      {
+        "x": 11,
+        "y": 14
+      },
+      {
+        "x": 12,
+        "y": 14
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 14,
+    "stepMs": 180,
+    "speedupEvery": 4,
+    "minStepMs": 135,
+    "wrap": false,
+    "targetMovement": "still",
+    "fleeEvery": 3
+  },
+  "levelIdentity": "ec32729d4ceaad9c",
+  "mode": "team",
+  "seed": 17,
+  "steps": 140,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 3,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 6,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 9,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 10,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 16,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 17,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 20,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 26,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 26,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 27,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 28,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 31,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 34,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 37,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 39,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 40,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 42,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 46,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 47,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 47,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 48,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 52,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 56,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 63,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 64,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 74,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 75,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 75,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 79,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 83,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 89,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 90,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 91,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 94,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 98,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 104,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 112,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 126,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 126,
+      "playerId": 1,
+      "direction": "down"
+    },
+    {
+      "tick": 127,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 130,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 132,
+      "playerId": 1,
+      "direction": "left"
+    },
+    {
+      "tick": 135,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 136,
+      "playerId": 1,
+      "direction": "up"
+    },
+    {
+      "tick": 138,
+      "playerId": 1,
+      "direction": "right"
+    },
+    {
+      "tick": 139,
+      "playerId": 0,
+      "direction": "up"
+    }
+  ],
+  "checkpoint": "35e3517e0b5df393"
+}

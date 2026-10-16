@@ -27,15 +27,27 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.0f5828ed32e61eea',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '47d47c206c066181eb78d22f474891538b7a24801aa6118f8cfd53255cb818da',
+      bytes: 264337,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.11b817ad76f073e5',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '176400881da368a2d827192379617651fb29fd4d44773cbd5a9296e1ee8c0048',
+      bytes: 307870,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.144ce9c31afe2f45',
@@ -51,9 +63,15 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.15ad2393da53b1f3',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'cefa98a6ac605e808fb0e4109405bc08e0f806c1ed3b4a3d22def159d217c5ec',
+      bytes: 264630,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.1b418d3381494d1e',
@@ -93,15 +111,27 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.21af5a140bffb67a',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '417dc519500675498cf4b5e53f5d35592b0564b68ba970e51d0f950e13ff7e9f',
+      bytes: 266680,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.26e53164613e83d0',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'b1111a42a118f874a0993abec79fe63a6da88f73ae70eaf7739aecc492115fb3',
+      bytes: 268343,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.3a2d993531f58afb',
@@ -117,15 +147,27 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.4166a190ab3ddec3',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '2958e511adaf042515f6445f40d739cc46797af3a7378b18477bd3d0efac167b',
+      bytes: 240180,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.42bce3db8b1e603a',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '2b206ab092e51af1b4569c466ec791047aba5cbd605556252d00e6a0e1be3f79',
+      bytes: 276824,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.4673612d986703b5',
@@ -141,9 +183,15 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.493d624384c36c39',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'd3719e11d241388f7d798ee0e4ed78387d56932dc461f1202284c34dea1ab12d',
+      bytes: 234219,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.4c2e50e6a5e5a496',
@@ -171,21 +219,39 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.628455cefcf758d6',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'af0f43097138386e745e361b3d6d7869740f6e15d99333d3bb2c237f48123418',
+      bytes: 261421,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.6a200fa6fc2c6c98',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '69455e043ab30c3eee430a2a81c8f1c1cd3901203e8b4e5dd38e5377348ebfac',
+      bytes: 307774,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.6a7fe94b1cf0ab84',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'e0b5c1100d674dc8038efac33b7813921a8181e26619c19a6428e79db6842802',
+      bytes: 226890,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.6cd39fc2a7838c93',
@@ -357,15 +423,27 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.89f500bf737786b4',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '003e6285f7c7ee1ed155d508caa67326ad5fe4d3eeed5edc761f349361aef402',
+      bytes: 207886,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.95c0dfa75cc8f037',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '935c40840c16732082d0a7cd00fa725300a2b8fd44ffd738be2cbecb2db89581',
+      bytes: 276549,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.9c57dfab02314b3b',
@@ -417,9 +495,15 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.b31039b52e366575',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'f7ecf0b53b5cbe1d91aa99a64432d8526953329518922efcd2e46fb38e40fcff',
+      bytes: 291750,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.b6fe74b07d509a5f',
@@ -459,9 +543,15 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.c2db06198f371c49',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: '4f56ba1159a737de7580bbe82e4e71e86e2a430f61db35f4d331280fdddb090c',
+      bytes: 226563,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.c3d85f08209b7de8',
@@ -501,9 +591,15 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.eed5c579750a6e66',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'a5c0112706c147589d19bbd5ed5bb14f046c2d22e8dc802c0b09a59f4712e1e6',
+      bytes: 264548,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.efccb4b013c76322',
@@ -519,9 +615,15 @@ export const CURRENT_PICTURE_BASELINES = [
   },
   {
     id: 'picture.fpv.f0b0d70327a0a4c4',
-    kind: 'procedural',
+    kind: 'embedded',
     fit: 'cover',
-    image: null,
+    image: {
+      sha256: 'e70a6191b244d2a32cd535b86f469174f3be935a3b95808bd929b59088e8d70b',
+      bytes: 240769,
+      mime: 'image/jpeg',
+      width: 1024,
+      height: 768,
+    },
   },
   {
     id: 'picture.fpv.f42f426a56bf26ac',

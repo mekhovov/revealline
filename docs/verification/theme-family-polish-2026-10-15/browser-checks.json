@@ -1,0 +1,96 @@
+{
+  "browser": "Safari Technology Preview",
+  "fixture": "game/test/fixtures/appearance-materials.html",
+  "checks": [
+    {
+      "theme": "Ember Foundry",
+      "mode": "material",
+      "status": "ember-foundry · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Polar Relay",
+      "mode": "material",
+      "status": "polar-relay · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "DOS Navigator",
+      "mode": "material",
+      "status": "dos · terminal · quiet · flat Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Vyshyvanka",
+      "mode": "material",
+      "status": "vyshyvanka · linen · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Dnipro Porcelain",
+      "mode": "material",
+      "status": "dnipro-porcelain · porcelain · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Flight Deck",
+      "mode": "material",
+      "status": "industrial-workshop · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Signal Blue",
+      "mode": "material",
+      "status": "legacy · legacy · quiet · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Military Field",
+      "mode": "material",
+      "status": "military-field · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Desktop 98",
+      "mode": "material",
+      "status": "windows-classic · classic · quiet · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Tryzub",
+      "mode": "material",
+      "status": "tryzub · brass · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Orchard Workshop",
+      "mode": "material",
+      "status": "orchard-workshop · wood · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Neon Ruins",
+      "mode": "material",
+      "status": "neon-ruins · composite · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Pocket LCD",
+      "mode": "material",
+      "status": "pocket-lcd · lcd · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Copper Observatory",
+      "mode": "material",
+      "status": "copper-observatory · copper · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Sakura Station",
+      "mode": "material",
+      "status": "sakura-station · sakura · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Obsidian Reliquary",
+      "mode": "material",
+      "status": "obsidian-reliquary · brass · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Deep Space",
+      "mode": "material",
+      "status": "deep-space · composite · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    },
+    {
+      "theme": "Moonlit Grove",
+      "mode": "material",
+      "status": "moonlit-grove · wood · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+    }
+  ]
+}

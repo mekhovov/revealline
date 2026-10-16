@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, SoloElement, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { snapshotReplayPresentation } from '../replay-presentation.mjs';
 
 function key(page, value) {
   const target = page.doc.activeElement;
@@ -51,6 +52,13 @@ function controls(page, t, mode) {
   if (mode === 'keyboard')
     return {
       next: () => key(page, 'Tab'),
+      category: (target) => {
+        const tabs = page.doc.activeElement.parentNode.querySelectorAll('[role="tab"]');
+        key(
+          page,
+          tabs.indexOf(target) < tabs.indexOf(page.doc.activeElement) ? 'ArrowUp' : 'ArrowDown',
+        );
+      },
       confirm: () => key(page, 'Enter'),
       back: () => key(page, 'Escape'),
     };
@@ -77,12 +85,36 @@ function controls(page, t, mode) {
   };
   frame();
   // A neutral sample connects automatically; Confirm is now a real menu action.
-  return { next: () => pulse(13), confirm: () => pulse(0), back: () => pulse(1) };
+  return {
+    next: (target) => {
+      const current = page.doc.activeElement,
+        group = current.closest('[data-menu-layout]'),
+        items = page.doc.querySelectorAll('button,a[href],select,input,textarea,summary'),
+        forward = !target || items.indexOf(target) > items.indexOf(current),
+        horizontal =
+          !!target &&
+          group?.getAttribute('data-menu-layout') === 'vertical' &&
+          group.getAttribute('data-menu-edge-exit') !== 'true' &&
+          !group.contains(target);
+      pulse(horizontal ? (forward ? 15 : 14) : forward ? 13 : 12);
+    },
+    category: (target) => {
+      const tabs = page.doc.activeElement.parentNode.querySelectorAll('[role="tab"]');
+      pulse(tabs.indexOf(target) < tabs.indexOf(page.doc.activeElement) ? 12 : 13);
+    },
+    confirm: () => pulse(0),
+    back: () => pulse(1),
+  };
 }
 function activate(page, input, target, scope) {
   const surfaces = Array.isArray(scope) ? scope : [scope];
   for (let step = 0; step < 80 && page.doc.activeElement !== target; step++) {
-    input.next();
+    if (
+      target.getAttribute('role') === 'tab' &&
+      page.doc.activeElement?.getAttribute('role') === 'tab'
+    )
+      input.category(target);
+    else input.next(target);
     assert.ok(
       surfaces.some((surface) => surface.contains(page.doc.activeElement)),
       'focus stays in the requested visible menu surfaces',
@@ -104,16 +136,7 @@ function nonmodalOverlay(page) {
 }
 
 for (const mode of ['keyboard', 'controller']) {
-  test(`${mode}: native Main menu reaches Collection and Workshop records without winning or leaving a paused cut`, async (t) => {
-    const nativeClick = SoloElement.prototype.click;
-    t.mock.method(SoloElement.prototype, 'click', function () {
-      nativeClick.call(this);
-      if (this.tagName === 'SUMMARY') {
-        const details = this.parentElement;
-        details.open = !details.open;
-        details.emit('toggle');
-      }
-    });
+  test(`${mode}: native Main menu Settings reaches Collection and Workshop records without winning or leaving a paused cut`, async (t) => {
     const showModal = SoloElement.prototype.showModal,
       close = SoloElement.prototype.close,
       origins = new WeakMap();
@@ -153,7 +176,10 @@ for (const mode of ['keyboard', 'controller']) {
       page.$('shell-workshop-dialog').contains(page.$('shell-guide')),
       'Field guide stays available through Workshop',
     );
-    activate(page, input, page.$('shell-gallery'), home);
+    activate(page, input, page.$('shell-options'), home);
+    const settings = page.$('settings-dialog');
+    activate(page, input, page.$('settings-tab-data'), settings);
+    activate(page, input, page.$('shell-gallery'), settings);
     assert.equal(home.open, true);
     assert.equal(page.$('collection-dialog').open, true);
     const progress = page.$('collection-progress'),
@@ -185,7 +211,9 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.rendered.paused, true);
     assert.equal(home.open, true);
     assert.ok(page.doc.activeElement === page.$('shell-gallery'), page.doc.activeElement?.id);
-    activate(page, input, page.$('shell-workshop'), home);
+    assert.equal(settings.open, true, 'Collection returns to its retained Settings owner');
+    activate(page, input, page.$('settings-tab-extras'), settings);
+    activate(page, input, page.$('shell-workshop'), settings);
     const workshop = page.$('shell-workshop-dialog');
     assert.equal(workshop.open, true);
     activate(page, input, page.$('shell-library'), workshop);
@@ -204,12 +232,26 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(workshop.open, false);
     assert.equal(home.open, true);
     assert.ok(page.doc.activeElement === page.$('shell-workshop'));
+    assert.equal(settings.open, true);
+    input.back();
+    page.frame(0);
+    assert.equal(settings.open, false);
+    assert.equal(page.doc.activeElement, page.$('shell-options'));
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), ready);
-    activate(page, input, page.$('shell-featured'), home);
-    await settle(() => {
-      page.frame(0);
-      return !home.open && !page.rendered.paused;
-    }, 'The explicit named Title Start must complete before sending flight input.');
+    const featured = page.$('shell-featured'),
+      originalStart = featured.onclick;
+    let pendingStart;
+    featured.onclick = (...args) => (pendingStart = originalStart.apply(featured, args));
+    activate(page, input, featured, home);
+    featured.onclick = originalStart;
+    if (pendingStart) await pendingStart;
+    await settle(
+      () => {
+        page.frame(0);
+        return !home.open && !page.rendered.paused;
+      },
+      `The explicit named Title Start must complete before sending flight input: ${page.$('shell-featured-status').textContent}; active ${page.doc.activeElement?.id}; dialogs ${page.doc.querySelectorAll('dialog[open]').map((node) => node.id)}`,
+    );
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let i = 0; i < 20; i++) page.frame();
@@ -219,7 +261,9 @@ for (const mode of ['keyboard', 'controller']) {
     page.frame(0);
     const paused = authoritativeCheckpoint(page.rendered.run);
     activate(page, input, page.$('overlay-menu'), nonmodalOverlay(page));
-    activate(page, input, page.$('shell-gallery'), home);
+    activate(page, input, page.$('shell-options'), home);
+    activate(page, input, page.$('settings-tab-data'), settings);
+    activate(page, input, page.$('shell-gallery'), settings);
     assert.equal(page.$('collection-dialog').open, true);
     input.back();
     for (let i = 0; i < 10; i++) page.frame();
@@ -230,7 +274,9 @@ for (const mode of ['keyboard', 'controller']) {
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
     assert.equal(page.$('collection-dialog').contains(page.doc.activeElement), false);
 
-    activate(page, input, page.$('shell-workshop'), home);
+    assert.equal(settings.open, true);
+    activate(page, input, page.$('settings-tab-extras'), settings);
+    activate(page, input, page.$('shell-workshop'), settings);
     const exportButton = page.$('export-replay'),
       replayDialog = page.$('replay-dialog'),
       replayStatus = page.$('replay-operation-status'),
@@ -283,7 +329,8 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(replayStatus.hidden, false);
     assert.match(replayStatus.textContent, /Preparing replay download/);
     const replayText = page.$('replay-json').value,
-      replay = JSON.parse(replayText),
+      recorded = JSON.parse(replayText),
+      replay = recorded.format ? snapshotReplayPresentation(recorded).replay : recorded,
       verified = verifyReplay(replay);
     assert.equal(verified.match, true);
     assert.deepEqual(replay.checkpoint, paused);
@@ -342,6 +389,11 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(workshop.open, false);
     assert.equal(home.open, true);
     assert.equal(page.doc.activeElement, page.$('shell-workshop'));
+    assert.equal(settings.open, true);
+    input.back();
+    page.frame(0);
+    assert.equal(settings.open, false);
+    assert.equal(page.doc.activeElement, page.$('shell-options'));
     assert.equal(page.rendered.paused, true);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
     assert.deepEqual([...page.storage.map], exportedStorage);
