@@ -1,9 +1,21 @@
+import { nativeArtReviewURL } from './art-review-navigation.mjs';
+
 // Navigation hints open a fixed presentation surface; they never adopt game data.
 const journey = (source, target) => {
   const values = source.searchParams.getAll('journey');
   if (values.length === 1 && /^(?:1|[a-z][a-z0-9-]{0,39})$/.test(values[0]))
     target.searchParams.set('journey', values[0]);
-  return target;
+  const editions = source.searchParams.getAll('edition');
+  if (
+    editions.length === 1 &&
+    editions[0].length <= 64 &&
+    /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(editions[0])
+  )
+    target.searchParams.set('edition', editions[0]);
+  const locales = source.searchParams.getAll('lang');
+  if (locales.length === 1 && ['en', 'uk'].includes(locales[0]))
+    target.searchParams.set('lang', locales[0]);
+  return new URL(nativeArtReviewURL(target.href, source.href));
 };
 
 export function assetStudioHref(gameHref) {

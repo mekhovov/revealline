@@ -92,7 +92,7 @@ test('actual panel uses metadata only; native filters and Back retain focus, sou
   row.click();
   const detail = h.root.querySelector('#production-detail');
   assert.equal(detail.hidden, false);
-  assert.equal(h.doc.activeElement.tagName, 'H2');
+  assert.equal(h.doc.activeElement.id, 'production-back');
   assert.equal(
     detail.querySelectorAll('img').length,
     0,

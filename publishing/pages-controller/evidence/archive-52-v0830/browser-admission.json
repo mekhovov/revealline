@@ -1,0 +1,27 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-52",
+  "repository": "mekhovov/revealline-archive-52",
+  "infrastructureCommit": "2dd7e8a598d8e37af063933733b8dc458ea9d44f",
+  "deploymentId": 6600345978,
+  "workflowRunId": 35782103893,
+  "versions": [
+    "v0.83.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-52-v0830/native/observation.json",
+      "sha256": "f40ec4f1dfd1ec41b89093fe1902243b763bf1fda93ba58f7db73ddaa373a8c4"
+    }
+  ],
+  "scope": "Genuine scoped native desktop availability: archived v0.83.0 title/91 missions, Settings close, About, central Release History, browser Back and Return to game with Continue retained; clean observed warning/error console. Independent observer task receipt, not a second witness by packager.",
+  "limits": [
+    "Navigation-only availability, not gameplay qualification.",
+    "No offline, physical input, responsive matrix, screenshot-file export or exhaustive accessibility claim.",
+    "No release/archive writes, uploads, gameplay actions or explicit save changes.",
+    "Complete public HTTP byte audit is separate and not established by this receipt.",
+    "The in-app browser content export command was unsupported; no artifact is claimed from that failed export."
+  ],
+  "approval": "Coordinator accepted the exact scoped native navigation observation and complete HTTP preservation evidence. No claim of extended gameplay, prepared offline, physical-device or responsive-matrix qualification."
+}

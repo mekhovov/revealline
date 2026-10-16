@@ -27,37 +27,14 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   f.$('coop-pack-file').focus();
   await f.selectFile(authored);
   assert.equal(f.$('coop-level').value, 'boundary-multi-core-stronghold');
-  f.$('coop-difficulty').value = 'gentle';
+  await f.choose('coop-difficulty', 'gentle');
   f.$('coop-experiment').value = 'full';
   f.$('coop-start').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.match(f.$('coop-objective').textContent, /0 \/ 2 secured · Relay 2/);
-  const objectives = [f.$('coop-objective').textContent];
-  const emit = ({ code, down }) => {
-    const key = code.startsWith('Key')
-      ? code.slice(3).toLowerCase()
-      : code.startsWith('Shift')
-        ? 'Shift'
-        : code;
-    f.doc.activeElement.emit(down ? 'keydown' : 'keyup', { key, code, repeat: false });
-  };
-  const terminalGestures = (g) =>
-    g.reason.startsWith('physical release after ') || g.reason === 'cleanup';
-  f.tick(2);
-  let replayed = 0;
-  for (let row = 0; row < fixture.metrics.ticksReplayed; row++) {
-    const gestures = fixture.gestures.filter((g) => g.row === row);
-    gestures.filter((g) => !terminalGestures(g)).forEach(emit);
-    f.tick();
-    replayed++;
-    gestures.filter(terminalGestures).forEach(emit);
-    const objective = f.$('coop-objective').textContent;
-    if (objective !== objectives.at(-1)) objectives.push(objective);
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  for (const code of ['ShiftLeft', 'ShiftRight']) emit({ code, down: false });
+  const { objectives, replayed } = playImportedRoute(f);
   assert.ok(
     objectives.some((text) => /1 \/ 2 secured · Relay 3/.test(text)),
     objectives.join('\n'),
@@ -111,7 +88,10 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   const coverage = playImportedRoute(f, importedCoverageRoute);
   assert.ok(Number.parseFloat(f.$('coop-coverage').textContent) >= 72.4);
   assert.equal(f.$('coop-next').hidden, true);
-  assert.match(f.$('coop-overlay-copy').textContent, /Pack complete.*Browse Team arenas/);
+  assert.match(
+    f.$('coop-overlay-copy').textContent,
+    /End of the Team mission library\. Browse Team arenas/,
+  );
   assert.equal(f.doc.activeElement.id, 'coop-discovery-paused');
   const final = importedResult(f);
   f.$('coop-next').onclick();
@@ -119,9 +99,10 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   assert.deepEqual(importedResult(f), final);
   assert.equal(f.$('coop-overlay').hidden, false);
   f.tap('Enter');
-  assert.equal(f.$('coop-discovery-dialog').open, true);
+  await waitFor(() => f.$('journey-chooser')?.open);
+  assert.equal(f.$('journey-chooser').open, true);
   assert.deepEqual(importedResult(f), final);
-  f.$('coop-discovery-back').focus();
+  f.$('journey-back').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.equal(f.$('coop-level').value, 'boundary-multi-core-coverage');
@@ -129,9 +110,8 @@ test('the imported two-core map earns Results, one Next starts coverage, and its
   t.diagnostic(
     JSON.stringify({
       scope:
-        'Actual mounted Team host with recorded sparse key events; finite DOM/Canvas, not native or human timing',
+        'Actual mounted Team host with rehearsed v4 direction/Support commands; finite DOM/Canvas, not native or human timing',
       replayed,
-      directionTaps: fixture.metrics.directionTaps,
       objectives,
       terminal,
       final,
@@ -297,7 +277,7 @@ test('an imported pack waits for required shared artwork without replacing the c
   assert.equal(f.$('coop-level').value, 'boundary-multi-core-stronghold');
   assert.equal(f.$('coop-start').disabled, false);
   assert.equal(f.artwork.calls.reads.length, 1);
-  f.$('coop-difficulty').value = 'gentle';
+  await f.choose('coop-difficulty', 'gentle');
   f.$('coop-start').focus();
   f.tap('Enter');
   playImportedRoute(f);

@@ -1,0 +1,311 @@
+{
+  "format": "FPVStadiumStructuresFunctionalEvidence.v1",
+  "date": "2026-10-03T16:31:33.572Z",
+  "baseline": "b3b23a76b4a4f41cd97e228ae1400fce96abcde8",
+  "sourceSha256": {
+    "renderer.mjs": "d284d5f7bc27a6441232a129cf90657949adb0e1c551f417ac9a2d2706736f7d",
+    "world-visuals.mjs": "1d8ee911a40bba382c5899500b6d63f127ce5115b1b9f1bd112d71370e2e92f0"
+  },
+  "scope": "Manual source-bound geometry and actual bundled demonstration replay checks; not browser, package, physical-device performance or human art acceptance.",
+  "checks": [
+    {
+      "title": "world-catalogue.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-catalogue.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "world-model.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "world-collision.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "world-demonstrations.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "world-assets.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "world-themes.mjs unchanged",
+      "pass": true
+    },
+    {
+      "title": "27 Stadium / 13 canonical courses",
+      "pass": true
+    },
+    {
+      "title": "coplanar role batches bounded",
+      "pass": true,
+      "detail": [
+        {
+          "id": "stand-west",
+          "batches": 2,
+          "vertices": 1200
+        },
+        {
+          "id": "stand-east",
+          "batches": 2,
+          "vertices": 1200
+        },
+        {
+          "id": "scoreboard",
+          "batches": 3,
+          "vertices": 264
+        }
+      ]
+    },
+    {
+      "title": "plain beginner platform excluded",
+      "pass": true
+    },
+    {
+      "title": "stadium-01/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-01/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-02/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-02/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-03/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-03/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-04/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-04/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-05/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-05/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-06/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-06/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-07/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-07/acro replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-08/self-level replay",
+      "pass": true
+    },
+    {
+      "title": "stadium-08/acro replay",
+      "pass": true
+    },
+    {
+      "title": "beginner-32/acro replay",
+      "pass": true
+    },
+    {
+      "title": "beginner-35/acro replay",
+      "pass": true
+    },
+    {
+      "title": "beginner-42/acro replay",
+      "pass": true
+    },
+    {
+      "title": "beginner-45/acro replay",
+      "pass": true
+    },
+    {
+      "title": "beginner-57/acro replay",
+      "pass": true
+    },
+    {
+      "title": "21 demonstrations verified",
+      "pass": true
+    }
+  ],
+  "immutable": {
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-assets.mjs": "7ec935731fb2404badde162930bf602ff49d24a9382623e582ce6cce199cc0aa",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549"
+  },
+  "geometry": [
+    {
+      "id": "stand-west",
+      "batches": 2,
+      "vertices": 1200
+    },
+    {
+      "id": "stand-east",
+      "batches": 2,
+      "vertices": 1200
+    },
+    {
+      "id": "scoreboard",
+      "batches": 3,
+      "vertices": 264
+    }
+  ],
+  "demonstrations": [
+    {
+      "course": "stadium-01",
+      "mode": "self-level",
+      "ticks": 1331,
+      "finalStateIdentity": "299120ad1b2310e9"
+    },
+    {
+      "course": "stadium-01",
+      "mode": "acro",
+      "ticks": 1329,
+      "finalStateIdentity": "b3dfdad088a55854"
+    },
+    {
+      "course": "stadium-02",
+      "mode": "self-level",
+      "ticks": 2899,
+      "finalStateIdentity": "9d38c4579c8cc50e"
+    },
+    {
+      "course": "stadium-02",
+      "mode": "acro",
+      "ticks": 2911,
+      "finalStateIdentity": "8afcc27153128b28"
+    },
+    {
+      "course": "stadium-03",
+      "mode": "self-level",
+      "ticks": 3699,
+      "finalStateIdentity": "ddd2c34488da36ed"
+    },
+    {
+      "course": "stadium-03",
+      "mode": "acro",
+      "ticks": 3708,
+      "finalStateIdentity": "409f62bc36aabce0"
+    },
+    {
+      "course": "stadium-04",
+      "mode": "self-level",
+      "ticks": 2828,
+      "finalStateIdentity": "53e1209d3057f2af"
+    },
+    {
+      "course": "stadium-04",
+      "mode": "acro",
+      "ticks": 2844,
+      "finalStateIdentity": "4629ab07fd4b6fe1"
+    },
+    {
+      "course": "stadium-05",
+      "mode": "self-level",
+      "ticks": 3897,
+      "finalStateIdentity": "7385b857cccd991a"
+    },
+    {
+      "course": "stadium-05",
+      "mode": "acro",
+      "ticks": 3919,
+      "finalStateIdentity": "c5d74eb7a141c81c"
+    },
+    {
+      "course": "stadium-06",
+      "mode": "self-level",
+      "ticks": 2146,
+      "finalStateIdentity": "966cf29e075f1f32"
+    },
+    {
+      "course": "stadium-06",
+      "mode": "acro",
+      "ticks": 2153,
+      "finalStateIdentity": "ed808a86b8b73d0d"
+    },
+    {
+      "course": "stadium-07",
+      "mode": "self-level",
+      "ticks": 2484,
+      "finalStateIdentity": "e5b5a3b37ad6cf51"
+    },
+    {
+      "course": "stadium-07",
+      "mode": "acro",
+      "ticks": 2498,
+      "finalStateIdentity": "ee92f866d422686d"
+    },
+    {
+      "course": "stadium-08",
+      "mode": "self-level",
+      "ticks": 2923,
+      "finalStateIdentity": "6b092dfa3f4d5fad"
+    },
+    {
+      "course": "stadium-08",
+      "mode": "acro",
+      "ticks": 2929,
+      "finalStateIdentity": "79447b77bac33275"
+    },
+    {
+      "course": "beginner-32",
+      "mode": "acro",
+      "ticks": 1709,
+      "finalStateIdentity": "77c17e1155019e55"
+    },
+    {
+      "course": "beginner-35",
+      "mode": "acro",
+      "ticks": 1902,
+      "finalStateIdentity": "8c29b29d69e761ab"
+    },
+    {
+      "course": "beginner-42",
+      "mode": "acro",
+      "ticks": 2784,
+      "finalStateIdentity": "52dc63ca74fabe94"
+    },
+    {
+      "course": "beginner-45",
+      "mode": "acro",
+      "ticks": 1045,
+      "finalStateIdentity": "23393f68b2059498"
+    },
+    {
+      "course": "beginner-57",
+      "mode": "acro",
+      "ticks": 3212,
+      "finalStateIdentity": "def0ca53a5dcd820"
+    }
+  ]
+}

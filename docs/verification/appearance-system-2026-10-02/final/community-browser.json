@@ -1,0 +1,50 @@
+{
+  "errors": [],
+  "companyInitial": "Review Vyshyvanka and apply it to the intended community or campaign draft. No default has changed yet.",
+  "formats": {
+    "catalog": "revealline-edition-catalog.v2",
+    "brand": "revealline-brand-pack.v2"
+  },
+  "community": {
+    "id": "coupa",
+    "appearanceDefault": {
+      "familyId": "vyshyvanka",
+      "revision": "r1"
+    }
+  },
+  "campaign": {
+    "id": "coupa-spend-in-motion",
+    "appearanceDefault": {
+      "familyId": "dnipro-porcelain",
+      "revision": "r1"
+    }
+  },
+  "export": {
+    "format": "revealline-company-source-draft.v1",
+    "filename": "coupa-all-draft.json",
+    "files": 244
+  },
+  "families": [
+    "Existing appearance",
+    "Industrial Workshop",
+    "Vyshyvanka",
+    "Dnipro Porcelain",
+    "Tryzub",
+    "Desktop 98",
+    "DOS Navigator",
+    "Orchard Workshop",
+    "Neon Ruins"
+  ],
+  "specimen": {
+    "theme": "dnipro-porcelain",
+    "text": "rgb(18, 32, 64)",
+    "primary": [
+      {
+        "background": "rgb(0, 87, 183)",
+        "foreground": "rgb(255, 255, 255)"
+      }
+    ]
+  },
+  "studioStatus": "Loading and verifying the current release collection…",
+  "preferenceKeys": []
+}

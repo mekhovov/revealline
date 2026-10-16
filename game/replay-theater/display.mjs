@@ -1,4 +1,6 @@
+import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 
 /** The theater's interface follows the shared display policy. This owner has
  * no access to recordings, playback, themes, imports or player progress. */
@@ -18,9 +20,9 @@ export function mountReplayDisplay({
     cap = control('replay-system-reduction'),
     notice = control('replay-display-status');
   let disposed = false;
-  const warning = (message) => {
+  const warning = (message, key) => {
     if (disposed) return;
-    notice.textContent = message;
+    localizedText(notice, () => (key ? t(key) : message));
     notice.hidden = !message;
   };
   const preferences = createDisplayPreferences({
@@ -37,20 +39,29 @@ export function mountReplayDisplay({
     size.value = state.textSize;
     reduced.checked = state.reducedEffects;
     const systemCap = state.effectiveReducedEffects && !state.reducedEffects;
-    cap.textContent = systemCap
-      ? 'Your system requests reduced motion. Replay effects remain reduced; your saved choice is unchanged.'
-      : '';
+    localizedText(cap, () =>
+      systemCap ? t('interface:yourSystemRequestsReducedMotionReplayEffectsRemainReducedYour') : '',
+    );
     cap.hidden = !systemCap;
   };
   const stopView = preferences.subscribe(render);
-  warning(preferences.getWarning());
+  const restoration = attachPreferenceRestoration({
+    window: host,
+    getSnapshot: preferences.snapshot,
+    render,
+  });
+  warning(preferences.getWarning(), preferences.getWarningKey());
   const change = (patch) => {
     if (disposed) return;
     try {
       preferences.set(patch);
     } catch (error) {
       render(preferences.snapshot());
-      warning(`The display preference could not be applied: ${error.message || error}`);
+      warning(
+        localizedMessage('common:preferences.applyFailed', {
+          error: error.message || String(error),
+        }),
+      );
     }
   };
   const bindings = [
@@ -63,6 +74,7 @@ export function mountReplayDisplay({
     if (disposed) return;
     disposed = true;
     for (const [element, listener] of bindings) element.removeEventListener('change', listener);
+    restoration.dispose();
     stopView();
     preferences.dispose();
     host.removeEventListener?.('pagehide', pagehide);

@@ -1,0 +1,144 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A white fixed-wing drone above fields and a river, from the supplied aerial clip.",
+      "bytes": 973469,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "social-drone-sky-watch-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/social-drone/sky-watch-v1.png",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3aa3c35ddb9f16b82d29020859ea5f397074b9cbc767e22d587b00fb5119f91d",
+      "width": 1280
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 3,
+      "discovery": { "exhibitLayout": "gallery" },
+      "format": "CampaignDesignV1",
+      "id": "social-drone-sky-watch",
+      "missionIds": ["social-drone-sky-watch-01"],
+      "name": "Sky Watch",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "social-drone-sky-watch",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 5, "w": 10, "x": 10, "y": 20 },
+        { "h": 5, "w": 10, "x": 31, "y": 21 },
+        { "h": 5, "w": 10, "x": 52, "y": 8 }
+      ],
+      "height": 36,
+      "id": "social-drone-sky-watch-01-map",
+      "name": "Watch corridors",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 12, "x": 5, "y": 10 },
+        { "h": 2, "w": 18, "x": 27, "y": 12 },
+        { "h": 2, "w": 12, "x": 55, "y": 23 },
+        { "h": 10, "w": 2, "x": 20, "y": 20 },
+        { "h": 10, "w": 2, "x": 49, "y": 5 },
+        { "h": 1, "w": 12, "x": 5, "y": 26 },
+        { "h": 1, "w": 12, "x": 5, "y": 34 },
+        { "h": 7, "w": 1, "x": 5, "y": 27 },
+        { "h": 7, "w": 1, "x": 16, "y": 27 },
+        { "h": 1, "w": 10, "x": 56, "y": 15 },
+        { "h": 1, "w": 10, "x": 56, "y": 22 },
+        { "h": 6, "w": 1, "x": 56, "y": 16 },
+        { "h": 6, "w": 1, "x": 65, "y": 16 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [0, 1],
+          "id": "west-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 10.5,
+          "y": 30.5
+        },
+        {
+          "heading": [0, -1],
+          "id": "east-keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 60.5,
+          "y": 18.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-watch",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 1.5,
+          "y": 35.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.45,
+      "design": {
+        "captureConsequence": "The first closure reveals most of the scene. A second safe return completes the picture and unlocks the video.",
+        "combines": ["field-keeper", "perimeter-patrol", "foundations"],
+        "counterplay": "Read both field keepers and the border patrol before leaving safety; the walls create protected pauses and narrow turns.",
+        "difficulty": {
+          "band": 3,
+          "coordination": 0,
+          "execution": 3,
+          "mechanicLoad": 3,
+          "planning": 3,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [25, 75],
+        "introduces": ["perimeter-patrol"],
+        "lesson": "Build two deliberate captures through the watch corridors, then enjoy the original video.",
+        "mastery": "Complete two captures through different corridors without losing a life.",
+        "memorableMoment": "The final corridor closes, the completed picture settles, and the aerial clip begins.",
+        "pacingBeat": "discover",
+        "practices": ["closure", "enemy-seeded-closure", "foundations"],
+        "rewardRef": { "id": "social-drone-sky-watch-01-discovery", "revision": "2" },
+        "routeDecision": "Use the center refuge for a shorter second cut, or circle a side corridor away from the keepers."
+      },
+      "format": "MissionDesignV1",
+      "id": "social-drone-sky-watch-01",
+      "map": { "id": "social-drone-sky-watch-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Sky Watch",
+      "objectives": [],
+      "presentation": {
+        "backgroundAssetId": "social-drone-sky-watch-picture",
+        "themeId": "social-drone-people-workshop-theme"
+      },
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Sky Watch",
+  "packs": [
+    {
+      "campaignIds": ["social-drone-sky-watch"],
+      "format": "PackDesignV1",
+      "id": "social-drone-sky-watch-pack",
+      "name": "Sky Watch",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

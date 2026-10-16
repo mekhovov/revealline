@@ -1,0 +1,77 @@
+{
+  "format": "revealline-public-auditor-independent-interim.v1",
+  "at": "2026-09-22T14:43:05.571530+00:00",
+  "disposition": "FIX_REQUIRED_BEFORE_EXECUTION",
+  "scope": "Cache-only auditor review; no public request or deployment acceptance",
+  "authorPreparation": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/helper-preparation.json",
+    "bytes": 1851,
+    "sha256": "ddf76442d9fc925591f0162b26eab768cf44e6ebc5d8164400683953adcb97aa"
+  },
+  "allPreparationPinsMatched": true,
+  "sourceMetadataByteEquality": [
+    {
+      "prepared": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/inputs/release.json",
+        "bytes": 465,
+        "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e"
+      },
+      "inspectedOriginal": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-inspection/evidence/qualified-artifact-verified/release.json",
+        "bytes": 465,
+        "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e"
+      },
+      "equal": true
+    },
+    {
+      "prepared": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/inputs/manifest.json",
+        "bytes": 192123,
+        "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d"
+      },
+      "inspectedOriginal": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-inspection/evidence/qualified-artifact-verified/manifest.json",
+        "bytes": 192123,
+        "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d"
+      },
+      "equal": true
+    },
+    {
+      "prepared": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/inputs/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588"
+      },
+      "inspectedOriginal": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-inspection/evidence/qualified-artifact-verified/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588"
+      },
+      "equal": true
+    }
+  ],
+  "localTests": {
+    "tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0,
+    "networkAuditDenied": true,
+    "log": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/independent-local-tests.log",
+      "bytes": 4002,
+      "sha256": "f16f8639af950d4d9e524d96f8228450eb26a60c1b43f8da19a2d6ceb4f3f3c1"
+    }
+  },
+  "finding": {
+    "id": "deadline-late-eof",
+    "location": "tools/http_audit.py:126-132",
+    "reproducer": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/independent-deadline-probe.json",
+      "bytes": 867,
+      "sha256": "eb22d21d6ec2a7506ba9443cbbad1d848199e2c2371097fd6c47a59aad405e0c"
+    },
+    "observed": "Exact body with delayed EOF returned PASS at elapsed120 despite attempt90 and global100. Buffered read(n) also does not establish a hard wall deadline against slow network progress.",
+    "required": "Post-read and final deadline guard, single-read streaming where available, regression and honest blocking-operation limitation."
+  },
+  "otherSourceFindings": []
+}

@@ -1,3 +1,4 @@
+import { t } from '../../game/i18n/index.mjs';
 // An isolated, fictional toy study. No body images, collection unlocks, terrain rules or real weapon model.
 export const ABILITY_REGISTRY = Object.freeze({version:"arcade-abilities.v1",primitives:Object.freeze(["pulse","drop","dash","projectile","net"])});
 const vectors={up:[0,-1],right:[1,0],down:[0,1],left:[-1,0]};
@@ -6,7 +7,7 @@ const bounded=(value,min,max)=>Number.isFinite(value)&&value>=min&&value<=max;
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 const getClass=(config,id)=>config.classes.find(item=>item.id===id);
 const getEquipment=(config,id)=>config.equipment.find(item=>item.id===id);
-const fail=message=>{throw new Error(`Ability study: ${message}`);};
+const fail=message=>{throw new Error(t("tools:abilityStudy", { value1: message }));};
 const validId=id=>typeof id==="string"&&/^[a-z][a-z0-9-]{0,63}$/.test(id);
 const allowedTargets=outcome=>({scan:["note"],clear:["ground","air"],deliver:["delivery"],restore:["relay"],disable:["air"],capture:["air"]})[outcome]||[];
 
@@ -23,7 +24,7 @@ export function validateAbilityPresets(config) {
   const classIds=new Set();
   for(const item of config.classes){
     if(!validId(item.id)||classIds.has(item.id))fail("class IDs must be unique");classIds.add(item.id);
-    if(!ABILITY_REGISTRY.primitives.includes(item.primitive))fail(`unsupported primitive ${item.primitive}`);
+    if(!ABILITY_REGISTRY.primitives.includes(item.primitive))fail(t("tools:unsupportedPrimitive", { value1: item.primitive }));
     if(!Array.isArray(item.compatibleEquipment)||!item.compatibleEquipment.length||item.compatibleEquipment.some(id=>!ids.has(id))||!item.compatibleEquipment.includes(item.recommendedEquipment))fail("invalid equipment compatibility");
     if(!item.preferredBodies||typeof item.description!=="string")fail("class description and preferred-body map required");
     const tune=item.tuning;
@@ -53,7 +54,7 @@ export function validateAbilityPresets(config) {
   for(const family of ["fpv-front","ukraine-atlas","retro-1994","navi-network"]){
     const vocab=config.vocabulary?.[family];
     if(!vocab||config.classes.some(item=>typeof vocab.classLabels?.[item.id]!=="string")||config.equipment.some(item=>typeof vocab.equipmentLabels?.[item.id]!=="string"))fail("missing family vocabulary");
-    for(const key of ["supplyLabel","hazeLabel","budgetLabel"])if(typeof vocab[key]!=="string"||!vocab[key].trim()||vocab[key].length>100)fail(`invalid vocabulary ${key}`);
+    for(const key of ["supplyLabel","hazeLabel","budgetLabel"])if(typeof vocab[key]!=="string"||!vocab[key].trim()||vocab[key].length>100)fail(t("tools:invalidVocabulary", { value1: key }));
   }
   return config;
 }

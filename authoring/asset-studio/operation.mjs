@@ -1,6 +1,8 @@
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
+import { localizedMessage, localizedText, t } from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
 
-const cancelled = () => new DOMException('Studio operation cancelled.', 'AbortError');
+const cancelled = () => new DOMException(t('errors:studio.operationCancelled'), 'AbortError');
 
 /** Studio work ownership. The presenter owns text only; this host owns locks and commits. */
 export function createStudioOperations({
@@ -29,8 +31,7 @@ export function createStudioOperations({
     if (owner.committing) {
       owner.detached = true;
       owner.lease.finish({
-        message:
-          'Stopped waiting. The local save is still running; workspace changes stay locked until it finishes.',
+        message: localizedMessage('tools:studio.operation.stoppedWaiting'),
         state: 'detached',
       });
       cancelButton.hidden = true;
@@ -38,7 +39,7 @@ export function createStudioOperations({
     }
     owner.controller.abort();
     owner.lease.finish({
-      message: 'Cancelled. The workspace and pixel edits are unchanged.',
+      message: localizedMessage('tools:studio.operation.cancelledEditsUnchanged'),
       state: 'cancelled',
     });
     unlock(owner);
@@ -65,7 +66,7 @@ export function createStudioOperations({
         message: label,
         isCurrent: () => active === owner && !disposed,
       });
-      cancelButton.textContent = 'Cancel';
+      localizedText(cancelButton, localizedMessage('common:actions.cancel'));
       cancelButton.hidden = false;
       setBusy(true);
       const check = () => {
@@ -78,18 +79,21 @@ export function createStudioOperations({
           check();
           if (!owner.detached) owner.lease.update({ message, stage });
         },
-        commit(message = 'Verifying and saving the local revision…') {
+        commit(message = localizedMessage('tools:studio.operation.verifyingAndSaving')) {
           check();
           owner.committing = true;
           owner.lease.update({ message, stage: 'saving' });
-          cancelButton.textContent = 'Stop waiting';
+          localizedText(cancelButton, localizedMessage('tools:studio.operation.stopWaiting'));
         },
       };
       try {
         await fn(task);
         check();
         owner.lease.finish(
-          owner.result || { message: 'Studio operation complete.', state: 'ready' },
+          owner.result || {
+            message: localizedMessage('tools:studio.operation.complete'),
+            state: 'ready',
+          },
         );
       } catch (error) {
         if (active === owner && !disposed) {
@@ -97,8 +101,8 @@ export function createStudioOperations({
           target.dataset.kind = wasCancelled ? '' : 'error';
           owner.lease.finish({
             message: wasCancelled
-              ? 'Cancelled. The workspace is unchanged.'
-              : error.message || String(error),
+              ? localizedMessage('tools:studio.operation.cancelledWorkspaceUnchanged')
+              : assetStudioErrorMessage(error),
             state: wasCancelled ? 'cancelled' : 'error',
           });
         }

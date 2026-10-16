@@ -9,21 +9,8 @@ import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 
-class CandidateImage {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
 const fetchResponse = async (path) => {
   if (String(path).includes('/content-design/assets/')) return new Response(await readFile(path));
 };
@@ -32,7 +19,7 @@ async function solo(t, options = {}) {
     search: '?journey=opening',
     titleScreen: true,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: CandidateImage },
+    pictures: { Image: PNGImage },
     fetchResponse,
     ...options,
   });
@@ -53,8 +40,9 @@ async function activate(element) {
 
 test('only explicit known Journey editions produce fixed Solo/Versus links, never Team or arbitrary URLs', () => {
   for (const id of AUTHORED_JOURNEY_ROUTE_IDS) {
-    assert.equal(authoredJourneyModeHref(id, 'versus'), `couch/?journey=${id}&return=solo`);
-    assert.equal(authoredJourneyModeHref(id, 'solo'), `../?journey=${id}`);
+    const style = id === 'snake-hunt-v1' ? '&snake-style=capture' : '';
+    assert.equal(authoredJourneyModeHref(id, 'versus'), `couch/?journey=${id}&return=solo${style}`);
+    assert.equal(authoredJourneyModeHref(id, 'solo'), `../?journey=${id}${style}`);
     assert.equal(authoredJourneyModeHref(id, 'team'), null);
   }
   for (const id of [null, undefined, '1', '', 'https://example.com', 'opening&redirect=bad'])
@@ -226,7 +214,7 @@ for (const route of [
 
 test('the Legacy-backed Journey preview does not acquire authored navigation authority', async (t) => {
   const p = await solo(t, { search: '?journey=1' });
-  assert.equal(p.$('shell-title-versus').getAttribute('href'), 'couch/?return=solo');
+  assert.equal(p.$('shell-title-versus').getAttribute('href'), 'couch/?journey=legacy&return=solo');
   await activate(p.$('shell-title-versus'));
-  assert.equal(globalThis.location.href, 'http://localhost/game/couch/?return=solo');
+  assert.equal(globalThis.location.href, 'http://localhost/game/couch/?journey=legacy&return=solo');
 });

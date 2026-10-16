@@ -1,0 +1,53 @@
+{
+  "format": "FPVOptionalWorldRelease.v1",
+  "id": "mountain-reservoir",
+  "revision": "r11",
+  "title": {
+    "en": "Mountain Reservoir",
+    "uk": "\u0413\u0456\u0440\u0441\u044c\u043a\u0435 \u0432\u043e\u0434\u043e\u0441\u0445\u043e\u0432\u0438\u0449\u0435"
+  },
+  "worldCount": 1,
+  "courseCount": 8,
+  "proofCount": 16,
+  "modes": [
+    "self-level",
+    "acro"
+  ],
+  "files": {
+    "pack": {
+      "path": "mountain-reservoir.r11.rlpack",
+      "bytes": 1356060,
+      "sha256": "e3f4c5e040c8232e31cc8d757d377cf892cf26a1042989c50de1df68cf5b2c34"
+    },
+    "editable": {
+      "path": "mountain-reservoir.r11.zip",
+      "bytes": 1356121,
+      "sha256": "1f8c780540d86655c4ec51fbfcad73af83a850029a32fbe9fd20b9a8f84edc60"
+    },
+    "proofs": {
+      "path": "mountain-reservoir.r11.proofs.json",
+      "bytes": 908574,
+      "sha256": "35aefd942d00dd294417d02d9fd782ef9aa23dd08c0d189088abcb0db895b8f6"
+    }
+  },
+  "license": "CC0-1.0",
+  "defaultCatalogueChanges": 0,
+  "waterPolicy": "Lake scenery lies outside playable land-side bounds; no water physics or island-flight claim.",
+  "qualification": {
+    "sourceCommit": "d7a8e044d03859b59212fdfdcde3d25af8c7e75a",
+    "assetChecks": 148,
+    "rejectedCandidateComparisonChecks": 43,
+    "ordinaryFlightChecks": 575,
+    "freshExactPackProofs": 16,
+    "actualStaticRendererObservations": 8,
+    "staticBrowserReceipt": "../../evidence/r11-static-review.json",
+    "ordinaryFlightReceipt": "../../evidence/r11-qualification.json",
+    "assetReceipt": "../../evidence/r11-material-qualification.json",
+    "historicalR9NativeSmoke": "../../evidence/r9-native-smoke.json",
+    "historicalR8ImportAndOfflineEvidence": "../r8/manifest.json",
+    "limits": "Accepted bounded grass/gravel material scale only. Prior r8 offline and r9 native journeys are historical, not newly repeated r11 claims. No FPS, hardware or completed representative-world art claim."
+  },
+  "change": "Separate original128px grass and gravel maps with world-metre scale in existing material batches; retain all geometry/collision/routes and exact r9 rock/seam closure.",
+  "previousRevision": "r9",
+  "rejectedUnpublishedRevision": "r10"
+}

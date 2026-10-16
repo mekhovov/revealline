@@ -1,45 +1,61 @@
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { createMissionLibrary, libraryMissionId } from '../mission-library/library.mjs';
+import { classicLibrarySources } from '../mission-library/classic-source.mjs';
 
-class CandidateImage {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
+const classic = createMissionLibrary(
+  classicLibrarySources(
+    JSON.parse(await readFile(new URL('../content/mission-library-index.json', import.meta.url))),
+    { availability: () => ({ state: 'ready' }), launch: () => true },
+  ),
+);
+const currentMission = new WeakMap();
+const authoredMission = (edition, mission) =>
+  libraryMissionId({
+    owner: `journey:${edition}`,
+    edition,
+    campaign: JSON.stringify(['candidate', 'journey-opening', 'prologue']),
+    mission: `candidate/journey-opening/prologue/${mission}`,
+  });
+
 async function setup(t, route = 'authored') {
   const memory = managedIndexedDB();
   const p = await soloPage(t, {
     search: `?journey=${route}`,
     titleScreen: true,
     journeyIndexedDB: memory.indexedDB,
-    pictures: { Image: CandidateImage },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) => {
       if (String(path).includes('/content-design/assets/'))
         return new Response(await readFile(path));
     },
   });
+  assert.equal(p.rendered.run.levelId, route === '1' ? 'signal-01' : 'first-return');
+  currentMission.set(
+    p,
+    route === '1'
+      ? classic.missions.find((mission) => mission.runtimeId === 'signal-01').id
+      : authoredMission(route, 'first-return'),
+  );
   return { p, backend: createJourneyBackend(memory) };
 }
-function open(p, id) {
+async function open(p, id, missionId = currentMission.get(p)) {
   const opener = p.$(id);
-  opener.focus();
-  opener.click();
+  await openMissionLibrary(p, id);
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.doc.activeElement, p.$('journey-search'));
+  const expected = [...p.$('journey-cards').children].find(
+    (card) => card.dataset.missionId === missionId,
+  );
+  assert.ok(expected, 'The exact current or retained mission remains in the visible gallery.');
+  assert.equal(expected.disabled, false);
+  assert.equal(p.doc.activeElement, expected);
   return opener;
 }
 function back(p, method, t) {
@@ -76,8 +92,8 @@ for (const route of ['1', 'opening', 'authored'])
     test(`${route} title Missions ${method} restores Home and its exact opener`, async (t) => {
       const { p, backend } = await setup(t, route);
       const before = await backend.read();
-      const opener = open(p, 'shell-play');
-      assert.equal(p.$('journey-back').textContent, 'Back to menu');
+      const opener = await open(p, 'shell-play');
+      assert.equal(p.$('journey-back').textContent, 'Back to menu →');
       back(p, method, t);
       assert.equal(p.$('shell-home').open, true);
       assert.equal(p.doc.activeElement, opener);
@@ -88,7 +104,7 @@ for (const route of ['1', 'opening', 'authored'])
 
 test('choosing a mission from Home leaves its parent and starts only the selected mission', async (t) => {
   const { p } = await setup(t);
-  open(p, 'shell-play');
+  await open(p, 'shell-play');
   p.$('journey-search').value = 'Choose your share';
   p.$('journey-search').emit('input');
   const cards = p.$('journey-cards').children;
@@ -115,10 +131,10 @@ for (const origin of ['field', 'home'])
     const checkpoint = authoritativeCheckpoint(run);
     const before = await backend.read();
     if (origin === 'home') p.$('overlay-menu').click();
-    const opener = open(p, origin === 'home' ? 'shell-play' : 'shell-packs');
+    const opener = await open(p, origin === 'home' ? 'shell-play' : 'shell-packs');
     assert.equal(
       p.$('journey-back').textContent,
-      origin === 'home' ? 'Back to menu' : 'Back to game',
+      origin === 'home' ? 'Back to menu →' : 'Back to game',
     );
     p.$('journey-search').value = 'Two keepers';
     p.$('journey-search').emit('input');
@@ -134,7 +150,7 @@ for (const origin of ['field', 'home'])
     assert.equal(p.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     assert.deepEqual(await backend.read(), before);
-    open(p, opener.id);
+    await open(p, opener.id, authoredMission('authored', 'two-keepers'));
     assert.equal(p.$('journey-search').value, 'Two keepers');
     assert.equal(p.$('journey-cards').children.length, 1);
     back(p, 'button');

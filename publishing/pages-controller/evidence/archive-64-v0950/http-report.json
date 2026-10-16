@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-64/",
+  "archiveCommit": "45b407653c4be22de8715aca519531e90266b18a",
+  "productionRun": 35939864591,
+  "deployment": 6627758431,
+  "deploymentStatus": 18759137651,
+  "files": 1120,
+  "expectedBytes": 594890224,
+  "verifiedBytes": 594890224,
+  "failedFiles": 0,
+  "failures": [],
+  "skipped": [],
+  "inventorySha256": "c45b382138eb61391dffccb2380fb958c31bbe0b8e8ecd4f6fa13ada769a6805",
+  "startedAt": "2026-09-24T00:59:30.399541+00:00",
+  "verifiedAt": "2026-09-24T01:01:38.423902+00:00",
+  "attempts": 1120,
+  "failedAttempts": 0,
+  "retriedFiles": 0,
+  "allFinalURLsExact": true,
+  "payloadFilesPersisted": false,
+  "scope": "Every immutable Archive64 inventory body, size, SHA-256 and MIME; browser availability is separate."
+}

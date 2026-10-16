@@ -1,11 +1,23 @@
+import { encounterCopy } from './encounter-copy.mjs';
 import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells, encounterShieldIds } from '../core/encounter.mjs';
 import { classicEffectActive } from '../core/classic-state.mjs';
-import { isClassicRuleset } from '../core/versions.mjs';
+import {
+  baseLevelVersion,
+  isClassicRuleset,
+  isRunningEnemyRuleset,
+  resolveVersions,
+} from '../core/versions.mjs';
 
-const frozenActors = (state) =>
-  isClassicRuleset(state.ruleset) && classicEffectActive(state, 'enemy-freeze');
+const classicRun = (state) =>
+  isClassicRuleset(
+    isRunningEnemyRuleset(state.ruleset)
+      ? resolveVersions({ levelVersion: baseLevelVersion(state.level) }).ruleset
+      : state.ruleset,
+  );
+
+const frozenActors = (state) => classicRun(state) && classicEffectActive(state, 'enemy-freeze');
 
 /** Read-only cues shared by live play and replay rendering. No presentation clock owns a phase. */
 export function encounterView(state) {
@@ -24,60 +36,43 @@ export function encounterView(state) {
         remainingIds: Object.freeze(remainingShieldIds),
       })
     : null;
-  const ground = multiple ? 'reclaimed ground' : 'safe ground';
   const shieldPlural = multiple && shieldIds.length > 1;
   const min = recipe.minReleaseCutCells;
   const remaining = state.cells.reduce((sum, cell) => sum + Number(cell === CELL.FIELD), 0);
   const cutCells = encounterCutCells(state);
   const ended = state.status === 'lost';
-  const clock = isClassicRuleset(state.ruleset) ? state.classic.actorTick : state.tick;
+  const clock = classicRun(state) ? state.classic.actorTick : state.tick;
   const seconds = ended ? 0 : Math.max(0, ((e.phaseEndTick ?? clock) - clock) * FIXED_DT);
   const enemy = state.enemies.find((item) => item.id === recipe.enemyId);
   const frozen = frozenActors(state);
   const suppressed = frozen || (!!enemy && enemy.stunnedUntil > state.time + 1e-8);
   const isolated = remaining <= min;
-  const lane = Number.isFinite(e.lane)
-    ? `${e.axis === 'horizontal' ? 'row' : 'column'} ${Math.floor(e.lane)}`
-    : '';
-  const phaseName = {
-    delay: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
-    warning: 'LANE WARNING',
-    active: suppressed ? 'LANE SUPPRESSED' : 'LANE ACTIVE',
-    rest: shieldPlural ? 'SHIELD RELAYS' : 'SHIELD RELAY',
-    transition: 'SHIELD OPENING',
-    open: 'CORE OPEN',
-    defeated: 'CORE RELEASED',
-  }[e.phase];
-  const title = ended
-    ? 'FLIGHT ENDED'
-    : `${e.stage === 'shielded' ? '1 / 2' : '2 / 2'} · ${phaseName}${e.defeated ? '' : ` · ${seconds.toFixed(1)}s`}`;
-  let instruction;
-  if (ended) instruction = 'Restart to try the two stages again.';
-  else if (state.status === 'respawning')
-    instruction = frozen
-      ? 'Recovering at home. Enemy freeze holds the encounter clock; wait for control to return.'
-      : 'Recovering at home. The encounter clock continues; wait for control to return.';
-  else if (e.defeated)
-    instruction =
-      e.defeatCause === 'isolated'
-        ? 'Core isolated. The picture is yours.'
-        : 'Release cut secured. The picture is yours.';
-  else if (e.stage === 'shielded')
-    instruction = `${multiple ? `Shield relay${shieldPlural ? 's' : ''} ${shields.captured} / ${shields.total}. Capture ${shieldPlural ? 'every' : 'the'} remaining relay.` : 'Capture the shield relay.'} ${lane ? `Watch ${lane}.` : `Return every line to ${ground}.`}`;
-  else if (e.stage === 'transition')
-    instruction = `${shieldPlural ? 'All shield relays secured.' : 'Relay secured.'} A vertical attack comes before the first opening.`;
-  else if (isolated)
-    instruction =
-      e.phase === 'open'
-        ? `Core isolated. Return to ${ground} with no live line to finish.`
-        : `Core isolated. Reach ${ground} and wait for CORE OPEN.`;
-  else
-    instruction = `Live line ${cutCells} / ${min} new cells · Close on ${ground} during CORE OPEN.${lane && e.phase !== 'open' ? ` Watch ${lane}.` : ''}`;
-  if (frozen && !ended && !e.defeated && state.status !== 'respawning')
-    instruction += ' Enemy freeze holds the encounter clock.';
+  // Presentation facts are detached from the run so an open reader can change
+  // language while retaining its accepted clock, stage and shield progress.
+  const copyFacts = Object.freeze({
+    status: state.status,
+    phase: e.phase,
+    stage: e.stage,
+    seconds,
+    multiple,
+    shieldPlural,
+    shields: multiple ? Object.freeze({ total: shields.total, captured: shields.captured }) : null,
+    lane: Number.isFinite(e.lane) ? e.lane : null,
+    axis: e.axis ?? null,
+    min,
+    remaining,
+    cutCells,
+    isolated,
+    frozen,
+    suppressed,
+    defeated: !!e.defeated,
+    defeatCause: e.defeatCause ?? null,
+  });
+  const { title, instruction, lane } = encounterCopy(copyFacts);
   return Object.freeze({
     title,
     instruction,
+    copyFacts,
     phase: e.phase,
     stage: e.stage,
     seconds,
@@ -142,7 +137,7 @@ export function drawEncounterCore(ctx, state, enemy, palette, reduced) {
   if (!e || enemy.id !== state.level.encounter.enemyId || e.defeated) return;
   const open = e.phase === 'open';
   const spread = open ? 24 : e.stage === 'transition' ? 21 : 18;
-  const time = isClassicRuleset(state.ruleset) ? state.classic.actorTime : state.time;
+  const time = classicRun(state) ? state.classic.actorTime : state.time;
   const offset = spread + (open && !reduced ? Math.round(Math.sin(time * 3) * 2) : 0);
   const x = enemy.x * 16,
     y = enemy.y * 16;

@@ -29,7 +29,14 @@ Versus formats and Rematch: “Start the default One race, earn a real win or dr
 
 “Prepare this publication successor from the exact current release metadata, semantic catalog and accepted archive admissions. Show the original byte/hash authority for each changed assertion, derive counts from policy, and trace the values through observation, receipt reconciliation, offline binding and final public validation. Preserve donors and prior executions; make only the necessary helper/pin correction. Keep actual receipt intake and full public acceptance pending until their own gates pass.”
 
-“After changing navigation, run the existing host regressions through the current visible routes. Open Missions → Prepare before setup selectors and Library → Expansion packs before campaign Play. Keep Title Start, explicit Title Continue and paused generic Load distinct. Preserve unfinished-flight confirmation, exact campaign/art readiness, checkpoint/storage/replay assertions and late-completion ownership. Reproduce failures, distinguish missing sparse-checkout inputs from product failures, and retain original failed logs. Do not remove guards, raise timeouts, skip tests or change gameplay to restore an obsolete hidden-control shortcut.”
+“After changing navigation, enter the shared All missions chooser through the host’s visible Play/Missions entry. Use its collection, campaign and mode filters; Solo setup is the existing Current Solo flight setup disclosure in the same chooser. For missing content, choose Download, wait for verified installation, then choose the exact mission’s separate Play action. Download never starts a mission. Browsing uses read-only metadata, not runtime or picture ownership; Play must validate the exact current source, edition, campaign, mission and revision before staged adoption. Preserve the source-return identity, filters and focus across mode handoffs. Keep the old attempt, pictures, checkpoints and progress through Cancel, Stay, failed preparation or newer input; recheck installed identity after Replace and before departure. A durable install remains installed after cancellation without granting stale launch authority. Preserve explicit Continue/Resume and retained legacy Load semantics rather than using hidden old selectors. Reproduce failures, retain original logs and exact storage/replay assertions, and distinguish fixture capability gaps from product failures. Do not remove guards, raise timeouts or skip tests to restore an obsolete route. Follow the [unified library contract](../../docs/unified-mission-library.md); Release B paired-original native end-to-end and public qualification remain pending, independently of modeled checks.”
+
+For Classic catalogue work, keep the ordinary Current gallery concise: when a
+compatible Current-rules projection exists, expose that edition in Current and
+retain the authenticated Original-rules edition in Archive and exact historical
+handoffs. Do not deduplicate owners by display name, map geometry or artwork.
+Verify Current, Archive and All counts separately and prove that the complete
+identity inventory is unchanged.
 
 “Inspect the current branch, latest main and `docs/cross-mode-execution.md`. Continue the active unaccepted phase. Reconcile related work without touching unrelated hunks. Show exact evidence for its blocking acceptance, fix failures, update this contract and relevant skills, synchronize the next unused version, commit related changes, qualify the exact source, freeze and deploy through the existing Pages controller. Verify all public bytes and ordinary play before marking accepted or beginning the next phase. Report physical devices separately from modeled/browser checks.”
 
@@ -283,11 +290,9 @@ Reproduce delayed Ready → Start confirmation through the real installed-pictur
 
 “Start Team, Pause, set Plain/Large, open Settings and return by keyboard. Rotate 390×844 → 844×390 → portrait; keep the same action focused and its complete outline inside the bordered client scrollport. Repeat Theme/Standard at 600×360. Check unchanged time/coverage/reserves and explicit Resume only. Cover stale focus during measurement, another modal, background/disposal and resize reentry in host tests. Preserve the original failed geometry; native checks do not establish physical-device or public acceptance.”
 
-
 ## Qualify narrow Solo active-flight counters
 
 “Use the exact current source and the selected text preferences. At 600×400, compare the actual running score and its icon with fullscreen/Pause; record the original overlap before changing the layout. Keep all four stats, the coverage target, owned captions, authored actions and the complete board. For 521–680px short landscape, budget two telemetry rows from the existing text tokens rather than shrinking text or letting event updates resize the arena. Preserve tutorial, portrait and Couch rules. Inspect Large/Plain with controls hidden and a shown D-pad, Standard/Theme with the existing floating stick, both boundary widths and 390×844 rotation. Start/play through ordinary UI; do not inject a score or win. Measure full rectangles and at least 44px action targets, then check Pause → Field details → Back and explicit Resume. Report the smaller arena as a play-comfort tradeoff. Retain exact source/CSS pins and original observations; separate a zero-score candidate check from a nonzero public baseline. Do not present modeled rectangles, formatting checks or the Large preference as native, physical-device or 200% zoom acceptance. Finish final integrated-source and affected public gates before closing the feature.” See [the scoped device-layout contract](../../docs/device-controls.md#narrow-solo-flight-counters--p05-hud-correction).
-
 
 Release packaging example: “Validate the complete evidence ZIP with the exact
 source uploader, including the root evidence-manifest.json. Preserve a rejected
@@ -302,3 +307,49 @@ separately from hosted upload success.”
 ### Retain an edition while publishing a menu correction
 
 “Prepare the archive from exact original ZIP/metadata. A new archive has zero previously accepted paths. Update only template-specific fixture identities; keep all corruption guards, inventory-base binding and budget limits. Preserve first failures, run complete fixtures, and verify hosted extraction plus every public body. Carry known historical UX issues into scoped native admission. Publish the separately qualified correction only after retention is admitted, then verify the affected public menu journey before marking its scope accepted.”
+
+## Team teaser and optional full picture preview
+
+Use one read-only draw helper for the ready lobby's recognisable broad border and concealed centre. The unified mission-library cards remain metadata-only and artwork-lazy. The existing explicit Preview picture action for the selected mission shows the complete authenticated original, with clear copy that viewing neither completes the arena nor earns a picture. This supersedes the older card-teaser and locked enlarged-teaser prompt above. Preserve current attempt/profile/checkpoint bytes, no automatic Start, transient preview lease release, cancellation and stale-visit guards; shared chooser Back closes directly to its exact game opener. Test true lobby centre/border pixels and full-preview pixels with both built-ins and imported artwork; qualify native recognisability, responsive controls and focus separately. Do not alter artwork, production recipes, simulation, awards or saves.
+
+## Ordinary default entry qualification
+
+Use the [default Journey contract](../../docs/default-journey-release.md) for the
+v0.83 candidate. Test fresh and returning ordinary root entry (no special URL),
+91/91/12 catalogue counts, direct Start, explicit Legacy access, mode/Workshop
+return, Retry/Next/endings and loading recovery. Follow nested tool launches too:
+Playground's Couch preview must open the installed-map Legacy catalogue from both
+its frame and open link, with editor/session data unchanged. Reuse current Journey scopes;
+no save migration, database deletion or mission/art generation is in this feature.
+Report source, PR, public version/link, actual input/viewports and evidence limits;
+never infer publication or complete human/device qualification from a host pass.
+
+## Recovered Team maintenance guidance
+
+Recovered from closed PR #757 without replacing newer guidance above. The linked
+2026-09-29 records are historical observations, not current test, production or
+device approval. Keep the current native menus; do not restore the former More
+disclosure or historical publication ordering. Apply the following checks to the
+current integrated source and report each remaining acceptance boundary honestly.
+
+Team readability and recovery: “Start both existing arenas using Standard then
+Large/Plain text. Compare prepared bodies and true contacts, and inspect enlarged
+player numerals, downed plus, Hunter/core/anchor labels over light/dark art. Keep
+both touch pads and the full board at 1280×800, 390×844, 844×390 and 568×320 CSS;
+record Ukrainian HUD/ability overflow separately. Pause a genuinely downed player,
+visit Settings, change language, return and explicitly Resume: preserve the exact
+world and restore current cause/rescue guidance. Complete rescue or Retry and
+require old guidance to disappear. Empty Support must not count as demonstrated
+success; an actual slow or interception does. Use fresh controller Confirm after
+join, preserve compatibility-echo rejection, and distinguish source tests, browser,
+hardware, production review and public acceptance.”
+
+Team narrow-state qualification: “At 568×320 and 390×844 with Large/Plain text,
+start a real Team stronghold, lose a reserve, then leave one player downed with
+zero reserves. Keep both pads, Boost/Support, the complete board, objective and
+rescue status in view. Switch language through Settings and explicitly Resume;
+full free-rescue/cause instructions remain correct while compact labels fit.
+Measure every action and save settled screenshots. Repeat a coverage arena and
+normal text. Preserve empty-Support rejection and test a genuine moving-enemy
+slow on the winning step; a stationary marker is not a successful demonstration.
+Report source, browser, hardware and public acceptance separately.”

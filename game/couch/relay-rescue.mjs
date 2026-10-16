@@ -1,10 +1,95 @@
+import { supplementalTeamSources } from '../mission-library/supplemental-hunt.mjs';
+import {
+  acceptAttemptAppearance,
+  restoreAttemptAppearance,
+} from '../presentation/attempt-appearance.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { createEnemyStatsHost } from '../enemy-stats.mjs';
+import { createTeamEnemyStatsOwnership } from '../coop/enemy-stats-ownership.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
+import {
+  mountGlobalSettingsTools,
+  globalSettingsToolsRoot,
+  globalSettingsToolFrameFocused,
+  closeGlobalSettingsTool,
+  guardGlobalSettingsToolBlur,
+} from '../ui/global-settings-tools.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
+import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
+import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
+import { prepareTeamRunningEnemies } from '../hunt/team-running-enemies.mjs';
+import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
+import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
+import { createHuntRecords } from '../hunt/records.mjs';
+import { createTeamAttemptIdentity } from '../coop/attempt-identity.mjs';
+import {
+  createTeamHuntAttemptStore,
+  createTeamHuntRecorder,
+  restoreTeamHuntAttempt,
+  matchingTeamHuntMirror,
+  teamHuntSourceIdentity,
+} from '../coop/hunt-attempts.mjs';
+import { attachTeamHuntSave, teamHuntSaveText } from '../ui/team-hunt-save.mjs';
+import { deriveEncounterLevel } from '../hunt/variants.mjs';
+import { ENCOUNTER_VARIANTS, createEncounterVariantPreferences } from '../hunt/preferences.mjs';
+import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
+import { freezeDesign } from '../content-design/catalogs.mjs';
+import { journeyTeamPackEdition } from '../coop/foundations.mjs';
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
+import { gameplayTuningDescription } from '../ui/gameplay-copy.mjs';
+import {
+  t,
+  getLocale,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  formatNumber,
+  render as renderMessage,
+  translateDOM,
+  attachLanguageControls,
+} from '../i18n/index.mjs';
+import { contentText } from '../i18n/content.mjs';
+import { coopGoalLabel, coopObjectiveLabel } from './coop-copy.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
+import { resultContinuationLabel } from '../ui/result-continuation.mjs';
+import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
+import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
+import {
+  createGameplayTuningController,
+  applyGameplayTuning,
+  resolveGameplayTuning,
+} from '../gameplay-tuning.mjs';
+import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
+import { createJourneyPreferences } from '../journey/preferences.mjs';
+import { createActorStylePreferences } from '../actor-style-preferences.mjs';
+import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { prepareTeamVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
+import { canonicalJSON, dataIdentity } from '../data-json.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { prepareTeamMusicContext } from './couch-music-context.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
+import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { authoredTeamReturn } from '../ui/authored-mode-routes.mjs';
+import { resolveJourneyRequest } from '../content-design/default-entry.mjs';
+import { teamExpeditionLibrarySource } from '../mission-library/multiplayer-expeditions.mjs';
+import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
+import { offlineAvailability } from '../offline.mjs';
 import {
   createCoop,
   startCoop,
@@ -15,24 +100,34 @@ import {
   FIXED_DT,
 } from '../coop/core.mjs';
 import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
-import {
-  COOP_STARTER_PACK,
-  readCoopPack,
-  coopGoalText,
-  coopPackDestination,
-} from '../coop/library.mjs';
+import { COOP_STARTER_PACK, coopPackDestination } from '../coop/library.mjs';
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
+import { coopCueOverflowEntries, hasCoopCueOverflow } from './coop-cue-overflow.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
-import { createCoopPresentation } from './coop-presentation.mjs';
-import { createCandidateTeamPictures } from './candidate-team-pictures.mjs';
+import { createOwnedCoopPresentation } from './coop-owned-presentation.mjs';
 import {
-  COOP_PICTURE_BINDINGS,
-  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  candidateTeamPictureFrame,
+  createCandidateTeamPictures,
+} from './candidate-team-pictures.mjs';
+import {
+  COOP_SUPPORTED_PICTURE_BINDINGS,
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
 } from './coop-picture-bindings.mjs';
 import { decodeCoopPicture } from './coop-picture-image.mjs';
 import { createCoopPresentationImport } from './coop-import-source.mjs';
+import { readPlayableTeamCampaign } from './creator-team-import.mjs';
+import {
+  createInstalledTeamAttemptSnapshot,
+  nativeInstalledTeamAttempt,
+  withInstalledTeamAttemptAppearance,
+  createInstalledTeamCampaignStore,
+} from '../creator/team-installed.mjs';
+import {
+  createCreatorTeamMediaPictureLease,
+  creatorTeamMediaForLevel,
+} from '../creator/team-media.mjs';
 import { COOP_PRESENTATION_MIME } from '../coop/presentation-envelope.mjs';
 import {
   coopFailureFeedback,
@@ -47,11 +142,12 @@ import {
   coopBonusDetails,
   coopBonusLive,
   coopBonusCaption,
-  TEAM_BONUS_HELP,
+  teamBonusHelp,
 } from './coop-bonus-view.mjs';
-import { coopGroundName } from './coop-ground.mjs';
+import { coopGroundContext } from './coop-ground.mjs';
 import { terrainTransitionCaption } from '../ui/terrain-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
@@ -62,17 +158,53 @@ import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-p
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
+import { createTeamContextualTeaching } from './team-contextual-teaching.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+  installOfflineOwnsElement,
+} from '../ui/install-offline-panel.mjs';
+import {
+  createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+} from '../offline-download-access.mjs';
 
 import { createTeamArenaPreference } from './team-arena-preference.mjs';
-import { attachTeamDiscovery } from './team-discovery.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { librarySuccessor } from '../mission-library/continuous-next.mjs';
+import { attachMissionLibraryChooser } from '../ui/mission-library-chooser.mjs';
+import {
+  createMissionLibrarySessionState,
+  missionLibraryHref,
+  readMissionLibraryHandoff,
+  readMissionLibraryReturn,
+  isMissionLibrarySourceJourney,
+} from '../mission-library/handoff.mjs';
+import {
+  teamJourneyLibrarySource,
+  teamArenaLibrarySource,
+  TEAM_LIBRARY_JOURNEY_EDITION,
+} from '../mission-library/team-source.mjs';
+import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
+import { attachTeamLibraryPreview, paintTeamPicturePreview } from './team-library-preview.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
 
 const $ = (id) => document.getElementById(id);
+// This host is loaded through the direct-tool launcher after parsing. Bind its
+// complete static setup here as well as in the classic startup adapter so live
+// switching remains complete in embedded and test hosts with no DOMContentLoaded handoff.
+if (typeof document.createTextNode === 'function') translateDOM(document);
+attachLanguageControls(document);
+$('coop-release-explorer').href = releaseExplorerHref(
+  globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/relay-rescue.html',
+);
 const unclaimedFocus = (element) =>
   !element || element === document.body || element === document.documentElement;
 // Capture before attached() can hide a deliberately focused loader recovery link.
@@ -84,14 +216,18 @@ const initialFocusChoice = (event) => {
 const initialFocusLost = () => {
   initialFocusPending = false;
 };
+const initialWindowBlur = guardInstallOfflineBlur(initialFocusLost);
 const initialVisibility = () => {
   if (document.hidden) initialFocusLost();
 };
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('coop-boot'));
-const bootDisplay = bootStatus.begin({ message: 'Preparing the Team arena…', stage: 'preparing' });
-const names = ['Sunflower', 'Skyline'];
+const bootDisplay = bootStatus.begin({
+  message: t('interface:preparingTheTeamArena'),
+  stage: 'preparing',
+});
+const names = () => [t('interface:sunflower2'), t('interface:skyline2')];
 const clock = (seconds) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 
@@ -102,53 +238,127 @@ function picturePreparationText({ stage, status }, destination = null) {
   // A forwarded reader stage is not the lease's authenticated ready status.
   if (status === 'ready')
     return destination
-      ? `${destination} ready. Starting together…`
-      : 'Team picture ready. Start remains a separate action.';
-  const action =
-    stage === 'downloading' ? 'Loading' : stage === 'verifying' ? 'Checking' : 'Preparing';
-  return destination
-    ? `${action} ${destination} artwork… Your result stays available.`
-    : `${action} the Team picture…`;
+      ? localizedMessage('gameplay:team.pictureDestinationReady', { name: destination })
+      : localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction');
+  const keys = destination
+    ? {
+        downloading: 'gameplay:team.pictureDestinationDownloading',
+        verifying: 'gameplay:team.pictureDestinationChecking',
+        preparing: 'gameplay:team.pictureDestinationPreparing',
+      }
+    : {
+        downloading: 'gameplay:team.pictureDownloading',
+        verifying: 'gameplay:team.pictureChecking',
+        preparing: 'gameplay:team.picturePreparing',
+      };
+  return localizedMessage(keys[stage] || keys.preparing, { name: destination });
 }
 
 export function bootCoop({
   candidateJourney = null,
+  prepareCandidateEnvironment = async () => null,
   candidateProgress = null,
   candidatePreferences = null,
-  candidateCardPresenter = undefined,
   candidateCaptureTeaching = null,
   candidateDifficulty = 'standard',
   candidateNotice = '',
   candidateEditionLabel = '',
 } = {}) {
+  // Consume native setup intent before applying saved defaults. Only an actual
+  // difficulty edit changes the global preference; opening its selector does not.
+  const earlySelection = globalThis.RevealLineTeamEntry?.take();
   // Entry links select a code-owned destination, never a supplied URL or referrer.
   // Older/direct links and ambiguous contexts retain the existing Versus return.
-  const returns = new URL(location.href).searchParams.getAll('return');
-  const fromSolo = returns.length === 1 && returns[0] === 'solo';
+  const entryParams = new URL(location.href).searchParams;
+  const incomingLibraryMission = readMissionLibraryHandoff(entryParams);
+  const libraryReturn = readMissionLibraryReturn(entryParams, {
+    mode: 'team',
+  });
+  const libraryEdition = resolveJourneyRequest(entryParams, {
+    mode: 'team',
+  });
+  const returns = entryParams.getAll('return');
+  const fromSolo = libraryReturn
+    ? libraryReturn.mode === 'solo'
+    : returns.length === 1 && returns[0] === 'solo';
   let returnStorage;
   try {
     returnStorage = sessionStorage;
   } catch {
     /* Fixed title fallback remains available. */
   }
-  const authoredReturn = authoredTeamReturn(location.href);
-  const homeHref = authoredReturn?.solo ?? '../';
-  const versusHref = authoredReturn?.versus ?? './';
-  const returnHref = () =>
-    authoredReturn?.[authoredReturn.origin] ??
-    teamReturnHref({ href: location.href, storage: returnStorage });
-  $('coop-home').setAttribute('href', homeHref);
-  $('coop-versus').setAttribute('href', versusHref);
-  $('coop-race').setAttribute('href', returnHref());
-  $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
-  $('coop-solo').setAttribute('href', fromSolo ? returnHref() : homeHref);
+  const authoredReturn = libraryReturn
+    ? {
+        solo: `../?journey=${libraryReturn.journey}`,
+        versus: `./?journey=${libraryReturn.journey}`,
+        origin: libraryReturn.mode,
+      }
+    : authoredTeamReturn(location.href);
+  // Keep the actual host selection across mode changes, including rejected or
+  // legacy launch intents. An authored return or valid save token still wins.
+  const legacyEntry = !candidateJourney;
+  const defaultJourney = Boolean(candidateJourney) && !entryParams.has('journey');
+  const homeHref = authoredReturn?.solo ?? (legacyEntry ? '../?journey=legacy' : '../');
+  const versusHref = authoredReturn?.versus ?? (legacyEntry ? './?journey=legacy' : './');
+  const catalogueParams = new URLSearchParams();
+  if (candidateJourney) catalogueParams.set('journey', 'legacy');
+  if (returns.length === 1 && ['solo', 'versus'].includes(returns[0]))
+    catalogueParams.set('return', returns[0]);
+  const catalogueHref = `relay-rescue.html${catalogueParams.size ? `?${catalogueParams}` : ''}`;
+  $('coop-catalogue').setAttribute('href', nativeArtReviewURL(catalogueHref, location.href));
+  localizedText($('coop-catalogue'), () =>
+    candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
+  );
+  $('coop-more-catalogue').setAttribute('href', nativeArtReviewURL(catalogueHref, location.href));
+  localizedText($('coop-more-catalogue'), () =>
+    candidateJourney ? t('interface:legacyArenas') : t('interface:newJourney2'),
+  );
+  const returnHref = () => {
+    // Mission identity and source navigation are independent. A checked Solo
+    // return ticket remains stronger than the finite edition-navigation hint.
+    if (libraryReturn) {
+      if (libraryReturn.mode === 'solo' && libraryReturn.journey === 'legacy') {
+        const checked = teamReturnHref({ href: location.href, storage: returnStorage });
+        if (checked.startsWith('../?mode-return=')) return checked;
+      }
+      return authoredReturn[libraryReturn.mode];
+    }
+    const invalidLibraryHint =
+      incomingLibraryMission &&
+      ['journey-return', 'return-token-v2', 'mode-return', 'mode-return-v2', 'practice'].some(
+        (key) => entryParams.has(key),
+      );
+    const destination =
+      authoredReturn?.[authoredReturn.origin] ??
+      (invalidLibraryHint
+        ? fromSolo
+          ? '../'
+          : './'
+        : teamReturnHref({ href: location.href, storage: returnStorage }));
+    return legacyEntry && ['../', './'].includes(destination)
+      ? `${destination}?journey=legacy`
+      : destination;
+  };
+  $('coop-home').setAttribute('href', nativeArtReviewURL(homeHref, location.href));
+  $('coop-versus').setAttribute('href', nativeArtReviewURL(versusHref, location.href));
+  $('coop-race').setAttribute('href', nativeArtReviewURL(returnHref(), location.href));
+  localizedText($('coop-race'), () =>
+    fromSolo ? t('interface:backToSolo') : t('interface:raceMode'),
+  );
+  $('coop-solo').setAttribute(
+    'href',
+    nativeArtReviewURL(fromSolo ? returnHref() : homeHref, location.href),
+  );
   const arenaPreference = createTeamArenaPreference({
     pack: COOP_STARTER_PACK,
     getStorage: () => localStorage,
     onWarning: (message) => {
-      $('coop-selection-status').textContent = message;
+      localizedText($('coop-selection-status'), () => message);
       $('coop-selection-status').hidden = !message;
     },
+  });
+  const contextualTeaching = createTeamContextualTeaching({
+    getStorage: () => localStorage,
   });
   let lastBuiltInArena = arenaPreference.current();
   const audioMaster = createAudioMaster();
@@ -157,12 +367,16 @@ export function bootCoop({
     window,
     getStorage: () => localStorage,
     onWarning: (message) => {
-      $('coop-audio-status').textContent = message;
+      localizedText($('coop-audio-status'), () => message);
     },
   });
   const renderMasterPreferences = ({ muted, volume }) => {
-    $('coop-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
-    $('coop-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+    localizedText($('coop-audio'), () =>
+      muted ? t('common:audio.unmute') : t('interface:muteSound'),
+    );
+    localizedText($('coop-quick-sound'), () =>
+      muted ? t('interface:soundOff') : t('interface:soundOn'),
+    );
     $('coop-quick-sound').setAttribute('aria-pressed', String(!muted));
     $('coop-master-volume').value = volume;
   };
@@ -194,8 +408,8 @@ export function bootCoop({
     window,
     matchMedia,
     getStorage: () => localStorage,
-    onWarning: (message) => {
-      $('coop-display-status').textContent = message;
+    onWarning: (message, key) => {
+      localizedText($('coop-display-status'), () => (key ? t(key) : message));
     },
   });
   const renderDisplayPreferences = (state) => {
@@ -205,15 +419,30 @@ export function bootCoop({
     $('coop-text-face').value = state.textFace;
     $('coop-text-size').value = state.textSize;
     $('coop-reduced').checked = state.reducedEffects;
-    $('coop-system-reduction').textContent =
+    localizedText($('coop-system-reduction'), () =>
       state.effectiveReducedEffects && !state.reducedEffects
-        ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
-        : '';
+        ? t('interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice')
+        : '',
+    );
   };
   const stopDisplayView = displayPreferences.subscribe((state) => {
     const reveal = prepareDisplayReveal?.(++displayLayoutVersion);
     renderDisplayPreferences(state);
     reveal?.();
+  });
+  const runningEnemyPreferences = createRunningEnemyPreferences({
+    window,
+    getStorage: () => localStorage,
+  });
+  const encounterPreferences = createEncounterVariantPreferences({
+    window,
+    getStorage: () => localStorage,
+  });
+  const encounterDisplay = attachEncounterDisplayControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    prefix: 'coop-',
   });
   const displayRestoration = attachPreferenceRestoration({
     window,
@@ -234,9 +463,12 @@ export function bootCoop({
     stopDisplayView();
     displayRestoration.dispose();
     displayPreferences.dispose();
+    encounterDisplay.dispose();
     menuStyle.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));
+  painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+  painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
   const presentationPage = mountPresentationPage({ document, window });
   presentationPage.bindPainter(painter);
   void presentationPage.ready.then((snapshot) => {
@@ -259,6 +491,73 @@ export function bootCoop({
   const earnedDialog = $('coop-earned-picture');
   const earnedCanvas = $('coop-earned-picture-canvas');
   let earnedOwner = null;
+  const teamStoryVideo = $('coop-victory-story-video');
+  let teamStoryOwner = null;
+  function releaseTeamStory() {
+    const owner = teamStoryOwner;
+    teamStoryOwner = null;
+    try {
+      teamStoryVideo.pause?.();
+    } catch {}
+    teamStoryVideo.removeAttribute?.('src');
+    teamStoryVideo.hidden = true;
+    if (owner?.url) URL.revokeObjectURL(owner.url);
+    $('coop-victory-story').hidden = true;
+  }
+  function currentTeamStory() {
+    if (run?.status !== 'won' || !acceptedPicture?.teamMedia) return null;
+    return creatorTeamMediaForLevel(acceptedPicture.teamMedia, run.level.id).story;
+  }
+  async function playTeamStory() {
+    const story = currentTeamStory();
+    if (!story) return;
+    if (
+      !teamStoryOwner ||
+      teamStoryOwner.run !== run ||
+      teamStoryOwner.generation !== generation ||
+      teamStoryOwner.story !== story
+    ) {
+      releaseTeamStory();
+      const url = URL.createObjectURL(story.blob);
+      teamStoryOwner = { run, generation, story, url };
+      teamStoryVideo.src = url;
+      teamStoryVideo.hidden = false;
+      $('coop-victory-story').hidden = false;
+    }
+    const owner = teamStoryOwner;
+    localizedText($('coop-victory-story-status'), () => t('interface:team.victoryStoryStarting'));
+    try {
+      teamStoryVideo.currentTime = story.descriptor.startSeconds;
+      await teamStoryVideo.play();
+      if (teamStoryOwner !== owner) return;
+      localizedText($('coop-victory-story-play'), () => t('interface:team.replayVictoryStory'));
+      localizedText($('coop-victory-story-status'), () => t('interface:team.victoryStoryPlaying'));
+    } catch {
+      if (teamStoryOwner === owner)
+        localizedText($('coop-victory-story-status'), () =>
+          t('interface:team.victoryStoryPlaybackRefused'),
+        );
+    }
+  }
+  function skipTeamStory(messageText = () => t('interface:team.victoryStorySkipped')) {
+    const story = currentTeamStory();
+    try {
+      teamStoryVideo.pause?.();
+      if (story) teamStoryVideo.currentTime = story.descriptor.startSeconds;
+    } catch {}
+    localizedText($('coop-victory-story-play'), () => t('interface:team.replayVictoryStory'));
+    localizedText($('coop-victory-story-status'), messageText);
+  }
+  teamStoryVideo.ontimeupdate = () => {
+    const owner = teamStoryOwner;
+    if (!owner || teamStoryVideo.currentTime < owner.story.descriptor.endSeconds) return;
+    skipTeamStory(() => t('interface:team.victoryStoryComplete'));
+  };
+  teamStoryVideo.onerror = () => skipTeamStory(() => t('interface:team.victoryStoryUnavailable'));
+  $('coop-victory-story-play').onclick = () => void playTeamStory();
+  $('coop-victory-story-skip').onclick = () => skipTeamStory();
+  let contextualReactions = null,
+    reactionRun = null;
   let music = null,
     musicPublished = null,
     musicSelection = null;
@@ -271,35 +570,165 @@ export function bootCoop({
     pictureSequence = 0,
     nextOperation = null,
     startPermitted = true;
-  let automaticRetry = null;
   let foundationMessage = null;
   let journeySkip = null;
   const journeyReactions = attachJourneyReactions({ prefix: 'coop-' });
   let candidatePresetIntent = 0;
   let candidatePreferenceRestoration = null;
   const foreground = () => !document.hidden && document.hasFocus?.() !== false;
+  const gameplayTuning = createGameplayTuningController({ eventTarget: window });
+  const gameplayPreferences = candidatePreferences ?? createJourneyPreferences({ window });
+  const actorPreferences = createActorStylePreferences({
+    window,
+    getStorage: () => localStorage,
+    onWarning: () => renderActorStyle(),
+  });
+  const earlyDifficulty = earlySelection?.difficulty;
+  if (earlyDifficulty?.changed && ['gentle', 'standard', 'expert'].includes(earlyDifficulty.value))
+    gameplayPreferences.choose(earlyDifficulty.value);
+  if (candidatePreferences) candidateDifficulty = gameplayPreferences.snapshot().difficulty;
+  const attemptTuning = new WeakMap();
+  const normalGameplayIdentities = new WeakMap();
+  if (!candidatePreferences) $('coop-difficulty').value = gameplayPreferences.snapshot().difficulty;
+  const gameplayTuningPanel = mountGameplayTuning({
+    root: $('coop-gameplay-tuning'),
+    controller: gameplayTuning,
+    getDifficulty: () =>
+      attemptLevel?.journeyDifficulty ??
+      (run ? gameplayPreferences.snapshot().difficulty : $('coop-difficulty').value),
+  });
   let inactive = !foreground();
-  let previousPads = new Map();
+  const teamStatsProvenance = new WeakMap();
+  const teamStatsOwnership = createTeamEnemyStatsOwnership();
+  const enemyStatistics = createEnemyStatsHost({ gameType: 'team' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [];
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('coop-overlay').querySelector('.overlay-card'),
+      stats: enemyStatistics.stats,
+      gameType: 'team',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'panel',
+    }),
+  );
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('coop-stage').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'team',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'hud',
+    }),
+  );
+  const continuousPlay = createContinuousPlayController({
+    isCurrent: (identity) => identity === run && !disposed && ['won', 'lost'].includes(run?.status),
+    isActive: () =>
+      foreground() && !settingsDialog.open && !earnedDialog.open && !departure && !teamStoryOwner,
+    onNext: () => $('coop-next').click(),
+    onRetry: () => $('coop-retry').click(),
+  });
+  const flowControls = mountContinuousPlayControls({
+    parent: $('coop-next').parentElement,
+    primaryAction: $('coop-next'),
+    controller: continuousPlay,
+    locale: () => document.documentElement.lang,
+  });
+  const flowCelebration = mountContinuousCelebration({
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+  });
+  const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
+  document.addEventListener('pointerdown', cancelContinuousPlay, true);
+  document.addEventListener('keydown', cancelContinuousPlay, true);
+  window.addEventListener('blur', cancelContinuousPlay);
+  window.addEventListener('gamepaddisconnected', cancelContinuousPlay);
+
   let pack = COOP_STARTER_PACK;
   let packArtworkSource = null;
+  let installedTeamStore = null,
+    installedTeamStorageError = null;
+  try {
+    installedTeamStore = createInstalledTeamCampaignStore();
+  } catch (error) {
+    installedTeamStorageError = error;
+  }
   let discovery = null,
     discoveryOperation = null,
     discoveryStarted = null,
     discoveryPreviewSequence = 0,
     localDiscoveryPack = null,
     localDiscoveryRevision = 0;
-  const discoveryRows = (sourcePack, artworkSource, prefix) =>
+  let missionLibrary = null,
+    libraryChooser = null,
+    libraryOpening = null,
+    libraryLaunch = null,
+    libraryLocalOwner = null,
+    libraryRemoteJourney = null,
+    libraryRemotePending = null,
+    libraryOtherModes = null,
+    libraryOtherModesPending = null,
+    libraryOtherModesVisit = 0,
+    libraryOtherModesCheckedVisit = -1,
+    libraryOtherModesOpening = null,
+    libraryOtherModesLoad = null,
+    libraryOtherModesLifetime = new AbortController(),
+    libraryPreview = null,
+    libraryReturnFocus = true;
+  const libraryRuntimeRows = new WeakMap();
+  const libraryOtherSources = new Map();
+  const installedTeamSourceIds = new Set();
+  const installedTeamProgress = new Map();
+  const installedTeamAttempts = new WeakMap();
+  const huntAttempts = new WeakMap();
+  const localRecordings = new WeakMap();
+  const recordingExport = attachTerminalRecordingExport({
+    document,
+    container: $('coop-recording-copy'),
+    status: $('coop-recording-status'),
+    getOwner: () => run,
+    isTerminal: (owner) => ['won', 'lost'].includes(owner?.status),
+  });
+  const recordingBuild = document.documentElement.dataset.buildVersion;
+  const buildVersion =
+    recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
+  const huntRetryOwners = new WeakMap();
+  const huntAttemptStore = createTeamHuntAttemptStore();
+  let huntSaveControls = null;
+  let installedTeamRows = [],
+    installedTeamEditions = new Map(),
+    installedTeamGeneration = -1,
+    installedTeamLoading = null;
+  const librarySession = createMissionLibrarySessionState({
+    mode: 'team',
+  });
+  const libraryVisit = crypto.randomUUID();
+  const teamPersistenceId = createTeamAttemptIdentity(libraryVisit);
+  const discoveryRows = (sourcePack, artworkSource, prefix, teamMedia = null) =>
     sourcePack.levels.map((level) =>
       Object.freeze({
         key: `${prefix}/${level.id}`,
-        title: level.name,
-        packName: sourcePack.name,
-        sourceLabel: sourcePack === COOP_STARTER_PACK ? 'Starter arena' : 'Local pack · this visit',
-        goal: coopGoalText(level),
+        get title() {
+          return contentText(level, 'name');
+        },
+        get packName() {
+          return contentText(sourcePack, 'name');
+        },
+        get sourceLabel() {
+          return sourcePack === COOP_STARTER_PACK
+            ? t('interface:starterArena')
+            : t('interface:localPackThisVisit');
+        },
+        get goal() {
+          return coopGoalLabel(level);
+        },
         levelId: level.id,
         level,
         pack: sourcePack,
         artworkSource,
+        teamMedia,
       }),
     );
   const starterDiscoveryRows = discoveryRows(COOP_STARTER_PACK, null, 'starter');
@@ -307,10 +736,24 @@ export function bootCoop({
     candidateJourney?.rows.map((row) =>
       Object.freeze({
         key: row.key,
-        title: row.level.name,
-        packName: row.pack.name,
-        sourceLabel: `Team Journey · ${row.background ? 'original-art candidate' : 'geometry test'} · not human validated`,
-        goal: coopGoalText(row.level),
+        get title() {
+          return contentText(row.level, 'name');
+        },
+        get packName() {
+          return contentText(row.pack, 'name');
+        },
+        get sourceLabel() {
+          return defaultJourney
+            ? t('interface:teamJourneyOriginalArtwork')
+            : t('interface:team.candidateJourneySource', {
+                state: row.background
+                  ? t('interface:originalArtCandidate')
+                  : t('interface:geometryTest'),
+              });
+        },
+        get goal() {
+          return coopGoalLabel(row.level);
+        },
         levelId: row.level.id,
         level: row.level,
         pack: row.pack,
@@ -327,6 +770,7 @@ export function bootCoop({
           candidateDifficulty),
     ),
     ...starterDiscoveryRows,
+    ...installedTeamRows,
     ...(localDiscoveryPack?.rows ?? []),
   ];
   const artworkImports = createCoopPresentationImport();
@@ -365,9 +809,9 @@ export function bootCoop({
         state: 'detached',
         message: artworkDraft
           ? artworkImports.pending()
-            ? 'Finishing cancelled artwork validation… The selected pack is unchanged.'
-            : 'Artwork import cancelled. The selected pack is unchanged. Retry pack when ready.'
-          : 'Stopped waiting. The selected pack is unchanged. Retry pack when ready.',
+            ? t('interface:finishingCancelledArtworkValidationTheSelectedPackIsUnchanged')
+            : t('interface:artworkImportCancelledTheSelectedPackIsUnchangedRetryPack')
+          : t('interface:stoppedWaitingTheSelectedPackIsUnchangedRetryPackWhen'),
       });
     }
     if (forget && importDraft) {
@@ -382,8 +826,296 @@ export function bootCoop({
     if (operation) pictureUI();
   }
   let knockdowns = [null, null];
+  const cueOverflowAttempts = new WeakSet();
+  let cueOverflowRun = null,
+    cueOverflowKey = '',
+    cueDetailsOwner = null;
+  function updateCueOverflow() {
+    const active = !loopStopped && !!run && ['running', 'paused'].includes(run.status),
+      overflow = active && hasCoopCueOverflow(painter.cueLayout),
+      admitted = active && (overflow || cueOverflowAttempts.has(run)),
+      rail = $('coop-cue-overflow'),
+      action = $('coop-field-details'),
+      section = $('coop-field-details-section');
+    if (cueOverflowRun !== run) {
+      cueOverflowRun = run;
+      cueOverflowKey = '';
+      localizedText($('coop-cue-announcement'), () => '');
+    }
+    if (!active && $('coop-cue-announcement').textContent)
+      localizedText($('coop-cue-announcement'), () => '');
+    if (overflow && !cueOverflowAttempts.has(run)) {
+      cueOverflowAttempts.add(run);
+      localizedText($('coop-cue-announcement'), () => t('interface:team.cueOverflowNotice'));
+    }
+    rail.hidden = !admitted || !running();
+    action.hidden = !admitted;
+    section.hidden = !admitted;
+    const destination = admitted && run.status === 'paused' ? $('coop-pause-core') : rail;
+    if (action.parentNode !== destination) destination.append(action);
+    const entries = admitted ? coopCueOverflowEntries(run) : [],
+      key = JSON.stringify(entries);
+    if (key !== cueOverflowKey) {
+      cueOverflowKey = key;
+      $('coop-field-details-list').replaceChildren(
+        ...entries.map((entry) => {
+          const item = document.createElement('li');
+          item.dataset.entity = entry.id;
+          item.textContent = `${entry.name}: ${entry.state}`;
+          return item;
+        }),
+      );
+      $('coop-cue-summary').textContent = entries
+        .slice(0, 2)
+        .map((entry) => `${entry.name}: ${entry.state.split(' · ')[0]}`)
+        .join(' · ');
+    }
+  }
+  function openCueDetails() {
+    if (
+      disposed ||
+      inactive ||
+      !foreground() ||
+      !run ||
+      !['flight', 'coop-paused'].includes(scope()) ||
+      !cueOverflowAttempts.has(run)
+    )
+      return;
+    const attempt = run,
+      epoch = generation;
+    if (running()) pause({ focus: false });
+    if (
+      disposed ||
+      run !== attempt ||
+      generation !== epoch ||
+      run.status !== 'paused' ||
+      loopStopped
+    )
+      return;
+    const owner = openSettings({ opener: $('coop-field-details') });
+    if (!owner || !settingsCurrent(owner) || !settingsDialog.open) return;
+    settingsPanels?.select('coop-settings-tab-extras', { drill: true });
+    $('coop-help').open = true;
+    updateCueOverflow();
+    controllerConfirmGuard.requireNeutral();
+    const region = $('coop-help-reading');
+    region.scrollTop = 0;
+    // The reader belongs to Settings. Its local entry stays inside that modal;
+    // the Settings visit owns the return to the original paused field action.
+    cueDetailsOwner = owner;
+    const entered = navigation.beginReading({
+      region,
+      origin: $('coop-help-read'),
+      exit: $('coop-help-reading-done'),
+      label: t('interface:fieldDetails'),
+      getLabel: () => t('interface:fieldDetails'),
+    });
+    if (!entered) {
+      cueDetailsOwner = null;
+      return;
+    }
+    region.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+  }
+  $('coop-field-details').onclick = openCueDetails;
   const selectedLevel = () =>
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
+  const encounterChoices = new WeakMap();
+  const huntRecords = createHuntRecords({ window, getStorage: () => localStorage });
+  huntSaveControls = attachTeamHuntSave({
+    container: $('coop-hunt-save'),
+    liveStatus: $('coop-hunt-attempt-status'),
+    store: huntAttemptStore,
+    canContinue: () => pictureSelection !== null && canOpenDiscovery({ fromSettings: true }),
+    findRow: (snapshot) =>
+      currentDiscoveryRows().find((row) => {
+        if (row.levelId !== snapshot.levelId) return false;
+        const source = teamHuntSourceIdentity(row.pack, row.level);
+        return source.pack === snapshot.source.pack && source.level === snapshot.source.level;
+      }),
+    async onContinue(saved, row, { signal, opener }) {
+      const interrupted = (code, message) => {
+        const error = new Error(message);
+        error.code = code;
+        return error;
+      };
+      if (disposed || signal.aborted)
+        throw new DOMException('Team Hunt Continue is closed.', 'AbortError');
+      if (inactive || !foreground())
+        throw interrupted('foregroundLost', 'Team Hunt Continue needs the foreground game.');
+      if (!canOpenDiscovery({ fromSettings: true }))
+        throw interrupted('continueInterrupted', 'Team Hunt Continue is unavailable.');
+      const ownerRun = run,
+        ownerGeneration = generation,
+        ownerSettingsVisit = settingsVisit,
+        ownerSettings = settingsDialog.open ? settingsOwner : null,
+        ownerSettingsPanel = settingsPanels?.selected();
+      const restored = await restoreTeamHuntAttempt(saved.envelope ?? saved.snapshot, {
+        pack: row.pack,
+        level: row.level,
+        signal,
+      });
+      if (disposed || signal.aborted)
+        throw new DOMException('Team Hunt Continue is closed.', 'AbortError');
+      if (inactive || !foreground())
+        throw interrupted('foregroundLost', 'Team Hunt Continue lost the foreground game.');
+      if (huntAttemptStore.read().raw !== saved.raw)
+        throw interrupted('saveChanged', 'Team Hunt checkpoint changed during verification.');
+      if (run !== ownerRun || generation !== ownerGeneration)
+        throw interrupted('continueInterrupted', 'Team Hunt attempt changed during verification.');
+      if (
+        settingsVisit !== ownerSettingsVisit ||
+        (ownerSettings &&
+          (settingsOwner !== ownerSettings || settingsPanels.selected() !== ownerSettingsPanel))
+      )
+        throw interrupted('continueInterrupted', 'Team Hunt settings changed during verification.');
+      const fromSettings = settingsDialog.open;
+      // Keep validation failures visible in Data. Only a verified checkpoint
+      // retires Settings before discovery takes ownership of the arena.
+      if (fromSettings) {
+        closeSettings({ restore: false });
+        settingsClosed();
+      }
+      const closedSettingsVisit = settingsVisit;
+      restored.raw = saved.raw;
+      try {
+        const activated = await activateDiscovery(row, {
+          signal,
+          isCurrent: () =>
+            !disposed && !signal.aborted && huntAttemptStore.read().raw === saved.raw,
+          onStatus: () => {},
+          opener,
+          restored,
+        });
+        if (!activated && !signal.aborted) {
+          const error = new Error('Team Hunt Continue did not activate the arena.');
+          error.code = 'continueInterrupted';
+          throw error;
+        }
+      } catch (error) {
+        if (
+          fromSettings &&
+          !disposed &&
+          !inactive &&
+          foreground() &&
+          run === ownerRun &&
+          generation === ownerGeneration &&
+          settingsVisit === closedSettingsVisit &&
+          !settingsDialog.open
+        ) {
+          openSettings();
+          if (settingsDialog.open) {
+            settingsPanels.select('coop-settings-tab-data', { drill: true });
+            opener.focus({ preventScroll: true });
+          }
+        }
+        if (error.name !== 'AbortError' || signal.aborted) throw error;
+        const reason = new Error(error.message);
+        reason.code =
+          huntAttemptStore.read().raw !== saved.raw
+            ? 'saveChanged'
+            : inactive || !foreground()
+              ? 'foregroundLost'
+              : 'continueInterrupted';
+        throw reason;
+      }
+    },
+    onDiscard(discarded) {
+      const record = run && huntAttempts.get(run);
+      if (record) {
+        record.disabled = discarded.snapshot?.attemptId === record.recorder.attemptId;
+        record.raw = null;
+        record.replaceAttemptId = null;
+        record.failed = false;
+      }
+      persistHuntAttempt(run, { force: true });
+    },
+  });
+  const encounterControls = attachEncounterVariantControls({
+    document,
+    records: huntRecords,
+    container: $('coop-encounter-variant'),
+    preferences: encounterPreferences,
+    onChange: () => setupNote(),
+    getAvailable: () => {
+      const level = selectedLevel();
+      if (!encounterChoices.has(level))
+        encounterChoices.set(
+          level,
+          ENCOUNTER_VARIANTS.filter((variant) => {
+            try {
+              return !!deriveEncounterLevel(level, variant, { mode: 'team' });
+            } catch {
+              return false;
+            }
+          }),
+        );
+      return encounterChoices.get(level);
+    },
+  });
+  const runningEnemyControlViews = [
+    ...new Set([$('coop-encounter-variant'), $('coop-enemy-remains').closest('section')]),
+  ]
+    .filter(Boolean)
+    .map((container) =>
+      mountRunningEnemyControls({
+        container,
+        document,
+        window,
+        preferences: runningEnemyPreferences,
+        getAcceptedStyle: () => (run ? (run.level.pursuit ? 'varied' : 'original') : null),
+        getAcceptedActors: () => pursuitRoster(run?.level),
+        getCurrentEnabled: () => (run ? Boolean(run.level.hunt) : null),
+        getAcceptedEnabled: () =>
+          run
+            ? run.level.hunt && !run.level.runningEnemies
+              ? runningEnemyPreferences.snapshot().enabled
+              : Boolean(attemptTuning.get(run)?.runningEnemies)
+            : null,
+        onRestart: () => {
+          if (!run) return;
+          closeSettings({ restore: false });
+          requestDeparture('retry', primary(), {
+            runningEnemies: runningEnemyPreferences.snapshot().enabled,
+            runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+            pursuitGeneration: 'pursuit-goals.v2',
+          });
+        },
+        getAvailability: () => {
+          try {
+            const source = selectedLevel();
+            const tuning = gameplayTuning.snapshot(
+              source.journeyDifficulty ?? $('coop-difficulty').value,
+            );
+            prepareTeamRunningEnemies(applyGameplayTuning(source, tuning), {
+              style: runningEnemyPreferences.snapshot().style,
+              generation: 'pursuit-goals.v2',
+            });
+            return { available: true, reason: '' };
+          } catch (error) {
+            return { available: false, reason: error.message };
+          }
+        },
+      }),
+    );
+  const runningEnemyControls = {
+    refresh: () => runningEnemyControlViews.forEach((view) => view.refresh()),
+    dispose: () => runningEnemyControlViews.forEach((view) => view.dispose()),
+  };
+  const huntStatus = attachHuntStatus({
+    records: huntRecords,
+    document,
+    container: $('coop-hunt-status'),
+    mode: 'team',
+    getStorage: () => localStorage,
+  });
+  const huntResult = attachHuntStatus({
+    records: huntRecords,
+    document,
+    container: $('coop-hunt-result'),
+    mode: 'team',
+    getStorage: () => localStorage,
+    record: false,
+  });
   const selectedConfiguration = () =>
     COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
     COOP_PLAYTEST_CONFIGURATIONS[0];
@@ -394,7 +1126,7 @@ export function bootCoop({
     readingInputPrompt({
       modality: readingModality,
       scrollable,
-      controls: { confirm: 'South', back: 'East' },
+      controls: { confirm: t('common:controls.south'), back: t('common:controls.east') },
     });
   function setReadingModality(modality) {
     if (readingModality === modality) return;
@@ -404,9 +1136,21 @@ export function bootCoop({
   }
   const touchQuery = matchMedia('(any-pointer: coarse)');
   const tools = $('coop-tools');
+  const journeyPictures =
+    candidateJourney && candidateProgress
+      ? attachJourneyModePictures({
+          document,
+          button: $('coop-journey-pictures'),
+          mode: 'team',
+          editionId: candidateProgress.editionId,
+          catalog: candidateJourney.catalog,
+          profile: candidateProgress,
+        })
+      : null;
   const modeChoices = $('coop-mode-actions');
-  mountModeChoices({
+  const modeNavigation = mountModeChoices({
     root: modeChoices,
+    pause: () => pause({ focus: false }),
     current: 'team',
     actions: { solo: $('coop-solo'), versus: $('coop-versus') },
   });
@@ -420,7 +1164,9 @@ export function bootCoop({
       const visible =
         running() &&
         (mode === 'on' ||
-          (mode === 'auto' && touchQuery.matches && assignedSlots[player] === null));
+          (mode === 'auto' &&
+            touchQuery.matches &&
+            (assignedSlots[player] === null || !controllerSession.completeFlight(player))));
       if (!pad.hidden && !visible) input?.clearPhysical(player);
       pad.hidden = !visible;
       pad.closest('.control-card').dataset.touchVisible = String(visible);
@@ -429,21 +1175,100 @@ export function bootCoop({
     $('coop-controls').hidden = !visible;
     document.body.dataset.coopTouch = visible ? 'visible' : 'hidden';
   }
+  let pauseMenu = null;
+  function placePictureRecovery() {
+    const section = $('coop-picture-preparation'),
+      menu = $('coop-menu');
+    if (!section || !menu.classList.contains('native-landing')) return;
+    // Keep the original status/actions reachable while the landing cannot
+    // start. Settings retains them during its own visit; no move grants focus
+    // or revives preparation retired by a foreground boundary.
+    const blocked = !run && (pictureSelection?.state !== 'ready' || pictureOperation),
+      destination =
+        blocked && !settingsDialog.open
+          ? menu.querySelector('.native-menu-actions')
+          : $('coop-settings-panel-extras');
+    if (destination && section.parentNode !== destination) destination.append(section);
+  }
   function placeTools(paused) {
+    const pausedAttempt = paused && run?.status === 'paused';
+    if (!pausedAttempt) pauseMenu?.setActive(false);
+    document.body.dataset.coopPaused = String(pausedAttempt);
     const modeDestination = $(paused ? 'coop-pause-modes' : 'coop-lobby-modes');
     if (modeChoices.parentNode !== modeDestination) modeDestination.append(modeChoices);
-    modeChoices.hidden = running();
+    modeChoices.hidden = running() || pausedAttempt;
     const destination = $(paused ? 'coop-pause-tools' : 'coop-lobby-tools');
     if (tools.parentNode !== destination) destination.append(tools);
+    // A retained attempt cannot depart from inside Settings. Keep the journey
+    // switch reachable on Pause/Results, then return it to native lobby Extras.
+    const catalogueDestination = $('coop-settings-panel-extras') ?? tools;
+    if ($('coop-catalogue').parentNode !== catalogueDestination)
+      catalogueDestination.append($('coop-catalogue'));
+    const pauseCore = $('coop-pause-core'),
+      help = $('coop-help'),
+      settings = $('coop-settings-open'),
+      sound = $('coop-quick-sound');
+    pauseCore.hidden = !pausedAttempt;
+    if (pausedAttempt) {
+      $('coop-settings-panel-extras').append(help);
+      if (!pauseMenu) {
+        pauseCore.append(settings, sound, $('coop-home-paused'));
+      }
+    } else if (paused) {
+      // Results still own these tools. The landing page is hidden while the
+      // completed attempt is retained, so it cannot host their only entry.
+      tools.append(help, settings, sound);
+    } else {
+      if ($('coop-menu').classList.contains('native-landing')) {
+        $('coop-settings-panel-extras').append(help);
+        const actions = $('coop-menu').querySelector('.native-menu-actions');
+        actions.append(settings);
+        $('coop-menu').querySelector('.native-menu-utilities').prepend(sound);
+      } else {
+        tools.append(help, settings, sound);
+      }
+    }
+    // Native landing hides the legacy lobby tools. Admission must keep its
+    // cancel action visible and focusable after the mission chooser closes.
+    const discoveryDestination =
+      !paused && $('coop-menu').classList.contains('native-landing')
+        ? $('coop-menu').querySelector('.native-menu-actions')
+        : tools;
+    for (const id of ['coop-discovery-status', 'coop-discovery-cancel']) {
+      if ($(id).parentNode !== discoveryDestination) discoveryDestination.append($(id));
+    }
+    // Failed saves are operational recovery, so Pause and Results keep their
+    // live actions visible. The lobby gives them a stable home under Data.
+    const recoveryDestination = paused ? tools : $('coop-settings-panel-data');
+    if (recoveryDestination)
+      for (const id of ['coop-journey-save', 'coop-journey-preferences'])
+        recoveryDestination.append($(id));
     tools.hidden = running();
     if (tools.hidden) {
       $('coop-help').open = false;
     }
+    if (tools.hidden || paused) $('coop-more').open = false;
+    placePictureRecovery();
+    pauseMenu?.setActive(pausedAttempt);
     showTouch();
   }
   function back() {
+    if (closeGlobalSettingsTool(document)) return;
+    if (modeNavigation.simulatorRoot()) {
+      modeNavigation.closeSimulator();
+      return;
+    }
+    if (modeNavigation.closeMore()) return;
+    if (installOfflinePanel?.isOpen()) {
+      installOfflinePanel.close();
+      return;
+    }
     if (music?.root()) {
       music.back();
+      return;
+    }
+    if (journeyPictures?.root()) {
+      journeyPictures.close();
       return;
     }
     if (settingsDialog.open) {
@@ -474,9 +1299,18 @@ export function bootCoop({
       stopWaiting();
       return;
     }
-    const details =
-      document.activeElement?.closest('details') || tools.querySelector('details[open]');
-    if (details?.open && tools.contains(details)) {
+    const pauseCore = $('coop-pause-core'),
+      details =
+        document.activeElement?.closest('details') ||
+        (!run
+          ? $('coop-menu').querySelector('details[open]')
+          : pauseCore.querySelector('details[open]') || tools.querySelector('details[open]'));
+    if (
+      details?.open &&
+      (pauseCore.contains(details) ||
+        tools.contains(details) ||
+        (!run && $('coop-menu').contains(details)))
+    ) {
       details.open = false;
       details.querySelector('summary')?.focus({ preventScroll: true });
     } else if (run?.status === 'paused') primary().focus({ preventScroll: true });
@@ -484,50 +1318,96 @@ export function bootCoop({
     else $('coop-race').click();
   }
   const running = () => run?.status === 'running';
+  const installOfflinePanel = $('coop-offline-main')
+    ? attachInstallOfflinePanel({
+        document,
+        window,
+        downloadsURL: new URL('../downloads.html', import.meta.url),
+        onOpen: () => {
+          if (running()) pause({ focus: false });
+        },
+        canActivate: () => !run,
+        onStatus: (message) => {
+          if ($('coop-offline-status')) $('coop-offline-status').textContent = message;
+        },
+      })
+    : null;
+  const gameplayDownloads = createOfflineDownloadAccess({
+    requestPackage: (request) => installOfflinePanel.requestPackage(request),
+  });
+  const detachModeDownloads = attachOfflineModeNavigation({
+    document,
+    window,
+    access: gameplayDownloads,
+    onError: (error) => message(error.message),
+  });
+  window.addEventListener('pagehide', (event) => {
+    if (!event.persisted) detachModeDownloads();
+  });
+  for (const id of ['coop-offline-main', 'coop-offline'])
+    if ($(id)) $(id).onclick = () => installOfflinePanel?.open();
   const scope = () =>
-    music?.root()
-      ? 'coop-music-library'
-      : settingsDialog.open
-        ? `coop-settings:${settingsPanels?.selected() || 'display'}`
-        : earnedDialog.open
-          ? 'coop-earned-picture'
-          : departure
-            ? 'coop-discard'
-            : discovery?.isOpen()
-              ? 'coop-discovery'
-              : running()
-                ? 'flight'
-                : run
-                  ? `coop-${run.status}`
-                  : 'coop-lobby';
+    globalSettingsToolsRoot(document)
+      ? `coop:${globalSettingsToolsRoot(document).id}`
+      : modeNavigation.simulatorRoot()
+        ? 'coop-fpv-sim'
+        : installOfflinePanel?.isOpen()
+          ? 'coop-install-offline'
+          : music?.root()
+            ? 'coop-music-library'
+            : journeyPictures?.root()
+              ? 'coop-journey-pictures'
+              : settingsDialog.open
+                ? `coop-settings:${settingsPanels?.selected() || 'display'}`
+                : earnedDialog.open
+                  ? 'coop-earned-picture'
+                  : departure
+                    ? 'coop-discard'
+                    : discovery?.isOpen()
+                      ? 'coop-discovery'
+                      : running()
+                        ? 'flight'
+                        : run
+                          ? `coop-${run.status}`
+                          : 'coop-lobby';
   const primary = () =>
-    music?.root()
-      ? music.primary()
-      : settingsDialog.open
-        ? settingsPanels?.primary() || $('coop-settings-close')
-        : earnedDialog.open
-          ? $('coop-picture-return')
-          : departure
-            ? $('coop-discard-stay')
-            : discovery?.isOpen()
-              ? discovery.primary()
-              : nextOperation
-                ? $('coop-next-cancel')
-                : importOperation
-                  ? $('coop-pack-cancel')
-                  : pictureOperation
-                    ? $('coop-picture-cancel')
-                    : !run && pictureSelection?.state !== 'ready'
-                      ? $('coop-picture-retry')
-                      : !run
-                        ? $('coop-start')
-                        : run.status === 'paused' && !loopStopped
-                          ? $('coop-resume')
-                          : run.status === 'won' && !loopStopped
-                            ? teamDestination()?.next
-                              ? $('coop-next')
-                              : $('coop-discovery-paused')
-                            : $('coop-retry');
+    globalSettingsToolsRoot(document)
+      ? globalSettingsToolsRoot(document).querySelector('button:not([disabled])')
+      : modeNavigation.simulatorRoot()
+        ? modeNavigation.simulatorPrimary()
+        : installOfflinePanel?.isOpen()
+          ? $('install-offline-downloads')
+          : music?.root()
+            ? music.primary()
+            : journeyPictures?.root()
+              ? journeyPictures.primary()
+              : settingsDialog.open
+                ? settingsPanels?.primary() || $('coop-settings-close')
+                : earnedDialog.open
+                  ? $('coop-picture-return')
+                  : departure
+                    ? $('coop-discard-stay')
+                    : discovery?.isOpen()
+                      ? discovery.primary()
+                      : nextOperation
+                        ? $('coop-next-cancel')
+                        : importOperation
+                          ? $('coop-pack-cancel')
+                          : pictureOperation
+                            ? pictureOperation.passive
+                              ? $('coop-optional-setup-toggle')
+                              : $('coop-picture-cancel')
+                            : !run && pictureSelection?.state !== 'ready'
+                              ? $('coop-picture-retry')
+                              : !run
+                                ? $('coop-start')
+                                : ['ready', 'paused'].includes(run.status) && !loopStopped
+                                  ? $('coop-resume')
+                                  : run.status === 'won' && !loopStopped
+                                    ? teamDestination()?.next
+                                      ? $('coop-next')
+                                      : $('coop-discovery-paused')
+                                    : $('coop-retry');
   // Preference updates can reflow a focused select beyond the Settings scroller
   // without a window resize. Keep only that current action visible, never focus
   // it again or resume. Initial display application runs before this owner exists.
@@ -581,7 +1461,19 @@ export function bootCoop({
     controls: $('coop-touch').parentElement,
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
+    onLoss: () => {
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('coop-settings-panel-controls'),
+    session: controllerSession,
+  });
   input = attachCouchInput({
+    controllerSession,
     getTouchSettings: () => couchTouch.snapshot(),
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),
@@ -592,38 +1484,68 @@ export function bootCoop({
     onPads: (count, slots) => {
       assignedSlots = slots;
       showTouch();
-      const text = `${count} controller${count === 1 ? '' : 's'} connected${menuHint ? ` · ${menuHint}` : ''}`;
-      if ($('coop-pads').textContent !== text) $('coop-pads').textContent = text;
+      const text = () =>
+        t('interface:team.controllersConnected', {
+          count,
+          hint: menuHint ? ` · ${menuHint}` : '',
+        });
+      if ($('coop-pads').textContent !== text()) localizedText($('coop-pads'), text);
     },
   });
-  const router = createControllerRouter({ readPads: () => framePads });
+  const router = createControllerRouter({
+    readPads: () => controllerSession.frame().menuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
+  const controllerConfirmGuard = attachControllerConfirmGuard({
+    confirmPressed: () => router.menuConfirmPressed() || controllerSession.frame().confirmHeld,
+  });
+  const menuMasthead = $('coop-home').closest('.masthead');
+  let compositeMenu = false;
   const navigation = attachControllerNavigation({
     onTabBoundary: () => playgroundTabBoundary({ window, suspend: () => suspend() }),
     getScope: scope,
-    getRoot: () =>
-      music?.root() ||
-      (settingsDialog.open
-        ? settingsDialog
-        : earnedDialog.open
-          ? earnedDialog
-          : departure
-            ? departureDialog
-            : discovery?.isOpen()
-              ? $('coop-discovery-dialog')
-              : run
-                ? $('coop-overlay')
-                : $('coop-app')),
-    accept: (element) => !element.closest('.race-pad'),
+    getRoot: () => {
+      if (globalSettingsToolFrameFocused(document) || installOfflinePanel?.frameFocused())
+        return null;
+      const modal =
+        globalSettingsToolsRoot(document) ||
+        modeNavigation.simulatorRoot() ||
+        installOfflinePanel?.root() ||
+        music?.root() ||
+        journeyPictures?.root() ||
+        (settingsDialog.open
+          ? settingsDialog
+          : earnedDialog.open
+            ? earnedDialog
+            : departure
+              ? departureDialog
+              : discovery?.isOpen()
+                ? $('journey-chooser')
+                : null);
+      // Pause/results restore the visible masthead alongside the overlay.
+      // Keep their common root while excluding gameplay and hidden lobby UI.
+      compositeMenu = !modal && !!run;
+      return modal || (run?.status === 'paused' ? $('coop-overlay') : $('coop-app'));
+    },
+    accept: (element) =>
+      !element.closest('.race-pad') &&
+      (!compositeMenu || $('coop-overlay').contains(element) || !!menuMasthead?.contains(element)),
     getDefaultFocus: primary,
     keyboard: true,
     ownsKeyboardEvent: (event) => !music?.root() && settingsTabOwnsKey(event, settingsDialog),
     nativeReadingScroll: true,
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: back,
     onMenu: () => {
       if (
+        globalSettingsToolsRoot(document) ||
+        modeNavigation.simulatorRoot() ||
+        installOfflinePanel?.isOpen() ||
         music?.root() ||
+        journeyPictures?.root() ||
         settingsDialog.open ||
         earnedDialog.open ||
         departure ||
@@ -640,10 +1562,22 @@ export function bootCoop({
       ) {
         menuHint = '';
         const hint = $(`${context.regionId}-hint`);
-        if (hint.textContent !== message) hint.textContent = message;
+        if (hint.textContent !== message) localizedText(hint, () => message);
       } else menuHint = message;
     },
-    onReadingChange: (state) => reading?.changed(state),
+    onReadingChange: (state, { restoreFocus = false, invalidated = false } = {}) => {
+      reading?.changed(state);
+      if (state || !cueDetailsOwner) return;
+      const owner = cueDetailsOwner;
+      cueDetailsOwner = null;
+      if (
+        restoreFocus &&
+        !invalidated &&
+        settingsCurrent(owner) &&
+        [$('coop-help-reading'), $('coop-help-reading-done')].includes(document.activeElement)
+      )
+        closeSettings();
+    },
   });
   reading = attachControllerReading({
     getNavigation: () => navigation,
@@ -651,8 +1585,18 @@ export function bootCoop({
     getReadingPrompt: readingPrompt,
     revealOnResize: true,
     surfaceDefinitions: [
-      ['coop-help-reading', 'coop-help-read', 'Relay Rescue controls', 'coop-help-unit'],
-      ['coop-data-reading', 'coop-data-read', 'Team game data', 'coop-data-unit'],
+      [
+        'coop-help-reading',
+        'coop-help-read',
+        localizedMessage('interface:relayRescueControls'),
+        'coop-help-unit',
+      ],
+      [
+        'coop-data-reading',
+        'coop-data-read',
+        localizedMessage('interface:teamGameData'),
+        'coop-data-unit',
+      ],
     ],
   });
   let revealingMenuResize = false;
@@ -718,13 +1662,46 @@ export function bootCoop({
   }
   window.addEventListener('resize', revealMenuAction);
   function clear() {
+    controllerSession.clear();
     input.clear();
     batch.release();
     router.clear();
     navigation.clear();
-    if (run) releaseCoopInputs(run);
+    if (run) {
+      recordTeamInputRelease(run);
+      releaseCoopInputs(run);
+    }
     accumulator = 0;
   }
+  const nativeMenu = prepareNativeMenus({
+    document,
+    mode: 'team',
+    getSceneContext: () => ({
+      themeId: acceptedPicture?.request?.themeId ?? 'fpv',
+      active: !running(),
+    }),
+  });
+  pauseMenu = createPauseMenu({
+    document,
+    root: $('coop-resume').parentNode,
+    resume: $('coop-resume'),
+    missions: [
+      { element: $('coop-retry'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('coop-journey-skip-confirm'), icon: 'skip' },
+      { element: $('coop-random-level'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('coop-discovery-paused'), icon: 'missions', key: 'nativeMenu.pauseChoose' },
+    ],
+    audio: [{ element: $('coop-quick-sound'), icon: 'sound' }, pauseMusicAction(document, 'coop')],
+    config: [
+      { element: $('coop-settings-open'), icon: 'settings' },
+      { element: $('team-landing-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('coop-home-paused'),
+    notices: [
+      { element: $('coop-journey-save-options'), icon: 'info' },
+      { element: $('team-landing-fullscreen-status') },
+    ],
+  });
   settingsPanels = attachSettingsPanels({
     root: settingsDialog,
     document,
@@ -737,10 +1714,33 @@ export function bootCoop({
     run === owner.run &&
     generation === owner.generation &&
     foreground();
+  const globalTools = mountGlobalSettingsTools({
+    document,
+    window,
+    prefix: 'coop-global',
+    settingsRoot: settingsDialog,
+    panels: Object.fromEntries(
+      ['controls', 'data', 'content', 'extras'].map((name) => [
+        name,
+        $(`coop-settings-panel-${name}`),
+      ]),
+    ),
+    existing: {
+      offlineTools: [$('coop-offline-main'), $('coop-offline-status')].filter(Boolean),
+      about: $('coop-more-about'),
+    },
+    getSettingsOpen: () => !disposed && settingsDialog.open,
+    getOwner: () => settingsOwner,
+    isOwnerCurrent: (owner) => !!owner && settingsCurrent(owner),
+    onOpen: clear,
+    offlinePanel: installOfflinePanel,
+  });
   music = attachCouchMusicHost({
     document,
     root: $('coop-settings-panel-audio'),
     prefix: 'coop',
+    quickAfter: ['coop-start', 'coop-resume'],
+    canControl: () => !disposed && !inactive,
     getScene: () => (run ? 'gameplay' : 'menu'),
     audioMaster,
     audioPreferences,
@@ -750,15 +1750,37 @@ export function bootCoop({
     onClose: () => clear(),
   });
   if (music) {
+    music.sound.setActorPresentation(() => ({
+      collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
+    }));
+    music.sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
+    contextualReactions = attachContextualReactions({
+      sound: music.sound,
+      document,
+      window,
+      container: $('coop-contextual-reactions'),
+      resultContainer: $('coop-journey-reactions'),
+      settingsContainer: $('coop-settings-panel-audio'),
+      getStorage: () => localStorage,
+      getReduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+      acquireGain: ({ factor }) => music.player.acquireGain({ factor }),
+    });
     musicPublished = attachPublishedAudio({
       sound: music.sound,
       ready: presentationPage.ready,
-      getHost: () => presentationPage,
-      cues: false,
+      getHost: () => (acceptedPicture?.lease?.readAudio ? acceptedPicture.lease : presentationPage),
+      cues: true,
       allowMusic: () =>
         !acceptedPicture?.artworkSource && (acceptedPicture?.request.themeId ?? 'fpv') === 'fpv',
     });
     musicPublished.setPlayer(music.player);
+  }
+  nativeMenu?.refreshGlobalSettings?.({ controls: globalTools.controls });
+  function prepareReactionAttempt() {
+    if (run && reactionRun !== run) {
+      reactionRun = run;
+      contextualReactions?.reset(`${acceptedPicture?.request.attemptId ?? 'team'}:${generation}`);
+    }
   }
   function acceptMusic(selection, { play = false } = {}) {
     if (!music || !selection || acceptedPicture !== selection || !run || loopStopped || disposed)
@@ -775,16 +1797,19 @@ export function bootCoop({
             music.contextPending(
               selection.request.themeId,
               selection.musicError ||
-                'Exact mission music assignments are unavailable. Global and theme playlists remain available.',
+                t('interface:exactMissionMusicAssignmentsAreUnavailableGlobalAndThemePlaylists'),
             );
         });
       }
     }
-    if (play) void music.start();
+    if (play) {
+      prepareReactionAttempt();
+      contextualReactions?.resume();
+      void music.start().then(() => contextualReactions?.prepare());
+    }
   }
-  function openSettings() {
+  function openSettings({ difficulty = false, opener = $('coop-settings-open') } = {}) {
     cancelNext();
-    const opener = $('coop-settings-open');
     if (
       disposed ||
       departure ||
@@ -805,7 +1830,17 @@ export function bootCoop({
       if (settingsOwner === owner) settingsOwner = null;
       return;
     }
+    if (difficulty) {
+      settingsPanels.select('coop-settings-tab-gameplay');
+      settingsDialog.setAttribute(
+        'data-settings-view',
+        $('coop-difficulty').disabled ? 'categories' : 'panel',
+      );
+    }
+    runningEnemyControls.refresh();
     settingsDialog.showModal();
+    placePictureRecovery();
+    globalTools.refresh();
     const active = document.activeElement;
     if (
       settingsCurrent(owner) &&
@@ -815,10 +1850,14 @@ export function bootCoop({
         active === settingsDialog ||
         active === $('coop-settings-close'))
     ) {
-      const target = settingsPanels.primary();
+      const target =
+        difficulty && visibleAction($('coop-difficulty'))
+          ? $('coop-difficulty')
+          : settingsPanels.primary();
       if (visibleAction(target) && settingsCurrent(owner) && document.activeElement === active)
         target.focus({ preventScroll: true });
     }
+    return settingsCurrent(owner) && settingsDialog.open ? owner : null;
   }
   function closeSettings({ restore = true } = {}) {
     if (!settingsDialog.open) return;
@@ -843,6 +1882,8 @@ export function bootCoop({
       foreground();
     navigation.clear();
     router.clear();
+    placePictureRecovery();
+    discoveryControls();
     if (!restore || !currentReturn() || !visibleAction(owner.opener) || !currentReturn()) return;
     const active = document.activeElement;
     if (active !== owner.opener && (unclaimedFocus(active) || settingsDialog.contains(active)))
@@ -891,13 +1932,17 @@ export function bootCoop({
     try {
       // Borrow the exact accepted original; no decoder, lease or award is created.
       const context = earnedCanvas.getContext('2d');
-      if (!context) throw new Error('Picture canvas unavailable');
+      if (!context) throw new Error(t('interface:pictureCanvasUnavailable'));
       earnedCanvas.width = 1152;
       earnedCanvas.height = 576;
       context.imageSmoothingEnabled = false;
       context.drawImage(owner.picture.binding.image, 0, 0, 1152, 576);
       if (!earnedCurrent(owner)) return;
-      $('coop-earned-picture-title').textContent = `${run.level.name} · Your shared picture`;
+      localizedText($('coop-earned-picture-title'), () =>
+        t('interface:team.sharedPictureTitle', {
+          mission: contentText(attemptLevel || run.level, 'name'),
+        }),
+      );
       navigation.clear();
       router.clear();
       earnedDialog.showModal();
@@ -915,7 +1960,7 @@ export function bootCoop({
       if (earnedOwner === owner) {
         earnedOwner = null;
         earnedCanvas.width = earnedCanvas.height = 0;
-        message('Picture view unavailable. Your earned result is unchanged.');
+        message(localizedMessage('interface:pictureViewUnavailableYourEarnedResultIsUnchanged'));
       }
     }
   }
@@ -959,7 +2004,7 @@ export function bootCoop({
   earnedDialog.addEventListener('close', earnedClosed);
   earnedDialog.addEventListener('cancel', earnedCancelled);
   earnedDialog.addEventListener('keydown', settingsKeydown);
-  function message(text, { foundationPlayers = [] } = {}) {
+  function message(text, { foundationPlayers = [], coach = null } = {}) {
     foundationMessage = foundationPlayers.length
       ? {
           run,
@@ -970,152 +2015,344 @@ export function bootCoop({
           })),
         }
       : null;
-    if ($('coop-message').textContent !== text) $('coop-message').textContent = text;
+    if (coach) $('coop-message').dataset.coach = coach;
+    else delete $('coop-message').dataset.coach;
+    localizedText($('coop-message'), typeof text === 'function' ? text : () => text);
+  }
+  function rescueMessage(event) {
+    return () =>
+      t('interface:team.playerNeedsRescue', {
+        cause: coopFailureFeedback(run, event).cause,
+        player: names()[event.player],
+        alternative: run.config.advancedCooperation
+          ? ' ' + t('interface:orCapture2NewTerritory')
+          : '',
+      });
   }
   function overlay({ focus = true } = {}) {
+    $('coop-next').parentElement.classList.toggle(
+      'continuous-result-actions',
+      ['won', 'lost'].includes(run?.status),
+    );
     const reactionRow = acceptedPicture?.journeyRow;
-    journeyReactions.present({
+    prepareReactionAttempt();
+    const reactionContext = {
       owned: !!candidateJourney?.owns(reactionRow),
       mode: 'team',
       outcome: run?.status,
       missionId: reactionRow?.mission?.id,
-    });
+      feedback: candidateJourney?.owns(reactionRow) ? reactionRow.campaignFeedback : null,
+    };
+    journeyReactions.present(reactionContext);
+    contextualReactions?.result(reactionContext);
     const show = run && !running();
     $('coop-overlay').hidden = !show;
     placeTools(Boolean(show));
+    $('coop-export-recording').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-status').hidden = !['won', 'lost'].includes(run?.status);
+    $('coop-recording-help').hidden = !['won', 'lost'].includes(run?.status);
+    recordingExport.refresh();
     $('coop-pause').disabled = !running();
     difficultyControls();
     const skipDestination = journeyNavigation();
     $('coop-journey-skip').hidden = !running() || !skipDestination?.next;
     $('coop-journey-skip-confirm').hidden =
       !['paused', 'lost'].includes(run?.status) || !skipDestination?.next || loopStopped;
-    $('coop-journey-skip-confirm').textContent =
+    localizedText($('coop-journey-skip-confirm'), () =>
       journeySkip?.run === run && journeySkip.generation === generation
-        ? 'Confirm skip'
-        : 'Skip mission';
+        ? t('interface:confirmSkip')
+        : t(run?.status === 'paused' ? 'interface:nativeMenu.pauseSkip' : 'interface:skipMission'),
+    );
     discoveryControls();
     if (!show) return;
-    const won = run.status === 'won',
+    const ready = run.status === 'ready',
+      won = run.status === 'won',
       lost = run.status === 'lost';
     const destination = won && !loopStopped ? teamDestination() : null;
-    $('coop-next').hidden = !destination?.next;
-    $('coop-next').textContent = destination?.next
-      ? `Next: ${destination.next.name}`
-      : 'Next arena';
-    $('coop-lobby').textContent = 'Change setup';
+    $('coop-next').hidden = !destination?.next && !destination?.error;
+    localizedText($('coop-next'), () =>
+      destination?.next
+        ? resultContinuationLabel(t, {
+            mission: contentText(destination.next, 'name'),
+            campaign: destination.nextRow?.mission
+              ? contentText(destination.nextRow.mission, 'campaignTitle')
+              : '',
+            crossesCampaign: destination.crossesCampaign === true,
+          })
+        : t('interface:nextArena'),
+    );
+    localizedText($('coop-lobby'), () =>
+      lost ? t('interface:changeDifficulty') : t('interface:changeSetup'),
+    );
     $('coop-resume').hidden = won || lost;
+    localizedText($('coop-resume'), () =>
+      ready ? t('interface:startTogether') : t('interface:resumeTogether'),
+    );
     $('coop-view-picture').hidden = !won || loopStopped || !acceptedPicture?.binding?.image;
-    $('coop-overlay-kicker').textContent = won
-      ? 'A WORLD YOU REVEALED TOGETHER'
-      : lost
-        ? 'ONE MORE SHARED PLAN'
-        : 'PAUSED';
-    $('coop-overlay-title').textContent = won
-      ? 'You brought it home.'
-      : lost
-        ? 'Your next route starts here.'
-        : 'Both players paused';
-    const completionCopy = destination?.journey
-      ? 'Team Journey test complete. Browse a mission, replay, or leave whenever you are ready.'
-      : 'Pack complete. Browse Team arenas to choose your next challenge, or retry this one.';
-    $('coop-overlay-copy').textContent = won
-      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. ${destination?.next ? `Next arena: ${destination.next.name}.` : destination?.final ? completionCopy : 'Browse Team arenas or retry this challenge.'}`
-      : lost
-        ? coopRetryFeedback(run, knockdowns.filter(Boolean))
-        : 'Release your controls, then choose Resume together.';
+    let story = null;
+    try {
+      story = won && !loopStopped ? currentTeamStory() : null;
+    } catch {
+      story = null;
+    }
+    if (
+      !story ||
+      (teamStoryOwner &&
+        (teamStoryOwner.run !== run ||
+          teamStoryOwner.generation !== generation ||
+          teamStoryOwner.story !== story))
+    )
+      releaseTeamStory();
+    $('coop-victory-story').hidden = !story;
+    if (story) {
+      localizedText($('coop-victory-story-description'), () => story.descriptor.description);
+      if (!teamStoryOwner) {
+        localizedText($('coop-victory-story-play'), () => t('interface:team.playVictoryStory'));
+        localizedText($('coop-victory-story-status'), () =>
+          t('interface:team.victoryStoryOptional'),
+        );
+      }
+    }
+    localizedText($('coop-overlay-kicker'), () =>
+      ready
+        ? t('interface:ready2')
+        : won
+          ? t('interface:aWorldYouRevealedTogether')
+          : lost
+            ? t('interface:oneMoreSharedPlan')
+            : t('interface:paused3'),
+    );
+    localizedText($('coop-overlay-title'), () =>
+      ready
+        ? contentText(attemptLevel || run.level, 'name')
+        : won
+          ? t('interface:youBroughtItHome')
+          : lost
+            ? t('interface:yourNextRouteStartsHere')
+            : t('interface:paused3'),
+    );
+    const completionCopy = destination?.libraryEnd
+      ? t('interface:endOfTheTeamMissionLibraryBrowseTeamArenasOr')
+      : destination?.journey
+        ? t('interface:endOfTheTeamJourneyTestRouteBrowseAMission')
+        : t('interface:endOfThisPackBrowseTeamArenasToChooseYour');
+    localizedText($('coop-overlay-copy'), () =>
+      ready
+        ? `${coopGoalLabel(run.level)}. ${coopArenaGuidance(run.level, run.config).startMessage}`
+        : won
+          ? [
+              t('interface:team.resultCoverage', {
+                coverage: formatNumber(run.coverage * 100, {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 1,
+                }),
+                time: clock(run.time),
+              }),
+              t('interface:team.resultJointCuts', { count: formatNumber(run.team.jointCuts) }),
+              t('interface:team.resultRescues', { count: formatNumber(run.team.rescues) }),
+              t('interface:team.resultInterceptions', {
+                count: formatNumber(run.team.interceptions),
+              }),
+              destination?.next
+                ? t('interface:team.nextArenaResult', {
+                    mission: contentText(destination.next, 'name'),
+                  })
+                : destination?.error
+                  ? t('interface:theNextMissionIsUnavailableYourResultAndPictureAre')
+                  : destination?.final
+                    ? completionCopy
+                    : t('interface:browseTeamArenasOrRetryThisChallenge'),
+            ].join(' ')
+          : lost
+            ? coopRetryFeedback(run, knockdowns.filter(Boolean))
+            : t('interface:releaseYourControlsThenChooseResumeTogether'),
+    );
     if (focus) primary().focus({ preventScroll: true });
+  }
+  function syncAcceptedPresentationAudio() {
+    // Host selection follows acceptedPicture. Rebind in the same transition,
+    // including lobby/rollback paths where render() has no arena to paint.
+    musicPublished?.setPresentation(
+      acceptedPicture?.binding?.snapshot ?? presentationPage.current(),
+    );
+  }
+  function paintPreparedTeam(state, options, temporary = false) {
+    const previous = painter.presentation;
+    const snapshot = options.picture?.snapshot ?? presentationPage.current();
+    try {
+      if (painter.presentation !== snapshot) painter.setPresentation(snapshot);
+      painter.paint(state, { ...options, runtimeLevel: attemptTuning.get(state)?.runtimeLevel });
+      if (!temporary) musicPublished?.setPresentation(snapshot);
+    } finally {
+      // Preflight painting must not replace the retained attempt's presentation.
+      // The caller adopts gameplay/picture references only after it succeeds.
+      if (temporary && painter.presentation !== previous) painter.setPresentation(previous);
+    }
   }
   function render() {
     if (!run) return;
+    localizedText(
+      $('coop-stage'),
+      () =>
+        `${attemptTuning.get(run)?.adminOverride ? '' + t('interface:adminPlaytest') + ' ' : ''}${contentText(attemptLevel || run.level, 'name').toUpperCase()}`,
+    );
     const bonusView = coopBonusView(run),
       bonusLive = coopBonusLive(bonusView);
-    $('coop-bonus-live').textContent = bonusLive;
+    localizedText($('coop-bonus-live'), () => coopBonusLive(bonusView));
     $('coop-bonus-live').hidden = !bonusLive;
     $('coop-bonus-details').hidden = !bonusView || run.status !== 'paused';
-    $('coop-bonus-detail-state').textContent =
-      coopBonusDetails(bonusView) || 'No pickup or effect window active.';
-    $('coop-bonus-help').textContent = bonusView ? TEAM_BONUS_HELP : '';
-    painter.paint(run, {
+    localizedText(
+      $('coop-bonus-detail-state'),
+      () => coopBonusDetails(bonusView) || t('interface:noPickupOrEffectWindowActive'),
+    );
+    localizedText($('coop-bonus-help'), () => (bonusView ? teamBonusHelp() : ''));
+    paintPreparedTeam(run, {
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      showRemains: encounterDisplay.snapshot().showRemains,
+      brutal: encounterDisplay.snapshot().brutal,
+      blood: encounterDisplay.snapshot().blood,
+      encounterLevel: attemptTuning.get(run)?.encounterLevel ?? null,
       textFace: displayPreferences.snapshot().textFace,
+      textSize: displayPreferences.snapshot().textSize,
       picture: acceptedPicture?.binding ?? null,
+      actorAppearance: acceptedPicture?.actorAppearance ?? null,
+      pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,
     });
+    huntStatus.render(run);
+    huntResult.render(run);
+    updateCueOverflow();
     const coverage = run.coverage * 100;
-    $('coop-coverage').textContent = `${coverage.toFixed(1)}%`;
-    $('coop-coverage').dataset.target = run.level.goal.coverage
-      ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
-      : '';
+    localizedText(
+      $('coop-coverage'),
+      () => `${formatNumber(coverage, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`,
+    );
+    $('coop-coverage').dataset.target =
+      run.level.hunt?.mode !== 'hunt' && run.level.goal.coverage
+        ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+        : '';
     $('coop-progress').value = coverage;
-    $('coop-reserves').textContent =
-      `${run.team.reserves} reserve${run.team.reserves === 1 ? '' : 's'}`;
-    $('coop-clock').textContent = clock(run.time);
+    localizedText($('coop-reserves'), () =>
+      t('gameplay:team.reserves', { count: run.team.reserves }),
+    );
+    localizedText($('coop-clock'), () => clock(run.time));
     const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
     const stronghold = strongholds.find((item) => !item.defeated);
-    $('coop-objective').dataset.kind = stronghold ? 'stronghold' : 'coverage';
-    $('coop-objective').textContent = stronghold
-      ? `${strongholds.length > 1 ? `${strongholds.filter((item) => item.defeated).length} / ${strongholds.length} secured · Relay ${run.strongholds.indexOf(stronghold) + 1} · ` : ''}${stronghold.shielded ? `Capture the shield anchors · ${stronghold.anchors.filter((anchor) => anchor.captured).length} / 2 secured` : 'Shield down · capture the exposed core in a new cut'}`
-      : strongholds.length
-        ? 'Strongholds secured together'
-        : coopGoalText(run.level);
+    $('coop-objective').dataset.kind =
+      run.level.hunt?.mode === 'hunt'
+        ? 'hunt'
+        : stronghold
+          ? 'stronghold'
+          : run.environment?.relays.length || run.environment?.stages.length
+            ? 'expedition'
+            : 'coverage';
+    localizedText($('coop-objective'), () => coopObjectiveLabel(run));
     const finished = run.status === 'won' || run.status === 'lost';
-    const groundName = coopGroundName(run.level);
+    const groundContext = coopGroundContext(run.level);
     for (const player of run.players) {
-      $('coop-state-' + player.id).textContent = finished
-        ? run.status === 'won'
-          ? 'Objective complete'
-          : 'Attempt ended'
-        : player.status === 'downed'
-          ? run.team.reserves === 0
-            ? 'Down · free rescue available'
-            : `Rescue · ${Math.max(0, Math.ceil(player.downedUntil - run.time))}s`
-          : player.cutting
-            ? 'Line exposed'
-            : player.graceUntil > run.time
-              ? `Recovery shield · ${groundName} only`
-              : `On ${groundName}`;
-      $('coop-state-' + player.id).dataset.compact = finished
-        ? run.status === 'won'
-          ? 'Complete'
-          : 'Ended'
-        : player.status === 'downed'
-          ? run.team.reserves === 0
-            ? 'Free rescue'
-            : `Rescue ${Math.max(0, Math.ceil(player.downedUntil - run.time))}s`
-          : player.cutting
-            ? 'Exposed'
-            : player.graceUntil > run.time
-              ? 'Shielded'
-              : groundName === 'reclaimed ground'
-                ? 'Reclaimed'
-                : 'Safe';
-      const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
-      $('coop-charge-' + player.id).textContent = finished
-        ? 'Results ready'
-        : player.status === 'downed'
-          ? 'Crawl to your partner'
-          : player.rescue
-            ? 'Hold Support · rescuing'
-            : recharge > 0
-              ? `Support · ${recharge.toFixed(1)}s`
-              : 'Support ready';
-      $('coop-charge-' + player.id).dataset.compact = finished
-        ? 'Results'
-        : player.status === 'downed'
-          ? 'Crawl to ally'
-          : player.rescue
-            ? 'Hold rescue'
-            : recharge > 0
-              ? `Support ${recharge.toFixed(1)}s`
-              : 'Support ready';
-      $('coop-support-' + player.id).textContent = finished
-        ? `${names[player.id]}: ${run.status === 'won' ? 'Objective complete. Choose another arena or Retry.' : 'Attempt ended. Choose Retry or Change setup.'}`
-        : player.rescue
-          ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
+      localizedText($('coop-state-' + player.id), () =>
+        finished
+          ? run.status === 'won'
+            ? t('interface:objectiveComplete')
+            : t('interface:attemptEnded')
           : player.status === 'downed'
-            ? `Crawl along ${groundName} toward your partner`
-            : recharge > 0
-              ? `Support recharging · ${recharge.toFixed(1)}s`
-              : 'Support ready · tap to cover, hold nearby to rescue';
+            ? run.team.reserves === 0
+              ? t('interface:downFreeRescueAvailable')
+              : t('gameplay:team.rescueSeconds', {
+                  seconds: formatNumber(Math.max(0, Math.ceil(player.downedUntil - run.time))),
+                })
+            : player.cutting
+              ? t('interface:lineExposed')
+              : player.graceUntil > run.time
+                ? t('gameplay:team.recoveryShield', { context: groundContext })
+                : t('gameplay:team.onGround', { context: groundContext }),
+      );
+      localizedAttribute($('coop-state-' + player.id), 'data-compact', () =>
+        finished
+          ? run.status === 'won'
+            ? t('interface:complete')
+            : t('interface:ended')
+          : player.status === 'downed'
+            ? run.team.reserves === 0
+              ? t('interface:freeRescue')
+              : t('gameplay:team.rescueCompact', {
+                  seconds: formatNumber(Math.max(0, Math.ceil(player.downedUntil - run.time))),
+                })
+            : player.cutting
+              ? t('interface:exposed')
+              : player.graceUntil > run.time
+                ? t('interface:shielded')
+                : groundContext === 'reclaimed'
+                  ? t('interface:reclaimed')
+                  : t('interface:safe'),
+      );
+      const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
+      const supportRole = () =>
+        player.supportRole === 'interceptor'
+          ? t('interface:interceptor')
+          : player.supportRole === 'disruptor'
+            ? t('interface:disruptor')
+            : t('interface:support');
+      $('coop-charge-' + player.id).dataset.supportRole = player.supportRole;
+      $('coop-support-' + player.id).dataset.supportRole = player.supportRole;
+      localizedText($('coop-charge-' + player.id), () =>
+        finished
+          ? t('interface:resultsReady')
+          : player.status === 'downed'
+            ? t('interface:crawlToYourPartner')
+            : player.rescue
+              ? t('interface:holdSupportRescuing')
+              : recharge > 0
+                ? t('gameplay:team.supportSeconds', {
+                    role: supportRole(),
+                    seconds: formatNumber(recharge, {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    }),
+                  })
+                : t('gameplay:team.supportReady', { role: supportRole() }),
+      );
+      localizedAttribute($('coop-charge-' + player.id), 'data-compact', () =>
+        finished
+          ? t('interface:results2')
+          : player.status === 'downed'
+            ? t('interface:crawlToAlly')
+            : player.rescue
+              ? t('interface:holdRescue')
+              : recharge > 0
+                ? t('gameplay:team.supportCompact', {
+                    role: supportRole(),
+                    seconds: formatNumber(recharge, {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    }),
+                  })
+                : t('gameplay:team.supportReady', { role: supportRole() }),
+      );
+      localizedText($('coop-support-' + player.id), () =>
+        finished
+          ? `${names()[player.id]}: ${run.status === 'won' ? t('interface:objectiveCompleteChooseAnotherArenaOrRetry') : t('interface:attemptEndedChooseRetryOrChangeSetup')}`
+          : player.rescue
+            ? t('gameplay:team.rescuing', {
+                percent: formatNumber(
+                  Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100)),
+                ),
+              })
+            : player.status === 'downed'
+              ? t('gameplay:team.crawl', { context: groundContext })
+              : recharge > 0
+                ? t('gameplay:team.supportRecharging', {
+                    role: supportRole(),
+                    seconds: formatNumber(recharge, {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    }),
+                  })
+                : player.supportRole === 'interceptor'
+                  ? t('interface:interceptorReadyTapNearATravellingImpactHoldNearbyTo')
+                  : player.supportRole === 'disruptor'
+                    ? t('interface:disruptorReadyTapNearMovingEnemiesHoldNearbyToRescue')
+                    : t('interface:supportReadyTapToCoverHoldNearbyToRescue'),
+      );
     }
   }
   // This focus lifetime is local to one picture action. Native disabling may
@@ -1135,6 +2372,7 @@ export function bootCoop({
       document.activeElement === origin &&
       (visibleAction(origin) || (initial && unclaimedFocus(origin)));
     const observe = (event) => {
+      if (installOfflineOwnsElement(event.target)) return;
       if (
         !unclaimedFocus(event.target) &&
         event.target !== origin &&
@@ -1143,9 +2381,11 @@ export function bootCoop({
       )
         moved = true;
     };
-    const lost = () => {
+    const lost = (event) => {
+      if (installOfflineOwnsElement(event?.target)) return;
       moved = true;
     };
+    const windowBlur = guardInstallOfflineBlur(lost);
     const hidden = () => {
       if (document.hidden) lost();
     };
@@ -1153,7 +2393,7 @@ export function bootCoop({
     document.addEventListener('pointerdown', lost, true);
     document.addEventListener('keydown', lost, true);
     document.addEventListener('visibilitychange', hidden);
-    window.addEventListener('blur', lost);
+    window.addEventListener('blur', windowBlur);
     window.addEventListener('pagehide', lost);
     const owns = () =>
       !retired &&
@@ -1177,7 +2417,7 @@ export function bootCoop({
       document.removeEventListener('pointerdown', lost, true);
       document.removeEventListener('keydown', lost, true);
       document.removeEventListener('visibilitychange', hidden);
-      window.removeEventListener('blur', lost);
+      window.removeEventListener('blur', windowBlur);
       window.removeEventListener('pagehide', lost);
     };
     const direct = (target, remember = false) => {
@@ -1211,6 +2451,7 @@ export function bootCoop({
       }
     };
     return {
+      current: owns,
       pending(target) {
         direct(target, true);
       },
@@ -1229,6 +2470,42 @@ export function bootCoop({
         }
       },
     };
+  }
+  function focusPreparedStart(selection, epoch) {
+    const target = $('coop-start'),
+      visit = settingsVisit,
+      beforeScope = scope();
+    if (!visibleAction(target)) return;
+    target.focus({ preventScroll: true });
+    const owns = () =>
+      !disposed &&
+      !inactive &&
+      foreground() &&
+      !run &&
+      pictureSelection === selection &&
+      generation === epoch &&
+      settingsVisit === visit &&
+      scope() === beforeScope &&
+      document.activeElement === target &&
+      visibleAction(target);
+    const reveal = () => {
+      if (!owns()) return;
+      const rect = target.getBoundingClientRect(),
+        width = document.documentElement.clientWidth || window.innerWidth,
+        height = document.documentElement.clientHeight || window.innerHeight;
+      if (
+        ![rect.left, rect.top, rect.right, rect.bottom, width, height].every(Number.isFinite) ||
+        rect.width <= 0 ||
+        rect.height <= 0 ||
+        width <= 16 ||
+        height <= 16 ||
+        (rect.left >= 8 && rect.top >= 8 && rect.right <= width - 8 && rect.bottom <= height - 8)
+      )
+        return;
+      if (owns())
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    };
+    setTimeout(reveal, 0);
   }
   let previewBinding = null,
     previewState = 'preparing',
@@ -1253,45 +2530,47 @@ export function bootCoop({
       canvas = $('coop-preview-canvas'),
       message = $('coop-preview-message'),
       level = selection?.pack.levels.find((level) => level.id === selection.levelId),
-      name = level?.name;
-    $('coop-preview-caption').textContent =
+      name = contentText(level, 'name');
+    localizedText($('coop-preview-caption'), () =>
       level?.journeyDifficulty && !selection.artworkSource && !selection.journeyRow?.background
-        ? `${name} geometry test. Preview scenery is not authored mission artwork. Win to reveal the full picture; scenery does not mark obstacles.`
+        ? t('gameplay:team.previewGeometry', { name: contentText(level, 'name') })
         : name
-          ? `${name} preview. Win to reveal the full picture. Scenery does not mark obstacles.`
-          : 'Selected arena preview. Win to reveal the full picture. Scenery does not mark obstacles.';
+          ? t('gameplay:team.previewTeaser', { name: contentText(level, 'name') })
+          : t('gameplay:team.previewUnnamed'),
+    );
     if (binding && previewBinding === binding && !retry) return;
     const cleared = clearPicturePreview();
     message.hidden = false;
     if (binding) {
       previewBinding = binding;
       try {
-        if (!cleared) throw new Error('Preview canvas unavailable.');
+        if (!cleared) throw new Error(t('interface:previewCanvasUnavailable'));
         const context = canvas.getContext('2d');
-        if (!context) throw new Error('Preview canvas unavailable.');
-        context.imageSmoothingEnabled = false;
-        context.globalAlpha = 1;
-        context.globalCompositeOperation = 'source-over';
-        context.drawImage(binding.image, 0, 0, canvas.width, canvas.height);
-        // One-cell border teaser only. The full original remains an earned reward.
-        context.fillStyle = '#000';
-        context.fillRect(8, 8, canvas.width - 16, canvas.height - 16);
+        if (!context) throw new Error(t('interface:previewCanvasUnavailable'));
+        if (
+          !paintTeamPicturePreview(context, binding.image, canvas.width, canvas.height, {
+            isCurrent: () =>
+              !disposed && !run && pictureSelection === selection && selection.binding === binding,
+          })
+        )
+          return;
         canvas.hidden = false;
         message.hidden = true;
         previewState = 'ready';
       } catch {
         previewState = 'unavailable';
-        message.textContent = 'Artwork preview unavailable.';
+        localizedText(message, () => t('interface:artworkPreviewUnavailable'));
       }
     } else {
       previewState = selection?.state ?? 'empty';
       if (previewState === 'ready') previewState = 'procedural';
-      message.textContent =
+      localizedText(message, () =>
         previewState === 'procedural'
-          ? 'Procedural arena · no picture preview.'
+          ? t('interface:proceduralArenaNoPicturePreview')
           : previewState === 'preparing'
-            ? 'Preparing artwork…'
-            : 'No artwork ready.';
+            ? t('interface:preparingArtwork')
+            : t('interface:noArtworkReady'),
+      );
     }
     $('coop-picture-preview').dataset.state = previewState;
   }
@@ -1304,14 +2583,25 @@ export function bootCoop({
       !startPermitted || !ready || busy || Boolean(importOperation || importAdopting);
     $('coop-picture-cancel').hidden = !busy;
     $('coop-picture-retry').hidden = busy || (ready && !retryPreview);
-    $('coop-picture-retry').textContent = retryPreview ? 'Retry preview' : 'Retry picture';
+    localizedText($('coop-picture-retry'), () =>
+      retryPreview
+        ? t('common:preview.retry')
+        : pictureSelection?.downloadRequired
+          ? t('interface:downloadPlay')
+          : t('interface:retryPicture2'),
+    );
     $('coop-picture-status').dataset.state = busy
       ? 'preparing'
       : (pictureSelection?.state ?? 'cancelled');
     if (messageText) pictureMessage = messageText;
-    $('coop-picture-status').textContent = retryPreview
-      ? `${pictureMessage} Artwork preview unavailable. Retry preview or Start with the prepared picture.`
-      : pictureMessage;
+    localizedText($('coop-picture-status'), () =>
+      retryPreview
+        ? t('gameplay:team.previewUnavailableAfterReady', {
+            message: renderMessage(pictureMessage),
+          })
+        : pictureMessage,
+    );
+    placePictureRecovery();
     discoveryControls();
   }
   function retirePicture() {
@@ -1331,11 +2621,24 @@ export function bootCoop({
     pictureOperation = null;
     operation.controller.abort();
     operation.focus.finish(null, false);
-    pictureSelection.state = 'cancelled';
-    pictureUI('Picture loading cancelled. Retry picture when you are ready.');
-    focus?.finish($('coop-picture-retry'));
+    if (!operation.retention) pictureSelection.state = 'cancelled';
+    pictureUI(
+      localizedMessage(
+        operation.retention
+          ? 'interface:teamPictureReadyStartRemainsASeparateAction'
+          : 'interface:pictureLoadingCancelledRetryPictureWhenYouAreReady',
+      ),
+    );
+    focus?.finish(operation.retention ? $('coop-start') : $('coop-picture-retry'));
   }
-  function newPictureSelection(recipe, sourcePack, pinnedPack = sourcePack, artworkSource = null) {
+  function newPictureSelection(
+    recipe,
+    sourcePack,
+    pinnedPack = sourcePack,
+    artworkSource = null,
+    installedEditionId = null,
+    teamMedia = null,
+  ) {
     // Only code-owned exact recipes join this route. An imported pack with the
     // same IDs (or even the same bytes) keeps its independent local ordering.
     const journeyRow =
@@ -1349,6 +2652,8 @@ export function bootCoop({
       sourcePack,
       journeyRow,
       artworkSource,
+      installedEditionId,
+      teamMedia,
       pack: structuredClone(pinnedPack),
       levelId: recipe.level.id,
       request: {
@@ -1358,23 +2663,136 @@ export function bootCoop({
         attemptId: `team-${++pictureSequence}`,
         ...(artworkSource ? { artworkSource } : {}),
       },
-      lease:
-        journeyRow?.background && !artworkSource
+      lease: teamMedia
+        ? createCreatorTeamMediaPictureLease(teamMedia, {
+            decodeImage: decodeCoopPicture,
+            getSnapshot: presentationPage.current,
+          })
+        : journeyRow?.background && !artworkSource
           ? createCandidateTeamPictures({
               row: journeyRow,
               owns: candidateJourney.owns,
               getSnapshot: presentationPage.current,
             })
-          : createCoopPresentation({
-              bindings: COOP_PICTURE_BINDINGS,
-              historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+          : createOwnedCoopPresentation({
+              artworkSource,
+              bindings: COOP_SUPPORTED_PICTURE_BINDINGS,
+              historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
               getSnapshot: presentationPage.current,
               readPicture: presentationPage.readPicture,
               decodeImage: decodeCoopPicture,
             }),
       binding: null,
+      actorAppearance: null,
+      environmentCandidate: null,
+      downloadRequired: false,
       state: 'new',
     };
+    // Ownership, not matching IDs/bytes, authorizes this cosmetic overlay.
+    // Imported packs and artwork bundles retain their original presentation.
+    const eligible =
+      !artworkSource &&
+      (sourcePack === COOP_STARTER_PACK || (journeyRow && candidateJourney.owns(journeyRow)));
+    if (eligible) {
+      const pictures = selection.lease,
+        style = actorPreferences.snapshot().actorStyle;
+      let actors = null,
+        pending = null,
+        visit = 0,
+        closed = false;
+      selection.lease = Object.freeze({
+        async select(request) {
+          if (closed) throw new Error(t('interface:teamAppearanceSelectionIsDisposed'));
+          pending?.abort();
+          const controller = new AbortController(),
+            ticket = ++visit,
+            cancel = () => controller.abort();
+          pending = controller;
+          request.signal?.addEventListener('abort', cancel, { once: true });
+          if (request.signal?.aborted) cancel();
+          const check = () => {
+            if (closed || ticket !== visit || controller.signal.aborted)
+              throw new DOMException(
+                t('interface:teamAppearancePreparationCancelled'),
+                'AbortError',
+              );
+          };
+          let staged = null;
+          try {
+            check();
+            const binding = await pictures.select({
+              ...request,
+              signal: controller.signal,
+              onStatus: (status) => {
+                if (
+                  !closed &&
+                  ticket === visit &&
+                  !controller.signal.aborted &&
+                  status.status !== 'ready'
+                )
+                  request.onStatus?.(status);
+              },
+            });
+            check();
+            selection.environmentCandidate = journeyRow
+              ? await prepareCandidateEnvironment(journeyRow, { signal: controller.signal })
+              : null;
+            check();
+            if (!actors) {
+              const content = await prepareTeamVisualThemeContext(
+                {
+                  pack: selection.pack,
+                  level: selection.pack.levels.find((level) => level.id === selection.levelId),
+                  association: {
+                    editionId: 'actor-style-v1',
+                    contentThemeId: selection.request.themeId,
+                    mode: 'team',
+                  },
+                },
+                { signal: controller.signal },
+              );
+              check();
+              staged = await prepareActorAppearanceLease(
+                { style, content, scope: 'team-pack' },
+                {
+                  baseURL: new URL('../presentation/compiled/', location.href),
+                  signal: controller.signal,
+                  currentManifestSha256: presentationPage.current()?.manifestSha256 ?? null,
+                },
+              );
+              check();
+              actors = staged;
+              staged = null;
+              selection.actorAppearance = Object.freeze({ style, snapshot: actors.snapshot });
+            }
+            request.onStatus?.({ stage: 'ready', status: 'ready' });
+            check();
+            return binding;
+          } finally {
+            staged?.release();
+            request.signal?.removeEventListener('abort', cancel);
+            if (pending === controller) pending = null;
+          }
+        },
+        confirm(request) {
+          if (closed || pending || !actors)
+            throw new Error(t('interface:theExactTeamActorsAreNotReadyRetryPreparation'));
+          actors.pin();
+          return pictures.confirm(request);
+        },
+        dispose() {
+          if (closed) return;
+          closed = true;
+          visit++;
+          pending?.abort();
+          pending = null;
+          actors?.release();
+          actors = null;
+          selection.actorAppearance = null;
+          pictures.dispose();
+        },
+      });
+    }
     if (music) {
       const level = structuredClone(recipe.level);
       selection.musicReady = Promise.resolve()
@@ -1391,17 +2809,42 @@ export function bootCoop({
             return context;
           },
           (error) => {
-            selection.musicError = `Exact mission music assignments: ${error.message}. Global and theme playlists remain available.`;
+            selection.musicError = localizedMessage('interface:team.musicAssignmentsUnavailable', {
+              error: error.message,
+            });
             return null;
           },
         );
     }
     return selection;
   }
+  const retainedTeamSelections = new WeakSet();
+  // A library card admits an immutable candidate and its picture, but owns no
+  // simulation activation or progress write. Start/Resume consumes this once.
+  const discoveryBriefings = new WeakMap();
+  async function ensureTeamPicturePackage(
+    selection,
+    { signal, prompt = true, retain = false } = {},
+  ) {
+    if (
+      selection.journeyRow &&
+      !selection.artworkSource &&
+      candidateJourney?.owns(selection.journeyRow)
+    ) {
+      await gameplayDownloads.ensureMission(
+        { routeId: libraryEdition, missionId: selection.journeyRow.mission.levelId, mode: 'team' },
+        { signal, prompt, retain },
+      );
+    } else if (retain) await gameplayDownloads.ensure('runtime:team', { signal, prompt, retain });
+    signal?.throwIfAborted();
+    if (retain) retainedTeamSelections.add(selection);
+  }
   function preparePicture({
     retry = false,
     origin = document.activeElement,
     initial = false,
+    passive = false,
+    onPrepared = null,
   } = {}) {
     if (disposed || departure || importDisplay || running()) return Promise.resolve();
     if (importAdopting) {
@@ -1413,7 +2856,7 @@ export function bootCoop({
       return Promise.resolve().then(() => {
         if (request !== importRequest || pack !== selectedPack || $('coop-level').value !== levelId)
           return;
-        return preparePicture({ retry, origin, initial });
+        return preparePicture({ retry, origin, initial, passive });
       });
     }
     if (!retry || !pictureSelection) {
@@ -1424,13 +2867,26 @@ export function bootCoop({
         sourcePack,
         sourcePack,
         run ? (acceptedPicture?.artworkSource ?? null) : packArtworkSource,
+        run
+          ? (acceptedPicture?.installedEditionId ?? null)
+          : localDiscoveryPack?.pack === pack
+            ? (localDiscoveryPack.installedEditionId ?? null)
+            : null,
       );
     }
     const selection = pictureSelection;
     if (pictureOperation) return pictureOperation.promise;
-    const focus = pictureFocus(origin, initial),
+    const passivePreparation = passive || document.documentElement.dataset.toolState !== 'ready',
+      focus = pictureFocus(origin, initial || passivePreparation),
       controller = new AbortController();
-    const operation = { selection, controller, focus, run, generation };
+    const operation = {
+      selection,
+      controller,
+      focus,
+      run,
+      generation,
+      passive: passivePreparation,
+    };
     pictureOperation = operation;
     selection.state = 'preparing';
     const current = () =>
@@ -1440,8 +2896,11 @@ export function bootCoop({
       !controller.signal.aborted &&
       run === operation.run &&
       generation === operation.generation;
-    pictureUI('Preparing the exact Team picture…');
-    focus.pending($('coop-picture-cancel'));
+    pictureUI(localizedMessage('interface:preparingTheExactTeamPicture'));
+    // Initial preparation is passive: do not turn the first controller Confirm
+    // into Cancel. Deliberate selector/retry work still exposes and focuses its
+    // owned cancellation action.
+    if (!passivePreparation && origin !== $('coop-start')) focus.pending($('coop-picture-cancel'));
     operation.promise = (async () => {
       try {
         const snapshot = await (retry ? presentationPage.retry() : presentationPage.ready);
@@ -1449,6 +2908,11 @@ export function bootCoop({
         // shared page also updates global appearance, even after picture Cancel.
         if (retry && !disposed && snapshot && snapshot === presentationPage.current())
           menuStyle.setPresentation(snapshot);
+        if (!current()) return;
+        await ensureTeamPicturePackage(selection, {
+          signal: controller.signal,
+          prompt: !passivePreparation,
+        });
         if (!current()) return;
         const binding = await selection.lease.select({
           ...selection.request,
@@ -1461,19 +2925,40 @@ export function bootCoop({
         });
         if (!current()) return;
         selection.binding = binding;
+        selection.downloadRequired = false;
         selection.state = 'ready';
         pictureOperation = null;
-        pictureUI('Team picture ready. Start remains a separate action.');
-        focus.finish(run ? $('coop-retry') : () => navigation.focusAvailable());
+        if (onPrepared?.(selection, focus) === true) {
+          focus.finish(null, false);
+          return;
+        }
+        pictureUI(localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'));
+        focus.finish(
+          run
+            ? $('coop-retry')
+            : () => {
+                if (visibleAction($('coop-start'))) focusPreparedStart(selection, generation);
+                else {
+                  const fallback = $('coop-app').querySelector('a[href]');
+                  if (visibleAction(fallback)) fallback.focus({ preventScroll: true });
+                  else navigation.focusAvailable();
+                }
+              },
+        );
       } catch (error) {
         if (!current()) return;
         try {
-          console.error('Team picture preparation failed.', error);
+          console.error(t('interface:teamPicturePreparationFailed'), error);
         } catch {}
         if (!current()) return;
+        selection.downloadRequired =
+          isOfflinePackageRequired(error) ||
+          (error?.name === 'AbortError' && selection.downloadRequired);
         selection.state = 'error';
         pictureOperation = null;
-        pictureUI('Team picture unavailable. Retry picture or choose another arena.');
+        pictureUI(
+          localizedMessage('interface:teamPictureUnavailableRetryPictureOrChooseAnotherArena'),
+        );
         focus.finish($('coop-picture-retry'));
       } finally {
         focus.finish(null, false);
@@ -1492,7 +2977,35 @@ export function bootCoop({
       );
       return;
     }
-    return preparePicture({ retry: true });
+    if (!pictureSelection?.downloadRequired) return preparePicture({ retry: true });
+    const selection = pictureSelection,
+      attempt = run,
+      epoch = generation,
+      recipe = currentRecipe();
+    return preparePicture({
+      retry: true,
+      onPrepared(prepared, actionFocus) {
+        if (
+          prepared !== selection ||
+          run !== attempt ||
+          generation !== epoch ||
+          pictureSelection !== selection ||
+          disposed ||
+          inactive ||
+          !foreground() ||
+          !actionFocus?.current()
+        )
+          return false;
+        // The package panel returns to the temporary Cancel control. Publish
+        // readiness and transfer this same admitted action to Start before the
+        // retention gate; hiding a focused Cancel must not strand the launch.
+        pictureUI(localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'));
+        actionFocus.pending($('coop-start'));
+        if (document.activeElement !== $('coop-start')) return false;
+        start(recipe);
+        return true;
+      },
+    });
   };
   // Follow the accepted content snapshot. Imports retain their own order and
   // recipes even when IDs match built-ins or a source catalogue later changes.
@@ -1523,8 +3036,39 @@ export function bootCoop({
       acceptedPicture.levelId !== attemptLevel?.id
     )
       return null;
-    if (candidateJourney?.owns(acceptedPicture.journeyRow)) return journeyNavigation();
-    return coopPackDestination(attemptPack, attemptLevel);
+    const authored = candidateJourney?.owns(acceptedPicture.journeyRow)
+      ? journeyNavigation()
+      : coopPackDestination(attemptPack, attemptLevel);
+    if (
+      authored?.next ||
+      !authored?.final ||
+      (candidateJourney && libraryEdition !== TEAM_LIBRARY_JOURNEY_EDITION) ||
+      entryParams.has('practice')
+    )
+      return authored;
+    try {
+      const library = getTeamLibrary();
+      const matches = library.forMode('team').filter((mission) => {
+        const row = libraryRuntimeRows.get(mission)?.();
+        return (
+          row?.pack === acceptedPicture.sourcePack &&
+          row.levelId === acceptedPicture.levelId &&
+          JSON.stringify(row.level) === JSON.stringify(attemptLevel)
+        );
+      });
+      if (matches.length !== 1)
+        throw new Error(t('interface:theCompletedTeamMissionNoLongerHasOneExactLibrary'));
+      const next = librarySuccessor(library, matches[0], 'team');
+      if (!next) return { ...authored, libraryEnd: true };
+      const row = libraryRuntimeRows.get(next)?.();
+      if (!row || !currentDiscoveryRows().includes(row))
+        throw new Error(t('interface:theNextExactTeamMissionIsUnavailableInThisEdition'));
+      if (library.availability(next, 'team').state !== 'ready')
+        throw new Error(t('interface:theNextExactTeamMissionIsNotReady'));
+      return { next: row.level, nextDiscoveryRow: row, final: false };
+    } catch (error) {
+      return { next: null, final: false, error };
+    }
   }
   function nextStatus(text) {
     const owner = nextOperation,
@@ -1533,7 +3077,7 @@ export function bootCoop({
     const current = () =>
       !disposed && nextOperation === owner && run === attempt && generation === epoch;
     if (!current()) return;
-    $('coop-next-status').textContent = text;
+    localizedText($('coop-next-status'), () => text);
     if (!current()) return;
     $('coop-next-status').hidden = !text;
     if (!current()) return;
@@ -1550,8 +3094,8 @@ export function bootCoop({
       if (announce && !disposed)
         nextStatus(
           operation.skipped
-            ? 'Skip cancelled. Your attempt and picture are still here.'
-            : 'Next arena cancelled. Your result and picture are still here.',
+            ? t('interface:skipCancelledYourAttemptAndPictureAreStillHere')
+            : t('interface:nextArenaCancelledYourResultAndPictureAreStillHere'),
         );
     } finally {
       operation.controller.abort();
@@ -1576,6 +3120,10 @@ export function bootCoop({
   async function nextArena({ skipRow = null } = {}) {
     const navigation = skipRow ? journeyNavigation() : teamDestination(),
       destination = navigation?.next;
+    if (navigation?.error) {
+      nextStatus(t('interface:theNextMissionIsUnavailableYourResultAndPictureAre'));
+      return;
+    }
     if (
       !destination ||
       disposed ||
@@ -1590,12 +3138,28 @@ export function bootCoop({
       (skipRow && (navigation.row !== skipRow || !['paused', 'lost'].includes(run?.status)))
     )
       return;
-    const recipe = { level: structuredClone(destination), options: currentRecipe().options };
+    const recipe = freshRecipe(structuredClone(destination), currentRecipe().options, {
+      encounterVariant: attemptTuning.get(run)?.encounterVariant ?? 'authored',
+      runningEnemies: runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+    });
+    const nextDiscoveryRow = navigation.nextDiscoveryRow;
+    const nextPack = nextDiscoveryRow?.pack ?? navigation.nextRow?.pack;
     const selection = newPictureSelection(
       recipe,
-      navigation.nextRow?.pack ?? acceptedPicture.sourcePack,
-      navigation.nextRow?.pack ?? attemptPack,
-      navigation.nextRow ? null : acceptedPicture.artworkSource,
+      nextPack ?? acceptedPicture.sourcePack,
+      nextPack ?? attemptPack,
+      nextDiscoveryRow
+        ? nextDiscoveryRow.artworkSource
+        : navigation.nextRow
+          ? null
+          : acceptedPicture.artworkSource,
+      nextDiscoveryRow?.installedEditionId ?? acceptedPicture.installedEditionId ?? null,
+      nextDiscoveryRow
+        ? (nextDiscoveryRow.teamMedia ?? null)
+        : navigation.nextRow
+          ? null
+          : acceptedPicture.teamMedia,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {
@@ -1642,17 +3206,28 @@ export function bootCoop({
       !departure;
     nextOperation = operation;
     const focusChanged = (event) => {
+      if (installOfflineOwnsElement(event.target)) return;
       if (event.target !== operation.action && event.target !== $('coop-next-cancel')) cancelNext();
     };
     document.addEventListener('focusin', focusChanged);
     operation.detach = () => document.removeEventListener('focusin', focusChanged);
     try {
-      nextStatus(
-        `Preparing ${destination.name}… Your ${skipRow ? 'attempt' : 'result'} stays available.`,
+      nextStatus(() =>
+        t(
+          skipRow
+            ? 'interface:team.preparingAttemptDestination'
+            : 'interface:team.preparingResultDestination',
+          { mission: contentText(destination, 'name') },
+        ),
       );
       if (!current()) return;
       $('coop-next-cancel').focus({ preventScroll: true });
       await presentationPage.ready;
+      if (!current()) return;
+      await ensureTeamPicturePackage(selection, {
+        signal: operation.controller.signal,
+        retain: true,
+      });
       if (!current()) return;
       selection.binding = await selection.lease.select({
         ...selection.request,
@@ -1666,15 +3241,25 @@ export function bootCoop({
       if (!current()) return;
       selection.binding = selection.lease.confirm(selection.request);
       selection.state = 'ready';
-      const candidate = createCoop(structuredClone(recipe.level), recipe.options);
+      const candidate = createTunedCoop(recipe);
       startCoop(candidate);
       if (!current()) return;
       // First paint is tested while the completed attempt still owns its image.
-      painter.paint(candidate, {
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        textFace: displayPreferences.snapshot().textFace,
-        picture: selection.binding,
-      });
+      paintPreparedTeam(
+        candidate,
+        {
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          textFace: displayPreferences.snapshot().textFace,
+          picture: selection.binding,
+          actorAppearance: selection.actorAppearance,
+          pictureLevel: attemptTuning.get(candidate).pictureLevel,
+          encounterLevel: attemptTuning.get(candidate).encounterLevel,
+          showRemains: encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
+        },
+        true,
+      );
       if (!current()) {
         if (!disposed && run === operation.run) render();
         return;
@@ -1699,6 +3284,7 @@ export function bootCoop({
       };
       // No callbacks between the final check and reference publication.
       run = candidate;
+      runningEnemyControls.refresh();
       attemptLevel = recipe.level;
       attemptPack = selection.pack;
       acceptedPicture = pictureSelection = selection;
@@ -1708,11 +3294,12 @@ export function bootCoop({
       knockdowns = [null, null];
       last = null;
       accumulator = 0;
+      beginInstalledTeamAttempt(candidate, selection);
       try {
         if (rememberBuiltIn) lastBuiltInArena = destination.id;
-        if (navigation.nextRow) {
-          packArtworkSource = null;
-          showPack(navigation.nextRow.pack, destination.id, () => adopted(candidate));
+        if (nextPack) {
+          packArtworkSource = selection.artworkSource;
+          showPack(nextPack, destination.id, () => adopted(candidate));
           if (!adopted(candidate)) return;
         }
         $('coop-level').value = destination.id;
@@ -1724,10 +3311,11 @@ export function bootCoop({
         );
         if (configuration) $('coop-experiment').value = configuration.id;
         nextStatus('');
-        $('coop-stage').textContent = candidate.level.name.toUpperCase();
-        $('coop-progress').max = candidate.level.goal.coverage
-          ? candidate.level.goal.coverage * 100
-          : 100;
+        localizedText($('coop-stage'), () => contentText(candidate.level, 'name').toUpperCase());
+        $('coop-progress').max =
+          candidate.level.hunt?.mode !== 'hunt' && candidate.level.goal.coverage
+            ? candidate.level.goal.coverage * 100
+            : 100;
         overlay({ focus: false });
         render();
         if (!adopted(candidate)) return;
@@ -1743,11 +3331,18 @@ export function bootCoop({
           knockdowns = previous.knockdowns;
           last = previous.last;
           accumulator = previous.accumulator;
-          generation++;
+          const epoch = ++generation;
           lastBuiltInArena = previous.lastBuiltInArena;
-          if (navigation.nextRow) {
+          syncAcceptedPresentationAudio();
+          if (
+            disposed ||
+            generation !== epoch ||
+            run !== previous.run ||
+            acceptedPicture !== previous.picture
+          )
+            return;
+          if (nextPack) {
             packArtworkSource = previous.artworkSource;
-            const epoch = generation;
             showPack(
               previous.setupPack,
               previous.arena,
@@ -1767,8 +3362,13 @@ export function bootCoop({
           $('coop-difficulty').value = previous.difficulty;
           $('coop-experiment').value = previous.configuration;
           setupNote({ level: attemptLevel, experiment: run.config });
-          $('coop-stage').textContent = run.level.name.toUpperCase();
-          $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
+          localizedText($('coop-stage'), () =>
+            contentText(attemptLevel || run.level, 'name').toUpperCase(),
+          );
+          $('coop-progress').max =
+            run.level.hunt?.mode !== 'hunt' && run.level.goal.coverage
+              ? run.level.goal.coverage * 100
+              : 100;
           overlay({ focus: false });
         }
         throw error;
@@ -1777,9 +3377,21 @@ export function bootCoop({
       if (acceptedPicture !== previous.picture && pictureSelection !== previous.picture)
         previous.picture.lease?.dispose();
       if (!adopted(candidate)) return;
-      candidateProgress?.started(selection.journeyRow, candidate, { skipped: skipRow });
+      candidateProgress?.started(selection.journeyRow, candidate, {
+        ...attemptTuning.get(candidate),
+        attemptId: teamPersistenceId(candidate),
+        adminOverride:
+          attemptTuning.get(candidate).adminOverride ||
+          attemptTuning.get(candidate).encounterVariant !== 'authored',
+        skipped: skipRow,
+        picture: earnedTeamPicture(selection, selection.binding),
+      });
       if (!adopted(candidate)) return;
-      message(`${destination.name}. Choose fresh directions when you are ready.`);
+      message(() =>
+        t('interface:team.arenaReadyDirections', {
+          mission: contentText(destination, 'name'),
+        }),
+      );
       input.focus();
     } catch (error) {
       const failed = nextOperation === operation;
@@ -1803,7 +3415,7 @@ export function bootCoop({
       // Logging is an external callback: Cancel or a newer action must remain
       // authoritative when it returns, including after an adoption rollback.
       try {
-        console.error('Team next arena preparation failed.', error);
+        console.error(t('interface:teamNextArenaPreparationFailed'), error);
       } catch {}
       if (!ownsRecovery()) return;
       if (failed) {
@@ -1818,8 +3430,13 @@ export function bootCoop({
         acceptedPicture === operation.picture &&
         !nextOperation
       ) {
-        nextStatus(
-          `Could not start ${destination.name}. Your ${skipRow ? 'attempt' : 'result'} is unchanged. ${skipRow ? 'Choose Skip again when ready.' : 'Try Next again.'}`,
+        nextStatus(() =>
+          t(
+            skipRow
+              ? 'interface:team.startAttemptDestinationFailed'
+              : 'interface:team.startResultDestinationFailed',
+            { mission: contentText(destination, 'name') },
+          ),
         );
         try {
           render();
@@ -1849,7 +3466,10 @@ export function bootCoop({
         operation.picture.lease?.dispose();
     }
   }
-  $('coop-next').onclick = () => void nextArena();
+  $('coop-next').onclick = () => {
+    continuousPlay.cancel('next');
+    void nextArena();
+  };
   $('coop-next-cancel').onclick = () => cancelNext({ restore: true });
 
   function cancelJourneySkip() {
@@ -1880,7 +3500,7 @@ export function bootCoop({
     ) {
       const row = journeySkip.row;
       journeySkip = null;
-      $('coop-journey-skip-confirm').textContent = 'Skip mission';
+      localizedText($('coop-journey-skip-confirm'), () => t('interface:skipMission'));
       void nextArena({ skipRow: row });
       return;
     }
@@ -1900,9 +3520,12 @@ export function bootCoop({
     )
       return;
     journeySkip = { run, generation, picture: acceptedPicture, row: destination.row };
-    $('coop-journey-skip-confirm').textContent = 'Confirm skip';
-    $('coop-overlay-copy').textContent =
-      `Skip to ${destination.next.name}? No clear is awarded. You can return through Browse Team arenas.`;
+    localizedText($('coop-journey-skip-confirm'), () => t('interface:confirmSkip'));
+    localizedText($('coop-overlay-copy'), () =>
+      t('interface:team.skipConfirm', {
+        mission: contentText(destination.next, 'name'),
+      }),
+    );
     $('coop-journey-skip-confirm').focus({ preventScroll: true });
   }
   const skipFocusChanged = (event) => {
@@ -1912,14 +3535,14 @@ export function bootCoop({
   $('coop-journey-skip').onclick = skipJourney;
   $('coop-journey-skip-confirm').onclick = skipJourney;
 
-  function canOpenDiscovery() {
+  function canOpenDiscovery({ fromSettings = false } = {}) {
     return (
       !disposed &&
       !inactive &&
       foreground() &&
       !running() &&
       !departure &&
-      !settingsDialog.open &&
+      (!settingsDialog.open || (fromSettings && settingsOwner && settingsCurrent(settingsOwner))) &&
       !earnedDialog.open &&
       !nextOperation &&
       !pictureOperation &&
@@ -1930,14 +3553,16 @@ export function bootCoop({
     );
   }
   function discoveryControls() {
-    for (const id of ['coop-discovery-open', 'coop-discovery-paused']) {
+    for (const id of ['coop-discovery-open', 'coop-discovery-paused', 'coop-random-level']) {
       const button = $(id);
       if (button) button.disabled = !canOpenDiscovery();
     }
+    huntSaveControls?.refresh();
   }
   function cancelDiscoveryPreparation(operation = discoveryOperation) {
     if (!operation || operation.cancelled) return;
     operation.cancelled = true;
+    operation.libraryOwner?.controller.abort();
     if (discoveryOperation === operation) discoveryOperation = null;
     operation.detach();
     if (departure?.kind === 'discovery' && departure.operation === operation)
@@ -1948,7 +3573,8 @@ export function bootCoop({
     discoveryControls();
   }
   async function prepareDiscoveryPreview(row, { signal, isCurrent, onStatus = () => {} }) {
-    const aborted = () => new DOMException('Team preview is no longer current.', 'AbortError');
+    const aborted = () =>
+      new DOMException(t('interface:teamPreviewIsNoLongerCurrent'), 'AbortError');
     if (!currentDiscoveryRows().includes(row) || signal.aborted || !isCurrent()) throw aborted();
     const owner = {
       run,
@@ -2014,8 +3640,8 @@ export function bootCoop({
         throw aborted();
     };
     const leaseOptions = {
-      bindings: COOP_PICTURE_BINDINGS,
-      historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+      bindings: COOP_SUPPORTED_PICTURE_BINDINGS,
+      historicalImportPolicy: COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
       getSnapshot() {
         check();
         const current = presentationPage.current();
@@ -2033,7 +3659,7 @@ export function bootCoop({
             owns: candidateJourney.owns,
             getSnapshot: leaseOptions.getSnapshot,
           })
-        : createCoopPresentation(leaseOptions);
+        : createOwnedCoopPresentation({ ...leaseOptions, artworkSource: row.artworkSource });
     const release = () => {
       if (released) return;
       released = true;
@@ -2062,6 +3688,8 @@ export function bootCoop({
       check();
       snapshot = presentationPage.current();
       check();
+      await ensureTeamPicturePackage(row, { signal, prompt: false });
+      check();
       await lease.select({
         ...request,
         signal,
@@ -2082,17 +3710,51 @@ export function bootCoop({
       throw error;
     }
   }
-  async function activateDiscovery(row, { signal, isCurrent, onStatus, opener }) {
+  async function activateDiscovery(
+    row,
+    {
+      signal,
+      isCurrent,
+      onStatus,
+      opener,
+      restored = null,
+      teamMedia = null,
+      briefingOnly = false,
+    },
+  ) {
     if (!canOpenDiscovery() || !currentDiscoveryRows().includes(row))
-      throw new DOMException('Arena selection is no longer current.', 'AbortError');
-    const recipe = {
-      level: structuredClone(row.level),
-      options: {
+      throw new DOMException(t('interface:arenaSelectionIsNoLongerCurrent'), 'AbortError');
+    const recipe = freshRecipe(
+      structuredClone(row.level),
+      {
         ...currentRecipe().options,
         ...(row.journeyRow ? { difficulty: row.journeyRow.difficulty } : {}),
+        ...(restored
+          ? {
+              seed: restored.run.seed,
+              difficulty: restored.snapshot.difficulty,
+              ...restored.run.config,
+            }
+          : {}),
       },
-    };
-    const selection = newPictureSelection(recipe, row.pack, row.pack, row.artworkSource);
+      restored
+        ? {
+            encounterVariant: restored.snapshot.encounterVariant ?? 'authored',
+            runningEnemies: Boolean(restored.snapshot.runningEnemies),
+            runningEnemyStyle: restored.snapshot.runningEnemyStyle ?? 'original',
+            pursuitGeneration: restored.snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
+            tuning: restored.snapshot.tuning,
+          }
+        : null,
+    );
+    const selection = newPictureSelection(
+      recipe,
+      row.pack,
+      row.pack,
+      row.artworkSource,
+      row.installedEditionId ?? null,
+      teamMedia ?? row.teamMedia ?? null,
+    );
     const previous = {
       run,
       generation,
@@ -2120,6 +3782,7 @@ export function bootCoop({
     };
     const operation = {
       selection,
+      libraryOwner: libraryLaunch,
       controller: new AbortController(),
       cancelled: false,
       detach: () => {},
@@ -2162,7 +3825,7 @@ export function bootCoop({
     const check = () => {
       if (!current())
         throw new DOMException(
-          'Arena preparation cancelled. Your current arena is kept.',
+          t('interface:arenaPreparationCancelledYourCurrentArenaIsKept'),
           'AbortError',
         );
     };
@@ -2172,6 +3835,7 @@ export function bootCoop({
         ![
           opener,
           $('coop-discovery-dialog'),
+          $('journey-chooser'),
           $('coop-discovery-cancel'),
           document.body,
           document.documentElement,
@@ -2212,7 +3876,7 @@ export function bootCoop({
       !departure &&
       pack === row.pack &&
       packArtworkSource === row.artworkSource &&
-      running();
+      (briefingOnly ? ['ready', 'paused'].includes(candidate.status) : running());
     const rollback = () => {
       if (!ownsPublished()) return;
       run = previous.run;
@@ -2229,6 +3893,8 @@ export function bootCoop({
       lastBuiltInArena = previous.lastBuiltInArena;
       const epoch = ++generation;
       const owns = () => !disposed && generation === epoch && run === previous.run;
+      syncAcceptedPresentationAudio();
+      if (!owns()) return;
       $('coop-difficulty').value = previous.difficulty;
       $('coop-experiment').value = previous.configuration;
       showPack(previous.pack, previous.arena, owns);
@@ -2239,16 +3905,30 @@ export function bootCoop({
       pictureUI(previous.pictureMessage);
       if (!owns()) return;
       if (run) {
-        $('coop-stage').textContent = run.level.name.toUpperCase();
-        $('coop-progress').max = run.level.goal.coverage ? run.level.goal.coverage * 100 : 100;
+        localizedText($('coop-stage'), () =>
+          contentText(attemptLevel || run.level, 'name').toUpperCase(),
+        );
+        $('coop-progress').max =
+          run.level.hunt?.mode !== 'hunt' && run.level.goal.coverage
+            ? run.level.goal.coverage * 100
+            : 100;
       }
       overlay({ focus: false });
     };
     try {
       check();
-      onStatus(`Preparing ${row.title}… Your current arena stays available.`);
+      onStatus(
+        t('interface:team.preparingArena', {
+          mission: contentText(row, 'title'),
+        }),
+      );
       check();
       await presentationPage.ready;
+      check();
+      await ensureTeamPicturePackage(selection, {
+        signal: operation.controller.signal,
+        retain: true,
+      });
       check();
       selection.binding = await selection.lease.select({
         ...selection.request,
@@ -2256,14 +3936,71 @@ export function bootCoop({
         onStatus: (status) => {
           if (!current()) return;
           const text = picturePreparationText(status);
-          if (text) onStatus(`${text} Your current arena stays available.`);
+          if (text) onStatus(t('interface:team.currentArenaAvailable', { status: text }));
         },
       });
       check();
       selection.binding = selection.lease.confirm(selection.request);
       selection.state = 'ready';
-      candidate = createCoop(structuredClone(recipe.level), recipe.options);
-      startCoop(candidate);
+      if (restored) {
+        if (restored.snapshot.levelId !== row.levelId)
+          throw new Error('Saved Team attempt belongs to another installed mission.');
+        candidate = restored.run;
+        localRecordings.set(
+          candidate,
+          createLocalMatchRecorder({
+            build: buildVersion,
+            mode: 'team',
+            level: preparedRuntimeLevel(recipe),
+            options: {
+              seed: candidate.seed,
+              difficulty: candidate.difficulty,
+              ...candidate.config,
+            },
+            provenance: localMatchProvenance(recipe.level),
+            segments: restored.snapshot.segments,
+          }),
+        );
+        attemptTuning.set(candidate, {
+          pictureLevel: recipe.level,
+          encounterLevel: recipe.encounterLevel,
+          encounterVariant: recipe.encounterVariant,
+          runningEnemies: recipe.runningEnemies,
+          runningEnemyStyle: recipe.runningEnemyStyle,
+          pursuitGeneration: recipe.pursuitGeneration,
+          runtimeLevel: preparedRuntimeLevel(recipe),
+          encounterPack: recipe.encounterPack,
+          adminOverride: restored.snapshot.tuning.adminOverride,
+          gameplayId: restored.snapshot.gameplayId,
+          tuning: restored.snapshot.tuning,
+        });
+      } else candidate = createTunedCoop(recipe);
+      if (restored) {
+        const acceptedArtwork = restoreAttemptAppearance(
+          restored.attemptAppearance ?? null,
+          selection.environmentCandidate,
+        );
+        attemptTuning.get(candidate).attemptAppearance = acceptedArtwork;
+        painter.setAttemptAppearance(candidate, acceptedArtwork);
+      } else if (!briefingOnly) {
+        const acceptedArtwork =
+          recipe.attemptAppearance !== undefined
+            ? recipe.attemptAppearance
+            : acceptAttemptAppearance(selection.environmentCandidate, {
+                artRevision: runtimeActorArtRevision(),
+                collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+              });
+        attemptTuning.get(candidate).attemptAppearance = acceptedArtwork;
+        painter.setAttemptAppearance(candidate, acceptedArtwork);
+      }
+      if (briefingOnly) {
+        if (candidate.status === 'running') {
+          // A restored checkpoint can still contain held controls or a rescue.
+          // Preparing its briefing performs the same journalled release as Pause.
+          recordTeamInputRelease(candidate);
+          pauseCoop(candidate);
+        }
+      } else startCoop(candidate);
       check();
       if (previous.run?.status === 'paused') {
         const replace = await new Promise((resolve) => {
@@ -2277,10 +4014,22 @@ export function bootCoop({
             current,
           };
           departure = ticket;
-          $('coop-discard-title').textContent = 'Start another Team arena?';
-          $('coop-discard-copy').textContent =
-            `Stay keeps this attempt and its picture. Replace & play starts ${row.title} together. This unfinished attempt is not saved; replacing it loses its current territory, not previously recorded mission clears.`;
-          $('coop-discard-confirm').textContent = 'Replace & play';
+          localizedText($('coop-discard-title'), () => t('interface:startAnotherTeamArena'));
+          localizedText($('coop-discard-copy'), () =>
+            durableHuntAttempt(run)
+              ? teamHuntSaveText('replaceSaved')
+              : t(
+                  installedTeamAttempts.get(run)?.durable
+                    ? 'interface:team.replaceAttemptSaved'
+                    : 'interface:team.replaceAttempt',
+                  {
+                    mission: contentText(row, 'title'),
+                  },
+                ),
+          );
+          localizedText($('coop-discard-confirm'), () =>
+            t(briefingOnly ? 'interface:replaceAndPrepare' : 'interface:replacePlay'),
+          );
           try {
             departureDialog.showModal();
             $('coop-discard-stay').focus({ preventScroll: true });
@@ -2292,23 +4041,34 @@ export function bootCoop({
         });
         check();
         if (!replace) {
-          onStatus('Your Team attempt is kept. Choose Play when you are ready.');
+          onStatus(t('interface:yourTeamAttemptIsKeptChoosePlayWhenYouAre'));
           return false;
         }
       }
       check();
       selection.binding = selection.lease.confirm(selection.request);
-      painter.paint(candidate, {
-        reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        textFace: displayPreferences.snapshot().textFace,
-        picture: selection.binding,
-      });
+      paintPreparedTeam(
+        candidate,
+        {
+          reduced: displayPreferences.snapshot().effectiveReducedEffects,
+          textFace: displayPreferences.snapshot().textFace,
+          picture: selection.binding,
+          actorAppearance: selection.actorAppearance,
+          pictureLevel: attemptTuning.get(candidate).pictureLevel,
+          encounterLevel: attemptTuning.get(candidate).encounterLevel,
+          showRemains: encounterDisplay.snapshot().showRemains,
+          brutal: encounterDisplay.snapshot().brutal,
+          blood: encounterDisplay.snapshot().blood,
+        },
+        true,
+      );
       check();
       clear();
       check();
       // Publish the validated core, exact picture and setup together. No callbacks
       // run between the last guard and these reference assignments.
       run = candidate;
+      runningEnemyControls.refresh();
       attemptLevel = recipe.level;
       attemptPack = selection.pack;
       acceptedPicture = pictureSelection = selection;
@@ -2319,6 +4079,10 @@ export function bootCoop({
       knockdowns = [null, null];
       last = null;
       accumulator = 0;
+      // Collect any release caused by publication callbacks, but keep both
+      // stores inert until every rollback-capable acceptance check passes.
+      if (!briefingOnly)
+        beginInstalledTeamAttempt(candidate, selection, restored, { deferSave: true });
       if (row.pack === COOP_STARTER_PACK) lastBuiltInArena = row.levelId;
       try {
         $('coop-difficulty').value = candidate.difficulty;
@@ -2329,21 +4093,40 @@ export function bootCoop({
         );
         if (configuration) $('coop-experiment').value = configuration.id;
         showPack(row.pack, row.levelId, accepted);
-        if (!accepted()) throw new DOMException('Arena activation changed.', 'AbortError');
+        if (!accepted())
+          throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
         document.body.classList.add('playing');
         $('coop-menu').hidden = true;
         $('coop-play').hidden = false;
-        $('coop-stage').textContent = candidate.level.name.toUpperCase();
-        $('coop-progress').max = candidate.level.goal.coverage
-          ? candidate.level.goal.coverage * 100
-          : 100;
-        pictureUI('Team picture ready.');
+        localizedText($('coop-stage'), () => contentText(candidate.level, 'name').toUpperCase());
+        $('coop-progress').max =
+          candidate.level.hunt?.mode !== 'hunt' && candidate.level.goal.coverage
+            ? candidate.level.goal.coverage * 100
+            : 100;
+        pictureUI(
+          localizedMessage(
+            briefingOnly
+              ? 'interface:teamPictureReadyStartRemainsASeparateAction'
+              : 'interface:teamPictureReady',
+          ),
+        );
         overlay({ focus: false });
         render();
-        if (!accepted()) throw new DOMException('Arena activation changed.', 'AbortError');
+        if (!accepted())
+          throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
         setupNote({ level: attemptLevel, experiment: candidate.config });
-        message(`${row.title}. Choose fresh directions when you are ready.`);
-        if (!accepted()) throw new DOMException('Arena activation changed.', 'AbortError');
+        message(() =>
+          briefingOnly
+            ? t('interface:teamPictureReadyStartRemainsASeparateAction')
+            : t(
+                restored
+                  ? 'interface:team.arenaRestoredDirections'
+                  : 'interface:team.arenaReadyDirections',
+                { mission: contentText(row.level, 'name') },
+              ),
+        );
+        if (!accepted())
+          throw new DOMException(t('interface:arenaActivationChanged'), 'AbortError');
       } catch (error) {
         rollback();
         throw error;
@@ -2351,6 +4134,15 @@ export function bootCoop({
       completed = true;
       discoveryOperation = null;
       operation.detach();
+      if (briefingOnly)
+        discoveryBriefings.set(candidate, { restored, sourcePack: row.pack, levelId: row.levelId });
+      else {
+        const huntRecord = huntAttempts.get(candidate);
+        if (huntRecord) huntRecord.armed = true;
+        const installedRecord = installedTeamAttempts.get(candidate);
+        if (installedRecord) installedRecord.armed = true;
+        persistInstalledTeamAttempt(candidate, selection, { force: true });
+      }
       discoveryStarted = {
         run: candidate,
         generation: publishedGeneration,
@@ -2361,8 +4153,24 @@ export function bootCoop({
       for (const old of new Set([previous.picture, previous.selection]))
         if (old && old !== acceptedPicture && old !== pictureSelection) old.lease?.dispose();
       if (run === candidate && running() && foreground() && !disposed)
-        candidateProgress?.started(selection.journeyRow, candidate);
-      return run === candidate && running() && foreground() && !disposed;
+        candidateProgress?.[restored?.huntAttempt ? 'resumed' : 'started'](
+          selection.journeyRow,
+          candidate,
+          {
+            ...attemptTuning.get(candidate),
+            attemptId: teamPersistenceId(candidate),
+            adminOverride:
+              attemptTuning.get(candidate).adminOverride ||
+              attemptTuning.get(candidate).encounterVariant !== 'authored',
+            picture: earnedTeamPicture(selection, selection.binding),
+          },
+        );
+      return (
+        run === candidate &&
+        (briefingOnly ? ['ready', 'paused'].includes(candidate.status) : running()) &&
+        foreground() &&
+        !disposed
+      );
     } finally {
       if (discoveryOperation === operation) discoveryOperation = null;
       operation.detach();
@@ -2380,88 +4188,1051 @@ export function bootCoop({
       discoveryControls();
     }
   }
-  discovery = attachTeamDiscovery({
-    document,
-    dialog: $('coop-discovery-dialog'),
-    list: $('coop-discovery-list'),
-    status: $('coop-discovery-status'),
-    back: $('coop-discovery-back'),
-    cancel: $('coop-discovery-cancel'),
-    search: $('coop-discovery-search'),
-    campaign: $('coop-discovery-campaign'),
-    getEntries: currentDiscoveryRows,
-    presentCard: candidateCardPresenter,
-    canOpen: canOpenDiscovery,
-    activate: activateDiscovery,
-    preparePreview: prepareDiscoveryPreview,
-    preview: {
+  const libraryDifficulty = () =>
+    acceptedPicture?.journeyRow?.difficulty ??
+    selectedCandidateRow()?.difficulty ??
+    candidateDifficulty;
+  function libraryStatus(text, state = 'ready') {
+    localizedText($('coop-discovery-status'), () => text);
+    $('coop-discovery-status').dataset.state = state;
+  }
+  function registerTeamSource(source, resolve) {
+    const rows = missionLibrary.register(source);
+    rows.forEach((row, index) => libraryRuntimeRows.set(row, () => resolve(source.entries[index])));
+  }
+  const installedDifficultyLabel = (value) =>
+    ({
+      gentle: t('interface:gentle'),
+      standard: t('interface:standard'),
+      expert: t('interface:expert'),
+    })[value] ?? value;
+  const installedPresetLabel = (value) =>
+    value === 'full' ? t('interface:fullTeamwork') : t('interface:jointCutsOrdinaryCover');
+  function installedProgressText(row) {
+    const progress = installedTeamProgress.get(row.installedEditionId),
+      receipt = progress?.clears?.[row.levelId],
+      saved = nativeInstalledTeamAttempt(progress?.attempts?.[row.levelId]);
+    if (saved)
+      return t('interface:missionLibrary.team.resumeSavedAttempt', {
+        difficulty: installedDifficultyLabel(saved.difficulty),
+        preset: installedPresetLabel(saved.presetId),
+      });
+    return receipt
+      ? `${t('interface:missionLibrary.team.installedClear', {
+          difficulty: installedDifficultyLabel(receipt.difficulty),
+          preset: installedPresetLabel(receipt.presetId),
+        })}${receipt.reward ? ` · ${t('interface:pictureEarned')}` : ''}`
+      : t('interface:missionLibrary.team.notClearedInstalledEdition');
+  }
+  function installedProgressState(row) {
+    const clears = installedTeamProgress.get(row.installedEditionId)?.clears;
+    return {
+      state: Object.hasOwn(clears ?? {}, row.levelId) ? 'completed' : 'new',
+      // Installed Team v1 receipts record exact clears, but no star grade.
+      bestStars: null,
+    };
+  }
+  async function launchInstalledTeamRow(edition, row, context) {
+    if (
+      !installedTeamStore ||
+      installedTeamEditions.get(edition.editionId) !== edition ||
+      !context.isCurrent()
+    )
+      return false;
+    context.onStatus(
+      t('interface:missionLibrary.team.verifyingInstalledEdition', {
+        edition: edition.editionId.slice(0, 12),
+      }),
+    );
+    const loaded = await installedTeamStore.load(edition.editionId, {
+      signal: context.signal,
+    });
+    if (
+      !context.isCurrent() ||
+      installedTeamEditions.get(edition.editionId) !== edition ||
+      canonicalJSON(loaded.prepared.pack) !== canonicalJSON(edition.pack)
+    )
+      throw new Error(t('interface:missionLibrary.team.installedEditionChanged'));
+    const saved = installedTeamProgress.get(edition.editionId)?.attempts?.[row.levelId];
+    let restored = saved
+      ? await installedTeamStore.restoreAttempt(edition.editionId, row.levelId, {
+          signal: context.signal,
+        })
+      : null;
+    if (restored?.run.level.hunt) {
+      const mirror = await matchingTeamHuntMirror(restored, {
+        pack: row.pack,
+        level: row.level,
+        saved: huntAttemptStore.read(),
+        signal: context.signal,
+      });
+      if (mirror) {
+        const promoted = mirror.promotion;
+        restored = {
+          ...restored,
+          attemptAppearance: restored.attemptAppearance ?? mirror.attemptAppearance,
+          raw: mirror.raw,
+          ...(promoted
+            ? {
+                run: promoted.run,
+                snapshot: createInstalledTeamAttemptSnapshot({
+                  ...restored.snapshot,
+                  run: promoted.run,
+                  segments: promoted.snapshot.segments,
+                  encounterVariant: promoted.snapshot.encounterVariant,
+                  runningEnemies: Boolean(promoted.snapshot.runningEnemies),
+                  runningEnemyStyle: promoted.snapshot.runningEnemyStyle ?? 'original',
+                  pursuitGeneration: promoted.snapshot.pursuitGeneration ?? 'pursuit-goals.v1',
+                  encounterLevelIdentity: promoted.snapshot.encounterLevelIdentity,
+                }),
+              }
+            : {}),
+        };
+      }
+    }
+    if (!context.isCurrent()) return false;
+    return launchTeamLibraryRow(row, { ...context, restored, teamMedia: loaded.media });
+  }
+  async function includeInstalledTeamCampaigns() {
+    if (!installedTeamStore) return;
+    if (installedTeamLoading) return installedTeamLoading;
+    const loading = (async () => {
+      try {
+        const inventory = await installedTeamStore.inventory();
+        if (disposed || installedTeamLoading !== loading) return;
+        if (inventory.generation === installedTeamGeneration) return;
+        for (const sourceId of installedTeamSourceIds) missionLibrary?.remove(sourceId);
+        installedTeamSourceIds.clear();
+        installedTeamRows = [];
+        installedTeamEditions = new Map(
+          inventory.editions.map((edition) => [edition.editionId, edition]),
+        );
+        installedTeamProgress.clear();
+        for (const edition of inventory.editions) {
+          installedTeamProgress.set(edition.editionId, edition.progress);
+          const rows = discoveryRows(edition.pack, null, `installed-${edition.editionId}`).map(
+            (row) =>
+              Object.freeze({
+                ...row,
+                installedEditionId: edition.editionId,
+                get sourceLabel() {
+                  return t('interface:missionLibrary.team.installedEdition', {
+                    edition: edition.editionId.slice(0, 12),
+                  });
+                },
+              }),
+          );
+          installedTeamRows.push(...rows);
+          const sourceId = `team-installed:${edition.editionId}`;
+          installedTeamSourceIds.add(sourceId);
+          registerTeamSource(
+            teamArenaLibrarySource({
+              rows,
+              sourceId,
+              editionId: edition.editionId,
+              edition: () =>
+                t('interface:missionLibrary.team.editionLabel', {
+                  campaign: edition.pack.name,
+                  edition: edition.editionId.slice(0, 12),
+                }),
+              collection: 'Custom',
+              isCurrent: (row) =>
+                installedTeamEditions.get(edition.editionId) === edition && rows.includes(row),
+              progress: installedProgressText,
+              progressState: installedProgressState,
+              launch: (row, context) => launchInstalledTeamRow(edition, row, context),
+            }),
+            (row) => row,
+          );
+        }
+        if (
+          libraryLocalOwner?.installedEditionId &&
+          installedTeamSourceIds.has(`team-installed:${libraryLocalOwner.installedEditionId}`)
+        ) {
+          if (libraryLocalOwner.librarySourceId)
+            missionLibrary.remove(libraryLocalOwner.librarySourceId);
+          libraryLocalOwner = null;
+          getTeamLibrary();
+        }
+        installedTeamGeneration = inventory.generation;
+        installedTeamStorageError = null;
+      } catch (error) {
+        if (error?.name !== 'AbortError') installedTeamStorageError = error;
+      }
+    })();
+    installedTeamLoading = loading;
+    try {
+      await loading;
+    } finally {
+      if (installedTeamLoading === loading) installedTeamLoading = null;
+    }
+  }
+  function retireLibraryLaunch() {
+    const owner = libraryLaunch;
+    libraryLaunch = null;
+    owner?.detach();
+    owner?.controller.abort();
+    cancelDiscoveryPreparation();
+    if (departure?.kind === 'discovery' && !departure.operation)
+      closeDeparture(departure, { restore: false });
+    $('coop-discovery-cancel').hidden = true;
+    if (owner) libraryStatus(t('interface:preparationCancelledYourTeamAttemptIsKept'));
+  }
+  function finishLibraryStart(started) {
+    if (discoveryStarted !== started) return;
+    discoveryStarted = null;
+    clear();
+    const current = () =>
+      Boolean(started) &&
+      !disposed &&
+      foreground() &&
+      !inactive &&
+      run === started.run &&
+      generation === started.generation &&
+      acceptedPicture === started.picture &&
+      running() &&
+      !discovery.isOpen() &&
+      !settingsDialog.open &&
+      !earnedDialog.open &&
+      !departure;
+    if (
+      started &&
+      discoveryBriefings.has(started.run) &&
+      run === started.run &&
+      generation === started.generation &&
+      acceptedPicture === started.picture &&
+      !disposed &&
+      foreground() &&
+      !inactive &&
+      !discovery.isOpen() &&
+      !settingsDialog.open &&
+      !earnedDialog.open &&
+      !departure
+    ) {
+      controllerConfirmGuard.requireNeutral();
+      overlay();
+      discoveryControls();
+      return;
+    }
+    const focus = document.activeElement;
+    if (
+      current() &&
+      started.sourcePack === COOP_STARTER_PACK &&
+      pack === COOP_STARTER_PACK &&
+      arenaPreference.current() !== started.levelId
+    )
+      arenaPreference.choose(started.levelId);
+    if (current() && document.activeElement === focus) input.focus();
+    discoveryControls();
+  }
+  function teamLibraryContext() {
+    retireLibraryLaunch();
+    libraryPreview?.close();
+    const owner = {
+      controller: new AbortController(),
+      opener: document.activeElement,
+      detach: () => {},
+    };
+    libraryLaunch = owner;
+    const current = () =>
+      libraryLaunch === owner &&
+      !owner.controller.signal.aborted &&
+      !disposed &&
+      !inactive &&
+      foreground();
+    // The initiating click/Enter may still be bubbling. Subsequent unrelated
+    // input retires admission without stealing its focus or reopening the picker.
+    const newerInput = (event) => {
+      if (departure?.kind === 'discovery' && departureDialog.contains(event.target)) return;
+      if (event.target === $('coop-discovery-cancel')) return;
+      retireLibraryLaunch();
+    };
+    const newerFocus = (event) => {
+      if (
+        [
+          owner.opener,
+          $('coop-discovery-cancel'),
+          document.body,
+          document.documentElement,
+        ].includes(event.target)
+      )
+        return;
+      newerInput(event);
+    };
+    queueMicrotask(() => {
+      if (!current()) return;
+      for (const type of ['keydown', 'pointerdown', 'click'])
+        document.addEventListener(type, newerInput, true);
+      document.addEventListener('focusin', newerFocus, true);
+    });
+    owner.detach = () => {
+      for (const type of ['keydown', 'pointerdown', 'click'])
+        document.removeEventListener(type, newerInput, true);
+      document.removeEventListener('focusin', newerFocus, true);
+    };
+    return {
+      signal: owner.controller.signal,
+      isCurrent: current,
+      opener: owner.opener,
+      onStatus: (text) => {
+        if (current()) libraryStatus(text, 'busy');
+      },
+    };
+  }
+  async function launchTeamLibraryRow(row, context) {
+    if (!context.isCurrent()) return false;
+    const owner = libraryLaunch;
+    const cancel = $('coop-discovery-cancel');
+    cancel.hidden = false;
+    cancel.focus({ preventScroll: true });
+    if (document.activeElement !== cancel || !context.isCurrent()) {
+      retireLibraryLaunch();
+      return false;
+    }
+    try {
+      const accepted = await activateDiscovery(row, context);
+      if (accepted && libraryLaunch === owner && context.isCurrent()) {
+        const started = discoveryStarted;
+        owner.detach();
+        libraryLaunch = null;
+        cancel.hidden = true;
+        libraryStatus(() => t('interface:teamPictureReady'), 'ready');
+        finishLibraryStart(started);
+      } else if (libraryLaunch === owner && context.isCurrent())
+        libraryStatus(t('interface:yourTeamAttemptIsKeptChoosePlayWhenReady'));
+      return accepted;
+    } catch (error) {
+      if (context.isCurrent())
+        libraryStatus(
+          () =>
+            t('interface:team.arenaPreparationFailed', {
+              mission: contentText(row.level, 'name'),
+            }),
+          'error',
+        );
+      throw error;
+    } finally {
+      if (libraryLaunch === owner) {
+        cancel.hidden = true;
+        owner.detach();
+      }
+    }
+  }
+  async function launchRemoteTeamRow(row, context) {
+    return launchRemoteLibraryMission(context);
+  }
+  async function launchRemoteLibraryMission(context) {
+    const row = missionLibrary.find(context.libraryMissionId);
+    if (!row || !row.modes.includes(context.mode) || !context.isCurrent()) return false;
+    const href = missionLibraryHref({
+      baseURL: location.href,
+      currentMode: 'team',
+      mode: context.mode,
+      journey: row.collection === 'Journey' ? row.editionId : 'legacy',
+      missionId: context.libraryMissionId,
+      sourceJourney: candidateJourney
+        ? isMissionLibrarySourceJourney(libraryEdition, 'team')
+          ? libraryEdition
+          : undefined
+        : 'legacy',
+    });
+    const attempt = run,
+      epoch = generation;
+    const current = () => context.isCurrent() && run === attempt && generation === epoch;
+    if (!current()) return false;
+    if (unfinished()) {
+      const replace = await new Promise((resolve) => {
+        const ticket = {
+          kind: 'discovery',
+          opener: context.opener,
+          run,
+          generation,
+          operation: null,
+          current,
+          resolve,
+        };
+        departure = ticket;
+        localizedText($('coop-discard-title'), () =>
+          t('interface:team.openModeMission', {
+            mode:
+              context.mode === 'team'
+                ? t('interface:team')
+                : context.mode === 'solo'
+                  ? t('interface:solo2')
+                  : t('interface:versus2'),
+          }),
+        );
+        localizedText($('coop-discard-copy'), () =>
+          durableHuntAttempt(run)
+            ? teamHuntSaveText('replaceSaved')
+            : t(
+                installedTeamAttempts.get(run)?.durable
+                  ? 'interface:team.openOriginalAttemptSaved'
+                  : 'interface:team.openOriginalAttempt',
+                { mission: contentText(row, 'name') },
+              ),
+        );
+        localizedText($('coop-discard-confirm'), () => t('interface:replacePlay'));
+        departureDialog.showModal();
+        $('coop-discard-stay').focus({ preventScroll: true });
+      });
+      if (!replace || !current()) return false;
+    }
+    if (!current()) return false;
+    if (context.confirmInventory && !(await context.confirmInventory())) return false;
+    if (!current() || missionLibrary.find(context.libraryMissionId) !== row) return false;
+    if (offlineAvailability().packageConsent)
+      await gameplayDownloads.ensureDestination(href, {
+        signal: context.signal,
+        runtimeOnly: row.collection === 'Custom',
+      });
+    if (!current() || missionLibrary.find(context.libraryMissionId) !== row) return false;
+    location.assign(nativeArtReviewURL(href, location.href));
+    return true;
+  }
+  function getTeamLibrary() {
+    if (!missionLibrary) {
+      missionLibrary = createMissionLibrary();
+      for (const source of supplementalTeamSources({
+        launch: launchRemoteLibraryMission,
+        difficulty: libraryDifficulty,
+        activeRouteId: libraryEdition,
+      }))
+        registerTeamSource(source, () => null);
+      if (libraryEdition !== 'team-expedition-v1')
+        registerTeamSource(
+          teamExpeditionLibrarySource({
+            difficulty: libraryDifficulty,
+            launch: launchRemoteLibraryMission,
+          }),
+          () => null,
+        );
+      if (candidateJourney)
+        registerTeamSource(
+          teamJourneyLibrarySource({
+            journey: candidateJourney,
+            editionId: libraryEdition,
+            edition:
+              libraryEdition === TEAM_LIBRARY_JOURNEY_EDITION
+                ? t('interface:teamJourney')
+                : `Team Journey · ${libraryEdition} · ${
+                    candidateJourney.rows.some((row) => row.background)
+                      ? t('interface:originalArtTestVisualQualificationPending')
+                      : t('interface:geometryTestHumanValidationPending')
+                  }`,
+            progress: candidateProgress,
+            gameplayIdentity: normalGameplayIdentity,
+            difficulty: libraryDifficulty,
+            encounterVariant: () => encounterPreferences.snapshot().variant,
+            launch: (row, context) =>
+              launchTeamLibraryRow(
+                candidateDiscoveryRows.find((entry) => entry.journeyRow === row),
+                context,
+              ),
+          }),
+          (mission) =>
+            candidateDiscoveryRows.find(
+              (entry) => entry.journeyRow === candidateJourney.row(mission, libraryDifficulty()),
+            ),
+        );
+      registerTeamSource(
+        teamArenaLibrarySource({ rows: starterDiscoveryRows, launch: launchTeamLibraryRow }),
+        (row) => row,
+      );
+    }
+    if (libraryLocalOwner !== localDiscoveryPack) {
+      if (libraryLocalOwner?.librarySourceId)
+        missionLibrary.remove(libraryLocalOwner.librarySourceId);
+      libraryLocalOwner = localDiscoveryPack;
+      if (localDiscoveryPack) {
+        const owner = localDiscoveryPack;
+        if (!installedTeamSourceIds.has(`team-installed:${owner.installedEditionId}`)) {
+          owner.librarySourceId = `team-custom:${libraryVisit}:${localDiscoveryRevision}`;
+          registerTeamSource(
+            teamArenaLibrarySource({
+              rows: owner.rows,
+              sourceId: owner.librarySourceId,
+              editionId: `${owner.pack.id}@${owner.pack.revision}`,
+              edition: () =>
+                t('interface:missionLibrary.team.visitEdition', { campaign: owner.pack.name }),
+              collection: 'Custom',
+              isCurrent: (row) => localDiscoveryPack === owner && owner.rows.includes(row),
+              launch: launchTeamLibraryRow,
+            }),
+            (row) => row,
+          );
+        }
+      }
+    }
+    return missionLibrary;
+  }
+  async function includeCurrentTeamJourney() {
+    if ((candidateJourney && libraryEdition !== 'team-expedition-v1') || libraryRemoteJourney)
+      return;
+    libraryRemotePending ??= Promise.all([
+      import('../content-design/team-host.mjs'),
+      import('../content-design/team-cultural-specialist-v2-originals.mjs'),
+    ])
+      .then(
+        ([{ createCandidateTeamHost }, { createTeamCulturalSpecialistV2OriginalCandidates }]) => {
+          if (disposed) return;
+          const source = createTeamCulturalSpecialistV2OriginalCandidates();
+          libraryRemoteJourney = createCandidateTeamHost(source, {
+            corePackIds: source.packs.map((item) => item.id),
+          });
+          // This browsing-only owner has no profile writer and cannot create a run
+          // in the Legacy host. The receiving Journey resolves the exact opaque ID.
+          registerTeamSource(
+            teamJourneyLibrarySource({
+              journey: libraryRemoteJourney,
+              encounterVariant: () => encounterPreferences.snapshot().variant,
+              launch: launchRemoteTeamRow,
+            }),
+            () => null,
+          );
+        },
+      )
+      .catch((error) => {
+        libraryRemotePending = null;
+        throw error;
+      });
+    await libraryRemotePending;
+  }
+  function retireOtherModesOpening() {
+    const opening = libraryOtherModesOpening;
+    libraryOtherModesOpening = null;
+    opening?.dispose();
+    if (!opening || libraryChooser?.state().mode === 'team') return;
+    localizedText($('coop-library-remote-status'), () =>
+      t('interface:loadingInterruptedRetryWhenReady'),
+    );
+    $('coop-library-remote-retry').hidden = false;
+    $('coop-library-remote-retry').removeAttribute('aria-disabled');
+  }
+  function mountTeamLibrary() {
+    if (libraryChooser) return;
+    libraryChooser = attachMissionLibraryChooser({
+      document,
+      library: getTeamLibrary(),
+      mode: 'team',
+      getCurrentId: () =>
+        missionLibrary.missions.find((row) => {
+          const bound = libraryRuntimeRows.get(row)?.();
+          return (
+            (bound?.pack === pack && bound.level === selectedLevel()) ||
+            (localDiscoveryPack?.installedEditionId &&
+              bound?.installedEditionId === localDiscoveryPack.installedEditionId &&
+              bound.levelId === selectedLevel().id)
+          );
+        })?.id,
+      readState: librarySession.read,
+      writeState: librarySession.write,
+      launchContext: teamLibraryContext,
+      onPause() {
+        retireLibraryLaunch();
+        discoveryStarted = null;
+        clear();
+        libraryStatus(t('interface:chooseAMissionYourCurrentTeamAttemptIsKeptUntil'));
+        discoveryControls();
+      },
+      onReturn(opener) {
+        retireOtherModesOpening();
+        retireLibraryLaunch();
+        libraryPreview?.close();
+        clear();
+        if (libraryReturnFocus && !disposed && foreground() && visibleAction(opener))
+          opener.focus({ preventScroll: true });
+        discoveryControls();
+      },
+    });
+    const dialog = $('journey-chooser');
+    const statusGroup = document.createElement('div');
+    statusGroup.id = 'coop-library-status';
+    const chooserStatus = $('journey-chooser-status');
+    // Keep one status grid row; remote feedback must not expand the action footer.
+    dialog.replaceChildren(
+      ...[...dialog.children].map((child) => (child === chooserStatus ? statusGroup : child)),
+    );
+    const remoteFeedback = document.createElement('div');
+    remoteFeedback.id = 'coop-library-remote-feedback';
+    remoteFeedback.hidden = true;
+    const remoteStatus = document.createElement('p');
+    remoteStatus.id = 'coop-library-remote-status';
+    remoteStatus.setAttribute('role', 'status');
+    remoteStatus.hidden = true;
+    const remoteRetry = document.createElement('button');
+    remoteRetry.id = 'coop-library-remote-retry';
+    remoteRetry.type = 'button';
+    localizedText(remoteRetry, () => t('common:actions.retry'));
+    remoteRetry.setAttribute('aria-label', t('interface:retrySoloAndVersusMissionLoading'));
+    remoteRetry.hidden = true;
+    remoteFeedback.append(remoteStatus, remoteRetry);
+    statusGroup.append(chooserStatus, remoteFeedback);
+    function trackRemoteLibraryView(onRetire) {
+      const visit = libraryOtherModesVisit,
+        mode = libraryChooser.state().mode;
+      let retired = false;
+      const current = () =>
+        !retired &&
+        !disposed &&
+        dialog.open &&
+        foreground() &&
+        libraryOtherModesVisit === visit &&
+        libraryChooser.state().mode === mode;
+      const listeners = [
+        [document, 'focusin', outside],
+        [document, 'pointerdown', outside],
+        [document, 'click', outside],
+        [document, 'keydown', key],
+        [document, 'visibilitychange', hidden],
+        [window, 'blur', windowBlur],
+        [window, 'pagehide', retire],
+        [dialog, 'cancel', retire],
+        [dialog, 'close', retire],
+        [$('journey-mode'), 'change', retire],
+      ];
+      function dispose() {
+        for (const [target, type, listener] of listeners)
+          target.removeEventListener(type, listener, true);
+      }
+      function retire() {
+        if (retired) return;
+        retired = true;
+        dispose();
+        onRetire();
+      }
+      function outside(event) {
+        if (!dialog.contains(event.target)) retire();
+      }
+      function key(event) {
+        if (event.key === 'Escape' || !dialog.contains(event.target)) retire();
+      }
+      function hidden() {
+        if (document.hidden) retire();
+      }
+      function windowBlur(event) {
+        // Capturing listeners also see a select/input losing focus inside the
+        // chooser. Only the window itself losing focus ends this read-only view.
+        if (event.target === window) retire();
+      }
+      // This is an already-open read-only view, not an automatic opening or
+      // launch intent. Search and filters remain usable while rows arrive.
+      for (const [target, type, listener] of listeners)
+        target.addEventListener(type, listener, true);
+      return { current, dispose };
+    }
+    async function includeOtherModes() {
+      libraryOtherModesOpening?.dispose();
+      libraryOtherModesOpening = null;
+      remoteStatus.hidden = libraryChooser.state().mode === 'team';
+      remoteFeedback.hidden = remoteStatus.hidden;
+      if (
+        !remoteStatus.hidden &&
+        document.activeElement === previewButton &&
+        dialog.open &&
+        foreground()
+      )
+        $('journey-mode').focus({ preventScroll: true });
+      previewButton.hidden = !remoteStatus.hidden;
+      remoteRetry.hidden = remoteStatus.hidden || document.activeElement !== remoteRetry;
+      remoteRetry.setAttribute('aria-disabled', 'true');
+      if (remoteStatus.hidden || libraryOtherModesCheckedVisit === libraryOtherModesVisit) return;
+      const opening = trackRemoteLibraryView(() => {
+        if (libraryOtherModesOpening !== opening) return;
+        localizedText(remoteStatus, () => t('interface:loadingInterruptedRetryWhenReady'));
+        remoteRetry.removeAttribute('aria-disabled');
+        remoteRetry.hidden = libraryChooser.state().mode === 'team';
+      });
+      libraryOtherModesOpening = opening;
+      localizedText(remoteRetry, () => t('common:actions.retry'));
+      localizedText(remoteStatus, () => t('interface:loadingSoloAndVersusMissionMetadata'));
+      try {
+        libraryOtherModesPending ??= import('../mission-library/remote-solo-versus.mjs')
+          .then(async ({ createRemoteSoloVersusLibrarySources }) => {
+            let channel = 'dev';
+            if (document.querySelector('meta[name="revealline-offline"]')) {
+              const response = await fetch(new URL('../build-info.json', location.href), {
+                signal: libraryOtherModesLifetime.signal,
+              });
+              if (!response.ok) throw new Error(t('interface:theExactReleaseChannelIsUnavailable'));
+              channel = `release-${(await response.json()).version}`;
+            }
+            return createRemoteSoloVersusLibrarySources({
+              baseURL: new URL('../', location.href),
+              launch: launchRemoteLibraryMission,
+              difficulty: libraryDifficulty,
+              signal: libraryOtherModesLifetime.signal,
+              installed: { channel },
+            });
+          })
+          .then((owner) => {
+            if (disposed) {
+              owner.dispose();
+              throw new DOMException(t('interface:missionBrowsingClosed'), 'AbortError');
+            }
+            libraryOtherModes = owner;
+            return owner;
+          })
+          .catch((error) => {
+            libraryOtherModesPending = null;
+            throw error;
+          });
+        const owner = await libraryOtherModesPending;
+        if (
+          libraryOtherModesOpening !== opening ||
+          !opening.current() ||
+          !dialog.open ||
+          libraryChooser.state().mode === 'team' ||
+          !foreground() ||
+          disposed
+        )
+          return;
+        // A cached owner may have completed after an earlier opening retired.
+        // Recheck raw installed metadata before this visit publishes its rows.
+        await owner.refresh({ signal: libraryOtherModesLifetime.signal });
+        if (
+          libraryOtherModesOpening !== opening ||
+          !opening.current() ||
+          !dialog.open ||
+          libraryChooser.state().mode === 'team' ||
+          !foreground() ||
+          disposed
+        )
+          return;
+        opening.dispose();
+        const sources = owner.sources;
+        const owned = new Set(sources.map((source) => source.id));
+        for (const id of libraryOtherSources.keys())
+          if (!owned.has(id)) {
+            missionLibrary.remove(id);
+            libraryOtherSources.delete(id);
+          }
+        for (const source of sources)
+          if (libraryOtherSources.get(source.id) !== source) {
+            missionLibrary.register(source);
+            libraryOtherSources.set(source.id, source);
+          }
+        // Even unchanged owners may have lost readiness (storage failure or
+        // expired paired-media proof). Do not leave their old Play labels up.
+        libraryChooser.refresh();
+        libraryOtherModesCheckedVisit = owner.state().ready ? libraryOtherModesVisit : -1;
+        localizedText(remoteStatus, () =>
+          owner.state().ready
+            ? t('interface:allMissionsLoadedDownloadsStayHerePlayOpensTheExact')
+            : t('interface:journeyAndBaseReadyInstalledContentUnavailableRetry'),
+        );
+        remoteStatus.setAttribute('aria-description', owner.state().reason || '');
+        remoteStatus.title = owner.state().reason || '';
+        remoteRetry.hidden = owner.state().ready;
+        if (!owner.state().ready) remoteRetry.removeAttribute('aria-disabled');
+        localizedText(remoteRetry, () =>
+          owner.state().ready ? t('interface:loaded') : t('common:actions.retry'),
+        );
+      } catch (error) {
+        if (libraryOtherModesOpening === opening && opening.current() && dialog.open) {
+          localizedText(remoteStatus, () =>
+            t('interface:team.otherModesUnavailable', { error: error.message }),
+          );
+          remoteRetry.hidden = false;
+          remoteRetry.removeAttribute('aria-disabled');
+        }
+      } finally {
+        opening.dispose();
+        if (libraryOtherModesOpening === opening) libraryOtherModesOpening = null;
+      }
+    }
+    libraryOtherModesLoad = includeOtherModes;
+    $('journey-mode').addEventListener('change', includeOtherModes);
+    remoteRetry.onclick = includeOtherModes;
+    const previewButton = document.createElement('button');
+    previewButton.id = 'coop-library-preview';
+    previewButton.type = 'button';
+    localizedText(previewButton, () => t('interface:selectAMissionToPreview'));
+    dialog.querySelector('.journey-footer').append(previewButton);
+    dialog.append($('coop-discovery-preview'));
+    libraryPreview = attachTeamLibraryPreview({
+      document,
+      dialog,
+      button: previewButton,
       panel: $('coop-discovery-preview'),
       canvas: $('coop-discovery-preview-canvas'),
       title: $('coop-discovery-preview-title'),
       status: $('coop-discovery-preview-status'),
       retry: $('coop-discovery-preview-retry'),
+      selection() {
+        const selected = missionLibrary.find(libraryChooser.state().selectedId);
+        if (!selected || libraryChooser.state().mode !== 'team') return null;
+        const row = libraryRuntimeRows.get(selected)?.();
+        return row && currentDiscoveryRows().includes(row) ? { row } : null;
+      },
+      prepare: prepareDiscoveryPreview,
+    });
+  }
+  discovery = {
+    isOpen: () => Boolean($('journey-chooser')?.open),
+    primary: () => libraryChooser?.primary() ?? $('coop-discovery-open'),
+    async open(opener, { random = false } = {}) {
+      if (!canOpenDiscovery()) return;
+      libraryOpening?.dispose();
+      const opening = trackMissionLibraryOpening({ document });
+      libraryOpening = opening;
+      getTeamLibrary();
+      try {
+        await Promise.all([includeCurrentTeamJourney(), includeInstalledTeamCampaigns()]);
+        if (libraryOpening !== opening || !opening.current() || !canOpenDiscovery()) return;
+        opening.dispose();
+        libraryOpening = null;
+        mountTeamLibrary();
+        ++libraryOtherModesVisit;
+        libraryChooser.open(opener);
+        if (random && libraryChooser.playRandom({ resetFilters: true })) return;
+        libraryPreview.refresh();
+        if (installedTeamStorageError)
+          libraryStatus(
+            () =>
+              t('interface:missionLibrary.team.installedCampaignsUnavailable', {
+                error: installedTeamStorageError.message,
+              }),
+            'error',
+          );
+        void libraryOtherModesLoad();
+      } catch (error) {
+        if (opening.current() && !disposed) {
+          $('coop-discovery-status').dataset.state = 'error';
+          localizedText($('coop-discovery-status'), () =>
+            t('interface:team.libraryUnavailable', { error: error.message }),
+          );
+        }
+      } finally {
+        opening.dispose();
+      }
     },
-    onViewChange: () => clear(),
-    onOpen() {
-      discoveryStarted = null;
-      clear();
-      discoveryControls();
+    close({ restore = true } = {}) {
+      retireOtherModesOpening();
+      libraryOpening?.dispose();
+      libraryOpening = null;
+      libraryReturnFocus = restore;
+      if (discovery.isOpen()) libraryChooser.close();
+      libraryReturnFocus = true;
+      retireLibraryLaunch();
+      libraryPreview?.close();
     },
-    onClose() {
-      cancelDiscoveryPreparation();
-      const started = discoveryStarted;
-      discoveryStarted = null;
-      clear();
-      const stillCurrent = () =>
-        Boolean(started) &&
-        !disposed &&
-        foreground() &&
-        !inactive &&
-        run === started.run &&
-        generation === started.generation &&
-        acceptedPicture === started.picture &&
-        running() &&
-        !discovery.isOpen() &&
-        !settingsDialog.open &&
-        !earnedDialog.open &&
-        !departure;
-      const focus = document.activeElement;
-      if (
-        stillCurrent() &&
-        started.sourcePack === COOP_STARTER_PACK &&
-        pack === COOP_STARTER_PACK &&
-        arenaPreference.current() !== started.levelId
-      )
-        arenaPreference.choose(started.levelId);
-      if (stillCurrent() && document.activeElement === focus) input.focus();
-      discoveryControls();
+    back: () => discovery.close(),
+    cancel() {
+      retireOtherModesOpening();
+      libraryOpening?.dispose();
+      libraryOpening = null;
+      retireLibraryLaunch();
+      libraryPreview?.close();
     },
-  });
+    dispose() {
+      discovery.cancel();
+      libraryOtherModesLifetime.abort();
+      libraryOtherModes?.dispose();
+      libraryReturnFocus = false;
+      libraryPreview?.dispose();
+      libraryChooser?.destroy();
+      missionLibrary?.dispose();
+      $('coop-discovery-cancel').onclick = null;
+    },
+  };
+  // Preparation feedback remains visible after the shared chooser closes. The
+  // accepted attempt and imported source are not moved into the browsing owner.
+  tools.append($('coop-discovery-status'), $('coop-discovery-cancel'));
+  $('coop-discovery-cancel').onclick = () => {
+    retireLibraryLaunch();
+    libraryStatus(t('interface:preparationCancelledYourTeamAttemptIsKept'));
+    if (canOpenDiscovery()) libraryChooser?.restore();
+  };
   $('coop-discovery-open').onclick = () => discovery.open($('coop-discovery-open'));
   $('coop-discovery-paused').onclick = () => discovery.open($('coop-discovery-paused'));
+  $('coop-random-level').onclick = () => discovery.open($('coop-random-level'), { random: true });
 
-  function currentRecipe() {
-    if (run)
-      return {
-        level: structuredClone(attemptLevel),
-        options: { seed: run.seed, difficulty: run.difficulty, ...run.config },
-      };
-    const experiment = selectedConfiguration();
-    const level = selectedLevel();
+  function freshRecipe(level, options, accepted = null) {
+    let encounterVariant = accepted?.encounterVariant ?? encounterPreferences.snapshot().variant;
+    let encounterLevel =
+      accepted?.encounterLevel ?? deriveEncounterLevel(level, encounterVariant, { mode: 'team' });
+    // An unavailable preference stays visible in setup; unrelated historical
+    // arenas continue to use their exact authored edition. Accepted retries fail closed.
+    if (!encounterLevel) {
+      if (accepted) throw new Error('The accepted Team encounter variant is unavailable.');
+      encounterVariant = 'authored';
+      encounterLevel = level;
+    }
+    const changed = dataIdentity(encounterLevel) !== dataIdentity(level);
+    const encounterPack = changed
+      ? freezeDesign({
+          ...journeyTeamPackEdition(encounterLevel),
+          id: `team-variant-${dataIdentity(encounterLevel)}`,
+          revision: String(encounterLevel.revision),
+          name: encounterLevel.name,
+          levels: [structuredClone(encounterLevel)],
+        })
+      : null;
     return {
       level,
-      options: {
-        seed: 17,
-        difficulty: level.journeyDifficulty ?? $('coop-difficulty').value,
-        jointCuts: experiment.jointCuts,
-        assistCaptures: experiment.assistCaptures,
-        advancedCooperation: experiment.advancedCooperation,
-      },
+      options,
+      encounterLevel,
+      encounterVariant,
+      runningEnemies: accepted
+        ? Boolean(accepted.runningEnemies)
+        : runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle: accepted
+        ? (accepted.runningEnemyStyle ?? 'original')
+        : runningEnemyPreferences.snapshot().style,
+      pursuitGeneration: accepted
+        ? (accepted.pursuitGeneration ??
+          accepted.runtimeLevel?.pursuit?.version ??
+          'pursuit-goals.v1')
+        : 'pursuit-goals.v2',
+      encounterPack,
+      ...(accepted && Object.hasOwn(accepted, 'attemptAppearance')
+        ? { attemptAppearance: accepted.attemptAppearance }
+        : {}),
+      tuning:
+        accepted?.tuning ?? gameplayTuning.snapshot(level.journeyDifficulty ?? options.difficulty),
     };
+  }
+  function normalGameplayIdentity(row) {
+    if (!candidateJourney.owns(row)) return null;
+    if (!normalGameplayIdentities.has(row))
+      normalGameplayIdentities.set(
+        row,
+        dataIdentity({
+          ruleset: row.pack.ruleset,
+          level: applyGameplayTuning(row.level, resolveGameplayTuning(row.difficulty)),
+        }),
+      );
+    return normalGameplayIdentities.get(row);
+  }
+  function preparedRuntimeLevel(recipe) {
+    const tuned = applyGameplayTuning(recipe.encounterLevel ?? recipe.level, recipe.tuning);
+    return recipe.runningEnemies
+      ? prepareTeamRunningEnemies(tuned, {
+          style: recipe.runningEnemyStyle,
+          generation: recipe.pursuitGeneration ?? 'pursuit-goals.v2',
+        })
+      : tuned;
+  }
+  function createTunedCoop(recipe) {
+    const level = preparedRuntimeLevel(recipe);
+    const next = createCoop(level, recipe.options);
+    localRecordings.set(
+      next,
+      createLocalMatchRecorder({
+        build: buildVersion,
+        mode: 'team',
+        level,
+        options: { seed: next.seed, difficulty: next.difficulty, ...next.config },
+        provenance: localMatchProvenance(recipe.level),
+      }),
+    );
+    painter.captureArcadeCollection(next);
+    if (recipe.attemptAppearance !== undefined)
+      painter.setAttemptAppearance(next, recipe.attemptAppearance);
+    attemptTuning.set(next, {
+      ...(Object.hasOwn(recipe, 'attemptAppearance')
+        ? { attemptAppearance: recipe.attemptAppearance }
+        : {}),
+      pictureLevel: recipe.level,
+      encounterLevel: recipe.encounterLevel ?? recipe.level,
+      encounterVariant: recipe.encounterVariant ?? 'authored',
+      runningEnemies: recipe.runningEnemies ?? false,
+      runningEnemyStyle: recipe.runningEnemyStyle ?? 'original',
+      pursuitGeneration: level.pursuit?.version ?? recipe.pursuitGeneration,
+      runtimeLevel: level,
+      encounterPack: recipe.encounterPack ?? null,
+      adminOverride: recipe.tuning.adminOverride,
+      gameplayId: dataIdentity({ ruleset: next.ruleset, level }),
+      tuning: recipe.tuning,
+    });
+    return next;
+  }
+  function earnedTeamPicture(selection, binding) {
+    const row = selection?.journeyRow;
+    if (!row || !candidateJourney?.owns(row) || !binding) return null;
+    const asset = candidateTeamPictureFrame(binding, row.level, presentationPage.current());
+    if (!asset) return null;
+    return {
+      editionId: candidateProgress?.editionId,
+      campaignKey: row.executionKey,
+      themeId: selection.request.themeId,
+      asset,
+    };
+  }
+  function currentRecipe() {
+    if (run)
+      return freshRecipe(
+        structuredClone(attemptLevel),
+        {
+          seed: run.seed,
+          difficulty: run.difficulty,
+          ...run.config,
+        },
+        attemptTuning.get(run),
+      );
+    const experiment = selectedConfiguration();
+    const level = selectedLevel();
+    return freshRecipe(level, {
+      seed: 17,
+      difficulty: level.journeyDifficulty ?? $('coop-difficulty').value,
+      jointCuts: experiment.jointCuts,
+      assistCaptures: experiment.assistCaptures,
+      advancedCooperation: experiment.advancedCooperation,
+    });
+  }
+  function retainTeamStart(recipe, prepared, selection) {
+    const origin = visibleAction(document.activeElement) ? document.activeElement : primary();
+    origin.focus({ preventScroll: true });
+    const controller = new AbortController(),
+      focus = pictureFocus(
+        origin,
+        false,
+        () => (run ? acceptedPicture : pictureSelection) === selection,
+      ),
+      operation = { selection, controller, focus, run, generation, retention: true };
+    const current = () =>
+      !disposed &&
+      !inactive &&
+      foreground() &&
+      !controller.signal.aborted &&
+      run === operation.run &&
+      generation === operation.generation &&
+      (run ? acceptedPicture : pictureSelection) === selection &&
+      !departure &&
+      !discovery?.isOpen() &&
+      !earnedDialog.open;
+    pictureOperation = operation;
+    pictureUI(localizedMessage('interface:preparingTheExactTeamPicture'));
+    focus.pending($('coop-picture-cancel'));
+    operation.promise = (async () => {
+      try {
+        await ensureTeamPicturePackage(selection, { signal: controller.signal, retain: true });
+        if (pictureOperation !== operation || !current() || !focus.current()) return;
+        pictureOperation = null;
+        pictureUI();
+        focus.finish(origin);
+        // Starting remains synchronous once the exact retained closure is ready.
+        // A newer selection, blur, Cancel or focus choice never starts this recipe.
+        if (current() && document.activeElement === origin) start(recipe, prepared);
+      } catch (error) {
+        if (pictureOperation !== operation || !current()) return;
+        pictureOperation = null;
+        pictureUI(
+          localizedMessage('gameplay:team.pictureAttemptUnchanged', { error: error.message }),
+        );
+      } finally {
+        if (pictureOperation === operation) {
+          pictureOperation = null;
+          pictureUI();
+        }
+        focus.finish(null, false);
+      }
+    })();
+    return operation.promise;
   }
   function start(recipe = currentRecipe(), prepared = null) {
     cancelJourneySkip();
-    cancelAutomaticRetry();
     cancelNext();
     nextStatus('');
     if (
@@ -2480,6 +5251,8 @@ export function bootCoop({
     const selection = run ? acceptedPicture : pictureSelection;
     if (!selection || selection.state !== 'ready') return;
     if (selection.levelId !== recipe.level.id) return;
+    if (offlineAvailability().packageConsent && !retainedTeamSelections.has(selection))
+      return retainTeamStart(recipe, prepared, selection);
     // Confirmation rechecks exact snapshot/asset identity before changing either
     // the core or its accepted image. Same-attempt Retry reuses that exact lease.
     const binding = selection.lease?.confirm(selection.request) ?? null;
@@ -2488,9 +5261,26 @@ export function bootCoop({
     // The core's live level shares enemy objects with its mutable threat state.
     // Keep the validated starting level separately for an exact fresh Retry.
     const startingLevel = structuredClone(recipe.level);
-    const next = prepared || createCoop(startingLevel, recipe.options);
+    const next = prepared || createTunedCoop(recipe);
+    const retainedTuning = attemptTuning.get(next);
+    const retainedArtwork = Object.hasOwn(retainedTuning, 'attemptAppearance')
+      ? retainedTuning.attemptAppearance
+      : recipe.attemptAppearance;
+    const nextArtwork =
+      retainedArtwork !== undefined
+        ? retainedArtwork
+        : acceptAttemptAppearance(selection.environmentCandidate, {
+            artRevision: runtimeActorArtRevision(),
+            collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+          });
+    painter.setAttemptAppearance(next, nextArtwork);
+    attemptTuning.get(next).attemptAppearance = nextArtwork;
+    const briefing = discoveryBriefings.get(next);
+    const previousRun = run;
     const rememberVisibleArena =
-      !run && pack === COOP_STARTER_PACK && arenaPreference.current() !== startingLevel.id;
+      (!run || briefing) &&
+      pack === COOP_STARTER_PACK &&
+      arenaPreference.current() !== startingLevel.id;
     cancelImport({ forget: true });
     $('coop-pack-file').value = '';
     clear();
@@ -2505,21 +5295,40 @@ export function bootCoop({
     if (pictureSelection && pictureSelection !== selection) retirePicture();
     pictureSelection = selection;
     if (previousPicture && previousPicture !== selection) previousPicture.lease?.dispose();
-    pictureUI(
+    pictureUI(() =>
       binding
-        ? 'Team picture is ready for this attempt.'
-        : 'Procedural Team arena is ready for this attempt.',
+        ? t('interface:teamPictureIsReadyForThisAttempt')
+        : t('interface:proceduralTeamArenaIsReadyForThisAttempt'),
     );
     generation++;
     startCoop(run);
+    libraryStatus('');
+    beginInstalledTeamAttempt(run, selection, briefing?.restored, {
+      // Starting an already prepared core clears its held controls before its
+      // save owners exist. Retain that same release in their initial journals.
+      releasedBeforeBinding: previousRun === next,
+    });
+    discoveryBriefings.delete(next);
+    if (previousRun?.level.hunt && !run.level.hunt) clearHuntAttempt(previousRun);
+    runningEnemyControls.refresh();
     document.body.classList.add('playing');
     $('coop-menu').hidden = true;
     $('coop-play').hidden = false;
-    $('coop-stage').textContent = level.name.toUpperCase();
-    $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
-    const guidance = coopArenaGuidance(run.level, run.config);
-    supportGuidance(guidance);
-    message(guidance.startMessage);
+    localizedText($('coop-stage'), () => contentText(level, 'name').toUpperCase());
+    $('coop-progress').max =
+      level.hunt?.mode !== 'hunt' && level.goal.coverage ? level.goal.coverage * 100 : 100;
+    const guidance = () => coopArenaGuidance(next.level, next.config);
+    supportGuidance(guidance, level);
+    const openingCue = contextualTeaching.opening(guidance());
+    message(
+      () => {
+        const start = guidance().startMessage;
+        return openingCue ? `${start} ${t(openingCue.key, openingCue.values)}` : start;
+      },
+      {
+        coach: openingCue?.kind,
+      },
+    );
     overlay();
     try {
       render();
@@ -2527,14 +5336,24 @@ export function bootCoop({
       stopArena(error);
       return;
     }
+    // Persistence and progress callbacks may make a newer focus choice after
+    // this Start has already published its native running state.
+    const startFocus = document.activeElement;
     if (rememberVisibleArena && !disposed && run === next && running() && foreground())
       arenaPreference.choose(startingLevel.id);
     if (!disposed && run === next && running() && foreground())
       acceptMusic(selection, { play: true });
     if (!disposed && run === next && running() && foreground())
-      candidateProgress?.started(selection.journeyRow, next);
+      candidateProgress?.started(selection.journeyRow, next, {
+        ...attemptTuning.get(next),
+        attemptId: teamPersistenceId(next),
+        adminOverride:
+          attemptTuning.get(next).adminOverride ||
+          attemptTuning.get(next).encounterVariant !== 'authored',
+        picture: earnedTeamPicture(selection, binding),
+      });
     if (disposed || run !== next || !running() || !foreground()) return;
-    input.focus();
+    if (document.activeElement === startFocus) input.focus();
     if (loopStopped) {
       loopStopped = false;
       last = null;
@@ -2542,12 +5361,15 @@ export function bootCoop({
   }
   function pause({ focus = true } = {}) {
     discovery?.cancel();
-    cancelAutomaticRetry();
     cancelNext();
     cancelPicture({ restore: false });
     if (!running()) return;
+    persistInstalledTeamAttempt(run, acceptedPicture, { force: true });
+    recordTeamInputRelease(run);
     pauseCoop(run);
+    contextualReactions?.suspend();
     clear();
+    persistHuntAttempt(run, { force: true });
     overlay({ focus });
     try {
       render();
@@ -2557,26 +5379,32 @@ export function bootCoop({
   }
   function stopArena(error, { focus = true } = {}) {
     discovery?.cancel();
-    cancelAutomaticRetry();
     cancelNext();
     // Never repaint while handling a painter failure. Any destructive decision
     // is cancelled before showing the stopped attempt's recovery actions.
     loopStopped = true;
+    updateCueOverflow();
     music?.suspend();
+    contextualReactions?.suspend();
     closeEarnedPicture({ restore: false });
     cancelPicture({ restore: false });
-    if (running()) pauseCoop(run);
+    if (running()) {
+      recordTeamInputRelease(run);
+      pauseCoop(run);
+    }
     clear();
+    persistHuntAttempt(run, { force: true });
     cancelDeparture({ restore: false });
     overlay({ focus: false });
     $('coop-resume').hidden = true;
-    $('coop-overlay-title').textContent = 'The arena needs a fresh start';
-    $('coop-overlay-copy').textContent =
-      'This attempt is stopped and cannot resume. Retry resets it; Change setup keeps your setup choices.';
+    localizedText($('coop-overlay-title'), () => t('interface:theArenaNeedsAFreshStart'));
+    localizedText($('coop-overlay-copy'), () =>
+      t('interface:thisAttemptIsStoppedAndCannotResumeRetryResetsIt'),
+    );
     if (focus && !document.hidden && document.hasFocus?.() !== false)
       primary().focus({ preventScroll: true });
-    $('coop-boot').textContent = `Arena stopped: ${error.message}`;
-    message(`Arena stopped: ${error.message}. Choose Retry or Change setup.`);
+    localizedText($('coop-boot'), () => t('interface:team.arenaStopped', { error: error.message }));
+    message(t('interface:team.arenaStoppedAction', { error: error.message }));
     console.error(error);
   }
   function resume() {
@@ -2593,16 +5421,46 @@ export function bootCoop({
       return;
     cancelPicture({ restore: false });
     clear();
+    const briefing = discoveryBriefings.get(run);
+    // Hunt persistence accepts running cores only. Resume the exact prepared
+    // core before binding its stores, without advancing simulation time.
     resumeCoop(run);
+    if (briefing) {
+      beginInstalledTeamAttempt(run, acceptedPicture, briefing.restored);
+      discoveryBriefings.delete(run);
+    }
+    // Newly attached stores also need the briefing/resume release after their
+    // restored journal. Save stores coalesce these; terminal recordings retain
+    // each ordered release for their native reconstruction.
+    recordTeamInputRelease(run);
+    contextualReactions?.resume();
     if (music) void music.start();
     last = null;
     overlay();
+    if (briefing)
+      candidateProgress?.[briefing.restored?.huntAttempt ? 'resumed' : 'started'](
+        acceptedPicture.journeyRow,
+        run,
+        {
+          ...attemptTuning.get(run),
+          attemptId: teamPersistenceId(run),
+          adminOverride:
+            attemptTuning.get(run).adminOverride ||
+            attemptTuning.get(run).encounterVariant !== 'authored',
+          picture: earnedTeamPicture(acceptedPicture, acceptedPicture.binding),
+        },
+      );
     input.focus();
-    message('Choose fresh directions when you are ready.');
+    const downed = run.players.find((player) => player.status === 'downed');
+    message(
+      downed
+        ? rescueMessage(knockdowns[downed.id] ?? { type: 'player.downed', player: downed.id })
+        : localizedMessage('interface:chooseFreshDirectionsWhenYouAreReady'),
+    );
   }
   // This synchronous handoff owns only the return from an attempt to its lobby.
   // Do not let focus/layout callbacks revive it after a newer action or lifecycle.
-  function lobbyFocus() {
+  function lobbyFocus(revealDifficulty = false) {
     const origin = document.activeElement,
       epoch = generation + 1,
       visit = settingsVisit;
@@ -2651,6 +5509,10 @@ export function bootCoop({
             document.activeElement === target ||
             unclaimedFocus(document.activeElement));
         if (!owns() || !visibleAction(target) || !owns()) return;
+        if (revealDifficulty && settingsDialog.contains($('coop-difficulty'))) {
+          openSettings({ difficulty: true });
+          if (!owns()) return;
+        }
         if (document.activeElement !== target) target.focus({ preventScroll: true });
         const focused = () =>
           current() && primary() === target && document.activeElement === target;
@@ -2676,12 +5538,13 @@ export function bootCoop({
       },
     };
   }
-  function lobby() {
+  function lobby({ revealDifficulty = false } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     nextStatus('');
     if (disposed || departure) return;
-    const focus = lobbyFocus();
+    if (revealDifficulty) $('coop-optional-setup').open = true;
+    const focus = lobbyFocus(revealDifficulty);
     try {
       cancelImport({ forget: true });
       clear();
@@ -2691,7 +5554,10 @@ export function bootCoop({
       run = null;
       attemptLevel = null;
       attemptPack = null;
-      generation++;
+      const epoch = ++generation;
+      syncAcceptedPresentationAudio();
+      if (disposed || generation !== epoch || run || acceptedPicture) return;
+      updateCueOverflow();
       document.body.classList.remove('playing');
       $('coop-play').hidden = true;
       $('coop-menu').hidden = false;
@@ -2704,7 +5570,7 @@ export function bootCoop({
         retainedPicture.levelId === selectedLevel().id
       ) {
         pictureSelection = retainedPicture;
-        pictureUI('Team picture ready. Start remains a separate action.');
+        pictureUI(localizedMessage('interface:teamPictureReadyStartRemainsASeparateAction'));
       } else {
         retainedPicture?.lease?.dispose();
         void preparePicture();
@@ -2715,12 +5581,13 @@ export function bootCoop({
     }
   }
   const unfinished = () => run && ['running', 'paused'].includes(run.status);
-  const departureLabels = {
-    setup: 'Discard and change setup',
-    retry: 'Discard and retry',
-    return: 'Discard and leave',
-    home: 'Discard and leave',
-    versus: 'Discard and go to Versus',
+  const departureLabelKeys = {
+    setup: 'interface:discardAndChangeSetup',
+    retry: 'interface:discardAndRetry',
+    return: 'interface:discardAndLeave',
+    home: 'interface:discardAndLeave',
+    versus: 'interface:discardAndGoToVersus',
+    catalogue: 'interface:discardAndSwitchJourney',
   };
   function visibleAction(element) {
     return (
@@ -2733,6 +5600,7 @@ export function bootCoop({
   }
   function closeDeparture(ticket, { restore = true } = {}) {
     if (!ticket || departure !== ticket) return;
+    ticket.downloadController?.abort();
     departure = null;
     if (departureDialog.open) departureDialog.close();
     navigation.clear();
@@ -2743,16 +5611,19 @@ export function bootCoop({
       return;
     }
     if (restore && !disposed && !document.hidden && document.hasFocus?.() !== false) {
-      // Header links are outside the paused navigation root. Return to its safe
-      // primary instead of leaving keyboard focus outside the active panel.
-      const origin = $('coop-overlay').contains(ticket.opener) ? ticket.opener : primary();
+      // Both the pause panel and its visible masthead are navigable owners.
+      // Stay returns to the exact opener without resuming either player.
+      const origin =
+        $('coop-overlay').contains(ticket.opener) || menuMasthead?.contains(ticket.opener)
+          ? ticket.opener
+          : primary();
       (visibleAction(origin) ? origin : primary()).focus({ preventScroll: true });
     }
   }
   function cancelDeparture(options) {
     closeDeparture(departure, options);
   }
-  function requestDeparture(kind, opener) {
+  function requestDeparture(kind, opener, { revealDifficulty = false, runningEnemies } = {}) {
     discovery?.close({ restore: false });
     cancelNext();
     if (
@@ -2761,54 +5632,75 @@ export function bootCoop({
       settingsDialog.open ||
       earnedDialog.open ||
       pictureOperation ||
-      !Object.hasOwn(departureLabels, kind)
+      !Object.hasOwn(departureLabelKeys, kind)
     )
       return;
+    const restartRecipe =
+      kind === 'retry' && typeof runningEnemies === 'boolean'
+        ? { ...currentRecipe(), runningEnemies }
+        : null;
     if (!unfinished()) {
-      if (kind === 'setup') lobby();
+      if (kind === 'setup') lobby({ revealDifficulty });
       else if (kind === 'retry') {
         try {
-          start();
+          start(restartRecipe ?? currentRecipe());
         } catch (error) {
-          pictureUI(`Team attempt unchanged: ${error.message}`);
+          pictureUI(
+            localizedMessage('gameplay:team.pictureAttemptUnchanged', { error: error.message }),
+          );
         }
       }
       return;
     }
-    const ticket = { kind, opener, run, generation, recipe: currentRecipe() };
+    const ticket = { kind, opener, run, generation, recipe: restartRecipe ?? currentRecipe() };
     departure = ticket;
     pause();
     if (departure !== ticket) return; // A paint fault cancelled this decision.
     // Already-paused and faulted attempts also shed stale UI/flight input.
     clear();
-    $('coop-discard-title').textContent = 'Discard this Team attempt?';
-    $('coop-discard-copy').textContent =
-      `This unfinished attempt is not saved; discarding it loses its current territory, not previously recorded mission clears. ${
-        loopStopped
-          ? 'Stay keeps this stopped attempt on screen. It cannot resume after the arena error.'
-          : 'Stay keeps both players paused. Resume together remains a separate action.'
-      } ${
-        kind === 'retry'
-          ? 'Discard and retry starts this same arena again from the beginning.'
-          : kind === 'setup'
-            ? 'Discard and change setup clears this attempt without starting another.'
-            : 'Discard and leave returns to the linked mode and loses this Team attempt.'
-      }`;
-    $('coop-discard-confirm').textContent = departureLabels[kind];
+    localizedText($('coop-discard-title'), () => t('interface:discardThisTeamAttempt'));
+    localizedText($('coop-discard-copy'), () =>
+      durableHuntAttempt(run)
+        ? teamHuntSaveText(kind === 'retry' ? 'retrySaved' : 'leaveSaved')
+        : `${t(
+            installedTeamAttempts.get(run)?.durable
+              ? 'interface:team.savedCheckpointDiscard'
+              : 'interface:thisUnfinishedAttemptIsNotSavedDiscardingItLosesIts',
+          )} ${
+            loopStopped
+              ? t('interface:stayKeepsThisStoppedAttemptOnScreenItCannotResume')
+              : t('interface:stayKeepsBothPlayersPausedResumeTogetherRemainsASeparate')
+          } ${
+            kind === 'retry'
+              ? t('interface:discardAndRetryStartsThisSameArenaAgainFromThe')
+              : kind === 'setup'
+                ? t('interface:discardAndChangeSetupClearsThisAttemptWithoutStartingAnother')
+                : kind === 'catalogue'
+                  ? t('interface:discardAndSwitchJourneyOpensTheOtherTeamCatalogueAnd')
+                  : t('interface:discardAndLeaveReturnsToTheLinkedModeAndLoses')
+          }`,
+    );
+    localizedText($('coop-discard-confirm'), () => t(departureLabelKeys[kind]));
     try {
       departureDialog.showModal();
       $('coop-discard-stay').focus({ preventScroll: true });
     } catch (error) {
       closeDeparture(ticket);
       message(
-        `Could not open the confirmation. The Team attempt stays ${loopStopped ? 'stopped' : 'paused'}: ${error.message}`,
+        t(
+          loopStopped
+            ? 'interface:team.confirmationUnavailableStopped'
+            : 'interface:team.confirmationUnavailablePaused',
+          { error: error.message },
+        ),
       );
     }
   }
   $('coop-discard-stay').onclick = () => cancelDeparture();
-  $('coop-discard-confirm').onclick = () => {
+  $('coop-discard-confirm').onclick = async () => {
     const ticket = departure;
     if (!ticket || disposed || ticket.run !== run || ticket.generation !== generation) return;
+    if (ticket.downloadController) return;
     if (document.hidden || document.hasFocus?.() === false) {
       cancelDeparture({ restore: false });
       return;
@@ -2825,7 +5717,9 @@ export function bootCoop({
     let prepared;
     try {
       if (ticket.kind === 'retry') {
-        prepared = createCoop(ticket.recipe.level, ticket.recipe.options);
+        prepared = createTunedCoop(ticket.recipe);
+        const record = huntAttempts.get(ticket.run);
+        if (record) huntRetryOwners.set(prepared, record.recorder.attemptId);
       }
       const destination =
         ticket.kind === 'return'
@@ -2834,17 +5728,41 @@ export function bootCoop({
             ? new URL(homeHref, location.href).href
             : ticket.kind === 'versus'
               ? new URL(versusHref, location.href).href
-              : null;
+              : ticket.kind === 'catalogue'
+                ? new URL(catalogueHref, location.href).href
+                : null;
+      if (destination && offlineAvailability().packageConsent) {
+        const controller = new AbortController();
+        ticket.downloadController = controller;
+        await gameplayDownloads.ensureDestination(destination, { signal: controller.signal });
+        if (
+          controller.signal.aborted ||
+          disposed ||
+          departure !== ticket ||
+          ticket.run !== run ||
+          ticket.generation !== generation
+        )
+          return;
+      }
       closeDeparture(ticket, { restore: false });
       if (ticket.kind === 'setup') lobby();
       else if (ticket.kind === 'retry') start(ticket.recipe, prepared);
-      else location.assign(destination);
+      else location.assign(nativeArtReviewURL(destination, location.href));
     } catch (error) {
-      message(`The Team attempt could not be replaced: ${error.message}`);
+      if (error.name === 'AbortError') return;
+      message(t('interface:team.replaceFailed', { error: error.message }));
       if (departure === ticket)
-        $('coop-discard-copy').textContent =
-          `The Team attempt is still here and is not saved. ${error.message} Stay keeps it on screen.`;
+        localizedText($('coop-discard-copy'), () =>
+          t(
+            installedTeamAttempts.get(run)?.durable
+              ? 'interface:team.attemptStillHereSaved'
+              : 'interface:team.attemptStillHere',
+            { error: error.message },
+          ),
+        );
       else primary().focus({ preventScroll: true });
+    } finally {
+      if (departure === ticket) ticket.downloadController = null;
     }
   };
   departureDialog.addEventListener('cancel', (event) => {
@@ -2864,6 +5782,7 @@ export function bootCoop({
     ['coop-home', 'home'],
     ['coop-solo', fromSolo ? 'return' : 'home'],
     ['coop-versus', 'versus'],
+    ['coop-catalogue', 'catalogue'],
   ])
     $(id).addEventListener('click', (event) => {
       if (
@@ -2878,7 +5797,16 @@ export function bootCoop({
       cancelNext();
       $(id).setAttribute(
         'href',
-        kind === 'return' ? returnHref() : kind === 'versus' ? versusHref : homeHref,
+        nativeArtReviewURL(
+          kind === 'return'
+            ? returnHref()
+            : kind === 'versus'
+              ? versusHref
+              : kind === 'catalogue'
+                ? catalogueHref
+                : homeHref,
+          location.href,
+        ),
       );
       if (departure || pictureOperation) {
         event.preventDefault();
@@ -2886,25 +5814,17 @@ export function bootCoop({
       }
       if (!unfinished()) return;
       event.preventDefault();
-      requestDeparture(kind, $(id));
+      const fromSettings = settingsDialog.open && settingsDialog.contains($(id));
+      if (fromSettings) closeSettings({ restore: false });
+      requestDeparture(kind, fromSettings ? $('coop-settings-open') : $(id));
     });
-  function cancelAutomaticRetry() {
-    if (!automaticRetry) return;
-    automaticRetry = null;
-    if (run?.status === 'lost')
-      $('coop-overlay-copy').textContent = coopRetryFeedback(run, knockdowns.filter(Boolean));
-  }
-  const retryFocusChanged = () => {
-    if (document.activeElement !== $('coop-retry')) cancelAutomaticRetry();
-  };
-  document.addEventListener('focusin', retryFocusChanged);
   const suspend = () => {
     if (disposed) return;
     cancelJourneySkip();
     music?.suspend();
+    contextualReactions?.suspend();
     discovery?.cancel();
     cancelDiscoveryPreparation();
-    cancelAutomaticRetry();
     if (settingsOwner) settingsOwner.restore = false;
     inactive = true;
     cancelImport();
@@ -2912,12 +5832,17 @@ export function bootCoop({
     cancelDeparture({ restore: false });
     // Losing foreground also retires menu ownership while already paused.
     // A reader or held menu repeat must not outlive this lifecycle boundary.
+    controllerConfirmGuard.requireNeutral();
     clear();
     framePads = [];
     last = null;
   };
   const returned = () => {
     if (disposed || !foreground()) return;
+    // visibilitychange also resets native echo state before this handler runs.
+    // Re-establish the lifecycle neutral gate so a controller still held while
+    // returning cannot suppress the first deliberate keyboard action after release.
+    controllerConfirmGuard.requireNeutral();
     inactive = false;
     last = null;
     if (music && !loopStopped) void music.resume();
@@ -2927,20 +5852,63 @@ export function bootCoop({
     if (document.hidden) suspend();
     else returned();
   };
-  window.addEventListener('blur', suspend);
+  const windowBlur = guardGlobalSettingsToolBlur(guardInstallOfflineBlur(suspend));
+  window.addEventListener('blur', windowBlur);
   window.addEventListener('focus', returned);
   document.addEventListener('visibilitychange', hidden);
   function events() {
+    prepareReactionAttempt();
+    contextualReactions?.events(run.events, {
+      mode: 'team',
+      actorFamilyFor: (id) => pursuitRoster(run.level).find((actor) => actor.id === id)?.family,
+      actorFamilies: pursuitRoster(run.level).map((actor) => actor.family),
+      board: 'team',
+      danger:
+        run.environment?.emitters.some((source) => source.phase === 'warning') ||
+        run.environment?.erosion.some((source) => source.warning.length > 0) ||
+        run.combatPatrols?.actors.some((actor) => actor.alive && actor.phase === 'warning') ||
+        run.combatPatrols?.projectiles.length > 0 ||
+        run.players.some((player) => player.status === 'downed') ||
+        run.enemies.some(
+          (enemy) => ['warning', 'commit'].includes(enemy.phase) || enemy.rover?.mode === 'warning',
+        ) ||
+        run.strongholds.some((stronghold) => stronghold.emitter?.phase === 'warning') ||
+        run.impacts.length > 0,
+    });
+    const feedbackRow = acceptedPicture?.journeyRow;
+    music?.sound.events(
+      run.events,
+      run,
+      { family: acceptedPicture?.request.themeId ?? 'fpv' },
+      {
+        mode: 'team',
+        actorStyle: acceptedPicture?.actorAppearance?.style,
+        resultContext: candidateJourney?.owns(feedbackRow)
+          ? {
+              owned: true,
+              mode: 'team',
+              outcome: run.status,
+              missionId: feedbackRow.mission.id,
+              feedback: feedbackRow.campaignFeedback,
+            }
+          : null,
+      },
+    );
+    painter.observe(run);
     const terminalMessage =
       run.status === 'won'
-        ? 'Team objective complete. Your shared result is ready.'
+        ? t('interface:teamObjectiveCompleteYourSharedResultIsReady')
         : run.status === 'lost'
-          ? 'Team attempt ended. Choose Retry or Change setup.'
+          ? t('interface:teamAttemptEndedChooseRetryOrChangeSetup')
           : null;
     // The final step still owns its input cleanup, but its live region must
     // not announce instructions for an attempt that has ended.
+    let latestAnnouncement = null;
     const announce = (text, options) => {
-      if (!terminalMessage) message(text, options);
+      if (!terminalMessage) {
+        latestAnnouncement = { text, options };
+        message(text, options);
+      }
     };
     // Only this owned instructional cue expires on movement. A later threat,
     // bonus, rescue or menu message revokes ownership in message() above.
@@ -2950,7 +5918,7 @@ export function bootCoop({
         ({ id, x, y }) => run.players[id].x !== x || run.players[id].y !== y,
       )
     )
-      announce('Choose your next route. Close cuts on reclaimed ground.');
+      announce(t('interface:chooseYourNextRouteCloseCutsOnReclaimedGround'));
     const captureTeaching = candidateCaptureTeaching?.(
       acceptedPicture?.journeyRow,
       run,
@@ -2983,21 +5951,19 @@ export function bootCoop({
       }
       const roamerCaption = coopRoamerCaption(event);
       if (roamerCaption) announce(roamerCaption);
-      const bonusCaption = coopBonusCaption(event, names);
+      const bonusCaption = coopBonusCaption(event, names());
       if (bonusCaption) announce(bonusCaption);
       if (event.type === 'cut.joint')
         announce(
           captureTeaching
-            ? `Joint Cut! ${captureTeaching}`
-            : 'Joint Cut! Both lines are banked. Choose your next route together.',
+            ? t('interface:team.jointCutTeaching', { teaching: captureTeaching })
+            : t('interface:jointCutBothLinesAreBankedChooseYourNextRoute'),
         );
       if (event.type === 'player.downed') {
         knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(
-          `${coopFailureFeedback(run, event).cause} ${names[event.player]} needs a rescue. Hold Support nearby${run.config.advancedCooperation ? ' or capture 2% new territory' : ''}.`,
-        );
+        announce(rescueMessage(event));
       }
       if (event.type === 'player.revived') {
         const cause =
@@ -3007,134 +5973,486 @@ export function bootCoop({
         knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(
-          `${cause ? `${cause} ` : ''}${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
+        announce(() =>
+          t('interface:team.playerBack', {
+            cause: cause ? `${cause} ` : '',
+            player: names()[event.player],
+            reserve: event.reason === 'reserve' ? ' ' + t('interface:oneTeamReserveUsed') : '',
+          }),
         );
       }
       if (event.type === 'team.recovery') {
         const cause = coopRecoveryCause(run, recoveryFailures);
-        announce(
-          `${cause ? `${cause} ` : ''}Both craft are back. One team reserve used. Choose fresh directions together.`,
-        );
+        announce(() => t('interface:team.bothCraftBack', { cause: cause ? `${cause} ` : '' }));
       }
       if (event.type === 'shield.disabled')
-        announce('Both anchors secured! Now capture the exposed core in a new cut.');
+        announce(
+          t(
+            run.environment
+              ? 'interface:expeditions.pathOpened'
+              : 'interface:bothAnchorsSecuredNowCaptureTheExposedCoreInA',
+          ),
+        );
       if (event.type === 'core.defeated')
-        announce('Stronghold defeated! Its emitter and travelling sparks are gone.');
+        announce(
+          t(
+            run.environment
+              ? 'interface:expeditions.sourceDisabled'
+              : 'interface:strongholdDefeatedItsEmitterAndTravellingSparksAreGone',
+          ),
+        );
+      if (event.type === 'emitter.warning' && run.environment)
+        announce(t('interface:expeditions.warning'));
       if (event.type === 'support.pulse') {
         if (event.interceptedImpacts?.length)
-          announce(`${names[event.player]} intercepted a travelling spark.`);
+          announce(() => t('interface:team.sparkIntercepted', { player: names()[event.player] }));
         else if (event.slowedEnemies?.length)
-          announce(`${names[event.player]} slowed the pressure. There is room to finish a cut.`);
+          announce(() => t('interface:team.pressureSlowed', { player: names()[event.player] }));
       }
       if (event.type === 'rescue.completed') {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce(
-          `${names[event.player]} rescued their partner. Both craft are ready for a fresh direction.`,
-        );
+        announce(() => t('interface:team.partnerRescued', { player: names()[event.player] }));
       }
       if (event.type === 'rescue.cancelled' && event.requiresFreshSteering) {
         input.clearPlayer(event.player);
         batch.release(event.player);
-        announce('Rescue interrupted. Choose a fresh direction or hold Support nearby again.');
+        announce(t('interface:rescueInterruptedChooseAFreshDirectionOrHoldSupportNearby'));
       }
     }
+    // Terminal presentation suppresses coaching, but the teaching memory must
+    // still observe the final authoritative events. A Support pulse can share
+    // the winning step and must not become an obsolete prompt on Retry.
+    const observedCue = contextualTeaching.observe(
+      run.events,
+      coopArenaGuidance(run.level, run.config),
+    );
+    const coachCue = terminalMessage ? null : observedCue;
+    if (coachCue) {
+      message(
+        () => {
+          const announcement =
+            typeof latestAnnouncement?.text === 'function'
+              ? latestAnnouncement.text()
+              : latestAnnouncement?.text;
+          const teaching = t(coachCue.key, coachCue.values);
+          return announcement ? `${announcement} ${teaching}` : teaching;
+        },
+        { ...(latestAnnouncement?.options ?? {}), coach: coachCue.kind },
+      );
+    }
     if (terminalMessage) message(terminalMessage);
+  }
+  const installedPreset = (completedRun) =>
+    COOP_PLAYTEST_CONFIGURATIONS.find((candidate) =>
+      ['jointCuts', 'assistCaptures', 'advancedCooperation'].every(
+        (key) => candidate[key] === completedRun.config[key],
+      ),
+    );
+  function installedPictureReward(picture) {
+    const choice = picture?.binding?.choice,
+      asset = choice?.picture;
+    if (
+      choice?.kind !== 'image' ||
+      !asset ||
+      typeof asset.sha256 !== 'string' ||
+      !Number.isSafeInteger(asset.bytes) ||
+      !Number.isSafeInteger(asset.width) ||
+      !Number.isSafeInteger(asset.height)
+    )
+      return undefined;
+    return {
+      kind: 'picture',
+      sourceKind: choice.sourceKind ?? 'registered-original',
+      sha256: asset.sha256,
+      bytes: asset.bytes,
+      mime: asset.mime,
+      width: asset.width,
+      height: asset.height,
+    };
+  }
+  function beginHuntAttempt(currentRun, picture, restored, { armed = true, attemptId } = {}) {
+    const tuning = attemptTuning.get(currentRun);
+    if (!currentRun.level.hunt || !tuning) return;
+    const existing = huntAttemptStore.read();
+    const replaceAttemptId =
+      !restored &&
+      existing.snapshot &&
+      huntRetryOwners.get(currentRun) === existing.snapshot.attemptId
+        ? existing.snapshot.attemptId
+        : null;
+    const recorder = createTeamHuntRecorder({
+      run: currentRun,
+      pack: picture.sourcePack,
+      level: tuning.pictureLevel,
+      tuning: tuning.tuning,
+      encounterLevel: tuning.encounterLevel,
+      encounterVariant: tuning.encounterVariant,
+      runningEnemies: tuning.runningEnemies,
+      runningEnemyStyle: tuning.runningEnemyStyle,
+      attemptId,
+      gameplayId: tuning.gameplayId,
+      restored,
+    });
+    huntAttempts.set(currentRun, {
+      recorder,
+      raw: restored?.raw ?? (replaceAttemptId ? existing.raw : null),
+      replaceAttemptId,
+      lastTick: restored?.snapshot.checkpoint.tick ?? -600,
+      failed: false,
+      armed,
+    });
+    huntSaveControls.refresh();
+  }
+  function recordTeamInputRelease(currentRun) {
+    localRecordings.get(currentRun)?.release();
+    if (!['running', 'paused'].includes(currentRun.status)) return;
+    huntAttempts.get(currentRun)?.recorder.release();
+    const installed = installedTeamAttempts.get(currentRun);
+    if (installed && !installed.segments.at(-1)?.release)
+      installed.segments.push({ release: true });
+  }
+  function persistHuntAttempt(currentRun, { force = false } = {}) {
+    const record = currentRun && huntAttempts.get(currentRun);
+    if (
+      !record ||
+      !record.armed ||
+      record.disabled ||
+      !['running', 'paused'].includes(currentRun.status) ||
+      (!force && currentRun.tick - record.lastTick < 600)
+    )
+      return;
+    record.lastTick = currentRun.tick;
+    try {
+      record.raw = huntAttemptStore.save(record.recorder.snapshot(), record.raw, {
+        attemptAppearance: attemptTuning.get(currentRun)?.attemptAppearance ?? null,
+        replaceAttemptId: record.replaceAttemptId,
+      });
+      record.replaceAttemptId = null;
+      record.failed = false;
+      huntSaveControls.failure(false);
+    } catch {
+      record.failed = true;
+      huntSaveControls.failure(true);
+    }
+  }
+  function clearHuntAttempt(currentRun) {
+    const record = huntAttempts.get(currentRun);
+    if (!record?.raw) return;
+    try {
+      const saved = huntAttemptStore.read();
+      if (saved.snapshot?.attemptId !== record.recorder.attemptId) return;
+      huntAttemptStore.discard(record.raw);
+      record.raw = null;
+      huntSaveControls.failure(false);
+    } catch {
+      huntSaveControls.failure(true);
+    }
+  }
+  function durableHuntAttempt(currentRun) {
+    const record = currentRun && huntAttempts.get(currentRun);
+    const saved = record?.raw && huntAttemptStore.read();
+    return (
+      !!saved && saved.raw === record.raw && saved.snapshot?.attemptId === record.recorder.attemptId
+    );
+  }
+  function beginInstalledTeamAttempt(
+    currentRun,
+    picture,
+    restored = null,
+    { deferSave = false, releasedBeforeBinding = false } = {},
+  ) {
+    localRecordings.get(currentRun)?.bindSource({
+      ...(picture?.installedEditionId ? { editionId: picture.installedEditionId } : {}),
+      ...(picture?.pack ? { packageIdentity: dataIdentity(picture.pack) } : {}),
+    });
+    const attemptId = teamPersistenceId(currentRun, restored);
+    teamStatsProvenance.set(currentRun, restored ? 'continue' : 'live');
+    beginHuntAttempt(currentRun, picture, restored, { armed: !deferSave, attemptId });
+    if (releasedBeforeBinding) huntAttempts.get(currentRun)?.recorder.release();
+    const editionId = picture?.installedEditionId,
+      setup = installedPreset(currentRun),
+      tuning = attemptTuning.get(currentRun);
+    if (
+      !installedTeamStore ||
+      !editionId ||
+      !['full', 'joint'].includes(setup?.id) ||
+      !tuning ||
+      tuning.adminOverride
+    )
+      return;
+    const progress = installedTeamProgress.get(editionId),
+      record = {
+        editionId,
+        levelId: currentRun.level.id,
+        attemptId,
+        gameplayId: tuning.gameplayId,
+        presetId: setup.id,
+        tuning: tuning.tuning,
+        encounterVariant: tuning.encounterVariant ?? 'authored',
+        runningEnemies: tuning.runningEnemies ?? false,
+        runningEnemyStyle: tuning.runningEnemyStyle,
+        encounterLevelIdentity: dataIdentity(tuning.encounterLevel ?? tuning.pictureLevel),
+        segments: structuredClone(restored?.snapshot.segments ?? []),
+        generation: restored?.generation ?? progress?.generation,
+        lastQueuedTick: restored?.snapshot.checkpoint.tick ?? -1,
+        chain: Promise.resolve(),
+        failure: null,
+        durable: Boolean(restored && !restored.huntAttempt),
+        armed: !deferSave,
+      };
+    if (releasedBeforeBinding && !record.segments.at(-1)?.release)
+      record.segments.push({ release: true });
+    installedTeamAttempts.set(currentRun, record);
+    if (!restored && !deferSave) persistInstalledTeamAttempt(currentRun, picture, { force: true });
+  }
+  function appendInstalledTeamCommands(currentRun, commands) {
+    const record = installedTeamAttempts.get(currentRun);
+    if (!record) return;
+    const copied = structuredClone(commands),
+      previous = record.segments.at(-1);
+    if (previous?.commands && canonicalJSON(previous.commands) === canonicalJSON(copied))
+      previous.ticks++;
+    else record.segments.push({ ticks: 1, commands: copied });
+  }
+  function installedAttemptSnapshot(currentRun, record) {
+    return createInstalledTeamAttemptSnapshot({
+      editionId: record.editionId,
+      attemptId: record.attemptId,
+      gameplayId: record.gameplayId,
+      presetId: record.presetId,
+      run: currentRun,
+      tuning: record.tuning,
+      segments: record.segments,
+      encounterVariant: record.encounterVariant,
+      runningEnemies: record.runningEnemies,
+      runningEnemyStyle: record.runningEnemyStyle,
+      encounterLevelIdentity: record.encounterLevelIdentity,
+    });
+  }
+  function persistInstalledTeamAttempt(currentRun, picture, { force = false } = {}) {
+    persistHuntAttempt(currentRun, { force });
+    const record = installedTeamAttempts.get(currentRun);
+    if (
+      !record ||
+      !record.armed ||
+      record.failure ||
+      currentRun.status !== 'running' ||
+      (!force && currentRun.tick - record.lastQueuedTick < 600)
+    )
+      return;
+    const savedRun = installedAttemptSnapshot(currentRun, record);
+    record.lastQueuedTick = savedRun.checkpoint.tick;
+    record.chain = record.chain.then(async () => {
+      if (record.failure) return null;
+      try {
+        const progress = await installedTeamStore.recordAttempt(
+          withInstalledTeamAttemptAppearance(
+            savedRun,
+            attemptTuning.get(currentRun)?.attemptAppearance ?? null,
+          ),
+          {
+            expectedGeneration: record.generation,
+          },
+        );
+        record.generation = progress.generation;
+        record.durable = true;
+        installedTeamProgress.set(record.editionId, progress);
+        libraryChooser?.refresh();
+        return progress;
+      } catch (error) {
+        record.failure = error;
+        if (!disposed && run === currentRun && acceptedPicture === picture)
+          message(`Team attempt remains on screen but could not be saved: ${error.message}`);
+        return null;
+      }
+    });
+  }
+  function clearInstalledTeamAttempt(currentRun, picture) {
+    const record = installedTeamAttempts.get(currentRun);
+    if (!record || record.failure) return;
+    record.chain = record.chain.then(async () => {
+      if (record.failure) return null;
+      try {
+        const progress = await installedTeamStore.clearAttempt({
+          editionId: record.editionId,
+          levelId: record.levelId,
+          attemptId: record.attemptId,
+          expectedGeneration: record.generation,
+        });
+        record.generation = progress.generation;
+        installedTeamProgress.set(record.editionId, progress);
+        libraryChooser?.refresh();
+        return progress;
+      } catch (error) {
+        record.failure = error;
+        if (!disposed && run === currentRun && acceptedPicture === picture)
+          message(`Ended Team attempt could not clear its saved checkpoint: ${error.message}`);
+        return null;
+      }
+    });
+  }
+  function persistInstalledTeamCompletion(completedRun, picture, epoch) {
+    const editionId = picture?.installedEditionId;
+    const setup = installedPreset(completedRun),
+      tuning = attemptTuning.get(completedRun),
+      record = installedTeamAttempts.get(completedRun);
+    if (
+      !installedTeamStore ||
+      !editionId ||
+      !['full', 'joint'].includes(setup?.id) ||
+      !record ||
+      record.failure
+    )
+      return;
+    if (record.encounterVariant !== 'authored') {
+      clearInstalledTeamAttempt(completedRun, picture);
+      return;
+    }
+    const savedRun = installedAttemptSnapshot(completedRun, record);
+    record.chain = record.chain.then(async () => {
+      if (record.failure) return null;
+      return installedTeamStore.recordCompletion({
+        editionId,
+        levelId: completedRun.level.id,
+        runId: record.attemptId,
+        gameplayId: tuning.gameplayId,
+        difficulty: completedRun.difficulty,
+        presetId: setup.id,
+        attempt: savedRun,
+        reward: installedPictureReward(picture),
+        expectedGeneration: record.generation,
+      });
+    });
+    void record.chain.then(
+      (progress) => {
+        if (!progress) return;
+        record.generation = progress.generation;
+        installedTeamProgress.set(editionId, progress);
+        libraryChooser?.refresh();
+        if (
+          !disposed &&
+          run === completedRun &&
+          generation === epoch &&
+          acceptedPicture === picture
+        )
+          nextStatus(t('interface:missionLibrary.team.progressSaved'));
+      },
+      (error) => {
+        record.failure = error;
+        if (
+          !disposed &&
+          run === completedRun &&
+          generation === epoch &&
+          acceptedPicture === picture
+        )
+          nextStatus(
+            t('interface:missionLibrary.team.progressSaveFailed', { error: error.message }),
+          );
+      },
+    );
   }
   function update(now) {
     if (disposed) return;
     if (inactive || !foreground()) {
+      continuousPlay.cancel('inactive');
       if (!inactive) suspend();
       frame = requestAnimationFrame(update);
       return;
     }
     try {
       acceptMusic(acceptedPicture);
-      if (!loopStopped)
+      if (!loopStopped) {
+        music?.sound.feedback(
+          running(),
+          { family: acceptedPicture?.request.themeId ?? 'fpv' },
+          run,
+          { mode: 'team', actorStyle: acceptedPicture?.actorAppearance?.style },
+        );
         music?.update(running(), { family: acceptedPicture?.request.themeId ?? 'fpv' });
+      }
+      let readError = null;
       try {
-        framePads = [...(navigator.getGamepads?.() || [])];
-      } catch {
+        if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+        framePads = [...navigator.getGamepads()];
+      } catch (error) {
         framePads = [];
+        readError = error;
       }
-      const signatures = new Map(
-        framePads
-          .filter((pad) => pad?.connected)
-          .map((pad) => [
-            pad.index,
-            `${pad.id}:${pad.mapping}:${pad.buttons?.length}:${pad.axes?.length}`,
-          ]),
-      );
-      if ([...previousPads].some(([index, signature]) => signatures.get(index) !== signature)) {
-        pause();
-        clear();
-      }
-      previousPads = signatures;
+      framePads = controllerSession.sample(framePads, { active: running(), error: readError }).pads;
+      controllerSetup.refresh();
       input.poll();
       const routed = router.sample({ scope: scope(), timeMs: now });
+      controllerConfirmGuard.observe(routed.confirmHeld || controllerSession.frame().confirmHeld);
+      if (
+        routed.disconnected ||
+        (routed.confirmSnapshot?.eligible && routed.confirmSnapshot.held) ||
+        Object.values(routed.ui).some(Boolean)
+      )
+        continuousPlay.cancel('controller');
       if (!running()) {
         if (routed.status.code === 'joined' || Object.values(routed.ui).some(Boolean))
           setReadingModality('controller');
-        if (routed.status.code === 'joined') navigation.engage();
-        navigation.handle(routed.ui);
-      }
-      if (automaticRetry) {
-        const ticket = automaticRetry;
-        if (
-          run !== ticket.run ||
-          generation !== ticket.generation ||
-          acceptedPicture !== ticket.picture ||
-          attemptPack !== ticket.pack ||
-          run.status !== 'lost' ||
-          loopStopped ||
-          settingsVisit !== ticket.settingsVisit ||
-          settingsDialog.open ||
-          earnedDialog.open ||
-          departure ||
-          document.activeElement !== $('coop-retry')
-        )
-          cancelAutomaticRetry();
-        else if (now >= ticket.at) {
-          cancelAutomaticRetry();
-          start(currentRecipe());
-          if (run !== ticket.run && running())
-            message(`${ticket.cause} New attempt; choose fresh directions together.`);
+        if (!globalTools.handleFrameCommand(routed.ui)) {
+          if (routed.status.code === 'joined') navigation.engage();
+          navigation.handle(routed.ui);
         }
       }
       const elapsed = last === null ? 0 : (now - last) / 1000;
       last = now;
-      if (running() && elapsed > 0.25) pause();
+      // Results still own an automatic launch. Cancel that timer before a long
+      // callback can replace the result with a new (then immediately paused) run.
+      if (elapsed > 0.25) {
+        continuousPlay.cancel('stalled');
+        pause();
+      } else continuousPlay.advance(elapsed * 1000);
       if (running()) {
         accumulator += elapsed;
         while (accumulator + 1e-9 >= FIXED_DT && running()) {
           const commands = batch.consume(input.consume());
+          huntAttempts.get(run)?.recorder.append(commands);
+          appendInstalledTeamCommands(run, commands);
+          localRecordings.get(run)?.append(commands);
           stepCoop(run, commands, FIXED_DT);
+          const statsSelection = teamStatsOwnership.select(run, teamPersistenceId(run), {
+            provenance: attemptTuning.get(run)?.adminOverride
+              ? 'preview'
+              : (teamStatsProvenance.get(run) ?? 'live'),
+          });
+          enemyStatistics.begin(statsSelection.identity, { provenance: statsSelection.provenance });
+          const enemyDefeats = arcadeEnemyDefeats(run);
+          if (enemyDefeats.length)
+            void enemyStatistics.observe({ sequence: run.tick, defeats: enemyDefeats });
+          music?.sound.feedback(true, { family: acceptedPicture?.request.themeId ?? 'fpv' }, run, {
+            mode: 'team',
+            actorStyle: acceptedPicture?.actorAppearance?.style,
+            commands,
+          });
           accumulator -= FIXED_DT;
           events();
+          if (running()) persistInstalledTeamAttempt(run, acceptedPicture);
           if (!running()) {
+            enemyStatistics.finish();
+            clearHuntAttempt(run);
             const finishedAttempt = run,
               epoch = generation;
-            if (run.status === 'won') candidateProgress?.complete(run);
+            if (run.status === 'won') {
+              candidateProgress?.complete(run);
+              persistInstalledTeamCompletion(run, acceptedPicture, epoch);
+            } else clearInstalledTeamAttempt(run, acceptedPicture);
             if (disposed || run !== finishedAttempt || generation !== epoch) break;
             clear();
             overlay();
-            if (run.status === 'lost' && run.level.journeyDifficulty && !loopStopped) {
-              const failure = knockdowns.find(Boolean);
-              automaticRetry = {
-                run,
-                generation,
-                picture: acceptedPicture,
-                pack: attemptPack,
-                settingsVisit,
-                at: now + 700,
-                cause: failure
-                  ? coopFailureFeedback(run, failure).cause
-                  : 'The team ran out of reserves.',
-              };
-              $('coop-overlay-copy').textContent +=
-                ' A fresh attempt starts shortly. Choose another action to stay here.';
-            }
+            const next = run.status === 'won' ? teamDestination() : null;
+            continuousPlay.begin({
+              identity: run,
+              outcome: run.status,
+              canAdvance: !!next?.next && !next.crossesCampaign,
+              replayMs: 0,
+              readyMs: 400,
+            });
+            if (run.status === 'won' && !$('coop-next').hidden)
+              $('coop-next').focus({ preventScroll: true });
           }
         }
       }
@@ -3145,14 +6463,49 @@ export function bootCoop({
     frame = requestAnimationFrame(update);
   }
   $('coop-start').onclick = () => requestDeparture('retry', $('coop-start'));
-  $('coop-retry').onclick = () => requestDeparture('retry', $('coop-retry'));
-  $('coop-resume').onclick = resume;
+  localizedText($('coop-export-recording'), () => t('interface:recording.exportTeam'));
+  // A retained locale binding belongs to this recording's original build.
+  const recordingPageHref =
+    globalThis.location?.href ??
+    document.baseURI ??
+    'http://localhost/game/couch/relay-rescue.html';
+  localizedAttribute($('coop-verify-recording'), 'href', () =>
+    recordingVerificationHref(recordingPageHref, getLocale()),
+  );
+  $('coop-export-recording').onclick = async () => {
+    const owner = run;
+    if (!['won', 'lost'].includes(owner?.status)) return;
+    try {
+      const recorder = localRecordings.get(owner);
+      if (!recorder) throw new Error('Recording is unavailable for this attempt.');
+      await recordingExport.request(owner, recorder, `revealline-team-${owner.level.id}.json`);
+    } catch (error) {
+      if (!disposed && run === owner)
+        localizedText($('coop-recording-status'), () => error.message);
+    }
+  };
+  $('coop-retry').onclick = () => {
+    continuousPlay.cancel('retry');
+    requestDeparture('retry', $('coop-retry'));
+  };
+  $('coop-resume').onclick = () =>
+    run?.status === 'ready' ? start(currentRecipe(), run) : resume();
   $('coop-pause').onclick = pause;
-  $('coop-lobby').onclick = () => requestDeparture('setup', $('coop-lobby'));
-  function supportGuidance(guidance) {
-    $('coop-support-help').textContent = guidance.supportText;
-    $('coop-help-support').textContent =
-      `${guidance.supportText} A downed player can crawl along ${guidance.groundName} to meet their partner.`;
+  $('coop-lobby').onclick = () => {
+    const changeDifficulty = run?.status === 'lost';
+    requestDeparture('setup', $('coop-lobby'), {
+      revealDifficulty: changeDifficulty,
+    });
+  };
+  $('coop-home-paused').onclick = () => requestDeparture('home', $('coop-home-paused'));
+  function supportGuidance(guidance, level) {
+    localizedText($('coop-support-help'), () => guidance().supportText);
+    localizedText($('coop-help-support'), () =>
+      t('gameplay:team.supportHelp', {
+        context: coopGroundContext(level),
+        support: guidance().supportText,
+      }),
+    );
   }
   function selectedCandidateRow() {
     const level = selectedLevel();
@@ -3165,38 +6518,83 @@ export function bootCoop({
       Boolean(level.journeyDifficulty) &&
       (Boolean(run) || !candidatePreferences || !selectedCandidateRow());
     if (level.journeyDifficulty) $('coop-difficulty').value = level.journeyDifficulty;
+    gameplayTuningPanel?.refresh();
   }
   function setupNote({ level = selectedLevel(), experiment = selectedConfiguration() } = {}) {
+    huntSaveControls?.refresh();
     difficultyControls(level);
-    const guidance = coopArenaGuidance(level, experiment);
-    $('coop-closure-help').textContent =
-      `Draw a short loop back to ${guidance.groundName} to claim it. Banking stops your craft; steer again for your next cut.`;
-    $('coop-intro').textContent = experiment.jointCuts
-      ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
-      : `Start with small loops. Cover each other and return to ${guidance.groundName} to bank each line.`;
-    $('coop-cut-title').textContent = experiment.jointCuts
-      ? 'Join when ready.'
-      : 'Bring each line home.';
-    $('coop-cut-help').textContent = experiment.jointCuts
-      ? 'Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.'
-      : `Return to ${guidance.groundName} to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.`;
-    $('coop-threat-title').textContent = guidance.threatTitle;
-    $('coop-threat-help').textContent = guidance.threatText;
-    supportGuidance(guidance);
-    $('coop-stronghold-help').hidden = !guidance.showStrongholds;
-    $('coop-stronghold-title').textContent = guidance.strongholdTitle;
-    $('coop-stronghold-copy').textContent = guidance.strongholdText;
-    $('coop-menu-goal').textContent = coopGoalText(level);
-    $('coop-briefing-title').textContent = guidance.briefingTitle;
-    $('coop-stage').textContent = level.name.toUpperCase();
-    $('coop-level-note').textContent = guidance.levelNote;
-    $('coop-setup-note').textContent = experiment.advancedCooperation
-      ? 'Captures recharge both players’ Support and can rescue a downed partner.'
-      : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
+    if (run) level = run.level;
+    else {
+      try {
+        level =
+          deriveEncounterLevel(level, encounterPreferences.snapshot().variant, { mode: 'team' }) ??
+          level;
+      } catch {
+        // Unavailable prospective variants retain the authored setup guidance.
+      }
+    }
+    const guidance = () => coopArenaGuidance(level, experiment);
+    localizedText($('coop-closure-help'), () =>
+      t('gameplay:team.closeLoop', { context: coopGroundContext(level) }),
+    );
+    localizedText($('coop-intro'), () =>
+      experiment.jointCuts
+        ? t('interface:startWithASmallLoopCoverEachOtherThenMeet')
+        : t('gameplay:team.independentIntro', { context: coopGroundContext(level) }),
+    );
+    localizedText($('coop-cut-title'), () =>
+      experiment.jointCuts ? t('interface:joinWhenReady') : t('interface:bringEachLineHome'),
+    );
+    localizedText($('coop-cut-help'), () =>
+      experiment.jointCuts
+        ? t('interface:steerBothMovingHeadsTogetherToBankASharedCut')
+        : t('gameplay:team.independentCut', { context: coopGroundContext(level) }),
+    );
+    localizedText($('coop-threat-title'), () => guidance().threatTitle);
+    localizedText($('coop-threat-help'), () => guidance().threatText);
+    supportGuidance(guidance, level);
+    $('coop-stronghold-help').hidden = !guidance().showStrongholds;
+    localizedText($('coop-stronghold-title'), () => guidance().strongholdTitle);
+    localizedText($('coop-stronghold-copy'), () => guidance().strongholdText);
+    localizedText($('coop-menu-goal'), () => coopGoalLabel(level));
+    localizedText($('coop-briefing-title'), () => guidance().briefingTitle);
+    localizedText($('coop-stage'), () => contentText(level, 'name').toUpperCase());
+    refreshGameplayTuningNote(level, experiment);
+    localizedText($('coop-setup-note'), () =>
+      experiment.advancedCooperation
+        ? t('interface:capturesRechargeBothPlayersSupportAndCanRescueADowned')
+        : t('interface:comparisonSupportRefillsOnItsTimerRescueByHoldingSupport'),
+    );
+  }
+  function refreshGameplayTuningNote(
+    level = selectedLevel(),
+    experiment = selectedConfiguration(),
+  ) {
+    const difficulty = level.journeyDifficulty ?? gameplayPreferences.snapshot().difficulty;
+    localizedText($('coop-level-note'), () =>
+      t('gameplay:tuning.teamNote', {
+        guidance: coopArenaGuidance(level, experiment).levelNote,
+        description: gameplayTuningDescription(gameplayTuning.snapshot(difficulty)),
+      }),
+    );
   }
   function showPackStatus() {
     const candidate = candidateJourney?.rows.find((row) => row.pack === pack);
-    const label = `${pack.name} · ${pack.levels.length} levels${packArtworkSource ? ' · Local artwork' : ''}${candidate ? ` · ${candidate.background ? 'Original-art candidate' : 'Geometry test'} · not human validated` : ''}`;
+    const label = () =>
+      t('interface:team.packStatus', {
+        pack: contentText(pack, 'name'),
+        count: pack.levels.length,
+        artwork: packArtworkSource ? ` · ${t('interface:team.localArtwork')}` : '',
+        validation: candidate
+          ? defaultJourney
+            ? ` · ${t('interface:team.originalArtwork')}`
+            : ` · ${
+                candidate.background
+                  ? t('interface:originalArtCandidate')
+                  : t('interface:geometryTest')
+              } · ${t('interface:team.notHumanValidated')}`
+          : '',
+      });
     packStatus.begin({ message: label }).finish({ message: label });
   }
   function showPack(next, preferred = next.levels[0].id, isCurrent = () => true) {
@@ -3207,7 +6605,11 @@ export function bootCoop({
       ...pack.levels.map((level) => {
         const option = document.createElement('option');
         option.value = level.id;
-        option.textContent = `${level.name} · ${level.goal.cores ? 'stronghold' : 'territory'} challenge`;
+        localizedText(option, () =>
+          t(level.goal.cores ? 'gameplay:team.challengeCore' : 'gameplay:team.challengeTerritory', {
+            name: contentText(level, 'name'),
+          }),
+        );
         return option;
       }),
     );
@@ -3217,7 +6619,11 @@ export function bootCoop({
     showPackStatus();
     if (!owns()) return;
     $('coop-pack-reset').hidden = pack === COOP_STARTER_PACK;
-    if (owns()) setupNote();
+    if (owns()) {
+      setupNote();
+      encounterControls.refresh();
+      runningEnemyControls.refresh();
+    }
   }
   async function prepareImport(draft, { retry = false, origin = document.activeElement } = {}) {
     if (
@@ -3249,8 +6655,8 @@ export function bootCoop({
       !controller.signal.aborted;
     const display = packStatus.begin({
       message: draft.pack
-        ? 'Preparing the imported Team picture…'
-        : 'Reading the selected Team pack…',
+        ? t('interface:preparingTheImportedTeamPicture')
+        : t('interface:readingTheSelectedTeamPack'),
       stage: draft.pack ? 'preparing' : 'reading',
     });
     const operation = { draft, controller, focus, display };
@@ -3263,7 +6669,10 @@ export function bootCoop({
       pictureUI();
       if (!draft.pack) {
         if (draft.kind === 'artwork') {
-          display.update({ message: 'Checking the Team artwork bundle…', stage: 'verifying' });
+          display.update({
+            message: t('interface:checkingTheTeamArtworkBundle'),
+            stage: 'verifying',
+          });
           if (!current()) return;
           let source;
           try {
@@ -3274,10 +6683,13 @@ export function bootCoop({
                 display.update({
                   message:
                     stage === 'checking-picture'
-                      ? `Checking local artwork ${index + 1} of ${total}…`
+                      ? t('interface:team.checkingLocalArtwork', {
+                          index: index + 1,
+                          total,
+                        })
                       : stage === 'ready'
-                        ? 'Local artwork validated. Preparing the selected arena…'
-                        : 'Checking Team arenas and artwork…',
+                        ? t('interface:localArtworkValidatedPreparingTheSelectedArena')
+                        : t('interface:checkingTeamArenasAndArtwork'),
                   stage: 'verifying',
                 });
               },
@@ -3291,13 +6703,38 @@ export function bootCoop({
           draft.artworkSource = source;
           draft.pack = source.pack;
         } else {
-          if (draft.file.size > COOP_PACK_MAX_BYTES)
-            throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
-          const source = await draft.file.text();
+          display.update({
+            message: t('interface:checkingTeamArenasAndRules'),
+            stage: 'verifying',
+          });
           if (!current()) return;
-          display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
+          const playable = await readPlayableTeamCampaign(draft.file, {
+            signal: controller.signal,
+          });
           if (!current()) return;
-          draft.pack = readCoopPack(source);
+          draft.pack = playable.pack;
+          draft.creatorCampaign = playable.prepared;
+          draft.teamMedia = playable.media ?? null;
+          if (playable.prepared && installedTeamStore) {
+            display.update({
+              message: t('interface:missionLibrary.team.installingVerifiedEdition'),
+              stage: 'verifying',
+            });
+            try {
+              const installed = await installedTeamStore.install(
+                playable.media ?? playable.prepared,
+                {
+                  signal: controller.signal,
+                },
+              );
+              if (!current()) return;
+              draft.installedEditionId = installed.editionId;
+              installedTeamGeneration = -1;
+            } catch (error) {
+              if (error?.name === 'AbortError') throw error;
+              draft.installError = error;
+            }
+          }
         }
         if (!packPicker.open) {
           cancelImport();
@@ -3308,10 +6745,12 @@ export function bootCoop({
           draft.pack,
           draft.pack,
           draft.artworkSource,
+          draft.installedEditionId,
+          draft.teamMedia,
         );
       }
       display.update({
-        message: 'Preparing the imported Team picture… The selected pack stays available.',
+        message: t('interface:preparingTheImportedTeamPictureTheSelectedPackStaysAvailable'),
         stage: 'preparing',
       });
       if (!current()) return;
@@ -3328,7 +6767,7 @@ export function bootCoop({
           const text = picturePreparationText(status);
           if (text)
             display.update({
-              message: `${text} The selected pack is unchanged.`,
+              message: t('interface:team.selectedPackUnchanged', { status: text }),
               stage: 'preparing',
             });
         },
@@ -3390,17 +6829,25 @@ export function bootCoop({
           return;
         }
         selection.state = 'ready';
-        pictureUI(
+        pictureUI(() =>
           draft.artworkSource
-            ? 'Local artwork ready. Start remains a separate action.'
-            : 'Imported Team picture ready. Start remains a separate action.',
+            ? t('interface:localArtworkReadyStartRemainsASeparateAction')
+            : draft.installedEditionId
+              ? t('interface:missionLibrary.team.campaignInstalled')
+              : draft.creatorCampaign
+                ? t('interface:missionLibrary.team.campaignSessionOnly', {
+                    error:
+                      (draft.installError ?? installedTeamStorageError)?.message ??
+                      t('interface:missionLibrary.team.storageUnavailable'),
+                  })
+                : t('interface:importedTeamPictureReadyStartRemainsASeparateAction'),
         );
         if (!current()) {
           rollback();
           return;
         }
         if ($('coop-level').value !== selection.levelId)
-          throw new Error('The selected arena changed during import. Retry the pack.');
+          throw new Error(t('interface:theSelectedArenaChangedDuringImportRetryThePack'));
         // Commit and relinquish the old operation without callbacks between
         // them. Once the old source is retired, rollback is no longer valid.
         if (draft.artworkSource) artworkImports.commit(draft.artworkSource);
@@ -3408,7 +6855,20 @@ export function bootCoop({
         localDiscoveryPack = {
           pack: draft.pack,
           artworkSource: draft.artworkSource,
-          rows: discoveryRows(draft.pack, draft.artworkSource, `local-${++localDiscoveryRevision}`),
+          installedEditionId: draft.installedEditionId ?? null,
+          teamMedia: draft.teamMedia ?? null,
+          rows: discoveryRows(
+            draft.pack,
+            draft.artworkSource,
+            `local-${++localDiscoveryRevision}`,
+            draft.teamMedia ?? null,
+          ).map((row) =>
+            Object.freeze({
+              ...row,
+              installedEditionId: draft.installedEditionId ?? null,
+              teamMedia: draft.teamMedia ?? null,
+            }),
+          ),
         };
         committed = true;
         importOperation = null;
@@ -3449,9 +6909,12 @@ export function bootCoop({
       if (!current()) return;
       importOperation = null;
       importDisplay = null;
-      packStatus.begin({ message: 'Team pack unavailable.' }).finish({
+      const detail = String(error.message).trim();
+      packStatus.begin({ message: t('interface:teamPackUnavailable') }).finish({
         state: 'error',
-        message: `Pack unchanged: ${error.message}. Retry pack or choose another file.`,
+        message: t('interface:team.packUnchanged', {
+          error: `${detail}${/[.!?]$/.test(detail) ? '' : '.'}`,
+        }),
       });
       $('coop-pack-cancel').hidden = true;
       $('coop-pack-retry').hidden = false;
@@ -3469,10 +6932,9 @@ export function bootCoop({
         draft.cancelledRequest === importRequest &&
         !importOperation
       )
-        packStatus.begin({ message: 'Artwork import cancelled.' }).finish({
+        packStatus.begin({ message: t('interface:artworkImportCancelled') }).finish({
           state: 'detached',
-          message:
-            'Artwork import cancelled. The selected pack is unchanged. Retry pack when ready.',
+          message: t('interface:artworkImportCancelledTheSelectedPackIsUnchangedRetryPack'),
         });
     }
   }
@@ -3488,9 +6950,20 @@ export function bootCoop({
       file.type === COOP_PRESENTATION_MIME || /\.rlteam$/i.test(file.name ?? '')
         ? 'artwork'
         : 'json';
-    const draft = { file, kind, pack: null, artworkSource: null, selection: null };
+    const draft = {
+      file,
+      kind,
+      pack: null,
+      artworkSource: null,
+      creatorCampaign: null,
+      installedEditionId: null,
+      installError: null,
+      selection: null,
+    };
     importDraft = draft;
-    $('coop-pack-cancel').textContent = kind === 'artwork' ? 'Cancel import' : 'Stop waiting';
+    localizedText($('coop-pack-cancel'), () =>
+      kind === 'artwork' ? t('interface:cancelImport') : t('common:actions.stopWaiting'),
+    );
     return importAdopting
       ? Promise.resolve().then(() => prepareImport(draft))
       : prepareImport(draft);
@@ -3527,12 +7000,19 @@ export function bootCoop({
       arenaPreference.choose(lastBuiltInArena);
     }
     setupNote();
+    encounterControls.refresh();
+    runningEnemyControls.refresh();
     return preparePicture();
   };
   $('coop-experiment').onchange = setupNote;
   $('coop-difficulty').onchange = () => {
     const previous = selectedCandidateRow(),
       requested = $('coop-difficulty').value;
+    if (!selectedLevel().journeyDifficulty && !run && !departure && !disposed && foreground()) {
+      gameplayPreferences.choose(requested);
+      gameplayTuningPanel?.refresh();
+      return;
+    }
     if (!previous || !candidatePreferences || run || departure || disposed || !foreground()) {
       difficultyControls();
       return;
@@ -3555,7 +7035,7 @@ export function bootCoop({
     // never pair a new compiled level with the previous edition's image lease.
     retirePicture();
     if (!current() || pack !== previousPack) return;
-    pictureUI('Preparing the selected Journey difficulty…');
+    pictureUI(localizedMessage('interface:preparingTheSelectedJourneyDifficulty'));
     if (!current() || pack !== previousPack) return;
     packArtworkSource = null;
     showPack(row.pack, row.level.id, current);
@@ -3564,7 +7044,6 @@ export function bootCoop({
   };
   // The classic entry owns intent before the select becomes interactive.
   // Without that evidence, retain native setup rather than override a choice.
-  const earlySelection = globalThis.RevealLineTeamEntry?.take();
   const validArena = (id) => COOP_STARTER_PACK.levels.some((level) => level.id === id);
   if (!earlySelection || earlySelection.claimed) {
     const selected = earlySelection?.changed ? earlySelection.value : $('coop-level').value;
@@ -3573,7 +7052,14 @@ export function bootCoop({
   }
   // Keep the existing option nodes and an already-correct native value while a
   // player may have the platform's selector open during module preparation.
-  if (candidateJourney && !earlySelection?.claimed) {
+  if (incomingLibraryMission) {
+    const mission = getTeamLibrary().find(incomingLibraryMission);
+    const row = mission && libraryRuntimeRows.get(mission)?.();
+    if (!row || !currentDiscoveryRows().includes(row))
+      throw new Error(t('interface:theRequestedTeamMissionIsUnavailableInThisEditionOr'));
+    showPack(row.pack, row.levelId);
+    if (row.pack === COOP_STARTER_PACK) lastBuiltInArena = row.levelId;
+  } else if (candidateJourney && !earlySelection?.claimed) {
     const first = candidateJourney.catalog.missions.find((mission) =>
       candidateJourney.isCore(mission.id),
     );
@@ -3584,6 +7070,35 @@ export function bootCoop({
   } else if ($('coop-level').value !== lastBuiltInArena) $('coop-level').value = lastBuiltInArena;
   showPackStatus();
   setupNote();
+  function renderActorStyle() {
+    $('coop-actor-style').value = actorPreferences.snapshot().actorStyle;
+    localizedText(
+      $('coop-actor-style-note'),
+      () =>
+        t('gameplay:team.actorStyleNext') +
+        (actorPreferences.getWarning() ? ` ${actorPreferences.getWarning()}` : ''),
+    );
+  }
+  let actorRevision = actorPreferences.snapshot().revision;
+  const stopActorView = actorPreferences.subscribe((snapshot) => {
+    renderActorStyle();
+    if (snapshot.revision === actorRevision) return;
+    actorRevision = snapshot.revision;
+    cancelNext({ announce: false });
+    cancelDiscoveryPreparation();
+    if (!disposed && !run && !departure && !importOperation && !importAdopting && !importDisplay)
+      void preparePicture();
+  });
+  $('coop-actor-style').onchange = () =>
+    actorPreferences.set({ actorStyle: $('coop-actor-style').value });
+  gameplayTuning.subscribe(() => refreshGameplayTuningNote());
+  if (!candidatePreferences)
+    gameplayPreferences.subscribe((snapshot) => {
+      if (!run && !selectedLevel().journeyDifficulty)
+        $('coop-difficulty').value = snapshot.difficulty;
+      gameplayTuningPanel?.refresh();
+      refreshGameplayTuningNote();
+    });
   $('coop-touch').value = 'auto';
   $('coop-touch').onchange = () => {
     input.clearPhysical();
@@ -3603,16 +7118,40 @@ export function bootCoop({
       if (disposed) unsubscribe();
       else unsubscribeNative = unsubscribe;
     })
-    .catch((error) => console.error('Native lifecycle unavailable:', error));
+    .catch((error) => console.error(t('interface:nativeLifecycleUnavailable'), error));
   const dispose = () => {
     if (disposed) return;
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    enemyStatsViews.forEach((view) => view.dispose());
+    void enemyStatistics.stats.flush().finally(() => {
+      enemyStatistics.close();
+      teamStatsOwnership.release();
+    });
+    document.removeEventListener('pointerdown', cancelContinuousPlay, true);
+    document.removeEventListener('keydown', cancelContinuousPlay, true);
+    window.removeEventListener('blur', cancelContinuousPlay);
+    window.removeEventListener('gamepaddisconnected', cancelContinuousPlay);
+    if (disposed) return;
+    // Invalidate cue/track readers before any owned host or page snapshot retires.
+    // closeAudio() later repeats this idempotently with the remaining audio cleanup.
+    musicPublished?.close();
+    $('coop-field-details').onclick = null;
+    nativeMenu?.destroy();
+    installOfflinePanel?.dispose();
+    void globalTools.dispose();
+    modeNavigation.dispose();
+    stopActorView();
+    actorPreferences.dispose();
+    $('coop-actor-style').onchange = null;
     discoveryStarted = null;
     discovery?.dispose();
     cancelDiscoveryPreparation();
     $('coop-discovery-open').onclick = null;
     $('coop-discovery-paused').onclick = null;
-    automaticRetry = null;
-    document.removeEventListener('focusin', retryFocusChanged);
+    $('coop-random-level').onclick = null;
+    $('coop-home-paused').onclick = null;
     cancelNext({ announce: false });
     $('coop-next').onclick = null;
     $('coop-next-cancel').onclick = null;
@@ -3630,6 +7169,7 @@ export function bootCoop({
     earnedDialog.removeEventListener('cancel', earnedCancelled);
     earnedDialog.removeEventListener('keydown', settingsKeydown);
     if (earnedDialog.open) earnedDialog.close();
+    releaseTeamStory();
     earnedCanvas.width = earnedCanvas.height = 0;
     $('coop-settings-open').onclick = null;
     $('coop-settings-close').onclick = null;
@@ -3640,7 +7180,11 @@ export function bootCoop({
     if (settingsDialog.open) settingsDialog.close();
     // The shared page may already have retired its painter snapshot. Stop the
     // core without repainting during terminal cleanup. BFCache uses suspend.
-    if (running()) pauseCoop(run);
+    if (running()) {
+      recordTeamInputRelease(run);
+      pauseCoop(run);
+    }
+    persistHuntAttempt(run, { force: true });
     cancelImport({ forget: true });
     cancelDeparture({ restore: false });
     retirePicture();
@@ -3650,27 +7194,47 @@ export function bootCoop({
     packArtworkSource = null;
     localDiscoveryPack = null;
     presentationPage.close();
+    painter.dispose();
     closeAudio();
     closeDisplay();
+    contextualReactions?.dispose();
     journeyReactions.dispose();
+    journeyPictures?.dispose();
     arenaPreference.dispose();
+    installedTeamStore?.close();
+    installedTeamStore = null;
     candidateProgress?.dispose();
     candidatePreferences?.dispose();
+    if (!candidatePreferences) gameplayPreferences.dispose();
+    runningEnemyControls.dispose();
+    runningEnemyPreferences.dispose();
+    encounterControls.dispose();
+    encounterPreferences.dispose();
+    huntStatus.dispose();
+    huntResult.dispose();
+    huntRecords.dispose();
+    huntSaveControls.dispose();
+    gameplayTuningPanel?.dispose();
+    gameplayTuning.dispose();
     candidatePreferenceRestoration?.dispose();
     importRequest++;
     disposed = true;
+    recordingExport.dispose();
     packStatus.dispose();
     packPicker.removeEventListener('toggle', pickerToggled);
     cancelAnimationFrame(frame);
     clear();
     couchTouch.destroy();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
+    controllerConfirmGuard.destroy();
     router.destroy();
     reading.destroy();
     navigation.destroy();
     touchQuery.removeEventListener?.('change', touchChanged);
     window.removeEventListener('resize', revealMenuAction);
-    window.removeEventListener('blur', suspend);
+    window.removeEventListener('blur', windowBlur);
     window.removeEventListener('focus', returned);
     window.removeEventListener('pageshow', returned);
     document.removeEventListener('visibilitychange', hidden);
@@ -3685,10 +7249,22 @@ export function bootCoop({
     suspend();
   });
   window.addEventListener('pageshow', returned);
-  function attachJourneyRecovery(owner, prefix, label, filename) {
+  const journeySaveCue = attachJourneySaveCue({
+    document,
+    target: $('coop-pause'),
+    action: $('coop-journey-save-options'),
+    announcement: $('coop-journey-save-announcement'),
+    onOpen() {
+      if (disposed || running()) return;
+      const target = $('coop-journey-save').hidden ? primary() : $('coop-journey-save-retry');
+      if (visibleAction(target)) target.focus();
+    },
+  });
+  function attachJourneyRecovery(owner, prefix, labelKey, filename) {
     let exportSequence = 0;
     owner?.subscribe(({ ready = true, durable, error }) => {
       if (disposed) return;
+      if (prefix === 'coop-journey-save') journeySaveCue.update({ ready, durable, error });
       const notice = $(prefix),
         focus = document.activeElement,
         ownedFocus = !notice.hidden && notice.contains(focus),
@@ -3696,9 +7272,9 @@ export function bootCoop({
         epoch = generation;
       notice.hidden = !ready || durable || !error;
       if (disposed) return;
-      $(`${prefix}-message`).textContent = error
-        ? `${label} is session-only. Retry saving or export before closing. ${error}`
-        : '';
+      localizedText($(`${prefix}-message`), () =>
+        error ? t('interface:team.sessionOnly', { label: t(labelKey), error }) : '',
+      );
       if (
         ownedFocus &&
         notice.hidden &&
@@ -3725,24 +7301,30 @@ export function bootCoop({
       try {
         const result = await exportJSONFile(JSON.parse(owner.export()), filename);
         if (!disposed && ticket === exportSequence && !$(prefix).hidden)
-          $(`${prefix}-message`).textContent = `${label} is session-only. ${result.message}`;
+          localizedText($(`${prefix}-message`), () =>
+            t('interface:team.sessionOnlyResult', {
+              label: t(labelKey),
+              result: renderMessage(result.message),
+            }),
+          );
       } catch (error) {
         if (!disposed && ticket === exportSequence && !$(prefix).hidden)
-          $(`${prefix}-message`).textContent =
-            `Export failed: ${error.message}. Your session choice or progress is still here.`;
+          localizedText($(`${prefix}-message`), () =>
+            t('interface:team.exportFailed', { error: error.message }),
+          );
       }
     };
   }
   attachJourneyRecovery(
     candidateProgress,
     'coop-journey-save',
-    'Team Journey progress',
+    'interface:teamJourneyProgress',
     candidateProgress?.backupFilename ?? 'revealline-journey-progress.json',
   );
   attachJourneyRecovery(
     candidatePreferences,
     'coop-journey-preferences',
-    'Journey difficulty',
+    'interface:journeyDifficulty',
     'revealline-journey-difficulty.json',
   );
   candidatePreferenceRestoration = candidatePreferences
@@ -3755,19 +7337,104 @@ export function bootCoop({
       })
     : null;
   $('coop-start').disabled = false;
-  $('coop-start').textContent = 'Start together →';
+  localizedText($('coop-start'), () => t('interface:startTogether'));
+  localizedText($('coop-advanced-note'), () => {
+    if (defaultJourney) return t('interface:couch.originalPicturesConnection');
+    if (!candidateJourney) return '';
+    const edition = renderMessage(candidateEditionLabel);
+    return t(
+      candidateJourney.rows.some((row) => row.background)
+        ? 'interface:couch.teamArtTest'
+        : 'interface:couch.teamGeometryTest',
+      {
+        count: candidateJourney.catalog.missions.length,
+        edition: edition ? `${edition} · ` : '',
+        notice: candidatePreferences ? '' : renderMessage(candidateNotice),
+      },
+    ).trim();
+  });
   bootDisplay.finish({
-    message: candidateJourney
-      ? `Team Journey ${candidateEditionLabel ? `${candidateEditionLabel} · ` : ''}${candidateJourney.rows.some((row) => row.background) ? `original-art test · ${candidateJourney.catalog.missions.length} missions · human validation pending.` : `geometry test · ${candidateJourney.catalog.missions.length} missions · human validation and original artwork pending.`} ${candidatePreferences ? '' : candidateNotice}`.trim()
-      : 'Two players · one screen · a shared victory',
+    message: () =>
+      candidateJourney
+        ? t('interface:couch.teamJourneyNotice', {
+            count: candidateJourney.catalog.missions.length,
+          })
+        : t('interface:twoPlayersOneScreenASharedVictory'),
   });
   document.documentElement.dataset.toolState = 'ready';
   startPermitted = !$('coop-start').disabled;
-  void preparePicture({
+  let handoffOpening = null;
+  const incomingAutoStart =
+    incomingLibraryMission && initialFocusPending && !earlySelection?.claimed;
+  const handoffPack = pack,
+    handoffLevel = $('coop-level').value,
+    handoffGeneration = generation;
+  const preparation = preparePicture({
     initial: initialFocusPending,
+    passive: true,
     origin: initialFocusPending ? document.activeElement : null,
+    onPrepared(selection) {
+      if (
+        !incomingLibraryMission ||
+        !handoffOpening?.current() ||
+        disposed ||
+        inactive ||
+        !foreground() ||
+        run ||
+        departure ||
+        settingsDialog.open ||
+        discovery.isOpen() ||
+        generation !== handoffGeneration ||
+        pack !== handoffPack ||
+        $('coop-level').value !== handoffLevel ||
+        pictureSelection !== selection ||
+        selection.levelId !== handoffLevel
+      )
+        return false;
+      handoffOpening.dispose();
+      try {
+        start();
+      } catch (error) {
+        pictureUI(localizedMessage('gameplay:team.pictureCouldNotStart', { error: error.message }));
+      }
+      return Boolean(run);
+    },
   });
-  if (initialFocusPending && unclaimedFocus(document.activeElement) && foreground())
+  if (incomingAutoStart) handoffOpening = trackMissionLibraryOpening({ document });
+  void preparation.finally(() => handoffOpening?.dispose());
+  // A community Play link resolves an installed immutable edition through the
+  // same admission, saved-attempt and input-ownership path as Mission Library.
+  const requestedCommunityTeam = entryParams.get('community-team');
+  if (requestedCommunityTeam && /^[a-f0-9]{64}$/.test(requestedCommunityTeam))
+    void preparation
+      .then(async () => {
+        if (disposed || run || departure || !foreground()) return;
+        const context = teamLibraryContext();
+        await includeInstalledTeamCampaigns();
+        if (!context.isCurrent()) return;
+        const edition = installedTeamEditions.get(requestedCommunityTeam);
+        const row = installedTeamRows.find(
+          (entry) => entry.installedEditionId === requestedCommunityTeam,
+        );
+        if (!edition || !row)
+          throw new Error(
+            'This exact community Team edition is not installed. Reinstall it from Community.',
+          );
+        await launchInstalledTeamRow(edition, row, context);
+      })
+      .catch((error) => {
+        if (!disposed) {
+          retireLibraryLaunch();
+          libraryStatus(error.message, 'error');
+        }
+      });
+
+  if (
+    initialFocusPending &&
+    !pictureOperation &&
+    unclaimedFocus(document.activeElement) &&
+    foreground()
+  )
     navigation.focusAvailable();
   initialFocusPending = false;
   frame = requestAnimationFrame(update);
@@ -3777,44 +7444,68 @@ export function bootCoop({
 try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
-  window.addEventListener('blur', initialFocusLost);
-  const journeyRequests = new URL(location.href).searchParams.getAll('journey');
+  window.addEventListener('blur', initialWindowBlur);
+  const journeyRequest = resolveJourneyRequest(new URL(location.href).searchParams, {
+    mode: 'team',
+  });
   let candidateEntry;
   if (
-    journeyRequests.length === 1 &&
     [
+      'team-expedition-v1',
+      'humanoid-hunt-v1',
+      'pursuit-pilots-v1',
+      'pursuit-campaigns-v1',
+      'snake-hunt-v1',
       'team-greybox',
       'team-originals',
       'team-pressure-originals-1',
       'team-spatial-originals-1',
-    ].includes(journeyRequests[0])
+      'team-trail-impact-originals-1',
+      'team-specialist-originals-1',
+      'team-complete-specialist-originals-1',
+      'team-cultural-specialist-originals-1',
+      'team-cultural-specialist-originals-2',
+    ].includes(journeyRequest)
   ) {
     const { createTeamGreyboxEntry } = await import('../content-design/team-entry.mjs');
     candidateEntry = await createTeamGreyboxEntry({
-      artwork: journeyRequests[0] === 'team-originals',
-      pressure: journeyRequests[0] === 'team-pressure-originals-1',
-      spatial: journeyRequests[0] === 'team-spatial-originals-1',
+      expedition: journeyRequest === 'team-expedition-v1',
+      huntTraining: journeyRequest === 'humanoid-hunt-v1',
+      pursuitPilots: journeyRequest === 'pursuit-pilots-v1',
+      pursuitCampaigns: journeyRequest === 'pursuit-campaigns-v1',
+      snakeHunt: journeyRequest === 'snake-hunt-v1',
+      artwork: journeyRequest === 'team-originals',
+      pressure: journeyRequest === 'team-pressure-originals-1',
+      spatial: journeyRequest === 'team-spatial-originals-1',
+      impact: journeyRequest === 'team-trail-impact-originals-1',
+      specialist: journeyRequest === 'team-specialist-originals-1',
+      reviewedSpecialists: journeyRequest === 'team-complete-specialist-originals-1',
+      culturalSpecialists: journeyRequest === 'team-cultural-specialist-originals-1',
+      culturalSpecialistsV2: journeyRequest === 'team-cultural-specialist-originals-2',
+      reviewCopy: new URL(location.href).searchParams.has('journey'),
     });
   } else if (
-    journeyRequests.length === 1 &&
     ['team-timed-originals', 'team-window-spatial-1', 'team-depot-spatial-1'].includes(
-      journeyRequests[0],
+      journeyRequest,
     )
   ) {
     const { createTeamTimedEntry } = await import('../content-design/team-timed-entry.mjs');
     candidateEntry = await createTeamTimedEntry({
-      spatial: journeyRequests[0] === 'team-window-spatial-1',
-      depot: journeyRequests[0] === 'team-depot-spatial-1',
+      spatial: journeyRequest === 'team-window-spatial-1',
+      depot: journeyRequest === 'team-depot-spatial-1',
     });
   }
   bootCoop(candidateEntry);
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
-  bootDisplay.finish({ state: 'error', message: `Could not start Relay Rescue: ${error.message}` });
+  bootDisplay.finish({
+    state: 'error',
+    message: localizedMessage('interface:team.startFailed', { error: error.message }),
+  });
   console.error(error);
 } finally {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);
   document.removeEventListener('visibilitychange', initialVisibility);
-  window.removeEventListener('blur', initialFocusLost);
+  window.removeEventListener('blur', initialWindowBlur);
 }

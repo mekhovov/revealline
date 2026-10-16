@@ -1,0 +1,57 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 bundled soundtrack source infrastructure only",
+  "revision": 3,
+  "checkedAt": "2026-09-24T03:44:11.870Z",
+  "baseRevision": "9938bdb8c8a21c0ab4df3462bfa261a5bb9b8e83",
+  "supersedes": "source-infrastructure-r2.json",
+  "reviewCorrection": "Use effectiveSoundtrackPolicy over the complete trusted catalogue: same-hash aliases may only narrow bundled playback, offline and redistribution permissions.",
+  "sourceFiles": [
+    {
+      "path": "game/soundtrack-bundled.mjs",
+      "bytes": 1980,
+      "sha256": "4603942591731b0bc214b0d27d0d8c957462485ba0dcd0dd074d7449a39c77ce"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "bytes": 4608,
+      "sha256": "ce8518de9719d9d827f14ba130e93bd67bce030334e5a58ed2f0c33f5829b6a5"
+    },
+    {
+      "path": "game/test/soundtrack-source.test.mjs",
+      "bytes": 10835,
+      "sha256": "8db6222e340af46bc38a235d8ea5085e408a20e226378210ba9b14f3a819220b"
+    }
+  ],
+  "checks": {
+    "node": "20.19.5",
+    "red": {
+      "revision": "9938bdb8c8a21c0ab4df3462bfa261a5bb9b8e83",
+      "tests": 11,
+      "pass": 10,
+      "fail": 1,
+      "failedTest": "same-recording catalogue aliases cannot widen bundled playback, storage or redistribution permission",
+      "error": "Missing expected exception.",
+      "outputSha256": "ef1569b9d85099d92b8ee3f413bdd13ecfe0f50934ea93247789d69239de4743"
+    },
+    "green": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skip": 0,
+      "outputSha256": "7530320dcfe1d7eb7c319da679bfc5dbd45a7d29d01eaf1205a7daf88ffa850e",
+      "cases": "All prior source tests plus denied/unknown same-hash aliases for webPlayback, offlineCache and redistribute"
+    },
+    "method": "In-memory vm.SourceTextModule graph using Node test runner; no working-tree write",
+    "prettier": "Pinned 3.6.2 and repository configuration applied in memory",
+    "eslint": "Not run locally: package unavailable and disk reserve prohibits dependency installation",
+    "hostedQualification": "Pending"
+  },
+  "admission": {
+    "recordingsAdded": 0,
+    "defaultChanged": false,
+    "bundledRegistrationsActivated": 0,
+    "mp3Downloaded": false,
+    "listeningApprovalClaimed": false
+  }
+}

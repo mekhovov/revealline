@@ -1,0 +1,95 @@
+{
+  "format": "revealline-soundtrack-research",
+  "version": 1,
+  "researchedOn": "2026-09-24",
+  "status": "research-only",
+  "runtimeAdmission": false,
+  "evidenceDocument": "EVIDENCE.md",
+  "candidates": [
+    {
+      "researchId": "alexander-nakarada-carol-of-the-bells-metal",
+      "title": "Carol of the Bells (Metal Version)",
+      "artist": "Alexander Nakarada",
+      "sourceUrl": "https://creatorchords.com/music/carol-of-the-bells-metal-version/",
+      "creatorUrl": "https://creatorchords.com",
+      "authorizedDownloadUrl": "https://d19p7hqu4j8vx0.cloudfront.net/media/media/data/mp3s/Carol_of_the_Bells_Metal_Version.mp3",
+      "downloadEvidence": "Creator Free download modal exposes the exact file URL and matching attribution without an account or social action. File link was not clicked.",
+      "creatorMetadata": {
+        "duration": "4:30",
+        "bpm": 160,
+        "genres": ["Metal", "Christmas", "Rock"]
+      },
+      "headObservation": {
+        "status": 200,
+        "contentType": "audio/mpeg",
+        "contentLength": 10905817,
+        "acceptRanges": "bytes",
+        "lastModified": "Thu, 14 Sep 2023 10:07:43 GMT"
+      },
+      "sourceLicenseClaim": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "licensingInformationUrl": "https://creatorchords.com/licensing-info/",
+        "faqUrl": "https://creatorchords.com/faq/",
+        "attribution": "Music: Carol of the Bells (Metal Version) by Alexander Nakarada (https://creatorchords.com)\nLicensed under Creative Commons Attribution 4.0 International (CC BY 4.0)\nhttps://creativecommons.org/licenses/by/4.0/",
+        "notes": "Source claim awaiting recording-bound admission; this metadata grants no runtime permissions. Preserve artist identity and attribution."
+      },
+      "contentId": true,
+      "contentIdEvidenceUrl": "https://creatorchords.com/licensing-info/",
+      "recordingModeCandidate": false,
+      "albumEvidence": {
+        "url": "https://alexandernakarada.bandcamp.com/album/carol-of-the-bells",
+        "statedReleaseDate": "2020-12-11",
+        "exactByteMatchToCurrentDownload": null
+      },
+      "culturalEvidence": {
+        "url": "https://ui.org.ua/wp-content/uploads/2022/12/programme_notes-from-ukraine.pdf",
+        "underlyingRepertoire": "Shchedryk / Carol of the Bells",
+        "underlyingComposer": "Mykola Leontovych",
+        "proposedDescription": "Ukrainian-melody metal adaptation",
+        "limits": "Melody identification, instrumental content, arrangement rights and cultural suitability remain unreviewed. No claim of traditional instrumentation or regional performance. Alternate Shchedryk arrangements are not distinct underlying compositions."
+      },
+      "acquiredBytes": false,
+      "acquiredSha256": null,
+      "independentDurationSeconds": null,
+      "reviewStatus": {
+        "rightsAdmission": "pending",
+        "fullDecode": "not-performed",
+        "loudnessAndTruePeak": "not-performed",
+        "fullTrackListening": "not-performed",
+        "ukrainianMusicalReview": "pending",
+        "inGameAndOfflinePlayback": "not-performed"
+      }
+    }
+  ],
+  "holds": [
+    {
+      "researchId": "jason-shaw-shchedryk-commons",
+      "title": "Shchedryk (Carol of the Bells) - Instrumental",
+      "artist": "Jason Shaw",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shchedryk_(Carol_of_the_Bells)_-_Instrumental.ogg",
+      "earliestCommonsRevisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=227375440&title=File:Shchedryk_(Carol_of_the_Bells)_-_Instrumental.ogg",
+      "sourceFileUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Shchedryk_%28Carol_of_the_Bells%29_-_Instrumental.ogg",
+      "sourceReportedFile": {
+        "uploadedAt": "2016-12-24T15:48:54Z",
+        "byteLength": 4374282,
+        "durationSeconds": 94.35467120181406,
+        "sha1": "24c7fb4f4cd7e1fd030523d9e1d4498c62e6d033",
+        "independentlyVerified": false
+      },
+      "commonsLicenseClaim": "CC-BY-3.0",
+      "signedCreatorReleaseUrl": "https://audionautix.com/Saved/CCrelease.jpg",
+      "signedCreatorReleaseDate": "2010-12-12",
+      "conflictingPrimarySourceUrls": [
+        "https://web.archive.org/web/20110104041404id_/http://audionautix.com/",
+        "https://web.archive.org/web/20160101010944id_/http://audionautix.com:80/",
+        "https://audionautix.com/"
+      ],
+      "licenseContinuitySourceUrl": "https://creativecommons.org/licenses/by/3.0/legalcode",
+      "holdReason": "The embedded-use limitation existed in creator homepages in 2011 and 2016 alongside CC licensing, conflicting with the broader signed release and Commons claim. Irrevocability alone does not resolve the original scope. Standalone redistribution, archive publication and admin MP3 download remain held.",
+      "acquiredBytes": false,
+      "acquiredSha256": null,
+      "runtimeAdmission": false
+    }
+  ]
+}

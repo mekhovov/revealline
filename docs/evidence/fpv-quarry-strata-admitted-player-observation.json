@@ -1,0 +1,34 @@
+{
+  "format": "FPVQuarryAdmittedPlayerObservation.v1",
+  "observer": "Root agent actual CUA browser observation, reported directly in this task; this file records that observation rather than synthesizing a browser trace.",
+  "candidate": "0a7c390bece5e6569d69f98755cfadd0c10527f2",
+  "url": "http://127.0.0.1:8834/dist/fpv-quarry-strata-admitted-player-0a7c390be/optional-practice/fpv-worlds/index.html",
+  "course": "Read the rock bowl",
+  "accepted": true,
+  "observations": [
+    "Full102-file admitted player rendered the course with its normal unmodified production loader.",
+    "Initial Follow game shared material kit retained its original flat/shared finish. Normal player armed through0.3s and paused to the main menu.",
+    "After choosing World appearance Authored and Retry, the new rock grain and fractures were visibly confirmed. This authored screenshot is distinct from the earlier shared-kit control.",
+    "Browser warning/error logs were empty."
+  ],
+  "warnings": [],
+  "errors": [],
+  "captures": [
+    {
+      "file": "fpv-quarry-strata-admitted-authored.png",
+      "bytes": 60308,
+      "sha256": "a503443f003c95d7c493e7e00cf698745b126873081747115e952f9c699f2c6b",
+      "role": "Authored appearance after Retry: accepted new grain/fracture texture"
+    },
+    {
+      "file": "fpv-quarry-strata-admitted-shared-control.png",
+      "bytes": 51401,
+      "sha256": "b57d4313024b6fc001639410720847211d4b82a0795fad849479635ec9d31af6",
+      "role": "Follow game shared-kit control: original shared finish, not evidence of the new authored art"
+    }
+  ],
+  "limitations": [
+    "Root-reported actual browser observations, not raw event/timing traces.",
+    "No installed/offline, public Quarry deployment, hardware or complete-world artistic claim."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "status": "PASS_FRESH_POST_AUDIT_AUTHORITIES",
+  "checkedAt": "2026-09-23T02:30:23.234Z",
+  "archiveCommit": "de23f0600a8410d0060f2bbcc1887bfb37d049a0",
+  "archiveTree": "5d00558b78f917cd7bb40d718fbcf0ef55b2ed86",
+  "productionRunId": 35810246159,
+  "deploymentId": 6605004645,
+  "deploymentStatusId": 18707444061,
+  "pins": [
+    {
+      "path": "after-main-original.json",
+      "bytes": 358,
+      "sha256": "ff35ae419d8c9ef172060bb06f947c4e8e590b1d7ec6ed35edc2a9a5f5310348"
+    },
+    {
+      "path": "after-commit-original.json",
+      "bytes": 2773,
+      "sha256": "b3bc476bdf5dd13baf9e775eadf4628f48c00a21afbd3771b1229cd7e9cba0a3"
+    },
+    {
+      "path": "after-production-run-original.json",
+      "bytes": 13189,
+      "sha256": "515ef169066358b80ebd90d86af78f867b530fd03ae0379dcb13ffed137cf71f"
+    },
+    {
+      "path": "after-deployment-statuses-original.json",
+      "bytes": 6817,
+      "sha256": "70812ae2c9db58465f6a0e9d03b76a2d9d6234bfe608d464172580e24bc1c52a"
+    },
+    {
+      "path": "after-deployments-original.json",
+      "bytes": 3858,
+      "sha256": "9f6f8ae3c73161f305e7043d20b2d3acba0003b6dfa6b0c4472a257afb20583b"
+    },
+    {
+      "path": "after-public-release-original.json",
+      "bytes": 465,
+      "sha256": "b5d286fa2cac21cfc90ee579b36eda21454a41cc227a76687058a71f4f3b8a38"
+    }
+  ],
+  "scope": "Fresh authority/marker after the completed audit; not a native or gameplay pass."
+}

@@ -1,0 +1,29 @@
+{
+  "file": "game/test/asset-studio-audio-master.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/asset-studio-audio-master.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 0.8,
+  "failures": [
+    {
+      "test": "native preview metadata statuses do not adopt procedural playback captions on master edits",
+      "location": "game/test/asset-studio-audio-master.test.mjs:473:1",
+      "detail": "\n  ---\n  duration_ms: 113.304666\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-audio-master.test.mjs:473:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /ready/. Input:\n    \n    'Native status saved: Ready'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Native status saved: Ready'\n  operator: 'match'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/asset-studio-audio-master.test.mjs:483:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 13",
+    "# pass 12",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 767.14175"
+  ]
+}

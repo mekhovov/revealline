@@ -1,0 +1,104 @@
+{
+  "scope": "Bounded direct production model observations; no automated suite or human qualification",
+  "observations": [
+    {
+      "kind": "match",
+      "policy": "score",
+      "elapsedMs": 180000,
+      "result": "draw",
+      "boards": [
+        {
+          "atMs": 3781,
+          "status": "lost",
+          "cause": "wall"
+        },
+        {
+          "atMs": 180000,
+          "status": "survived",
+          "cause": "time"
+        }
+      ],
+      "ticks": [
+        19,
+        904
+      ],
+      "coreElapsed": [
+        3781,
+        179896
+      ],
+      "restoredExactly": true
+    },
+    {
+      "kind": "match",
+      "policy": "survival",
+      "elapsedMs": 30000,
+      "result": "draw",
+      "boards": [
+        {
+          "atMs": 30000,
+          "status": "lost",
+          "cause": "catch-deadline"
+        },
+        {
+          "atMs": 30000,
+          "status": "lost",
+          "cause": "catch-deadline"
+        }
+      ],
+      "ticks": [
+        150,
+        150
+      ],
+      "coreElapsed": [
+        29850,
+        29850
+      ],
+      "restoredExactly": true
+    },
+    {
+      "kind": "authored-route",
+      "id": "classic-pursuit-oval-intercept",
+      "target": "patroller",
+      "status": "won",
+      "tick": 97,
+      "catches": 8,
+      "goal": 8,
+      "warnings": 0,
+      "moves": 18,
+      "pickups": 0,
+      "restoredExactly": true
+    },
+    {
+      "kind": "authored-route",
+      "id": "classic-pursuit-open-intercept",
+      "target": "runner",
+      "status": "won",
+      "tick": 191,
+      "catches": 12,
+      "goal": 12,
+      "warnings": 0,
+      "moves": 27,
+      "pickups": 0,
+      "restoredExactly": true
+    },
+    {
+      "kind": "authored-route",
+      "id": "classic-pursuit-first-dash",
+      "target": "sprinter",
+      "status": "won",
+      "tick": 228,
+      "catches": 14,
+      "goal": 14,
+      "warnings": 10,
+      "moves": 15,
+      "pickups": 0,
+      "restoredExactly": true
+    }
+  ],
+  "sourceHashes": {
+    "game/snake/classic-core.mjs": "f9a4361b85bfc8d4cba8e8889109b893bbca8de65e91863b93c7d5ddc0435f74",
+    "game/snake/classic-core-v2.mjs": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+    "game/snake/classic-match.mjs": "02d904912c0df723bbe7ec760c07c489939298f109817d6542bfd38e1d287d77",
+    "game/snake/classic-catalogue-v2.mjs": "7da35f440d8b9ca30345f468844142e00517c0fbfaa9501b068a95b48c073531"
+  }
+}

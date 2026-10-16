@@ -1,0 +1,114 @@
+{
+  "format": "revealline-soundtrack-batch-rights.v1",
+  "batchId": "approved-synth-metal-20260930",
+  "tracks": [
+    {
+      "id": "builtin.catalog.bogart-vgm.retroracing-nightlife",
+      "sha256": "24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70",
+      "bytes": 5199456,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://opengameart.org/content/retroracing-nightlife",
+      "credit": "Music: Retroracing Nightlife by Bogart VGM (https://www.facebook.com/BogartVGM/). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+      "reviewedBy": "Codex source/licence verification",
+      "reviewedAt": "2026-09-30T05:12:00Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/source-evidence.json",
+        "bytes": 15081,
+        "sha256": "4544f1d5d583a068920eed7b27d1ff2483e1ccb5241c0b91c1fb302410d356db"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.agony-space-deep",
+      "sha256": "991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d",
+      "bytes": 9048860,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack",
+      "credit": "Music: Agony Space-deep by David KBD (https://davidkbd.itch.io/eternity-metal-scfi-music-pack). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+      "reviewedBy": "Codex source/licence verification",
+      "reviewedAt": "2026-09-30T05:12:00Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/source-evidence.json",
+        "bytes": 15081,
+        "sha256": "4544f1d5d583a068920eed7b27d1ff2483e1ccb5241c0b91c1fb302410d356db"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.god-of-darkness",
+      "sha256": "ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0",
+      "bytes": 6281970,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack",
+      "credit": "Music: God of Darkness by David KBD (https://davidkbd.itch.io/eternity-metal-scfi-music-pack). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+      "reviewedBy": "Codex source/licence verification",
+      "reviewedAt": "2026-09-30T05:12:00Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/source-evidence.json",
+        "bytes": 15081,
+        "sha256": "4544f1d5d583a068920eed7b27d1ff2483e1ccb5241c0b91c1fb302410d356db"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.davidkbd.suffocation",
+      "sha256": "c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae",
+      "bytes": 6880488,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://davidkbd.itch.io/eternity-metal-scfi-music-pack",
+      "credit": "Music: Suffocation by David KBD (https://davidkbd.itch.io/eternity-metal-scfi-music-pack). Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+      "reviewedBy": "Codex source/licence verification",
+      "reviewedAt": "2026-09-30T05:12:00Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/source-evidence.json",
+        "bytes": 15081,
+        "sha256": "4544f1d5d583a068920eed7b27d1ff2483e1ccb5241c0b91c1fb302410d356db"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.yannz.pixel-damnation",
+      "sha256": "a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde",
+      "bytes": 4302515,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz",
+      "credit": "Music: Pixel Damnation by Yanni Ziangos a.k.a. YannZ. Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+      "reviewedBy": "Codex source/licence verification",
+      "reviewedAt": "2026-09-30T05:12:00Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/source-evidence.json",
+        "bytes": 15081,
+        "sha256": "4544f1d5d583a068920eed7b27d1ff2483e1ccb5241c0b91c1fb302410d356db"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    },
+    {
+      "id": "builtin.catalog.yannz.revenges-waiting",
+      "sha256": "a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec",
+      "bytes": 1538133,
+      "license": "CC BY 4.0 International",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceURL": "https://opengameart.org/content/they%E2%80%99re-going-down-%E2%80%93-game-ost-pack-by-yannz",
+      "credit": "Music: Revenge's Waiting by Yanni Ziangos a.k.a. YannZ. Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/",
+      "reviewedBy": "Codex source/licence verification",
+      "reviewedAt": "2026-09-30T05:12:00Z",
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/source-evidence.json",
+        "bytes": 15081,
+        "sha256": "4544f1d5d583a068920eed7b27d1ff2483e1ccb5241c0b91c1fb302410d356db"
+      },
+      "contentId": "unknown",
+      "contentIdEvidence": null
+    }
+  ]
+}

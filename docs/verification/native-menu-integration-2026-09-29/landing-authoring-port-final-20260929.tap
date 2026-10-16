@@ -1,0 +1,1577 @@
+TAP version 13
+# Subtest: grid editing bounds its cursor, commits only on confirm, and cancels an unfinished anchor before leaving
+ok 1 - grid editing bounds its cursor, commits only on confirm, and cancels an unfinished anchor before leaving
+  ---
+  duration_ms: 1.458834
+  ...
+# Subtest: keyboard and controller registration share domain commands without synthetic key dispatch
+ok 2 - keyboard and controller registration share domain commands without synthetic key dispatch
+  ---
+  duration_ms: 5.630333
+  ...
+# Subtest: source chooser respects accept types and passes the exact File through the existing change handler
+ok 3 - source chooser respects accept types and passes the exact File through the existing change handler
+  ---
+  duration_ms: 1.086041
+  ...
+# Subtest: a cancelled source download cannot deliver after the chooser closes
+ok 4 - a cancelled source download cannot deliver after the chooser closes
+  ---
+  duration_ms: 4.538292
+  ...
+# Subtest: one authoring host owns one poller, suspends for preview focus, and releases all input on disposal
+ok 5 - one authoring host owns one poller, suspends for preview focus, and releases all input on disposal
+  ---
+  duration_ms: 1.058792
+  ...
+# Subtest: preview boot cannot steal input before explicit entry, and Return restores the editor
+ok 6 - preview boot cannot steal input before explicit entry, and Return restores the editor
+  ---
+  duration_ms: 0.39825
+  ...
+# Subtest: authoring menus coordinate native Confirm before frames and retain the captured modal handoff
+ok 7 - authoring menus coordinate native Confirm before frames and retain the captured modal handoff
+  ---
+  duration_ms: 4.609417
+  ...
+# Subtest: reference reading scrolls by bounded viewport steps, exits, and invalidates when hidden
+ok 8 - reference reading scrolls by bounded viewport steps, exits, and invalidates when hidden
+  ---
+  duration_ms: 1.915416
+  ...
+# Subtest: reference media needs explicit play, supports mute/seek and restores native controls on disposal
+ok 9 - reference media needs explicit play, supports mute/seek and restores native controls on disposal
+  ---
+  duration_ms: 1.323917
+  ...
+# Subtest: reference media releases a pending playback request when its scope is paused or destroyed
+ok 10 - reference media releases a pending playback request when its scope is paused or destroyed
+  ---
+  duration_ms: 0.5365
+  ...
+# Subtest: Gamepad-first keyboard, pointer, and click echoes are consumed until release commit
+ok 11 - Gamepad-first keyboard, pointer, and click echoes are consumed until release commit
+  ---
+  duration_ms: 1.533083
+  ...
+# Subtest: a release-only trusted click cannot reverse a committed controller action
+ok 12 - a release-only trusted click cannot reverse a committed controller action
+  ---
+  duration_ms: 0.35225
+  ...
+# Subtest: click activation uses the primary button, not the PointerEvent isPrimary default
+ok 13 - click activation uses the primary button, not the PointerEvent isPrimary default
+  ---
+  duration_ms: 0.238917
+  ...
+# Subtest: a primary mouse representation is owned by the transaction
+ok 14 - a primary mouse representation is owned by the transaction
+  ---
+  duration_ms: 0.186625
+  ...
+# Subtest: a primary touch representation is owned by the transaction
+ok 15 - a primary touch representation is owned by the transaction
+  ---
+  duration_ms: 0.128583
+  ...
+# Subtest: a primary pen representation is owned by the transaction
+ok 16 - a primary pen representation is owned by the transaction
+  ---
+  duration_ms: 0.102833
+  ...
+# Subtest: a primary mouse representation is owned by the transaction
+ok 17 - a primary mouse representation is owned by the transaction
+  ---
+  duration_ms: 0.185291
+  ...
+# Subtest: a trusted native-first activation remains the winner for a five-second hold
+ok 18 - a trusted native-first activation remains the winner for a five-second hold
+  ---
+  duration_ms: 0.1735
+  ...
+# Subtest: an unrelated or stale native activation does not suppress release commit
+ok 19 - an unrelated or stale native activation does not suppress release commit
+  ---
+  duration_ms: 0.2385
+  ...
+# Subtest: rapid deliberate transactions each activate once
+ok 20 - rapid deliberate transactions each activate once
+  ---
+  duration_ms: 0.326583
+  ...
+# Subtest: legacy observed hosts activate once per press without opening a release transaction
+ok 21 - legacy observed hosts activate once per press without opening a release transaction
+  ---
+  duration_ms: 0.142667
+  ...
+# Subtest: synchronous host input cleanup cannot split a committed release transaction
+ok 22 - synchronous host input cleanup cannot split a committed release transaction
+  ---
+  duration_ms: 0.426583
+  ...
+# Subtest: cancel and blur retire a transaction without activation
+ok 23 - cancel and blur retire a transaction without activation
+  ---
+  duration_ms: 0.102042
+  ...
+# Subtest: touchscreen and keyboard work after the release grace period
+ok 24 - touchscreen and keyboard work after the release grace period
+  ---
+  duration_ms: 0.113083
+  ...
+# Subtest: modified keys and secondary clicks are never treated as Confirm echoes
+ok 25 - modified keys and secondary clicks are never treated as Confirm echoes
+  ---
+  duration_ms: 0.133625
+  ...
+# Subtest: native probes capture and release a whole tap between render frames
+ok 26 - native probes capture and release a whole tap between render frames
+  ---
+  duration_ms: 0.971958
+  ...
+# Subtest: a five-second hold and overlapping aliases release as one gesture
+ok 27 - a five-second hold and overlapping aliases release as one gesture
+  ---
+  duration_ms: 0.798666
+  ...
+# Subtest: cross-alias echoes drain while deliberate original-button repeats are accepted
+ok 28 - cross-alias echoes drain while deliberate original-button repeats are accepted
+  ---
+  duration_ms: 0.146708
+  ...
+# Subtest: native winner survives router clear, changed scope, removed target and a long hold
+ok 29 - native winner survives router clear, changed scope, removed target and a long hold
+  ---
+  duration_ms: 0.147416
+  ...
+# Subtest: native click refreshes its lead window without replacing the original menu target
+ok 30 - native click refreshes its lead window without replacing the original menu target
+  ---
+  duration_ms: 0.2835
+  ...
+# Subtest: delayed Gamepad adopts the original target before the native click
+ok 31 - delayed Gamepad adopts the original target before the native click
+  ---
+  duration_ms: 0.077542
+  ...
+# Subtest: expired and unrelated native candidates do not win activation
+ok 32 - expired and unrelated native candidates do not win activation
+  ---
+  duration_ms: 0.209708
+  ...
+# Subtest: scope change and target removal cancel but own the entire remaining hold
+ok 33 - scope change and target removal cancel but own the entire remaining hold
+  ---
+  duration_ms: 0.162584
+  ...
+# Subtest: hard loss, replacement and inactive document cannot commit stale holds or candidates
+ok 34 - hard loss, replacement and inactive document cannot commit stale holds or candidates
+  ---
+  duration_ms: 0.194083
+  ...
+# Subtest: neutral native input remains unowned; blocked controller cannot invent a press
+ok 35 - neutral native input remains unowned; blocked controller cannot invent a press
+  ---
+  duration_ms: 0.122833
+  ...
+# Subtest: invalid alias timing and trace callbacks are rejected
+ok 36 - invalid alias timing and trace callbacks are rejected
+  ---
+  duration_ms: 0.209166
+  ...
+# Subtest: native winner survives its own same-scope focus change but yields to separate controller navigation
+ok 37 - native winner survives its own same-scope focus change but yields to separate controller navigation
+  ---
+  duration_ms: 0.081834
+  ...
+# Subtest: disabled trace records nothing and creates no UI
+ok 38 - disabled trace records nothing and creates no UI
+  ---
+  duration_ms: 1.919292
+  ...
+# Subtest: trace is bounded and stores only the diagnostic allowlist
+ok 39 - trace is bounded and stores only the diagnostic allowlist
+  ---
+  duration_ms: 20.731666
+  ...
+# Subtest: held samples coalesce but retain changes, native order, timing and independent snapshots
+ok 40 - held samples coalesce but retain changes, native order, timing and independent snapshots
+  ---
+  duration_ms: 1.426875
+  ...
+# Subtest: trace retains the selected high-index device and browser focus/fullscreen context
+ok 41 - trace retains the selected high-index device and browser focus/fullscreen context
+  ---
+  duration_ms: 11.712625
+  ...
+# Subtest: temporary toggle follows active modal without adding navigation controls or moving focus
+ok 42 - temporary toggle follows active modal without adding navigation controls or moving focus
+  ---
+  duration_ms: 2.727958
+  ...
+# Subtest: native observations capture Confirm, pointer and focus context without typed text
+ok 43 - native observations capture Confirm, pointer and focus context without typed text
+  ---
+  duration_ms: 0.765375
+  ...
+# Subtest: trace UI follows live locale changes without clearing diagnostics
+ok 44 - trace UI follows live locale changes without clearing diagnostics
+  ---
+  duration_ms: 6.377792
+  ...
+# Subtest: visible native trace preserves primary pointer edges and nonprimary click defaults
+ok 45 - visible native trace preserves primary pointer edges and nonprimary click defaults
+  ---
+  duration_ms: 0.342917
+  ...
+# Subtest: enabling trace after the document guard observes owned native events before consumption
+ok 46 - enabling trace after the document guard observes owned native events before consumption
+  ---
+  duration_ms: 1.466709
+  ...
+# Subtest: visible context preserves device identity and browser state across later native observations
+ok 47 - visible context preserves device identity and browser state across later native observations
+  ---
+  duration_ms: 0.409292
+  ...
+# Subtest: semantic menu rows keep horizontal edges and move vertically into adjacent action groups
+ok 48 - semantic menu rows keep horizontal edges and move vertically into adjacent action groups
+  ---
+  duration_ms: 8.821708
+  ...
+# Subtest: passive input hints follow accepted device changes and restore host attributes on disposal
+ok 49 - passive input hints follow accepted device changes and restore host attributes on disposal
+  ---
+  duration_ms: 2.464583
+  ...
+# Subtest: controller text edits a Ukrainian draft and commits through input/change exactly once
+ok 50 - controller text edits a Ukrainian draft and commits through input/change exactly once
+  ---
+  duration_ms: 3.918
+  ...
+# Subtest: captured Confirm tracks the current field-editor owner and exact focused key
+ok 51 - captured Confirm tracks the current field-editor owner and exact focused key
+  ---
+  duration_ms: 1.006667
+  ...
+# Subtest: text editor retains native multiline editing and Cancel discards the whole draft
+ok 52 - text editor retains native multiline editing and Cancel discards the whole draft
+  ---
+  duration_ms: 1.106417
+  ...
+# Subtest: number and color drafts reject invalid values without publishing them
+ok 53 - number and color drafts reject invalid values without publishing them
+  ---
+  duration_ms: 11.443958
+  ...
+# Subtest: host scope, source replacement and explicit clear invalidate drafts without stale writes
+ok 54 - host scope, source replacement and explicit clear invalidate drafts without stale writes
+  ---
+  duration_ms: 3.013333
+  ...
+# Subtest: tool adapters own canvas commands and cancel pending work before returning focus
+ok 55 - tool adapters own canvas commands and cancel pending work before returning focus
+  ---
+  duration_ms: 0.461791
+  ...
+# Subtest: file activation delegates to the in-game source chooser without opening an OS picker
+ok 56 - file activation delegates to the in-game source chooser without opening an OS picker
+  ---
+  duration_ms: 0.257208
+  ...
+# Subtest: Confirm captures the focused control on press and activates it once on release
+ok 57 - Confirm captures the focused control on press and activates it once on release
+  ---
+  duration_ms: 0.221083
+  ...
+# Subtest: Confirm cancellation, removal, and scope changes never activate the captured control
+ok 58 - Confirm cancellation, removal, and scope changes never activate the captured control
+  ---
+  duration_ms: 0.315625
+  ...
+# Subtest: locale refresh retains the exact active reader and scroll without renewing replaced content
+ok 59 - locale refresh retains the exact active reader and scroll without renewing replaced content
+  ---
+  duration_ms: 1.88575
+  ...
+# Subtest: Boost preference previews cancel without writes and commit once through the native setting
+ok 60 - Boost preference previews cancel without writes and commit once through the native setting
+  ---
+  duration_ms: 1.547959
+  ...
+# Subtest: select browsing uses a separate preview, and Back cancels without changing or firing native handlers
+ok 61 - select browsing uses a separate preview, and Back cancels without changing or firing native handlers
+  ---
+  duration_ms: 0.375333
+  ...
+# Subtest: selection previews describe the configured menu buttons without changing draft semantics
+ok 62 - selection previews describe the configured menu buttons without changing draft semantics
+  ---
+  duration_ms: 7.5075
+  ...
+# Subtest: select Confirm commits once through the existing change handler and ignores disabled choices
+ok 63 - select Confirm commits once through the existing change handler and ignores disabled choices
+  ---
+  duration_ms: 21.331041
+  ...
+# Subtest: stale disabled cancels a select preview without activating its replacement on the same Confirm
+ok 64 - stale disabled cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.741459
+  ...
+# Subtest: stale hidden cancels a select preview without activating its replacement on the same Confirm
+ok 65 - stale hidden cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.388917
+  ...
+# Subtest: stale detached cancels a select preview without activating its replacement on the same Confirm
+ok 66 - stale detached cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.826334
+  ...
+# Subtest: stale options cancels a select preview without activating its replacement on the same Confirm
+ok 67 - stale options cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 1.026083
+  ...
+# Subtest: stale value cancels a select preview without activating its replacement on the same Confirm
+ok 68 - stale value cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.911041
+  ...
+# Subtest: stale focus cancels a select preview without activating its replacement on the same Confirm
+ok 69 - stale focus cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.496083
+  ...
+# Subtest: stale scope cancels a select preview without activating its replacement on the same Confirm
+ok 70 - stale scope cancels a select preview without activating its replacement on the same Confirm
+  ---
+  duration_ms: 0.434833
+  ...
+# Subtest: modal root traps navigation and delegates protected Back without closing or touching background actions
+ok 71 - modal root traps navigation and delegates protected Back without closing or touching background actions
+  ---
+  duration_ms: 1.557042
+  ...
+# Subtest: native modal Escape and controller Back keep their host lifecycle with couch flight input attached
+ok 72 - native modal Escape and controller Back keep their host lifecycle with couch flight input attached
+  ---
+  duration_ms: 2.097708
+  ...
+# Subtest: linear navigation skips hidden, disabled, inert, closed disclosure and host-rejected controls
+ok 73 - linear navigation skips hidden, disabled, inert, closed disclosure and host-rejected controls
+  ---
+  duration_ms: 6.041958
+  ...
+# Subtest: gallery-grid uses geometric neighbors within a two-column layout
+ok 74 - gallery-grid uses geometric neighbors within a two-column layout
+  ---
+  duration_ms: 6.871292
+  ...
+# Subtest: missions uses geometric neighbors within a two-column layout
+ok 75 - missions uses geometric neighbors within a two-column layout
+  ---
+  duration_ms: 1.313459
+  ...
+# Subtest: Journey keyboard follows 1 rendered columns without wrapping rows
+ok 76 - Journey keyboard follows 1 rendered columns without wrapping rows
+  ---
+  duration_ms: 4.839667
+  ...
+# Subtest: Journey keyboard follows 2 rendered columns without wrapping rows
+ok 77 - Journey keyboard follows 2 rendered columns without wrapping rows
+  ---
+  duration_ms: 17.565291
+  ...
+# Subtest: Journey keyboard follows 3 rendered columns without wrapping rows
+ok 78 - Journey keyboard follows 3 rendered columns without wrapping rows
+  ---
+  duration_ms: 11.935708
+  ...
+# Subtest: Journey keyboard follows 6 rendered columns without wrapping rows
+ok 79 - Journey keyboard follows 6 rendered columns without wrapping rows
+  ---
+  duration_ms: 15.123958
+  ...
+# Subtest: Journey controller follows 1 rendered columns without wrapping rows
+ok 80 - Journey controller follows 1 rendered columns without wrapping rows
+  ---
+  duration_ms: 9.183459
+  ...
+# Subtest: Journey controller follows 2 rendered columns without wrapping rows
+ok 81 - Journey controller follows 2 rendered columns without wrapping rows
+  ---
+  duration_ms: 11.604041
+  ...
+# Subtest: Journey controller follows 3 rendered columns without wrapping rows
+ok 82 - Journey controller follows 3 rendered columns without wrapping rows
+  ---
+  duration_ms: 21.511625
+  ...
+# Subtest: Journey controller follows 6 rendered columns without wrapping rows
+ok 83 - Journey controller follows 6 rendered columns without wrapping rows
+  ---
+  duration_ms: 7.586916
+  ...
+# Subtest: Journey keyboard recalculates geometry after reflow and skips unavailable controls
+ok 84 - Journey keyboard recalculates geometry after reflow and skips unavailable controls
+  ---
+  duration_ms: 3.777
+  ...
+# Subtest: Journey controller recalculates geometry after reflow and skips unavailable controls
+ok 85 - Journey controller recalculates geometry after reflow and skips unavailable controls
+  ---
+  duration_ms: 9.010833
+  ...
+# Subtest: Journey keyboard chooses the nearest column in the adjacent row, not a later exact column
+ok 86 - Journey keyboard chooses the nearest column in the adjacent row, not a later exact column
+  ---
+  duration_ms: 3.631
+  ...
+# Subtest: Journey controller chooses the nearest column in the adjacent row, not a later exact column
+ok 87 - Journey controller chooses the nearest column in the adjacent row, not a later exact column
+  ---
+  duration_ms: 2.54175
+  ...
+# Subtest: slider draft clamps and commits one input/change pair; cancellation never writes the real value
+ok 88 - slider draft clamps and commits one input/change pair; cancellation never writes the real value
+  ---
+  duration_ms: 3.224
+  ...
+# Subtest: buttons and checkboxes activate through their existing handlers once per logical edge
+ok 89 - buttons and checkboxes activate through their existing handlers once per logical edge
+  ---
+  duration_ms: 0.335333
+  ...
+# Subtest: file and text controls explain the host limitation without opening a picker or changing text
+ok 90 - file and text controls explain the host limitation without opening a picker or changing text
+  ---
+  duration_ms: 0.914834
+  ...
+# Subtest: pointerdown relinquishes controller focus and cancels an uncommitted edit
+ok 91 - pointerdown relinquishes controller focus and cancels an uncommitted edit
+  ---
+  duration_ms: 0.289459
+  ...
+# Subtest: keydown relinquishes controller focus and cancels an uncommitted edit
+ok 92 - keydown relinquishes controller focus and cancels an uncommitted edit
+  ---
+  duration_ms: 0.225625
+  ...
+# Subtest: external focus changes cancel editing and a flight scope suppresses all menu actions
+ok 93 - external focus changes cancel editing and a flight scope suppresses all menu actions
+  ---
+  duration_ms: 0.290875
+  ...
+# Subtest: destroy removes listeners and prevents all later controller actions
+ok 94 - destroy removes listeners and prevents all later controller actions
+  ---
+  duration_ms: 0.137333
+  ...
+# Subtest: sync cancels a stale editor immediately, and an unchanged scope token cannot retain the old modal root
+ok 95 - sync cancels a stale editor immediately, and an unchanged scope token cannot retain the old modal root
+  ---
+  duration_ms: 0.579625
+  ...
+# Subtest: a slider range change invalidates the draft before Confirm can commit an obsolete value
+ok 96 - a slider range change invalidates the draft before Confirm can commit an obsolete value
+  ---
+  duration_ms: 0.294667
+  ...
+# Subtest: Menu cancels an editor first; clear relinquishes navigation without destroying normal DOM controls
+ok 97 - Menu cancels an editor first; clear relinquishes navigation without destroying normal DOM controls
+  ---
+  duration_ms: 0.496042
+  ...
+# Subtest: a disabled focused button cannot redirect its Confirm into a neighboring destructive action
+ok 98 - a disabled focused button cannot redirect its Confirm into a neighboring destructive action
+  ---
+  duration_ms: 0.176125
+  ...
+# Subtest: returning from a picture preserves the newly restored gallery origin instead of the modal default
+ok 99 - returning from a picture preserves the newly restored gallery origin instead of the modal default
+  ---
+  duration_ms: 0.248792
+  ...
+# Subtest: joining engages the default focus without activating it or leaking the join into Confirm
+ok 100 - joining engages the default focus without activating it or leaking the join into Confirm
+  ---
+  duration_ms: 0.243542
+  ...
+# Subtest: engaging a new scope preserves a host-restored gallery card without opening it
+ok 101 - engaging a new scope preserves a host-restored gallery card without opening it
+  ---
+  duration_ms: 0.218041
+  ...
+# Subtest: engage never enters menu navigation during flight or after destruction
+ok 102 - engage never enters menu navigation during flight or after destruction
+  ---
+  duration_ms: 0.117541
+  ...
+# Subtest: select previews stay outside the enclosing label and preserve its name source
+ok 103 - select previews stay outside the enclosing label and preserve its name source
+  ---
+  duration_ms: 0.526458
+  ...
+# Subtest: range previews stay outside the enclosing label and preserve its name source
+ok 104 - range previews stay outside the enclosing label and preserve its name source
+  ---
+  duration_ms: 0.366958
+  ...
+# Subtest: reading entry focuses a named region before notification and returns owned metadata
+ok 105 - reading entry focuses a named region before notification and returns owned metadata
+  ---
+  duration_ms: 0.490208
+  ...
+# Subtest: reading hint refresh changes current copy without focus, transitions or stale scope publication
+ok 106 - reading hint refresh changes current copy without focus, transitions or stale scope publication
+  ---
+  duration_ms: 0.211333
+  ...
+# Subtest: reader scrolls vertically to both endpoints without moving focus, wrapping or repeating edge announcements
+ok 107 - reader scrolls vertically to both endpoints without moving focus, wrapping or repeating edge announcements
+  ---
+  duration_ms: 0.738292
+  ...
+# Subtest: small and nonoverflowing readers have bounded steps and always permit immediate exit
+ok 108 - small and nonoverflowing readers have bounded steps and always permit immediate exit
+  ---
+  duration_ms: 0.320625
+  ...
+# Subtest: reading back ends once and consumes the complete gesture before host actions
+ok 109 - reading back ends once and consumes the complete gesture before host actions
+  ---
+  duration_ms: 0.249208
+  ...
+# Subtest: reading confirm ends once and consumes the complete gesture before host actions
+ok 110 - reading confirm ends once and consumes the complete gesture before host actions
+  ---
+  duration_ms: 0.185708
+  ...
+# Subtest: reading menu ends once and consumes the complete gesture before host actions
+ok 111 - reading menu ends once and consumes the complete gesture before host actions
+  ---
+  duration_ms: 0.164417
+  ...
+# Subtest: entry validates the entire surface before replacing a reader or cancelling an editor
+ok 112 - entry validates the entire surface before replacing a reader or cancelling an editor
+  ---
+  duration_ms: 0.965
+  ...
+# Subtest: removed region cancels reading and cannot redirect the invalidating Confirm to another action
+ok 113 - removed region cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.328667
+  ...
+# Subtest: changed region identity cancels reading and cannot redirect the invalidating Confirm to another action
+ok 114 - changed region identity cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.271459
+  ...
+# Subtest: hidden region cancels reading and cannot redirect the invalidating Confirm to another action
+ok 115 - hidden region cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.240334
+  ...
+# Subtest: inert region cancels reading and cannot redirect the invalidating Confirm to another action
+ok 116 - inert region cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.294375
+  ...
+# Subtest: removed origin cancels reading and cannot redirect the invalidating Confirm to another action
+ok 117 - removed origin cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.242792
+  ...
+# Subtest: disabled origin cancels reading and cannot redirect the invalidating Confirm to another action
+ok 118 - disabled origin cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.23725
+  ...
+# Subtest: replaced content cancels reading and cannot redirect the invalidating Confirm to another action
+ok 119 - replaced content cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.260292
+  ...
+# Subtest: removed marker cancels reading and cannot redirect the invalidating Confirm to another action
+ok 120 - removed marker cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.258916
+  ...
+# Subtest: collapsed viewport cancels reading and cannot redirect the invalidating Confirm to another action
+ok 121 - collapsed viewport cancels reading and cannot redirect the invalidating Confirm to another action
+  ---
+  duration_ms: 0.299292
+  ...
+# Subtest: scope and root changes cancel reading without restoring stale focus or activating the next dialog
+ok 122 - scope and root changes cancel reading without restoring stale focus or activating the next dialog
+  ---
+  duration_ms: 0.273458
+  ...
+# Subtest: native focus, pointer and keyboard relinquish reading without stealing focus or swallowing native keys
+ok 123 - native focus, pointer and keyboard relinquish reading without stealing focus or swallowing native keys
+  ---
+  duration_ms: 0.562042
+  ...
+# Subtest: an end-only Done button stays harmless after pointerdown already cancelled reading
+ok 124 - an end-only Done button stays harmless after pointerdown already cancelled reading
+  ---
+  duration_ms: 0.17625
+  ...
+# Subtest: lifecycle clear cancels reading once, preserves scroll position and consumes stale input
+ok 125 - lifecycle clear cancels reading once, preserves scroll position and consumes stale input
+  ---
+  duration_ms: 0.252833
+  ...
+# Subtest: real remapped router drives reading repeats and gates held buttons/sticks across entry and exit
+ok 126 - real remapped router drives reading repeats and gates held buttons/sticks across entry and exit
+  ---
+  duration_ms: 11.617
+  ...
+# Subtest: held Retry Confirm cannot leave the loss reader or leak ability and Toggle Boost into flight
+ok 127 - held Retry Confirm cannot leave the loss reader or leak ability and Toggle Boost into flight
+  ---
+  duration_ms: 4.705959
+  ...
+# Subtest: reopening changed content starts at the top while unchanged content keeps its reading position
+ok 128 - reopening changed content starts at the top while unchanged content keeps its reading position
+  ---
+  duration_ms: 0.349167
+  ...
+# Subtest: registered Done preserves the reader until native click and restores the origin after host disables Done
+ok 129 - registered Done preserves the reader until native click and restores the origin after host disables Done
+  ---
+  duration_ms: 0.231708
+  ...
+# Subtest: Done descendant taps keep click semantics; pointercancel and other pointer gestures still relinquish
+ok 130 - Done descendant taps keep click semantics; pointercancel and other pointer gestures still relinquish
+  ---
+  duration_ms: 0.406666
+  ...
+# Subtest: native scroll opt-in retains reading through primary pan adoption and the real Done click
+ok 131 - native scroll opt-in retains reading through primary pan adoption and the real Done click
+  ---
+  duration_ms: 0.36225
+  ...
+# Subtest: native scrolling opt-in leaves the default pointer relinquish policy unchanged
+ok 132 - native scrolling opt-in leaves the default pointer relinquish policy unchanged
+  ---
+  duration_ms: 0.152833
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"button":2}
+ok 133 - native scroll opt-in does not retain a rejected primary gesture: {"button":2}
+  ---
+  duration_ms: 0.169042
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"isPrimary":false}
+ok 134 - native scroll opt-in does not retain a rejected primary gesture: {"isPrimary":false}
+  ---
+  duration_ms: 0.12975
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"defaultPrevented":true}
+ok 135 - native scroll opt-in does not retain a rejected primary gesture: {"defaultPrevented":true}
+  ---
+  duration_ms: 0.123666
+  ...
+# Subtest: native scroll opt-in does not retain a rejected primary gesture: {"cancelable":false}
+ok 136 - native scroll opt-in does not retain a rejected primary gesture: {"cancelable":false}
+  ---
+  duration_ms: 0.119875
+  ...
+# Subtest: native pointerdown cannot retain reading with stale scope
+ok 137 - native pointerdown cannot retain reading with stale scope
+  ---
+  duration_ms: 0.222875
+  ...
+# Subtest: native pointerdown cannot retain reading with stale root
+ok 138 - native pointerdown cannot retain reading with stale root
+  ---
+  duration_ms: 0.13225
+  ...
+# Subtest: native pointerdown cannot retain reading with stale content
+ok 139 - native pointerdown cannot retain reading with stale content
+  ---
+  duration_ms: 0.175292
+  ...
+# Subtest: native pointerdown cannot retain reading with stale focus
+ok 140 - native pointerdown cannot retain reading with stale focus
+  ---
+  duration_ms: 0.161625
+  ...
+# Subtest: native pointerdown cannot retain reading with stale hidden-region
+ok 141 - native pointerdown cannot retain reading with stale hidden-region
+  ---
+  duration_ms: 0.143959
+  ...
+# Subtest: native pointerdown cannot retain reading with stale background
+ok 142 - native pointerdown cannot retain reading with stale background
+  ---
+  duration_ms: 0.144625
+  ...
+# Subtest: native pointerdown cannot retain reading with stale hidden-document
+ok 143 - native pointerdown cannot retain reading with stale hidden-document
+  ---
+  duration_ms: 0.1365
+  ...
+# Subtest: native pointercancel cannot retain reading with stale scope
+ok 144 - native pointercancel cannot retain reading with stale scope
+  ---
+  duration_ms: 0.813875
+  ...
+# Subtest: native pointercancel cannot retain reading with stale root
+ok 145 - native pointercancel cannot retain reading with stale root
+  ---
+  duration_ms: 0.526875
+  ...
+# Subtest: native pointercancel cannot retain reading with stale content
+ok 146 - native pointercancel cannot retain reading with stale content
+  ---
+  duration_ms: 0.3515
+  ...
+# Subtest: native pointercancel cannot retain reading with stale focus
+ok 147 - native pointercancel cannot retain reading with stale focus
+  ---
+  duration_ms: 0.253
+  ...
+# Subtest: native pointercancel cannot retain reading with stale hidden-region
+ok 148 - native pointercancel cannot retain reading with stale hidden-region
+  ---
+  duration_ms: 0.179334
+  ...
+# Subtest: native pointercancel cannot retain reading with stale background
+ok 149 - native pointercancel cannot retain reading with stale background
+  ---
+  duration_ms: 0.157208
+  ...
+# Subtest: native pointercancel cannot retain reading with stale hidden-document
+ok 150 - native pointercancel cannot retain reading with stale hidden-document
+  ---
+  duration_ms: 0.158542
+  ...
+# Subtest: only the pending region pointer can survive cancellation; Done, outside and ended gestures still cancel
+ok 151 - only the pending region pointer can survive cancellation; Done, outside and ended gestures still cancel
+  ---
+  duration_ms: 2.229959
+  ...
+# Subtest: native scroll retention is retired if input or acceptance callbacks invalidate its reader
+ok 152 - native scroll retention is retired if input or acceptance callbacks invalidate its reader
+  ---
+  duration_ms: 0.9215
+  ...
+# Subtest: native wheel remains unhandled and keyboard reading keeps its existing scroll and exit behavior
+ok 153 - native wheel remains unhandled and keyboard reading keeps its existing scroll and exit behavior
+  ---
+  duration_ms: 1.170167
+  ...
+# Subtest: native scroll opt-in does not change unowned keyboard defaults or retain gestures after destruction
+ok 154 - native scroll opt-in does not change unowned keyboard defaults or retain gestures after destruction
+  ---
+  duration_ms: 4.033125
+  ...
+# Subtest: reading hint metadata identifies entry, refresh, boundaries and ended messages after state retirement
+ok 155 - reading hint metadata identifies entry, refresh, boundaries and ended messages after state retirement
+  ---
+  duration_ms: 0.9485
+  ...
+# Subtest: non-reading hints retain their one-argument callback contract
+ok 156 - non-reading hints retain their one-argument callback contract
+  ---
+  duration_ms: 0.301
+  ...
+# Subtest: exit registration rejects unrelated or hidden controls without replacing a current reader
+ok 157 - exit registration rejects unrelated or hidden controls without replacing a current reader
+  ---
+  duration_ms: 0.390542
+  ...
+# Subtest: actual two-surface host preserves a native Done click through document capture and returns focus
+ok 158 - actual two-surface host preserves a native Done click through document capture and returns focus
+  ---
+  duration_ms: 1.692791
+  ...
+# Subtest: embedded practice Tab edges return to parent controls; interior keys keep their menu owner
+ok 159 - embedded practice Tab edges return to parent controls; interior keys keep their menu owner
+  ---
+  duration_ms: 0.902208
+  ...
+# Subtest: practice boundary never bypasses a real modal, active reader, native field or unregistered game
+ok 160 - practice boundary never bypasses a real modal, active reader, native field or unregistered game
+  ---
+  duration_ms: 0.892416
+  ...
+# Subtest: stale, loading, unfocused or disposed practice contexts cannot move parent focus or clear newer input
+    # Subtest: session
+    ok 1 - session
+      ---
+      duration_ms: 0.831875
+      ...
+    # Subtest: loading
+    ok 2 - loading
+      ---
+      duration_ms: 7.558334
+      ...
+    # Subtest: parent-focus
+    ok 3 - parent-focus
+      ---
+      duration_ms: 0.202958
+      ...
+    # Subtest: hidden
+    ok 4 - hidden
+      ---
+      duration_ms: 0.15025
+      ...
+    # Subtest: wrong-frame
+    ok 5 - wrong-frame
+      ---
+      duration_ms: 0.156125
+      ...
+    # Subtest: disposed
+    ok 6 - disposed
+      ---
+      duration_ms: 0.252167
+      ...
+    1..6
+ok 161 - stale, loading, unfocused or disposed practice contexts cannot move parent focus or clear newer input
+  ---
+  duration_ms: 9.949834
+  ...
+# Subtest: an accepted practice exit cannot wrap the child after a callback changes session or parent focus
+    # Subtest: onSuspend: session
+    ok 1 - onSuspend: session
+      ---
+      duration_ms: 1.589542
+      ...
+    # Subtest: onSuspend: focus
+    ok 2 - onSuspend: focus
+      ---
+      duration_ms: 0.383167
+      ...
+    # Subtest: onRelease: session
+    ok 3 - onRelease: session
+      ---
+      duration_ms: 0.25125
+      ...
+    # Subtest: onRelease: focus
+    ok 4 - onRelease: focus
+      ---
+      duration_ms: 0.186583
+      ...
+    1..4
+ok 162 - an accepted practice exit cannot wrap the child after a callback changes session or parent focus
+  ---
+  duration_ms: 2.620667
+  ...
+# Subtest: keyboard Done: modal Shift+Tab and "Enter" end the actual host once
+ok 163 - keyboard Done: modal Shift+Tab and "Enter" end the actual host once
+  ---
+  duration_ms: 0.87
+  ...
+# Subtest: keyboard Done: modal Shift+Tab and " " end the actual host once
+ok 164 - keyboard Done: modal Shift+Tab and " " end the actual host once
+  ---
+  duration_ms: 0.600584
+  ...
+# Subtest: keyboard Done: panel Shift+Tab and "Enter" end the actual host once
+ok 165 - keyboard Done: panel Shift+Tab and "Enter" end the actual host once
+  ---
+  duration_ms: 0.502708
+  ...
+# Subtest: keyboard Done: panel Shift+Tab and " " end the actual host once
+ok 166 - keyboard Done: panel Shift+Tab and " " end the actual host once
+  ---
+  duration_ms: 0.487792
+  ...
+# Subtest: keyboard Done: modal round trip retains reading, leaving the pair cancels
+ok 167 - keyboard Done: modal round trip retains reading, leaving the pair cancels
+  ---
+  duration_ms: 0.767583
+  ...
+# Subtest: keyboard Done: panel round trip retains reading, leaving the pair cancels
+ok 168 - keyboard Done: panel round trip retains reading, leaving the pair cancels
+  ---
+  duration_ms: 0.795208
+  ...
+# Subtest: keyboard Done: an exit after the region follows actual sequential order
+ok 169 - keyboard Done: an exit after the region follows actual sequential order
+  ---
+  duration_ms: 0.527916
+  ...
+# Subtest: keyboard Done: an intervening action is not skipped or activated to reach Done
+ok 170 - keyboard Done: an intervening action is not skipped or activated to reach Done
+  ---
+  duration_ms: 0.524959
+  ...
+# Subtest: keyboard Done: controller back on focused Done ends without host action
+ok 171 - keyboard Done: controller back on focused Done ends without host action
+  ---
+  duration_ms: 0.5115
+  ...
+# Subtest: keyboard Done: controller confirm on focused Done ends without host action
+ok 172 - keyboard Done: controller confirm on focused Done ends without host action
+  ---
+  duration_ms: 0.431208
+  ...
+# Subtest: keyboard Done: controller menu on focused Done ends without host action
+ok 173 - keyboard Done: controller menu on focused Done ends without host action
+  ---
+  duration_ms: 0.392125
+  ...
+# Subtest: keyboard Done: hidden exit invalidates its ownership without activating another action
+ok 174 - keyboard Done: hidden exit invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.502875
+  ...
+# Subtest: keyboard Done: disabled exit invalidates its ownership without activating another action
+ok 175 - keyboard Done: disabled exit invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.405208
+  ...
+# Subtest: keyboard Done: removed exit invalidates its ownership without activating another action
+ok 176 - keyboard Done: removed exit invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.39925
+  ...
+# Subtest: keyboard Done: replaced text invalidates its ownership without activating another action
+ok 177 - keyboard Done: replaced text invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.390834
+  ...
+# Subtest: keyboard Done: changed scope invalidates its ownership without activating another action
+ok 178 - keyboard Done: changed scope invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.4165
+  ...
+# Subtest: keyboard Done: external focus invalidates its ownership without activating another action
+ok 179 - keyboard Done: external focus invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.370667
+  ...
+# Subtest: keyboard Done: lifecycle clear invalidates its ownership without activating another action
+ok 180 - keyboard Done: lifecycle clear invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.291208
+  ...
+# Subtest: keyboard Done: destroy invalidates its ownership without activating another action
+ok 181 - keyboard Done: destroy invalidates its ownership without activating another action
+  ---
+  duration_ms: 0.286958
+  ...
+# Subtest: keyboard Done: modal disabling the focused exit preserves its real Tab neighbor
+ok 182 - keyboard Done: modal disabling the focused exit preserves its real Tab neighbor
+  ---
+  duration_ms: 0.382084
+  ...
+# Subtest: keyboard Done: panel disabling the focused exit preserves its real Tab neighbor
+ok 183 - keyboard Done: panel disabling the focused exit preserves its real Tab neighbor
+  ---
+  duration_ms: 2.875916
+  ...
+# Subtest: keyboard Done: held activation and ordinary controller directions retain one reader
+ok 184 - keyboard Done: held activation and ordinary controller directions retain one reader
+  ---
+  duration_ms: 1.346667
+  ...
+# Subtest: keyboard Done: a host focus handoff during exit owns the next destination
+ok 185 - keyboard Done: a host focus handoff during exit owns the next destination
+  ---
+  duration_ms: 1.16425
+  ...
+# Subtest: keyboard Done: hosts without keyboard navigation retain native focus cancellation
+ok 186 - keyboard Done: hosts without keyboard navigation retain native focus cancellation
+  ---
+  duration_ms: 0.382417
+  ...
+# Subtest: keyboard Done: a hidden page after exit notification cannot receive a stale Tab handoff
+ok 187 - keyboard Done: a hidden page after exit notification cannot receive a stale Tab handoff
+  ---
+  duration_ms: 0.463084
+  ...
+# Subtest: keyboard Done: a blurred page after exit notification cannot receive a stale Tab handoff
+ok 188 - keyboard Done: a blurred page after exit notification cannot receive a stale Tab handoff
+  ---
+  duration_ms: 0.385916
+  ...
+# Subtest: reader modifier: full Shift down/Tab down-up/Shift up reaches Done in a modal
+ok 189 - reader modifier: full Shift down/Tab down-up/Shift up reaches Done in a modal
+  ---
+  duration_ms: 0.651125
+  ...
+# Subtest: reader modifier: full Shift down/Tab down-up/Shift up reaches Done in a panel
+ok 190 - reader modifier: full Shift down/Tab down-up/Shift up reaches Done in a panel
+  ---
+  duration_ms: 0.62775
+  ...
+# Subtest: reader modifier: Shift alone and held Shift preserve the current region without action
+ok 191 - reader modifier: Shift alone and held Shift preserve the current region without action
+  ---
+  duration_ms: 0.343458
+  ...
+# Subtest: reader modifier: Shift alone and held Shift preserve the current done without action
+ok 192 - reader modifier: Shift alone and held Shift preserve the current done without action
+  ---
+  duration_ms: 0.401208
+  ...
+# Subtest: reader modifier: hosts without keyboard navigation retain Shift relinquish
+ok 193 - reader modifier: hosts without keyboard navigation retain Shift relinquish
+  ---
+  duration_ms: 0.244917
+  ...
+# Subtest: reader modifier: Shift cannot preserve hidden page
+ok 194 - reader modifier: Shift cannot preserve hidden page
+  ---
+  duration_ms: 0.237917
+  ...
+# Subtest: reader modifier: Shift cannot preserve unfocused page
+ok 195 - reader modifier: Shift cannot preserve unfocused page
+  ---
+  duration_ms: 0.222167
+  ...
+# Subtest: reader modifier: Shift cannot preserve replaced text
+ok 196 - reader modifier: Shift cannot preserve replaced text
+  ---
+  duration_ms: 0.226
+  ...
+# Subtest: reader modifier: Shift cannot preserve changed scope
+ok 197 - reader modifier: Shift cannot preserve changed scope
+  ---
+  duration_ms: 0.428
+  ...
+# Subtest: reader modifier: Shift cannot preserve changed root
+ok 198 - reader modifier: Shift cannot preserve changed root
+  ---
+  duration_ms: 0.224916
+  ...
+# Subtest: reader modifier: Shift cannot preserve outside focus
+ok 199 - reader modifier: Shift cannot preserve outside focus
+  ---
+  duration_ms: 0.245291
+  ...
+# Subtest: reader modifier: Shift with ctrlKey retains existing relinquish behavior
+ok 200 - reader modifier: Shift with ctrlKey retains existing relinquish behavior
+  ---
+  duration_ms: 0.222208
+  ...
+# Subtest: reader modifier: Shift with altKey retains existing relinquish behavior
+ok 201 - reader modifier: Shift with altKey retains existing relinquish behavior
+  ---
+  duration_ms: 0.203
+  ...
+# Subtest: reader modifier: Shift with metaKey retains existing relinquish behavior
+ok 202 - reader modifier: Shift with metaKey retains existing relinquish behavior
+  ---
+  duration_ms: 0.202125
+  ...
+# Subtest: reader modifier: Shift with defaultPrevented retains existing relinquish behavior
+ok 203 - reader modifier: Shift with defaultPrevented retains existing relinquish behavior
+  ---
+  duration_ms: 0.190083
+  ...
+# Subtest: reader modifier: native-input callback may retire the reader without re-entry or focus transfer
+ok 204 - reader modifier: native-input callback may retire the reader without re-entry or focus transfer
+  ---
+  duration_ms: 0.252459
+  ...
+# Subtest: registered native frame exit leaves sequential focus to the browser without wrapping
+ok 205 - registered native frame exit leaves sequential focus to the browser without wrapping
+  ---
+  duration_ms: 0.313125
+  ...
+# Subtest: multiline JSON caret, selection, newline, tab and undo preserve authored text
+ok 206 - multiline JSON caret, selection, newline, tab and undo preserve authored text
+  ---
+  duration_ms: 0.908417
+  ...
+# Subtest: Unicode deletion does not split emoji and replacement obeys maxlength atomically
+ok 207 - Unicode deletion does not split emoji and replacement obeys maxlength atomically
+  ---
+  duration_ms: 0.101292
+  ...
+# Subtest: native selection direction and edits compose with controller insertion
+ok 208 - native selection direction and edits compose with controller insertion
+  ---
+  duration_ms: 0.079292
+  ...
+# Subtest: caret navigation retains empty lines and never lands inside an emoji
+ok 209 - caret navigation retains empty lines and never lands inside an emoji
+  ---
+  duration_ms: 0.071458
+  ...
+# Subtest: custom menu owns controls and recovery dialogs, then yields all pad reads and arrows to flight
+ok 210 - custom menu owns controls and recovery dialogs, then yields all pad reads and arrows to flight
+  ---
+  duration_ms: 73.307125
+  ...
+# Subtest: creator menu captures a native Confirm tap between frames without a duplicate release action
+ok 211 - creator menu captures a native Confirm tap between frames without a duplicate release action
+  ---
+  duration_ms: 8.771625
+  ...
+# Subtest: installed custom player starts, pauses, saves and resumes through one controller menu owner
+ok 212 - installed custom player starts, pauses, saves and resumes through one controller menu owner
+  ---
+  duration_ms: 1399.569417
+  ...
+# Subtest: installation errors retain a keyboard/controller exit menu without a running simulation
+ok 213 - installation errors retain a keyboard/controller exit menu without a running simulation
+  ---
+  duration_ms: 500.439625
+  ...
+# Subtest: a legally completed custom mission exposes result actions and keeps earned progress on menu traversal
+ok 214 - a legally completed custom mission exposes result actions and keeps earned progress on menu traversal
+  ---
+  duration_ms: 1088.396875
+  ...
+# Subtest: vertical settings arrows select categories; compact Confirm enters and Back returns once
+ok 215 - vertical settings arrows select categories; compact Confirm enters and Back returns once
+  ---
+  duration_ms: 5.944291
+  ...
+# Subtest: compact native dialog cancellation returns to categories before allowing parent cancellation
+ok 216 - compact native dialog cancellation returns to categories before allowing parent cancellation
+  ---
+  duration_ms: 0.552041
+  ...
+# Subtest: mount respects the authored category and keeps existing controls, values and focus
+ok 217 - mount respects the authored category and keeps existing controls, values and focus
+  ---
+  duration_ms: 0.700041
+  ...
+# Subtest: tab arrows wrap and Home/End select before focus without bubbling a game command
+ok 218 - tab arrows wrap and Home/End select before focus without bubbling a game command
+  ---
+  duration_ms: 18.032541
+  ...
+# Subtest: capture-phase navigation recognizes only owned visible tab keys
+ok 219 - capture-phase navigation recognizes only owned visible tab keys
+  ---
+  duration_ms: 0.647666
+  ...
+# Subtest: owned tabs cannot toggle another root or a replaced panel
+ok 220 - owned tabs cannot toggle another root or a replaced panel
+  ---
+  duration_ms: 0.86425
+  ...
+# Subtest: a native cancellation hook may request focus without changing control values
+ok 221 - a native cancellation hook may request focus without changing control values
+  ---
+  duration_ms: 1.572292
+  ...
+# Subtest: a newer hook selection or removed root cannot be overwritten or refocused
+ok 222 - a newer hook selection or removed root cannot be overwritten or refocused
+  ---
+  duration_ms: 0.365792
+  ...
+# Subtest: disabled tabs are skipped and their previous panel still closes
+ok 223 - disabled tabs are skipped and their previous panel still closes
+  ---
+  duration_ms: 1.636334
+  ...
+# Subtest: a target hidden or disabled by its host hook does not replace the current panel or focus
+ok 224 - a target hidden or disabled by its host hook does not replace the current panel or focus
+  ---
+  duration_ms: 1.364791
+  ...
+# Subtest: destroy and absent supporting-page roots leave no active listeners or focus changes
+ok 225 - destroy and absent supporting-page roots leave no active listeners or focus changes
+  ---
+  duration_ms: 0.942917
+  ...
+# Subtest: controller sprite commands share pixel history and cancel a shape anchor without painting
+ok 226 - controller sprite commands share pixel history and cancel a shape anchor without painting
+  ---
+  duration_ms: 38.331708
+  ...
+# Subtest: focused undo endpoint transfers to enabled opposite history action without changing pixels
+ok 227 - focused undo endpoint transfers to enabled opposite history action without changing pixels
+  ---
+  duration_ms: 3.401333
+  ...
+# Subtest: focused redo endpoint transfers to enabled opposite history action without changing pixels
+ok 228 - focused redo endpoint transfers to enabled opposite history action without changing pixels
+  ---
+  duration_ms: 2.444208
+  ...
+# Subtest: an Undo with remaining history retains its own focus
+ok 229 - an Undo with remaining history retains its own focus
+  ---
+  duration_ms: 3.659125
+  ...
+# Subtest: canvas ctrlKey Undo/Redo keeps keyboard ownership and exact pixels
+ok 230 - canvas ctrlKey Undo/Redo keeps keyboard ownership and exact pixels
+  ---
+  duration_ms: 3.204375
+  ...
+# Subtest: canvas metaKey Undo/Redo keeps keyboard ownership and exact pixels
+ok 231 - canvas metaKey Undo/Redo keeps keyboard ownership and exact pixels
+  ---
+  duration_ms: 0.961625
+  ...
+# Subtest: history operations do not claim another control focus
+ok 232 - history operations do not claim another control focus
+  ---
+  duration_ms: 0.95
+  ...
+# Subtest: opening fresh history falls back to canvas only from an owned endpoint
+ok 233 - opening fresh history falls back to canvas only from an owned endpoint
+  ---
+  duration_ms: 1.04975
+  ...
+# Subtest: a newer focus established during repaint is not reclaimed
+ok 234 - a newer focus established during repaint is not reclaimed
+  ---
+  duration_ms: 0.947458
+  ...
+# Subtest: a successor focus callback can choose another control without a later handoff
+ok 235 - a successor focus callback can choose another control without a later handoff
+  ---
+  duration_ms: 0.906292
+  ...
+# Subtest: actual workshop reviews without writes, explicitly restores all originals, and prepares a separate native download
+ok 236 - actual workshop reviews without writes, explicitly restores all originals, and prepares a separate native download
+  ---
+  duration_ms: 469.755166
+  ...
+# Subtest: actual preserve review distinguishes assignments while retaining current and incoming history
+ok 237 - actual preserve review distinguishes assignments while retaining current and incoming history
+  ---
+  duration_ms: 531.733542
+  ...
+# Subtest: actual restore review distinguishes assignments while retaining current and incoming history
+ok 238 - actual restore review distinguishes assignments while retaining current and incoming history
+  ---
+  duration_ms: 401.053042
+  ...
+# Subtest: corrupt bundle, quota refusal, and stale writer keep exact prior storage and preview
+ok 239 - corrupt bundle, quota refusal, and stale writer keep exact prior storage and preview
+  ---
+  duration_ms: 798.32275
+  ...
+# Subtest: review binds the exact installed catalog, selected file and explicit assignment policy
+ok 240 - review binds the exact installed catalog, selected file and explicit assignment policy
+  ---
+  duration_ms: 187.571416
+  ...
+# Subtest: cancelled late review and double commands cannot publish stale restore or download
+ok 241 - cancelled late review and double commands cannot publish stale restore or download
+  ---
+  duration_ms: 158.315
+  ...
+# Subtest: allocation-time cancellation and hidden lifecycle release prepared download without late artifacts
+ok 242 - allocation-time cancellation and hidden lifecycle release prepared download without late artifacts
+  ---
+  duration_ms: 29.660042
+  ...
+# Subtest: shared v3 MP3 recovery is byte-identical after originals restore
+ok 243 - shared v3 MP3 recovery is byte-identical after originals restore
+  ---
+  duration_ms: 187.960042
+  ...
+# Subtest: actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file
+ok 244 - actual controller router reaches download/review/restore and held Confirm cannot apply the newly reviewed file
+  ---
+  duration_ms: 180.92925
+  ...
+# Subtest: actual classic entry gives file-URL guidance before module/storage access
+ok 245 - actual classic entry gives file-URL guidance before module/storage access
+  ---
+  duration_ms: 12.883083
+  ...
+# Subtest: actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+ok 246 - actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media
+  ---
+  duration_ms: 259.288333
+  ...
+# Subtest: cold workshop Escape restores the invoker blurred by its disabled loading state
+ok 247 - cold workshop Escape restores the invoker blurred by its disabled loading state
+  ---
+  duration_ms: 31.772375
+  ...
+# Subtest: closing a pending workshop read restores the invoker before settling and preserves later focus
+ok 248 - closing a pending workshop read restores the invoker before settling and preserves later focus
+  ---
+  duration_ms: 26.140416
+  ...
+# Subtest: v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation
+ok 249 - v1 MP3 bytes remain exact through shared v5 upgrade and explicit native backup preparation
+  ---
+  duration_ms: 129.52225
+  ...
+# Subtest: actual host omits unused trusted online pins from an importable backup without fetching or changing storage
+ok 250 - actual host omits unused trusted online pins from an importable backup without fetching or changing storage
+  ---
+  duration_ms: 118.571167
+  ...
+# Subtest: actual host preserves installed permitted originals and their metadata byte-for-byte
+ok 251 - actual host preserves installed permitted originals and their metadata byte-for-byte
+  ---
+  duration_ms: 34.159792
+  ...
+# Subtest: actual host names restricted references before preparing and retains that notice through download
+ok 252 - actual host names restricted references before preparing and retains that notice through download
+  ---
+  duration_ms: 27.415792
+  ...
+# Subtest: missing permitted music stops preparation visibly and discards the earlier prepared URL
+ok 253 - missing permitted music stops preparation visibly and discards the earlier prepared URL
+  ---
+  duration_ms: 34.555333
+  ...
+# Subtest: closing pending audio recovery prevents late status, notices or download ownership
+ok 254 - closing pending audio recovery prevents late status, notices or download ownership
+  ---
+  duration_ms: 15.931625
+  ...
+# Subtest: file URL and cancelled late source load do not open or upgrade media
+ok 255 - file URL and cancelled late source load do not open or upgrade media
+  ---
+  duration_ms: 33.386458
+  ...
+# Subtest: rejected shared-store access remains visible and cannot become an empty media save
+ok 256 - rejected shared-store access remains visible and cannot become an empty media save
+  ---
+  duration_ms: 22.965958
+  ...
+# Subtest: persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+ok 257 - persisted pagehide cancels a pending first Open before it can create or upgrade a manager
+  ---
+  duration_ms: 29.462458
+  ...
+# Subtest: existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+ok 258 - existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context
+  ---
+  duration_ms: 44.793291
+  ...
+# Subtest: actual shared router prevents held Confirm across modal close and native pointer handoff
+ok 259 - actual shared router prevents held Confirm across modal close and native pointer handoff
+  ---
+  duration_ms: 105.040625
+  ...
+# Subtest: opening announces the held catalogue read and Close fences its late failure
+ok 260 - opening announces the held catalogue read and Close fences its late failure
+  ---
+  duration_ms: 15.437958
+  ...
+# Subtest: classic picture workshop exposes loading and Back before storage explanation
+ok 261 - classic picture workshop exposes loading and Back before storage explanation
+  ---
+  duration_ms: 1.231375
+  ...
+# Subtest: successful in-dialog reload reconciles the failed host opening without moving focus or writing media
+ok 262 - successful in-dialog reload reconciles the failed host opening without moving focus or writing media
+  ---
+  duration_ms: 37.202458
+  ...
+# Subtest: failed in-dialog reload retains the host failure and the current panel error
+ok 263 - failed in-dialog reload retains the host failure and the current panel error
+  ---
+  duration_ms: 27.264958
+  ...
+# Subtest: cancelled reload after hide cannot reconcile a late read as success
+ok 264 - cancelled reload after hide cannot reconcile a late read as success
+  ---
+  duration_ms: 25.637792
+  ...
+# Subtest: cancelled reload after close cannot reconcile a late read as success
+ok 265 - cancelled reload after close cannot reconcile a late read as success
+  ---
+  duration_ms: 24.349167
+  ...
+# Subtest: successful reload cannot overwrite a newer host status owner
+ok 266 - successful reload cannot overwrite a newer host status owner
+  ---
+  duration_ms: 36.626542
+  ...
+# Subtest: retired reload cannot change a newer successful opening
+ok 267 - retired reload cannot change a newer successful opening
+  ---
+  duration_ms: 22.6995
+  ...
+# Subtest: retired reload cannot change a newer failed opening
+ok 268 - retired reload cannot change a newer failed opening
+  ---
+  duration_ms: 25.384292
+  ...
+# Subtest: workshop initial successful load and reopen restore Reload after native disabled blur
+ok 269 - workshop initial successful load and reopen restore Reload after native disabled blur
+  ---
+  duration_ms: 28.898333
+  ...
+# Subtest: workshop initial failed load and reopen restore Reload after native disabled blur
+ok 270 - workshop initial failed load and reopen restore Reload after native disabled blur
+  ---
+  duration_ms: 37.127875
+  ...
+# Subtest: no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+ok 271 - no optional capability keeps the actual still-only panel and rich-v3 store unchanged
+  ---
+  duration_ms: 129.016541
+  ...
+# Subtest: Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+ok 272 - Prepare writes neither descriptor nor binding, Save commits both once and rejected notification retains the new generation
+  ---
+  duration_ms: 1164.135458
+  ...
+# Subtest: historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+ok 273 - historical poster A can be selected after current B; clear saves explicit null and exact saved history can be rebound
+  ---
+  duration_ms: 1596.398459
+  ...
+# Subtest: unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+ok 274 - unsaved poster and invalid segment cannot produce a reviewed story; picture revision change invalidates a prepared save
+  ---
+  duration_ms: 343.456
+  ...
+# Subtest: stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+ok 275 - stale installed context, concurrent story generation and transaction refusal preserve the entire prior inventory
+  ---
+  duration_ms: 1987.31225
+  ...
+# Subtest: native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+ok 276 - native prepared download transfers exact v2 bytes; keep-current preserves null and explicit restore restores only reviewed incoming bindings
+  ---
+  duration_ms: 1706.846833
+  ...
+# Subtest: story restore success retains only the initiating operation's focus ownership
+ok 277 - story restore success retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 734.808208
+  ...
+# Subtest: story restore observer-failure retains only the initiating operation's focus ownership
+ok 278 - story restore observer-failure retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 737.542584
+  ...
+# Subtest: story restore moved-focus retains only the initiating operation's focus ownership
+ok 279 - story restore moved-focus retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 705.599167
+  ...
+# Subtest: story restore cancelled retains only the initiating operation's focus ownership
+ok 280 - story restore cancelled retains only the initiating operation's focus ownership
+  ---
+  duration_ms: 1179.338625
+  ...
+# Subtest: fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+ok 281 - fresh restore requires actual paired poster originals, corrupt source refuses completely, and correct pairs restore exact video
+  ---
+  duration_ms: 948.0915
+  ...
+# Subtest: Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+ok 282 - Back cancels a late returned reservation without publishing Save; current source remains usable after reload
+  ---
+  duration_ms: 293.371
+  ...
+# Subtest: the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+ok 283 - the existing router requires released Confirm between Prepare and Save and native Enter remains a browser action
+  ---
+  duration_ms: 420.049541
+  ...
+# Subtest: standalone entry has native file/time controls, dark local styles and file failure before modules
+ok 284 - standalone entry has native file/time controls, dark local styles and file failure before modules
+  ---
+  duration_ms: 3.694416
+  ...
+# Subtest: actual workshop handlers inspect/select/capture and retain exact PNG until native explicit download
+ok 285 - actual workshop handlers inspect/select/capture and retain exact PNG until native explicit download
+  ---
+  duration_ms: 39.817542
+  ...
+# Subtest: fallback timing is explicitly unavailable, never substituted with requested time
+ok 286 - fallback timing is explicitly unavailable, never substituted with requested time
+  ---
+  duration_ms: 5.081625
+  ...
+# Subtest: presented-frame evidence enables bounded directional seek and publishes only changed decoded time
+ok 287 - presented-frame evidence enables bounded directional seek and publishes only changed decoded time
+  ---
+  duration_ms: 13.17675
+  ...
+# Subtest: playback range stays separate from explicitly unavailable physical trim
+ok 288 - playback range stays separate from explicitly unavailable physical trim
+  ---
+  duration_ms: 3.823083
+  ...
+# Subtest: verified optional trim publishes the adapter output URL and explicit audio provenance
+ok 289 - verified optional trim publishes the adapter output URL and explicit audio provenance
+  ---
+  duration_ms: 22.649542
+  ...
+# Subtest: bounded resize/compression plan supports whole-video conversion and invalidates stale support
+ok 290 - bounded resize/compression plan supports whole-video conversion and invalidates stale support
+  ---
+  duration_ms: 10.299875
+  ...
+# Subtest: invalid numeric times do not clamp, allocate or disturb an existing poster
+ok 291 - invalid numeric times do not clamp, allocate or disturb an existing poster
+  ---
+  duration_ms: 3.498792
+  ...
+# Subtest: cancelled late inspection is disposed and cannot enable capture
+ok 292 - cancelled late inspection is disposed and cannot enable capture
+  ---
+  duration_ms: 1.984167
+  ...
+# Subtest: older inspection completion cannot replace a newer successfully inspected source
+ok 293 - older inspection completion cannot replace a newer successfully inspected source
+  ---
+  duration_ms: 8.870875
+  ...
+# Subtest: fixture generator explains usage and refuses output outside its exclusive cache boundary
+ok 294 - fixture generator explains usage and refuses output outside its exclusive cache boundary
+  ---
+  duration_ms: 168.189209
+  ...
+# Subtest: fixture generator refuses symlink ancestors before writing outside its cache and preserves existing directories
+ok 295 - fixture generator refuses symlink ancestors before writing outside its cache and preserves existing directories
+  ---
+  duration_ms: 76.340958
+  ...
+# Subtest: Cancel and source change reject late capture publication while retaining prior result only for same source
+ok 296 - Cancel and source change reject late capture publication while retaining prior result only for same source
+  ---
+  duration_ms: 7.615084
+  ...
+# Subtest: failed capture preserves exact prior preview and allows retry
+ok 297 - failed capture preserves exact prior preview and allows retry
+  ---
+  duration_ms: 4.015667
+  ...
+# Subtest: native file-picker blur keeps selection while hidden/pagehide cancels and releases work
+ok 298 - native file-picker blur keeps selection while hidden/pagehide cancels and releases work
+  ---
+  duration_ms: 6.16925
+  ...
+# Subtest: controller native range editing and confirmation reaches explicit PNG action without mouse
+ok 299 - controller native range editing and confirmation reaches explicit PNG action without mouse
+  ---
+  duration_ms: 9.321541
+  ...
+# Subtest: native keyboard editing/activation preserves input defaults and no repeated capture during work
+ok 300 - native keyboard editing/activation preserves input defaults and no repeated capture during work
+  ---
+  duration_ms: 6.026834
+  ...
+# Subtest: focused page owns polling; held pad must neutralize after native input and focus loss
+ok 301 - focused page owns polling; held pad must neutralize after native input and focus loss
+  ---
+  duration_ms: 3.456666
+  ...
+# Subtest: disposal revokes prepared PNG and late callbacks cannot restart the standalone page
+ok 302 - disposal revokes prepared PNG and late callbacks cannot restart the standalone page
+  ---
+  duration_ms: 2.827708
+  ...
+# Subtest: classic video workshop exposes loading immediately after its title
+ok 303 - classic video workshop exposes loading immediately after its title
+  ---
+  duration_ms: 0.723042
+  ...
+1..303
+# tests 313
+# suites 0
+# pass 313
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12547.386917

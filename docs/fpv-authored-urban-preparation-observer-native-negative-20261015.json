@@ -1,0 +1,144 @@
+{
+  "receiptUTC": "2026-10-15T21:10:20.827188+00:00",
+  "toolRevision": "ee79ef29d317335ba5c957cc0cc22e264fe353e1",
+  "productionRevision": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+  "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+  "origin": "http://127.0.0.1:9207",
+  "identitySHA256": "8732091519e501716fc1b4e6cdc1ab2c7e3f965814b6459a3cdc3629c1af5194",
+  "scope": "Actual strict-focus bounded five-minute observation invalidated before its target. Native acceptance below applies only to instrumentation capture and honest failure reporting, not duration/performance qualification.",
+  "observations": {
+    "startedUTC": "2026-10-15T21:00:50.317Z",
+    "elapsedSeconds": 176.33209999999403,
+    "ticks": 8790,
+    "reason": "Frame gap exceeded 250 ms",
+    "maximumClockFrameIntervalMs": 516.8999999910593,
+    "visibleFocusedEvents": {
+      "policy": "strict-focus",
+      "input": "Commanded test pilot only; no player input",
+      "scope": "Visible document with continuous window focus required",
+      "events": [
+        {
+          "elapsedMs": 0,
+          "type": "start",
+          "visible": true,
+          "focused": true
+        }
+      ],
+      "failure": null
+    },
+    "dimensions": {
+      "basis": "visualViewport",
+      "width": 1280,
+      "height": 720,
+      "dpr": 2,
+      "cssWidth": 1280,
+      "cssHeight": 417.59375,
+      "backingWidth": 1920,
+      "backingHeight": 627
+    },
+    "contacts": 0,
+    "disposalZero": true,
+    "accepted": false,
+    "routeCoverageQualified": false,
+    "preparationReceipts": {
+      "scope": "Authoring wrapper lifecycle intervals and copies of existing renderer receipts. Start/end/receive offsets observe the wrapper, not individual internal continuations. elapsedMs and compileWaitMs include asynchronous wait; uploadCpuMs is synchronous upload-submission wall time, not GPU completion or exclusive CPU. Outcome describes wrapper settlement, not flight progress.",
+      "started": 2,
+      "settled": 2,
+      "overwritten": 0,
+      "lateCompletions": 0,
+      "invalidObservations": 0,
+      "last": [
+        {
+          "id": 1,
+          "startElapsedMs": 42142.59999999404,
+          "endElapsedMs": 42235.39999999106,
+          "receivedAtElapsedMs": 42235.70000000298,
+          "elapsedMs": 92.79999999701977,
+          "outcome": "fulfilled",
+          "receipt": {
+            "sequence": 2,
+            "objects": 91,
+            "batches": 12,
+            "submittedBytes": 847008,
+            "maxBatchBytes": 306288,
+            "compileWaitMs": 3.400000035762787,
+            "uploadCpuMs": 3.0999999791383743,
+            "elapsedMs": 92.3999999910593,
+            "status": "prepared",
+            "gpuCompletionMeasured": false
+          }
+        },
+        {
+          "id": 2,
+          "startElapsedMs": 93318.79999999702,
+          "endElapsedMs": 93367.09999999404,
+          "receivedAtElapsedMs": 93367.59999999404,
+          "elapsedMs": 48.29999999701977,
+          "outcome": "fulfilled",
+          "receipt": {
+            "sequence": 3,
+            "objects": 45,
+            "batches": 6,
+            "submittedBytes": 675816,
+            "maxBatchBytes": 237708,
+            "compileWaitMs": 1.7999999821186066,
+            "uploadCpuMs": 1.699999988079071,
+            "elapsedMs": 48.099999994039536,
+            "status": "prepared",
+            "gpuCompletionMeasured": false
+          }
+        }
+      ]
+    },
+    "actualLoAFEntries": 51,
+    "lastLoAFRowsRetained": 16,
+    "loafRowsOverwritten": 35,
+    "allRetainedRowsHaveZeroPreparationMatches": true,
+    "terminalLongGapCallerOrPhase": "unknown; terminal LoAF not delivered before stop",
+    "phaseMaximaMs": {
+      "observer-checks": 0.7000000029802322,
+      "snapshot-before-step": 1.7999999970197678,
+      "pilot-command": 0.10000000894069672,
+      "flight-step": 3.5,
+      "snapshot-for-draw": 1.6000000089406967,
+      "renderer-draw": 11.799999997019768,
+      "sample-collection": 0.7000000029802322,
+      "live-display": 0.3999999910593033,
+      "prepare-renderer-submit": 0.9000000059604645,
+      "frame-callback": 12.299999997019768
+    },
+    "callbackCPU": {
+      "count": 51,
+      "totalMs": 4.600000038743019,
+      "maxMs": 1.5
+    },
+    "malformed": 0,
+    "readFailures": 0,
+    "stopped": true,
+    "rootTabClosed": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-preparation-observer-invalid-20261015.json",
+      "bytes": 230908,
+      "sha256": "4461a69aebb553a52387ad3f75943f3b4cc143681e0b736a03f79292568d94b7"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-preparation-observer-invalid-native-20261015.txt",
+      "bytes": 2018,
+      "sha256": "ff5466a361527e0cce784e4dd309b4a7d380dee23dba906071f65588bf3fed34"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-preparation-observer-invalid-native-20261015.png",
+      "bytes": 98308,
+      "sha256": "271890fb98c6a555ebef10b5a0e55d1a3ceef977c1a8e9c9addb9201960c594c"
+    }
+  ],
+  "acceptedBoundary": "Two genuine in-run completed preparation receipts and bounded whole-callback spans captured correctly; no malformed observations. Actual elapsed run FAILED and remains negative evidence. No positive native preparation/LoAF association is claimed because older LoAF rows were overwritten and all final rows have no matching preparation.",
+  "remaining": [
+    "actual expensive JS/browser/GC/driver cause",
+    "native pending/cancelled preparation and positive preparation-LoAF association",
+    "two-hour full-route endurance",
+    "device FPS/physical/controller/offline/restart/public launch"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS_INDEPENDENT_RAW_ROW_READBACK",
+  "checkedAt": "2026-09-22T21:55:53.721Z",
+  "paths": 1085,
+  "attempts": 1085,
+  "bytes": 590842992,
+  "failed": 0,
+  "retries": 0,
+  "reportSha256": "ffd632d07f89479eac723c73c61c083293322517989c369a245a4eab69ebb8a8",
+  "resultsSha256": "8f2149f46ecb0de0156f1e40d3f0881d7514f0611d6c64af581aad741bfe349c",
+  "attemptsSha256": "8f2149f46ecb0de0156f1e40d3f0881d7514f0611d6c64af581aad741bfe349c",
+  "inventorySha256": "af53bba40a5726c0959c1433f0e03f4813eca8f6ef4086f8d82dd2900ff326ec",
+  "scope": "Independent local readback of all bounded hosted raw results and attempts against the actual production receipt inventory; no duplicate network requests."
+}

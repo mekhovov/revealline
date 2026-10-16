@@ -1,0 +1,21 @@
+{
+  "format": "native-session-bundle-byte-review.v1",
+  "bundleBytes": 62224,
+  "bundleSha256": "5998ad61d6bfddb873e939b577361241a9b4c008b0ecdfe8c0a2ca7ae01f2fbf",
+  "assets": [
+    {
+      "bytes": 46655,
+      "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+    }
+  ],
+  "allAssetHashesVerified": true,
+  "noTrailingBytes": true,
+  "assignments": null,
+  "frozenManifestMatches": [
+    {
+      "path": "game/presentation/compiled/assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",
+      "bytes": 46655,
+      "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+    }
+  ]
+}

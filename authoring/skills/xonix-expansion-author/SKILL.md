@@ -29,6 +29,14 @@ Run `node --test game/test/library.test.mjs game/test/packs.test.mjs game/test/p
 
 For a portable player transfer, follow `docs/full-backup.md`: include profile, pack library and a verified optional unfinished flight. Use journaled import and preserve the previous collection; never bypass writer ownership.
 
+## Content Studio community projects
+
+For a new community edition, follow the [tested community guide](../../community/README.md) and [copyable requests](../../prompts/community-creation.md). Start with the supplied ContentProjectV1 example or an inspected Studio starter. Keep Inspect separate from Apply; Save creates a newer local checkpoint. Export backup carries the current project snapshot, not all checkpoint history or presentation bytes. Asset Studio exports `.rltheme` separately; ordinary players install compatible content through the catalogue. Neither authoring export publishes a campaign.
+
+Use `scripts/compile-content-project.mjs` with explicit mission, mode and difficulty. Preserve the runtime preset names Gentle/Standard/Expert; do not relabel Expert as the planned Hard contract. A Solo/Versus declaration does not provide Team compatibility. Team test exports carry geometry/rules and fixed preset; current candidate artwork fallback is disclosed in the player. Keep `campaignTheme: true` when reproducing the Studio Team candidate through its shared compiler. Check exact-source APIs before copying options from older evidence.
+
+Preserve original and derivative bytes, exact presentation pins and honest provenance. A changed crop must be prepared again before staging; changed geometry becomes a produced candidate with no inherited review evidence. On a stale save, export the unsaved work before Reset to saved and Reload saved. Never overwrite another tab’s accepted revision or record review merely to clear a warning. Complete branding, real routes, mode coverage, offline installation, public play and physical-device checks remain separate acceptance gates.
+
 ## Optional goals in authored packs
 
 Read [the pack mastery contract](../../../docs/pack-mastery-contract.md), [shared context registration](../../../docs/mastery-catalog-contract.md) and [eight concrete prompts](../../prompts/round-19-pack-goals.md). Opt into `xonix-pack.v2` with required top-level `masteries`; never add this field to a v1 pack or normalized map. Empty `masteries` means explicitly none. Use only the implemented Steady Signal v1 or Supply Line/Safe Return v2 compositions. Resolve references within the owning map and filtered actual class roster before decoding artwork. A name, skin or catalog reference supplies no capability.

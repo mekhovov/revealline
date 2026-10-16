@@ -103,3 +103,42 @@ test('slow module observation is truthful and cannot overwrite a later attached 
   assert.equal(h.label.textContent, 'Host data ready');
   assert.equal(h.doc.body.querySelector('a').hidden, true);
 });
+
+test('classic launch recovery uses localized bindings and keeps error details on live switch', async (t) => {
+  const h = await fixture(t, "import './missing-localized-dependency.mjs';\n"),
+    bindings = [];
+  let locale = 'uk';
+  const messages = {
+    en: {
+      'tools:toolLaunch.reload': 'Reload this tool',
+      'tools:toolLaunch.startFailed':
+        'This tool could not start: {{error}}. Reload to try again, or use the page’s Back link.',
+    },
+    uk: {
+      'tools:toolLaunch.reload': 'Перезавантажити цей інструмент',
+      'tools:toolLaunch.startFailed':
+        'Не вдалося запустити цей інструмент: {{error}}. Перезавантажте сторінку.',
+    },
+  };
+  h.context.RevealLineI18n = {
+    message:
+      (key, values = {}) =>
+      () =>
+        messages[locale][key].replace('{{error}}', values.error ?? ''),
+    localizedText: (target, producer) => {
+      const update = () => {
+        target.textContent = typeof producer === 'function' ? producer() : producer;
+      };
+      bindings.push(update);
+      update();
+    },
+  };
+  h.run();
+  await waitFor(() => h.status.dataset.state === 'error');
+  assert.match(h.label.textContent, /Не вдалося запустити.*missing-localized-dependency/s);
+  assert.equal(h.doc.body.querySelector('a').textContent, 'Перезавантажити цей інструмент');
+  locale = 'en';
+  for (const update of bindings) update();
+  assert.match(h.label.textContent, /could not start.*missing-localized-dependency/s);
+  assert.equal(h.doc.body.querySelector('a').textContent, 'Reload this tool');
+});

@@ -12,6 +12,14 @@ releases/
 coverage/
 *.log
 generated/
+# Local design/research inputs are preserved outside the public source tree.
+# Their reviewed identities and conclusions belong in the tracked ledgers.
+/.cursor/
+/docs/research/_xposed-reloaded_reloaded_examples/
+/docs/research/dah-soundtracks/
+/docs/research/drones-examples/
+/docs/concepts/exec-*.png
+/docs/concepts/generated_images/exec-*.png
 # Unreviewed local production media are retained locally. Approved MP3 releases
 # go to the separately verified project soundtrack archive.
 /authoring/library/revealline-original-soundtrack/local-production/candidates/**/*.mp3

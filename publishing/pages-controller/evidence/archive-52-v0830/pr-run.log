@@ -1,0 +1,329 @@
+build	Set up job	﻿2026-09-22T20:42:15.1857533Z Current runner version: '2.337.0'
+build	Set up job	2026-09-22T20:42:15.1883521Z ##[group]Runner Image Provisioner
+build	Set up job	2026-09-22T20:42:15.1884489Z Hosted Compute Agent
+build	Set up job	2026-09-22T20:42:15.1885043Z Version: 20260828.587
+build	Set up job	2026-09-22T20:42:15.1885672Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+build	Set up job	2026-09-22T20:42:15.1886720Z Build Date: 2026-08-28T16:44:25Z
+build	Set up job	2026-09-22T20:42:15.1887564Z Worker ID: {89204b0a-538d-4354-9985-83cce11ee09d}
+build	Set up job	2026-09-22T20:42:15.1888437Z Azure Region: westcentralus
+build	Set up job	2026-09-22T20:42:15.1889206Z ##[endgroup]
+build	Set up job	2026-09-22T20:42:15.1891261Z ##[group]Operating System
+build	Set up job	2026-09-22T20:42:15.1891979Z Ubuntu
+build	Set up job	2026-09-22T20:42:15.1892516Z 24.04.5
+build	Set up job	2026-09-22T20:42:15.1893075Z LTS
+build	Set up job	2026-09-22T20:42:15.1893719Z ##[endgroup]
+build	Set up job	2026-09-22T20:42:15.1894277Z ##[group]Runner Image
+build	Set up job	2026-09-22T20:42:15.1894908Z Image: ubuntu-24.04
+build	Set up job	2026-09-22T20:42:15.1895424Z Version: 20260907.300.1
+build	Set up job	2026-09-22T20:42:15.1896470Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+build	Set up job	2026-09-22T20:42:15.1898145Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+build	Set up job	2026-09-22T20:42:15.1899207Z ##[endgroup]
+build	Set up job	2026-09-22T20:42:15.1900466Z ##[group]GITHUB_TOKEN Permissions
+build	Set up job	2026-09-22T20:42:15.1903013Z Contents: read
+build	Set up job	2026-09-22T20:42:15.1903724Z Metadata: read
+build	Set up job	2026-09-22T20:42:15.1904313Z ##[endgroup]
+build	Set up job	2026-09-22T20:42:15.1906426Z Secret source: Actions
+build	Set up job	2026-09-22T20:42:15.1907631Z Cache mode: write
+build	Set up job	2026-09-22T20:42:15.1908481Z Prepare workflow directory
+build	Set up job	2026-09-22T20:42:15.2244813Z Prepare all required actions
+build	Set up job	2026-09-22T20:42:15.2293476Z Getting action download info
+build	Set up job	2026-09-22T20:42:15.5659833Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+build	Set up job	2026-09-22T20:42:15.6874314Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+build	Set up job	2026-09-22T20:42:15.8493877Z Download action repository 'actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9' (SHA:fc324d3547104276b827a68afc52ff2a11cc49c9)
+build	Set up job	2026-09-22T20:42:16.1946137Z Getting action download info
+build	Set up job	2026-09-22T20:42:16.3254572Z Download action repository 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f' (SHA:bbbca2ddaa5d8feaa63e36b76fdaad77386f024f)
+build	Set up job	2026-09-22T20:42:16.4720145Z Complete job name: build
+build	Check out reviewed archive infrastructure	﻿2026-09-22T20:42:16.5519287Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5529540Z ##[group]Run actions/checkout@v4
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5530466Z with:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5531066Z   path: archive
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5531721Z   persist-credentials: false
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5532606Z   repository: mekhovov/revealline-archive-52
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5540025Z   token: ***
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5540649Z   ssh-strict: true
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5541266Z   ssh-user: git
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5541836Z   clean: true
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5542516Z   sparse-checkout-cone-mode: true
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5543464Z   fetch-depth: 1
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5544109Z   fetch-tags: false
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5544741Z   show-progress: true
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5545352Z   lfs: false
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5546059Z   submodules: false
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5546678Z   set-safe-directory: true
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5547380Z   allow-unsafe-pr-checkout: false
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.5548318Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6604882Z Syncing repository: mekhovov/revealline-archive-52
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6608606Z ##[group]Getting Git version info
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6610728Z Working directory is '/home/runner/work/revealline-archive-52/revealline-archive-52/archive'
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6613821Z [command]/usr/bin/git version
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6622578Z git version 2.55.0
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6642437Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6655730Z Temporarily overriding HOME='/home/runner/work/_temp/4bdd6686-dd69-4f77-b5b4-99334fa53a69' before making global git config changes
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6659126Z Adding repository directory to the temporary git global config as a safe directory
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6666086Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline-archive-52/revealline-archive-52/archive
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6727764Z ##[group]Initializing the repository
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6735469Z [command]/usr/bin/git init /home/runner/work/revealline-archive-52/revealline-archive-52/archive
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6817421Z hint: Using 'master' as the name for the initial branch. This default branch name
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6823066Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6827646Z hint: to use in all of your new repositories, which will suppress this warning,
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6829869Z hint: call:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6830631Z hint:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6831840Z hint: 	git config --global init.defaultBranch <name>
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6833243Z hint:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6834455Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6836875Z hint: 'development'. The just-created branch can be renamed via this command:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6838476Z hint:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6839672Z hint: 	git branch -m <name>
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6840411Z hint:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6841327Z hint: Disable this message with "git config set advice.defaultBranchName false"
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6843690Z Initialized empty Git repository in /home/runner/work/revealline-archive-52/revealline-archive-52/archive/.git/
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6848949Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline-archive-52
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6886343Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6888368Z ##[group]Disabling automatic garbage collection
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6890134Z [command]/usr/bin/git config --local gc.auto 0
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6920172Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6921618Z ##[group]Setting up auth
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6926564Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.6961102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7328946Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7362564Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7575057Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7607902Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7802210Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7839400Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7841236Z ##[group]Fetching the repository
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:16.7852118Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4e14e2bcf574fb88b731051d771fb2de79cd5976:refs/remotes/pull/1/merge
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2851204Z From https://github.com/mekhovov/revealline-archive-52
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2853797Z  * [new ref]         4e14e2bcf574fb88b731051d771fb2de79cd5976 -> pull/1/merge
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2858589Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2860724Z ##[group]Determining the checkout info
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2862601Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2866135Z [command]/usr/bin/git sparse-checkout disable
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2913409Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2969617Z ##[group]Checking out the ref
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.2972961Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1/merge
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3042896Z Note: switching to 'refs/remotes/pull/1/merge'.
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3044225Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3045064Z You are in 'detached HEAD' state. You can look around, make experimental
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3047490Z changes and commit them, and you can discard any commits you make in this
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3050293Z state without impacting any branches by switching back to a branch.
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3052026Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3053487Z If you want to create a new branch to retain commits you create, you may
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3056887Z do so (now or later) by using -c with the switch command. Example:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3058465Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3059117Z   git switch -c <new-branch-name>
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3060030Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3060636Z Or undo this operation with:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3061443Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3062046Z   git switch -
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3063304Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3064369Z Turn off this advice by setting config variable advice.detachedHead to false
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3065830Z 
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3067371Z HEAD is now at 4e14e2b Merge 6289140a0f876cafd9d76a5eb207fd1ae4b40116 into e505a0c825c84c65193e87c46754f386d96730c8
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3072824Z ##[endgroup]
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3091362Z [command]/usr/bin/git log -1 --format=%H
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3115052Z 4e14e2bcf574fb88b731051d771fb2de79cd5976
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3127237Z ##[group]Removing auth
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3131646Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3161683Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3346794Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3372004Z http.https://github.com/.extraheader
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3380245Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3411498Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3593966Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3622381Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Check out reviewed archive infrastructure	2026-09-22T20:42:17.3804445Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	﻿2026-09-22T20:42:17.4169424Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4174452Z ##[group]Run actions/checkout@v4
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4175653Z with:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4176623Z   repository: mekhovov/revealline
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4177805Z   ref: 30530b3436a1a9737be93f67f308587f89b2f8bc
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4179047Z   fetch-depth: 1
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4179989Z   path: source
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4181017Z   persist-credentials: false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4183038Z   sparse-checkout: publishing/pages-controller/extract-current.py
+build	Check out the reviewed bounded original-ZIP extractor	publishing/pages-controller/test_extract_current.py
+build	Check out the reviewed bounded original-ZIP extractor	
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4186361Z   sparse-checkout-cone-mode: false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4193918Z   token: ***
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4194878Z   ssh-strict: true
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4196017Z   ssh-user: git
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4197036Z   clean: true
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4198192Z   fetch-tags: false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4199512Z   show-progress: true
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4201011Z   lfs: false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4202206Z   submodules: false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4203576Z   set-safe-directory: true
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4204760Z   allow-unsafe-pr-checkout: false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.4205931Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5080457Z Syncing repository: mekhovov/revealline
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5084187Z ##[group]Getting Git version info
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5087398Z Working directory is '/home/runner/work/revealline-archive-52/revealline-archive-52/source'
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5121970Z [command]/usr/bin/git version
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5164650Z git version 2.55.0
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5188158Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5205317Z Temporarily overriding HOME='/home/runner/work/_temp/d096910f-354c-4dec-9244-5ba30f632fb8' before making global git config changes
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5210028Z Adding repository directory to the temporary git global config as a safe directory
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5215589Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline-archive-52/revealline-archive-52/source
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5252363Z ##[group]Initializing the repository
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5257916Z [command]/usr/bin/git init /home/runner/work/revealline-archive-52/revealline-archive-52/source
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5295455Z hint: Using 'master' as the name for the initial branch. This default branch name
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5299450Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5303821Z hint: to use in all of your new repositories, which will suppress this warning,
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5307166Z hint: call:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5309220Z hint:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5311789Z hint: 	git config --global init.defaultBranch <name>
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5315540Z hint:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5318390Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5321635Z hint: 'development'. The just-created branch can be renamed via this command:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5324546Z hint:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5326353Z hint: 	git branch -m <name>
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5328195Z hint:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5330505Z hint: Disable this message with "git config set advice.defaultBranchName false"
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5334785Z Initialized empty Git repository in /home/runner/work/revealline-archive-52/revealline-archive-52/source/.git/
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5341367Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5595561Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5597685Z ##[group]Disabling automatic garbage collection
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5601608Z [command]/usr/bin/git config --local gc.auto 0
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5807127Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5809614Z ##[group]Setting up auth
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5814726Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.5855297Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6074182Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6114763Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6309280Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6342718Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6534014Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6569114Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6572180Z ##[group]Fetching the repository
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:17.6581505Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 30530b3436a1a9737be93f67f308587f89b2f8bc
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3773580Z From https://github.com/mekhovov/revealline
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3774821Z  * branch            30530b3436a1a9737be93f67f308587f89b2f8bc -> FETCH_HEAD
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3777689Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3778797Z ##[group]Determining the checkout info
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3782968Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3784228Z ##[group]Setting up sparse checkout
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3787574Z [command]/usr/bin/git config core.sparseCheckout true
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3820259Z [command]/usr/bin/git rev-parse --git-path info/sparse-checkout
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3845548Z .git/info/sparse-checkout
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3853941Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3855161Z ##[group]Checking out the ref
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:18.3858962Z [command]/usr/bin/git checkout --progress --force 30530b3436a1a9737be93f67f308587f89b2f8bc
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7019164Z Updating files:  50% (1/2)
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7019779Z Updating files: 100% (2/2)
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7020356Z Updating files: 100% (2/2), done.
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7199482Z Note: switching to '30530b3436a1a9737be93f67f308587f89b2f8bc'.
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7200202Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7200992Z You are in 'detached HEAD' state. You can look around, make experimental
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7201729Z changes and commit them, and you can discard any commits you make in this
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7202414Z state without impacting any branches by switching back to a branch.
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7202899Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7203382Z If you want to create a new branch to retain commits you create, you may
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7204162Z do so (now or later) by using -c with the switch command. Example:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7204619Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7204909Z   git switch -c <new-branch-name>
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7205192Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7205422Z Or undo this operation with:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7205731Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7205916Z   git switch -
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7206263Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7206611Z Turn off this advice by setting config variable advice.detachedHead to false
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7207149Z 
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7207542Z HEAD is now at 30530b3 Merge pull request #248 from mekhovov/codex/v082-artifact-envelope
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7221243Z ##[endgroup]
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7257244Z [command]/usr/bin/git log -1 --format=%H
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7290485Z 30530b3436a1a9737be93f67f308587f89b2f8bc
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7300737Z ##[group]Removing auth
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7304537Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7335034Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7584761Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7586065Z http.https://github.com/.extraheader
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7590485Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7621452Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7838167Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.7868113Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:19.8085609Z ##[endgroup]
+build	Fetch the original immutable release tags for identity verification	﻿2026-09-22T20:42:19.8208781Z ##[group]Run git fetch --depth=1 origin refs/tags/v0.83.0:refs/tags/v0.83.0
+build	Fetch the original immutable release tags for identity verification	2026-09-22T20:42:19.8209449Z ^[[36;1mgit fetch --depth=1 origin refs/tags/v0.83.0:refs/tags/v0.83.0^[[0m
+build	Fetch the original immutable release tags for identity verification	2026-09-22T20:42:19.8239446Z shell: /usr/bin/bash -e {0}
+build	Fetch the original immutable release tags for identity verification	2026-09-22T20:42:19.8239897Z ##[endgroup]
+build	Fetch the original immutable release tags for identity verification	2026-09-22T20:42:20.6144139Z From https://github.com/mekhovov/revealline
+build	Fetch the original immutable release tags for identity verification	2026-09-22T20:42:20.6145001Z  * [new tag]         v0.83.0    -> v0.83.0
+build	Require artifact workspace capacity	﻿2026-09-22T20:42:20.6196462Z ##[group]Run python3 - <<'PY'
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6196907Z ^[[36;1mpython3 - <<'PY'^[[0m
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6197234Z ^[[36;1mimport shutil^[[0m
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6197651Z ^[[36;1mfree = shutil.disk_usage('.').free^[[0m
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6198109Z ^[[36;1massert free >= 3 * 1024**3, f'At least 3 GiB free required; found {free}'^[[0m
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6198551Z ^[[36;1mPY^[[0m
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6221883Z shell: /usr/bin/bash -e {0}
+build	Require artifact workspace capacity	2026-09-22T20:42:20.6222349Z ##[endgroup]
+build	Record temporary automated-suite waiver	﻿2026-09-22T20:42:20.6558985Z ##[group]Run echo 'Automated suites waived by explicit user request 2026-09-22; not a test pass. Extraction, source identity, inventory and capacity verification remain mandatory.'
+build	Record temporary automated-suite waiver	2026-09-22T20:42:20.6560184Z ^[[36;1mecho 'Automated suites waived by explicit user request 2026-09-22; not a test pass. Extraction, source identity, inventory and capacity verification remain mandatory.'^[[0m
+build	Record temporary automated-suite waiver	2026-09-22T20:42:20.6583715Z shell: /usr/bin/bash -e {0}
+build	Record temporary automated-suite waiver	2026-09-22T20:42:20.6584073Z ##[endgroup]
+build	Record temporary automated-suite waiver	2026-09-22T20:42:20.6625227Z Automated suites waived by explicit user request 2026-09-22; not a test pass. Extraction, source identity, inventory and capacity verification remain mandatory.
+build	Extract the original ZIP and verify every member	﻿2026-09-22T20:42:20.6656324Z ##[group]Run python3 archive/tools/prepare.py --source source --out "$RUNNER_TEMP/archive52"
+build	Extract the original ZIP and verify every member	2026-09-22T20:42:20.6657025Z ^[[36;1mpython3 archive/tools/prepare.py --source source --out "$RUNNER_TEMP/archive52"^[[0m
+build	Extract the original ZIP and verify every member	2026-09-22T20:42:20.6678271Z shell: /usr/bin/bash -e {0}
+build	Extract the original ZIP and verify every member	2026-09-22T20:42:20.6678622Z ##[endgroup]
+build	Extract the original ZIP and verify every member	2026-09-22T20:42:31.0967554Z {"status": "PASS", "files": 1063, "bytes": 590419655, "archiveId": "archive-52", "releases": [{"version": "v0.83.0", "sourceRevision": "01b189f6427601a15cbb3eb1563b5f82eabbafa3", "tagObject": "972dedddefe8a25286b9664b064ecfa6ad742c5f", "originalZipExtraction": {"distributionSha256": "ee486739cef7bc1dc832c62aaecdfc85e02b0c9957cacdab1d6070a1a1cac451", "manifestSha256": "81bca8924b8fec845bdf9f6e99afa6a862ab2727b2da104a3891a3d8fa74d941", "gameSourceRevision": "01b189f6427601a15cbb3eb1563b5f82eabbafa3", "version": "v0.83.0", "membersVerified": 1056, "manifestFilesVerified": 1055, "uncompressedBytesVerified": 590388213, "crcAndHashesVerified": true}}], "toolingCommit": "30530b3436a1a9737be93f67f308587f89b2f8bc", "archiveCommit": "4e14e2bcf574fb88b731051d771fb2de79cd5976", "archiveTree": "b21a8bdf97a7b4af190f065286d470e2c73e1f4f", "expectedInventorySha256": "b3d2d33d0428cf2668b1c5a46978a12d9122ed30a88dec0e6e4c51ee7f48e4d0", "noHistoricalBuilds": true}
+build	Independently reread every artifact byte including hidden files	﻿2026-09-22T20:42:31.1061725Z ##[group]Run python3 archive/tools/verify.py "$RUNNER_TEMP/archive52/artifact"
+build	Independently reread every artifact byte including hidden files	2026-09-22T20:42:31.1062438Z ^[[36;1mpython3 archive/tools/verify.py "$RUNNER_TEMP/archive52/artifact"^[[0m
+build	Independently reread every artifact byte including hidden files	2026-09-22T20:42:31.1086864Z shell: /usr/bin/bash -e {0}
+build	Independently reread every artifact byte including hidden files	2026-09-22T20:42:31.1087299Z ##[endgroup]
+build	Independently reread every artifact byte including hidden files	2026-09-22T20:42:31.7142576Z {"status": "PASS", "files": 1063, "bytes": 590419655}
+build	Retain extraction and complete-inventory receipts	﻿2026-09-22T20:42:31.7283875Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7285221Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7285725Z with:
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7286035Z   name: archive52-verification-receipts
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7286496Z   if-no-files-found: warn
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7287192Z   path: /home/runner/work/_temp/archive52/zip-receipt-*.json
+build	Retain extraction and complete-inventory receipts	/home/runner/work/_temp/archive52/receipt.json
+build	Retain extraction and complete-inventory receipts	/home/runner/work/_temp/archive52/expected-inventory.json
+build	Retain extraction and complete-inventory receipts	
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7287892Z   compression-level: 6
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7288229Z   overwrite: false
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7288532Z   include-hidden-files: false
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.7288913Z ##[endgroup]
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.8904428Z (node:2671) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.8906268Z (Use `node --trace-deprecation ...` to show where the warning was created)
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.9045125Z With the provided path, there will be 3 files uploaded
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.9046575Z Artifact name is valid!
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:31.9047109Z Root directory input is valid!
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.2482904Z Beginning upload of artifact content to blob storage
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.2751790Z (node:2671) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.5357835Z Uploaded bytes 56329
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.5877852Z Finished uploading artifact content to blob storage!
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.5878934Z SHA256 digest of uploaded artifact zip is 306fbaa29aba66e0e5aec255ba9a763f7e0cd12f0c5ed00e127cbcf1af573e38
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.5879829Z Finalizing artifact upload
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.8249796Z Artifact archive52-verification-receipts.zip successfully finalized. Artifact ID 10718632270
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.8250993Z Artifact archive52-verification-receipts has been successfully uploaded! Final size is 56329 bytes. Artifact ID is 10718632270
+build	Retain extraction and complete-inventory receipts	2026-09-22T20:42:32.8256408Z Artifact download URL: https://github.com/mekhovov/revealline-archive-52/actions/runs/35781993718/artifacts/10718632270
+build	Post Check out the reviewed bounded original-ZIP extractor	﻿2026-09-22T20:42:32.8430655Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.8431969Z Post job cleanup.
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9304404Z [command]/usr/bin/git version
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9330231Z git version 2.55.0
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9364173Z Temporarily overriding HOME='/home/runner/work/_temp/8df12754-b78b-44b2-b6e2-5ba611cf39a0' before making global git config changes
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9365844Z Adding repository directory to the temporary git global config as a safe directory
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9378354Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline-archive-52/revealline-archive-52/source
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9409247Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9443505Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9687091Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9722711Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:32.9967894Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Post Check out the reviewed bounded original-ZIP extractor	2026-09-22T20:42:33.0005097Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Post Check out reviewed archive infrastructure	﻿2026-09-22T20:42:33.0376528Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.0377797Z Post job cleanup.
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1224254Z [command]/usr/bin/git version
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1245885Z git version 2.55.0
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1280889Z Temporarily overriding HOME='/home/runner/work/_temp/50bda3fc-470f-4186-b78c-4683f61fdaa3' before making global git config changes
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1282358Z Adding repository directory to the temporary git global config as a safe directory
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1286745Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline-archive-52/revealline-archive-52/archive
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1326106Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1359382Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1569853Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1600967Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1817108Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+build	Post Check out reviewed archive infrastructure	2026-09-22T20:42:33.1865134Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+build	Complete job	﻿2026-09-22T20:42:33.2179989Z Cleaning up orphan processes
+build	Complete job	2026-09-22T20:42:33.2451867Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -96,11 +96,29 @@ for (const arena of ['first-connection', 'relay-yard']) {
 
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(3);
+    const decodedPicture = f.artwork.calls.decodes[0];
+    for (let frame = 0; frame < 3; frame++) {
+      f.drawImages.length = 0;
+      f.tick(1);
+      assert.equal(
+        f.drawImages[0],
+        decodedPicture,
+        `Frame ${frame + 1} paints the exact recovered decoded picture before actor artwork.`,
+      );
+      assert.equal(f.drawImages[0].sha256, row.picture.sha256);
+      assert.equal(
+        f.drawImages.filter((image) => image === decodedPicture).length,
+        1,
+        'Each sampled frame paints its accepted original exactly once.',
+      );
+      assert.ok(
+        f.drawImages.length > 1,
+        'The real prepared actor/equipment artwork also paints after the arena picture.',
+      );
+    }
     assert.equal(f.$('coop-menu').hidden, true);
     assert.equal(f.$('coop-play').hidden, false);
     assert.equal(f.$('coop-overlay').hidden, true);
-    assert.equal(f.drawImages.at(-1).sha256, row.picture.sha256);
     assert.equal(f.artwork.calls.loads, 2, 'Start borrows the recovered presentation.');
     assert.equal(f.artwork.calls.reads.length, 1);
   });
@@ -188,7 +206,7 @@ test('another failed bootstrap Retry remains actionable and a later explicit Ret
   assertLobby(f, 'first-connection');
 });
 
-test('recovered presentation updates automatic menu appearance while unsupported Team artwork stays blocked', async (t) => {
+test('recovered presentation leaves explicit Neon Arcade UI skin independent while unsupported Team artwork stays blocked', async (t) => {
   const f = await failedBootstrap(t, {
     load({ snapshot, calls }) {
       if (calls.loads === 1) throw new Error('Controlled initial presentation outage.');
@@ -198,7 +216,7 @@ test('recovered presentation updates automatic menu appearance while unsupported
     },
   });
   assert.equal(f.$('coop-menu-palette').value, 'auto');
-  assert.equal(f.doc.body.dataset.menuPalette, 'ukrainian');
+  assert.equal(f.doc.body.dataset.menuPalette, 'neon');
   retry(f);
   await terminal(f);
   assert.equal(f.artwork.calls.loads, 2);
@@ -217,7 +235,7 @@ test('recovered presentation updates automatic menu appearance while unsupported
   );
   assert.equal(
     f.doc.body.dataset.menuPalette,
-    'authored',
-    'Automatic menu appearance follows the successfully recovered page presentation.',
+    'neon',
+    'The UI skin stays independent of the successfully recovered page presentation.',
   );
 });

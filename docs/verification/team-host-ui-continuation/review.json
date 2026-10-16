@@ -1,0 +1,403 @@
+{
+  "format": "revealline-scoped-functional-ui-review.v1",
+  "scope": "Continue only the 24 existing UI recipe functional approvals for shared explicit Team-image admission. No Team recipe/equipment artwork approval.",
+  "sourceBase": "80a47a3b25167d9dcd0bdf98b1bde6a95d112269",
+  "preApprovalSourcePatchSHA256": "96529c92f5426af632a36ab04386d9cf651093d50b41093d6d73347ff8021e9f",
+  "preApprovalGeneratedBundleSHA256": "2f4262dd5e18e090726fd4f617101083668ca2020be1ba7b36292b3ffe677cae",
+  "preApprovalRuntimeSHA256": "1dd341984370ad4152b36ca8d678c95e627e19346c142625ea3dd03fe3f004c4",
+  "uiFingerprint": "6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865",
+  "uiInputs": [
+    {
+      "path": "game/ui/field-kit-components.css",
+      "oldSHA256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+      "currentSHA256": "ab7e3291bf517c8eae031bf55015bbaf13ab13cc7f6f69fafa516d1cf714f497",
+      "changed": false
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "oldSHA256": "9a9c6e0ab846b623c73fa811f43df1d39a0ba43bbdc567e93f3d5d30d70cc731",
+      "currentSHA256": "9a9c6e0ab846b623c73fa811f43df1d39a0ba43bbdc567e93f3d5d30d70cc731",
+      "changed": false
+    },
+    {
+      "path": "game/presentation/host.mjs",
+      "oldSHA256": "179f7660bc82cb8f7f90ed0e91098d6e8424259bdb3889f11cccc8966584e8c3",
+      "currentSHA256": "f15fc7910c5646462a3f3d8839a2d7a67d8c6764c11ff5f8356d0dc4a7564c2c",
+      "changed": true
+    },
+    {
+      "path": "game/presentation/team-runtime-slots.mjs",
+      "oldSHA256": null,
+      "currentSHA256": "4d078cf93726755540e83d1f84143808f385c0b56ea6212a502ab4a438418738",
+      "changed": true
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "oldSHA256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+      "currentSHA256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+      "changed": false
+    },
+    {
+      "path": "game/ui/operation-status.mjs",
+      "oldSHA256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+      "currentSHA256": "2048510a877f43e887081d8436532ca6bdadc4633c4cf556ad3c621015af76ab",
+      "changed": false
+    },
+    {
+      "path": "game/presentation/dom-ownership.mjs",
+      "oldSHA256": "d558d33a28023e98489c0ae2ccb402e4deffeea0be5a0f54ed3040c0e4f5df7e",
+      "currentSHA256": "d558d33a28023e98489c0ae2ccb402e4deffeea0be5a0f54ed3040c0e4f5df7e",
+      "changed": false
+    }
+  ],
+  "functionalRecipeComparisons": [
+    {
+      "slot": "ui.button.chip",
+      "id": "ui.button.chip.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "b61016c5f271478670f14a13c35fbfa4954d1c5cd8db3e77476369c7b8819f1b",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.button.danger",
+      "id": "ui.button.danger.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "1d99657322344fbb62ad7829b34dc2f5e15908b0a52765b1afc64f97ea7323ff",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.button.icon",
+      "id": "ui.button.icon.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "550c41424684906c676f2fd80574651c1f6808773487e8388c989fb63d118880",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.button.primary",
+      "id": "ui.button.primary.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "95c7d5baded92409fe714eeeefef1893c273f069a9b86ad9251049c8cfd16a14",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.button.secondary",
+      "id": "ui.button.secondary.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "7029288cb00e7985007cd6d552d7d5d4c39193425f70bff8cb0a15c58cc039d2",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.button.tab",
+      "id": "ui.button.tab.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "85a1975cc1056565975f192d4baa5e321851f23041c3868efbff8fce8ae4ff32",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.cursor",
+      "id": "ui.cursor.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "4357ed1d7910212557284edc89a9fa6e86bc9e62797f38c87200239e47ae1277",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.dialog",
+      "id": "ui.dialog.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "c0a9ed5f2c817ab51048879f9fc142c9f376843bd85db1b3bd909f730be16c0e",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.focus",
+      "id": "ui.focus.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "5f0e4631b9c4c263a17cbbaf5469b2b76ee27eb8f384593c47f36996a8c2637f",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.checkbox",
+      "id": "ui.input.checkbox.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "b8e1d6271955cc1d523123dbc04a3be3dcf0053dc6d4cbf6ce1366d9d0eca5bc",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.radio",
+      "id": "ui.input.radio.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "394a9a9d650c9ffdb10140fa0af897980d0d4780ffd5075603d2e5fa854a7591",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.scrollbar",
+      "id": "ui.input.scrollbar.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "8979d95c29710cf255ed8a0f753d802b5c9cc6361be7e41064d2ff54baf39dd9",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.select",
+      "id": "ui.input.select.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "cc4190610b95be4158bbe6fec8809eb8038caddf1a92dd9d92d97eb04698acb9",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.slider",
+      "id": "ui.input.slider.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "254d2045d8d6419c2bf6e24872fc1d5a2fdbef75d6bd85d866dc72877bb3a299",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.text",
+      "id": "ui.input.text.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "1568708e6db2f8d203219662ce7a45b2be953f6bf43231a2da22d1bf2fac5d12",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.input.toggle",
+      "id": "ui.input.toggle.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "fbbd3b6eef2dda13aede4c4d22701368bfa11870a18f11be50708b4a488b833e",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.meter.ability",
+      "id": "ui.meter.ability.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "f0e620ecf9599cfda3ba657beeb722fac8a4a2291787f3287ea074d94f95ce44",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.meter.coverage",
+      "id": "ui.meter.coverage.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "57718452285ba174a3211b6229dbd98d8da7d21e6309e2add9e44b854c844b53",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.meter.progress",
+      "id": "ui.meter.progress.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "f2fc7c30dca0dc4243d96cb4aeca51a9254d11a84bd39a99364ae5faf71f231b",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.meter.time",
+      "id": "ui.meter.time.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "3138e8be6181cc0ad991bcba40aa41bd47da7bdee3e4b62e4deebaf68bea5a9d",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.meter.volume",
+      "id": "ui.meter.volume.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "08dd1af09ecdaec43f9c6534043000e1c26ad1b105aaa9ea8472ff7952d6d5f0",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.panel",
+      "id": "ui.panel.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "66846dd673792aa32206eeda507cf7b531e40bcea04b30d42d04a9997a2a6f98",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.toast",
+      "id": "ui.toast.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "832c17b23415c98b0e41e7b5470f5f3bde49da5fc674234a7cbcd7c49f56cad3",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    },
+    {
+      "slot": "ui.tooltip",
+      "id": "ui.tooltip.field-kit",
+      "oldRevision": 16,
+      "newRevision": 17,
+      "functionalRecordSHA256": "af95387be2dc856df48cac8c10f05b48243df8b9e697afac23564d898504d19e",
+      "functionalFieldsUnchanged": true,
+      "oldStage": "reviewed",
+      "newStage": "source",
+      "parentExact": true
+    }
+  ],
+  "resolvedTokensSHA256": "19a96d366880bb2b09433fa847e2c0a7ca556d3013fe62f413f846ff5642e5d7",
+  "tokensUnchanged": true,
+  "sharedSlotLeaf": "game/presentation/team-runtime-slots.mjs",
+  "sharedSlotCount": 42,
+  "sharedSlotSemantics": "One dependency-free frozen authority; owners re-export identical objects. Both UI and Team fingerprints change if the leaf changes. Team-only drawing changes do not reopen UI.",
+  "runtimeEvidence": {
+    "receiptSHA256": "49802d86484e735abb7f4d3bba5effc946bab096636523cb2139de9c76e75d3c",
+    "sourceAuditSHA256": "eb8f110945e52726b13c8f73e9db4214e4c95e31142c31111abd81ac08440f5d",
+    "cohorts": [
+      {
+        "name": "node20-remaining-r1",
+        "counts": {
+          "tests": 125,
+          "pass": 125,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "completeFiles": 13,
+        "observedReadRecords": 4498,
+        "originBoundRecords": 1357,
+        "uniqueBindings": 264,
+        "elapsedSeconds": 16.575619220733643,
+        "logSHA256": "bdfe9d61a6c7ab26d8192a4d09c3fa81a4b5a84a36737143b760fcfd7f6ae79e",
+        "receiptSHA256": "9eb7ae18174ada66148b016fd94e18b9145683c60b63896d9f0269dda1f0b920"
+      },
+      {
+        "name": "node22-remaining-r1",
+        "counts": {
+          "tests": 125,
+          "pass": 125,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "completeFiles": 13,
+        "observedReadRecords": 4498,
+        "originBoundRecords": 1357,
+        "uniqueBindings": 264,
+        "elapsedSeconds": 16.446485996246338,
+        "logSHA256": "8d587ea7f547c921d2d3b3ddf1a3fd221a9a025e78a5aeb25750265765f07c86",
+        "receiptSHA256": "5673a06987ef3f1698d41eeeb3baf87eb57d2c3b4f56db3fa2574af33910a760"
+      }
+    ],
+    "sourceMismatches": 0,
+    "readMapsIdentical": true,
+    "physicalAndHelperPinsUnchanged": true
+  },
+  "nativeEvidence": {
+    "path": "docs/verification/team-host-ui-continuation/native-ui.json",
+    "sha256": "51518c0fd80029641cf294942cd1d4a35069bda61a3da8c099808f4fcc2fb082",
+    "requests": 285,
+    "httpErrors": 0,
+    "consoleWarningsAndErrors": []
+  },
+  "openFinding": {
+    "id": "team-catalogue-large-focus-clipped",
+    "severity": "required correction before navigation acceptance",
+    "trigger": "Paused -> Plain/Large -> Browse Team arenas",
+    "focus": "Play First Connection",
+    "rect": {
+      "x": 250,
+      "y": 683.90625,
+      "width": 364,
+      "height": 47
+    },
+    "panelBottom": 708,
+    "viewportHeight": 720,
+    "description": "Initially focused action extends below scroll-panel viewport. Separate narrow correction assigned."
+  },
+  "teamQualityUnchanged": {
+    "source": 37,
+    "produced": 5
+  },
+  "reviewDecision": "Bounded UI functional continuation only. Initial Large catalogue focus clipping is an open navigation defect and blocks whole navigation acceptance; it does not change these unchanged UI recipe functional records.",
+  "priorReview": "docs/verification/fresh-presentation-retention/review.json sha256:120fbc1081856a6961f99bd479212695a09a4ce4b8debf3e3069a05620e75675 remains immutable historical evidence.",
+  "limits": [
+    "Evidence is from the exact pre-approval r3 composition. Changed final source/output require applicable qualification.",
+    "No exhaustive 24-state visual or 42-role Team artwork approval.",
+    "No physical touch/controller, listening, offline, public or release acceptance.",
+    "Approval metadata must append through immutable production history; do not overwrite any earlier ledger or payload."
+  ]
+}

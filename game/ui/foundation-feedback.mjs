@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { DIRECTIONS } from '../core/registry.mjs';
 import { EPS } from '../core/geometry.mjs';
 import { cellIndex } from '../core/movement.mjs';
@@ -8,7 +9,7 @@ export function foundationCaptionForCell(rectangles, index, width) {
   const x = index % width,
     y = Math.floor(index / width);
   return rectangles.some((r) => x >= r.x && x < r.x + r.w && y >= r.y && y < r.y + r.h)
-    ? 'Foundation reached. Close future cuts here; permanent reclaimed ground adds no coverage.'
+    ? t('interface:foundationReachedCloseFutureCutsHerePermanentReclaimedGroundAdds')
     : '';
 }
 

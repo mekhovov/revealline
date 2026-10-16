@@ -1,3 +1,4 @@
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -22,6 +23,8 @@ import { FIXED_DT } from '../coop/core.mjs';
 import { memoryIndexedDB, fixture, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import { resolveOnlineSoundtrackCatalogue } from '../online-soundtrack-catalogue.mjs';
+import { publicCatalogueFixture } from './helpers/soundtrack-public-catalogue.mjs';
 
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 let sequence = 0;
@@ -100,6 +103,18 @@ function key(page, value) {
   if (rangeChanged) target.emit('change');
   return event;
 }
+function adjustSetting(page, direction) {
+  const field = page.doc.activeElement;
+  const before = field.value;
+  assert.equal(field.type, 'range');
+  key(page, 'Enter');
+  assert.equal(field.getAttribute('data-controller-editing'), 'true');
+  key(page, direction);
+  assert.equal(field.value, before, 'Settings value remains a draft until explicit Confirm.');
+  key(page, 'Enter');
+  assert.equal(field.hasAttribute('data-controller-editing'), false);
+  assert.equal(page.doc.activeElement, field);
+}
 function enter(page, id) {
   page.$(id).focus();
   assert.equal(page.doc.activeElement, page.$(id));
@@ -169,11 +184,12 @@ async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {
   let next = 0,
     now = 0;
   const globals = {
+    fetch: async () => new Response(null, { status: 503 }),
     document: doc,
     window: win,
     localStorage: store,
     navigator: { getGamepads: () => pads },
-    location: { href: 'http://localhost/game/couch/relay-rescue.html' },
+    location: { href: 'http://localhost/game/couch/relay-rescue.html?journey=legacy' },
     matchMedia: () => ({ matches: false }),
     indexedDB: assetDatabase,
     AudioContext:
@@ -211,6 +227,14 @@ async function teamPage(t, store, { audio = null, assetDatabase, pads = [] } = {
       Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
     },
   });
+  installActorAppearanceTransport({
+    baseURL: new URL('../presentation/compiled/', globals.location.href),
+    install(name, descriptor) {
+      if (!originals.has(name))
+        originals.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
+      Object.defineProperty(globalThis, name, { configurable: true, ...descriptor });
+    },
+  });
   await import(`../couch/relay-rescue.mjs?audio-host=${++sequence}`);
   await waitForTeamPicture(
     () => $('coop-picture-status').dataset.state === 'ready',
@@ -242,7 +266,7 @@ test('Versus keyboard master controls persist only the shared record; Team and a
     assert.equal(page.$('race-audio').textContent, 'Mute sound');
     assert.equal(page.$('race-audio').getAttribute('aria-pressed'), null);
     reaches(page, 'race-master-volume');
-    key(page, 'ArrowRight');
+    adjustSetting(page, 'ArrowRight');
     assert.deepEqual(record(saved), { muted: false, volume: 0.66 });
     assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), '{"muted":false,"volume":0.66}');
     assert.equal(a.contexts(), 0);
@@ -309,7 +333,7 @@ test('Versus starts muted, then master edits preserve active music intent and a 
   assert.equal(sound.cursor, cursor);
   assert.deepEqual(sound.musicState(), music);
   reaches(page, 'race-master-volume');
-  key(page, 'ArrowLeft');
+  adjustSetting(page, 'ArrowLeft');
   assert.deepEqual(record(saved), { muted: false, volume: 0.39 });
   page.frames(30);
   assert.equal(page.state(), 'paused');
@@ -328,6 +352,8 @@ test('Versus controller edits the actual master slider without starting either b
   };
   const page = await couchPage(t, { storage: saved, pads: [pad] });
   page.join(0);
+  // Switch deliberately from controller join to keyboard after its native echo window.
+  page.frame(1500);
   enter(page, 'race-options');
   enter(page, 'race-settings-tab-audio');
   page.frame();
@@ -366,11 +392,11 @@ test('Team keyboard master edits remain accessible while paused and preserve its
   assert.equal(page.$('coop-audio').getAttribute('aria-pressed'), null);
   key(page, 'Enter');
   reaches(page, 'coop-master-volume');
-  key(page, 'ArrowRight');
+  adjustSetting(page, 'ArrowRight');
   assert.deepEqual(record(saved), { muted: false, volume: 0.26 });
   page.tick(120);
   assert.equal(page.$('coop-overlay').hidden, false);
-  assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+  assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
   assert.deepEqual(
     ids.map((id) => page.$(id).textContent),
     before,
@@ -428,7 +454,7 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
 
   failWrite = true;
   page.$('coop-master-volume').focus();
-  key(page, 'ArrowRight');
+  adjustSetting(page, 'ArrowRight');
   assert.equal(Number(page.$('coop-master-volume').value), 0.26);
   assert.deepEqual(record(saved), { muted: false, volume: 0.25 });
   assert.equal(
@@ -438,7 +464,7 @@ test('Team keeps its sound explanation through saved edits, storage failure and 
   expectExplanation();
 
   failWrite = false;
-  key(page, 'ArrowRight');
+  adjustSetting(page, 'ArrowRight');
   assert.deepEqual(record(saved), { muted: false, volume: 0.27 });
   assert.equal(status.textContent, '');
   expectExplanation();
@@ -490,7 +516,7 @@ for (const mode of ['Versus', 'Team'])
     assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
     refuse = team;
     reaches(page, `${prefix}-master-volume`);
-    key(page, 'ArrowRight');
+    adjustSetting(page, 'ArrowRight');
     assert.equal(Number(control('master-volume').value), 0.41);
     const preferenceBytes = saved.getItem(AUDIO_PREFERENCES_KEY),
       writes = saved.writes.length,
@@ -502,7 +528,7 @@ for (const mode of ['Versus', 'Team'])
       assert.deepEqual(record(saved), { muted: true, volume: 0.4 });
     } else assert.equal(warning, '');
 
-    enter(page, `${prefix}-${team ? 'settings-close' : 'options-back'}`);
+    enter(page, `${prefix}-settings-tab-extras`);
     enter(page, `${prefix}-${team ? 'help-toggle' : 'help'}`);
     const entry = control('help-read'),
       region = control('help-reading'),
@@ -532,7 +558,7 @@ for (const mode of ['Versus', 'Team'])
     assert.equal(done.disabled, true);
     assert.equal(region.scrollTop, 80);
     enter(page, `${prefix}-${team ? 'help-toggle' : 'help-back'}`);
-    enter(page, `${prefix}-${team ? 'settings-open' : 'options'}`);
+    enter(page, `${prefix}-settings-tab-audio`);
     frames(30);
     assert.deepEqual(state(), attempt);
     assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), preferenceBytes);
@@ -550,7 +576,7 @@ for (const mode of ['Versus', 'Team'])
       assert.equal(page.mediaElements(), 1);
       refuse = false;
       reaches(page, 'coop-master-volume');
-      key(page, 'ArrowRight');
+      adjustSetting(page, 'ArrowRight');
       assert.deepEqual(record(saved), { muted: true, volume: 0.42 });
       assert.equal(control('audio-status').textContent, '');
       assert.equal(control('audio-note').textContent, explanation);
@@ -678,7 +704,11 @@ for (const mode of ['Team', 'Versus']) {
       const credit = page.$(`${prefix}-music-${suffix}`);
       assert.ok(credit, 'The real Couch page provides menu and arena credits.');
       assert.equal(credit.hidden, true);
-      assert.equal(credit.closest('[data-couch-music],dialog'), null);
+      assert.equal(credit.closest('[data-couch-music]'), null);
+      assert.equal(
+        credit.closest('dialog')?.id ?? null,
+        mode === 'Team' && suffix === 'menu-now-playing' ? 'coop-options' : null,
+      );
     }
     assert.equal(a.media.plays, 0);
     assert.equal(a.contexts(), 0);
@@ -696,6 +726,7 @@ for (const mode of ['Team', 'Versus']) {
       page.doc.hidden = false;
       page.doc.emit('visibilitychange');
       if (mode === 'Versus') page.frame();
+      else page.tick();
     };
     hide();
     assert.equal(a.media.paused, true);
@@ -752,8 +783,8 @@ for (const mode of ['Team', 'Versus']) {
       frame();
       frame();
     };
-    const reach = (id) => {
-      for (let n = 0; n < 45 && page.doc.activeElement.id !== id; n++) button(13);
+    const reach = (id, direction = 13) => {
+      for (let n = 0; n < 45 && page.doc.activeElement.id !== id; n++) button(direction);
       assert.equal(page.doc.activeElement.id, id);
     };
     await settleUntil(() => page.$(`${prefix}-music-status`)?.dataset.state === 'ready');
@@ -762,8 +793,9 @@ for (const mode of ['Team', 'Versus']) {
     button(0);
     reach(mode === 'Team' ? 'coop-settings-open' : 'race-options');
     button(0);
-    reach(`${prefix}-settings-tab-audio`);
+    reach(`${prefix}-settings-tab-audio`, 12);
     button(0);
+    button(15); // Leave the vertical category rail for its audio controls.
     reach(`${prefix}-music-library`);
     button(0);
     await settleUntil(
@@ -824,6 +856,7 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix: 'credits',
@@ -875,11 +908,16 @@ test('Couch music credits follow audible MP3 metadata without live position anno
       'Now playing: <b>Actual title</b> · Original artist',
     );
     assert.equal(node.children[1].textContent, 'File: original-file.mp3');
-    assert.equal(node.children[2].getAttribute('href'), 'https://composer.example/music?album=1');
-    assert.equal(node.children[2].textContent, 'Source: composer.example');
-    assert.equal(node.children[2].getAttribute('rel'), 'noopener noreferrer');
-    assert.equal(node.children[2].getAttribute('target'), '_blank');
+    const link = node.children[2].querySelector('a');
+    assert.equal(link.getAttribute('href'), 'https://composer.example/music?album=1');
+    assert.match(link.textContent, /Creator source/);
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+    assert.equal(link.getAttribute('target'), '_blank');
   }
+  assert.equal(
+    doc.getElementById('credits-music-status-source').querySelector('a').getAttribute('href'),
+    'https://composer.example/music?album=1',
+  );
   const titleNode = mounts[0].children[0];
   let writes = 0;
   const originalText = titleNode.textContent;
@@ -912,6 +950,10 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   host.session.setVolume(0.5);
   host.session.pause();
   assert.ok(mounts.every((node) => node.hidden));
+  const pausedPlays = a.media.plays;
+  doc.getElementById('credits-music-status-source').querySelector('a').click();
+  assert.equal(a.media.paused, true);
+  assert.equal(a.media.plays, pausedPlays, 'creator links do not restart paused music');
   for (const unsafe of [
     'javascript:alert(1)',
     'https://name:password@example.test/music',
@@ -921,7 +963,8 @@ test('Couch music credits follow audible MP3 metadata without live position anno
     assert.equal(mounts[0].children[0].textContent, 'Now playing: Next title · Original artist');
     assert.equal(mounts[0].children[1].textContent, 'Original filename not recorded');
     assert.equal(mounts[0].children[2].hidden, true);
-    assert.equal(mounts[0].children[2].getAttribute('href'), null, 'Old safe link is removed.');
+    assert.equal(mounts[0].children[2].querySelector('a'), null, 'Old safe link is removed.');
+    assert.equal(doc.getElementById('credits-music-status-source').querySelector('a'), null);
   }
   host.session.pause();
   const catalogueLibrary = structuredClone(upgradeSoundtrackLibrary(imported.library));
@@ -947,7 +990,28 @@ test('Couch music credits follow audible MP3 metadata without live position anno
   await host.player.prepare();
   await host.session.play();
   assert.equal(mounts[0].children[1].textContent, 'File: composer-master.mp3');
-  assert.equal(mounts[0].children[2].getAttribute('href'), 'https://artist.example/album');
+  assert.equal(
+    mounts[0].children[2].querySelector('a').getAttribute('href'),
+    'https://artist.example/album',
+  );
+  const remote = resolveOnlineSoundtrackCatalogue(publicCatalogueFixture()).tracks[0];
+  await host.player.playRemotePlaylist([remote]);
+  for (const node of mounts) {
+    assert.equal(node.hidden, false, 'remote recordings expose the same live credits');
+    assert.equal(
+      node.children[2].querySelector('a').getAttribute('href'),
+      'https://artists.example/1',
+    );
+    assert.equal(
+      node.children[2].querySelectorAll('a').length,
+      1,
+      'licence URLs are not creator links',
+    );
+  }
+  assert.equal(
+    doc.getElementById('credits-music-status-source').querySelector('a').getAttribute('href'),
+    'https://artists.example/1',
+  );
   host.dispose();
   master.setMuted(true);
   assert.ok(mounts.every((node) => node.hidden && node.children.length === 0));
@@ -986,11 +1050,11 @@ test('Versus menu music source is reachable with Tab and controller without star
   });
   await settleUntil(() => page.$('race-music-status')?.dataset.state === 'ready');
   page.join(0);
+  page.frame(1500); // Let the controller Confirm echo window expire before keyboard input.
   enter(page, 'race-options');
   enter(page, 'race-settings-tab-audio');
   enter(page, 'race-music-play');
   await settleUntil(() => !a.media.paused && !page.$('race-music-menu-now-playing').hidden);
-  enter(page, 'race-options-back');
   const credit = page.$('race-music-menu-now-playing'),
     link = credit.querySelector('a'),
     before = page.checkpoint();
@@ -1000,8 +1064,10 @@ test('Versus menu music source is reachable with Tab and controller without star
   assert.equal(link.tabIndex, 0);
   assert.equal(link.closest('[hidden],[inert],[aria-hidden="true"]'), null);
   assert.equal(link.closest('#race-music-now-playing, #race-music-menu-now-playing'), credit);
-  assert.ok(page.$('race-main').querySelectorAll('button,a[href],select,input').includes(link));
-  page.focus('race-help');
+  assert.ok(
+    page.$('race-options-panel').querySelectorAll('button,a[href],select,input').includes(link),
+  );
+  page.focus('race-settings-tab-audio');
   for (let n = 0; n < 30 && page.doc.activeElement !== link; n++) key(page, 'Tab');
   assert.equal(
     page.doc.activeElement,
@@ -1012,16 +1078,19 @@ test('Versus menu music source is reachable with Tab and controller without star
   link.addEventListener('click', () => {
     activations++;
   });
-  page.focus('race-help');
+  page.focus('race-settings-tab-audio');
+  page.pulse(0, 0);
+  page.pulse(0, 15); // Enter the Audio panel from the category rail.
   for (let n = 0; n < 30 && page.doc.activeElement !== link; n++) page.pulse(0, 13);
   assert.equal(page.doc.activeElement, link, 'D-pad navigation includes the same source link.');
   page.pulse(0, 0);
   assert.equal(activations, 1, 'Controller confirm activates the source, not Start.');
   assert.equal(page.state(), 'ready');
   assert.deepEqual(page.checkpoint(), before);
-  enter(page, 'race-quick-sound');
+  page.frame(1500);
+  enter(page, 'race-audio');
   assert.equal(credit.hidden, true);
-  page.focus('race-help');
+  page.focus('race-settings-tab-audio');
   key(page, 'Tab');
   assert.notEqual(page.doc.activeElement, link, 'Muted credits leave the navigation order.');
 });
@@ -1035,6 +1104,7 @@ test('a failed music assignment replaces pending status with its actionable erro
   const create = doc.createElement.bind(doc);
   doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix: 'test',
@@ -1094,6 +1164,7 @@ test('Journey music library keeps keyboard Back, paused boards and chooser owner
   enter('race-options-back');
   assert.equal(p.doc.activeElement.id, 'race-options');
   enter('race-journey-find');
+  await settleUntil(() => p.$('journey-chooser')?.open);
   assert.equal(p.$('journey-chooser').open, true);
   p.key('Escape', true, p.doc.activeElement);
   p.key('Escape', false, p.doc.activeElement);
@@ -1115,6 +1186,7 @@ test('Couch explicit scene keeps level music across inactive Pause, Settings, re
   doc.createElement = (tag) => (tag === 'audio' ? a.createElement(doc) : create(tag));
   let scene = 'menu';
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix: 'scene',

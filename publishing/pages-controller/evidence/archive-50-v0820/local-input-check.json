@@ -1,0 +1,16 @@
+{
+  "authorityExact": true,
+  "originalAssets": 9,
+  "configurationReproduced": true,
+  "unchangedDonorTools": [
+    "prepare.py",
+    "verify.py",
+    "test_verify.py"
+  ],
+  "pins": {
+    "source-lock.json": "809d27a2c4fcfcee9c621bccbb2292d6dc726c9fcb24a6838efd763d46f6a331",
+    "input-authority.json": "e198e91389b952608e17609123ad865b5ab0a358e6d7ef6e53b0ab7c9c6bc39e",
+    "expected-inventory.json": "0afa89ef51a67bb5fbdb3b7656da488e76eff0f8cd1005c07bf7a982d83b6a9f"
+  },
+  "limitation": "Local metadata checks only; public and native acceptance pending"
+}

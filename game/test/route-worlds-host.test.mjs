@@ -1,3 +1,7 @@
+import {
+  playCurrentExternalRoute,
+  proveHistoricalExternalRoute,
+} from './helpers/external-current-host-route.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
 import test from 'node:test';
@@ -217,6 +221,8 @@ const id = (e, kind) =>
   `optional-worlds-${e.descriptor.id === pilot.descriptor.id ? 'source' : `source-${e.descriptor.id}`}-${kind}`;
 const playControl = (p, e) => p.$(id(e, 'download')) ?? p.$(id(e, 'choose'));
 async function open(p) {
+  // Mount the retained More Worlds component for its import/ownership contract.
+  // Ordinary player entry now uses unified Missions; this is not public-entry evidence.
   p.$('shell-menu').click();
   p.$('shell-play').click();
   p.$('shell-mode-choice').open = true;
@@ -360,12 +366,8 @@ test('five exact registered editions install together within unchanged budgets, 
           r.expected.won &&
           r.levelId.endsWith('foundry'),
       );
-      for (const s of route.segments) {
-        direction(p, s.input.direction);
-        ticks(p, s.ticks);
-      }
-      p.frame(0);
-      assert.equal(p.rendered.run.status, 'won');
+      proveHistoricalExternalRoute(e, route);
+      playCurrentExternalRoute(p, e);
     }
     await open(p);
     await play(p, sentinel);
@@ -375,16 +377,8 @@ test('five exact registered editions install together within unchanged budgets, 
     );
     assert.equal(p.rendered.run.activeClassId, 'scout');
     const route = sentinelProof.routes.find((r) => r.id === 'fpv/standard/immediate/court-upper');
-    for (const step of route.segments) {
-      if (step.input.direction) direction(p, step.input.direction);
-      if (step.input.action) p.key('KeyE');
-      ticks(p, step.ticks);
-      if (step.input.action) p.key('KeyE', false);
-    }
-    p.frame(0);
-    assert.equal(p.rendered.run.status, 'won');
-    assert.equal(p.rendered.run.score, route.expected.score);
-    assert.equal(p.rendered.run.lives, route.expected.lives);
+    proveHistoricalExternalRoute(sentinel, route);
+    playCurrentExternalRoute(p, sentinel);
     const library = loadLibrary(f.storage, 'revealline.library.dev.v1').library;
     receipts = library.pictureReceipts;
     assert.equal(receipts.length, 4);

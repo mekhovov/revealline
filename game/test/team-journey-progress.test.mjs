@@ -21,6 +21,25 @@ const first = journey.row(journey.catalog.missions[0]),
 const log = JSON.parse(
   await readFile(new URL('./fixtures/team-opening-routes.json', import.meta.url)),
 ).routes[0].log;
+const pictureAsset = Object.freeze({
+  format: 'AssetRevisionV1',
+  id: 'team-original',
+  revision: 'r1',
+  kind: 'reveal-background',
+  path: 'content-design/assets/test/team-original.png',
+  sha256: 'a'.repeat(64),
+  bytes: 128,
+  width: 1152,
+  height: 576,
+  alt: 'Team mission original',
+  review: 'candidate',
+});
+const pictureFor = (_row, editionId = 'journey') => ({
+  editionId,
+  campaignKey: 'team-campaign/1/exact',
+  themeId: 'fpv',
+  asset: pictureAsset,
+});
 function win(run) {
   startCoop(run);
   for (const segment of log)
@@ -51,7 +70,7 @@ test('Team selection/command-earned receipt survives store recreation and resume
   await progress.load();
   assert.equal(progress.initial('standard'), first);
   const run = createCoop(first.level);
-  assert(progress.started(first, run));
+  assert(progress.started(first, run, { picture: pictureFor(first, progress.editionId) }));
   assert.equal(progress.complete(run), false);
   win(run);
   assert(progress.complete(run));
@@ -59,6 +78,12 @@ test('Team selection/command-earned receipt survives store recreation and resume
   assert.equal(progress.complete(run), false);
   assert.equal(progress.snapshot().generation, generation);
   await progress.retry();
+  const retained = (await createJourneyBackend(indexedDB).readState()).pictures.records;
+  assert.equal(retained.length, 1);
+  assert.equal(retained[0].mode, 'team');
+  assert.equal(retained[0].editionId, progress.editionId);
+  assert.equal(retained[0].missionId, first.mission.id);
+  assert.deepEqual(retained[0].asset, pictureAsset);
   const receipt = progress.snapshot().clears.team[first.mission.id];
   assert.deepEqual(receipt, {
     runId: 'visit-a/1',
@@ -77,6 +102,31 @@ test('Team selection/command-earned receipt survives store recreation and resume
   assert.deepEqual(reopened.snapshot().clears.team[first.mission.id], receipt);
   assert.deepEqual(reopened.snapshot().clears.solo, {});
   assert.deepEqual(reopened.snapshot().clears.versus, {});
+  assert.deepEqual(reopened.pictures().records, retained);
+});
+
+test('Team picture admission never creates Solo or Versus rewards and rejects invalid presentation without losing the clear', async () => {
+  const indexedDB = managedIndexedDB(),
+    backend = createJourneyBackend(indexedDB),
+    progress = createTeamJourneyProgress(journey, { backend, sessionId: 'mode-proof' }),
+    run = createCoop(first.level);
+  await progress.load();
+  assert(
+    progress.started(first, run, {
+      picture: {
+        ...pictureFor(first, progress.editionId),
+        asset: { ...pictureAsset, width: 0 },
+      },
+    }),
+  );
+  win(run);
+  assert(progress.complete(run));
+  await progress.retry();
+  const saved = await backend.readState();
+  assert(saved.profile.clears.team[first.mission.id]);
+  assert.deepEqual(saved.profile.clears.solo, {});
+  assert.deepEqual(saved.profile.clears.versus, {});
+  assert.deepEqual(saved.pictures.records, []);
 });
 
 test('unowned rows, unsupported presets, late admissions and imported-looking runs cannot write Team receipts', async () => {
@@ -172,4 +222,23 @@ test('admitted skip publishes its successor cursor and reversible skip together 
   assert.deepEqual(observed[0].skipped.team, [first.mission.id]);
   assert.deepEqual(observed[0].clears.team, {});
   assert.equal(progress.started(first, createCoop(first.level), { skipped: second }), false);
+});
+
+test('a fresh pressure attempt records its actual gameplay identity while admin practice earns no clear', async () => {
+  const progress = createTeamJourneyProgress(journey, { backend: memory() });
+  await progress.load();
+  const run = createCoop(first.level),
+    gameplayId = '1234567890abcdef';
+  assert.equal(progress.started(first, run, { gameplayId: 'not-a-gameplay-identity' }), false);
+  assert(progress.started(first, run, { gameplayId }));
+  win(run);
+  assert(progress.complete(run));
+  assert.equal(progress.snapshot().clears.team[first.mission.id].gameplayId, gameplayId);
+  const practice = createTeamJourneyProgress(journey, { backend: memory() });
+  await practice.load();
+  const admin = createCoop(first.level);
+  assert.equal(practice.started(first, admin, { gameplayId, adminOverride: true }), false);
+  win(admin);
+  assert.equal(practice.complete(admin), false);
+  assert.deepEqual(practice.snapshot().clears.team, {});
 });

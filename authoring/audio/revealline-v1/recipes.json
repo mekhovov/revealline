@@ -1,0 +1,157 @@
+{
+  "focus": [
+    "interface",
+    "tick_001",
+    0.12
+  ],
+  "confirm": [
+    "ui",
+    "click1",
+    0.1
+  ],
+  "cancel": [
+    "interface",
+    "back_001",
+    0.22
+  ],
+  "contact-metal": [
+    "impact",
+    "impactMetal_light_000",
+    0.22
+  ],
+  "contact-wood": [
+    "impact",
+    "impactWood_light_000",
+    0.22
+  ],
+  "contact-glass": [
+    "impact",
+    "impactGlass_light_000",
+    0.28
+  ],
+  "contact-soft": [
+    "impact",
+    "impactSoft_medium_000",
+    0.22
+  ],
+  "gate": [
+    "scifi",
+    "doorOpen_001",
+    0.6
+  ],
+  "impact": [
+    "impact",
+    "impactPunch_medium_000",
+    0.26
+  ],
+  "paper": [
+    "interface",
+    "scroll_001",
+    0.16
+  ],
+  "deploy": [
+    "scifi",
+    "forceField_001",
+    0.45
+  ],
+  "attack": [
+    "scifi",
+    "laserSmall_001",
+    0.3
+  ],
+  "interference": [
+    "scifi",
+    "computerNoise_001",
+    0.35
+  ],
+  "erosion": [
+    "scifi",
+    "impactMetal_001",
+    0.36
+  ],
+  "switch": [
+    "interface",
+    "switch_002",
+    0.22
+  ],
+  "pickup": [
+    "interface",
+    "pluck_002",
+    0.16
+  ],
+  "closure": [
+    "ui",
+    "click4",
+    0.09
+  ],
+  "confirm-1": [
+    "ui",
+    "click2",
+    0.1
+  ],
+  "confirm-2": [
+    "ui",
+    "click3",
+    0.1
+  ],
+  "paper-1": [
+    "interface",
+    "scroll_002",
+    0.16
+  ],
+  "paper-2": [
+    "interface",
+    "scroll_003",
+    0.16
+  ],
+  "pickup-1": [
+    "interface",
+    "pluck_001",
+    0.16
+  ],
+  "pickup-2": [
+    "interface",
+    "drop_001",
+    0.16
+  ],
+  "contact-metal-1": [
+    "impact",
+    "impactMetal_light_001",
+    0.22
+  ],
+  "contact-metal-2": [
+    "impact",
+    "impactMetal_light_002",
+    0.22
+  ],
+  "contact-wood-1": [
+    "impact",
+    "impactWood_light_001",
+    0.22
+  ],
+  "contact-wood-2": [
+    "impact",
+    "impactWood_light_002",
+    0.22
+  ],
+  "contact-glass-1": [
+    "impact",
+    "impactGlass_light_001",
+    0.28
+  ],
+  "contact-glass-2": [
+    "impact",
+    "impactGlass_light_002",
+    0.28
+  ],
+  "contact-soft-1": [
+    "impact",
+    "impactSoft_medium_001",
+    0.22
+  ],
+  "contact-soft-2": [
+    "impact",
+    "impactSoft_medium_002",
+    0.22
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "campaignId": "ukraine-cities-symbols-time",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Cities, Symbols and Time", "uk": "Міста, символи і час" } },
+      "id": "ukraine-cities-symbols-time",
+      "identity": "05aa54b1af79ee7b",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Connect the mosaic gallery and monastery court while keeping their histories distinct. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте галерею мозаїк і монастирське подвір’я, зберігаючи їхні окремі історії. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original architectural exhibition with separate mosaic-colour panels and monastery model plinths, blue shadows and warm gold light; no copied sacred fresco, reconstructed historic interior or real navigation map.",
+          "uk": "Оригінальна архітектурна виставка з окремими панелями мозаїчних кольорів і постаментами монастирських моделей, синіми тінями та теплим золотим світлом. Без копіювання сакральних фресок, реконструкції історичного інтер’єру чи справжньої навігаційної мапи."
+        },
+        "design.routeDecision": {
+          "en": "Open the short numbered return into the mosaic wing or take the outer court first while keeping two retreat choices. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Відкрийте коротке нумероване повернення до мозаїчного крила або спершу захопіть зовнішнє подвір’я, зберігаючи два відступи. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Kyiv in Layers", "uk": "Київ шарами" }
+      },
+      "id": "ukraine-cities-symbols-time-01",
+      "identity": "a996d33a067a90a4",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Connect the market and side galleries to discover more than one architectural influence. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте ринкову й бічні галереї, щоб відкрити кілька архітектурних впливів. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original Lviv-inspired urban-study gallery with model streets and varied generic façade silhouettes, clearly a fictional exhibition rather than an exact city view or single-style historical claim.",
+          "uk": "Оригінальна галерея міських досліджень за мотивами Львова з модельними вулицями й різними узагальненими фасадами. Це вигадана виставка, а не точний міський краєвид чи твердження про єдиний історичний стиль."
+        },
+        "design.routeDecision": {
+          "en": "Secure the nearby market islands or activate the connector that opens a longer safe route behind the side galleries. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Закріпіть близькі ринкові острови або активуйте прохід, що відкриває довший безпечний шлях за бічними галереями. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Lviv: Streets and Encounters", "uk": "Львів: вулиці й зустрічі" }
+      },
+      "id": "ukraine-cities-symbols-time-02",
+      "identity": "96d7aaac383b7be7",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Link the harbour-model bays and follow the relationship between a city and its wider setting. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте зали моделі гавані та простежте зв’язок міста з його середовищем. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original blue-gold port-city exhibition with harbour model, separate street-grid panel and generous square; no exact Odesa street plan, wartime scene or recreated documentary view.",
+          "uk": "Оригінальна синьо-золота виставка портового міста з моделлю гавані, окремою панеллю вуличної сітки та просторою площею. Без точного плану Одеси, воєнної сцени чи відтворення документального виду."
+        },
+        "design.routeDecision": {
+          "en": "Take the lower harbour bay for a short closure or connect the upper squares through the numbered return. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Захопіть нижню гавань коротким замиканням або поєднайте верхні площі через нумероване повернення. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Odesa: A Port City Record", "uk": "Одеса: опис портового міста" }
+      },
+      "id": "ukraine-cities-symbols-time-03",
+      "identity": "c89f84a0dd046950",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Open the spacious symbol gallery and match the modern state record to its date. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Відкрийте простору галерею символів і пов’яжіть державний документ із його датою. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original civic-history gallery with two clear timeline stands and a placeholder for an accurately sourced upright state emblem; no distorted trident, speculative symbol decoding or fabricated legal document facsimile.",
+          "uk": "Оригінальна галерея громадянської історії з двома чіткими стендами хронології та місцем для точного вертикального державного герба з перевіреного джерела. Без спотвореного тризуба, довільного розшифрування символів чи вигаданого юридичного документа."
+        },
+        "design.routeDecision": {
+          "en": "Use the broad central foundation for a calmer approach or unlock the side return before entering the marked lane. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Скористайтеся широкою центральною основою для спокійнішого підходу або відкрийте бічне повернення перед позначеною смугою. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "The Trident and a Date", "uk": "Тризуб і дата" }
+      },
+      "id": "ukraine-cities-symbols-time-04",
+      "identity": "e40a41cbb39327ea",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Connect the two colour halls and keep the symbol readable at every scale. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "З’єднайте дві кольорові зали та збережіть читабельність символу в кожному масштабі. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original accessible design exhibit with blue and yellow panels, separate blank labels and a correctly proportioned two-band flag card; quiet cream surround, no colour-only essential information.",
+          "uk": "Оригінальна доступна дизайн-виставка із синіми й жовтими панелями, окремими порожніми підписами та карткою двосмугового прапора правильних пропорцій. Спокійне кремове оточення; важлива інформація не передається лише кольором."
+        },
+        "design.routeDecision": {
+          "en": "Open the nearest numbered connection first or secure both colour islands before crossing the warning lane. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Спершу відкрийте найближчий нумерований прохід або закріпіть обидва кольорові острови перед смугою попередження. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Blue and Yellow, Clearly Seen", "uk": "Синій і жовтий: бачити чітко" }
+      },
+      "id": "ukraine-cities-symbols-time-05",
+      "identity": "846ca843a528dce0",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+          "uk": "Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення. У незахопленому полі стрілки прискорюють рух за потоком і сповільнюють рух проти нього. Захоплення нейтралізує їх."
+        },
+        "design.lesson": {
+          "en": "Connect the city records and symbol timeline into a clearly sourced final exhibition. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Поєднайте описи міст і часову шкалу символів у фінальну виставку з джерелами. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original museum map room with three distinct city model tables, a separate civic-symbol timeline and generous source-card wall; an exhibition diagram, not a real navigation map or exhaustive account of Ukraine.",
+          "uk": "Оригінальна музейна кімната мап із трьома окремими столами міських моделей, хронологією громадянських символів і просторою стіною джерел. Виставкова схема не є навігаційною мапою чи вичерпною розповіддю про Україну."
+        },
+        "design.routeDecision": {
+          "en": "Activate the two source returns before following the directional fields or take a longer loop around the flow. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Активуйте два повернення джерел перед рухом напрямленими полями або оберіть довшу петлю навколо потоку. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "A Map with More Than One Story", "uk": "Мапа з багатьма історіями" }
+      },
+      "id": "ukraine-cities-symbols-time-06",
+      "identity": "4d92fa0c9bac9c42",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

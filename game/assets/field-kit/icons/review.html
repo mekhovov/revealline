@@ -1,7 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../../access-gate.css" />
+    <script src="../../../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Field Kit · Original semantic pixel icons</title>
     <link rel="stylesheet" href="../../../ui/field-kit-fonts.css" />
@@ -90,7 +107,11 @@
         color: #f4bf62;
       }
     </style>
-    <script type="module" src="./review.mjs"></script>
+    <script
+      src="./review.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </head>
   <body class="field-kit">
     <main>
@@ -114,5 +135,10 @@
       <p id="status" role="status">Rendering recipe specimens…</p>
       <div id="inventory"></div>
     </main>
+    <script
+      src="../../../ui/authoring-reference-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </body>
 </html>

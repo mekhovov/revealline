@@ -1,0 +1,488 @@
+diff --git a/docs/player-first-ux2-couch-secondary-navigation.md b/docs/player-first-ux2-couch-secondary-navigation.md
+new file mode 100644
+index 000000000..ba2560fc5
+--- /dev/null
++++ b/docs/player-first-ux2-couch-secondary-navigation.md
+@@ -0,0 +1,60 @@
++# UX2 Couch secondary-navigation parity — v0.135.0 candidate
++
++## Scope
++
++- Reconciled base: `651b78756039f48d332a97528503193d9111c382`, the corrected local
++  v0.134.0 Team quick-start candidate stacked on the compact gallery and Couch
++  input handoff.
++- Donor feature commit: `e5db202099eaffb3af32ad111066073fecb2e5c2`.
++- The package, root lock record, and build configuration identify this local
++  candidate as v0.135.0.
++- This source does not claim a merge, tag, release, Pages deployment,
++  physical-controller check, browser-touch check, or public acceptance.
++
++The effective feature remains seven paths. The old `couch.mjs` controller
++activation hunk is already supplied by the input stack and is omitted. Team's
++`relay-rescue.mjs` change only places the existing quick Sound control in the
++paused action group; it does not duplicate the controller activation hook.
++
++## Player behavior
++
++Versus exposes **More** beside its primary lobby utilities. Home, About &
++credits, and Releases no longer require opening How to play. Keyboard Back and
++controller Back close More and restore its summary. During a live match, each
++secondary destination keeps the paused attempt behind the existing discard
++choice. Stay returns focus to the exact destination that opened that choice.
++
++Team Pause exposes Sound directly in the Resume, Retry, Missions, Help,
++Settings, Sound, Home hierarchy. Changing Sound keeps the arena paused. The
++v0.134.0 quick-start behavior remains intact: Start owns initial focus, Arena &
++team options starts collapsed, and passive picture preparation focuses that
++summary rather than the hidden arena selector or Cancel.
++
++## Focused evidence
++
++The complete Versus shell passes 25/25 and the complete Team host passes 77/77.
++The focused feature cases pass 3/3 inside the Versus shell, and the shared Pause
++and quick-start boundary passes 11/11. Original donor evidence also records a
++194/194 Couch/player navigation boundary and a 103/103 controller binding,
++confirm, lifecycle, and router boundary. `npm run validate` passes with 9,529
++localized messages, 7,714 source references, 1,239 game files, and presentation
++revision 88. Scoped ESLint, Prettier, version parity, generated-i18n freshness,
++and diff checks pass.
++
++These tests assert exact DOM parents, keyboard/controller/touch-modeled focus,
++exact opener restoration, destination-specific departure copy and hrefs, the
++paused clock, and the preserved collapsed quick-start setup. The stale
++revision-79 fixture override from the old draft is removed.
++
++The corrected v0.134.0 base supplies the genuine-`Blob` Team fixtures and actual
++controller navigation. This replay takes only the Versus lifecycle correction
++from the later host-contract commit: it releases the mirrored Enter gesture,
++waits through the controller echo window, and then resumes with a later native
++keyboard Confirm. Production validation and controller guards remain unchanged.
++
++## Evidence limits
++
++The stacked v0.134.0 base is not an accepted release. If its eventual merge SHA
++differs, replay this single navigation slice onto that accepted source and rerun
++the focused boundary. Automated controller and touch modeling does not replace
++physical controller, Steam Deck, browser touch, or responsive visual review.
+diff --git a/game/build-config.json b/game/build-config.json
+index 1c09a3381..4e761636e 100644
+--- a/game/build-config.json
++++ b/game/build-config.json
+@@ -1,5 +1,5 @@
+ {
+-  "version": "0.134.0",
++  "version": "0.135.0",
+   "entry": "game/index.html",
+   "include": [
+     "game",
+diff --git a/game/couch/couch-shell.mjs b/game/couch/couch-shell.mjs
+index cdcf75813..8e9abc402 100644
+--- a/game/couch/couch-shell.mjs
++++ b/game/couch/couch-shell.mjs
+@@ -78,6 +78,10 @@ export function createCouchShell({
+     removers = [],
+     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
+   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
++  const secondaryDestinations = Object.freeze({
++    about: $('race-more-about').getAttribute('href'),
++    releases: $('race-release-explorer').href || $('race-release-explorer').getAttribute('href'),
++  });
+   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
+   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
+   const libraryLabel = () => (isJourney ? t('interface:legacyLibrary') : t('interface:newJourney'));
+@@ -278,6 +282,12 @@ export function createCouchShell({
+   function back() {
+     departure = null;
+     if (screen === 'main') {
++      const more = $('race-more');
++      if (more.open) {
++        more.open = false;
++        $('race-more-toggle').focus({ preventScroll: true });
++        return;
++      }
+       onTransition({ from: screen, to: screen, back: true });
+       return focus();
+     }
+@@ -323,6 +333,7 @@ export function createCouchShell({
+     (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
+     (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
+     (kind === 'team' && teamRouteId && `relay-rescue.html?journey=${teamRouteId}&return=versus`) ||
++    secondaryDestinations[kind] ||
+     (isJourney && authoredDestinations?.[kind]) ||
+     authoredDestinations?.[kind] ||
+     DESTINATIONS[kind];
+@@ -402,21 +413,27 @@ export function createCouchShell({
+         ? t('interface:couch.openLibrary', { library: libraryLabel() })
+         : kind === 'team'
+           ? t('interface:goToCouchTeam')
+-          : t('interface:returnToSolo4'),
++          : kind === 'about'
++            ? t('common:navigation.aboutCredits')
++            : kind === 'releases'
++              ? t('common:navigation.releases')
++              : t('interface:returnToSolo4'),
+     );
+     setText('race-leave-copy', () =>
+-      isJourney && kind !== 'library'
+-        ? kind === 'team'
+-          ? t('interface:couch.leaveAttemptForTeam')
+-          : t('interface:couch.leaveAttemptForSolo')
+-        : t('interface:couch.leaveAttempt'),
++      isJourney && kind === 'team'
++        ? t('interface:couch.leaveAttemptForTeam')
++        : isJourney && kind === 'solo'
++          ? t('interface:couch.leaveAttemptForSolo')
++          : t('interface:couch.leaveAttempt'),
+     );
+     setText('race-leave', () =>
+       kind === 'library'
+         ? t('interface:couch.discardOpenLibrary', { library: libraryLabel() })
+         : kind === 'team'
+           ? t('interface:discardAndGoToTeam')
+-          : t('interface:discardAndReturnToSolo'),
++          : ['about', 'releases'].includes(kind)
++            ? t('interface:discardAndLeave')
++            : t('interface:discardAndReturnToSolo'),
+     );
+     $('race-leave').setAttribute(
+       'href',
+@@ -449,6 +466,9 @@ export function createCouchShell({
+   for (const [id, kind] of [
+     ['race-solo-return', 'solo'],
+     ['race-home', 'solo'],
++    ['race-more-home', 'solo'],
++    ['race-more-about', 'about'],
++    ['race-release-explorer', 'releases'],
+     ['race-coop', 'team'],
+     ['race-library-switch', 'library'],
+   ])
+diff --git a/game/couch/couch.css b/game/couch/couch.css
+index a3a56b88d..7d79ad02c 100644
+--- a/game/couch/couch.css
++++ b/game/couch/couch.css
+@@ -275,13 +275,23 @@ body.unified-missions #race-library-switch {
+   margin-block: 12px 20px;
+ }
+ .race-secondary-details {
+-  margin-top: 16px;
+-  border-top: 1px solid #2b4364;
++  grid-column: 1 / -1;
++  min-width: 0;
++  margin: 0;
++  border: 1px solid transparent;
+ }
+ .race-secondary-details > summary {
++  box-sizing: border-box;
+   min-height: 44px;
+-  padding: 12px 0;
++  padding: 9px 14px;
+   cursor: pointer;
++  font-size: 24px;
++  list-style-position: inside;
++}
++.race-secondary-details > summary:hover,
++.race-secondary-details > summary:focus-visible {
++  border-color: #537ca0;
++  background: #142641;
+ }
+ #couch-app .race-more-destinations a {
+   justify-content: center;
+diff --git a/game/couch/index.html b/game/couch/index.html
+index 52b5c5134..517532727 100644
+--- a/game/couch/index.html
++++ b/game/couch/index.html
+@@ -483,6 +483,23 @@
+             <button id="race-help" type="button" data-i18n="common:navigation.howToPlay">
+               How to play
+             </button>
++            <details id="race-more" class="race-secondary-details">
++              <summary id="race-more-toggle" data-i18n="common:navigation.more">More</summary>
++              <nav
++                class="race-more-destinations"
++                aria-label="More destinations"
++                data-i18n-aria-label="common:navigation.moreDestinations"
++              >
++                <a id="race-more-home" href="../" data-i18n="common:navigation.home">Home</a>
++                <a
++                  id="race-more-about"
++                  href="../../site/about.html#versions"
++                  data-i18n="common:navigation.aboutCredits"
++                  >About &amp; credits</a
++                >
++                <a id="race-release-explorer" data-i18n="common:navigation.releases">Releases</a>
++              </nav>
++            </details>
+             <a id="race-home" href="../" hidden data-i18n="common:navigation.home">Home</a>
+             <button id="race-review" type="button" hidden data-i18n="interface:viewBothBoards">
+               View both boards
+@@ -956,23 +973,6 @@
+               </p>
+             </div>
+           </div>
+-          <details class="race-secondary-details">
+-            <summary id="race-more-toggle" data-i18n="common:navigation.more">More</summary>
+-            <nav
+-              class="race-more-destinations"
+-              aria-label="More destinations"
+-              data-i18n-aria-label="common:navigation.moreDestinations"
+-            >
+-              <a id="race-more-home" href="../" data-i18n="common:navigation.home">Home</a>
+-              <a
+-                id="race-more-about"
+-                href="../../site/about.html#versions"
+-                data-i18n="common:navigation.aboutCredits"
+-                >About &amp; credits</a
+-              >
+-              <a id="race-release-explorer" data-i18n="common:navigation.releases">Releases</a>
+-            </nav>
+-          </details>
+           <button id="race-help-back" type="button" data-i18n="common:actions.back">Back</button>
+         </section>
+         <section
+diff --git a/game/couch/relay-rescue.mjs b/game/couch/relay-rescue.mjs
+index 134431dc0..2e2f9634b 100644
+--- a/game/couch/relay-rescue.mjs
++++ b/game/couch/relay-rescue.mjs
+@@ -651,6 +651,7 @@ export function bootCoop({
+     if (pausedAttempt) {
+       pauseCore.append(help);
+       pauseCore.append(settings);
++      pauseCore.append(sound);
+       pauseCore.append($('coop-home-paused'));
+     } else {
+       tools.append(help);
+diff --git a/game/test/couch-shell.test.mjs b/game/test/couch-shell.test.mjs
+index b82f4d93e..37cac0b85 100644
+--- a/game/test/couch-shell.test.mjs
++++ b/game/test/couch-shell.test.mjs
+@@ -173,6 +173,95 @@ test('lobby, setup and children use reachable native controls and Back restores
+   }
+ });
+ 
++test('Versus More is a primary utility with keyboard, controller and guarded departures', async (t) => {
++  const hardware = pad(0),
++    f = await couchPage(t, { pads: [hardware], nativeKeyboard: true }),
++    more = f.$('race-more'),
++    toggle = f.$('race-more-toggle');
++  assert.equal(more.parentNode, f.$('race-start').parentNode);
++  assert.equal(more.parentNode.classList.contains('race-menu-actions'), true);
++  assert.equal(f.$('race-optional-setup').open, false, 'Optional setup remains collapsed.');
++  assert.equal(f.$('race-help-panel').contains(more), false);
++  assert.equal(f.doc.activeElement.id, 'race-start', 'Start retains initial focus.');
++
++  toggle.focus();
++  const keyboardConfirm = press(f, 'Enter');
++  if (!keyboardConfirm.defaultPrevented) toggle.click();
++  assert.equal(more.open, true, 'Keyboard Confirm opens More.');
++  press(f, 'Escape');
++  assert.equal(more.open, false);
++  assert.equal(f.doc.activeElement.id, 'race-more-toggle', 'Back restores the More opener.');
++
++  f.$('race-start').focus();
++  for (let i = 0; i < 30 && f.doc.activeElement.id !== 'race-more-toggle'; i++) press(f, 'Tab');
++  assert.equal(f.doc.activeElement.id, 'race-more-toggle', 'Tab reaches More from Start.');
++
++  f.join(0);
++  for (let i = 0; i < 30 && f.doc.activeElement.id !== 'race-more-toggle'; i++) f.pulse(0, 13);
++  assert.equal(f.doc.activeElement.id, 'race-more-toggle', 'D-pad reaches More from Start.');
++  f.pulse(0, 0);
++  assert.equal(more.open, true, 'Controller Confirm opens More.');
++  f.pulse(0, 1);
++  assert.equal(more.open, false);
++  assert.equal(f.doc.activeElement.id, 'race-more-toggle');
++
++  more.open = true;
++  const destinations = more.querySelector('.race-more-destinations');
++  for (const id of ['race-more-home', 'race-more-about', 'race-release-explorer']) {
++    assert.equal(f.$(id).parentNode, destinations, `${id} has the exact More navigation parent.`);
++    assert.equal(f.$(id).closest('#race-more'), more, `${id} stays in the same utility shell.`);
++  }
++});
++
++test('Versus More exposes native touch targets without changing Start focus', async (t) => {
++  const f = await couchPage(t, { nativeKeyboard: true }),
++    more = f.$('race-more'),
++    toggle = f.$('race-more-toggle');
++  assert.equal(f.doc.activeElement.id, 'race-start');
++  toggle.emit('pointerdown', { pointerType: 'touch', pointerId: 41, button: 0 });
++  toggle.emit('pointerup', { pointerType: 'touch', pointerId: 41, button: 0 });
++  toggle.click();
++  assert.equal(more.open, true);
++  assert.equal(f.doc.activeElement.id, 'race-start', 'Touch does not steal keyboard focus.');
++  for (const id of ['race-more-home', 'race-more-about', 'race-release-explorer'])
++    assert.equal(f.$(id).closest('#race-more'), more);
++});
++
++test('Versus More departures retain the paused match until a separate decision', async (t) => {
++  const f = await couchPage(t, { nativeKeyboard: true }),
++    more = f.$('race-more');
++  f.$('race-start').click();
++  f.frame();
++  f.$('race-pause').click();
++  f.frame();
++  const paused = f.checkpoint();
++  for (const [id, title, action, soloCopy] of [
++    ['race-more-home', 'Return to Solo?', 'Discard and return to Solo', false],
++    ['race-more-about', 'About & credits', 'Discard and leave', false],
++    ['race-release-explorer', 'Releases', 'Discard and leave', false],
++  ]) {
++    more.open = true;
++    const destination = f.$(id);
++    destination.focus();
++    assert.equal(f.doc.activeElement, destination);
++    const event = destination.emit('click', { button: 0 });
++    assert.equal(event.defaultPrevented, true, `${id} cannot discard a paused match directly.`);
++    assert.equal(f.$('race-leave-panel').hidden, false);
++    assert.equal(f.$('race-leave-title').textContent, title);
++    assert.equal(f.$('race-leave').textContent, action);
++    assert.equal(f.$('race-leave').getAttribute('href'), destination.getAttribute('href'));
++    assert.equal(
++      /Solo opens its own Journey progress/.test(f.$('race-leave-copy').textContent),
++      soloCopy,
++      `${id} receives only its own departure copy.`,
++    );
++    f.$('race-leave-back').click();
++    assert.equal(f.doc.activeElement, destination, 'Stay restores the exact destination opener.');
++    assert.equal(destination.parentNode, more.querySelector('.race-more-destinations'));
++    assert.deepEqual(f.checkpoint(), paused);
++  }
++});
++
+ test('an embedded Couch route stays loading until its actual setup is prepared', async (t) => {
+   let began, finish;
+   const requested = new Promise((resolve) => {
+@@ -371,7 +460,7 @@ test('authored Arcade removes equipment controls and hints; Tactical reflects th
+ });
+ 
+ test('controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary', async (t) => {
+-  const f = await couchPage(t, { pads: [pad(0)] });
++  const f = await couchPage(t, { pads: [pad(0)], nativeKeyboard: true });
+   f.join(0);
+   f.focus('race-help');
+   f.pulse(0, 0);
+@@ -386,11 +475,22 @@ test('controller setup/help and repeated keyboard Confirm cannot leak through th
+   f.frame();
+   assert.equal(f.state(), 'paused');
+   const held = f.checkpoint();
+-  const e = press(f, 'Enter', f.$('race-start'), { repeat: true });
+-  assert.equal(e.defaultPrevented, true);
++  const start = f.$('race-start'),
++    repeated = press(f, 'Enter', start, { repeat: true });
++  assert.equal(repeated.defaultPrevented, true);
+   f.frames(4);
+   assert.deepEqual(f.checkpoint(), held);
+-  f.$('race-start').click();
++  const release = f.key('Enter', false, start);
++  assert.equal(
++    release.defaultPrevented,
++    true,
++    'The mirrored key release belongs to the controller lifecycle.',
++  );
++  f.frames(151);
++  assert.deepEqual(f.checkpoint(), held, 'Neutral waiting never advances the paused match.');
++  const deliberate = f.key('Enter', true, start);
++  assert.equal(deliberate.defaultPrevented, false, 'A later neutral native Confirm stays native.');
++  f.key('Enter', false, start);
+   f.frame();
+   assert.equal(f.state(), 'running');
+   assert.equal(f.renders[0].ability.cooldownUntil, 0);
+@@ -403,6 +503,7 @@ test('markup keeps touch crosses outside both arenas and uses separate screen ro
+   assert.match(css, /object-fit: contain/);
+   assert.match(css, /grid-template-rows: auto minmax\(48px, 1fr\)/);
+   assert.match(css, /\.race-pad button\.pressed/);
++  assert.match(css, /\.race-secondary-details > summary\s*\{[^}]*min-height: 44px/s);
+   // A modal may reserve a viewport gutter. The actual boards must still derive
+   // their space from the layout rather than subtracting a guessed HUD height.
+   const boardLayout = css.replace(/\.race-chapter-replace\s*\{[^{}]*\}/g, '');
+diff --git a/game/test/shared-pause-hierarchy.test.mjs b/game/test/shared-pause-hierarchy.test.mjs
+index 06d42b5b2..4f3fa4d07 100644
+--- a/game/test/shared-pause-hierarchy.test.mjs
++++ b/game/test/shared-pause-hierarchy.test.mjs
+@@ -51,8 +51,23 @@ test('Versus Pause exposes the shared player actions and retries with one delibe
+   assert.deepEqual(page.checkpoint(), retried);
+ });
+ 
+-test('Team Pause puts Help, Settings and Home in the direct shared hierarchy', async (t) => {
+-  const page = await teamPage(t, { nativeFocus: true, capturePaint: true });
++test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierarchy', async (t) => {
++  const stored = new Map();
++  const page = await teamPage(t, {
++    nativeFocus: true,
++    capturePaint: true,
++    beforeImport({ install }) {
++      install('localStorage', {
++        value: {
++          getItem: (key) => stored.get(key) ?? null,
++          setItem: (key, value) => stored.set(key, String(value)),
++          removeItem: (key) => stored.delete(key),
++        },
++      });
++    },
++  });
++  assert.equal(page.$('coop-optional-setup').open, false, 'Quick-start setup stays collapsed.');
++  assert.equal(page.doc.activeElement.id, 'coop-start', 'Quick Start retains initial focus.');
+   page.$('coop-start').click();
+   page.tick(3);
+   page.$('coop-pause').click();
+@@ -61,14 +76,28 @@ test('Team Pause puts Help, Settings and Home in the direct shared hierarchy', a
+   assert.equal(core.hidden, false);
+   assert.deepEqual(
+     core.children.map((element) => element.id),
+-    ['coop-help', 'coop-settings-open', 'coop-home-paused'],
++    ['coop-help', 'coop-settings-open', 'coop-quick-sound', 'coop-home-paused'],
+   );
+-  for (const id of ['coop-resume', 'coop-retry', 'coop-discovery-paused', 'coop-settings-open'])
++  assert.equal(page.$('coop-quick-sound').parentNode, core);
++  for (const id of [
++    'coop-resume',
++    'coop-retry',
++    'coop-discovery-paused',
++    'coop-settings-open',
++    'coop-quick-sound',
++  ])
+     assert.equal(visible(page.$(id)), true, `${id} is visible from Pause.`);
+   assert.equal(page.$('coop-help-toggle').textContent.trim(), 'How to play and controls');
+   assert.equal(page.$('coop-home-paused').textContent, 'Home');
+ 
+   const paused = page.$('coop-clock').textContent;
++  page.$('coop-quick-sound').click();
++  page.tick(120);
++  assert.equal(page.$('coop-quick-sound').parentNode, core);
++  assert.equal(page.$('coop-quick-sound').textContent, 'Sound: on');
++  assert.equal(page.$('coop-quick-sound').getAttribute('aria-pressed'), 'true');
++  assert.equal(page.$('coop-clock').textContent, paused, 'Sound changes cannot resume Team play.');
++
+   page.$('coop-settings-open').click();
+   assert.equal(page.$('coop-options').open, true);
+   page.$('coop-settings-close').click();
+diff --git a/package-lock.json b/package-lock.json
+index f0ccf31e7..7b8b949d1 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "revealline",
+-  "version": "0.134.0",
++  "version": "0.135.0",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "revealline",
+-      "version": "0.134.0",
++      "version": "0.135.0",
+       "dependencies": {
+         "i18next": "26.4.2",
+         "mediabunny": "1.59.1",
+diff --git a/package.json b/package.json
+index 666de3cf7..2d8b46e4e 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "revealline",
+-  "version": "0.134.0",
++  "version": "0.135.0",
+   "private": true,
+   "type": "module",
+   "description": "Configurable territory-capture game and authoring playground",

@@ -1,0 +1,53 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-63",
+  "repository": "mekhovov/revealline-archive-63",
+  "infrastructureCommit": "2c12b49492cc5029e8eb0d1009c0e7875d314451",
+  "infrastructureTree": "2bee66f1d6b2e3b0d44189edd03836423a874088",
+  "deploymentId": 6618242102,
+  "deploymentStatusId": 18737724240,
+  "workflowRunId": 35884201254,
+  "versions": [
+    "v0.94.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-63-v0940/native/observation.json",
+      "bytes": 1531,
+      "sha256": "a917c26ffbea4775c094b8025464a59577766dbb53906bd181a5b8437f69645e"
+    },
+    {
+      "path": "evidence/archive-63-v0940/http-report.json",
+      "bytes": 809,
+      "sha256": "a711c7133d8682e85aff647f8b03c5d73210e46a08e1722bf594ab205433a49a"
+    },
+    {
+      "path": "evidence/archive-63-v0940/http-results.jsonl",
+      "bytes": 847826,
+      "sha256": "95ac2cd0cc32d2a38fafbc317927636629447d765b4d9dc6eafae0d605f8c56a"
+    },
+    {
+      "path": "evidence/archive-63-v0940/http-attempts.jsonl",
+      "bytes": 848388,
+      "sha256": "12ee89f4d278277188cbefdf08456972124efd57ee03c897f83308ca984707c0"
+    }
+  ],
+  "inventory": {
+    "files": 1120,
+    "bytes": 594889291,
+    "attempts": 1121,
+    "failedAttempts": 1,
+    "retriedFiles": 1,
+    "finalFailures": 0,
+    "skipped": 0,
+    "expectedInventorySha256": "863bdebdef3ea1f28c16d8fb9d668608f859837cb40c9ace9c55fc97e2cdc91c"
+  },
+  "scope": "Complete immutable Archive63 byte inventory plus bounded root, preserved Solo shell, Team setup, and one Team start availability.",
+  "limits": [
+    "The first HTTP attempt for releases/v0.94.0/site/optional/external-chapters/original-fpv-pressure-external/pack.json returned 503 and recovered on attempt two; it is retained, not rewritten as zero retries.",
+    "No clean-console claim was made by the native check.",
+    "Extended gameplay, win/next progression, responsive/device coverage, offline preparation and recovery, audio, timing, and balance remain waived or deferred and are not passed."
+  ],
+  "approval": "Selector admission may preserve the already published v0.94.0 build at its exact Archive63 route without expanding the bounded acceptance scope."
+}

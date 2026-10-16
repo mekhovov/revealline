@@ -1,0 +1,180 @@
+{
+  "format": "FPVFestivalBrowserProofComparison.v1",
+  "browserSHA256": "2d39b5a596346af081a81db2009ab79dfce39d385f512f40af1507ac3c7d202d",
+  "browserChecks": 311,
+  "clockScope": [
+    "Eight courses/sixteen proofs on the identified admitted host; no default catalogue addition.",
+    "Complete identified historical admitted runtime; no source overlay. The qualifier proof closure matches exact admitted modules. No current-main whole-host, hardware/offline/FPS claim.",
+    "Controlled RAF delivers200ms per pulse to actual1x Watch; real performance clock, visibility and pause guards remain unchanged. No state/tick/completion assignment. Native-clock launch and unmodified standalone entry are distinct manual steps."
+  ],
+  "rows": [
+    {
+      "course": "festival-grounds-01",
+      "mode": "self-level",
+      "ticks": 3464,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-01",
+      "mode": "acro",
+      "ticks": 3480,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-02",
+      "mode": "self-level",
+      "ticks": 2502,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-02",
+      "mode": "acro",
+      "ticks": 2520,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-03",
+      "mode": "self-level",
+      "ticks": 3727,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-03",
+      "mode": "acro",
+      "ticks": 3761,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-04",
+      "mode": "self-level",
+      "ticks": 4969,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-04",
+      "mode": "acro",
+      "ticks": 5010,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-05",
+      "mode": "self-level",
+      "ticks": 1415,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-05",
+      "mode": "acro",
+      "ticks": 1432,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-06",
+      "mode": "self-level",
+      "ticks": 2445,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-06",
+      "mode": "acro",
+      "ticks": 2467,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-07",
+      "mode": "self-level",
+      "ticks": 2063,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-07",
+      "mode": "acro",
+      "ticks": 2077,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-08",
+      "mode": "self-level",
+      "ticks": 7043,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    },
+    {
+      "course": "festival-grounds-08",
+      "mode": "acro",
+      "ticks": 7070,
+      "exactTicks": true,
+      "exactIdentity": true,
+      "exactLanding": true,
+      "zeroContacts": true
+    }
+  ],
+  "errors": [],
+  "warnings": [],
+  "diagnosticsDropped": 0,
+  "owners": [
+    {
+      "createdRenderers": 1,
+      "resources": [
+        {
+          "disposed": true,
+          "registered": {
+            "geometries": 0,
+            "materials": 0,
+            "textures": 0
+          },
+          "programs": 0,
+          "contextLost": true
+        }
+      ]
+    },
+    {
+      "createdRenderers": 0,
+      "resources": []
+    }
+  ]
+}

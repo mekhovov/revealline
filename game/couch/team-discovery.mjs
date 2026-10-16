@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage, localizedAttribute } from '../i18n/index.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { attachTeamDiscoveryPictures } from './team-discovery-pictures.mjs';
 
@@ -53,6 +54,7 @@ export function attachTeamDiscovery({
             selected = key;
           },
           onViewChange,
+          onReturnFocus: (target) => revealFocused(visit, target, () => !pictures?.primary()),
         })
       : null;
   const primary = () => pictures?.primary() ?? (operation ? cancel : (available()?.button ?? back));
@@ -88,7 +90,7 @@ export function attachTeamDiscovery({
     if (!live(pending.owner) || operation) return true;
     controls(pending.owner, false);
     if (announce && live(pending.owner) && !operation)
-      describe(pending.owner, 'Preparation cancelled. Your current attempt is unchanged.');
+      describe(pending.owner, t('interface:preparationCancelledYourCurrentAttemptIsUnchanged'));
     if (restore) restoreCard(pending.owner, pending.button);
     return true;
   }
@@ -102,7 +104,11 @@ export function attachTeamDiscovery({
     try {
       controls(owner, true);
       if (!current()) return;
-      describe(owner, `Preparing ${row.title}… Your current attempt stays available.`, 'preparing');
+      describe(
+        owner,
+        () => t('interface:team.preparingAttemptDestination', { mission: row.title }),
+        'preparing',
+      );
       if (!current()) return;
       cancel.focus({ preventScroll: true });
       if (!current()) return;
@@ -128,7 +134,7 @@ export function attachTeamDiscovery({
         close({ restore: false });
       } else {
         controls(owner, false);
-        describe(owner, 'Your current attempt is unchanged. Choose an arena when ready.');
+        describe(owner, t('interface:yourCurrentAttemptIsUnchangedChooseAnArenaWhenReady'));
         restoreCard(owner, button);
       }
     } catch (error) {
@@ -138,8 +144,8 @@ export function attachTeamDiscovery({
       describe(
         owner,
         error?.name === 'AbortError'
-          ? 'Preparation cancelled. Your current attempt is unchanged.'
-          : `Could not prepare ${row.title}. Your current attempt is unchanged. Try Play again.`,
+          ? t('interface:preparationCancelledYourCurrentAttemptIsUnchanged')
+          : () => t('interface:team.arenaPreparationFailed', { mission: row.title }),
         error?.name === 'AbortError' ? 'ready' : 'error',
       );
       restoreCard(owner, button);
@@ -147,26 +153,32 @@ export function attachTeamDiscovery({
   }
   function populate(owner) {
     const rows = getEntries();
-    if (!Array.isArray(rows)) throw new TypeError('Team arenas are unavailable.');
+    if (!Array.isArray(rows)) throw new TypeError(t('interface:teamArenasAreUnavailable'));
     const keys = new Set(),
       packs = [];
     const cards = rows.map((row) => {
       if (!row || typeof row.key !== 'string' || keys.has(row.key))
-        throw new TypeError('Team arena identities are unavailable.');
+        throw new TypeError(t('interface:teamArenaIdentitiesAreUnavailable'));
       keys.add(row.key);
       const card = document.createElement('article');
       card.className = 'team-discovery-card field-kit-panel';
       const pack = document.createElement('p');
       pack.className = 'eyebrow';
-      pack.textContent = `${row.packName} · ${row.sourceLabel}`;
+      localizedText(pack, () => `${row.packName} · ${row.sourceLabel}`);
       const title = document.createElement('h3');
-      title.textContent = row.title;
+      localizedText(title, () => row.title);
       const goal = document.createElement('p');
-      goal.textContent = row.goal;
+      localizedText(goal, () => row.goal);
       const button = document.createElement('button');
       button.type = 'button';
-      button.textContent = `Play ${row.title}`;
-      button.setAttribute('aria-label', `Play ${row.title} · ${row.packName} · ${row.sourceLabel}`);
+      localizedText(button, () => t('interface:team.playMission', { mission: row.title }));
+      localizedAttribute(button, 'aria-label', () =>
+        t('interface:team.playMissionLabel', {
+          mission: row.title,
+          campaign: row.packName,
+          source: row.sourceLabel,
+        }),
+      );
       button.className = 'field-kit-primary team-discovery-play';
       button.onclick = () => play(owner, row, button);
       card.append(pack, title, goal);
@@ -191,11 +203,11 @@ export function attachTeamDiscovery({
       const option = (value, label) => {
         const item = document.createElement('option');
         item.value = value;
-        item.textContent = label;
+        localizedText(item, () => label);
         return item;
       };
       campaign.replaceChildren(
-        option('', 'All campaigns and packs'),
+        option('', localizedMessage('interface:allCampaignsAndPacks')),
         ...packs.map((pack, index) => {
           const row = cards.find((card) => card.row.pack === pack).row;
           return option(String(index), `${row.packName} · ${row.sourceLabel}`);
@@ -211,8 +223,8 @@ export function attachTeamDiscovery({
     describe(
       owner,
       cards.length
-        ? 'Choose an arena. Your current attempt stays available until the new arena is ready.'
-        : 'No compatible Team arenas are available. Back keeps your current setup.',
+        ? t('interface:chooseAnArenaYourCurrentAttemptStaysAvailableUntilThe')
+        : t('interface:noCompatibleTeamArenasAreAvailableBackKeepsYourCurrent'),
     );
     controls(owner, false);
   }
@@ -244,13 +256,46 @@ export function attachTeamDiscovery({
     describe(
       owner,
       count
-        ? `${count} of ${owner.cards.length} Team missions. Play directly; your current attempt stays available.`
-        : 'No matching Team missions. Clear Search or choose All campaigns and packs. Back keeps your current attempt.',
+        ? t('interface:team.filteredMissions', { count, total: owner.cards.length })
+        : t('interface:noMatchingTeamMissionsClearSearchOrChooseAllCampaigns'),
     );
     onViewChange();
   }
   if (search) search.oninput = filterCards;
   if (campaign) campaign.onchange = filterCards;
+  function revealFocused(owner, target, isTargetCurrent) {
+    const current = () =>
+      live(owner) &&
+      !operation &&
+      foreground() &&
+      document.activeElement === target &&
+      dialog.contains(target) &&
+      isTargetCurrent() &&
+      visible(target);
+    if (!current()) return;
+    const rect = target.getBoundingClientRect(),
+      bounds = dialog.getBoundingClientRect(),
+      width = document.documentElement.clientWidth || document.defaultView?.innerWidth,
+      height = document.documentElement.clientHeight || document.defaultView?.innerHeight,
+      left = Math.max(0, bounds.left + dialog.clientLeft),
+      top = Math.max(0, bounds.top + dialog.clientTop),
+      right = Math.min(width, bounds.left + dialog.clientLeft + dialog.clientWidth),
+      bottom = Math.min(height, bounds.top + dialog.clientTop + dialog.clientHeight);
+    if (
+      ![rect.left, rect.top, rect.right, rect.bottom, left, top, right, bottom].every(
+        Number.isFinite,
+      ) ||
+      rect.width <= 0 ||
+      rect.height <= 0 ||
+      right <= left ||
+      bottom <= top ||
+      (rect.left >= left && rect.right <= right && rect.top >= top && rect.bottom <= bottom)
+    )
+      return;
+    // Focus and layout callbacks may publish a newer visit or destination.
+    if (current())
+      target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+  }
   function open(opener = document.activeElement) {
     if (disposed || dialog.open || visit || !foreground() || !canOpen()) return false;
     const owner = { opener, cards: [], restore: true, sequence: ++visitSequence };
@@ -263,15 +308,23 @@ export function attachTeamDiscovery({
       } catch {
         if (!owns(owner)) return false;
         list.replaceChildren();
-        describe(owner, 'Team arenas are unavailable. Back keeps your current attempt.', 'error');
+        describe(
+          owner,
+          t('interface:teamArenasAreUnavailableBackKeepsYourCurrentAttempt'),
+          'error',
+        );
         controls(owner, false);
       }
       if (!owns(owner)) return false;
       dialog.showModal();
       if (!live(owner)) return false;
-      const active = document.activeElement;
+      const active = document.activeElement,
+        target = primary();
       if (unclaimed(active) || active === opener || active === dialog || active === back)
-        primary().focus({ preventScroll: true });
+        target.focus({ preventScroll: true });
+      // Native showModal may already have focused this action. Reveal it without
+      // refocusing, but only while the same visit still owns that focus.
+      revealFocused(owner, target, () => primary() === target);
       if (live(owner)) pictures?.start();
       return live(owner);
     } catch {

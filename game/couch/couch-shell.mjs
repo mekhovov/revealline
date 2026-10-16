@@ -1,15 +1,34 @@
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
+import { gameplayStatsLabel } from '../ui/gameplay-copy.mjs';
+import { contentText } from '../i18n/content.mjs';
+import { t, localizedText } from '../i18n/index.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
+import { prepareNativeMenus } from '../ui/native-menus.mjs';
+import { commitMenuRetune } from '../ui/menu-retune.mjs';
 import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
+import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
 
 const ABILITY = Object.freeze({
-  scan: 'Scan',
-  shield: 'Shield',
-  'stun-field': 'Stun field',
-  'slow-field': 'Slow field',
-  'impact-pulse': 'Impact pulse',
+  get scan() {
+    return t('interface:scan');
+  },
+  get shield() {
+    return t('interface:shield');
+  },
+  get 'stun-field'() {
+    return t('interface:stunField');
+  },
+  get 'slow-field'() {
+    return t('interface:slowField');
+  },
+  get 'impact-pulse'() {
+    return t('interface:impactPulse');
+  },
 });
 const SCREENS = Object.freeze({
   main: ['race-main', 'race-start'],
@@ -28,10 +47,14 @@ export function couchEquipment(run) {
     action: actions.manualAbility,
     pickup: actions.manualPickup && recipe.capacity > 0 && run.supplies.length > 0,
     boost: actions.manualBoost,
-    label: ABILITY[recipe.primitive] || 'Ability',
-    description: actions.manualAbility
-      ? recipe.description
-      : 'Directions only. Pickups activate on contact.',
+    get label() {
+      return ABILITY[recipe.primitive] || t('interface:ability');
+    },
+    get description() {
+      return actions.manualAbility
+        ? contentText(recipe, 'description')
+        : t('interface:directionsOnlyPickupsActivateOnContact');
+    },
   });
 }
 
@@ -41,12 +64,18 @@ export function createCouchShell({
   coarse = false,
   onTransition = () => {},
   onNewMatch = () => {},
+  onRetry = () => {},
   getDepartureState = () => null,
   onLeaveRequest = () => {},
   getSoloReturnToken = () => null,
-  authoredRoute = null,
+  authoredRoute = 'legacy',
   getSoloJourneyRoute = () => null,
+  getTeamJourneyRoute = () => null,
+  onMissions = null,
+  controllerNeedsTouch = () => false,
+  getSceneContext = () => ({}),
 } = {}) {
+  const nativeMenu = prepareNativeMenus({ document: doc, mode: 'versus', getSceneContext });
   const $ = (id) => doc.getElementById(id),
     view = doc.defaultView,
     pads = [...doc.querySelectorAll('.race-pad')],
@@ -56,31 +85,84 @@ export function createCouchShell({
     removers = [],
     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
+  const secondaryDestinations = Object.freeze({
+    about: $('race-more-about').getAttribute('href'),
+    releases: $('race-release-explorer').href || $('race-release-explorer').getAttribute('href'),
+  });
+  const isJourney = isAuthoredJourneyRouteId(authoredRoute);
+  const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
+  const libraryLabel = () => (isJourney ? t('interface:legacyLibrary') : t('interface:newJourney'));
+  $('race-library-switch').setAttribute(
+    'href',
+    nativeArtReviewURL(libraryHref, view?.location?.href ?? globalThis.location?.href),
+  );
+  localizedText($('race-library-switch'), () =>
+    onMissions ? t('interface:allMissions') : libraryLabel(),
+  );
+  doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
-    $('race-solo-return').setAttribute('href', authoredDestinations.solo);
-    $('race-coop').setAttribute('href', authoredDestinations.team);
+    $('race-solo-return').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.solo,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
+    $('race-coop').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.team,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
   }
-  mountModeChoices({
+  const modeChoices = mountModeChoices({
     root: $('race-mode-choices'),
+    pause: () => onTransition({ from: screen, to: screen }),
     current: 'versus',
-    separateTeam: !!authoredDestinations,
+    separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
+  });
+  nativeMenu?.refreshLandingNavigation();
+  const pauseMenu = createPauseMenu({
+    document: doc,
+    root: $('race-main').querySelector('.race-menu-actions'),
+    resume: $('race-start'),
+    missions: [
+      { element: $('race-retry'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('race-journey-skip'), icon: 'skip' },
+      { element: $('race-journey-random'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('race-chapters'), icon: 'missions' },
+    ],
+    audio: [{ element: $('race-quick-sound'), icon: 'sound' }, pauseMusicAction(doc, 'race')],
+    config: [
+      { element: $('race-options'), icon: 'settings' },
+      { element: $('versus-landing-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('race-home'),
+    notices: [
+      { element: $('race-journey-save-options'), icon: 'info' },
+      { element: $('versus-landing-fullscreen-status') },
+    ],
   });
   let screen = 'main',
     status = null,
     opener = null,
     departure = null,
+    briefingOwner = null,
     destroyed = false,
     revealingResize = false,
     equipment = [];
+  const returnScreens = new Map();
   const setText = (id, text) => {
-    if ($(id).textContent !== text) $(id).textContent = text;
+    localizedText($(id), text);
   };
   const listen = (element, type, fn) => {
     element.addEventListener(type, fn);
     removers.push(() => element.removeEventListener(type, fn));
   };
   function primary() {
+    if (modeChoices.simulatorRoot()) return modeChoices.simulatorPrimary();
     if (screen === 'options' && settings.primary()) return settings.primary();
     if (screen === 'main' && $('race-start').disabled) {
       const retry = $('race-chapter-retry');
@@ -114,8 +196,21 @@ export function createCouchShell({
     element.focus({ preventScroll: true });
     // The screen is installed first. Reveal its actual focused action without
     // letting a synchronous focus callback scroll a replacement/background view.
-    if (eligible() && doc.activeElement === element)
-      element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+    if (eligible() && doc.activeElement === element) {
+      // Keep the adjacent save-recovery shortcut in view with primary play.
+      // This only changes a deliberate menu transition's scroll, never flight
+      // geometry or focus in response to a background storage status change.
+      const warning = $('race-journey-save-options');
+      const block =
+        screen === 'main' &&
+        (status === 'paused' || status === 'finished') &&
+        element === $('race-start') &&
+        warning &&
+        !warning.hidden
+          ? 'center'
+          : 'nearest';
+      element.scrollIntoView({ block, inline: 'nearest', behavior: 'auto' });
+    }
   }
   function revealResizedAction(event) {
     if (revealingResize || event.target !== view) return;
@@ -171,7 +266,9 @@ export function createCouchShell({
     $('race-shell').inert = running;
     $('race-hud').hidden = !running;
     $('race-pause').disabled = !running;
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
+    setText('race-pause', () =>
+      screen === 'review' ? t('interface:results2') : t('common:actions.pause'),
+    );
     $('race-boards').hidden = !running;
     $('race-boards').inert = !running;
     doc.body.classList.toggle('race-focus', running);
@@ -184,58 +281,89 @@ export function createCouchShell({
   function renderPads() {
     for (let i = 0; i < 2; i++) {
       const wanted =
-        preferences[i] === 'always' || (preferences[i] === 'auto' && modality[i] === 'touch');
+        preferences[i] === 'always' ||
+        (preferences[i] === 'auto' &&
+          (modality[i] === 'touch' || (coarse && controllerNeedsTouch(i))));
       // A held physical control may not vanish mid-round. Collapse at pause,
       // after the host has called its existing clearPhysical lifecycle guard.
       shown[i] = status === 'running' && (wanted || shown[i]);
       pads[i].hidden = !shown[i];
       pads[i].inert = !shown[i];
       pads[i].closest('.racer').dataset.touch = String(shown[i]);
-      const device =
+      const device = () =>
         modality[i] === 'controller'
-          ? 'Controller'
+          ? t('interface:controller')
           : modality[i] === 'pointer'
-            ? 'On-screen controls'
+            ? t('interface:onScreenControls')
             : modality[i] === 'touch'
-              ? 'Touch'
+              ? t('interface:touch')
               : i === 0
-                ? 'W A S D'
-                : 'Arrow keys';
-      setText(`race-seat-${i}`, device);
+                ? t('interface:wASD')
+                : t('interface:arrowKeys');
+      setText(`race-seat-${i}`, () => device());
       setText(
         `racer-input-${i}`,
-        `${device} · ${status === 'running' && shown[i] && !wanted ? 'Touch stays visible until pause' : status === 'finished' ? 'Results for Settings' : 'Pause for Settings'}`,
+        () =>
+          `${device()} · ${status === 'running' && shown[i] && !wanted ? t('interface:touchStaysVisibleUntilPause') : status === 'finished' ? t('interface:resultsForSettings') : t('interface:pauseForSettings')}`,
       );
       for (const button of pads[i].querySelectorAll('button')) {
         const kind = button.dataset.action;
         button.hidden = !!kind && !equipment[i]?.[kind];
         button.disabled = status !== 'running' || button.hidden;
-        if (kind === 'action') button.textContent = equipment[i]?.label || 'Ability';
+        if (kind === 'action')
+          localizedText(button, () => contentText(equipment[i], 'label') || t('interface:ability'));
       }
     }
   }
   function show(next, { restore = null, remember = false, restoreFocus = true } = {}) {
     if (destroyed || status === 'running' || (!Object.hasOwn(SCREENS, next) && next !== 'review'))
       return;
-    if (remember) opener = remember === true ? doc.activeElement : remember;
+    if (remember) {
+      opener = remember === true ? doc.activeElement : remember;
+      returnScreens.set(next, { screen, opener });
+    }
+    const previous = screen;
     onTransition({ from: screen, to: next });
     screen = next;
     renderScreens();
     renderPads();
     if (restoreFocus) focus(restore || primary());
+    if (
+      status === 'ready' &&
+      ((previous === 'main' && next === 'setup') || (previous === 'setup' && next === 'main'))
+    )
+      commitMenuRetune($(SCREENS[previous][0]), $(SCREENS[next][0]));
   }
   function back() {
+    if (modeChoices.simulatorRoot()) {
+      modeChoices.closeSimulator();
+      return;
+    }
+    if (modeChoices.closeMore()) return;
     departure = null;
+    const more = $('race-more');
+    if (more.open && actionCurrent($('race-more-toggle'))()) {
+      more.open = false;
+      $('race-more-toggle').focus({ preventScroll: true });
+      return;
+    }
     if (screen === 'main') {
       onTransition({ from: screen, to: screen, back: true });
       return focus();
     }
-    const target = opener;
+    const previous = returnScreens.get(screen);
+    returnScreens.delete(screen);
+    const target = previous?.opener ?? opener;
     opener = null;
-    show('main', { restore: target });
+    const returnScreen = previous?.screen ?? 'main';
+    show(returnScreen, { restore: target });
   }
   function setup() {
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
+  }
+  function retry() {
+    if (status !== 'paused') return;
+    onRetry();
   }
   const foreground = () => !doc.hidden && doc.hasFocus?.() !== false;
   function soloReturnToken() {
@@ -249,15 +377,34 @@ export function createCouchShell({
   function soloJourneyRoute() {
     try {
       const id = getSoloJourneyRoute();
-      return isAuthoredJourneyRouteId(id) ? id : null;
+      return id === 'legacy' || isAuthoredJourneyRouteId(id) ? id : null;
     } catch {
       return null;
     }
   }
-  const destinationHref = (kind, token, routeId) =>
-    authoredDestinations?.[kind] ||
-    (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
-    (kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind]);
+  function teamJourneyRoute() {
+    try {
+      const id = getTeamJourneyRoute();
+      return isMissionLibrarySourceJourney(id, 'team') ? id : null;
+    } catch {
+      return null;
+    }
+  }
+  const destinationHref = (kind, token, routeId, teamRouteId = teamJourneyRoute()) =>
+    nativeArtReviewURL(
+      (kind === 'library' && libraryHref) ||
+        (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
+        (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
+        (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
+        (kind === 'team' &&
+          teamRouteId &&
+          `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
+        secondaryDestinations[kind] ||
+        (isJourney && authoredDestinations?.[kind]) ||
+        authoredDestinations?.[kind] ||
+        DESTINATIONS[kind],
+      view?.location?.href ?? globalThis.location?.href,
+    );
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -266,6 +413,7 @@ export function createCouchShell({
       current?.match === ticket.match &&
       current.generation === ticket.generation &&
       soloJourneyRoute() === ticket.journeyRouteId &&
+      teamJourneyRoute() === ticket.teamJourneyRouteId &&
       current.match.status === 'paused'
     );
   }
@@ -274,8 +422,11 @@ export function createCouchShell({
     const target = departure.opener;
     departure = null;
     opener = null;
-    if (screen === 'leave')
-      show('main', { restore: target, restoreFocus: restore && foreground() });
+    if (screen === 'leave') {
+      const previous = returnScreens.get('leave');
+      returnScreens.delete('leave');
+      show(previous?.screen ?? 'main', { restore: target, restoreFocus: restore && foreground() });
+    }
   }
   function requestLeave(kind, element, event) {
     if (
@@ -287,12 +438,28 @@ export function createCouchShell({
       (event.button !== undefined && event.button !== 0)
     )
       return;
+    if (kind === 'library' && onMissions) {
+      event.preventDefault();
+      if (['main', 'options'].includes(screen) && actionCurrent(element)())
+        return onMissions(element);
+      return;
+    }
     // Fixed routes are owned here; no target is accepted from a URL or control.
-    const returnToken = kind === 'solo' && !authoredDestinations ? soloReturnToken() : null;
+    const returnToken = kind === 'solo' ? soloReturnToken() : null;
     const journeyRouteId = soloJourneyRoute();
-    element.setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
+    const teamJourneyRouteId = teamJourneyRoute();
+    element.setAttribute(
+      'href',
+      destinationHref(kind, returnToken, journeyRouteId, teamJourneyRouteId),
+    );
     const before = getDepartureState();
-    if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
+    if (
+      destroyed ||
+      departure ||
+      !['main', 'options'].includes(screen) ||
+      !actionCurrent(element)() ||
+      !before?.match
+    ) {
       event.preventDefault();
       return;
     }
@@ -313,30 +480,48 @@ export function createCouchShell({
       kind,
       returnToken,
       journeyRouteId,
+      teamJourneyRouteId,
       opener: element,
       match: current.match,
       generation: current.generation,
     };
     departure = ticket;
-    setText('race-leave-title', kind === 'team' ? 'Go to Couch Team?' : 'Return to Solo?');
-    setText(
-      'race-leave-copy',
-      'This Versus attempt exists only on this page and is not saved. Stay keeps both boards paused. Leaving discards this attempt.' +
-        (authoredDestinations
-          ? kind === 'team'
-            ? ' Team opens its separate arenas.'
-            : ' Solo opens its own Journey progress; Continue remains explicit.'
-          : ''),
+    setText('race-leave-title', () =>
+      kind === 'library'
+        ? t('interface:couch.openLibrary', { library: libraryLabel() })
+        : kind === 'team'
+          ? t('interface:goToCouchTeam')
+          : kind === 'about'
+            ? t('common:navigation.aboutCredits')
+            : kind === 'releases'
+              ? t('common:navigation.releases')
+              : t('interface:returnToSolo4'),
     );
-    setText(
-      'race-leave',
-      kind === 'team' ? 'Discard and go to Team' : 'Discard and return to Solo',
+    setText('race-leave-copy', () =>
+      isJourney && kind === 'team'
+        ? t('interface:couch.leaveAttemptForTeam')
+        : isJourney && kind === 'solo'
+          ? t('interface:couch.leaveAttemptForSolo')
+          : t('interface:couch.leaveAttempt'),
     );
-    $('race-leave').setAttribute('href', destinationHref(kind, returnToken, journeyRouteId));
+    setText('race-leave', () =>
+      kind === 'library'
+        ? t('interface:couch.discardOpenLibrary', { library: libraryLabel() })
+        : kind === 'team'
+          ? t('interface:discardAndGoToTeam')
+          : ['about', 'releases'].includes(kind)
+            ? t('interface:discardAndLeave')
+            : t('interface:discardAndReturnToSolo'),
+    );
+    $('race-leave').setAttribute(
+      'href',
+      destinationHref(kind, returnToken, journeyRouteId, teamJourneyRouteId),
+    );
     show('leave', { remember: element });
     if (!departureCurrent(ticket)) cancelDeparture();
   }
   listen($('race-focus'), 'click', setup);
+  listen($('race-retry'), 'click', retry);
   listen($('race-review'), 'click', () => {
     if (status === 'finished') show('review', { remember: $('race-review') });
   });
@@ -358,7 +543,12 @@ export function createCouchShell({
   });
   for (const [id, kind] of [
     ['race-solo-return', 'solo'],
+    ['race-home', 'solo'],
+    ['race-more-home', 'solo'],
+    ['race-more-about', 'about'],
+    ['race-release-explorer', 'releases'],
     ['race-coop', 'team'],
+    ['race-library-switch', 'library'],
   ])
     listen($(id), 'click', (event) => requestLeave(kind, $(id), event));
   listen($('race-leave'), 'click', (event) => {
@@ -370,7 +560,12 @@ export function createCouchShell({
     }
     $('race-leave').setAttribute(
       'href',
-      destinationHref(ticket.kind, ticket.returnToken, ticket.journeyRouteId),
+      destinationHref(
+        ticket.kind,
+        ticket.returnToken,
+        ticket.journeyRouteId,
+        ticket.teamJourneyRouteId,
+      ),
     );
     // Preserve native anchor activation. If the browser cannot leave, the
     // original paused attempt stays intact and another decision remains explicit.
@@ -423,6 +618,8 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    $('race-briefing').hidden = status !== 'ready' || contentBusy || match !== briefingOwner;
+    doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
     if (status !== previous) {
@@ -432,57 +629,87 @@ export function createCouchShell({
     }
     const series = format === 'first-to-two';
     setText('race-summary', summary);
-    setText(
-      'race-format-note',
-      `${series ? 'First to two round wins.' : 'One race. Choose First to two in Race setup for a longer match.'} Couch races do not change your solo progress.`,
+    setText('race-format-note', () =>
+      series ? t('interface:couch.seriesNote') : t('interface:couch.singleRaceNote'),
     );
     setText(
       'race-format-help',
-      `First clear wins the ${series ? 'round' : 'race'}. ${match.limitTicks === null ? 'No race countdown. If both flights end, coverage, then lives, then score decide.' : 'At the time limit: coverage, then lives, then score decide.'} ${series ? 'First to two round wins takes the match. Draws award no round win.' : 'One race ends after this result. Rematch plays the same mission again.'}`,
+      () =>
+        `${series ? t('interface:couch.firstClearRound') : t('interface:couch.firstClearRace')} ${match.limitTicks === null ? t('interface:noRaceCountdownIfBothFlightsEndCoverageThenLives') : t('interface:atTheTimeLimitCoverageThenLivesThenScoreDecide')} ${series ? t('interface:firstToTwoRoundWinsTakesTheMatchDrawsAward') : t('interface:oneRaceEndsAfterThisResultRematchPlaysTheSame')}`,
     );
-    setText(
-      'race-title',
-      contentBusy
-        ? 'Loading the shared picture…'
-        : status === 'paused'
-          ? 'Both boards paused.'
-          : status === 'finished'
-            ? !series
-              ? 'Race complete.'
-              : won.some((n) => n >= 2)
-                ? 'Match complete.'
-                : 'Round complete.'
-            : 'Two boards. One race.',
-    );
+    if (status === 'ready' && nativeMenu) nativeMenu.showBrandTitle();
+    else {
+      nativeMenu?.hideBrandTitle();
+      setText('race-title', () =>
+        contentBusy
+          ? t('interface:loadingTheSharedPicture')
+          : status === 'paused'
+            ? t('interface:paused3')
+            : status === 'finished'
+              ? !series
+                ? t('interface:raceComplete')
+                : won.some((n) => n >= 2)
+                  ? t('interface:matchComplete')
+                  : t('interface:roundComplete')
+              : 'FPV / LINE',
+      );
+    }
     $('race-review').hidden = status !== 'finished';
+    const paused = status === 'paused';
+    $('race-retry').hidden = !paused;
+    $('race-retry').disabled = !paused || contentBusy;
+    $('race-home').hidden = !paused;
+    $('race-optional-setup').hidden = paused;
+    setText('race-chapters', () =>
+      t(paused ? 'interface:nativeMenu.pauseChoose' : 'interface:nativeMenu.missions'),
+    );
+    pauseMenu?.setActive(paused);
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
-    $('race-pause').textContent = screen === 'review' ? 'Results' : 'Pause';
-    $('race-focus').textContent = status === 'ready' ? 'Race setup' : 'New match · setup';
+    // Do not replace the native click target's content on every flight frame.
+    setText('race-pause', () =>
+      screen === 'review' ? t('interface:results2') : t('common:actions.pause'),
+    );
+    localizedText($('race-focus'), () =>
+      status === 'ready'
+        ? t('interface:couch.advancedSetup')
+        : t('interface:couch.newMatchOptions'),
+    );
     $('race-class-field').hidden = !equipment[0].action;
     $('race-class').disabled = !equipment[0].action || status !== 'ready';
     for (const id of ['race-level', 'race-theme', 'race-turn', 'race-time', 'race-format'])
       $(id).disabled = status !== 'ready';
     $('race-tap-field').hidden = !equipment.some((e) => e.boost);
     $('race-tap').disabled = !equipment.some((e) => e.boost);
-    setText('race-loadout', equipment[0].description);
-    const controller = ['D-pad or left stick: move'];
-    if (equipment[0].action) controller.push(`South: ${equipment[0].label}`);
-    if (equipment[0].pickup) controller.push('West: supply');
-    if (equipment[0].boost) controller.push('right shoulder: hold Boost');
-    controller.push('Menu: pause');
-    setText('race-controller-help', `Controllers · ${controller.join(' · ')}.`);
+    setText('race-loadout', () => equipment[0].description);
+    const controllerHelp = () => {
+      const controller = [t('interface:dPadOrLeftStickMove')];
+      if (equipment[0].action) controller.push(t('gameplay:south', { value1: equipment[0].label }));
+      if (equipment[0].pickup) controller.push(t('interface:westSupply'));
+      if (equipment[0].boost) controller.push(t('interface:couch.controllerBoost'));
+      controller.push(t('interface:menuPause'));
+      return t('gameplay:controllers', { value1: controller.join(' · ') });
+    };
+    setText('race-controller-help', () => controllerHelp());
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i],
-        e = equipment[i],
-        hints = [i === 0 ? 'W A S D: move' : 'Arrow keys: move'];
-      if (e.action) hints.push(`${i === 0 ? 'Q' : 'Enter'}: ${e.label}`);
-      if (e.pickup) hints.push(`${i === 0 ? 'E' : '/'}: supply`);
-      if (e.boost) hints.push(`${i === 0 ? 'left' : 'right'} Shift: hold Boost`);
-      setText(`race-help-${i}`, `${hints.join(' · ')}.`);
+        e = equipment[i];
+      const keyboardHelp = () => {
+        const hints = [i === 0 ? t('interface:wASDMove') : t('interface:arrowKeysMove')];
+        if (e.action) hints.push(`${i === 0 ? 'Q' : t('interface:enter')}: ${e.label}`);
+        if (e.pickup) hints.push(t('gameplay:supply', { value1: i === 0 ? 'E' : '/' }));
+        if (e.boost)
+          hints.push(
+            i === 0 ? t('interface:couch.leftShiftBoost') : t('interface:couch.rightShiftBoost'),
+          );
+        return `${hints.join(' · ')}.`;
+      };
+      setText(`race-help-${i}`, () => keyboardHelp());
       $(`race-result-${i}`).hidden = status !== 'finished';
-      setText(
-        `race-result-${i}`,
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points${series ? ` · ${won[i]} round wins` : ''}`,
+      setText(`race-result-${i}`, () =>
+        [
+          gameplayStatsLabel(run),
+          ...(series ? [t('gameplay:result.roundWins', { count: won[i] })] : []),
+        ].join(' · '),
       );
     }
     renderPads();
@@ -492,22 +719,39 @@ export function createCouchShell({
       focus();
   }
   renderScreens();
+  nativeMenu?.refreshGlobalSettings();
   if (view?.addEventListener) listen(view, 'resize', revealResizedAction);
   return {
     update,
     back,
     setup,
+    briefing(owner, { title, description }) {
+      briefingOwner = owner;
+      setText('race-briefing-title', title);
+      setText('race-briefing-copy', description);
+      $('race-briefing').hidden = status !== 'ready';
+      show('main');
+    },
     observe,
     root,
     primary,
     focus,
     scope: () => screen,
+    refreshGlobalSettings: (options) => nativeMenu?.refreshGlobalSettings(options),
+    openSettings(category = 'data', focusTarget = null) {
+      show('options', { remember: doc.activeElement });
+      settings.select(`race-settings-tab-${category}`, { drill: true });
+      if (focusTarget && !focusTarget.closest('[hidden],[inert]')) focusTarget.focus();
+    },
     controllerHint: () => $('race-controller-help').textContent,
     cancelDeparture,
     destroy() {
       departure = null;
       destroyed = true;
       settings.destroy();
+      modeChoices.dispose();
+      pauseMenu?.destroy();
+      nativeMenu?.destroy();
       for (const remove of removers) remove();
     },
   };

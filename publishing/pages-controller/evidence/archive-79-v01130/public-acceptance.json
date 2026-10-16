@@ -1,0 +1,79 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-79",
+    "repository": "mekhovov/revealline-archive-79",
+    "url": "https://mekhovov.github.io/revealline-archive-79/"
+  },
+  "preservedRelease": {
+    "version": "v0.113.0",
+    "sourceRevision": "0395ddbda83d9903c7127714d6d8de8747a5e2ca",
+    "sourceTree": "586d3877e850c0b7da581f56861105db8aa8d41f",
+    "tagObject": "b203b267cffe9467613735cf6678708d7c77e7df",
+    "releaseId": 396407841,
+    "distributionSha256": "1f7bf32729fb9616de0970b5c1d8dbc53c122dea5ac0db56a19544dbacc75811"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "03f8862e4ad54fdf63aea2484a855c81e19ba562",
+    "mergeCommit": "4b37ccf7e5a49c522c63cdd9bc8579910b480c16",
+    "mergeTree": "c1d38d649ddf58305bf82d1dcfa3480f97306bd1",
+    "review": "SAFE",
+    "reviewedExactHead": "03f8862e4ad54fdf63aea2484a855c81e19ba562"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36116373734,
+    "exactMainRun": 36116507134,
+    "buildJob": 108011763543,
+    "deployJob": 108012033497,
+    "receiptsArtifact": {
+      "id": 10855555414,
+      "name": "archive79-verification-receipts",
+      "size_in_bytes": 60763,
+      "digest": "sha256:70e9b2374ce691dc8b88e98be75675bde4f32c695881bc107ed23c09168e6d96"
+    },
+    "pagesArtifact": {
+      "id": 10855645092,
+      "name": "github-pages",
+      "size_in_bytes": 534700108,
+      "digest": "sha256:8f875fdeb630c7316ab546e7c4d8c4133f52c699501d21a5ea499f2c90630044"
+    },
+    "deployment": {
+      "id": 6657384199,
+      "statusId": 18826655513,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-79/",
+      "createdAt": "2026-09-25T09:06:59Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "43c37ddadc9c21a9651df6c4d8d713884d36abf849f6f274a32d2cc943db0667",
+      "receiptSha256": "0d0441f39f7a3f45c5625353d5b0a54a4c13e8dda1a1d09dc11d9fccc246f3de",
+      "zipReceiptSha256": "2c8f740d6b86c1a246ffbb99b6979775e5939521e3a1bbeb54bf113de72dbdb1",
+      "files": 1148,
+      "bytes": 595654470,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1148,
+    "bytes": 595654470,
+    "failures": 0,
+    "transportRetries": 0,
+    "verifiedAt": "2026-09-25T09:10:19Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-79/releases/v0.113.0/site/game/",
+    "observations": [
+      "The archive opened the preserved v0.113.0 title with 91 missions and focused Continue.",
+      "Keyboard Return launched Horizon School / Stepping stones; flight showed the authored 67% target.",
+      "Escape opened PAUSED with focus on Resume, and Return resumed the same mission."
+    ],
+    "scope": "Fresh keyboard browser navigation admission only; does not claim physical touch/controller devices, comprehensive offline use, all modes, or mission balance."
+  },
+  "accepted": true
+}

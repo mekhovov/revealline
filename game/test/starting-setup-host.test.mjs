@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -48,23 +49,32 @@ async function flight(h, { paused = true } = {}) {
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
   h.key('ArrowDown');
-  frames(h, 27);
+  // The current 8.84-cell/s preset leaves a real cut before the next cell
+  // centre; the queued turn must also survive the two later Resume ticks.
+  frames(h, 8);
   h.key('ArrowDown', false);
   h.key('ArrowRight');
   h.frame();
   h.key('ArrowRight', false);
   assert.equal(h.rendered.run.player.queuedDirection, 'right');
   if (paused) {
-    h.$('overlay-menu').click();
-    h.$('shell-packs').click();
+    h.$('pause-button').click();
+    await action(h.$('shell-packs'));
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.equal(h.$('mission-picker-setup').closest('dialog'), h.$('journey-chooser'));
+    // The finite DOM models native <summary> expansion only; the controls and
+    // their setup/replacement handlers remain the actual host implementations.
     h.$('mission-picker-setup').open = true;
+    h.$('mission-picker-setup').emit('toggle');
   }
   h.frame(0);
 }
-function preserved(h, run, before) {
-  frames(h);
+function preserved(h, run, before, { disposed = false } = {}) {
+  // pagehide destroys Phaser and its DOM. Late storage callbacks must remain
+  // harmless, but a real browser never runs another frame on that dead scene.
+  if (!disposed) frames(h);
   assert.equal(h.rendered.run, run);
-  assert.deepEqual(checkpoint(h), before);
+  assert.deepEqual(disposed ? authoritativeCheckpoint(run) : checkpoint(h), before);
   assert.equal(h.rendered.paused, true);
   assert.deepEqual(h.errors, []);
 }
@@ -85,8 +95,8 @@ for (const choice of choices)
       assert.equal(h.storage.getItem(profile), oldProfile);
       const saved = h.storage.getItem(slot),
         session = JSON.parse(saved);
-      assert.equal(verifyReplay(session.replay).match, true);
-      assert.equal(session.replay.options[choice.field], choice.before);
+      assert.equal(verifyReplay(nativeSession(session).replay).match, true);
+      assert.equal(nativeSession(session).replay.options[choice.field], choice.before);
       preserved(h, run, before);
       await change(h, choice.id, choice.after); // repeated native changes do not create another owner
       assert.equal(h.storage.getItem(slot), saved);
@@ -112,8 +122,8 @@ for (const choice of choices)
       assert.equal(h.rendered.paused, true);
       assert.equal(h.storage.getItem(slot), retained);
       assert.equal(loadLibrary(h.storage, profile).library.preferences[choice.field], choice.after);
-      assert.equal(verifyReplay(JSON.parse(retained).replay).match, true);
-      h.$('shell-missions').close();
+      assert.equal(verifyReplay(nativeSession(JSON.parse(retained)).replay).match, true);
+      if (h.$('journey-chooser')?.open) h.$('journey-back').click();
       await action(h.$('continue-saved'));
       h.frame(0);
       assert.deepEqual(checkpoint(h), before);
@@ -199,12 +209,12 @@ for (const method of ['button', 'Escape', 'controller', 'pagehide'])
     await pending;
     assert.equal(h.storage.getItem(slot), raw);
     assert.equal(h.storage.getItem(profile), prefs);
-    preserved(h, run, before);
+    preserved(h, run, before, { disposed: method === 'pagehide' });
     if (method !== 'pagehide') {
       assert.equal(h.$('mission-replace-dialog').open, false);
       assert.equal(h.doc.activeElement.id, 'turn-select');
-      h.$('shell-missions').close();
-      const expected = verifyReplay(JSON.parse(raw).replay).state;
+      h.$('journey-back').click();
+      const expected = verifyReplay(nativeSession(JSON.parse(raw)).replay).state;
       const tick = run.tick;
       h.$('start-button').click();
       h.frame();
@@ -238,7 +248,10 @@ for (const failure of ['quota', 'readback', 'newer-before', 'newer-after'])
     if (failure === 'newer-after') {
       set(slot, get(slot) + ' ');
       await action(h.$('mission-replace-confirm'));
-      assert.match(h.$('mission-replace-status').textContent, /changed.*Prepare again/);
+      assert.match(
+        h.$('mission-replace-status').textContent,
+        /changed.*Prepare fresh attempt again/,
+      );
     }
     assert.match(h.$('mission-replace-status').textContent, /not verified.*may lose/);
     assert.doesNotMatch(
@@ -379,15 +392,36 @@ test('actual controller editor draft/Back and Confirm are separate from fresh-at
   assert.equal(h.storage.getItem(profile), prefs);
   pulse(0);
   pulse(13);
-  set(0, true);
-  h.frame();
+  // Native controller navigation commits on release. Holding Confirm keeps
+  // the editor draft; releasing it owns the asynchronous retention check.
+  const select = h.$('class-select'),
+    onChange = select.onchange;
+  let pendingChange,
+    committed = false;
+  select.onchange = function (...args) {
+    committed = true;
+    return (pendingChange = onChange.apply(this, args));
+  };
+  try {
+    set(0, true);
+    h.frame();
+    frames(h, 8);
+    assert.equal(committed, false, 'Held Confirm cannot commit the editor draft.');
+    assert.equal(h.$('mission-replace-dialog').open, false);
+    assert.equal(select.value, 'scout');
+    assert.equal(h.rendered.run, run);
+    set(0, false);
+    h.frame();
+  } finally {
+    select.onchange = onChange;
+  }
+  assert.equal(committed, true, 'Confirm release must commit the native select.');
+  await pendingChange;
   assert.equal(h.$('mission-replace-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'mission-replace-stay');
   frames(h, 8);
   assert.equal(h.rendered.run, run);
   assert.equal(h.$('mission-replace-dialog').open, true);
-  set(0, false);
-  h.frame();
   await settle(() => !h.$('mission-replace-confirm').disabled);
   pulse(1);
   assert.equal(h.$('mission-replace-dialog').open, false);

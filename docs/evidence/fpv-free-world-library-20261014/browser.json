@@ -1,0 +1,85 @@
+{
+  "worlds": [
+    {
+      "id": "cc0-industrial-yard",
+      "title": "Industrial Service Yard · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-village-green",
+      "title": "Village Green · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-city-plaza",
+      "title": "City Plaza · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-road-lab",
+      "title": "Roadworks Practice Park · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-pine-clearing",
+      "title": "Pine Clearing · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-race-paddock",
+      "title": "Race Paddock · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-castle-court",
+      "title": "Castle Courtyard · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-shipyard",
+      "title": "Dry-dock Shipyard · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-orbital-workshop",
+      "title": "Orbital Workshop · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-ruined-halls",
+      "title": "Ruined Halls · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-rock-grotto",
+      "title": "Rock Grotto · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-woodland-camp",
+      "title": "Woodland Camp · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-skate-plaza",
+      "title": "Skate Plaza · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-frontier-camp",
+      "title": "Frontier Camp · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-platform-garden",
+      "title": "Platform Garden · discovery",
+      "status": "Flight active."
+    },
+    {
+      "id": "cc0-construction-site",
+      "title": "House Construction Site · discovery",
+      "status": "Flight active."
+    }
+  ],
+  "logs": []
+}

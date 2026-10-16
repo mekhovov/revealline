@@ -1,5 +1,6 @@
 import { CLASSES } from './core/index.mjs';
 import { validateScenario, inspectImageDataUrl } from './content.mjs';
+import { t } from './i18n/index.mjs';
 
 export class ScenarioImportError extends TypeError {
   constructor(message, code = 'invalid-scenario', role = null) {
@@ -16,12 +17,13 @@ export class ScenarioImportError extends TypeError {
  */
 export async function browserDecodeImage(dataUrl) {
   const header = inspectImageDataUrl(dataUrl);
-  if (!header.valid) throw new ScenarioImportError(header.errors.join('; '), 'invalid-image');
-  if (typeof globalThis.Image !== 'function')
+  if (!header.valid)
     throw new ScenarioImportError(
-      'Browser image decoding is unavailable. Supply a decoder in non-browser tools.',
-      'decoder-unavailable',
+      t('errors:imports.invalidImage', { detail: header.errors.join('; ') }),
+      'invalid-image',
     );
+  if (typeof globalThis.Image !== 'function')
+    throw new ScenarioImportError(t('errors:imports.decoderUnavailable'), 'decoder-unavailable');
   return new Promise((resolve, reject) => {
     const image = new Image();
     let settled = false;
@@ -39,7 +41,7 @@ export async function browserDecodeImage(dataUrl) {
     };
     image.onerror = () =>
       finish(
-        new ScenarioImportError('The browser could not decode this image.', 'image-decode-failed'),
+        new ScenarioImportError(t('errors:imports.browserDecodeFailed'), 'image-decode-failed'),
       );
     image.onload = async () => {
       try {
@@ -53,23 +55,18 @@ export async function browserDecodeImage(dataUrl) {
           naturalWidth <= 0 ||
           naturalHeight <= 0
         )
-          throw new Error('Image dimensions are empty');
+          throw new Error(t('errors:imports.emptyImageDimensions'));
         finish(null, { naturalWidth, naturalHeight });
       } catch {
         finish(
-          new ScenarioImportError(
-            'The browser could not completely decode this image.',
-            'image-decode-failed',
-          ),
+          new ScenarioImportError(t('errors:imports.completeDecodeFailed'), 'image-decode-failed'),
         );
       }
     };
     try {
       image.src = dataUrl;
     } catch {
-      finish(
-        new ScenarioImportError('The browser could not load this image.', 'image-decode-failed'),
-      );
+      finish(new ScenarioImportError(t('errors:imports.browserLoadFailed'), 'image-decode-failed'));
     }
   });
 }
@@ -89,7 +86,7 @@ export async function prepareScenario(
   const validation = validateScenario(candidate, { classRecipes });
   if (!validation.valid) throw new ScenarioImportError(validation.errors.join('; '));
   if (typeof decodeImage !== 'function')
-    throw new ScenarioImportError('decodeImage must be a function.', 'invalid-decoder');
+    throw new ScenarioImportError(t('errors:imports.invalidDecoder'), 'invalid-decoder');
   const scenario = structuredClone(candidate);
   for (const key of ['walls', 'enemies', 'objectives', 'supplies'])
     if (!Object.hasOwn(scenario.level, key)) scenario.level[key] = [];
@@ -104,8 +101,14 @@ export async function prepareScenario(
       decoded = await decodeImage(item.dataUrl, { role });
     } catch (error) {
       const detail =
-        typeof error?.message === 'string' ? error.message.slice(0, 240) : 'Image decoding failed.';
-      throw new ScenarioImportError(`${role}: ${detail}`, 'image-decode-failed', role);
+        typeof error?.message === 'string'
+          ? error.message.slice(0, 240)
+          : t('errors:imports.decodeFailed');
+      throw new ScenarioImportError(
+        t('errors:imports.roleDecodeFailed', { role, detail }),
+        'image-decode-failed',
+        role,
+      );
     }
     const width = decoded?.naturalWidth,
       height = decoded?.naturalHeight;
@@ -116,7 +119,11 @@ export async function prepareScenario(
       height !== expected.height
     )
       throw new ScenarioImportError(
-        `${role}: decoded dimensions must match its ${expected.width} × ${expected.height} image header.`,
+        t('errors:imports.dimensionsMismatch', {
+          role,
+          width: expected.width,
+          height: expected.height,
+        }),
         'image-dimensions-mismatch',
         role,
       );

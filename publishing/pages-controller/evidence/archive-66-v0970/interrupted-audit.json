@@ -1,0 +1,31 @@
+{
+  "format": "revealline-http-audit-interruption.v1",
+  "status": "FAILED_NO_ACCEPTANCE",
+  "observedAt": "2026-09-24T05:39:20.138549+00:00",
+  "command": "TMPDIR=/Volumes/RevealLineTemp/ux0-publisher/tmp python3 -B http-tools/http_audit.py --run",
+  "exitCode": 1,
+  "cause": "OSError [Errno 28] No space left on device during MetadataBudget.line stream.flush; evidence write failure propagated and no PASS report was created.",
+  "rawEvidence": [
+    {
+      "path": "http/http-20260924T053643Z-a94c6227/http-results.jsonl",
+      "bytes": 859984,
+      "sha256": "960d5bcfcc5d6304df2ef1b13816d1601cefe61a788e785426f30e413ba9f814"
+    },
+    {
+      "path": "http/http-20260924T053643Z-a94c6227/http-attempts.jsonl",
+      "bytes": 860160,
+      "sha256": "3f3c49fbc6bc04c31229cfd9d17d35f7b8c847b882967ddaf8760ce5c4d508d0"
+    }
+  ],
+  "completeResultRows": 1054,
+  "completeAttemptRows": 1054,
+  "partialAttemptTailRetained": true,
+  "completeRowsPassed": 1054,
+  "expectedFiles": 1121,
+  "completeRun": false,
+  "reportExists": false,
+  "initialRamFreeMiB": 76,
+  "immediateAfterFailureRamFreeMiB": 73,
+  "diagnosis": "Transient shared-volume allocation pressure is suspected; exact allocating process is not established.",
+  "response": "Retain original partial logs byte-for-byte; no use as acceptance. Repeat complete fixed inventory with unchanged auditor safeguards after coordinator excludes concurrent RAM-heavy tests."
+}

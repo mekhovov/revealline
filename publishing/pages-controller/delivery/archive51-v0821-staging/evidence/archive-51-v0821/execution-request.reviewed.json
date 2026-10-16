@@ -1,0 +1,48 @@
+{
+  "format": "revealline-archive51-http-request.v1",
+  "reviewed": true,
+  "archiveCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "archiveTree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+  "sourceCheckoutCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "runId": 35747012670,
+  "deploymentId": 6594278854,
+  "deploymentStatusId": 18683226213,
+  "receiptArtifactId": 10703815435,
+  "pins": {
+    "main": {
+      "path": "deployed-main-original.json",
+      "bytes": 358,
+      "sha256": "384471ec29bd8defe5385985818fd5e8ac6c4f81ddc49969e40e4b8097819ee2"
+    },
+    "commit": {
+      "path": "deployed-commit-original.json",
+      "bytes": 2753,
+      "sha256": "4c4506e02e7dfa990fa46becf3e0fd8e764b82fbccd77da821e56296a5e5f26a"
+    },
+    "run": {
+      "path": "deploy-run-original.json",
+      "bytes": 13168,
+      "sha256": "f3caf107280d4df167b6ff98356815e21cf1400c6a17ac37a3b574826552b9a5"
+    },
+    "deployment": {
+      "path": "deployment-actual-original.json",
+      "bytes": 3856,
+      "sha256": "68b6e37fa8de5b5e7d33dab27262a7d145ad9fff26f88d561bba81b8139a0f18"
+    },
+    "statuses": {
+      "path": "deployment-statuses-original.json",
+      "bytes": 6817,
+      "sha256": "fcdc9ea4d671814537e9d08bf58bafafbd6e582858464f27d65d083172e26616"
+    },
+    "artifacts": {
+      "path": "deploy-artifacts-original.json",
+      "bytes": 1454,
+      "sha256": "c7f89c0b137b6de6ebe6578c719dd9363e7699906d0e83b3cb9657580e1dc548"
+    },
+    "receiptZIP": {
+      "path": "deploy-receipts-original.zip",
+      "bytes": 56129,
+      "sha256": "2a21fdc23f35506f827a7c382422675dbaeddd9b368db4dcee3a52e774d030f0"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "format": "revealline-archive-input-independent-review.v1",
+  "status": "PASS_SCOPED",
+  "reviewedAt": "2026-09-22T14:16:07.209986+00:00",
+  "reviewer": "soundtrack_references",
+  "authorshipDisclosure": "Reviewer did not author the archive50 configuration or source; reviewed retained inputs and donor differences independently. No remote operation, extraction or test suite execution performed.",
+  "archiveSource": {
+    "commit": "e3d24919b44987914c1684eb1e8b92da4f61067d",
+    "tree": "ea35972c2f58c202f36e77030d0946451ea360de"
+  },
+  "releaseSource": {
+    "version": "v0.82.0",
+    "tagObject": "eb0f14fd584c8d9180e4bf3a28b1befc1f3bd7ee",
+    "commit": "9b26f2a02fb621a6f023422768e34605ae103739",
+    "tree": "283866fee55d100d68e4770b3330874b743f8583"
+  },
+  "checks": {
+    "fourOriginalAuthorityHashes": true,
+    "tagObjectToCommitToTree": true,
+    "nineOriginalReleaseAssetIDsLengthsDigests": true,
+    "metadataBodiesMatchReleaseAssetDigests": true,
+    "qualificationMatchesAcceptedV082Original": true,
+    "lockedInputsIndependentlyValidated": true,
+    "exactInventoryFiles": 1056,
+    "exactInventoryBytes": 590361506,
+    "largestInventoryFileBytes": 12358446,
+    "prepareVerifyAndVerifyTestsEqualArchive49Donor": true,
+    "workflowDeltaOnlyArchiveAndVersionConstants": true,
+    "hostedPRReceiptZIPCRCAndInventoryMatch": true,
+    "hostedPRTreeMatchesReviewedTree": true
+  },
+  "pins": [
+    {
+      "path": ".cache/worktrees/revealline-archive-50/source-lock.json",
+      "bytes": 1429,
+      "sha256": "809d27a2c4fcfcee9c621bccbb2292d6dc726c9fcb24a6838efd763d46f6a331"
+    },
+    {
+      "path": ".cache/worktrees/revealline-archive-50/input-authority.json",
+      "bytes": 2587,
+      "sha256": "e198e91389b952608e17609123ad865b5ab0a358e6d7ef6e53b0ab7c9c6bc39e"
+    },
+    {
+      "path": ".cache/worktrees/revealline-archive-50/expected-inventory.json",
+      "bytes": 215846,
+      "sha256": "0afa89ef51a67bb5fbdb3b7656da488e76eff0f8cd1005c07bf7a982d83b6a9f"
+    },
+    {
+      "path": ".cache/worktrees/revealline-archive-50/tools/configure_v0820.py",
+      "bytes": 4296,
+      "sha256": "6ce5c47979cdd746e20c672c284f4d54caca6843c11a0f4605fc578a2da90007"
+    },
+    {
+      "path": ".cache/worktrees/revealline-archive-50/tools/prepare.py",
+      "bytes": 4420,
+      "sha256": "d0c66a9f0ff13e5c9e343cec0251da40aebc98849059ffc70da948b3f0fa524f"
+    },
+    {
+      "path": ".cache/worktrees/revealline-archive-50/tools/verify.py",
+      "bytes": 7916,
+      "sha256": "5e9c64fdc246d61b58355a5afebb39de55cfd4a1d1315f7f6d73b7e706281b06"
+    },
+    {
+      "path": ".cache/worktrees/revealline-archive-50/.github/workflows/deploy.yml",
+      "bytes": 3234,
+      "sha256": "bf1a57511a95845a934cac0a89da463706139bd55c13f5aeea3472a8a4b24a68"
+    },
+    {
+      "path": ".cache/archive50-v0820/pr-receipts-original.zip",
+      "bytes": 55963,
+      "sha256": "51f21f78058616791ccd06c78d889b0f644a07a4d5fb2be69125cd3fc3f3d73c"
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Source/input and retained PR receipt review only; no public HTTP/native/offline acceptance claimed.",
+    "Hosted original ZIP extraction is attributed to retained PR receipt, not rerun locally.",
+    "Public HTTP auditor preparation is a separate review and is not approved by this receipt."
+  ]
+}

@@ -10,7 +10,7 @@ import {
   JOURNEY_BACKUP_VERSION,
 } from '../journey/profile.mjs';
 import { journeyMissionId } from '../journey/catalog.mjs';
-import { inspectImageDataUrl } from '../content.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
 const campaign = {
@@ -44,19 +44,34 @@ async function setup(t, options = {}) {
   await running(p, 'cut-1');
   return { p, backend: createJourneyBackend(memory) };
 }
+// These injected ?journey=1 missions exercise the retained historical receipt
+// and preparation authorities, not the current registered mission catalogue.
+// Mount only the native old chooser boundary after the real host pauses; its
+// real search, launch, backup and cancellation handlers remain in charge.
+// Current visible entry is covered by mission-library-solo-host/controller-host.
+function openHistoricalChooser(p) {
+  p.$('shell-menu').click();
+  p.$('shell-home').close();
+  p.$('journey-chooser').showModal();
+  p.$('journey-search').emit('input');
+  assert.equal(p.$('journey-chooser').open, true);
+}
 function win(p) {
   p.key('ArrowDown');
   p.key('ArrowDown', false);
   for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
+  assert.equal(p.$('game-overlay').hidden, true, 'The earned picture waits for the player.');
+  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  p.$('show-result').click();
   assert.equal(p.$('game-overlay').dataset.kind, 'won');
   assert.equal(p.$('next-button').hidden, false);
   assert.equal(p.$('skip-celebration').hidden, true);
 }
 
-test('Journey backup restoration updates chooser progress without replacing or rewarding the paused attempt', async (t) => {
+test('Historical Journey backup restoration updates chooser progress without replacing or rewarding the paused attempt', async (t) => {
   const { p, backend } = await setup(t);
-  p.$('shell-packs').click();
+  openHistoricalChooser(p);
   p.frame(0);
   const run = p.rendered.run;
   const before = {
@@ -116,7 +131,7 @@ test('Journey backup restoration updates chooser progress without replacing or r
   assert.deepEqual(p.errors, []);
 });
 
-test('Journey ten consecutive mission clears need only Next and retain exact progress', async (t) => {
+test('Journey ten consecutive clears retain exact progress through picture Continue and Next', async (t) => {
   const { p, backend } = await setup(t);
   for (let i = 1; i <= 10; i++) {
     win(p);
@@ -136,7 +151,7 @@ test('Journey ten consecutive mission clears need only Next and retain exact pro
   assert.deepEqual(p.errors, []);
 });
 
-test('Journey Skip is two activations, grants no clear, and the global chooser can return', async (t) => {
+test('Historical Journey Skip is two activations, grants no clear, and the retained chooser can return', async (t) => {
   const { p, backend } = await setup(t);
   p.$('journey-skip').click();
   p.frame(0);
@@ -158,7 +173,7 @@ test('Journey Skip is two activations, grants no clear, and the global chooser c
   const profile = await backend.read();
   assert.equal(Object.keys(profile.clears.solo).length, 0);
   assert.equal(profile.skipped.solo.length, 1);
-  p.$('shell-packs').click();
+  openHistoricalChooser(p);
   assert.equal(p.$('journey-chooser').open, true);
   p.$('journey-search').emit('cancel');
   assert.equal(p.$('journey-chooser').open, true, 'a child cancellation cannot close the chooser');
@@ -166,7 +181,10 @@ test('Journey Skip is two activations, grants no clear, and the global chooser c
   p.$('journey-search').emit('input');
   const card = p
     .$('journey-cards')
-    .children.find((node) => node.dataset.missionId.endsWith('/cut-1'));
+    .children.find(
+      (node) =>
+        node.dataset.missionId === journeyMissionId({ campaignId: campaign.id, levelId: 'cut-1' }),
+    );
   assert.ok(card);
   card.click();
   await running(p, 'cut-1');
@@ -213,10 +231,37 @@ test('Journey storage failure reports session-only progress without preventing S
   });
   assert.equal(p.$('journey-save-status').hidden, false);
   assert.match(p.$('journey-save-message').textContent, /session-only/);
+  assert.equal(p.$('journey-save-status').closest('dialog'), p.$('shell-home'));
+  assert.equal(p.$('journey-save-badge').hidden, false);
+  assert.match(p.$('shell-menu').getAttribute('aria-label'), /Journey progress not saved/);
   p.$('journey-skip').click();
   p.$('journey-skip').click();
   await running(p, 'cut-2');
   assert.equal(p.$('journey-save-status').hidden, false);
+  assert.deepEqual(p.errors, []);
+});
+
+test('Journey save options preserves the won attempt and deliberate Next', async (t) => {
+  const { p } = await setup(t, {
+    journeyIndexedDB: {
+      open() {
+        throw new Error('Storage denied by browser');
+      },
+    },
+  });
+  win(p);
+  const run = p.rendered.run;
+  assert.equal(p.$('journey-save-options').hidden, false);
+  p.$('journey-save-options').click();
+  assert.equal(p.$('shell-home').open, true);
+  assert.equal(p.doc.activeElement, p.$('journey-save-retry'));
+  p.frame(0);
+  assert.equal(p.rendered.run, run);
+  assert.equal(run.status, 'won');
+  p.$('shell-home').close();
+  p.$('next-button').click();
+  await running(p, 'cut-2');
+  assert.equal(p.$('journey-save-badge').hidden, false);
   assert.deepEqual(p.errors, []);
 });
 
@@ -239,7 +284,7 @@ test('Journey total defeat starts a fresh attempt without a menu confirmation', 
 });
 
 for (const cancel of ['button', 'Escape', 'new chooser'])
-  test(`Journey cold-load ${cancel} cancellation is immediate and a late failure cannot replace a newer choice`, async (t) => {
+  test(`Historical Journey cold-load ${cancel} cancellation is immediate and a late failure cannot replace a newer choice`, async (t) => {
     let resolveDownload;
     const { p } = await setup(t, {
       fetchResponse: (url) => {
@@ -250,12 +295,12 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
       },
     });
     const original = p.rendered.run;
-    p.$('shell-packs').click();
+    openHistoricalChooser(p);
     p.$('journey-search').value = 'Orchard Crossing';
     p.$('journey-search').emit('input');
     p.$('journey-cards').children[0].click();
     await settle(() => !!resolveDownload);
-    assert.equal(p.$('flight-preparation-cancel').hidden, false);
+    assert.equal(p.$('flight-preparation-cancel').hidden, true);
     if (cancel === 'button') p.$('flight-preparation-cancel').click();
     else if (cancel === 'Escape') {
       p.key('Escape');
@@ -263,7 +308,7 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
     }
     p.frame(0);
     assert.equal(p.rendered.run, original);
-    p.$('shell-packs').click();
+    openHistoricalChooser(p);
     p.$('journey-search').value = 'Cut 3';
     p.$('journey-search').emit('input');
     p.$('journey-cards').children[0].click();
@@ -279,42 +324,17 @@ for (const cancel of ['button', 'Escape', 'new chooser'])
     assert.deepEqual(p.errors, []);
   });
 
-// Models only image decode completion; browser/pixel evidence is separate.
-class Picture {
-  constructor() {
-    this.width = this.height = this.naturalWidth = this.naturalHeight = 1;
-  }
-  set src(value) {
-    this.url = value;
-    if (value?.startsWith('data:')) {
-      const header = inspectImageDataUrl(value);
-      this.width = this.naturalWidth = header.width;
-      this.height = this.naturalHeight = header.height;
-    }
-    if (value) queueMicrotask(() => this.onload?.());
-  }
-  get src() {
-    return this.url;
-  }
-  decode() {
-    return Promise.resolve();
-  }
-  removeAttribute() {
-    this.url = '';
-  }
-}
-
-test('Journey refuses an edited same-ID pack without replacing the current flight or awarding progress', async (t) => {
+test('Historical Journey refuses an edited same-ID pack without replacing the current flight or awarding progress', async (t) => {
   const edited = JSON.parse(
     await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url), 'utf8'),
   );
   edited.campaigns[0].levels[0].goal.coverage = 0.01;
   const { p, backend } = await setup(t, {
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchJSON: (url) => (url === 'content/packs/fpv-arcade-r5.json' ? edited : undefined),
   });
   const original = p.rendered.run;
-  p.$('shell-packs').click();
+  openHistoricalChooser(p);
   p.$('journey-search').value = 'Orchard Crossing';
   p.$('journey-search').emit('input');
   p.$('journey-cards').children[0].click();
@@ -333,15 +353,15 @@ test('Journey refuses an edited same-ID pack without replacing the current fligh
   assert.deepEqual(p.errors, []);
 });
 
-test('Journey campaign-boundary Next keeps a result on failed download and retries into the next pack', async (t) => {
+test('Historical Journey campaign-boundary Next keeps a result on failed download and retries into the next pack', async (t) => {
   let failing = true;
   const { p } = await setup(t, {
-    pictures: { Image: Picture },
+    pictures: { Image: PNGImage },
     fetchResponse: (url) => {
       if (url === 'content/packs/fpv-arcade-r5.json' && failing) return { ok: false, status: 503 };
     },
   });
-  p.$('shell-packs').click();
+  openHistoricalChooser(p);
   p.$('journey-search').value = 'Cut 11';
   p.$('journey-search').emit('input');
   p.$('journey-cards').children[0].click();

@@ -1,0 +1,80 @@
+{
+  "format": "retro-body-css-inspection.v1",
+  "at": "2026-09-14T17:52:31.980953+00:00",
+  "sourceBase": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "nativeOperator": "Parent/root using owned native browser tab 382; Lagrange did not operate browser",
+  "authorInspection": "All three complete screenshot files viewed with view_image detail=original; full originals inspected separately",
+  "url": "http://127.0.0.1:65084/inspection/index.html",
+  "cssSizes": [
+    24,
+    32,
+    56
+  ],
+  "backgrounds": [
+    "black",
+    "Unchanged Retro Rooftop Radio reserve illustration as a revealed-picture crop"
+  ],
+  "screenshots": [
+    {
+      "path": "inspection/north-auto.jpg",
+      "originalCapturePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v042-plan-review/retro-bodies-north-auto.png",
+      "bytes": 78942,
+      "sha256": "def7204d7b3d6350d2bbf1a71ec1fe293f75fc177ed48be965756032612f99b6",
+      "imageFormat": "JPEG",
+      "dimensions": [
+        2000,
+        1125
+      ],
+      "visibleState": "North / Auto",
+      "qualification": "Parent full-page capture; whole image viewed by Lagrange. Capture dimensions are not a physical CSS pixel measurement.",
+      "copy": "Exclusive APFS fclonefileat, no fallback or image edit",
+      "sourceInode": 76074756,
+      "destinationInode": 76077401
+    },
+    {
+      "path": "inspection/east-auto-transition.jpg",
+      "originalCapturePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v042-plan-review/retro-bodies-east-pixelated.png",
+      "bytes": 150653,
+      "sha256": "10f29a9c89f0f282a0782813798c0803cc8495716ebeae4b8a1e44be4410be39",
+      "imageFormat": "JPEG",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "visibleState": "East / Auto",
+      "qualification": "The parent filename says pixelated but the visible selector is Auto. Retained as a transitional capture and independently viewed; not counted as Pixelated evidence.",
+      "copy": "Exclusive APFS fclonefileat, no fallback or image edit",
+      "sourceInode": 76074818,
+      "destinationInode": 76077402
+    },
+    {
+      "path": "inspection/east-pixelated-settled.jpg",
+      "originalCapturePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v042-plan-review/retro-bodies-east-pixelated-settled.jpg",
+      "bytes": 153601,
+      "sha256": "25d56fd9571867e5ec522a4e57c5c7ee2b9b510613fe2764f4aef3acb148a6cd",
+      "imageFormat": "JPEG",
+      "dimensions": [
+        1600,
+        900
+      ],
+      "visibleState": "East / Pixelated",
+      "qualification": "Parent confirmed settled selectors in DOM before capture; visible selectors independently inspected by Lagrange.",
+      "copy": "Exclusive APFS fclonefileat, no fallback or image edit",
+      "sourceInode": 76076768,
+      "destinationInode": 76077403
+    }
+  ],
+  "findings": [
+    "All seven broad shapes are distinguishable across the two backgrounds at the reviewed CSS sizes. Scout/Interceptor give the clearest directional reading; Carrier twin rails, Fiber unequal round/square masses, Impact blunt visor, and Trapper open grid provide distinct cues.",
+    "At 24 pixels the interior fittings and thin connectors compress, especially Carrier/Fiber/Trapper. Orientation is less immediate for those shapes than Scout/Interceptor.",
+    "Pixelated sampling introduces visibly noisier small highlights at 24 pixels than Auto; no universal runtime sampling recommendation is inferred.",
+    "The source alpha composites without an opaque rectangular background in these captures. A few low-alpha fringe pixels and the many-color palette remain in exact source bytes."
+  ],
+  "limits": [
+    "Static CSS samples only; no actual gameplay, rig, interpolation, collision, hitbox, physical device, memory-loading or performance validation.",
+    "Full-page output dimensions do not establish physical sprite size; the reviewed board source provides explicit CSS sizes.",
+    "No original image transformation, crop export, recompression or background rewrite. JPEG screenshots are native browser outputs retained byte-exact."
+  ],
+  "freeBeforeScreenshotClones": 5432274944,
+  "additionalScreenshotOriginalBytes": 383196
+}

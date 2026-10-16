@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const CONFIG = __XONIX_OFFLINE_CONFIG__;
-  const MAX_BYTES = 64 * 1024 * 1024;
+  const MAX_BYTES = 80 * 1024 * 1024;
   const DOWNLOAD_CONCURRENCY = 4;
   if (!Array.isArray(CONFIG.files) || CONFIG.files.length > 2000)
     throw new Error('Offline inventory exceeds its file budget');
@@ -23,8 +23,62 @@
       file,
     ]),
   );
+  const officialFiles = new Map(
+    (CONFIG.downloadFiles || []).map((file) => [new URL(file.path, scope).href, file]),
+  );
+  const officialKey = (hash) => new URL(`/.revealline-official/sha256/${hash}`, scope.origin).href;
   const sameScope = (url) => url.origin === scope.origin && url.pathname.startsWith(scope.pathname);
+  async function requestedRange(response, request) {
+    const range = request.headers?.get('Range');
+    if (!range || response.status !== 200) return response;
+    const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+    const blob = await response.blob(),
+      total = blob.size;
+    let start = match?.[1] ? Number(match[1]) : Math.max(0, total - Number(match?.[2]));
+    let end = match?.[1] && match[2] ? Number(match[2]) : total - 1;
+    if (
+      !match ||
+      (!match[1] && !match[2]) ||
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      start < 0 ||
+      start >= total ||
+      end < start
+    )
+      return new Response(null, { status: 416, headers: { 'Content-Range': `bytes */${total}` } });
+    end = Math.min(end, total - 1);
+    const headers = new Headers(response.headers);
+    headers.delete('Content-Encoding');
+    headers.set('Content-Range', `bytes ${start}-${end}/${total}`);
+    headers.set('Content-Length', String(end - start + 1));
+    headers.set('Accept-Ranges', 'bytes');
+    return new Response(blob.slice(start, end + 1), { status: 206, headers });
+  }
   const PROTOCOL = 'revealline.offline-progress.v1';
+  function authorizedSource(event) {
+    if (!event.source?.url) return false;
+    let source;
+    try {
+      source = new URL(event.source.url);
+    } catch {
+      return false;
+    }
+    if (sameScope(source)) return true;
+    // The stable launcher prepares immutable editions from outside their game
+    // scope. This single document must name the exact worker/build explicitly;
+    // older same-scope callers retain their existing message compatibility.
+    const release = scope.pathname.indexOf('/releases/');
+    const root = release >= 0 ? scope.pathname.slice(0, release + 1) : scope.pathname;
+    return (
+      source.origin === scope.origin &&
+      !source.username &&
+      !source.password &&
+      source.pathname === `${root}app/update.html` &&
+      event.data?.protocol === PROTOCOL &&
+      event.data.scope === scope.href &&
+      event.data.buildId === CONFIG.buildId
+    );
+  }
   const subscribers = new Set();
   const MAX_SUBSCRIBERS = 64;
   const SUBSCRIBER_LIFETIME = 5 * 60 * 1000;
@@ -186,7 +240,64 @@
       corrupt,
     };
   }
+  let durableController;
+  async function installDurableFiles() {
+    durableController = new AbortController();
+    const signal = durableController.signal;
+    const cache = await caches.open(cacheName);
+    const indexes = await caches.open('revealline-core-index-v1');
+    const candidates = new Map();
+    for (const request of await indexes.keys()) {
+      try {
+        const prior = await (await indexes.match(request)).json();
+        if (prior.cache === cacheName || !prior.cache.startsWith('revealline-offline:')) continue;
+        for (const file of prior.files) {
+          const list = candidates.get(file.sha256) || [];
+          list.push({ cache: prior.cache, url: new URL(file.path, prior.scope).href });
+          candidates.set(file.sha256, list);
+        }
+      } catch {
+        /* Stale metadata never proves that content is present. */
+      }
+    }
+    await indexes.put(
+      new URL(`.offline-index-${CONFIG.buildId}`, scope).href,
+      new Response(JSON.stringify({ cache: cacheName, scope: scope.href, files: CONFIG.files })),
+    );
+    const originalIndex = await caches.open('revealline-official-original-index-v1');
+    for (const original of CONFIG.downloadOriginals || [])
+      await originalIndex.put(officialKey(original.sha256), new Response(JSON.stringify(original)));
+    let completed = 0;
+    for (const [url, file] of files) {
+      signal.throwIfAborted();
+      if (await verified(await cache.match(url), file)) {
+        candidates.set(file.sha256, [{ cache: cacheName, url }]);
+        progress('saving', ++completed);
+        continue;
+      }
+      let reusable = null;
+      for (const candidate of candidates.get(file.sha256) || []) {
+        const hit = await (await caches.open(candidate.cache)).match(candidate.url);
+        if (await verified(hit, file)) {
+          reusable = hit;
+          break;
+        }
+      }
+      const response = reusable || ownedResponse(await downloadVerified(url, file, signal));
+      // Atomic, verified file checkpoints survive worker termination and quota errors.
+      // Missing readiness marker keeps partial editions from being activated.
+      await cache.put(url, response);
+      candidates.set(file.sha256, [{ cache: cacheName, url }]);
+      progress('saving', ++completed);
+    }
+    signal.throwIfAborted();
+    await cache.put(
+      readyURL,
+      new Response(CONFIG.buildId, { headers: { 'Content-Type': 'text/plain' } }),
+    );
+  }
   async function installFiles() {
+    if (Array.isArray(CONFIG.downloadFiles)) return installDurableFiles();
     // Finish any existing read before repair so a pre-repair snapshot cannot be
     // reused as the final report after this installation saves its files.
     const cached = await (inspection ??
@@ -302,20 +413,62 @@
     url.search = '';
     url.hash = '';
     if (url.pathname.endsWith('/')) url.pathname += 'index.html';
+    if (url.href === new URL('offline-cache.json', scope).href) {
+      event.respondWith(
+        Promise.resolve(
+          new Response(JSON.stringify(CONFIG), { headers: { 'Content-Type': 'application/json' } }),
+        ),
+      );
+      return;
+    }
+    const optional = officialFiles.get(url.href);
+    if (optional) {
+      event.respondWith(
+        (async () => {
+          // The downloader has already found a missing or corrupt file. Serving
+          // a same-sized damaged cache entry again would make repair impossible.
+          // Only its explicit request bypasses local bytes; verification and
+          // the durable replacement remain the downloader's responsibility.
+          if (CONFIG.packageConsent && event.request.cache === 'no-store')
+            return fetch(event.request);
+          // Prepared bytes are an optimization, never permission to play.
+          // A normal request may load online without saving an offline package.
+          try {
+            const cache = await caches.open('revealline-official-content-v1');
+            const hit = await cache.match(officialKey(optional.sha256));
+            if (
+              hit &&
+              hit.status === 200 &&
+              Number(hit.headers.get('Content-Length')) === optional.bytes
+            )
+              return requestedRange(hit, event.request);
+          } catch {
+            // Private browsing or unavailable storage must not prevent online play.
+          }
+          return fetch(event.request);
+        })(),
+      );
+      return;
+    }
     const file = files.get(url.href);
     if (!file) return;
     event.respondWith(
       (async () => {
-        const cache = await caches.open(cacheName),
-          hit = await cache.match(url.href);
-        if (hit) return hit;
+        let cache;
+        try {
+          cache = await caches.open(cacheName);
+          const hit = await cache.match(url.href);
+          if (hit) return requestedRange(hit, event.request);
+        } catch {
+          // The network remains usable when local storage is denied.
+        }
         try {
           const owned = await downloadVerified(url.href, file);
-          await cache.put(url.href, ownedResponse(owned));
-          return ownedResponse(owned);
+          await cache?.put(url.href, ownedResponse(owned)).catch(() => {});
+          return requestedRange(ownedResponse(owned), event.request);
         } catch {
           return new Response(
-            'This offline file is unavailable. Reconnect and prepare this game version again.',
+            'This file is unavailable. Reconnect to play, or choose a chapter already downloaded for offline play.',
             { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
           );
         }
@@ -323,12 +476,17 @@
     );
   });
   self.addEventListener('message', (event) => {
+    if (event.data?.type === 'revealline.offline-pause') {
+      if (event.data.buildId === CONFIG.buildId && authorizedSource(event))
+        durableController?.abort();
+      return;
+    }
     if (
       !['revealline.offline-check', 'revealline.offline-prepare'].includes(event.data?.type) ||
       !event.ports?.[0]
     )
       return;
-    if (!event.source?.url || !sameScope(new URL(event.source.url))) return;
+    if (!authorizedSource(event)) return;
     const port = event.ports[0],
       request = event.data,
       streaming = request.protocol === PROTOCOL;
@@ -341,6 +499,7 @@
           if (streaming && (request.buildId !== CONFIG.buildId || request.scope !== scope.href)) {
             subscriber.send('terminal', {
               status: 'not-ready',
+              messageCode: 'differentBuild',
               message: 'Offline worker belongs to a different build. Reopen this version online.',
             });
             return;
@@ -352,7 +511,12 @@
           if (subscriber) subscriber.send('terminal', report);
           else port.postMessage(report);
         } catch (error) {
-          const report = { status: 'error', message: error.message, buildId: CONFIG.buildId };
+          const report = {
+            status: 'error',
+            messageCode: 'downloadFailed',
+            message: error.message,
+            buildId: CONFIG.buildId,
+          };
           if (subscriber) subscriber.send('terminal', report);
           else port.postMessage(report);
         } finally {

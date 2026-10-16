@@ -1,4 +1,7 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import {
   installCoopPresentation,
   waitFor as waitForTeamPicture,
@@ -89,7 +92,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     window: win,
     localStorage: store,
     navigator: { getGamepads: () => [] },
-    location: { href: 'http://localhost/game/couch/relay-rescue.html' },
+    location: { href: 'http://localhost/game/couch/relay-rescue.html?journey=legacy' },
     matchMedia: (query) =>
       query === '(prefers-reduced-motion: reduce)' ? media : { matches: false },
     requestAnimationFrame(fn) {
@@ -111,13 +114,14 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
       else delete globalThis[key];
   });
-  const artwork = installCoopPresentation({
-    doc,
-    win,
-    install(key, descriptor) {
-      originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
-      Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
-    },
+  const install = (key, descriptor) => {
+    if (!originals.has(key)) originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+    Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
+  };
+  const artwork = installCoopPresentation({ doc, win, install });
+  installActorAppearanceTransport({
+    install,
+    baseURL: new URL('../presentation/compiled/', globals.location.href),
   });
   await import(`../couch/relay-rescue.mjs?display-host=${++sequence}`);
   await waitForTeamPicture(
@@ -142,6 +146,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     media,
     geometry: () => calls.map(({ method, args }) => ({ method, args })),
     fonts: () => calls.filter((c) => c.method === 'fillText').map((c) => c.font),
+    labels: () => calls.filter((call) => call.method === 'fillText'),
   };
 }
 
@@ -153,20 +158,20 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       profileKey,
       updatePreferences(emptyLibrary(), { turnPolicy, textSize: 'large' }),
     );
-    const page = await soloPage(t, { campaign, storage: store });
+    const page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
     assert.equal(
       store.getItem(DISPLAY_PREFERENCES_KEY),
       null,
       'Legacy adoption must not write a new record.',
     );
-    page.$('start-button').click();
+    await activateHostAction(page.$('start-button'));
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let n = 0; n < 13; n++) page.frame();
     assert.equal(page.rendered.run.player.cutting, true);
     page.$('settings-button').click();
-    page.$('settings-tab-display').click();
+    page.$('settings-tab-accessibility').click();
     page.frame(0);
     const run = page.rendered.run,
       checkpoint = authoritativeCheckpoint(run),
@@ -194,7 +199,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
-    assert.equal(verifyReplay(JSON.parse(store.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(store.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 }
@@ -209,7 +217,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
   await t.test('Solo explicitly opts into the shared record', async (t) => {
     const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
     page.$('shell-options').click();
-    page.$('settings-tab-display').click();
+    page.$('settings-tab-accessibility').click();
     change(page, 'settings-reduced-effects', true);
     reflects(page, 'plain', 'large', true);
   });
@@ -225,15 +233,33 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     page.$('coop-pause').click();
     page.tick();
     const geometry = page.geometry(),
+      labels = page.labels(),
       clock = page.$('coop-clock').textContent;
     page.$('coop-settings-open').click();
-    page.$('coop-settings-tab-display').focus();
+    page.$('coop-settings-tab-accessibility').click();
+    page.$('coop-settings-tab-accessibility').focus();
     for (const id of ['coop-text-face', 'coop-text-size', 'coop-reduced']) reaches(page, id);
     change(page, 'coop-text-face', 'pixel');
-    change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
     assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    change(page, 'coop-text-size', 'standard');
+    page.tick(120);
+    assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
+    const images = (commands) => commands.filter((command) => command.method === 'drawImage');
+    assert.deepEqual(
+      images(page.geometry()),
+      images(geometry),
+      'The accepted picture and actor frames stay exact',
+    );
+    for (const id of ['1', '2']) {
+      const size = (values) =>
+        Number(values.find((call) => call.args[0] === id).font.match(/([\d.]+)px/)[1]);
+      assert.ok(
+        Math.abs(size(labels) - size(page.labels()) * (4 / 3)) < 1e-9,
+        'The real host forwards Large to player numerals',
+      );
+    }
     assert.equal(page.$('coop-clock').textContent, clock);
     assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
     assert.equal(store.getItem(profileKey), profile);
@@ -261,6 +287,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       assert.equal(store.writes.length, writes, 'Opening Options does not save a preference');
       assert.equal(page.state(), 'paused');
       assert.deepEqual(page.checkpoint(), checkpoint);
+      page.$('race-settings-tab-accessibility').click();
       page.$('race-options-back').focus();
       reaches(page, 'race-text-face');
       reaches(page, 'race-text-size');
@@ -302,6 +329,8 @@ test('Team system reduction preserves a raw false choice and a denied shared sav
   assert.equal(page.$('coop-reduced').checked, false);
   assert.match(page.$('coop-system-reduction').textContent, /System reduced motion/);
   assert.deepEqual(store.map, before);
+  page.$('coop-settings-open').click();
+  page.$('coop-settings-tab-accessibility').click();
   store.setItem = () => {
     throw new DOMException('Full storage', 'QuotaExceededError');
   };
@@ -328,11 +357,14 @@ test('Versus controller selects the real display control without replacing or st
   const page = await couchPage(t, { storage: store, pads: [pad] });
   page.join(0);
   const displayBefore = store.getItem(DISPLAY_PREFERENCES_KEY);
-  page.$('race-options').click();
-  page.frame();
+  page.focus('race-options');
+  page.pulse(0, 0);
   assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
   assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), displayBefore);
   const before = page.checkpoint();
+  page.pulse(0, 13);
+  assert.equal(page.doc.activeElement.id, 'race-settings-tab-accessibility');
+  page.pulse(0, 0);
   page.focus('race-text-size');
   page.pulse(0, 0);
   assert.equal(page.editors().length, 1);

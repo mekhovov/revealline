@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { resolveAuthoringEditor } from '../ui/authoring-editors.mjs';
+import { createDuel, resumeDuel, stepDuel, DUEL_PROTOCOL } from '../multiplayer.mjs';
+import { createLocalMatchRecorder } from '../multiplayer-recording.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const settle = async () => {
@@ -79,7 +82,10 @@ function mount(document, html) {
     if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(node);
   }
 }
-async function harness(t, { deferImage = false, classicRole = false, tacticalResponse } = {}) {
+async function harness(
+  t,
+  { deferImage = false, classicRole = false, tacticalResponse, hash, initialFocusId } = {},
+) {
   const document = new EditorDocument(),
     window = new Events(),
     images = [],
@@ -88,6 +94,8 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
     layoutFrames = [],
     resizeObservers = [];
   mount(document, await readFile(new URL('../playground/index.html', import.meta.url), 'utf8'));
+  if (hash !== undefined) window.location = { hash };
+  if (initialFocusId) document.getElementById(initialFocusId).focus();
   const documents = new Map(
     await Promise.all(
       [
@@ -231,6 +239,57 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
   };
 }
 
+test('actual Playground controller map edit/Undo and rejected complete JSON preserve model, preview, and saved scenario until explicit launch', async (t) => {
+  const f = await harness(t),
+    original = structuredClone(f.current()),
+    saved = [...f.storage.entries()],
+    preview = f.$('preview-frame').src,
+    writes = f.writes.length,
+    adapter = resolveAuthoringEditor(f.$('map-editor'));
+  assert.equal(adapter.enter(), true);
+  adapter.handle({ direction: 'right' });
+  adapter.handle({ direction: 'down' });
+  assert.deepEqual(f.current(), original, 'cursor navigation alone does not edit');
+  adapter.handle({ confirm: true });
+  const edited = structuredClone(f.current());
+  assert.notDeepEqual(edited, original, 'Confirm reaches the actual paint command');
+  assert.equal(adapter.handle({ back: true }), 'cancel');
+  adapter.exit();
+  f.$('undo-button').click();
+  assert.deepEqual(f.current(), original);
+  assert.equal(adapter.enter(), true);
+  adapter.handle({ confirm: true });
+  adapter.exit();
+  assert.deepEqual(f.current(), edited, 'same cell edit can be repeated after Undo');
+  f.$('show-pack').click();
+  const complete = f.$('pack-json').value;
+  f.$('pack-json').value = `${complete}a`;
+  await f.$('apply-pack').onclick();
+  assert.equal(f.$('editor-status').classList.contains('error'), true);
+  assert.deepEqual(f.current(), edited, 'invalid JSON does not replace the model');
+  assert.equal(f.$('preview-frame').src, preview);
+  assert.deepEqual([...f.storage.entries()], saved);
+  assert.equal(f.writes.length, writes);
+  f.$('show-pack').click();
+  assert.equal(
+    f.$('pack-json').value,
+    complete,
+    'authoritative complete JSON survives rejected text',
+  );
+  await f.$('apply-pack').onclick();
+  assert.equal(f.$('editor-status').classList.contains('error'), false);
+  assert.deepEqual(f.current(), edited, 'valid complete source reopens the exact edit');
+  assert.equal(
+    f.$('preview-frame').src,
+    preview,
+    'validated source does not implicitly start preview',
+  );
+  assert.equal(f.writes.length, writes);
+  f.$('preview-button').click();
+  assert.notEqual(f.$('preview-frame').src, preview);
+  assert.deepEqual(f.saved().level, edited, 'only explicit Play updates the practice handoff');
+});
+
 test('actual Playground entry blocks Play/open/mode launch during chosen pack decode, then paints and launches Classic Lab', async (t) => {
   const f = await harness(t, { deferImage: true }),
     source = f.$('preview-frame').src,
@@ -288,6 +347,40 @@ test('actual Playground entry blocks Play/open/mode launch during chosen pack de
   assert.equal(f.saved().format, 'xonix-playground.v5');
   assert.equal(f.saved().level.id, 'contour-watch');
   assert.notEqual(f.$('preview-frame').src, source);
+});
+
+test('Couch preview opens the Legacy installed library without changing the editor, history or saved Solo configuration', async (t) => {
+  const f = await harness(t),
+    original = f.current();
+  await f.teaching('tactical-read-clearing').onclick();
+  f.$('preview-button').click();
+  const editor = f.$('level-json').value,
+    classId = f.$('class-select').value,
+    turnPolicy = f.$('turn-select').value,
+    storage = [...f.storage.entries()],
+    writes = f.writes.length;
+  assert.equal(f.current().id, 'tactical-read-clearing');
+  assert.match(f.$('preview-frame').src, /^\.\.\/\?practice=1&revision=/);
+
+  f.$('preview-mode').value = 'couch';
+  f.$('preview-mode').onchange();
+
+  assert.equal(f.$('preview-frame').src, '../couch/?journey=legacy&focus=1');
+  assert.equal(f.$('open-preview').href, '../couch/?journey=legacy&focus=1');
+  assert.match(f.$('editor-status').textContent, /Couch preview uses installed maps and packs/);
+  assert.equal(f.$('level-json').value, editor);
+  assert.equal(f.$('class-select').value, classId);
+  assert.equal(f.$('turn-select').value, turnPolicy);
+  assert.deepEqual([...f.storage.entries()], storage);
+  assert.equal(f.writes.length, writes, 'Couch preview does not overwrite the Solo scenario');
+
+  f.$('undo-button').click();
+  assert.deepEqual(f.current(), original, 'preview selection creates no editor-history entry');
+  assert.deepEqual(
+    [...f.storage.entries()],
+    storage,
+    'Undo does not alter the saved Solo scenario',
+  );
 });
 
 test('three native teaching buttons adopt exact scenarios only through import and explicit practice launch', async (t) => {
@@ -471,6 +564,38 @@ test('preview iframe load waits for the child readiness marker and does not reus
   assert.equal(f.$('preview-load-status'), feedback);
 });
 
+test('recording deep links open only the verifier without importing data or replacing editor state', async (t) => {
+  const f = await harness(t, { hash: '#recording-verification' }),
+    section = f.$('recording-verification');
+  assert.equal(section.open, true);
+  assert.equal(f.document.activeElement, section.querySelector('summary'));
+  assert.equal(f.$('replay-paste').value, '');
+  assert.equal(f.$('replay-result').textContent, '');
+  const source = f.$('level-json').value,
+    preview = f.$('preview-frame').src;
+  section.open = false;
+  f.$('generate-button').focus();
+  f.window.location.hash = '#recording-verification?import=untrusted';
+  f.window.emit('hashchange');
+  assert.equal(section.open, false);
+  assert.equal(f.document.activeElement, f.$('generate-button'));
+  f.window.location.hash = '#recording-verification';
+  f.window.emit('hashchange');
+  assert.equal(section.open, true);
+  assert.equal(f.document.activeElement, section.querySelector('summary'));
+  assert.equal(f.$('level-json').value, source);
+  assert.equal(f.$('preview-frame').src, preview);
+});
+
+test('late Playground startup does not steal a deliberately selected control for its recording link', async (t) => {
+  const f = await harness(t, {
+    hash: '#recording-verification',
+    initialFocusId: 'generate-button',
+  });
+  assert.equal(f.$('recording-verification').open, true);
+  assert.equal(f.document.activeElement, f.$('generate-button'));
+});
+
 test('replay file reading acknowledges immediately, cancellation preserves the result, and a fresh real recording verifies', async (t) => {
   const f = await harness(t),
     readGate = deferred();
@@ -493,6 +618,44 @@ test('replay file reading acknowledges immediately, cancellation preserves the r
   assert.match(f.$('replay-status').textContent, /matches its full recorded/);
   assert.equal(JSON.parse(f.$('replay-result').textContent).match, true);
   assert.equal(f.$('cancel-replay').hidden, true);
+});
+
+test('v2 multiplayer verification reports its observation scope without claiming full-state equality', async (t) => {
+  const level = (await read('../content/campaign.json')).levels[0],
+    options = { seed: 17 },
+    duel = { protocol: DUEL_PROTOCOL, seconds: 10 },
+    match = createDuel(level, options, duel),
+    recorder = createLocalMatchRecorder({ mode: 'versus', level, options, duel }),
+    input = Array.from({ length: 2 }, () => ({
+      direction: null,
+      boost: false,
+      action: false,
+      pickup: false,
+    }));
+  resumeDuel(match, { preserveContinuation: true });
+  while (match.status === 'running') {
+    recorder.append(input);
+    stepDuel(match, input);
+  }
+  const recording = await recorder.snapshot(match);
+  recording.final.stateSha256 = '0'.repeat(64);
+  const f = await harness(t),
+    writes = f.writes.length;
+  f.$('replay-paste').value = JSON.stringify(recording);
+  await f.$('verify-replay-json').onclick();
+  const result = JSON.parse(f.$('replay-result').textContent);
+  assert.equal(result.match, true);
+  assert.equal(result.exactStateMatch, false);
+  assert.equal(result.terminalObservationMatch, true);
+  assert.match(result.verificationScope, /terminal-observations/);
+  assert.match(f.$('replay-status').textContent, /declared gameplay observations match/);
+  assert.doesNotMatch(f.$('replay-status').textContent, /matches its full recorded/);
+  assert.equal(f.writes.length, writes);
+  recording.final.observationSha256 = '0'.repeat(64);
+  f.$('replay-paste').value = JSON.stringify(recording);
+  await f.$('verify-replay-json').onclick();
+  assert.equal(f.$('replay-status').dataset.state, 'error');
+  assert.match(f.$('replay-status').textContent, /terminal gameplay observations differ/);
 });
 
 test('the original editor status and Cancel share one bounded sticky region through decode, cancel, failure and Undo', async (t) => {

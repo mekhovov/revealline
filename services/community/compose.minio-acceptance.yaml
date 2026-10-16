@@ -1,0 +1,96 @@
+services:
+  recovery-postgres:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_DB: revealline_source
+      POSTGRES_USER: revealline
+      POSTGRES_PASSWORD: revealline-recovery-only
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U revealline -d revealline_source']
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - community-minio-recovery-postgres:/var/lib/postgresql/data
+
+  recovery-database-init:
+    image: postgres:17.6-alpine
+    depends_on:
+      recovery-postgres:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: revealline-recovery-only
+    volumes:
+      - ./migrations:/migrations:ro
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        psql \
+          --host=recovery-postgres \
+          --username=revealline \
+          --dbname=postgres \
+          --set=ON_ERROR_STOP=1 \
+          --command='CREATE DATABASE revealline_target'
+        for file in /migrations/*.sql; do
+          psql \
+            --host=recovery-postgres \
+            --username=revealline \
+            --dbname=revealline_source \
+            --set=ON_ERROR_STOP=1 \
+            --file="$$file"
+        done
+    restart: 'no'
+
+  minio:
+    build:
+      context: ../..
+      dockerfile: services/community/Dockerfile.minio-acceptance
+    command: ['server', '/data']
+    environment:
+      MINIO_ROOT_USER: revealline-minio
+      MINIO_ROOT_PASSWORD: revealline-minio-recovery-only
+    healthcheck:
+      test: ['CMD', 'curl', '--fail', '--silent', 'http://127.0.0.1:9000/minio/health/live']
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - community-minio-recovery-objects:/data
+
+  minio-recovery-acceptance:
+    build:
+      context: ../..
+      dockerfile: services/community/Dockerfile
+    command: ['npm', 'run', 'acceptance:minio-recovery']
+    depends_on:
+      recovery-database-init:
+        condition: service_completed_successfully
+      minio:
+        condition: service_healthy
+    environment:
+      COMMUNITY_RUN_MINIO_RECOVERY_ACCEPTANCE: 'true'
+      COMMUNITY_DATABASE_URL: postgres://revealline:revealline-recovery-only@recovery-postgres:5432/revealline_source
+      COMMUNITY_RECOVERY_REHEARSAL_TARGET_DATABASE_URL: postgres://revealline:revealline-recovery-only@recovery-postgres:5432/revealline_target
+      COMMUNITY_BLOB_STORAGE: s3
+      COMMUNITY_S3_BUCKET: revealline-source
+      COMMUNITY_S3_REGION: us-east-1
+      COMMUNITY_S3_ENDPOINT: http://minio:9000
+      COMMUNITY_S3_FORCE_PATH_STYLE: 'true'
+      COMMUNITY_BLOB_STAGING_ROOT: /tmp/revealline-source-stage
+      COMMUNITY_RECOVERY_TARGET_S3_BUCKET: revealline-target
+      COMMUNITY_RECOVERY_TARGET_S3_REGION: us-east-1
+      COMMUNITY_RECOVERY_TARGET_S3_ENDPOINT: http://minio:9000
+      COMMUNITY_RECOVERY_TARGET_S3_FORCE_PATH_STYLE: 'true'
+      COMMUNITY_RECOVERY_TARGET_BLOB_STAGING_ROOT: /tmp/revealline-target-stage
+      COMMUNITY_MINIO_RECOVERY_EVIDENCE_ROOT: /data/recovery
+      AWS_ACCESS_KEY_ID: revealline-minio
+      AWS_SECRET_ACCESS_KEY: revealline-minio-recovery-only
+    volumes:
+      - community-minio-recovery-evidence:/data/recovery
+    restart: 'no'
+
+volumes:
+  community-minio-recovery-postgres:
+  community-minio-recovery-objects:
+  community-minio-recovery-evidence:

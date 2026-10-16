@@ -1,5 +1,40 @@
 # RevealLine: detailed delivery history
 
+> **3 October implementation update:** [Unified gameplay and industrial art](unified-industrial-plan.md) records the newly approved priorities, bounded budget increases, implemented scope and remaining art/device gates.
+
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
+> **Current status and execution order:** use the
+> [30 September source reconciliation and remaining delivery plan](plan-status-2026-09-30.md).
+> It separates merged source, the publisher's pending queue, retained local work
+> and deferred qualification. Every dated checkpoint and “next” label below is
+> preserved historical evidence, not today's release queue.
+
+## Current scoped handoff — 28 September 2026
+
+The [completed/remaining phase audit and Flight Details correction](flight-details-localization-2026-09-28.md) records the v0.141.7 public baseline, queued touch work, the next bounded P05/P03 fix, and the original whole-game phases still open. The release coordinator owns cumulative integration, version allocation and Pages publication. Read the dated sections below as history; they do not describe the current queue.
+
+## Current execution order — 24 September 2026
+
+The approved [player-first UX execution board](player-first-ux-execution.md) now
+controls UX0–UX6 priorities, acceptance and release discipline. Immutable v0.98.0
+was published from the independent FPV presentation line. UX0 is reconciled onto
+that baseline as the v0.100.0 candidate; it is not yet a public release. Preserve
+the older observations below as dated evidence.
+
+## Previous status — 23 September 2026
+
+Use the [completed and remaining delivery plan](plan-status-2026-09-23.md) for the
+current release state, priorities, estimates and P00–P15 closure checklist.
+v0.83–v0.87 are delivered; v0.87 Pages and scoped public acceptance are complete
+at the 00:26 UTC check. The full redesign is not finally accepted.
+The earlier text below is preserved historical scope and evidence, not today's
+release queue.
+
+## Preserved historical delivery register
+
 For the current release, phase status, accepted evidence and remaining work, start with the [cross-mode execution register](cross-mode-execution.md). The [whole-game execution plan](whole-game-ux-plan.md) and [Delivery priorities](delivery-priorities.md) describe the approved sequence and outcomes. The detailed historical register below remains unchanged; its “active” and “upcoming” headings describe their recorded dates, not the current release.
 
 Historical register last updated 2026-09-14. Its dated status paragraphs describe earlier checkpoints, not today’s release or remaining priorities. Use [Delivery priorities](delivery-priorities.md) for the current order and acceptance gates. Implementation remains authorized.

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-23T01:58:06.219626+00:00",
+  "kind": "scoped native public availability",
+  "version": "v0.87.0",
+  "sourceRevision": "08548aeabe72f396fb75aede938d5bcadcfdc00e",
+  "archivePublisher": "592d0afe42f66dfb9fe95962c80adfaf236cd8ef",
+  "productionRun": 35808261588,
+  "deployment": 6604670353,
+  "deploymentStatus": 18706677271,
+  "productionReceipt": {
+    "artifact": 10728921369,
+    "bytes": 57641,
+    "sha256": "bb0ff49f132f88b7a4b35cf81003210c8bca76094629e9a607d0239f6493b28c"
+  },
+  "entry": "https://mekhovov.github.io/revealline-archive-56/",
+  "gameURL": "https://mekhovov.github.io/revealline-archive-56/releases/v0.87.0/site/game/",
+  "canonicalReleaseMarker": "https://mekhovov.github.io/revealline-archive-56/releases/v0.87.0/release.json",
+  "browser": "Codex in-app browser, desktop1280x720 screenshots, no viewport override",
+  "steps": [
+    {
+      "action": "Archive index Play87",
+      "result": "PASS: visible preparation then title; no reload."
+    },
+    {
+      "action": "Read title",
+      "result": "PASS:91 missions,VERSION V0.87.0,Standard reference-paced targets0.260/0.325/0.240. Existing Continue Prologue Choose your share; not fresh profile."
+    },
+    {
+      "action": "Keyboard Tab/Return Workshop; expand extras; keyboard Tab/Return About",
+      "result": "PASS: within archive56v87."
+    },
+    {
+      "action": "Expand Build information",
+      "result": "PASS:131preserved builds,current87,OPENBUILD targets archive56v87; main release explorer link available."
+    },
+    {
+      "action": "Browser Back",
+      "result": "PASS:archive56v87title; focusDifficulty, no Workshopopener restoration claim."
+    },
+    {
+      "action": "Read captured warn/error console",
+      "result": "PASS:empty list."
+    }
+  ],
+  "productFailures": [],
+  "automationFailures": [],
+  "retries": 0,
+  "reloads": 0,
+  "knownObservations": [
+    "Existing current/preserved87duplicate in picker.",
+    "About generic offline-ready wording does not certify Journey original caching.",
+    "Coordinator earlier probed unlisted site/release.json and got404; corrected canonical releases/v0.87.0/release.json200. Observer URLerror outside this native journey, not accepted-route failure."
+  ],
+  "screenshots": [
+    {
+      "name": "title",
+      "bytes": 137202,
+      "sha256": "1a1f73c3861ddd25c1609c941a20a0f434433bd55a222f47ce726ecc2795de42"
+    },
+    {
+      "name": "history",
+      "bytes": 71916,
+      "sha256": "5daa1111e9c7780db22ca182f27ad93b686e019161f470177df4f4b69989fe4c"
+    },
+    {
+      "name": "return",
+      "bytes": 137116,
+      "sha256": "d280774495a7f0da4765bacb391cf270fa3ea5ebfb978eb9ab80f09cead1b29c"
+    }
+  ],
+  "screenshotRetention": "Original bytes hashed/emitted inline; no disk PNGs.",
+  "limits": [
+    "Source/deployment/marker authority supplied by coordinator handoff.",
+    "Full HTTP audit separate, not duplicated.",
+    "No actual gameplay, offline, saved-flight recovery, physical device/controller, listening or full-suite claim.",
+    "No v88 public check yet."
+  ]
+}

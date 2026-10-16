@@ -1,8 +1,41 @@
+import { mountActorAnimationControls } from './animation-controls.mjs';
+import {
+  t,
+  getLocale,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  formatNumber,
+} from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
+import { mountRewardAssetExport } from '../../game/studio/reward-asset-export.mjs';
+import { createStudioDownload } from './download.mjs';
+import { exportRuntimeTheme } from '../../game/presentation/runtime-transfer.mjs';
+import {
+  createThemeCandidate,
+  saveThemePreview,
+  unsupportedThemeAssignmentSlots,
+} from '../../game/presentation/theme-preview.mjs';
+import { isTeamPreviewScenarioAvailable } from './team-preview-fixture.mjs';
+import {
+  addTeamPresentationSlots,
+  needsTeamPresentationSlots,
+} from '../../game/presentation/team-anchor-upgrade.mjs';
+import {
+  addDestructionAudioSlots,
+  needsDestructionAudioSlots,
+} from '../../game/presentation/destruction-audio-upgrade.mjs';
+import {
+  addOverflightArtworkSlots,
+  needsOverflightArtworkSlots,
+  OVERFLIGHT_ARTWORK_SLOTS,
+} from '../../game/presentation/overflight-artwork-upgrade.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
 import {
   FORMATS,
   LIMITS,
+  TOKEN_DEFAULTS,
   resolvePresentation,
   validateThemeBundle,
   presentationCoverage,
@@ -16,11 +49,13 @@ import {
 } from '../../game/presentation/bundle.mjs';
 import {
   reviseStudioTheme,
+  setStudioAppearanceBasis,
   replaceStudioCollection,
   adoptStudioBundle,
   generateAssetPrompt,
   nextAssetRevision,
   studioSlotHistory,
+  duplicateStudioSnapshot,
 } from '../../game/presentation/studio-session.mjs';
 import { createStudioStore } from '../../game/presentation/studio-store.mjs';
 import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
@@ -36,10 +71,45 @@ import { attachPreferenceRestoration } from '../../game/ui/preference-restoratio
 import { mountInterfacePreferences } from './interface-preferences.mjs';
 import { mountStudioGuide } from './guide.mjs';
 import { attachStudioAuditionLifecycle } from './audition-lifecycle.mjs';
+import { createStudioViewMemory, resolveStudioView } from './view-memory.mjs';
+import { studioEntryView } from './entry-view.mjs';
+import { mountStudioRotorControls } from './rotor-controls.mjs';
+import { mountArtworkCollectionPanel } from './artwork-panel.mjs';
+import { mountThemeWorkbench } from './theme-workbench.mjs';
+import { getInterfaceTheme, getThemeFamily } from '../../game/presentation/theme-system.mjs';
+mountArtworkCollectionPanel({ document, window });
 const $ = (id) => document.getElementById(id);
+const destructionAdmissionCopy = (key) =>
+  ({
+    label: ['Add destruction sounds', 'Додати звуки знищення'],
+    preparing: ['Adding editable destruction sounds…', 'Додаємо звуки знищення для редагування…'],
+    complete: [
+      'Destruction sounds added to this draft. Existing assets are retained. Save a local revision or export to keep this change.',
+      'Звуки знищення додано до чернетки. Наявні ресурси збережено. Збережіть локальну версію або експортуйте зміни.',
+    ],
+  })[key][getLocale() === 'uk' ? 1 : 0];
+localizedText($('add-destruction-audio'), () => destructionAdmissionCopy('label'));
+const overflightAdmissionCopy = (key) =>
+  ({
+    label: ['Add FPV Survivals artwork slots', 'Додати графіку FPV Survivals'],
+    preparing: ['Adding editable battlefield artwork…', 'Додаємо графіку поля для редагування…'],
+    complete: [
+      'FPV Survivals artwork added to this draft. Existing artwork and animation remain selected. Save a local revision or export to keep this change.',
+      'Графіку FPV Survivals додано до чернетки. Наявну графіку й анімацію збережено. Збережіть локальну версію або експортуйте зміни.',
+    ],
+  })[key][getLocale() === 'uk' ? 1 : 0];
+localizedText($('add-overflight-artwork'), () => overflightAdmissionCopy('label'));
+localizedText($('industrial-art-review'), () =>
+  getLocale() === 'uk' ? 'Огляд індустріальної графіки' : 'Industrial art review',
+);
+localizedAttribute(
+  $('industrial-art-review'),
+  'href',
+  () => `../industrial-art-review/?lang=${getLocale()}`,
+);
 const node = (tag, value = '', className = '', hostRole = null) => {
   const el = document.createElement(tag);
-  el.textContent = value;
+  localizedText(el, typeof value === 'function' ? value : () => value);
   el.className = className;
   if (hostRole) el.dataset.studioHost = hostRole;
   return el;
@@ -50,12 +120,45 @@ let working = { document: createDefaultThemeBundle(), assets: new Map() },
   saved = working,
   generation = 0,
   storageReady = false;
+let workspaceLibrary = { entries: [] },
+  activeWorkspaceId = null,
+  themeWorkbench = null;
+let assetHandoffExport = null,
+  actorAnimationControls = null;
 let selected = working.document.slots[0].id,
   pending = null,
   undo = [],
   redo = [],
   promptAction = 'variation';
 const collectionSlots = new Set();
+const viewMemory = createStudioViewMemory(() => window.history);
+const pendingViewRestore = viewMemory.read();
+let initialWorkspaceLoad = true,
+  restoredView = false;
+function rememberView() {
+  if (!initialWorkspaceLoad) viewMemory.write(selected, filters());
+}
+function restoreView() {
+  if (!initialWorkspaceLoad) return;
+  const requestedView =
+    pendingViewRestore ?? studioEntryView(window.location.href, working.document.slots);
+  if (!requestedView) return;
+  const view = resolveStudioView(
+    requestedView,
+    working.document.slots.map((slot) => slot.id),
+    Object.fromEntries(
+      ['screen', 'state', 'kind', 'quality'].map((key) => [
+        key,
+        [...$(`filter-${key}`).querySelectorAll('option')].map((option) => option.value),
+      ]),
+    ),
+  );
+  if (!view) return;
+  if (view.selected) selected = view.selected;
+  for (const [key, value] of Object.entries(view.filters))
+    $(key === 'query' ? 'filter-search' : `filter-${key}`).value = value;
+  restoredView = !!view.selected;
+}
 let previewGeneration = 0;
 const currentSlot = () => working.document.slots.find((slot) => slot.id === selected);
 const resolved = () => resolvePresentation(working.document);
@@ -64,38 +167,53 @@ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) =>
   control.disabled = false;
   control.removeAttribute('data-studio-startup-disabled');
 });
-let operationFocus = null;
+let operationFocus = null,
+  invalidOperationFocus = null;
 const operations = createStudioOperations({
   target: $('studio-status'),
   cancelButton: $('cancel-studio-operation'),
   setBusy(value) {
-    if (value) operationFocus = document.activeElement;
+    if (value) {
+      operationFocus = document.activeElement;
+      invalidOperationFocus = null;
+    }
     // Escape and preview observation controls stay outside these mutation regions.
     document
       .querySelectorAll(
-        '.workspace-actions,.workspace-state,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
+        '.workspace-actions,.workspace-state,.theme-library-controls,.inventory,#replacement-panel,#sprite-panel,#token-form,#asset-history,#review-panel',
       )
       .forEach((el) => {
         el.inert = value;
         el.setAttribute('aria-busy', String(value));
       });
+    // A successful Stage consumes its prepared draft and disables its opener.
+    // Preserve the ordinary return owner on errors; only a consumed Stage
+    // advances to the next available authoring action.
+    const returnTarget =
+      invalidOperationFocus ||
+      (operationFocus === $('stage-asset') && operationFocus.disabled
+        ? $('save-workspace')
+        : operationFocus);
     if (
       !value &&
       document.hasFocus() &&
-      [document.body, $('cancel-studio-operation')].includes(document.activeElement) &&
-      operationFocus?.isConnected &&
-      !operationFocus.disabled
+      [document.body, $('cancel-studio-operation'), operationFocus].includes(
+        document.activeElement,
+      ) &&
+      returnTarget?.isConnected &&
+      !returnTarget.disabled
     )
-      operationFocus.focus();
+      returnTarget.focus();
   },
 });
 const status = (message, kind = '') => operations.message(message, kind);
-const report = (error) => status(error.message || String(error), 'error');
+const report = (error) => status(assetStudioErrorMessage(error), 'error');
 const interfacePreferences = mountInterfacePreferences({
   document,
   window,
   getStorage: () => localStorage,
 });
+themeWorkbench = mountThemeWorkbench({ document, window, onAction: workspaceAction });
 const studioGuide = mountStudioGuide({ document });
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
@@ -103,11 +221,13 @@ const audioPreferences = createAudioPreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('studio-audio-status').textContent = message;
+    localizedText($('studio-audio-status'), () => message);
   },
 });
 const renderMasterPreferences = ({ muted, volume }) => {
-  $('studio-audio-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
+  localizedText($('studio-audio-mute'), () =>
+    muted ? t('common:audio.unmute') : t('tools:muteSound'),
+  );
   $('studio-master-volume').value = volume;
 };
 const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
@@ -134,18 +254,13 @@ window.addEventListener('keydown', (event) => {
 });
 function requireSettled(allowPixels = false) {
   if (!allowPixels && sprite.hasEdits())
-    throw new Error(
-      'Prepare the edited sprite, or discard pixel edits, before changing workspace revisions.',
-    );
-  if (pending)
-    throw new Error(
-      'Validate and stage the prepared slot, or discard it, before changing workspace revisions.',
-    );
+    throw new Error(t('tools:prepareTheEditedSpriteOrDiscardPixelEditsBeforeChanging'));
+  if (pending) throw new Error(t('tools:validateAndStageThePreparedSlotOrDiscardItBefore'));
 }
 function stage(
   document,
   assets = working.assets,
-  message = 'Change staged. Save a local revision or export to keep it.',
+  message = t('tools:changeStagedSaveALocalRevisionOrExportToKeep'),
 ) {
   undo.push(working);
   if (undo.length > 40) undo.shift();
@@ -158,9 +273,10 @@ function discardPreparation() {
   pending?.bitmap?.close();
   pending = null;
   $('asset-upload').value = '';
-  $('upload-summary').textContent = 'No replacement selected.';
+  localizedText($('upload-summary'), () => t('tools:noReplacementSelected'));
   $('image-preparation').hidden = true;
   $('geometry-panel').hidden = true;
+  rotorControls.refresh();
   $('stage-asset').disabled = true;
   $('discard-asset').disabled = true;
 }
@@ -169,6 +285,7 @@ function selectSlot(id) {
   selected = id;
   sprite.reset();
   refresh();
+  rememberView();
 }
 function filters() {
   return {
@@ -182,10 +299,9 @@ function filters() {
 function refreshInventory() {
   const view = resolved(),
     rows = matchingSlots(working.document.slots, view, filters());
-  $('slot-count').textContent = `${rows.length} / ${working.document.slots.length}`;
+  localizedText($('slot-count'), () => `${rows.length} / ${working.document.slots.length}`);
   const coverage = presentationCoverage(working.document);
-  $('coverage-summary').textContent =
-    `${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`;
+  localizedText($('coverage-summary'), () => t('tools:studio.inventory.coverage', coverage.counts));
   const list = document.createDocumentFragment();
   for (const slot of rows) {
     const asset = view.assets[slot.id],
@@ -196,7 +312,9 @@ function refreshInventory() {
     check.dataset.studioHost = 'control';
     check.type = 'checkbox';
     check.checked = collectionSlots.has(slot.id);
-    check.setAttribute('aria-label', `Include ${slot.label} in collection`);
+    localizedAttribute(check, 'aria-label', () =>
+      t('tools:studio.inventory.includeInCollection', { label: slot.label }),
+    );
     check.onchange = () => {
       check.checked ? collectionSlots.add(slot.id) : collectionSlots.delete(slot.id);
       updateCollectionCount();
@@ -207,7 +325,16 @@ function refreshInventory() {
     button.setAttribute('aria-pressed', String(slot.id === selected));
     button.append(
       node('strong', slot.label, '', 'control'),
-      node('small', `${slot.id} · ${stage}`, `stage-${stage}`, 'secondary'),
+      node(
+        'small',
+        () =>
+          t('tools:studio.inventory.slotStage', {
+            slotId: slot.id,
+            stage: t(`tools:studio.inventory.stage.${stage}`),
+          }),
+        `stage-${stage}`,
+        'secondary',
+      ),
     );
     button.onclick = () => {
       const restoreFocus = document.hasFocus() && document.activeElement === button;
@@ -229,9 +356,18 @@ function refreshInventory() {
   $('empty-inventory').hidden = rows.length !== 0;
 }
 function updateCollectionCount() {
-  $('collection-count').textContent = `${collectionSlots.size} slots selected`;
+  localizedText($('collection-count'), () =>
+    t('tools:studio.inventory.selectedSlots', { count: collectionSlots.size }),
+  );
 }
 function refresh() {
+  if (!working.document.slots.some((slot) => slot.id === selected))
+    selected =
+      studioEntryView(window.location.href, working.document.slots)?.selected ??
+      working.document.slots[0].id;
+  $('add-team-anchors').disabled = !needsTeamPresentationSlots(working.document);
+  $('add-destruction-audio').disabled = !needsDestructionAudioSlots(working.document);
+  $('add-overflight-artwork').disabled = !needsOverflightArtworkSlots(working.document);
   const view = resolved();
   const themes = [...new Map(working.document.themes.map((theme) => [theme.id, theme])).values()];
   $('filter-theme').replaceChildren(
@@ -242,8 +378,15 @@ function refresh() {
     }),
   );
   $('filter-theme').value = view.theme.id;
-  $('workspace-summary').textContent =
-    `Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`;
+  localizedText($('workspace-summary'), () =>
+    t('tools:studio.workspace.summary', {
+      theme: view.theme.name,
+      revision: working.document.revision,
+      generation: generation || t('tools:studio.crossMode.none'),
+      changes: working !== saved ? t('tools:studio.workspace.unsavedChanges') : '',
+      collection: view.collection ? ` · ${view.collection.id}` : '',
+    }),
+  );
   $('undo-draft').disabled = !undo.length;
   $('redo-draft').disabled = !redo.length;
   $('reset-draft').disabled = working === saved;
@@ -251,14 +394,25 @@ function refresh() {
   refreshInspector();
   refreshTokens();
   updateCollectionCount();
+  themeWorkbench?.update({
+    library: workspaceLibrary,
+    activeId: activeWorkspaceId,
+    document: working.document,
+    assets: working.assets,
+    selected,
+  });
 }
 function refreshInspector() {
+  assetHandoffExport?.reset();
+  actorAnimationControls?.refresh();
   const slot = currentSlot(),
     view = resolved(),
     asset = view.assets[slot.id];
-  $('slot-id').textContent = slot.id;
-  $('slot-title').textContent = slot.label;
-  $('slot-quality').textContent = asset?.quality.stage || 'missing';
+  localizedText($('slot-id'), () => slot.id);
+  localizedText($('slot-title'), () => slot.label);
+  localizedText($('slot-quality'), () =>
+    t(`tools:studio.inventory.stage.${asset?.quality.stage || 'missing'}`),
+  );
   const priorState = $('preview-state').value;
   $('preview-state').replaceChildren(
     ...slot.states.map((state) => {
@@ -268,19 +422,22 @@ function refreshInspector() {
     }),
   );
   if (slot.states.includes(priorState)) $('preview-state').value = priorState;
-  $('slot-description').textContent = asset?.description || 'No asset bound to this slot.';
+  localizedText(
+    $('slot-description'),
+    () => asset?.description || t('tools:noAssetBoundToThisSlot'),
+  );
   const facts = [
     [
-      'Frame',
+      t('tools:frame'),
       slot.dimensions
         ? `${slot.dimensions.width} × ${slot.dimensions.height} px`
-        : 'Scalable / media',
+        : t('tools:scalableMedia'),
     ],
-    ['Accepted', slot.kinds.join(', ')],
-    ['Budget', `${Math.round(slot.budget.maxBytes / 1024)} KiB`],
-    ['Alpha', slot.alpha],
-    ['Sampling', slot.sampling],
-    ['Required', slot.required ? 'Yes' : 'Optional theme owner'],
+    [t('tools:accepted'), slot.kinds.join(', ')],
+    [t('tools:budget'), `${Math.round(slot.budget.maxBytes / 1024)} KiB`],
+    [t('tools:alpha'), slot.alpha],
+    [t('tools:sampling'), slot.sampling],
+    [t('tools:required'), slot.required ? t('tools:yes') : t('tools:optionalThemeOwner')],
   ];
   $('slot-facts').replaceChildren(
     ...facts.map(([key, value]) => {
@@ -296,10 +453,12 @@ function refreshInspector() {
   $('slot-requirements').replaceChildren(
     ...slot.requirements.map((requirement) => node('li', requirement, '', 'body')),
   );
-  $('slot-contract').textContent = JSON.stringify(
-    { ...slot, currentAsset: asset ? `${asset.id}@${asset.revision}` : null },
-    null,
-    2,
+  localizedText($('slot-contract'), () =>
+    JSON.stringify(
+      { ...slot, currentAsset: asset ? `${asset.id}@${asset.revision}` : null },
+      null,
+      2,
+    ),
   );
   const editable =
     slot.kinds.includes('image') &&
@@ -340,13 +499,11 @@ async function refreshPreviews() {
   $('preview-field-mode').disabled = !fieldContext;
   $('preview-team-arena').disabled = !teamContext;
   $('preview-team-scenario').disabled = !teamContext;
-  const firstConnection = $('preview-team-arena').value === 'first-connection',
-    scenario = $('preview-team-scenario'),
-    firstConnectionScenes = ['initial', 'cutting', 'warning', 'charge', 'capture', 'victory'];
+  const arena = $('preview-team-arena').value,
+    scenario = $('preview-team-scenario');
   for (const option of scenario.options)
-    option.disabled = firstConnection && !firstConnectionScenes.includes(option.value);
-  if (firstConnection && !firstConnectionScenes.includes(scenario.value))
-    scenario.value = 'initial';
+    option.disabled = !isTeamPreviewScenarioAvailable(arena, option.value);
+  if (!isTeamPreviewScenarioAvailable(arena, scenario.value)) scenario.value = 'initial';
   const requestedPreview = ++previewGeneration;
   const slot = currentSlot(),
     current = resolvePresentation(saved.document),
@@ -375,7 +532,7 @@ async function refreshPreviews() {
         ...options,
         statusTarget: $(`${id}-preview-status`),
         cancelButton: $(`${id}-preview-cancel`),
-        label: id === 'current' ? 'Saved preview' : 'Draft preview',
+        label: () => (id === 'current' ? t('tools:savedPreview') : t('tools:draftPreview')),
         isCurrent: () => requestedPreview === previewGeneration,
       }),
     ),
@@ -430,7 +587,12 @@ function refreshHistory() {
       );
       row.append(copy);
       if (item.file) {
-        const downloadButton = node('button', 'Download file', '', 'control');
+        const downloadButton = node(
+          'button',
+          localizedMessage('tools:downloadFile'),
+          '',
+          'control',
+        );
         downloadButton.type = 'button';
         downloadButton.onclick = () =>
           download(
@@ -441,20 +603,25 @@ function refreshHistory() {
       }
       if (!bindable) {
         row.append(
-          node('p', 'Source original · prepare it before binding to this slot.', '', 'secondary'),
+          node(
+            'p',
+            localizedMessage('tools:sourceOriginalPrepareItBeforeBindingToThisSlot'),
+            '',
+            'secondary',
+          ),
         );
         return row;
       }
-      const button = node('button', 'Bind this revision', '', 'control');
+      const button = node('button', localizedMessage('tools:bindThisRevision'), '', 'control');
       button.type = 'button';
       button.disabled = item.id === asset?.id && item.revision === asset?.revision;
       button.onclick = () =>
-        operation('Preparing workspace change…', () => {
+        operation(t('tools:preparingWorkspaceChange'), () => {
           requireSettled();
           stage(
             reviseStudioTheme(working.document, { bindings: { [selected]: ref(item) } }),
             working.assets,
-            'Earlier asset bound in a new immutable theme revision.',
+            t('tools:earlierAssetBoundInANewImmutableThemeRevision'),
           );
         });
       row.append(button);
@@ -520,24 +687,36 @@ function fileMime(file) {
     }[ext] || file.type
   );
 }
+const preparedDownload = createStudioDownload({ document, target: $('prepared-download') });
+assetHandoffExport = mountRewardAssetExport({
+  container: $('asset-history').parentElement,
+  getOriginal() {
+    requireSettled();
+    const asset = resolved().assets[selected];
+    if (!asset?.file) throw new Error(t('tools:fileBytesAreUnavailable'));
+    return {
+      blob: working.assets.get(asset.file.sha256),
+      sha256: asset.file.sha256,
+      mime: asset.file.mime,
+      name: `${asset.id}-${asset.revision}`,
+    };
+  },
+});
 function download(blob, filename) {
   if (!blob) {
-    report(new Error('File bytes are unavailable.'));
+    report(new Error(t('tools:fileBytesAreUnavailable')));
     return;
   }
-  const url = URL.createObjectURL(blob),
-    link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  preparedDownload.offer(blob, filename);
 }
+window.addEventListener('pagehide', (event) => {
+  if (!event.persisted) preparedDownload.dispose();
+});
+
 async function fileMetadata(blob, dimensions, task) {
-  task.update('Reading asset bytes for verification…', 'reading');
+  task.update(t('tools:readingAssetBytesForVerification'), 'reading');
   const bytes = new Uint8Array(await blob.arrayBuffer());
-  task.update('Hashing the original asset bytes…', 'verifying');
+  task.update(t('tools:hashingTheOriginalAssetBytes'), 'verifying');
   const sha256 = await hashPresentationBytes(bytes);
   task.check();
   return {
@@ -549,14 +728,14 @@ async function fileMetadata(blob, dimensions, task) {
   };
 }
 async function decodeImage(blob, task) {
-  task.update('Reading the image header…', 'reading');
+  task.update(t('tools:readingTheImageHeader'), 'reading');
   const dataURL = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     const cleanup = () => task.signal.removeEventListener('abort', cancel);
     const cancel = () => {
       reader.abort();
       cleanup();
-      reject(new DOMException('Image read cancelled.', 'AbortError'));
+      reject(new DOMException(t('tools:imageReadCancelled'), 'AbortError'));
     };
     reader.onload = () => {
       cleanup();
@@ -569,7 +748,7 @@ async function decodeImage(blob, task) {
     task.signal.addEventListener('abort', cancel, { once: true });
     reader.readAsDataURL(blob);
   });
-  task.update('Validating image dimensions…', 'verifying');
+  task.update(t('tools:validatingImageDimensions'), 'verifying');
   const info = inspectImageDataUrl(dataURL);
   if (!info.valid) throw new Error(info.errors.join(' '));
   if (
@@ -578,14 +757,17 @@ async function decodeImage(blob, task) {
     info.width * info.height > LIMITS.imagePixels
   )
     throw new Error(
-      `Studio images must fit ${LIMITS.imageSide} px per side and ${LIMITS.imagePixels.toLocaleString()} total pixels. Resize externally, retaining your original.`,
+      t('tools:studio.upload.imageLimits', {
+        side: formatNumber(LIMITS.imageSide),
+        pixels: formatNumber(LIMITS.imagePixels),
+      }),
     );
-  task.update('Decoding the original image…', 'decoding');
+  task.update(t('tools:decodingTheOriginalImage'), 'decoding');
   const bitmap = await createImageBitmap(blob);
   try {
     task.check();
     if (bitmap.width !== info.width || bitmap.height !== info.height)
-      throw new Error('Decoded image dimensions do not match its header.');
+      throw new Error(t('tools:decodedImageDimensionsDoNotMatchItsHeader'));
     return bitmap;
   } catch (error) {
     bitmap.close();
@@ -617,9 +799,9 @@ async function startUpload(file, fromSprite = false, task) {
     mime = fileMime(file),
     kind = mime.split('/')[0];
   if (!slot.kinds.includes(kind))
-    throw new Error(`This slot accepts ${slot.kinds.join(', ')}. Choose an appropriate file.`);
+    throw new Error(t('tools:studio.upload.acceptedKinds', { kinds: slot.kinds.join(', ') }));
   if (file.size > LIMITS.assetBytes)
-    throw new Error('The original exceeds the 4 MiB asset budget.');
+    throw new Error(t('tools:theOriginalExceedsThe4MibAssetBudget'));
   const blob = new Blob([file], { type: mime });
   const revision = nextAssetRevision(working.document, slot.id);
   const record = {
@@ -628,9 +810,9 @@ async function startUpload(file, fromSprite = false, task) {
     kind,
     description: slot.label,
     provenance: {
-      creator: 'Pending creator',
+      creator: t('tools:pendingCreator'),
       source: file.name || 'Local pixel editor',
-      license: 'Pending rights declaration',
+      license: t('tools:pendingRightsDeclaration'),
       prompt: '',
       parent: null,
     },
@@ -669,18 +851,26 @@ async function startUpload(file, fromSprite = false, task) {
     adopted = true;
     if (fromSprite) sprite.acceptSnapshot();
     $('discard-asset').disabled = false;
-    $('asset-source').value = file.name || 'Local pixel editor';
+    $('asset-source').value = file.name || t('tools:localPixelEditor');
     $('asset-description').value = slot.label;
-    $('upload-summary').textContent =
-      `${file.name || 'Local sprite'} · ${Math.ceil(blob.size / 1024)} KiB${bitmap ? ` · ${bitmap.width} × ${bitmap.height} px original` : ''}`;
+    localizedText($('upload-summary'), () =>
+      t('tools:studio.upload.summary', {
+        name: file.name || t('tools:localSprite'),
+        kibibytes: formatNumber(Math.ceil(blob.size / 1024)),
+        dimensions: bitmap
+          ? t('tools:studio.upload.originalDimensions', {
+              width: formatNumber(bitmap.width),
+              height: formatNumber(bitmap.height),
+            })
+          : '',
+      }),
+    );
     $('image-preparation').hidden = !bitmap;
     if (crop) setCrop(crop);
     populateGeometry();
     $('stage-asset').disabled = false;
     refreshPreviews();
-    status(
-      'Replacement prepared. Check geometry and enter actual creator, source, and rights before staging.',
-    );
+    status(t('tools:replacementPreparedCheckGeometryAndEnterActualCreatorSourceAnd'));
   } finally {
     if (!adopted) bitmap?.close();
   }
@@ -717,7 +907,7 @@ function drawSource() {
   }
 }
 async function cropCandidate(preparation, slot, crop, task) {
-  task.update('Encoding the crop at the slot frame size…', 'encoding');
+  task.update(t('tools:encodingTheCropAtTheSlotFrameSize'), 'encoding');
   const canvas = document.createElement('canvas');
   canvas.width = slot.dimensions.width;
   canvas.height = slot.dimensions.height;
@@ -736,7 +926,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   );
   const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
   task.check();
-  if (!blob) throw new Error('The browser could not encode this crop.');
+  if (!blob) throw new Error(t('tools:theBrowserCouldNotEncodeThisCrop'));
   const asset = structuredClone(preparation.template);
   asset.file = await fileMetadata(blob, canvas, task);
   asset.geometry = imageGeometry(canvas, slot);
@@ -744,7 +934,7 @@ async function cropCandidate(preparation, slot, crop, task) {
   return { candidate: asset, candidateBlob: blob, preparedCrop: { ...crop } };
 }
 async function prepareCrop(task) {
-  if (!pending?.bitmap) throw new Error('Choose an image first.');
+  if (!pending?.bitmap) throw new Error(t('tools:chooseAnImageFirst'));
   const preparation = pending;
   const candidate = await cropCandidate(preparation, currentSlot(), getCrop(), task);
   task.check();
@@ -753,27 +943,48 @@ async function prepareCrop(task) {
   $('stage-asset').disabled = false;
   drawSource();
   refreshPreviews();
-  status(
-    'Derivative prepared. Check geometry and enter actual creator, source, and rights before staging.',
-  );
+  status(t('tools:derivativePreparedCheckGeometryAndEnterActualCreatorSourceAnd'));
 }
 
 function populateGeometry() {
   const geometry = pending?.candidate?.geometry;
   $('geometry-panel').hidden = !geometry;
-  if (!geometry) return;
+  if (!geometry) {
+    rotorControls.refresh();
+    return;
+  }
   const controls = presentationGeometryControls(currentSlot());
   $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
   $('rotor-anchors').disabled = !controls.rotors;
   $('nine-slice').disabled = !controls.nineSlice;
-  $('geometry-usage').textContent = controls.pivot
-    ? 'The pivot places this artwork around its unchanged gameplay center. Rotor hubs and panel slices are editable only where the renderer supports them.'
-    : 'This interface or picture slot uses centered placement. Crop the source to change its composition; unsupported anchors and slices stay locked.';
+  localizedText($('geometry-usage'), () =>
+    controls.pivot
+      ? t('tools:thePivotPlacesThisArtworkAroundItsUnchangedGameplayCenter')
+      : t('tools:thisInterfaceOrPictureSlotUsesCenteredPlacementCropThe'),
+  );
   $('pivot-x').value = geometry.pivot.x;
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
   $('nine-slice').value = JSON.stringify(geometry.nineSlice);
+  rotorControls.refresh();
 }
+const rotorControls = mountStudioRotorControls({
+  document,
+  getContext: () => ({
+    owner: pending,
+    asset: pending?.candidate,
+    slot: currentSlot(),
+    geometryText: JSON.stringify(
+      ['pivot-x', 'pivot-y', 'rotor-anchors', 'nine-slice'].map((id) => $(id).value),
+    ),
+  }),
+  onApply: (anchors, checkCurrent) =>
+    operation(t('tools:checkingPreviewGeometry'), (task) => {
+      checkCurrent();
+      return validatePending(true, task, anchors);
+    }),
+  onError: report,
+});
 function editedGeometry() {
   const current = pending.candidate.geometry;
   return {
@@ -783,22 +994,23 @@ function editedGeometry() {
     nineSlice: JSON.parse($('nine-slice').value),
   };
 }
-async function validatePending(geometryOnly = false, task) {
-  if (!pending?.candidate) throw new Error('Prepare an image crop or choose media first.');
+async function validatePending(geometryOnly = false, task, rotorAnchors = null) {
+  if (!pending?.candidate) throw new Error(t('tools:prepareAnImageCropOrChooseMediaFirst'));
   if (pending.bitmap) {
     const crop = getCrop();
     if (Object.keys(crop).some((key) => crop[key] !== pending.preparedCrop?.[key]))
-      throw new Error(
-        'The crop has changed. Prepare derivative before applying geometry or staging.',
-      );
+      throw new Error(t('tools:theCropHasChangedPrepareDerivativeBeforeApplyingGeometryOr'));
   }
   const asset = structuredClone(pending.candidate);
   if (asset.geometry) asset.geometry = editedGeometry();
+  if (rotorAnchors !== null) asset.geometry.rotorAnchors = rotorAnchors;
   if (!geometryOnly) {
     for (const id of ['asset-creator', 'asset-source', 'asset-license'])
       if (!$(id).value.trim()) {
-        $(id).focus();
-        throw new Error('Enter the actual creator, source, and license / rights statement.');
+        // The operation has made this panel inert. Defer the correction target
+        // until unlock, which also checks foreground and current focus ownership.
+        invalidOperationFocus = $(id);
+        throw new Error(t('tools:enterTheActualCreatorSourceAndLicenseRightsStatement'));
       }
     asset.description = $('asset-description').value.trim() || currentSlot().label;
     asset.provenance = {
@@ -821,13 +1033,15 @@ async function validatePending(geometryOnly = false, task) {
     bindings: { [selected]: ref(asset) },
   });
   if (geometryOnly) {
+    task.check();
     pending.candidate = asset;
+    populateGeometry();
     refreshPreviews();
-    status('Geometry checked and applied to the draft preview.');
+    status(t('tools:geometryCheckedAndAppliedToTheDraftPreview'));
     return;
   }
   if (asset.kind === 'image') {
-    task.update('Decoding and checking transparency…', 'decoding');
+    task.update(t('tools:decodingAndCheckingTransparency'), 'decoding');
     const bitmap = await createImageBitmap(pending.candidateBlob),
       frame = asset.geometry.frame,
       canvas = document.createElement('canvas');
@@ -853,37 +1067,42 @@ async function validatePending(geometryOnly = false, task) {
     const measured = pixelBounds(context.getImageData(0, 0, frame.width, frame.height));
     bitmap.close();
     if (currentSlot().alpha === 'required' && !measured.transparent)
-      throw new Error('This slot requires transparency; the candidate is fully opaque.');
+      throw new Error(t('tools:thisSlotRequiresTransparencyTheCandidateIsFullyOpaque'));
     if (currentSlot().alpha === 'opaque' && measured.transparent)
-      throw new Error('This slot requires a fully opaque image.');
+      throw new Error(t('tools:thisSlotRequiresAFullyOpaqueImage'));
     if (!measured.occupiedBounds)
-      throw new Error('The candidate is entirely transparent. Paint or import a visible asset.');
+      throw new Error(t('tools:theCandidateIsEntirelyTransparentPaintOrImportAVisible'));
   }
   if (asset.kind === 'font') {
-    task.update('Reading and decoding the candidate font…', 'decoding');
+    task.update(t('tools:readingAndDecodingTheCandidateFont'), 'decoding');
     const fontBytes = await pending.candidateBlob.arrayBuffer();
     task.check();
     await new FontFace('RLStudioValidation', fontBytes).load();
   }
-  task.update('Verifying original bytes and replacement history…', 'verifying');
+  task.update(t('tools:verifyingOriginalBytesAndReplacementHistory'), 'verifying');
   const verified = await verifyThemeAssets(next, bytes, { signal: task.signal });
   task.check();
   discardPreparation();
   stage(
     next,
     verified,
-    'Replacement validated and staged. The original source and earlier revisions remain in the bundle.',
+    t('tools:replacementValidatedAndStagedTheOriginalSourceAndEarlierRevisions'),
   );
 }
-const editGeometry = node('button', 'Edit current raster metadata', '', 'control');
+const editGeometry = node(
+  'button',
+  localizedMessage('tools:editCurrentRasterMetadata'),
+  '',
+  'control',
+);
 editGeometry.type = 'button';
 editGeometry.id = 'edit-geometry';
 $('asset-upload-label').after(editGeometry);
 editGeometry.onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     const asset = resolved().assets[selected];
-    if (asset.kind !== 'image') throw new Error('Choose a raster asset first.');
+    if (asset.kind !== 'image') throw new Error(t('tools:chooseARasterAssetFirst'));
     const candidate = {
       ...structuredClone(asset),
       ...nextAssetRevision(working.document, selected),
@@ -904,20 +1123,50 @@ editGeometry.onclick = () =>
     populateGeometry();
     $('discard-asset').disabled = false;
     $('stage-asset').disabled = false;
-    $('upload-summary').textContent = 'Editing metadata; existing bytes remain unchanged.';
+    localizedText($('upload-summary'), () =>
+      t('tools:editingMetadataExistingBytesRemainUnchanged'),
+    );
   });
+actorAnimationControls = mountActorAnimationControls({
+  document,
+  after: editGeometry,
+  getContext: () => ({
+    document: working.document,
+    asset: resolved().assets[selected],
+    slot: currentSlot(),
+    blob: working.assets.get(resolved().assets[selected]?.file?.sha256),
+  }),
+  onError: report,
+  onApply: (animation, original) => {
+    requireSettled();
+    const asset = {
+      ...structuredClone(original),
+      ...nextAssetRevision(working.document, selected),
+      format: FORMATS.animatedAsset,
+      animation,
+      provenance: { ...original.provenance, parent: ref(original) },
+      quality: { stage: 'source', evidence: [] },
+    };
+    stage(
+      reviseStudioTheme(working.document, {
+        assets: [asset],
+        bindings: { [selected]: ref(asset) },
+      }),
+    );
+  },
+});
 const sprite = mountSpritePanel({
   onError: report,
   runOperation: operation,
   onPrepare: (blob, task) =>
     startUpload(new File([blob], 'local-sprite.png', { type: 'image/png' }), true, task),
 });
-const discardPixels = node('button', 'Discard pixel edits', '', 'control');
+const discardPixels = node('button', localizedMessage('tools:discardPixelEdits'), '', 'control');
 discardPixels.type = 'button';
 $('edit-current').after(discardPixels);
 discardPixels.onclick = () => {
   sprite.reset();
-  status('Pixel editor cleared. Prepared and staged assets are unchanged.');
+  status(t('tools:pixelEditorClearedPreparedAndStagedAssetsAreUnchanged'));
 };
 $('new-sprite').onclick = () => {
   try {
@@ -929,7 +1178,7 @@ $('new-sprite').onclick = () => {
   }
 };
 $('edit-current').onclick = () =>
-  operation('Decoding the current sprite…', async (task) => {
+  operation(t('tools:decodingTheCurrentSprite'), async (task) => {
     requireSettled();
     const asset = resolved().assets[selected],
       bitmap = await createImageBitmap(working.assets.get(asset.file.sha256)),
@@ -956,13 +1205,13 @@ $('edit-current').onclick = () =>
     );
     bitmap.close();
     sprite.open(frame.width, frame.height, ctx.getImageData(0, 0, frame.width, frame.height).data);
-    status('Current raster loaded in the pixel editor.');
+    status(t('tools:currentRasterLoadedInThePixelEditor'));
   });
 $('asset-upload').onchange = () => {
   const file = $('asset-upload').files[0];
-  if (file) operation('Reading replacement file…', (task) => startUpload(file, false, task));
+  if (file) operation(t('tools:readingReplacementFile'), (task) => startUpload(file, false, task));
 };
-$('prepare-crop').onclick = () => operation('Preparing crop derivative…', prepareCrop);
+$('prepare-crop').onclick = () => operation(t('tools:preparingCropDerivative'), prepareCrop);
 $('fit-crop').onclick = () => {
   if (pending?.bitmap)
     setCrop(
@@ -978,17 +1227,17 @@ $('fit-crop').onclick = () => {
 $('download-original').onclick = () =>
   download(pending?.blob, `original-${selected}.${extension(pending?.blob?.type)}`);
 $('apply-geometry').onclick = () =>
-  operation('Checking preview geometry…', (task) => validatePending(true, task));
+  operation(t('tools:checkingPreviewGeometry'), (task) => validatePending(true, task));
 $('stage-asset').onclick = () =>
-  operation('Validating replacement…', (task) => validatePending(false, task));
+  operation(t('tools:validatingReplacement'), (task) => validatePending(false, task));
 $('discard-asset').onclick = () => {
   discardPreparation();
   refreshInspector();
-  status('Prepared slot discarded. Staged workspace revisions are unchanged.');
+  status(t('tools:preparedSlotDiscardedStagedWorkspaceRevisionsAreUnchanged'));
 };
 $('token-form').onsubmit = (event) => {
   event.preventDefault();
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     const tokens = Object.fromEntries(
       [...new FormData(event.currentTarget)].map(([key, value]) => [
@@ -1000,10 +1249,13 @@ $('token-form').onsubmit = (event) => {
   });
 };
 ['filter-search', 'filter-screen', 'filter-state', 'filter-kind', 'filter-quality'].forEach((id) =>
-  $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', refreshInventory),
+  $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', () => {
+    refreshInventory();
+    rememberView();
+  }),
 );
 $('filter-theme').onchange = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     try {
       requireSettled();
       const previous = working.document,
@@ -1042,14 +1294,15 @@ $('clear-collection').onclick = () => {
   refreshPrompt();
 };
 $('stage-collection').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
-    if (!collectionSlots.size) throw new Error('Select at least one slot to build a collection.');
+    if (!collectionSlots.size) throw new Error(t('tools:selectAtLeastOneSlotToBuildACollection'));
     const view = resolved(),
       requiredSlots = [...collectionSlots];
     const bindings = Object.fromEntries(
       requiredSlots.map((id) => {
-        if (!view.bindings[id]) throw new Error(`Collection has no binding for ${id}.`);
+        if (!view.bindings[id])
+          throw new Error(t('tools:studio.collection.missingBinding', { slotId: id }));
         return [id, view.bindings[id]];
       }),
     );
@@ -1061,7 +1314,7 @@ $('stage-collection').onclick = () =>
         bindings,
       }),
       working.assets,
-      'Collection staged atomically. Every selected slot has a valid binding.',
+      t('tools:collectionStagedAtomicallyEverySelectedSlotHasAValidBinding'),
     );
   });
 for (const button of document.querySelectorAll('[data-prompt-action]'))
@@ -1077,10 +1330,10 @@ let copyRequest = 0;
 $('copy-generated-prompt').onclick = async () => {
   const request = ++copyRequest;
   const button = $('copy-generated-prompt');
-  const lease = promptStatus.begin({ message: 'Copying the complete prompt…' });
+  const lease = promptStatus.begin({ message: t('tools:copyingTheCompletePrompt') });
   try {
     await navigator.clipboard.writeText($('generated-prompt').value);
-    lease.finish({ message: 'Complete prompt copied.' });
+    lease.finish({ message: t('tools:completePromptCopied') });
   } catch {
     if (request !== copyRequest) return;
     if (document.hasFocus() && document.activeElement === button) {
@@ -1088,41 +1341,70 @@ $('copy-generated-prompt').onclick = async () => {
       $('generated-prompt').select();
     }
     lease.finish({
-      message: 'Clipboard unavailable. Select the full prompt and press Ctrl/Cmd+C.',
+      message: t('tools:clipboardUnavailableSelectTheFullPromptAndPressCtrlCmd'),
       state: 'error',
     });
   }
 };
+$('add-team-anchors').onclick = () =>
+  operation(t('tools:addingEditableTeamPresentation'), () => {
+    requireSettled();
+    stage(
+      addTeamPresentationSlots(working.document),
+      working.assets,
+      t('tools:teamPresentationSlotsAddedToThisDraftChooseCouchTeam'),
+    );
+  });
+$('add-destruction-audio').onclick = () =>
+  operation(destructionAdmissionCopy('preparing'), () => {
+    requireSettled();
+    const next = addDestructionAudioSlots(working.document);
+    selected = 'audio.destroy-soft';
+    $('filter-search').value = 'audio.';
+    for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
+    stage(next, working.assets, destructionAdmissionCopy('complete'));
+    rememberView();
+  });
+$('add-overflight-artwork').onclick = () =>
+  operation(overflightAdmissionCopy('preparing'), () => {
+    requireSettled();
+    const next = addOverflightArtworkSlots(working.document);
+    selected = OVERFLIGHT_ARTWORK_SLOTS[0];
+    $('filter-search').value = 'overflight.';
+    for (const name of ['screen', 'state', 'kind', 'quality']) $(`filter-${name}`).value = '';
+    stage(next, working.assets, overflightAdmissionCopy('complete'));
+    rememberView();
+  });
 $('undo-draft').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     if (!undo.length) return;
     redo.push(working);
     working = undo.pop();
     refresh();
-    status('Draft change undone. Saved history is intact.');
+    status(t('tools:draftChangeUndoneSavedHistoryIsIntact'));
   });
 $('redo-draft').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     if (!redo.length) return;
     undo.push(working);
     working = redo.pop();
     refresh();
-    status('Draft change restored.');
+    status(t('tools:draftChangeRestored'));
   });
 $('reset-draft').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     working = saved;
     undo = [];
     redo = [];
     sprite.reset();
     refresh();
-    status('Returned to the last saved workspace.');
+    status(t('tools:returnedToTheLastSavedWorkspace'));
   });
 $('record-review').onclick = () =>
-  operation('Preparing workspace change…', () => {
+  operation(t('tools:preparingWorkspaceChange'), () => {
     requireSettled();
     const evidence = [
       ...new Set(
@@ -1133,9 +1415,9 @@ $('record-review').onclick = () =>
       ),
     ];
     if (!evidence.length)
-      throw new Error('Record the concrete review checks before marking this asset reviewed.');
+      throw new Error(t('tools:recordTheConcreteReviewChecksBeforeMarkingThisAssetReviewed'));
     const current = resolved().assets[selected];
-    if (!current) throw new Error('Bind an asset before reviewing it.');
+    if (!current) throw new Error(t('tools:bindAnAssetBeforeReviewingIt'));
     const asset = {
       ...structuredClone(current),
       ...nextAssetRevision(working.document, selected),
@@ -1148,19 +1430,17 @@ $('record-review').onclick = () =>
         bindings: { [selected]: ref(asset) },
       }),
       working.assets,
-      'Review evidence recorded in a new immutable revision.',
+      t('tools:reviewEvidenceRecordedInANewImmutableRevision'),
     );
     $('review-evidence').value = '';
   });
 $('save-workspace').onclick = () =>
-  operation('Preparing a local revision…', async (task) => {
+  operation(t('tools:preparingALocalRevision'), async (task) => {
     requireSettled();
     if (!storageReady)
-      throw new Error(
-        'Local storage has not loaded successfully. Export your work, then use Reload saved to retry.',
-      );
+      throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
     task.commit();
-    const result = await store.save(working.document, working.assets, {
+    const result = await store.saveWorkspace(activeWorkspaceId, working.document, working.assets, {
       expectedGeneration: generation,
     });
     task.check();
@@ -1170,26 +1450,26 @@ $('save-workspace').onclick = () =>
     undo = [];
     redo = [];
     refresh();
-    status('Local revision saved atomically. Player saves are untouched.', 'success');
+    status(t('tools:localRevisionSavedAtomicallyPlayerSavesAreUntouched'), 'success');
   });
 $('export-workspace').onclick = () =>
-  operation('Verifying original bytes for export…', async (task) => {
+  operation(t('tools:verifyingOriginalBytesForExport'), async (task) => {
     requireSettled();
     const bundle = await exportThemeBundle(working.document, working.assets, {
       signal: task.signal,
     });
     task.check();
     download(bundle, `revealline-${resolved().theme.id}-r${working.document.revision}.rltheme`);
-    status('Theme download requested with all source files and immutable revisions.', 'success');
+    status(t('tools:themeDownloadRequestedWithAllSourceFilesAndImmutableRevisions'), 'success');
   });
 $('import-workspace').onchange = () => {
   const file = $('import-workspace').files[0];
   if (!file) return;
   $('import-workspace').value = '';
-  operation('Reading and validating the imported bundle…', async (task) => {
+  operation(t('tools:readingAndValidatingTheImportedBundle'), async (task) => {
     requireSettled();
     const incoming = await importThemeBundle(file, { signal: task.signal });
-    task.update('Verifying merged assets and immutable revisions…', 'verifying');
+    task.update(t('tools:verifyingMergedAssetsAndImmutableRevisions'), 'verifying');
     const next = adoptStudioBundle(working.document, incoming.document),
       merged = new Map([...working.assets, ...incoming.assets]);
     const bytes = await verifyThemeAssets(next, merged, { signal: task.signal });
@@ -1197,46 +1477,243 @@ $('import-workspace').onchange = () => {
     stage(
       next,
       bytes,
-      'Verified collection staged atomically. Current and imported source files are retained. Save to persist.',
+      t('tools:verifiedCollectionStagedAtomicallyCurrentAndImportedSourceFilesAre'),
     );
   });
 };
 async function loadWorkspace(task) {
   requireSettled();
-  if (working !== saved)
-    throw new Error('Export or save the staged workspace, or Reset to saved, before reloading.');
-  const result = await store.load();
+  if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
+  workspaceLibrary = await store.migrateLegacyWorkspace();
   task.check();
-  if (!result) task.update('Loading and verifying the current release collection…', 'downloading');
+  const workspaceId = activeWorkspaceId ?? workspaceLibrary.activeId;
+  const result = workspaceId ? await store.loadWorkspace(workspaceId) : null;
+  task.check();
+  if (!result)
+    task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
   const published = result ? null : await loadPublishedStudio({ signal: task.signal });
   task.check();
-  storageReady = true;
-  generation = result?.generation || 0;
-  working = result
+  let accepted = result
     ? { document: result.document, assets: result.assets }
     : (published ?? { document: createDefaultThemeBundle(), assets: new Map() });
+  if (!result) {
+    task.commit();
+    accepted = await store.createWorkspace(accepted.document, accepted.assets);
+    task.check();
+    workspaceLibrary = await store.listWorkspaces();
+    task.check();
+  }
+  storageReady = true;
+  generation = result?.generation ?? accepted.generation;
+  activeWorkspaceId = workspaceId ?? accepted.id;
+  working = { document: accepted.document, assets: accepted.assets };
   saved = working;
   undo = [];
   redo = [];
+  restoreView();
   if (!working.document.slots.some((slot) => slot.id === selected))
     selected = working.document.slots[0].id;
   sprite.reset();
   refresh();
   status(
     result
-      ? 'Saved studio workspace loaded.'
+      ? t('tools:savedStudioWorkspaceLoaded')
       : published
-        ? 'Current release assets loaded. Changes stay in this local studio.'
-        : 'Source registry loaded. A compiled release collection is not present.',
+        ? t('tools:currentReleaseAssetsLoadedChangesStayInThisLocalStudio')
+        : t('tools:sourceRegistryLoadedACompiledReleaseCollectionIsNotPresent'),
   );
 }
-$('reload-workspace').onclick = () => operation('Loading saved Studio workspace…', loadWorkspace);
+function requireSavedWorkspace() {
+  requireSettled();
+  if (working !== saved) throw new Error(t('tools:exportOrSaveTheStagedWorkspaceOrResetToSaved'));
+}
+function acceptWorkspace(record, id) {
+  previewGeneration++;
+  for (const target of ['current-preview', 'draft-preview']) $(target).previewCleanup?.();
+  generation = record.generation;
+  activeWorkspaceId = id;
+  working = { document: record.document, assets: record.assets };
+  saved = working;
+  undo = [];
+  redo = [];
+  collectionSlots.clear();
+  sprite.reset();
+  refresh();
+  rememberView();
+}
+function workspaceAction(action, options = {}) {
+  if (action === 'set-basis') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      requireSettled();
+      stage(
+        setStudioAppearanceBasis(working.document, options),
+        working.assets,
+        t('tools:studio.themes.basisStaged'),
+      );
+    });
+    return;
+  }
+  if (action === 'configure-defaults') {
+    operation(t('tools:studio.themes.preparing'), async (task) => {
+      requireSavedWorkspace();
+      const source = working.document;
+      const published = await loadPublishedStudio({ signal: task.signal });
+      task.check();
+      const unsupported = unsupportedThemeAssignmentSlots(
+        source,
+        published?.document ?? createDefaultThemeBundle(),
+      );
+      if (unsupported.length)
+        throw new Error(
+          t('tools:studio.themes.assignmentUnsupported', {
+            slots: unsupported.slice(0, 5).join(', '),
+          }),
+        );
+      await verifyThemeAssets(source, working.assets, { signal: task.signal });
+      task.check();
+      const candidate = createThemeCandidate(source, options);
+      const id = saveThemePreview(window.sessionStorage, candidate);
+      const target = new URL('../company-studio/', import.meta.url);
+      target.searchParams.set('appearanceCandidate', id);
+      window.location.assign(target.href);
+    });
+    return;
+  }
+  if (action === 'preview-sim') {
+    operation(t('tools:studio.themes.preparing'), () => {
+      // The preview leaves this tab. Preserve staged pixel edits and unsaved
+      // workspace history before handing off only the bounded candidate data.
+      requireSavedWorkspace();
+      const id = saveThemePreview(
+        window.sessionStorage,
+        createThemeCandidate(working.document, options),
+      );
+      const target = new URL('../fpv-worlds/calibration.html', import.meta.url);
+      target.searchParams.set('themePreview', id);
+      window.location.assign(target.href);
+    });
+    return;
+  }
+  if (action === 'export-runtime') {
+    operation(t('tools:verifyingOriginalBytesForExport'), async (task) => {
+      requireSettled();
+      const source = working.document;
+      const bundle = await exportRuntimeTheme(source, working.assets, {
+        signal: task.signal,
+        familyId: options.familyId,
+        familyRevision: options.familyRevision,
+        interfaceId: options.interfaceId,
+        interfaceRevision: options.interfaceRevision,
+      });
+      task.check();
+      download(bundle, `revealline-${source.id}-r${source.revision}.rlruntime`);
+      status(t('tools:studio.themes.runtimeExported'), 'success');
+    });
+    return;
+  }
+  if (action === 'preview') {
+    $('preview-mode').value = 'context';
+    refreshPreviews();
+    $('draft-preview').scrollIntoView({ block: 'center' });
+    return;
+  }
+  operation(t('tools:studio.themes.preparing'), async (task) => {
+    requireSettled();
+    if (!storageReady)
+      throw new Error(t('tools:localStorageHasNotLoadedSuccessfullyExportYourWorkThen'));
+    if (action !== 'duplicate') requireSavedWorkspace();
+    const identity = () => `theme-${globalThis.crypto.randomUUID()}`;
+    let record, id;
+    if (action === 'select') {
+      id = options.id;
+      record = await store.loadWorkspace(id);
+      task.check();
+      if (!record) throw new Error(t('tools:studio.themes.unavailable'));
+      task.commit();
+      workspaceLibrary = await store.selectWorkspace(id);
+    } else {
+      let source, assets;
+      if (action === 'import') {
+        const incoming = await importThemeBundle(options.file, { signal: task.signal });
+        task.check();
+        source = incoming.document;
+        assets = incoming.assets;
+        if (options.mode === 'duplicate')
+          source = duplicateStudioSnapshot(source, {
+            id: identity(),
+            name: options.name || resolvePresentation(source).theme.name,
+          });
+      } else if (action === 'duplicate') {
+        source = duplicateStudioSnapshot(working.document, { id: identity(), name: options.name });
+        assets = working.assets;
+      } else {
+        task.update(t('tools:loadingAndVerifyingTheCurrentReleaseCollection'), 'downloading');
+        const published = await loadPublishedStudio({ signal: task.signal });
+        task.check();
+        const family = getThemeFamily(
+          options.familyId ?? 'industrial-workshop',
+          options.familyRevision,
+        );
+        if (!family) throw new Error(t('tools:studio.themes.basisUnavailable'));
+        const tokens = getInterfaceTheme(family.interface.id, family.interface.revision).tokens;
+        const shared = Object.fromEntries(
+          Object.entries(tokens).filter(([name]) => Object.hasOwn(TOKEN_DEFAULTS, name)),
+        );
+        source = duplicateStudioSnapshot(published?.document ?? createDefaultThemeBundle(), {
+          id: identity(),
+          name: options.name,
+          tokens: { ...shared, amber: tokens.accent, success: tokens.safe },
+          appearanceBasis: {
+            familyId: family.id,
+            familyRevision: family.revision,
+            interfaceId: family.interface.id,
+            interfaceRevision: family.interface.revision,
+          },
+        });
+        assets = published?.assets ?? new Map();
+      }
+      // Snapshot duplication retains only selected assets and provenance parents.
+      const hashes = new Set(
+        source.assets.filter((asset) => asset.file).map((asset) => asset.file.sha256),
+      );
+      const retainedAssets = new Map([...assets].filter(([hash]) => hashes.has(hash)));
+      const verified = await verifyThemeAssets(source, retainedAssets, { signal: task.signal });
+      task.check();
+      if (action === 'import' && options.mode === 'replace') {
+        const library = await store.listWorkspaces();
+        task.check();
+        const entry = library.entries.find(
+          (item) => item.documentId === source.id && !item.recovery,
+        );
+        if (!entry) throw new Error(t('tools:studio.themes.noMatchingWorkspace'));
+        id = entry.id;
+        const prior = await store.loadWorkspace(id);
+        task.check();
+        task.commit();
+        record = await store.replaceWorkspace(id, source, verified, {
+          expectedGeneration: prior.generation,
+        });
+      } else {
+        task.commit();
+        record = await store.createWorkspace(source, verified);
+        id = record.id;
+      }
+      task.check();
+      workspaceLibrary = await store.listWorkspaces();
+    }
+    task.check();
+    acceptWorkspace(record, id);
+    status(t('tools:studio.themes.ready'), 'success');
+  });
+}
+$('reload-workspace').onclick = () =>
+  operation(t('tools:loadingSavedStudioWorkspace'), loadWorkspace);
 $('load-release').onclick = () =>
-  operation('Loading and verifying the release collection…', async (task) => {
+  operation(t('tools:loadingAndVerifyingTheReleaseCollection'), async (task) => {
     requireSettled();
     const published = await loadPublishedStudio({ signal: task.signal });
-    task.update('Verifying merged release assets…', 'verifying');
-    if (!published) throw new Error('This source checkout has no compiled release collection.');
+    task.update(t('tools:verifyingMergedReleaseAssets'), 'verifying');
+    if (!published) throw new Error(t('tools:thisSourceCheckoutHasNoCompiledReleaseCollection'));
     const next = adoptStudioBundle(working.document, published.document);
     const assets = await verifyThemeAssets(
       next,
@@ -1244,13 +1721,12 @@ $('load-release').onclick = () =>
       { signal: task.signal },
     );
     task.check();
-    stage(
-      next,
-      assets,
-      'Release collection staged. Existing local history is retained; save or undo this change.',
-    );
+    stage(next, assets, t('tools:releaseCollectionStagedExistingLocalHistoryIsRetainedSaveOr'));
   });
 window.addEventListener('pagehide', (event) => {
+  rememberView();
+  assetHandoffExport?.reset();
+  actorAnimationControls?.suspend();
   copyRequest++;
   if (event.persisted) {
     operations.cancel();
@@ -1262,9 +1738,14 @@ window.addEventListener('pagehide', (event) => {
   }
   for (const id of ['current-preview', 'draft-preview']) $(id).previewCleanup?.();
   if (!event.persisted) {
+    assetHandoffExport?.dispose();
+    actorAnimationControls?.dispose();
+    rotorControls.dispose();
     auditionLifecycle.dispose();
     studioGuide.dispose();
     interfacePreferences.dispose();
+    themeWorkbench?.dispose();
+    void store.close();
     stopMasterView();
     audioRestoration.dispose();
     audioPreferences.dispose();
@@ -1292,4 +1773,17 @@ for (const [id, values] of [
     }),
   );
 refresh();
-operation('Loading saved Studio workspace…', loadWorkspace);
+operation(t('tools:loadingSavedStudioWorkspace'), loadWorkspace).then(() => {
+  initialWorkspaceLoad = false;
+  if (
+    restoredView &&
+    !operations.busy &&
+    document.hasFocus() &&
+    document.activeElement === document.body
+  ) {
+    const target = matchMedia('(max-width: 700px)').matches
+      ? $('inspector')
+      : $('asset-list').querySelector('button[aria-pressed="true"]') || $('inspector');
+    target.focus();
+  }
+});

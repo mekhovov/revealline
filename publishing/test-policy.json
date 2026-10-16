@@ -1,0 +1,8 @@
+{
+  "format": "revealline-release-test-policy.v1",
+  "mode": "required",
+  "authorization": "explicit-user-request-20261004",
+  "scope": "automated-test-suites",
+  "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+  "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+}

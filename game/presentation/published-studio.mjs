@@ -1,6 +1,7 @@
 import { required } from '../data-json.mjs';
 import { LIMITS, validateThemeBundle } from './model.mjs';
 import { verifyThemeAssets } from './bundle.mjs';
+import { decodePresentationDocument } from './document-codec.mjs';
 
 const extensions = {
   'image/png': 'png',
@@ -82,7 +83,9 @@ export async function loadPublishedStudio({
   try {
     const source = await bytesAt('studio.json', LIMITS.manifestBytes, true);
     if (!source) return null;
-    const document = validateThemeBundle(new TextDecoder('utf-8', { fatal: true }).decode(source));
+    const document = validateThemeBundle(
+      decodePresentationDocument(new TextDecoder('utf-8', { fatal: true }).decode(source)),
+    );
     const files = new Map(
       document.assets.filter((a) => a.file).map((a) => [a.file.sha256, a.file]),
     );

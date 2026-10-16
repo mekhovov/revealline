@@ -1,0 +1,84 @@
+{
+  "format": "revealline-main-v097-final-authority-check.v1",
+  "status": "PASS",
+  "startedAt": "2026-09-24T06:18:17.289230+00:00",
+  "finishedAt": "2026-09-24T06:18:18.678982+00:00",
+  "auditAndFinalCheckElapsedSeconds": 377.953765,
+  "auditDeadlineSeconds": 1800,
+  "controllerCommit": "ca3f3fd638e02e1907a0811d7759d24ba8f726b6",
+  "runId": 35962558115,
+  "deploymentId": 6631370106,
+  "deploymentStatusId": 18767390016,
+  "receiptArtifactId": 10792966805,
+  "httpReport": {
+    "path": "http/http-20260924T061200Z-494edbf9/http-report.json",
+    "sha256": "5469b073e104fc05fee4ca9d9157f9480bcb4e3298c756b366be0456bf3e9ccd"
+  },
+  "checks": {
+    "run": {
+      "path": "final-authority/run.json",
+      "bytes": 12182,
+      "sha256": "07f473cd5c47a20e837d1786bab2c366ce384691905069477a5b438ad77e0714",
+      "endpoint": "repos/mekhovov/revealline/actions/runs/35962558115",
+      "startedAt": "2026-09-24T06:18:17.292610+00:00",
+      "finishedAt": "2026-09-24T06:18:17.749651+00:00",
+      "exactOriginalJSONObjectUnchanged": true
+    },
+    "jobs": {
+      "path": "final-authority/jobs.json",
+      "bytes": 5749,
+      "sha256": "384e13e48980d3d98a58c28f83dc43ef14837fd5192143c0a6054b5761c10255",
+      "endpoint": "repos/mekhovov/revealline/actions/runs/35962558115/jobs?per_page=100",
+      "startedAt": "2026-09-24T06:18:17.292714+00:00",
+      "finishedAt": "2026-09-24T06:18:17.911669+00:00",
+      "exactOriginalJSONObjectUnchanged": true
+    },
+    "deployment": {
+      "path": "final-authority/deployment.json",
+      "bytes": 3823,
+      "sha256": "2b592957080f3db4111818a449bc1ca867a1b60a27be0c39b05e5ec65bc4394d",
+      "endpoint": "repos/mekhovov/revealline/deployments/6631370106",
+      "startedAt": "2026-09-24T06:18:17.294435+00:00",
+      "finishedAt": "2026-09-24T06:18:17.749610+00:00",
+      "exactOriginalJSONObjectUnchanged": true
+    },
+    "statuses": {
+      "path": "final-authority/statuses.json",
+      "bytes": 6586,
+      "sha256": "0af31a79e445b75a0d32f97483ec7c364c696fa00f37c25200b8f77caa613a72",
+      "endpoint": "repos/mekhovov/revealline/deployments/6631370106/statuses?per_page=100",
+      "startedAt": "2026-09-24T06:18:17.749757+00:00",
+      "finishedAt": "2026-09-24T06:18:18.135404+00:00",
+      "exactOriginalJSONObjectUnchanged": true
+    },
+    "artifacts": {
+      "path": "final-authority/artifacts.json",
+      "bytes": 1401,
+      "sha256": "d848b0566716c8e7e2cc8c2d4bbec369da7db6139832307b0279b3d3e2c92716",
+      "endpoint": "repos/mekhovov/revealline/actions/runs/35962558115/artifacts?per_page=100",
+      "startedAt": "2026-09-24T06:18:17.751177+00:00",
+      "finishedAt": "2026-09-24T06:18:18.208040+00:00",
+      "exactOriginalJSONObjectUnchanged": true
+    },
+    "latest-deployment": {
+      "path": "final-authority/latest-deployment.json",
+      "bytes": 3825,
+      "sha256": "57937164157d68d35661a70fc3bd51a3fabdc9a1afb3551cbc0873deabf8287f",
+      "endpoint": "repos/mekhovov/revealline/deployments?environment=github-pages&per_page=1",
+      "startedAt": "2026-09-24T06:18:17.911848+00:00",
+      "finishedAt": "2026-09-24T06:18:18.323074+00:00",
+      "latestDeploymentUnchanged": true
+    },
+    "main": {
+      "path": "final-authority/main.json",
+      "bytes": 336,
+      "sha256": "c08b180f6776f0455fd758aa226d69cf7c665a9d10084c6d753401ff556e542e",
+      "endpoint": "repos/mekhovov/revealline/git/ref/heads/main",
+      "startedAt": "2026-09-24T06:18:18.323216+00:00",
+      "finishedAt": "2026-09-24T06:18:18.678848+00:00",
+      "exactOriginalJSONObjectUnchanged": true
+    }
+  },
+  "errors": [],
+  "scope": "Fresh read-only GitHub API originals after the complete public HTTP audit; exact JSON object equality with the admitted authority plus latest Pages deployment identity. No publication mutation."
+}

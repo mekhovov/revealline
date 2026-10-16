@@ -6,6 +6,8 @@ import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
+import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
+import { libraryMissionId } from '../mission-library/library.mjs';
 
 const catalogue = JSON.parse(
   await readFile(new URL('../content/optional-worlds.json', import.meta.url), 'utf8'),
@@ -24,7 +26,39 @@ const firstPicture = Buffer.from(
     .visualOverrides.background.dataUrl.split(',')[1],
   'base64',
 );
-const playId = `optional-worlds-install-${chapter.id}`;
+const index = JSON.parse(
+  await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
+);
+const indexedMission = index.missions.find(
+  (row) => row.packId === chapter.id && row.levelId === firstLevel,
+);
+assert(indexedMission, 'Use the exact current indexed optional mission.');
+const missionId = libraryMissionId({
+  owner: JSON.stringify(['classic', indexedMission.source, chapter.id]),
+  edition: indexedMission.sourceFile.sha256,
+  campaign: indexedMission.campaignKey,
+  mission: indexedMission.levelId,
+  revision: indexedMission.levelRevision,
+});
+const missionCard = (page) =>
+  [...(page.$('journey-cards')?.children ?? [])].find(
+    (button) => button.dataset.missionId === missionId,
+  );
+function assertCurrentBaseCardFocused(page) {
+  const row = index.missions.find(
+    (item) => item.source === 'base' && item.levelId === page.renders[0].levelId,
+  );
+  assert.ok(row, 'The fixture retains an exact indexed base-game mission.');
+  const id = libraryMissionId({
+    owner: JSON.stringify(['classic', row.source, row.packId]),
+    edition: row.sourceFile.sha256,
+    campaign: row.campaignKey,
+    mission: row.levelId,
+    revision: row.levelRevision,
+  });
+  assert.equal(page.doc.activeElement.dataset.missionId, id);
+  assert.equal(page.$('journey-cards').contains(page.doc.activeElement), true);
+}
 const packKey = 'revealline.packs.dev.v1';
 const hostTest = (name, run) => test(name, { timeout: 120000 }, run);
 
@@ -82,7 +116,7 @@ function mediaBoundary() {
   return media;
 }
 
-async function fixture(t, { beforeImport, pads = [] } = {}) {
+async function fixture(t, { beforeImport, pads = [], preinstalled = false } = {}) {
   const media = mediaBoundary();
   const databases = new Map();
   const solo = new Map([
@@ -95,7 +129,26 @@ async function fixture(t, { beforeImport, pads = [] } = {}) {
     initialLevel: null,
     seconds: '30',
     nativeKeyboard: true,
-    beforeImport,
+    async beforeImport(context) {
+      if (preinstalled) {
+        const installer = createCouchChapterInstaller({
+          channel: 'dev',
+          registeredEntries: [],
+          baseURL: 'http://localhost/',
+        });
+        try {
+          const result = await installer.install(chapter);
+          assert.equal(result.committed, true);
+          assert.equal(result.reused, false);
+          assert.equal(result.pack.id, chapter.id);
+          assert.equal(controls.downloadCount, 1);
+          assert.equal([...databases.values()].flatMap((db) => db.allPuts).length, 1);
+        } finally {
+          installer.dispose();
+        }
+      }
+      await beforeImport?.(context);
+    },
     pads,
     ImageClass: media.ImageClass,
     URLImpl: media.URLImpl,
@@ -140,6 +193,12 @@ async function fixture(t, { beforeImport, pads = [] } = {}) {
     writes: () => [...databases.values()].flatMap((db) => db.allPuts),
     assertSoloKept() {
       assert.deepEqual([...solo], originalSolo);
+      if (preinstalled)
+        assert.equal(
+          [...databases.values()].flatMap((db) => db.allPuts).length,
+          1,
+          'Installed Play must not write the authenticated pack again.',
+        );
       for (const [store, key] of [...databases.values()].flatMap((db) => db.allPuts)) {
         assert.equal(store, 'assets', 'Only the installed-pack store may be written.');
         assert.equal(key, packKey, 'Installation must not write Solo saves or progress.');
@@ -157,8 +216,24 @@ async function settled(page, predicate, message) {
     { timeoutMs: 45000, message },
   );
 }
+
+function releaseMissionCue(page) {
+  assert.equal(page.$('race-start-cue').hidden, false);
+  assert.equal(page.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(page.$('race-start-cue-label').textContent, '3');
+  assert.equal(page.tick(), 0);
+  page.frame(0, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  page.frame(700, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(page.tick(), 0);
+  for (let tick = 0; tick < 42; tick++) page.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(page.$('race-start-cue').hidden, true);
+  assert.equal(page.tick(), 42);
+}
 function activate(page, id) {
-  const element = page.$(id);
+  const element = typeof id === 'string' ? page.$(id) : id;
   assert.ok(element, `Missing public control ${id}`);
   assert.equal(element.disabled, false, `${id} must be available.`);
   assert.ok(element.getClientRects().length, `${id} must be visible.`);
@@ -177,7 +252,7 @@ function activate(page, id) {
   return operation;
 }
 function tap(page, id) {
-  const element = page.$(id);
+  const element = typeof id === 'string' ? page.$(id) : id;
   assert.ok(element, `Missing public control ${id}`);
   assert.equal(element.disabled, false, `${id} must be available.`);
   assert.ok(element.getClientRects().length, `${id} must be visible.`);
@@ -197,15 +272,49 @@ async function openCatalogue(page) {
   activate(page, 'race-chapters');
   await settled(
     page,
-    () => page.$('optional-worlds-dialog')?.open && page.$(playId)?.disabled === false,
-    'The real Couch chapter catalogue must load its published Play action.',
+    () => page.$('journey-chooser')?.open && missionCard(page)?.disabled === false,
+    'The real All missions chooser must expose the exact indexed chapter mission.',
   );
-  return page.$(playId);
+  assert.equal(page.$('optional-worlds-dialog'), null, 'No second chapter picker is mounted.');
+  return missionCard(page);
 }
 async function closeCatalogue(page) {
-  activate(page, 'optional-worlds-top-back');
-  await settled(page, () => !page.$('optional-worlds-dialog').open, 'Back must close Chapters.');
+  activate(page, 'journey-back');
+  await settled(page, () => !page.$('journey-chooser').open, 'Back must close All missions.');
 }
+async function downloadAndPlay(t, f) {
+  const page = f.page,
+    before = snapshot(page),
+    entered = deferred(),
+    gate = deferred();
+  t.after(() => gate.resolve());
+  f.controls.onDownload = async () => {
+    entered.resolve();
+    await gate.promise;
+  };
+  assert.match(missionCard(page).textContent, /Download/);
+  const operation = activate(page, missionCard(page));
+  assert.ok(operation instanceof Promise, 'Download & Play exposes its owned preparation.');
+  try {
+    await entered.promise;
+    assert.equal(page.$('journey-chooser').open, true);
+    assertRetained(page, before);
+    assert.equal(f.writes().length, 0, 'Unverified transport cannot publish a pack.');
+    await activate(page, missionCard(page));
+    assert.equal(f.controls.downloadCount, 1, 'Repeat activation cannot duplicate preparation.');
+    assertRetained(page, before);
+  } finally {
+    gate.resolve();
+  }
+  await operation;
+  f.controls.onDownload = null;
+  page.frame(0, { preserveStartCue: true });
+  assert.equal(page.state(), 'running', 'One Download & Play intent starts the chapter.');
+  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(f.controls.downloadCount, 1);
+  assert.equal(f.writes().length, 1, 'The authenticated pack is committed exactly once.');
+}
+
 async function start(page) {
   activate(page, 'race-start');
   await settled(page, () => page.state() === 'running', 'Start must run the accepted race.');
@@ -254,14 +363,14 @@ function assertRetained(page, before) {
 }
 
 hostTest(
-  'Couch main Chapters and Back retain the ready boards and restore the exact keyboard opener',
+  'Couch main All missions and Back retain the ready boards and restore the exact keyboard opener',
   async (t) => {
     const f = await fixture(t),
       p = f.page,
       before = snapshot(p);
     await openCatalogue(p);
     assert.equal(p.$('optional-worlds-manage')?.getClientRects().length ?? 0, 0);
-    assert.ok(p.doc.activeElement === p.$('optional-worlds-top-back'), 'Back retains exact focus.');
+    assertCurrentBaseCardFocused(p);
     await closeCatalogue(p);
     assert.ok(
       p.doc.activeElement === p.$('race-chapters'),
@@ -283,15 +392,13 @@ for (const state of ['ready', 'paused', 'finished'])
       const before = snapshot(p);
       await openCatalogue(p);
       f.controls.failDownload = true;
-      activate(p, playId);
+      activate(p, missionCard(p));
       await settled(
         p,
-        () =>
-          !p.$(playId).disabled &&
-          /503|unavailable/i.test(p.$('optional-worlds-status').textContent),
+        () => !missionCard(p).disabled && /503|unavailable/i.test(missionCard(p).textContent),
         'A failed download must surface recovery and re-enable its action.',
       );
-      assert.ok(p.doc.activeElement === p.$(playId), 'Focus returns to the exact Play action.');
+      assert.ok(p.doc.activeElement === missionCard(p), 'Focus returns to the exact Play action.');
       assertRetained(p, before);
       await closeCatalogue(p);
       assertRetained(p, before);
@@ -305,61 +412,82 @@ for (const state of ['ready', 'paused', 'finished'])
   );
 
 for (const state of ['paused', 'finished'])
-  hostTest(
-    `Cancel fences a late transport completion without replacing the ${state} race`,
-    async (t) => {
-      const f = await fixture(t),
-        p = f.page,
-        entered = deferred(),
-        gate = deferred(),
-        returned = deferred();
-      t.after(() => gate.resolve());
-      await prepareState(p, state);
-      const before = snapshot(p);
-      await openCatalogue(p);
-      f.controls.onDownload = async () => {
-        entered.resolve();
-        await gate.promise;
-        returned.resolve();
-      };
-      const pending = activate(p, playId);
-      assert.equal(
-        p.doc.activeElement,
-        p.$('optional-worlds-cancel'),
-        'The real catalogue activation hook must retain the panel-owned Cancel focus.',
-      );
-      await entered.promise;
-      assert.equal(p.$('optional-worlds-cancel').hidden, false);
-      assert.equal(p.doc.activeElement, p.$('optional-worlds-cancel'));
-      assertRetained(p, before);
-      activate(p, 'optional-worlds-cancel');
-      assert.ok(p.doc.activeElement === p.$(playId), 'Focus returns to the exact Play action.');
-      gate.resolve();
-      await returned.promise;
-      await pending;
-      await settled(p, () => !p.$(playId).disabled, 'Cancel must release the chapter action.');
-      await closeCatalogue(p);
-      assertRetained(p, before);
-      assert.deepEqual(f.writes(), []);
-      f.assertSoloKept();
-    },
-  );
+  for (const cancellation of ['Back', 'new focus'])
+    hostTest(
+      `${cancellation} fences a late transport completion without replacing the ${state} race`,
+      async (t) => {
+        const f = await fixture(t),
+          p = f.page,
+          entered = deferred(),
+          gate = deferred(),
+          returned = deferred();
+        let signal;
+        t.after(() => gate.resolve());
+        await prepareState(p, state);
+        const before = snapshot(p);
+        await openCatalogue(p);
+        f.controls.onDownload = async (options) => {
+          signal = options.signal;
+          entered.resolve();
+          await gate.promise;
+          returned.resolve();
+        };
+        const operation = activate(p, missionCard(p));
+        assert.ok(operation instanceof Promise);
+        try {
+          await entered.promise;
+          assert.equal(signal.aborted, false);
+          assert.equal(p.doc.activeElement, missionCard(p));
+          assertRetained(p, before);
+          if (cancellation === 'Back') {
+            await closeCatalogue(p);
+            assert.equal(p.doc.activeElement, p.$('race-chapters'));
+          } else {
+            p.$('journey-back').focus();
+            assert.equal(p.$('journey-chooser').open, true);
+            assert.equal(p.doc.activeElement, p.$('journey-back'));
+          }
+          assert.equal(signal.aborted, true, 'The public cancellation aborts transport ownership.');
+          assertRetained(p, before);
+        } finally {
+          gate.resolve();
+        }
+        await returned.promise;
+        await operation;
+        assertRetained(p, before);
+        assert.equal(p.$('race-library-replace')?.open ?? false, false);
+        if (cancellation === 'Back') {
+          assert.equal(p.$('journey-chooser').open, false);
+          assert.equal(p.doc.activeElement, p.$('race-chapters'));
+        } else {
+          assert.equal(p.$('journey-chooser').open, true);
+          assert.equal(p.doc.activeElement, p.$('journey-back'));
+          assert.equal(missionCard(p).disabled, false);
+          assert.match(
+            missionCard(p).querySelector('.journey-card-action').textContent,
+            /Download/,
+          );
+          await closeCatalogue(p);
+        }
+        assertRetained(p, before);
+        assert.equal(f.controls.downloadCount, 1);
+        assert.deepEqual(f.writes(), []);
+        f.assertSoloKept();
+      },
+    );
 
 hostTest(
-  'one deliberate Download & play starts once with the same authenticated original on both boards',
+  'Download & Play retains the ready race until verified and starts once with the same authenticated original on both boards',
   async (t) => {
     const f = await fixture(t),
       p = f.page,
       before = snapshot(p);
     await openCatalogue(p);
-    activate(p, playId);
-    await settled(
-      p,
-      () => p.state() === 'running',
-      'Catalogue Play must start without another Start.',
-    );
-    assert.equal(p.$('optional-worlds-dialog').open, false);
-    assert.equal(p.$('race-chapter-replace')?.open ?? false, false);
+    await downloadAndPlay(t, f);
+    assert.equal(p.state(), 'running');
+    releaseMissionCue(p);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.$('race-library-replace')?.open ?? false, false);
     const accepted = [...p.renders],
       picture = p.drawOptions[0].backdrop;
     accepted.forEach((run, seat) => {
@@ -386,8 +514,7 @@ hostTest(
     const f = await fixture(t),
       p = f.page;
     await openCatalogue(p);
-    activate(p, playId);
-    await settled(p, () => p.state() === 'running', 'The chapter must start first.');
+    await downloadAndPlay(t, f);
     p.key('KeyS');
     p.frames(12);
     p.key('KeyS', false);
@@ -395,32 +522,32 @@ hostTest(
     const before = snapshot(p),
       writes = f.writes().length;
     await openCatalogue(p);
-    assert.equal(p.$(playId).textContent, 'Play');
-    activate(p, playId);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    activate(p, missionCard(p));
     await settled(
       p,
-      () => p.$('race-chapter-replace')?.open,
+      () => p.$('race-library-replace')?.open,
       'Paused replacement requires a decision.',
     );
     assertRetained(p, before);
-    activate(p, 'race-chapter-stay');
+    activate(p, 'race-library-stay');
     await settled(
       p,
-      () => !p.$('race-chapter-replace').open && !p.$(playId).disabled,
+      () => !p.$('race-library-replace') && p.$('journey-chooser').open,
       'Stay releases Play.',
     );
-    assert.ok(p.doc.activeElement === p.$(playId), 'Focus returns to the exact Play action.');
-    assert.match(p.$('optional-worlds-status').textContent, /race.*kept|kept.*race/i);
+    assert.ok(p.doc.activeElement === missionCard(p), 'Focus returns to the exact Play action.');
+    assert.match(p.$('journey-chooser-status').textContent, /current game is kept/i);
     assertRetained(p, before);
-    activate(p, playId);
-    await settled(p, () => p.$('race-chapter-replace').open, 'A new Play asks again.');
-    activate(p, 'race-chapter-play');
+    activate(p, missionCard(p));
+    await settled(p, () => p.$('race-library-replace')?.open, 'A new Play asks again.');
+    activate(p, 'race-library-play');
     await settled(
       p,
       () => p.state() === 'running',
       'Explicit replacement starts the selected chapter.',
     );
-    assert.equal(p.$('optional-worlds-dialog').open, false);
+    assert.equal(p.$('journey-chooser').open, false);
     const accepted = [...p.renders];
     accepted.forEach((run, seat) =>
       assert.ok(run !== before.runs[seat], 'Replacement creates a new run.'),
@@ -444,13 +571,14 @@ for (const interruption of ['Back then setup', 'foreground loss'])
   hostTest(
     `late picture preparation after ${interruption} cannot adopt or start the catalogue race`,
     async (t) => {
-      const f = await fixture(t),
+      const f = await fixture(t, { preinstalled: true }),
         p = f.page,
         gate = deferred(),
         returned = deferred();
       t.after(() => gate.resolve());
       const before = snapshot(p);
       await openCatalogue(p);
+      assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
       let heldImage;
       f.media.onDecode = async (image) => {
         // Embedded originals decode from data URLs. Hold the first actual
@@ -461,17 +589,26 @@ for (const interruption of ['Back then setup', 'foreground loss'])
         await gate.promise;
         returned.resolve();
       };
-      const pending = activate(p, playId);
+      activate(p, missionCard(p));
       await settled(p, () => heldImage, 'The committed chapter must begin picture preparation.');
+      assert.equal(p.$('journey-chooser').open, false, 'Deliberate Play owns staged preparation.');
       assert.equal(
-        p.doc.activeElement,
-        p.$('optional-worlds-cancel'),
-        'Cancel stays actionable through actual installed-picture decoding.',
+        p.$('race-chapters').disabled,
+        false,
+        'A newer mission intent remains available.',
       );
       assertRetained(p, before);
       let focus;
       if (interruption === 'Back then setup') {
+        activate(p, 'race-chapters');
+        await settled(
+          p,
+          () => p.$('journey-chooser')?.open,
+          'A newer browse intent must expose Back while the retired decoder is unresolved.',
+        );
         await closeCatalogue(p);
+        tap(p, 'race-optional-setup-toggle');
+        assert.equal(p.$('race-optional-setup').open, true);
         activate(p, 'race-focus');
         assert.equal(p.$('race-setup').hidden, false);
         focus = p.doc.activeElement;
@@ -484,10 +621,9 @@ for (const interruption of ['Back then setup', 'foreground loss'])
       }
       gate.resolve();
       await returned.promise;
-      await pending;
       await settled(
         p,
-        () => heldImage.released && (!p.$('optional-worlds-dialog').open || !p.$(playId).disabled),
+        () => heldImage.released && (!p.$('journey-chooser').open || !missionCard(p).disabled),
         'Retired preparation must settle without taking back the view.',
       );
       assertRetained(p, before);
@@ -507,13 +643,8 @@ hostTest(
     const before = snapshot(p);
     await openCatalogue(p);
     assertRetained(p, before);
-    activate(p, playId);
-    await settled(
-      p,
-      () => p.state() === 'running',
-      'Results may deliberately start another chapter.',
-    );
-    assert.equal(p.$('race-chapter-replace')?.open ?? false, false);
+    await downloadAndPlay(t, f);
+    assert.equal(p.$('race-library-replace')?.open ?? false, false);
     p.renders.forEach((run, seat) => {
       assert.ok(run !== before.runs[seat], 'Replacement creates a new run.');
       assert.equal(run.level.id, firstLevel);
@@ -531,7 +662,7 @@ hostTest(
 hostTest(
   'foreground loss releases catalogue actions while picture decoding is still unresolved',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page,
       gate = deferred(),
       before = snapshot(p);
@@ -539,16 +670,17 @@ hostTest(
       decoded = false;
     t.after(() => gate.resolve());
     await openCatalogue(p);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
       heldImage = image;
       await gate.promise;
       decoded = true;
     };
-    const pending = activate(p, playId);
+    activate(p, missionCard(p));
     try {
       await settled(p, () => heldImage, 'The committed chapter must begin picture preparation.');
-      assert.equal(p.$(playId).disabled, true);
+      assert.equal(p.$('journey-chooser').open, false);
       p.doc.focused = false;
       p.win.emit('blur');
       p.doc.body.focus();
@@ -556,7 +688,7 @@ hostTest(
       await waitFor(
         () => {
           p.frame(0);
-          return !p.$(playId).disabled && p.$('optional-worlds-cancel').hidden;
+          return heldImage.released > 0 && !p.$('race-chapters').disabled;
         },
         {
           timeoutMs: 1000,
@@ -565,13 +697,13 @@ hostTest(
         },
       );
       assert.equal(decoded, false, 'The decoder is deliberately still unresolved.');
-      assert.equal(p.$('optional-worlds-dialog').open, true);
+      assert.equal(p.$('journey-chooser').open, false);
       assert.ok(p.doc.activeElement === p.doc.body, 'Cancellation must not reclaim focus.');
       assertRetained(p, before);
       f.assertSoloKept();
     } finally {
       gate.resolve();
-      await pending;
+      await settled(p, () => decoded, 'The deliberately held decoder eventually settles.');
     }
     assertRetained(p, before);
     assert.ok(p.doc.activeElement === p.doc.body, 'Late preparation does not reclaim focus.');
@@ -580,40 +712,40 @@ hostTest(
 );
 
 hostTest(
-  'moving focus to Back retires late preparation with a terminal race-kept status',
+  'moving focus to another host action retires late preparation without restoring stale chooser feedback',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page,
       gate = deferred();
     t.after(() => gate.resolve());
     await prepareState(p, 'finished');
     const before = snapshot(p);
     await openCatalogue(p);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
     let heldImage;
     f.media.onDecode = async (image) => {
       if (heldImage || !f.writes().length || sha(image.bytes) !== sha(firstPicture)) return;
       heldImage = image;
       await gate.promise;
     };
-    const pending = activate(p, playId);
+    activate(p, missionCard(p));
     try {
       await settled(p, () => heldImage, 'The committed chapter must begin picture preparation.');
-      p.$('optional-worlds-top-back').focus();
-      assert.equal(p.$('optional-worlds-dialog').open, true);
+      p.$('race-help').focus();
+      assert.equal(p.$('journey-chooser').open, false);
       assertRetained(p, before);
     } finally {
       gate.resolve();
-      await pending;
     }
     await settled(
       p,
-      () => !p.$(playId).disabled && p.$('optional-worlds-cancel').hidden,
+      () => heldImage.released > 0 && !p.$('race-chapters').disabled,
       'A retired preparation must leave a terminal catalogue state.',
     );
-    assert.equal(p.$('optional-worlds-dialog').open, true);
-    assert.ok(p.doc.activeElement === p.$('optional-worlds-top-back'), 'Back retains exact focus.');
-    assert.match(p.$('optional-worlds-status').textContent, /cancelled|race.*kept|kept.*race/i);
-    assert.doesNotMatch(p.$('optional-worlds-status').textContent, /preparing|checking/i);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.ok(p.doc.activeElement === p.$('race-help'), 'The newer action retains exact focus.');
+    assert.doesNotMatch(p.$('race-message').textContent, /preparing|checking/i);
+    assert.doesNotMatch(p.$('journey-chooser-status').textContent, /preparing|checking/i);
     assertRetained(p, before);
     assert.equal(f.controls.downloadCount, 1);
     f.assertSoloKept();
@@ -623,36 +755,33 @@ hostTest(
 hostTest(
   'touch Play from Back focus keeps a paused race on Stay and a fresh Replace starts once',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page;
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.ok(
-      p.doc.activeElement === p.$('optional-worlds-top-back'),
-      'Back owns initial touch focus.',
-    );
-    const pending = tap(p, playId);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    p.$('journey-back').focus();
+    assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
+    tap(p, missionCard(p));
     await settled(
       p,
-      () => p.$('race-chapter-replace')?.open,
+      () => p.$('race-library-replace')?.open,
       'Touch Play must ask before replacement.',
     );
     assertRetained(p, before);
-    tap(p, 'race-chapter-stay');
-    await pending;
-    await settled(p, () => !p.$(playId).disabled, 'Stay must release the original Play action.');
+    tap(p, 'race-library-stay');
+    await settled(p, () => p.$('journey-chooser').open, 'Stay must restore the exact mission.');
     assertRetained(p, before);
-    assert.equal(p.$('race-chapter-replace').open, false);
-    assert.ok(p.doc.activeElement === p.$(playId), 'Stay restores the exact Play action.');
-    assert.match(p.$('optional-worlds-status').textContent, /race.*kept|kept.*race/i);
+    assert.equal(p.$('race-library-replace'), null);
+    assert.ok(p.doc.activeElement === missionCard(p), 'Stay restores the exact Play action.');
+    assert.match(p.$('journey-chooser-status').textContent, /current game is kept/i);
     const writes = f.writes().length;
-    p.$('optional-worlds-top-back').focus();
-    const retry = tap(p, playId);
-    await settled(p, () => p.$('race-chapter-replace').open, 'Fresh touch Play must ask again.');
-    tap(p, 'race-chapter-play');
-    await retry;
-    p.frame(0);
+    p.$('journey-back').focus();
+    tap(p, missionCard(p));
+    await settled(p, () => p.$('race-library-replace')?.open, 'Fresh touch Play must ask again.');
+    tap(p, 'race-library-play');
+    await settled(p, () => p.state() === 'running', 'Confirmed touch replacement starts once.');
     assert.equal(p.state(), 'running');
     const accepted = [...p.renders];
     accepted.forEach((run, seat) =>
@@ -676,28 +805,26 @@ hostTest(
 hostTest(
   'touch Replace starts one prepared race when catalogue Play began with Back still focused',
   async (t) => {
-    const f = await fixture(t),
+    const f = await fixture(t, { preinstalled: true }),
       p = f.page;
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    assert.ok(
-      p.doc.activeElement === p.$('optional-worlds-top-back'),
-      'Back owns initial touch focus.',
-    );
-    const pending = tap(p, playId);
+    assert.equal(missionCard(p).querySelector('.journey-card-action').textContent, 'Play');
+    p.$('journey-back').focus();
+    assert.ok(p.doc.activeElement === p.$('journey-back'), 'Back owns initial touch focus.');
+    tap(p, missionCard(p));
     await settled(
       p,
-      () => p.$('race-chapter-replace')?.open,
+      () => p.$('race-library-replace')?.open,
       'Touch Play must prepare its decision.',
     );
     assertRetained(p, before);
-    tap(p, 'race-chapter-play');
-    await pending;
-    p.frame(0);
+    tap(p, 'race-library-play');
+    await settled(p, () => p.state() === 'running', 'Confirmed touch replacement starts once.');
     assert.equal(p.state(), 'running');
-    assert.equal(p.$('optional-worlds-dialog').open, false);
-    assert.equal(p.$('race-chapter-replace').open, false);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.$('race-library-replace'), null);
     const accepted = [...p.renders];
     accepted.forEach((run, seat) => {
       assert.ok(run !== before.runs[seat], 'Replacement creates a new run.');
@@ -735,11 +862,16 @@ hostTest(
     assert.ok(p.pendingFrames() > 0, 'Storage denial must not stop shipped-map boot.');
     assert.equal(p.state(), 'ready');
     assert.equal(p.$('race-start').disabled, false);
-    assert.equal(p.$('race-chapters').disabled, true);
-    assert.match(
-      p.$('race-installed-status').textContent,
-      /chapters.*unavailable|storage.*denied/i,
+    assert.equal(p.$('race-chapters').disabled, false);
+    activate(p, 'race-chapters');
+    await settled(p, () => p.$('journey-chooser')?.open, 'Core missions remain browseable.');
+    assert.equal(missionCard(p).disabled, true);
+    assert(
+      [...p.$('journey-cards').children].some((card) => !card.disabled),
+      'Core missions remain available while installed inventory is unknown.',
     );
+    assert.match(p.$('race-library-inventory-status').textContent, /storage|unavailable/i);
+    await closeCatalogue(p);
     await start(p);
     p.frames(5);
     assert.equal(p.state(), 'running');
@@ -750,31 +882,38 @@ hostTest(
 );
 
 hostTest(
-  'a newer Back focus during touch admission cancels before download or adoption',
+  'newer host focus during touch chooser closure cancels before download or adoption',
   async (t) => {
     const f = await fixture(t),
       p = f.page;
     await prepareState(p, 'paused');
     const before = snapshot(p);
     await openCatalogue(p);
-    const dialog = p.$('optional-worlds-dialog'),
-      back = p.$('optional-worlds-top-back');
+    const dialog = p.$('journey-chooser'),
+      nextFocus = p.$('race-help'),
+      button = [...p.$('journey-cards').children].find(
+        (card) => JSON.parse(card.dataset.missionId)[3] === 'signal-12',
+      );
+    assert(button, 'Use an exact selectable late Base mission without a download.');
     let redirects = 0;
-    const chooseBack = (event) => {
-      if (event.target !== dialog || redirects) return;
+    const chooseNewerFocus = () => {
+      if (redirects) return;
       redirects++;
-      back.focus();
+      nextFocus.focus();
     };
-    p.doc.addEventListener('focusin', chooseBack);
-    t.after(() => p.doc.removeEventListener('focusin', chooseBack));
-    await tap(p, playId);
+    dialog.addEventListener('close', chooseNewerFocus);
+    t.after(() => dialog.removeEventListener('close', chooseNewerFocus));
+    p.$('journey-back').focus();
+    tap(p, button);
+    await new Promise((resolve) => setImmediate(resolve));
     p.frame(0);
-    assert.equal(redirects, 1, 'The host admitted touch focus through the real open dialog.');
-    assert.ok(p.doc.activeElement === back, 'A newer Back focus retains authority.');
-    assert.equal(dialog.open, true);
-    assert.equal(p.$('race-chapter-replace').open, false);
-    assert.equal(p.$(playId).disabled, false);
-    assert.match(p.$('optional-worlds-status').textContent, /cancelled|race.*kept|kept.*race/i);
+    assert.equal(redirects, 1, 'The actual chooser close callback established a newer intent.');
+    assert.ok(
+      p.doc.activeElement === nextFocus,
+      `Newer host focus retains authority, not ${p.doc.activeElement?.id}.`,
+    );
+    assert.equal(dialog.open, false);
+    assert.equal(p.$('race-library-replace'), null);
     assertRetained(p, before);
     assert.equal(f.controls.downloadCount, 0);
     assert.deepEqual(f.writes(), []);
@@ -783,7 +922,7 @@ hostTest(
 );
 
 hostTest(
-  'the claimed controller opens Chapters and returns with East without replacing either ready board',
+  'the claimed controller opens All missions and returns with East without replacing either ready board',
   async (t) => {
     const pads = [0, 1].map((index) => ({
       index,
@@ -804,16 +943,16 @@ hostTest(
     p.pulse(0, 0);
     await settled(
       p,
-      () => p.$('optional-worlds-dialog')?.open && p.$(playId)?.disabled === false,
-      'South must open the real Chapters catalogue.',
+      () => p.$('journey-chooser')?.open && missionCard(p)?.disabled === false,
+      'South must open the shared All missions chooser.',
     );
-    assert.equal(p.doc.activeElement.id, 'optional-worlds-top-back');
+    assertCurrentBaseCardFocused(p);
     assertRetained(p, before);
     p.pulse(1, 1);
-    assert.equal(p.$('optional-worlds-dialog').open, true, 'The other pad does not own this menu.');
+    assert.equal(p.$('journey-chooser').open, true, 'The other pad does not own this menu.');
     assert.match(p.$('race-menu-status').textContent, /Player 1 controller has the menu/);
     p.pulse(0, 1);
-    await settled(p, () => !p.$('optional-worlds-dialog').open, 'Owner East returns to Versus.');
+    await settled(p, () => !p.$('journey-chooser').open, 'Owner East returns to Versus.');
     assert.ok(p.doc.activeElement === p.$('race-chapters'), 'Back restores the exact opener.');
     assert.match(p.$('race-menu-status').textContent, /Player 1 controller has the menu/);
     assertRetained(p, before);

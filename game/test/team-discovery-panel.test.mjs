@@ -588,3 +588,164 @@ test('a preview abort may reopen the native dialog without an older close cleari
   assert.equal(h.closed, 1);
   assert.equal(h.calls.length, 0);
 });
+
+// Real open/focus handoff with the observed desktop Large-display clip: the
+// action intersects the panel yet its bottom is outside the scrollport.
+function clippedOpening(
+  t,
+  rect = { x: 250, y: 683.906, width: 364, height: 47 },
+  nativePrimary = false,
+) {
+  const h = fixture(t);
+  h.doc.documentElement.clientWidth = 1280;
+  h.doc.documentElement.clientHeight = 720;
+  h.dialog._rect = { x: 230, y: 12, width: 820, height: 696 };
+  h.dialog.clientLeft = h.dialog.clientTop = 0;
+  h.dialog.clientWidth = 820;
+  h.dialog.clientHeight = 696;
+  const show = h.dialog.showModal;
+  let target;
+  const scrolls = [];
+  h.dialog.showModal = () => {
+    show();
+    target = h.panel.primary();
+    target._rect = rect;
+    t.mock.method(target, 'scrollIntoView', (options) => {
+      scrolls.push({ options, focused: h.doc.activeElement === target, open: h.dialog.open });
+    });
+    if (nativePrimary) target.focus();
+    h.beforeFocus?.(target);
+  };
+  return Object.assign(h, { scrolls, target: () => target });
+}
+
+test('opening Team arenas fully reveals a partially clipped focused Play action', (t) => {
+  const h = clippedOpening(t);
+  assert.equal(h.panel.open(h.otherOpener), true);
+  assert.equal(h.doc.activeElement, h.target());
+  assert.deepEqual(h.scrolls, [
+    {
+      options: { block: 'nearest', inline: 'nearest', behavior: 'instant' },
+      focused: true,
+      open: true,
+    },
+  ]);
+  assert.deepEqual(h.calls, [], 'Opening and revealing never starts or replaces an attempt');
+  assert.equal(h.panel.primary().textContent, 'Play First Connection');
+});
+
+test('opening Team arenas preserves scroll when the selected Play action is fully visible', (t) => {
+  const h = clippedOpening(t, { x: 250, y: 550, width: 364, height: 47 });
+  h.panel.open(h.otherOpener);
+  assert.equal(h.doc.activeElement, h.target());
+  assert.deepEqual(h.scrolls, []);
+});
+
+for (const newer of ['focus', 'close', 'hidden', 'layout-focus'])
+  test(`a newer ${newer} during catalogue opening vetoes its stale reveal`, (t) => {
+    const h = clippedOpening(t);
+    h.beforeFocus = (target) => {
+      if (newer === 'layout-focus') {
+        const read = target.getBoundingClientRect.bind(target);
+        t.mock.method(target, 'getBoundingClientRect', () => {
+          h.destination.focus();
+          return read();
+        });
+      } else {
+        target.addEventListener('focusin', () => {
+          if (newer === 'focus') h.destination.focus();
+          if (newer === 'close') h.panel.close();
+          if (newer === 'hidden') h.doc.hidden = true;
+        });
+      }
+    };
+    h.panel.open(h.otherOpener);
+    assert.deepEqual(h.scrolls, []);
+    assert.deepEqual(h.calls, []);
+    if (newer === 'focus' || newer === 'layout-focus')
+      assert.equal(h.doc.activeElement, h.destination);
+  });
+
+test('native primary autofocus still reveals the clipped action without taking focus again', (t) => {
+  const h = clippedOpening(t, undefined, true);
+  let focuses = 0;
+  h.beforeFocus = (target) => {
+    t.mock.method(target, 'focus', () => {
+      focuses++;
+      assert.fail('The current native autofocus must not be reassigned');
+    });
+  };
+  h.panel.open(h.otherOpener);
+  assert.equal(h.doc.activeElement, h.target());
+  assert.equal(focuses, 0);
+  assert.equal(h.scrolls.length, 1);
+  assert.deepEqual(h.calls, []);
+});
+
+function previewReturning(t, rect = { x: 250, y: 742.906, width: 364, height: 47 }) {
+  const h = fixture(t, { preparePreview: async () => ({ image: null, release() {} }) });
+  h.doc.documentElement.clientWidth = 844;
+  h.doc.documentElement.clientHeight = 390;
+  h.dialog._rect = { x: 20, y: 12, width: 804, height: 366 };
+  h.dialog.clientLeft = h.dialog.clientTop = 0;
+  h.dialog.clientWidth = 804;
+  h.dialog.clientHeight = 366;
+  h.panel.open(h.otherOpener);
+  const target = h.list.querySelector('.team-discovery-preview-button'),
+    scrolls = [];
+  target.focus();
+  target.click();
+  assert.equal(h.doc.activeElement, h.back);
+  target._rect = rect;
+  t.mock.method(target, 'scrollIntoView', (options) => {
+    scrolls.push({
+      options,
+      focused: h.doc.activeElement === target,
+      cardsVisible: !h.list.hidden,
+    });
+  });
+  return { ...h, target, scrolls };
+}
+
+test('return from a locked preview reveals its exact offscreen opener without starting an attempt', (t) => {
+  const h = previewReturning(t);
+  h.back.click();
+  assert.equal(h.doc.activeElement, h.target);
+  assert.deepEqual(h.scrolls, [
+    {
+      options: { block: 'nearest', inline: 'nearest', behavior: 'instant' },
+      focused: true,
+      cardsVisible: true,
+    },
+  ]);
+  assert.deepEqual(h.calls, []);
+  assert.equal(h.panel.isOpen(), true);
+});
+
+test('return to a fully visible preview opener preserves the catalogue scroll position', (t) => {
+  const h = previewReturning(t, { x: 250, y: 180, width: 364, height: 47 });
+  h.back.click();
+  assert.equal(h.doc.activeElement, h.target);
+  assert.deepEqual(h.scrolls, []);
+});
+
+for (const newer of ['focus', 'layout-focus', 'close'])
+  test(`newer ${newer} during preview return vetoes the old opener reveal`, (t) => {
+    const h = previewReturning(t);
+    if (newer === 'layout-focus') {
+      const read = h.target.getBoundingClientRect.bind(h.target);
+      t.mock.method(h.target, 'getBoundingClientRect', () => {
+        h.destination.focus();
+        return read();
+      });
+    } else {
+      h.target.addEventListener('focusin', () => {
+        if (newer === 'focus') h.destination.focus();
+        else h.panel.close();
+      });
+    }
+    h.back.click();
+    assert.deepEqual(h.scrolls, []);
+    assert.deepEqual(h.calls, []);
+    if (newer !== 'close') assert.equal(h.doc.activeElement, h.destination);
+  });

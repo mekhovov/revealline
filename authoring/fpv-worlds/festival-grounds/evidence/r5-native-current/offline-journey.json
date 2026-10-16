@@ -1,0 +1,88 @@
+{
+  "format": "FPVFestivalStoppedOriginJourney.v1",
+  "source": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "origin": "http://127.0.0.1:58606",
+  "entry": "/player/optional-practice/fpv-worlds/index.html",
+  "runtimeOverlays": 0,
+  "clock": "Unmodified native browser clock; no fixture observer, clock/storage/renderer instrumentation",
+  "packSHA256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+  "courseCount": 8,
+  "steps": [
+    {
+      "action": "Public Library Prepare simulator offline",
+      "result": "Offline runtime preparation completed."
+    },
+    {
+      "action": "Online reload",
+      "result": "Eight installed Festival challenges retained."
+    },
+    {
+      "action": "Stop dedicated server",
+      "receipt": "server-stop.json",
+      "result": "curl exit7 connection refused at2026-10-04T22:15:21Z"
+    },
+    {
+      "action": "Reload with origin stopped",
+      "result": "Library retains8 challenges and exact87baca pack hash."
+    },
+    {
+      "action": "Select Entry check-in, deliberate Arm",
+      "result": "Native flight clock progressed to17.4s; zero throttle/full health. An unexpected pause was observed before intended manual Pause."
+    },
+    {
+      "action": "Deliberate Arm / resume",
+      "result": "Visible Flight active at19.6s."
+    },
+    {
+      "action": "Public Pause",
+      "result": "Paused at19.7s with Home/Continue menu."
+    },
+    {
+      "action": "Post-flight origin refusal",
+      "result": "curl exit7 connection refused at2026-10-04T22:17:35Z"
+    },
+    {
+      "action": "Authorized exact server restart",
+      "result": "Same immutable directory at58606; session25108 started2026-10-04T22:17:42Z, entryHTTP200."
+    }
+  ],
+  "limits": [
+    "Unexpected17.4s pause cause is unattributed; no uninterrupted-playback claim.",
+    "The original offline-active PNG/TXT actually shows Paused; archived under paused-interruption names.",
+    "No offline completion, all-sixteen native-clock endurance, offline editor, rollback or hardware/FPS claim.",
+    "No separate console-clean assertion for this manual stopped-origin journey; errors/warnings are empty in the separately retained311-check controlled matrix."
+  ],
+  "files": {
+    "offline-library.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-library.txt",
+      "bytes": 2236,
+      "sha256": "53f6cc0068c129bb0ff3512b71af046e4463fec1d48a85225346a8208aaac765"
+    },
+    "offline-paused-interruption-first.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-active.txt",
+      "bytes": 692,
+      "sha256": "79ec8ce975b6d733eb84ae0798c99dd2fddb9ed7f1c9eaf1169485ba395cb49d"
+    },
+    "offline-paused-interruption.png": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-active.png",
+      "bytes": 105781,
+      "sha256": "5bb719030be9d9abcfd3be260f014fb2e4a9f50ac73a97f84ebd8078fd6850e9"
+    },
+    "offline-paused-interruption.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-interrupted.txt",
+      "bytes": 692,
+      "sha256": "79ec8ce975b6d733eb84ae0798c99dd2fddb9ed7f1c9eaf1169485ba395cb49d"
+    },
+    "offline-resumed-active.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-resumed.txt",
+      "bytes": 577,
+      "sha256": "5ad0927d4b632848a526fe01556eef800247d48d46fb43883890c4035bad2eb6"
+    },
+    "offline-deliberate-pause.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-paused.txt",
+      "bytes": 1696,
+      "sha256": "0fc803945e0a900576c030ac1df160d28f147f90e3afcce1e9e2249adfe2e76b"
+    }
+  },
+  "acceptedScope": "Root accepted stopped-origin retention, native launch/resume and deliberate pause; bounded scene subject/style acceptance is a separate receipt."
+}

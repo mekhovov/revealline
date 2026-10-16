@@ -1,3 +1,4 @@
+import { t } from '../i18n/index.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { validateCoopPack, COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
@@ -22,8 +23,25 @@ const fields = (value, names, label) => {
     `${label} is incomplete.`,
   );
 };
+function identityFields(value, names, label) {
+  const pinned = Object.hasOwn(value, 'manifestSha256');
+  fields(value, names + (pinned ? ' manifestSha256' : ''), label);
+  required(
+    !pinned || digest(value.manifestSha256),
+    'Invalid exact presentation manifest identity.',
+  );
+}
+function matchesManifest(candidate, theme) {
+  return (
+    !Object.hasOwn(candidate, 'manifestSha256') || candidate.manifestSha256 === theme.manifestSha256
+  );
+}
 function pictureIdentity(picture) {
-  fields(picture, 'slot assetId assetRevision sha256 bytes mime width height', 'Team picture');
+  fields(
+    picture,
+    'slot assetId assetRevision sha256 bytes mime width height',
+    t('interface:teamPicture'),
+  );
   required(
     stableId(picture.slot) &&
       stableId(picture.assetId) &&
@@ -31,43 +49,69 @@ function pictureIdentity(picture) {
       digest(picture.sha256) &&
       revision(picture.bytes) &&
       picture.bytes <= LIMITS.assetBytes &&
-      ['image/png', 'image/jpeg'].includes(picture.mime) &&
+      ['image/png', 'image/jpeg', 'image/webp'].includes(picture.mime) &&
       picture.width === 1152 &&
       picture.height === 576,
-    'Team picture requires a bounded complete 1152×576 PNG/JPEG identity.',
+    t('interface:teamPictureRequiresABoundedComplete1152576PngJpeg'),
   );
 }
 function historicalPolicy(source) {
   if (source === null || source === undefined) return null;
-  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 16 });
-  fields(
+  const policy = boundedJSON(source, { maxBytes: 4096, maxArray: 20 });
+  identityFields(
     policy,
     'version themeId themeRevision collection picture',
-    'Team historical import policy',
+    t('interface:teamHistoricalImportPolicy'),
   );
   required(
     policy.version === 'revealline-team-historical-import-picture.v1' &&
       stableId(policy.themeId) &&
       revision(policy.themeRevision) &&
       policy.collection === null,
-    'Invalid Team historical import picture policy.',
+    t('interface:invalidTeamHistoricalImportPicturePolicy'),
   );
   pictureIdentity(policy.picture);
   required(
     policy.picture.slot === 'scene.reveal.wide',
-    'Historical Team imports require an explicit wide-scene association.',
+    t('interface:historicalTeamImportsRequireAnExplicitWideSceneAssociation'),
   );
   return freezePresentation(policy);
 }
+function historicalPolicies(source) {
+  if (source === null || source === undefined) return [];
+  const entries = Array.isArray(source)
+    ? // Current canonical104 and45 retained identities, including manifest-pinned published101.
+      // Another supported edition must deliberately revisit this finite bound.
+      boundedJSON(source, { maxBytes: 43 * 1024, maxArray: 46 })
+    : [source];
+  const seen = new Set();
+  return freezePresentation(
+    entries.map((entry) => {
+      const policy = historicalPolicy(entry);
+      required(policy, t('interface:aTeamHistoricalPolicyEntryIsRequired'));
+      const key = canonicalJSON({
+        themeId: policy.themeId,
+        themeRevision: policy.themeRevision,
+        collection: policy.collection,
+        ...(Object.hasOwn(policy, 'manifestSha256')
+          ? { manifestSha256: policy.manifestSha256 }
+          : {}),
+      });
+      required(!seen.has(key), t('interface:duplicateTeamHistoricalPictureIdentity'));
+      seen.add(key);
+      return policy;
+    }),
+  );
+}
 function bindingTable(source) {
   const rows = boundedJSON(source, { maxBytes: 256 * 1024, maxArray: 128 });
-  required(Array.isArray(rows), 'Team picture bindings must be a finite list.');
+  required(Array.isArray(rows), t('interface:teamPictureBindingsMustBeAFiniteList'));
   const seen = new Set();
   for (const row of rows) {
-    fields(
+    identityFields(
       row,
       'packId packRevision packSha256 levelId levelRevision levelSha256 themeId themeRevision collection picture',
-      'Team binding',
+      t('interface:teamBinding'),
     );
     required(
       identifier(row.packId) &&
@@ -78,35 +122,35 @@ function bindingTable(source) {
         digest(row.levelSha256) &&
         stableId(row.themeId) &&
         revision(row.themeRevision),
-      'Team binding needs complete immutable content and theme identities.',
+      t('interface:teamBindingNeedsCompleteImmutableContentAndThemeIdentities'),
     );
     if (row.collection !== null) {
-      fields(row.collection, 'id revision', 'Team collection');
+      fields(row.collection, 'id revision', t('interface:teamCollection'));
       required(
         stableId(row.collection.id) && revision(row.collection.revision),
-        'Invalid Team collection identity.',
+        t('interface:invalidTeamCollectionIdentity'),
       );
     }
     if (row.picture !== null) pictureIdentity(row.picture);
     const { picture: _, ...identity } = row;
     const key = canonicalJSON(identity);
-    required(!seen.has(key), 'Duplicate Team picture identity.');
+    required(!seen.has(key), t('interface:duplicateTeamPictureIdentity'));
     seen.add(key);
   }
   return freezePresentation(rows);
 }
 function requestIdentity(request) {
-  required(request && typeof request === 'object', 'A Team picture request is required.');
+  required(request && typeof request === 'object', t('interface:aTeamPictureRequestIsRequired'));
   const { levelId, themeId, attemptId } = request;
   required(
     identifier(levelId) && stableId(themeId) && stableId(attemptId),
-    'Invalid Team request identity.',
+    t('interface:invalidTeamRequestIdentity'),
   );
   const pack = boundedJSON(request.pack, { maxBytes: COOP_PACK_MAX_BYTES, maxArray: 4096 });
   const validation = validateCoopPack(pack);
   required(validation.valid, `Invalid Team pack: ${validation.errors.join('; ')}`);
   const level = pack.levels.find((entry) => entry.id === levelId);
-  required(level, 'The requested Team level is absent from this exact pack.');
+  required(level, t('interface:theRequestedTeamLevelIsAbsentFromThisExactPack'));
   const packJSON = canonicalJSON(pack),
     levelJSON = canonicalJSON(level);
   const artworkSource = request.artworkSource ?? null;
@@ -116,7 +160,7 @@ function requestIdentity(request) {
     exportCoopPresentationEnvelope(artworkSource);
     required(
       canonicalJSON(artworkSource.pack) === packJSON,
-      'Local Team artwork belongs to a different exact pack.',
+      t('interface:localTeamArtworkBelongsToADifferentExactPack'),
     );
     readCoopPresentationPicture(artworkSource, level);
     sourceReceipt = artworkSource.receipt;
@@ -142,15 +186,16 @@ function snapshotIdentity(snapshot, themeId) {
     collection = snapshot?.resolved?.collection;
   required(
     theme?.id === themeId && revision(theme.revision),
-    'No matching prepared Team theme snapshot.',
+    t('interface:noMatchingPreparedTeamThemeSnapshot'),
   );
   required(
     collection === null || (stableId(collection?.id) && revision(collection?.revision)),
-    'Invalid prepared Team collection.',
+    t('interface:invalidPreparedTeamCollection'),
   );
   return freezePresentation({
     themeId: theme.id,
     themeRevision: theme.revision,
+    manifestSha256: digest(snapshot.manifestSha256) ? snapshot.manifestSha256 : null,
     collection: collection === null ? null : { id: collection.id, revision: collection.revision },
   });
 }
@@ -174,7 +219,7 @@ function selectedAsset(snapshot, row) {
       frame.y === 0 &&
       frame.width === file.width &&
       frame.height === file.height,
-    'The prepared Team asset does not match its exact reviewed picture binding.',
+    t('interface:thePreparedTeamAssetDoesNotMatchItsExactReviewed'),
   );
   return asset;
 }
@@ -184,7 +229,8 @@ function imageURL(bytes, mime) {
     binary += String.fromCharCode(...bytes.subarray(offset, offset + 32768));
   return `data:${mime};base64,${btoa(binary)}`;
 }
-const aborted = () => new DOMException('Team picture preparation was cancelled.', 'AbortError');
+const aborted = () =>
+  new DOMException(t('interface:teamPicturePreparationWasCancelled'), 'AbortError');
 const releaseQuietly = (lease) => {
   try {
     lease?.release();
@@ -205,11 +251,11 @@ export function createCoopPresentation({
   decodeImage,
 }) {
   const rows = bindingTable(bindings),
-    policy = historicalPolicy(historicalImportPolicy),
+    policies = historicalPolicies(historicalImportPolicy),
     closedNamespaces = new Set(['relay-rescue-starter', ...rows.map((row) => row.packId)]);
   required(
     [getSnapshot, readPicture, decodeImage].every((fn) => typeof fn === 'function'),
-    'Team presentation requires injected snapshot, picture and decoder readers.',
+    t('interface:teamPresentationRequiresInjectedSnapshotPictureAndDecoderReaders'),
   );
   let closed = false,
     captured = null,
@@ -218,12 +264,15 @@ export function createCoopPresentation({
     selectionEpoch = 0;
   function contextCurrent(state) {
     const epoch = selectionEpoch;
-    required(!closed && captured === state, 'This Team picture attempt is no longer current.');
-    required(getSnapshot() === state.snapshot, 'Team presentation changed; prepare a new attempt.');
+    required(!closed && captured === state, t('interface:thisTeamPictureAttemptIsNoLongerCurrent'));
+    required(
+      getSnapshot() === state.snapshot,
+      t('interface:teamPresentationChangedPrepareANewAttempt'),
+    );
     required(
       canonicalJSON(snapshotIdentity(state.snapshot, state.request.themeId)) ===
         canonicalJSON(state.theme),
-      'Team theme identity changed during preparation.',
+      t('interface:teamThemeIdentityChangedDuringPreparation'),
     );
     if (state.request.artworkSource !== null) {
       const original = readCoopPresentationPicture(
@@ -233,17 +282,17 @@ export function createCoopPresentation({
       required(
         canonicalJSON(state.request.artworkSource.receipt) ===
           canonicalJSON(state.request.sourceReceipt),
-        'Local Team artwork identity changed during preparation.',
+        t('interface:localTeamArtworkIdentityChangedDuringPreparation'),
       );
       if (state.row)
         required(
           canonicalJSON(original.file) === canonicalJSON(state.row.picture),
-          'Local Team artwork changed during preparation.',
+          t('interface:localTeamArtworkChangedDuringPreparation'),
         );
     } else if (state.row)
       required(
         canonicalJSON(selectedAsset(state.snapshot, state.row)) === state.assetJSON,
-        'Team picture binding changed during preparation.',
+        t('interface:teamPictureBindingChangedDuringPreparation'),
       );
     // Snapshot readers (and injected snapshot accessors) can synchronously
     // cancel/dispose/select. Identity equality alone does not retain ownership.
@@ -268,7 +317,7 @@ export function createCoopPresentation({
       required(
         captured.request.key === identity.key &&
           captured.request.artworkSource === identity.artworkSource,
-        'Retry must retain the exact Team pack, level, theme and artwork source.',
+        t('interface:retryMustRetainTheExactTeamPackLevelThemeAnd'),
       );
       contextCurrent(captured);
       return captured;
@@ -281,7 +330,7 @@ export function createCoopPresentation({
     const state = operation.state;
     operationCurrent(operation);
     if (state.row) return;
-    report(operation, 'verifying', 'Verifying this exact Team arena and picture identity…');
+    report(operation, 'verifying', t('interface:verifyingThisExactTeamArenaAndPictureIdentity'));
     operationCurrent(operation);
     const encoder = new TextEncoder();
     const [packSha256, levelSha256] = await Promise.all([
@@ -299,13 +348,17 @@ export function createCoopPresentation({
         candidate.levelSha256 === levelSha256 &&
         candidate.themeId === state.theme.themeId &&
         candidate.themeRevision === state.theme.themeRevision &&
+        matchesManifest(candidate, state.theme) &&
         canonicalJSON(candidate.collection) === canonicalJSON(state.theme.collection),
     );
-    const policyMatches =
-      policy &&
-      state.theme.themeId === policy.themeId &&
-      state.theme.themeRevision === policy.themeRevision &&
-      canonicalJSON(state.theme.collection) === canonicalJSON(policy.collection);
+    const policy = policies.find(
+      (candidate) =>
+        state.theme.themeId === candidate.themeId &&
+        state.theme.themeRevision === candidate.themeRevision &&
+        matchesManifest(candidate, state.theme) &&
+        canonicalJSON(state.theme.collection) === canonicalJSON(candidate.collection),
+    );
+    const policyMatches = Boolean(policy);
     if (state.request.artworkSource !== null) {
       const receipt = state.request.sourceReceipt;
       required(
@@ -313,7 +366,7 @@ export function createCoopPresentation({
           receipt.theme.id === state.theme.themeId &&
           receipt.theme.revision === state.theme.themeRevision &&
           canonicalJSON(receipt.theme.collection) === canonicalJSON(state.theme.collection),
-        'Local Team artwork requires its exact accepted pack and prepared theme collection.',
+        t('interface:localTeamArtworkRequiresItsExactAcceptedPackAndPrepared'),
       );
       required(
         !closedNamespaces.has(state.request.pack.id) ||
@@ -323,9 +376,12 @@ export function createCoopPresentation({
               candidate.packRevision === state.request.pack.revision &&
               candidate.packSha256 === packSha256,
           ),
-        'Local artwork cannot replace gameplay under a reserved Team pack identity.',
+        t('interface:localArtworkCannotReplaceGameplayUnderAReservedTeamPack'),
       );
-      required(row || policyMatches, 'Local Team artwork is not supported by this approved theme.');
+      required(
+        row || policyMatches,
+        t('interface:localTeamArtworkIsNotSupportedByThisApprovedTheme'),
+      );
       const original = readCoopPresentationPicture(
         state.request.artworkSource,
         state.request.level,
@@ -358,13 +414,13 @@ export function createCoopPresentation({
         themeId: policy.themeId,
         themeRevision: policy.themeRevision,
         collection: policy.collection,
+        ...(Object.hasOwn(policy, 'manifestSha256')
+          ? { manifestSha256: policy.manifestSha256 }
+          : {}),
         picture: policy.picture,
       });
     }
-    required(
-      row,
-      'No exact Team picture binding; this arena has not been prepared for this theme.',
-    );
+    required(row, t('interface:noExactTeamPictureBindingThisArenaHasNotBeen'));
     const asset = selectedAsset(state.snapshot, row);
     state.assetJSON = canonicalJSON(asset);
     state.row = row;
@@ -377,7 +433,7 @@ export function createCoopPresentation({
       const state = operation.state,
         row = state.row;
       if (row.picture) {
-        report(operation, 'downloading', 'Reading the selected Team picture…');
+        report(operation, 'downloading', t('interface:readingTheSelectedTeamPicture'));
         operationCurrent(operation);
         const local = state.request.artworkSource !== null;
         const original = local
@@ -391,12 +447,12 @@ export function createCoopPresentation({
         if (local)
           required(
             canonicalJSON(original.file) === canonicalJSON(row.picture),
-            'Team local picture reader returned a different original.',
+            t('interface:teamLocalPictureReaderReturnedADifferentOriginal'),
           );
         else
           required(
             canonicalJSON(validateAssetRevision(original?.asset)) === state.assetJSON,
-            'Team picture reader returned a different asset.',
+            t('interface:teamPictureReaderReturnedADifferentAsset'),
           );
         let blob;
         try {
@@ -408,28 +464,28 @@ export function createCoopPresentation({
           );
           required(
             size === row.picture.bytes && type === row.picture.mime,
-            'Team picture reader returned invalid original bytes.',
+            t('interface:teamPictureReaderReturnedInvalidOriginalBytes'),
           );
           blob = Blob.prototype.slice.call(original.blob, 0, size, type);
         } catch {
-          throw new TypeError('Team picture reader returned invalid original bytes.');
+          throw new TypeError(t('interface:teamPictureReaderReturnedInvalidOriginalBytes'));
         }
-        report(operation, 'verifying', 'Verifying the complete Team picture original…');
+        report(operation, 'verifying', t('interface:verifyingTheCompleteTeamPictureOriginal'));
         operationCurrent(operation);
         const bytes = new Uint8Array(await Blob.prototype.arrayBuffer.call(blob));
         operationCurrent(operation);
         required(
           bytes.length === row.picture.bytes &&
             (await hashPresentationBytes(bytes)) === row.picture.sha256,
-          'Team picture original hash or size mismatch.',
+          t('interface:teamPictureOriginalHashOrSizeMismatch'),
         );
         operationCurrent(operation);
         const header = inspectImageDataUrl(imageURL(bytes, row.picture.mime));
         required(
           header.valid && header.width === 1152 && header.height === 576,
-          'Team picture original dimensions disagree.',
+          t('interface:teamPictureOriginalDimensionsDisagree'),
         );
-        report(operation, 'decoding', 'Preparing the complete Team picture…');
+        report(operation, 'decoding', t('interface:preparingTheCompleteTeamPicture'));
         operationCurrent(operation);
         const lease = await decodeImage(blob, { signal: operation.controller.signal });
         let released = false;
@@ -444,14 +500,14 @@ export function createCoopPresentation({
         };
         required(
           lease && typeof lease.release === 'function',
-          'Team picture decoding needs an owned release handle.',
+          t('interface:teamPictureDecodingNeedsAnOwnedReleaseHandle'),
         );
         operationCurrent(operation);
         required(
           decoded.image &&
             (decoded.image.naturalWidth ?? decoded.image.width) === 1152 &&
             (decoded.image.naturalHeight ?? decoded.image.height) === 576,
-          'Decoded Team picture dimensions disagree.',
+          t('interface:decodedTeamPictureDimensionsDisagree'),
         );
       }
       operationCurrent(operation);
@@ -467,7 +523,7 @@ export function createCoopPresentation({
       report(
         operation,
         'ready',
-        'The Team picture is ready. Start remains a separate action.',
+        t('interface:theTeamPictureIsReadyStartRemainsASeparateAction'),
         'ready',
       );
       operationCurrent(operation);
@@ -502,7 +558,7 @@ export function createCoopPresentation({
       let state;
       const epoch = ++selectionEpoch;
       try {
-        required(!closed, 'Team presentation is closed.');
+        required(!closed, t('interface:teamPresentationIsClosed'));
         state = capture(request);
         if (closed || selectionEpoch !== epoch || request.signal?.aborted) throw aborted();
       } catch (error) {
@@ -536,7 +592,7 @@ export function createCoopPresentation({
           accepted.state === captured &&
           captured.request.key === identity.key &&
           captured.request.artworkSource === identity.artworkSource,
-        'The exact Team picture is not ready for this request.',
+        t('interface:theExactTeamPictureIsNotReadyForThisRequest'),
       );
       contextCurrent(captured);
       if (request.signal?.aborted) throw aborted();

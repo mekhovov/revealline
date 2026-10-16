@@ -1,0 +1,305 @@
+TAP version 13
+# Subtest: the actual game has a static dark guard before resources and a single caught module entry
+not ok 1 - the actual game has a static dark guard before resources and a single caught module entry
+  ---
+  duration_ms: 3.207834
+  location: '/private/tmp/theme-pause-head-baseline/game/test/boot-build.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /body\s*>\s*:not\(#boot-screen\):not\(script\)[\s\S]*?display:\s*none\s*!important/. Input:
+    
+    '<style>\n' +
+      '      html {\n' +
+      '        background: #070914;\n' +
+      '        color-scheme: dark;\n' +
+      '      }\n' +
+      '      body {\n' +
+      '        margin: 0;\n' +
+      '        background: #070914;\n' +
+      '        color: #edf2ff;\n' +
+      '      }\n' +
+      "      html:not([data-boot-state='ready']) body > :not(#boot-screen):not(#access-gate):not(script) {\n" +
+      '        display: none !important;\n' +
+      '      }\n' +
+      '      #boot-screen {\n' +
+      '        min-height: 100vh;\n' +
+      '        min-height: 100svh;\n' +
+      '        display: grid;\n' +
+      '        place-items: center;\n' +
+      '        box-sizing: border-box;\n' +
+      '        padding: 24px;\n' +
+      '        font:\n' +
+      "          18px/1.5 'Field Kit UI',\n" +
+      '          system-ui,\n' +
+      '          sans-serif;\n' +
+      '      }\n' +
+      '      #boot-screen .launch-card {\n' +
+      '        width: min(100%, 620px);\n' +
+      '        box-sizing: border-box;\n' +
+      '        padding: 24px;\n' +
+      '        background: #101923;\n' +
+      '        border: 2px solid #425563;\n' +
+      '      }\n' +
+      '      #boot-screen .fpv-line-wordmark {\n' +
+      '        display: block;\n' +
+      '        width: min(100%, 510px);\n' +
+      '        aspect-ratio: 5.7;\n' +
+      '        object-fit: cover;\n' +
+      '        object-position: center 42%;\n' +
+      '      }\n' +
+      '      #boot-screen .launch-signal {\n' +
+      '        display: flex;\n' +
+      '        gap: 6px;\n' +
+      '      }\n' +
+      '      #boot-screen .launch-signal i {\n' +
+      '        width: 8px;\n' +
+      '        height: 12px;\n' +
+      '        background: #78dce8;\n' +
+      '      }\n' +
+      "      html[data-boot-state='loading'] #boot-screen .launch-signal i {\n" +
+      '        animation: boot-signal 900ms steps(2, end) infinite;\n' +
+      '      }\n' +
+      '      #boot-screen .launch-signal i:nth-child(2) {\n' +
+      '        animation-delay: 150ms;\n' +
+      '      }\n' +
+      '      #boot-screen .launch-signal i:nth-child(3) {\n' +
+      '        animation-delay: 300ms;\n' +
+      '      }\n' +
+      '      @keyframes boot-signal {\n' +
+      '        50% {\n' +
+      '          transform: scaleY(1.5);\n' +
+      '        }\n' +
+      '      }\n' +
+      '      @media (prefers-reduced-motion: reduce) {\n' +
+      "        html[data-boot-state='loading'] #boot-screen .launch-signal i {\n" +
+      '          animation: none;\n' +
+      '        }\n' +
+      '      }\n' +
+      '      #boot-screen .launch-actions {\n' +
+      '        display: flex;\n' +
+      '        flex-wrap: wrap;\n' +
+      '        gap: 12px;\n' +
+      '      }\n' +
+      '      #boot-screen .launch-action,\n' +
+      '      #boot-screen summary {\n' +
+      '        display: inline-flex;\n' +
+      '        align-items: center;\n' +
+      '        min-height: 44px;\n' +
+      '        padding: 0 8px;\n' +
+      '      }\n' +
+      '      #boot-screen a:focus-visible,\n' +
+      '      #boot-screen summary:focus-visible {\n' +
+      '        outline: 3px solid #78dce8;\n' +
+      '        outline-offset: 3px;\n' +
+      '      }\n' +
+      '      #boot-screen a {\n' +
+      '        color: #68d9fa;\n' +
+      '      }\n' +
+      '      #boot-screen [hidden] {\n' +
+      '        display: none !important;\n' +
+      '      }\n' +
+      '    '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <style>
+          html {
+            background: #070914;
+            color-scheme: dark;
+          }
+          body {
+            margin: 0;
+            background: #070914;
+            color: #edf2ff;
+          }
+          html:not([data-boot-state='ready']) body > :not(#boot-screen):not(#access-gate):not(script) {
+            display: none !important;
+          }
+          #boot-screen {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: grid;
+            place-items: center;
+            box-sizing: border-box;
+            padding: 24px;
+            font:
+              18px/1.5 'Field Kit UI',
+              system-ui,
+              sans-serif;
+          }
+          #boot-screen .launch-card {
+            width: min(100%, 620px);
+            box-sizing: border-box;
+            padding: 24px;
+            background: #101923;
+            border: 2px solid #425563;
+          }
+          #boot-screen .fpv-line-wordmark {
+            display: block;
+            width: min(100%, 510px);
+            aspect-ratio: 5.7;
+            object-fit: cover;
+            object-position: center 42%;
+          }
+          #boot-screen .launch-signal {
+            display: flex;
+            gap: 6px;
+          }
+          #boot-screen .launch-signal i {
+            width: 8px;
+            height: 12px;
+            background: #78dce8;
+          }
+          html[data-boot-state='loading'] #boot-screen .launch-signal i {
+            animation: boot-signal 900ms steps(2, end) infinite;
+          }
+          #boot-screen .launch-signal i:nth-child(2) {
+            animation-delay: 150ms;
+          }
+          #boot-screen .launch-signal i:nth-child(3) {
+            animation-delay: 300ms;
+          }
+          @keyframes boot-signal {
+            50% {
+              transform: scaleY(1.5);
+            }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            html[data-boot-state='loading'] #boot-screen .launch-signal i {
+              animation: none;
+            }
+          }
+          #boot-screen .launch-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+          }
+          #boot-screen .launch-action,
+          #boot-screen summary {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 0 8px;
+          }
+          #boot-screen a:focus-visible,
+          #boot-screen summary:focus-visible {
+            outline: 3px solid #78dce8;
+            outline-offset: 3px;
+          }
+          #boot-screen a {
+            color: #68d9fa;
+          }
+          #boot-screen [hidden] {
+            display: none !important;
+          }
+        
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/theme-pause-head-baseline/game/test/boot-build.test.mjs:62:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+ok 2 - native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+  ---
+  duration_ms: 3.907042
+  ...
+# Subtest: build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+not ok 3 - build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+  ---
+  duration_ms: 249.359833
+  location: '/private/tmp/theme-pause-head-baseline/game/test/boot-build.test.mjs:98:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Missing distribution references:
+    game/index.html → access-gate.mjs
+    site/index.html → ../game/access-gate.mjs
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///private/tmp/theme-pause-head-baseline/scripts/game-cli.mjs:77:9)
+    validateBuildReferences (file:///private/tmp/theme-pause-head-baseline/scripts/game-cli.mjs:319:23)
+    async prepareBuildProject (file:///private/tmp/theme-pause-head-baseline/scripts/game-cli.mjs:876:3)
+    async buildProject (file:///private/tmp/theme-pause-head-baseline/scripts/game-cli.mjs:1023:20)
+    async TestContext.<anonymous> (file:///private/tmp/theme-pause-head-baseline/game/test/boot-build.test.mjs:183:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: public company directory can display and navigate without a community backend
+not ok 4 - public company directory can display and navigate without a community backend
+  ---
+  duration_ms: 9.903833
+  location: '/private/tmp/theme-pause-head-baseline/game/test/community-directory.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Only the local localization runtime runs; no catalog/auth/client bootstrap is loaded.
+    + actual - expected
+    
+      [
+        '../i18n/bootstrap.mjs',
+        '../i18n/catalogs.mjs',
+        '../vendor/i18next-26.4.2.min.js',
+    +   './directory.mjs'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: '../i18n/bootstrap.mjs'
+    1: '../i18n/catalogs.mjs'
+    2: '../vendor/i18next-26.4.2.min.js'
+  actual:
+    0: '../i18n/bootstrap.mjs'
+    1: '../i18n/catalogs.mjs'
+    2: '../vendor/i18next-26.4.2.min.js'
+    3: './directory.mjs'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/theme-pause-head-baseline/game/test/community-directory.test.mjs:28:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: directory exposes the main game and every public brand through relative clean routes
+ok 5 - directory exposes the main game and every public brand through relative clean routes
+  ---
+  duration_ms: 5.360542
+  ...
+# Subtest: DroneAid collections share one community card without losing either entry point
+ok 6 - DroneAid collections share one community card without losing either entry point
+  ---
+  duration_ms: 2.432625
+  ...
+# Subtest: old directory bookmarks preserve query and hash while forwarding to the plural path
+ok 7 - old directory bookmarks preserve query and hash while forwarding to the plural path
+  ---
+  duration_ms: 1.490625
+  ...
+# Subtest: the separate community store retains its service configuration and existing account/catalog host
+ok 8 - the separate community store retains its service configuration and existing account/catalog host
+  ---
+  duration_ms: 2.527792
+  ...
+# Subtest: creator and moderator return links retain the separate service marketplace
+ok 9 - creator and moderator return links retain the separate service marketplace
+  ---
+  duration_ms: 3.572458
+  ...
+# Subtest: static directory resources and preserved store entry are covered by the source distribution
+ok 10 - static directory resources and preserved store entry are covered by the source distribution
+  ---
+  duration_ms: 3.729416
+  ...
+# Subtest: Pages aliases retain both entry routes and preserve frozen directory/store bytes
+ok 11 - Pages aliases retain both entry routes and preserve frozen directory/store bytes
+  ---
+  duration_ms: 7.163
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 8
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 456.034625

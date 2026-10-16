@@ -45,7 +45,7 @@ test('an unavailable HTTP chapter is not parsed and reports its status without i
     (error) => {
       assert.equal(error.code, 'chapter-download');
       assert.match(error.message, /First Light \(HTTP 404\)/);
-      assert.match(error.message, /while online.*choose this chapter again/);
+      assert.match(error.message, /While online, choose this chapter again to retry/);
       return true;
     },
   );
@@ -66,7 +66,7 @@ test('unreadable downloaded JSON stays separate from later pack validation', asy
     (error) => {
       assert.equal(error.cause, cause);
       assert.match(error.message, /First Light could not be read/);
-      assert.match(error.message, /while online/);
+      assert.match(error.message, /While online, choose this chapter again to retry/);
       return true;
     },
   );

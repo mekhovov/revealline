@@ -1,0 +1,142 @@
+[
+  {
+    "slot": "team.anchor.available",
+    "bytes": 181,
+    "height": 24,
+    "mime": "image/png",
+    "sha256": "88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3",
+    "width": 24,
+    "geometry": {
+      "frame": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.8333333333333334,
+        "width": 0.6666666666666666,
+        "x": 0.16666666666666666,
+        "y": 0.08333333333333333
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotorAnchors": []
+    }
+  },
+  {
+    "slot": "team.anchor.captured",
+    "bytes": 195,
+    "height": 24,
+    "mime": "image/png",
+    "sha256": "a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466",
+    "width": 24,
+    "geometry": {
+      "frame": {
+        "height": 24,
+        "width": 24,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.6666666666666666,
+        "width": 0.8333333333333334,
+        "x": 0.08333333333333333,
+        "y": 0.25
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotorAnchors": []
+    }
+  },
+  {
+    "slot": "team.core.shielded",
+    "bytes": 389,
+    "height": 64,
+    "mime": "image/png",
+    "sha256": "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a",
+    "width": 64,
+    "geometry": {
+      "frame": {
+        "height": 64,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.828125,
+        "width": 0.625,
+        "x": 0.1875,
+        "y": 0.078125
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotorAnchors": []
+    }
+  },
+  {
+    "slot": "team.core.exposed",
+    "bytes": 395,
+    "height": 64,
+    "mime": "image/png",
+    "sha256": "6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a",
+    "width": 64,
+    "geometry": {
+      "frame": {
+        "height": 64,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.828125,
+        "width": 0.71875,
+        "x": 0.140625,
+        "y": 0.078125
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotorAnchors": []
+    }
+  },
+  {
+    "slot": "team.core.secured",
+    "bytes": 366,
+    "height": 64,
+    "mime": "image/png",
+    "sha256": "28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d",
+    "width": 64,
+    "geometry": {
+      "frame": {
+        "height": 64,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "nineSlice": null,
+      "occupiedBounds": {
+        "height": 0.71875,
+        "width": 0.625,
+        "x": 0.1875,
+        "y": 0.1875
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "rotorAnchors": []
+    }
+  }
+]

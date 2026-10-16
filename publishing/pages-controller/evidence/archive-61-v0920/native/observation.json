@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-23T09:33:17.687967+00:00",
+  "kind": "scoped native public UX availability",
+  "status": "PASS within bounded public cases; broader qualification remains deferred",
+  "version": "v0.92.0",
+  "sourceRevision": "b572e82765cb53e2e7420ea13ec7cfd5e55301df",
+  "sourceTree": "f11f9418298616b31ca9be4287be7ed95d52677f",
+  "publisherRevision": "8232a8f90e1381e986a8d67d74f17592ccd9ff7b",
+  "productionRun": 35842300057,
+  "deployment": 6610614566,
+  "deploymentStatusId": 18720317680,
+  "deploymentStatus": "success",
+  "authority": "Deployment pins supplied by release coordinator; canonical release marker fetched independently once. Inert metadata-only deployment 6610704770 is not production authority.",
+  "canonicalReleaseMarker": "https://mekhovov.github.io/revealline/releases/v0.92.0/release.json",
+  "entry": "https://mekhovov.github.io/revealline/",
+  "marker": {
+    "sourceArchiveSha256": "8efeac922044fc6efb1f5d7c1f660dfaa957e1ee969fd4abcf0275f02f403918",
+    "distributionSha256": "60fc0c039dbe04c34d7ac725247e0d21423d16acfefa20ffb9fceda997301634",
+    "manifestSha256": "0dcbe15b77ffbb000fe3d4ca6a0f5777bb945e01610ca2a7c3f8a591ef97d606"
+  },
+  "steps": [
+    "Ordinary root opened once, loading status then v0.92.0 New Journey / 91 missions; Start / First return, Standard, Sound off.",
+    "Workshop to Replay: Copper Crossing example verified and paused at tick 0/1305. Theme, Standard and unchecked Reduced effects unchanged.",
+    "Return to Workshop restored Replay Theater opener focus; browser Back loaded same paused example and unchanged Interface controls. No playback started.",
+    "Asset Studio release r57 loaded, local save none. Eight preview control rows measured 44px high at 390x844 (354px wide) and 844x390 (wrapped widths 110.5 to190px); no horizontal overflow.",
+    "Disposable 24x24 blank sprite: Space added one pixel. Keyboard Undo endpoint focused enabled Redo, top400.0234375/bottom444.0234375 at390x844.",
+    "Rotate to844x390 and keyboard Redo endpoint focused enabled Undo, top172.8125/bottom216.8125, visible focus; Undo returned focus to Redo.",
+    "Discard pixel edits confirmed prepared/staged assets unchanged. No prepare, stage or Save local revision.",
+    "Content Studio timed schedule invalid submit at320x568 focused required Stable schedule ID: label top8.09375/bottom75.09375; native required message.",
+    "Only disposable ID filled; invalid submit at844x390 focused required Anchors: label top7.78125/bottom280.78125, native required message, no horizontal overflow.",
+    "Shift+Tab from Anchors focused Effect. Temporary ID cleared with keyboard after empty fill no-op; visible Project JSON unchanged, 2765 characters, checkpoint1. No valid schedule applied.",
+    "Viewport reset; temporary Content and Asset Studio tabs closed.",
+    "Replay Return restored Workshop opener; About Build information showed136 preserved builds. v0.91 selection resolved Archive60 URL.",
+    "Browser Back returned v0.92 title, Start First return, Standard and Sound off; main tab closed."
+  ],
+  "archiveTarget": "https://mekhovov.github.io/revealline-archive-60/releases/v0.91.0/site/game/",
+  "productFailures": [],
+  "automationFailures": [
+    {
+      "operation": "Clear disposable schedule ID using locator.fill(\"\")",
+      "result": "Returned without clearing visible input; DOM observation caught unchanged value.",
+      "correction": "Native Command+A then Backspace cleared field, confirmed empty DOM value."
+    }
+  ],
+  "retries": 1,
+  "reloads": 0,
+  "consoleResult": {
+    "replay": [],
+    "assetStudio": [],
+    "contentStudio": [],
+    "titleAndAbout": [],
+    "levels": [
+      "warn",
+      "error"
+    ]
+  },
+  "cleanup": {
+    "viewportReset": true,
+    "agentCreatedTabsClosed": [
+      8,
+      9,
+      10
+    ],
+    "disposableSpriteDiscarded": true,
+    "disposableScheduleIdCleared": true
+  },
+  "limits": [
+    "No gameplay, full responsive/input/offline/device matrix or human balance certification. These remain waived/deferred for this bounded receipt, not passed.",
+    "Replay case used unchanged preferences and paused built-in tick0 example. No denied-storage/session-only, injected stale controls, true persisted bfcache, imported recording or nonzero checkpoint proof.",
+    "Content Studio opening reported Saved locally checkpoint1. Automatic initialization versus preexisting project was not determined; no claim of zero storage writes on opening. No manual Save/Apply/import or deletion.",
+    "Project JSON equality was checked before keyboard cleanup; the only subsequent edit cleared unsubmitted temporary schedule ID.",
+    "Screenshots viewed inline; no local screenshot files. No new full artifact byte audit; marker hashes are declared values, not independently recomputed download hashes.",
+    "No source/repository/GitHub/release/selector/workflow changes in this verification lane."
+  ]
+}

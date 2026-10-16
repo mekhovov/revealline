@@ -1,0 +1,39 @@
+{
+  "format": "FPVContinuousPlayerInspection.v1",
+  "date": "2026-10-02",
+  "entry": "http://127.0.0.1:8789/dist/fpv-continuous-school-playtest/optional-practice/fpv-worlds/index.html#learn",
+  "observed": [
+    "Fresh packaged entry initializes World runtime before the isolated guide",
+    "Whole-lesson autoplay starts and advances the turn lesson descriptions",
+    "Fullscreen preserves current step number, title and instruction above the drone",
+    "Keyboard W takes ownership without resetting the lab; no arm of real flight",
+    "EN/UK labels and instructions visible",
+    "World controller source remains USB radio; English locale restored",
+    "No browser error entries after final packaged load"
+  ],
+  "responsive": {
+    "requestedViewport": [
+      390,
+      844
+    ],
+    "actualCssViewport": [
+      433,
+      938
+    ],
+    "documentOverflow": false,
+    "toolbarButtons": 4,
+    "minimumButtonHeightCssPixels": 43.99,
+    "instructionBounds": {
+      "x": 0.56,
+      "y": 105.09,
+      "width": 432.22,
+      "height": 76.44
+    }
+  },
+  "screenshot": "/tmp/fpv-continuous-school-fullscreen.png",
+  "limitations": [
+    "Controlled browser verification is not physical-radio acceptance or target-device qualification",
+    "Full-window immersive player verified; native fullscreen permission not separately certified",
+    "New unit coverage remains deferred"
+  ]
+}

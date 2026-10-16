@@ -1,0 +1,131 @@
+{
+  "format": "revealline-independent-archive-preservation-results-review.v1",
+  "status": "PASS_SCOPED_READY_FOR_OWNER_ADMISSION_DECISION",
+  "reviewedAt": "2026-09-22T15:43:59.895769+00:00",
+  "reviewer": "Codex subagent /root/soundtrack_references",
+  "authorship": "Reviewer did not perform HTTP execution or browser journey. Independently reconciled retained bytes and viewed supplied screenshot; not a second browser or physical witness.",
+  "archiveId": "archive-51",
+  "version": "v0.82.1",
+  "infrastructureCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+  "infrastructureTree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+  "gameSourceRevision": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "gameSourceTree": "402f5f12d83cb86dbceb9d9dceec12731ea48980",
+  "checks": [
+    "Full1059path result coverage;1060 attempts; one original503 and successful secondattempt retained; nofinalfailure orskip.",
+    "All successful final responses exactURL/200/MIME/identityencoding/length/hash; verified590404002B.",
+    "Inventory/request/sevenrawauthorities/retainedhelper bytes match reviewed actualbinding and final correctedhelper.",
+    "Observed duration108.422813s and every recorded attempt below90s; final auditDeadlineExceeded:false.",
+    "51native support originals431838B match individual files and52member ZIP including support-manifest.json with exact manifest bytes; CRC/hash/pins all pass.",
+    "Observation references only retained support; actual title version, initial sessions503\u2192ordinary Reload200, paused/caughtattempt and explicit Restartconfirmation retained.",
+    "Reviewed retained screenshot displays FirstSignal52.2%,8160points,0:04 and fullpicture collection; snapshot also records3lives.",
+    "Archiveindex\u2192mainexplorer(current821/source64ec)\u2192Back URLs and heading snapshots agree; owned-session close/processcheck are observer evidence.",
+    "Preparation/admission status remains pendingownerdecision; no allocation/runtime/version/release mutation inferred."
+  ],
+  "http": {
+    "files": 1059,
+    "bytes": 590404002,
+    "attempts": 1060,
+    "failedAttempts": 1,
+    "retriedFiles": 1,
+    "finalFailures": 0,
+    "skips": 0,
+    "durationSeconds": 108.422813,
+    "maxAttemptSeconds": 4.859,
+    "recoveredHTTPFailure": {
+      "path": "releases/v0.82.1/site/game/presentation/compiled/assets/0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7.png",
+      "url": "https://mekhovov.github.io/revealline-archive-51/releases/v0.82.1/site/game/presentation/compiled/assets/0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7.png",
+      "attempt": 1,
+      "expectedBytes": 134,
+      "expectedSha256": "0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7",
+      "at": "2026-09-22T15:36:00.450213+00:00",
+      "requestStarted": true,
+      "bytes": 0,
+      "status": "FAIL",
+      "errorType": "HTTPError",
+      "error": "HTTP Error 503: Service Unavailable",
+      "statusCode": 503,
+      "elapsedSeconds": 0.187
+    }
+  },
+  "native": {
+    "supportOriginals": 51,
+    "originalBytes": 431838,
+    "ZIPMembersIncludingManifest": 52,
+    "scope": "Online keyboardFirstSignalwin/recovery and archiveindex/mainexplorer/back only.",
+    "initialFailure": "Descendant sessions.mjs503 while app.mjs200; ordinaryReload succeeds. Separate public-audit503 concerned a134-byte PNG, not the same failed request.",
+    "retainedDetours": [
+      "Guessedlabel wait interrupted by owner",
+      "Paused/caughtfirstgameplay attempt",
+      "FirstrestartArrowDown while confirmation stillopen; explicitconfirmation then successful ordinarykeyboard attempt"
+    ],
+    "physicalWitness": false,
+    "audibleListening": false,
+    "rootAdmissionApproved": false
+  },
+  "pins": [
+    {
+      "path": "preservation-results.json",
+      "bytes": 2519,
+      "sha256": "f6d687febd38411e8196c9d621c31365a05af3c1ade882315a3b5d0ff2a93a86"
+    },
+    {
+      "path": "native/observation.json",
+      "bytes": 5795,
+      "sha256": "764f621751970d1be9d5f6f77e9e79d7481101a5cde9af9993e10054d4e89ee2"
+    },
+    {
+      "path": "native-support-manifest.json",
+      "bytes": 7842,
+      "sha256": "b969ed91cf7c5fa0a9efc407c4e9a0982f724124852bee289fd5641dc0b0b8cf"
+    },
+    {
+      "path": "native-support-originals.zip",
+      "bytes": 244623,
+      "sha256": "c63268921800ef12d437673a1fd035174fe054ceb4c5a6d8a8ec4af8a57c7360"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/http-report.json",
+      "bytes": 1638,
+      "sha256": "d44e8642dbdd8adfa55117efd1825a290e7115b105537d481a1e24e2c4204d34"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/http-attempts.jsonl",
+      "bytes": 863758,
+      "sha256": "72dacd8bdd54ae86814d9fe8cbfbbbeedfb68908d4c65c1d11e9b021273485a9"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/http-results.jsonl",
+      "bytes": 863101,
+      "sha256": "1d53ec693eccc08765fafbb803dc16e6876addff5f7be8cbbe97378f21d318fe"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/expected-inventory.json",
+      "bytes": 216442,
+      "sha256": "7687ea84796d955b63b6bc11b41465a7777be7e7f24ccd07b2becd2eeee246c0"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/execution-request.json",
+      "bytes": 1638,
+      "sha256": "0d493b69396b82f12b14a81722cf4556cb30621c51d1512b42ca5e27ed1fa561"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/auditor.py",
+      "bytes": 14812,
+      "sha256": "cb73e372f9dcd1eba016aca9e654315654f5d4d945bcdefee3ac0014a172ead7"
+    },
+    {
+      "path": "http/http-20260922T153449Z-0594c0fd/audit_binding.py",
+      "bytes": 9046,
+      "sha256": "84cd4a00c22919e8cf8423ae4a8c4cb8b3e0312bfe8cfd00ab2a25be20922f16"
+    }
+  ],
+  "blockers": [],
+  "reviewerNetworkRequests": 0,
+  "limitations": [
+    "No new HTTP/browser/test actions, source edits or remote mutations.",
+    "All native findings are bounded review of observer originals and screenshot, not independently executed gameplay.",
+    "No physicalphone/SteamDeck/gamepad/multitouch/offline or whole-game/musicquality acceptance.",
+    "Freshness is bounded by retained actualobservation times; no new liveauthorityquery.",
+    "Owner admission and future publisher commit remain separate; this review does not admitarchive51."
+  ]
+}

@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -11,12 +12,17 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
-import { campaignKey } from '../library.mjs';
+import { campaignKey, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const slot = 'revealline.suspended.dev.v1';
-const homeURL = 'http://localhost/game/';
+const gameURL = 'http://localhost/game/';
+const homeURL = `${gameURL}?journey=legacy`;
 const hintKeys = ['revealline.mode-return.v1:/game/', 'revealline.mode-return.v2:/game/'];
-const destinations = { team: 'couch/relay-rescue.html?return=solo', versus: 'couch/?return=solo' };
+const destinations = {
+  team: 'couch/relay-rescue.html?journey=legacy&return=solo',
+  versus: 'couch/?journey=legacy&return=solo',
+};
 // Model native top-layer focus and cancel defaults only. Actual app, shell,
 // controller navigation, replay, storage and mode presenter execute unchanged.
 function nativeDialogs(t) {
@@ -85,14 +91,24 @@ function frozen(h, before) {
   assert.deepEqual(h.errors, []);
 }
 async function flight(t, options = {}) {
-  const h = await host(t, options);
-  if (options.policy === 'grid-center') {
-    h.change('turn-select', 'grid-center');
-    await settle(() => h.doc.body.dataset.pictureState === 'ready');
-  }
+  const storage = options.storage ?? memoryStorage();
+  if (options.policy)
+    saveLibrary(
+      storage,
+      'revealline.library.dev.v1',
+      updatePreferences(loadLibrary(storage, 'revealline.library.dev.v1').library, {
+        turnPolicy: options.policy,
+      }),
+    );
+  // This fixture explicitly starts through the real title action below.
+  // Joining that action also owns any unfinished initial picture preparation.
+  // Load the requested native steering preference before boot rather than
+  // changing an unrelated loadout control during startup picture preparation.
+  const h = await host(t, { waitForPictures: false, ...options, storage });
   h.$('shell-featured').focus();
   await press(h, 'Enter');
   await settle(() => h.doc.body.dataset.flightState === 'running');
+  assert.equal(h.rendered.run.turnPolicy, options.policy ?? 'immediate');
   h.key('ArrowDown');
   for (let i = 0; i < 12; i++) h.frame();
   h.key('ArrowDown', false);
@@ -103,6 +119,28 @@ async function flight(t, options = {}) {
   h.$('shell-menu').click();
   assert.equal(h.$('shell-home').open, true);
   return h;
+}
+async function pendingPictureRestore(h, decodeCount, gate) {
+  // This is setup for cancellation at the real held decoder boundary, not a
+  // responsiveness deadline. Saved replay verification and startup picture
+  // admission share the host thread and can exceed the generic 5 s fixture
+  // wait under the CI cohort. Neither a busy button alone nor a decode from an
+  // already-finished operation is enough to exercise this lifecycle contract.
+  await waitFor(() => decodeCount() > 0 && h.$('continue-saved').disabled, {
+    message: 'Saved Continue must own a pending original-picture decode.',
+    timeoutMs: 20_000,
+  }).catch((error) => {
+    error.message += JSON.stringify({
+      decodes: decodeCount(),
+      continueDisabled: h.$('continue-saved').disabled,
+      titleDisabled: h.$('shell-continue').disabled,
+      message: h.$('run-message').textContent,
+      picture: h.doc.body.dataset.pictureState,
+      errors: h.errors.map(String),
+    });
+    gate.resolve();
+    throw error;
+  });
 }
 function request(h, kind) {
   h.$(`shell-title-${kind}`).focus();
@@ -133,20 +171,21 @@ for (const kind of ['versus', 'team']) {
       const before = checkpoint(h),
         row = h.$('shell-title-modes');
       assert.equal(row.hidden, false);
+      const modes = row.children.filter((element) => element.dataset.gameMode);
       assert.deepEqual(
-        row.children.map((e) => e.dataset.gameMode),
-        ['solo', 'versus', 'team'],
+        modes.map((e) => e.dataset.gameMode),
+        ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator'],
       );
-      assert.equal(row.children[0].tagName, 'SPAN');
-      assert.equal(row.children[0].getAttribute('aria-current'), 'page');
-      assert.equal(row.children[0].getAttribute('tabindex'), null);
-      row.children[0].click();
+      assert.equal(modes[0].tagName, 'BUTTON');
+      assert.equal(modes[0].getAttribute('aria-current'), 'page');
+      assert.equal(modes[0].getAttribute('tabindex'), null);
+      modes[0].click();
       assert.deepEqual(checkpoint(h), before);
       const calls = hintGuard(previewStorage);
       assert.equal(h.$(`shell-title-${kind}`).getAttribute('href'), destinations[kind]);
       await request(h, kind);
       target = globalThis.location.href;
-      assert.equal(target, homeURL + destinations[kind]);
+      assert.equal(target, gameURL + destinations[kind]);
       assert.equal(h.$('mode-leave-dialog').open, false);
       assert.equal(h.$('shell-missions').open, false);
       assert.equal(storage.getItem(slot), null);
@@ -188,7 +227,7 @@ for (const kind of ['versus', 'team']) {
       const retained = h.storage.getItem(slot);
       h.$('mode-leave-confirm').focus();
       await press(h, 'Enter');
-      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(globalThis.location.href, gameURL + destinations[kind]);
       h.win.emit('pagehide', { persisted: true });
       assert.equal(h.storage.getItem(slot), retained);
       assert.deepEqual(calls, []);
@@ -308,7 +347,9 @@ for (const reason of ['quota', 'readback', 'newer-before', 'newer-after'])
     let written = false,
       newer;
     if (reason === 'newer-before') {
-      newer = JSON.stringify({ ...JSON.parse(get(slot)), savedAt: '2026-09-16T00:00:00.000Z' });
+      const changed = JSON.parse(get(slot));
+      nativeSession(changed).savedAt = '2026-09-16T00:00:00.000Z';
+      newer = JSON.stringify(changed);
       set(slot, newer);
     }
     h.storage.setItem = (key, value) => {
@@ -321,7 +362,9 @@ for (const reason of ['quota', 'readback', 'newer-before', 'newer-after'])
     await request(h, 'team');
     if (reason === 'newer-after') {
       assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
-      newer = JSON.stringify({ ...JSON.parse(get(slot)), savedAt: '2026-09-16T00:00:00.000Z' });
+      const changed = JSON.parse(get(slot));
+      nativeSession(changed).savedAt = '2026-09-16T00:00:00.000Z';
+      newer = JSON.stringify(changed);
       set(slot, newer);
       h.$('mode-leave-confirm').click();
       assert.equal(globalThis.location.href, homeURL);
@@ -331,7 +374,7 @@ for (const reason of ['quota', 'readback', 'newer-before', 'newer-after'])
     assert.doesNotMatch(h.$('mode-leave-status').textContent, /saved and verified/);
     if (newer) assert.equal(get(slot), newer);
     h.$('mode-leave-confirm').click();
-    assert.equal(globalThis.location.href, homeURL + destinations.team);
+    assert.equal(globalThis.location.href, gameURL + destinations.team);
     if (newer) assert.equal(get(slot), newer);
     frozen(h, before);
   });
@@ -360,7 +403,7 @@ test('modified Title links retain native defaults; rejected direct navigation le
     },
   });
   await request(h, 'versus');
-  assert.equal(current, homeURL + destinations.versus);
+  assert.equal(current, gameURL + destinations.versus);
 });
 
 class Picture {
@@ -440,9 +483,9 @@ for (const kind of ['versus', 'team'])
     const before = checkpoint(h);
     h.$('shell-featured').focus();
     const starting = press(h, 'Enter');
-    assert.equal(h.$('shell-flight-cancel').hidden, false);
+    assert.equal(h.$('shell-flight-cancel').hidden, true);
     await request(h, kind);
-    assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+    assert.equal(globalThis.location.href, gameURL + destinations[kind]);
     const chosen = h.doc.activeElement;
     gate.resolve();
     await starting;
@@ -466,7 +509,7 @@ for (const kind of ['versus', 'team'])
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: Picture },
       });
-      assert.ok(JSON.parse(storage.getItem(slot)).presentationPins);
+      assert.ok(nativeSession(JSON.parse(storage.getItem(slot))).presentationPins);
       assert.equal(h.rendered.run.player.cutting, true);
     });
     const captured = storage.getItem(slot);
@@ -476,7 +519,7 @@ for (const kind of ['versus', 'team'])
       class RestorePicture extends Picture {
         decode() {
           decodes++;
-          return decodes === 1 ? Promise.resolve() : gate.promise;
+          return gate.promise;
         }
       }
       const h = await host(t, {
@@ -484,13 +527,18 @@ for (const kind of ['versus', 'team'])
         campaign: f.campaign,
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: RestorePicture },
+        waitForPictures: false,
       });
       const before = checkpoint(h),
         old = h.rendered.run;
+      // Continue may reuse the exact initial image. Keep that native media
+      // load pending instead of assuming restore always decodes a second copy.
+      await settle(() => !h.$('shell-continue').disabled && !h.$('continue-saved').disabled);
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
-      await settle(() => decodes >= 2);
-      assert.equal(h.$('shell-flight-cancel').hidden, false);
+      await pendingPictureRestore(h, () => decodes, gate);
+      assert.equal(h.rendered.run, old, 'Pending media cannot adopt the saved owner.');
+      assert.equal(h.$('shell-flight-cancel').hidden, true);
       await request(h, kind);
       // The real restore owns sessionBusy until its asynchronous finally runs.
       assert.equal(globalThis.location.href, homeURL);
@@ -503,7 +551,7 @@ for (const kind of ['versus', 'team'])
       frozen(h, before);
       assert.equal(h.doc.activeElement.id, `shell-title-${kind}`);
       await request(h, kind);
-      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(globalThis.location.href, gameURL + destinations[kind]);
       assert.equal(storage.getItem(slot), captured);
       frozen(h, before);
     });
@@ -521,7 +569,7 @@ for (const kind of ['versus', 'team'])
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: Picture },
       });
-      assert.ok(JSON.parse(storage.getItem(slot)).presentationPins);
+      assert.ok(nativeSession(JSON.parse(storage.getItem(slot))).presentationPins);
       assert.equal(h.rendered.run.player.cutting, true);
     });
     const captured = storage.getItem(slot);
@@ -531,7 +579,7 @@ for (const kind of ['versus', 'team'])
       class RestorePicture extends Picture {
         decode() {
           decodes++;
-          return decodes === 1 ? Promise.resolve() : gate.promise;
+          return gate.promise;
         }
       }
       const h = await host(t, {
@@ -539,18 +587,26 @@ for (const kind of ['versus', 'team'])
         campaign: f.campaign,
         soundtrackIndexedDB: f.memory.indexedDB,
         pictures: { Image: RestorePicture },
+        waitForPictures: false,
       });
       const before = checkpoint(h),
         old = h.rendered.run;
+      // Continue may reuse the exact initial image. Keep that native media
+      // load pending instead of assuming restore always decodes a second copy.
+      await settle(() => !h.$('shell-continue').disabled && !h.$('continue-saved').disabled);
       h.$('shell-continue').focus();
       const pending = press(h, 'Enter');
-      await settle(() => decodes >= 2);
-      assert.equal(h.$('shell-flight-cancel').hidden, false);
-      assert.equal(h.doc.activeElement.id, 'shell-flight-cancel');
-      await press(h, 'Enter');
+      await pendingPictureRestore(h, () => decodes, gate);
+      assert.equal(h.rendered.run, old, 'Pending media cannot adopt the saved owner.');
+      assert.equal(h.$('shell-flight-cancel').hidden, true);
+      assert.equal(h.doc.activeElement.id, 'shell-continue');
+      const cancel = new Event('cancel', { cancelable: true });
+      h.$('shell-home').dispatchEvent(cancel);
+      assert.equal(cancel.defaultPrevented, true);
       assert.equal(h.$('shell-flight-cancel').hidden, true);
       assert.equal(h.doc.activeElement.id, 'shell-continue');
       assert.equal(h.$('shell-continue').disabled, false);
+      assert.equal(h.$('shell-continue').hasAttribute('aria-busy'), false);
       assert.equal(h.$('continue-saved').disabled, true, 'The actual restore still owns cleanup');
       assert.equal(storage.getItem(slot), captured);
       await request(h, kind);
@@ -572,7 +628,7 @@ for (const kind of ['versus', 'team'])
       assert.equal(storage.getItem(slot), captured);
       frozen(h, before);
       await request(h, kind);
-      assert.equal(globalThis.location.href, homeURL + destinations[kind]);
+      assert.equal(globalThis.location.href, gameURL + destinations[kind]);
       assert.equal(storage.getItem(slot), captured);
       assert.equal(h.$('mode-leave-dialog').open, false);
       frozen(h, before);

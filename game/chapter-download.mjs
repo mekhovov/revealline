@@ -20,14 +20,14 @@ export async function fetchBundledChapter(summary, { fetch: request = globalThis
   }
   if (!response.ok)
     throw downloadError(
-      `Chapter download unavailable: ${summary.name} (HTTP ${response.status}). Reload the game while online, then choose this chapter again. ${kept}`,
+      `Chapter download unavailable: ${summary.name} (HTTP ${response.status}). While online, choose this chapter again to retry the download. ${kept}`,
     );
   try {
     return await response.json();
   } catch (error) {
     if (error?.name === 'AbortError') throw error;
     throw downloadError(
-      `The download for ${summary.name} could not be read. Reload the game while online, then choose this chapter again. ${kept}`,
+      `The download for ${summary.name} could not be read. While online, choose this chapter again to retry the download. ${kept}`,
       error,
     );
   }

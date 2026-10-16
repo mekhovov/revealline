@@ -1,0 +1,140 @@
+- dialog "MUSIC PLAYER"
+  - heading "MUSIC PLAYER" [level=2, ref=e1]
+  - button "Close studio" [ref=e2]
+  - paragraph
+    - StaticText "Custom music stays in this browser. Export a .rlsound file to keep its original bytes."
+  - paragraph
+    - status
+      - StaticText "Playlist selected and playing."
+  - generic
+    - heading "Now playing" [level=3, ref=e6]
+    - status
+      - StaticText "Lost In The Jungle · Holizna · playing · 0:08 / 2:42 · File: 04 HoliznaCC0 - Lost In The Jungle.mp3"
+    - generic
+      - link "Creator source and recording license" [ref=e20]
+      - link "CC0 1.0 Universal" [ref=e21]
+    - button "Previous" [ref=e7]
+    - button "Play music" [ref=e8]
+    - button "Pause music" [ref=e9]
+    - button "Next" [ref=e10]
+    - LabelText
+      - StaticText "Track position"
+      - slider "Track position" [ref=e22]: 8.800000190734863
+    - LabelText
+      - StaticText "Music volume"
+      - slider "Music volume" [ref=e23]: 0.44999998807907104
+  - generic
+    - heading "Pick the music" [level=3, ref=e11]
+    - paragraph
+      - StaticText "Start every song on shuffle, choose a style, or jump to a playlist."
+    - status
+      - StaticText "Selected playlist: Holizna — Retro Wave 1"
+    - generic
+      - StaticText "ALL TRACKS"
+      - strong
+        - StaticText "Everything, shuffled"
+      - paragraph
+        - StaticText "A no-repeat mix across every available style."
+      - button "Shuffle all music" [ref=e24]
+      - StaticText "STYLE"
+      - LabelText
+        - StaticText "Music style"
+        - combobox "Music style" [expanded=false, ref=e27]: Metal
+          - MenuListPopup
+            - option "90s Synth" [disabled, ref=e29]
+            - option "Metal" [disabled, ref=e30]
+            - option "Ukrainian" [disabled, ref=e31]
+            - option "Chiptune" [disabled, ref=e32]
+            - option "Electronic & dance" [disabled, ref=e33]
+            - option "Rock" [disabled, ref=e34]
+            - option "Ambient & chill" [disabled, ref=e35]
+            - option "Cinematic" [disabled, ref=e36]
+            - option "Acoustic & folk" [disabled, ref=e37]
+            - option "Fusion" [disabled, ref=e38]
+            - option "Automatic — match this world" [disabled, ref=e39]
+            - option "My Mix" [disabled, ref=e40]
+      - button "Play this style" [ref=e25]
+      - StaticText "PLAYLIST"
+      - LabelText
+        - StaticText "Playback playlist"
+        - combobox "Playback playlist" [expanded=false, ref=e28]: Holizna — Retro Wave 1
+          - MenuListPopup
+            - option "Use selected style" [disabled, ref=e41]
+            - option "RevealLine synth collection" [disabled, ref=e42]
+            - option "Synthwave: Signal Afterglow" [disabled, ref=e43]
+            - option "Chiptune: Pocket Constellation" [disabled, ref=e44]
+            - option "Arcade rock: Copper Highway" [disabled, ref=e45]
+            - option "Metal: Iron Comet" [disabled, ref=e46]
+            - option "Ambient: Quiet Orchard" [disabled, ref=e47]
+            - option "90s Synth" [disabled, ref=e48]
+            - option "Metal" [disabled, ref=e49]
+            - option "Ukrainian" [disabled, ref=e50]
+            - option "Chiptune" [disabled, ref=e51]
+            - option "Electronic & dance" [disabled, ref=e52]
+            - option "Rock" [disabled, ref=e53]
+            - option "Ambient & chill" [disabled, ref=e54]
+            - option "Cinematic" [disabled, ref=e55]
+            - option "Acoustic & folk" [disabled, ref=e56]
+            - option "Fusion" [disabled, ref=e57]
+            - option "Mix all styles" [disabled, ref=e58]
+            - option "Holizna — Retro Wave 1" [disabled, ref=e59]
+            - option "Holizna — Retro Wave 2" [disabled, ref=e60]
+            - option "Rock & Metal" [disabled, ref=e61]
+            - option "3xBlast — Pop-Punk Chiptune" [disabled, ref=e62]
+            - option "Tracker & FM Arcade" [disabled, ref=e63]
+            - option "Metal — Extra Battles" [disabled, ref=e64]
+            - option "Metal & Synth-Metal — Preview" [disabled, ref=e65]
+            - option "Instrumental Rock — Preview" [disabled, ref=e66]
+            - option "Electronic & Dance — Preview" [disabled, ref=e67]
+            - option "90s Synth & FM — Preview" [disabled, ref=e68]
+            - option "90s Synth & FM — Short Cues — Preview" [disabled, ref=e69]
+            - option "Fakebit & Chiptune — Short Cues — Preview" [disabled, ref=e70]
+            - option "Fakebit & Chiptune — Preview" [disabled, ref=e71]
+            - option "Ambient — Short Cues — Preview" [disabled, ref=e72]
+            - option "Electronic & Dance — Short Cues — Preview" [disabled, ref=e73]
+      - button "Play this playlist" [ref=e26]
+  - generic
+    - button "Sound controls Master volume and mute +" [expanded=false, ref=e12]
+      - StaticText "Sound controls"
+      - StaticText "Master volume and mute"
+      - StaticText "+"
+  - generic
+    - button "Filters & custom mix Installed music, recording mode and genre combinations +" [expanded=false, ref=e13]
+      - StaticText "Filters & custom mix"
+      - StaticText "Installed music, recording mode and genre combinations"
+      - StaticText "+"
+  - button "Offline album downloads Install or remove verified recordings for offline play +" [expanded=false, ref=e14]
+    - StaticText "Offline album downloads"
+    - StaticText "Install or remove verified recordings for offline play"
+    - StaticText "+"
+  - generic
+    - button "Add & edit music Upload MP3s, edit credits and audition tracks +" [expanded=false, ref=e15]
+      - StaticText "Add & edit music"
+      - StaticText "Upload MP3s, edit credits and audition tracks"
+      - StaticText "+"
+  - generic
+    - button "Create playlists Order, shuffle and repeat your own selections +" [expanded=false, ref=e16]
+      - StaticText "Create playlists"
+      - StaticText "Order, shuffle and repeat your own selections"
+      - StaticText "+"
+  - generic
+    - button "Match music to worlds Map, campaign and theme assignments +" [expanded=false, ref=e17]
+      - StaticText "Match music to worlds"
+      - StaticText "Map, campaign and theme assignments"
+      - StaticText "+"
+  - generic
+    - button "Backups & album files Import, export and restore .rlsound files +" [expanded=false, ref=e18]
+      - StaticText "Backups & album files"
+      - StaticText "Import, export and restore .rlsound files"
+      - StaticText "+"
+  - button "Community downloads Creator albums, credits and optional offline copies +" [expanded=false, ref=e19]
+    - StaticText "Community downloads"
+    - StaticText "Creator albums, credits and optional offline copies"
+    - StaticText "+"
+  - paragraph
+    - StaticText "Saved · generation 3 · 0 custom tracks · 0 custom playlists · 0.0 MiB original audio"
+  - button "Save all changes" [disabled, ref=e3]
+  - button "Undo unsaved changes" [disabled, ref=e4]
+  - button "Reload latest saved" [ref=e5]
+✓ Screenshot saved to /tmp/v0821-music-acceptance.5aZyQg/13-playlist-playing.png
+

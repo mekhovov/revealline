@@ -1,0 +1,51 @@
+{
+  "format": "FPVAlpineStationApproachGitClosure.v1",
+  "observedAt": "2026-10-15T23:20:25.931474+00:00",
+  "passed": true,
+  "head": "ca76af991b127f6ed81434162832a79518add9a8",
+  "base": "5388647fca9777b26c24c52e7f4f8d2c9e4931d4",
+  "preservedEditions": [
+    {
+      "edition": "r1",
+      "originalPin": "07be16fe40ade4c398299c4e64cb542b7523856c",
+      "namespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1",
+      "fileCount": 721,
+      "allGitBlobsExact": true
+    },
+    {
+      "edition": "r2",
+      "originalPin": "1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a",
+      "namespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2",
+      "fileCount": 723,
+      "allGitBlobsExact": true
+    },
+    {
+      "edition": "r3",
+      "originalPin": "ffb79b67479f9ed5c8104610695ac8b5cb04edc7",
+      "namespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3",
+      "fileCount": 723,
+      "allGitBlobsExact": true
+    },
+    {
+      "edition": "r4",
+      "originalPin": "02f2b140d06cc930d8d4dd6b01abcd860db75436",
+      "namespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4",
+      "fileCount": 723,
+      "allGitBlobsExact": true
+    },
+    {
+      "edition": "r5",
+      "originalPin": "95b2f108c7c0ef347e120e6f66775805ee5d6e8a",
+      "namespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5",
+      "fileCount": 723,
+      "allGitBlobsExact": true
+    }
+  ],
+  "newFiles": 723,
+  "reusedPayloadBlobs": 716,
+  "changedPayloadsPlusDescriptor": 7,
+  "changedPathsTotal": 726,
+  "changesOnlyNewDeliveryAndExplicitDocumentation": true,
+  "playerAdmission": false,
+  "preflightNote": "First preflight assumed723 files for every prior edition. Original r1 actually contains721; all721 exact old/new Git entries compare equal. R2\u2013r5 contain723 each. Strict whole-tree equality retained; no original file removed."
+}

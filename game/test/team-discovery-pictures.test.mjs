@@ -273,3 +273,24 @@ test('terminal disposal prevents abort callbacks from reviving preview work', as
   assert.equal(f.calls[0].releases, 1);
   assert.equal(f.preview.panel.hidden, true);
 });
+
+test('a teaser keeps its reserved frame while its real canvas progresses from hidden to painted', async (t) => {
+  const h = fixture(t),
+    cards = h.populate('reserved', 1),
+    frame = cards[0].card.querySelector('.team-discovery-thumbnail-frame'),
+    canvas = cards[0].card.querySelector('canvas');
+  assert.ok(frame, 'A dedicated layout frame exists before preparation begins');
+  assert.equal(frame.hidden, false);
+  assert.equal(canvas.parentElement, frame);
+  assert.equal(canvas.hidden, true, 'Reserved space does not present unearned or synthetic pixels');
+  h.pictures.start();
+  assert.equal(canvas.hidden, true);
+  h.complete(0);
+  await waitFor(() => canvas.hidden === false);
+  assert.equal(canvas.parentElement, frame);
+  assert.equal(frame.hidden, false);
+  assert.equal(h.calls[0].releases, 1);
+  h.pictures.close();
+  assert.equal(canvas.hidden, true);
+  assert.equal(frame.hidden, false);
+});

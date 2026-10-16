@@ -12,13 +12,14 @@ import {
   TEAM_DEPOT_SPATIAL_PROFILE_KEY,
 } from '../content-design/team-timed-entry.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
+import { createTeamWindowSpatialCandidates } from '../content-design/team-window-spatial-candidates.mjs';
+import { createTeamDepotSpatialCandidates } from '../content-design/team-depot-spatial-candidates.mjs';
 
 const source = createTeamTimedOriginalCandidates();
 const href = 'http://localhost/game/couch/relay-rescue.html?journey=team-timed-originals';
-const read = async (name) =>
-  JSON.parse(await readFile(new URL(`./fixtures/${name}.json`, import.meta.url)));
-const qualification = await read('team-timed-qualification');
-const routes = await read('team-timed-host-routes');
+const decodedOriginals = new WeakSet();
+const currentImage = (f) => f.drawImages.findLast((image) => decodedOriginals.has(image));
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (a) => [
@@ -27,17 +28,14 @@ const originals = new Map(
     ]),
   ),
 );
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
 const enter = (f, node) => {
   node.focus();
   f.tap('Enter');
 };
 
 function environment(install, { failures = new Set(), gates = new Map() } = {}) {
-  const BaseImage = globalThis.Image;
+  const BaseImage = globalThis.Image,
+    actorFetch = globalThis.fetch;
   class CandidateImage extends BaseImage {
     releases = 0;
     async decode() {
@@ -46,6 +44,7 @@ function environment(install, { failures = new Set(), gates = new Map() } = {}) 
       this.width = this.naturalWidth = b.readUInt32BE(16);
       this.height = this.naturalHeight = b.readUInt32BE(20);
       this.sha256 = createHash('sha256').update(b).digest('hex');
+      decodedOriginals.add(this);
     }
     removeAttribute(name) {
       if (name === 'src') this.releases++;
@@ -55,8 +54,16 @@ function environment(install, { failures = new Set(), gates = new Map() } = {}) 
   install('Image', { value: CandidateImage });
   install('crypto', { value: webcrypto });
   install('fetch', {
-    value: async (url) => {
-      const asset = source.assets.find((a) => new URL(url).pathname.endsWith('/' + a.path));
+    value: async (url, options = {}) => {
+      const pathname = new URL(url).pathname;
+      const asset = source.assets.find((a) => pathname.endsWith('/' + a.path));
+      if (
+        !asset &&
+        /\/presentation\/compiled\/(?:runtime(?:\.[a-f0-9]{64})?\.json|assets\/[a-f0-9]{64}\.(?:png|jpg|webp|ttf|otf|woff2))$/.test(
+          pathname,
+        )
+      )
+        return actorFetch(url, options);
       assert(asset, 'Only exact registered pictures may be fetched');
       if (failures.has(asset.id)) throw Error('Modeled timed original offline');
       if (gates.has(asset.id)) await gates.get(asset.id).promise;
@@ -79,34 +86,9 @@ async function timedPage(t, options = {}) {
   });
 }
 function clear(f, id) {
-  const row = routes.rows.find((r) => r.missionId === id && r.difficulty === 'standard');
-  const log = structuredClone(
-    qualification.rows.find(
-      (r) => r.missionId === id && r.difficulty === 'standard' && r.kind === 'alternate-taking',
-    ).log,
-  );
-  for (const change of row.keyboard.adjustments) {
-    assert.equal(log[change.segment].ticks, change.fromTicks);
-    log[change.segment].ticks = change.toTicks;
-  }
-  f.tick(31);
-  let previous = [null, null],
-    frames = 30;
-  for (const segment of log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-    previous = [segment.a, segment.b];
-    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-      f.tick();
-      frames++;
-      assert.equal(f.$('coop-reserves').textContent, '2 reserves');
-    }
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay').hidden, false);
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-  assert.equal(f.$('coop-coverage').textContent, row.keyboard.coverageText);
-  assert.equal(frames, row.keyboard.tick);
+  return playTeamEditionRoute(f, source, id, 'standard', () => {
+    assert.equal(f.$('coop-reserves').textContent, '2 reserves');
+  });
 }
 
 test('Shared windows clears all three originals across two Next boundaries and one failed picture load', async (t) => {
@@ -116,8 +98,12 @@ test('Shared windows clears all three originals across two Next boundaries and o
     { type: 'select', mode: 'team', missionId: 'existing-team-bookmark' },
   ]);
   const f = await timedPage(t, { failures, memory });
+  assert.ok(
+    f.actorTransport.requests.some(({ relative }) => relative.startsWith('runtime')),
+    'Team uses the current compiled actor presentation authority',
+  );
   assert.match(
-    f.$('coop-boot').textContent,
+    f.$('coop-advanced-note').textContent,
     /original-art test · 3 missions · human validation pending/,
   );
   assert.equal(f.$('coop-level').value, 'window-exchange');
@@ -128,7 +114,7 @@ test('Shared windows clears all three originals across two Next boundaries and o
     assert.equal(f.$('coop-difficulty').value, 'standard');
     clear(f, mission.id);
     const asset = source.assets.find((a) => a.id === mission.presentation.backgroundAssetId);
-    const image = f.drawImages.at(-1);
+    const image = currentImage(f);
     assert.equal(image.sha256, asset.sha256);
     assert.equal(image.releases, 0);
     assert.deepEqual(f.visits, []);
@@ -181,19 +167,17 @@ test('Shared windows Skip needs two activations, grants no clear and remains dir
   assert.equal(f.$('coop-level').value, 'coolant-crossing');
   enter(f, f.$('coop-pause'));
   enter(f, f.$('coop-discovery-paused'));
-  const cards = [...f.$('coop-discovery-list').querySelectorAll('article')].filter((c) =>
-    c.querySelector('.team-mission-diagram'),
+  await waitFor(() => f.$('journey-chooser')?.open);
+  const cards = [...f.$('journey-cards').querySelectorAll('.journey-card')].filter((c) =>
+    c.querySelector('.journey-card-tags').textContent.includes('Journey'),
   );
   assert.equal(cards.length, 3);
-  const first = cards.find((c) => c.querySelector('button').textContent === 'Play Window exchange');
-  assert.equal(
-    first.querySelector('.team-mission-completion').textContent,
-    'Skipped · revisit whenever you like',
-  );
-  enter(f, first.querySelector('button'));
+  const first = cards.find((c) => c.querySelector('strong').textContent === 'Window exchange');
+  assert.equal(first.querySelector('.journey-card-progress').textContent, 'Skipped · try again');
+  enter(f, first);
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));
-  await waitFor(() => !f.$('coop-discovery-dialog').open);
+  await waitFor(() => !f.$('journey-chooser').open && f.$('coop-overlay').hidden);
   assert.equal(f.$('coop-level').value, 'window-exchange');
   const profile = await createJourneyBackend({
     ...memory,
@@ -208,7 +192,7 @@ test('cancelling a Shared windows picture preparation keeps the finished source 
     f = await timedPage(t, { gates });
   enter(f, f.$('coop-start'));
   clear(f, 'window-exchange');
-  const old = f.drawImages.at(-1),
+  const old = currentImage(f),
     gate = deferred();
   gates.set(source.missions[1].presentation.backgroundAssetId, gate);
   enter(f, f.$('coop-next'));
@@ -254,30 +238,16 @@ for (const depot of [false, true])
     });
     assert.equal(f.$('coop-level').value, 'window-exchange');
     assert.match(
-      f.$('coop-boot').textContent,
+      f.$('coop-advanced-note').textContent,
       /original-art test · 3 missions · human validation pending/,
     );
     enter(f, f.$('coop-start'));
-    f.tick(2);
-    const row = (await read('team-window-spatial-routes')).rows.find(
-      (r) => r.difficulty === 'standard' && r.kind === 'cooperation',
-    );
-    let previous = [null, null],
-      frames = 1;
-    for (const segment of row.log) {
-      for (const [seat, direction] of [segment.a, segment.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(frames, row.checks[1].result.tick);
+    const spatial = depot
+      ? createTeamDepotSpatialCandidates({ artwork: true })
+      : createTeamWindowSpatialCandidates({ artwork: true });
+    playTeamEditionRoute(f, spatial, 'window-exchange');
     assert.equal(
-      f.drawImages.at(-1).sha256,
+      currentImage(f).sha256,
       source.assets.find((a) => a.id === 'team-windows-window-exchange').sha256,
     );
     enter(f, f.$('coop-next'));
@@ -305,28 +275,10 @@ for (const depot of [false, true])
     assert.deepEqual(await oldBackend.read(), before);
     assert.deepEqual(f.visits, []);
     if (depot) {
-      const row = (await read('team-depot-spatial-routes')).rows.find(
-        (r) => r.difficulty === 'standard',
-      );
-      f.tick(2);
-      let previous = [null, null],
-        frames = 1;
-      for (const s of row.log) {
-        for (const [seat, direction] of [s.a, s.b].entries())
-          if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-        previous = [s.a, s.b];
-        for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-          f.tick();
-          frames++;
-        }
-        if (!f.$('coop-overlay').hidden) break;
-      }
-      assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-      assert.equal(frames, 3217);
-      assert.equal(f.$('coop-coverage').textContent, '78.7%');
+      playTeamEditionRoute(f, spatial, 'depot-dash');
       assert.equal(f.$('coop-next').hidden, true);
       assert.equal(
-        f.drawImages.at(-1).sha256,
+        currentImage(f).sha256,
         source.assets.find((a) => a.id === 'team-windows-depot-dash').sha256,
       );
       assert.deepEqual(await oldBackend.read(), before);

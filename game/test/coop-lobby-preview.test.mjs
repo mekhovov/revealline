@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { coverageClear } from './helpers/coop-route-search.mjs';
+import { earnTeamVictory } from './helpers/coop-win.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import {
   COOP_PICTURE_BINDINGS,
@@ -26,7 +26,17 @@ const settle = (f, expected = 'ready') =>
   );
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const lastPreview = (f) => f.previewDrawImages.at(-1);
-const lastArena = (f) => f.drawImages.at(-1);
+function lastArena(f) {
+  f.drawImages.length = 0;
+  f.tick(1);
+  const image = f.drawImages[0];
+  assert.ok(
+    f.artwork.calls.decodes.includes(image),
+    'A fresh frame starts with an accepted decoded picture',
+  );
+  assert.equal(f.drawImages.filter((entry) => entry === image).length, 1);
+  return image;
+}
 function assertMysteryPreview(f) {
   const canvas = f.$('coop-preview-canvas'),
     image = lastPreview(f),
@@ -35,9 +45,9 @@ function assertMysteryPreview(f) {
   // Interpret the finite Canvas trace at actual picture coordinates. This checks
   // visible centre/border outcomes, not browser rasterization or a method count.
   const points = [
-    [width / 2, height / 2, '#000'],
-    [16, 16, '#000'],
-    [width - 16, height - 16, '#000'],
+    [width / 2, height / 2, '#0b1a24'],
+    [16, 16, image],
+    [width - 16, height - 16, image],
     [0.5, height / 2, image],
     [width - 0.5, height / 2, image],
     [width / 2, 0.5, image],
@@ -74,10 +84,13 @@ function assertMysteryPreview(f) {
     assert.equal(
       pixels[index],
       expected,
-      `Lobby picture at ${x},${y} preserves the mystery border policy.`,
+      `Lobby picture at ${x},${y} preserves the broad teaser border and concealed centre.`,
     ),
   );
-  assert.match(f.$('coop-preview-caption').textContent, /win to reveal the full picture/i);
+  assert.match(
+    f.$('coop-preview-caption').textContent,
+    /optional full preview; viewing earns no progress/i,
+  );
 }
 
 const previewClears = (f) =>
@@ -229,6 +242,7 @@ test('held artwork completes behind Settings without reclaiming its selector or 
   f.$('coop-settings-open').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-options').open, true);
+  f.$('coop-settings-tab-accessibility').click();
   const selector = f.$('coop-text-size');
   selector.focus();
   selector.value = 'large';
@@ -244,12 +258,23 @@ test('held artwork completes behind Settings without reclaiming its selector or 
   assert.equal(f.artwork.calls.reads.length, 2);
   assert.equal(f.artwork.calls.decodes.length, 2);
   assert.equal(f.drawImages.length, 0, 'Neither readiness nor Settings starts a flight.');
+  assert.equal(f.$('coop-discovery-open').disabled, true, 'Settings still owns the surface');
   f.$('coop-settings-close').click();
   assert.equal(f.$('coop-options').open, false);
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-start').disabled, false);
   assert.equal(f.drawImages.length, 0);
+  assert.equal(
+    f.$('coop-discovery-open').disabled,
+    false,
+    'Closing Settings restores the ready catalogue action',
+  );
+  f.$('coop-discovery-open').focus();
+  f.tap('Enter');
+  await waitFor(() => f.$('journey-chooser')?.open);
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.drawImages.length, 0, 'Browsing still requires an explicit Play');
 });
 
 test('late superseded read cannot draw or clear the newer arena preview or reclaim focus', async (t) => {
@@ -488,35 +513,7 @@ test('earned First Connection victory keeps preview in the hidden lobby and Chan
   assert.ok(image);
   f.$('coop-start').focus();
   f.tap('Enter');
-  const keys = [
-    { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD', boost: 'ShiftLeft', support: 'KeyQ' },
-    {
-      up: 'ArrowUp',
-      down: 'ArrowDown',
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
-      boost: 'ShiftRight',
-      support: 'Enter',
-    },
-  ];
-  const route = coverageClear('standard', { boost: true, cover: true });
-  assert.equal(route.run.status, 'won');
-  f.tick();
-  for (const commands of route.log) {
-    commands.forEach((command, seat) => {
-      if (command.direction) f.tap(keys[seat][command.direction]);
-      if (command.boost) f.press(keys[seat].boost);
-      if (command.support) f.press(keys[seat].support);
-    });
-    f.tick();
-    commands.forEach((command, seat) => {
-      for (const action of ['boost', 'support'])
-        if (command[action])
-          f.doc.activeElement.emit('keyup', { key: keys[seat][action], code: keys[seat][action] });
-    });
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
+  earnTeamVictory(t, f);
   assertMysteryPreview(f); // The hidden lobby never turns into an unearned full-image gallery.
   assertLobbyOwned(f);
   assert.equal(f.$('coop-menu').hidden, true);
@@ -672,4 +669,49 @@ test('preview reset failure cannot block a newly prepared arena or interrupt ter
   assert.equal(f.artwork.calls.closes, 1);
   assert.equal(f.$('coop-preview-canvas').hidden, true);
   f.setPreviewResetFailure(false);
+});
+
+test('Settings close and queued older close cannot enable Browse over pending artwork or a reopened visit', async (t) => {
+  const gate = deferred();
+  t.after(() => gate.resolve());
+  const f = await page(t, {
+    ...options,
+    presentation: { read: ({ calls }) => (calls.reads.length === 2 ? gate.promise : undefined) },
+  });
+  const changing = f.choose('coop-level', 'relay-yard');
+  await waitFor(() => f.artwork.calls.reads.length === 2);
+  f.$('coop-settings-open').focus();
+  f.tap('Enter');
+  f.$('coop-settings-close').click();
+  assert.equal(f.$('coop-options').open, false);
+  assert.equal(
+    f.$('coop-discovery-open').disabled,
+    true,
+    'Current picture operation still owns admission',
+  );
+  assert.equal(f.$('coop-start').disabled, true);
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  f.tap('Enter');
+  assert.equal(f.$('coop-options').open, true);
+  const selector = f.$('coop-text-size');
+  selector.focus();
+  f.$('coop-options').emit('close'); // Queued native close belonging to the old visit.
+  assert.equal(f.$('coop-options').open, true);
+  assert.equal(f.doc.activeElement, selector);
+  assert.equal(f.$('coop-discovery-open').disabled, true);
+  assert.equal(f.artwork.calls.decodes.length, 1);
+  gate.resolve();
+  await changing;
+  assert.equal(f.doc.activeElement, selector);
+  assert.equal(
+    f.$('coop-discovery-open').disabled,
+    true,
+    'A reopened Settings visit remains authoritative after readiness',
+  );
+  f.$('coop-settings-close').click();
+  assert.equal(f.$('coop-discovery-open').disabled, false);
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  assert.equal(f.$('coop-start').disabled, false);
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.drawImages.length, 0);
 });
