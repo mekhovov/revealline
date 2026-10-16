@@ -274,13 +274,46 @@ for (const policy of ['immediate', 'grid-center'])
     assert.deepEqual(p.errors, []);
   });
 
+for (const input of [
+  { type: 'pointerdown', pointerType: 'mouse', button: 0 },
+  { type: 'pointerdown', pointerType: 'touch', button: 0 },
+  { type: 'keydown', key: 'Tab' },
+])
+  test(`${input.pointerType ?? 'keyboard'} cancellation retains only the current result countdown slot and stops its announcements`, async (t) => {
+    const { p } = await setup(t);
+    await win(p);
+    const completed = p.rendered.run,
+      notice = p.$('result-auto-next'),
+      next = p.$('next-button');
+    assert.equal(notice.hidden, false);
+    assert.equal(notice.getAttribute('aria-live'), 'polite');
+    const countdown = notice.textContent;
+    const event = next.emit(input.type, input);
+    if (input.type === 'pointerdown') assert.equal(event.defaultPrevented, false);
+    assert.equal(notice.hidden, true);
+    assert.equal(notice.dataset.reserveSpace, 'true');
+    assert.equal(notice.getAttribute('aria-hidden'), 'true');
+    assert.equal(notice.getAttribute('aria-live'), 'off');
+    for (let elapsed = 0; elapsed <= AUTO_NEXT_MS + 1000; elapsed += 100) p.frame(100);
+    assert.equal(p.rendered.run, completed, 'Interaction cancels the actual automatic handoff.');
+    assert.equal(notice.textContent, countdown, 'The hidden countdown stops updating.');
+    next.click();
+    await running(p, 'next-cut');
+    assert.equal(notice.hidden, true);
+    assert.equal(notice.dataset.reserveSpace, undefined, 'No empty slot survives a new attempt.');
+    assert.deepEqual(p.errors, []);
+  });
+
 test('picture view keeps a direct Next action and clears the old full-screen reward before the next flight paints', async (t) => {
   const { p } = await setup(t);
   await win(p);
   const flowControls = p.$('result-flow-controls');
   if (flowControls) {
     assert.equal(flowControls.parentElement, p.$('next-button').parentElement);
-    assert.equal(p.$('overlay-reading-unit').querySelector('.enemy-stats').dataset.variant, 'panel');
+    assert.equal(
+      p.$('overlay-reading-unit').querySelector('.enemy-stats').dataset.variant,
+      'panel',
+    );
   }
   const more = p.$('earned-result-more');
   if (more) {
@@ -335,7 +368,11 @@ test('automatic Next survives launch clearing the sampled controller frame and t
   );
   const runTotal = p.$('score').parentElement.querySelector('.enemy-stats-run');
   if (runTotal) {
-    assert.equal(runTotal.hidden, false, 'The current run is visible even before its first defeat.');
+    assert.equal(
+      runTotal.hidden,
+      false,
+      'The current run is visible even before its first defeat.',
+    );
     assert.equal(runTotal.querySelector('strong').textContent, '0');
   }
   assert.deepEqual(p.errors, []);
