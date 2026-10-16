@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { createReadStream } from 'node:fs';
+import { pbkdf2Sync } from 'node:crypto';
 import { lstat, readFile, realpath } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
@@ -71,8 +72,30 @@ async function regularPath(root, relative) {
   }
   return file;
 }
-export async function startProductionPreview({ root = PROJECT_ROOT, port = 8773 } = {}) {
+export function parsePreviewRange(value, size) {
+  const match = /^bytes=(\d*)-(\d*)$/.exec(value);
+  if (!match || (!match[1] && !match[2]) || size === 0) return null;
+  if (match.slice(1).some((value) => value && !Number.isSafeInteger(Number(value)))) return null;
+  const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
+  const end = match[1] && match[2] ? Math.min(size - 1, Number(match[2])) : size - 1;
+  if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start > end || start >= size)
+    return null;
+  return { start, end };
+}
+export async function startProductionPreview({
+  root = PROJECT_ROOT,
+  port = 8773,
+  fixtureAccess = false,
+  cache = 'policy',
+} = {}) {
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid preview port.');
+  if (typeof fixtureAccess !== 'boolean' || !['policy', 'no-store', 'revalidate'].includes(cache))
+    throw new Error('Invalid preview fixture/cache options.');
+  const fixtureVerifier = fixtureAccess
+    ? pbkdf2Sync('fixture-password', 'performance-fixture', 150000, 32, 'sha256').toString(
+        'base64url',
+      )
+    : null;
   root = await realpath(root);
   const marker = await readOptional(path.join(root, '.xonix-build.json'));
   const ownership = marker === null ? null : JSON.parse(marker);
@@ -81,8 +104,11 @@ export async function startProductionPreview({ root = PROJECT_ROOT, port = 8773 
   const build = ownership !== null;
   const sourceHeaders = await readOptional(path.join(root, '_headers'));
   if (build && sourceHeaders === null) throw new Error('Generated builds require their _headers.');
-  const headers =
-    sourceHeaders === null ? PUBLIC_SECURITY_HEADERS : generatedHeaders(sourceHeaders);
+  const headers = Object.fromEntries(
+    Object.entries(
+      sourceHeaders === null ? PUBLIC_SECURITY_HEADERS : generatedHeaders(sourceHeaders),
+    ).map(([key, value]) => [key.toLowerCase(), value]),
+  );
   const config = build ? null : await readBuildConfig(root);
   const admitted = (relative) =>
     build || config.include.some((entry) => relative === entry || relative.startsWith(`${entry}/`));
@@ -125,13 +151,58 @@ export async function startProductionPreview({ root = PROJECT_ROOT, port = 8773 
       }
       if (!admitted(relative)) return send(403, 'Outside admitted public paths');
       if (!stat.isFile()) return send(404, 'Not found');
-      response.writeHead(200, {
+      let body = null;
+      if (fixtureAccess && path.extname(file) === '.html') {
+        // Explicit local-only access metadata fixture. Runtime bytes and public
+        // CSP stay unchanged; no browser request interception disables caching.
+        const source = await readFile(file, 'utf8');
+        body = Buffer.from(
+          source
+            .replace(
+              /(name="revealline-access-salt"\s+content=")[^"]+/,
+              '$1' + Buffer.from('performance-fixture').toString('base64url'),
+            )
+            .replace(
+              /(name="revealline-access-verifier"\s+content=")[^"]+/,
+              '$1' + fixtureVerifier,
+            ),
+        );
+      }
+      const size = body?.length ?? stat.size;
+      const etag = `W/"${stat.size.toString(16)}-${stat.mtimeMs.toString(16)}-${fixtureAccess ? 'fixture-v1' : 'original'}"`;
+      const fileHeaders = {
         ...headers,
         'Content-Type': MIME[path.extname(file)] ?? 'application/octet-stream',
-        'Content-Length': stat.size,
-      });
+        'Content-Length': size,
+        'Accept-Ranges': 'bytes',
+        ...(cache === 'policy'
+          ? {}
+          : {
+              'cache-control':
+                cache === 'revalidate' ? 'public, max-age=0, must-revalidate' : 'no-store',
+            }),
+        ...(cache === 'revalidate' ? { ETag: etag } : {}),
+      };
+      if (cache === 'revalidate' && request.headers['if-none-match'] === etag) {
+        delete fileHeaders['Content-Length'];
+        response.writeHead(304, fileHeaders);
+        return response.end();
+      }
+      // Ignore If-Range without a strong validator; a full response is safe.
+      const range =
+        request.method === 'GET' && request.headers.range && !request.headers['if-range']
+          ? parsePreviewRange(request.headers.range, size)
+          : undefined;
+      if (range === null)
+        return send(416, 'Unsatisfiable byte range', { 'Content-Range': `bytes */${size}` });
+      if (range) {
+        fileHeaders['Content-Range'] = `bytes ${range.start}-${range.end}/${size}`;
+        fileHeaders['Content-Length'] = range.end - range.start + 1;
+      }
+      response.writeHead(range ? 206 : 200, fileHeaders);
       if (request.method === 'HEAD') return response.end();
-      const stream = createReadStream(file);
+      if (body) return response.end(range ? body.subarray(range.start, range.end + 1) : body);
+      const stream = createReadStream(file, range);
       stream.on('error', () => response.destroy());
       stream.pipe(response);
     } catch (error) {
@@ -147,6 +218,8 @@ export async function startProductionPreview({ root = PROJECT_ROOT, port = 8773 
     root,
     mode: build ? 'generated-build' : 'source',
     headers: sourceHeaders === null ? 'PUBLIC_SECURITY_HEADERS' : 'generated _headers (verified)',
+    fixtureAccess,
+    cache,
     url: `http://127.0.0.1:${server.address().port}/`,
   };
 }
@@ -155,9 +228,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   for (const argument of process.argv.slice(2)) {
     if (argument.startsWith('--root=')) options.root = path.resolve(argument.slice(7));
     else if (/^--port=\d+$/.test(argument)) options.port = Number(argument.slice(7));
+    else if (argument === '--fixture-access') options.fixtureAccess = true;
+    else if (argument.startsWith('--cache=')) options.cache = argument.slice(8);
     else
       throw new Error(
-        'Usage: node scripts/serve-production-preview.mjs [--root=<path>] [--port=8773]',
+        'Usage: node scripts/serve-production-preview.mjs [--root=<path>] [--port=8773] [--fixture-access] [--cache=policy|no-store|revalidate]',
       );
   }
   const { server, ...preview } = await startProductionPreview(options);
