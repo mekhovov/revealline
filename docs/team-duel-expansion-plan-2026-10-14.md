@@ -6,6 +6,13 @@ Prepared 14 October 2026. Source reviewed: `5f126d6105be5708948dbaff6907ca5cd7e1
 
 Implementation is now authorized. The [delivery register](team-duel-expansion-status.md) records actual completion and evidence separately from the targets below. A source, an automated clear, a browser check and a human playtest are different milestones; none silently substitutes for another.
 
+**Current execution — 16 October 2026:** the 96 Team / 72 Duel source wave is
+delivered. The [reviewed continuation plan](team-duel-plan-continuation-2026-10-16.md)
+supersedes the old estimates and blanket deferrals below for remaining work. It
+adds fresh first-party research, exact integration fixes, encounter-aware native
+observations and normal-gameplay audio qualification, while preserving explicit
+publication/device/listening gates and the user's waivers.
+
 ## Implementation review and improvements
 
 The second review keeps the 96 Team / 72 Duel target. It changes execution in five ways:
