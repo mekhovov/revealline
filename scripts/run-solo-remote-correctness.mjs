@@ -2,7 +2,17 @@ import assert from 'node:assert/strict';
 import { spawn, execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { lstat, mkdir, open, readFile, readdir, statfs, writeFile } from 'node:fs/promises';
+import {
+  lstat,
+  mkdir,
+  mkdtemp,
+  open,
+  readFile,
+  readdir,
+  realpath,
+  statfs,
+  writeFile,
+} from 'node:fs/promises';
 import { arch, cpus, release, totalmem } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -17,6 +27,14 @@ const repository = resolve(here, '..');
 const hash = (data) => createHash('sha256').update(data).digest('hex');
 const json = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const save = (path, value) => writeFile(path, JSON.stringify(value, null, 2) + '\n');
+// Chromium creates its Unix socket beneath TMPDIR. Keep that owner path short,
+// independently of descriptive report names; do not reuse a shared /tmp profile.
+export function scratchRowPath(root, index) {
+  assert(Number.isInteger(index) && index >= 0 && index < 100);
+  const path = join(root, `r${String(index).padStart(2, '0')}`);
+  assert(Buffer.byteLength(path) <= 52, 'Owned browser scratch path exceeds socket budget');
+  return path;
+}
 export async function digest(path) {
   const h = createHash('sha256');
   let bytes = 0;
@@ -452,6 +470,19 @@ async function main() {
     assert(totalmem() >= 12 * GiB, 'Hosted runner memory admission');
     const disk = await statfs(output);
     assert(disk.bavail * disk.bsize >= 8 * GiB, 'Hosted disk admission');
+    const temporaryRoot = resolve(process.env.RUNNER_TEMP);
+    assert.equal(await realpath(temporaryRoot), temporaryRoot, 'Runner temporary root alias');
+    assert(!(await lstat(temporaryRoot)).isSymbolicLink());
+    const scratchRoot = await mkdtemp(join(temporaryRoot, 'sc-'));
+    scratchRowPath(scratchRoot, report.rows.length - 1);
+    const scratchOwner = await lstat(scratchRoot);
+    report.scratchOwner = {
+      path: scratchRoot,
+      device: scratchOwner.dev,
+      inode: scratchOwner.ino,
+      maximumRowPathBytes: 52,
+      lifetime: 'Fresh hosted-job owner; retained until job teardown',
+    };
     for (const role of ['baseline', 'candidate']) {
       report[`${role}Source`] = await sourceIdentity(sources[role], plan[role].revision);
       assert.equal(report[`${role}Source`].tree, plan[role].tree);
@@ -582,20 +613,72 @@ async function main() {
     for (const row of report.rows) {
       if (row.kind === 'first30' && !admitted.artifacts.baseline) {
         report.baselineSetupStatus = 'running';
-        await required(
-          'baseline-build',
-          [
-            process.execPath,
-            join(sources.baseline, 'scripts/game-cli.mjs'),
-            'build',
-            '--out',
-            baselineBuild,
-            '--revision',
-            plan.baseline.revision,
-          ],
-          600000,
-          { cwd: sources.baseline },
-        );
+        const observations = [];
+        let lastObservation = -Infinity;
+        const observeBuild = async (force = false) => {
+          if (!force && Date.now() - lastObservation < 15000) return;
+          assert(observations.length < 100, 'baseline-build-observation-cap');
+          lastObservation = Date.now();
+          const staging = (await readdir(work, { withFileTypes: true })).filter((entry) =>
+            entry.name.startsWith('.xonix-build-'),
+          );
+          assert(staging.length <= 2, 'Unexpected baseline staging count');
+          const roots = [baselineBuild, ...staging.map((entry) => join(work, entry.name))];
+          const paths = [];
+          for (const root of roots) {
+            try {
+              assert((await lstat(root)).isDirectory(), 'Build output must remain a directory');
+            } catch (error) {
+              if (error.code !== 'ENOENT') throw error;
+              paths.push({ path: root, exists: false });
+              continue;
+            }
+            for (const name of ['manifest.json', 'distribution.zip', '.xonix-build.json']) {
+              const path = join(root, name);
+              try {
+                const info = await lstat(path);
+                assert(info.isFile(), 'Declared build output must remain a regular file');
+                paths.push({ path, exists: true, bytes: info.size, modifiedMs: info.mtimeMs });
+              } catch (error) {
+                if (error.code !== 'ENOENT') throw error;
+                paths.push({ path, exists: false });
+              }
+            }
+          }
+          observations.push({ at: new Date().toISOString(), paths });
+          await save(join(evidence, 'baseline-build-observations.json'), {
+            scope:
+              'Setup-only scalar lstat observations; absence/presence does not identify CPU cause',
+            intervalMs: 15000,
+            maximumRecords: 100,
+            observations,
+          });
+        };
+        await observeBuild();
+        try {
+          await required(
+            'baseline-build',
+            [
+              process.execPath,
+              join(sources.baseline, 'scripts/game-cli.mjs'),
+              'build',
+              '--out',
+              baselineBuild,
+              '--revision',
+              plan.baseline.revision,
+            ],
+            1200000,
+            {
+              cwd: sources.baseline,
+              inspect: async () => {
+                await inspect();
+                await observeBuild();
+              },
+            },
+          );
+        } finally {
+          await observeBuild(true);
+        }
         await required(
           'baseline-inner',
           [
@@ -616,13 +699,18 @@ async function main() {
       const dir = join(evidence, row.id);
       await mkdir(dir);
       const rawPath = join(dir, 'report.json'),
-        tmp = join(work, row.id);
+        tmp = scratchRowPath(report.scratchOwner.path, report.rows.indexOf(row));
+      const currentOwner = await lstat(report.scratchOwner.path);
+      assert(currentOwner.isDirectory());
+      assert.equal(currentOwner.dev, report.scratchOwner.device);
+      assert.equal(currentOwner.ino, report.scratchOwner.inode);
       await mkdir(tmp);
       const scratchStat = await lstat(tmp),
         scratchSpace = await statfs(tmp);
       row.storage = {
         outputRoot: dir,
         scratchRoot: tmp,
+        scratchOwner: report.scratchOwner,
         device: scratchStat.dev,
         inode: scratchStat.ino,
         freeBytesAtAdmission: scratchSpace.bavail * scratchSpace.bsize,

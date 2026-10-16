@@ -10,6 +10,7 @@ import {
   isOwnedProcess,
   ownedCommand,
   parseProcStat,
+  scratchRowPath,
 } from './run-solo-remote-correctness.mjs';
 
 const archive = fileURLToPath(new URL('./solo-remote-archive.py', import.meta.url));
@@ -19,6 +20,23 @@ const temporary = async (t) => {
   t.after(() => rm(path, { recursive: true, force: true }));
   return path;
 };
+
+test('owned short scratch admits Chromium sockets and rejects the observed long path', () => {
+  const root = '/home/runner/work/_temp/sc-ABCDEF';
+  const path = scratchRowPath(root, 0);
+  assert.equal(path, `${root}/r00`);
+  const socket = `${path}/org.chromium.Chromium.ABCDEF/SingletonSocket`;
+  assert(Buffer.byteLength(socket) < 108, 'Linux Unix socket includes a terminating byte');
+  assert.throws(() =>
+    scratchRowPath(
+      '/home/runner/work/_temp/solo-linux-correctness/work/candidate-worker-chromium',
+      0,
+    ),
+  );
+  assert.throws(() => scratchRowPath('/tmp/' + 'é'.repeat(24), 0));
+  assert.throws(() => scratchRowPath(root, 100));
+  assert.throws(() => scratchRowPath(root, -1));
+});
 
 test('independent extraction rejects traversal, symlinks and a mismatched manifest digest', async (t) => {
   const dir = await temporary(t);

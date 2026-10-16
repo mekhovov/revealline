@@ -1,6 +1,6 @@
 {
   "format": "SoloHostedCorrectnessPlan.v1",
-  "cohort": "linux-correctness-2ec-v1",
+  "cohort": "linux-correctness-2ec-v2",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
@@ -108,7 +108,7 @@
     }
   },
   "acceptance": {
-    "core": "Unchanged worker/paused report passes with exit0, exact source/CSP proof and clean owned closure.",
+    "core": "Unchanged worker/paused assertions pass with exit0, exact source/CSP proof and clean owned closure. Worker report additionally records bounded public warning/focus/visibility/flight state only after an unexpected paused inspection result; it cannot turn that failure into a pass.",
     "first30": "Unchanged scenario pass and strict same-engine/version artifact replay pass, exact recipe/source and clean closure. Raw numerical performance status/exit2 retained separately; this cohort provides no timing pass.",
     "failures": "No retries. Retain failed, partial, setup-failed and not-run rows. Continue to next declared row only after clean owned closure; forced cleanup makes that row fail. Ambiguous/surviving processes stop the cohort.",
     "scope": "Linux Chromium/WebKit correctness only. Persistent WebKit observation uses the existing owner; replay uses unchanged ephemeral verifier. No macOS/Safari/iPhone/SteamDeck, GPU, thermal, installed-PWA, authentication or sustained-performance claim.",
@@ -126,10 +126,12 @@
     "minimumInitialMemoryBytes": 12884901888,
     "minimumInitialDiskBytes": 8589934592,
     "minimumRemainingDiskBytes": 1073741824,
-    "setupBounds": "300s artifact transfer;600s each outer/inner verification and baseline build;480s each source proof;75min helper inside120min job with fixed setup/upload margin. No artifact/profile upload; only bounded evidence.",
+    "setupBounds": "300s artifact transfer;600s each outer/inner verification;1200s baseline build;480s each source proof;75min helper inside120min job with fixed setup/upload margin. No artifact/profile upload; only bounded evidence.",
     "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
     "finalizationReserveBytes": 4194304,
-    "setupEvidenceMaximumBytes": 25165824
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "baselineBuildObservation": "Setup-only15s scalar lstat witnesses, <=100records and <=2 direct .xonix-build-* staging roots; only manifest.json/distribution.zip/.xonix-build.json existence,size,mtime. No recursive payload scan, content read or stage-cause inference."
   },
   "guidance": [
     {
@@ -144,5 +146,12 @@
       "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
       "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
     }
-  ]
+  ],
+  "predecessor": {
+    "run": 38972430908,
+    "head": "1467394b3c8555a65560b127a7b2dc0bf4335eb5",
+    "retainedFailure": "Both Chromium launches failed on122-byte socket paths; WebKit worker ended paused; WebKit paused passed; baseline normal build reached600s and paired rows were not run. No prior result is replaced.",
+    "changes": "Fresh short owned scratch and a prospective1200s baseline build setup limit. The worker report adds a bounded public-state snapshot only after an unexpected paused inspection result. Browser240s deadlines, buildflags/sourcebudgets and all scenarios/pass assertions remain unchanged; original failures retained.",
+    "buildDurationContext": "Historical b117 main-pages run38817575550 build591s; different publication profile, not proof of normal-build duration or timeout cause."
+  }
 }
