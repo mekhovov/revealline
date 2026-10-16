@@ -2,6 +2,15 @@
 
 ## 16 October research and execution update
 
+Latest follow-up: safe EN/UK offline error feedback and synchronized player guides
+are implemented on reproduced/admitted source `b8aec0821`; the full practice suite
+passes 387/387. Its fresh native short-recovery run passes 22 checkpoints; genuine
+all-three historical upgrades/offline rollbacks pass 10 checkpoints and seven exact
+data witnesses. The earlier failed cache assumption and no-op headless window
+attempts remain retained. Active-session protection is still open; only its
+explicit next diagnostic uses isolated visible Chrome. Production output now
+builds successfully; its full-distribution player journey is still pending.
+
 Build-blocker diagnosis correction: the required Couch verification document and
 FPV baseline directory are committed, but this managed worktree's non-cone sparse
 patterns excluded `docs/verification`. Materializing those two exact committed
