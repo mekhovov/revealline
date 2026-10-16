@@ -1,0 +1,135 @@
+[
+  {
+    "at": "2026-10-16T04:31:54.784Z",
+    "action": "Team Originals twin-landings Expert; sound enabled; autoNext and autoRetry off; Start via ordinary UI"
+  },
+  {
+    "at": "2026-10-16T04:31:54.784Z",
+    "keys": "d+Left",
+    "holdMs": 1000
+  },
+  {
+    "at": "2026-10-16T04:31:55.803Z",
+    "keys": "w+Up",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:31:56.314Z",
+    "keys": "d+Left",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:31:56.851Z",
+    "keys": "s+Down",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:31:57.361Z",
+    "keys": "a+Right",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:05.823Z",
+    "keys": "d+Left",
+    "holdMs": 1000
+  },
+  {
+    "at": "2026-10-16T04:32:06.868Z",
+    "keys": "w+Up",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:07.378Z",
+    "keys": "d+Left",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:07.906Z",
+    "keys": "s+Down",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:08.416Z",
+    "keys": "a+Right",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:20.936Z",
+    "action": "Observed first actual Team defeat; retained cold result before explicit Restart"
+  },
+  {
+    "at": "2026-10-16T04:32:26.820Z",
+    "keys": "d+Left",
+    "holdMs": 1000
+  },
+  {
+    "at": "2026-10-16T04:32:27.910Z",
+    "keys": "w+Up",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:28.420Z",
+    "keys": "d+Left",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:29.004Z",
+    "keys": "s+Down",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:29.515Z",
+    "keys": "a+Right",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:37.212Z",
+    "keys": "d+Left",
+    "holdMs": 1000
+  },
+  {
+    "at": "2026-10-16T04:32:38.290Z",
+    "keys": "w+Up",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:38.832Z",
+    "keys": "d+Left",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:39.378Z",
+    "keys": "s+Down",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:32:39.906Z",
+    "keys": "a+Right",
+    "holdMs": 500
+  },
+  {
+    "at": "2026-10-16T04:33:06.608Z",
+    "keys": "w+Up",
+    "holdMs": 700
+  },
+  {
+    "at": "2026-10-16T04:33:07.329Z",
+    "keys": "d+Left",
+    "holdMs": 1000
+  },
+  {
+    "at": "2026-10-16T04:33:08.344Z",
+    "keys": "s+Down",
+    "holdMs": 300
+  },
+  {
+    "at": "2026-10-16T04:33:08.656Z",
+    "keys": "a+Right",
+    "holdMs": 400
+  },
+  {
+    "at": "2026-10-16T04:33:09.223Z",
+    "keys": "w+Up",
+    "holdMs": 800
+  }
+]

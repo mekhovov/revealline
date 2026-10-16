@@ -85,6 +85,7 @@ export class FeedbackDirector {
   ) {
     const cueFamily = name.replace(/-[12]$/, '');
     const routine = /^(focus|confirm|cancel|paper|pickup|closure|switch|reveal-)/.test(cueFamily);
+    const publishedKey = publishedName ? `${board}:published:${publishedName}:${cueFamily}` : null;
     if (['confirm', 'paper', 'pickup'].includes(name)) {
       const variant = this.serial++ % 3;
       if (variant) name += `-${variant}`;
@@ -145,9 +146,12 @@ export class FeedbackDirector {
     // decoding is preparation only and cannot replay the original event.
     if (publishedName && s.publishedAudio) {
       const key = `${board}:${cueFamily}`;
+      // A line-impact accent can precede player.failed in the same batch.
+      // Sharing its recording family must not consume the Studio failure's
+      // own cooldown. Retain the existing family scope and repeat windows.
       if (
         s.publishedAudio.has(publishedName) &&
-        c.currentTime - (this.recent.get(key) ?? -Infinity) < (routine ? 0.16 : 0.045)
+        c.currentTime - (this.recent.get(publishedKey) ?? -Infinity) < (routine ? 0.16 : 0.045)
       )
         return true;
       if (
@@ -163,6 +167,7 @@ export class FeedbackDirector {
         })
       ) {
         this.recent.set(key, c.currentTime);
+        this.recent.set(publishedKey, c.currentTime);
         return true;
       }
     }
@@ -278,6 +283,9 @@ export class FeedbackDirector {
     // Re-enter a periodic texture at its global phase, without an attack restart.
     try {
       source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
+      // A successfully started cold fallback owns the same semantic repeat
+      // window if its Studio replacement becomes ready immediately afterward.
+      if (publishedKey && !loop) this.recent.set(publishedKey, c.currentTime);
       if (!loop) source.stop(start + duration + (humanReaction ? 0 : 0.01));
     } catch {
       voice.stop();

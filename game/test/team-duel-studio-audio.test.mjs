@@ -242,6 +242,123 @@ test('a cold Studio replacement uses ready native feedback once and only a later
   assert.equal(nativeVoice.ended, true, 'A later successful replacement retires its native tail');
 });
 
+test('Duel line impact cannot consume the restored failure cue cooldown on either board', async (t) => {
+  const h = await restoredAudio(t),
+    sound = h.soundscape,
+    runs = [state(), state()],
+    impact = { duration: 0.1, native: 'impact' },
+    neutralized = { duration: 0.1, native: 'neutralized' },
+    failure = h.decoded.get(h.snapshot.resolved.assets['audio.failure'].file.sha256);
+  sound.feedbackDirector.buffers.set('impact', impact);
+  sound.feedbackDirector.buffers.set('neutralized', neutralized);
+  // This is the ordinary line-impact failure batch observed from both native
+  // Duel boards. Its impact accent and Studio failure have different owners,
+  // even though player.failed uses impact as its unavailable-cue fallback.
+  const batch = (tick) =>
+    ['lineImpact.arrived', 'lineImpact.cleared', 'player.failed'].map((type) => ({
+      type,
+      tick,
+      time: tick / 60,
+      player: 0,
+    }));
+  const deliver = (tick) => {
+    for (const board of [0, 1])
+      sound.events(batch(tick), runs[board], {}, { mode: 'versus', board });
+  };
+  h.context.currentTime = 1;
+  deliver(1);
+  assert.equal(h.sources.length, 6, 'Each board owns its impact, clear and restored failure');
+  assert.deepEqual(
+    [...sound.voices].map((voice) => [voice.board, voice.name, voice.source.buffer]),
+    [
+      [0, 'impact', impact],
+      [0, 'neutralized', neutralized],
+      [0, 'failure', failure],
+      [1, 'impact', impact],
+      [1, 'neutralized', neutralized],
+      [1, 'failure', failure],
+    ],
+  );
+  deliver(1);
+  h.context.currentTime = 1.044;
+  deliver(2);
+  assert.equal(
+    h.sources.length,
+    6,
+    'Repeated delivery and a new event inside cooldown stay silent',
+  );
+  sound.stopVoices();
+  h.context.currentTime = 1.046;
+  deliver(3);
+  assert.equal(
+    h.sources.length,
+    12,
+    'Both boards can own a fresh failure after the existing cooldown',
+  );
+
+  sound.stopVoices();
+  for (const control of ['mute', 'pause']) {
+    h.context.currentTime += 1;
+    if (control === 'mute') h.master.setMuted(true);
+    else sound.pause();
+    const before = h.sources.length;
+    deliver(control === 'mute' ? 4 : 5);
+    if (control === 'mute') h.master.setMuted(false);
+    else await sound.resume();
+    assert.equal(h.sources.length, before, `${control} restoration cannot replay a failure`);
+  }
+  for (let index = 0; index < 16; index++) {
+    const voice = {
+      feedback: true,
+      priority: 5,
+      stop: () => sound.voices.delete(voice),
+    };
+    sound.voices.add(voice);
+  }
+  h.context.currentTime += 1;
+  const before = h.sources.length;
+  deliver(6);
+  assert.equal(sound.voices.size, 16);
+  assert.equal(
+    h.sources.length,
+    before,
+    'A full urgent-voice budget cannot trigger custom or fallback playback',
+  );
+  sound.stopVoices();
+  h.context.currentTime += 1;
+  deliver(7);
+  assert.equal(h.sources.length, before + 6, 'A later legal batch remains playable on both boards');
+});
+
+test('a cold failure fallback keeps its semantic cooldown when the restored cue becomes ready', async (t) => {
+  const h = await restoredAudio(t, { prepare: false }),
+    sound = h.soundscape,
+    run = state(),
+    impact = { duration: 0.1, native: 'impact' };
+  sound.feedbackDirector.buffers.set('impact', impact);
+  const deliver = (tick, board = 0) =>
+    sound.events(
+      [{ type: 'player.failed', tick, time: tick / 60, player: 0 }],
+      run,
+      {},
+      { mode: 'versus', board },
+    );
+  h.context.currentTime = 1;
+  deliver(1);
+  assert.equal(h.sources.length, 1);
+  assert.equal(h.sources[0].buffer, impact);
+  await sound.publishedAudio.prepare(['failure']);
+  assert.equal(h.sources.length, 1, 'Decode completion cannot replay the cold failure');
+  const failure = h.decoded.get(h.snapshot.resolved.assets['audio.failure'].file.sha256);
+  h.context.currentTime = 1.044;
+  deliver(2);
+  assert.equal(h.sources.length, 1, 'Native-to-custom readiness preserves the 45ms cooldown');
+  h.context.currentTime = 1.046;
+  deliver(3);
+  assert.equal(h.sources.length, 2);
+  assert.equal(h.sources[1].buffer, failure);
+});
+
 test('long Studio routine cues replace only their own board and semantic family after cooldown', async (t) => {
   // The controlled decode duration exercises scheduling ownership, not a claim
   // about the length or acoustic quality of these original WAV recordings.

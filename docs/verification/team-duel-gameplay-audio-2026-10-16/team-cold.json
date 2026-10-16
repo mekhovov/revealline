@@ -1,0 +1,1915 @@
+{
+  "format": "revealline-gameplay-audio-observation.v1",
+  "metadata": {
+    "sourceRevision": "690a85f3c1fc62ea1142d635ac41d63d18b6b13b",
+    "bundleSha256": "4f7e20a0b7936d81b8160002addfddddbc08f5ee87ab3fecd19f85a3bbd563d0",
+    "runtimeSha256": "04b79caefe1a8683d29034d03c81f885a5595556d479e1246769e3f972e20cc4",
+    "theme": {
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "revision": 107
+    },
+    "slots": {
+      "capture": {
+        "id": "audio.capture.field-kit",
+        "revision": 56,
+        "kind": "recipe",
+        "file": null
+      },
+      "failure": {
+        "id": "audio.failure.custom",
+        "revision": 1,
+        "kind": "audio",
+        "file": {
+          "bytes": 38444,
+          "height": null,
+          "mime": "audio/wav",
+          "sha256": "574ed8153f407aff77e2ad5316ac1ca8d1b6aec95ddfc6b793e76bdc8f0e4a14",
+          "width": null
+        }
+      },
+      "pickup": {
+        "id": "audio.pickup.custom",
+        "revision": 1,
+        "kind": "audio",
+        "file": {
+          "bytes": 6941,
+          "height": null,
+          "mime": "audio/ogg",
+          "sha256": "c977fe249ff42d1c93a552b33abc13a8399df3879fa510475426e5c4bbac1da9",
+          "width": null
+        }
+      },
+      "victory": {
+        "id": "audio.victory.custom",
+        "revision": 1,
+        "kind": "audio",
+        "file": {
+          "bytes": 32600,
+          "height": null,
+          "mime": "audio/mpeg",
+          "sha256": "cdee5b2980749d03f6c622c4438bbf068f7f24f2d7f4214835152929834ae891",
+          "width": null
+        }
+      }
+    },
+    "scope": "Unapproved local candidate compilation and observer-entry overlay; no shipped approved presentation or gameplay module bytes changed."
+  },
+  "lifecycle": "observing",
+  "live": true,
+  "limits": {
+    "owners": 16,
+    "events": 240,
+    "starts": 400,
+    "decodes": 128,
+    "hashBytes": 8388608,
+    "pendingHashes": 8
+  },
+  "dropped": {
+    "owners": 0,
+    "events": 0,
+    "starts": 0,
+    "decodes": 0,
+    "hashes": 0,
+    "observerErrors": 0
+  },
+  "observedAt": "2026-10-16T04:32:20.836Z",
+  "owners": [
+    {
+      "owner": "sound-1",
+      "enabled": true,
+      "disposed": false,
+      "paused": false,
+      "gameplayPaused": true,
+      "master": {
+        "muted": false,
+        "volume": 0.65
+      },
+      "context": {
+        "id": "context-2",
+        "state": "running",
+        "currentTime": 34.86933333333333
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "delivery-1176",
+      "time": 93005.80000000075,
+      "at": "2026-10-16T04:31:55.073Z",
+      "owner": "sound-1",
+      "board": "solo",
+      "mode": "team",
+      "levelId": "twin-landings",
+      "tick": 1089,
+      "status": "running",
+      "events": [
+        {
+          "type": "cut.started",
+          "player": 0,
+          "tick": 1088,
+          "status": null,
+          "levelId": null
+        },
+        {
+          "type": "cut.started",
+          "player": 1,
+          "tick": 1088,
+          "status": null,
+          "levelId": null
+        }
+      ],
+      "eventOverflow": 0,
+      "starts": [
+        "source-1177"
+      ],
+      "state": {
+        "owner": "sound-1",
+        "enabled": true,
+        "disposed": false,
+        "paused": false,
+        "gameplayPaused": false,
+        "master": {
+          "muted": false,
+          "volume": 0.65
+        },
+        "context": {
+          "id": "context-2",
+          "state": "running",
+          "currentTime": 9.104
+        }
+      },
+      "voices": [
+        {
+          "name": "paper-2",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "paper",
+          "source": "source-1177",
+          "buffer": {
+            "id": "buffer-133",
+            "duration": 0.16,
+            "frames": 7680,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "paper-2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delivery-1512",
+      "time": 95777.5,
+      "at": "2026-10-16T04:31:57.845Z",
+      "owner": "sound-1",
+      "board": "solo",
+      "mode": "team",
+      "levelId": "twin-landings",
+      "tick": 1421,
+      "status": "running",
+      "events": [
+        {
+          "type": "player.downed",
+          "player": 0,
+          "tick": 1420,
+          "status": null,
+          "levelId": null
+        }
+      ],
+      "eventOverflow": 0,
+      "starts": [
+        "source-1513"
+      ],
+      "state": {
+        "owner": "sound-1",
+        "enabled": true,
+        "disposed": false,
+        "paused": false,
+        "gameplayPaused": false,
+        "master": {
+          "muted": false,
+          "volume": 0.65
+        },
+        "context": {
+          "id": "context-2",
+          "state": "running",
+          "currentTime": 11.877333333333333
+        }
+      },
+      "voices": [
+        {
+          "name": "warning",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "warning",
+          "source": "source-1513",
+          "buffer": {
+            "id": "buffer-220",
+            "duration": 0.42,
+            "frames": 20160,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "warning"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delivery-1515",
+      "time": 95778.20000000019,
+      "at": "2026-10-16T04:31:57.845Z",
+      "owner": "sound-1",
+      "board": "solo",
+      "mode": "team",
+      "levelId": "twin-landings",
+      "tick": 1422,
+      "status": "running",
+      "events": [
+        {
+          "type": "player.downed",
+          "player": 1,
+          "tick": 1421,
+          "status": null,
+          "levelId": null
+        },
+        {
+          "type": "player.revived",
+          "player": 0,
+          "tick": 1421,
+          "status": null,
+          "levelId": null
+        },
+        {
+          "type": "player.revived",
+          "player": 1,
+          "tick": 1421,
+          "status": null,
+          "levelId": null
+        },
+        {
+          "type": "team.recovery",
+          "player": null,
+          "tick": 1421,
+          "status": null,
+          "levelId": null
+        }
+      ],
+      "eventOverflow": 0,
+      "starts": [
+        "source-1516"
+      ],
+      "state": {
+        "owner": "sound-1",
+        "enabled": true,
+        "disposed": false,
+        "paused": false,
+        "gameplayPaused": false,
+        "master": {
+          "muted": false,
+          "volume": 0.65
+        },
+        "context": {
+          "id": "context-2",
+          "state": "running",
+          "currentTime": 11.877333333333333
+        }
+      },
+      "voices": [
+        {
+          "name": "respawn",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "respawn",
+          "source": "source-1516",
+          "buffer": {
+            "id": "buffer-244",
+            "duration": 0.45,
+            "frames": 21600,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "respawn"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delivery-2515",
+      "time": 104065.60000000056,
+      "at": "2026-10-16T04:32:06.133Z",
+      "owner": "sound-1",
+      "board": "solo",
+      "mode": "team",
+      "levelId": "twin-landings",
+      "tick": 2417,
+      "status": "running",
+      "events": [
+        {
+          "type": "cut.started",
+          "player": 0,
+          "tick": 2416,
+          "status": null,
+          "levelId": null
+        },
+        {
+          "type": "cut.started",
+          "player": 1,
+          "tick": 2416,
+          "status": null,
+          "levelId": null
+        }
+      ],
+      "eventOverflow": 0,
+      "starts": [
+        "source-2516"
+      ],
+      "state": {
+        "owner": "sound-1",
+        "enabled": true,
+        "disposed": false,
+        "paused": false,
+        "gameplayPaused": false,
+        "master": {
+          "muted": false,
+          "volume": 0.65
+        },
+        "context": {
+          "id": "context-2",
+          "state": "running",
+          "currentTime": 20.165333333333333
+        }
+      },
+      "voices": [
+        {
+          "name": "paper-2",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "paper",
+          "source": "source-2516",
+          "buffer": {
+            "id": "buffer-133",
+            "duration": 0.16,
+            "frames": 7680,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "paper-2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delivery-2693",
+      "time": 105531.90000000037,
+      "at": "2026-10-16T04:32:07.599Z",
+      "owner": "sound-1",
+      "board": "solo",
+      "mode": "team",
+      "levelId": "twin-landings",
+      "tick": 2593,
+      "status": "running",
+      "events": [
+        {
+          "type": "player.downed",
+          "player": 0,
+          "tick": 2592,
+          "status": null,
+          "levelId": null
+        }
+      ],
+      "eventOverflow": 0,
+      "starts": [
+        "source-2694"
+      ],
+      "state": {
+        "owner": "sound-1",
+        "enabled": true,
+        "disposed": false,
+        "paused": false,
+        "gameplayPaused": false,
+        "master": {
+          "muted": false,
+          "volume": 0.65
+        },
+        "context": {
+          "id": "context-2",
+          "state": "running",
+          "currentTime": 21.632
+        }
+      },
+      "voices": [
+        {
+          "name": "warning",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "warning",
+          "source": "source-2694",
+          "buffer": {
+            "id": "buffer-220",
+            "duration": 0.42,
+            "frames": 20160,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "warning"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "delivery-2849",
+      "time": 106822.30000000075,
+      "at": "2026-10-16T04:32:08.890Z",
+      "owner": "sound-1",
+      "board": "solo",
+      "mode": "team",
+      "levelId": "twin-landings",
+      "tick": 2747,
+      "status": "lost",
+      "events": [
+        {
+          "type": "player.downed",
+          "player": 1,
+          "tick": 2746,
+          "status": null,
+          "levelId": null
+        },
+        {
+          "type": "run.completed",
+          "player": null,
+          "tick": 2746,
+          "status": "lost",
+          "levelId": null
+        }
+      ],
+      "eventOverflow": 0,
+      "starts": [
+        "source-2850",
+        "source-2851"
+      ],
+      "state": {
+        "owner": "sound-1",
+        "enabled": true,
+        "disposed": false,
+        "paused": false,
+        "gameplayPaused": false,
+        "master": {
+          "muted": false,
+          "volume": 0.65
+        },
+        "context": {
+          "id": "context-2",
+          "state": "running",
+          "currentTime": 22.922666666666668
+        }
+      },
+      "voices": [
+        {
+          "name": "warning",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "warning",
+          "source": "source-2850",
+          "buffer": {
+            "id": "buffer-220",
+            "duration": 0.42,
+            "frames": 20160,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "warning"
+          ]
+        },
+        {
+          "name": "loss",
+          "board": "solo",
+          "bus": "sfx",
+          "feedback": true,
+          "cueFamily": "loss",
+          "source": "source-2851",
+          "buffer": {
+            "id": "buffer-238",
+            "duration": 0.6,
+            "frames": 28800,
+            "channels": 1,
+            "sampleRate": 48000
+          },
+          "fallbackBufferNames": [
+            "loss"
+          ]
+        }
+      ]
+    }
+  ],
+  "starts": [
+    {
+      "source": "source-302",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 2.1386666666666665,
+      "offset": 2.1386666666666665,
+      "duration": null,
+      "time": 86040,
+      "at": "2026-10-16T04:31:48.107Z"
+    },
+    {
+      "source": "source-303",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 2.1386666666666665,
+      "offset": 2.1386666666666665,
+      "duration": null,
+      "time": 86040.10000000056,
+      "at": "2026-10-16T04:31:48.107Z"
+    },
+    {
+      "source": "source-304",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 2.1386666666666665,
+      "offset": 2.1386666666666665,
+      "duration": null,
+      "time": 86040.10000000056,
+      "at": "2026-10-16T04:31:48.107Z"
+    },
+    {
+      "source": "source-1140",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-288",
+        "duration": 6,
+        "frames": 288000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 8.832,
+      "offset": 2.8320000000000007,
+      "duration": null,
+      "time": 92731.80000000075,
+      "at": "2026-10-16T04:31:54.799Z"
+    },
+    {
+      "source": "source-1147",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-288",
+        "duration": 6,
+        "frames": 288000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 8.874666666666666,
+      "offset": 2.8746666666666663,
+      "duration": null,
+      "time": 92773.40000000037,
+      "at": "2026-10-16T04:31:54.840Z"
+    },
+    {
+      "source": "source-1175",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-20",
+        "duration": 0.061,
+        "frames": 2928,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 9.104,
+      "offset": 0,
+      "duration": null,
+      "time": 93005.80000000075,
+      "at": "2026-10-16T04:31:55.073Z"
+    },
+    {
+      "source": "source-1177",
+      "delivery": "delivery-1176",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-133",
+        "duration": 0.16,
+        "frames": 7680,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 9.104,
+      "offset": 0,
+      "duration": null,
+      "time": 93006.20000000019,
+      "at": "2026-10-16T04:31:55.073Z"
+    },
+    {
+      "source": "source-1293",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 10.064,
+      "offset": 1.064,
+      "duration": null,
+      "time": 93965.10000000056,
+      "at": "2026-10-16T04:31:56.032Z"
+    },
+    {
+      "source": "source-1344",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 10.490666666666666,
+      "offset": 1.490666666666666,
+      "duration": null,
+      "time": 94389.60000000056,
+      "at": "2026-10-16T04:31:56.457Z"
+    },
+    {
+      "source": "source-1384",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 10.816,
+      "offset": 1.8160000000000007,
+      "duration": null,
+      "time": 94714.70000000019,
+      "at": "2026-10-16T04:31:56.782Z"
+    },
+    {
+      "source": "source-1513",
+      "delivery": "delivery-1512",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-220",
+        "duration": 0.42,
+        "frames": 20160,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 11.877333333333333,
+      "offset": 0,
+      "duration": null,
+      "time": 95777.60000000056,
+      "at": "2026-10-16T04:31:57.845Z"
+    },
+    {
+      "source": "source-1514",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-20",
+        "duration": 0.061,
+        "frames": 2928,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 11.877333333333333,
+      "offset": 0,
+      "duration": null,
+      "time": 95778.10000000056,
+      "at": "2026-10-16T04:31:57.845Z"
+    },
+    {
+      "source": "source-1516",
+      "delivery": "delivery-1515",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-244",
+        "duration": 0.45,
+        "frames": 21600,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 11.877333333333333,
+      "offset": 0,
+      "duration": null,
+      "time": 95778.30000000075,
+      "at": "2026-10-16T04:31:57.845Z"
+    },
+    {
+      "source": "source-1521",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 11.92,
+      "offset": 0.6699999999999999,
+      "duration": null,
+      "time": 95822.30000000075,
+      "at": "2026-10-16T04:31:57.889Z"
+    },
+    {
+      "source": "source-2479",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-288",
+        "duration": 6,
+        "frames": 288000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 19.893333333333334,
+      "offset": 1.8933333333333344,
+      "duration": null,
+      "time": 103796.80000000075,
+      "at": "2026-10-16T04:32:05.864Z"
+    },
+    {
+      "source": "source-2485",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-288",
+        "duration": 6,
+        "frames": 288000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 19.941333333333333,
+      "offset": 1.9413333333333327,
+      "duration": null,
+      "time": 103840,
+      "at": "2026-10-16T04:32:05.907Z"
+    },
+    {
+      "source": "source-2514",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-20",
+        "duration": 0.061,
+        "frames": 2928,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 20.165333333333333,
+      "offset": 0,
+      "duration": null,
+      "time": 104065.60000000056,
+      "at": "2026-10-16T04:32:06.133Z"
+    },
+    {
+      "source": "source-2516",
+      "delivery": "delivery-2515",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-133",
+        "duration": 0.16,
+        "frames": 7680,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 20.165333333333333,
+      "offset": 0,
+      "duration": null,
+      "time": 104065.80000000075,
+      "at": "2026-10-16T04:32:06.133Z"
+    },
+    {
+      "source": "source-2595",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 20.832,
+      "offset": 0.5820000000000007,
+      "duration": null,
+      "time": 104730.60000000056,
+      "at": "2026-10-16T04:32:06.798Z"
+    },
+    {
+      "source": "source-2694",
+      "delivery": "delivery-2693",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-220",
+        "duration": 0.42,
+        "frames": 20160,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 21.632,
+      "offset": 0,
+      "duration": null,
+      "time": 105532,
+      "at": "2026-10-16T04:32:07.599Z"
+    },
+    {
+      "source": "source-2704",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-301",
+        "duration": 2.25,
+        "frames": 108000,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 21.712,
+      "offset": 1.4619999999999997,
+      "duration": null,
+      "time": 105615.20000000019,
+      "at": "2026-10-16T04:32:07.682Z"
+    },
+    {
+      "source": "source-2850",
+      "delivery": "delivery-2849",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-220",
+        "duration": 0.42,
+        "frames": 20160,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 22.922666666666668,
+      "offset": 0,
+      "duration": null,
+      "time": 106822.40000000037,
+      "at": "2026-10-16T04:32:08.890Z"
+    },
+    {
+      "source": "source-2851",
+      "delivery": "delivery-2849",
+      "owner": "sound-1",
+      "buffer": {
+        "id": "buffer-238",
+        "duration": 0.6,
+        "frames": 28800,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 22.922666666666668,
+      "offset": 0,
+      "duration": null,
+      "time": 106822.5,
+      "at": "2026-10-16T04:32:08.890Z"
+    },
+    {
+      "source": "source-2852",
+      "delivery": null,
+      "owner": null,
+      "buffer": {
+        "id": "buffer-18",
+        "duration": 0.045,
+        "frames": 2160,
+        "channels": 1,
+        "sampleRate": 48000
+      },
+      "context": "context-2",
+      "when": 22.933333333333334,
+      "offset": 0,
+      "duration": null,
+      "time": 106832.60000000056,
+      "at": "2026-10-16T04:32:08.900Z"
+    }
+  ],
+  "decodes": [
+    {
+      "id": "buffer-18",
+      "duration": 0.045,
+      "frames": 2160,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 2924,
+      "sha256": "0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256",
+      "time": 84055.20000000019,
+      "at": "2026-10-16T04:31:46.122Z"
+    },
+    {
+      "id": "buffer-19",
+      "duration": 0.0909375,
+      "frames": 4365,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 5864,
+      "sha256": "52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1",
+      "time": 84055.20000000019,
+      "at": "2026-10-16T04:31:46.122Z"
+    },
+    {
+      "id": "buffer-20",
+      "duration": 0.061,
+      "frames": 2928,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 3948,
+      "sha256": "d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616",
+      "time": 84055.30000000075,
+      "at": "2026-10-16T04:31:46.122Z"
+    },
+    {
+      "id": "buffer-26",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "9f58bbd3f1072887829faf972cb56962b1b82ea2d0783dbb557fe476b3549b23",
+      "time": 84093.5,
+      "at": "2026-10-16T04:31:46.161Z"
+    },
+    {
+      "id": "buffer-32",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "2aa9867eb2ec9faa4639643fe80231add3be161c18530bbc085824f20af443cc",
+      "time": 84145.40000000037,
+      "at": "2026-10-16T04:31:46.212Z"
+    },
+    {
+      "id": "buffer-38",
+      "duration": 0.23075,
+      "frames": 11076,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 14812,
+      "sha256": "48f310643bcca5979287cb5c821a86a565448bc2b91a88c580b91da3b2aa6956",
+      "time": 84184.20000000019,
+      "at": "2026-10-16T04:31:46.251Z"
+    },
+    {
+      "id": "buffer-46",
+      "duration": 0.115125,
+      "frames": 5526,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 7412,
+      "sha256": "03dadcb8787068edd1001f9af97dc2c35e480ff2317401d28529380c6cb76e5c",
+      "time": 84234.30000000075,
+      "at": "2026-10-16T04:31:46.301Z"
+    },
+    {
+      "id": "buffer-52",
+      "duration": 0.528625,
+      "frames": 25374,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 33876,
+      "sha256": "bc0516e880a1efbc245192c766f1e16c73e7610382edddf407874d50c4142559",
+      "time": 84283.40000000037,
+      "at": "2026-10-16T04:31:46.350Z"
+    },
+    {
+      "id": "buffer-60",
+      "duration": 0.26,
+      "frames": 12480,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 16684,
+      "sha256": "54e3ddbc423545055cf0a5449531d739961cfa5605840042f7c885d672f29ced",
+      "time": 84336.20000000019,
+      "at": "2026-10-16T04:31:46.403Z"
+    },
+    {
+      "id": "buffer-66",
+      "duration": 0.16,
+      "frames": 7680,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 10284,
+      "sha256": "9431d7cc80f414cbeb06f85eaa1fa02571f668bc669e75dd2f148614cc757209",
+      "time": 84382.70000000019,
+      "at": "2026-10-16T04:31:46.450Z"
+    },
+    {
+      "id": "buffer-73",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "944895457543b7b12e49ff273a438be4db3d39003db8394570899bee6ca04a68",
+      "time": 84427,
+      "at": "2026-10-16T04:31:46.494Z"
+    },
+    {
+      "id": "buffer-78",
+      "duration": 0.24445833333333333,
+      "frames": 11734,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 15690,
+      "sha256": "5fc5e03044c1dd52c65022e81145b441cc8083e50fa808b8177f6e829c249348",
+      "time": 84471.70000000019,
+      "at": "2026-10-16T04:31:46.539Z"
+    },
+    {
+      "id": "buffer-85",
+      "duration": 0.35,
+      "frames": 16800,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 22444,
+      "sha256": "eca91b1ea7bf47bcfd869bd1e05d05e967c298e6f07fc38c61307065369ee7ac",
+      "time": 84509.80000000075,
+      "at": "2026-10-16T04:31:46.577Z"
+    },
+    {
+      "id": "buffer-91",
+      "duration": 0.36,
+      "frames": 17280,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 23084,
+      "sha256": "de116f0ef2e9e7e3467bbf9b6e71f6f644751b5afa7da0085428612a17806ae6",
+      "time": 84551.70000000019,
+      "at": "2026-10-16T04:31:46.619Z"
+    },
+    {
+      "id": "buffer-97",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "af2245b7db60240ce831c87a14d25e93ad5ce92b3526027f2376a10de18a7415",
+      "time": 84593.20000000019,
+      "at": "2026-10-16T04:31:46.660Z"
+    },
+    {
+      "id": "buffer-103",
+      "duration": 0.157125,
+      "frames": 7542,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 10100,
+      "sha256": "653402de8b13a5e6031b36bd79e26e60376718acc55383ee81303019ad211629",
+      "time": 84637,
+      "at": "2026-10-16T04:31:46.704Z"
+    },
+    {
+      "id": "buffer-108",
+      "duration": 0.03775,
+      "frames": 1812,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 2460,
+      "sha256": "40941e76c117bece074e71efd6b53b805547bcbca6a693494ad1cb8e91d4949c",
+      "time": 84678.20000000019,
+      "at": "2026-10-16T04:31:46.745Z"
+    },
+    {
+      "id": "buffer-115",
+      "duration": 0.0528125,
+      "frames": 2535,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 3424,
+      "sha256": "cf0c4a10ff9edf13ad7a74b0276ab603c11ab1cb3a8fd8cf5830125449a1a8c8",
+      "time": 84722.10000000056,
+      "at": "2026-10-16T04:31:46.789Z"
+    },
+    {
+      "id": "buffer-122",
+      "duration": 0.08325,
+      "frames": 3996,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 5372,
+      "sha256": "a829e1cbf473b0fed97d285ce90edab52ad28e8e562ef189aea1b90663d93cb8",
+      "time": 84767.90000000037,
+      "at": "2026-10-16T04:31:46.835Z"
+    },
+    {
+      "id": "buffer-127",
+      "duration": 0.16,
+      "frames": 7680,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 10284,
+      "sha256": "8ec37915f0d9da3c41331033cab1a7cf9d5be42eea88ffaf0fe546688f3f51ca",
+      "time": 84809.5,
+      "at": "2026-10-16T04:31:46.877Z"
+    },
+    {
+      "id": "buffer-133",
+      "duration": 0.16,
+      "frames": 7680,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 10284,
+      "sha256": "46d1349e9f53040013637a7c4b39b427ae08e1bbf8ca5f416104d9cb0ad41e36",
+      "time": 84853.70000000019,
+      "at": "2026-10-16T04:31:46.921Z"
+    },
+    {
+      "id": "buffer-140",
+      "duration": 0.09952083333333334,
+      "frames": 4777,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 6414,
+      "sha256": "cefabefb819ca38f654dd553b9491b2e0a061c0ee71718c4e9ba5aca2aaff176",
+      "time": 84900.10000000056,
+      "at": "2026-10-16T04:31:46.967Z"
+    },
+    {
+      "id": "buffer-147",
+      "duration": 0.13208333333333333,
+      "frames": 6340,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 8498,
+      "sha256": "617aa5ff700202d65b4f45e8bb30210a80b3dbf4ae1b3352c035ccb418d30361",
+      "time": 84942.80000000075,
+      "at": "2026-10-16T04:31:47.010Z"
+    },
+    {
+      "id": "buffer-153",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "63d7d549ae524d92598535db0b575244e702798b07918ecbf2f7231ded2d8057",
+      "time": 84984.80000000075,
+      "at": "2026-10-16T04:31:47.052Z"
+    },
+    {
+      "id": "buffer-159",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "c6bccd2887ae42c6dafe6bfd3b03a2abe0c72d43293501300129c9e97770cdc4",
+      "time": 85027.20000000019,
+      "at": "2026-10-16T04:31:47.094Z"
+    },
+    {
+      "id": "buffer-165",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "76e89a4d9c871acc11bd47482788140e194dfeb1f04b3e228cd7c3aa0aa2d443",
+      "time": 85075,
+      "at": "2026-10-16T04:31:47.142Z"
+    },
+    {
+      "id": "buffer-171",
+      "duration": 0.217125,
+      "frames": 10422,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13940,
+      "sha256": "136b4de34402f0218c51346e9f6fefc57fdac51a3c15b0a2bfb4dc5347869549",
+      "time": 85118.90000000037,
+      "at": "2026-10-16T04:31:47.186Z"
+    },
+    {
+      "id": "buffer-180",
+      "duration": 0.20670833333333333,
+      "frames": 9922,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13274,
+      "sha256": "0f119de4d4c1a1048219382a51a324f99403c18f0bc0ac5f47aa0e126b1c6b57",
+      "time": 85180,
+      "at": "2026-10-16T04:31:47.247Z"
+    },
+    {
+      "id": "buffer-192",
+      "duration": 0.20670833333333333,
+      "frames": 9922,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 13274,
+      "sha256": "15532eb0f1918573e558d5d42719d8cc84990b8d49f6d6209df2be5dc1986135",
+      "time": 85267.5,
+      "at": "2026-10-16T04:31:47.335Z"
+    },
+    {
+      "id": "buffer-201",
+      "duration": 0.18039583333333334,
+      "frames": 8659,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 11590,
+      "sha256": "b50101bfe9b9ea199d4d22c6cabbb666c6a3c7ba5abddab9fd8779fd2566c3b0",
+      "time": 85335.30000000075,
+      "at": "2026-10-16T04:31:47.402Z"
+    },
+    {
+      "id": "buffer-207",
+      "duration": 0.1323125,
+      "frames": 6351,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 8512,
+      "sha256": "5c04cab2bbdb1ae4c1f7b5d3fa5ba54b0bfa81bf7f646260b72992dbe3bf7182",
+      "time": 85376.30000000075,
+      "at": "2026-10-16T04:31:47.443Z"
+    },
+    {
+      "id": "buffer-214",
+      "duration": 3.92,
+      "frames": 188160,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 250924,
+      "sha256": "9980208876d624991427d4d3baae2b631f7380eba7aeae22a3c2f09aae0bcaa0",
+      "time": 85426.5,
+      "at": "2026-10-16T04:31:47.494Z"
+    },
+    {
+      "id": "buffer-220",
+      "duration": 0.42,
+      "frames": 20160,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 26924,
+      "sha256": "118b422ba5b988d4c4ea9e7b06d746dc5ee065ddf924098d1a09527c5c29a0f5",
+      "time": 85468.70000000019,
+      "at": "2026-10-16T04:31:47.536Z"
+    },
+    {
+      "id": "buffer-226",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "4f9093b56201eca492f784986446c247fbde5dcd6f67e364e145984e03c80135",
+      "time": 85509.80000000075,
+      "at": "2026-10-16T04:31:47.577Z"
+    },
+    {
+      "id": "buffer-232",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "b935eb91136df081e678ba6d00b870b89350d13feea23f82ba321e03c808fd6b",
+      "time": 85551.80000000075,
+      "at": "2026-10-16T04:31:47.619Z"
+    },
+    {
+      "id": "buffer-238",
+      "duration": 0.6,
+      "frames": 28800,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 38444,
+      "sha256": "574ed8153f407aff77e2ad5316ac1ca8d1b6aec95ddfc6b793e76bdc8f0e4a14",
+      "time": 85593.20000000019,
+      "at": "2026-10-16T04:31:47.660Z"
+    },
+    {
+      "id": "buffer-244",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "2456655527f9ccaa90efd1f5fdff85fb06644fc9ab7d42883ab7ce2933d48e6d",
+      "time": 85638,
+      "at": "2026-10-16T04:31:47.705Z"
+    },
+    {
+      "id": "buffer-250",
+      "duration": 1.35,
+      "frames": 64800,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 86444,
+      "sha256": "cd99631c5d574957b4ec584854725575bab6d97c82e3ecbbfcdcdd2ee154f460",
+      "time": 85679.80000000075,
+      "at": "2026-10-16T04:31:47.747Z"
+    },
+    {
+      "id": "buffer-255",
+      "duration": 0.2,
+      "frames": 9600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 12844,
+      "sha256": "4583bb3ed76d8e1ee3a23a22d6654f0905b3745498164e88c6f60855eaa69772",
+      "time": 85721.10000000056,
+      "at": "2026-10-16T04:31:47.788Z"
+    },
+    {
+      "id": "buffer-262",
+      "duration": 0.4,
+      "frames": 19200,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 25644,
+      "sha256": "a9b0b0e3c496bdcce18d20964a573ebd4870480e9a2b0959fa8685464e0eeb2d",
+      "time": 85766.5,
+      "at": "2026-10-16T04:31:47.833Z"
+    },
+    {
+      "id": "buffer-269",
+      "duration": 0.65,
+      "frames": 31200,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 41644,
+      "sha256": "d527476d69c7bffefff491e3d879103229bc10ce7c0359bef92f8a60428c74b6",
+      "time": 85809.90000000037,
+      "at": "2026-10-16T04:31:47.877Z"
+    },
+    {
+      "id": "buffer-275",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "cab25bc75e1a981827f28f34ca0eb956dd8285202fd8c50b2a8cd1970125794e",
+      "time": 85851.70000000019,
+      "at": "2026-10-16T04:31:47.919Z"
+    },
+    {
+      "id": "buffer-281",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "a03935c47ac26839dcb14349315d6db2c586abb59fa572333a51f279925e2f0c",
+      "time": 85895.10000000056,
+      "at": "2026-10-16T04:31:47.962Z"
+    },
+    {
+      "id": "buffer-288",
+      "duration": 6,
+      "frames": 288000,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 384044,
+      "sha256": "49dfb580bd8061e1fa2a40fa68031087a0e715de121dbba140ada367e3160452",
+      "time": 85945.60000000056,
+      "at": "2026-10-16T04:31:48.013Z"
+    },
+    {
+      "id": "buffer-295",
+      "duration": 3.3,
+      "frames": 158400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 211244,
+      "sha256": "901849781fde5e7adaf40704ec950af7e8013ae9570f69f2c6cc1246bc700638",
+      "time": 85992.20000000019,
+      "at": "2026-10-16T04:31:48.059Z"
+    },
+    {
+      "id": "buffer-301",
+      "duration": 2.25,
+      "frames": 108000,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 144044,
+      "sha256": "4200099c09d64f8952ecdaf184dd1a9aba3f37f161ae6c3cadff4f5c62b84796",
+      "time": 86035.80000000075,
+      "at": "2026-10-16T04:31:48.103Z"
+    },
+    {
+      "id": "buffer-311",
+      "duration": 5.6,
+      "frames": 268800,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 358444,
+      "sha256": "6755f8c4951110d926a97f959895c2e9c807e2f4981fbb73fe8db8e84ba04e7d",
+      "time": 86086.90000000037,
+      "at": "2026-10-16T04:31:48.154Z"
+    },
+    {
+      "id": "buffer-317",
+      "duration": 6.4,
+      "frames": 307200,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 409644,
+      "sha256": "603232246e16132c9153812e1bd31ff34faa49ab3261c269662db17d055f1d24",
+      "time": 86126.30000000075,
+      "at": "2026-10-16T04:31:48.193Z"
+    },
+    {
+      "id": "buffer-323",
+      "duration": 6.4,
+      "frames": 307200,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 409644,
+      "sha256": "2a35b7241e2dcf7588666413f891c62df3777d9e7d9735925619db672058b7e1",
+      "time": 86171.60000000056,
+      "at": "2026-10-16T04:31:48.239Z"
+    },
+    {
+      "id": "buffer-330",
+      "duration": 6.4,
+      "frames": 307200,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 409644,
+      "sha256": "69b63c6a0ff617020b3cbd95140320ece594964e63f554e67d6ccdb92e82ef86",
+      "time": 86217.90000000037,
+      "at": "2026-10-16T04:31:48.285Z"
+    },
+    {
+      "id": "buffer-335",
+      "duration": 5.8,
+      "frames": 278400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 371244,
+      "sha256": "ac6b0ead11a5e870dea67f0d7f21ef73543aa573e3787a029f237260625b8f38",
+      "time": 86261.10000000056,
+      "at": "2026-10-16T04:31:48.328Z"
+    },
+    {
+      "id": "buffer-344",
+      "duration": 7.2,
+      "frames": 345600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 460844,
+      "sha256": "5f4081f52b13e78cd0722c3d5913c2afeea9b1a1613311c6c7d647b3ca578450",
+      "time": 86321.5,
+      "at": "2026-10-16T04:31:48.389Z"
+    },
+    {
+      "id": "buffer-348",
+      "duration": 0.785,
+      "frames": 37680,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 50284,
+      "sha256": "8d79ce5cd995c9b7f729ef319c23558f8db6a717bbfc6121d2b8d62d8b031968",
+      "time": 86350.40000000037,
+      "at": "2026-10-16T04:31:48.417Z"
+    },
+    {
+      "id": "buffer-355",
+      "duration": 0.285,
+      "frames": 13680,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 18284,
+      "sha256": "00df88821febac55e76207eea9a1276a5b8d49eae28e26ac5cd40c990abc5286",
+      "time": 86393.30000000075,
+      "at": "2026-10-16T04:31:48.460Z"
+    },
+    {
+      "id": "buffer-363",
+      "duration": 1.512,
+      "frames": 72576,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 96812,
+      "sha256": "82e875a493fa5dce7c7f6f1d8f680317086eb8e9a246eef299ceda7f268d4b34",
+      "time": 86453.70000000019,
+      "at": "2026-10-16T04:31:48.521Z"
+    },
+    {
+      "id": "buffer-371",
+      "duration": 2.2,
+      "frames": 105600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 140844,
+      "sha256": "92c3ed412975bf1b557bada0ebb15865db004f096586e1f5a063564048fb2b86",
+      "time": 86509.10000000056,
+      "at": "2026-10-16T04:31:48.576Z"
+    },
+    {
+      "id": "buffer-375",
+      "duration": 0.22,
+      "frames": 10560,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 21164,
+      "sha256": "4ccf476d260718a54c78954918b06e0b222c75eae12c967f68e7ac5047b97acf",
+      "time": 86543.90000000037,
+      "at": "2026-10-16T04:31:48.611Z"
+    },
+    {
+      "id": "buffer-383",
+      "duration": 0.22,
+      "frames": 10560,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 21164,
+      "sha256": "9724c67c085277040f44b7b39313d9cfe3af1afae4339a15bd625b47068ec2b8",
+      "time": 86594.60000000056,
+      "at": "2026-10-16T04:31:48.662Z"
+    },
+    {
+      "id": "buffer-389",
+      "duration": 0.22,
+      "frames": 10560,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 21164,
+      "sha256": "575837cdd684af17be402d982569338f90813bbd983596dfaa173ebb36bdba89",
+      "time": 86640.80000000075,
+      "at": "2026-10-16T04:31:48.708Z"
+    },
+    {
+      "id": "buffer-402",
+      "duration": 0.3,
+      "frames": 14400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "341ec9b36071d2a2b8ee77c570b7ab950be85e795f5f1a2f74b32812d6f6b634",
+      "time": 86745.60000000056,
+      "at": "2026-10-16T04:31:48.813Z"
+    },
+    {
+      "id": "buffer-410",
+      "duration": 0.3,
+      "frames": 14400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "f1090620c85ae18dbde22b4f51182a1d34addfe4ca78600cc51635e635dee760",
+      "time": 86795.10000000056,
+      "at": "2026-10-16T04:31:48.862Z"
+    },
+    {
+      "id": "buffer-419",
+      "duration": 0.3,
+      "frames": 14400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "603a4ee6f317ab05b326328269b26686fb7f3e1ce02515f255dabd1c616b4b3c",
+      "time": 86862.40000000037,
+      "at": "2026-10-16T04:31:48.929Z"
+    },
+    {
+      "id": "buffer-422",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 43244,
+      "sha256": "b7f5836a2b207d984cf324b3eb2633c5c2971c313a640d1e0f0f2fb56bae7788",
+      "time": 86883.30000000075,
+      "at": "2026-10-16T04:31:48.950Z"
+    },
+    {
+      "id": "buffer-428",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 43244,
+      "sha256": "01bcffaec50d0b29b560a10fbdb6e00587a6d8858b2dac6af9a708e0d7169204",
+      "time": 86928.90000000037,
+      "at": "2026-10-16T04:31:48.996Z"
+    },
+    {
+      "id": "buffer-435",
+      "duration": 0.45,
+      "frames": 21600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 43244,
+      "sha256": "03c0e762813aaf041d36dd51912048319f4afa514dde4b00d020c7bf22ea7340",
+      "time": 86972,
+      "at": "2026-10-16T04:31:49.039Z"
+    },
+    {
+      "id": "buffer-441",
+      "duration": 0.75,
+      "frames": 36000,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 72044,
+      "sha256": "84b26977fc5779e551dcae00acb30ec473fb4a6b275f3c7903d6e30c9e1aedc7",
+      "time": 87016.40000000037,
+      "at": "2026-10-16T04:31:49.083Z"
+    },
+    {
+      "id": "buffer-447",
+      "duration": 0.75,
+      "frames": 36000,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 72044,
+      "sha256": "0d19b678058042174743faa8a11018fb4acb4bc8a566813d844bff19358d05c7",
+      "time": 87061.70000000019,
+      "at": "2026-10-16T04:31:49.129Z"
+    },
+    {
+      "id": "buffer-454",
+      "duration": 0.75,
+      "frames": 36000,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 72044,
+      "sha256": "2b51c0865cca213199a6db35bacb1aacbc079edb0e4e644b6c7aa0d5c30389ed",
+      "time": 87102.20000000019,
+      "at": "2026-10-16T04:31:49.169Z"
+    },
+    {
+      "id": "buffer-460",
+      "duration": 0.3,
+      "frames": 14400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "9cffbf1ec33ca0f183261bc4335befb6cf77ed76954485aeb928480415c0512a",
+      "time": 87143.60000000056,
+      "at": "2026-10-16T04:31:49.211Z"
+    },
+    {
+      "id": "buffer-466",
+      "duration": 0.3,
+      "frames": 14400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "e46030c0b1e33f9805ff4e29ad4a4747b514c2c38733934b19c9db5b4251dfa4",
+      "time": 87185.20000000019,
+      "at": "2026-10-16T04:31:49.252Z"
+    },
+    {
+      "id": "buffer-471",
+      "duration": 0.3,
+      "frames": 14400,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 28844,
+      "sha256": "faf2c32947866105285d925723b9fbe02f4fd6391e5adb9a6a82586b9f61f5ce",
+      "time": 87228.20000000019,
+      "at": "2026-10-16T04:31:49.295Z"
+    },
+    {
+      "id": "buffer-478",
+      "duration": 0.7,
+      "frames": 33600,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 67244,
+      "sha256": "4fb0c8881f4ddee958b94e03b70339b291e90c6139adffe9326ffd6d1bf6209a",
+      "time": 87271.10000000056,
+      "at": "2026-10-16T04:31:49.338Z"
+    },
+    {
+      "id": "buffer-483",
+      "duration": 0.5076875,
+      "frames": 24369,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 48782,
+      "sha256": "212de184cd976cc1aef23ad0c2a13af7353c1dbc3564264718e7dfb8f589dd1e",
+      "time": 87313.80000000075,
+      "at": "2026-10-16T04:31:49.381Z"
+    },
+    {
+      "id": "buffer-490",
+      "duration": 0.3122083333333333,
+      "frames": 14986,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 30016,
+      "sha256": "ff99273589efd9db0fe0931d6bdfc2908b563e4fed9e2436f2df053b07688abe",
+      "time": 87358,
+      "at": "2026-10-16T04:31:49.425Z"
+    },
+    {
+      "id": "buffer-497",
+      "duration": 0.6753958333333333,
+      "frames": 32419,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 64882,
+      "sha256": "0dfbe18eddc5a832af74a9413084329a7d2a33691fec12b2d489d5a11bb0201c",
+      "time": 87410.20000000019,
+      "at": "2026-10-16T04:31:49.477Z"
+    },
+    {
+      "id": "buffer-502",
+      "duration": 0.3872083333333333,
+      "frames": 18586,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 37216,
+      "sha256": "448601efaac9ed7cd7121a9a210ea75d434c91b1776b681e04493c096b3fdacf",
+      "time": 87442.10000000056,
+      "at": "2026-10-16T04:31:49.509Z"
+    },
+    {
+      "id": "buffer-509",
+      "duration": 0.6211041666666667,
+      "frames": 29813,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 59670,
+      "sha256": "fce6fcfb558076547f18569542a364ccc677185568fed96f90d1e643906896c8",
+      "time": 87488.20000000019,
+      "at": "2026-10-16T04:31:49.555Z"
+    },
+    {
+      "id": "buffer-515",
+      "duration": 0.6655625,
+      "frames": 31947,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 63938,
+      "sha256": "c600f66cf99796d9981621a5fccc97430fa7b7c9c493f27dbc56b79986b49edd",
+      "time": 87529.30000000075,
+      "at": "2026-10-16T04:31:49.596Z"
+    },
+    {
+      "id": "buffer-523",
+      "duration": 0.6045625,
+      "frames": 29019,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 58082,
+      "sha256": "df6a067eec36f2a2ab8599e0541ea0ab04befaf7d268e8815d0f859fe8b0d542",
+      "time": 87596.10000000056,
+      "at": "2026-10-16T04:31:49.663Z"
+    },
+    {
+      "id": "buffer-2853",
+      "duration": 0.6,
+      "frames": 28800,
+      "channels": 1,
+      "sampleRate": 48000,
+      "context": "context-2",
+      "bytes": 38444,
+      "sha256": "574ed8153f407aff77e2ad5316ac1ca8d1b6aec95ddfc6b793e76bdc8f0e4a14",
+      "time": 106919.60000000056,
+      "at": "2026-10-16T04:32:08.987Z"
+    }
+  ],
+  "boundary": "Native normal-host event and source observations only; no generated inputs, events, state, buffers, clocks or acoustic acceptance."
+}

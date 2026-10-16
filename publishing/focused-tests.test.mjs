@@ -146,6 +146,23 @@ test('Studio gameplay audio and the shared picture fixture retain both host tran
   }
 });
 
+test('native gameplay audio observation retains passive semantics and native buffer identity checks', () => {
+  for (const file of [
+    'docs/verification/team-duel-desktop-audio/gameplay.html',
+    'docs/verification/team-duel-desktop-audio/gameplay.mjs',
+    'docs/verification/team-duel-desktop-audio/gameplay-observer.mjs',
+    'docs/verification/team-duel-desktop-audio/gameplay-observer.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'native-gameplay-audio-observer');
+    assert.deepEqual(command.args, [
+      '--test',
+      'docs/verification/team-duel-desktop-audio/gameplay-observer.test.mjs',
+    ]);
+  }
+});
+
 test('the separate codec observer retains capture and codec ownership coverage', () => {
   const plan = focusedTestPlan(
     ['docs/verification/team-duel-desktop-audio/studio-codecs.mjs'],
