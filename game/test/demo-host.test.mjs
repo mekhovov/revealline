@@ -7,6 +7,7 @@ import {
   DEMO_HOST_READY_TIMEOUT_MS,
 } from './helpers/demo-host-fixture.mjs';
 import { memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { authoritativeCheckpoint, verifyReplay, MAX_REPLAY_TICKS } from '../replay.mjs';
 import { FIXED_DT } from '../core/index.mjs';
 import { REWARD_BOARD_SECONDS, REWARD_STORY_SECONDS } from '../ui/reward-arrival.mjs';
@@ -111,12 +112,13 @@ test('actual idle home entry resets on activity and does not write game data', a
     ordinary = page.rendered.run;
   const checkpoint = authoritativeCheckpoint(ordinary),
     before = stored(page);
-  frames(page, 239, 250);
+  page.frame(0);
+  frames(page, 599, 100);
   assert.equal(page.$('demo-dialog').open, false);
   page.doc.emit('pointerdown', { button: 0, pointerType: 'mouse' });
-  frames(page, 239, 250);
+  frames(page, 599, 100);
   assert.equal(page.$('demo-dialog').open, false);
-  page.frame(250);
+  page.frame(100);
   await page.ready();
   assert.equal(page.$('demo-dialog').open, true);
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
@@ -558,7 +560,7 @@ test('accessible Fresh opens the demonstrated level at Ready and preserves the p
   assert.equal(page.doc.activeElement, page.$('start-button'));
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
   const savedBytes = page.storage.getItem('revealline.suspended.dev.v1'),
-    saved = JSON.parse(savedBytes),
+    saved = nativeCaptureSession(JSON.parse(savedBytes)),
     afterLibrary = loadLibrary(page.storage, 'revealline.library.dev.v1').library;
   assert.deepEqual(saved.replay.checkpoint, checkpoint);
   assert.equal(verifyReplay(saved.replay).match, true);

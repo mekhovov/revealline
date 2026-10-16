@@ -128,6 +128,7 @@ jobs:
         game/test/fpv-acceptance-workflow.test.mjs
         game/test/win-picture-host.test.mjs
         game/test/demo-reward.test.mjs
+        game/test/solo-demo-media-admission-host.test.mjs
         game/test/company-studio-ui.test.mjs
         game/test/company-studio-preview.test.mjs
         game/test/studio-appearance-basis.test.mjs

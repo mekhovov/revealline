@@ -63,6 +63,7 @@ export function attachDemoHost({
   clearRecordings = async () => {},
   audio = null,
   audioMaster = null,
+  onPreparationPhase = () => {},
   prepareActors = async () => null,
   preparePresentation = async () => null,
 }) {
@@ -142,10 +143,28 @@ export function attachDemoHost({
   const foreground = () => !doc.hidden && doc.hasFocus();
   const ownsUI = () => !!doc.activeElement?.closest?.('[data-demo-ui]');
   const watching = () => active && !practice && !interrupted && !busy;
+  let publishedPreparationPhase = null;
+  function preparationPhase() {
+    if (!active) return null;
+    if (lifecycleSuspended) return 'suspended';
+    // Spectator transport remains available in the background. Keep required
+    // fetch/decode/worker work admitted, but park bulk main-thread work.
+    if (!foreground()) return practice || handoffPending ? 'suspended' : 'playing';
+    if (busy || director?.phase === 'loading') return 'preparing';
+    if (practice) return practice.phase === 'playing' ? 'playing' : 'paused';
+    return interrupted || director?.phase === 'paused' ? 'paused' : 'playing';
+  }
+  function publishPreparationPhase() {
+    const phase = preparationPhase();
+    if (phase === null || phase === publishedPreparationPhase) return;
+    publishedPreparationPhase = phase;
+    onPreparationPhase(phase);
+  }
   const takeoverAvailable = () =>
     active && !practice && !busy && !lifecycleSuspended && foreground();
   function renderControls() {
     if (!active) return;
+    publishPreparationPhase();
     fullscreen.refresh();
     dialog.classList.toggle('is-practice', !!practice);
     const state = currentRun(),
@@ -369,6 +388,7 @@ export function attachDemoHost({
     idle.activity();
     clear();
     if (practice || handoffPending) suspend();
+    else publishPreparationPhase();
   }
   function suspend() {
     idle.activity();
@@ -388,6 +408,7 @@ export function attachDemoHost({
   function close({ handoff = false } = {}) {
     if (!active) return;
     active = false;
+    publishedPreparationPhase = null;
     detailsOpen = false;
     sceneTransition.clear();
     reward.reset();
@@ -1009,6 +1030,7 @@ export function attachDemoHost({
     }
   }
   function updateAudio() {
+    publishPreparationPhase();
     const state = currentRun();
     const look = director?.player && owners.get(director.player);
     audio?.update?.({
@@ -1054,6 +1076,9 @@ export function attachDemoHost({
   return {
     get active() {
       return active;
+    },
+    get preparationPhase() {
+      return preparationPhase();
     },
     get backgroundAudio() {
       return active && !practice && !handoffPending && !lifecycleSuspended;

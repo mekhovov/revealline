@@ -1402,6 +1402,13 @@ try {
   }
   refreshAppearanceDefault();
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  let mediaPreparationPhase = 'menu';
+  function setMediaPreparationPhase(phase) {
+    const effective = demoHost?.preparationPhase ?? phase;
+    if (effective === mediaPreparationPhase) return;
+    mediaPreparationPhase = effective;
+    sound.setPreparationPhase(effective);
+  }
   sound.setActorPresentation(() => ({
     collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
   }));
@@ -10404,7 +10411,7 @@ try {
       pictureVisualController = controller;
       pictureResume = ticket;
       paused = true;
-      sound.setPreparationPhase('preparing');
+      setMediaPreparationPhase('preparing');
       performanceSession?.setPhase('preparing');
       void sound.prepareGameplayAudio().catch(() => {});
       clearInput();
@@ -10559,7 +10566,7 @@ try {
     started = true;
     paused = false;
     retireMissionThumbnails();
-    sound.setPreparationPhase('playing');
+    setMediaPreparationPhase('playing');
     performanceSession?.setPhase('playing');
     qualityPolicy.safeTransition(performance.now());
     if (['restored', 'paused-resume'].includes(resumeCue))
@@ -10604,7 +10611,7 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
-    sound.setPreparationPhase(document.hidden || !document.hasFocus() ? 'suspended' : 'paused');
+    setMediaPreparationPhase(document.hidden || !document.hasFocus() ? 'suspended' : 'paused');
     performanceSession?.setPhase(document.hidden ? 'hidden' : 'paused');
     if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
@@ -11237,7 +11244,7 @@ try {
       }
       return;
     }
-    if (['won', 'lost'].includes(run.status)) sound.setPreparationPhase('paused');
+    if (['won', 'lost'].includes(run.status)) setMediaPreparationPhase('paused');
     controllerInactive = false;
     // The isolated lesson owns its controller; the paused parent must not
     // sample the same pad or turn a child Confirm into a parent menu action.
@@ -12443,7 +12450,7 @@ try {
   function restoreListening() {
     if (document.hidden || !document.hasFocus() || soundtrackDisposed || enemyGuide?.practiceActive)
       return;
-    sound.setPreparationPhase(started && !paused ? 'playing' : started ? 'paused' : 'menu');
+    setMediaPreparationPhase(started && !paused ? 'playing' : started ? 'paused' : 'menu');
     if (!soundtrackPlayer) {
       // The procedural fallback is used when file-audio setup is unavailable.
       // It still needs a fresh resume after an iOS lifecycle interruption.
@@ -14345,6 +14352,7 @@ try {
     presets,
     audio: demoAudio,
     audioMaster,
+    onPreparationPhase: setMediaPreparationPhase,
     prepareActors: (entry, level, themeId, options) =>
       prepareAttemptActors(entry, level, themeId, options),
     preparePresentation: async (demoPainter, entry, level, themeId, options) => {
@@ -14428,6 +14436,7 @@ try {
     onEnter: () => {
       clearInput();
       paused = true;
+      setMediaPreparationPhase('preparing');
       if (started && !['won', 'lost'].includes(run.status)) overlay('pause');
       demoReturnSettings = $('settings-dialog').open;
       if (demoReturnSettings) $('settings-dialog').close();
@@ -14435,6 +14444,15 @@ try {
     },
     onExit: ({ handoff, origin }) => {
       clearInput();
+      setMediaPreparationPhase(
+        document.hidden || !document.hasFocus()
+          ? 'suspended'
+          : started && !paused
+            ? 'playing'
+            : started
+              ? 'paused'
+              : 'menu',
+      );
       sound.pause();
       if (handoff) {
         if (!controllerDialog()) $('start-button').focus({ preventScroll: true });
