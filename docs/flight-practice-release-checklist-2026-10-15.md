@@ -346,6 +346,15 @@ to omit fields from comparisons.
 
 ### C6 — Slow/stalled/cancelled/denied preparation
 
+16 October correction: both package worker families now announce their return to
+Downloading before awaiting the next dependency. Previously a stalled next response
+could leave Verifying visible after local verification had ended. Two deterministic
+regressions fail before and pass after the fix; this is not a native interruption
+qualification. Network-only faults cannot pause actual local hashing/cache writes.
+Do not claim verification-phase cancellation from a stale label. Run real 30-second
+idle/native-download-cancel cases first; keep elapsed five-minute runs separate
+from the existing ten-minute aggregate observer bound.
+
 Progress: all-three controlled positive-headroom quota denial/reset/retry/removal
 passed a separate 21-checkpoint native Chrome observation on `50b7612e8`.
 The original failed zero control and 20-checkpoint hidden-removal test attempt
