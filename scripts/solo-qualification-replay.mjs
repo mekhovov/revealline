@@ -18,13 +18,17 @@ export function inspectQualificationReplay(recording, requirements = {}) {
     warningTicks: 0,
     projectileTicks: 0,
     jammerTicks: 0,
+    movingTicks: 0,
     maximumTrailCells: 0,
     maximumClaimedCells: 0,
   };
   for (const segment of replay.segments) {
     if (segment.releaseBefore) releaseInputs(run);
     for (let tick = 0; tick < segment.ticks; tick++) {
+      const beforeX = run.player.x,
+        beforeY = run.player.y;
       stepRun(run, segment.input, FIXED_DT);
+      if (run.player.x !== beforeX || run.player.y !== beforeY) features.movingTicks++;
       for (const event of run.events) {
         if (event.type === 'cut.closed') features.closures++;
         if (event.type === 'cells.eroded') features.eroded++;

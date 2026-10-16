@@ -73,9 +73,20 @@ export function qualificationDisplayOptions(flags) {
   return { viewport: { width, height }, deviceScaleFactor, isMobile, hasTouch: isMobile };
 }
 
+export function qualificationCacheMode(
+  scenario,
+  { workProbe = false, fixtureAccess = false, mirrored = false } = {},
+) {
+  if (scenario.cacheMode !== 'warm-http-reload') return 'fresh-context';
+  assert(workProbe, 'Warm reload requires explicit ready-phase calibration on both documents');
+  assert(!fixtureAccess && !mirrored, 'Warm HTTP cache observations cannot use browser routing');
+  return scenario.cacheMode;
+}
+
 export function validateQualification(scenario) {
   assert.equal(scenario.format, QUALIFICATION_FORMAT);
   string(scenario.id, 'scenario id');
+  if (scenario.cacheMode !== undefined) assert.equal(scenario.cacheMode, 'warm-http-reload');
   assert(['performance', 'lifecycle', 'recovery'].includes(scenario.kind), 'Invalid evidence kind');
   if (scenario.query !== undefined) {
     assert(scenario.query && typeof scenario.query === 'object' && !Array.isArray(scenario.query));
@@ -142,6 +153,7 @@ export function validateQualification(scenario) {
           'warningTicks',
           'projectileTicks',
           'jammerTicks',
+          'movingTicks',
           'maximumTrailCells',
           'maximumClaimedCells',
         ].includes(key),

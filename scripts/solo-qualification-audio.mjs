@@ -134,13 +134,14 @@ export function installAudioProof() {
       duration: Number.isFinite(element.duration) ? element.duration : null,
       paused: element.paused,
       readyState: element.readyState,
+      playbackRate: element.playbackRate,
     });
   }
   const play = HTMLMediaElement.prototype.play;
   HTMLMediaElement.prototype.play = function (...args) {
     if (!elements.has(this) && elements.size < 8) {
       elements.set(this, elements.size);
-      for (const name of ['playing', 'timeupdate', 'ended', 'pause', 'error'])
+      for (const name of ['playing', 'timeupdate', 'ended', 'pause', 'error', 'seeking', 'seeked'])
         this.addEventListener(name, () => sample(this, name));
     }
     const result = play.apply(this, args);
@@ -198,6 +199,55 @@ export function installAudioProof() {
   };
 }
 
+/** Seek/reset jumps and disjoint plays cannot masquerade as advancing media. */
+export function observedMediaAdvancement(events) {
+  const active = new Map();
+  let witness = null;
+  const sample = ({ atMs, currentTime, event }) => ({ atMs, currentTime, event });
+  for (const event of events) {
+    const key = `${event.element}:${event.sourceId}`;
+    if (['play-request', 'pause', 'ended', 'error', 'seeking', 'seeked'].includes(event.event)) {
+      active.delete(key);
+      continue;
+    }
+    if (!Number.isFinite(event.atMs) || !Number.isFinite(event.currentTime)) continue;
+    let segment = active.get(key);
+    if (!segment && ['playing', 'play-resolved'].includes(event.event)) {
+      segment = { first: event, previous: event };
+      active.set(key, segment);
+      continue;
+    }
+    if (!segment) continue;
+    const delta = event.currentTime - segment.previous.currentTime;
+    const elapsedSeconds = (event.atMs - segment.previous.atMs) / 1000;
+    const rate =
+      Number.isFinite(event.playbackRate) && event.playbackRate > 0 ? event.playbackRate : 1;
+    if (delta < -0.000001 || elapsedSeconds < 0 || delta > elapsedSeconds * rate + 0.25) {
+      active.delete(key);
+      if (['playing', 'play-resolved'].includes(event.event))
+        active.set(key, { first: event, previous: event });
+      continue;
+    }
+    segment.previous = event;
+    const seconds = event.currentTime - segment.first.currentTime;
+    if (seconds > (witness?.seconds ?? 0))
+      witness = {
+        element: event.element,
+        sourceId: event.sourceId,
+        from: sample(segment.first),
+        to: sample(event),
+        seconds,
+        wallSeconds: (event.atMs - segment.first.atMs) / 1000,
+      };
+  }
+  return {
+    seconds: witness?.seconds ?? 0,
+    witness,
+    scope:
+      'Largest continuous chronological progress after native playing/play-resolved; resets, seeks, pauses and implausible jumps close the segment.',
+  };
+}
+
 export function evaluateAudioProof(proof, requirements) {
   if (!proof)
     return {
@@ -228,8 +278,8 @@ export function evaluateAudioProof(proof, requirements) {
         byId.get(row.sourceId)?.status === 'resolved' && byId.get(row.sourceId)?.sha256 === sha256,
     );
     const playing = events.filter((row) => ['playing', 'play-resolved'].includes(row.event));
-    const times = events.map((row) => row.currentTime).filter(Number.isFinite);
-    const advancement = times.length ? Math.max(...times) - Math.min(...times) : 0;
+    const progress = observedMediaAdvancement(events);
+    const advancement = progress.seconds;
     const minimum = requirements.minimumAdvanceSeconds ?? 0.25;
     firstPlaying.push(playing.length ? Math.min(...playing.map((row) => row.atMs)) : null);
     checks.push({
@@ -237,6 +287,8 @@ export function evaluateAudioProof(proof, requirements) {
       sha256,
       playingEvents: playing.length,
       advancement,
+      advancementWitness: progress.witness,
+      advancementScope: progress.scope,
       minimum,
       status: playing.length && advancement >= minimum ? 'pass' : 'unobserved',
     });

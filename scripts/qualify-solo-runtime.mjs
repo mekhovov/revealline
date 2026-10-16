@@ -11,6 +11,7 @@ import { installAudioProof, evaluateAudioProof } from './solo-qualification-audi
 import {
   validateQualification,
   qualificationDisplayOptions,
+  qualificationCacheMode,
   resourceStability,
   createManifestMirror,
   evaluateQualificationBudgets,
@@ -21,6 +22,7 @@ import {
 import {
   calibrateReadyCadence,
   externalQualificationBudgets,
+  aggregateQualificationGates,
 } from './solo-qualification-observation.mjs';
 
 // Public UI only. Never write application storage, run state, clocks or caches.
@@ -86,6 +88,7 @@ assert(
     ['localhost', '127.0.0.1', '[::1]'].includes(localURL.hostname),
   'Access fixture requires a local transport',
 );
+const cacheMode = qualificationCacheMode(scenario, { workProbe, fixtureAccess, mirrored });
 if (scenario.query)
   for (const [key, value] of Object.entries(scenario.query)) url.searchParams.set(key, value);
 url.searchParams.set('performance', '1');
@@ -94,6 +97,7 @@ const report = {
   scenario: scenario.id,
   kind: memoryProfile ? 'memory-profile' : audioProof ? 'audio-proof' : scenario.kind,
   scenarioKind: scenario.kind,
+  cacheMode,
   baselineRuntime,
   workProbe,
   audioProof,
@@ -523,6 +527,16 @@ try {
     'Exact production CSP required',
   );
   report.csp = response.headers()['content-security-policy'];
+  report.environment.documentCacheControl = response.headers()['cache-control'] ?? null;
+  if (scenario.cacheMode === 'warm-http-reload') {
+    assert(
+      !/\bno-store\b/i.test(report.environment.documentCacheControl ?? ''),
+      'Warm reload document is served with no-store',
+    );
+    report.limitations.push(
+      'Warm HTTP reload attempt in the same context without browser routing; cache eligibility is preserved, but actual body cache hits are not inferred from reload alone.',
+    );
+  }
   if (
     (fixtureAccess || serverFixtureAccess) &&
     (await page.locator('input[name=password]').isVisible())
@@ -784,9 +798,13 @@ try {
             record.actual = (await locator.textContent()).trim();
             assert.equal(record.actual, action.value);
           } else record.actual = 'visible';
-        } else if (action.type === 'resize')
-          await page.setViewportSize({ width: action.width, height: action.height });
-        else if (action.type === 'fault')
+        } else if (action.type === 'resize') {
+          const resized = qualificationDisplayOptions([
+            `--viewport=${action.width}x${action.height}`,
+            `--dpr=${display.deviceScaleFactor}`,
+          ]);
+          await page.setViewportSize(resized.viewport);
+        } else if (action.type === 'fault')
           await page.evaluate(({ selector, event }) => {
             const target = selector ? document.querySelector(selector) : window;
             if (!target) throw new Error('Missing injected-event target');
@@ -992,14 +1010,16 @@ try {
   } else if (scenario.kind !== 'recovery') {
     try {
       report.performanceGates = evaluateQualificationBudgets(report.snapshots.at(-1)?.application);
-      report.performanceGateStatus = baselineRuntime
-        ? 'partial-baseline-internal-unknown'
-        : report.performanceGates.status;
-      if (workProbe) {
+      if (workProbe)
         report.externalPerformanceGates = externalQualificationBudgets(report.finalState?.probe);
-        if (report.externalPerformanceGates.status === 'fail')
-          report.performanceGateStatus = 'fail';
-      }
+      report.performanceGateAggregation = aggregateQualificationGates({
+        application: report.performanceGates,
+        external: report.externalPerformanceGates,
+        workProbe,
+        baselineRuntime,
+        applicationAvailable: Boolean(report.snapshots.at(-1)?.application),
+      });
+      report.performanceGateStatus = report.performanceGateAggregation.status;
     } catch (error) {
       report.performanceGateStatus = 'invalid-evidence';
       report.performanceGateFailure = String(error.stack ?? error);
