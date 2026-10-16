@@ -1,86 +1,36 @@
 {
-  "format": "SoloBoundedCanonicalAndBaselineManifestV5",
-  "purpose": "Full canonical observations after two identity-formatting fixture repairs and audio lifecycle observation correction, plus five exact original-main baseline comparisons. All source and test bytes are pinned; existing failures remain failures.",
+  "format": "SoloBoundedBaselineClassificationManifestV6",
+  "purpose": "Exact original-main Linux execution of three image ownership, image-format and scene-clock regression groups, retaining full original tests and all failures. Named comparisons use prior retained candidate TAP; completed baseline files never count as candidate coverage.",
   "entries": [
     {
-      "label": "candidate",
-      "case": "team-default-entry-host",
-      "mode": "original",
-      "sourceRevision": "9768c2ebe051834e69b3d6a74322a655244d59c7",
-      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "file": "game/test/team-default-entry-host.test.mjs",
-      "testSHA256": "78450faeb3e45e32e6f2a299f20c96cad86a1635ae5ae45abb4bd72ea0429764",
-      "bytes": 14525
-    },
-    {
-      "label": "candidate",
-      "case": "coop-picture-recovery-focus",
-      "mode": "original",
-      "sourceRevision": "9768c2ebe051834e69b3d6a74322a655244d59c7",
-      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "file": "game/test/coop-picture-recovery-focus.test.mjs",
-      "testSHA256": "5b2df5ff56e7bd0d541e8990bf66b54ecedaa8b8a126f063586eb3a91099248c",
-      "bytes": 14392
-    },
-    {
-      "label": "candidate",
-      "case": "soundtrack-host",
-      "mode": "original",
-      "sourceRevision": "9768c2ebe051834e69b3d6a74322a655244d59c7",
-      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "file": "game/test/soundtrack-host.test.mjs",
-      "testSHA256": "e8a0a08f2e37ded0aa5c66b282b27e2140a4f9f5d34f20801832cdca21f81e7b",
-      "bytes": 47308
-    },
-    {
       "label": "baseline",
-      "case": "course-selection-host",
+      "case": "presentation-team-runtime",
       "mode": "original",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/course-selection-host.test.mjs",
-      "testSHA256": "83c4f2c9af28926fabfc9410b61dd5b54340502a1cae93619b2095d574f66bfa",
-      "bytes": 8591
+      "file": "game/test/presentation-team-runtime.test.mjs",
+      "testSHA256": "18cbe09bc8c4a4008123ea2a9b708a6fb1c934ffe57c57bee37c4c07a131d7a6",
+      "bytes": 8522
     },
     {
       "label": "baseline",
-      "case": "course-pause-host",
+      "case": "test-company-content-inventory",
       "mode": "original",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/course-pause-host.test.mjs",
-      "testSHA256": "be80233e913f17a244f3cbd8793bd4d8a6d9876f399f4ec47a05f6c92cdb92c6",
-      "bytes": 3626
+      "file": "scripts/test-company-content-inventory.mjs",
+      "testSHA256": "eea9cb5a3326c695dd2105434e591d5d77e5a50396e83bd0d5bf6bcff38c9934",
+      "bytes": 4996
     },
     {
       "label": "baseline",
-      "case": "terminal-navigation",
+      "case": "selection-bookmark-host",
       "mode": "original",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/terminal-navigation.test.mjs",
-      "testSHA256": "8fa54f19a4ebe3bf51e5cd33b5b0fcb8e7f0a364e317503dcff8aeb0e15ba469",
-      "bytes": 26141
-    },
-    {
-      "label": "baseline",
-      "case": "offline-team-retention-host",
-      "mode": "original",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/offline-team-retention-host.test.mjs",
-      "testSHA256": "602ddd82fa9b86806d6722deebd1152a74ff4fdc75dfb96aadcc427a89eaac88",
-      "bytes": 6522
-    },
-    {
-      "label": "baseline",
-      "case": "offline-download-play-host",
-      "mode": "original",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/offline-download-play-host.test.mjs",
-      "testSHA256": "b4444385375288e09445433609d097aec955461d2e50b715cc539e0b6ef95c3a",
-      "bytes": 14097
+      "file": "game/test/selection-bookmark-host.test.mjs",
+      "testSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
+      "bytes": 5359
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -97,16 +47,14 @@
     "runId": 38865274741,
     "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
     "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-    "failureAuthoritySHA256": "c8d728cf76290577135049e78f2f9cdbe57992bbe04232155507df2b58ae9c74",
+    "failureAuthoritySHA256": "3093a14c4d7b6c27e21652cb9a46a3bd8796936825813a4f037e98fc83470c77",
     "scope": "Retained complete candidate failures only; baseline results are separate scoped comparisons, not passing waivers."
   },
-  "scope": "Three complete canonical files at9768/e025 and five exact b117 baseline files. Baseline observations grant no candidate coverage. Canonical failed files grant observed coverage, never a pass. Earlier90f/49c and partial/resource-aborted results remain separate. No full-suite or device acceptance inferred.",
+  "scope": "Three full original-main files under the same Node22/CI=1 Linux environment. Source and workflow revisions separate. Compare only observed named assertions; later assertions after a failure remain unexecuted. No candidate/full-suite/device acceptance inferred.",
   "sameTestBytesByCase": {
-    "course-selection-host": true,
-    "course-pause-host": true,
-    "terminal-navigation": true,
-    "offline-team-retention-host": true,
-    "offline-download-play-host": true
+    "presentation-team-runtime": true,
+    "test-company-content-inventory": true,
+    "selection-bookmark-host": true
   },
   "commandTemplate": [
     "node",
@@ -118,102 +66,53 @@
   "diagnosticOverlay": "None. Every selected test is the exact committed baseline file; no assertion, timeout, fixture, policy, golden or runtime changes.",
   "comparisons": [
     {
-      "case": "course-selection-host",
-      "file": "game/test/course-selection-host.test.mjs",
-      "baselineTestSHA256": "83c4f2c9af28926fabfc9410b61dd5b54340502a1cae93619b2095d574f66bfa",
-      "candidateTestSHA256": "83c4f2c9af28926fabfc9410b61dd5b54340502a1cae93619b2095d574f66bfa",
+      "case": "presentation-team-runtime",
+      "file": "game/test/presentation-team-runtime.test.mjs",
+      "baselineTestSHA256": "18cbe09bc8c4a4008123ea2a9b708a6fb1c934ffe57c57bee37c4c07a131d7a6",
+      "candidateTestSHA256": "18cbe09bc8c4a4008123ea2a9b708a6fb1c934ffe57c57bee37c4c07a131d7a6",
       "sameTestBytes": true,
       "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12033224434,
-      "candidateArtifactSHA256": "sha256:d7484e125142f57b1b6117d0b0ba8685c15fabb895914989f68b151d4bf62734",
-      "candidateTAPSHA256": "e9d1353366946872c682d2de09d9ff36e6bef69ce93eb9ae3849b7a66dec9a05",
+      "candidateArtifactId": 12035142646,
+      "candidateArtifactSHA256": "sha256:56d15abf4aee40af0a3a7958f9ed47dde5f4c1a9ce1dc0271f0b25cf5a903390",
+      "candidateTAPSHA256": "79126b0368a1db77ae32108f94de090b0faf148fad8289ccd2f1097f27754531",
       "candidateFailureNames": [
-        "immediate: only Prepare adopts the requested lesson, paused at tick zero without awards",
-        "grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards"
+        "a missing Team image cannot replace or dispose the accepted snapshot"
       ]
     },
     {
-      "case": "course-pause-host",
-      "file": "game/test/course-pause-host.test.mjs",
-      "baselineTestSHA256": "be80233e913f17a244f3cbd8793bd4d8a6d9876f399f4ec47a05f6c92cdb92c6",
-      "candidateTestSHA256": "be80233e913f17a244f3cbd8793bd4d8a6d9876f399f4ec47a05f6c92cdb92c6",
+      "case": "test-company-content-inventory",
+      "file": "scripts/test-company-content-inventory.mjs",
+      "baselineTestSHA256": "eea9cb5a3326c695dd2105434e591d5d77e5a50396e83bd0d5bf6bcff38c9934",
+      "candidateTestSHA256": "eea9cb5a3326c695dd2105434e591d5d77e5a50396e83bd0d5bf6bcff38c9934",
       "sameTestBytes": true,
       "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12033098482,
-      "candidateArtifactSHA256": "sha256:1a223268acd5f53bdecbe3ac3a0232b03e52a469d404320594f26e9bf144e8b3",
-      "candidateTAPSHA256": "1c5b7865c991d99e3b4ed46a4c07d9efec426589ad088f63945a4b93e54e69ee",
+      "candidateArtifactId": 12035039142,
+      "candidateArtifactSHA256": "sha256:5addde9f03f269ecb1ccb925f1dae5b8771d95e5963bbccda1b3322638569484",
+      "candidateTAPSHA256": "834841f59bdf95df3b085cd54ad14a72aeebe9a4e65ba965b69b4af947d2ba5e",
       "candidateFailureNames": [
-        "immediate: embedded First Flight Pause \u2192 End course restores the visible reader without resuming or awarding",
-        "grid-center: embedded First Flight Pause \u2192 End course restores the visible reader without resuming or awarding"
+        "every registered current and retained edition is inventoried without multiplying bundle owners",
+        "historical originals retain their exact source, presentation, campaign and save dependencies",
+        "committed company evidence exactly reproduces from current source and pinned originals"
       ]
     },
     {
-      "case": "terminal-navigation",
-      "file": "game/test/terminal-navigation.test.mjs",
-      "baselineTestSHA256": "8fa54f19a4ebe3bf51e5cd33b5b0fcb8e7f0a364e317503dcff8aeb0e15ba469",
-      "candidateTestSHA256": "8fa54f19a4ebe3bf51e5cd33b5b0fcb8e7f0a364e317503dcff8aeb0e15ba469",
+      "case": "selection-bookmark-host",
+      "file": "game/test/selection-bookmark-host.test.mjs",
+      "baselineTestSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
+      "candidateTestSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
       "sameTestBytes": true,
       "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12033075592,
-      "candidateArtifactSHA256": "sha256:dc064bd3e73f505690122ddbb50eae339f4a2e705daf5e181ed54347f0a888c2",
-      "candidateTAPSHA256": "9c627add959913cd38bdf0047790aac1463b9398fe8fabedc3095f16aa950e14",
+      "candidateArtifactId": 12035142646,
+      "candidateArtifactSHA256": "sha256:56d15abf4aee40af0a3a7958f9ed47dde5f4c1a9ce1dc0271f0b25cf5a903390",
+      "candidateTAPSHA256": "c5a662e943fc15da26be4f07f49476ec38f3120a75b75c2dfff9ac06a9236974",
       "candidateFailureNames": [
-        "explicit results after a real win focus Next; keyboard arrows and Tab include visible headers and exclude unrelated or flight controls",
-        "controller reaches results plus visible headers; Confirm opens picture and Back restores the same result",
-        "Confirm waits for release and a held press cannot cross Next adoption; Pause requires fresh Resume",
-        "short results omit reading controls; overflow reading scrolls by keyboard and ends without launching",
-        "result keyboard picture/Back and current appearance setup return keep the same earned attempt",
-        "final installed campaign keeps its result while keyboard Missions opens the shared library and returns",
-        "keyboard: Pause \u2192 Main menu \u2192 Settings/Missions \u2192 return stays paused and preserves the live cut",
-        "controller: Pause \u2192 Main menu \u2192 Settings/Missions \u2192 return stays paused and preserves the live cut"
-      ]
-    },
-    {
-      "case": "offline-team-retention-host",
-      "file": "game/test/offline-team-retention-host.test.mjs",
-      "baselineTestSHA256": "602ddd82fa9b86806d6722deebd1152a74ff4fdc75dfb96aadcc427a89eaac88",
-      "candidateTestSHA256": "602ddd82fa9b86806d6722deebd1152a74ff4fdc75dfb96aadcc427a89eaac88",
-      "sameTestBytes": true,
-      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12032508985,
-      "candidateArtifactSHA256": "sha256:4afa569881972587a18ade8c347a3509f477f4abca39f73bcf96ff91c68792b0",
-      "candidateTAPSHA256": "dc6558e6eedebfd9a6251dbba48795c99b66b94e962f47f15251efe43c6588d8",
-      "candidateFailureNames": [
-        "a prepared Team preview is not pinned; deliberate Start waits for retention and cancelled work cannot start later",
-        "Team starts online without downloaded files or an install popup"
-      ]
-    },
-    {
-      "case": "offline-download-play-host",
-      "file": "game/test/offline-download-play-host.test.mjs",
-      "baselineTestSHA256": "b4444385375288e09445433609d097aec955461d2e50b715cc539e0b6ef95c3a",
-      "candidateTestSHA256": "b4444385375288e09445433609d097aec955461d2e50b715cc539e0b6ef95c3a",
-      "sameTestBytes": true,
-      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12032735083,
-      "candidateArtifactSHA256": "sha256:f072c219b7be8715dac3c872e2b3d667085863e20297570c3c116b5e1db17608",
-      "candidateTAPSHA256": "9d6e6d2a49b1cfc5fb787895fbd127376f49040edbc29005d04e4298012784c4",
-      "candidateFailureNames": [
-        "fresh Team missing package offers one Download & play action and starts only after exact verified readiness",
-        "Team Download & play never reclaims focus or starts after a newer lobby choice",
-        "fresh Versus missing package offers one Download & play action and admits that exact race once ready"
+        "save one flight, then deliberately choose a different installed chapter",
+        "reload opens the selected chapter without automatically loading or flying",
+        "retained chapter selector persists its choice while the other saved flight stays explicit and exact"
       ]
     }
-  ],
-  "canonicalProofs": {
-    "formatterCommit": "146810fc6",
-    "audioFixtureCommit": "9768c2ebe051834e69b3d6a74322a655244d59c7",
-    "formatterPairedRunId": 38873458942,
-    "formatterPairedWorkflowRevision": "cfb32eb262f481ecdda84fa86601061f8bef8b9e",
-    "formatterPairedComparisonSHA256": "fbfc572119e0565fff4552d8deaa4292acf009cc786d05e8845bbf53d6496bd2",
-    "audioBaselineRunId": 38875817263,
-    "audioBaselineWorkflowRevision": "8258ae0813e4cbb57d8875ec868c386e15e689db",
-    "audioBaselineTAPSHA256": "a410ecbc1552080384c816683e8e0a975c5028c337df434adb82b9a237a3e2db",
-    "scope": "All formatter identity truth and audio transport/durability assertions remain intact. Canonical run outcomes are pending; prior diagnostic copies do not substitute for them."
-  }
+  ]
 }

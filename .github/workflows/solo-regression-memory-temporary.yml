@@ -1,4 +1,4 @@
-name: Temporary Solo bounded canonical and baseline checks
+name: Temporary Solo bounded baseline classification
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,29 +28,14 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - label: candidate
-            case: team-default-entry-host
-            source: 9768c2ebe051834e69b3d6a74322a655244d59c7
-          - label: candidate
-            case: coop-picture-recovery-focus
-            source: 9768c2ebe051834e69b3d6a74322a655244d59c7
-          - label: candidate
-            case: soundtrack-host
-            source: 9768c2ebe051834e69b3d6a74322a655244d59c7
           - label: baseline
-            case: course-selection-host
+            case: presentation-team-runtime
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: course-pause-host
+            case: test-company-content-inventory
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: terminal-navigation
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: offline-team-retention-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: offline-download-play-host
+            case: selection-bookmark-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
