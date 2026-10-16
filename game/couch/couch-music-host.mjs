@@ -109,6 +109,26 @@ export function attachCouchMusicHost({
       report(error);
     }
   };
+  const effectsLabel = make(
+    'label',
+    'effects-volume-label',
+    localizedMessage('interface:globalSettings.effectsVolumeThisSession'),
+  );
+  effectsLabel.setAttribute('for', `${prefix}-music-effects-volume`);
+  const effectsVolume = make('input', 'effects-volume');
+  for (const [key, value] of Object.entries({ type: 'range', min: '0', max: '1', step: '0.01' })) {
+    effectsVolume.setAttribute(key, value);
+    effectsVolume[key] = value;
+  }
+  effectsVolume.value = String(sound.settings.sfx);
+  effectsVolume.oninput = effectsVolume.onchange = () => {
+    try {
+      sound.configure({ sfx: Number(effectsVolume.value) });
+    } catch (error) {
+      effectsVolume.value = String(sound.settings.sfx);
+      report(error);
+    }
+  };
   action('library', localizedMessage('interface:musicLibrary'), () => open());
   const retry = action('retry', localizedMessage('interface:retryMusicLibrary'), () => load());
   make('p', 'note', localizedMessage('interface:musicVolumeLastsForThisVisitMasterSoundIsShared'));

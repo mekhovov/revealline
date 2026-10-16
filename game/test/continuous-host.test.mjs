@@ -1,3 +1,4 @@
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { ACTOR_APPEARANCE_PIN_FORMAT } from '../presentation/actor-appearance-pin.mjs';
 import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
 import test from 'node:test';
@@ -14,6 +15,7 @@ import {
 import { challengeCampaign } from '../challenges.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const level = retryFixture('self-contact').level;
@@ -30,8 +32,24 @@ const ticks = (page, count) => {
   for (let n = 0; n < count; n++) page.frame();
 };
 
+// These cases exercise the same-owner restore handler boundary. Load saved flight
+// is intentionally hidden once an attempt starts; this is not a user-click path.
+// Fresh-page visible Continue coverage lives in difficulty-host.test.mjs.
+async function restoreSavedAttemptInPlace(page) {
+  page.frame(0); // Publish the paused owner without consuming a simulation tick.
+  const button = page.$('continue-saved');
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.equal(button.hidden, true);
+  assert.equal(button.disabled, false);
+  const verification = button.onclick();
+  assert.ok(verification instanceof Promise, 'The real restore handler owns verification.');
+  await verification;
+  assert.equal(button.disabled, false);
+}
+
 for (const turnPolicy of ['immediate', 'grid-center']) {
-  test(`${turnPolicy}: tap/release, same direction, exact pause/load and explicit resume through the actual host`, async (t) => {
+  test(`${turnPolicy}: tap/release, same direction, exact pause/restore handler and explicit Resume`, async (t) => {
     const storage = memoryStorage();
     saveLibrary(
       storage,
@@ -39,11 +57,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       updatePreferences(emptyLibrary(), { turnPolicy }),
     );
     const page = await soloPage(t, { campaign, storage });
-    page.$('start-button').click();
-    await settle(
-      () => page.doc.body.dataset.flightState === 'running',
-      'Explicit Start/Resume waits for the selected picture before movement.',
-    );
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     // With the host's v4 8.84-cell/s preset, this leaves the same-direction
@@ -61,7 +77,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const checkpoint = authoritativeCheckpoint(run);
     page.$('pause-button').click();
     page.frame(0);
-    const saved = JSON.parse(storage.getItem(sessionKey));
+    const saved = nativeCaptureSession(JSON.parse(storage.getItem(sessionKey)));
     assert.equal(saved.format, ACTOR_SESSION_FORMAT);
     assert.equal(saved.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
     assert.equal(saved.presentationPins.format, 'revealline-flight-pictures.v2');
@@ -79,8 +95,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     ticks(page, 4);
     assert.equal(page.rendered.paused, true, 'directions cannot auto-resume');
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
-    page.$('continue-saved').click();
-    await settle(() => !page.$('continue-saved').disabled, 'saved flight verified');
+    await restoreSavedAttemptInPlace(page);
+    assert.equal(page.$('continue-saved').disabled, false);
     page.frame(0);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.equal(page.doc.body.dataset.flightState, 'paused');
@@ -91,11 +107,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       'The restored flight retains its unfinished line',
     );
     const restoredBytes = storage.getItem(sessionKey);
-    page.$('start-button').click();
-    await settle(
-      () => page.doc.body.dataset.flightState === 'running',
-      'Explicit Start/Resume waits for the selected picture before movement.',
-    );
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     assert.equal(
       page.$('run-message').textContent,
       'Flight resumed. Your unfinished line is still exposed.',
@@ -108,7 +122,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       'explicit Resume continues saved turn without a new direction',
     );
     page.$('pause-button').click();
-    assert.equal(verifyReplay(JSON.parse(storage.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeCaptureSession(JSON.parse(storage.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.equal(
       page.$('run-message').textContent,
       'Flight paused. Your unfinished line is kept. Press Resume to continue.',
@@ -123,16 +140,23 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   });
 }
 
-test('restored ground flight captions follow pause/resume without suppressing an interruption warning', async (t) => {
+test('same-owner restore handler preserves ground captions and interruption warnings', async (t) => {
   const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   ticks(page, 8);
   page.$('pause-button').click();
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  const saved = authoritativeCheckpoint(page.rendered.run);
+  await restoreSavedAttemptInPlace(page);
+  page.frame(0);
+  assert.equal(page.$('continue-saved').disabled, false);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.match(page.$('run-message').textContent, /Saved flight verified.*Press Resume/);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), saved);
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   assert.equal(page.$('run-message').textContent, 'Flight resumed.');
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('pause-button').click();
@@ -149,17 +173,18 @@ test('restored ground flight captions follow pause/resume without suppressing an
   assert.equal(page.$('run-message').textContent, important);
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+  assert.equal(
+    verifyReplay(nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+    true,
+  );
   assert.deepEqual(page.errors, []);
 });
 
 test('fresh direction before the next tick survives pause and does not rewrite the checkpoint', async (t) => {
   const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Explicit Start/Resume waits for the selected picture before movement.',
-  );
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 13);
@@ -167,18 +192,16 @@ test('fresh direction before the next tick survives pause and does not rewrite t
   page.key('ArrowRight');
   page.key('ArrowRight', false);
   page.$('pause-button').click();
-  const saved = JSON.parse(page.storage.getItem(sessionKey));
+  const saved = nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey)));
   assert.equal(saved.continuation.direction, 'right');
   assert.deepEqual(saved.replay.checkpoint, checkpoint);
 });
 
 test('recovery inside a multi-tick frame clears intent and requires fresh post-recovery input', async (t) => {
   const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Explicit Start/Resume waits for the selected picture before movement.',
-  );
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 30);
@@ -197,7 +220,10 @@ test('recovery inside a multi-tick frame clears intent and requires fresh post-r
   ticks(page, 3);
   assert.ok(run.player.y > position[1]);
   page.$('pause-button').click();
-  assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+  assert.equal(
+    verifyReplay(nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+    true,
+  );
 });
 
 test('title, missions and settings use the current library navigation without starting flight', async (t) => {
@@ -243,8 +269,9 @@ async function liveForegroundCut(t, turnPolicy) {
     updatePreferences(emptyLibrary(), { turnPolicy }),
   );
   const page = await soloPage(t, { campaign, storage });
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 12); // Queue before the next cell centre under the host's v4 preset.
@@ -253,7 +280,16 @@ async function liveForegroundCut(t, turnPolicy) {
   ticks(page, 1);
   assert.equal(page.rendered.run.player.cutting, true);
   assert.ok(page.rendered.run.trail.length > 0);
-  if (turnPolicy === 'grid-center') assert.equal(page.rendered.run.player.queuedDirection, 'right');
+  if (turnPolicy === 'grid-center')
+    assert.equal(
+      page.rendered.run.player.queuedDirection,
+      'right',
+      JSON.stringify({
+        turnPolicy: page.rendered.run.turnPolicy,
+        tick: page.rendered.run.tick,
+        player: page.rendered.run.player,
+      }),
+    );
   assert.equal(page.doc.body.dataset.pictureState, 'ready');
   return page;
 }
@@ -312,7 +348,11 @@ for (const turnPolicy of ['immediate', 'grid-center'])
       assert.equal(run.tick, savedTick + 8);
       assert.ok(run.player.x > savedX);
       page.$('pause-button').click();
-      assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+      assert.equal(
+        verifyReplay(nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).replay)
+          .match,
+        true,
+      );
       assert.deepEqual(page.errors, []);
     });
 
@@ -349,25 +389,29 @@ for (const background of ['hidden', 'unfocused'])
     assert.equal(run.tick, savedTick + 8);
     assert.ok(run.player.x > savedX);
     page.$('pause-button').click();
-    assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 
-test('saved compiled flights refresh and restore without rereading authored geometry', async (t) => {
+test('saved compiled flights refresh and restore through the handler without rereading authored geometry', async (t) => {
   const source = structuredClone(campaign);
   const page = await soloPage(t, {
     fetchResponse(path) {
       if (path === 'content/campaign.json') return { ok: true, json: async () => source };
     },
   });
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   ticks(page, 10);
   page.key('ArrowDown', false);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.$('pause-button').click();
-  const saved = JSON.parse(page.storage.getItem(sessionKey));
+  const saved = nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey)));
   const levels = source.levels;
   let authoredReads = 0;
   // Observe the caller-owned source after the host has compiled an immutable
@@ -385,8 +429,9 @@ test('saved compiled flights refresh and restore without rereading authored geom
     return read(key);
   };
   for (let cycle = 0; cycle < 20; cycle++) {
-    page.$('start-button').click();
-    await settle(() => page.doc.body.dataset.flightState === 'running');
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     page.$('pause-button').click();
   }
   assert.ok(savedReads >= 20, 'The actual overlay repeatedly reads the saved-flight preview.');
@@ -394,12 +439,12 @@ test('saved compiled flights refresh and restore without rereading authored geom
   // Full restoration deliberately validates authored presentation inputs too.
   // Remove the observation proxy before exercising that separate boundary.
   source.levels = levels;
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  await restoreSavedAttemptInPlace(page);
+  assert.equal(page.$('continue-saved').disabled, false);
   page.frame(0);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(
-    JSON.parse(page.storage.getItem(sessionKey)).presentationPins,
+    nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).presentationPins,
     saved.presentationPins,
   );
   assert.equal(page.doc.body.dataset.flightState, 'paused');
@@ -408,7 +453,7 @@ test('saved compiled flights refresh and restore without rereading authored geom
   assert.deepEqual(page.errors, []);
 });
 
-test('dynamic saved routes follow current mutable inputs and a replacement selection', async (t) => {
+test('dynamic saved-route handler follows current mutable inputs and a replacement selection', async (t) => {
   const currentClasses = structuredClone(classes);
   const page = await soloPage(t, {
     campaign,
@@ -434,15 +479,16 @@ test('dynamic saved routes follow current mutable inputs and a replacement selec
     false,
     'An uncompleted selected route is absent from the historical campaign registry.',
   );
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   ticks(page, 8);
   page.$('pause-button').click();
-  const first = JSON.parse(page.storage.getItem(sessionKey));
+  const first = nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey)));
   const firstCheckpoint = authoritativeCheckpoint(page.rendered.run);
   assert.equal(first.campaignKey, firstKey);
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  await restoreSavedAttemptInPlace(page);
+  assert.equal(page.$('continue-saved').disabled, false);
   page.frame(0);
   assert.match(page.$('run-message').textContent, /Saved flight verified/);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), firstCheckpoint);
@@ -458,8 +504,8 @@ test('dynamic saved routes follow current mutable inputs and a replacement selec
   assert.equal(replacement.levelId, campaign.levels[0].id);
   const originalRevision = currentClasses[0].revision;
   currentClasses[0].revision = 'dynamic-changed';
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  await activateHostAction(page.$('continue-saved'));
+  assert.equal(page.$('continue-saved').disabled, false);
   page.frame(0);
   assert.equal(
     page.rendered.run,
@@ -467,15 +513,18 @@ test('dynamic saved routes follow current mutable inputs and a replacement selec
     'A stale dynamic key cannot restore against changed equipment.',
   );
   assert.match(page.$('run-message').textContent, /not loaded.*matching campaign pack/);
-  assert.equal(JSON.parse(page.storage.getItem(sessionKey)).campaignKey, firstKey);
+  assert.equal(
+    nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).campaignKey,
+    firstKey,
+  );
   currentClasses[0].revision = originalRevision;
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  await activateHostAction(page.$('continue-saved'));
+  assert.equal(page.$('continue-saved').disabled, false);
   page.frame(0);
   assert.match(page.$('run-message').textContent, /Saved flight verified/);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), firstCheckpoint);
   assert.deepEqual(
-    JSON.parse(page.storage.getItem(sessionKey)).presentationPins,
+    nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey))).presentationPins,
     first.presentationPins,
   );
 
@@ -490,18 +539,19 @@ test('dynamic saved routes follow current mutable inputs and a replacement selec
   );
   await page.$('mission-replace-confirm').onclick();
   await settle(() => page.doc.body.dataset.pictureState === 'ready');
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   ticks(page, 8);
   page.$('pause-button').click();
-  const second = JSON.parse(page.storage.getItem(sessionKey));
+  const second = nativeCaptureSession(JSON.parse(page.storage.getItem(sessionKey)));
   assert.notEqual(second.campaignKey, firstKey);
   assert.equal(
     second.campaignKey,
     campaignKey(challengeCampaign(secondDate, 'daily', currentClasses)),
   );
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  await restoreSavedAttemptInPlace(page);
+  assert.equal(page.$('continue-saved').disabled, false);
   page.frame(0);
   assert.equal(page.rendered.run.levelId, `route-${secondDate}-daily`);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), second.replay.checkpoint);

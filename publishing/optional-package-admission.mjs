@@ -4,6 +4,7 @@ import { editionHash, inspectEditionZip } from './edition-zip.mjs';
 import { OPTIONAL_PACKAGE_POLICIES, optionalRuntimePaths } from './optional-package-policy.mjs';
 import { validatePublicSourceEligibility } from './edition-admission.mjs';
 import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
+import { validateOptionalModuleClosure } from './optional-module-closure.mjs';
 
 const editionDescriptor = (path, bytes) => ({
   path,
@@ -181,6 +182,7 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       fail('Complete optional runtime output exceeds package limits.');
     for (const pin of policy.vendorPins ?? [])
       matches(pin, runtime.get(pin.path), policy.limits.bytes);
+    validateOptionalModuleClosure(runtime, policy);
     const installation = manifest.installation;
     keys(
       installation,
@@ -368,6 +370,8 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       'app.webmanifest',
       'icons/icon-192.png',
       'icons/icon-512.png',
+      'access-gate.mjs',
+      'access-gate.css',
     ];
     const launcherPins = launcherNames.map((name) =>
       editionDescriptor(name, runtime.get('launcher/' + name)),

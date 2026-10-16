@@ -326,6 +326,9 @@ async function adoptDisplay(attempt, running, epoch) {
   setEarnedView(false);
   storyPlayer?.reset();
   painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
+  // This standalone player exposes authored edition artwork, not a shared
+  // appearance selector. Ambient review/preferences must not reinterpret it.
+  painter.setAttemptAppearance(null);
   await painter.setLook(attempt.theme, 'neutral-marker');
   const size = boardPaintSizeForRun(attempt.run);
   $('board').width = size.width;

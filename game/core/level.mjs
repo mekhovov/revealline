@@ -1,4 +1,4 @@
-import { SNAKE_PURSUIT_VERSIONS, isPursuitLevel, isRunningEnemyLevel } from './versions.mjs';
+import { isSnakePursuitLevel, isPursuitLevel, isRunningEnemyLevel } from './versions.mjs';
 import { validatePursuitGoals } from '../hunt/pursuit-goals.mjs';
 import {
   runningEnemyBaseLevel,
@@ -283,11 +283,7 @@ export function validateLevel(level) {
       validateSnakeDefinition(level.snake, base.classic.hunt);
       return { valid: true, errors: [] };
     }
-    if (
-      level &&
-      Object.hasOwn(level, 'snake') &&
-      version?.value !== SNAKE_PURSUIT_VERSIONS.levelVersion
-    )
+    if (level && Object.hasOwn(level, 'snake') && !isSnakePursuitLevel(level))
       return { valid: false, errors: ['Snake requires its explicit successor edition.'] };
     if (isRunningEnemyLevel(level)) {
       const owned = runningEnemyCopy(level);

@@ -1,0 +1,125 @@
+{
+  "sourceRevision": "8009089ed84a4067db112a24428f11f6304ee8fc",
+  "sourceTree": "4b3fcc8d303cf75843fb242b05e2e2aa978d394b",
+  "version": "v0.151.1",
+  "revision": "f383a7fa530df0ba04d851e23868f797ec6ac36a93a71717ff3ca71277330d34",
+  "cloudRun": 38667676428,
+  "githubArtifactId": 11943087422,
+  "topLevelChecksumsVerified": 15,
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "members": 94,
+      "bytes": 3739893,
+      "archiveSHA256": "17257a22f7b4be3fe736de0bbef1d5b423e5ff4990df573aa535388fbb92d4eb"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "members": 96,
+      "bytes": 3773447,
+      "archiveSHA256": "25302f3383363ca6bd15c2f70dc60c3eb9ad1ec8258a69dce81d918b75f77651"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "members": 101,
+      "bytes": 6751974,
+      "archiveSHA256": "88998839d3dfbf8db7e22f685ade0943a0b1c884e2e39d758721ba0945758b4f"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "members": 103,
+      "bytes": 6787038,
+      "archiveSHA256": "89829131243ba4a0f9257e352ec1c8e3cf95a9a259ae2c098708df27fdccce35"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "members": 157,
+      "bytes": 17383111,
+      "archiveSHA256": "e36333424e55d833ada95937a99f2e3d3e1a930971f31030585ffbe3f3ddba66"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "members": 159,
+      "bytes": 17426074,
+      "archiveSHA256": "f09e9a53fa7708f328f55034637b44fa3d4d82aa612632d132de12fde4cefd98"
+    }
+  ],
+  "scope": "Official gh artifact download, declared checksums and all finished archive members verified. Outer transport archive not retained; browser qualification pending.",
+  "imports": [
+    {
+      "id": "civilian-flight",
+      "modules": 68,
+      "imports": 96
+    },
+    {
+      "id": "civilian-fpv",
+      "modules": 81,
+      "imports": 152
+    },
+    {
+      "id": "fpv-worlds",
+      "modules": 129,
+      "imports": 323
+    }
+  ],
+  "native": {
+    "browser": "Codex in-app browser on macOS; engine version not independently recorded",
+    "viewport": [1280, 800],
+    "origin": "http://127.0.0.1:9057",
+    "packageBytesUnmodified": true,
+    "launcherPreparedOffline": true,
+    "regionalRevision": "railway-valley-study/structure-r1",
+    "firstFly": {
+      "ready": true,
+      "retryNeeded": false,
+      "armed": false,
+      "heightMetres": 16,
+      "commandsZero": true
+    },
+    "deliberateFlight": {
+      "paused": true,
+      "heightMetres": 16.3,
+      "verticalSpeedMetresPerSecond": 3,
+      "driftMetresPerSecond": 0.7,
+      "throttlePercent": 63
+    },
+    "originUnavailable": {
+      "ownedServerStopped": true,
+      "connectionRefusedConfirmed": true,
+      "cachedPlayerReloaded": true,
+      "savedRegionRetained": true,
+      "preparedDisarmed": true,
+      "deliberateFlightPaused": true,
+      "heightMetres": 16.5,
+      "verticalSpeedMetresPerSecond": 3.2,
+      "driftMetresPerSecond": 0.7,
+      "throttlePercent": 64,
+      "serverRestored": true
+    }
+  },
+  "screenshots": [
+    {
+      "file": "railway-8009089-package-flight.png",
+      "bytes": 57940,
+      "sha256": "9fa31c1a3751e113b934d6b756c6221375cf70eb74df9920e8b14a9705d0eb44"
+    },
+    {
+      "file": "railway-8009089-origin-unavailable-flight.png",
+      "bytes": 58802,
+      "sha256": "408335b1bdc7ddc81ad55194f8eb290c024f4a45443e856d8fabe8061aa4fb78"
+    }
+  ],
+  "limitations": [
+    "Not public deployed launch",
+    "Not all-network offline or browser-process restart",
+    "Not physical radio/controller acceptance",
+    "No device FPS, GPU/heap or real elapsed two-hour claim",
+    "Candidate predates live surface-quality1310, Urban r2 Library1316, Canyon Library1320 and RGBA1322; combined package qualification remains required"
+  ]
+}

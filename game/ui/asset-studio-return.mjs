@@ -1,3 +1,5 @@
+import { nativeArtReviewURL } from './art-review-navigation.mjs';
+
 // Navigation hints open a fixed presentation surface; they never adopt game data.
 const journey = (source, target) => {
   const values = source.searchParams.getAll('journey');
@@ -13,7 +15,7 @@ const journey = (source, target) => {
   const locales = source.searchParams.getAll('lang');
   if (locales.length === 1 && ['en', 'uk'].includes(locales[0]))
     target.searchParams.set('lang', locales[0]);
-  return target;
+  return new URL(nativeArtReviewURL(target.href, source.href));
 };
 
 export function assetStudioHref(gameHref) {

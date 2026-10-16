@@ -18,6 +18,7 @@ export function matchReplayInstalledRules({ campaign, replay, state }) {
       ? prepareRunningEnemyLevel(level, {
           classes: campaign.classRecipes,
           style: state.level.pursuit ? 'varied' : 'original',
+          generation: state.level.pursuit?.version ?? 'pursuit-goals.v1',
         })
       : level;
   if (!matched) throw new Error('Saved rules differ from the installed campaign.');

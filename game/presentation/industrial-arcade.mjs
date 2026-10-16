@@ -1,3 +1,4 @@
+import { resolveIndustrialEnvironment } from './industrial-environments.mjs';
 import { FIELD_KIT_COLORS, FIELD_KIT_SPRITE_IDS } from './pixel-art.mjs';
 import { TEAM_RUNTIME_IMAGE_SLOTS } from './team-runtime-slots.mjs';
 import {
@@ -6,8 +7,22 @@ import {
   INSTALLED_THEME_FAMILIES,
   resolveThemeFamilySelection,
 } from './theme-system.mjs';
-import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
-import { MILITARY_FIELD_ROLES, militaryFieldPixels } from './military-field-art.mjs';
+import {
+  INDUSTRIAL_BUILTIN_SPRITES,
+  hasCustomIndustrialMachineryGeometry,
+} from './industrial-arcade-builtins.mjs';
+import {
+  MILITARY_FIELD_ROLES,
+  militaryFieldPixels,
+  militaryVehicleRole,
+} from './military-field-art.mjs';
+import { INDUSTRIAL_MACHINERY_REVISION } from './industrial-machinery.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import {
+  industrialMaterialPixels,
+  INDUSTRIAL_MATERIAL_REVISION,
+  INDUSTRIAL_TERRAIN_MATERIALS,
+} from './industrial-materials.mjs';
 
 /** An appearance layer only. The original release remains the authority for
  * pictures, audio, provenance, geometry, and all saved presentation identities. */
@@ -46,6 +61,14 @@ export function getArcadeCollection(id, revision) {
     collections.find((entry) => entry.id === id && (!revision || entry.revision === revision)) ??
     null
   );
+}
+
+/** Resolve a palette only from this runtime's exact installed collection record.
+ * Portable id/revision pairs must first pass getArcadeCollection. */
+export function getArcadePalette(collection) {
+  if (!collections.includes(collection))
+    throw new TypeError('Unavailable Arcade collection authority.');
+  return paletteFor(collection);
 }
 
 export function selectedArcadeCollection(preferences) {
@@ -161,12 +184,25 @@ export function industrialTexturePixels(
   { width, height, rgba },
   slot,
   collection = INDUSTRIAL_ARCADE_COLLECTION,
+  { reviewRevision = null, environment = null } = {},
 ) {
+  const admitted = resolveIndustrialEnvironment(environment);
+  const binding = admitted?.arcade[slot];
+  if (
+    binding &&
+    collection.id === admitted.collection.id &&
+    collection.revision === admitted.collection.revision &&
+    reviewRevision === admitted.artRevision
+  )
+    return industrialMaterialPixels({ width, height }, binding.material, {
+      revision: admitted.materialRevision,
+      variant: binding.variant,
+    });
   // Enemy livery must never recolor the Ukrainian FPV player into the opposing kit.
   if (collection.id === 'military-field' && slot.startsWith('player.'))
     return { width, height, rgba: new Uint8ClampedArray(rgba) };
   if (collection.id === 'military-field') {
-    const military = militaryFieldPixels({ width, height }, slot);
+    const military = militaryFieldPixels({ width, height }, slot, { revision: reviewRevision });
     if (military) return military;
   }
   const colors = colorsFor(collection),
@@ -257,16 +293,40 @@ export function industrialTexturePixels(
 const defaultCanvas = () => globalThis.document?.createElement('canvas');
 /** Each adapter owns a bounded cache, retired with its painter. Original shared
  * ImageBitmaps are neither changed nor disposed. Failure preserves authored art. */
-export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
-  let snapshots = new WeakMap();
+export function createArcadeAdapter({
+  canvasFactory = defaultCanvas,
+  reviewRevision = runtimeActorArtRevision(),
+} = {}) {
+  if (reviewRevision === 'industrial-overhead-v2') reviewRevision = INDUSTRIAL_MATERIAL_REVISION;
+  let snapshots = new WeakMap(),
+    environment = null;
   const canvases = new Set();
   return {
+    setEnvironment(pin) {
+      const next = resolveIndustrialEnvironment(pin);
+      const previous = resolveIndustrialEnvironment(environment);
+      if (next?.id === previous?.id && next?.revision === previous?.revision) {
+        environment = pin ?? null;
+        return false;
+      }
+      this.clear();
+      environment = pin ?? null;
+      return true;
+    },
+    setReviewRevision(value) {
+      const next = value === 'industrial-overhead-v2' ? INDUSTRIAL_MATERIAL_REVISION : value;
+      if (next === reviewRevision) return false;
+      this.clear();
+      reviewRevision = next;
+      return true;
+    },
     resolve(base, collection) {
       if (!base || !collections.includes(collection)) return base;
       const variants = snapshots.get(base) ?? new Map();
       const key = `${collection.id}@${collection.revision}`;
       if (variants.has(key)) return variants.get(key);
-      const frames = new Map();
+      const frames = new Map(),
+        acceptedEnvironment = environment;
       const adapted = Object.freeze({
         ...base,
         appearance: collection,
@@ -282,7 +342,8 @@ export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
           if (
             !original ||
             asset?.id !== `${slot}.field-kit` ||
-            !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(asset?.file?.sha256)
+            !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(asset?.file?.sha256) ||
+            hasCustomIndustrialMachineryGeometry(asset, slot)
           )
             return original;
           let derived = original;
@@ -305,21 +366,36 @@ export function createArcadeAdapter({ canvasFactory = defaultCanvas } = {}) {
             ctx.drawImage(original.image, 0, 0);
             const data = ctx.getImageData(0, 0, width, height);
             data.data.set(
-              industrialTexturePixels({ width, height, rgba: data.data }, slot, collection).rgba,
+              industrialTexturePixels({ width, height, rgba: data.data }, slot, collection, {
+                reviewRevision,
+                environment: acceptedEnvironment,
+              }).rgba,
             );
             ctx.putImageData(data, 0, 0);
             canvases.add(canvas);
-            const vehicle = collection.id === 'military-field' && slot.startsWith('enemy.');
+            const vehicle =
+              collection.id === 'military-field' &&
+              (slot.startsWith('enemy.') ||
+                (reviewRevision === INDUSTRIAL_MACHINERY_REVISION && militaryVehicleRole(slot)));
             derived = Object.freeze({
               ...original,
               image: canvas,
+              ...(collection.id === 'military-field' &&
+              (reviewRevision === INDUSTRIAL_MATERIAL_REVISION ||
+                reviewRevision === INDUSTRIAL_MACHINERY_REVISION) &&
+              INDUSTRIAL_TERRAIN_MATERIALS[slot]
+                ? { materialReviewRevision: reviewRevision }
+                : {}),
               ...(vehicle
                 ? {
                     geometry: Object.freeze({
                       ...original.geometry,
                       rotors: Object.freeze([]),
                       material: 'military-vehicle',
-                      vehicleRole: MILITARY_FIELD_ROLES[slot],
+                      vehicleRole: militaryVehicleRole(slot) ?? MILITARY_FIELD_ROLES[slot],
+                      ...(reviewRevision === INDUSTRIAL_MACHINERY_REVISION
+                        ? { machineryRevision: reviewRevision }
+                        : {}),
                       occupiedBounds: Object.freeze({
                         x: 5 / 32,
                         y: 1 / 32,

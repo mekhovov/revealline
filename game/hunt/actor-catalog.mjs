@@ -2,7 +2,11 @@
  * accept a versioned policy before an actor can enter an attempt. */
 export const ACTOR_CATALOG_VERSION = 'humanoid-actors.v1';
 export const ACTOR_ART_REVISION = 'overhead-field-kit.v2';
-export const ACTOR_ART_BUDGET = Object.freeze({ decodedBytes: 32 * 1024 * 1024, sharedBoards: 2 });
+export const ACTOR_ART_BUDGET = Object.freeze({
+  decodedBytes: 64 * 1024 * 1024,
+  compactDecodedBytes: 32 * 1024 * 1024,
+  sharedBoards: 2,
+});
 const freeze = (value) => {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freeze(child);

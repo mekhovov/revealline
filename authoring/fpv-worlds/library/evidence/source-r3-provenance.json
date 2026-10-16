@@ -1,0 +1,58 @@
+{
+  "format": "FPVWorldLibraryBrowserEvidence.v1",
+  "candidate": "ef770faff3c1bde4dfcd95a99641863186d0efeb",
+  "passed": 195,
+  "failed": 0,
+  "archives": [
+    {
+      "file": "source-r3.json.gz",
+      "rawBytes": 54047,
+      "rawSHA256": "54773df4d9cc3cbbcb503902c30de34cb3a044ef5c906fcb63703a1928921ebb",
+      "gzipBytes": 9820,
+      "gzipSHA256": "129d6e2ca6dd886be3ad1aed0cabb906b352a2f62449c62ccf8405b21ef7d3b8"
+    },
+    {
+      "file": "source-r3-fixture.json.gz",
+      "rawBytes": 20297,
+      "rawSHA256": "b3fe711db4fcab85cc45dc4d0006e5eb7ba2e7a678d10a9374b592daf600aa18",
+      "gzipBytes": 6612,
+      "gzipSHA256": "cc7a2f36e9b2a8602cb2648f8921ad1d12115fb75aa09017a1eae48d7ccc08cf"
+    },
+    {
+      "file": "source-r3-harness.mjs.gz",
+      "rawBytes": 18110,
+      "rawSHA256": "9629b2246508b9d03f50d23b7b788f9b480e278039639b12c65ba7023ab9228e",
+      "gzipBytes": 5738,
+      "gzipSHA256": "9dfa0bf21f834aeecbfbb2309bcc4d6e9b916eed9285bdc3422ad9b726af8f35"
+    },
+    {
+      "file": "source-r3-host.html.gz",
+      "rawBytes": 38688,
+      "rawSHA256": "b8b562124fbb794c0d72098101d65ea0bf73942da5c20d8c0bc583e388ee0f4c",
+      "gzipBytes": 9914,
+      "gzipSHA256": "793a6f9bbf6fe99194b3174a7cf39e06a09fe948d681a4cb5ce418a3ce58ced4"
+    },
+    {
+      "file": "source-r3-index.html.gz",
+      "rawBytes": 1419,
+      "rawSHA256": "bd1d2c3e235be469bc3800ef9d1b3a609ed57a408db724c86caaa1059a806912",
+      "gzipBytes": 759,
+      "gzipSHA256": "5bcfb2943edbc62db6ea0c11951cfce541ecdd0ca232d8f83fde4cc95cdf1346"
+    }
+  ],
+  "screenshot": {
+    "bytes": 56484,
+    "sha256": "87714a7d6b9c283f06802ad8f84d7d50ce81e1ca61eb2f10737995fae755cc62"
+  },
+  "limits": [
+    "Actual native host/IndexedDB and unchanged production clock. Only named catalogue/network fault responses and isolated storage names are injected.",
+    "Successful pack download uses the actual immutable first-party HTTPS URL. The production catalogue remains empty.",
+    "Timeout callback is explicitly injected, not a claim of two-minute wall-clock endurance. No offline, finished-world, flight-completion or FPS claim."
+  ],
+  "subsequentAdmission": {
+    "result": "Rejected before artifact creation",
+    "message": "Optional practice network requests belong only to its generated verified worker",
+    "guardUnchanged": true
+  },
+  "supersededTransport": "This is pre-Worker transport evidence. It does not qualify the subsequent dedicated Worker implementation."
+}

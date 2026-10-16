@@ -1,3 +1,7 @@
+import {
+  CAPTURE_PRESENTATION_SESSION_FORMAT,
+  nativeCaptureSession,
+} from '../capture-presentation-session.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 import { captureOperationFocus } from './operation-focus.mjs';
@@ -526,7 +530,7 @@ export function attachLibraryPanel(api) {
         value7: usage.percent.toFixed(1),
       }),
     );
-    const saved = api.saved();
+    const saved = nativeCaptureSession(api.saved());
     localizedText($('suspended-status'), () =>
       saved
         ? t('gameplay:savedFlight', {
@@ -807,7 +811,7 @@ export function attachLibraryPanel(api) {
       status('save-status', t('interface:preparingTheVerifiedAttemptDownload'), 'busy');
       const exported = await downloadJSON(prepared.session, 'revealline-suspended-flight.json');
       if (!currentAttemptExport(operation)) return;
-      const session = prepared.session;
+      const session = nativeCaptureSession(prepared.session);
       status(
         'save-status',
         t('gameplay:attemptPrepared', {
@@ -853,7 +857,12 @@ export function attachLibraryPanel(api) {
   async function backupContents() {
     if (api.backupSnapshot) return api.backupSnapshot();
     const { library, packs } = api.get();
-    return { library, packs, session: api.currentSession() };
+    return {
+      library,
+      packs,
+      session: api.currentSession(),
+      ...(api.enemyStats ? { enemyStats: await api.enemyStats() } : {}),
+    };
   }
   function releaseTask(owner, restoreFocus = true) {
     if (libraryTask !== owner) return;
@@ -1071,7 +1080,7 @@ export function attachLibraryPanel(api) {
       )
         throw new Error(t('interface:thisBackupExceedsTheImportBudget'));
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
-      if (['xonix-backup.v1', 'xonix-backup.v2'].includes(parsed.format)) {
+      if (['xonix-backup.v1', 'xonix-backup.v2', 'xonix-backup.v3'].includes(parsed.format)) {
         const options = await backupOptions();
         operation.check();
         const prepared = await prepareBackup(parsed, { ...options, signal: operation.signal });
@@ -1101,6 +1110,7 @@ export function attachLibraryPanel(api) {
           'xonix-session.v4',
           'xonix-session.v5',
           'xonix-session.v6',
+          CAPTURE_PRESENTATION_SESSION_FORMAT,
         ].includes(parsed.format)
       ) {
         operation.commit(t('interface:restoringTheVerifiedSavedFlight'));
@@ -1151,9 +1161,11 @@ export function attachLibraryPanel(api) {
         const contents = await backupContents();
         old = await prepareBackup(
           {
-            format: Object.hasOwn(contents, 'externalChapters')
-              ? 'xonix-backup.v2'
-              : 'xonix-backup.v1',
+            format: Object.hasOwn(contents, 'enemyStats')
+              ? 'xonix-backup.v3'
+              : Object.hasOwn(contents, 'externalChapters')
+                ? 'xonix-backup.v2'
+                : 'xonix-backup.v1',
             ...contents,
           },
           options,

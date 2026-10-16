@@ -558,24 +558,37 @@ test('all collections cover every environment with protected course data and ext
   }
 });
 
-test('family surface recipes provide distinct luminance structure beyond a global tint', () => {
-  const signatures = new Set();
+test('every family has a distinct surface motif and a unique palette', () => {
+  const signatures = new Map(),
+    colored = new Set();
   for (const collectionId of Object.keys(SIM_VISUAL_COLLECTIONS)) {
     const texture = createWorkshopTexture('enamel', { collectionId });
     const values = texture.image.data,
       average = (at) => values[at] + values[at + 1] + values[at + 2];
-    const mean =
-      Array.from({ length: 128 * 128 }, (_, i) => average(i * 4)).reduce((a, b) => a + b, 0) /
-      (128 * 128);
-    signatures.add(
-      Array.from({ length: 128 * 128 }, (_, i) => (average(i * 4) > mean ? '1' : '0')).join(''),
-    );
+    const luminance = Array.from({ length: 128 * 128 }, (_, i) => average(i * 4)),
+      darkest = Math.min(...luminance),
+      brightest = Math.max(...luminance);
+    assert.ok(brightest > darkest, `${collectionId} has structural contrast`);
+    // A global binary mean erases the DOS inlay and military machining marks.
+    // Three normalized tones retain those details independently of base tint.
+    const signature = luminance
+      .map((value) => Math.round(((value - darkest) / (brightest - darkest)) * 2))
+      .join('');
+    const owners = signatures.get(signature) ?? [];
+    owners.push(collectionId);
+    signatures.set(signature, owners);
+    colored.add(Buffer.from(values).toString('base64'));
     assert.equal(texture.image.width, 128);
     texture.dispose();
   }
-  assert.equal(
-    signatures.size,
-    Object.keys(SIM_VISUAL_COLLECTIONS).length,
-    'all enamel recipes have a unique light/dark motif',
+  // Field equipment now has its own recessed panels and service slot.
+  // Every admitted family must remain structurally distinct in grayscale.
+  assert.deepEqual(
+    [...signatures.values()].filter((owners) => owners.length > 1).map((owners) => owners.sort()),
+    [],
   );
+  assert.equal(SIM_VISUAL_COLLECTIONS['military-field'].pattern, 'field');
+  assert.equal(SIM_VISUAL_COLLECTIONS['ember-foundry'].pattern, 'foundry');
+  assert.equal(signatures.size, Object.keys(SIM_VISUAL_COLLECTIONS).length);
+  assert.equal(colored.size, Object.keys(SIM_VISUAL_COLLECTIONS).length);
 });

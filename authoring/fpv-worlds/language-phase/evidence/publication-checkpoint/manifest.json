@@ -1,0 +1,40 @@
+{
+  "format": "FPVProtectedPublicationCheckpoint.v1",
+  "files": [
+    {
+      "path": "fpv-pr-1085-warm-input-bridge.json.gz",
+      "bytes": 37114,
+      "sha256": "7ffeaa0e1584877fd271d97ef327b3269e6513d4e6a0456c76ec57a84e4ec743",
+      "storedBytes": 9664,
+      "storedSha256": "9aeb55e30649b6e32a9d91a64700610532326f4a4f9bc39851a5fc4e4183cbaa"
+    },
+    {
+      "path": "fpv-pr-1085-ghost-input-bridge.json.gz",
+      "bytes": 37043,
+      "sha256": "f274a2bf72283abcb1b573bfb4eb5c917658244adf9935eafc48b5d632a3b508",
+      "storedBytes": 9571,
+      "storedSha256": "b4cf09fc801348494e0f7e4e7e7ad0de09fa27809497eec8c7eb610e344653bc"
+    },
+    {
+      "path": "fpv-pr-1086-warm-input-bridge.json.gz",
+      "bytes": 37112,
+      "sha256": "aee0902f14fc176dc410b75da3f24bc74638a412e28a362cda32477c9d641293",
+      "storedBytes": 9658,
+      "storedSha256": "29eff9baf891244e97922a6de12747dbb1deeea5e363914c2e00f4946d3e4bc2"
+    },
+    {
+      "path": "fpv-capacity-hold-audit.json.gz",
+      "bytes": 938,
+      "sha256": "3e16141adac1fd08dad9bbe1645d6d2af00e8952d0b073c9325a72fc6c834f46",
+      "storedBytes": 414,
+      "storedSha256": "95da9d6483ca2edf65d135e4d3b82ea62af4b9637a86358d910aae248a6f17f4"
+    },
+    {
+      "path": "fpv-public-warm-marker-20261004.json.gz",
+      "bytes": 956,
+      "sha256": "849aae1709a383169f2b8db966d6ce6699d410e435c2a366033c8da16165dee4",
+      "storedBytes": 403,
+      "storedSha256": "9dfd407227fef4a52c90b4523579aaa81f8b5afc13ec9da0f04832554c50627e"
+    }
+  ]
+}

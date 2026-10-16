@@ -96,6 +96,17 @@ export const FIELD_KIT_RETAINED_NATIVE_PREDECESSOR103 = Object.freeze({
   originalPath: 'game/presentation/compiled/runtime.json',
 });
 
+// The published 335-slot canonical104 is an exact byte authority, not an
+// inferred reconstruction from a newer ledger or a production-art approval.
+export const FIELD_KIT_RETAINED_CANONICAL104 = Object.freeze({
+  path: 'authoring/library/fpv-field-kit/retained/runtime.b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3.json',
+  sha256: 'b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3',
+  bytes: 1264907,
+  commit: 'c5e22bc860e9021d42ce326761d0f4decba3fc40',
+  blob: 'c27b56d8195b0675d2657dbdb7f284b7955571f2',
+  originalPath: 'game/presentation/compiled/runtime.json',
+});
+
 /** Construct explicit compiler history from immutable authoring input and the
  * ledger's hash-addressed originals. Never consult the current output directory. */
 async function readPinnedOutput({ read, assets }, pin, revision) {
@@ -147,7 +158,7 @@ async function readPinnedOutput({ read, assets }, pin, revision) {
   return files;
 }
 
-/** Preserve published38/50 imports, committed54, accepted58, retained60/62 and both101–103 lineages
+/** Preserve published38/50 imports, committed54, accepted58, retained60/62, both101–103 lineages and canonical104
  * by manifest identity, with their complete lazy
  * dependencies. New ledger revisions never authorize implicit output-directory IO. */
 export async function readFieldKitRetainedOutput(options) {
@@ -171,6 +182,7 @@ export async function readFieldKitRetainedOutput(options) {
     [FIELD_KIT_RETAINED_MAIN101, 101],
     [FIELD_KIT_RETAINED_RADIO_PREDECESSOR102, 102],
     [FIELD_KIT_RETAINED_NATIVE_PREDECESSOR103, 103],
+    [FIELD_KIT_RETAINED_CANONICAL104, 104],
   ])
     previous = await retainPresentationOutput(
       await readPinnedOutput(options, pin, revision),

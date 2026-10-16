@@ -27,6 +27,7 @@ import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { projectEditionGuideScenario } from '../editions/selected-presentation.mjs';
 import { createLessonScenario } from '../first-flight.mjs';
 import { readFile } from 'node:fs/promises';
+import { EDITION_LIMITS } from '../editions/model.mjs';
 
 const previewPath = '/preview/game/company.html';
 const baseURL = 'http://localhost/authoring/company-studio/';
@@ -84,6 +85,35 @@ async function neutral({ appearanceCandidate } = {}) {
   };
   return { source, result, report, input };
 }
+
+test('preview admits the registered runtime ledger and rejects invalid or duplicate unselected assets', async () => {
+  const { input } = await neutral();
+  const runtimeAssets = JSON.parse(
+    await readFile(new URL('../editions/runtime-assets.json', import.meta.url)),
+  );
+  assert.ok(runtimeAssets.length > 128 && runtimeAssets.length <= EDITION_LIMITS.assets);
+  await verifyStudioPreview({ ...input, runtimeAssets });
+  for (const invalid of [null, Array(EDITION_LIMITS.assets + 1).fill(runtimeAssets[0])])
+    await assert.rejects(
+      verifyStudioPreview({ ...input, runtimeAssets: invalid }),
+      /Invalid trusted engine asset ledger/,
+    );
+  for (const duplicate of [
+    { ...runtimeAssets[0], path: 'game/otherwise-unused.png' },
+    { ...runtimeAssets[0], id: 'otherwise-unused' },
+  ])
+    await assert.rejects(
+      verifyStudioPreview({ ...input, runtimeAssets: [...runtimeAssets, duplicate] }),
+      /Duplicate trusted engine asset identity or path/,
+    );
+  await assert.rejects(
+    verifyStudioPreview({
+      ...input,
+      runtimeAssets: [...runtimeAssets, { ...runtimeAssets[0], path: '../outside.png' }],
+    }),
+    /Invalid asset identity or path/,
+  );
+});
 
 test('whole-game preview verifies the report, every artifact byte and exact selected draft', async () => {
   const f = await neutral(),

@@ -132,7 +132,10 @@ for (const edition of catalog.editions) {
     // Check the returned artifact, including manifests and workers generated
     // after the offline builder checks its cache inventory's own limits.
     assert.ok(compiled.files.size <= limits.files, 'Final edition exceeds 2000 files');
-    assert.ok(outputBytes <= limits.bytes, `Final edition exceeds ${COMPANY_PACKAGE_BUDGET.maxBytes / 1024 / 1024} MiB`);
+    assert.ok(
+      outputBytes <= limits.bytes,
+      `Final edition exceeds ${COMPANY_PACKAGE_BUDGET.maxBytes / 1024 / 1024} MiB`,
+    );
     editions.push({
       edition: edition.id,
       passed: true,

@@ -1,0 +1,146 @@
+{
+  "observedUTC": "2026-10-15T18:58:50.706486+00:00",
+  "origin": "http://127.0.0.1:9181",
+  "observerSource": "311f66b7",
+  "productionSource": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+  "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+  "scope": "Normal UI installs/import/backup and player tab close/reopen, followed by read-only per-database byte fingerprints. No raw stored content exported by observer.",
+  "observations": {
+    "normalWorldPack": "Roadworks Practice Park, 63 KiB catalogue download; 1 installed challenge; 97fe29db8316 displayed identity",
+    "normalRecordingImport": {
+      "title": "Meet your drone",
+      "source": "Actual unchanged published da5 WORLD_DEMONSTRATIONS[94], beginner-01 self-level, demonstration session",
+      "frames": 360,
+      "archiveBytes": 8207,
+      "archiveSHA256": "ebe8be3a8f9535632d09f124053dd91999ae0e02e0bfc92eddec1f320bdda898",
+      "UIStatus": "Example · Previously verified · Required content available · complete · 360 ticks",
+      "recordsNavigation": "Settings → Progress & Collection → Recorded flights & recovery",
+      "normalBackupSucceeded": true,
+      "UIStatusRetainedAfterPlayerReopen": true
+    },
+    "regionalAndSavedPlaceStoresUnchangedFromEarlierA": true,
+    "allFourDatabaseChannelsNonempty": true,
+    "sessionStorePopulated": false,
+    "databaseCounts": [
+      {
+        "name": "revealline-fpv-regions-v1",
+        "stores": [
+          {
+            "name": "assets",
+            "count": 39
+          },
+          {
+            "name": "meta",
+            "count": 1
+          },
+          {
+            "name": "projects",
+            "count": 1
+          },
+          {
+            "name": "revisions",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "name": "revealline-fpv-regional-locations-v1",
+        "stores": [
+          {
+            "name": "state",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "revealline-fpv-worlds-v1",
+        "stores": [
+          {
+            "name": "assets",
+            "count": 1
+          },
+          {
+            "name": "meta",
+            "count": 1
+          },
+          {
+            "name": "projects",
+            "count": 1
+          },
+          {
+            "name": "revisions",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "revealline.fpv.world-records.v1",
+        "stores": [
+          {
+            "name": "records",
+            "count": 1
+          },
+          {
+            "name": "session",
+            "count": 0
+          }
+        ]
+      }
+    ],
+    "beforeAfterContentSHA256": "fb0379425c55165b04c0456fbcf86dbd12993d25cb68abacffaa9591303d63e1",
+    "exactMatchAfterNormalPlayerReopen": true,
+    "differences": [],
+    "allTabsClosed": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-nonempty-baseline-c-20261015.json",
+      "bytes": 13373,
+      "sha256": "0d27c6da109dadebcdd9fee5503cb93838ee717d496bf7409e925c9fcea1cbe3"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-nonempty-reopened-d-20261015.json",
+      "bytes": 13373,
+      "sha256": "23a29a43f5aede8f772d1b172af01aff5dac5f68fbcecd242252e98bf198fa52"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-nonempty-comparison-native-20261015.json",
+      "bytes": 14544,
+      "sha256": "2e4cd92cfdcb8575d6cec4c8dc54847562cbf27781de362b8ea62076f158a8d5"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-genuine-import-native-20261015.txt",
+      "bytes": 16568,
+      "sha256": "158fc0d34a493d6ef5ca89bac3b337b2c0cdbe63b9acb2f0e08e05d63382837f"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-genuine-import-native-20261015.png",
+      "bytes": 63721,
+      "sha256": "40eacecfdf0c8cf6539cfe79d04f734ba20e9b7ede9725d7e9bbcb199ab2683b"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-genuine-reopen-native-20261015.txt",
+      "bytes": 16521,
+      "sha256": "b34e21a8d322d750a99360929a60497eccdc9a9998d6e16ef2201e032e8b3192"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-normal-record-backup-20261015.json",
+      "bytes": 8191,
+      "sha256": "c5605b0b2aa54a6faab6e7ea385e8711bc88e7a734eeb76631ae08aa5d48339d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/storage-continuity-genuine-demo-da5-20261015/meet-your-drone-published-demo.part-1-of-1.json",
+      "bytes": 8207,
+      "sha256": "ebe8be3a8f9535632d09f124053dd91999ae0e02e0bfc92eddec1f320bdda898"
+    }
+  ],
+  "acceptedBoundary": "Nonempty regional assets/revisions, saved place, installed World pack and verified published example survive normal player close/reopen byte-exactly.",
+  "remaining": [
+    "real interrupted live session preservation (session store empty)",
+    "full application/browser restart",
+    "network-wide offline and retained flight",
+    "actual quota/eviction recovery",
+    "physical-device/radio/controller acceptance",
+    "broader D6 and all-plan release qualification"
+  ]
+}

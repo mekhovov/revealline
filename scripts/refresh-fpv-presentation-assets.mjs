@@ -70,9 +70,19 @@ for (const [name, file, position] of [
   const body = `${marker}\n${(await readFile(path.join(root, file), 'utf8')).trim()}\n${finish}`;
   const from = cssUpdated.indexOf(marker),
     to = cssUpdated.indexOf(finish);
-  if (from >= 0 && to >= from)
-    cssUpdated = cssUpdated.slice(0, from) + body + cssUpdated.slice(to + finish.length);
-  else
+  if (from >= 0 && to >= from) {
+    if (position === 'end') {
+      // Shared layout must sit outside the host's legacy layer. Otherwise its
+      // mobile geometry loses to theme paint and broad simulator selectors.
+      cssUpdated =
+        (cssUpdated.slice(0, from) + cssUpdated.slice(to + finish.length))
+          .replace(/[ \t]+$/gm, '')
+          .trimEnd() +
+        '\n\n' +
+        body +
+        '\n';
+    } else cssUpdated = cssUpdated.slice(0, from) + body + cssUpdated.slice(to + finish.length);
+  } else
     cssUpdated =
       position === 'start' ? body + '\n' + cssUpdated : cssUpdated.trimEnd() + '\n' + body + '\n';
 }

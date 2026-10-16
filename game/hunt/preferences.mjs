@@ -1,4 +1,5 @@
 import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { actorArtReviewRevision } from '../ui/art-review-navigation.mjs';
 
 export const ENCOUNTER_VARIANTS = Object.freeze([
   'authored',
@@ -10,12 +11,14 @@ export const ENCOUNTER_VARIANTS = Object.freeze([
 ]);
 export const ENCOUNTER_VARIANT_KEY = 'revealline.encounter-variant.v1';
 export const DESTRUCTION_PREFERENCES_KEY = 'revealline.destruction.v1';
+export const ENEMY_ARTWORK_PREFERENCES_KEY = 'revealline.enemy-art.v1';
 
 function storedChoice({
   key,
   format,
   defaults,
   valid,
+  normalize = (value) => value,
   window: target = globalThis,
   getStorage = () => globalThis.localStorage,
   writable = () => true,
@@ -27,7 +30,7 @@ function storedChoice({
   const listeners = new Set();
   const parse = (raw) => {
     if (raw === null) return { ...defaults };
-    const value = boundedJSON(raw, { maxBytes: 512, maxNodes: 12, maxDepth: 2 });
+    const value = normalize(boundedJSON(raw, { maxBytes: 512, maxNodes: 12, maxDepth: 2 }));
     exactKeys(value, ['format', ...Object.keys(defaults)], format);
     if (value.format !== format || !valid(value))
       throw new TypeError('Unsupported preference record.');
@@ -156,8 +159,14 @@ export const createDestructionPreferences = (options = {}) =>
     ...options,
     key: DESTRUCTION_PREFERENCES_KEY,
     format: 'DestructionPreferencesV1',
-    defaults: { brutal: false, blood: true },
-    valid: (value) => typeof value.brutal === 'boolean' && typeof value.blood === 'boolean',
+    // Retain the shared V1 boolean: true = reactions, false = classic sounds.
+    // Missing legacy values choose reactions without changing the visual settings.
+    defaults: { brutal: false, blood: true, vocals: true },
+    normalize: (value) => ({ vocals: true, ...value }),
+    valid: (value) =>
+      typeof value.brutal === 'boolean' &&
+      typeof value.blood === 'boolean' &&
+      typeof value.vocals === 'boolean',
   });
 
 /** Cosmetic cast choice is shared by Capture, Snake, Studio and flight hosts.
@@ -173,3 +182,28 @@ export const createActorAppearancePreferences = (options = {}) =>
 
 let actorAppearance;
 export const sharedActorAppearance = () => (actorAppearance ??= createActorAppearancePreferences());
+
+/** Enemy artwork is independent of cast, encounter population and destruction. */
+export const createEnemyArtworkPreferences = (options = {}) =>
+  storedChoice({
+    ...options,
+    key: ENEMY_ARTWORK_PREFERENCES_KEY,
+    format: 'EnemyArtworkPreferencesV1',
+    defaults: { style: 'authored' },
+    valid: (value) => ['authored', 'military'].includes(value.style),
+  });
+
+let enemyArtwork;
+export const sharedEnemyArtwork = () => (enemyArtwork ??= createEnemyArtworkPreferences());
+
+export function runtimeActorArtRevision(
+  location = globalThis.location,
+  choice = sharedEnemyArtwork().snapshot(),
+) {
+  return (
+    actorArtReviewRevision(location) ??
+    (choice?.style === 'military' ? 'industrial-roster-v3' : null)
+  );
+}
+
+export { actorArtReviewRevision };

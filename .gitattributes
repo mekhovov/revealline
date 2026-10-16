@@ -22,3 +22,8 @@ docs/verification/actor-batch-7/initial-tuning-regressions.tap -whitespace
 docs/verification/actor-batch-7/pressure-details-baseline-controller-fail.tap -whitespace
 docs/verification/actor-batch-7/pressure-details-current-controller-fail.tap -whitespace
 docs/verification/actor-batch-7/lint.txt -whitespace
+
+# Exact upstream license evidence and generated Overflight qualification output.
+authoring/audio/human-reactions-v1/source-page.html linguist-vendored=true -whitespace
+qualification/overflight-variety-20261005/*.tap linguist-generated=true -whitespace
+qualification/overflight-variety-20261005/route-matrix.json linguist-generated=true

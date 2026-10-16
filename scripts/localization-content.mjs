@@ -227,6 +227,16 @@ async function currentJourneySources(root) {
     createPursuitCampaignCandidates({ team: true }),
     'team',
   );
+  const { createMultiplayerExpansionCandidates } = await moduleAt(
+    'content-design/multiplayer-expansion.mjs',
+  );
+  for (const mode of ['team', 'versus']) {
+    registerExecution(
+      `game/content-design/multiplayer-expansion.mjs#${mode}`,
+      createMultiplayerExpansionCandidates({ mode }),
+      mode,
+    );
+  }
   return sources;
 }
 export async function contentSources(root) {
@@ -360,7 +370,9 @@ export async function extractContent(root, register) {
           'budgetLabel',
         ].includes(key);
       const snakePresentation =
-        (source.includes('snake-hunt') || source.includes('pursuit-')) &&
+        (source.includes('snake-hunt') ||
+          source.includes('pursuit-') ||
+          source.includes('multiplayer-expansion')) &&
         ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment'].includes(key);
       if (
         (CONTENT_FIELDS.has(key) || motionPresentation || snakePresentation) &&

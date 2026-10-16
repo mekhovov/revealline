@@ -9,8 +9,9 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { duplicateStudioSnapshot } from '../presentation/studio-session.mjs';
 import { createThemeCandidate } from '../presentation/theme-preview.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 
-async function fixture(t, options = {}) {
+async function fixture(t, options = {}, controlsOptions = {}) {
   const document = new Document(),
     window = new Events(),
     storage = memoryStorage(),
@@ -24,7 +25,12 @@ async function fixture(t, options = {}) {
       ...options,
     });
   await host.ready;
-  const controls = attachThemeFamilyControls({ document, root: document.body, host });
+  const controls = attachThemeFamilyControls({
+    document,
+    root: document.body,
+    host,
+    ...controlsOptions,
+  });
   t.after(() => {
     controls.dispose();
     host.dispose();
@@ -172,4 +178,36 @@ test('disposing a picker releases scoped presentation and detaches selection han
     undefined,
     'Detached scopes are not repainted by host updates.',
   );
+});
+
+test('shared appearance owns one injected enemy selector and disposes its subscription', async (t) => {
+  let mounts = 0;
+  let disposals = 0;
+  const { document, controls } = await fixture(
+    t,
+    {},
+    {
+      mountEnemyAppearance(options) {
+        mounts++;
+        const control = mountEnemyAppearanceControls(options);
+        return {
+          ...control,
+          dispose() {
+            disposals++;
+            control.dispose();
+          },
+        };
+      },
+    },
+  );
+  assert.equal(mounts, 1);
+  assert.equal(document.querySelectorAll('[data-enemy-appearance]').length, 1);
+  assert.ok(
+    document
+      .querySelector('[data-theme-controls]')
+      .contains(document.querySelector('[data-enemy-appearance]')),
+  );
+  controls.dispose();
+  assert.equal(disposals, 1);
+  assert.equal(document.querySelectorAll('[data-enemy-appearance]').length, 0);
 });

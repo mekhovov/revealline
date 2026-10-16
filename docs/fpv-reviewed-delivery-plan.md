@@ -1,5 +1,9 @@
 # FPV implementation continuation — approved 1 October 2026
 
+> Current execution order and researched parallel acceptance gates: [4 October continuation](fpv-parallel-delivery-2026-10-04.md). Earlier checkpoints below are historical where superseded.
+
+Current status and next priorities: [4 October delivery review](fpv-delivery-review-2026-10-04.md).
+
 This plan supersedes the original remaining-work estimate in
 `fpv-worlds-implementation.md`. Keep the completed native UI, radio calibration,
 fullscreen and existing simulation/content contracts. Direction: grounded
@@ -51,30 +55,75 @@ Quality presets must preserve collision, relevant sight lines and objective acto
 Measure frame times, loading and resource disposal before claiming performance.
 No multiplayer, online publishing or universal commercial-map conversion is added.
 
-### Orchard surface checkpoint — 4 October 2026
+### D4 starter-project checkpoint — 4 October 2026
 
-Campus #1018 is merged and public render/arm/pause was verified at96ef08777.
-Graphics recovery #1019 is merged at`a46aded0b56c612fbbfb1736cfb27ee0746c2b1f`
-and [normal public Clearing check-in render/arm/pause](evidence/fpv-renderer-public-launch-a46aded0b.json)
-is verified; context-loss recovery retains its separate local evidence.
+The first D4 increment supplies [ten editable industrial/natural starter projects](../authoring/fpv-worlds/starters/README.md):
+sweeper, hairpin, chicane, climb and split level, with one course per project,
+independent Self-level/Acro routes, EN/UK guidance and bounded nominal clearance.
+Twenty ordinary-control flights and independent replays complete in 55,804 ticks
+with zero hard contacts. The unchanged 102-member admitted player passes 237
+browser checks covering all ten ZIP identities, two numeric editor workflows,
+four original replays, a trusted spatial drag, Undo/Redo, export/reimport and
+native IndexedDB reopening. See the [exact receipts and limits](../authoring/fpv-worlds/starters/evidence/README.md).
 
-Orchard now has an accepted bounded authored-tree material increment. It replaces
-six existing maps with broken upright bark plates and broad opaque leaf groups;
-all closed tree geometry, UVs, routes, actors, collision and GPU owners remain
-unchanged. CPU378/89, ten original recordings/39,525ticks, source/package96checks/
-43pairs each, all three reproducible admissions and the full102-file admitted
-player render/arm/pause pass. [Qualification](fpv-orchard-tree-surfaces.md) retains
-the rejected first visual pass and exact candidate identities. Current original
-inputs leave11,488bytes below16MiB before independent Railworks/Solar integration.
-Protected CI, merge and public Orchard availability remain separate.
+This authoring-only increment adds zero runtime source bytes and no catalogue
+entries; counts remain 196 challenges / 14 worlds and package limits stay exact.
+Complete D4 next with explicit spatial route-mode selection across edits,
+ordering, history and source overrides. Separate actual localhost offline
+qualification passes cached reload, keyboard editing, Undo/Redo, installation,
+reopening and original/edited revision restoration with the serving origin down.
+Device-wide offline, browser restart and storage-eviction qualification remain open.
+Edited copies do not inherit the original routes' flight/clearance evidence.
+D5's four new worlds and D6's additional unit coverage remain subsequent work;
+physical-device, unfamiliar-player and sustained-performance acceptance stay open.
 
-Railworks #1020 continues independently; Solar is a separate art increment.
-Continue the approved D3 optional Adventure examples after publishing this focused
-Orchard item, without mixing unfinished conversion work into its PR. The earlier
-world-surface increments do not certify every world as fully realistic. Broader
-art/device acceptance and the unexplained historical long stalls remain recorded
-without blocking the approved sequence. D4 creator work, D5 four new worlds and
-D6 additional unit coverage retain their order and scope.
+### Optional Adventure examples checkpoint — 4 October 2026
+
+The D3 data-only Adventure increment converts all 60 retained authoring proofs
+into an optional Library-import JSON: both modes for each of 30 challenges,
+with the original 178 bundled examples and all core download inputs unchanged.
+The converter passes 992 checks and 120 exact original/transport replays; the
+actual admitted host passes 395 checks covering all 60 imports/lookups and
+persistence plus 12 complete rendered replays across both modes and six worlds.
+All original zero-contact and six reduced-health duel outcomes are retained.
+See [evidence and limits](fpv-adventure-optional-examples.md). Public availability
+requires protected merge and a working download link; it is not implied by local
+qualification. Historical failed fixture runs remain visible.
+
+The observed explicit World-host disposal ordering defect is the next narrow
+independent fix: shell teardown removes the menu hint target before menu
+navigation cleanup. It is not fixed by the data change. Then continue the
+separate 28 alternate School examples, audit one evidence-based optional lesson
+recommendation, and improve optional-example discoverability in Library without
+automatic download or core precaching. Existing section-watch, longest-section
+practice, live height/speed/tilt hints and touch/controller flows remain delivered
+features to preserve, not duplicate. Broader D3 work and D4–D6 remain open.
+
+### Optional alternate School checkpoint — 4 October 2026
+
+The 28 remaining eligible alternate School examples are qualified as explicit
+optional imports: original Self-level lessons 01–12 in Acro, and non-skill
+intermediate/advanced lessons 27–42 in Self-level. The 14 foundation alternates
+already exist; the 16 Acro-skill lessons retain only unscored Self-level practice.
+All 28 new recordings complete, independently replay, and import/replay again
+with zero contacts and full health. The actual retained admitted player passes
+393 checks and 30 playbacks, including two recorded sections, with unchanged
+progress and no errors. The 178 built-in recordings and all production code stay
+unchanged. See [School archive qualification](fpv-school-alternate-examples.md).
+
+Orchard #1021 is merged and has an actual public Authored/Touch render, arm and
+pause observation at descendant main `a087facd9`, with no warning/error logs.
+Solar #1022 was superseded by replacement #1025; its integration review and
+protected CI/deployment remain separate. These are bounded surface improvements,
+not complete-world artistic or hardware acceptance.
+
+Continue D3 with the independent optional Adventure examples, lifecycle repair
+and one evidence-based gate-section lesson recommendation with deliberate return
+to the prior challenge. Preserve timing provenance, exact dependencies, selected
+controls and playlist bookmarks. Broader art/performance and coaching remain
+open; D4 creator, D5 four worlds, and deferred D6 unit coverage follow. Counts stay
+**196 challenges / 14 worlds / 58 School lessons / 374 School steps**; D5 targets
+**228 challenges / 18 worlds**.
 
 ### Campus facade checkpoint — 4 October 2026
 
@@ -755,3 +804,54 @@ Content remains **196 challenges / 14 worlds**. Continue the approved D3 example
 and coaching work, D4 creator, D5's **228 challenges / 18 worlds** target and D6
 unit coverage, while retaining broader art, named-device performance and physical
 control acceptance as separate unfinished goals.
+
+### Measured coaching and creator checkpoint — 4 October 2026
+
+The catalogue remains **196 challenges / 14 worlds / 58 School lessons**, with
+**178 bundled demonstrations**. The bounded Orchard and Solar increments are
+verified live; Solar's public marker and actual authored launch identify merged
+`72d6661b`. These passes do not close broader world-art or hardware acceptance.
+Optional Adventure **#1027** (60 examples) and alternate School **#1031** (28)
+are merged after actual import, persistence and playback qualification.
+
+The next D3 increment offers one existing gate-sequence lesson from verified
+section timing and preserves the exact original route, controls and playlist
+bookmark on return. Its source browser passes 194 checks; the final local
+candidate includes the reviewed explicit-disposal **#1040** repair, passes
+all-three package admission with two identical builds, and passes 208 packaged
+browser checks including owned-control disposal. The rendered recommendation is
+accepted. Disposal #1040 merged at `5931ef126`; normal coaching integration
+preserves all 95 admitted inputs exactly and is ready for protected publication.
+The separate source-capacity **#1047** repair preserves the existing cap and recordings.
+See [coaching qualification](fpv-gate-section-coaching.md) for exact provenance.
+
+D4's ten independent editable starter projects have twenty replay proofs and
+237 actual-editor checks covering numeric/spatial edits, Undo/Redo, retained
+revisions and native IndexedDB reopening. Starter **#1050** is published, and its
+separate offline exercise passed. Carry explicit Acro/Self-level route selection through future
+editor work; do not claim the present Self-level spatial editor already does so.
+Reuse the existing continuous-practice, touch and controller contracts during D3
+integration. Continue D4 creator work, D5's **228 challenges / 18 worlds** target,
+then D6's deferred unit/regression work. Physical controls, sustained device
+timings and novice feedback remain honestly unqualified.
+
+### Mountain Reservoir qualification — 4 October 2026
+
+Measured coaching, explicit route-mode editing, multi-course selection and exact
+imported-example lookup are now merged. The first D5 optional world, Mountain
+Reservoir r8, has eight distinct bilingual land-side routes and sixteen new
+ordinary-control demonstrations, all freshly qualified against its final shared
+world. It passes 575 CPU checks and 304 actual admitted-player/editor checks,
+including every Watch replay. A separate stopped-server native reload retained
+the world, flew Dry spillway descent and edited course 08 in Acro with Undo/Redo.
+Offline install/rollback was not part of that bounded run; earlier framework
+evidence remains separate. See the [world and exact evidence](../authoring/fpv-worlds/mountain-reservoir/README.md).
+
+This is **one of four D5 worlds** locally qualified, with protected publication
+and public entry tracked separately. The bundled catalogue stays **196 / 14**;
+installing this optional world produces **204 authored challenges / 15 installed
+worlds**. Festival Grounds is next, followed by Harbor Docks and Old Town Canals,
+toward **228 / 18**. Generic imported-card activity/difficulty/duration metadata
+is an existing host follow-up. Continue current-player performance, Library
+discovery and integration work in parallel; broader artistic acceptance,
+physical controls, named-device timings and deferred D6 unit coverage remain open.

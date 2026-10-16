@@ -18,13 +18,18 @@ export function createWorldHuntReactionSession({ reactions }) {
           .filter((step) => step.type === HUNT_CONTACT_CRITERION)
           .flatMap((step) => step.targets),
       );
+      for (const policy of course?.pursuit?.actors ?? []) targets.add(policy.id);
       actors = new Map(
         (course?.actors ?? [])
           .filter((actor) => targets.has(actor.id))
-          .map((actor) => [actor.id, actor.speed > 0 ? 'patroller' : 'lookout']),
+          .map((actor) => [
+            actor.id,
+            course?.pursuit?.actors.find((policy) => policy.id === actor.id)?.family ??
+              (actor.speed > 0 ? 'patroller' : 'lookout'),
+          ]),
       );
       families = [...new Set(actors.values())];
-      seen = new Set(state?.hunt?.caught ?? []);
+      seen = new Set([...(state?.hunt?.caught ?? []), ...(state?.pursuit?.bonusCaught ?? [])]);
       lastTick = state?.ticks ?? -1;
       health = state?.health ?? null;
       playback = replay;
@@ -70,7 +75,9 @@ export function createWorldHuntReactionSession({ reactions }) {
           type: 'actor.caught',
           id: event.actor,
           tick: state.ticks,
-          actorFamily: actors.get(event.actor),
+          actorFamily:
+            state.actors?.find((actor) => actor.id === event.actor)?.pursuit?.family ??
+            actors.get(event.actor),
         });
       }
       if (events.length || danger)

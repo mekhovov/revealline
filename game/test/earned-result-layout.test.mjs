@@ -23,6 +23,7 @@ function fixture() {
     'next-button',
     'view-picture',
     'retry-button',
+    'result-mission-actions',
     'journey-save-options',
     'flight-preparation-cancel',
     'overlay-menu',
@@ -40,6 +41,13 @@ function fixture() {
   note.id = 'overlay-footnote';
   note.textContent = 'Optional advice.';
   unit.append(note);
+  const secondaryReading = ['journey-best', 'overlay-difficulty'].map((id) => {
+    const paragraph = document.createElement('p');
+    paragraph.id = id;
+    paragraph.textContent = id;
+    reading.append(paragraph);
+    return paragraph;
+  });
   const save = document.createElement('p');
   save.className = 'completion-reward-save-note';
   save.textContent = 'Keep a backup.';
@@ -47,7 +55,20 @@ function fixture() {
   const originals = [...actions.children],
     layout = createEarnedResultLayout({ document, reading, result }),
     run = { status: 'won' };
-  return { document, unit, reading, result, actions, buttons, note, save, originals, layout, run };
+  return {
+    document,
+    unit,
+    reading,
+    result,
+    actions,
+    buttons,
+    note,
+    secondaryReading,
+    save,
+    originals,
+    layout,
+    run,
+  };
 }
 
 test('earned layout preserves immediate actions and restores every existing node and handler on leaving results', () => {
@@ -60,24 +81,27 @@ test('earned layout preserves immediate actions and restores every existing node
   for (const id of [
     'next-button',
     'retry-button',
-    'view-picture',
     'journey-save-options',
     'flight-preparation-cancel',
   ]) {
     assert.equal(f.buttons[id].parentElement, f.actions);
     f.buttons[id].click();
   }
-  assert.equal(f.buttons['overlay-menu'].closest('details'), more);
+  assert.equal(f.buttons['overlay-menu'].parentElement, f.actions);
+  assert.equal(f.buttons['view-picture'].closest('details'), more);
+  assert.equal(f.buttons['result-mission-actions'].closest('details'), more);
   assert.equal(f.note.closest('details'), more);
+  for (const paragraph of f.secondaryReading) assert.equal(paragraph.closest('details'), more);
   assert.equal(f.save.closest('details'), more);
   more.open = true;
+  f.buttons['view-picture'].click();
   f.buttons['overlay-menu'].click();
   assert.deepEqual(calls, [
     'next-button',
     'retry-button',
-    'view-picture',
     'journey-save-options',
     'flight-preparation-cancel',
+    'view-picture',
     'overlay-menu',
   ]);
   f.layout.sync(false, null);
@@ -88,6 +112,7 @@ test('earned layout preserves immediate actions and restores every existing node
     f.originals,
   );
   assert.equal(f.note.parentElement, f.unit);
+  for (const paragraph of f.secondaryReading) assert.equal(paragraph.parentElement, f.reading);
   assert.equal(f.save.parentElement, f.result);
   f.layout.dispose();
   assert.equal(f.document.querySelector('[data-earned-result-anchor]'), null);

@@ -22,7 +22,7 @@ import { encodeSpritePNG, inspectSprite } from './produce-field-kit-sprites.mjs'
 import { compilePresentation } from './compile-presentation.mjs';
 import { writePresentation, retainedPresentationPath } from './write-presentation.mjs';
 import { readFieldKitRetainedOutput } from './field-kit-retained-runtime.mjs';
-import { retainFieldKitProductionHistory } from './team-production-history.mjs';
+import { retainPictureProductionHistory } from './picture-production-history.mjs';
 import { importThemeBundle, exportThemeBundle } from '../game/presentation/bundle.mjs';
 
 import {
@@ -488,8 +488,10 @@ export async function fieldKitRecipeSources(read) {
   );
 }
 
-export async function createFieldKitProduction({ projectRoot = root } = {}) {
-  const read = async (relative) => fs.readFile(path.join(projectRoot, relative));
+export async function createFieldKitProduction({
+  projectRoot = root,
+  read = async (relative) => fs.readFile(path.join(projectRoot, relative)),
+} = {}) {
   const json = async (relative) => JSON.parse(await read(relative));
   if (
     !verifyFieldKitNativeMenuContinuationReview(
@@ -1058,7 +1060,10 @@ async function generate(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  production.document = retainFieldKitProductionHistory(production.document, history?.document);
+  // The current candidate introduces the pinned 54-picture successor. Keep the
+  // older Team-only writer strict and route this one explicit contract through
+  // its dedicated history validator.
+  production.document = retainPictureProductionHistory(production.document, history?.document);
   production.assets = new Map([...(history?.assets ?? []), ...production.assets]);
   production.coverage = presentationCoverage(production.document);
   const historyBytes = Buffer.from(
@@ -1098,8 +1103,17 @@ async function generate(args) {
   );
 }
 async function main(args) {
+  if (args.length === 2 && ['--candidate', '--check-candidate'].includes(args[0])) {
+    const { runFieldKitCandidate } = await import('./field-kit-production-candidate.mjs');
+    return runFieldKitCandidate({
+      destination: args[1],
+      check: args[0] === '--check-candidate',
+    });
+  }
   if (args.length !== 1 || !['--write', '--check'].includes(args[0]))
-    throw new Error('Use --write to adopt production assets or --check for reproducibility.');
+    throw new Error(
+      'Use --candidate NEW_DIRECTORY or --check-candidate DIRECTORY for isolated review; --write/--check target published production.',
+    );
   if (args[0] === '--check') return generate(args);
   const lockPath = path.join(root, 'authoring/library/fpv-field-kit/production.rltheme.lock');
   let lock;

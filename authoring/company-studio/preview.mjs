@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, required } from '../../game/data-json.mjs';
 import {
+  EDITION_LIMITS,
   editionRelativePath,
   validateEditionRuntimeCatalog,
   validateEditionAsset,
@@ -33,6 +34,18 @@ export async function verifyStudioPreview({
   signal,
   onProgress = () => {},
 }) {
+  // The runtime ledger shares the edition catalogue's reviewed metadata bound.
+  // Validate every row, including assets omitted by this selected publication.
+  required(
+    Array.isArray(runtimeAssets) && runtimeAssets.length <= EDITION_LIMITS.assets,
+    'Invalid trusted engine asset ledger.',
+  );
+  const engineAssets = runtimeAssets.map(validateEditionAsset);
+  required(
+    new Set(engineAssets.map((asset) => asset.id)).size === engineAssets.length &&
+      new Set(engineAssets.map((asset) => asset.path)).size === engineAssets.length,
+    'Duplicate trusted engine asset identity or path.',
+  );
   const report = validateStudioReport(input);
   required(report.editionId === editionId, 'The report belongs to another selected edition.');
   const preview = studioPreviewURL(report, baseURL),
@@ -168,13 +181,7 @@ export async function verifyStudioPreview({
     selection.campaigns,
     'The compiled catalog contains an unselected campaign.',
   );
-  required(
-    Array.isArray(runtimeAssets) && runtimeAssets.length <= 128,
-    'Invalid trusted engine asset ledger.',
-  );
-  const sharedAssets = runtimeAssets
-    .map(validateEditionAsset)
-    .filter((asset) => inventory.has(asset.path));
+  const sharedAssets = engineAssets.filter((asset) => inventory.has(asset.path));
   same(
     built.assets,
     [...selection.assets, ...sharedAssets],

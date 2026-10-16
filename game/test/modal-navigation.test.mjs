@@ -840,7 +840,8 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
 // native dialog focus/events are modeled, as in the existing modal host cases.
 async function earnedTitleCollection(t) {
   nativeDialogs(t);
-  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  // Keep SoloElement's shared Canvas boundary: the live field guide also draws
+  // during host preparation, before the earned Collection picture opens.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const classRecipes = JSON.parse(
     await readFile(new URL('../content/classes.json', import.meta.url)),
@@ -1092,6 +1093,7 @@ test('Collection resets its return label from Settings to a direct paused-flight
     h.$('shell-featured'),
     'The title Start control owns its actual flight preparation.',
   );
+  await startPreparedFlight(h);
   assert.equal(h.doc.body.dataset.flightState, 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);

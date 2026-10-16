@@ -21,6 +21,9 @@ export async function rasterDimensions(blob) {
 export class RasterImage {
   source = '';
   pending = Promise.resolve();
+  inspect(blob) {
+    return rasterDimensions(blob);
+  }
   set src(value) {
     this.source = value;
     if (!value) return;
@@ -30,7 +33,7 @@ export class RasterImage {
         resolveObjectURL(value) ??
         (data ? new Blob([Buffer.from(value.split(',')[1], 'base64')], { type: data[1] }) : null);
       assert(blob, 'Raster fixture requires actual blob or raster data bytes.');
-      const { width, height } = await rasterDimensions(blob);
+      const { width, height } = await this.inspect(blob);
       if (this.source !== value) return;
       this.width = this.naturalWidth = width;
       this.height = this.naturalHeight = height;

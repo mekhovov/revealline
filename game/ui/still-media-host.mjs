@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
@@ -57,8 +58,7 @@ async function readSource({ signal } = {}) {
       classRecipes: classes,
       themes: themes.themes,
       sourcePackId: null,
-      visualOverrides: {},
-      levelVisuals: [],
+      ...(await loadBaseArtwork({ ...campaign, classRecipes: classes }, { signal })),
     },
     presets,
     channel,

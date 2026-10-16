@@ -80,6 +80,13 @@ test('actual demo shares mute, volume and transport while demo Pause and credits
   page.$('demo-audio-toggle').click();
   await settle(() => playing(page) && page.audioElements.some((element) => !element.paused));
   const song = page.$('demo-audio-title').textContent;
+  assert.ok(page.$('demo-now-playing').textContent.includes(song));
+  assert.ok(page.$('demo-now-playing').closest('#demo-audience'));
+  assert.equal(
+    page.$('demo-panel').hidden,
+    true,
+    'Now playing is visible without opening audio settings',
+  );
   page.$('demo-interrupt').click();
   assert.equal(page.$('demo-actions').hidden, false);
   assert.equal(playing(page), true, 'Pause demo does not pause music');

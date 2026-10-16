@@ -2,15 +2,22 @@ import {
   inheritedTeamVersion,
   TEAM_RUNNING_LEVEL_VERSION,
   TEAM_PURSUIT_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_PURSUIT_V2_RULESET,
+  TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_RULESET,
   TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
   TEAM_SNAKE_PURSUIT_RULESET,
   TEAM_SNAKE_PURSUIT_PACK_VERSION,
   TEAM_PURSUIT_RULESET,
   TEAM_PURSUIT_PACK_VERSION,
+  TEAM_PURSUIT_V2_PACK_VERSION,
+  TEAM_SNAKE_PURSUIT_V2_PACK_VERSION,
   TEAM_RUNNING_RULESET,
   TEAM_RUNNING_PACK_VERSION,
 } from './running-enemies.mjs';
 import { compileMapGeometry } from '../content-design/map.mjs';
+import { EXPEDITION_LEVEL, EXPEDITION_PACK, EXPEDITION_RULESET } from './expedition-version.mjs';
 import {
   TEAM_SNAKE_LEVEL_VERSION,
   TEAM_SNAKE_RULESET,
@@ -41,6 +48,15 @@ export const COOP_HUNT_RULESET = 'revealline-coop.v10';
 export const COOP_HUNT_PACK_VERSION = 'revealline-coop-pack.v8';
 
 const editions = Object.freeze({
+  [EXPEDITION_LEVEL]: Object.freeze({ version: EXPEDITION_PACK, ruleset: EXPEDITION_RULESET }),
+  [TEAM_PURSUIT_V2_LEVEL_VERSION]: Object.freeze({
+    version: TEAM_PURSUIT_V2_PACK_VERSION,
+    ruleset: TEAM_PURSUIT_V2_RULESET,
+  }),
+  [TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION]: Object.freeze({
+    version: TEAM_SNAKE_PURSUIT_V2_PACK_VERSION,
+    ruleset: TEAM_SNAKE_PURSUIT_V2_RULESET,
+  }),
   [TEAM_SNAKE_PURSUIT_LEVEL_VERSION]: Object.freeze({
     version: TEAM_SNAKE_PURSUIT_PACK_VERSION,
     ruleset: TEAM_SNAKE_PURSUIT_RULESET,
@@ -126,6 +142,8 @@ export const hasTeamHunting = (level) =>
     TEAM_SNAKE_LEVEL_VERSION,
     TEAM_PURSUIT_LEVEL_VERSION,
     TEAM_SNAKE_PURSUIT_LEVEL_VERSION,
+    TEAM_PURSUIT_V2_LEVEL_VERSION,
+    TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
   ].includes(level.version);
 
 export const isJourneyTeamLevel = (level) => Object.hasOwn(editions, inheritedTeamVersion(level));

@@ -1,4 +1,4 @@
-import { sharedActorAppearance } from '../hunt/preferences.mjs';
+import { sharedActorAppearance, runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { actorFacingRadians } from '../hunt/actor-facing.mjs';
 import { HUNT_PRESENTATION_CATALOG } from '../hunt/presentation-catalog.mjs';
 import { drawHumanoidPixelBody, drawHuntRemains } from '../hunt/destruction.mjs';
@@ -11,6 +11,7 @@ import {
 } from './actor-presentation.mjs';
 
 const CELL = 16;
+const HEADING_ANGLES = { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 };
 const live = (view) => view?.valid === true && ['running', 'respawning'].includes(view.status);
 const unitFor = (options) => 1 / actorScreenScale(options.screenScale);
 const diameterFor = (options) => actorDiameter({ ...options, role: 'enemy', style: 'microtile' });
@@ -63,6 +64,7 @@ export function drawCombatPixelBody(ctx, { role, pose = 0 }, palette = {}) {
 /** Bounded per-painter sprite cache, never a cache of runs or actor references. */
 export function createCombatPresentation({
   createCanvas = () => document.createElement('canvas'),
+  artRevision = runtimeActorArtRevision(),
 } = {}) {
   let paletteKey = '',
     sprites = new Map();
@@ -75,12 +77,14 @@ export function createCombatPresentation({
     const cast = sharedActorAppearance().snapshot().cast;
     const id = JSON.stringify([
       kind ?? role,
+      artRevision,
       pose,
       cast,
       actor?.pursuit?.behavior,
       actor?.pursuit?.phase ?? actor?.phase,
       actor?.pursuit?.heading,
       actor?.pursuit?.nextHeading,
+      actor?.intentFacingRadians,
       actor?.state,
       actor?.frozen,
       actor?.reducedEffects,
@@ -95,7 +99,7 @@ export function createCombatPresentation({
       if (kind)
         drawHumanoidPixelBody(
           ctx,
-          { ...actor, kind, pose, cast, armed: role === 'sentry' },
+          { ...actor, kind, pose, cast, artRevision, armed: role === 'sentry' },
           palette,
         );
       else drawCombatPixelBody(ctx, { role, pose }, palette);
@@ -105,6 +109,12 @@ export function createCombatPresentation({
     return sprites.get(id);
   }
   return Object.freeze({
+    setArtRevision(value) {
+      if (value === artRevision) return false;
+      artRevision = value;
+      this.reset();
+      return true;
+    },
     reset() {
       paletteKey = '';
       sprites = new Map();
@@ -137,6 +147,7 @@ export function createCombatPresentation({
                     : 'walk'
                   : 'idle';
         const specialist = ['shield', 'brace'].includes(actor.pursuit?.behavior);
+        const facingRadians = actor.facingRadians ?? actorFacingRadians(actor);
         const still = options.reduced || view.frozen;
         const cycleTicks = Math.max(36, Math.min(120, 360 / (Math.hypot(actor.vx, actor.vy) || 3)));
         const pose = actor.kind
@@ -151,12 +162,25 @@ export function createCombatPresentation({
         const drawing = actor.kind
           ? {
               ...actor,
+              // Ordinary prey rotates once at its world position below. Keep
+              // its cached body north-facing even when successor pursuit state
+              // carries a heading; only specialists bake their armored front.
+              pursuit:
+                actor.pursuit && !specialist ? { ...actor.pursuit, heading: 'up' } : actor.pursuit,
+              // The body's outer transform supplies world facing. Counter that
+              // transform for the separate accepted upcoming-direction cue.
+              intentFacingRadians:
+                !specialist && Object.hasOwn(HEADING_ANGLES, actor.pursuit?.nextHeading)
+                  ? HEADING_ANGLES[actor.pursuit.nextHeading] - facingRadians
+                  : undefined,
               state,
               frozen: view.frozen,
               reducedEffects: !!options.reduced,
               locomotionPhase: pose / 6,
-              timeMs: pose * 300,
-              facingRadians: specialist ? actor.facingRadians : 0,
+              // Movement descriptors contain six 100 ms stride frames. Using
+              // idle's 300 ms cadence here aliases every step to a neutral pose.
+              timeMs: pose * (moving ? 100 : 300),
+              facingRadians: specialist ? facingRadians : 0,
               heading: specialist ? actor.pursuit.heading : 'up',
             }
           : actor;
@@ -166,7 +190,7 @@ export function createCombatPresentation({
         if (actor.kind && !specialist) {
           ctx.save();
           ctx.translate(x, y);
-          ctx.rotate(actor.facingRadians ?? actorFacingRadians(actor));
+          ctx.rotate(facingRadians);
           ctx.drawImage(body, -size / 2, -size / 2, size, size);
           ctx.restore();
         } else ctx.drawImage(body, x - size / 2, y - size / 2, size, size);
@@ -323,6 +347,7 @@ export function drawCombatScrap(ctx, view, palette, options = {}) {
         brutal: options.brutal,
         blood: options.blood,
         color: c.body,
+        ...(Object.hasOwn(options, 'artRevision') ? { artRevision: options.artRevision } : {}),
       });
     } else if (index >= firstSettled && options.showScrap !== false) {
       pixel(ctx, c.plate, x - 4 * u, y - 2 * u, 8 * u, 4 * u);

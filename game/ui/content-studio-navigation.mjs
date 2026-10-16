@@ -1,4 +1,5 @@
 import { t } from '../i18n/index.mjs';
+import { nativeArtReviewURL } from './art-review-navigation.mjs';
 import { studioReturnLinks } from './asset-studio-return.mjs';
 import { workshopToolHref } from './workshop-return.mjs';
 
@@ -45,7 +46,7 @@ export function snakeStudioReturnHref(href) {
   const languages = page.searchParams.getAll('lang');
   if (languages.length === 1 && ['en', 'uk'].includes(languages[0]))
     target.searchParams.set('lang', languages[0]);
-  return target.href;
+  return nativeArtReviewURL(target.href, page.href);
 }
 
 /** Early navigation only. Editor loading, focus, drafts and storage have separate owners. */
@@ -59,4 +60,25 @@ export function mountContentStudioLinks({ document: doc, href }) {
     link.inert = false;
     link.removeAttribute('aria-disabled');
   }
+}
+
+/** One named editor section is a navigation destination, never a content or
+ * playback command. Open its native disclosure before the large editor loads. */
+export function openContentStudioSection({ document: doc, href }) {
+  let page;
+  try {
+    page = new URL(href);
+  } catch {
+    return false;
+  }
+  if (
+    !/\/game\/studio\/(?:index\.html)?$/.test(page.pathname) ||
+    page.hash !== '#reaction-voice-editor-panel'
+  )
+    return false;
+  const section = doc.getElementById('reaction-voice-editor-panel');
+  if (!section) return false;
+  section.open = true;
+  section.scrollIntoView?.({ block: 'start' });
+  return true;
 }

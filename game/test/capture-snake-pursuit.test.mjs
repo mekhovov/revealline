@@ -113,8 +113,8 @@ test('Studio JSON round-trip preserves ordered bonuses and Team tail ownership t
     assert.deepEqual(pursuitPopulation(resolved), pursuitPopulation(level));
     if (team) {
       const pack = createTeamTestPack(updated, mission.id);
-      assert.equal(pack.version, 'revealline-coop-pack.v12');
-      assert.equal(pack.ruleset, 'revealline-coop.v14');
+      assert.equal(pack.version, 'revealline-coop-pack.v14');
+      assert.equal(pack.ruleset, 'revealline-coop.v16');
       assert.equal(validateCoopPack(pack).valid, true);
       assert.equal(validateCoopPack({ ...pack, version: 'revealline-coop-pack.v10' }).valid, false);
     }

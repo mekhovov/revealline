@@ -151,7 +151,7 @@ test('confetti launches at the center and expands into all four quadrants', () =
     );
   };
   assert.ok(radius(1.4) > radius(0.75));
-  assert.ok(at(source, 3.7).particles.every((p) => p.alpha < 0.01));
+  assert.ok(at(source, CELEBRATION_SECONDS - 0.1).particles.every((p) => p.alpha < 0.01));
 });
 
 test('burst uses equal pixel distances from the center on portrait and wide surfaces', () => {

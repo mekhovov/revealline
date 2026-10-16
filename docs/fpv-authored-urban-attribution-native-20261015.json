@@ -1,0 +1,157 @@
+{
+  "authoringSource": "34b8bb175b736461f5ef3158b539df8caf83898f",
+  "productionSource": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+  "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+  "origin": 9185,
+  "startedUTC": "2026-10-15T18:50:40.830Z",
+  "clock": {
+    "status": "completed",
+    "reason": null,
+    "targetMs": 10000,
+    "elapsedMs": 10005.10000000894,
+    "wallElapsedMs": 10004,
+    "simulationMs": 10000,
+    "ticks": 500,
+    "remainingAccumulatorMs": 5.100000008940697
+  },
+  "sourceClosure": "Independent disk/HTTP stage receipt verifies all162qualified members,9authoring and9sourceappearance files;70ASTmodules/no external or nonliteral imports. Runtime report direct hashes alone do not prove closure.",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "dimensions": {
+    "basis": "visualViewport",
+    "width": 1280,
+    "height": 720,
+    "dpr": 2,
+    "cssWidth": 1280,
+    "cssHeight": 417.59375,
+    "backingWidth": 1920,
+    "backingHeight": 627
+  },
+  "observation": {
+    "policy": "strict-focus",
+    "input": "Commanded test pilot only; no player input",
+    "scope": "Visible document with continuous window focus required",
+    "events": [
+      {
+        "elapsedMs": 0,
+        "type": "start",
+        "visible": true,
+        "focused": true
+      }
+    ],
+    "failure": null
+  },
+  "attribution": {
+    "capability": "observed",
+    "entries": 0,
+    "callbackCPU": {
+      "count": 1,
+      "totalMs": 0,
+      "maxMs": 0
+    },
+    "phases": [
+      {
+        "phase": "observer-checks",
+        "count": 1194,
+        "totalMs": 65.50000014901161,
+        "maxMs": 0.30000001192092896
+      },
+      {
+        "phase": "snapshot-before-step",
+        "count": 500,
+        "totalMs": 96.00000008940697,
+        "maxMs": 0.5
+      },
+      {
+        "phase": "pilot-command",
+        "count": 500,
+        "totalMs": 2.2999999970197678,
+        "maxMs": 0.10000000894069672
+      },
+      {
+        "phase": "flight-step",
+        "count": 500,
+        "totalMs": 224.29999989271164,
+        "maxMs": 1.5
+      },
+      {
+        "phase": "snapshot-for-draw",
+        "count": 1194,
+        "totalMs": 173.19999998807907,
+        "maxMs": 0.5
+      },
+      {
+        "phase": "renderer-draw",
+        "count": 1194,
+        "totalMs": 678.1999998539686,
+        "maxMs": 1.5
+      },
+      {
+        "phase": "sample-collection",
+        "count": 10,
+        "totalMs": 3.600000023841858,
+        "maxMs": 0.7000000029802322
+      },
+      {
+        "phase": "live-display",
+        "count": 9,
+        "totalMs": 1.4999999850988388,
+        "maxMs": 0.20000000298023224
+      },
+      {
+        "phase": "prepare-renderer-submit",
+        "count": 0,
+        "totalMs": 0,
+        "maxMs": 0
+      }
+    ],
+    "bounds": {
+      "spans": 128,
+      "longAnimationFrames": 16,
+      "scriptsPerFrame": 8,
+      "scriptsScannedPerFrame": 64,
+      "overlapExamplesPerFrame": 12
+    },
+    "dropped": {
+      "spans": 4973,
+      "longAnimationFrames": 0,
+      "scripts": 0,
+      "unscannedScripts": 0
+    },
+    "malformed": 0,
+    "readFailures": 0,
+    "stopped": true
+  },
+  "lastSpanCount": 128,
+  "contacts": 0,
+  "disposalZero": true,
+  "routeCoverageQualified": false,
+  "acceptedBoundary": "Authoring diagnostic source and short native smoke only; real LoAF API observed but no caller entries occurred. Not zero-cost evidence, production latency diagnosis or two-hour endurance.",
+  "limitations": [
+    "Synchronous wall spans are not exclusive CPU",
+    "No native caller entry/JS sampled stack/allocation/GC attribution captured",
+    "Final sample occurs after attribution stop; terminal LoAF may not yet be queued",
+    "No physical device or sustained FPS acceptance"
+  ],
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-attribution-smoke-20261015.json",
+      "bytes": 66731,
+      "sha256": "dbee172a5ccd88ae57492c2ab7c3cf67eadabbc02c34fb45fc356e4cb391f19a"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-attribution-smoke-native-20261015.png",
+      "bytes": 95486,
+      "sha256": "bc2414a269126c2b7018ef44d004ae41095ac7e6a382457702770120a8ea0e51"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-attribution-review-9185/review-identity.json",
+      "bytes": 57679,
+      "sha256": "5557eb7e29f40e38a5a48dbdd1815afbb7fb05826e25a5079902cd16dbbda3c5"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-attribution-review-9185/http-closure-receipt.json",
+      "bytes": 72254,
+      "sha256": "7e5eac4b81248100aaeb37bf8080e684d3198e4bf7838ff9bc6fe21ad57ec4b0"
+    }
+  ]
+}

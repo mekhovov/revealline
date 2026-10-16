@@ -49,6 +49,28 @@ test('reload and changed physical index restore shared sides, swap and independe
   assert.equal(gamepadCommand(f.pads[1033]).direction, 'right');
   assert.equal(gamepadCommand(f.pads[1032]).direction, null);
 });
+test('direct continuation restores configured radio sides once without accepting held input', () => {
+  const store = storage(),
+    a = pad(),
+    first = session(store);
+  first.sample([a]);
+  first.split(0, [tx15StickProfile(a, 'left'), tx15StickProfile(a)]);
+  const saved = store.getItem(COUCH_RESTORE_KEY),
+    continued = session(store, { initialSlots: [1025, 1024] });
+  a.axes[0] = 1;
+  let f = continued.sample([a], { active: true });
+  assert.deepEqual(f.slots, [1025, 1024]);
+  assert.equal(gamepadCommand(f.pads[1025]).direction, null);
+  assert.equal(store.getItem(COUCH_RESTORE_KEY), saved, 'Handoff does not rewrite saved setup.');
+  a.axes[0] = 0;
+  continued.sample([a], { active: true });
+  a.axes[0] = 1;
+  f = continued.sample([a], { active: true });
+  assert.equal(gamepadCommand(f.pads[1025]).direction, 'right');
+  assert.equal(gamepadCommand(f.pads[1024]).direction, null);
+  continued.sample([], { active: true });
+  assert.deepEqual(continued.sample([a], { active: true }).slots, [null, null]);
+});
 test('disconnect keeps setup, reconnect stays neutral and cannot change seats during active play', () => {
   const store = storage(),
     a = pad(),

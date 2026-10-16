@@ -2,12 +2,21 @@ import { actorFieldGuide } from '../hunt/actor-catalog.mjs';
 import { drawHuntActor } from '../hunt/actor-art.mjs';
 
 /** Shared text and previews for runtime pause screens and creator inspectors. */
-export function renderEnemyFieldGuide(container, kinds, { locale = 'en', cast = 'rivals' } = {}) {
+export function renderEnemyFieldGuide(
+  container,
+  kinds,
+  {
+    locale = 'en',
+    cast = 'rivals',
+    resolveEntry = actorFieldGuide,
+    drawActor = drawHuntActor,
+  } = {},
+) {
   const doc = container.ownerDocument;
   const entries = new Map(
     kinds
       .map((kind) => {
-        const entry = actorFieldGuide(kind, locale);
+        const entry = resolveEntry(kind, locale);
         return [entry?.id, entry];
       })
       .filter(([id]) => id),
@@ -84,7 +93,8 @@ export function renderEnemyFieldGuide(container, kinds, { locale = 'en', cast = 
       const ctx = icon.getContext('2d');
       if (!ctx) return;
       ctx.clearRect(0, 0, 56, 56);
-      drawHuntActor(ctx, 0, 0, 56, frame, {
+      drawActor(ctx, 0, 0, 56, frame, {
+        kind: entry.kind ?? entry.id,
         family: entry.id,
         cast,
         direction: direction.value,

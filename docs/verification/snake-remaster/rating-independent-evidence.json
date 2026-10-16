@@ -1,0 +1,1702 @@
+{
+  "format": "classic-snake-rating-evidence.v1",
+  "scope": "Five exact normal-pace Solo seed-17 setups. Separate steering implementations, not independent players or repeated human observations. No pace copies count as additional evidence.",
+  "methods": {
+    "visible": "Shortest path on currently visible stationary-target board; conservative occupied tail; no future simulation, hidden RNG, retry, backtracking or fallback strategy.",
+    "general": "Existing scored qualification search with simulated candidate moves, escape-space ranking and bounded backtracking. This remains solvability evidence, not human difficulty."
+  },
+  "sources": [
+    {
+      "path": "scripts/lib/snake-visible-route-pilot.mjs",
+      "sha256": "81e2df76db739b151d79404b064c43e2783caa92e8a048b57be12df6fbf06e45"
+    },
+    {
+      "path": "game/test/helpers/classic-snake-v4-playthrough.mjs",
+      "sha256": "7a062472d7575b5569cff6486027a1840bb650abb7f313cdef88495a49a61a8d"
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "sha256": "072d87e656ef6f0d384cc83d5ed62ed7927a6b5426828e89b2fd4d982f2f96b1"
+    }
+  ],
+  "summary": {
+    "setups": 5,
+    "completionOnlyCandidates": 4,
+    "bothStrategiesClear": 5,
+    "differentInputRoutes": 0,
+    "proposedNewBudgets": 0,
+    "humanObservations": 0
+  },
+  "decision": "Retain completion-only for all candidates. Separate algorithms are not automatically separate strategies; compare input journals explicitly. Neither route diversity nor algorithm agreement establishes a fair silver/gold margin, Team coordination cost or real-time execution difficulty.",
+  "rows": [
+    {
+      "levelId": "classic-snake-open-loop",
+      "name": "Open Loop",
+      "levelIdentity": "5f286bbd6eb04450",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "role": "published-control",
+      "eligibility": "existing-fixed-budget",
+      "visiblePilot": {
+        "status": "won",
+        "moves": 93,
+        "catches": 8,
+        "inputChanges": 15,
+        "routeIdentity": "76d7b34fceb481891c758d48bbca46b5a4ba19f42b76dc6aa7a621027bea8685",
+        "stop": "finished"
+      },
+      "generalPilot": {
+        "status": "won",
+        "moves": 93,
+        "catches": 8,
+        "inputChanges": 15,
+        "routeIdentity": "76d7b34fceb481891c758d48bbca46b5a4ba19f42b76dc6aa7a621027bea8685"
+      },
+      "differentInputRoutes": false,
+      "proposedBudget": null,
+      "visibleReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-open-loop",
+          "revision": "1",
+          "name": "Open Loop",
+          "width": 24,
+          "height": 18,
+          "walls": [],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 8,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "5f286bbd6eb04450",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 93,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 19,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 21,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 48,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 49,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 69,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 75,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "6b65d4ecbeac829d"
+      },
+      "generalReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-open-loop",
+          "revision": "1",
+          "name": "Open Loop",
+          "width": 24,
+          "height": 18,
+          "walls": [],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 8,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "5f286bbd6eb04450",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 93,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 6,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 19,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 21,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 29,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 36,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 40,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 48,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 49,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 69,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 75,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "6b65d4ecbeac829d"
+      }
+    },
+    {
+      "levelId": "classic-snake-two-landings",
+      "name": "Twin Islands",
+      "levelIdentity": "c1f2c6a1cdab450c",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "role": "completion-only-candidate",
+      "eligibility": "completion-only",
+      "visiblePilot": {
+        "status": "won",
+        "moves": 98,
+        "catches": 8,
+        "inputChanges": 12,
+        "routeIdentity": "84ac9474b852237a21230fb174fa2cbdab7697383f1633474c4069391c0c067f",
+        "stop": "finished"
+      },
+      "generalPilot": {
+        "status": "won",
+        "moves": 98,
+        "catches": 8,
+        "inputChanges": 12,
+        "routeIdentity": "84ac9474b852237a21230fb174fa2cbdab7697383f1633474c4069391c0c067f"
+      },
+      "differentInputRoutes": false,
+      "proposedBudget": null,
+      "visibleReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-two-landings",
+          "revision": "1",
+          "name": "Twin Islands",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 7,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 8,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "c1f2c6a1cdab450c",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 98,
+        "turns": [
+          {
+            "tick": 13,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 33,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 63,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 67,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 80,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "35d8d0ed17bc2167"
+      },
+      "generalReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-two-landings",
+          "revision": "1",
+          "name": "Twin Islands",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 7,
+              "y": 4
+            },
+            {
+              "x": 8,
+              "y": 4
+            },
+            {
+              "x": 9,
+              "y": 4
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 8,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 15,
+              "y": 12
+            },
+            {
+              "x": 16,
+              "y": 12
+            },
+            {
+              "x": 14,
+              "y": 13
+            },
+            {
+              "x": 15,
+              "y": 13
+            },
+            {
+              "x": 16,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 8,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "c1f2c6a1cdab450c",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 98,
+        "turns": [
+          {
+            "tick": 13,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 27,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 33,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 38,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 50,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 59,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 63,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 67,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 71,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 80,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 86,
+            "playerId": 0,
+            "direction": "left"
+          }
+        ],
+        "checkpoint": "35d8d0ed17bc2167"
+      }
+    },
+    {
+      "levelId": "classic-snake-first-baffle",
+      "name": "First Baffle",
+      "levelIdentity": "f50c5e0aed79ca12",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "role": "completion-only-candidate",
+      "eligibility": "completion-only",
+      "visiblePilot": {
+        "status": "won",
+        "moves": 108,
+        "catches": 9,
+        "inputChanges": 15,
+        "routeIdentity": "06e7c2cc8d23f41456ff92098b04d52182f47af721dfdccb41bca0833e45f7fd",
+        "stop": "finished"
+      },
+      "generalPilot": {
+        "status": "won",
+        "moves": 108,
+        "catches": 9,
+        "inputChanges": 15,
+        "routeIdentity": "06e7c2cc8d23f41456ff92098b04d52182f47af721dfdccb41bca0833e45f7fd"
+      },
+      "differentInputRoutes": false,
+      "proposedBudget": null,
+      "visibleReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-first-baffle",
+          "revision": "1",
+          "name": "First Baffle",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 5,
+              "y": 8
+            },
+            {
+              "x": 6,
+              "y": 8
+            },
+            {
+              "x": 11,
+              "y": 8
+            },
+            {
+              "x": 5,
+              "y": 9
+            },
+            {
+              "x": 6,
+              "y": 9
+            },
+            {
+              "x": 11,
+              "y": 9
+            },
+            {
+              "x": 11,
+              "y": 10
+            },
+            {
+              "x": 11,
+              "y": 11
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 9,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "f50c5e0aed79ca12",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 108,
+        "turns": [
+          {
+            "tick": 2,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 10,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 13,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 22,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 85,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 96,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 106,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "fe2539117b947263"
+      },
+      "generalReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-first-baffle",
+          "revision": "1",
+          "name": "First Baffle",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 11,
+              "y": 6
+            },
+            {
+              "x": 11,
+              "y": 7
+            },
+            {
+              "x": 5,
+              "y": 8
+            },
+            {
+              "x": 6,
+              "y": 8
+            },
+            {
+              "x": 11,
+              "y": 8
+            },
+            {
+              "x": 5,
+              "y": 9
+            },
+            {
+              "x": 6,
+              "y": 9
+            },
+            {
+              "x": 11,
+              "y": 9
+            },
+            {
+              "x": 11,
+              "y": 10
+            },
+            {
+              "x": 11,
+              "y": 11
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 9,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "f50c5e0aed79ca12",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 108,
+        "turns": [
+          {
+            "tick": 2,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 10,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 13,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 22,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 23,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 31,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 34,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 37,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 44,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 54,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 70,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 85,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 96,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 106,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "fe2539117b947263"
+      }
+    },
+    {
+      "levelId": "classic-snake-offset-docks",
+      "name": "Offset Blocks",
+      "levelIdentity": "bb246ac8df19d088",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "role": "completion-only-candidate",
+      "eligibility": "completion-only",
+      "visiblePilot": {
+        "status": "won",
+        "moves": 102,
+        "catches": 9,
+        "inputChanges": 17,
+        "routeIdentity": "77bc95000d9a976bc29c08d854274419825ae6bcd8dfcb19de60a6eeec24a21d",
+        "stop": "finished"
+      },
+      "generalPilot": {
+        "status": "won",
+        "moves": 102,
+        "catches": 9,
+        "inputChanges": 17,
+        "routeIdentity": "77bc95000d9a976bc29c08d854274419825ae6bcd8dfcb19de60a6eeec24a21d"
+      },
+      "differentInputRoutes": false,
+      "proposedBudget": null,
+      "visibleReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-offset-docks",
+          "revision": "1",
+          "name": "Offset Blocks",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 4
+            },
+            {
+              "x": 7,
+              "y": 4
+            },
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 14,
+              "y": 9
+            },
+            {
+              "x": 15,
+              "y": 9
+            },
+            {
+              "x": 16,
+              "y": 13
+            },
+            {
+              "x": 17,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 9,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "bb246ac8df19d088",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 102,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 14,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 19,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 20,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 28,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 52,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 79,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 89,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 91,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 92,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 100,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "be4262a3b74501b1"
+      },
+      "generalReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-offset-docks",
+          "revision": "1",
+          "name": "Offset Blocks",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 6,
+              "y": 4
+            },
+            {
+              "x": 7,
+              "y": 4
+            },
+            {
+              "x": 6,
+              "y": 5
+            },
+            {
+              "x": 7,
+              "y": 5
+            },
+            {
+              "x": 12,
+              "y": 9
+            },
+            {
+              "x": 13,
+              "y": 9
+            },
+            {
+              "x": 14,
+              "y": 9
+            },
+            {
+              "x": 15,
+              "y": 9
+            },
+            {
+              "x": 16,
+              "y": 13
+            },
+            {
+              "x": 17,
+              "y": 13
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 9,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "bb246ac8df19d088",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 102,
+        "turns": [
+          {
+            "tick": 0,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 8,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 11,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 14,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 19,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 20,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 28,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 42,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 52,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 68,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 79,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 89,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 91,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 92,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 100,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "be4262a3b74501b1"
+      }
+    },
+    {
+      "levelId": "classic-snake-room-to-follow",
+      "name": "Room to Follow",
+      "levelIdentity": "1d3e6e121c09c7f3",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "role": "completion-only-candidate",
+      "eligibility": "completion-only",
+      "visiblePilot": {
+        "status": "won",
+        "moves": 156,
+        "catches": 10,
+        "inputChanges": 17,
+        "routeIdentity": "674e989f49e13e9c32f95e326461dffe8d8802e36b751d2c93343413ff3cfc75",
+        "stop": "finished"
+      },
+      "generalPilot": {
+        "status": "won",
+        "moves": 156,
+        "catches": 10,
+        "inputChanges": 17,
+        "routeIdentity": "674e989f49e13e9c32f95e326461dffe8d8802e36b751d2c93343413ff3cfc75"
+      },
+      "differentInputRoutes": false,
+      "proposedBudget": null,
+      "visibleReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-room-to-follow",
+          "revision": "1",
+          "name": "Room to Follow",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 14,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 9
+            },
+            {
+              "x": 14,
+              "y": 9
+            },
+            {
+              "x": 9,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 9,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 11,
+              "y": 14
+            },
+            {
+              "x": 12,
+              "y": 14
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 10,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "1d3e6e121c09c7f3",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 156,
+        "turns": [
+          {
+            "tick": 13,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 14,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 43,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 75,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 76,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 94,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 101,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 102,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 110,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 111,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 125,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 142,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "7a880fff5bc7a478"
+      },
+      "generalReplay": {
+        "version": "classic-snake-replay.v1",
+        "ruleset": "classic-snake-core.v1",
+        "level": {
+          "version": "classic-snake-level.v1",
+          "id": "classic-snake-room-to-follow",
+          "revision": "1",
+          "name": "Room to Follow",
+          "width": 24,
+          "height": 18,
+          "walls": [
+            {
+              "x": 9,
+              "y": 5
+            },
+            {
+              "x": 9,
+              "y": 6
+            },
+            {
+              "x": 9,
+              "y": 7
+            },
+            {
+              "x": 14,
+              "y": 7
+            },
+            {
+              "x": 9,
+              "y": 8
+            },
+            {
+              "x": 14,
+              "y": 8
+            },
+            {
+              "x": 9,
+              "y": 9
+            },
+            {
+              "x": 14,
+              "y": 9
+            },
+            {
+              "x": 9,
+              "y": 10
+            },
+            {
+              "x": 14,
+              "y": 10
+            },
+            {
+              "x": 9,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 11
+            },
+            {
+              "x": 14,
+              "y": 12
+            },
+            {
+              "x": 11,
+              "y": 14
+            },
+            {
+              "x": 12,
+              "y": 14
+            }
+          ],
+          "spawns": [
+            {
+              "x": 5,
+              "y": 2,
+              "direction": "right"
+            },
+            {
+              "x": 18,
+              "y": 15,
+              "direction": "left"
+            }
+          ],
+          "goal": 10,
+          "stepMs": 200,
+          "speedupEvery": 0,
+          "minStepMs": 200,
+          "wrap": false,
+          "targetMovement": "still",
+          "fleeEvery": 3
+        },
+        "levelIdentity": "1d3e6e121c09c7f3",
+        "mode": "solo",
+        "seed": 17,
+        "steps": 156,
+        "turns": [
+          {
+            "tick": 13,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 14,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 30,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 35,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 41,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 43,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 51,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 53,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 75,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 76,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 94,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 101,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 102,
+            "playerId": 0,
+            "direction": "up"
+          },
+          {
+            "tick": 110,
+            "playerId": 0,
+            "direction": "left"
+          },
+          {
+            "tick": 111,
+            "playerId": 0,
+            "direction": "down"
+          },
+          {
+            "tick": 125,
+            "playerId": 0,
+            "direction": "right"
+          },
+          {
+            "tick": 142,
+            "playerId": 0,
+            "direction": "up"
+          }
+        ],
+        "checkpoint": "7a880fff5bc7a478"
+      }
+    }
+  ]
+}

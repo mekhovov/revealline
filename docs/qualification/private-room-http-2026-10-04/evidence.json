@@ -1,0 +1,76 @@
+{
+  "format": "revealline-room-http-working-tree-evidence.v1",
+  "recordedAt": "2026-10-04T13:11:44.806152+00:00",
+  "baseRevision": "41441fc60a7321bf40a174ba76f2d92291b14aab",
+  "scope": "Working-tree test/transport source hashes; not a clean committed-source build. Parallel art edits were active; exact-head full-source evidence remains a subsequent CI gate.",
+  "files": [
+    {
+      "path": "game/test/helpers/room-service-http-fixture.mjs",
+      "sha256": "24ac173ef6b81a7318e056cdb2f8b182aeb5ee0c04a2776bcd566c715b05c7f3"
+    },
+    {
+      "path": "game/test/online-room-service.test.mjs",
+      "sha256": "09f52955ed9bda862c8997ba1e8e75960b00e9cb874e75f3e5ca4f8ab9749782"
+    },
+    {
+      "path": "game/test/online-room-http-qualification.test.mjs",
+      "sha256": "754adc8a8deea0bae60203737287744217a61e81265f9fec1cdabbc1b5bbf529"
+    },
+    {
+      "path": "services/rooms/server.mjs",
+      "sha256": "4726b056d1b61ce75c88f1521f8e8e09e1f7a8992a5a9c4876c091fd77836331"
+    },
+    {
+      "path": "game/online/room-client-lifecycle.mjs",
+      "sha256": "b8271776104e2b5e7bcbf65f7ac010b20b0853e1a1455947b25c50efae4e4d37"
+    },
+    {
+      "path": "game/online/room-core.mjs",
+      "sha256": "0d68066c99a670709d2f7a17c277f396dab9a859b6bf55eb47ab3253044fe394"
+    },
+    {
+      "path": "game/online/room-events.mjs",
+      "sha256": "9db93669e1b2d0053f6c3cfec2f576dd2114e381bed15d55e07035b4af7e1347"
+    },
+    {
+      "path": "game/online/room-controls.mjs",
+      "sha256": "64ed3f5b073d37d6331fa1b45e6c585d54e70c38f3093d2e3e91394064ad085d"
+    }
+  ],
+  "runs": [
+    {
+      "node": "22.22.2",
+      "command": "node --test --test-concurrency=2 game/test/online-room*.test.mjs",
+      "summary": {
+        "tests": 73,
+        "pass": 73,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": ".cache/room-http-qualification-node22.tap",
+      "logSha256": "cb0969fe8f85a25e9f5c1670d5c3208307aaa7d7db32b1405bbedb2dd47553ea"
+    },
+    {
+      "node": "20.19.5",
+      "command": "node --test --test-concurrency=2 game/test/online-room-service.test.mjs game/test/online-room-http-qualification.test.mjs",
+      "summary": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "log": ".cache/room-http-qualification-node20.tap",
+      "logSha256": "edabf3973e8f4fa30767f2701ccacbd8774ba5a9b99062748e0f1bbae9d5a6d4"
+    }
+  ],
+  "productionChanges": false,
+  "humanPlay": "pending",
+  "physicalDevices": "pending",
+  "wideAreaNetwork": "pending",
+  "httpsHosting": "not-configured",
+  "publicRelease": "not-qualified"
+}

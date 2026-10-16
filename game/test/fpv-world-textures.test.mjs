@@ -6,9 +6,13 @@ import { parse } from 'acorn';
 import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { GLTFLoader } from '../../optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js';
 import { configureWorldGLTFLoader } from '../../optional-practice/civilian-fpv/renderer.mjs';
+import { applySimBattlefieldGround } from '../../optional-practice/civilian-fpv/battlefield-ground.mjs';
 import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs';
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { resolveIndustrialEnvironment } from '../presentation/industrial-environments.mjs';
 import {
   inspectImport,
   encodeWorldGLB,
@@ -170,8 +174,12 @@ async function rendererFixture() {
     setSize() {}
   }
   const create = vm.runInNewContext(`${module}; createFlightRenderer`, {
+    applySimBattlefieldGround,
     ...themes,
     ...visuals,
+    runtimeActorArtRevision,
+    canonicalJSON,
+    resolveIndustrialEnvironment,
     Blob,
     URL,
     ArrayBuffer,

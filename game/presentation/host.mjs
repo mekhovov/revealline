@@ -1,3 +1,5 @@
+import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.mjs';
+import { pageActorArtPool } from './actor-art-pool.mjs';
 import { localizedMessage } from '../i18n/index.mjs';
 import {
   isTeamRuntimeImageSlot,
@@ -6,6 +8,8 @@ import {
   TEAM_CORE_SLOTS,
 } from './team-runtime-slots.mjs';
 import { ASSET_SLOTS } from './catalog.mjs';
+import { OVERFLIGHT_WORLD_IMAGE_SLOTS } from './overflight-world-slots.mjs';
+import { OVERFLIGHT_ACTOR_SLOT_IDS } from './overflight-actor-slots.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import {
@@ -31,16 +35,21 @@ export const COMPILED_PRESENTATION_FORMAT = 'revealline-compiled-presentation.v1
 export const PRESENTATION_DECODE_PIXELS = 16 * 1024 * 1024;
 // Fixed renderer vocabulary, never an uploaded prefix or arbitrary slot filter.
 export const ACTOR_PRESENTATION_SLOTS = Object.freeze([
-  ...ASSET_SLOTS.filter((slot) =>
-    slot.recipes.some((recipe) =>
-      ['actor.player.v1', 'actor.rotors.v1', 'actor.enemy.v1'].includes(recipe),
-    ),
+  ...ASSET_SLOTS.filter(
+    (slot) =>
+      !OVERFLIGHT_ACTOR_SLOT_IDS.includes(slot.id) &&
+      slot.recipes.some((recipe) =>
+        ['actor.player.v1', 'actor.rotors.v1', 'actor.enemy.v1'].includes(recipe),
+      ),
   ).map((slot) => slot.id),
   ...TEAM_PILOT_SLOTS,
   ...TEAM_ENEMY_SLOTS,
   ...TEAM_CORE_SLOTS,
 ]);
-const actorSlots = new Set(ACTOR_PRESENTATION_SLOTS);
+// Historical Solo/Duel actor leases have a fixed required vocabulary. Optional
+// Survivals artwork is admitted by board/full hosts without extending that lease.
+const leasedActorSlots = new Set(ACTOR_PRESENTATION_SLOTS);
+const actorSlots = new Set([...ACTOR_PRESENTATION_SLOTS, ...OVERFLIGHT_ACTOR_SLOT_IDS]);
 const extensions = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -155,12 +164,31 @@ const browserDecode = async (blob) => {
 async function cropBitmap(image, frame) {
   return globalThis.createImageBitmap(image, frame.x, frame.y, frame.width, frame.height);
 }
-async function cropBlob(image, frame, document) {
-  const canvas = document.createElement('canvas');
-  canvas.width = frame.width;
-  canvas.height = frame.height;
-  canvas.getContext('2d').drawImage(image, 0, 0);
+let cropExportSequence = 0;
+async function cropBlob(image, frame, document, { actorPool, signal } = {}) {
+  let lease;
+  const createCanvas = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = frame.width;
+    canvas.height = frame.height;
+    canvas.close = () => {
+      canvas.width = canvas.height = 0;
+    };
+    return canvas;
+  };
+  // Keep encoding storage reserved until toBlob settles. Aborting the host
+  // cannot make an in-flight encoder's pixels disappear from accounting.
+  if (actorPool)
+    lease = await actorPool.acquire({
+      key: `presentation-crop-export:${++cropExportSequence}`,
+      width: frame.width,
+      height: frame.height,
+      load: createCanvas,
+    });
+  const canvas = lease?.image ?? createCanvas();
   try {
+    cancelled(signal);
+    canvas.getContext('2d').drawImage(image, 0, 0);
     return await new Promise((resolve, reject) =>
       canvas.toBlob(
         (blob) => (blob ? resolve(blob) : reject(new Error('Frame export failed.'))),
@@ -168,14 +196,17 @@ async function cropBlob(image, frame, document) {
       ),
     );
   } finally {
-    canvas.width = canvas.height = 0;
+    if (lease) lease.release();
+    else canvas.close();
   }
 }
 const visibleSlot = (id, asset) =>
   asset.kind === 'font' ||
   (asset.kind === 'image' &&
     (/^(ui|icon|hud|reward|control|screen|player|enemy|terrain|pickup)\./.test(id) ||
-      isTeamRuntimeImageSlot(id)));
+      isTeamRuntimeImageSlot(id) ||
+      actorSlots.has(id) ||
+      OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(id)));
 const controlIcons = {
   settings: '#shell-settings, #settings-button, #shell-options',
   play: '#shell-featured, #shell-continue, #shell-deploy, #start-button, #soundtrack-play, #race-start',
@@ -245,15 +276,24 @@ export function createPresentationHost({
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   fontFactory = (name, bytes, descriptors) => new FontFace(name, bytes, descriptors),
 } = {}) {
-  required(['full', 'actors'].includes(profile), 'Use a registered presentation host profile.');
-  const loadsSlot = (id, asset) =>
+  required(
+    ['full', 'actors', 'board'].includes(profile),
+    'Use a registered presentation host profile.',
+  );
+  // Actor-only leases deliberately omit DOM authority, but still share their
+  // page's image ownership and budget with the ordinary presentation host.
+  const actorPool = pageActorArtPool(document ?? globalThis.document);
+  const profileLoadsSlot = (id, asset) =>
     profile === 'full'
       ? visibleSlot(id, asset) &&
         !(
           (id === 'screen.title.background' || id === 'screen.title.portrait') &&
           (skipTitleArtwork || document?.querySelector?.('.native-landing'))
         )
-      : actorSlots.has(id) && asset.kind === 'image';
+      : ((profile === 'actors' ? leasedActorSlots : actorSlots).has(id) ||
+          (profile === 'board' &&
+            (/^(terrain|pickup)\./.test(id) || OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(id)))) &&
+        asset.kind === 'image';
   const manifestPath = presentationManifestPath(retainedManifestSha256);
   const base = new URL(baseURL);
   required(
@@ -359,12 +399,23 @@ export function createPresentationHost({
     /** Audio stays lazy. The existing sound transport owns playback, decoding,
      * user activation and any object URLs; this host authenticates original bytes. */
     async readAudio(slot, { signal, snapshot = current?.snapshot } = {}) {
-      required(profile === 'full', 'An actor-only host cannot read audio.');
+      required(
+        profile === 'full' ||
+          (profile === 'board' &&
+            (slot === 'audio.pickup' ||
+              [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].some(
+                (cue) => slot === `audio.${cue}`,
+              ))),
+        profile === 'actors'
+          ? 'An actor-only host cannot read audio.'
+          : 'This presentation profile cannot read this audio slot.',
+      );
       required(!closed && snapshot && snapshot === current?.snapshot, 'No current audio release.');
       cancelled(signal);
       const asset = snapshot.resolved.assets[slot];
       required(
-        /^audio\.(focus|confirm|cancel|capture|failure|victory|pickup|music)$/.test(slot) &&
+        (/^audio\.(focus|confirm|cancel|capture|failure|victory|pickup|music)$/.test(slot) ||
+          [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].some((cue) => slot === `audio.${cue}`)) &&
           asset?.kind === 'audio',
         'No compiled audio for this slot.',
       );
@@ -467,8 +518,28 @@ export function createPresentationHost({
         pictureReads.delete(controller);
       }
     },
-    async load({ signal, onStatus = () => {}, expectedManifestSha256 = null } = {}) {
+    async load({
+      signal,
+      onStatus = () => {},
+      expectedManifestSha256 = null,
+      worldImageSlots = null,
+    } = {}) {
       required(!closed, 'Presentation host is closed.');
+      required(
+        worldImageSlots === null ||
+          (Array.isArray(worldImageSlots) &&
+            worldImageSlots.every((slot) => OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(slot))),
+        'Use registered battlefield image slots.',
+      );
+      // The optional board selection is captured per load, including concurrent
+      // preparation. Full/actor hosts retain their established vocabulary.
+      const selectedWorldSlots = worldImageSlots === null ? null : new Set(worldImageSlots),
+        loadsSlot = (id, asset) =>
+          profileLoadsSlot(id, asset) &&
+          (profile !== 'board' ||
+            selectedWorldSlots === null ||
+            !OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(id) ||
+            selectedWorldSlots.has(id));
       required(
         expectedManifestSha256 === null ||
           (typeof expectedManifestSha256 === 'string' &&
@@ -527,10 +598,11 @@ export function createPresentationHost({
           fullImages.set(asset.file.sha256, asset.file.width * asset.file.height);
           const frame = asset.geometry.frame;
           if (
-            frame.x ||
-            frame.y ||
-            frame.width !== asset.file.width ||
-            frame.height !== asset.file.height
+            !asset.animation &&
+            (frame.x ||
+              frame.y ||
+              frame.width !== asset.file.width ||
+              frame.height !== asset.file.height)
           )
             frames.set(slot, frame.width * frame.height);
         }
@@ -540,7 +612,16 @@ export function createPresentationHost({
           'Presentation exceeds the decoded pixel budget.',
         );
         const sourceBlobs = new Map(),
-          decoded = new Map();
+          decoded = new Map(),
+          actorLeases = new Map(),
+          actorHashes = new Set(
+            Object.entries(manifest.resolved.assets)
+              .filter(
+                ([slot, asset]) =>
+                  loadsSlot(slot, asset) && actorSlots.has(slot) && asset.kind === 'image',
+              )
+              .map(([, asset]) => asset.file.sha256),
+          );
         for (const [slot, asset] of Object.entries(manifest.resolved.assets)) {
           if (!loadsSlot(slot, asset)) continue;
           cancelled(controller.signal);
@@ -587,8 +668,21 @@ export function createPresentationHost({
               header.valid && header.width === file.width && header.height === file.height,
               'Presentation image header disagrees with its dimensions.',
             );
-            original = await decodeImage(blob, { signal: controller.signal });
-            own(() => original.close?.());
+            if (actorHashes.has(hash)) {
+              const lease = await actorPool.acquire({
+                key: hash,
+                width: file.width,
+                height: file.height,
+                signal: controller.signal,
+                load: (signal) => decodeImage(blob, { signal }),
+              });
+              original = lease.image;
+              actorLeases.set(hash, lease);
+              own(lease.release);
+            } else {
+              original = await decodeImage(blob, { signal: controller.signal });
+              own(() => original.close?.());
+            }
             cancelled(controller.signal);
             required(
               (original.naturalWidth ?? original.width) === file.width &&
@@ -600,16 +694,51 @@ export function createPresentationHost({
           const frame = asset.geometry.frame;
           let image = original,
             visualBlob = blob;
-          if (frame.x || frame.y || frame.width !== file.width || frame.height !== file.height) {
+          if (
+            !asset.animation &&
+            (frame.x || frame.y || frame.width !== file.width || frame.height !== file.height)
+          ) {
             report('decoding', localizedMessage('interface:presentation.preparingFrames'));
-            image = await cropImage(original, frame, { signal: controller.signal });
-            own(() => image.close?.());
+            if (actorHashes.has(hash)) {
+              const keepOriginal = actorLeases.get(hash).retain();
+              let cropStarted = false;
+              try {
+                const lease = await actorPool.acquire({
+                  key: `${hash}:${frame.x},${frame.y},${frame.width},${frame.height}`,
+                  width: frame.width,
+                  height: frame.height,
+                  signal: controller.signal,
+                  async load(signal) {
+                    // Transfer the existing hold into the codec. Taking it here
+                    // would race a cancelled caller before this microtask starts.
+                    cropStarted = true;
+                    try {
+                      return await cropImage(original, frame, { signal });
+                    } finally {
+                      keepOriginal();
+                    }
+                  },
+                });
+                image = lease.image;
+                own(lease.release);
+              } finally {
+                if (!cropStarted) keepOriginal();
+              }
+            } else {
+              image = await cropImage(original, frame, { signal: controller.signal });
+              own(() => image.close?.());
+            }
             cancelled(controller.signal);
             required(
               image.width === frame.width && image.height === frame.height,
               'Decoded presentation frame disagrees.',
             );
-            if (profile === 'full') visualBlob = await cropBlob(image, frame, document);
+            if (profile === 'full')
+              visualBlob = await cropBlob(image, frame, document, {
+                actorPool: actorHashes.has(hash) ? actorPool : null,
+                signal: controller.signal,
+              });
+            cancelled(controller.signal);
           }
           images[slot] = Object.freeze({ image, asset, geometry: imagePresentation(asset) });
           if (profile === 'full') {
@@ -627,6 +756,7 @@ export function createPresentationHost({
         const css = presentationCSSVariables(manifest.resolved);
         const snapshot = Object.freeze({
           manifestSha256,
+          actorArtBudget: actorPool.stats,
           source: manifest.source,
           resolved: manifest.resolved,
           canvas: canvasPresentation(manifest.resolved),

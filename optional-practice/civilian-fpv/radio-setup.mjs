@@ -10,6 +10,7 @@ import {
   radioProfileKey,
   radioSwitch,
   AXIS_RADIO_FORMAT,
+  ACTION_RADIO_FORMAT,
   STICK_LAYOUTS,
   createFlightProfileStore,
   defaultRadioProfile,
@@ -97,6 +98,7 @@ const COPY = {
     arm: 'Arm/disarm — switch ON enables flight; OFF stops motors',
     pause: 'Pause — freeze flight until resumed',
     resetAction: 'Reset level — restart this drill at the launch pad',
+    camera: 'View — switch ON, then OFF to cycle FPV / Chase / Overview',
     roll: 'Roll',
     pitch: 'Pitch',
     yaw: 'Yaw',
@@ -183,6 +185,7 @@ const COPY = {
     arm: 'Мотори — увімкнений перемикач дозволяє політ, вимкнений зупиняє мотори',
     pause: 'Пауза — призупинити політ до відновлення',
     resetAction: 'Скинути рівень — почати цю вправу зі стартового майданчика',
+    camera: 'Камера — увімкніть і вимкніть перемикач: FPV / За дроном / Огляд',
     roll: 'Крен',
     pitch: 'Тангаж',
     yaw: 'Рискання',
@@ -417,7 +420,7 @@ export function mountRadioSetup({
   const switchHeading = el('h3', copy.switches);
   const switchIntro = el('p', copy.switchStart);
   const switchFields = [];
-  for (const action of ['arm', 'pause', 'reset']) {
+  for (const action of ['arm', 'pause', 'reset', 'camera']) {
     const field = el('fieldset');
     switchFields.push(field);
     field.setAttribute('data-radio-switch', action);
@@ -489,6 +492,16 @@ export function mountRadioSetup({
       },
       field,
     );
+    if (action === 'camera')
+      button(
+        locale === 'uk' ? 'Не призначати перемикач камери' : 'Remove View switch',
+        () => {
+          stopCaptures();
+          node.value = '';
+          invalidate();
+        },
+        field,
+      );
     function updateSwitchFields() {
       const axis = source.value === 'axis';
       off.parentNode.hidden = on.parentNode.hidden = !axis;
@@ -589,11 +602,14 @@ export function mountRadioSetup({
     if (!pad) throw new Error(copy.pick);
     const numeric = (node) => (node.value.trim() === '' ? NaN : Number(node.value));
     return validateRadioProfile({
-      format: Object.values(switchRows).some(
-        (row) => row.button.value !== '' && row.source.value === 'axis',
-      )
-        ? AXIS_RADIO_FORMAT
-        : RADIO_FORMAT,
+      format:
+        switchRows.camera.button.value !== ''
+          ? ACTION_RADIO_FORMAT
+          : Object.values(switchRows).some(
+                (row) => row.button.value !== '' && row.source.value === 'axis',
+              )
+            ? AXIS_RADIO_FORMAT
+            : RADIO_FORMAT,
       id: 'usb-radio-v1',
       name: pad.id.slice(0, 120) || 'USB radio',
       device: radioDeviceIdentity(pad),
@@ -618,18 +634,24 @@ export function mountRadioSetup({
         }),
       ),
       switches: Object.fromEntries(
-        Object.entries(switchRows).map(([key, row]) => [
-          key,
-          row.button.value === ''
-            ? null
-            : row.source.value === 'axis'
-              ? { axis: Number(row.button.value), off: numeric(row.off), on: numeric(row.on) }
-              : {
-                  button: Number(row.button.value),
-                  threshold: numeric(row.threshold),
-                  invert: row.invert.checked,
-                },
-        ]),
+        Object.entries(switchRows)
+          .filter(([key, row]) => key !== 'camera' || row.button.value !== '')
+          .map(([key, row]) => [
+            key,
+            row.button.value === ''
+              ? null
+              : row.source.value === 'axis'
+                ? {
+                    axis: Number(row.button.value),
+                    off: numeric(row.off),
+                    on: numeric(row.on),
+                  }
+                : {
+                    button: Number(row.button.value),
+                    threshold: numeric(row.threshold),
+                    invert: row.invert.checked,
+                  },
+          ]),
       ),
     });
   }
@@ -813,7 +835,7 @@ export function mountRadioSetup({
     const parsed = JSON.parse(text);
     const draft = (p) => (p ? { ...validateRadioProfile(p), verified: false } : null);
     let value;
-    if (parsed.format === RADIO_FORMAT || parsed.format === AXIS_RADIO_FORMAT) {
+    if ([RADIO_FORMAT, AXIS_RADIO_FORMAT, ACTION_RADIO_FORMAT].includes(parsed.format)) {
       value = {
         format: 'FlightProfiles.v1',
         radio: draft(parsed),

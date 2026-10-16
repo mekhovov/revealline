@@ -3,6 +3,10 @@
 export const REWARD_BOARD_SECONDS = 2.4;
 export const REWARD_STORY_SECONDS = 3.8;
 export const REWARD_TRANSITION_MS = 650;
+// Let the completely uncovered picture breathe after the burst, then give the
+// player enough time to read the result before the next mission begins.
+export const REWARD_SETTLED_SECONDS = 1.2;
+export const RESULT_AUTO_ADVANCE_SECONDS = 4;
 
 export function advanceRewardAge(age, seconds, paused = false) {
   return paused ? age : age + Math.max(0, Math.min(Number.isFinite(seconds) ? seconds : 0, 0.1));

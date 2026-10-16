@@ -1,5 +1,8 @@
 // Same-site navigation between the regular game and its bundled simulator.
 import { saveAppearanceContext, resolveStoredAppearance } from './presentation/theme-system.mjs';
+import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
+export { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
+
 export function fpvLaunchURL(href, locale = 'en', appearanceDefault = null) {
   const game = new URL(href);
   if (!['http:', 'https:', 'file:', 'capacitor:'].includes(game.protocol)) return null;
@@ -7,7 +10,7 @@ export function fpvLaunchURL(href, locale = 'en', appearanceDefault = null) {
   const target = new URL('../optional-practice/civilian-fpv/index.html', game);
   target.searchParams.set('game-return', game.pathname + game.search);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
-  return appearanceLaunchURL(target.href, appearanceDefault);
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), game.href);
 }
 
 /** Cosmetic context only. A theme pin cannot select content, assets or audience. */
@@ -53,7 +56,9 @@ export function appearanceLaunchURL(
               : (localStorage ?? win.localStorage);
           for (const candidate of candidates) {
             if (kind === 'session' || candidate.family.id === activeId)
-              saveAppearanceContext(storage, candidate, { shared: kind === 'local' });
+              saveAppearanceContext(storage, candidate, {
+                shared: kind === 'local',
+              });
           }
         } catch {
           // Denied storage keeps the normal visible authored fallback available.
@@ -79,7 +84,7 @@ export function fpvWorldLaunchURL(href, locale = 'en', appearanceDefault = null)
   )
     return null;
   const match =
-    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?)?$/.exec(
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html)?$/.exec(
       game.pathname,
     );
   if (!match) return null;
@@ -87,7 +92,7 @@ export function fpvWorldLaunchURL(href, locale = 'en', appearanceDefault = null)
   target.searchParams.set('game-return', game.pathname + game.search + game.hash);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
   target.hash = 'learn';
-  return appearanceLaunchURL(target.href, appearanceDefault);
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), game.href);
 }
 
 export function fpvReturnURL(href) {
@@ -112,10 +117,12 @@ export function fpvReturnURL(href) {
         'snake/',
         'snake/index.html',
         'snake/play.html',
+        'overflight/play.html',
+        'overflight/raid.html',
       ].some((name) => target.pathname === gameRoot.pathname + name)
     )
       return null;
-    return target.href;
+    return nativeArtReviewURL(target.href, current.href);
   } catch {
     return null;
   }
@@ -137,14 +144,49 @@ export function snakeLaunchURL(href, mode = 'solo', locale = 'en', appearanceDef
   )
     return null;
   const match =
-    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?)?$/.exec(
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html)?$/.exec(
       current.pathname,
     );
   if (!match) return null;
   const target = new URL(`${match[1]}game/snake/play.html`, current);
   target.searchParams.set('mode', mode);
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
-  return appearanceLaunchURL(target.href, appearanceDefault);
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
+}
+
+/** Same-build survivor destination. Carry only the shared locale/artwork context. */
+export function overflightLaunchURL(href, locale = 'en', appearanceDefault = null) {
+  let current;
+  try {
+    current = new URL(href);
+  } catch {
+    return null;
+  }
+  if (
+    !['http:', 'https:', 'file:', 'capacitor:'].includes(current.protocol) ||
+    current.username ||
+    current.password
+  )
+    return null;
+  const match =
+    /^(.*\/)game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:(?:index|play|raid)\.html)?|studio\/(?:index|overflight|raid)\.html)?$/.exec(
+      current.pathname,
+    );
+  if (!match) return null;
+  const target = new URL(`${match[1]}game/overflight/play.html`, current);
+  target.searchParams.set('family', '1');
+  target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
+  return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
+}
+
+/** Raid shares the same native artwork/locale context, with its own rules identity. */
+export function overflightHuntLaunchURL(href, locale = 'en', appearanceDefault = null) {
+  const shared = overflightLaunchURL(href, locale, appearanceDefault);
+  if (!shared) return null;
+  const target = new URL(shared);
+  target.pathname = target.pathname.replace(/\/overflight\/play\.html$/, '/overflight/raid.html');
+  target.searchParams.delete('family');
+  return target.href;
 }
 
 /** Standalone SIM visits also need an exit without relying on browser chrome. */
@@ -157,6 +199,8 @@ export function fpvWorldReturnURL(href) {
   if (!match) return null;
   // A separately published practice package does not ship an arcade of its own.
   const root = match[1].replace(/practice\/fpv-worlds\/releases\/v\d+\.\d+\.\d+\/site\/$/, '');
-  return new URL(root + (root.includes('/editions/') ? 'game/company.html' : 'game/'), current)
-    .href;
+  return nativeArtReviewURL(
+    new URL(root + (root.includes('/editions/') ? 'game/company.html' : 'game/'), current).href,
+    current.href,
+  );
 }

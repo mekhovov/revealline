@@ -35,14 +35,15 @@ export function createCommunityLibrary({
   lockManager = globalThis.navigator?.locks,
 }) {
   required(
-    client && creatorStore && stateStore && downloadStore,
+    client && creatorStore && stateStore?.update && downloadStore,
     'Community library adapters are required.',
   );
   const classics =
     classicInstalled ?? (globalThis.indexedDB ? createCommunityClassicInstalled() : null);
   const natives =
     nativeInstalled ?? (globalThis.indexedDB ? createCommunityNativeInstalled() : null);
-  const isNative = (family) => ['team', 'fpv'].includes(family);
+  const isNative = (family) =>
+    ['team', 'fpv', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(family);
   const runtimeStorage = async (linked) => {
     const storage =
       linked.family === 'classic'
@@ -64,7 +65,13 @@ export function createCommunityLibrary({
         ? `../couch/relay-rescue.html?community-team=${linked.creatorEditionId}`
         : linked.family === 'fpv'
           ? `../../optional-practice/civilian-fpv/index.html?community-world=${encodeURIComponent(linked.runtimeIdentity)}&community-revision=${linked.creatorEditionId}`
-          : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
+          : linked.family === 'overflight-riy'
+            ? `../overflight/play.html?operation=riy&community=${encodeURIComponent(linked.runtimeIdentity)}`
+            : linked.family === 'overflight-hunt'
+              ? `../overflight/raid.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
+              : linked.family === 'overflight'
+                ? `../overflight/play.html?community=${encodeURIComponent(linked.runtimeIdentity)}`
+                : `../creator/player.html?edition=${encodeURIComponent(linked.creatorEditionId)}`;
   const runtimeExport = (linked) => {
     if (linked.family === 'classic') {
       required(classics, 'Classic community storage is unavailable.');
@@ -74,7 +81,9 @@ export function createCommunityLibrary({
       required(natives, 'Native community storage is unavailable.');
       return natives.export(linked);
     }
-    return exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, { decodeImage });
+    return exportInstalledCreatorBundle(creatorStore, linked.creatorEditionId, {
+      decodeImage,
+    });
   };
   const verifyPackage = async (edition, blob) => {
     const safe = validateCommunityEdition(edition);
@@ -94,11 +103,13 @@ export function createCommunityLibrary({
       ...(await installedCreatorManifests(creatorStore)).map((item) => item.editionId),
       ...(classics ? await classics.list() : []),
       ...(natives
-        ? await natives.list([...new Set(stateStore.read().editions.map((item) => item.family))])
+        ? await natives.list([
+            ...new Set((await stateStore.read()).editions.map((item) => item.family)),
+          ])
         : []),
     ]);
   async function status(editionId) {
-    const state = stateStore.read();
+    const state = await stateStore.read();
     const linked = association(state, editionId);
     const storage = linked ? await runtimeStorage(linked) : null;
     const installed = storage?.installed ?? false;
@@ -108,6 +119,7 @@ export function createCommunityLibrary({
       installed,
       offloaded: storage?.offloaded ?? false,
       manifestRetained: storage?.manifestRetained ?? false,
+      localCopyRetained: storage?.localCopyRetained ?? false,
       offlinePlayable: installed,
       creatorEditionId: linked?.creatorEditionId ?? null,
       ...(linked?.family ? { family: linked.family, runtimeIdentity: linked.runtimeIdentity } : {}),
@@ -148,12 +160,14 @@ export function createCommunityLibrary({
     // to retry. If the last journal write fails, status still discovers the
     // committed manifest by its immutable creator edition identity.
     await downloadStore.put(safe.editionId, blob);
-    const state = stateStore.read();
     const staged = {
       editionId: safe.editionId,
       creatorEditionId: prepared.editionId,
       ...(inspected.family !== 'creator'
-        ? { family: inspected.family, runtimeIdentity: inspected.runtimeIdentity }
+        ? {
+            family: inspected.family,
+            runtimeIdentity: inspected.runtimeIdentity,
+          }
         : {}),
       collectionId: safe.collectionId,
       slug: safe.slug,
@@ -162,27 +176,30 @@ export function createCommunityLibrary({
       installation: 'staged',
       installedAt: null,
     };
-    state.editions = [
-      ...state.editions.filter((item) => item.editionId !== safe.editionId),
-      staged,
-    ];
-    stateStore.write(state);
+    await stateStore.update((state) => {
+      state.editions = [
+        ...state.editions.filter((item) => item.editionId !== safe.editionId),
+        staged,
+      ];
+      return state;
+    });
     if (inspected.family === 'classic') review = await classics.install(inspected);
     else if (isNative(inspected.family)) review = await natives.install(inspected);
     else
       await installPreparedCreatorBundle(creatorStore, prepared, approval, review, { decodeImage });
-    state.editions = state.editions.map((item) =>
-      item.editionId === safe.editionId
-        ? {
-            ...item,
-            installation: 'installed',
-            installedAt: new Date().toISOString(),
-          }
-        : item,
-    );
     let journalComplete = true;
     try {
-      stateStore.write(state);
+      await stateStore.update((state) => {
+        const current = association(state, safe.editionId);
+        required(
+          current?.creatorEditionId === prepared.editionId &&
+            current.packageSha256 === safe.packageSha256,
+          'The installed association changed.',
+        );
+        current.installation = 'installed';
+        current.installedAt = new Date().toISOString();
+        return state;
+      });
     } catch {
       journalComplete = false;
     }
@@ -197,7 +214,7 @@ export function createCommunityLibrary({
     async catalog({ query = '', installed = 'all', cursor = null, limit = 20 } = {}) {
       required(['all', 'installed', 'available'].includes(installed), 'Catalog filter is invalid.');
       const page = await client.catalog({ query, cursor, limit });
-      const state = stateStore.read();
+      const state = await stateStore.read();
       const local = await installedSet();
       const needle = query.trim().toLocaleLowerCase();
       const rows = [];
@@ -236,9 +253,13 @@ export function createCommunityLibrary({
             installed: isInstalled,
             offloaded: storage?.offloaded ?? false,
             manifestRetained: storage?.manifestRetained ?? false,
+            localCopyRetained: storage?.localCopyRetained ?? false,
             creatorEditionId: linked?.creatorEditionId ?? null,
             ...(linked?.family
-              ? { family: linked.family, runtimeIdentity: linked.runtimeIdentity }
+              ? {
+                  family: linked.family,
+                  runtimeIdentity: linked.runtimeIdentity,
+                }
               : {}),
             attemptKey: linked
               ? linked.family === 'classic'
@@ -346,7 +367,7 @@ export function createCommunityLibrary({
     async retainFromInstalled(edition) {
       const safe = validateCommunityEdition(edition);
       return withEditionLock(safe.editionId, async () => {
-        const state = stateStore.read();
+        const state = await stateStore.read();
         const linked = association(state, safe.editionId);
         required(linked, 'This community edition has not been installed on this device.');
         const blob = await runtimeExport(linked);
@@ -385,6 +406,7 @@ export function createCommunityLibrary({
         generation: creatorReview.generation,
         detachableBytes: creatorReview.detachableBytes,
         detachedAssets: creatorReview.detachedAssets,
+        localCopyRetained: creatorReview.localCopyRetained ?? false,
         manifestRetained: true,
       });
       offloadReviews.set(review, { safe, creatorReview });
@@ -412,11 +434,18 @@ export function createCommunityLibrary({
           current.installed && current.creatorEditionId === review.creatorEditionId,
           'The installed edition changed. Review offloading again.',
         );
-        const pending = stateStore.read();
-        pending.editions = pending.editions.map((item) =>
-          item.editionId === safe.editionId ? { ...item, installation: 'offloading' } : item,
-        );
-        stateStore.write(pending);
+        const setInstallation = (installation) =>
+          stateStore.update((state) => {
+            const item = association(state, safe.editionId);
+            required(
+              item?.creatorEditionId === review.creatorEditionId &&
+                item.packageSha256 === safe.packageSha256,
+              'The installed association changed.',
+            );
+            item.installation = installation;
+            return state;
+          });
+        await setInstallation('offloading');
         try {
           if (approved.creatorReview.family === 'classic')
             await classics.offload(approved.creatorReview);
@@ -425,30 +454,27 @@ export function createCommunityLibrary({
           else await offloadInstalledCreatorBundle(creatorStore, approved.creatorReview);
         } catch (error) {
           try {
-            pending.editions = pending.editions.map((item) =>
-              item.editionId === safe.editionId ? { ...item, installation: 'installed' } : item,
-            );
-            stateStore.write(pending);
+            await setInstallation('installed');
           } catch {}
           throw error;
         }
-        const state = stateStore.read();
-        state.editions = state.editions.map((item) =>
-          item.editionId === safe.editionId ? { ...item, installation: 'offloaded' } : item,
-        );
         let journalComplete = true;
         try {
-          stateStore.write(state);
+          await setInstallation('offloaded');
         } catch {
           journalComplete = false;
         }
-        return Object.freeze({ ...(await status(safe.editionId)), journalComplete });
+        return Object.freeze({
+          ...(await status(safe.editionId)),
+          journalComplete,
+        });
       });
     },
     status,
     close: () => {
       classics?.close();
       natives?.close();
+      stateStore.close?.();
     },
   });
 }

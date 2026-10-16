@@ -35,4 +35,34 @@ them and replays again. It never appends to the core packed registry.
 
 The committed archive is 260,391 bytes. SHA-256:
 `715a45515c572ab559ca95362585f5665f6297f7fcd410b3c4d7474cf8ac36aa`.
-The 60 Adventure authoring proofs are a later optional-data increment.
+
+## Adventure examples: both modes
+
+[Download the Adventure examples](adventures-v1.json) (use **Download raw file**
+in GitHub). This optional file contains 60 demonstrations: Acro and Self-level
+for each of the 30 existing Adventure challenges across Coast, Quarry, Rooftops,
+Rail Depot, Orchard and Solar Farm. It adds no challenges and leaves the original
+178 bundled examples unchanged.
+
+Import the JSON through **Library → Import recordings / examples**. Choose
+**Acro** or **Self-level** in Settings, then use the challenge's **Watch
+demonstration** action in the world catalogue. The player checks the exact
+installed course, pack, physics, controls and final state before enabling the
+example. Watching is unscored and does not earn notebook progress or rewards.
+All examples complete with zero contacts. Six laser-duel recordings retain their
+original reduced-health outcomes; they are completed examples, not perfect runs.
+
+This is optional data, separate from the core download and offline precache.
+An import uses the existing recording-library limits; keep the JSON as a portable
+backup and pin examples you want to retain. Reproduce the conversion and all
+60 original plus 60 imported physics replays without generating new controls:
+
+```sh
+node scripts/convert-fpv-adventure-examples.mjs --out /tmp/NEW-ADVENTURE-EXAMPLES
+```
+
+The converter authenticates the retained authoring ZIP, checks every original
+member, and exports the existing `FPVProofArchive.v2` format. The committed JSON
+is 4,637,320 bytes. SHA-256:
+`c9734dcf05fcfc87a42960daad05e3b594e938dcfeb44624305802972aad5ca3`.
+See [qualification and limits](../../../../docs/fpv-adventure-optional-examples.md).

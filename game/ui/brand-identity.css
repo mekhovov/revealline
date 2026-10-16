@@ -65,3 +65,35 @@
     }
   }
 }
+
+/* A wordmark already contains the identity symbol. Keep it on one baseline
+   and override the generic action icon, including compact gameplay headers. */
+body.field-kit.game-shell #shell-menu:has(.fpv-line-wordmark),
+.mode-play-shell .mode-play-brand-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: clamp(100px, 18vw, 192px);
+  min-width: 100px;
+  min-height: 44px;
+  height: 44px;
+  padding: 6px 8px;
+  line-height: 1;
+}
+body.field-kit.game-shell #shell-menu:has(.fpv-line-wordmark)::before,
+body.field-kit.game-shell #shell-menu:has(.fpv-line-wordmark)::after,
+.mode-play-shell .mode-play-brand-button::before,
+.mode-play-shell .mode-play-brand-button::after {
+  display: none;
+  content: none;
+}
+body.field-kit.game-shell #shell-menu .fpv-line-brand,
+body.field-kit.game-shell #shell-menu .fpv-line-wordmark,
+.mode-play-shell .mode-play-brand-button .fpv-line-wordmark {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  margin: 0;
+}

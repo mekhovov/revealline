@@ -23,8 +23,11 @@ export function installOptionalLauncher(
         'Open the available version, then choose Prepare offline. Your existing version stays available.',
       error: 'This version is unavailable. Previously prepared practice remains available.',
       offline: 'Ready offline',
+      checking: 'Checking prepared versions…',
+      unverified:
+        'Offline verification could not finish. Check again. Your saved versions have not been removed.',
       repair:
-        'Needs repair: a saved installation has missing files or no owning worker. Open online and download again.',
+        'Needs repair: a saved installation has missing files or no owning worker. Remove this offline copy, then download it again.',
       available: 'Available online. Choose Download for offline use to prepare this version.',
       update:
         'Update available. Your prepared version remains available; no running flight will reload.',
@@ -51,8 +54,11 @@ export function installOptionalLauncher(
         'Відкрийте доступну версію та виберіть підготовку офлайн. Попередня версія залишається доступною.',
       error: 'Ця версія недоступна. Раніше підготовлена практика залишається доступною.',
       offline: 'Готово офлайн',
+      checking: 'Перевірка підготовлених версій…',
+      unverified:
+        'Не вдалося завершити офлайн-перевірку. Перевірте ще раз. Збережені версії не видалено.',
       repair:
-        'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Відкрийте онлайн і завантажте знову.',
+        'Потрібне відновлення: у збереженій версії бракує файлів або власного воркера. Видаліть цю офлайн-копію, потім завантажте її знову.',
       available:
         'Доступно онлайн. Виберіть «Завантажити для роботи офлайн» для підготовки цієї версії.',
       update:
@@ -77,9 +83,12 @@ export function installOptionalLauncher(
       ? 'uk'
       : 'en';
   let prepared = null,
+    retained = null,
     available = null,
     repairReference = null,
     launcherReady = false,
+    verificationUnknown = false,
+    verificationUnavailable = false,
     stateKey = 'status';
   const entryURL = (value) => {
     const url = new URL(value.entry, value.scope);
@@ -126,6 +135,7 @@ export function installOptionalLauncher(
       if ($('support')) $('support').href = description.support;
     }
     if (prepared) $('open').href = entryURL(prepared);
+    if (retained) $('previous').href = entryURL(retained);
     if (available) $('prepare').href = entryURL(available);
     if ($('download')) $('download').hidden = !available;
     if ($('remove')) $('remove').hidden = !prepared && stateKey !== 'repair';
@@ -144,12 +154,23 @@ export function installOptionalLauncher(
   }
   const validate = (value) =>
     validateOptionalInstallationReference(value, { packageId, root, baseURL: location.href });
+  const readiness = async (base) => {
+    const result = await inspectOptionalOffline?.(base, { detailed: true });
+    if (result === true) return 'ready';
+    if (result === false) return 'unavailable';
+    return ['ready', 'unavailable'].includes(result?.status) ? result.status : 'unknown';
+  };
+  let restoreRevision = 0;
   async function restore() {
-    prepared = null;
-    repairReference = null;
-    $('open').hidden = true;
-    $('previous').hidden = true;
-    stateKey = available ? 'available' : 'status';
+    const revision = ++restoreRevision;
+    const entries = [];
+    let invalid = false,
+      shell = 'absent';
+    // Each action belongs to its own verified package. A stalled retained copy
+    // or launcher-shell check must not conceal a ready active package (or vice versa).
+    // The aggregate status stays Checking until all checks finish.
+    stateKey = 'checking';
+    render();
     try {
       const state = JSON.parse(
         localStorage.getItem(optionalInstallationKey(packageId, root)) ?? '{}',
@@ -159,30 +180,81 @@ export function installOptionalLauncher(
         ['previous', 'previous'],
       ])
         if (state[key]) {
-          const value = validate(state[key]);
-          const ready = await inspectOptionalOffline?.(
-            new URL('./', new URL(value.entry, value.scope)),
-          );
-          if (!ready) {
-            stateKey = 'repair';
-            repairReference ??= value;
-            continue;
+          try {
+            const value = validate(state[key]);
+            entries.push({
+              key,
+              element,
+              value,
+              status: 'pending',
+              previouslyVerified: !$(element).hidden && $(element).href === entryURL(value),
+            });
+          } catch {
+            invalid = true;
           }
-          if (key === 'active') {
-            prepared = value;
-            stateKey = 'offline';
-          }
-          $(element).href = entryURL(value);
-          $(element).hidden = false;
         }
     } catch {
-      /* Bad storage leaves all launch actions hidden. */
+      invalid = true;
     }
-    if (prepared) {
-      launcherReady = await inspectOptionalOffline?.(new URL('./', location.href));
-      if (!launcherReady) stateKey = 'repair';
-    }
-    render();
+    const active = entries.find((entry) => entry.key === 'active');
+    if (active) shell = 'pending';
+    const publish = () => {
+      if (revision !== restoreRevision || hidden) return;
+      prepared = null;
+      retained = null;
+      repairReference = null;
+      for (const element of ['open', 'previous']) {
+        const entry = entries.find((item) => item.element === element);
+        const usable =
+          entry &&
+          (entry.status === 'ready' ||
+            (['pending', 'unknown'].includes(entry.status) && entry.previouslyVerified));
+        $(element).hidden = !usable;
+        if (usable) {
+          $(element).href = entryURL(entry.value);
+          if (entry.key === 'active') prepared = entry.value;
+          else retained = entry.value;
+        }
+        if (entry?.status === 'unavailable') repairReference ??= entry.value;
+      }
+      launcherReady = shell === 'ready';
+      verificationUnknown =
+        entries.some((entry) => entry.status === 'unknown') || (!!prepared && shell === 'unknown');
+      verificationUnavailable = !!repairReference || (!!prepared && shell === 'unavailable');
+      stateKey =
+        entries.some((entry) => entry.status === 'pending') || shell === 'pending'
+          ? 'checking'
+          : verificationUnavailable
+            ? 'repair'
+            : verificationUnknown
+              ? 'unverified'
+              : invalid
+                ? 'error'
+                : prepared
+                  ? 'offline'
+                  : available
+                    ? 'available'
+                    : 'status';
+      render();
+    };
+    publish();
+    await Promise.all([
+      ...entries.map(async (entry) => {
+        entry.status = await readiness(
+          new URL('./', new URL(entry.value.entry, entry.value.scope)),
+        ).catch(() => 'unknown');
+        publish();
+      }),
+      ...(active
+        ? [
+            (async () => {
+              shell = await readiness(new URL('./', location.href)).catch(() => 'unknown');
+              publish();
+            })(),
+          ]
+        : []),
+    ]);
+    return revision === restoreRevision && !hidden;
   }
   $('locale').value = locale;
   $('locale').onchange = () => {
@@ -190,10 +262,12 @@ export function installOptionalLauncher(
     render();
   };
   let busy = false,
+    checking = false,
     activeRequest = null,
     hidden = false;
   globalThis.addEventListener?.('pagehide', () => {
     hidden = true;
+    restoreRevision++;
     activeRequest?.abort();
   });
   globalThis.addEventListener?.('pageshow', () => {
@@ -201,6 +275,7 @@ export function installOptionalLauncher(
   });
   const check = async (play = false) => {
     if (busy) return;
+    const revision = restoreRevision;
     busy = true;
     $('check').disabled = true;
     const controller = new AbortController();
@@ -233,7 +308,7 @@ export function installOptionalLauncher(
       } finally {
         await reader.cancel().catch(() => {});
       }
-      if (hidden || controller.signal.aborted) return;
+      if (hidden || revision !== restoreRevision || controller.signal.aborted) return;
       const bytes = new Uint8Array(size);
       let offset = 0;
       for (const chunk of chunks) {
@@ -244,9 +319,10 @@ export function installOptionalLauncher(
       available = value;
       $('prepare').href = entryURL(value);
       $('prepare').hidden = false;
-      stateKey =
-        prepared && !launcherReady
-          ? 'repair'
+      stateKey = verificationUnavailable
+        ? 'repair'
+        : verificationUnknown
+          ? 'unverified'
           : prepared
             ? prepared.version !== value.version
               ? 'update'
@@ -255,8 +331,16 @@ export function installOptionalLauncher(
       render();
       if (play) location.assign(entryURL(value));
     } catch {
-      if (!hidden) {
-        stateKey = prepared ? (launcherReady ? 'offline' : 'repair') : 'error';
+      if (!hidden && revision === restoreRevision) {
+        stateKey = verificationUnavailable
+          ? 'repair'
+          : verificationUnknown
+            ? 'unverified'
+            : prepared
+              ? launcherReady
+                ? 'offline'
+                : 'repair'
+              : 'error';
         render();
         if (play && prepared) location.assign(entryURL(prepared));
       }
@@ -267,13 +351,21 @@ export function installOptionalLauncher(
       $('check').disabled = false;
     }
   };
-  $('check').onclick = async () => {
-    await restore();
-    return check(false);
+  const refresh = async (play = false) => {
+    if (busy || checking) return;
+    checking = true;
+    $('check').disabled = true;
+    try {
+      if (await restore()) await check(play);
+    } finally {
+      checking = false;
+      $('check').disabled = false;
+    }
   };
+  $('check').onclick = () => refresh(false);
   if ($('download'))
     $('download').onclick = async () => {
-      if (!available || busy) return;
+      if (!available || busy || checking) return;
       busy = true;
       $('download').disabled = true;
       try {
@@ -293,7 +385,7 @@ export function installOptionalLauncher(
   if ($('remove'))
     $('remove').onclick = async () => {
       const value = repairReference ?? prepared;
-      if (!value || busy) return;
+      if (!value || busy || checking) return;
       busy = true;
       try {
         await removeOptionalOffline({ packageId, location: { href: entryURL(value) } });
@@ -327,11 +419,7 @@ export function installOptionalLauncher(
   render();
   mountPracticeNavigation?.();
   // Unknown query parameters cannot select a route or arm a flight.
-  return restore().then(() => {
-    if (query.get('action') === 'play') {
-      globalThis.history?.replaceState(null, '', '?lang=' + locale);
-      return check(true);
-    }
-    return check(false);
-  });
+  const play = query.get('action') === 'play';
+  if (play) globalThis.history?.replaceState(null, '', '?lang=' + locale);
+  return refresh(play);
 }

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Native world painter review</title>
+    <style>
+      body {
+        margin: 0;
+        background: #101815;
+        color: #e5e6cb;
+        font: 14px monospace;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px;
+      }
+      h1 {
+        margin: 0 0 4px;
+        font-size: 17px;
+      }
+      p {
+        margin: 0;
+        color: #b5bfae;
+      }
+      a {
+        color: #e8c56d;
+      }
+      #download {
+        border: 1px solid #677159;
+        padding: 10px 12px;
+        white-space: nowrap;
+      }
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        padding: 0 12px 12px;
+      }
+      input,
+      button {
+        font: inherit;
+        background: #19231d;
+        color: #e5e6cb;
+        border: 1px solid #677159;
+        padding: 7px;
+      }
+      input {
+        width: 260px;
+        max-width: 65vw;
+      }
+      .play-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 12px;
+        padding: 0 8px 10px;
+      }
+      .play-links a {
+        padding: 5px 0;
+      }
+      .tactic {
+        padding: 6px 0 2px;
+        line-height: 1.5;
+      }
+      main {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 2160px;
+        margin: auto;
+        padding: 0 12px 12px;
+      }
+      figure {
+        margin: 0;
+        min-width: 0;
+        background: #19231d;
+      }
+      figcaption {
+        min-height: 38px;
+        padding: 7px 8px;
+        overflow-wrap: anywhere;
+      }
+      figcaption small {
+        display: block;
+        color: #a6b19e;
+        font-size: 10px;
+        padding-top: 3px;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        image-rendering: pixelated;
+      }
+      @media (max-width: 640px) {
+        main {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Six worlds · native painter reference</h1>
+        <p>
+          Art overview, not gameplay footage. <a href="?crops">Six camera crops</a> ·
+          <a href="?">All 18 layouts</a>
+        </p>
+        <p>
+          Open an operation, then Start. Marathon visits all three layouts in the selected world.
+        </p>
+      </div>
+      <a id="download" aria-disabled="true">Preparing overview…</a>
+    </header>
+    <form id="review-server">
+      <label for="review-origin">Game site base URL</label>
+      <input id="review-origin" type="url" value="http://127.0.0.1:8911/" required />
+      <button type="submit">Update links</button>
+      <span id="link-status" role="status"></span>
+    </form>
+    <main></main>
+    <script type="module">
+      import {
+        OVERFLIGHT_BATTLEFIELDS,
+        createOverflightBattlefield,
+      } from '../../../../../game/overflight/battlefields.mjs';
+      import { createOverflightWorldPresentation } from '../../../../../game/overflight/worlds.mjs';
+      import { paintOverflightWorld } from '../../../../../game/presentation/overflight-world-art.mjs';
+      import { OVERFLIGHT_OPERATIONS } from '../../../../../game/overflight/operation-view.mjs';
+      const params = new URL(location.href).searchParams;
+      const crops = params.has('crops');
+      // Review copy describes the authored routes and solid footprints above;
+      // it does not promise a particular enemy outcome or prescribe a winning build.
+      const tactics = {
+        'field-crossing-broken-crossroads':
+          'Open diagonal crossings reward broad passes and quick changes of heading.',
+        'field-crossing-shelterbelt-gaps':
+          'Three staggered cover islands break up the approach; switch between the wide gaps.',
+        'field-crossing-supply-orchard-edge':
+          'Four alternating cover islands invite a sweeping route through the open centre.',
+        'freight-depot-shunting-yard':
+          'A clear cross-yard route meets a dogleg; use the loading block to change your approach.',
+        'freight-depot-loading-loop':
+          'Circle the central loading compound, then leave the loop for a fresh attack angle.',
+        'freight-depot-dispatch-junction':
+          'Two breakable barriers offer extra approaches between staggered dispatch positions.',
+        'relay-ruins-antenna-court':
+          'An open northern court and a southern detour offer different interception angles.',
+        'relay-ruins-split-compound':
+          'Two broad compounds split the route; change sides through the central passage.',
+        'relay-ruins-receiver-gardens':
+          'Alternate between four receiver islands instead of committing to one long lane.',
+        'river-port-pump-apron':
+          'A broad southern apron leaves room to sweep; the northern pump position adds a detour.',
+        'river-port-twin-docks':
+          'Two dock blocks create offset crossings; weave between their upper and lower approaches.',
+        'river-port-floodgate-yard':
+          'Six cover islands frame a clear central lane and a loop for changing attack direction.',
+        'chalk-quarry-survey-basin':
+          'An open basin supports a broad perimeter sweep or a direct pass through the middle.',
+        'chalk-quarry-haul-switchbacks':
+          'Staggered quarry blocks bend the routes; link the gaps with deliberate heading changes.',
+        'chalk-quarry-reclaimer-court':
+          'A large central compound separates upper and lower approaches; choose when to cross.',
+        'orchard-strongpoint-harvest-clearing':
+          'An open northern sweep meets a lower orchard detour for return passes.',
+        'orchard-strongpoint-irrigation-courts':
+          'Four staggered irrigation blocks create successive openings to sweep and revisit.',
+        'orchard-strongpoint-glasshouse-ruins':
+          'Three glasshouse blocks divide the middle; alternate upper and lower attack routes.',
+      };
+      const operationNames = {
+        overflight: 'Single Drone',
+        'overflight-riy': 'Riy',
+        'overflight-hunt': 'Raid',
+        'time-attack': 'Time Attack',
+        marathon: 'Marathon',
+      };
+      const launchLinks = [];
+      let entries = OVERFLIGHT_BATTLEFIELDS;
+      if (params.has('world'))
+        entries = entries.filter((entry) => entry.world === params.get('world'));
+      if (crops) entries = entries.filter((entry, index) => index % 3 === 1);
+      const canvases = [];
+      for (const entry of entries) {
+        const layout = createOverflightBattlefield(entry.id);
+        const presentation = createOverflightWorldPresentation(entry.world, layout.arena, {
+          layout,
+        });
+        const figure = document.createElement('figure');
+        const caption = document.createElement('figcaption');
+        const detail = document.createElement('small');
+        const tactic = document.createElement('p');
+        tactic.className = 'tactic';
+        tactic.textContent = tactics[entry.id];
+        const canvas = document.createElement('canvas');
+        caption.textContent = entry.title.en;
+        detail.textContent = entry.id;
+        caption.append(detail, tactic);
+        const links = document.createElement('nav');
+        links.className = 'play-links';
+        links.setAttribute('aria-label', `Play ${entry.title.en}`);
+        for (const operation of OVERFLIGHT_OPERATIONS) {
+          const link = document.createElement('a');
+          link.textContent = operationNames[operation.id];
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.setAttribute('aria-label', `${operationNames[operation.id]} · ${entry.title.en}`);
+          links.append(link);
+          launchLinks.push({ link, operation, layout: entry.id });
+        }
+        canvas.width = crops ? 960 : layout.arena.width;
+        canvas.height = crops ? 540 : layout.arena.height;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        if (crops) ctx.translate(-960, -270);
+        paintOverflightWorld(ctx, presentation, layout.arena);
+        figure.append(caption, canvas, links);
+        document.querySelector('main').append(figure);
+        canvases.push({ canvas, entry });
+      }
+      function updateLaunchLinks(event) {
+        event?.preventDefault();
+        const input = document.querySelector('#review-origin');
+        const status = document.querySelector('#link-status');
+        try {
+          const siteBase = new URL(input.value);
+          if (!['http:', 'https:'].includes(siteBase.protocol)) throw Error('Invalid site URL');
+          siteBase.search = '';
+          siteBase.hash = '';
+          if (!siteBase.pathname.endsWith('/')) siteBase.pathname += '/';
+          const gameBase = new URL('game/overflight/', siteBase);
+          for (const { link, operation, layout } of launchLinks) {
+            const target = new URL(operation.path, gameBase);
+            target.searchParams.set('layout', layout);
+            target.searchParams.set('lang', 'en');
+            target.searchParams.set('seed', '17031991');
+            link.href = target.href;
+          }
+          input.value = siteBase.href;
+          status.textContent = event ? 'Play links updated.' : '';
+        } catch {
+          status.textContent = 'Enter an HTTP or HTTPS site base URL, including any path prefix.';
+        }
+      }
+      document.querySelector('#review-server').addEventListener('submit', updateLaunchLinks);
+      updateLaunchLinks();
+      // Export exactly the displayed painter canvases. No browser capture or asset substitution.
+      const tileWidth = crops ? 960 : 1440;
+      const tileHeight = 540;
+      const captionHeight = 58;
+      const gap = 12;
+      const headerHeight = 58;
+      const columns = Math.min(3, Math.max(1, canvases.length));
+      const overview = document.createElement('canvas');
+      overview.width = columns * (tileWidth + gap) + gap;
+      overview.height =
+        headerHeight +
+        Math.ceil(canvases.length / columns) * (tileHeight + captionHeight + gap) +
+        gap;
+      const output = overview.getContext('2d');
+      output.imageSmoothingEnabled = false;
+      output.fillStyle = '#101815';
+      output.fillRect(0, 0, overview.width, overview.height);
+      output.fillStyle = '#e5e6cb';
+      output.font = '22px monospace';
+      output.fillText('FPV Survivals · native painter reference · not gameplay footage', gap, 35);
+      canvases.forEach(({ canvas, entry }, index) => {
+        const x = gap + (index % columns) * (tileWidth + gap);
+        const y = headerHeight + Math.floor(index / columns) * (tileHeight + captionHeight + gap);
+        output.fillStyle = '#e5e6cb';
+        output.font = '22px monospace';
+        output.fillText(entry.title.en, x + 8, y + 24);
+        output.fillStyle = '#a6b19e';
+        output.font = '15px monospace';
+        output.fillText(entry.id, x + 8, y + 45);
+        output.drawImage(canvas, x, y + captionHeight, tileWidth, tileHeight);
+      });
+      overview.toBlob((blob) => {
+        const download = document.querySelector('#download');
+        if (!blob) {
+          download.textContent = 'PNG export unavailable';
+          return;
+        }
+        download.href = URL.createObjectURL(blob);
+        download.download = crops
+          ? 'fpv-survivals-six-world-crops.png'
+          : 'fpv-survivals-18-layouts.png';
+        download.textContent = 'Download overview PNG';
+        download.removeAttribute('aria-disabled');
+        addEventListener('pagehide', () => URL.revokeObjectURL(download.href), { once: true });
+        document.documentElement.dataset.ready = 'true';
+      }, 'image/png');
+    </script>
+  </body>
+</html>

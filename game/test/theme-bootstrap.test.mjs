@@ -14,7 +14,9 @@ import {
   presentationThemeVariables,
   resolveStoredAppearance,
   resolveThemeFamilySelection,
+  createThemePreferences,
 } from '../presentation/theme-system.mjs';
+import { createDisplayPreferences } from '../display-preferences.mjs';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const source = await fs.readFile(path.join(root, 'game/presentation/theme-bootstrap.mjs'), 'utf8');
@@ -192,6 +194,33 @@ test('read-only startup matches runtime migration for new, existing, damaged and
   assert.equal(seed({}, { brokenStorage: true }).dataset.interfaceTheme, 'industrial-workshop');
 });
 
+test('changing shared accessibility preferences does not change theme intent in the next game', () => {
+  const records = {},
+    writes = [];
+  const storage = {
+    getItem: (key) => records[key] ?? null,
+    setItem(key, value) {
+      records[key] = value;
+      writes.push(key);
+    },
+  };
+  const firstTheme = createThemePreferences({ window: null, getStorage: () => storage });
+  const display = createDisplayPreferences({ window: null, getStorage: () => storage });
+  const before = firstTheme.snapshot();
+  display.set({ textFace: 'plain', textSize: 'large', reducedEffects: true });
+  const nextTheme = createThemePreferences({ window: null, getStorage: () => storage });
+  assert.deepEqual(nextTheme.snapshot(), before);
+  assert.equal(nextTheme.snapshot().familyId, 'follow-game');
+  assert.deepEqual(writes, ['revealline.display.v1'], 'Accessibility does not write theme intent.');
+  const painted = seed(records);
+  assert.equal(painted.dataset.interfaceTheme, 'industrial-workshop');
+  assert.equal(painted.dataset.themeTextSize, 'large');
+  assert.equal(painted.dataset.themeMotion, 'reduced');
+  display.dispose();
+  firstTheme.dispose();
+  nextTheme.dispose();
+});
+
 test('first-paint density, motion, legibility and cosmetic context use bounded canonical choices', () => {
   const records = {
     'revealline.appearance.v2': raw(preference('dos', { opaqueHud: true })),
@@ -302,8 +331,18 @@ test('every production game, authoring and site entry seeds appearance before ot
       tree = parse(html, { sourceCodeLocationInfo: true });
     const scripts = nodes(tree, 'script');
     const bootstrap = scripts.find((node) => attr(node, 'src')?.endsWith('theme-bootstrap.mjs'));
+    const accessGate = scripts.find((node) => attr(node, 'src')?.endsWith('access-gate.mjs'));
     assert.ok(bootstrap, path.relative(root, file));
-    assert.equal(attr(bootstrap, 'type'), undefined, 'bootstrap is synchronous classic code');
+    if (accessGate) {
+      assert.equal(attr(bootstrap, 'type'), 'application/x-revealline-locked');
+      assert.equal(attr(bootstrap, 'data-access-type'), '');
+      assert.ok(
+        accessGate.sourceCodeLocation.startOffset < bootstrap.sourceCodeLocation.startOffset,
+        `${file}: access gate precedes held appearance startup`,
+      );
+    } else {
+      assert.equal(attr(bootstrap, 'type'), undefined, 'bootstrap is synchronous classic code');
+    }
     assert.equal(attr(bootstrap, 'defer'), undefined);
     assert.equal(attr(bootstrap, 'async'), undefined);
     const styles = nodes(tree, 'link').filter((node) => attr(node, 'rel') === 'stylesheet');
@@ -313,7 +352,12 @@ test('every production game, authoring and site entry seeds appearance before ot
     );
     const inlineStyles = library.includes(file) ? nodes(tree, 'style') : [];
     for (const resource of [...scripts, ...styles, ...inlineStyles]) {
-      if (resource === bootstrap) continue;
+      if (
+        resource === bootstrap ||
+        resource === accessGate ||
+        (accessGate && attr(resource, 'href')?.endsWith('access-gate.css'))
+      )
+        continue;
       assert.ok(
         bootstrap.sourceCodeLocation.startOffset < resource.sourceCodeLocation.startOffset,
         `${file}: seed precedes resources`,

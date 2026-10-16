@@ -46,10 +46,7 @@ const fixture = () => ({
         id: 'tooling:artwork',
         category: 'tooling',
         requires: [],
-        files: [
-          'game/content-design/assets/shared.png',
-          'game/content-design/assets/unused.png',
-        ],
+        files: ['game/content-design/assets/shared.png', 'game/content-design/assets/unused.png'],
       },
     ],
     missions: [{ groups: ['chapter:current'] }, { groups: ['archive:old'] }],
@@ -69,16 +66,22 @@ const fixture = () => ({
 test('main Pages keeps current content and omits archive and exclusive unused artwork', () => {
   const { entries, catalogue, artwork } = fixture();
   assert.equal(applyPublicationProfile(entries, catalogue, 'main-pages', artwork), null);
-  assert.deepEqual(entries.map((entry) => entry.name), [
-    'game/index.html',
-    'game/content-design/runtime/current.json',
-    'game/content-design/assets/shared.png',
-  ]);
-  assert.deepEqual(catalogue.files.map((file) => file.path), [
-    'game/content-design/runtime/current.json',
-    'game/content-design/assets/shared.png',
-  ]);
-  assert.deepEqual(catalogue.groups.map((group) => group.id), ['shared', 'chapter:current']);
+  assert.deepEqual(
+    entries.map((entry) => entry.name),
+    [
+      'game/index.html',
+      'game/content-design/runtime/current.json',
+      'game/content-design/assets/shared.png',
+    ],
+  );
+  assert.deepEqual(
+    catalogue.files.map((file) => file.path),
+    ['game/content-design/runtime/current.json', 'game/content-design/assets/shared.png'],
+  );
+  assert.deepEqual(
+    catalogue.groups.map((group) => group.id),
+    ['shared', 'chapter:current'],
+  );
   assert.deepEqual(catalogue.missions, [{ groups: ['chapter:current'] }]);
   assert.deepEqual(catalogue.destinations, [
     { routeId: 'current', groups: ['chapter:current'], runtimeGroups: ['shared'] },

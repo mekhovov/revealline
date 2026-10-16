@@ -1,0 +1,95 @@
+{
+  "format": "fpv-hunt-momentum-catalogue.v1",
+  "sourceFiles": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "6283394f54747669ee980c692e7a5bdf9ae56bc21b33e593f77e314571ba2022"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "626563d18b6180f009aaac8ed5d599069e62b25a1a35af6a860a85a30b12b6d8"
+    }
+  ],
+  "passed": true,
+  "checks": 24,
+  "rows": [
+    {
+      "kind": "read-only-runtime-identity",
+      "beforePhysicsInitialization": true,
+      "variants": [
+        {
+          "kind": "momentum",
+          "mode": "self-level",
+          "model": "civilian-world-hunt.v2"
+        },
+        {
+          "kind": "momentum",
+          "mode": "acro",
+          "model": "civilian-world-hunt.v2"
+        },
+        {
+          "kind": "mixed-mode",
+          "mode": "self-level",
+          "model": "civilian-world-hunt.v2"
+        },
+        {
+          "kind": "mixed-mode",
+          "mode": "acro",
+          "model": "civilian-world-hunt.v1"
+        },
+        {
+          "kind": "ordinary-Hunt",
+          "mode": "self-level",
+          "model": "civilian-world-hunt.v1"
+        },
+        {
+          "kind": "ordinary-Hunt",
+          "mode": "acro",
+          "model": "civilian-world-hunt.v1"
+        },
+        {
+          "kind": "pursuit-v1",
+          "mode": "self-level",
+          "model": "civilian-world-pursuit.v1"
+        },
+        {
+          "kind": "pursuit-v1",
+          "mode": "acro",
+          "model": "civilian-world-pursuit.v1"
+        },
+        {
+          "kind": "pursuit-v2",
+          "mode": "self-level",
+          "model": "civilian-world-pursuit.v2"
+        },
+        {
+          "kind": "pursuit-v2",
+          "mode": "acro",
+          "model": "civilian-world-pursuit.v2"
+        },
+        {
+          "kind": "ordinary",
+          "mode": "self-level",
+          "model": "civilian-world-fixed.v2"
+        },
+        {
+          "kind": "ordinary",
+          "mode": "acro",
+          "model": "civilian-world-fixed.v2"
+        }
+      ]
+    },
+    {
+      "kind": "mounted-import",
+      "packInstalled": true,
+      "wrongModelRejected": true,
+      "verifiedExamples": 2,
+      "watchModes": ["self-level", "acro"]
+    },
+    {
+      "kind": "mounted-stale-metadata",
+      "wrongModelWatchUnavailable": true
+    }
+  ],
+  "boundary": "Mounted production app with DOM and renderer boundaries; native browser review remains separate."
+}

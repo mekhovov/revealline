@@ -1,5 +1,8 @@
 import { createDefaultThemeBundle } from './catalog.mjs';
 import { isTeamRuntimeImageSlot } from './team-runtime-slots.mjs';
+import { OVERFLIGHT_FIELD_KIT_IDS } from './overflight-field-kit-art.mjs';
+import { OVERFLIGHT_WORLD_IMAGE_SLOTS } from './overflight-world-slots.mjs';
+import { OVERFLIGHT_ACTOR_SLOT_IDS } from './overflight-actor-slots.mjs';
 import {
   FORMATS,
   validateThemeBundle,
@@ -171,7 +174,10 @@ export function adoptStudioBundle(source, incomingSource) {
     for (const slot of missing) {
       const contract = approved.get(slot.id);
       required(
-        isTeamRuntimeImageSlot(slot.id) &&
+        (isTeamRuntimeImageSlot(slot.id) ||
+          OVERFLIGHT_FIELD_KIT_IDS.includes(slot.id) ||
+          OVERFLIGHT_WORLD_IMAGE_SLOTS.includes(slot.id) ||
+          OVERFLIGHT_ACTOR_SLOT_IDS.includes(slot.id)) &&
           contract &&
           canonicalJSON(slot) === canonicalJSON(contract),
         `Unsupported imported slot contract: ${slot.id}. Use a compatible Studio release.`,

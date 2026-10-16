@@ -1,3 +1,8 @@
+import {
+  CAPTURE_PRESENTATION_SESSION_FORMAT,
+  nativeCaptureSession as nativeSession,
+} from '../capture-presentation-session.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -152,9 +157,8 @@ for (const policy of ['immediate', 'grid-center'])
       p = await pageFor(t, f);
     if (policy === 'grid-center') {
       p.change('turn-select', policy);
-      await settle(() => p.doc.body.dataset.pictureState === 'ready');
     }
-    p.$('start-button').click();
+    await activateHostAction(p.$('start-button'));
     await settle(() => p.doc.body.dataset.flightState === 'running');
     p.key('ArrowDown');
     ticks(p, 13);
@@ -163,10 +167,15 @@ for (const policy of ['immediate', 'grid-center'])
     p.frame(0);
     const saved = JSON.parse(p.storage.getItem(sessionKey)),
       beforeTime = p.rendered.run.time;
-    assert.equal(saved.format, ACTOR_SESSION_FORMAT);
-    assert.equal(saved.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
     assert.equal(
-      presentationPicturePins(saved.presentationPins).choices.find(
+      saved.format,
+      CAPTURE_PRESENTATION_SESSION_FORMAT,
+      'Library imports the accepted-artwork envelope intact.',
+    );
+    assert.equal(nativeSession(saved).format, ACTOR_SESSION_FORMAT);
+    assert.equal(nativeSession(saved).actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+    assert.equal(
+      presentationPicturePins(nativeSession(saved).presentationPins).choices.find(
         (x) => x.identity.themeId === 'fpv',
       ).assetId,
       'picture-a',
@@ -176,12 +185,12 @@ for (const policy of ['immediate', 'grid-center'])
     await f.replace();
     p.$('library-button').click();
     p.$('save-json').value = JSON.stringify(saved);
-    p.$('import-save').click();
-    await settle(() => !p.$('library-dialog').open);
+    await activateHostAction(p.$('import-save'));
+    assert.equal(p.$('library-dialog').open, false);
     p.frame(0);
     assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
     assert.equal(p.doc.body.dataset.flightState, 'paused');
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     image = p.rendered.backdrop.image;
     p.$('start-button').click();
     await settle(() => p.doc.body.dataset.flightState === 'running');
@@ -393,7 +402,10 @@ for (const launch of ['start', 'retry', 'restart'])
           ticks(p, 13);
           p.key('ArrowDown', false);
           p.$('pause-button').click();
-          assert.equal(verifyReplay(JSON.parse(p.storage.getItem(sessionKey)).replay).match, true);
+          assert.equal(
+            verifyReplay(nativeSession(JSON.parse(p.storage.getItem(sessionKey))).replay).match,
+            true,
+          );
           hold = true;
           p.$('overlay-restart').click();
           assert.equal(p.$('restart-dialog').open, true);
@@ -473,7 +485,7 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   ticks(p, 13);
   p.key('ArrowDown', false);
   p.$('pause-button').click();
-  const old = JSON.parse(p.storage.getItem(sessionKey));
+  const old = nativeSession(JSON.parse(p.storage.getItem(sessionKey)));
   old.format = 'xonix-session.v2';
   delete old.presentationPins;
   delete old.visualThemePin;
@@ -489,8 +501,11 @@ test('old v2 saved flight remains legacy even when a current managed assignment 
   await settle(() => p.doc.body.dataset.flightState === 'running');
   p.frame();
   p.$('pause-button').click();
-  assert.equal(JSON.parse(p.storage.getItem(sessionKey)).format, 'xonix-session.v2');
-  assert.equal(verifyReplay(JSON.parse(p.storage.getItem(sessionKey)).replay).match, true);
+  assert.equal(nativeSession(JSON.parse(p.storage.getItem(sessionKey))).format, 'xonix-session.v2');
+  assert.equal(
+    verifyReplay(nativeSession(JSON.parse(p.storage.getItem(sessionKey))).replay).match,
+    true,
+  );
 });
 
 test('unavailable storage blocks a new flight until explicit original-art choice', async (t) => {
@@ -511,7 +526,9 @@ test('unavailable storage blocks a new flight until explicit original-art choice
   p.$('pause-button').click();
   const saved = JSON.parse(p.storage.getItem(sessionKey));
   assert.ok(
-    presentationPicturePins(saved.presentationPins).choices.every((pin) => pin.kind === 'legacy'),
+    presentationPicturePins(nativeSession(saved).presentationPins).choices.every(
+      (pin) => pin.kind === 'legacy',
+    ),
   );
   assert.equal(p.rendered.backdrop, null);
 });
@@ -620,20 +637,20 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('export-session').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(p.$('save-json').value);
-  assert.equal(exported.format, ACTOR_SESSION_FORMAT);
-  assert.equal(exported.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
-  assert.deepEqual(exported.presentationPins, raw.presentationPins);
-  assert.equal(verifyReplay(exported.replay).match, true);
+  assert.equal(nativeSession(exported).format, ACTOR_SESSION_FORMAT);
+  assert.equal(nativeSession(exported).actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+  assert.deepEqual(nativeSession(exported).presentationPins, nativeSession(raw).presentationPins);
+  assert.equal(verifyReplay(nativeSession(exported).replay).match, true);
   p.$('library-dialog').close();
   p.$('help-button').click();
   p.$('first-flight-help-enter').click();
   await settle(() => navigation !== null);
   const retained = JSON.parse(p.storage.getItem(sessionKey));
-  assert.equal(retained.format, ACTOR_SESSION_FORMAT);
-  assert.equal(retained.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
-  assert.deepEqual(retained.presentationPins, raw.presentationPins);
-  assert.deepEqual(retained.continuation, raw.continuation);
-  assert.equal(verifyReplay(retained.replay).match, true);
+  assert.equal(nativeSession(retained).format, ACTOR_SESSION_FORMAT);
+  assert.equal(nativeSession(retained).actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+  assert.deepEqual(nativeSession(retained).presentationPins, nativeSession(raw).presentationPins);
+  assert.deepEqual(nativeSession(retained).continuation, nativeSession(raw).continuation);
+  assert.equal(verifyReplay(nativeSession(retained).replay).match, true);
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
   assert.match(navigation, /course=first-flight/);
 });
@@ -652,15 +669,18 @@ test('raw installed campaign plus retained normalized owner can export a complet
   p.$('export-backup').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const backup = JSON.parse(p.$('save-json').value);
-  assert.equal(backup.session.format, ACTOR_SESSION_FORMAT);
-  assert.equal(backup.session.actorAppearancePin.format, ACTOR_APPEARANCE_PIN_FORMAT);
+  assert.equal(nativeSession(backup.session).format, ACTOR_SESSION_FORMAT);
   assert.equal(
-    presentationPicturePins(backup.session.presentationPins).choices.find(
+    nativeSession(backup.session).actorAppearancePin.format,
+    ACTOR_APPEARANCE_PIN_FORMAT,
+  );
+  assert.equal(
+    presentationPicturePins(nativeSession(backup.session).presentationPins).choices.find(
       (x) => x.identity.themeId === 'fpv',
     ).assetId,
     'picture-a',
   );
-  assert.equal(verifyReplay(backup.session.replay).match, true);
+  assert.equal(verifyReplay(nativeSession(backup.session).replay).match, true);
 });
 
 for (const outcome of ['ready', 'error', 'background'])

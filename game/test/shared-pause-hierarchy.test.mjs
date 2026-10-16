@@ -20,15 +20,15 @@ test('Versus Pause exposes the shared player actions and retries with one delibe
     ),
     [
       ['race-start', true, 'Resume race →'],
-      ['race-retry', true, 'Retry race'],
-      ['race-chapters', true, 'Missions'],
-      ['race-help', true, 'How to play'],
+      ['race-retry', true, 'Restart'],
+      ['race-chapters', true, 'Choose'],
+      ['race-help', false, 'How to play'],
       ['race-options', true, 'Settings'],
       ['race-home', true, 'Home'],
     ],
   );
   assert.equal(visible(page.$('race-journey-random')), true);
-  assert.equal(page.$('race-journey-random').textContent.trim(), 'Random level');
+  assert.equal(page.$('race-journey-random').textContent.trim(), 'Random');
   assert.equal(page.$('race-optional-setup').hidden, true);
 
   const paused = page.checkpoint(),
@@ -53,7 +53,7 @@ test('Versus Pause exposes the shared player actions and retries with one delibe
   assert.deepEqual(page.checkpoint(), retried);
 });
 
-test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierarchy', async (t) => {
+test('Team Pause shares mission and utility rows while Help stays in Settings', async (t) => {
   const stored = new Map();
   const page = await teamPage(t, {
     nativeFocus: true,
@@ -68,7 +68,10 @@ test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierar
       });
     },
   });
-  assert.equal(page.$('coop-optional-setup').open, false, 'Quick-start setup stays collapsed.');
+  assert.equal(
+    page.$('coop-optional-setup').closest('[role="tabpanel"]')?.id,
+    'coop-settings-panel-gameplay',
+  );
   assert.equal(page.doc.activeElement.id, 'coop-start', 'Quick Start retains initial focus.');
   page.$('coop-start').click();
   page.tick(3);
@@ -77,10 +80,13 @@ test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierar
   const core = page.$('coop-pause-core');
   assert.equal(core.hidden, false);
   assert.deepEqual(
-    core.children.map((element) => element.id),
-    ['coop-help', 'coop-settings-open', 'coop-quick-sound', 'coop-home-paused'],
+    core.children.filter((element) => !element.hidden).map((element) => element.id),
+    [],
   );
-  assert.equal(page.$('coop-quick-sound').parentNode, core);
+  assert.equal(
+    page.$('coop-quick-sound').closest('[data-pause-group]')?.dataset.pauseGroup,
+    'audio',
+  );
   for (const id of [
     'coop-resume',
     'coop-retry',
@@ -90,13 +96,16 @@ test('Team Pause puts Help, Settings, Sound and Home in the direct shared hierar
     'coop-quick-sound',
   ])
     assert.equal(visible(page.$(id)), true, `${id} is visible from Pause.`);
-  assert.equal(page.$('coop-help-toggle').textContent.trim(), 'How to play and controls');
+  assert.equal(page.$('coop-help').closest('[role="tabpanel"]')?.id, 'coop-settings-panel-extras');
   assert.equal(page.$('coop-home-paused').textContent, 'Home');
 
   const paused = page.$('coop-clock').textContent;
   page.$('coop-quick-sound').click();
   page.tick(120);
-  assert.equal(page.$('coop-quick-sound').parentNode, core);
+  assert.equal(
+    page.$('coop-quick-sound').closest('[data-pause-group]')?.dataset.pauseGroup,
+    'audio',
+  );
   assert.equal(page.$('coop-quick-sound').textContent, 'Sound: on');
   assert.equal(page.$('coop-quick-sound').getAttribute('aria-pressed'), 'true');
   assert.equal(page.$('coop-clock').textContent, paused, 'Sound changes cannot resume Team play.');

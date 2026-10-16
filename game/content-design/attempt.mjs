@@ -79,6 +79,7 @@ export function createContentAttemptPreparer(
       gameplayTuning,
       runningEnemies = false,
       runningEnemyStyle = 'original',
+      pursuitGeneration = 'pursuit-goals.v2',
     } = {},
   ) {
     required(!disposed, 'Candidate preparer is disposed.');
@@ -172,6 +173,7 @@ export function createContentAttemptPreparer(
               ? prepareRunningEnemyLevel(tunedLevel, {
                   classes: options.classRecipes,
                   style: runningEnemyStyle,
+                  generation: pursuitGeneration,
                 })
               : tunedLevel,
             options,

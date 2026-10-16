@@ -92,3 +92,97 @@ test('all gameplay preserves explicit SIM and community choices through an updat
   });
   assert.deepEqual(gameplaySelection(catalogue, retained), ids);
 });
+
+test('native Overflight and Snake use the main PWA core and share one recorded-effects download', () => {
+  const core = new Set([
+    'game/overflight/play.html',
+    'game/overflight/raid.html',
+    'game/snake/play.html',
+    'game/snake/index.html',
+  ]);
+  const effects = ['rotor-start.wav', 'human-reaction-1.wav', 'destroy-heavy.wav'].map(
+    (name, index) => file(`game/audio/effects/${name}`, index + 1),
+  );
+  const groups = [
+    group('base'),
+    group('shared'),
+    group(
+      'extras:spatial-audio',
+      effects.map(({ path }) => path),
+      { current: false },
+    ),
+    group('tooling:workshop', [], { category: 'tooling', current: false }),
+    { id: 'music:one', kind: 'soundtrack', current: false, files: [], requires: [] },
+  ];
+  addOfflineExperiences(groups, effects, [], core);
+  const catalogue = { format: 'revealline-offline-content.v2', groups, files: effects };
+  const experiences = groups.filter((item) => item.category === 'experience');
+  assert.deepEqual(
+    experiences.map(({ id }) => id),
+    ['extras:overflight', 'extras:snake'],
+  );
+  assert.deepEqual(
+    experiences.map(({ launchPath }) => launchPath),
+    ['game/overflight/play.html', 'game/snake/play.html'],
+  );
+  for (const experience of experiences) {
+    assert.deepEqual(experience.files, [], 'core files keep one verified owner');
+    assert.deepEqual(experience.requires, ['shared', 'extras:spatial-audio']);
+    assert.equal(experience.current, true);
+    assert.ok(experience.titleKey);
+    assert.deepEqual(downloadFiles(catalogue, [experience.id]), effects);
+  }
+  const ids = gameplaySelection(catalogue, { all: true });
+  assert.ok(experiences.every(({ id }) => ids.includes(id)));
+  assert.deepEqual(downloadFiles(catalogue, ids), effects, 'recordings downloaded once');
+  assert.ok(!ids.includes('tooling:workshop'));
+  assert.ok(!ids.includes('music:one'));
+  assert.deepEqual(
+    restoredGameplaySelection(catalogue, {
+      edition: 'https://example.test/',
+      updating: true,
+      active: { scope: 'https://example.test/', selection: ['extras:overflight', 'extras:snake'] },
+    }).selected,
+    ['extras:overflight', 'extras:snake'],
+  );
+});
+
+test('native experience admission rejects partial or optional player hosts and omits absent modes', () => {
+  for (const name of [
+    'game/overflight/play.html',
+    'game/overflight/raid.html',
+    'game/snake/play.html',
+  ]) {
+    assert.throws(
+      () => addOfflineExperiences([group('shared')], [], [], new Set([name])),
+      /Incomplete native offline experience/,
+    );
+    assert.throws(
+      () => addOfflineExperiences([group('shared')], [file(name, 1)], [], new Set()),
+      /Incomplete native offline experience/,
+    );
+  }
+  const groups = [group('shared')];
+  addOfflineExperiences(groups, [], [], new Set(['game/index.html']));
+  assert.equal(groups.length, 1);
+});
+
+test('legacy flight-practice selections do not silently acquire unrelated native modes', () => {
+  const files = [
+    file('optional-practice/fpv-worlds/index.html', 1),
+    file('optional-practice/fpv-worlds/worker.js', 2),
+  ];
+  const groups = [group('shared'), group('extras:practice')];
+  addOfflineExperiences(
+    groups,
+    files,
+    [{ packageId: 'fpv-worlds', files: files.slice(0, 1), workerPath: files[1].path }],
+    new Set([
+      'game/overflight/play.html',
+      'game/overflight/raid.html',
+      'game/snake/play.html',
+      'game/snake/index.html',
+    ]),
+  );
+  assert.deepEqual(groups.find(({ id }) => id === 'extras:practice').requires, ['extras:sim-fpv']);
+});

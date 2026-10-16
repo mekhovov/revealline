@@ -1,9 +1,11 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
 import { RasterImage } from './helpers/raster-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -50,7 +52,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     await settle(() => storage.getItem(key) !== null);
     original = storage.getItem(key);
     assert.equal(
-      JSON.parse(original).actorAppearancePin.authoredPresentationSha256,
+      nativeSession(JSON.parse(original)).actorAppearancePin.authoredPresentationSha256,
       f.descriptor.id,
     );
   });
@@ -143,10 +145,18 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     page.$('save-attempt-button').click();
     const resumed = JSON.parse(storage.getItem(key)),
       saved = JSON.parse(original);
-    assert.equal(resumed.campaignKey, saved.campaignKey);
-    assert.equal(resumed.runId, saved.runId);
-    assert.deepEqual(resumed.actorAppearancePin, saved.actorAppearancePin);
-    assert.deepEqual(resumed.replay, saved.replay);
+    assert.equal(nativeSession(resumed).campaignKey, nativeSession(saved).campaignKey);
+    assert.equal(nativeSession(resumed).runId, nativeSession(saved).runId);
+    assert.deepEqual(
+      nativeSession(resumed).actorAppearancePin,
+      nativeSession(saved).actorAppearancePin,
+    );
+    assert.deepEqual(nativeSession(resumed).replay, nativeSession(saved).replay);
+    assert.deepEqual(
+      resumed.appearance ?? null,
+      saved.appearance ?? null,
+      'Continue retains the accepted presentation envelope.',
+    );
     page.$('shell-menu').click();
     openEditionSettings(page, 'data');
     const choice = page.$('edition-presentation-select'),
@@ -311,7 +321,10 @@ for (const saving of ['verified', 'quota', 'occupied'])
     );
     const retained = page.storage.getItem(key);
     if (saving === 'verified')
-      assert.equal(JSON.parse(retained).actorAppearancePin.content.editionId, 'sample-public');
+      assert.equal(
+        nativeSession(JSON.parse(retained)).actorAppearancePin.content.editionId,
+        'sample-public',
+      );
     else assert.equal(retained, null);
     page.$('mode-leave-stay').click();
     assert.equal(page.$('mode-leave-dialog').open, false);
@@ -482,16 +495,22 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   page.$('settings-dialog').close();
   page.$('save-attempt-button').click();
   const saved = JSON.parse(storage.getItem(`${legacyKey}.solo-v2`));
-  assert.equal(saved.format, 'xonix-session.v6');
-  assert.equal(saved.actorAppearancePin.style, 'campaign');
-  assert.equal(saved.actorAppearancePin.format, 'revealline-actor-appearance-pin.v2');
-  assert.match(saved.actorAppearancePin.authoredPresentationSha256, /^[a-f0-9]{64}$/);
-  assert.equal(saved.actorAppearancePin.content.editionId, 'sample-public');
+  assert.equal(nativeSession(saved).format, 'xonix-session.v6');
+  assert.equal(nativeSession(saved).actorAppearancePin.style, 'campaign');
+  assert.equal(
+    nativeSession(saved).actorAppearancePin.format,
+    'revealline-actor-appearance-pin.v2',
+  );
+  assert.match(
+    nativeSession(saved).actorAppearancePin.authoredPresentationSha256,
+    /^[a-f0-9]{64}$/,
+  );
+  assert.equal(nativeSession(saved).actorAppearancePin.content.editionId, 'sample-public');
   assert.equal(storage.getItem(legacyKey), legacy);
   await page.$('export-replay').onclick();
   const recording = JSON.parse(page.$('replay-json').value);
   assert.equal(recording.format, 'revealline-replay-presentation.v2');
-  assert.deepEqual(recording.actorAppearancePin, saved.actorAppearancePin);
+  assert.deepEqual(recording.actorAppearancePin, nativeSession(saved).actorAppearancePin);
   page.$('replay-dialog').close();
   assert.ok(page.$('settings-panel-data').textContent.includes('Earlier preview save retained'));
   page.$('shell-worlds').click();
@@ -713,7 +732,9 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         fetchResponse: f.fetcher,
       });
     assert.ok(
-      page.$('continue-saved-note').textContent.includes(JSON.parse(saved).replay.level.name),
+      page
+        .$('continue-saved-note')
+        .textContent.includes(nativeSession(JSON.parse(saved)).replay.level.name),
       'The preview resolves the exact saved candidate mission from its owned execution key.',
     );
     const beforeContinue = storage.getItem(key);
@@ -722,13 +743,13 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
     page.frame(0);
     assert.deepEqual(
       authoritativeCheckpoint(page.rendered.run),
-      JSON.parse(beforeContinue).replay.checkpoint,
+      nativeSession(JSON.parse(beforeContinue)).replay.checkpoint,
     );
     page.$('pause-button').click();
     page.$('save-attempt-button').click();
     assert.deepEqual(
-      JSON.parse(storage.getItem(key)).actorAppearancePin,
-      JSON.parse(saved).actorAppearancePin,
+      nativeSession(JSON.parse(storage.getItem(key))).actorAppearancePin,
+      nativeSession(JSON.parse(saved)).actorAppearancePin,
     );
   });
   for (const change of ['palette', 'missing receipt'])
@@ -738,8 +759,8 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
       if (change === 'palette') f.data.themes.themes[0].palette.accent = '#ff00ff';
       else {
         const prior = JSON.parse(saved);
-        prior.actorAppearancePin.format = 'revealline-actor-appearance-pin.v1';
-        delete prior.actorAppearancePin.authoredPresentationSha256;
+        nativeSession(prior).actorAppearancePin.format = 'revealline-actor-appearance-pin.v1';
+        delete nativeSession(prior).actorAppearancePin.authoredPresentationSha256;
         raw = JSON.stringify(prior);
       }
       storage.setItem(key, raw);
@@ -801,11 +822,33 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').hidden, false);
   assert.equal(page.$('demo-button').hidden, false);
+  const retainedRun = page.rendered.run,
+    paused = authoritativeCheckpoint(retainedRun);
   page.$('demo-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('demo-dialog').open, true, 'Watch first cut opens the shared Demo player.');
+  // This boundary includes exact-edition Demo planning and verified asset work.
+  // Keep the real scene predicate and paused-attempt assertions; a crowded
+  // company cohort may take longer than an ordinary five-second UI transition.
+  await waitFor(() => page.$('demo-dialog').dataset.scene === 'playing', {
+    timeoutMs: 20000,
+    message: 'Exact-edition Demo preparation did not reach its playable scene.',
+  });
+  assert.ok(
+    f.source.missions.some((mission) => mission.name === page.$('demo-level').textContent),
+    'The presentation-only Demo rotation stays within this edition, without requiring its first mission.',
+  );
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual(
+    authoritativeCheckpoint(retainedRun),
+    paused,
+    'Watching does not replace the paused attempt.',
+  );
+  page.$('demo-back').click();
+  assert.equal(page.$('demo-dialog').open, false);
   page.frame(0);
-  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
-  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
+  assert.equal(page.rendered.run, retainedRun);
+  assert.equal(page.rendered.run.levelId, second.id);
+  assert.deepEqual(authoritativeCheckpoint(retainedRun), paused);
   assert.deepEqual(page.errors, []);
 });
 

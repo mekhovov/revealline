@@ -195,8 +195,12 @@ export const toPublicEdition = (row) => ({
   publishedAt: row.publishedAt,
   latestEditionId: row.latestEditionId,
   latestVersion: row.latestVersion,
-  previewAvailable: true,
-  ...(['classic', 'team', 'fpv'].includes(row.validationReport?.family)
+  previewAvailable: !['overflight', 'overflight-hunt', 'overflight-riy'].includes(
+    row.validationReport?.family,
+  ),
+  ...(['classic', 'team', 'fpv', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(
+    row.validationReport?.family,
+  )
     ? { family: row.validationReport.family }
     : {}),
 });

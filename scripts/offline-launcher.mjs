@@ -1,3 +1,4 @@
+import { protectPageHTML } from './access-pages.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -218,7 +219,9 @@ try {
 ${identity}
 `;
   const bridgeScriptId = createHash('sha256').update(bridgeScript).digest('hex');
-  const bridge = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FPV / LINE · App update</title><style>body{margin:0;padding:max(32px,env(safe-area-inset-top,0px)) max(32px,env(safe-area-inset-right,0px)) max(32px,env(safe-area-inset-bottom,0px)) max(32px,env(safe-area-inset-left,0px));background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><main><h1>App update / Оновлення гри</h1><p id="status" role="status">Preparing the updater. Close other app update windows if this takes longer.<br>Готуємо оновлення. Якщо це триває довго, закрийте інші вікна оновлення гри.</p><a href="./app/?manage">Back to game / Назад до гри</a></main><script type="module" src="./game-update.mjs?build=${bridgeScriptId}"></script></html>`;
+  let bridge = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>FPV / LINE · App update</title><style>body{margin:0;padding:max(32px,env(safe-area-inset-top,0px)) max(32px,env(safe-area-inset-right,0px)) max(32px,env(safe-area-inset-bottom,0px)) max(32px,env(safe-area-inset-left,0px));background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><main><h1>App update / Оновлення гри</h1><p id="status" role="status">Preparing the updater. Close other app update windows if this takes longer.<br>Готуємо оновлення. Якщо це триває довго, закрийте інші вікна оновлення гри.</p><a href="./app/?manage">Back to game / Назад до гри</a></main><script type="module" src="./game-update.mjs?build=${bridgeScriptId}"></script></html>`;
+  if (downloads.bytes.includes('access-gate:start'))
+    bridge = protectPageHTML(bridge, 'game-update.html', downloads.bytes.toString());
   const bridgeId = createHash('sha256').update(bridge).digest('hex');
   const bootstrap = `let status = document.getElementById('game-status');
 const lifecycle = new AbortController();
@@ -293,7 +296,9 @@ try {
 ${identity}
 `;
   const bootstrapId = createHash('sha256').update(bootstrap).digest('hex');
-  const source = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091324"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-180.png"><meta name="revealline-update" content='${marker}' /><title>FPV / LINE · Game updates</title><style>body{margin:0;padding:max(32px,env(safe-area-inset-top,0px)) max(32px,env(safe-area-inset-right,0px)) max(32px,env(safe-area-inset-bottom,0px)) max(32px,env(safe-area-inset-left,0px));background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><script type="module" src="./update.mjs?build=${bootstrapId}"></script></head><body><main><h1>Game updates / Оновлення гри</h1><p id="game-status" role="status">Opening the latest update screen…<br>Відкриваємо останні оновлення…</p><a href="./?manage">Back to game / Назад до гри</a></main></body></html>`;
+  let source = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091324"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-180.png"><meta name="revealline-update" content='${marker}' /><title>FPV / LINE · Game updates</title><style>body{margin:0;padding:max(32px,env(safe-area-inset-top,0px)) max(32px,env(safe-area-inset-right,0px)) max(32px,env(safe-area-inset-bottom,0px)) max(32px,env(safe-area-inset-left,0px));background:#091324;color:#edf2e8;font:18px/1.5 system-ui}main{max-width:640px;margin:auto}a{display:inline-block;padding:12px;color:#7fdbeb}</style><script type="module" src="./update.mjs?build=${bootstrapId}"></script></head><body><main><h1>Game updates / Оновлення гри</h1><p id="game-status" role="status">Opening the latest update screen…<br>Відкриваємо останні оновлення…</p><a href="./?manage">Back to game / Назад до гри</a></main></body></html>`;
+  if (downloads.bytes.includes('access-gate:start'))
+    source = protectPageHTML(source, 'app/update.html', downloads.bytes.toString(), 'app');
   for (const [name, body] of [
     ['app/update.html', source],
     ['app/update.mjs', bootstrap],
@@ -326,13 +331,15 @@ export async function addOfflineLauncher(root, entries, version, options = {}) {
       target,
       target === 'index.html'
         ? Buffer.from(
-            (await fs.readFile(path.join(root, source), 'utf8')).replaceAll(
-              '../presentation/',
-              './presentation/',
-            ),
+            (await fs.readFile(path.join(root, source), 'utf8'))
+              .replaceAll('../presentation/', './presentation/')
+              .replaceAll('../access-gate.', './access-gate.'),
           )
         : await fs.readFile(path.join(root, source)),
     );
+  if (launcher.find((entry) => entry.name === 'app/index.html').bytes.includes('access-gate:start'))
+    for (const file of ['access-gate.mjs', 'access-gate.css'])
+      add(file, await fs.readFile(path.join(root, 'game', file)));
   if (
     launcher.find((entry) => entry.name === 'app/index.html').bytes.includes('theme-bootstrap.mjs')
   )

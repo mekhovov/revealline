@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
+import { REWARD_SETTLED_SECONDS } from '../ui/reward-arrival.mjs';
 
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -67,8 +69,9 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
     page.$('reduced-effects').checked = true;
     page.$('reduced-effects').emit('change');
   }
-  page.$('start-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('game-overlay').hidden, false);
+  await activateHostAction(page.$('start-button'));
+  assert.equal(page.doc.body.dataset.flightState, 'running');
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let tick = 0; tick < 900 && page.rendered.run.status === 'running'; tick++) {
@@ -79,22 +82,23 @@ async function win(t, { reduced = false, readPads, beforeFrame } = {}) {
   assert.equal(page.rendered.fullReveal, true);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.$('skip-celebration').hidden, true);
   return { page, surface };
 }
 
 for (const reduced of [false, true])
-  test(`${reduced ? 'reduced' : 'full'} effects: a legal win keeps its full picture after the celebration finishes`, async (t) => {
+  test(`${reduced ? 'reduced' : 'full'} effects: a legal win presents its earned picture before the automatic result`, async (t) => {
     const { page, surface } = await win(t, { reduced });
     assert.equal(
       page.doc.body.dataset.winPicture,
       'revealing',
-      'The final capture retains its board position.',
+      'The result is held back while the final capture animates.',
     );
     for (let i = 0; i < 18; i++) page.frame(100);
     assert.equal(
       page.doc.body.dataset.winPicture,
       'revealing',
-      'Full and reduced effects both leave time to enjoy the win.',
+      'Full and reduced effects keep the earned picture as the focus.',
     );
     const run = page.rendered.run;
     const checkpoint = authoritativeCheckpoint(run);
@@ -102,24 +106,59 @@ for (const reduced of [false, true])
     assert.ok(earned, 'The win has persisted its collection progress.');
     if (!reduced) {
       assert.equal(surface.frame.painter.celebrationStatus.active, true);
-      assert.equal(page.doc.activeElement.id, 'skip-celebration');
+      assert.equal(page.$('skip-celebration').hidden, true);
     }
-    for (let i = 0; i < Math.ceil(CELEBRATION_SECONDS * 10) + 50; i++) page.frame(100);
+    if (reduced) {
+      // The reduced renderer begins at its finished visual state but still
+      // honours the board and full-picture timing owned by the host.
+      for (
+        let i = 0;
+        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && page.$('show-result').hidden;
+        i++
+      )
+        page.frame(100);
+    } else
+      for (
+        let i = 0;
+        i < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && !surface.frame.painter.celebrationStatus.finished;
+        i++
+      )
+        page.frame(100);
     assert.equal(surface.frame.painter.celebrationStatus.finished, true);
-    assert.equal(page.$('game-overlay').hidden, true, 'No timer opens the result menu.');
+    // The painter reaches its terminal frame before the host consumes that
+    // status on the following update.
+    page.frame(0);
+    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture fills the game after the celebration.');
     assert.equal(page.$('show-result').hidden, false);
-    assert.equal(page.doc.activeElement.id, 'show-result');
-    assert.equal(page.doc.body.dataset.flightState, 'picture');
+    assert.equal(page.doc.body.dataset.winPicture, 'settled');
+    assert.equal(page.$('next-button').hidden, true, 'Next appears after the short picture hold.');
+    for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
+    assert.equal(page.$('game-overlay').hidden, false, 'The result follows without requiring a click.');
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    assert.equal(page.$('show-result').hidden, true);
+    assert.equal(page.$('next-button').hidden, false);
+    if (!reduced) {
+      assert.equal(page.$('result-auto-next').hidden, false);
+      assert.match(page.$('result-auto-next').textContent, /starts automatically/);
+    }
+    assert.equal(page.doc.activeElement.id, 'next-button');
+    assert.equal(
+      page.doc.body.dataset.flightState,
+      'result',
+      'Both motion preferences return to the same automatic result state.',
+    );
     assert.equal(page.rendered.fullReveal, true);
     assert.equal(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     assert.equal(page.storage.getItem('revealline.library.dev.v1'), earned);
-    page.$('show-result').click();
-    assert.equal(page.$('game-overlay').hidden, false, 'Only an explicit action opens results.');
-    assert.equal(page.$('game-overlay').dataset.kind, 'won');
     page.$('view-picture').click();
     page.frame(100);
     assert.equal(page.$('game-overlay').hidden, true);
+    assert.equal(
+      page.$('result-auto-next').hidden,
+      true,
+      'Choosing another action stops auto-next.',
+    );
     assert.equal(
       surface.frame.painter.celebrationStatus.finished,
       true,
@@ -130,21 +169,24 @@ for (const reduced of [false, true])
     assert.deepEqual(page.errors, []);
   });
 
-test('skipping the win animation settles the picture without opening results', async (t) => {
+test('the automatic victory presentation does not expose a redundant animation-skip step', async (t) => {
   const { page, surface } = await win(t);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
-  page.$('skip-celebration').click();
-  page.frame(100);
-  assert.equal(surface.frame.painter.celebrationStatus.finished, true);
+  assert.equal(page.$('skip-celebration').hidden, true);
   assert.equal(page.$('game-overlay').hidden, true);
+  for (let i = 0; i < Math.ceil(CELEBRATION_SECONDS * 10) + 2; i++) page.frame(100);
+  assert.equal(surface.frame.painter.celebrationStatus.finished, true);
+  page.frame(0);
   assert.equal(page.$('skip-celebration').hidden, true);
   assert.equal(page.$('show-result').hidden, false);
-  assert.equal(page.doc.activeElement.id, 'show-result');
+  for (let i = 0; i < Math.ceil(REWARD_SETTLED_SECONDS * 10) + 2; i++) page.frame(100);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, false);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
 
-test('held controller Confirm cannot skip the earned picture or activate its result action', async (t) => {
+test('held controller Confirm cannot interrupt the automatic victory presentation', async (t) => {
   let now = 1000;
   const previous = Object.getOwnPropertyDescriptor(performance, 'now');
   Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
@@ -173,34 +215,9 @@ test('held controller Confirm cannot skip the earned picture or activate its res
     now += 16;
     page.frame(16);
   };
-  for (let i = 0; i < 12; i++) frame();
-  assert.equal(page.$('skip-celebration').hidden, false);
-  assert.equal(page.$('game-overlay').hidden, true);
-  confirm(false);
-  frame();
-  confirm(true);
-  frame();
-  assert.equal(page.$('skip-celebration').hidden, false, 'Confirm waits for its release.');
-  confirm(false);
-  frame();
+  for (let i = 0; i < 24; i++) frame();
   assert.equal(page.$('skip-celebration').hidden, true);
-  assert.equal(page.$('show-result').hidden, false);
-  confirm(true);
-  for (let i = 0; i < 12; i++) frame();
-  assert.equal(
-    page.$('game-overlay').hidden,
-    true,
-    'Settling the picture requires another fresh action to continue.',
-  );
-  confirm(false);
-  frame();
-  confirm(true);
-  frame();
-  assert.equal(page.$('game-overlay').hidden, true, 'Continue also waits for release.');
-  confirm(false);
-  frame();
-  assert.equal(page.$('game-overlay').hidden, false);
-  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.equal(page.$('game-overlay').hidden, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });

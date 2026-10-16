@@ -1,0 +1,167 @@
+{
+  "admission": "Native asset validation, portable import/export and published Studio adoption. No default replacement or public release.",
+  "bundleBytes": 1034069,
+  "decodedBytes": 643584,
+  "format": "revealline-machinery-batch.v1",
+  "quality": { "evidence": [], "stage": "produced" },
+  "revision": "industrial-roster-v3",
+  "slots": [
+    {
+      "asset": { "id": "industrial-v3-enemy.bouncer", "revision": 1 },
+      "bytes": 893,
+      "decodedBytes": 32768,
+      "family": "utility-car",
+      "frames": 8,
+      "sha256": "2961feee15006f62381c106f66e6315bbac2996e4677c7d055a1ffcef4d831b0",
+      "slot": "enemy.bouncer"
+    },
+    {
+      "asset": { "id": "industrial-v3-enemy.claimed-rover", "revision": 1 },
+      "bytes": 936,
+      "decodedBytes": 32768,
+      "family": "cargo-truck",
+      "frames": 8,
+      "sha256": "08a21fb3ede118b7e602d219acc7190543959911e553fce29a0803847911b66d",
+      "slot": "enemy.claimed-rover"
+    },
+    {
+      "asset": { "id": "industrial-v3-enemy.border-patrol", "revision": 1 },
+      "bytes": 1007,
+      "decodedBytes": 32768,
+      "family": "armored-carrier",
+      "frames": 8,
+      "sha256": "f77a2f99e4d03fdf848a0b109504aad961b908dbd2ea4b109dca2d3202f17b08",
+      "slot": "enemy.border-patrol"
+    },
+    {
+      "asset": { "id": "industrial-v3-enemy.contour-patrol", "revision": 1 },
+      "bytes": 858,
+      "decodedBytes": 32768,
+      "family": "scout-car",
+      "frames": 8,
+      "sha256": "80049f102a461a7b5a8cda5f8a2736d6ef8fef877d68a1fec21bc740a7cca5a9",
+      "slot": "enemy.contour-patrol"
+    },
+    {
+      "asset": { "id": "industrial-v3-enemy.eroder", "revision": 1 },
+      "bytes": 974,
+      "decodedBytes": 32768,
+      "family": "tracked-tank",
+      "frames": 8,
+      "sha256": "10e61096446881e93b140e366f9e6b5af66dbea94181278d360d1fa5789f2734",
+      "slot": "enemy.eroder"
+    },
+    {
+      "asset": { "id": "industrial-v3-enemy.lane-boss", "revision": 1 },
+      "bytes": 2177,
+      "decodedBytes": 131072,
+      "family": "tracked-tank",
+      "frames": 8,
+      "sha256": "a846e7fafba85bf38894ee5091dd23b5e68f7be67959b494d5b97d3a78d3bd6d",
+      "slot": "enemy.lane-boss"
+    },
+    {
+      "asset": { "id": "industrial-v3-enemy.relay-sentinel", "revision": 1 },
+      "bytes": 1992,
+      "decodedBytes": 131072,
+      "family": "radar-truck",
+      "frames": 8,
+      "sha256": "eb27092e6560903038a22e0e4653dff638702d868b6d6c2ab5d7184e6cf084a5",
+      "slot": "enemy.relay-sentinel"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.enemy.drifter", "revision": 1 },
+      "bytes": 893,
+      "decodedBytes": 32768,
+      "family": "utility-car",
+      "frames": 8,
+      "sha256": "2961feee15006f62381c106f66e6315bbac2996e4677c7d055a1ffcef4d831b0",
+      "slot": "team.enemy.drifter"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.enemy.hunter.patrol", "revision": 1 },
+      "bytes": 1007,
+      "decodedBytes": 32768,
+      "family": "armored-carrier",
+      "frames": 8,
+      "sha256": "f77a2f99e4d03fdf848a0b109504aad961b908dbd2ea4b109dca2d3202f17b08",
+      "slot": "team.enemy.hunter.patrol"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.enemy.hunter.warning", "revision": 1 },
+      "bytes": 1007,
+      "decodedBytes": 32768,
+      "family": "armored-carrier",
+      "frames": 8,
+      "sha256": "f77a2f99e4d03fdf848a0b109504aad961b908dbd2ea4b109dca2d3202f17b08",
+      "slot": "team.enemy.hunter.warning"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.enemy.hunter.charge", "revision": 1 },
+      "bytes": 1007,
+      "decodedBytes": 32768,
+      "family": "armored-carrier",
+      "frames": 8,
+      "sha256": "f77a2f99e4d03fdf848a0b109504aad961b908dbd2ea4b109dca2d3202f17b08",
+      "slot": "team.enemy.hunter.charge"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.enemy.hunter.recovery", "revision": 1 },
+      "bytes": 1007,
+      "decodedBytes": 32768,
+      "family": "armored-carrier",
+      "frames": 8,
+      "sha256": "f77a2f99e4d03fdf848a0b109504aad961b908dbd2ea4b109dca2d3202f17b08",
+      "slot": "team.enemy.hunter.recovery"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.anchor.available", "revision": 1 },
+      "bytes": 188,
+      "decodedBytes": 2304,
+      "family": null,
+      "frames": 1,
+      "sha256": "2023c589de5f532fc81a730529ebe6e80ec8c9ab2a6019cc059b7a1dbb1ea394",
+      "slot": "team.anchor.available"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.anchor.captured", "revision": 1 },
+      "bytes": 191,
+      "decodedBytes": 2304,
+      "family": null,
+      "frames": 1,
+      "sha256": "a2fd740563d14371ae4a26f11331a72a8e8659b95eca1b30710e5d3034e66581",
+      "slot": "team.anchor.captured"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.core.shielded", "revision": 1 },
+      "bytes": 372,
+      "decodedBytes": 16384,
+      "family": null,
+      "frames": 1,
+      "sha256": "9faf453160ce0506bf23df5d10df1ebace980ee9ac67c7d162cedc581b3f4703",
+      "slot": "team.core.shielded"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.core.exposed", "revision": 1 },
+      "bytes": 397,
+      "decodedBytes": 16384,
+      "family": null,
+      "frames": 1,
+      "sha256": "f9d263bd5a5bfafef4382e1e2a66382ede0ac1cb755766f990a6209d30ad4e0f",
+      "slot": "team.core.exposed"
+    },
+    {
+      "asset": { "id": "industrial-v3-team.core.secured", "revision": 1 },
+      "bytes": 386,
+      "decodedBytes": 16384,
+      "family": null,
+      "frames": 1,
+      "sha256": "14aa4345dbca16b00b82f2916d3703100d9ce4a9886eca980f2b0377da809704",
+      "slot": "team.core.secured"
+    }
+  ],
+  "source": {
+    "path": "game/presentation/industrial-machinery.mjs",
+    "sha256": "4b1eddf3c797ba6b52d68f14a1f2a3b282ede3e204fedfc387a72fe4a219f151"
+  }
+}

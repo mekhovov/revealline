@@ -1,6 +1,13 @@
 import { readFile } from 'node:fs/promises';
-import { soloPage, settle } from './solo-dom.mjs';
+import { soloPage } from './solo-dom.mjs';
+import { waitFor } from './wait-for.mjs';
+import { DEMO_LOAD_TIMEOUT_MS } from '../../demo-loading.mjs';
 import { PNGImage } from './png-image.mjs';
+
+// Catalogue, retained-library and complete scene admission each own a bounded
+// native loading phase. Observe their real readiness without shortening the
+// product's per-phase deadline to the generic five-second fixture wait.
+export const DEMO_HOST_READY_TIMEOUT_MS = 3 * DEMO_LOAD_TIMEOUT_MS;
 
 /** Actual solo app, replay transport and painter. Canvas, image decode and the
  * physical pad boundary are modeled; this makes no browser pixel/device claim. */
@@ -90,10 +97,18 @@ export async function demoPage(t, { clipId = 'first-signal-left', ...options } =
     await ready();
   }
   async function ready() {
-    await settle(
-      () => page.$('demo-dialog').open && !page.$('demo-fresh').disabled,
-      `Demo should finish loading: ${page.$('demo-availability').textContent}`,
-    );
+    await waitFor(() => page.$('demo-dialog').open && !page.$('demo-fresh').disabled, {
+      timeoutMs: DEMO_HOST_READY_TIMEOUT_MS,
+      message: 'The native demo must finish catalogue, library and scene preparation.',
+    }).catch((error) => {
+      error.message += JSON.stringify({
+        scene: page.$('demo-dialog').dataset.scene,
+        status: page.$('demo-status').textContent,
+        availability: page.$('demo-availability').textContent,
+        errors: page.errors.map((value) => String(value?.stack ?? value)),
+      });
+      throw error;
+    });
     page.frame(0);
   }
   return {

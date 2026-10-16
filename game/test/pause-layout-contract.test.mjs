@@ -169,3 +169,9 @@ test('mission preparation uses a fixed progress rail and no visible cancel actio
   );
   assert.match(appSource, /function preparationButtonBusy\([\s\S]*?aria-disabled[\s\S]*?aria-busy/);
 });
+
+test('every shared play-shell host loads its pause and landing layout dependencies', () => {
+  const shellCSS = readFileSync(new URL('../ui/mode-play-shell.css', import.meta.url), 'utf8');
+  assert.match(shellCSS, /@import url\('\.\/pause-menu\.css'\);/);
+  assert.match(shellCSS, /@import url\('\.\/mode-choice\.css'\);/);
+});

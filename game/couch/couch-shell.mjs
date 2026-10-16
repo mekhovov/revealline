@@ -1,3 +1,5 @@
+import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { gameplayStatsLabel } from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t, localizedText } from '../i18n/index.mjs';
@@ -90,14 +92,29 @@ export function createCouchShell({
   const isJourney = isAuthoredJourneyRouteId(authoredRoute);
   const libraryHref = isJourney ? '?journey=legacy' : `?journey=${DEFAULT_JOURNEY_ROUTES.versus}`;
   const libraryLabel = () => (isJourney ? t('interface:legacyLibrary') : t('interface:newJourney'));
-  $('race-library-switch').setAttribute('href', libraryHref);
+  $('race-library-switch').setAttribute(
+    'href',
+    nativeArtReviewURL(libraryHref, view?.location?.href ?? globalThis.location?.href),
+  );
   localizedText($('race-library-switch'), () =>
     onMissions ? t('interface:allMissions') : libraryLabel(),
   );
   doc.body.classList.toggle('unified-missions', Boolean(onMissions));
   if (authoredDestinations) {
-    $('race-solo-return').setAttribute('href', authoredDestinations.solo);
-    $('race-coop').setAttribute('href', authoredDestinations.team);
+    $('race-solo-return').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.solo,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
+    $('race-coop').setAttribute(
+      'href',
+      nativeArtReviewURL(
+        authoredDestinations.team,
+        view?.location?.href ?? globalThis.location?.href,
+      ),
+    );
   }
   const modeChoices = mountModeChoices({
     root: $('race-mode-choices'),
@@ -106,10 +123,33 @@ export function createCouchShell({
     separateTeam: isJourney,
     actions: { solo: $('race-solo-return'), team: $('race-coop') },
   });
+  nativeMenu?.refreshLandingNavigation();
+  const pauseMenu = createPauseMenu({
+    document: doc,
+    root: $('race-main').querySelector('.race-menu-actions'),
+    resume: $('race-start'),
+    missions: [
+      { element: $('race-retry'), icon: 'restart', key: 'nativeMenu.pauseRestart' },
+      { element: $('race-journey-skip'), icon: 'skip' },
+      { element: $('race-journey-random'), icon: 'random', key: 'nativeMenu.pauseRandom' },
+      { element: $('race-chapters'), icon: 'missions' },
+    ],
+    audio: [{ element: $('race-quick-sound'), icon: 'sound' }, pauseMusicAction(doc, 'race')],
+    config: [
+      { element: $('race-options'), icon: 'settings' },
+      { element: $('versus-landing-fullscreen'), icon: 'fullscreen' },
+    ],
+    home: $('race-home'),
+    notices: [
+      { element: $('race-journey-save-options'), icon: 'info' },
+      { element: $('versus-landing-fullscreen-status') },
+    ],
+  });
   let screen = 'main',
     status = null,
     opener = null,
     departure = null,
+    briefingOwner = null,
     destroyed = false,
     revealingResize = false,
     equipment = [];
@@ -351,17 +391,20 @@ export function createCouchShell({
     }
   }
   const destinationHref = (kind, token, routeId, teamRouteId = teamJourneyRoute()) =>
-    (kind === 'library' && libraryHref) ||
-    (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
-    (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
-    (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
-    (kind === 'team' &&
-      teamRouteId &&
-      `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
-    secondaryDestinations[kind] ||
-    (isJourney && authoredDestinations?.[kind]) ||
-    authoredDestinations?.[kind] ||
-    DESTINATIONS[kind];
+    nativeArtReviewURL(
+      (kind === 'library' && libraryHref) ||
+        (kind === 'solo' && token && `../?mode-return-v2=${token}`) ||
+        (kind === 'solo' && routeId === 'legacy' && '../?journey=legacy') ||
+        (kind === 'solo' && authoredJourneyModeHref(routeId, 'solo')) ||
+        (kind === 'team' &&
+          teamRouteId &&
+          `relay-rescue.html?journey=${teamRouteId}&return=versus${teamRouteId === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`) ||
+        secondaryDestinations[kind] ||
+        (isJourney && authoredDestinations?.[kind]) ||
+        authoredDestinations?.[kind] ||
+        DESTINATIONS[kind],
+      view?.location?.href ?? globalThis.location?.href,
+    );
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -575,6 +618,7 @@ export function createCouchShell({
       $('race-solo-return').setAttribute('href', soloHref);
     const previous = status;
     status = match.status;
+    $('race-briefing').hidden = status !== 'ready' || contentBusy || match !== briefingOwner;
     doc.body.dataset.couchStatus = status;
     if (departure && !departureCurrent(departure)) cancelDeparture();
     equipment = match.runs.map(couchEquipment);
@@ -593,14 +637,14 @@ export function createCouchShell({
       () =>
         `${series ? t('interface:couch.firstClearRound') : t('interface:couch.firstClearRace')} ${match.limitTicks === null ? t('interface:noRaceCountdownIfBothFlightsEndCoverageThenLives') : t('interface:atTheTimeLimitCoverageThenLivesThenScoreDecide')} ${series ? t('interface:firstToTwoRoundWinsTakesTheMatchDrawsAward') : t('interface:oneRaceEndsAfterThisResultRematchPlaysTheSame')}`,
     );
-    if (status === 'ready' && !contentBusy && nativeMenu) nativeMenu.showBrandTitle();
+    if (status === 'ready' && nativeMenu) nativeMenu.showBrandTitle();
     else {
       nativeMenu?.hideBrandTitle();
       setText('race-title', () =>
         contentBusy
           ? t('interface:loadingTheSharedPicture')
           : status === 'paused'
-            ? t('interface:bothBoardsPaused')
+            ? t('interface:paused3')
             : status === 'finished'
               ? !series
                 ? t('interface:raceComplete')
@@ -616,7 +660,10 @@ export function createCouchShell({
     $('race-retry').disabled = !paused || contentBusy;
     $('race-home').hidden = !paused;
     $('race-optional-setup').hidden = paused;
-    setText('race-chapters', () => t('interface:nativeMenu.missions'));
+    setText('race-chapters', () =>
+      t(paused ? 'interface:nativeMenu.pauseChoose' : 'interface:nativeMenu.missions'),
+    );
+    pauseMenu?.setActive(paused);
     $('race-pause').disabled = status !== 'running' && screen !== 'review';
     // Do not replace the native click target's content on every flight frame.
     setText('race-pause', () =>
@@ -672,16 +719,30 @@ export function createCouchShell({
       focus();
   }
   renderScreens();
+  nativeMenu?.refreshGlobalSettings();
   if (view?.addEventListener) listen(view, 'resize', revealResizedAction);
   return {
     update,
     back,
     setup,
+    briefing(owner, { title, description }) {
+      briefingOwner = owner;
+      setText('race-briefing-title', title);
+      setText('race-briefing-copy', description);
+      $('race-briefing').hidden = status !== 'ready';
+      show('main');
+    },
     observe,
     root,
     primary,
     focus,
     scope: () => screen,
+    refreshGlobalSettings: (options) => nativeMenu?.refreshGlobalSettings(options),
+    openSettings(category = 'data', focusTarget = null) {
+      show('options', { remember: doc.activeElement });
+      settings.select(`race-settings-tab-${category}`, { drill: true });
+      if (focusTarget && !focusTarget.closest('[hidden],[inert]')) focusTarget.focus();
+    },
     controllerHint: () => $('race-controller-help').textContent,
     cancelDeparture,
     destroy() {
@@ -689,6 +750,7 @@ export function createCouchShell({
       destroyed = true;
       settings.destroy();
       modeChoices.dispose();
+      pauseMenu?.destroy();
       nativeMenu?.destroy();
       for (const remove of removers) remove();
     },

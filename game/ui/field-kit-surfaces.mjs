@@ -63,7 +63,10 @@ export function attachFieldKitSurfaces({
       doc.body.dataset.textSize = control.value === 'large' ? 'large' : 'standard';
     });
   }
-  return { destroy: () => removers.forEach((remove) => remove()) };
+  return {
+    refreshGlobalSettings: (options) => nativeMenu?.refreshGlobalSettings(options),
+    destroy: () => removers.forEach((remove) => remove()),
+  };
 }
 
 // Supporting tools opt in explicitly. The game calls this from its shell so

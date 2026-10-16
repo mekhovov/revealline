@@ -288,6 +288,7 @@ export function updateCoopCombat(run) {
     if (
       actor.phase === 'cooldown' &&
       updatePursuitHeading({
+        version: run.level.pursuit?.version,
         actor,
         policy: pursuitPolicy(run.level, actor.id),
         actors: combat.actors,
@@ -509,7 +510,15 @@ export function coopCombatView(run) {
       ...(pursuitPolicy(run.level, actor.id) && !actor.pursuit
         ? { pursuit: { behavior: pursuitPolicy(run.level, actor.id).behavior, phase: 'walking' } }
         : {}),
-      ...(pursuitPolicy(run.level, actor.id)?.partnerId
+      ...(pursuitPolicy(run.level, actor.id)?.partnerId &&
+      !(
+        run.level.pursuit.version === 'pursuit-goals.v2' &&
+        actor.pursuit?.partnerLost === true &&
+        actor.pursuit?.behavior === 'runner' &&
+        !combat.actors.some(
+          (other) => other.id === pursuitPolicy(run.level, actor.id).partnerId && other.alive,
+        )
+      )
         ? {
             pursuit: {
               ...actor.pursuit,

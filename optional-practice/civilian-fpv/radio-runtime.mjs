@@ -11,7 +11,12 @@ import {
 
 /** No physics here. All faults release input ownership and require explicit pickup.
  * An unchanged Gamepad timestamp is valid for a held control, not a disconnect. */
-export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset = () => {} }) {
+export function createRadioRuntime({
+  getGamepads,
+  onFreeze = () => {},
+  onReset = () => {},
+  onCamera = () => {},
+}) {
   let selected = null,
     profile = null,
     verified = false,
@@ -24,7 +29,9 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
     pickup = null,
     reason = 'select-device';
   let previous = { arm: false, pause: false, reset: false },
-    armOffSeen = false;
+    armOffSeen = false,
+    cameraOffSeen = false,
+    cameraPressed = false;
   const freeze = (why) => {
     if (active) pickup = { ...live };
     active = false;
@@ -32,6 +39,7 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
     frozen = true;
     reason = why;
     armOffSeen = false;
+    cameraOffSeen = cameraPressed = false;
     previous = { arm: false, pause: false, reset: false };
     onFreeze(why);
   };
@@ -218,7 +226,7 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
       let next;
       try {
         next = Object.fromEntries(
-          ['arm', 'pause', 'reset'].map((key) => [
+          ['arm', 'pause', 'reset', 'camera'].map((key) => [
             key,
             radioSwitch(profile, pad, key, previous[key]),
           ]),
@@ -243,6 +251,15 @@ export function createRadioRuntime({ getGamepads, onFreeze = () => {}, onReset =
         // it so a subsequent ON edge does not require an extra OFF frame.
         armOffSeen = true;
       } else if (!active && edges.arm && armOffSeen) requestArm();
+      // View is presentation-only: require a fresh OFF, press and release
+      // during this active ownership period. Menus/focus/reconnect clear it.
+      if (!active || editing || !verified) cameraOffSeen = cameraPressed = false;
+      else if (!next.camera) {
+        const changeCamera = cameraOffSeen && cameraPressed;
+        cameraOffSeen = true;
+        cameraPressed = false;
+        if (changeCamera) onCamera();
+      } else if (cameraOffSeen) cameraPressed = true;
       previous = next;
       if (active) live = command;
       else

@@ -14,7 +14,7 @@ The game modes share audio ownership, output routing, persisted master preferenc
 | FPV Academy / Academy Studio play  | Same flight mixer, projected into admitted SIM presentation source | Native drone movement, contacts and route completion; menu samples share the flight context                                                         |
 | Assisted 2D civilian flight gym    | Thin centimetre-to-audio projection into the same flight mixer     | Audible flight activity, ordered checkpoint/finish cues and localized Sound toggle                                                                  |
 
-Military Field machine appearances use wheeled/tracked movement recipes without changing enemy roles or collision. Humanoid loops remain distinct from vehicle loops. Static obstacles do not emit continuous motor noise. Native SIM drones do not emit human footsteps.
+Military Field machine appearances use wheeled/tracked movement recipes without changing enemy roles or collision. Humanoid footsteps remain distinct from vehicle loops. Static obstacles do not emit continuous motor noise. Native SIM drones do not emit human footsteps.
 
 Editor inspection, catalogue portraits and static previews do not autoplay. Studio play attempts use their normal game host. Historical import/restore seeds observation cursors rather than replaying old catches or shots. Verified flight playback is silent in the newly connected hosts; importing or verifying a result does not create audio.
 
@@ -30,6 +30,40 @@ Pause stops movement loops and one-shots. Retry and course replacement reset obs
 
 Warning cues interrupt low-priority dialogue. Incidental tells have longer cooldowns; multiple accepted kills in one transaction produce a bounded accent. FeedbackDirector retains its existing 16 feedback-voice / 64 total-voice ceiling and four movement loops. The native flight mixer caps one-shots at 12 and uses one nearby vehicle layer and one distance-limited footstep cadence. No timer, sound asset or completion callback advances gameplay.
 
+## Industrial character and material accents
+
+The opt-in industrial art review exposes six original short listening samples: Runner, Courier,
+Guard, Shield bearer, utility car and tracked tank. These compose the admitted effects bank
+and its existing procedural fallback; no new recordings, licensed sounds or media downloads
+are added. Clean and brutal contact accents use the same semantic recipes as gameplay.
+The review never starts sound on load or writes preferences while playing a sample. Its
+explicit mute control uses the shared master preference; movement remains subject to the
+existing movement fader. Stop, visual Pause, hidden documents and navigation cancel pending
+activation and delayed accents. A persisted pagehide releases audio without disposing the
+BFCache page, so returning still requires deliberate Play.
+
+Capture Solo/Versus/Team and Classic Snake share family-specific footsteps and equipment
+accents. Runner, Courier, Guard and Shield bearer have distinct cadence and material
+profiles; other families retain their shared baseline. Each board selects one nearest moving
+humanoid per observed tick, with a real-time cadence limit. Capture's Military Field machines
+add one nearby wheeled or tracked movement-onset accent; continuing motion retains the
+existing bounded motor loops. Private rooms use these positional accents and their accepted
+event journal for equipment phase cues, so observational phase cues remain disabled there.
+
+Native flight uses the same family profiles for nearby patrol/sentry footsteps and pursuit
+phase equipment, and adds a short vehicle movement-onset accent. Accepted native vehicle
+models select wheeled sound or the tracked sound for `field-tank`. The existing flight rotor,
+airflow and vehicle engine continue through the same graph. The listening samples add no
+new vehicle, weapon, armor or damage behavior. Academy and the assisted gym retain their existing
+flight sounds; they have no new pursuit populations in this change.
+
+Incidental movement cues route through movement and effects faders, have lower priority than
+warnings, and are discarded while foreground combat/result cues are active. A newly arriving
+warning also stops active movement one-shots; the player rotor is retained. Pose/animation
+sampling cannot trigger audio. Paired boards retain one page-owned mixer and the existing
+voice limits. Replacing or restoring an attempt primes observation state rather than replaying
+old footsteps, equipment or vehicle starts.
+
 ## Packaging and source identity
 
 - Capture and Snake import canonical shared modules directly.
@@ -40,7 +74,7 @@ Warning cues interrupt low-priority dialogue. Incidental tells have longer coold
 
 ## Verification and remaining qualification
 
-Relevant regressions are authored in `game/test/shared-encounter-audio.test.mjs`: output routing; phase recipe distinctions; Snake catches/supplies/restore; shared flight context, mute and terminal catch; offline stereo; gym units and non-mutation; procedural Pause/Retry ownership. Automated suites remain explicitly waived and were not run.
+Relevant regressions are authored in `game/test/shared-encounter-audio.test.mjs`: output routing; phase recipe distinctions; Snake catches/supplies/restore; shared flight context, mute and terminal catch; offline stereo; gym units and non-mutation; procedural Pause/Retry ownership. Additional authored regressions in `game/test/industrial-encounter-audio.test.mjs` cover sample cancellation, saved/cross-tab mute, BFCache, movement faders, warning priority, nearest-actor aggregation, movement onsets and journal phase ownership. Automated suites remain explicitly waived and were not run.
 
 Targeted ESLint and formatting checks cover changed audio modules and hosts. The release owner records aggregate localization, source-projection, optional-package, source-identity and committed-source build outcomes with the rest of this change. This document does not claim a successful production build or human listening review.
 

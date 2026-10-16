@@ -93,7 +93,10 @@ const makePad = (index = 0) => ({
   axes: [0, 0],
   buttons: Array.from({ length: 16 }, () => ({ pressed: false })),
 });
-function fixture(t, { external = true, tap = false, onClear = () => {}, touchMode = null } = {}) {
+function fixture(
+  t,
+  { external = true, tap = false, onClear = () => {}, onSteer = () => {}, touchMode = null } = {},
+) {
   const originals = new Map(
     ['window', 'document', 'navigator'].map((key) => [
       key,
@@ -137,6 +140,7 @@ function fixture(t, { external = true, tap = false, onClear = () => {}, touchMod
     continuousSteering: () => continuous,
     tapMode: () => tap,
     onClear,
+    onSteer,
     getTouchSettings: touchMode ? () => ({ mode: touchMode }) : null,
     onActivity: () => activities++,
     onPause: () => {
@@ -843,3 +847,18 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(runs[0].player.direction, 'down');
     assert.equal(f.reads, reads);
   });
+
+test('fresh steering callback retains same-direction gestures and ignores held keyboard repeats', (t) => {
+  const turns = [],
+    f = fixture(t, { onSteer: (direction) => turns.push(direction) });
+  f.key('ArrowRight');
+  f.key('ArrowRight', { repeat: true });
+  f.input.poll();
+  f.up('ArrowRight');
+  f.key('ArrowRight');
+  assert.deepEqual(turns, ['right', 'right']);
+  f.setActive(false);
+  f.up('ArrowRight');
+  f.key('ArrowLeft');
+  assert.deepEqual(turns, ['right', 'right']);
+});

@@ -428,10 +428,14 @@ export function matchRecordedGameplayTuning(source, recordedLevel, { classes = C
   const accepted = (level) =>
     recorded.runningEnemies
       ? recorded.version.startsWith('revealline-coop-level.')
-        ? prepareTeamRunningEnemies(level, { style: recorded.pursuit ? 'varied' : 'original' })
+        ? prepareTeamRunningEnemies(level, {
+            style: recorded.pursuit ? 'varied' : 'original',
+            generation: recorded.pursuit?.version ?? 'pursuit-goals.v1',
+          })
         : prepareRunningEnemyLevel(level, {
             classes,
             style: recorded.pursuit ? 'varied' : 'original',
+            generation: recorded.pursuit?.version ?? 'pursuit-goals.v1',
           })
       : level;
   const current = accepted(applyGameplayTuning(source, tuning));
@@ -448,7 +452,11 @@ function tuneGameplay(source, snapshot, vectorMagnitude) {
     const team = owned.version.startsWith('revealline-coop-level.');
     const base = team ? teamRunningEnemyBaseLevel(owned) : runningEnemyBaseLevel(owned);
     const tuned = tuneGameplay(base, snapshot, vectorMagnitude);
-    const options = { style: 'varied', population: pursuitPopulation(owned) };
+    const options = {
+      style: 'varied',
+      population: pursuitPopulation(owned),
+      generation: owned.pursuit.version,
+    };
     return team
       ? prepareTeamRunningEnemies(tuned, options)
       : prepareRunningEnemyLevel(tuned, options);

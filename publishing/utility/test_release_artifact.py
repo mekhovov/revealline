@@ -383,6 +383,8 @@ class WorkflowTests(unittest.TestCase):
         self.assertNotIn('upload-originals', text)
         for command in utility.COMMANDS:
             self.assertIn('run: ' + command, regular)
+        for retired in ['npm run lint', 'npm run format:check', 'npm run format:native:check']:
+            self.assertNotIn('run: ' + retired, regular)
         self.assertIn('node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4', regular)
         self.assertIn('needs: [qualify, test]', regular)
         self.assertIn("inputs.operation == 'qualify' && inputs.freeze_snapshot", regular)

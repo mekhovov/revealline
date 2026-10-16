@@ -40,7 +40,7 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
     classification: 'public',
     kind: 'selected-inputs-and-projections',
     description:
-      'Selected application and shared code; generated offline worker and icons; selected validator messages only. Original aggregate locale bytes and build tooling are omitted. Original input hashes bind the committed build inputs, not additional published files.',
+      'Selected application and shared code; generated offline worker and icons; selected validator and settings messages. Original aggregate locale bytes and build tooling are omitted. Original input hashes bind the committed build inputs, not additional published files.',
     inputs: inventory(inputs),
     files: inventory(selectedSource),
     projections: [
@@ -71,14 +71,14 @@ export function createOptionalPackageCandidate({ built, version, sourceRevision,
       ...editionDescriptor(license.path, runtime.get(license.path)),
     })),
   });
-  if (
-    selectedSource.size + 1 > policy.limits.files ||
-    [...selectedSource.values()].reduce(
-      (sum, bytes) => sum + bytes.length,
-      sourceInventory.length,
-    ) > policy.limits.bytes
-  )
-    throw new Error('Complete optional source output exceeds package limits.');
+  const sourceBytes = [...selectedSource.values()].reduce(
+    (sum, bytes) => sum + bytes.length,
+    sourceInventory.length,
+  );
+  if (selectedSource.size + 1 > policy.limits.files || sourceBytes > policy.limits.bytes)
+    throw new Error(
+      `Complete optional source output exceeds package limits: ${id} has ${selectedSource.size + 1}/${policy.limits.files} files and ${sourceBytes}/${policy.limits.bytes} bytes.`,
+    );
   const files = new Map([
     [`manifest-optional-${id}.json`, manifestBytes],
     [`distribution-optional-${id}.zip`, built.zip],

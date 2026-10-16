@@ -1,4 +1,4 @@
-import { makeClassicSnakeV2, makeClassicSnakeV3 } from './classic-core.mjs';
+import { makeClassicSnakeV2, makeClassicSnakeV3, makeClassicSnakeV4 } from './classic-core.mjs';
 
 export const CLASSIC_PACES = Object.freeze({ slow: 1.4, normal: 1, fast: 0.75 });
 
@@ -29,12 +29,16 @@ export function prepareClassicSnakeLevel(
   entry,
   { pace = 'normal', format = 'campaign', targetRules = 'authored', preset = 'classic' } = {},
 ) {
+  if (entry.level.operation && (format !== 'campaign' || targetRules !== 'authored'))
+    throw new Error('Operations require authored Campaign / Mission Race rules.');
   let level = structuredClone(entry.level);
   if (targetRules === 'moving' || targetRules === 'varied' || format === 'endless')
     level = structuredClone(
-      (targetRules === 'varied' || level.version.endsWith('v3')
-        ? makeClassicSnakeV3
-        : makeClassicSnakeV2)(level, {
+      (level.version.endsWith('v4')
+        ? makeClassicSnakeV4
+        : targetRules === 'varied' || level.version.endsWith('v3')
+          ? makeClassicSnakeV3
+          : makeClassicSnakeV2)(level, {
         ...(targetRules === 'varied' ? { varied: true } : {}),
         targetRemix: targetRules === 'moving',
         endless: format === 'endless',
@@ -47,4 +51,12 @@ export function prepareClassicSnakeLevel(
     Math.max(60, Math.round(level.minStepMs * CLASSIC_PACES[pace])),
   );
   return level;
+}
+
+/** UI admission keeps staged missions intact when chosen from a remix or score setup.
+ * Engine/import validation remains strict; this only selects the visible supported controls. */
+export function classicSnakeMissionSettings(entry, settings) {
+  return entry.level.operation
+    ? { ...settings, format: 'campaign', targetRules: 'authored' }
+    : settings;
 }

@@ -1,11 +1,23 @@
 import { CLASSIC_SNAKE_LEVELS } from '../snake/classic-catalogue.mjs';
-import { makeClassicSnakeV3, createClassicSnake } from '../snake/classic-core.mjs';
+import {
+  createClassicSnake,
+  CLASSIC_SNAKE_V4_KINDS,
+  classicSnakeUsesVariableHazards,
+} from '../snake/classic-core.mjs';
+import { prepareClassicSnakeStudioLevel } from '../snake/classic-studio-recipe.mjs';
 import { drawClassicTarget } from '../snake/classic-target-art.mjs';
-import { actorFieldGuide, ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
-import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
+import { ACTOR_CASTS } from '../hunt/actor-catalog.mjs';
+import {
+  classicMechanicGuide as actorFieldGuide,
+  renderClassicEnemyFieldGuide as renderEnemyFieldGuide,
+} from '../snake/classic-mechanic-guide.mjs';
 import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { contentStudioLinks } from '../ui/content-studio-navigation.mjs';
+import { mountSnakeStudioPreview } from './snake-preview-panel.mjs';
+import { captureStudioActionFocus } from './action-focus.mjs';
+import { prepareSnakeStudioPlay } from './snake-play-launch.mjs';
+import { createSnakeStudioStorageLifecycle } from './snake-storage-lifecycle.mjs';
 import {
   CLASSIC_PACKAGE_FORMAT,
   validateClassicSnakePackage,
@@ -55,10 +67,12 @@ const report = (text, error = false) => {
   status.dataset.error = String(error);
 };
 const guard = (fn) => async () => {
+  let operation;
   try {
-    await fn();
+    operation = storage.capture();
+    await fn(operation);
   } catch (error) {
-    report(error.message, true);
+    if (operation?.current()) report(error.message, true);
   }
 };
 const button = (text, fn) => {
@@ -92,26 +106,39 @@ let draft = {
 };
 let active = 0,
   cursor = { x: 0, y: 0 },
-  strokes = new Set();
-const library = createClassicSnakeCommunityLibrary();
-const drafts = createProfileRecordBackend({
-  key: 'classic-snake-studio-draft.v1',
-  empty: () => ({ draft: null }),
-  validate: (source) => {
-    const value = boundedJSON(source, {
-      maxBytes: 1536 * 1024,
-      maxNodes: 160000,
-      maxArray: 1536,
-      maxDepth: 14,
-    });
-    required(
-      Object.keys(value).length === 1 && Object.hasOwn(value, 'draft'),
-      'Invalid Snake Studio draft.',
-    );
-    if (value.draft !== null) validateClassicSnakePackage(value.draft);
-    return value;
-  },
-  operationTimeoutMs: 5000,
+  strokes = new Set(),
+  playRevision = 0,
+  playFocus = null;
+function retirePlay() {
+  playRevision++;
+  playFocus?.cancel();
+  playFocus = null;
+}
+const createDrafts = () =>
+  createProfileRecordBackend({
+    key: 'classic-snake-studio-draft.v1',
+    empty: () => ({ draft: null }),
+    validate: (source) => {
+      const value = boundedJSON(source, {
+        maxBytes: 1536 * 1024,
+        maxNodes: 160000,
+        maxArray: 1536,
+        maxDepth: 14,
+      });
+      required(
+        Object.keys(value).length === 1 && Object.hasOwn(value, 'draft'),
+        'Invalid Snake Studio draft.',
+      );
+      if (value.draft !== null) validateClassicSnakePackage(value.draft);
+      return value;
+    },
+    operationTimeoutMs: 5000,
+  });
+const storage = createSnakeStudioStorageLifecycle({
+  window,
+  document,
+  create: () => ({ library: createClassicSnakeCommunityLibrary(), drafts: createDrafts() }),
+  retire: retirePlay,
 });
 const top = el('div', null, { class: 'fields' });
 root.append(top);
@@ -188,12 +215,18 @@ const kinds = [
   'pair',
   'shield',
   'brace',
+  ...CLASSIC_SNAKE_V4_KINDS,
 ];
 const kind = field(
   fields,
   words('Prey policy', 'Поведінка здобичі'),
   select(kinds.map((value) => [value, actorFieldGuide(value, language)?.name ?? value])),
 );
+// Advanced posts, linked pads and lanes are authored together. Their accepted
+// policy is inspectable here and editable in package JSON, not replaced by a
+// guessed generic policy when a template is opened.
+for (const option of kind.options)
+  if (CLASSIC_SNAKE_V4_KINDS.includes(option.value)) option.disabled = true;
 const population = field(
   fields,
   words('Active prey', 'Активні цілі'),
@@ -222,8 +255,13 @@ const cast = field(
 );
 const phase = field(
   fields,
-  words('Preview phase', 'Фаза перегляду'),
-  select(['rest', 'warning', 'burst', 'turning'].map((value) => [value, value])),
+  words('Specimen phase', 'Фаза зразка'),
+  select([
+    ['rest', words('Rest', 'Відпочинок')],
+    ['warning', words('Warning', 'Попередження')],
+    ['burst', words('Burst', 'Ривок')],
+    ['turning', words('Turning', 'Поворот')],
+  ]),
 );
 const specimen = el('canvas', null, {
   width: '240',
@@ -237,6 +275,12 @@ const guide = el('section', null, {
   'aria-label': words('Prey goal, tell and counter', 'Мета, ознака та протидія здобичі'),
 });
 editor.append(guide);
+const playPreview = mountSnakeStudioPreview({
+  container: boardSection,
+  getLevel: () => current().level,
+  getCast: () => cast.value,
+  language,
+});
 const modes = el('div', null, { class: 'actions' });
 editor.append(modes);
 const sourceDetails = el('details'),
@@ -265,14 +309,19 @@ const current = () => draft.entries[active];
 const upgradedEntries = new WeakMap();
 function editableLevel() {
   const entry = current();
-  if (entry.level.version !== 'classic-snake-level.v3') {
+  if (
+    !['classic-snake-level.v3', 'classic-snake-level.v4', 'classic-snake-level.v5'].includes(
+      entry.level.version,
+    )
+  ) {
     const previous = entry.level.version;
-    entry.level = structuredClone(makeClassicSnakeV3(entry.level));
+    entry.level = prepareClassicSnakeStudioLevel(entry.level);
     upgradedEntries.set(entry, previous);
   }
   return entry.level;
 }
 function changed() {
+  retirePlay();
   current().level.revision = `studio-${sequence++}`;
   paint();
 }
@@ -287,6 +336,7 @@ function validate() {
   return pack;
 }
 function refresh() {
+  retirePlay();
   const entry = current(),
     level = entry.level;
   missionSelect.replaceChildren(
@@ -313,13 +363,24 @@ function paint() {
     context = board.getContext('2d'),
     cell = board.width / level.width;
   const previous = upgradedEntries.get(current());
-  formatNotice.hidden = !previous;
+  formatNotice.hidden =
+    !previous && !['classic-snake-level.v4', 'classic-snake-level.v5'].includes(level.version);
   formatNotice.textContent = previous
     ? words(
         `This draft mission was upgraded from ${previous} to Snake v3 for your gameplay edits.`,
         `Цю чернетку місії оновлено з ${previous} до Snake v3 для редагування ігрових правил.`,
       )
-    : '';
+    : level.version === 'classic-snake-level.v5'
+      ? words(
+          'This operation keeps its stages, cargo, junctions and cable plates. Edit these together in Advanced recipe JSON; validate and play every changed route.',
+          'Операція зберігає етапи, вантаж, розвилки й кабельні плити. Редагуйте їх разом у розширеному JSON рецепта; перевіряйте грою кожен змінений маршрут.',
+        )
+      : level.version === 'classic-snake-level.v4'
+        ? words(
+            'This mission keeps its authored field mechanics. Posts, lanes, relay pads and erosion marks remain editable in Advanced recipe JSON.',
+            'Місія зберігає задані польові механіки. Пости, смуги, ретранслятори й позначки руйнування можна змінити в розширеному JSON рецепта.',
+          )
+        : '';
   board.height = Math.round(cell * level.height);
   context.imageSmoothingEnabled = false;
   context.fillStyle = '#1a2b2a';
@@ -345,6 +406,17 @@ function paint() {
   level.targets?.required.forEach((policy) => {
     policy.goals?.forEach((point) => square(point, '#c5e18b', cell * 0.3));
     policy.path?.forEach((point) => square(point, '#6fc7da', cell * 0.4));
+    if (policy.at) square(policy.at, '#e7b759', cell * 0.2);
+    policy.relays?.forEach((point) => square(point, '#bce992', cell * 0.3));
+    policy.breaks?.forEach((point) => square(point, '#f2aa85', cell * 0.4));
+    if (policy.lane) {
+      for (let at = policy.lane.from; at <= policy.lane.to; at++)
+        square(
+          policy.lane.axis === 'x' ? { x: at, y: policy.at.y } : { x: policy.at.x, y: at },
+          '#d59494',
+          cell * 0.44,
+        );
+    }
   });
   level.pickups?.forEach((pickup) =>
     pickup.pads.forEach((point) =>
@@ -379,11 +451,15 @@ function paint() {
   });
   renderEnemyFieldGuide(guide, [kind.value], { locale: language, cast: cast.value });
   try {
-    createClassicSnake(level, { mode: 'team' });
+    createClassicSnake(level, {
+      mode: 'team',
+      ...(classicSnakeUsesVariableHazards(level) ? { hazardSeed: 17 } : {}),
+    });
     validate();
   } catch (error) {
     report(error.message, true);
   }
+  playPreview.refresh();
 }
 function paintCell(point) {
   const identity = `${point.x},${point.y}`;
@@ -414,7 +490,8 @@ function paintCell(point) {
       if (['refuge', 'switchback', 'pair'].includes(policy.kind)) append(policy.goals);
   } else if (tool.value === 'path') {
     for (const policy of level.targets.required)
-      if (['patroller', 'courier'].includes(policy.kind)) append(policy.path);
+      if (['patroller', 'courier', 'perimeter', 'contour'].includes(policy.kind))
+        append(policy.path);
   } else if (tool.value.startsWith('shutter')) {
     const id = tool.value;
     let gate = level.shutters.find((entry) => entry.id === id);
@@ -513,6 +590,7 @@ population.addEventListener('change', () => {
 kind.addEventListener('change', () => {
   const level = editableLevel(),
     selected = kind.value;
+  if (CLASSIC_SNAKE_V4_KINDS.includes(selected)) return;
   const policy = { kind: selected, every: selected === 'patroller' ? 4 : 3 };
   if (['refuge', 'switchback', 'pair'].includes(selected))
     policy.goals = [
@@ -532,7 +610,7 @@ actions.append(
   button(words('Add copied mission', 'Додати копію місії'), () => {
     required(draft.entries.length < 12, 'A package supports at most twelve missions.');
     const source = CLASSIC_SNAKE_LEVELS.find((entry) => entry.id === template.value),
-      level = structuredClone(makeClassicSnakeV3(source.level));
+      level = prepareClassicSnakeStudioLevel(source.level);
     level.id = `studio-mission-${Date.now()}-${draft.entries.length + 1}`;
     draft.entries.push({
       title: structuredClone(source.title),
@@ -548,9 +626,10 @@ actions.append(
     active = Math.min(active, draft.entries.length - 1);
     refresh();
   }),
-  button(words('Save valid draft', 'Зберегти правильну чернетку'), async () => {
+  button(words('Save valid draft', 'Зберегти правильну чернетку'), async ({ drafts, current }) => {
     const pack = validate();
     await drafts.update(() => ({ draft: pack }));
+    if (!current()) return;
     report(
       words(
         'Draft saved in the shared profile database.',
@@ -558,8 +637,9 @@ actions.append(
       ),
     );
   }),
-  button(words('Restore saved draft', 'Відновити чернетку'), async () => {
+  button(words('Restore saved draft', 'Відновити чернетку'), async ({ drafts, current }) => {
     const saved = await drafts.read();
+    if (!current()) return;
     required(saved.draft, 'No saved draft.');
     draft = structuredClone(saved.draft);
     active = 0;
@@ -585,34 +665,42 @@ const file = el('input', null, {
 field(actions, words('Import package', 'Імпорт пакунка'), file);
 file.addEventListener(
   'change',
-  guard(async () => {
+  guard(async ({ current }) => {
     if (!file.files[0]) return;
-    draft = structuredClone(await importClassicSnakePackage(file.files[0]));
+    const imported = await importClassicSnakePackage(file.files[0]);
+    if (!current()) return;
+    draft = structuredClone(imported);
     active = 0;
     refresh();
     file.value = '';
   }),
 );
-for (const mode of ['solo', 'versus', 'team'])
-  modes.append(
-    button(words(`Play ${mode}`, `Грати: ${mode}`), async () => {
-      const installed = await library.install(validate()),
-        url = new URL('../snake/play.html', location.href);
-      url.search = new URLSearchParams({
+for (const mode of ['solo', 'versus', 'team']) {
+  const play = button(words(`Play ${mode}`, `Грати: ${mode}`), async ({ library, current }) => {
+    retirePlay();
+    play.focus({ preventScroll: true });
+    const focus = captureStudioActionFocus(play),
+      revision = playRevision;
+    playFocus = focus;
+    try {
+      const url = await prepareSnakeStudioPlay({
+        source: validate(),
+        selectedIndex: active,
         mode,
-        community: installed.identity,
-        level: installed.entries[active].id,
-        lang: language,
-        studio: 'snake',
-      }).toString();
-      location.assign(url.href);
-    }),
-  );
+        locale: language,
+        baseURL: location.href,
+        install: (pack, options) => library.install(pack, options),
+        isCurrent: () => current() && revision === playRevision && focus.current(),
+      });
+      if (url && revision === playRevision && focus.current()) location.assign(url);
+    } finally {
+      focus.cancel();
+      if (playFocus === focus) playFocus = null;
+    }
+  });
+  modes.append(play);
+}
 sourceDetails.addEventListener('toggle', () => {
   if (sourceDetails.open) sourceArea.value = JSON.stringify(draft, null, 2);
-});
-window.addEventListener('pagehide', () => {
-  drafts.close();
-  library.close();
 });
 refresh();

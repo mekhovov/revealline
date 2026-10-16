@@ -162,13 +162,14 @@ test('guard warning keeps the selected seat and observed point; target recovery 
   const { run } = fixture(),
     guard = run.combatPatrols.actors.find((a) => a.role === 'sentry');
   const definition = run.level.combatPatrols.actors.find((a) => a.id === guard.id);
-  expose(run, 0, guard.x + 2, guard.y);
+  // The admitted guard is near the right edge; keep both observed seats in the field.
+  expose(run, 0, guard.x - 2, guard.y);
   run.combatPatrols.actorTick = definition.openingTicks;
   updateCoopCombat(run);
   assert.equal(guard.phase, 'warning');
   const aim = { ...guard.aim };
   run.players[0].y += 1;
-  expose(run, 1, guard.x + 1, guard.y);
+  expose(run, 1, guard.x - 1, guard.y);
   updateCoopCombat(run);
   assert.deepEqual(guard.aim, aim);
   assert.equal(guard.targetPlayer, 0);

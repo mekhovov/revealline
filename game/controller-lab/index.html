@@ -1,17 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
-    <script src="../presentation/theme-bootstrap.mjs" data-theme-density="studio"></script>
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <link
       rel="stylesheet"
       href="../presentation/industrial-workshop.css"
       data-industrial-workshop
     />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title data-i18n="interface:revealLineControllerPractice">
@@ -25,13 +59,33 @@
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
-    <script type="module" src="../ui/tool-display-entry.mjs"></script>
-    <script type="module" src="../presentation/page-entry.mjs"></script>
+    <script
+      src="../ui/tool-display-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
-    <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
+    <script
+      src="../ui/field-kit-surfaces.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
-    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
-    <script type="module" src="../ui/support-input-entry.mjs"></script>
+    <script
+      src="../ui/workshop-return-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../ui/support-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/workshop-return.css" />
     <link
       rel="icon"
@@ -63,8 +117,8 @@
         inert
         aria-disabled="true"
         href="../?workshop=controller-lab"
-        data-i18n="common:navigation.returnToWorkshop"
-        >Return to Workshop</a
+        data-i18n="interface:backToSettings"
+        >Back to Settings</a
       >
       <span data-i18n="interface:controllerPractice">CONTROLLER PRACTICE</span>
       <a href="../playground/" data-workshop-tool="playground" data-i18n="interface:openPlayground"
@@ -498,6 +552,8 @@
       src="../ui/direct-tool-launch.js"
       data-module="lab.mjs"
       data-status="load-status"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
   </body>
 </html>

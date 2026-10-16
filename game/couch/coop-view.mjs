@@ -1,3 +1,10 @@
+import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import {
+  sharedBattlefieldGround,
+  createBattlefieldGroundSurface,
+  battlefieldGroundAllowed,
+  paintBattlefieldGroundSpan,
+} from '../presentation/battlefield-ground.mjs';
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { coopCombatView } from '../coop/combat-patrols.mjs';
 import { teamPictureArenaLevel } from '../coop/picture-source.mjs';
@@ -8,10 +15,12 @@ import {
   drawCombatScrap,
 } from '../ui/combat-presentation.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { drawSnakeBody, drawSnakeTargetOrder } from '../ui/snake-view.mjs';
 import { t } from '../i18n/index.mjs';
 import {
   createArcadeAdapter,
+  getArcadeCollection,
   selectedArcadeCollection,
 } from '../presentation/industrial-arcade.mjs';
 import {
@@ -47,11 +56,13 @@ import {
   drawCoopCaptureFeedback,
   drawCoopWall,
   prepareCoopWall,
+  prepareCoopMaterialSample,
 } from './coop-terrain-trail.mjs';
 import { paintMaterialMarker } from '../content-design/material-markers.mjs';
 import { candidateTeamPictureFrame } from './candidate-team-pictures.mjs';
 import { coopBonusView, drawCoopBonuses } from './coop-bonus-view.mjs';
 import { coopBonusActive } from '../coop/timed-bonuses.mjs';
+import { drawCoopExpedition } from '../ui/team-expedition-view.mjs';
 import {
   TEAM_PILOT_SLOTS,
   TEAM_ENEMY_SLOTS,
@@ -129,8 +140,11 @@ function prepareActorAppearance(snapshot) {
 
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
-  const arcadeAdapter = createArcadeAdapter(),
-    runCollections = new WeakMap();
+  const battlefieldGround = createBattlefieldGroundSurface(),
+    arcadeAdapter = createArcadeAdapter(),
+    runAcceptedAppearances = new WeakMap(),
+    runCollections = new WeakMap(),
+    runArtRevisions = new WeakMap();
   let interfaceProvider = () => null;
   let arcadeProvider = () => null,
     artSnapshot = null;
@@ -150,6 +164,7 @@ export function createCoopPainter(canvas) {
     cueLayoutCache = null,
     look = null,
     wall = null,
+    materialSample = Object.freeze({}),
     anchors = Object.freeze({}),
     coreFrames = Object.freeze({}),
     supportFrames = Object.freeze({}),
@@ -197,6 +212,7 @@ export function createCoopPainter(canvas) {
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
     const nextWall = prepareCoopWall(snapshot);
+    const nextMaterialSample = prepareCoopMaterialSample(snapshot);
     const nextAnchors = prepareTeamAnchors(snapshot);
     const nextCoreFrames = prepareTeamCores(snapshot);
     const nextSupportFrames = prepareTeamSupport(snapshot);
@@ -209,6 +225,7 @@ export function createCoopPainter(canvas) {
     artSnapshot = snapshot ?? null;
     look = next;
     wall = nextWall;
+    materialSample = nextMaterialSample;
     anchors = nextAnchors;
     coreFrames = nextCoreFrames;
     supportFrames = nextSupportFrames;
@@ -238,7 +255,22 @@ export function createCoopPainter(canvas) {
       feedbackComparison = null,
     } = {},
   ) {
+    // Historical/unregistered painters do not infer a new opted-in appearance.
+    const artRevision = runArtRevisions.has(run) ? runArtRevisions.get(run) : null;
+    arcadeAdapter.setReviewRevision(artRevision);
+    arcadeAdapter.setEnvironment(runAcceptedAppearances.get(run)?.environmentPin ?? null);
+    combatPresentation.setArtRevision(artRevision);
+    destruction.setArtRevision(artRevision);
     const selectedArt = arcadeAdapter.resolve(presentation, runCollections.get(run) ?? null);
+    const ground = battlefieldGround.prepare(
+      sharedBattlefieldGround().snapshot().world,
+      run.width * 16,
+      run.height * 16,
+      battlefieldGroundAllowed({
+        environmentPin: runAcceptedAppearances.get(run)?.environmentPin,
+        presentation,
+      }),
+    );
     if (selectedArt !== artSnapshot) prepareArt(selectedArt);
     const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
@@ -306,6 +338,7 @@ export function createCoopPainter(canvas) {
         );
     }
     cueLayout = null;
+    if (actors !== nextActors) actors.reset();
     actors = nextActors;
     actorPresentation = selectedActors;
     actorAppearanceStyle = actorAppearance?.style ?? null;
@@ -330,10 +363,12 @@ export function createCoopPainter(canvas) {
       canvasCSSWidth: canvas.clientWidth,
       style: actorStyle,
       previousRun,
+      concealed: run.status === 'won' && !!picture?.image,
     });
     const unit = canvas.width / run.width;
     const combat = coopCombatView(run),
       combatOptions = {
+        artRevision,
         screenScale: canvas.clientWidth / 1152,
         reduced,
         showScrap: showRemains,
@@ -440,6 +475,27 @@ export function createCoopPainter(canvas) {
         // cells and score intact while retiring the live arena's concealment/cues.
         if (run.status === 'won') return;
       }
+      if (ground)
+        for (let y = 0; y < run.height; y++) {
+          let start = -1;
+          for (let x = 0; x <= run.width; x++) {
+            const covered = x < run.width && run.cells[y * run.width + x] === 0;
+            if (covered && start < 0) start = x;
+            if (!covered && start >= 0) {
+              paintBattlefieldGroundSpan(
+                ctx,
+                ground,
+                start,
+                y,
+                x - start,
+                1,
+                run.width,
+                run.height,
+              );
+              start = -1;
+            }
+          }
+        }
       for (let y = 0; y < run.height; y++) {
         for (let x = 0; x < run.width; x++) {
           const cell = run.cells[y * run.width + x];
@@ -464,8 +520,8 @@ export function createCoopPainter(canvas) {
               ctx.fill();
             }
           } else {
-            if (picture?.image) {
-              // Required picture concealment is opaque black in every theme.
+            if (!ground && picture?.image) {
+              // Without explicit decorative ground, keep the original opaque concealment.
               ctx.fillStyle = '#000000';
               ctx.fillRect(x, y, 1, 1);
             }
@@ -473,6 +529,8 @@ export function createCoopPainter(canvas) {
             ctx.fillRect(x + 0.46, y + 0.46, 0.08, 0.08);
             const material = run.terrain?.[y * run.width + x];
             if (material === 1 || material === 2) {
+              // Cosmetic pixels remain beneath native active-material symbols.
+              drawCoopWall(ctx, materialSample[material], x, y);
               ctx.save();
               ctx.scale(1 / 16, 1 / 16);
               paintMaterialMarker(ctx, material, x * 16, y * 16, 16);
@@ -492,6 +550,7 @@ export function createCoopPainter(canvas) {
         color: palette?.accent,
       });
       ctx.restore();
+      actors.drawDefeats(ctx, (count) => destruction.reserveTransientPieces(count));
       drawCoopBonuses(ctx, bonuses, { screenScale: canvas.clientWidth / 1152 });
       drawSnakeBody(ctx, run, { unit: 1, palette, colors });
       // Launch markers are anchored landmarks, not compulsory meeting pads.
@@ -518,6 +577,7 @@ export function createCoopPainter(canvas) {
       drawCombatWarnings(ctx, combat, palette, combatOptions);
       drawCombatProjectiles(ctx, combat, palette, combatOptions);
       ctx.restore();
+      drawCoopExpedition(ctx, run, { palette, frames: emitterFrames, anchorFrames: anchors });
       for (const actor of combat?.actors ?? []) {
         if (!bonusSlowed && actor.slowUntil <= run.time) continue;
         ctx.save();
@@ -1105,6 +1165,7 @@ export function createCoopPainter(canvas) {
   return {
     paint,
     observe(run) {
+      actors.observe(run);
       outcomes.observe(run);
       captures.observe(run);
     },
@@ -1115,11 +1176,36 @@ export function createCoopPainter(canvas) {
     setArcadeProvider(provider) {
       arcadeProvider = typeof provider === 'function' ? provider : () => null;
     },
-    captureArcadeCollection(run) {
+    setAttemptAppearance(run, appearance) {
+      if (runAcceptedAppearances.has(run) && runAcceptedAppearances.get(run) === appearance) return;
+      const accepted = requireAcceptedAttemptAppearance(appearance);
+      runArtRevisions.set(run, accepted?.artRevision ?? null);
+      runCollections.set(
+        run,
+        accepted?.collection
+          ? getArcadeCollection(accepted.collection.id, accepted.collection.revision)
+          : null,
+      );
+      // Keep the original accepted object: projected room views may be rebound
+      // every paint, without repeatedly copying metadata or flushing caches.
+      runAcceptedAppearances.set(run, appearance);
+    },
+    acceptEnemyArtwork(run) {
+      if (run.status !== 'ready') return false;
+      runAcceptedAppearances.delete(run);
+      runArtRevisions.set(run, runtimeActorArtRevision());
+      runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
+      return true;
+    },
+    captureArcadeCollection(run, { artRevision = runtimeActorArtRevision() } = {}) {
+      if (!runArtRevisions.has(run)) runArtRevisions.set(run, artRevision);
       if (!runCollections.has(run))
         runCollections.set(run, selectedArcadeCollection(arcadeProvider()));
     },
     dispose() {
+      battlefieldGround.clear();
+      actors.reset();
+      destruction.reset();
       arcadeAdapter.clear();
     },
     get artSnapshot() {

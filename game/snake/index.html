@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
     <script
       src="../presentation/theme-bootstrap.mjs"
       data-theme-density="player"
       data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
     <link
       rel="stylesheet"
@@ -17,12 +36,12 @@
     <title>Snake hunts · FPV / LINE</title>
     <link rel="stylesheet" href="hub.css" />
     <link rel="stylesheet" href="../ui/optional-practice-panel.css" />
-    <script type="module" src="hub.mjs"></script>
+    <script src="hub.mjs" type="application/x-revealline-locked" data-access-type="module"></script>
   </head>
   <body>
     <main>
       <header class="topbar">
-        <a href="../" class="brand">FPV / LINE</a>
+        <a href="../" class="brand" data-native-review-link>FPV / LINE</a>
         <label
           ><span id="language-label">Language</span>
           <select id="language">
@@ -123,8 +142,8 @@
       </section>
       <footer>
         <p id="footer-note"></p>
-        <a id="studio-link" href="../studio/snake.html"></a>
-        <a href="../online/">Private rooms preview / Приватні кімнати</a>
+        <a id="studio-link" href="../studio/snake.html" data-native-review-link></a>
+        <a href="../online/" data-native-review-link>Private rooms preview / Приватні кімнати</a>
       </footer>
     </main>
   </body>

@@ -113,6 +113,21 @@ async function setup(
   };
 }
 
+for (const prefix of ['race', 'coop']) {
+  test(`${prefix}: effects fader controls the existing soundscape without changing shared master sound`, async (t) => {
+    const f = await setup(t, { prefix });
+    const master = f.master.snapshot(),
+      beforeMusic = f.audio.soundscape.settings.music,
+      effects = f.doc.getElementById(`${prefix}-music-effects-volume`);
+    assert.equal(effects.value, String(f.audio.soundscape.settings.sfx));
+    effects.value = '0.23';
+    effects.emit('input');
+    assert.equal(f.audio.soundscape.settings.sfx, 0.23);
+    assert.equal(f.audio.soundscape.settings.music, beforeMusic);
+    assert.deepEqual(f.master.snapshot(), master);
+  });
+}
+
 for (const prefix of ['race', 'coop'])
   test(`${prefix}: first trusted menu gesture plays remembered unmuted music without rewriting master or storage`, async (t) => {
     const f = await setup(t, { prefix }),

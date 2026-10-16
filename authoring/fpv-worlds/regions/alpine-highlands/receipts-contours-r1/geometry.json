@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "terrain": "c1218b914e01346414dd160e2535fdd115a057a18b511a29577526675b6a90b0",
+    "scenery": "73d63d56158b300b006bcd3e1750477ba23304af51665cda7080aec891ed5a61"
+  },
+  "canonicalGLBs": 360,
+  "seams": 480,
+  "sourceBytes": 21644516,
+  "districts": 6,
+  "landmarks": 20,
+  "clearProbes": 1578,
+  "compositionSupportProbes": 2,
+  "solidHits": 2,
+  "transitions": 546,
+  "maxResourceBytes": 965856,
+  "maxReservedBytes": 965856,
+  "disposalZero": true,
+  "playerReady": false
+}

@@ -7,6 +7,7 @@ import {
   drawCombatProjectiles,
   drawCombatScrap,
 } from '../ui/combat-presentation.mjs';
+import { sharedEnemyArtwork, runtimeActorArtRevision } from '../hunt/preferences.mjs';
 import { PRESENTATION_INK, PRESENTATION_PLATE } from '../ui/actor-presentation.mjs';
 import { combatView } from '../ui/combat-view.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -126,6 +127,128 @@ test('absent, disabled and explicitly invalid projections have no canvas or cach
   }
   assert.equal(s.calls.length, 0);
   assert.equal(p.images.length, 0);
+});
+
+test('successor ordinary prey rotates once outside its north-facing sprite in every direction', () => {
+  for (const [heading, facingRadians] of [
+    ['up', 0],
+    ['right', Math.PI / 2],
+    ['down', Math.PI],
+    ['left', -Math.PI / 2],
+    ['right', Math.PI / 4],
+  ]) {
+    const p = painter(),
+      s = surface(),
+      v = view();
+    v.actors = [
+      {
+        ...v.actors[0],
+        kind: 'runner',
+        facingRadians,
+        pursuit: { behavior: 'courier', heading, nextHeading: null, phase: 'committed' },
+      },
+    ];
+    const before = structuredClone(v);
+    p.drawActors(s.ctx, v, palette, { reduced: true });
+    assert.equal(p.images[0].calls.find(({ name }) => name === 'rotate').args[0], 0);
+    assert.deepEqual(
+      s.calls.filter(({ name }) => name === 'rotate').map(({ args }) => args[0]),
+      [facingRadians],
+    );
+    assert.equal(s.calls.find(({ name }) => name === 'arc').args[2], v.actors[0].radius * 16);
+    assert.deepEqual(v, before);
+  }
+});
+
+test('specialists retain their current armored heading without an outer or pending-turn rotation', () => {
+  for (const behavior of ['shield', 'brace']) {
+    const p = painter(),
+      s = surface(),
+      v = view();
+    v.actors = [
+      {
+        ...v.actors[0],
+        kind: 'runner',
+        facingRadians: -Math.PI / 2,
+        pursuit: { behavior, heading: 'left', nextHeading: 'right', phase: 'warning' },
+      },
+    ];
+    const before = structuredClone(v);
+    p.drawActors(s.ctx, v, palette, { reduced: true });
+    assert.equal(p.images[0].calls.find(({ name }) => name === 'rotate').args[0], -Math.PI / 2);
+    assert.equal(s.calls.filter(({ name }) => name === 'rotate').length, 0);
+    assert.deepEqual(v, before);
+  }
+});
+
+test('Capture ordinary warning arrows retain world intent through cached-body rotation and reduced effects', () => {
+  const headings = { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 };
+  for (const behavior of ['refuge', 'switchback', 'sprinter']) {
+    const p = painter(),
+      s = surface(),
+      v = view();
+    for (const [heading, facingRadians] of Object.entries(headings)) {
+      v.actors = [
+        {
+          ...view().actors[0],
+          kind: 'runner',
+          vx: 0,
+          vy: 0,
+          facingRadians,
+          pursuit: { behavior, heading, nextHeading: 'right', phase: 'warning' },
+        },
+      ];
+      const before = structuredClone(v);
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      const image = s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0],
+        turns = image.calls.filter(({ name }) => name === 'rotate').map(({ args }) => args[0]);
+      assert.equal(turns[0], 0, 'Cached body remains north-facing');
+      assert.equal(turns[1] + facingRadians, Math.PI / 2, 'Warning arrow announces world east');
+      const cached = image;
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      assert.strictEqual(s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0], cached);
+      assert.deepEqual(v, before);
+    }
+    assert.equal(p.images.length, 4, 'Relative intent angle is part of the sprite cache identity');
+  }
+});
+
+test('industrial compact Capture gait advances through stride poses and freezes for reduced effects', () => {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'location');
+  try {
+    for (const revision of ['industrial-pilot-v1', 'industrial-overhead-v2']) {
+      Object.defineProperty(globalThis, 'location', {
+        configurable: true,
+        value: { href: `https://example.test/game/?artReview=${revision}` },
+      });
+      const p = painter(),
+        s = surface(),
+        v = view(),
+        signatures = new Set();
+      v.actors = [{ ...v.actors[0], kind: 'runner', facingRadians: Math.PI / 2 }];
+      const before = structuredClone(v.actors);
+      for (const tick of [0, 20, 40, 60, 80, 100]) {
+        v.actorTick = tick;
+        p.drawActors(s.ctx, v, palette);
+        const image = s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0];
+        signatures.add(
+          JSON.stringify(
+            image.calls.filter(({ name }) => name === 'fillRect').map(({ args }) => args),
+          ),
+        );
+      }
+      assert.ok(signatures.size >= 3, `${revision} must show alternating compact footsteps.`);
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      const frozen = s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0];
+      v.actorTick += 100;
+      p.drawActors(s.ctx, v, palette, { reduced: true });
+      assert.strictEqual(s.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0], frozen);
+      assert.deepEqual(v.actors, before);
+    }
+  } finally {
+    if (previous) Object.defineProperty(globalThis, 'location', previous);
+    else delete globalThis.location;
+  }
 });
 
 for (const width of [200, 240, 294, 390, 600, 1152])
@@ -388,4 +511,45 @@ test('maximum presentation populations have bounded drawing work and finite mini
   assert.equal(s.calls.filter((c) => c.name === 'drawImage').length, 24);
   for (const { args } of s.calls)
     for (const arg of args.flat()) if (typeof arg === 'number') assert(Number.isFinite(arg));
+});
+
+test('Capture humanoid artwork accepts first Start, stays frozen and preserves explicit historical null', () => {
+  const preference = sharedEnemyArtwork(),
+    previous = preference.snapshot().style;
+  const board = new BoardPainter({});
+  const cached = painter(),
+    destination = surface(),
+    observed = view();
+  board.combatPresentation = cached;
+  observed.actors = [{ ...observed.actors[0], kind: 'runner', heading: 'up' }];
+  const draw = () => {
+    cached.drawActors(destination.ctx, observed, palette);
+    return destination.calls.filter(({ name }) => name === 'drawImage').at(-1).args[0];
+  };
+  try {
+    preference.set({ style: 'authored' });
+    board.setLevel({}, { artRevision: null });
+    const original = draw(),
+      pixels = JSON.stringify(original.calls);
+    preference.set({ style: 'military' });
+    assert.equal(runtimeActorArtRevision(), 'industrial-roster-v3');
+    assert.equal(draw(), original, 'setting alone cannot replace the accepted active sprite');
+    const preparedLevel = board.levelInfo;
+    board.acceptEnemyArtwork();
+    assert.equal(board.levelInfo, preparedLevel, 'first Start does not recreate the level');
+    assert.equal(board.artRevision, 'industrial-roster-v3');
+    assert.notEqual(JSON.stringify(draw().calls), pixels);
+    const accepted = draw();
+    preference.set({ style: 'authored' });
+    assert.equal(draw(), accepted, 'later menu edits wait for a new attempt');
+    board.setLevel({});
+    assert.equal(JSON.stringify(draw().calls), pixels);
+    preference.set({ style: 'military' });
+    board.setLevel({}, { artRevision: null });
+    assert.equal(board.artRevision, null);
+    assert.equal(JSON.stringify(draw().calls), pixels, 'null must not fall through to saved v3');
+  } finally {
+    preference.set({ style: previous });
+    board.dispose();
+  }
 });

@@ -430,12 +430,15 @@ try {
     });
     importDisplay = display;
     let stagedActors = null,
+      stagedPainter = null,
       stagedPicture = null,
       stagedPainterRelease = null,
       retainedRequest = null;
     const releaseStaged = () => {
       stagedPainterRelease?.();
       stagedPainterRelease = null;
+      stagedPainter?.dispose();
+      stagedPainter = null;
       stagedActors?.release();
       stagedActors = null;
       stagedPicture?.release();
@@ -503,12 +506,13 @@ try {
         }
       }
       let assetMessage = '';
-      const nextPainter = new BoardPainter(presets, {
+      stagedPainter = new BoardPainter(presets, {
         onAsset: (message) => {
           assetMessage = message;
           if (!disposed && painter === nextPainter) localizedText($('asset-status'), () => message);
         },
       });
+      const nextPainter = stagedPainter;
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
       const theme = envelope?.actorAppearancePin.authoredPresentationSha256
         ? themes.find((item) => item.id === envelope.actorAppearancePin.content.contentThemeId)
@@ -536,6 +540,7 @@ try {
       actorLease?.release();
       pictureLease?.release();
       painter = nextPainter;
+      stagedPainter = null;
       releasePresentationPainter = stagedPainterRelease;
       stagedPainterRelease = null;
       actorLease = stagedActors;

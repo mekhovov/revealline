@@ -14,6 +14,7 @@ function runningCompletion(row, run, verified = null) {
     const level = applyGameplayTuning(row.level, tuning),
       matched = prepareTeamRunningEnemies(level, {
         style: run.level.pursuit ? 'varied' : 'original',
+        generation: run.level.pursuit?.version ?? 'pursuit-goals.v1',
       }),
       original = createCoop(level, {
         seed: run.seed,

@@ -1,12 +1,46 @@
 # FPV continuous feature delivery
 
-Updated 2026-10-01. The owner requests a verified PR after each completed feature,
+## Current review — 16 October 2026
+
+Use the [current reviewed priorities](fpv-plan-review-20261016.md) and
+[large-worlds plan](fpv-large-worlds-delivery-plan.md). Older “current” headings,
+queue rows and estimates below are preserved historical checkpoints.
+
+The docs-only research review is based on main `aac03bf0`: R6 Library #1535 has
+merged after exact optional/Company original archive and bounded local native
+qualification. Public Pages `aac03bf0`, all 24 catalogue offers, capability and
+R6 descriptor now pass the independent HTTP/source gate (run 38830488894; receipt
+`ead3757b811f32ce2448006877ad45de27dc7ca000efe54fe716bd31720f7118`). Actual
+public R6 UI flight remains open; the frozen public ledger remains 13/23 regional
+launches, all ten families, 14 built-ins and 20 Worldpacks with one course sampled each. Capacity
+#1531 is merged and its 512 MiB regional limit publicly byte-verified. Actual
+all-24/native-above-256-MiB retention remains unqualified.
+
+Prioritize P0 storage-visibility/closing-connection diagnosis and public delivery,
+P1 measured performance, Library/setup simplicity and School/HUD coverage, then
+P2 Reservoir's representative standard → Festival → Harbor → Canals and optional
+repeatable activities. Later authored regions follow; integrated reliability/D6
+continues in parallel. Official-reference research and per-item rationale/exit
+gates are in the linked review. These are planning refinements, not newly shipped
+runtime features or a competitor performance comparison.
+
+Preserve both public storage failures and every endurance negative. No two-hour,
+physical-device, full offline/restart/eviction, final-art or all-plan pass exists.
+Internal storage is below the stable 3 GiB floor; heavy work stays external/cloud.
+Core 72 MiB, regional 512 MiB, Worldpacks 256 MiB and all other ceilings remain
+unchanged. The player-data problem is not inferred to be caused by low disk or
+solved by capacity expansion.
+
+Historical opening, 2026-10-05. The owner requests a verified PR after each
+completed feature,
 with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current checkpoint:** see “Reviewed continuation — creator repair, Acro school,
-graphics and audio” at the end of this log. Earlier tables and heads are history.
+**Historical scoped checkpoint:** see “5 October — Stick geometry observation qualified; publication held” at the end of this log, the active parallel delivery plan and the coordinator’s central checkpoint. Earlier tables and heads are history.
+**Historical checkpoint:** see “5 October — Public21826 and imported catalogue truthfulness”
+at the end of this log and the active parallel delivery
+plan. Earlier tables and heads are history.
 
 ## Delivery queue
 
@@ -1502,7 +1536,7 @@ archive are retained in `authoring/fpv-worlds/demonstrations`.
 Authoring qualification passes15/15; all154 v2 and24 v1 recordings independently
 replay. All1,331 checkpoint positions pass (768 restored /563 explicit fallbacks).
 Actual WebGL source281/281 and packaged279/279 checks each complete18 runs:
-all16 Garage examples in both modes plus retained original/school representatives.
+all 16 Garage examples in both modes plus retained original/school representatives.
 The checks cover exact final state, FPV/chase, speed/pause, controlled held-input
 isolation, localization and saved-record preservation. Their supplied frame
 timestamps accelerate playback; they do not measure hardware performance.
@@ -1597,7 +1631,6 @@ for Flight/Academy/World; World bytes14,064,140. Exact source runtime from the
 Garage playback receipts is unchanged; new discovery/worker helpers are inherited
 from reviewed #930. See `fpv-garage-integrated-package-verification.json`.
 
-
 ### 2 October — C1 integrated qualification and inherited edition-size gate
 
 C1 candidate `294c9abe89e04cfb60b9e463dc88400832bace33` passes75/75 actual
@@ -1615,7 +1648,6 @@ run37034459099 fails the whole-edition guard:820 files/67,116,517 bytes,
 7,653 bytes above64MiB. Do not merge or increase the guard. Next publication
 step is a bounded lossless reduction followed by exact-head requalification,
 then a fresh native stack if C1 still depends on open #954. C1 stays separate.
-
 
 ### 2 October — fresh native stack957, Garage954 → Hangar956
 
@@ -1640,7 +1672,6 @@ retain all media, exported data, budgets and publication authority.
 C2 candidate after this checkpoint: redistribute the existing meadow tree line
 into irregular exterior groves without increasing geometry/resources, pending
 visual readability checks. Broader Themes integration remains separate.
-
 
 ### 2 October — capacity repair958 published; next art branch prepared
 
@@ -1678,7 +1709,6 @@ changes yet. Implement C2's same-count exterior tree composition and verify
 readability/unchanged gameplay; publish as a new dependent PR only when complete.
 Physical TX15/iPhone/Steam Deck, novice/art acceptance and measured FPS remain
 open. Additional unit coverage stays in H/R7.
-
 
 ### Latest handoff — Garage merged; preserve native child rewrite
 
@@ -1829,6 +1859,7 @@ Next work uses independent `codex/fpv-courtyard-terraces` from current main;
 keep unfinished C3 out of ready #960. Preserve Themes #955 and C2 placement when
 integrating branches. Do not report remaining physical-device/art qualification
 or deferred unit coverage as complete.
+
 ### C3 courtyard continuation — 2 October 2026
 
 C2 meadow composition is published separately as
@@ -2005,7 +2036,6 @@ Deck acceptance, D novice/experienced sessions, F creator/device-offline work,
 feedback-led G map growth and H/R7 unit coverage remain open. Catalogue counts
 remain 148 challenges / 14 worlds; visuals do not create extra levels.
 
-
 ### C5 Warehouse ready checkpoint — 3 October 2026
 
 Main now contains capacity #963 (`ae4624f6e`) and Woodland #964
@@ -2054,7 +2084,6 @@ iPhone and Steam Deck, D unfamiliar-player sessions, F creator/device-offline,
 feedback-led G maps and H/R7 deferred unit coverage remain open. No new physical
 acceptance, sustained FPS or complete production-art claim is made.
 
-
 C5 is published and attached as [#966](https://github.com/mekhovov/revealline/pull/966).
 Initial published head was `a276d9715a4322821357a3aebea7cfbc3bfef131`; Hunt #962
 then merged to main. Candidate `065026f0d3b30e23d168feb2b0d3b50811331b1d`
@@ -2077,7 +2106,6 @@ cues, geometry, alpha and scoring rules. Beginner42's metal landing platform
 must share a plain board-atlas region to avoid another texture pool. No C6
 production changes are mixed into #966. Keep ready Warehouse isolated while the
 Stadium branch develops. Themes received exact runtime hashes and ownership.
-
 
 ### Feedback-nonblocking continuation — 3 October 2026
 
@@ -2103,7 +2131,6 @@ records, medals or playlist progress. Existing partial-recording practice fallba
 must stay valid; do not label an unreached section a successful demonstration.
 Current counts remain148challenges/14worlds/178installed demonstrations.
 
-
 Section source qualification is complete: 7/7 functional groups,154v2 proofs,
 768exact recorded sections; checkpoint regression716entries/615fallbacks;
 production-host source WebGL51/51 checks. Imported installed sessions now select
@@ -2124,7 +2151,6 @@ Ready atzero throttle with no captured errors. Warehouse8896c4976 has not yet
 been identified by the public marker, so Warehouse live availability is still
 unverified. Public screenshot: `/tmp/fpv-themes-public-launch-20261003.png`.
 
-
 Section frozen candidate4d7bad1e2 passes all three optional admissions, exact
 committed inputs and ZIP members, two identical builds, and packaged WebGL51/51.
 The largest edition also passes frozen validation/reproducibility at this child
@@ -2135,7 +2161,6 @@ were unchanged. #968 has since been automatically reconciled with newer Themes
 #967 at586b9cb08. Preserve that remote update and reconcile the section child
 before publication; earlier renderer/package evidence does not qualify new
 Themes bytes by inference.
-
 
 Themes #967 was preserved through a recovery-backed child rebase. Candidate
 c5b7b3771 passes all three frozen optional admissions, committed inputs/ZIP
@@ -2152,7 +2177,6 @@ was rebased onto that main while retaining the qualified runtime bytes. A new
 native stack is only needed if the next dependent feature is published before
 section replay merges. Next concrete feature is the visual Follow/Observe
 objective inspector, including both-mode editing and project/pack roundtrip.
-
 
 ### Section replay published; tracking editor started — 3 October 2026
 
@@ -2171,7 +2195,6 @@ this dependent feature is complete, inspect its exact remote head and append
 through a new native stack. If it merges first, reconcile with current main and
 publish independently. Continue functional qualification without waiting for
 player feedback; keep physical/human acceptance pending and unit coverage last.
-
 
 Warehouse public availability is now verified: public markerdb84d3f14 (Themes#967)
 is a descendant of Warehouse8896c4976. An actual refreshed public Moving freight
@@ -2235,7 +2258,7 @@ because both focused features can merge independently.
 [PR #975](https://github.com/mekhovov/revealline/pull/975) is published and attached,
 initial head19d11689a, independently against main. Its source/package browser
 workflows pass63/63 each; both UI-authored modes complete/replay; frozen candidate
- aa05d0b93 passes all three optional admissions and reproducibility. Local standalone
+aa05d0b93 passes all three optional admissions and reproducibility. Local standalone
 ZIPa2a8b90c…8c9e50 is available at `dist/fpv-tracking-editor-main-playtest`.
 
 Section replay [#972](https://github.com/mekhovov/revealline/pull/972) has now
@@ -2244,7 +2267,6 @@ separate; no native stack was necessary. Public deployment/launch of either
 new feature is not yet claimed. Next implementation: pack-removal impact and
 recovery guidance on a separate branch from current main. Preserve pending
 editor CI/review and current qualification receipts while progressing that item.
-
 
 ### Pack removal and exact recovery — 3 October 2026
 
@@ -2291,7 +2313,6 @@ collision and the beginner42 landing platform's plain material region. Then
 continue yard/Garage art, distinct maps and final H/R7 qualification. Player
 feedback remains nonblocking and pending; all existing limits/gates remain.
 
-
 Pack-recovery frozen candidate `e64e53be5a144919d32c71f3cbce91666f8c4345`
 passes all three optional admissions, committed-input/ZIP validation and two
 identical builds. World Studio is99 source files/14,465,716bytes. Packaged actual
@@ -2302,7 +2323,6 @@ retain this guard. Authoring dependencies were temporarily moved to ignored
 .cache for source eligibility and restored by an EXIT trap. Runtime hashes match
 the source-qualified candidate. Publish as an independent focused PR on main;
 no native stack is needed for this item. Public deployment remains unverified.
-
 
 Before publication, main advanced to21dbd1014 with merged editor#975, Themes#974
 and WASM CSP#976. Recovery ref `codex/recovery/pack-removal-before-main-20261003`
@@ -2317,7 +2337,6 @@ under64MiB. Keep subsequent example data separately delivered and verify current
 capacity rather than expanding any limit. Current host SHA256:
 `c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776`. Updated receipts replace prior
 candidate receipts in the feature document; earlier evidence remains in Git.
-
 
 ### Pack recovery published — 3 October 2026
 
@@ -2340,7 +2359,6 @@ remote state before later integration. No public deployment claim for #977.
 Next independent work is matching-mode school demonstrations and bounded
 optional example import/selection. Player feedback remains nonblocking; physical
 radio, novice acceptance and named-device performance remain unverified.
-
 
 ### Matching-mode optional examples — 3 October 2026
 
@@ -2377,8 +2395,6 @@ do not change immutable assets or global release authority as a shortcut.
 
 Next: finish focused publication/recovery package repair, then60optional Adventure
 examples and Stadium/yard/Garage art. Player feedback remains nonblocking.
-
-
 
 ### Recovery merged; matching-mode examples published — 3 October 2026
 
@@ -2443,7 +2459,6 @@ unchanged. Host SHA25652cbfac9012bf2a7127ec1cfd85142ead184166aadb8a97818d886623c
 Fresh local build: `dist/fpv-optional-examples-current-playtest`,94files/
 14355327bytes, ZIP6126d9fd523e62a82cc4b76a185a278cec0f03c6650f89a328b0da48a5dc5661.
 This development player includes the preserved #977/#978 main work and #979.
-
 
 ### Optional examples merged; focused recovery-refresh follow-up — 3 October 2026
 
@@ -2545,6 +2560,7 @@ Post-rebase candidate4752ae5ef again passes all three package admissions,
 committed-input/ZIP-member checks and two byte-identical builds. The admission
 receipt is refreshed; browser evidence remains bound to identical runtime bytes.
 CI/publication continues on #986 while art work remains independent.
+
 ### FlightDivision presentation increment — 3 October 2026
 
 The user requested comparable visual quality and keyboard controls after
@@ -2595,6 +2611,7 @@ A separate local integration branch may combine #986/#987 solely to build the
 user's combined playtest. Do not push that merge into either focused PR. Continue
 Stadium/Garage on current main or an explicit dependent branch, preserving these
 ready candidates and all existing proof identities.
+
 ### D1 Woodland rendering foundation — 3 October 2026
 
 Independent branch `codex/fpv-woodland-canopy-batching` starts from accepted main
@@ -2621,6 +2638,7 @@ Published as [PR #990](https://github.com/mekhovov/revealline/pull/990), head
 CI is pending; no live deployment claim. Capacity #989 now passes focused and
 default-capacity checks, but its preview and edition candidate jobs failed;
 inspect those failures next without weakening admission guards.
+
 ### D1 primary Woodland composition — 3 October 2026
 
 Continued on independent `codex/fpv-woodland-depth-composition` from main
@@ -2642,7 +2660,6 @@ five other GLBs byte-identical. Package passes at 94 files/15,384,159 bytes.
 29/30 existing checks pass; shared-theme enamel motif uniqueness remains open.
 See `docs/fpv-yard-landmarks.md`. Next: isolate that existing qualification failure,
 then continue primary material depth and remaining world art. D1 remains open.
-
 
 ### D0 approved capacity increment — 3 October 2026
 
@@ -2715,7 +2732,6 @@ silhouettes and placement. 12cases/60browser comparisons and package preparation
 pass. See that PR's `docs/fpv-woodland-canopy-batching.md`. Next art work remains
 Woodland natural detail/Container composition. #987 concurrent work is preserved.
 
-
 ### Owner directive: continue across phase boundaries — 3 October 2026
 
 After completing and functionally verifying each increment, publish the focused
@@ -2724,7 +2740,6 @@ handoff into the next phase, not a stopping point or a new approval request. Kee
 CI/publication separate from unfinished next-item work. This standing instruction
 is now recorded in the reviewed delivery plan. D1 art remains next; the canopy
 optimization alone does not complete D1.
-
 
 ### D1 Woodland foliage surfaces — 3 October 2026
 
@@ -2754,7 +2769,6 @@ browser map comparisons pass; package admission passes at 94files/15,383,912byte
 See `docs/fpv-field-surface-identity.md`. Next: publish this focused repair, refresh
 art PRs after protected integration, continue D1 material depth; do not call D1
 complete or public availability verified. Preserve concurrent capacity/Theme work.
-
 
 ### Stadium surfaces qualified; remaining world order refreshed — 3 October 2026
 
@@ -2795,7 +2809,6 @@ Keep `school-upper-deck`, all9 Snake Garage layouts and17 demonstrations intact.
 Stadium publication status will be appended after PR creation; no new stack is
 required for this independent main-based increment.
 
-
 Published as [PR #1004](https://github.com/mekhovov/revealline/pull/1004), using
 existing milestone57. Main advanced to ce6af3e65 (#999 merged) during publication;
 the main merge preserves both delivery histories. The
@@ -2810,6 +2823,7 @@ Military Field recipe; Stadium renderer/helpers remain identical. Main's#999merg
 unintentionally removed#992 foliage code; separate#993repair restores it and keeps
 that work out of the independent StadiumPR. Local player build is available at
 port8834/dist/fpv-stadium-playtest-70679d3ab/optional-practice/fpv-worlds/index.html.
+
 ### D1 continued without waiting: both Woodland scenery paths — 3 October 2026
 
 Surface increment published as PR #992 on `codex/fpv-woodland-foliage-surfaces`.
@@ -2871,7 +2885,6 @@ Return #993 to ready and use protected merge-commit auto-merge only after normal
 head-specific checks. No native stack, admission guard, release tag or public
 deployment is changed by this refresh. See the new maince6 qualification receipt.
 
-
 ### Yard draft refreshed onto integrated Woodland main — 3 October 2026
 
 #998 runtime candidate ec760db263041be23f60f4450381dc4ec88ec402 integrates main
@@ -2890,6 +2903,7 @@ per scene. Five other environment GLBs remain byte-identical; the comparison
 views were inspected. This completes the local draft qualification. Publish the
 reviewed #998 head through normal exact-head protected CI; public deployment and
 physical-device/artist acceptance remain separate.
+
 ### Review and primary Woodland lighting — 3 October 2026
 
 #999 passed every reported GitHub check at feb04b6ad; main then advanced. Merged
@@ -2913,9 +2927,6 @@ qualification. Feedback does not block implementation; no device acceptance is
 invented. Keep finished PRs separate from new work.
 inspect those failures next without weakening admission guards.
 
-
-
-
 ### Woodland groves refreshed after Yard publication — 3 October 2026
 
 #996 candidate fabb417ec23e1fcaaabf90cd0c102a9f9335efed integrates main b3167a8f89,
@@ -2938,7 +2949,6 @@ Hangar visual changes are inside the indoor branch and do not affect Woodland.
 All 30 checks and three reproducible admissions pass again. Preserve the explicit
 browser candidate identity and use protected exact-head publication.
 
-
 ### D1 production and cached-player evidence — 3 October 2026
 
 Historical combined candidate `e572026ba357f3194bf47e7137a0817cacb1a640` passed
@@ -2956,7 +2966,6 @@ merged at `e98df020d`; its public check remains separate. Material #1001 and
 Courtyard #1012 continue protected publication; Warehouse exterior composition is
 the next independent art increment. This evidence-only checkpoint changes no
 runtime and does not claim the historical matrix tests newer main code.
-
 
 ### Bounded transition follow-up and publication checkpoint — 3 October 2026
 
@@ -3011,9 +3020,2357 @@ through39,525ticks, with ten Rapier worlds freed once.
 
 Source and admitted-package WebGL each pass96checks/43pairs, with exact functional,
 image, draw-budget and resource results. All three source-bound packages pass two
-identical builds; all95inputs are committed and leave11,488B under16MiB. The full
+identical builds; all 95inputs are committed and leave11,488B under16MiB. The full
 102-file admitted player renders, arms0.2s and pauses0.3s with no warning/error
 logs. See [Orchard qualification](fpv-orchard-tree-surfaces.md). Protected publication
 and public availability remain separate; no hardware FPS or whole-world realism
 claim follows. Continue independent Solar work and the next approved D3 optional
 Adventure conversion audit without mixing unfinished items into this focused PR.
+
+### Optional Adventure examples — 4 October 2026
+
+The separate data-only increment on Orchard main `5e4abe273` delivers 60 existing
+Adventure proofs as one 4,637,320-byte optional `FPVProofArchive.v2` download.
+All 30 courses retain both modes; no core registry, source limit, physics or
+player runtime changes. Portable conversion passes 992 checks and 120 exact
+replays. Historical bf/9efa admitted-host browser evidence passes 395 checks,
+all 60 import/lookup/persistence identities and 12 complete rendered examples.
+The incoming Orchard surface change has its own source/package and replay
+qualification; no new browser rendering on5e4 is claimed.
+
+The full v1–v4 failed/partial diagnostics remain alongside accepted v5 evidence.
+Repeated full-library diagnostic snapshots caused substantial observer overhead;
+v5 forwards real renderer draws and preserves the production pause guard. The
+separate explicit host-dispose ordering defect remains next. Publish through
+protected exact-head checks and verify the public optional JSON link after merge.
+See [complete qualification and limits](fpv-adventure-optional-examples.md).
+
+### D4 standalone creator starters — 4 October 2026
+
+The focused increment on School main `c907b4f7f` adds ten original one-course
+industrial/natural projects: sweeper, hairpin, chicane, climb and split level.
+Each has independent mode arrays, EN/UK guidance and reproducible editable ZIP,
+world-pack and project exports through existing APIs. It adds no player module,
+catalogue entry or optional-runtime source bytes; 196 challenges / 14 worlds and
+the existing package limits remain unchanged.
+
+Twenty ordinary-control flights and independent replays pass in 55,804 ticks
+with zero hard contacts. Nominal clearance passes 314 swept segments; it is
+bounded authored-path evidence. Actual browser r2 passes 237/237 checks on the
+unchanged 102-member admitted `d9ad2561e` player: ten ZIP identities, two numeric
+editor workflows, four original mode replays, a trusted 3D arrow drag, exact
+Undo/Redo, export/reimport, retained original pack revision and online native
+IndexedDB reopening. The manual upper-gate move is 3,500 mm along X. Edited
+copies do not inherit the original routes' flight or clearance qualification.
+
+The original r4 scalar-identity qualifier failure and r1 browser reopen failure
+are retained. r1's fixture incorrectly borrowed the parent's native IDB factory;
+r2 keeps each reader in its own JavaScript realm and verifies the prototypes and
+public Edit flow. No production guard changed. See the
+[starter qualification and raw receipts](../authoring/fpv-worlds/starters/evidence/README.md).
+
+Publish this completed authoring increment independently. Continue explicit
+spatial mode choice through route edits/order/Undo/Redo/source overrides in a
+separate branch after runtime-capacity review. Separate localhost offline
+qualification now passes on the same admitted player: actual Prepare offline,
+stopped origin with two curl exit-7 probes, reload/Workshop render, native keyboard
+edit, two Undo/Redo pairs, edited installation, reload, and restoration of both
+the original and edited revisions. Logs are empty; the dedicated server is
+restored afterward. The raw receipt and screenshots are in the starter evidence.
+This is not device-wide offline, browser restart, storage eviction or public-path
+qualification. Neither this increment nor browser checks close full D4, hardware,
+novice or sustained-FPS acceptance. Additional unit coverage remains in D6.
+
+### 4 October — Owner reallocation and publication completion
+
+The owner adopted publication first, engineering concentrated on performance,
+Library delivery and integrated reliability, and art/content concentrated on
+Reservoir as the representative quality standard. Festival is preserved at
+47f8e36e; finish Festival, Harbor and Canals one at a time after that standard,
+then D6. Functional verification remains continuous; extra unit coverage is D6.
+The allocation is recorded in #1069 on codex/fpv-allocation-priorities.
+
+Completed protected publication:
+
+- #1065 merged bf9b0290970f548738c719fbd47d57be93004be2; its marker and native
+  public launch/zero-throttle arming/pause were verified.
+- #1067 merged 29e23a11fa2e6226b1970855f9a6ef63b870c652. Frozen admitted
+  readiness candidate 53d passed 141 actual browser checks; no general FPS gain.
+- #1066 merged 94548aa26d489ecd93ec23274208fb7a6dd733e7 after exact-head
+  500ee518e4a7210d3de5fce304d0f2d02a8793da checks and holds were audited.
+  All 18 Reservoir tree children match qualified 34ba byte-for-byte; the latest
+  ordinary merge only incorporated accepted main. No stack/bypass was needed.
+- Public main-deployment.json now identifies 94548. Root reloaded the native
+  public SIM, started Lift and land, armed at zero throttle and paused normally.
+  Reservoir's production Library registration still remains; general SIM entry
+  does not imply that a newly published optional pack is already discoverable.
+
+Current independent candidates:
+
+- Library worker preparation 503d62f4a77ef29b032ce55016bc2e13ad75bee8, clean
+  codex/fpv-generated-worker-capacity in garage checkout. Recovers 1716 bytes;
+  exact AST/tokens/comments/line endings plus generator/lint/scoped checks pass.
+  Current-main integration, full admissions and admitted worker smoke remain.
+- Library dedicated-worker transport a0784ea613 is preserved separately. The old
+  source fixture's 195 passes predate transport; its page-fetch admission FAILED
+  the existing guard. Do not reuse that evidence for actual Worker cancellation,
+  transfer/hash/truncation/fault qualification or weaken the network guard.
+- Menu access 7e6b2e227178aad638a980ec159a75425b6683a9, clean
+  codex/fpv-library-menu-access in /private/tmp/fpv-delivery-review-20261004.
+  Reachable EN/UK and 320/390px source UI checks passed; full admission remains.
+- Focus runtime 58d89b606b068be706e1914c4e083a32d7e623fe and corrected fixture
+  c205ffd070b753990caee0c2110fc03c38762f85 in editor checkout.
+  Actual native-browser r2 passes 145/145, including trusted Tab/Shift+Tab,
+  retained appearance focus/parent menu and deliberate subsequent arm.
+  /tmp/fpv-prearm-focus-r2.json and PNG were saved. This is declared-source-overlay
+  evidence, not current-main/package admission. Existing 16 checks also pass.
+  Audio runtime unchanged; only the old diagnostic's initial-snapshot assumption
+  was corrected. Admission/current-main integration/publication remain.
+- Reservoir terrain-stitching branch is clean at published 34ba; Festival 47f8
+  and its recovery ref remain intact. Root and art audit confirmed sky-colored
+  slivers at the terrace/ridge join. Proposed narrow boundary closure adds
+  34 triangles, reuses existing material and preserves collision/routes.
+  FIRST WRITE FAILED ENOSPC; source SHA beea7973e6ae1e6adfa33d326ca5dfd46b525ad08aa87eb88dd864843933daa5
+  remains intact. No repaired asset/proof claim.
+
+Next performance investigation: matched Yard and actor-free first-ready actor/
+camera initialization versus shader preparation, native clocks, same state/pose,
+actor/program/resource counts and first/second draw. Existing timing evidence is
+mixed; no cache expansion or broad physics/rendering rewrite is justified.
+
+Storage remains an external blocker despite fluctuating df free-space figures
+(116-481 MiB). Tiny source/plan writes still fail ENOSPC. Root's earlier local
+delivery-log append did NOT persist; this remote checkpoint preserves the state.
+All original worktrees/source/failures/published packs remain. Do not delete
+unknown Git packs, repeat heavy builds or claim failed writes succeeded.
+User has been asked to free at least 2 GiB. No automation state was changed.
+
+### 4 October — Menu qualification and engineering publication checkpoint
+
+The earlier storage-blocked checkpoint above is historical. Storage recovered and
+the authorized serial source validation/admissions resumed. The owner allocation
+remains publication first, then performance, Library delivery and integrated
+reliability; Reservoir remains the representative art standard before the
+preserved Festival, Harbor and Canals work, followed by D6 unit coverage.
+
+Worker projection #1075 merged as
+`da0bd0d6be2b42a4d2f954ebdcb1f970311b0da5` from exact reviewed
+`727a68d00622a93a56425b006999f0e474a40d3d`. Pages run 37216276847 succeeded;
+both public deployment/build markers identify that merge. Its parents retain
+main `f3764070e` and the qualified worker head. Actual public UI launch of this
+new marker remains a separate coordinator check. The worker prerequisite's
+native Worlds/Academy offline acceptance remains documented.
+
+Menu source `411396374bf25a1888a4a861c089d19671fd8432` is qualified for focused
+publication: full validation, pinned format/generator equality and all three
+two-build admissions passed. Exact admitted Worlds/Academy players retain
+102/69 members with no overlays. Six source and seven final admitted native
+iframe layout observations cover 320/390/844/1280 CSS widths, reachable EN/UK
+Settings, retained language after Reload, readable tabs/footer and wrapped header
+actions. Native Worlds arming/pause and Academy practice/pause passed; Academy
+used the full-window fallback when native fullscreen returned false. Undiagnosed
+observer TypeError logs remain disclosed; no zero-console, physical-device,
+hardware-FPS or new offline claim is made. Superseded narrow-layout candidates
+remain historical. See [menu qualification](fpv-library-menu-access.md).
+
+Library transport remains separate at admitted source `01fc6ad20`. The genuine
+dedicated-Worker source fixture passed 208 controls and the all-three/two-build
+admission passed, with 918 bytes of Worlds source reserve before menu/focus
+integration. Its direct native Worlds and Academy players passed preparation,
+stopped-origin reload and entry/pause. However, the exact admitted Library matrix
+twice stopped after 119 controls waiting for the selected course's Ready text,
+including an exclusive-focus repeat. The new bounded status/focus/RAF diagnostic
+also reproduced that timeout; analysis is pending. The frozen runtime and guards
+are unchanged. Do not claim 208 admitted controls, weaken the network/pause guard
+or publish a finished production catalogue row on that evidence.
+
+Focus #1076 is ready on current main and undergoing protected exact-head checks.
+Reservoir r9 #1077 is separately published; its required source release-ready
+check passed while the appearance check was still running at the bounded audit.
+The later r10 content candidate passed 575 CPU controls including sixteen fresh
+ordinary flights and independent/archive replays. Its visual/art acceptance
+remains pending, so r10 is not called accepted or published. First-ready resource
+investigation continues with bounded native program attribution; no broad
+performance gain or cache rewrite is claimed.
+
+### 4 October — Combined native and stopped-origin acceptance
+
+Historical combined source `216b36ce1` now passes 208 native Library controls,
+145 native appearance-focus controls (including trusted Tab/Shift+Tab), seven
+responsive iframe observations, and both admitted players' native offline
+reopens. Worlds Library and Academy Flight guide preparations completed through
+public controls; trusted Enter activated controls where an initial click only
+focused them. The known8939 server was stopped, with refused curl connections
+before and after actual reload/launch/pause in both Worlds and Academy. This is
+an own-origin outage check, not browser-wide offline, eviction or hardware/FPS
+acceptance. The exact server was restored after the check.
+
+The complete receipts/screenshots are losslessly retained in
+[combined qualification](fpv-library-integrated-reliability.md). Its 95 original
+inputs remain exact at16,776,664 bytes with552 bytes reserve; no unfinished shadow
+prototype was included. Focus #1076 merged `b98205d76` and menu #1079 merged
+`e7d06f3c6` through the normal protected path. Library #1080 received an ordinary
+main update to`2cfc24050`; all 95 input hashes exactly match the admitted combined
+candidate and fresh protected checks are pending. No new public deployment is
+inferred from local or historical package acceptance.
+
+### 4 October — Library live and personal-best access qualification
+
+The pending Library status above is historical. #1080 merged as
+`8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2`. Both public deployment/build markers
+now identify that revision. The coordinator reloaded the actual public Worlds
+player, entered briefing, deliberately armed at zero throttle, observed active
+flight and paused. The same public Library's Browse optional worlds action
+reported “No published worlds yet.” The empty catalogue is intentional; it does
+not advertise unfinished Reservoir content. Markers, native UI text and images
+are retained in the
+[public checkpoint manifest](../authoring/fpv-worlds/personal-best-settings/evidence/public-library-8e/manifest.json).
+
+The focused personal-best Settings access change is qualified for publication.
+It removes two hiding assignments without changing the existing ghost handler,
+record selection, scoring or physics. The original native run retained 173
+passing controls and a later Arm timeout; a separate unchanged-runtime tail
+passed 166 controls and diagnosed an existing language repaint/Home phase race.
+Full validation, 16 existing checks and all-three/two-build admission pass. All
+95 original inputs remain exact to the admitted candidate, with 615 source bytes
+remaining. See [the scoped evidence](fpv-personal-best-settings.md); this is not a
+single broad browser pass or a new offline or hardware-performance claim.
+
+Warm-frame readiness #1084 is ready at `7da26a8e1`, with its separate native
+classification/lifecycle evidence and exact admission. World-visual source
+projection #1085 is ready at `7fa`; a normal expected-head main update has been
+requested. The latter recovers 41,026 original source bytes through the existing
+lexical preparation, with full validation, all three admissions, deterministic
+builds and AST/token/comment/line-ending identity. The generated world-visual
+member's bytes change; unrelated payloads remain exact except for the expected
+generated worker/descriptors. Neither ready PR is called publicly deployed here.
+
+Remaining engineering work is the isolated language-phase race and steady-flight
+CPU attribution. The next Reservoir gate is the capacity-bounded opaque-coating
+runtime capability, then the r14 pack's fresh proofs, actual native import and
+terrace visual acceptance. Hut identity and scene rooting remain subsequent
+quality work. Festival, Harbor and Canals follow sequentially after Reservoir
+meets the representative quality standard; final new unit coverage stays in D6.
+
+### 4 October — Warm readiness and ghost access merged; capacity hold resolved
+
+Warm-frame readiness #1084 merged normally as `1a1a82d5e6617a53239218642eda3aa70e817fe3`.
+Personal-best Settings #1086 subsequently merged normally as
+`5cde6dbc97c3067b6023d2bf7fd97fe251805347`, from updated head `04bc7c9505`.
+The exact 95-input bridge verifies qualified warm main plus the two ghost hiding
+deletions. Its original 173-control run and separate 166-control tail retain their
+historical runtime identities; the normal merge is not called another browser run.
+At the bounded 19:05 UTC deployment read, both public markers still identified
+the already launched Library revision `8e5ad71e`, while warm deployment was running.
+Newer public launch acceptance is not inferred from these merges.
+
+Capacity #1085's hold was the initial allocation race: staging added it at
+18:42:48 UTC, before milestone 57 was assigned at 18:43:55. Later staging skipped
+the allocated PR but had no label-removal path. After exact-head/source inspection,
+only that obsolete allocation hold was removed. Ordinary leased main updates
+preserve the original capacity candidate and incorporate warm and merged ghost
+work. Current inspected head `e058d93b4f2f415e5446190d7c61b3c6bdf4f465` has all
+95 expected input identities, 16,735,954 raw source bytes and 41,262 bytes reserve.
+Fresh exact-head checks and the normal protected controller remain authoritative.
+The 41,026-byte lexical reduction preserves the previously documented semantic,
+token/comment/newline contract; no cap or global publication policy changed.
+Bounded publication/source bridges are retained in the
+[checkpoint manifest](../authoring/fpv-worlds/language-phase/evidence/publication-checkpoint/manifest.json).
+
+The next reliability fix preserves current flight ownership during language and
+Library repaint. Its first +55-byte guard reproduced the original baseline race
+and retained 324 passing native checks, then exposed another real transient:
+public Settings paused flight but Home's resumability still said Start until a
+native frame. The failed receipt remains. The isolated +105-byte continuation
+also refreshes the existing HUD in the native surface-open callback. Its new
+bounded source browser qualification is pending; pause/arming guards are unchanged.
+
+The exact admitted r14 Reservoir coating candidate passed nine bounded native
+views and actual import/render/arm/pause. All sixteen fresh ordinary flight proofs,
+independent replays and archive reimports subsequently passed 575 checks. Broader
+terrace/art acceptance and protected runtime/content publication remain distinct;
+this is not a comprehensive realistic-world or hardware-performance claim. Hut
+identity and scene rooting remain next quality work. Steady-flight CPU attribution
+continues independently. Festival, Harbor and Canals remain sequential after the
+Reservoir quality gate, with final new unit coverage reserved for D6.
+
+### 4 October — Language action ownership qualified; capacity prerequisite merged
+
+The focused language/menu ownership fix now has a 433-check native source pass
+at `bf3597703763584c79119bdeab50bfa03198ae6f` and a separate 283-check native
+admitted lifecycle pass at `d1d48b2b7ad67a0915532a1489f300abccd778ae`. The latter
+uses all 102 admitted files with no runtime overlays, on main5c including the
+qualified warm-frame and public personal-best control changes. Full Node22
+validation, all 16 existing appearance/texture checks, and all-three/two-identical
+source-bound admissions pass. The prior324-check timeout is retained: it revealed
+the additional same-event stale Continue/Start state, repaired by synchronizing the
+existing HUD immediately after the native surface-open pause. No clock, arming,
+pause, physics, scoring or replay-proof guard changed.
+
+Capacity #1085 merged normally as `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`
+at19:32:24Z after its current exact-head checks succeeded. Its initial allocation
+hold had preceded milestone57; only that proven obsolete hold was removed, then
+ordinary expected-head main updates and protected merge were used. The language
+branch normally incorporates this semantic-only projection: all 95 input paths are
+checked, only world-visuals formatting changes from the admitted candidate, and
+the canonical bytes/AST/tokens/comments/line terminators remain exact. Resulting
+source reserve is41,157B; fresh publication CI remains distinct from historical
+local admission. See `authoring/fpv-worlds/language-phase/README.md` and its bounded
+lossless evidence archives.
+
+Warm #1084 is now publicly verified at marker/build identity
+`1a1a82d5e6617a53239218642eda3aa70e817fe3`: native Start, briefing Start, Ready,
+deliberate Arm, active flight and Pause were observed. Ghost #1086 is merged at5c,
+but that earlier public marker does not establish its deployment. Library's
+earlier8e public entry and empty published-world catalogue remain verified.
+
+Remaining delivery order is unchanged: qualify and publish the cap-guarded
+Reservoir coating capability, keep exact r14 native views/import/flight and
+575-check16-proof evidence distinct from broader terrace acceptance, then improve
+hut identity and terrain rooting. Steady-flight CPU attribution continues in its
+separate measured lane. Festival, Harbor and Canals follow the Reservoir quality
+standard; final additional unit coverage remains D6. No hardware-FPS, universal
+imported-image determinism, new offline or unobserved public deployment claim is
+added by this language increment.
+
+### 4 October — Current publication and Creator transaction boundary
+
+The active engineering instructions in
+[the parallel plan](fpv-parallel-delivery-2026-10-04.md#engineering-execution-within-the-revised-allocation)
+now distinguish delivered worker/warm/focus/menu work from the remaining gates;
+older dated checkpoints remain historical. Native public deployment/build markers
+both identified `5bd8f36d7767dcd9dda740865b4d8f19ddbe7c28`. The coordinator entered
+briefing, deliberately armed, observed active flight, paused and opened Settings.
+The personal-best control was visible and correctly disabled without a personal
+best. This establishes public entry for ancestor ghost `5c` and capacity `5bd`,
+not a personal-best playback or newer-runtime claim. See the
+[bounded public evidence](../authoring/fpv-worlds/creator-install-reliability/evidence/public-5bd/manifest.json).
+
+Language/Home phase #1087 merged normally as
+`395a638b1b3d68b0da9771f313990f3028703481` after current-head protected checks.
+Coating #1088 then passed all current `a767ff494` checks and merged normally as
+`3bc7a923da2b7d50a6a675a91d5560005ad0f20d`. HUD #1089 received the reviewed label
+and ordinary expected-head updates for phase and coating, then passed every
+active check at exact `d97b7eb42` and merged normally as
+`ecf0bafc6541c6b57ae28a530763bab221555d4f`. The later public deployment/build markers both identified `3bc7a923d`; the
+coordinator entered briefing, reached Ready, deliberately armed, observed active
+flight, then paused at 51.8 seconds with Continue available.
+[This bounded public evidence](../authoring/fpv-worlds/creator-install-reliability/evidence/public-3bc/manifest.json)
+qualifies normal entry for coating/language ancestry, not a public coating import,
+FPS, later HUD or Creator run. No force, bypass or release-policy change was used.
+
+The historical-main `5bd` Creator diagnostic preserved a genuine recording and
+interrupted flight while reproducing two postcommit defects. The focused 323-byte
+correction uses the committed transaction generation and truthful EN/UK saved-pack
+refresh guidance. Source 294 controls pass, including failed install/retry, a real
+second-connection revision conflict, exact retained proof/recovery and reopen/Watch.
+The incorrect compiled-view-only fixture edit and its failed assertion are retained.
+Full validation passed on `f1c8641b6`; integrated `fc3254382` has the exact same host
+and 94 other inputs matching coating's admitted source, 28 existing checks, and fresh
+all-three/two-build admission. Its exact zero-overlay admitted player passed
+294/294 native controls, with both hosts free of warnings/errors. The complete
+1,888,634-byte receipt is preserved losslessly under
+`authoring/fpv-worlds/creator-install-reliability/evidence/admitted-8961-passed`.
+The publication branch then normally merged HUD main `ecf0bafc6`. Its 95-input
+bridge proves only the independently qualified 121-byte HUD difference from
+admitted `fc325`; the 323-byte Creator function is byte-exact. Combined source
+reserve is 37,314 bytes, with fresh protected CI required. This source bridge
+does not establish the later HUD/compatibility combined browser journey.
+
+Remaining work is the finished first Library row and old-cache compatibility,
+Creator's protected publication, final combined reliability, and representative
+natural and industrial presentation/endurance. Reservoir r16 has 575 ordinary
+flight/replay checks, 304 admitted import/Watch checks and native arm/pause evidence;
+its data-only #1090 is in protected publication. The production Library index stays
+empty until the finished content and compatible runtime are published and verified. Festival, Harbor and Canals remain sequential after that
+quality standard, followed by D6. Physical-device, novice and universal FPS/offline
+claims remain pending.
+
+### 5 October — Explicit ground movement correction; publication hold retained
+
+Main remains `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4`. The human
+#1083/P1 delivery hold remains in effect. First Reservoir Library row #1094,
+combined reliability evidence #1096, Festival content #1097, stick-width
+observation #1099 and imported-catalogue truthfulness #1100 remain held Drafts;
+none is enrolled for automatic merge. Earlier October 4 checkpoints are
+historical where superseded by this entry. No release bypass or hold removal is
+part of this increment.
+
+Integrated reliability #1096 is already complete and held, including its exact
+admitted online journey, stopped-origin offline tail and representative longer
+session evidence. Ground movement is a new Harbor prerequisite, not unfinished
+work from that integrated journey. The qualified Reservoir Library row and
+Festival content remain held; the remaining world order is Harbor, then Canals,
+then D6. The future support-v1 Library cohort is a separate delivery increment.
+
+Harbor exposed a real finite-platform ground-actor stall: ordinary native
+3000-tick flights stopped permanently on both solid boxes and equivalent closed
+meshes while retaining named support. The original half-space paths continued.
+The focused `groundMotion: "support-v1"` capability opts in only patrol, sentry
+and vehicle actors. Absent fields retain the legacy branch and course identities;
+no WORLD_RULES default, model/backend identity, snapshot field, player physics,
+input, renderer or reward changes are introduced. The correction retains native
+swept movement and full-shape upward-clearance checking. Older validators reject
+the new actor field before installation, and both older Library feeds remain
+unchanged. A later Harbor row needs a compatible cohort rather than registration
+in an older feed.
+
+Frozen runtime `9b5c3d65e2877847126c87f263fbc7e9aca357fb` has 534 manual
+geometry/replay/reset/ownership checks across 66 bounded cases, 1372 contract and
+editor/import checks, ten representative unchanged legacy recordings replayed
+exactly, and nine existing contact-hunt tests. Native source qualification passes
+292 checks including actual completion, export/import, Watch and old/new storage
+retention. Root's separately stopped-origin old-cache tail retains the
+unsupported pack and its older revision, refuses the new course, and still runs
+and pauses an ordinary built-in flight. Backup readiness was visible but its
+download capture timed out, so no exported-byte claim is made. Historical failed
+experiments and fixture failures remain losslessly archived in
+[the ground-motion evidence](../authoring/fpv-worlds/ground-motion/README.md).
+
+The exact candidate `ca28461faa9a5245f55532bb27fbb5d69f557e16` then passed
+full Node 22 validation, 26 existing runtime/content checks and all-three-package
+admission with two byte-identical builds. The 95 Worlds inputs total 16,744,060
+bytes, leaving 33,156 bytes under the unchanged ceiling. The 102-member player
+passed a separate native 8981 matrix, 292/292 with zero runtime overlays, four
+owners, no warnings/errors/dropped observations and zero registered renderer
+resources after disposal. Candidate offline and Harbor's complete native
+presentation journey remain separate next checks; the old-cache tail above
+does not establish either. The sparse prerequisite failures and subsequent exact
+Git-blob/APFS materialization are retained rather than treated as product faults.
+
+Harbor r4 explicitly opts in its cart and inspector while preserving the accepted
+scene, colliders, route criteria and remaining courses. Its static qualification
+passes 407 checks; all sixteen ordinary flights, independent replays and archive
+reimports pass 540 checks. This is separate content evidence and not a current
+public Library listing, completed native art review or unrestricted movement
+guarantee. The bounded 12-actor CPU observation records the added correction cost;
+it establishes no browser FPS or hardware-performance claim. Full regression and
+new unit coverage remain D6, with physical-device and novice qualification still
+unclaimed.
+
+## 2026-10-05 — Harbor r4 qualified on the explicit ground-motion prerequisite
+
+Harbor now has eight distinct EN/UK challenges and sixteen fresh ordinary-input
+proofs. Its accepted r2 scene remains exact: 7,900 triangles, ten imported material
+batches, two original maps and 38 solid records. The raised quay and service deck
+remain real collision supports; background water stays outside playable bounds.
+Only the civilian cart and inspector opt into `groundMotion: "support-v1"`.
+The final prerequisite is Draft [#1101](https://github.com/mekhovov/revealline/pull/1101),
+head `f9617ba8e0fdb0a526171f0fab944d06ad2d834e`, retaining qualified runtime
+`9b5c3d65e2877847126c87f263fbc7e9aca357fb`. The data branch was rebased
+linearly with a recovery ref and exact Harbor-tree/distribution comparison; it
+does not change runtime, Library feeds, ceilings or objective tolerances.
+
+Static qualification passes 407 checks; 540 ordinary-flight/replay/archive checks
+cover all sixteen complete examples. Across 6,700 civilian ticks, independent
+feet-to-solid gaps remain 12–13mm on the exact named supports, within the explicitly
+approved r4-only 14mm rounding envelope. Follow completes six continuous seconds
+and 4.2m target travel; Observe completes four seconds. The isolated fictional,
+stationary, nonfiring training drone records real 50→25→0 health and defeat in
+both modes. Historical r3 finite-platform failures and their 12mm observer remain
+preserved; no source or pose shortcut is presented as a fix.
+
+The exact 102-member admitted player at
+`ca28461faa9a5245f55532bb27fbb5d69f557e16` passes a separate controlled
+packaged-module matrix: 314 checks, sixteen complete Watch endpoints and
+eight-course editor/export/reimport/reopen, with no errors/warnings/dropped
+observations and correct created-renderer disposal. Scripted legacy controls
+and controlled RAF are explicit; this is not native-visible end-to-end or
+native-clock endurance evidence.
+
+Root then used the unmodified direct entry and visible file choosers to install
+the exact pack and verify all sixteen proofs. Two normal-RAF/public-1x examples
+completed at displayed 34.5s (cart) and 32.2s (inspector), followed by deliberate
+Arm and Pause/Continue for each. The moving subjects were directly observed;
+retained screenshots are accurately labeled later landing-phase views.
+Prepare offline completed, root stopped only the verified dedicated origin,
+curl refused with exit 7, and a real cached reload retained the eight-course pack.
+Offline cart launch reached a saved Flight active state at 17.5s and paused to
+Continue. The console was empty. These flights are bounded launch/pause checks,
+not manual course completions or hardware/FPS qualification.
+
+The pack is 879,213 bytes, SHA256
+`d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6`;
+the sixteen-record archive is 1,018,615 bytes, SHA256
+`7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102`.
+The [Harbor README](../authoring/fpv-worlds/harbor-docks/README.md) links the
+editable ZIP, originals, failed diagnostics and separate CPU/controlled/native
+evidence. Bundled 14-world/196-challenge counts remain unchanged; installing
+Harbor adds one optional world and eight challenges.
+
+The human #1083/P1 main-merge hold remains in force: prepare the qualified child
+as Draft in a native dependency stack, with no automatic merge. Compatible
+Library-cohort publication is separate and no Harbor row is added to an older
+feed. Bounded stylized scene acceptance does not imply commercial-realism,
+physical-device or novice acceptance. Canals remains the next world, then D6.
+
+Publication checkpoint: the movement correction is attached Draft **#1101** and
+Harbor is attached Draft **#1102**. Native GitHub stack **#1103** was created
+through the stack API, rooted on main with the linear order `#1101 → #1102`.
+Initial exact remote heads are `f9617ba8e0fdb0a526171f0fab944d06ad2d834e`
+and `7bde8bfcb856638cba1fda6b7924986bed46290a`, respectively. Both retain
+milestone57; no auto-merge, fastline labels, manual retarget or protected merge
+was requested. This subsequent checkpoint changes documentation only. The
+coordinated main hold is still active; neither new PR is called publicly live.
+
+Next engineering increment is the separately qualified cumulative Library
+capability cohort for support-v1. Preserve both older feeds and do not bypass
+the held Reservoir row or advertise an unqualified Harbor revision. Subsequent
+approved compatible row publication must also populate the new cohort, so a newer
+player does not lose previously available worlds. Canals follows Harbor as the
+next eight-course art/content increment; D6 remains after those deliverables.
+
+### 5 October — Ground prerequisite integrated with P1; new admission pending
+
+The Character owner explicitly released the former #1083/P1 main-merge hold
+after public e03 verification. Reservoir's first Library row #1094 subsequently
+merged as `00770c96eb8eab8d0aedda433d115f86188d5a75`; that follow-up is data-only.
+Ground #1101 and its Harbor native stack #1103 remain Draft while the changed
+P1 runtime is integrated and qualified. Historical held-state checkpoints above
+are preserved as records, not current publication instructions. Integrated
+reliability #1096 was already complete before this new prerequisite.
+
+The ground branch preserves published f961 in recovery ref
+`codex/fpv-ground-motion-before-p1-e03` and rebases its focused changes onto
+`e03fdbb5cd73176a01df49347fbe9eab722f1882`. Frozen integrated runtime
+`c888632ecefe7b3846ef19d16a693eb060a91fc3` retains P1's V3 pursuit, appearance,
+offline lifecycle and package policy. A real native-query observation found
+that pursuit admission's body-shape cache skipped a second, distinct movement
+policy. The only integration-specific adjustment appends an optional policy
+suffix; absent-policy keys, decisions and movement remain unchanged.
+
+Thirty-five existing native pursuit/editor/successor/completion checks pass.
+The bounded manual comparison passes 1,074 controls: 192 V2/V3 normalized,
+exported and compiled courses, 22 paired 150-tick flights, all 16 retained
+Festival r5 recordings and all 16 Harbor r4 recordings with exact completed
+identities. The other 12 catalogue entries are FlightCourse.v1 and outside
+the World-validator loop. The established ten retained legacy recordings also
+pass, overlapping four Festival records. Eight synthetic mixed-policy V3
+partial-practice recordings replay exactly and reject policy removal. The
+initial manual error-message expectation failure is retained; production did
+not change for that fixture correction. See the
+[P1 integration archive](../authoring/fpv-worlds/ground-motion/evidence/integration-p1/README.md).
+
+P1 changed the actual dependency closure and existing policy. The new committed
+source inventory has 105 Worlds inputs, 16,981,627 raw bytes and 3,989,893 bytes
+of reserve under its inherited 128-file / 20 MiB ceiling; this feature does not
+edit those limits. Historical ca284 admission and native 8981 remain precisely
+95-input / 102-member evidence. Fresh integrated validation, package admission,
+native browser and populated-storage/offline qualification remain pending and
+must use the new actual manifests. Source integration may be published as a
+Draft while storage recovery blocks those gates; no admission or readiness
+claim is inferred from the source checks.
+
+Root will cascade the preserved Harbor data/evidence onto this parent and
+coordinate explicit branch leases. No push, merge, admission or new unit suite
+was performed by this integration handoff. Harbor's recorded content checks
+remain separate from the upcoming compatible Library cohort. Canals proceeds
+through its first scene checkpoint before complete routes; broader regression,
+physical-device and novice gates remain D6.
+
+### 5 October — P1 ground package admission complete; native integration next
+
+After safe storage recovery, the ground parent rebased cleanly onto data-only
+main `00770c96eb8eab8d0aedda433d115f86188d5a75`. Qualification source
+`328f4c5373a89342aca2063134c0bc2823ecbb07` retains all 105 runtime inputs
+byte-identically to c888. Recovery ref
+`codex/fpv-ground-motion-before-row-007` preserves pre-rebase 68c9611.
+
+Fresh full Node 22 validation and all three optional-package admissions pass,
+with two byte-identical builds per package and every committed source input
+verified. Worlds now has the actual P1 closure: 105 inputs, 112 full members,
+16,981,627 source bytes and 3,989,893 bytes of reserve under the inherited
+20 MiB / 128-member policy. Academy has 76 members. The exact no-overlay Worlds
+stage passes 243 hash/ownership checks. The small
+[integrated admission archive](../authoring/fpv-worlds/ground-motion/evidence/integration-p1-admission/README.md)
+retains successful logs and the earlier bounded sparse-materialization failure.
+
+This closes validation and package admission for the integrated parent.
+Fresh native browser and populated-storage/offline acceptance remain pending;
+old ca284/8981 results are not relabeled. Root will cascade Harbor onto the
+docs-complete parent and coordinate explicit branch leases before updating the
+Draft native stack. The separate Library cohort must preserve older feeds and
+carry eligible published rows forward. No push, merge or new unit coverage was
+performed by this admission handoff. Canals remains at its first-scene stage;
+broader regression, novice and physical-device qualification remain D6.
+
+### 5 October — Disk recovery, current P1 admission and Reservoir public launch
+
+The user authorized disposable-cache cleanup while preserving development data.
+About 7 GiB of cache/duplicate allocation was recovered, principally 23 stale,
+unindexed, incomplete Git temporary packs that Git classified as garbage.
+Finalized Git packs/indexes and all 2,135 previously checked ref/worktree HEAD
+objects remain unchanged and readable. This is a bounded preservation check,
+not a recursive repository integrity claim. Unique qualification archives,
+working files, installed extensions and browser offline/profile data remain.
+Local validation and package builds resumed; runtime qualification is no longer
+blocked by disk space.
+
+Ground's final documentation head `d78ae3bdd84e7f92ea88f94f8ca9e3fe04afe009`
+retains all 105 inputs from admitted `328f4c5373a89342aca2063134c0bc2823ecbb07`.
+Full validation and all-three admission pass, with two byte-identical builds per
+package and an exact 112-member Worlds stage. Its new
+[P1 admission evidence](../authoring/fpv-worlds/ground-motion/evidence/integration-p1-admission/README.md)
+keeps failures and historical results separate. Harbor was cascaded linearly
+onto this parent with recovery refs; every Harbor source/distribution/evidence
+byte remains identical to prior `f70834deb9bb21b0b9f000f355884af047fc0ba9`.
+Native stack1103 remains `#1101 → #1102`, both Draft pending fresh integrated
+native/offline checks. No manual retarget, bypass or merge is requested.
+
+Reservoir Library #1094 is publicly available: the public deployment marker
+identifies `00770c96eb8eab8d0aedda433d115f86188d5a75`, and root launched the
+actual public SIM, used Browse/Download to install r16 (eight challenges,
+identity prefix `50ffbb0e5da7`), and opened Shoreline check-in. Deliberate arm,
+pause and continue worked; the captured ordinary flight reached 30.8 seconds.
+This is public installation/launch evidence, not a manual course completion,
+new recording, hardware or sustained performance claim. The compatible Library
+cohort must copy the eligible Reservoir row and retain both older feeds.
+
+### 5 October — Stick geometry observation qualified; publication held
+
+The separate Worlds display-only candidate `34ddde3ed0416f0e90aae8170101bd6a6c8d08e2`
+replaces unchanged per-frame stick width reads with one owned ResizeObserver,
+preserving exact integer padding-box radius, current axes, synchronous source/display
+changes and the original no-observer fallback. Physics, recorder/input pickup and
+Academy's separate implementation are unchanged. Its +937 original-source bytes
+retain the existing 104-file/16MiB limits.
+
+Native source qualification passed1,338 geometry controls (46 cases each for baseline,
+candidate and explicit no-observer fallback),2,400 manual exact-source display
+comparisons, and372 timing controls across eight5s windows. Mixed-scene paired host
+RAF plus ResizeObserver callback means changed1.706→1.249ms and1.678→1.181ms for Yard
+Ready/playback,1.652→1.101ms and1.663→1.281ms for Reservoir. Stable candidate windows
+read no stick widths. These are measured callback costs, not whole-frame CPU, GPU
+time, input latency, FPS or hardware qualification. Native start ticks differed by
+one during playback; final ticks, settings/canvas and corresponding registered
+resources matched. No qualifying LoAF entries does not mean no jank.
+
+Clean admission `d73f573e492978fdbded369d4b009e78d644f296` passed full validation,
+15 existing controls and all-three/two-byte-identical package builds. Its102-member
+Worlds player has95 independently rechecked inputs totaling16,742,575B, leaving
+34,641B. Actual unmodified admitted entry8978 passed Ready/Arm/active/Pause,
+Expanded+Touch settings and deliberate Continue, then Compact+Keyboard restoration
+while paused; warnings/errors were zero. This adds no flight-completion, physical
+touch, new offline or public-deployment claim. All registered renderer resources
+and owned observer targets were released in the separate functional matrix.
+
+[The focused evidence](../authoring/fpv-worlds/stick-geometry/README.md) retains all
+failed fixtures and complete successful receipts losslessly, including the earlier
+unexplained timing canvas change. No production fix is claimed for that discarded
+comparison. The source/package identity and raw observer limits remain explicit.
+
+The verified human #1083/P1 delivery hold still applies to main merges. This
+completed increment is published only as a **Draft PR**, without fastline or
+auto-merge enrollment; fresh protected checks/publication remain separate. The
+first Library row #1094 and combined/endurance evidence #1096 remain independently
+tracked. This checkpoint does not finish broader D1 performance/physical-device
+acceptance, D5's remaining worlds, or deferred D6 coverage.
+
+### 5 October — Public21826 and imported catalogue truthfulness
+
+Matching public deployment/build markers now identify main 21826c460e80. The
+coordinator used native briefing, deliberately armed at zero throttle, observed
+active flight at 2.4 seconds, then paused at 2.5 seconds with Continue available. The
+[archived public receipt](../authoring/fpv-worlds/catalogue-truthfulness/evidence/public-21826/manifest.json)
+qualifies normal public entry for merged HUD, Creator and compatibility ancestry.
+It does not qualify the still-unpublished first Reservoir row or all component
+matrices on the public origin.
+
+The exact final combined 0b54 admission/native 453 journey, stopped-origin cached
+reopen/edited-course/flight acceptance and 306-control eight-window native session
+are preserved in qualified [PR #1096](https://github.com/mekhovov/revealline/pull/1096).
+First Reservoir row #1094 and qualified Festival r5 #1097 are also Draft under the
+explicit human-authorized P1 #1083 main-merge hold. This procedural state preserves
+heads and qualification; no hold lift, merge, policy change or live-row claim is
+implied. Qualified stick-size observation #1099 is also held Draft. Harbor's accepted
+r2 scene is fixed while eight authored routes enter static/ordinary-proof qualification;
+an actual fine-step actor support stall remains under diagnosis, before any native
+world/release claim. Canals and D6 retain their approved order.
+
+The separate imported catalogue correction removes the unverified Explore,
+intermediate and 4-minute defaults. The selected mode can infer only one consistent
+validated tracking kind with holds/landings as Follow or Observe; ambiguous routes
+remain Authored challenge. Built-in metadata, schemas, immutable packs and proof
+identities are unchanged. Both manual actual-function/data runs passed 284 checks,
+including exact Reservoir/Festival pack round trips. Native 8971 passed its first
+364 controls but timed out on a fixture label predicate despite actual replay
+completion; the failure is retained. Corrected observer run 8974 completed 423
+controls and reproduced a separate product defect: an Acro replay changed the
+selected mode while Missions retained the previous Follow label until a filter
+repaint. The narrow correction repaints when Missions opens. Its immutable 8976
+fixture passed 424 checks and 14 samples, requiring Observe immediately before any
+filter change; both native owners recorded no warnings or errors. Final `add835c7b`
+admission passed full Node22 validation, 12 existing World UI checks and two identical
+builds of all three optional packages. Runtime grows 620 bytes in one of 95 inputs,
+leaving 34,958 source bytes before other draft integrations. Exact admitted fixture
+8977 passed the same 424 checks and 14 samples with no runtime overlays or owner
+warnings/errors. Source/admitted check names/results, catalogue samples and immediate
+Acro mode observation match. The focused change is qualified for a held Draft PR;
+protected publication remains subject to the explicit human hold. No published
+Browse, whole replay completion, offline or performance claim is added. See the
+[focused scope](../authoring/fpv-worlds/catalogue-truthfulness/README.md).
+
+## 4 October — Combined online journey and publication
+
+Reservoir r16 data #1090 merged normally as
+`53620a6615210047385c770ef1c24f4eb0bdc461`; Creator commit/retry repair #1092
+merged as `8b31237d6f2cba627b5d35acc10309e4d3335992`. Library compatibility
+#1093 merged normally as `21826c460e80fa4e7fa47ec8e6ba9f98f75beea4` after every
+active check passed at exact `40b2e29df95691cbe44220e253ba8f795d60dd74`. Its
+normal Creator-main update has the same host bytes as the final combined admission.
+Latest actual public-entry evidence
+remains the recorded `3bc7a923d` launch, not these newer merges.
+
+The bounded [combined journey](fpv-combined-journey-qualification.md) passed all
+453 native controls at port8965 on source
+`6c341bef4347d98bae882fb1785eabf6a133537c`. It used the exact Library admitted
+player plus the declared, byte-exact 323-byte Creator correction. Explicit native
+file imports installed pack50ff and then its separate proof archive073ee. Native
+selection, language/Settings ownership, neutral Arm/pause/visible Retry, the exact
+1,616-tick Watch, non-first-course/single-mode edit/Undo/Redo, export, transaction
+abort/ordinary retry/postcommit refresh failure and durable reopen all passed.
+All original proof rows, original dependency revision and interrupted recovery
+were retained. The created renderer released all registered resources; the
+reopened lobby demonstrably created no renderer. Both hosts had no errors/warnings.
+The full 6,456,631-byte receipt is losslessly archived with its original hash.
+
+Both preceding failed fixtures remain retained. One selected the closed Results
+Retry instead of Home Retry; the other required a renderer in the reopened lobby.
+Only these manual observer/control defects changed. No product guard, physics,
+clock or visibility behavior was altered to obtain the pass. This online run uses
+the actual default Industrial presentation; it does not qualify an authored
+natural performance workload, published Browse/download or cached-native offline.
+The final exact combined source `0b54fd0fdf8fe06dc900024a8b59713340b09bb3`
+passed full Node22 validation and all-three/two-identical-build admission, with
+all 95 original inputs byte-exact to the successful online fixture. The complete
+zero-overlay102-file player passed223 staging checks and supplies the single
+runtime for subsequent native/offline and longer-session work. Original source
+reserve is35,578 bytes; no limits changed and no second build set was created.
+
+The exact admitted port8966 run subsequently passed all 453 of the same named
+native online controls with zero overlays. Its full6,456,634-byte receipt and
+screenshot are retained losslessly under `combined-journey/evidence/admitted-8966-passed`.
+Both hosts had no errors/warnings; the created renderer released its owned
+resources and the reopened lobby created no renderer. Published Browse and the
+separate stopped-origin offline phase are not implied by that online pass.
+
+That separate offline phase subsequently passed on the same native admitted entry.
+Public preparation completed; the dedicated 8966 server stopped and curl refused
+before and after native reload. Library retained edited revision d44a3936bff0 and
+rollback 50ffbb0e5da7; Creator showed course 02/Acro X=-9.9m, Y=5m, Z=15m. Unchanged
+course 01 loaded, deliberately armed at zero throttle and paused at 33.9s. Native
+text/screenshots and exact server stop/refusal/restart metadata are retained under
+`combined-journey/evidence/offline-8966-passed`. This qualifies own-origin outage,
+not browser-wide offline, eviction or a repeated private database audit. The
+same server root was restored with HTTP 200.
+
+The separate [native session audit](../authoring/fpv-worlds/longer-session/README.md)
+then passed 306 controls on the same exact 0b54 admission: eight 20-second windows
+across authored industrial Yard and natural Reservoir, 167.196s total run. The
+three repeated Ready resource counts per scene stayed identical, and both owners
+released all registered resources. Mean host callback CPU ranged 1.442–1.850ms;
+the recurring first stick-width read represented 25.0–29.5% of that nested time.
+The maximum observed native RAF gap was 34.3ms. Supported LoAF/longtask observers
+saw no qualifying entries starting inside these windows; that does not establish
+absence of jank. The complete receipt, exact observer and audit retain overhead,
+viewport, profile and shared-browser limits. This is a bounded single-runtime
+observation, not a before/after speedup, hardware-FPS, GPU-time or thermal-endurance
+claim. No optimization is included in this manual-evidence increment.
+
+The active parallel-plan checkpoint and engineering priorities were reconciled,
+including merged ghost/language/coating/HUD/Creator status. Reservoir's bounded
+r16 art review is accepted and its data is merged; the first production Library
+row is ready as #1094 following compatibility's merge; actual download/install
+verification remains pending. An explicit owner-authorized temporary main-merge
+hold applies until Character/P1 #1083 completes protected merge and Pages delivery
+and the coordinator lifts the hold. Qualified #1094 and evidence #1096 are
+temporarily Draft, with exact heads preserved and auto-merge disabled. This
+enforces the controller's explicit draft gate because it can directly merge an
+approved head even when auto-merge is absent. The existing release-train-hold
+label means unallocated product work and was not repurposed. Draft is procedural,
+not an unfinished-qualification claim; Ready returns only after the human hold
+is lifted. Development and qualification continue.
+Festival r5 eight-course source has616 checks / 16 ordinary completion and replay
+proofs, plus 311 historical admitted-browser checks / 16 Watch replays; final native
+offline qualification and publication remain pending. Continue
+Festival, Harbor, Canals and then D6, retaining device/novice limits.
+
+## 5 October — Player-reported learning and exploration fixes
+
+Native stack **#1106**, based on main, contains **#1104 → #1105**. Lesson clarity
+#1104 is published at `037b6ac6303d064f9dba31fce8e5078a6c1bc72b`; untimed full-world
+free flight #1105 was first published at `a83823757cba76c26131f352d6b09ac4ba37eeb4`.
+The latter receives this documentation-only checkpoint as a normal fast-forward.
+Both remain Draft for exact committed-source package admission, reproducibility and
+offline qualification. No public availability or merge is claimed.
+
+The learning observer now exposes the actual altitude, tilt, centred-input, speed,
+heading and landing conditions. Named chapters explain their purpose; full-flight
+and section demonstrations are discoverable, and returning from a demonstration
+preserves an unfinished scored attempt's command prefix and resumes paused.
+Larger live readings/sticks and an active-objective direction cue were inspected
+in desktop, phone portrait/landscape and Ukrainian layouts. All 58 recommended-mode
+school demonstrations complete and independently replay: 87,518 ticks on each path,
+56,796 hold-frame comparisons, 239 accepted transitions, zero criterion mismatches.
+The receipt also covers 1,496 EN/UK lesson/mode states and 35 edge cases. These are
+functional checks, not novice acceptance or new unit coverage.
+
+Free flight now selects a full-world layout independently of filtered Hunt arenas
+and uses the existing untimed, unscored practice runtime. Its 142-assertion functional
+probe covers 14 worlds, 28 mode starts, imported fallback selection, immutable source
+courses and both modes remaining active beyond 36,000 ticks. This removes the old
+12-minute cutoff; it does not claim streamed, spatially unlimited terrain. See
+`fpv-learning-clarity.md`, `fpv-endless-exploration.md` and their evidence probes.
+
+The combined development player is retained at `dist/fpv-learning-clarity-playtest`:
+104 files / 15,651,677 bytes, ZIP SHA-256
+`df31491b9b04469d7c2feb60b378862f88015b413c0c905330496704a52deb6d`.
+It was launched and exercised but is explicitly not release-qualified.
+
+Independent Snake shared soundtrack **#1107**, branch `codex/snake-shared-soundtrack`,
+head `af179bb15f`, restores the shared transport/library using Snake's existing audio
+owner. Browser transport progression, Pause through Start/Retry, nested-library Back
+and music through gameplay Pause passed. Existing 69 shared menu/music and 12 catch
+audio checks pass. Audible device output and packaged/offline qualification remain
+pending. See `fpv-snake-shared-music.md` on that branch. It is also Draft.
+
+Storage repeatedly fell to zero during this work. One confirmed incomplete Git temp
+pack and two duplicate installed-extension download archives were safely removed;
+all source, refs, histories, protected builds and unique evidence were preserved.
+The interrupted branch switch was repaired only after verifying affected files
+matched the intended committed target byte-for-byte. All completed application
+changes are now committed and pushed. Full builds require the existing 3 GiB floor;
+do not bypass it or delete unique work to force qualification.
+
+Next priorities: finish exact package/offline qualification when space is stable;
+clarify Hunt contact versus Combat fire versus Follow/Observe interactions; add
+filtered random challenge selection; integrate SIM's shared music with explicit
+audio ownership. Richer beginner scenery and collidable landmarks inside expanded,
+versioned exploration worlds remain art/runtime work. Existing target contact was
+reproduced successfully in eight moving catches and exact replays; stopping momentum
+and non-destructible Follow/Observe actors are separate versioned design questions,
+not permission to rewrite existing proofs. Physical radio/mobile/Steam Deck and novice
+acceptance remain unclaimed. Festival, Harbor, Canals and D6 priorities remain in force.
+
+## 5 October — Learning clarity and free exploration fixes
+
+From main `cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873`, branch `codex/fpv-learning-clarity` implements the reviewed [learning clarity increment](fpv-learning-clarity.md): explicit real criteria, named chapters, prominent real-flight/section demonstrations, safe recorded-prefix return, FPV target cues and larger lesson sticks. All 58 recommended-mode proofs and 56,796 hold-frame comparisons pass unchanged. Native browser verification includes actual section/full replay, retained 11-second practice prefix, explicit flight-mode choice, EN/UK and desktop/phone viewports.
+
+Free-flight canonical-world selection and endless unscored operation are a separate dependent increment. Snake shared soundtrack controls are a separate independent increment. They remain separately reviewable; no old course/replay contract is rewritten. [The running-target audit](fpv-running-target-contact-audit.md) found eight valid moving-target catches replaying correctly; the next increment must clarify Contact Hunt versus pulse combat versus observation and treat momentum-preserving Hunt changes as versioned behavior.
+
+These changes are locally verified development work, not public live availability. Full frozen-source package admission remains pending sufficient temporary storage (3 GiB heavy-build floor; below 1 GiB observed). No protected checks, holds, source budgets or cleanup safeguards were relaxed. Continue focused publication, then target-action clarity/random selection/shared settings, accessible scenery revisions and the established Festival → Harbor → Canals → D6 sequence. Human art/device/novice acceptance stays explicitly unmeasured and does not block independent development.
+
+## 5 October — Shared graphical flight HUD
+
+Focused PR **#1110**, branch `codex/fpv-graphical-flight-hud`, is appended to native
+stack **#1106** after **#1104 → #1105**. Its implemented/frozen candidate is
+`3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852`, based on exact parent
+`29646092ff152d4807e44522ff6f1e67ba7b79d9`. A following documentation-only
+fast-forward records qualification. No parent heads, stack targets, holds or
+required protections were altered. Public deployment is not claimed.
+
+Both SIM hosts replace their large numeric coach and duplicate telemetry with a
+shared compact target-band gauge, one correction and a runtime-earned progress
+ring. Exact conditions live behind safely paused Explain. Current target cues
+distinguish hold/landing, entry-side gates, tracking and Touch/Fire; hidden targets
+receive directional/obstructed guidance. Missing facts cannot earn success.
+Preferences, typed feedback and read-only legacy criterion facts preserve physics,
+recordings, scoring and identities. See `fpv-graphical-flight-hud.md`.
+
+All 58 School and 24 Academy demonstrations complete and replay unchanged:
+102,365 ticks per path, 65,309 eligibility comparisons and 484 transitions.
+The functional receipt contains 18 focused checks plus 3,336 EN/UK feedback cases;
+74 projection/legacy checks and 60 existing flight/UI/radio/replay tests pass.
+Browser review covers 390×844, 844×390 and 1280×800, EN/UK, touch, safe Explain,
+shared preferences and twenty theme options. Same-workload callback mean was
+0.089 ms versus old coach 0.108 ms; this is not an FPS/input-latency claim.
+
+Storage recovery removed only ten audited abandoned incomplete Git temporary
+packs (2,935,750,656 bytes), each checksum-invalid, unopened and unchanged during
+two checks. Valid packs, refs, source, registered worktrees and unique evidence
+were preserved. Free space stayed above 3 GiB for all qualification phases.
+All three frozen package admissions and two identical builds each passed, along
+with full Node22 validation and 53 existing offline/package checks.
+Exact admitted World/Academy prepared via their launchers and reloaded during a
+verified stopped-origin outage; Academy Explain returned paused and the full Acro
+tilt demonstration completed in World Studio without console warnings/errors.
+The local server was restored. Byte/hash receipts and screenshots are committed.
+
+#1110 remains Draft for coordinated parent publication and exact-head CI/reviews,
+not a remaining storage or package qualification failure. Parent Draft states
+were preserved. Next concrete delivery step: reconcile #1104/#1105 frozen
+qualification and current-main native stack ancestry with explicit recovery refs
+and remote-head leases where needed, then protected publication and actual public
+SIM launch. Additional unit coverage remains D6; physical-device/controller/novice
+acceptance and installed-app fullscreen are unclaimed. No scenery/physics/mission
+expansion was included in this HUD increment.
+
+## 5 October — HUD/results overlap correction
+
+Follow-up to #1110 fixes the reported compact HUD painting above the lesson
+completion menu. Both hosts now give covering menus and terminal results explicit
+HUD visibility ownership, separate from paused/replay state. Ordinary paused
+practice retains accessible Explain. Canonical CSS immediately suppresses the HUD
+when a result appears after the frame update, including the asynchronous recording
+verification interval. Completed results also hide idle sticks, the drone diagram
+and replay transport so they cannot overlap the restored menu header.
+
+Native browser verification passed 38 functional DOM checks covering both hosts,
+active/paused/replay suppression, result replacement, controls and restoration.
+The real Acro tilt demonstration ends with a clear result; World and Academy
+Pause/Continue and Explain/Close restore guidance safely. All 60 existing flight,
+UI, radio and replay regressions pass; scoped lint/syntax and shared style
+projection checks pass. Evidence: `fpv-flight-hud-overlay-verification.json`.
+
+Fresh development preview: http://127.0.0.1:8981/optional-practice/fpv-worlds/index.html?lang=en#learn.
+The immutable 8972 admitted preview and historical package receipts still identify
+3bbdc8 and do not contain this follow-up. Do not mark the new source package-qualified
+or public live: the stable 3 GiB build floor is not currently met. Preserve #1110's
+Draft/native-stack position and repeat frozen package qualification before release.
+
+## 5 October — Parallel publication, Library and contact gameplay
+
+Native stack **#1106** was reconciled onto main
+`2d447bc790bdf3951251c99041c8a918363ece0a` as a coordinated linear cascade.
+Recovery refs retain all three former remote heads. All six patches compare
+identically in range-diff, and the three branches were pushed atomically with
+explicit per-branch remote-head leases. Live membership remains
+**#1104 → #1105 → #1110**; no PR was retargeted or protection changed.
+The new code heads are `55493cb94783`, `0e3cc79c89f6` and `614adef75a6e`.
+See `fpv-stack-1106-cascade-20261005.json`.
+
+The frozen HUD code at `614adef` passes all three package admissions, two identical
+builds per package, committed-input/member verification and full Node 22
+validation. Both parent exact-head CI package receipts are also retained.
+The refreshed functional run completes and independently replays all 58 School
+and 24 Academy demonstrations (102,365 ticks per path, 65,309 criterion comparisons,
+484 transitions). The exact admitted hosts reload with their dedicated origin
+stopped. Acro tilt reaches a clear result without HUD/stick/replay overlap;
+Academy Explain returns paused. No console warnings/errors were observed.
+See `fpv-flight-hud-package-qualification-614adef.json` and
+`fpv-flight-hud-overlay-admitted-review.json`.
+
+The current 53-case offline/package regression suite is **not run**: concurrent
+volume allocation dropped free space below the 3 GiB heavy-build floor after
+admission and validation. Prior passing results remain explicitly historical.
+Safe cache/invalid-temp-pack cleanup and lossless compression of inactive temporary
+receipts preserve source, commits, valid Git objects, worktrees and all evidence
+bytes. Stop expanding cleanup merely to chase ongoing allocation; retain the
+restoration manifests. Fresh responsive/device acceptance is not claimed: the
+current browser ignored the requested viewport override and remained 1280×720.
+
+Independent **#1113** (`codex/fpv-festival-library`) adds the merged Festival r5
+pack to the capable Library feed while preserving Reservoir and the original
+feed. Its 37 data checks pass. Native pending-catalogue integration verifies
+Browse, immutable HTTPS download/hash validation, all eight installed missions,
+scene preparation, deliberate arm/pause and retained identity after reload.
+Only the catalogue response is a local fixture; public feed publication remains
+pending. Its release-ready gate explicitly holds without an allocated release
+slot; do not invent a version or bypass the gate.
+
+Independent **#1114** (`codex/fpv-hunt-momentum-contact`) introduces opt-in
+`retain-momentum-v1` ordinary Hunt catches and preserves legacy identities and
+all other collision responses. A small editable/importable moving-runner practice
+pack and both-mode proof archive accompany 15,714 initial functional assertions.
+Native import verified the pack and both examples, then exposed an existing
+hard-coded world-model restriction hiding Hunt demonstrations. Correct that
+read-only model selection and verify actual example playback before calling the
+increment complete. Package/device/public qualification remains pending.
+
+Filtered random flight selection is developing independently on
+`codex/fpv-filtered-random-flight`, based on the frozen HUD code and intended as
+its next focused stack member. Keep it out of #1110. It reuses current catalogue
+filters within the explicitly selected world, avoids immediate repeats when
+possible, and keeps normal preparation and deliberate arming.
+
+Performance **#1099** retains exact head `823fd48afb77`; the failed candidate job
+was an upload-stage timeout after tests/build passed. Only that failed job was
+retried; attempt 2 remained in progress at the checkpoint. The human Ready and
+fastline-approved history is preserved. Do not claim publication before exact
+checks, protected merge and public deployment/launch verification.
+
+The Harbor-capable Library cohort retains a clean linear base on Harbor
+`c958e5e13d03`; probe-only preparation `bdbb7c96f` checks all inherited catalogue
+and policy members, including rejection of dropped/changed entries (60 checks).
+No parent branch changed. Coordinate #1101 → #1102 → cohort rebasing later with
+recovery refs and explicit leases. Carry Festival forward only after its feed
+entry is published. Harbor integration, Canals completion and D6 remain next;
+physical hardware/novice acceptance is unclaimed and does not block independent
+feature work. No new public-live claim is made in this checkpoint.
+
+## 5 October — Random flight, native Hunt and protected performance merge
+
+Live native stack **#1106** is now **#1104 → #1105 → #1110 → #1115**, all Draft.
+Only the random-flight child was rebased and appended using the supported native
+stack operation. HUD parent #1110 remains exactly
+`b0f8555a45a41a829e2d81230a0608c72acb6c89`; its admitted runtime source remains
+`614adef75a6e1cc28ea1d04acf26fa69b507c551`.
+
+**#1115** is published as a focused Draft. Random selection uses the selected
+world's visible filters, preserves flight mode, avoids repeating a manually or
+randomly chosen flight when another match exists, and keeps deliberate arming.
+All 19 mounted World UI checks pass. Native EN verification covers empty/single
+matches and Enter preparing **Wide oval** unarmed at zero throttle and elapsed
+time; Menu retains its title and hides the HUD. The long UK world label and
+button fit the 1280×720 mission modal without horizontal overflow or browser
+warnings/errors. The receipt and screenshot are retained in
+`fpv-filtered-random-flight-native-review.json`. Fresh package admission, offline
+qualification and protected delivery remain outstanding for this child.
+
+Performance **#1099** merged through the protected exact-head path at
+**12:43:12 UTC**, from `823fd48afb771b49700bd18f29593f22a016664a` to main merge
+`e3e1e8b8d3b061a85c77f7bc82159db810dff688`, with `bypass_rules: false`.
+All 23 recorded checks were successful or explicitly skipped. The lossless
+[merge archive](evidence/fpv-performance-protected-merge-20261005/manifest.json)
+retains eligibility, merge request, merge result and publication observations.
+Pages run **37311488518** was queued after merge and was in progress at
+**12:44:53 UTC**, alongside Company run **37311488428**. At that observation both
+public markers still named `2d447bc790bdf3951251c99041c8a918363ece0a`.
+Actual public launch of the merged performance change is not yet verified.
+
+Hunt **#1114** runtime `1ba932e6f61b918a9571c4a193c30f554855e951` now has actual
+native playback verification on the isolated 8918 preview: the practice pack and
+both examples imported, **2/2 recordings verified**, and Self-level and Acro
+demonstrations each completed in **20.9 seconds**, **Caught 2/2**. Changing modes
+kept playback paused. The documentation follow-up is separate from that runtime
+identity; no future branch head is assumed. Package/device/public qualification
+remains pending.
+
+Festival **#1113** has passed its native pending-catalogue fixture flow and remains
+Draft pending release allocation and actual feed publication. Reservoir remains
+preserved; the fixture is not evidence that the Festival row is publicly served.
+
+Available disk space is about **2.6 GiB**, below the stable **3 GiB** floor for heavy
+qualification. No further cleanup is planned. Preserve existing admissions and
+evidence, and keep heavy qualification stopped until the stable floor is met.
+This checkpoint changes documentation only; current runtime and package input
+identities remain unchanged.
+
+## 13 October — Rebase and cumulative Library repair
+
+Rebased onto current main `fba236ef80bd0310ae3b9c33fd7c26b1529b245c` (already
+up to date), then continued on `codex/fpv-library-complete-worlds`. Concurrent
+Overflight edits and untracked migration/history files remain untouched and are
+excluded from this change.
+
+The current ground-motion Library feed omitted Festival even though its older
+surface-coating entry had merged, and had no Harbor row. The repair retains
+Reservoir, copies Festival's exact existing row, and adds Harbor r4 at immutable
+commit `8af1b67220be4f26e9b68d821e2b574b63a23904`. Both older feeds remain
+byte-exact. The new publication receipt passes 84 HTTP/parser/import/roundtrip
+and dependency checks covering three packs, 24 courses and 48 separate records.
+No runtime, physics, package inputs, course identity or recording changed.
+
+Actual public player launch and navigation to Library were observed before
+publication; this is not evidence that the candidate three-row feed is live.
+Focused PR publication and subsequent actual public downloads remain next.
+Heavy package builds were not started: approximately 2.8 GiB free is below the
+existing stable 3 GiB floor. This small catalogue qualification uses existing
+pack bytes and does not claim new device, FPS, offline or unit coverage.
+
+Next: finish the public Library journey, then current-main integrated
+performance/reliability verification. Preserve the approved order of content
+work and defer Canals until the shared quality/delivery path is qualified.
+
+## 13 October — Public Library delivery verified
+
+#1155 merged as `e5dce34d35b0f7bca81c95f54e27fba9b8e6cacd`. Its Pages run was
+superseded by successful run **38460556864** at main descendant
+`6514e5c3ab8171bc75af287e08262977db88e2b3`. The public `main-deployment.json`
+reported that exact source and `main-6514e5c3ab81`; the actual public SIM was
+reloaded and launched after that observation. Library delivery is now verified
+live, rather than merely merged.
+
+Actual Library downloads of Reservoir r16, Festival r5 and Harbor r4 persist
+across reload, exposing all 24 courses. The separate Harbor archive imported
+16/16 verified records through ordinary file selection. Terminal cart escort
+then completed visible native replay in both Self-level and Acro, with no
+captured browser warnings/errors. The shared chooser exposes Watch example
+under SIM tools. Demonstration-to-practice, Pause and a settings mode change
+were checked; the latter returned unarmed at zero elapsed time and throttle.
+See [exact identities and limits](evidence/fpv-public-library-20261013/receipt.json).
+
+This increment records verification only. No physics, runtime, content revision,
+package limits or scoring changed. Concurrent Overflight edits and untracked
+files in the main checkout remain untouched; this report uses a separate sparse
+checkout based on main6514. No full package build was attempted near the disk
+headroom floor (roughly 3.2 GiB available).
+
+Next priority: a current-main admitted integrated Creator/offline journey and
+longer representative performance windows, preserving historical evidence and
+reporting exact tested identities. Qualify the shared quality standard before
+Canals production; D6 remains the final coverage/release phase. This public UI
+check does not claim new offline recovery, hardware FPS or physical-radio results.
+
+## 13 October — Current-main admission, Creator and stopped-origin flight
+
+Continue from `codex/fpv-current-main-qualification`, based on main
+`45e943bd40831e21fa9b55cb712725e49a901e13`. Existing workflow
+[38467392436](https://github.com/mekhovov/revealline/actions/runs/38467392436) passed
+all-three/two-build optional admission and the selected fpv-learning company
+candidate. All 117 World source inputs match both this main and the observed
+public deployment6514; all 122 admitted members passed exact extraction checks.
+The candidate review gates remain pending and publicEligible remains false.
+
+Actual public Creator verification covered a non-first Reservoir course, Acro-only
+position edit, Undo/Redo, mode/course switching and native editable export. Native
+parser inspection preserved seven other courses, Self-level, source bindings and
+all asset bytes. The four changed coordinates exactly describe the intended
+100 mm Acro edit. The draft was restored without replacing the installed pack.
+
+The exact admitted player then downloaded Reservoir through the real Library,
+prepared offline files, reloaded with its dedicated origin server stopped,
+reopened all eight courses and ran course02 for 19 seconds after deliberate
+arming. Pause hid guidance; captured browser warnings/errors were empty. This
+is a bounded stopped-origin check, not complete offline recovery or performance
+qualification. [Receipt and screenshots](evidence/fpv-current-main-qualification-20261013/README.md).
+
+Authorized safe cleanup restored about 5 GiB free. Old generated duplicate paths
+remain byte-identical via independent APFS clones; unique files, source, Git,
+unfinished work, browser databases and recordings remain intact. Local per-file
+audits are retained outside the repository. The stable 3 GiB build floor is unchanged.
+
+Next: finish the cohesive current-candidate Creator/reimport/rollback/records
+journey and longer representative performance windows. Keep the offline result
+visible beside its Settings action. Qualify the common quality standard before
+Canals; D6 stays last. Do not promote historical counts, pending hardware/player
+acceptance or this neutral-input run into a complete release claim.
+
+The evidence-only branch was subsequently rebased onto main `41e5986ed6c208db2dd63fbbb52a912b69050388`.
+A separate source bridge matches 114/117 World inputs at that head. The admitted
+artifact and native stopped-origin observations remain bound to45e; no newer
+package or release identity is inferred.
+
+Published evidence PR **#1166**, `codex/fpv-current-main-qualification`. Newer main41e
+changes three admitted inputs: `game/ui/native-menu-icons.mjs`,
+`optional-practice/civilian-fpv/flight-fullscreen.mjs`, and
+`optional-practice/civilian-fpv/style.css`. The old candidate is therefore not a
+complete source bridge to that main. Fresh existing-workflow run
+[38473307634](https://github.com/mekhovov/revealline/actions/runs/38473307634) is in
+progress on frozen `b7bf654486014efc6c8b8af25323b9d06f88e388`; its source includes
+those updates. Read its final admission before continuing current-package
+qualification. Subsequent evidence-only commits do not change that tested identity.
+
+Later storage observation: other activity reduced available space from the
+post-cleanup 5.3 GiB peak to roughly 2.2 GiB. The safe cleanup and all preserved
+paths remain; the 3 GiB local heavy-build floor is not currently stable. Keep
+large local builds paused and use the existing cloud candidate run. This does
+not invalidate the earlier completed bounded browser check.
+
+## 2026-10-14 — Workshop import guide and free-resource shortlist
+
+Independent `codex/fpv-world-import-guide` from main `0a3e1fb51a8060fd3d3bfaa94956e4ae575bbcbd`.
+Preserved root Overflight edits and qualification branch #1166. Added local EN/UK
+collapsible importing help plus 23 external scene/kit candidates; see
+[workflow, priorities and verification](fpv-world-import-guide.md). No new worlds
+are claimed installed. Explicit isolated HTTPS anchors are navigation; optional
+runtime network dependencies remain forbidden. Three preflights, existing 9/9
+package checks, 11 navigation guard cases, scoped lint and browser layouts pass.
+Full admission stays with CI while local free space is below 3 GiB. Next content
+work is candidate selection, archive/license provenance, preparation, collision,
+course authoring and qualification, without changing existing package limits.
+
+Published as [PR #1169](https://github.com/mekhovov/revealline/pull/1169), implementation
+head `a0b012f564b9c1c0094022e6f2f72d86d51c9242`. Cloud qualification was dispatched
+in [run 38477507774](https://github.com/mekhovov/revealline/actions/runs/38477507774);
+PR-triggered run 38477509680 also started. This checkpoint is docs-only; protected
+checks and publication remain pending. No live availability claim.
+
+## 2026-10-14 — Sixteen prepared CC0 worlds
+
+Independent `codex/fpv-free-world-library` preserves all unrelated root work.
+Prepared Majadroid's assembled House Construction Site and fifteen new practice
+layouts from Kenney kits. All sixteen include collision, spawn, an EN/UK discovery
+course, editable project, source/license receipts and two portable verified flights.
+See [catalogue and remaining conversions](../authoring/fpv-worlds/free-worlds/README.md)
+and [browser evidence](evidence/fpv-free-world-library-20261014/README.md).
+
+The new bounded Library feed retains Reservoir, Festival and Harbor and adds
+sixteen immutable pack rows pinned to asset commit
+`0c05c638bad38a3ae62c4c0a911919bc54f1eb11`. Its 19 rows occupy 8,787 bytes;
+all sixteen pack sizes/hashes match, and an oversized catalogue is rejected.
+The old feed remains unchanged for cached players. Renderer scene metadata
+suppresses duplicate collision placeholders and procedural scenery only when
+represented by imported artwork, restoring them on unload. Map/editor views
+omit fog for these authored-ground scenes; FPV/chase keep course fog and physics.
+
+Completed: sixteen Khronos-valid GLBs and lossless pack/editable round trips;
+32 ordinary-command flights and independent replays, all complete with zero
+contacts and full health; all sixteen final packs imported through Library and
+launched in the source browser, with screenshots and no captured warnings/errors;
+26/26 existing content/runtime checks, changed-source lint and generated projections.
+These are introductory routes, not exhaustive off-route collision or device-FPS
+qualification. Additional unit coverage remains deferred.
+
+Remaining: protected PR checks/full cloud package admission, public deployment
+and public Library installation. Seven Poly Haven candidates require substantial
+conversion/optimization (1.1–3.4 GB Blender scenes; one ~13.2 GB Unreal collection)
+and are explicitly not offered as playable maps. Local free space remains below
+the unchanged stable 3 GiB full-build floor. No core/world/asset limits were raised;
+only catalogue metadata grows to a bounded 32 rows / 32 KiB. No public-live claim.
+
+Published as [PR #1174](https://github.com/mekhovov/revealline/pull/1174).
+All 19 immutable remote catalogue downloads were fetched from GitHub and matched
+the declared size and SHA-256, including the preserved three maps. Cloud candidate
+run [38484966895](https://github.com/mekhovov/revealline/actions/runs/38484966895)
+started on `8600cf3bdaf68956a55343a08aaded56ac755862`; this subsequent checkpoint
+changes documentation only. Read the latest exact-head checks before any merge.
+
+## 2026-10-14 — Direct camera switching
+
+Independent `codex/fpv-quick-camera` from main `548bf3e93`; free-world PR #1174 is
+merged. Both SIM hosts now share a small View button, V shortcut, standard Gamepad
+R3 action and explicit FPV/Chase/Overview choices in Pause. Radio/D-pad use existing
+menu navigation. No input ownership, arming, physics, course or replay change.
+See [implementation, evidence and prioritized research recommendations](fpv-quick-camera-and-ux.md).
+
+Actual source browser checks cover both hosts, paused selection, keyboard/pointer,
+EN/UK, phone/handheld viewport sizes and full-window fallback. Controlled R3
+signals preserve active throttle/rotation and reject stale held actions. Existing
+checks pass 123/123; all three source preflights and projections pass. Physical
+hardware acceptance and full frozen-package/deployment verification remain open.
+Storage is below 3 GiB; use existing CI admission. Next recommended increment is
+one paused Flight setup group and device-aware/remappable action hints, followed
+by a clearer retry/practice/demo flow. Research proposals are not reported shipped.
+
+Published as [PR #1178](https://github.com/mekhovov/revealline/pull/1178), source
+head `6384164d5`. Cloud admission started in
+[run 38489543945](https://github.com/mekhovov/revealline/actions/runs/38489543945).
+This follow-up is documentation-only. Use the latest exact-head checks before
+merge; source-browser availability is not a public deployment claim.
+
+### 14 October 2026 — paused Flight setup candidate
+
+Continued the approved quick-camera recommendations on `codex/fpv-pause-flight-setup`, based on frozen #1178 head `4e3ad7c9f8fd6ebcc2fd9cca877c03ce76d3dd06`. Shared paused setup and device hints are implemented in both hosts; canonical mode/input handlers, recording identity and explicit arming remain authoritative. Mode switches keep the pause menu; radio return restores its opener. Phone camera choices now share one row, with Resume first. No active-flight overlay was added.
+
+All 123 existing radio/control/shell/flight/appearance checks passed, along with scoped lint, projection checks and package source preflight. Actual browser verification covers both hosts, EN/UK, radio-dialog return, disconnected-controller setup access, input/mode/camera changes and portrait/landscape/handheld viewport sizes. Full local packages remain blocked by storage (observed 0–573 MiB); the 297 MiB disposable Blender installer was unmounted and removed without touching source, archives, commits or browser storage. CI/public deployment and physical device acceptance are not claimed. Screenshots and preflight evidence accompany the candidate; PR/stack identity will be recorded after publication.
+
+Next independent increment: shared Retry / Practise section / Watch example flow. Remaining recommendation order is in `docs/fpv-quick-camera-and-ux.md`. Preserve ready camera/setup candidates and keep next-item edits on a separate branch.
+
+Publication: focused **PR #1179** (`b476fca3e7834bb304b32ab5daeebd0a79a9aa2f`) is published above **#1178** in new native stack **#1180**, rooted on main. GitHub confirmed the remote head despite a local disk-full error writing upstream tracking metadata; repair that metadata when storage permits. No public availability claim. App attachment was attempted but rejected by the existing 100-attachment limit. A further 62,623,386 bytes of hash-verified, re-downloadable Kenney ZIP caches were removed; extracted sources, download manifests, committed assets and player storage remain intact. Final formatting-only source preflight passed again; receipt refreshed below. Do not treat these source preflights as frozen bundle qualification.
+
+## 2026-10-14 — Parallel usability recommendations implemented
+
+Current top branch `codex/fpv-watch-try-repeat`, implementation head `0e2d47957dad0faaf10ca5e53a0a6e62461c7af3`. Native stack **#1180** now contains merged #1178 and #1179, then open **#1184 → #1185 → #1186 → #1188**. Parents were preserved and the new chain was rebased on #1179's corrected `3162f03df`; 135 existing regressions now pass. No force-push or manual native-stack retarget was used. Four new PRs are safely on GitHub; app attachment attempts hit the existing 100-attachment limit.
+
+Completed: primary entry/Library launch, persisted stick comfort, explicit camera presets and compatible-best access, calibrated radio View binding, and unified replay/practice flow. See `fpv-quick-camera-and-ux.md` and the four focused implementation notes. Actual source-browser evidence covers both hosts, EN/UK, phone/handheld-sized layouts, disarmed download/retry/Try and focused Download → Fly. A final locale-change stale chooser callback was corrected by resolving current display rows without weakening launch authority; 101 existing chooser/library checks and a source-replacement/locale probe passed.
+
+Storage: hash-verified 1,310 source files were relocated to `/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/free-world-sources`, with the original temporary path replaced by a symlink. No source, commits, archives, player storage or unfinished work was discarded. Internal free space recovered to approximately 3.8 GiB; qualified outputs target the external volume. An initial bundle attempt correctly refused untracked verification files; it did not qualify a package.
+
+Next: complete frozen qualification on the committed final candidate and record results; let exact-head protected checks/reviews run, then use protected native-stack publication. At the last check #1188 CI was queued/running. Physical-device qualification and D6 remain unclaimed. Public deployment identity and actual launch must be verified before describing this increment as live.
+
+Frozen candidate `63cda2f18d56b4b7ca938832e765dfa711729879` now passes all three package admissions, committed-input validation, ZIP validation and two byte-identical builds. Flight 85 files / 3,618,121 bytes; Academy 91 / 6,614,749; Worlds 126 / 17,025,929, under unchanged limits. Receipt: `docs/evidence/fpv-ux-parallel-20261014/package-admission.json`. Output is preserved at `/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/qualified-final-ux`. This subsequent receipt change is documentation-only. Final browser EN/UK switching has no new errors; earlier captured stale-selection error predates the fix. Protected CI/public deployment and physical-device acceptance remain open. No new runtime feature remains in this six-item recommendation increment.
+
+## 2026-10-14 — Main rebase and integrated qualification continuation
+
+Rebased the four local UX branches onto `0e708a45c` with recovery refs and nine identical range-diff patches. All135 existing integration checks and canonical projections passed. A fresh frozen candidate on `6acc57d2b288abed26c745d40c1b97439440d04a` passed allthree admissions, committed inputs, ZIP members and two byte-identical builds.
+
+The atomic push was safely rejected by explicit per-branch leases because GitHub concurrently merged #1184 and #1185 and cascaded #1186/#1188. No newer remote commit was overwritten. Development accepted the native remote history and rebased onto updated main `d22397939`; its `1189e3d9a` tree is exactly identical to the fresh admitted candidate (`461d0bb52d3183688e634a497abd9599b4b88c50`). Original candidate identities remain unchanged. Continue independent work on `codex/fpv-integrated-reliability-20261014`; do not manually retarget native stack members.
+
+Performance audit found historical fixtures pinned to obsolete102-member players; existing shadow preparation and stick-width caching fixes are already present. The next increment uses a manifest-derived exact-player observation with no runtime overlays, bounded visible/focused windows and explicit callback-gap limitations. Reliability baseline passes56 existing checks. The current source graph requires223 modules/17,233,260 bytes: only the two manual Creator fixture limits were reviewed to256 modules/20MiB; per-file6MiB and all production budgets remain unchanged. Actual browser qualification and subsequent publication evidence follow below.
+
+## 2026-10-14 — Integrated reliability completed on latest main
+
+Native stack **#1180 is fully merged** (#1178, #1179, #1184, #1185, #1186, #1188). The independent `codex/fpv-integrated-reliability-20261014` branch is based on main `8b20276815da2684ac76872ae868fce4318dc471`, preserving the latest Snake and bottom-positioned menu updates. Recovery refs retain previous local histories; no newer remote work was overwritten.
+
+Completed: removal-review Cancel focus; current-row localized completion labels; interrupted-flight restoration that remains paused until deliberate Arm/Resume. Visible Creator and recovery fixtures now follow shared menus and native child storage through the unchanged access gate. Actual browser checks pass 66/66 tracking and 90/90 recovery, including exact-revision restoration, rollback and record preservation. Failed receipts are retained. Existing checks pass 135 on the latest-main rebase, 107 Library/projection checks for the label fix, and 55 focused checks after the recovery fix.
+
+Final runtime candidate `28450a208030c34098bd2e2b59f6a2237d55284e` passed all three package admissions, committed inputs, ZIP verification and two identical builds. Evidence: `docs/evidence/fpv-integrated-continuation-20261014/`; detailed scope/limits: `docs/fpv-integrated-reliability-20261014.md`. The observation tool now detects incomplete callback coverage; two 60-second and one 30-second stationary launch observations are scheduling evidence only, not hardware FPS or moving-flight performance qualification.
+
+Next: protected publication of this independent PR; moving replay and reload/memory measurements; the combined unchanged-package offline recovery journey; representative art and Canals; then D6. Physical-device and novice acceptance remain unverified/nonblocking. No public live claim until public marker plus actual player launch verifies deployment.
+
+Publication: **PR #1193** (https://github.com/mekhovov/revealline/pull/1193) is open against main on `codex/fpv-integrated-reliability-20261014`, milestone v0.150.0. No new native stack is needed for this independent increment. Protected checks are running; no merge or live availability is claimed. Chat attachment was attempted but the app rejected it at its existing 100-attachment limit. Source, recovery refs and failed diagnostic receipts remain preserved.
+
+## 2026-10-14 — Default world catalogue and regional foundations
+
+Reconciled main at `595421060`; #1193 and native stack #1180 are merged. New
+independent catalogue branch is `codex/fpv-world-catalogue-20261014`. Updated
+priorities and researched source candidates are in `fpv-large-worlds-delivery-plan.md`.
+The regional manifest/residency foundation was published as #1197 and has now
+merged. Source-window loading continues separately; no huge playable-region claim.
+
+Catalogue increment adds Explore/Library discovery, Play-to-download and exact
+installed revision launch, EN/UK search, cancellation-safe navigation and bounded
+v2 pages. Existing v1 feed and all package/recording budgets remain unchanged.
+23 parser/worker scenarios, 15 browser UI contract scenarios, 27 existing focused
+checks and canonical projections pass. Actual integrated host displays the new
+section; its v2 bootstrap is unavailable until this feed merges. A broader existing
+installed-host fixture remains red on an unhandled presentation/runtime.json request;
+33 other installation/offline checks passed. Do not count this as full qualification.
+
+Internal storage is approximately 1.3 GiB, below the 3 GiB heavy-build floor.
+External storage holds new asset preparation and regional work. Coaster Practice
+Park is undergoing flight/collision/visual admission; no unverified row is added.
+Next: exact-head cloud admission, live feed/host verification, transactional region
+source preparation, actual collision/render streaming, and representative Canyon
+and Urban authored regions. Physical devices, long sessions and public launch
+remain unclaimed. Protected publication continues independently of development.
+
+## 2026-10-14 — Catalogue delivery, Coaster admission and terrain preparation
+
+Latest continuation rebased onto main `2abfd20bdee39369b3480ed3013074a8dfac3006`.
+#1199, #1200, #1203, #1205, #1206, #1207, #1209 and #1211 are merged. No new native
+stack was needed: each dependency had merged before its successor was published.
+All attachment attempts were made; the app rejected additional attachments at its
+existing 100-item limit. Primary-checkout unrelated edits remain untouched.
+
+The live v2 catalogue now lists 20 worlds. Actual local browser Play downloads
+Reservoir and Coaster exact revisions and starts disarmed. Coaster survives reload;
+its bounded practice layout has two fly-through loops, hills, avenues and scenery.
+The published content is not the planned large streamed Coaster region. Six exact
+stored-pack checks and 37 existing offline/content checks passed, alongside 23
+catalogue transport probes. Source browser verification is not offline package
+or public deployment acceptance.
+
+The new catalogue exposed a layout conflict with the chooser action dock. The
+focused correction on `codex/fpv-catalogue-layout-recovered-20261014` puts both
+catalogues in one allocated scrolling row. 25 existing checks and actual EN/UK
+phone/landscape/handheld-sized browser checks pass; see
+`fpv-catalogue-layout-20261014.md`. Source files are committed in a durable workspace
+after temporary folders disappeared; recovery refs and external sources survive.
+
+Regional terrain preparation now verifies matching render/collision triangles,
+seams, support/sweeps and bounded disposal through pinned Three/Rapier. The runtime
+still reports `flightReady: false`. Next: bind terrain to verified source bytes,
+then scenery collision and safe streaming/origin migration/player integration.
+In parallel, prepare the first original Canyon representative and its source
+receipts. Long-session/device/performance, full offline package and public launch
+qualification remain open. Internal free space remains below the stable 3 GiB
+heavy-build floor; use existing cloud artifacts and external storage without
+weakening budgets or removing player/unpublished data.
+
+## 14 October — Catalogue navigation ownership
+
+After catalogue PR #1199 merged, the Explore dialog's queued close event could
+abort the same catalogue after it moved to Library. Closing and immediately
+reopening during an initial metadata request could also leave an empty catalogue
+until Browse was pressed again.
+
+The close handler now deactivates only the catalogue still owned by that surface.
+A newly reopened catalogue remembers its demand for initial metadata until the
+cancelled request settles; it never retries a pack download or flight launch.
+Canonical runtime projection is refreshed. The independent fixture-boundary repair
+is PR #1203 and records its remaining timestamp/focus assertions separately.
+
+Verification: 18/18 actual in-app-browser checks using controlled worker responses,
+including delayed cancellation, re-entry and relocation; 23/23 catalogue transport
+probes; 27/27 existing content, radio, entry and projection checks; scoped lint and
+byte-identical canonical projection. The reusable browser fixture is
+`scripts/fixtures/fpv-catalogue-navigation.html`. It exercises real catalogue DOM
+and focus with controlled downloads, not actual pack validation, physics, native
+controller hardware or offline-package qualification.
+
+## 14 October — Optional-world Settings return
+
+Auditing the two host failures exposed an actual keyboard/controller focus bug:
+a download could finish after Settings returned to Cancel, then hide the focused
+Cancel control. Returning to that same visible Cancel now renews its focus lease,
+so completion returns to the enabled Play card. This does not renew the retired
+launch intent, resume flight or repeat any download.
+
+The existing assertions now observe shared modal navigation's deferred close
+handoff and compare the native timestamp inside the accepted presentation save
+envelope. Every other saved simulation/presentation field remains exactly equal;
+valid chronological timestamps are still required.
+
+Verification: all 34 optional-world host checks pass. The final focus change
+passes 20 existing lifetime/Settings checks, including blur, hidden-page, filtering,
+late cancellation and newer-operation ownership. A broader 98-check run passed 97;
+the sole failure was a missing sparse-checkout sentinel fixture. Restoring the
+exact tracked JSON and rerunning the affected first-flight suite passes 14/14.
+No timeout was increased and no assertion about retained gameplay was removed.
+These are modeled DOM/storage checks, not native browser/device or offline-package
+qualification. Source lint and whitespace checks pass.
+
+## 14 October — Cached player qualification and regional continuation
+
+Current continuation: `codex/fpv-offline-qualification-20261014`, based on main
+`01abc1e3a`. PR #1213 verified source/terrain binding, #1214 catalogue layout and
+#1216 Canyon preparation have merged. Recovery refs, external sources and unrelated
+local edits remain preserved; no temporary worktree metadata was pruned.
+
+The exact PR #1211 cloud artifact passed all 15 retrieved checksums and 126 package
+members. Actual browser preparation completed; after stopping its dedicated origin
+server, the cached player reopened and the installed Coaster world launched in FPV,
+disarmed with health 100 and time 0.0 s. Catalogue failure retained installed content.
+The server was restored. See `fpv-offline-candidate-20261014.md` for exact revisions,
+sequence and limits. This is origin-unavailable evidence, not full airplane-mode,
+update/rollback, hardware or public-release acceptance.
+
+Next independent work: truthful offline completion status in Settings; regional
+authoring flight/cell crossing with deliberate recovery; Urban Bando representative
+architecture. Canyon is currently 768×768 m authoring terrain, not the planned 8 km
+playable world. Shared production flight-core integration, scene collision, full
+quality art, remaining regions and sustained qualification remain open. Publication
+queues do not block those independent increments.
+
+## 14 October — Public Coaster launch and regional movement
+
+Continuation `codex/fpv-public-qualification-20261014`, from main `f1b24a063`.
+Offline Settings feedback #1219 and localized failure copy #1221 merged; regional
+authoring movement #1220 merged with seven movement/Canyon and twelve verified-source
+scenarios. Browser review verified Arm focuses the preview canvas, throttle responds
+immediately and P pauses. Staged support validation now precedes terrain publication,
+so rejection retains the previous complete frame. Production engine unification and
+host integration remain required before regional player admission.
+
+Actual public Library/Coaster download, paused launch and FPV/Chase/Overview switching
+passed against deployment marker `456f7c3c0716fc2d9bedefc06c78a399457a08e4`.
+This closes the previously unobserved public launch path for that world; it does not
+close full offline/device/performance qualification. Exact details and safe sparse
+checkout space recovery are recorded in `fpv-offline-candidate-20261014.md`.
+
+## 14 October — Shared flight transition
+
+Academy, World Studio and the regional authoring prototype now call one production
+free-air transition; the temporary prototype force port is removed. The shared
+50 Hz clock, integer equations, rounding, model identities and existing host
+collision/landing/arming/scoring policies are preserved. No proof or golden
+expectation was rewritten.
+
+Verification on Node v20.19.5: 51/51 existing flight/boundary/replay/radio/World
+checks; 7/7 regional scenarios including actual Canyon sources; all 154 World
+demonstrations compare equal against pre-extraction main across 312,948 ticks,
+including complete replay states and sampled paths. Scoped source lint and
+whitespace checks pass. The rebased main changed no flight-model equations.
+See `fpv-shared-air-transition.md` for exact commands and evidence limits.
+
+This completes the shared-air prerequisite, not regional player admission.
+Production terrain collision, actual renderer/input lifecycle, all-owner origin
+migration, scenery admission, recovery and sustained device/package qualification
+remain open. The authoring preview stays unscored and `playerReady:false`; terrain
+remains `flightReady:false`. No additional regional world is claimed playable.
+
+## 14 October — Regional input, scenery, camera and material increments
+
+Merged independent increments: #1227 shared appearance for the regional preview;
+#1228 exact-source qualification of all 20 published optional packs; #1230 production
+input/lifecycle; #1231 transactional visible scenery and collision; #1232 stale offline
+navigation fixture repair; #1234 production camera and racer presentation. Focused
+Canyon material study #1235 is published from `codex/fpv-canyon-surface-study-20261014`.
+No new native stack was necessary because each dependency merged before its successor.
+The chat's 100-artifact attachment ceiling prevented new attachments; PRs are on GitHub.
+
+Canyon verification: five exact-source surface/physics parity cases, 23 existing
+terrain/source cases and nine shared-theme cases pass. Browser prepared all three
+tiers, viewed Gorge/Basin/Spires, retained terrain on invalid reload, and released/
+reloaded resources. See `fpv-canyon-surface-study.md`. This is original procedural
+material preparation, not finished P2 art, sustained GPU evidence or public admission.
+
+Native package update on dedicated localhost 9016: v0.142.4 prepared offline;
+Reservoir r16 installed with digest `50ffbb0e5da7`, eight courses, and rendered ready.
+v0.151.1 prepared next; the installed world remained selectable and launched. Both
+exact owning workers report ready and active/previous pointers survive. The previous
+player still opens the same Library item. During rechecking, the launcher temporarily
+hides its recovery link; this is under repair, not lost player data. Direct mission
+Start uses deliberately merged automatic launch after readiness; do not revert it
+as an offline regression. No full network-disconnection, quota, browser-restart or
+hardware acceptance is claimed by this sequence.
+
+Next work proceeds in parallel: Urban flight geometry adapter using existing authority;
+regional streaming/recovery integration; launcher recovery action stability; Canyon
+normal/seam/art refinement. Larger public regions, P3 authored worlds and sustained
+package/device qualification remain unfinished. Existing local work, frozen package
+candidates and external source archives remain preserved.
+
+## 14 October — Atomic regional frame and recovery checkpoint
+
+Current coordinator branch: `codex/fpv-delivery-checkpoint-external-20261014`,
+based on main `2c95bfcb` in an external docs-only worktree. Preserve the unrelated
+untracked Worlds verification worker in the internal source checkout. #1235 Canyon
+surfaces and #1237 resident seam normals merged. #1238 adds verified Urban geometry
+to the shared flight authority; #1240 makes geometry, body origin and camera adoption
+synchronous with rollback. #1241 publishes reviewable authoring spawn/heading/material
+controls and remains under protected checks at this checkpoint. Dependencies have
+merged before successors so no new native stack is necessary yet.
+
+Coordinator browser verification of #1241: Canyon Balanced/basin loaded 202,848
+geometry bytes, Quality/mesa 304,272 and Performance/shelf 202,848. Each restart
+returned 0 ticks and 0% throttle with deliberate Arm required; FPV camera selection
+was retained. A deliberate 1,048-tick flight/pause changed to FPV without arming.
+No browser console errors were observed. Different starting windows explain the
+geometry byte counts; they are not evidence that quality settings change collision.
+No sustained FPS or final-art acceptance is claimed.
+
+#1236 fixes disappearing recovery actions. Its separate corrected-launcher harness
+kept both links visible while checking and opened the actual previous player. #1239
+records origin-unavailable cached reopen of both frozen players, each restoring the
+same Reservoir flight at 57.2 seconds paused. In separate localhost 9017, a delayed
+new dependency caused the existing 30-second stalled-download error. An explicit
+cancel during active transfer also retained the old launch action; the server log
+confirmed the delayed dependency request. After cancellation, the old worker still
+hash-verified ready and the old Library retained Reservoir r16, eight challenges
+and digest `50ffbb0e5da7`. This is bounded interruption evidence, not fresh-package
+or every quota/restart scenario qualification.
+
+A separate observed issue is corrected for review in #1242: a slow readiness
+response was reported as missing files despite subsequent exact worker readiness.
+The fix distinguishes unknown verification from actual corruption and avoids
+instructing users to remove usable copies. Catalogue/recovery work continues
+independently of the combined terrain/scenery owner and representative art fixture.
+Main regional player admission, authored expansions, sustained performance and
+device qualification remain unfinished. See `fpv-large-worlds-delivery-plan.md`
+for the current order.
+
+Internal free space reached zero during an attempted documentation update. An
+immediate Git/size audit confirmed both tracked documents were unchanged and the
+unrelated untracked worker remained present. Documentation work moved to an
+external sparse worktree with an external Git store. No source, local commits,
+player storage or unfinished work was deleted. Heavy local builds remain paused
+below the 3 GiB stable free-space floor; independent checks and publication continue.
+
+## 14 October — Paired regions and corrected package qualification
+
+Coordinator branch: `codex/fpv-delivery-checkpoint-qualified-20261014`, based on
+current main in the external docs-only checkout. #1244 paired Urban source relief,
+#1245 combined terrain/scenery ownership, #1246 preparation recovery, #1247 optional
+architectural materials, #1249 package-local home artwork, #1250 bounded authoring
+lighting and #1251 exact-package recovery evidence have merged. Dependencies merged
+before successors; no new native stack or manual member retargeting was needed.
+
+The combined owner stages verified terrain and scenery against joint budgets before
+one frame adoption. Native authoring flight loaded both layers at 260,472 geometry
+bytes, zero ticks and zero throttle. A missing companion manifest retained the old
+scene and left the form open with a paused error; correcting the URL restored a
+disarmed region. Fast cached preparation prevented a fresh native cancellation
+observation, so the earlier bounded/automated cancellation evidence is not inflated.
+
+Warehouse, parking and atrium material/lighting views retain their geometry counts
+and show clearer openings, slab edges and shadows. Release reports no live scenery
+or collision and Load restores the nine-cell overview. A new immutable loading-court
+composition is being reviewed with seven licensed container landmarks and clear
+approach corridors. These are authored quality foundations, not finished regional
+art or default catalogue admission.
+
+Fresh corrected cloud artifact 11916098235 from run 38608388073 at source
+`f14366940379bdbd46ead268f92c1aa160d80ca5` was installed through native UI on a
+separate local origin. Exact new, previous and mutable-launcher workers reported
+ready. The corrected mutable worker activates after old launcher-controlled tabs
+close; a simple reload alone does not necessarily activate it. Both usable recovery
+links remained present while checking. The actual previous link opened v0.142.4,
+whose Library retained Reservoir r16, eight challenges and digest `50ffbb0e5da7`.
+The corrected v0.151.1 catalogue Play rendered Reservoir disarmed at zero seconds.
+With that origin server stopped and transport refusal confirmed, both immutable
+players reopened; the new player ran the installed Shoreline mission through its
+explicit mission-card start, then was paused. The server was restored. This is
+bounded same-browser origin-unavailable evidence, not network-wide offline,
+browser-restart, quota eviction or physical-device qualification.
+
+The native journey exposed a separate home image request outside the immutable
+package. #1249 resolves it from the package-local wordmark. Its new exact cloud
+artifact 11919610810 from run 38615162179 at source
+`25d086cbd580de5dc5b745ce088af283434df5ae` installed successfully on another fresh
+origin. The native hangar/orchard home artwork remained visible after that origin
+server stopped and the same URL reloaded. The server was restored afterward;
+frozen earlier candidates remain unchanged. #1253 subsequently merged production
+swept-sphere movement reuse: all 154 historical demonstrations (312,948 ticks),
+384 contact comparisons, 51 existing tests, 57 regional checks and five Urban routes
+pass. Broader CI still runs separately. Main regional host integration, support/
+landing policy, sustained performance, remaining region batches and D6 remain
+open. The current next steps are recorded in `fpv-large-worlds-delivery-plan.md`.
+
+Source, local commits, unfinished changes, frozen candidates and player storage
+remain preserved. A separate agent reclaimed only its own clean tracked history
+directories through sparse checkout, with a recovery receipt; heavy builds still
+use external storage/cloud while internal free space is below the 3 GiB floor.
+
+## 14 October — Shared support, catalogue lifecycle and rendering evidence
+
+Coordinator branch: `codex/fpv-regional-qualified-checkpoint-20261014`, rebased
+on current main in the external docs-only checkout. #1255 loading courts, #1257
+shared support/landing response, #1258 optional ground surfaces, #1256 native
+20-world static render evidence, #1260 all-course lifecycle evidence and #1261
+bounded rendering measurements have merged. Dependencies cleared before successors;
+no native stack or manual retargeting was required. #1263 industrial-hall
+composition and #1264 integrity-rejection evidence have also merged.
+
+All 41 exact catalogue courses pass launch/pause/reset checks in both modes
+(82 cases). This does not claim all-course native gameplay completion. Nine native
+static samples cover Reservoir, Harbor and Coaster across three quality tiers.
+The valid viewport is 1280×800, canvas 1280×520, DPR 1; each sample uses 30 warmup
+and 120 measured frames. CPU callback p95 is 0.6–1.2 ms and frame-callback cadence
+p95 is 8.8–9.2 ms. GPU work, sustained flight and hardware targets remain unmeasured.
+A zero-size initial viewport was caught and excluded before publication.
+
+Shared support checks retain 297 historical query outcomes and all 154 recorded
+World flights across 312,948 ticks. Production-host regional integration is now in
+source review: normal menu/input/camera/pause ownership, explicit unscored session,
+disarmed preparation/retry/mode changes and no World.v1 proof extension. Native
+review confirmed deliberate arming and keyboard response; irrelevant goal/score
+widgets were identified for correction before acceptance. Exact package closure
+and regional public admission remain unfinished.
+
+The hall composition keeps 102 existing surfaces and 18 terrain assets unchanged
+and adds six authored render/collision surfaces (936 triangles). Native interior
+and roof-frame inspection shows open approach lines, ducts and roof gaps; release
+and reload restore all nine cells and 117 meshes/colliders at 1,093,680 geometry
+bytes. This is a representative art increment, not completion of the regional art
+standard. Further regions, sustained/device qualification and D6 remain open.
+
+Internal storage remains below the heavy-build floor. Source, unfinished changes,
+commits, frozen packages and browser data are preserved. External builds and
+independent publication continue.
+
+On a separate origin, native UI prepared the exact previous player and installed
+Reservoir r16 with eight challenges and digest `50ffbb0e5da7`. One new dependency
+HTTP response was changed by a single byte without changing its length. The update
+was rejected; the actual previous-player link still opened and its Library retained
+the same world. Removing the response fault let the unchanged new package prepare
+successfully, keeping both recovery links. Its actual home opened and catalogue
+Play loaded Reservoir disarmed at zero seconds. Frozen files and player storage
+were not modified. This bounded integrity scenario does not prove quota eviction,
+full browser restart or all network failures.
+
+## 14 October — regional host, Canyon and moving-flight checkpoint
+
+Coordinator branch: `codex/fpv-regional-motion-checkpoint-20261014`, from current
+main in the external docs checkout. #1266 licensed Canyon landmarks and #1267
+shared regional player-host review are merged. Host review uses normal input,
+camera, pause and setup ownership, with explicit unscored regional sessions.
+Native keyboard and touch flight, camera/mode changes, 390×844 layout and boundary
+recovery were observed. At the ceiling, Resume opens the shared pause menu; Retry
+returns to the launch pose with zero speed/throttle and stays disarmed.
+
+The first host cloud qualification caught stale Academy file-count assertions
+and missing regional modules in the main distribution builder. Merged follow-up #1269
+corrects both; merged receipt #1272 records exact package and native evidence. Its optional-package cloud check and all six exact archive member
+checks pass. Native first-attempt preparation reports Ready offline; its actual
+launcher link opens Home. The packaged regional review starts disarmed, responds
+to deliberate keyboard arming/input and camera switching, and returns disarmed
+after mode change and Retry. The separate regional fixture is not claimed installed
+or available offline. Exact structural counts
+are 143 runtime paths, 153 manifest dependencies, 154 runtime ZIP members and 156
+source ZIP members. The Worlds file limit is 156; the 20 MiB byte limit is unchanged.
+The source host review does not establish default regional catalogue admission.
+
+Nine longer native synthetic motion workloads are recorded in #1270. Reservoir,
+Harbor and Coaster each ran all three presets with 1,230 physics ticks and 1,200
+measured frames, including 400 frames per camera. All final states match the
+independent reference and no terminal reset occurred. Combined model/draw CPU p95
+was 0.6–1.1 ms. Registered geometry/material/texture counts returned to zero after
+disposal; the retained internal renderer texture counter is documented separately.
+One physics tick per render frame is deliberate and not real-time flight; these
+observations do not establish hardware FPS, GPU completion or leak-free memory.
+
+Canyon's 27 licensed formations retain clear gaps and matching collision. Native
+review found and corrected a buried ridge formation and a poorly framed preview.
+A broad drainage rewrite was rejected because it changed substantial relief while
+leaving the jagged skyline. A targeted rounding revision instead preserves original
+drainage and rock horizontal positions, with fresh route/support checks. The targeted relief is merged in #1271. Native inspection of the next material
+revision across all three presets removes repeating surface bands; Performance
+release/reload restores nine cells, 90 meshes/colliders and 673,464 geometry bytes
+without console errors. Its focused PR is #1274. Neither source
+study is final art acceptance.
+
+Next independent lanes: continuous bounded terrain prefetch/adoption so ordinary
+cell crossings remain active; exact host-package qualification; Canyon surface
+refinement. Default player admission follows those gates, before later large regions.
+The shared external Git object index was updated without deleting objects, commits,
+source or player data. Primary checkout unrelated files remain untouched; heavy
+work stays external/cloud while internal storage is below the 3 GiB floor.
+
+Continuous window staging is published in #1273 (`f5411438367b`): 2,200
+accepted ticks across four cell crossings match the conservative physics reference.
+Delayed/corrupt sources, live-pose rejection and cancellation are verified. Native
+9032 review confirms deliberate keyboard lift/forward movement, retained pause
+pose and disarmed boundary reset; it does not establish an exact observed cell
+crossing. Renderer preparation and immutable regional delivery remain next gates.
+
+## 15 October — regional Library and texture checkpoint
+
+Coordinator branch: `codex/fpv-library-quality-checkpoint-20261015`, external docs
+checkout based on main. Delivery, player UI and Railway art lanes continue while
+protected publication runs. Unrelated edits remain untouched; heavy work stays
+external/cloud below the internal 3 GiB free-space floor.
+
+Merged #1282 prepares renderer resources before adoption. Native initial/neighbour
+staging, cancellation retaining the prior scene and release pass. The frame count
+covers the whole preparation operation, not shader CPU work alone; this does not
+establish sustained GPU/device FPS.
+
+Merged #1283 publishes delivery authoring and an immutable Urban preview bundle:
+commit `9d97e70c18729c3f399b90610380274e50d7d0df`, descriptor 6,615 bytes, SHA-256
+`1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c`.
+The 38 files total 1,455,090 bytes. #1288 rejects malformed UTF-8 before creating
+output; the valid bundle stays unchanged. This is a 384×384 m architectural preview.
+Source art improvements remain separate until a new revision is pinned.
+
+Merged #1284 adds verified download, separate atomic storage, retained rollback
+and reverified cache-only loading. Native isolated real assets passed install,
+corrupt update rejection, valid update, rollback, stale removal rejection and page
+reload. No actual quota exhaustion, browser-process restart or network-wide offline
+claim follows. #1281 records separate modeled World store transaction-failure
+recovery. #1275 records company qualification and 164 course/mode lifecycle cases.
+#1286 preserves an initial exact-package registration abort and a later unchanged
+successful retry: Ready offline and actual prepared-player link reach Home. No
+storage cleanup or code change occurred between attempts; cause is unknown and
+stopped-origin retry proof remains open.
+
+Normal Library UI is in final source review on 9042. Real remote Download → saved
+Fly opens disarmed at 3 m with zero input. Keyboard flight, pause, Chase view, reset
+and Acro change pass; reset/mode change stay disarmed. Reload retains review-r1;
+removal review followed by Keep preserves it. EN/UK 390×844 has no horizontal
+overflow. Six interface checks pass, including delayed-host navigation cancellation.
+Review fixed stale cancellation text and delayed launch ownership. The old source
+catalogue worker 404 is separate; immutable package qualification must cover its
+generated worker. Ready/paused header height remains a focused mobile correction.
+
+Merged #1277 adds measured Urban parking ramps; #1274 improves Canyon sediment.
+Merged #1280/#1285 retain licensed Railway source and exact palette/UV/normal
+conversion. Runtime ownership #1287 is published: native comparison retains
+appearance, Release disposes and Load recreates with 77,496 geometry bytes and
+2,446,676 texture bytes (CPU RGBA plus GPU mip chain). This bounded proof is not
+finished environment acceptance. Three sources remain preserved but unadmitted
+because their geometry collapses at current quantization.
+
+Next: qualify Library in the exact package, compact the flight header, exercise
+sustained bounded streaming and compose reachable Railway routes. Multi-kilometre
+regions, long native flights, final art acceptance and D6 remain incomplete. Byte
+ceilings and player data protections stay in force. PR attachment attempts continue
+to hit the chat's 100-identity limit; unrelated attachments were not removed.
+
+## 15 October — combined regional admission and Railway routes
+
+Coordinator branch: `codex/fpv-regional-admission-checkpoint-20261015`. Native
+stack **#1292** contains #1287 → #1290. #1293 merged into its feature base #1287,
+not main; preserve the resulting combined texture and Library implementation.
+The parent at `9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee` now carries both changes
+and its title/report reflects that scope. Do not request auto-merge on non-main
+dependent PRs: an unprotected feature base can merge immediately. Stack-managed
+child synchronization preserves parent identity; no manual member retargeting.
+
+The combined optional-practice cloud job passed in run `38653769049`; the full
+company build and native unchanged-package review remain pending at this checkpoint.
+Expected inventories are 146 runtime source entries, 157 runtime ZIP members and
+159 source ZIP members. This candidate predates merged #1291 pairing parity; final
+admission must include that correction and exact current checks. Native source UI
+Home → Explore worlds → saved regional Fly opens disarmed. Six interface scenarios
+cover delayed navigation, installation and reviewed removal. Ready/paused compact
+header work proceeds independently.
+
+Merged #1291 requires terrain/scenery identity, revision and cell-coordinate parity
+in authoring and runtime checks; valid pinned Urban bytes remain unchanged. Merged
+#1294 records 48,000 accepted ticks, seven reversals, 37 origin recentres and 30
+integrity/recovery cycles. At 50 Hz this is 960 seconds of simulated flight, not
+elapsed player/device performance. Reported scene/resource reservations return to
+zero; collider-allocation, GPU and physical-device qualification remain open.
+
+Railway #1290 publishes a bounded route foundation: 384×384 m, nine cells, four
+safe spawns, seven four-metre flight corridors and 1,195 collision/support queries.
+Native hall, grounded station canopy and freight views pass, as does release/reload.
+A separate preserved ground-style change gives the hall concrete, the freight lane
+asphalt with quiet edge lines, and track shoulders ballast. Native hall/freight
+appearance passes; three-preset and final reload review continue after stack sync.
+This remains source study work, not finished art or default player admission.
+
+Next gates: exact combined Library package, compact ready/paused flight layout,
+independent archive import-closure checking, and Railway structural composition.
+Large-region expansion and full P4/D6 qualification remain open. No byte limits
+were raised, user storage cleared, or unrelated local work removed. The latest
+space reading is 4.5 GiB internal and 187 GiB external; no cleanup was performed in
+this checkpoint and heavy work stays external until the internal floor is stable.
+
+## 15 October — Railway immutable structural delivery prepared
+
+Prepared the exact Railway structural source from #1301 (`3794177fe`) as a strict
+regional v1 bundle at
+`authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1`. It retains the
+Kenney CC0 license/provenance and source preparation receipt beside the payload.
+The descriptor is 6,661 bytes, SHA-256
+`431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15`;
+38 payload files total 5,684,606 bytes. Runtime preparation verified all declared
+bytes/hashes; the existing authoring integrity/failure matrix passed on this source.
+This is a 384×384 m structural preview, not a 4 km finished region. Default Library
+admission, normal-host art integration and public qualification remain separate.
+
+Meanwhile #1287 (combined regional Library/textured source delivery), #1291
+(paired identity/coordinates), #1297 (independent archive import closure) and #1300
+(explicit physics ownership diagnostics) merged. #1292 remains the native art stack:
+#1290 → #1298 → #1301 at this checkpoint. Starting-point selection and graphics-loss
+recovery continue independently of art publication. Combined fixed-main package
+qualification runs from `c3368bb60da7002f157fc7e9cae2688a53fb546c` in run
+38658148642; optional-package checks passed, broader qualification is still running.
+
+## 15 October — combined-main native admission and continued parallel work
+
+The Railway immutable bundle #1303 merged at `31c0b54b668fa004be03f46f7ddcfa195ee734b3`.
+Its strict descriptor remains pinned to that commit. Native art stack #1292 retains
+#1298 → #1301 → #1302 → #1306 after route foundation #1290 merged. Independent UI
+stack #1305 contains compact regional flight controls #1296 → starting points #1304.
+No feature-base automatic merge or manual stack-member retarget was used here.
+
+Exact combined-main source `c3368bb60da7002f157fc7e9cae2688a53fb546c`, artifact
+11938251159, World revision
+`adccf16a6a972e03f38d7395788928f1a7cd2f6f5f06fc8802a4f4baeef3bba9`, passed
+first-attempt offline preparation and the ordinary Library download/play flow on
+fresh local origin 9045. After stopping only that origin server (connection refused),
+the cached player reopened, retained Urban review-r1, prepared disarmed at 3 m, and
+accepted deliberate keyboard flight. Origin was restored afterward. This is bounded
+origin-unavailable evidence, not a full network outage, browser restart or device FPS
+claim. Run 38658148642 subsequently completed successfully in both the optional-practice
+and broader company jobs.
+
+Actual WebGL loss/restoration on the prior exact package paused flight, disabled
+arming and preserved saved data. Explicit scene restart followed by deliberate Arm
+restored flying. The missing explanation and awkward menu path are addressed in a
+separate recovery follow-up; root native review found the new source menu still
+needs its regional setup labels populated after interruption. Do not mark that UX
+acceptance complete before the correction is reviewed.
+
+Source diagnostics from #1300 separately pass 360,000 accepted steps, 53 reversals
+and 269 recentres, with peak four physics query worlds / 18 colliders / zero rigid
+bodies and all zero after disposal. These are 7,200 simulated seconds, not elapsed
+hardware acceptance. Internal free space was 3.8 GiB at this check; heavy artifacts
+remain on external storage, with no source, commits or player storage deleted.
+
+The recovery follow-up then passed a repeated native source check: real loss/restoration
+kept arming disabled; Menu showed populated Regional free flight, Retry and starting
+points while unavailable flight setup stayed hidden. Retry rebuilt the scene and kept
+the menu open with zero input. Deliberate Resume and keyboard flight worked, followed
+by a safe pause. This closes the observed source UI gap, not its later package gate.
+
+## 15 October 2026 — independent delivery lanes continue
+
+Active plan branch: `codex/fpv-large-worlds-progress-20261015`, based on main
+`62bf80d85123d4ab60543c3a71377ced5b35b38a`. No primary checkout edits were included.
+UI stack #1305 completed: #1313/#1314/#1318 report merged at that main commit.
+The cold-preparation guard was read from the actual main source before #1316
+was marked Ready. Art stack #1292 retains #1306 → #1310 → #1316 → #1320; native
+stack tooling owns its bases. No feature-base automatic merge or manual retarget.
+
+Urban review-r2 remains pinned to merged immutable bundle `622fade3`; browser
+normal Library download, first disarmed Fly, deliberate flight and reload passed.
+Historical review-r1 was installed alongside it through the actual Library/store,
+then both exact revisions were selected and read after reload. Existing saved data
+was not removed. Canyon source/bundle #1317 is merged; #1320 is its separate Library
+admission. Snapshot reuse #1321 is independent against main. Tropical intake #1315
+is authoring-only; bounded material support and coastal assembly proceed separately.
+
+Exact frozen source `c2e18b4bb9b0efd27bae9a795a06c415fa4291f9`, World package
+`7348eeecdbb1f38e87ebccad3c0c22e456c04d8e3dda3900611648359f534289`, passed native
+real graphics loss/restoration: arming disabled, explanatory menu retained, explicit
+Retry rebuilt while paused, and deliberate Resume plus keyboard input restored
+flight. Receipt #1318 records this bounded package evidence; it does not claim
+network-wide outage coverage or current public deployment acceptance.
+
+Next root work is normal Canyon Library acceptance and fresh combined-package
+qualification. Parallel lanes own Tropical materials/coastal composition and
+performance/favourite locations. The multi-kilometre worlds, sustained device
+qualification and D6 remain open. Preserve source, recovery refs, frozen candidates
+and browser storage; heavy outputs remain external/cloud.
+
+## 15 October 2026 — wider cells and independent content publication
+
+Root branch `codex/fpv-regional-progress-20261015-b` now follows main `83fd6525`.
+Wide-cell capability #1329 merged after native normal-player camera/arming checks
+and 4,013 production flight ticks across two boundaries. Source-only diagnostic
+fixture export is repeatable and refuses to overwrite a prior output. Existing
+128 m bytes, fixed source limits and memory budgets remain unchanged.
+
+Canyon district source #1326 and immutable delivery #1331 merged independently.
+Its 768 m region retains the old arrival geometry, adds six districts and passed
+24 commanded routes/123,566 ticks plus bounded native renderer inspection.
+Its separate Library entry is still under review; preserve the old 384 m row.
+Tropical source #1327 merged; Library #1328 is separately qualified against its
+exact source and current main. Frozen native sources and earlier saved entries
+remain preserved. Concurrent remote edits were merged without force or retargeting.
+
+Safe saved-location containment #1330 is merged. Favourite-place storage and UI
+continue separately; no restore may arm or overwrite a failed bookmark. Integrated
+package/offline qualification and multi-kilometre authored maps remain open.
+Do not describe these source checks as all-device, sustained FPS or public-release
+acceptance. Heavy outputs remain external; no player data or unpublished work was
+removed.
+
+## 15 October — cached flight and parallel large-region verification
+
+Root checkpoint is based on main `da0b0108`; exact-source evidence remains pinned.
+Saved places #1334 and renderer measurement #1336 are merged. Tropical qualification
+#1337 preserves the initial graphics deadline failure and subsequent same-package
+cached-flight pass with the origin stopped. No downloaded data was lost. A separate
+localized graphics failure/retry correction is in progress. The saved-place package
+passes blocked-location rejection, retained records, authored-start fallback, cached
+restore and deliberate flight; its independent detailed receipt follows.
+
+Coastal districts #1335 remain an early appearance study with composition work still
+needed. Canyon #1338 proves a new 8.192 km terrain source and representative routes,
+not a Library-ready or final-art region. The sparse-scene delivery contract and
+authoring overview-cell correction proceed independently of the art stack queue.
+No budgets, physics, old recordings or installed revisions are changed by this
+checkpoint. All-network offline, real elapsed long flights, physical controller/device
+coverage and final public deployment acceptance remain open.
+
+## 15 October — bounded parallel delivery and coastal composition
+
+Coordinator branch `codex/fpv-regional-checkpoint-20261015-c` starts from protected
+main `a046fd67944867b451033ff4471c51ac8faa6bcb`. Sparse contract #1341, saved-place
+package receipt #1342, elapsed-time authoring tool #1348, concurrent downloads #1352
+and native elapsed receipt #1355 are merged. The root checkout is clean before
+this documentation increment; unrelated primary edits remain untouched.
+
+#1352 exact head `a07c0a9c36e2e0af4cda3a5a53a45573ba2712e8` passed five downloader
+functional groups, seven sparse scenarios and real IndexedDB replacement/reload
+checks. The frozen 8 km Canyon inventory passes all 2,050 payloads and their hashes
+with at most four concurrent reads. Its package workflow remains queued. No network
+speed comparison, public deployment or full offline claim follows from that result.
+
+#1339 retains readable graphics-timeout recovery through Pause, with explicit
+Performance restart returning disarmed; native EN/UK source checks passed. Its
+exact package and separate sparse receipt #1353 continue independently. #1328
+Tropical Library requires reconciliation with concurrent main changes; retain both
+remote work and exact frozen qualification evidence. No manual native-stack retarget.
+
+Coastal composition #1349 and immutable source #1357 form dependent publication
+work; distinct ground presentation #1354 is independent. Source comparisons at
+Balanced street, Quality shoreline and Performance courtyard preserve flight
+openings, and explicit disposal leaves zero owned resources and colliders. These
+are bounded visual improvements; broader density and final water/art quality remain
+open. The 8.192 km Canyon source #1338 has separate immutable delivery and Library
+admission still in progress. Preserve old Canyon entries and saved revisions.
+
+Actual elapsed verification now distinguishes an accepted final ten-second run from
+a stopped 57.35-second segment and an earlier rejected frame gap. None is a two-hour
+pass. Heavy artifacts stay external/cloud; latest free-space observation is 7.0 GiB
+locally and 183 GiB externally, without deletion of player data or unpublished work.
+The complete roadmap, full-network offline and physical-device acceptance remain open.
+
+
+## 15 October — protected coastal merges and exact package progression
+
+Main checkpoint `87dbcfda`. Native stack bases remain GitHub-owned. Source #1349
+merged as `c8e2db2f`, ground #1354 as `36aa0971`; their dependent immutable/water
+work remains separately gated. New native stack #1370 is #1363 → #1369 for the
+4.096 km Railway source and immutable delivery. Draft #1367 holds its separate
+renderer treatment. Preserve its concurrent remote correction `952ae548`; a local
+duplicate one-line assertion correction was safely dropped during rebase, with a
+recovery ref retained. No force push or newer-work discard was needed.
+
+Exact Canyon Library #1368 stays draft with package receipt #1373. Coastal #1362
+has completed company/package checks but still needs native ordinary-player review.
+Railway ground receipt #1374 applies only to its frozen `83eda367` package; subsequent
+source/preview correction does not retroactively change that identity. Coarse-cell
+capability #1372 remains a source capability with separate native/package gates;
+Coaster intake #1375 is a verified original-asset preparation, not a playable map.
+
+Parallel authored Desert/Hillside/Coaster work may proceed while protected queues
+run. The uninterrupted browser measurement is still active at this checkpoint;
+its final elapsed acceptance and the queued native source/package views remain
+outstanding. Exact package proof is not public availability. Full-network offline,
+physical controller/device observations, representative final art and remaining
+regional design targets keep the complete roadmap open.
+
+### 15 October — continued large downloads without false cancellation
+
+A focused main-based Library correction replaces the blanket two-minute install
+cutoff with two-minute inactivity detection plus a ten-minute hard ceiling. Exact
+hashes, four-request bounds, atomic commits, saved revisions and all size ceilings
+remain. Existing non-install deadlines are unchanged. The 39-response committed
+Urban inventory verifies across 195 virtual seconds, and the existing five download
+concurrency groups pass. Native UI and exact-package qualification remain pending;
+the separate sustained browser run is uninterrupted. See
+[the scoped receipt](fpv-regional-download-deadline-20261015.md).
+
+### 15 October — uninterrupted two-hour regional corridor completed
+
+The exact frozen native workload completed 7,200.0052 seconds, 360,000 physics
+steps, 53 reversals and 269 origin recentres with zero contacts. Registered owned
+resources and physics allocations return to zero. All 159 frozen runtime files
+match their qualified archive; four harness files match their revision. The raw
+report, bounded minute/tail samples and independent closure receipts are retained.
+This closes the elapsed synthetic-corridor case only, not all-region or physical-
+device performance. See [the full receipt](fpv-elapsed-two-hour-20261015.md).
+
+
+### 15 October — native admission and preserved negative reviews
+
+Main7de653d8 includes the merged regional deadline correction1381 and elapsed
+receipt1385. Native normal-package launch/restart and Coastal saved download,
+cameras, mode/start changes, reload and portrait checks pass on their frozen
+candidates. The earlier Canyon package reproduces its old fixed120s cancellation;
+a fresh latest-main package is required. Standalone Library branches1362/1368
+are reconciled normally with recovery refs, preserving all existing rows.
+
+Hillside town-r2 passes bounded structural appearance/reload/disposal, including
+the repaired road. A reverse review-camera mistake was corrected without changing
+source and its negative is preserved. Coaster r3's unsupported loop and sparse
+park composition require refinement; its source, delivery and Library remain
+preserved drafts. See `fpv-native-regional-admission-20261015.md`. These checks do
+not close final art, physical devices, full-network offline or the whole roadmap.
+
+
+### 15 October — fresh regional player acceptance and further source work
+
+Coordinator branch `codex/fpv-regional-release-verification-20261015` rebased onto
+main `2281f3d5`, preserving all earlier work. Fresh Canyon and Coastal packages pass
+normal download, explicit flight, safe restart/mode changes and saved revision
+after reload; Canyon #1368 merged. The Coastal catalogue conflict is reconciled
+without replacing either existing Canyon revision. See
+`fpv-native-regional-release-20261015.md` for exact heads and limits.
+
+Desert source/delivery/materials #1378/#1389/#1390 and water #1364 merged through
+protected publication. Their source acceptance does not substitute for a default
+Library or deployed-launch gate. Hillside foundation #1397 and supported Coaster
+correction #1398 remain isolated drafts. The next source lane is a bounded
+4.096 km Alpine study; it must meet route, seam, collision, resource and native
+appearance checks before admission. P1–P4/D6 remain open; queue waiting does not
+stop independent engineering or art work.
+
+## 15 October — parallel regional admission and art checkpoint
+
+See the newest entry in `fpv-large-worlds-delivery-plan.md`. The full roadmap stays
+open. Railway source/delivery merged through native stack #1370 (`e1f124d2`);
+independent Railway Library #1404 is based on main and awaits player admission.
+Harbor structure #1371, Hillside source/ground/Library, supported Coaster source
+and immutable corrected delivery #1401 have merged. Coaster Library #1392 remains
+a distinct admission stage, preserving the original revision. Desert Library
+#1396 merged as `ef1ff5a6` after exact package qualification and bounded normal-player
+plus stopped-origin evidence; the newer landmark source #1405 stays separate.
+
+Native structural/ground observations are recorded in
+`fpv-regional-art-follow-up-20261015.md` (#1403). Representative art is still open.
+Alpine #1407 and planted Hillside courtyard #1406 continue independently while
+publication runs. All new PR attachment attempts encounter the chat's existing
+100-attachment limit; PR URLs and evidence remain on GitHub. No old attachment or
+source has been removed to bypass that limit.
+
+## 15 October — exact admission and visual holds
+
+Coordinator base `56896945`; active branch
+`codex/fpv-regional-admission-checkpoint-20261015b`. Railway #1404, Harbour #1410,
+Hillside contact cue #1412 and short-screen Arm #1413 are merged. #1413 exact
+package follow-up is recorded in comment 6189835191; native focused CSS checks
+and final archive verification remain distinct. Harbour's two saved revisions
+select distinct hash-bound sources; shared title ambiguity is corrected separately
+in #1419. No public launch claim is made.
+
+Coaster #1392 normal download, restart, mode/view and reload checks pass on
+`856fefea`, but Overview ground interference keeps its visual gate held.
+Alpine #1407/#1415 retains the failed source appearance evidence; #1420 is a
+separate narrowly scoped overlay correction. Desert landmark source #1405 merged;
+#1414 → #1416 uses native stack #1417 for immutable delivery and Library admission.
+Exact current heads/checks must be inspected before protected publication.
+
+Next independent implementation: optional revision-bound district/saved-place
+guidance using the bounded HUD, no autopilot/score/arming changes. Full-region art,
+network-wide offline/device qualification and D6 remain open. See the current
+large-worlds delivery plan checkpoint for priorities and evidence boundaries.
+
+## 15 October — optional guidance and safe version removal integrated
+
+Coordinator branch `codex/fpv-integrated-admission-review-20261015`, base
+`e5dc67c1`. #1419, #1421, #1423, #1425 and #1426 are merged; #1416 landmark
+Library also merged as `cecbd408`. Detailed scoped evidence and remaining gates
+are in the newest `fpv-large-worlds-delivery-plan.md` checkpoint. Normal player
+data, old regional revisions, frozen failed candidates and source work are retained.
+
+#1392 awaits a fresh integrated Coaster package with the Overview and Arm fixes;
+#1427 is separate Alpine Library admission. #1424 remains the Desert authored-start
+heading follow-up in native stack #1417; inspect current membership/heads before
+protected publication. Independent Hillside material refinement and Canal City
+source authoring continue while checks/merges run. The complete roadmap, final art
+standard, broader offline/device qualification and D6 remain open. No public launch
+is inferred from a merge or local check.
+
+## 15 October — integrated reviews continue independently
+
+Coordinator `codex/fpv-admission-diagnostics-review-20261015` starts at `d97f9736`.
+Coaster #1392, courtyard source/delivery #1431/#1433 and storage batching #1432
+merged. Latest scoped native/package results and open negative findings are in
+the newest large-worlds plan checkpoint. Alpine #1427 remains visually held;
+Desert retained-version launch timed out without losing either saved revision.
+Cancellation #1434, authored endurance #1435, courtyard Library #1436 and original
+Canal source #1437 progress independently. Preserve exact old packages, all source
+work and player records. No public or full-roadmap completion claim is made.
+
+## 15 October — source review and retained-flight reliability gates
+
+Coordinator `codex/fpv-regional-review-gates-20261015` starts from `6a6baac9`.
+Cancellation #1434, actual-region endurance tooling #1435, courtyard Library
+#1436 and Overview height correction #1439 are merged. The newest large-worlds
+plan checkpoint records the retained-chooser slowdown diagnosis, guard #1440,
+Canal draft 3 source acceptance and Alpine contour preview correction. Exact
+package checks, immutable content admission, sustained qualification and final
+art remain separate gates. Earlier negative packages and saved revisions remain
+preserved. Queue waiting does not stop independent development.
+
+## 15 October — Canal admission and preserved interrupted elapsed review
+
+Coordinator `codex/fpv-library-admission-checkpoint-20261015`, base `3d272500`.
+Canal immutable #1442 merged; exact Library1446 native player checks passed.
+Storage guidance1444 and immediate lifecycle status1447 merged. Alpine corrected
+delivery1448 is merged while updated Library1427 awaits fresh combined admission.
+Lunar1452/1455 remain draft for camera/appearance corrections. The strict-focus
+Urban flight invalidated after1,036.314s on lost focus; its full negative report
+and zero-owned disposal are preserved, without a two-hour claim. Current evidence
+and remaining gates are in the newest large-worlds plan checkpoint.
+
+## 15 October — Alpine admitted; corrected source and sustained verification
+
+Coordinator `codex/fpv-regional-qualification-checkpoint-20261015`, base `d949d8c1`.
+Canal #1446 and Alpine #1427 merged after scoped exact-package native checks. Both
+Alpine revisions survive reload and corrected cached Fly stays disarmed. Heading
+#1468 is a separate follow-up; no frozen package was rewritten. Reliability #1454
+passed all checks; edition #1465 publication is continuing. Lunar #1460/#1462/#1464
+bounded native corrections pass across all three material tiers, with final art
+and exact immutable/Library admission still open. Preview #1463 merged; #1467
+extends its authoring tier forwarding separately.
+
+Strict-focus Urban endurance failure remains preserved. Observation #1461 merged
+with an explicit opt-in visible-commanded policy and ten-second smoke, which does
+not qualify endurance. A fresh two-hour real-time segment began 14:53:27.762Z on
+15 October, earliest finish 16:53:28Z; preserve the sole 9162 renderer and inspect
+its actual report before any completed claim. The current private handoff has exact
+identity and operational instructions. Latest large-worlds checkpoint and receipts
+record passed and remaining gates. Internal free space 1.8 GiB is below the 3 GiB
+floor; heavy work stays external/cloud, source and player data untouched.
+
+## 15 October — frame-gap result preserved without a pass
+
+The visible-commanded Urban attempt invalidated after 659.5013 real seconds when
+a 997.4 ms frame interval exceeded the unchanged 250 ms gate. One circuit and
+zero contacts do not substitute for the two-hour workload. The complete report is
+committed as `fpv-authored-urban-visible-invalid-framegap-20261015.json`; earlier
+negative and smoke reports remain intact. No elapsed segment is currently running.
+Corrected Lunar source is merged; immutable delivery, material and Library admission
+remain separate. Native Alpine heading verification and retained-copy recovery
+continue independently while browser scheduling is investigated.
+
+## 15 October, 17:13 UTC — Lunar player gate and fresh authored observation
+
+Lunar immutable #1470 and Library #1474 are merged. Exact `65e92d12` title/reload
+follow-up passes normal download, EN/UK names, six Ukrainian starts, retained locale
+and disarmed cached launch; the earlier broader native checks stay bound to their
+frozen predecessor. Alpine facade #1475 and immutable station-r3 #1478 are merged;
+Library #1480 remains a separate exact-package/player gate. Retained repair #1471,
+explicit repair #1473, durable pin retention #1477 and authoring lifecycle diagnostics
+#1476 have merged through normal protections.
+
+The fresh actual authored Urban segment began **17:08:17.178Z**, earliest finish
+**19:08:18Z**, on package `6a092df1` / production `da5df483` / authoring `56e99707`.
+Its independent 10.0028-second smoke is retained separately and proves no route or
+two-hour acceptance. Preserve the sole renderer and any final result honestly;
+earlier strict-focus and frame-gap failures remain unchanged negative evidence.
+Full details and exact completed/open gates are in the newest large-worlds plan
+checkpoint. Final art, actual offline/application restart, physical devices and
+controllers, later region targets, D6 and public launch remain open.
+
+## 15 October, 17:18 UTC — foreground negative preserved
+
+The 17:08:17.178Z authored run invalidated after290.7995real seconds on a257.1ms
+frame interval, while visible and focused throughout. The matching257ms long task
+is correlation, not a function-level diagnosis. Full negative evidence and zero
+owned disposal are preserved; no run is active. Authoring live-report overhead and
+browser scheduling are under investigation without changing acceptance gates.
+Independent player/art and D6 lanes continue.
+
+
+## 15 October, 17:31 UTC — preserve the focused failure and advance independent gates
+
+#1482 merged at `f30ba747` before the later `8a31528f` negative-report commit.
+That committed evidence is preserved and published as a separate main-based
+follow-up. The actual 290.7995-second foreground run failed the unchanged 250 ms
+frame-gap gate; it is not a two-hour pass. No elapsed run is active.
+
+Lunar source #1481 (`9e98c4fb`) and saved-place coverage #1483 (`75bbcf57`) merged
+through normal protections. Root's bounded Lunar review covered Balanced shelter
+and gallery views, Performance shelter and Quality gallery, followed by confirmed
+resource release. The first transitional gallery screenshot is excluded. This
+accepts the source refinement only; immutable r3 delivery, its player admission,
+final representative art and broader offline/restart/device gates remain open.
+
+Alpine #1480 exact package qualification passes; native 9174 player review is in
+progress. Continuity observer #1479 remains Draft awaiting read-only native
+exports/comparison. A separate authoring display-cost correction is under review
+without changing production physics, timing or acceptance limits.
+
+
+## 15 October, 18:05 UTC — native admission and observer increments
+
+#1480 station-r3 admission merged `e5e5562f`; exact native report is
+[fpv-alpine-station-r3-native-20261015.json](fpv-alpine-station-r3-native-20261015.json).
+The first generic download failure is preserved; unchanged refresh/retry and later
+cached launch succeed. Limited starts, camera/mode/arm/pause, EN/UK and two browser
+layouts pass. This is not all-start hardware, first-attempt reliability or final art.
+
+#1479 read-only continuity observer merged `95703ee3` after native export/import,
+refusal/recovery and exact stored-byte comparison around normal player reopening.
+[The receipt](fpv-storage-continuity-native-20261015.json) distinguishes actual
+regional assets/revisions and a saved place from the empty World/record stores.
+Whole-network offline, full application restart, eviction and nonempty recording
+preservation remain open. #1483 saved-place focused and broader CI are all green.
+
+#1485 bounded authoring summary merged `51f5af07`. Separate actual 10.0059-second
+and 60.0018-second runs preserve full reports and disposal evidence. The summary
+uses 430 characters, and a native running export is provisional and accepted-false.
+Neither smoke/minute run has route coverage or counts as the required two hours.
+No acceptance gate, simulation clock or production module changed.
+
+Lunar source/detail #1481 and immutable r3 #1488 are merged. Its additive #1490
+is being reconciled normally with the Alpine Library addition so all twenty old
+offers survive alongside the new edition. Frozen earlier and integrated package
+native checks stay separate. Representative art, elapsed, integrated reliability,
+D6/device and public-launch acceptance remain incomplete.
+
+
+## 15 October, 18:20 UTC — preserve bounded-display elapsed failure
+
+Fresh #1485-tooling/unchanged-production authored Urban segment started
+18:15:01.428Z and failed at102.9565 real seconds /5,127ticks on a408.5ms clock
+interval. Lifecycle separately measured416.7ms/417ms long task. It stayed visible
+and focused; zero contacts and zero owned disposal. Full negative report is
+[fpv-authored-urban-bounded-invalid-framegap-20261015.json](fpv-authored-urban-bounded-invalid-framegap-20261015.json).
+No elapsed segment is active. The display optimization remains bounded/useful but
+is not a fix for the failure. Physics/draw/observer maxima require phase/script
+attribution; no causal or two-hour acceptance claim is made.
+
+#1494 quieter timber source merged `c217b5d4` after matched concourse/wall native
+comparison. New immutable and player editions remain separate. Frozen Lunar d6
+bounded native results remain tied to its pre-integration package; combined b062
+preserves twenty main offers plus new Lunar but still needs exact admission.
+Independent delivery work resumes without changing the frozen failed fixture.
+
+## 15 October, 19:00 UTC — exact admission and populated preservation
+
+#1490 merged `244e81c1` at unchanged `b0625e6f`, preserving twenty old Library
+offers and adding Lunar r3. Exact `e1ab4a5e` cloud package and fresh native 9183
+normal downloads, dual-revision reload, EN/UK labels, camera/mode/arm/pause and
+two responsive layouts pass. [Native receipt](fpv-lunar-shelter-r3-b062-native-20261015.json)
+distinguishes initial Ready from later cached Paused. Broader CI tails were still
+queued at merge; no hardware, public, offline or final-art claim.
+
+Normal Roadworks installation and genuine unchanged published example import now
+populate all four observed storage channels. Native import verifies the example
+complete at 360 ticks; normal backup and player close/reopen preserve exact stored
+bytes, alongside the two Hillside revisions and named place. [Receipt](fpv-storage-continuity-nonempty-native-20261015.json)
+and [full comparison](fpv-storage-continuity-nonempty-comparison-20261015.json)
+close that narrow previous empty-content gap. The session store remains empty;
+this does not establish application restart, whole-network offline or eviction.
+
+Authoring-only attribution #1500 merged `03ee6df3`. Independent source review and
+strict-focus 10.0051-second/500-tick native smoke preserve the full report, zero
+contacts and zero owned disposal. Actual LoAF support produces zero caller entries
+in this observation, so no native caller/GC cause is established. Source spans and
+retention work without changing production or the unchanged 250 ms gate. There
+is no active elapsed run and no authored two-hour pass. [Full report](fpv-authored-urban-attribution-smoke-20261015.json).
+
+Quiet timber immutable #1499 merged `691351e1`; separate Alpine #1501 exact
+integrated player admission remains open. Representative grounding, discoverable
+Library record access and meaningful recording D6 coverage continue independently
+through protected PRs. All prior negative reports, frozen packages and player
+data remain preserved. The complete roadmap remains unfinished.
+
+## 15 October, 19:30 UTC — explicit five-minute diagnostic and a retention finding
+
+The authored review now offers an explicit five-minute attribution observation,
+separate from two-hour endurance. Fresh 9198 tool `219c3e92` with unchanged
+`da5df483` production / `6a092df1` package completes 300.0005 real seconds and
+15,000 ticks under strict focus, with zero contacts/owned disposal. Four crossings,
+three waypoints and zero circuits leave route coverage false. [Full report](fpv-authored-urban-five-minute-attribution-20261015.json).
+No elapsed run remains active and no two-hour pass is inferred.
+
+Four actual LoAF entries now retain three authoring frame-callback entry points,
+but no early phase associations survive final reporting: its join only sees the
+last 128 spans. A separate bounded receive-time association correction is needed.
+This is a diagnostic retention finding, not a production/GC cause. Earlier full
+failures and every acceptance gate stay unchanged. [Identity/scope receipt](fpv-authored-urban-five-minute-native-20261015.json).
+
+Alpine grounding source #1504 and immutable r5 #1508 merged normally, preserving
+earlier geometry/edition data; separate Library admission and final art remain.
+R4 #1501 exact integrated package/native, record-access #1507 package/native and
+recording archive/storage D6 #1509 exact cloud/review gates continue independently.
+
+
+## 15 October, 20:32 UTC — close bounded gates and preserve independent failures
+
+Alpine r4 #1501 merged `d6f93f71`; exact `e8a79844` / `a9b9eb0a` native 9192
+passes normal dual-edition download/cache, representative starts, cameras/mode,
+explicit arm/pause, EN/UK and responsive browser checks. [Receipt](fpv-alpine-quiet-r4-e8-native-20261015.json).
+R5 #1513 `40685bbc` / `493dd96b` independently passes its cloud and fresh 9203
+native gate, preserving all 22 prior offers plus new concourse materials. Both
+r5/r4 survive reload and prepare cached, disarmed at 114 m. Summit apron/open
+passage, FPV/Overview/Chase, Acro/reset/explicit arm/pause, EN/UK and three viewport
+sizes are observed. [Separate receipt](fpv-alpine-station-r5-40685-native-20261015.json).
+R5 subsequently merged normally at20:34:20Z as `0892cab9`, unchanged reviewed
+head, all reported checks passing. Final representative art remains distinct from
+this bounded gate.
+
+A genuine normal grounded live attempt now populates session storage. Explicit
+Pause→normal tab close/reopen→Resume interrupted flight restores paused with Arm
+available. Every stored byte remains identical after recovery/close, including
+previous installed worlds/revisions/place/published example; [full comparison](fpv-storage-continuity-live-session-comparison-20261015.json)
+and [receipt](fpv-storage-continuity-live-session-native-20261015.json). Actual
+application restart, moving-flight crash, whole-network offline and eviction are
+still separate open journeys.
+
+Library records shortcut #1507 merged `4ed8d055`, unchanged exact e27. Canonical
+single controls, keyboard/compact focus return, EN/UK and paused access pass.
+Fresh normal download/cached Fly after shortcut also succeeds, with explicit arm
+required. The original native [closing-IDB failure](fpv-library-records-closing-db-negative-20261015.txt)
+is preserved and unresolved; normal reopen recovery is not its cause/fix. [Scope](fpv-library-records-e27-native-20261015.json).
+Original 600-second local-UX timeout remains incomplete evidence; required normal
+retry passes 645/645. D6 archive/storage #1509 merged `68cb206b`, exact cloud
+66/66 recordings and 650/650 local-UX pass, with broader D6 still open.
+
+Attribution receive-time retention #1511 merged `b5b114c8`; unchanged production
+on fresh 9202 completes 300.0047 actual seconds /15,000 ticks under strict focus.
+All seven LoAF rows retain early phase facts despite the final window advancing;
+bounds/lower-bound disclosure work and malformed/read failures are zero. [Full
+report](fpv-authored-urban-retention-five-minute-20261015.json) and [receipt](fpv-authored-urban-retention-five-minute-native-20261015.json).
+Zero contacts/owned disposal, but only four crossings/three waypoints/zero circuits:
+route coverage false and **no authored two-hour pass**. The earlier four actual
+failures remain unchanged. JS descendants/GC/scheduling require causal observation,
+not a production guess. No active elapsed run or root renderer remains at this
+checkpoint. Storage, packages, failed artifacts and earlier editions are preserved.
+
+
+## 15 October, 21:20 UTC — bounded failure and passive connection capture
+
+Fresh 9207 actual preparation observation starts21:00:50.317Z, invalidates at
+176.3321 real seconds /8,790ticks on516.9ms interval while visible/focused, zero
+contacts and disposalZero. [Full failed report](fpv-authored-urban-preparation-observer-invalid-20261015.json)
+and [receipt](fpv-authored-urban-preparation-observer-native-negative-20261015.json)
+preserve the new bounded negative; all four earlier full-attempt failures remain.
+There is no active elapsed run and no two-hour pass. #1518 exactee79/qualifiedda5/6a
+captures two genuine settled preparation receipts and a bounded full synchronous
+callback span, but no cause for the interval. All latest sixteen LoAF preparation
+matches are zero and35 older rows are overwritten; no positive native association
+or terminal caller is claimed. Fifteen local/81 exact cloud tests pass; source/tool
+acceptance is separate from failed duration/performance qualification.
+
+#1517 correctedf3b34f4c freshpassive9206 passes native modal access and active-flight
+refusal, genuine normal Roadworks download, paused compact settings/Library records
+and EN→UK→EN. Five trusted native opens and sanitized ownership are captured;
+Stop leaves zero owned database-event listeners/pending request observers, and normal cached Fly
+still prepares disarmed. [Receipt](fpv-idb-ownership-passive-native-20261015.json) and
+[complete capture](fpv-idb-ownership-passive-stopped-20261015.json). The original
+[9205 authoring modal failure](fpv-idb-ownership-passive-modal-negative-20261015.json)
+and9196 connection failure are preserved. No abnormal/versionchange was observed;
+passive explicit-close counts remain null/unknown, not zero. No reconnect/data
+change or causal repair is claimed. Ten software groups and source review pass;
+protected publication remains its own gate.
+
+Station approach source #1521 continues independently through explicit new-solid
+collision/attachment/route/tier qualification and later native comparison. Earlier
+missing-field/attachment candidates remain preserved unaccepted. Physical-device,
+public, final-art, full offline/restart/eviction and broader D6 remain open. No
+root renderer or active observation remains; heavy work stays external/cloud.
+
+## 16 October — actual public map audit; preserve storage blockers
+
+The [per-item public report](fpv-public-map-availability-20261016.md) records actual GitHub Pages launch checks for14builtins,20Worldpacks(onecourseeach) and13/23regionaleditions/all10families. All23descriptors/11492supportingfiles and20packpins/41coursedefinitions pass independent HTTP integrity/production validation. Main game More→SIM and one full Acro tilt demo completed in the public browser. #1528 is deployed atb1174522 with exact reviewed canonical bytes; normal close/reopen retains13regionaleditions+20Worldpacks and consistent names.
+
+The ten older regional native checks remain open after the Alpine r2 preserved install negative: source accounting reconstructs500465bytes over the existing256MiB per-regional-database cap. The owner explicitly approved regional-only512MiB; implementation/early capacity error/package/native/public rollout is separate. No saved content was removed; Worldpack/core budgets unchanged. A later public School mode/input transition also exposes the raw closing-database error with flight paused/Arm available. Exact connection owner/cause remains unknown; [negative receipt](fpv-public-school-storage-negative-20261016.json) is preserved. No all-reliability pass.
+
+All178bundled proofs pass the separate software replay audit; all58Schoolexamples callable, but86ordinaryentries lack bundled demos. Native178playback is not claimed. R6 source1521 and immutable1532 are merged; Library admission1535, later regions/finalart, real two-hour endurance, physical devices, full offline/restart/eviction and broaderD6 remain open. Existing failed reports and player storage are unchanged. Heavy work stays external/cloud; internal free space remains below stable3GiBfloor. Completed temporary build copies were preserved externally with verified perfilearchive/readback hashes and originalpathsymlinks; no source/commits/player data lost.
+
+### Later public saved-map visibility negative — 16 October checkpoint
+
+After the public School closing-connection failure and normal reopen, the Library lists zero saved regional rows and no installed Worldpack cards. Refresh saved regions completes but the rows remain absent. No removal/reset/import/restore action occurred. Database identity and actual stored contents remain unobserved; do not assert data loss, a scope change or eviction. Earlier13+20 retention samples remain historical, and persistence is explicitly unqualified. The shared Records shortcut opens Progress & Collection but shows no record entries. [Visibility receipt](fpv-public-library-visibility-negative-20261016.json). Capacity512 approval/change does not claim to repair this separate failure.
+
+### Regional-only capacity: exact package and bounded native accepted
+
+Owner-approved512MiB source1531 remains exactfac28c1d; defaultWorldpack256MiB/core72MiB and256retainedrevisionlimit stayunchanged. Exact optional/Company original archives, budgets,3closures and9packagedcases pass. All23currentoffers account404703892bytes, leaving132167020bytes oflogicalheadroom. Fresh9210normalr5/r4/r2downloads survive2close/reopens; all3cachedReady114mdisarmed+explicitArm/Pause, r2cameras, safeAcromode andTouchselection pass. Actualreadonlyobservation confirmsregionv2projects1/revisions3/assets723. [Native receipt](fpv-regional-capacity-native-20261016.json) and [package receipt](fpv-regional-capacity-package-20261016.json). Nativeonly~64MiB, notmorethan256/all23/public/physical/offline/endurance acceptance. Separatepublicclosing/zeroSaved failuresremainunresolved. Source/currentCI/protectedmerge/deploystillseparategates. R6source1521andimmutable1532merged; additive24thLibraryDraft1535preservesall23oldrows butawaitscapacityintegration/exactcombinedpackage/native/publicgate.
+
+### Regional capacity merged; public and retained-library gates remain open
+
+Focused capacity1531 merged normally as3e43dc1d at2026-10-15T23:45:15Z after required checks; Pages38825450255 is publishing. No served512MiB claim until actual public bytes match. R6 Library1535 combined39a80bdd includes that ancestor and awaits exact cloud/native/public gates. All23 original offer rows remain intact in source. Public saved-map visibility and closing-connection failures remain open, independent of capacity. Verified external preservation of completed build payloads retains all original paths; observed internal free space still falls below the3GiB heavy-work floor. No player storage was removed or reset.

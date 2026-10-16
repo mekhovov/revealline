@@ -1,0 +1,64 @@
+{
+  "format": "FPVWorldDisposalLocalChecks.v1",
+  "finalSource": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+  "sourceBrowserRuntimeSha256": "f31ef625a2a1f893f93cb241bf88f33a083934c642b0825c404f0578d7458cc4",
+  "finalRuntimeSha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+  "bridge": {
+    "exactSingleAddition": "if (disposed) return; in reportError",
+    "bytes": 26,
+    "allOtherHostBytesIdentical": true
+  },
+  "commands": [
+    {
+      "command": "npm --logs-max=0 run validate",
+      "runtimeSha256": "f31ef625a2a1f893f93cb241bf88f33a083934c642b0825c404f0578d7458cc4",
+      "exit": 0,
+      "details": "EN/UK12928messages8991references;2806files;all generated runtime/presentation identity checks pass; existing navigation warnings retained"
+    },
+    {
+      "command": "node --test game/test/fpv-world-runtime.test.mjs game/test/fpv-notebook.test.mjs (same combined invocation as UI)",
+      "passed": 25,
+      "failed": 0
+    },
+    {
+      "command": "node --test game/test/fpv-world-appearance-ui.test.mjs",
+      "exit": 1,
+      "stage": "initial dependency resolution",
+      "error": "Cannot find module fake-indexeddb"
+    },
+    {
+      "command": "NODE_PATH=existing pinned authoring node_modules node --test game/test/fpv-world-appearance-ui.test.mjs",
+      "exit": 1,
+      "passed": 11,
+      "failed": 1,
+      "remaining": "pre-arm focus assertion; baseline comparison reproduces identically",
+      "lateRejection": "terminal-Retry callback reaches detached status; also reproduced on exact72d baseline"
+    },
+    {
+      "command": "read-only baseline loader + existing pre-arm/terminal-Retry named checks",
+      "baseline": "72d6661b117e1cf1d76ac5de44381685c63d19b9",
+      "exit": 1,
+      "passed": 1,
+      "failed": 1,
+      "skipped": 10,
+      "sameFailures": true
+    },
+    {
+      "command": "final guarded host + existing terminal-Retry named check",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 11,
+      "unhandledRejections": 0
+    },
+    {
+      "command": "eslint world-app.mjs + manual preparer --max-warnings0; git diff --check",
+      "exit": 0
+    }
+  ],
+  "limits": [
+    "Original Node20.19.5 local run; no new unit assertions.",
+    "Do not summarize existing appearance suite as all-pass.",
+    "The late-error guard does not suppress explicit dispose save rejection; final admitted browser covers that contract."
+  ]
+}

@@ -753,7 +753,7 @@ export async function addOfflineEntries(
     // Demo recordings and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
-    // while keeping the shared 72 MiB service-worker cache bound.
+    // while keeping the 80 MiB service-worker cache bound.
     ...entries
       .filter(
         (entry) =>
@@ -772,8 +772,17 @@ export async function addOfflineEntries(
       )
       .map((entry) => entry.name),
     // Recorded spatial effects stay hosted for online play and exact optional
-    // download, but are not charged to every installation's 72 MiB core.
+    // download, but are not charged to every installation's 80 MiB core.
     ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
+    // The review gallery duplicates paintings already embedded in playable
+    // content. Host its source copies without charging the offline game twice.
+    ...entries
+      .filter((entry) =>
+        ['classic-reveal-artwork', 'neon-artwork', 'neon-mosaic', 'neon-reference-pack'].some(
+          (directory) => entry.name.startsWith(`authoring/library/${directory}/`),
+        ),
+      )
+      .map((entry) => entry.name),
     ...entries
       .filter((entry) => isOptionalReactionVoiceBody(entry.name))
       .map((entry) => entry.name),
@@ -863,6 +872,12 @@ export async function addOfflineEntries(
     );
     injected.push(entry);
   }
+  if (
+    entries
+      .find((entry) => entry.name === 'game/index.html')
+      ?.bytes.includes('revealline-access-id')
+  )
+    (await import('./access-pages.mjs')).protectPageEntries(entries);
   // Hash a canonical placeholder form, including the optional HTML descriptors.
   // Final build IDs and their derived catalogue hashes cannot hash themselves.
   refreshCatalogue();
@@ -896,9 +911,9 @@ export async function addOfflineEntries(
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
   const totalBytes = files.reduce((n, f) => n + f.bytes, 0);
-  if (files.length > 2000 || totalBytes > 72 * 1024 * 1024)
+  if (files.length > 2000 || totalBytes > 80 * 1024 * 1024)
     fail(
-      `Offline distribution exceeds 2000 files or 72 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
+      `Offline distribution exceeds 2000 files or 80 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
     );
   const config = {
     format: 'revealline-offline.v1',
@@ -1042,6 +1057,12 @@ export async function prepareBuildProject({
   };
   replace('game/build-info.json', json(info));
   addPublicEntries(entries, info);
+  if (
+    entries
+      .find((entry) => entry.name === 'game/index.html')
+      ?.bytes.includes('revealline-access-id')
+  )
+    (await import('./access-pages.mjs')).protectPageEntries(entries);
   await addOfflineEntries(
     root,
     entries,
@@ -1684,6 +1705,20 @@ export async function validateLevels(root = PROJECT_ROOT) {
       fail(`Invalid campaign level ${level.id ?? '(unnamed)'}: ${JSON.stringify(result.errors)}`);
     if (ids.has(level.id)) fail(`Duplicate campaign level ID: ${level.id}`);
     ids.add(level.id);
+  }
+  if (await exists(path.join(root, 'game/base-artwork.mjs'))) {
+    const { resolveBaseArtwork } = await import(
+      pathToFileURL(path.join(root, 'game/base-artwork.mjs')).href
+    );
+    resolveBaseArtwork(
+      JSON.parse(await fs.readFile(path.join(root, 'game/content/base-artwork.json'), 'utf8')),
+      {
+        ...campaign,
+        classRecipes: JSON.parse(
+          await fs.readFile(path.join(root, 'game/content/classes.json'), 'utf8'),
+        ),
+      },
+    );
   }
   return { campaign: campaign.id, levels: campaign.levels.length };
 }

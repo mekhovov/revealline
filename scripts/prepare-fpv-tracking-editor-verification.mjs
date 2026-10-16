@@ -11,8 +11,10 @@ const HOST = 'optional-practice/civilian-fpv/world-app.mjs';
 const HTML = 'optional-practice/fpv-worlds/index.html';
 const EVIDENCE = 'docs/evidence/fpv-tracking-editor-browser-harness.html';
 const MAX_FILE_BYTES = 6 * 1024 * 1024;
-const MAX_TOTAL_BYTES = 13 * 1024 * 1024;
-const MAX_MODULES = 192;
+// Current source closure: 223 modules / 17,233,260 bytes (2026-10-14).
+// These bound isolated verification fixtures, not shipped package allowances.
+const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
+const MAX_MODULES = 256;
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fail = (message) => {
   throw new Error(message);
@@ -56,7 +58,9 @@ function buildPlayer(html, sourceBase, frozenBase) {
     const query=new URL(location.href).searchParams;
     window.fixtureLoadToken=query.get('token');window.fixtureErrors=[];
     addEventListener('error',e=>fixtureErrors.push(e.message));addEventListener('unhandledrejection',e=>fixtureErrors.push(String(e.reason)));
-    Object.defineProperty(window,'localStorage',{value:parent.fixtureStorage});Object.defineProperty(window,'indexedDB',{value:parent.fixtureDB});
+    Object.defineProperty(window,'localStorage',{value:parent.fixtureStorage});
+    const nativeDB=window.indexedDB;
+    Object.defineProperty(window,'indexedDB',{value:{open(name,version){const full=parent.fixtureDBName(name);return version===undefined?nativeDB.open(full):nativeDB.open(full,version)},deleteDatabase:name=>nativeDB.deleteDatabase(parent.fixtureDBName(name)),cmp:nativeDB.cmp.bind(nativeDB)}});
     Object.defineProperty(navigator,'getGamepads',{value:()=>[]});
     window.fixtureDownloads=[];const blobs=new Map(),create=URL.createObjectURL.bind(URL),revoke=URL.revokeObjectURL.bind(URL),anchorClick=HTMLAnchorElement.prototype.click;
     URL.createObjectURL=blob=>{const url=create(blob);blobs.set(url,blob);return url};URL.revokeObjectURL=url=>{revoke(url);blobs.delete(url)};
@@ -75,6 +79,10 @@ function buildPlayer(html, sourceBase, frozenBase) {
     import{createFlightProfileStore,defaultRadioProfile,DEFAULT_RESPONSE}from${JSON.stringify(`${frozenBase}/optional-practice/civilian-fpv/radio-profile.mjs`)};
     createFlightProfileStore({storage:window.localStorage}).save({format:'FlightProfiles.v1',radio:defaultRadioProfile(),response:DEFAULT_RESPONSE});
     const rendererFactory=options=>{const renderer=createFlightRenderer(options);window.fixtureRenderer=renderer;return renderer};
+    if(document.documentElement.dataset.accessState==='locked'){
+      if(!window.RevealLineAccess)throw Error('The ordinary access gate is unavailable; open and unlock this source player before qualification.');
+      await window.RevealLineAccess.scriptsReady;
+    }
     window.fixtureApp=mountWorldApp({rendererFactory});
   `;
   if (!html.includes('data-fpv-worlds="true"') || !html.includes('</body>'))

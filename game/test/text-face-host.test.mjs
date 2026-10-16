@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -64,8 +65,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.$('pause-button').click();
     page.frame(0);
     const continued = JSON.parse(storage.getItem(sessionKey));
-    assert.equal(continued.runId, JSON.parse(slot).runId);
-    assert.equal(verifyReplay(continued.replay).match, true);
+    assert.equal(nativeSession(continued).runId, nativeSession(JSON.parse(slot)).runId);
+    assert.equal(verifyReplay(nativeSession(continued).replay).match, true);
     assert.deepEqual(page.errors, []);
   });
 }

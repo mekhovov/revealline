@@ -66,3 +66,32 @@ test('Team final imported results retain the one-action Browse path and restore 
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.deepEqual(f.visits, []);
 });
+
+test('Team keeps its completed result when a stalled frame reaches the auto-next deadline', async (t) => {
+  const f = await page(t, { href, nativeFocus: true, nativeVisibility: true });
+  f.$('coop-start').focus();
+  f.tap('Enter');
+  playCurrentTeamRoute(f, source, 'twin-landings');
+  f.tap('Enter');
+  await waitFor(() => f.$('coop-overlay').hidden);
+  playCurrentTeamRoute(f, source, 'stepping-exchange');
+  const flow = f.doc.querySelector('[data-continuous-play]');
+  for (let i = 0; i < 60 && !flow.textContent.includes('Next level in 1s'); i++) f.tick(1, 200);
+  assert.match(flow.textContent, /Next level in 1s/);
+  f.tick(4, 200);
+  const result = f.$('coop-overlay-copy').textContent,
+    reads = f.artwork.calls.reads.length;
+  f.tick(1, 1200);
+  f.tick(4);
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(f.$('coop-level').value, 'stepping-exchange');
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-overlay-copy').textContent, result);
+  assert.equal(
+    f.artwork.calls.reads.length,
+    reads,
+    'The stalled timer must not start destination loading.',
+  );
+  assert.equal(flow.hidden, true, 'The cancelled countdown cannot silently rearm.');
+  assert.equal(f.$('coop-next').disabled, false, 'Manual Next remains available.');
+});

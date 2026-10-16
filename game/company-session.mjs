@@ -136,6 +136,7 @@ export async function restoreCompanySession(
           prepareRunningEnemyLevel(prepared.manifest.level, {
             classes: replay.options.classRecipes,
             style: replay.level.pursuit ? 'varied' : 'original',
+            generation: replay.level.pursuit?.version ?? 'pursuit-goals.v1',
           }),
         ) === canonicalJSON(replay.level));
     required(

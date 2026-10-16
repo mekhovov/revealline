@@ -14,7 +14,10 @@ import { createRewardBackend } from '../rewards/store.mjs';
 
 test(
   'an accepted shared Solo win unlocks only its optional body in the native picker without changing core checkpoints',
-  { timeout: 30000 },
+  // The actual player now holds its earned picture before exposing results.
+  // This integration fixture builds an edition, decodes its reward artwork,
+  // and runs a complete route, so leave room for a contended CI worker.
+  { timeout: 60000 },
   async (t) => {
     const f = await editionProviderFixture(),
       catalog = structuredClone(f.catalog),
@@ -107,6 +110,9 @@ test(
     page.frame(0);
     assert.equal(expected.status, 'won');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
+    assert.equal(page.$('game-overlay').hidden, true);
+    page.$('skip-celebration').onclick();
+    assert.equal(page.$('show-result').hidden, false);
     await waitFor(() => {
       page.frame(0);
       return option().disabled === false;

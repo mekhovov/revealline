@@ -22,6 +22,7 @@ import {
 } from '../presentation/industrial-arcade.mjs';
 import { INDUSTRIAL_BUILTIN_SPRITES } from '../presentation/industrial-arcade-builtins.mjs';
 import { FIELD_KIT_SPRITE_IDS, pixelArtForSlot } from '../presentation/pixel-art.mjs';
+import { MILITARY_FIELD_ROLES, militaryFieldPixels } from '../presentation/military-field-art.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 
 const simKey = 'revealline.fpv.appearance.v1';
@@ -496,7 +497,7 @@ test('complete Apply clears independent SIM appearance but preserves accessibili
   }
 });
 
-test('all installed Arcade treatments preserve native sprite coverage and source ownership', () => {
+test('installed Arcade finishes retain native coverage or exact declared replacement silhouettes without editing sources', () => {
   const families = BUILTIN_THEME_FAMILIES.filter((family) => family.arcade);
   assert.ok(families.length >= 8, 'Original families remain available alongside new ones.');
   for (const family of families) {
@@ -514,8 +515,22 @@ test('all installed Arcade treatments preserve native sprite coverage and source
       assert.equal(changed.width, original.width);
       assert.equal(changed.height, original.height);
       assert.deepEqual(original.rgba, before, `${family.id}/${slot} original pixels are immutable`);
-      for (let at = 3; at < before.length; at += 4)
-        assert.equal(changed.rgba[at], before[at], `${family.id}/${slot} alpha ${at}`);
+      if (family.id === 'military-field' && MILITARY_FIELD_ROLES[slot]) {
+        assert.deepEqual(changed, militaryFieldPixels(original, slot));
+        assert.notDeepEqual(changed.rgba, before, `${slot} uses its own military silhouette`);
+        if (slot.startsWith('enemy.')) {
+          assert.equal(changed.rgba[3], 0, `${slot} has transparent air around its body`);
+          assert.equal(changed.rgba.at(-1), 0);
+          const occupied = changed.rgba.filter((value, at) => at % 4 === 3 && value === 255).length;
+          assert.ok(occupied > original.width * original.height * 0.2);
+          assert.ok(occupied < original.width * original.height * 0.8);
+        }
+      } else {
+        for (let at = 3; at < before.length; at += 4)
+          assert.equal(changed.rgba[at], before[at], `${family.id}/${slot} alpha ${at}`);
+        if (family.id === 'military-field' && slot.startsWith('player.'))
+          assert.deepEqual(changed.rgba, before, 'the Ukrainian FPV retains its own livery');
+      }
     }
   }
 });

@@ -3,6 +3,10 @@ import path from 'node:path';
 
 const FILE_LIMIT = 128 * 1024;
 const OPTIONAL_CLOSURE = [
+  // Gate-enabled launchers must carry their own gate; historical launchers
+  // without these references remain publishable unchanged.
+  ['access-gate.mjs', 'index.html', './access-gate.mjs'],
+  ['access-gate.css', 'index.html', './access-gate.css'],
   // A current seed requires its frozen CSS/font closure; older launchers do not.
   ...[
     'presentation/theme-bootstrap.mjs',

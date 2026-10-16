@@ -1,17 +1,32 @@
 import { getLocale, setLocale, onLocaleChange } from '../i18n/index.mjs';
 import { ACTOR_FAMILIES } from './actor-catalog.mjs';
 import { drawHuntActor } from './actor-art.mjs';
-import { sharedActorAppearance } from './preferences.mjs';
+import {
+  sharedActorAppearance,
+  sharedEnemyArtwork,
+  runtimeActorArtRevision,
+} from './preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
 import { attachDestructionControls } from '../ui/destruction-controls.mjs';
 import { renderEnemyFieldGuide } from '../ui/enemy-field-guide.mjs';
 import { militaryFieldPixels } from '../presentation/military-field-art.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
+import { clearExplicitReviewPin } from '../ui/enemy-appearance-controls.mjs';
+const staticNativeLinks = [...document.querySelectorAll('a[data-native-review-link]')].map(
+    (link) => [link, link.getAttribute('href')],
+  ),
+  nativeTargets = new Map();
+function setNativeLink(link, target) {
+  nativeTargets.set(link, target);
+  link.href = nativeArtReviewURL(target, location.href);
+}
 const linkedLocale = new URL(location.href).searchParams.get('lang');
 if (['en', 'uk'].includes(linkedLocale)) setLocale(linkedLocale, { persist: false });
 const $ = (id) => document.getElementById(id),
   appearance = sharedActorAppearance(),
+  enemyArtwork = sharedEnemyArtwork(),
   display = createDisplayPreferences(),
   theme = installThemeHost({ displayPreferences: display });
 const words = {
@@ -25,6 +40,7 @@ const words = {
     'military-help':
       'Russian field vehicles, concrete checkpoints and rutted ground. Vehicles keep their existing enemy rules and remain dangerous; soldiers are contact prey unless marked as specialists. Snake uses the same soldiers and concrete walls. Choose Military Field in the game appearance settings, or apply it and open a mode below.',
     'military-apply': 'Apply Military Field',
+    'military-directory': 'Find levels with soldiers and vehicles',
     qualification:
       'Preview chapters: structural admission is complete; human completion routes, phone/controller play and release qualification are still being recorded. Existing campaigns and saved attempts keep their original rules.',
     'settings-title': 'Add running enemies to your next Capture attempt',
@@ -62,6 +78,7 @@ const words = {
     'military-help':
       'Російська польова техніка, бетонні блокпости й колії. Техніка зберігає правила відповідних ворогів і залишається небезпечною; солдатів ловлять дотиком, окрім позначених спеціалістів. Змійка використовує тих самих солдатів і бетонні стіни. Оберіть «Військове поле» в налаштуваннях вигляду або застосуйте його й відкрийте режим нижче.',
     'military-apply': 'Застосувати «Військове поле»',
+    'military-directory': 'Знайти рівні із солдатами й технікою',
     qualification:
       'Попередні розділи: структурну перевірку пройдено; маршрути проходження людьми, телефони, контролери та придатність до випуску ще перевіряються. Наявні кампанії та спроби зберігають початкові правила.',
     'settings-title': 'Додайте рухливих ворогів до наступної спроби Capture',
@@ -121,9 +138,14 @@ const cards = [
   { id: 'sim', links: [['flight', '../snake/#sim-title']] },
 ];
 function render() {
+  nativeTargets.clear();
+  for (const [link, target] of staticNativeLinks) setNativeLink(link, target);
   const locale = getLocale() === 'uk' ? 'uk' : 'en',
     copy = words[locale];
   $('language').value = locale;
+  const directory = new URL('military-levels.html', location.href);
+  directory.searchParams.set('lang', locale);
+  setNativeLink($('military-directory'), directory.href);
   for (const [id, text] of Object.entries(copy)) if ($(id)) $(id).textContent = text;
   $('campaigns').replaceChildren(
     ...cards.map((card) => {
@@ -134,7 +156,7 @@ function render() {
         const anchor = node('a', copy[label]),
           url = new URL(href, location.href);
         url.searchParams.set('lang', locale);
-        anchor.href = url.href;
+        setNativeLink(anchor, url.href);
         links.append(anchor);
       }
       article.append(node('h3', copy[card.id]), node('p', copy[`${card.id}Body`]), links);
@@ -142,7 +164,7 @@ function render() {
         const link = node('a', copy.lesson),
           url = new URL(card.pilot, location.href);
         url.searchParams.set('lang', locale);
-        link.href = url.href;
+        setNativeLink(link, url.href);
         const p = node('p');
         p.append(link);
         article.append(p);
@@ -167,7 +189,11 @@ function render() {
       canvas.setAttribute('aria-hidden', 'true');
       const ctx = canvas.getContext('2d');
       const image = ctx.createImageData(64, 64);
-      image.data.set(militaryFieldPixels({ width: 64, height: 64 }, slot).rgba);
+      image.data.set(
+        militaryFieldPixels({ width: 64, height: 64 }, slot, {
+          revision: runtimeActorArtRevision(),
+        }).rgba,
+      );
       ctx.putImageData(image, 0, 0);
       item.append(canvas, node('figcaption', locale === 'uk' ? uk : en));
       return item;
@@ -185,12 +211,18 @@ function render() {
       url.searchParams.set('appearanceFamily', 'military-field');
       url.searchParams.set('appearanceRevision', 'r1');
       url.searchParams.set('lang', locale);
-      link.href = url.href;
+      setNativeLink(link, url.href);
       const apply = (event) => {
         if (event.type === 'auxclick' && event.button !== 1) return;
         // The URL is a context default; existing personal/author-art choices
         // take precedence. This clearly labeled action explicitly selects the
         // complete shared appearance before opening the selected playground.
+        clearExplicitReviewPin(location, history);
+        // Refresh only owned URLs without replacing the activated anchor, so
+        // modified and middle clicks retain the browser's native behavior.
+        for (const [owned, target] of nativeTargets)
+          owned.href = nativeArtReviewURL(target, location.href);
+        enemyArtwork.set({ style: 'military' });
         const accepted = theme.applyComplete('military-field');
         if (
           event.button === 0 &&

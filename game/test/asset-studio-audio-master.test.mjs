@@ -227,6 +227,46 @@ function recipePreview(h, master, id) {
   return { ...audio, surface, gains, pending, play, stop, cleanup };
 }
 
+test('uploaded destruction previews use the calibrated native cue path and keep original bytes', async (t) => {
+  const h = boundary(t),
+    audio = audioHarness(),
+    master = createAudioMaster({ muted: false, volume: 0.5 }),
+    surface = h.doc.createElement('div'),
+    original = new Blob([new Uint8Array(44)]),
+    samples = new Float32Array(4800).fill(0.9);
+  h.own(() => audio.soundscape.dispose());
+  audio.context.decodeAudioData = async () => ({
+    duration: 0.1,
+    length: samples.length,
+    sampleRate: 48000,
+    numberOfChannels: 1,
+    getChannelData: () => samples,
+  });
+  h.replace('AudioContext', function () {
+    return audio.context;
+  });
+  h.own(() => surface.previewCleanup?.());
+  await drawAssetPreview(
+    surface,
+    { id: 'audio.destroy-heavy', group: 'audio', label: 'Tank' },
+    { kind: 'audio', file: { sha256: 'fixture' } },
+    resolvePresentation(createDefaultThemeBundle()),
+    new Map([['fixture', original]]),
+    { audioMaster: master },
+  );
+  assert.equal(surface.querySelector('audio'), null, 'Avoid an uncalibrated HTML media owner');
+  assert.equal(audio.sources.length, 0, 'Preview preparation cannot autoplay');
+  const [play, stop] = surface.querySelectorAll('button');
+  await play.onclick();
+  assert.equal(audio.sources.length, 1, 'Exactly one native published cue');
+  assert.equal(audio.sources[0].buffer.getChannelData(0), samples);
+  assert(samples.every((value) => Math.abs(value - 0.9) < 0.00001));
+  assert.match(surface.textContent, /Playing the registered/);
+  stop.onclick();
+  assert.equal(audio.context.state, 'suspended');
+  assert.equal(h.urls.size, 0, 'No unnecessary object URLs');
+});
+
 for (const id of ['audio.music', 'audio.capture']) {
   test(`${id} keeps the shared mute gate through delayed context resume and retains its local attenuation`, async (t) => {
     const h = boundary(t),

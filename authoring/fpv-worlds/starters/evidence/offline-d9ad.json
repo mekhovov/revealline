@@ -1,0 +1,39 @@
+{
+  "format": "FPVCreatorOfflineManual.v1",
+  "source": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+  "url": "http://127.0.0.1:8891/player/optional-practice/fpv-worlds/index.html#packs",
+  "method": "Actual Prepare simulator offline, normal navigation, stopped dedicated server21832 atport8891 and terminalcurl connection refusal7; actual reload, edit/install/reload and restore revisions while unavailable",
+  "onlinePack": "Industrial starter · Split level\n1 challenges · 311b04890037\nEditExport packRemove",
+  "offlinePack": "Industrial starter · Split level\n1 challenges · 311b04890037\nEditExport packRemove",
+  "undoTitle": "Industrial starter · Split level",
+  "redoTitle": "Industrial starter · Split level — offline",
+  "edited": "Industrial starter · Split level — offline\n1 challenges · 36c064f4b7b2\nEditExport packRemoveRestore revision 311b04890037",
+  "reloaded": "Industrial starter · Split level — offline\n1 challenges · 36c064f4b7b2\nEditExport packRemoveRestore revision 311b04890037",
+  "reopenedTitle": "Industrial starter · Split level — offline",
+  "restoredOriginal": "Industrial starter · Split level\n1 challenges · 311b04890037\nEditExport packRemoveRestore revision 36c064f4b7b2",
+  "restoredEdited": "Industrial starter · Split level — offline\n1 challenges · 36c064f4b7b2\nEditExport packRemoveRestore revision 311b04890037",
+  "logs": [],
+  "automationNotes": [
+    "Hidden file input required visible label click; first file-chooser wait timed out before any import",
+    "Synthetic fill did not commit change; native x key and Backspace committed two real edits, then two Undo and two Redo restored exact intended title"
+  ],
+  "limitations": [
+    "Stopped localhost origin only, not device-wide airplane mode",
+    "No browser restart/storage-eviction/public-launcher qualification",
+    "No flight completion, performance or physical-device claim"
+  ],
+  "originProbes": {
+    "beforeOfflineReload": {
+      "curlExit": 7,
+      "pidStopped": 21832
+    },
+    "afterOfflineRestore": {
+      "curlExit": 7
+    },
+    "restart": {
+      "pid": 34190,
+      "session": 21635,
+      "httpStatus": 200
+    }
+  }
+}

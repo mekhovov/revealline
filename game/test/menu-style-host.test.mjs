@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
@@ -10,9 +11,11 @@ import { readFile } from 'node:fs/promises';
 import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 import { THEME_PREFERENCES_KEY, DEFAULT_THEME_PREFERENCES } from '../presentation/theme-system.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -22,6 +25,7 @@ const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.met
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
 const simAppearanceKey = 'revealline.fpv.appearance.v1';
+const enemyStatsWriterKey = `${ENEMY_STATS_KEY}:writer`;
 const raw = (store) => JSON.parse(store.getItem(THEME_PREFERENCES_KEY));
 const appearanceKeys = new Set([THEME_PREFERENCES_KEY, simAppearanceKey]);
 const unrelated = (store) => new Map([...store.map].filter(([key]) => !appearanceKeys.has(key)));
@@ -186,14 +190,15 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       profileKey,
       updatePreferences(emptyLibrary(), { turnPolicy, textSize: 'large' }),
     );
-    const page = await soloPage(t, { campaign, storage: store });
+    const page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
     assert.equal(
       store.getItem(THEME_PREFERENCES_KEY),
       null,
       'Opening a host does not create appearance preferences.',
     );
-    page.$('start-button').click();
-    await settle(() => page.doc.body.dataset.flightState === 'running');
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let n = 0; n < 13; n++) page.frame();
@@ -244,7 +249,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
-    assert.equal(verifyReplay(JSON.parse(store.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(store.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 }
@@ -261,7 +269,13 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
   );
   await t.test('Solo immediately applies its complete family from real Settings', async (t) => {
-    const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+    // Title Settings are usable while optional flight pictures are preparing.
+    const page = await soloPage(t, {
+      campaign,
+      storage: store,
+      titleScreen: true,
+      waitForPictures: false,
+    });
     page.$('shell-options').click();
     page.$('settings-tab-display').click();
     const records = unrelated(store),
@@ -279,7 +293,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     async (t) => {
       const before = store.writes.length,
         page = await teamPage(t, store);
-      assert.equal(store.writes.length, before);
+      assert.deepEqual(store.writes.slice(before).map(([key]) => key), [enemyStatsWriterKey]);
       reflects(page, 'coop-', 'vyshyvanka', 'rich');
       page.$('coop-start').click();
       page.tick(10);
@@ -310,7 +324,7 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       assert.deepEqual(page.geometry(), geometry);
       assert.deepEqual(page.fonts(), fonts);
       assert.equal(page.$('coop-clock').textContent, clock);
-      assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+      assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
       assert.equal(page.doc.body.dataset.textFace, 'plain');
       assert.equal(page.doc.body.dataset.textSize, 'large');
       assert.equal(page.doc.body.dataset.effects, 'reduced');
@@ -329,6 +343,9 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
       page.frames(8);
       page.$('race-pause').click();
       page.frame(0);
+      // Starting a distinct game creates its statistics session. Appearance
+      // edits below must preserve that session and every other unrelated record.
+      records = unrelated(store);
       const checkpoint = page.checkpoint(),
         pictures = page.drawOptions.map((options) => options.backdrop);
       page.$('race-options').focus();
@@ -364,8 +381,14 @@ test('unified appearance survives Solo, Team, Versus and Solo return without alt
     },
   );
   await t.test('fresh Solo adopts without an implicit save or start', async (t) => {
+    // This adoption stays on Home and must not depend on board-image readiness.
     const before = store.writes.length,
-      page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+      page = await soloPage(t, {
+        campaign,
+        storage: store,
+        titleScreen: true,
+        waitForPictures: false,
+      });
     reflects(page, '', 'tryzub', 'subtle');
     assert.equal(store.writes.length, before);
     assert.deepEqual(unrelated(store), records);
@@ -437,7 +460,7 @@ test('denied appearance saving leaves Team local choice usable without replacing
   customize(page, 'coop-');
   change(page, 'coop-theme-ornaments', 'off');
   reflects(page, 'coop-', 'vyshyvanka', 'off');
-  const status = page.doc.querySelector('[data-theme-controls] [role="status"]');
+  const status = page.doc.querySelector('[data-theme-controls] > [role="status"]');
   assert.match(status.textContent, /session|save/i);
   assert.deepEqual(store.map, before);
   page.win.emit('storage', {

@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
 import { validateThemeBundle, resolvePresentation } from './model.mjs';
+import { isNativeOverflightArtworkFallback } from './overflight-artwork-upgrade.mjs';
 import {
   getThemeFamily,
   getInterfaceTheme,
@@ -125,13 +126,25 @@ export function studioCandidateOptions(source, options = {}) {
 /** Curated interface candidates use engine-owned art. Reject changed selected
  * source assets instead of claiming that their images/fonts/audio were applied. */
 export function unsupportedThemeAssignmentSlots(source, installedSource) {
-  const selected = resolvePresentation(validateThemeBundle(source));
+  const document = validateThemeBundle(source);
+  const selected = resolvePresentation(document);
   const installed = resolvePresentation(validateThemeBundle(installedSource));
   return Object.freeze(
     [...new Set([...Object.keys(selected.assets), ...Object.keys(installed.assets)])].filter(
-      (slot) =>
-        canonicalJSON(selected.assets[slot] ?? null) !==
-        canonicalJSON(installed.assets[slot] ?? null),
+      (slot) => {
+        if (
+          !installed.assets[slot] &&
+          isNativeOverflightArtworkFallback(
+            document.slots.find((entry) => entry.id === slot),
+            selected.assets[slot],
+          )
+        )
+          return false;
+        return (
+          canonicalJSON(selected.assets[slot] ?? null) !==
+          canonicalJSON(installed.assets[slot] ?? null)
+        );
+      },
     ),
   );
 }

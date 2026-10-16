@@ -34,6 +34,38 @@ test('candidate CI defaults cover every currently public company audience editio
   assert.deepEqual(manual, expected);
   assert.deepEqual(automatic, expected);
 });
+test('candidate CI reserves a bounded hour for every qualification stage without widening optional work', async () => {
+  const workflow = await fs.readFile(
+    new URL('../.github/workflows/company-edition-candidate.yml', import.meta.url),
+    'utf8',
+  );
+  const candidate = workflow.split('\n  candidate:\n')[1];
+  const optional = workflow.split('\n  optional-practice:\n')[1]?.split('\n  candidate:\n')[0];
+  assert.ok(candidate && optional);
+  assert.match(candidate, /^    timeout-minutes: 60$/m);
+  assert.match(optional, /^    timeout-minutes: 8$/m);
+  assert.doesNotMatch(candidate, /continue-on-error: true/);
+  for (const command of [
+    'npm run company:check',
+    'npm run company:test',
+    'node --test scripts/test-company-review.mjs',
+    'python3 -m unittest test_source_manifest test_release_artifact test_upload_source test_assemble_waived_qualification',
+    'node scripts/bundle-editions.mjs --editions "$EDITION_IDS"',
+  ])
+    assert.ok(candidate.includes(command), `Keep required qualification: ${command}`);
+  const stages = [
+    'Verify generated source and public media eligibility',
+    'Run focused company, persistence, offline and artifact tests',
+    'Verify both source release formats and edition admission',
+    'Compile twice and inspect original candidate ZIP members',
+    'Save small capacity metadata for review',
+    'Save immutable candidates for review',
+  ].map((name) => candidate.indexOf(`- name: ${name}`));
+  assert.ok(
+    stages.every((position, index) => position >= 0 && (!index || position > stages[index - 1])),
+  );
+});
+
 test('capacity CI artifact whitelists small metadata after qualification checks without replacing full candidates', async () => {
   const workflow = await fs.readFile(
     new URL('../.github/workflows/company-edition-candidate.yml', import.meta.url),

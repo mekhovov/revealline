@@ -88,5 +88,13 @@
   "audio.unavailable": "Звук недоступний.",
   "audio.failed": "Не вдалося запустити звук. Спробуйте ще раз.",
   "audio.source": "Автор / джерело",
-  "playChoices": "Хочеш грати?"
+  "playChoices": "Хочеш грати?",
+  "pauseShort": "Пауза",
+  "resumeShort": "Далі",
+  "nextShort": "Наст. рівень",
+  "guide": "Порадник",
+  "joinHint": "Почни керувати · тренування без нагород",
+  "closeDetails": "Закрити деталі",
+  "fullscreenShort": "На весь екран",
+  "windowedShort": "У вікні"
 }

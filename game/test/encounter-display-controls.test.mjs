@@ -5,6 +5,7 @@ import { parse } from 'parse5';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
+import { createDestructionPreferences } from '../hunt/preferences.mjs';
 import { getLocale, setLocale, translateDOM } from '../i18n/index.mjs';
 
 const pages = [
@@ -47,7 +48,11 @@ function mount(node, parent, document) {
 
 // Actual shipped settings markup and helper; native CSS/focus layout is not
 // simulated. The DOM boundary models events, ownership and label structure.
-async function fixture(t, page = pages[0], { stored, writable = () => true } = {}) {
+async function fixture(
+  t,
+  page = pages[0],
+  { stored, writable = () => true, separateSoundContainer = false, borrowDestruction = false } = {},
+) {
   const tree = parse(await readFile(new URL(page.path, import.meta.url), 'utf8'));
   const nodes = [...walk(tree)];
   const input = nodes.find((node) => attr(node, 'id') === `${page.prefix}enemy-remains`);
@@ -77,15 +82,23 @@ async function fixture(t, page = pages[0], { stored, writable = () => true } = {
   const other = document.createElement('button');
   document.body.append(other);
   other.focus();
+  const soundContainer = separateSoundContainer ? document.createElement('section') : null;
+  if (soundContainer) document.body.append(soundContainer);
+  const destructionPreferences = borrowDestruction
+    ? createDestructionPreferences({ window, getStorage: () => storage, writable })
+    : null;
   const controls = attachEncounterDisplayControls({
     document,
     window,
     getStorage: () => storage,
     writable,
     prefix: page.prefix,
+    soundContainer,
+    destructionPreferences,
   });
   t.after(() => {
     controls.dispose();
+    destructionPreferences?.dispose();
     document.body.replaceChildren();
   });
   return {
@@ -97,6 +110,8 @@ async function fixture(t, page = pages[0], { stored, writable = () => true } = {
     retry,
     other,
     controls,
+    soundContainer,
+    destructionPreferences,
     data,
     writes,
     failSave(value) {
@@ -113,6 +128,55 @@ async function fixture(t, page = pages[0], { stored, writable = () => true } = {
     },
   };
 }
+
+test('a host can place defeat sounds in its native Sound surface and teardown removes them there', async (t) => {
+  const h = await fixture(t, pages[0], { separateSoundContainer: true });
+  const sounds = h.document.getElementById('defeat-sounds');
+  assert(h.soundContainer.contains(sounds));
+  assert.equal(h.document.getElementById('settings-panel-audio').contains(sounds), false);
+  sounds.value = 'classic';
+  sounds.emit('change');
+  assert.equal(h.controls.snapshot().vocals, false);
+  h.controls.dispose();
+  assert.equal(h.soundContainer.children.length, 0);
+});
+
+test('renderer, audio and controls can borrow one destruction owner without stale state or premature disposal', async (t) => {
+  const h = await fixture(t, pages[0], { borrowDestruction: true });
+  const sounds = h.document.getElementById('defeat-sounds'),
+    brutal = h.document.getElementById('brutal-destruction');
+  sounds.value = 'classic';
+  sounds.emit('change');
+  brutal.checked = true;
+  brutal.emit('change');
+  assert.equal(h.destructionPreferences.snapshot().vocals, false);
+  assert.equal(h.destructionPreferences.snapshot().brutal, true);
+  h.destructionPreferences.set({ vocals: true, blood: false });
+  assert.equal(sounds.value, 'reactions');
+  assert.equal(h.controls.snapshot().blood, false);
+  h.controls.dispose();
+  assert.doesNotThrow(() => h.destructionPreferences.set({ vocals: false }));
+});
+
+for (const page of pages)
+  test(`${page.mode} exposes independent defeat sounds in Audio, retaining visual destruction in Display`, async (t) => {
+    const h = await fixture(t, page);
+    const sounds = h.document.getElementById(`${page.prefix}defeat-sounds`),
+      audio = h.document.getElementById(`${page.prefix}settings-panel-audio`),
+      gore = h.document.getElementById(`${page.prefix}brutal-destruction`);
+    assert(audio.contains(sounds));
+    assert.equal(sounds.value, 'reactions');
+    assert.equal(sounds.disabled, false);
+    assert.equal(gore.checked, false);
+    assert.equal(audio.contains(gore), false);
+    sounds.value = 'classic';
+    sounds.emit('change');
+    assert.equal(h.controls.snapshot().vocals, false);
+    assert.equal(h.controls.snapshot().brutal, false);
+    gore.checked = true;
+    gore.emit('change');
+    assert.equal(sounds.value, 'classic');
+  });
 
 for (const page of pages)
   test(`${page.mode} uses a native labeled remains checkbox and shared touch target, with silent saved-choice synchronization`, async (t) => {
@@ -251,7 +315,7 @@ test('disposal removes control and storage owners; later gestures, restores and 
   h.window.emit('pageshow', { persisted: true });
   h.document.body.replaceChildren();
   setLocale(locale === 'en' ? 'uk' : 'en', { persist: false });
-  assert.equal(h.controls.snapshot(), before);
+  assert.deepEqual(h.controls.snapshot(), before);
   assert.equal(h.status.textContent, warning);
   assert.deepEqual(h.writes, []);
 });

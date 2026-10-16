@@ -1,0 +1,73 @@
+{
+  "match": true,
+  "verificationScope": "revealline-capture-terminal-observations.v1",
+  "exactStateMatch": true,
+  "terminalObservationMatch": true,
+  "diagnostics": [],
+  "actual": {
+    "ruleset": "revealline-coop.v13",
+    "levelId": "pincer-yard",
+    "levelRevision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-b609455dc00eb3fa",
+    "status": "won",
+    "tick": 5925,
+    "time": 49.375,
+    "seed": 17,
+    "difficulty": "standard",
+    "config": {
+      "jointCuts": true,
+      "assistCaptures": true,
+      "advancedCooperation": true
+    },
+    "coverage": 0.583041958041958,
+    "goal": 0.55,
+    "requiredCores": [],
+    "hunt": {
+      "version": "humanoid-hunt-state.v1",
+      "mode": "bonus",
+      "quota": 0,
+      "total": 2,
+      "remaining": 2,
+      "kills": 0,
+      "touchKills": 0,
+      "captureKills": 0,
+      "score": 0
+    },
+    "strongholds": [],
+    "claimedCount": 1334,
+    "totalClaimable": 2288,
+    "reserves": 0,
+    "teamwork": {
+      "interceptions": 0,
+      "jointCuts": 0,
+      "rescues": 0
+    },
+    "players": [
+      {
+        "id": 0,
+        "status": "active",
+        "cutting": false,
+        "trailCells": 0,
+        "x": 16.5,
+        "y": 29.5,
+        "downedUntil": null,
+        "graceUntil": 49.67307692307698,
+        "supportCooldown": 0,
+        "supportRole": "hybrid",
+        "rescue": null
+      },
+      {
+        "id": 1,
+        "status": "active",
+        "cutting": false,
+        "trailCells": 0,
+        "x": 17,
+        "y": 6.5,
+        "downedUntil": null,
+        "graceUntil": 0,
+        "supportCooldown": 0,
+        "supportRole": "hybrid",
+        "rescue": null
+      }
+    ]
+  }
+}
