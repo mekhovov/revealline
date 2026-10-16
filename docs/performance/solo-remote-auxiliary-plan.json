@@ -24,14 +24,41 @@
   "baseline": {
     "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
     "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
-    "producer": "Fresh exact-source normal Linux build under Node22.13.1, original source flags/budgets. New archive/manifest identity; not the historical macOS baseline artifact.",
+    "producer": "Retained exact-source normal Linux b117 producer38978329593/attempt1 under Node22.13.1; no source flags or budgets changed. Each consumer must verify the complete pinned outer/ready/inner/source/CSP before admission. No fallback rebuild or historical macOS artifact substitution.",
     "historicalArtifactInvestigation": {
       "mainRun": 38817575550,
       "pagesArtifact": 12011437947,
       "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
       "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
     },
-    "reuse": "May consume a future exactly pinned verified-normal b117 producer only through the common ensureBaseline verifier; no reuse authority exists yet."
+    "reuse": "Exact API/producer-small-evidence pins only locally; full large outer and ready-body readback remain mandatory in each remote consumer. This binding grants no performance qualification or candidate release.",
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV1",
+      "run": 38978329593,
+      "artifact": 12080662080,
+      "name": "solo-normal-baseline-b1174522-38978329593-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "run": 38978329593,
+        "attempt": 1,
+        "toolingRevision": "d569ce092db47d14f974da24063f82f4a280a19a",
+        "toolingTree": "ee4d756b04fd512849cb19ceb613edfbb04c7c68"
+      },
+      "outer": {
+        "bytes": 1073744615,
+        "sha256": "abf5d8ae1f277cc2b640f103a3ab3471ebf13fe78eba518cc7630c7c316b9e62"
+      },
+      "inner": {
+        "bytes": 1073181451,
+        "sha256": "1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290"
+      },
+      "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+      "ready": {
+        "bytes": 1602,
+        "sha256": "4e90b38ad8e3d871f122798643c87173dde7d2a006c1e282485c124fcaa2132a"
+      }
+    }
   },
   "performanceExclusion": true,
   "cpu": 1,
@@ -248,6 +275,11 @@
       "path": "scripts/solo-remote-auxiliary.mjs",
       "bytes": 16004,
       "sha256": "0fb6061d899f388ab15f0c98e600404671ffd456cbfbcceba090d492f77f9e84"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 13941,
+      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
     }
   ]
 }
