@@ -8,6 +8,8 @@ The frozen source is `8c727777aac2e0ec6fa0bc260051b8a7d99a8b94`, including the s
 
 The implementation has source-scoped regression proof; regression closure and the remaining native, stress, overhead, retention and physical-device gates remain open. Historical results retain their own revisions and failures. Prospective settled120 calibration and matched RAM service create new observation protocols; they do not rewrite earlier baselines or pool unlike cohorts.
 
+The new WebKit compositor diagnostic also retains the strict full/acquire control failure: identical first-frame pictures differ by one channel value at 0.10 s despite unchanged owner/readiness witnesses. Later 0.25 s and same-owner replacement controls match exactly. Concealment at the unstable sample remains unqualified; no privacy cause, hidden-image leak or physical-display result is inferred. [Compositor evidence](solo-compositor-8c727777.md).
+
 ### Historical packaged checkpoints
 
 The preceding verified package is `14ac29e27df9d78283a1d93b5a16a23121212371`, including touch observation and Demo presentation fixes. Payload, independent ZIP members, source/static-worker/offline closure, exact CSP and durable preservation pass. Four worker/paused-render checks pass in Chrome 155.0.8059.85 and desktop WebKit 26.5. Its later Demo, touch and raster observations remain individually scoped, including the failed complete handoff and unresolved raster comparison; they do not qualify the new source. [Artifact evidence](solo-artifact-14ac29e2.md).
@@ -25,6 +27,8 @@ The subsequent source fix `f7b665906270f26c73f7e419a7258191532e3118` extends opt
 ### Device report and Demo follow-up
 
 The user identified iPhone 17 Pro with Safari on iOS 27.0.1 and Steam Deck OLED with its default refresh setting; the actual selected Deck cadence remains unknown. The user also reports substantial warmth during play, especially Demo. This is a device observation, not a measured temperature or a demonstrated thermal-throttling cause.
+
+The [16 October device research follow-up](solo-device-research-20261016.md) adds an existing-preference comparison for an open iOS 27 canvas-text GPU-memory report, and separates browser input dispatch from application handling in touch-latency investigation. These are scoped qualification additions, not confirmed explanations of the reported warmth or reasons to relax a performance gate.
 
 The Demo audit found three removable costs: the covered Solo canvas still clears/submits on each callback, paused spectator scenes repaint unchanged content, and spectator controls repeatedly rewrite unchanged text/attributes. The finite scene fade also continues writing settled opacity. Focused regressions reproduce the redundant covered-board submissions and paused draws. These presentation costs are fixed in the `14ac29e2` package, preserving native input callbacks, 120 Hz simulation, existing practice takeover ownership and the intentional background-audio contract. The complete Demo host group passes 39/39, with final narrow and covered-resize regressions retained separately in [the correctness report](solo-demo-correctness.md). A proposed duplicate practice paint owner was disproved by the existing spectator-clock stop and is not a finding.
 

@@ -1,0 +1,245 @@
+{
+  "format": "SoloCompositorEvidenceV1",
+  "status": "failed-strict-identical-input-control",
+  "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+  "artifactArchiveSHA256": "f4cc3d51219aa0f9b6cc5d1e60a4c2bc3bfea8d3022328326f92927b6fec7c47",
+  "browser": "26.5",
+  "scope": "Separate synthetic WebKit full/acquire compositor screenshot control, exact 14 captures at declared 0.10/0.25 presentation seconds and zero-delta replacements. Same original fixture, DPR3 geometry, default privacy configuration, strict zero-difference control gates and exposed-picture positive checks. Pre/post owner/checkpoint/painter/readiness stability is mandatory. Not physical display, performance, thermal, legal-play or whole-raster qualification; original getImageData failures remain unchanged.",
+  "performanceGateStatus": "excluded-instrumented-synthetic-correctness",
+  "startedAt": "2026-10-16T14:01:54.376Z",
+  "completedAt": "2026-10-16T14:01:56.538Z",
+  "receipt": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/report.json",
+    "bytes": 116275,
+    "sha256": "ea354d1512eae64a3bdaacdc42fda59d52fcb95aa657795608e1cbee9e175b4b"
+  },
+  "preservation": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/preservation.json",
+    "bytes": 10624,
+    "sha256": "f3dff0e03ef71b8173e5c1b2078bdc36787ce2ba7c373a3ba811b2db40f5e235"
+  },
+  "plan": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/plan-8c727777.json",
+    "bytes": 4496,
+    "sha256": "668098f8cd6614ab559a380e197da8074d870ba71ee2cde97be62209bd12c8bf"
+  },
+  "driver": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/driver.mjs",
+    "bytes": 19623,
+    "sha256": "42a2f2c8459bc09e5d532e281ba21656fadea5f02eceb247923e1a6bad1f0cc2"
+  },
+  "originalReadbackFailure": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/original-failed-readback-report.json",
+    "bytes": 88016,
+    "sha256": "951666592d1b7740a43ab0da17a980b0a5f12dbec5156adec2efa8e90963f839"
+  },
+  "geometry": {
+    "bitmap": {
+      "width": 1200,
+      "height": 900
+    },
+    "CSS": {
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 300
+    },
+    "DPR": 3,
+    "cells": [48, 36]
+  },
+  "captureProtocol": {
+    "count": 14,
+    "fixedRafOpportunities": 2,
+    "strictThresholdChangedPixels": 0,
+    "hiddenCellBoundaryMarginOutputPixels": 1,
+    "sameOwnerReplacement": "A\u2192B\u2192A at0.25presentationseconds;zero delta;no manual invalidation",
+    "stateWitnessesUnchangedAllCaptures": true,
+    "witnessFields": [
+      "serial",
+      "image",
+      "tick",
+      "levelId",
+      "checkpoint",
+      "painterTime",
+      "generation",
+      "paintRevision",
+      "draws",
+      "board",
+      "frame",
+      "connected",
+      "fontsStatus",
+      "imageReady",
+      "contextLost",
+      "rectangle",
+      "dpr"
+    ]
+  },
+  "controls": [
+    {
+      "left": "a-010",
+      "right": "repeat-a-010",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 40713,
+      "changedChannels": 40713,
+      "maxDelta": 1
+    },
+    {
+      "left": "a-025",
+      "right": "repeat-a-025",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-zero-control",
+      "right": "a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "b-zero-control",
+      "right": "b-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "repeat-a-zero-control",
+      "right": "repeat-a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-zero-repeat",
+      "right": "repeat-a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    }
+  ],
+  "replacement": [
+    {
+      "left": "a-replaced-b",
+      "right": "b-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-restored-a",
+      "right": "a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    }
+  ],
+  "hidden": [
+    {
+      "left": "a-010",
+      "right": "b-010",
+      "region": "hidden",
+      "samples": 755941,
+      "changedPixels": 23842,
+      "changedChannels": 23842,
+      "maxDelta": 1
+    },
+    {
+      "left": "a-025",
+      "right": "b-025",
+      "region": "hidden",
+      "samples": 755941,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-zero-repeat",
+      "right": "a-replaced-b",
+      "region": "hidden",
+      "samples": 755941,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    }
+  ],
+  "exposed": [
+    {
+      "left": "a-010",
+      "right": "b-010",
+      "region": "exposed",
+      "samples": 71415,
+      "changedPixels": 71415,
+      "changedChannels": 214245,
+      "maxDelta": 89
+    },
+    {
+      "left": "a-025",
+      "right": "b-025",
+      "region": "exposed",
+      "samples": 71415,
+      "changedPixels": 71415,
+      "changedChannels": 214245,
+      "maxDelta": 148
+    },
+    {
+      "left": "a-zero-repeat",
+      "right": "a-replaced-b",
+      "region": "exposed",
+      "samples": 71415,
+      "changedPixels": 71415,
+      "changedChannels": 214245,
+      "maxDelta": 148
+    }
+  ],
+  "temporalExposed": {
+    "left": "a-010",
+    "right": "a-025",
+    "region": "exposed",
+    "samples": 71415,
+    "changedPixels": 71415,
+    "changedChannels": 214245,
+    "maxDelta": 44
+  },
+  "invariantFailures": [
+    "Exact pixel control differs: a-010/repeat-a-010",
+    "Concealed-pixel comparison fails: a-010/b-010"
+  ],
+  "concealmentStatus": "unobserved-identical-input-control-failed",
+  "pageErrors": [],
+  "failedRequests": [],
+  "cleanup": {
+    "processExit": {
+      "code": 0,
+      "signal": null,
+      "at": "2026-10-16T14:01:56.296Z"
+    },
+    "forced": false,
+    "browserClosed": true,
+    "closedAt": "2026-10-16T14:01:56.298Z"
+  },
+  "limits": [
+    "The complete diagnostic remains failed; matching later samples do not replace the failed first-frame control.",
+    "An unstable identical-input control leaves the0.10s concealed-image comparison unqualified; this does not establish a hidden-image leak or identify the cause.",
+    "Default browser privacy/settings unchanged. This result does not establish readback-only or privacy causality.",
+    "Page screenshots represent captured composited submission, not physical display/energy/temperature.",
+    "Synthetic procedural-actor full/acquire fixture only; no live gameplay, physical iPhone or whole-raster pass.",
+    "No pixel epsilon, threshold relaxation, sample trimming or rerun selection. Original readback failure remains unchanged."
+  ]
+}
