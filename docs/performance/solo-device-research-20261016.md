@@ -49,3 +49,21 @@ A fresh Linux CI cohort can continue browser correctness checks while the local 
 Run one browser observation at a time, with a harness deadline below the job deadline and retained partial reports. These choices follow [Playwright’s CI guidance](https://playwright.dev/docs/ci). No automatic retry may replace a failed observation.
 
 Remote or calibrated desktop checks cannot establish the reported iPhone heat reduction: CPU throttling does not reproduce mobile GPU architecture, memory bandwidth or thermal throttling. Keep both regular Safari and installed offline PWA physical runs, plus Steam Deck Chrome, as distinct acceptance work. [Chrome’s calibration limits](https://developer.chrome.com/blog/devtools-grounded-real-world).
+
+## Canvas color-space and diagnostic controls
+
+WebKit documents sRGB as the default 2D canvas backing color space and notes
+that mismatched image/canvas/readback spaces require conversion. Its inspector
+can show the actual canvas color space. The canvas-debugging example also shows
+context dimensions, memory and recorded drawing operations. These are useful
+controls for the retained first-draw raster discrepancy and physical GPU-memory
+investigation; they do not establish its cause. [Color-space behavior](https://webkit.org/blog/12058/wide-gamut-2d-graphics-using-html-canvas/).
+[Canvas inspection example](https://webkit.org/blog/8452/canvas-debugging/).
+
+Extend the separate instrumented raster investigation with actual context
+attributes and image/readback color-space witnesses at creation and recovery.
+Use captured drawing operations and canvas-memory inspection outside timing
+runs. Keep default rendering and strict initial-draw comparisons intact. No
+source found in this follow-up establishes that the game's one-channel-value
+history-dependent difference is a color conversion, a driver issue or a hidden
+picture leak; neither a forced color-space change nor a tolerance waiver follows.
