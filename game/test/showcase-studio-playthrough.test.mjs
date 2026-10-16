@@ -347,9 +347,16 @@ test(
     assert.equal(expected.status, 'won');
     assert.equal(ticks, 469);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
-    assert.equal(
-      page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`)?.dataset.earned,
-      'true',
+    page.$('skip-celebration').onclick();
+    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture owns the win moment.');
+    assert.equal(page.$('show-result').hidden, false);
+    page.$('show-result').click();
+    assert.equal(page.$('game-overlay').dataset.kind, 'won');
+    const result = page.$('completion-reward-result');
+    assert.equal(result.hidden, false);
+    assert.equal(result.dataset.placement, 'summary');
+    assert.ok(
+      result.querySelector(`[data-reward-id="${f.reward.id}"][data-reward-surface="result"]`),
       'The winning frame exposes the accepted reward before any durability wait.',
     );
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
@@ -363,11 +370,6 @@ test(
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.deepEqual(saved.receipts[0].definition, f.reward);
     assert.ok(f.requests.includes(`game/${f.art.path}`));
-    page.$('skip-celebration').onclick();
-    assert.equal(page.$('game-overlay').hidden, true, 'The earned picture owns the win moment.');
-    assert.equal(page.$('show-result').hidden, false);
-    page.$('show-result').click();
-    assert.equal(page.$('game-overlay').dataset.kind, 'won');
     assert.equal(page.$('result-picture').hidden, false);
     assert.equal(page.$('next-button').hidden, false);
     assert.equal(page.$('next-button').disabled, false);
@@ -407,8 +409,21 @@ test(
     control('close').click();
     assert.equal(page.$('edition-lesson-dialog').open, false);
     assert.equal(page.doc.activeElement, lessonOpen);
-    page.$('collection-button').click();
-    await settle(() => page.$('journey-picture-grid').querySelector('button'));
+    page.$('shell-collection').click();
+    assert.equal(page.$('collection-dialog').open, true);
+    // This finite host has no MutationObserver; advance its paused UI polling clock.
+    page.frame(100);
+    await settle(
+      () =>
+        page.$('collection-dialog').open &&
+        page.$('journey-picture-grid').querySelector('button') &&
+        page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`),
+    );
+    assert.equal(
+      page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`).dataset.earned,
+      'true',
+      'The public Collection exposes the same accepted reward.',
+    );
     const earnedPicture = page.$('journey-picture-grid').querySelector('button');
     await earnedPicture.onclick();
     assert.equal(
@@ -686,9 +701,11 @@ test(
     await win(`${f.campaignId}-01`);
     page.$('next-button').click();
     const checkpoint = await win(f.missionId);
-    assert.equal(
-      page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`)?.dataset.earned,
-      'true',
+    const result = page.$('completion-reward-result');
+    assert.equal(result.hidden, false);
+    assert.equal(result.dataset.placement, 'summary');
+    assert.ok(
+      result.querySelector(`[data-reward-id="${f.reward.id}"][data-reward-surface="result"]`),
       'The accepted successor reward is visible before any durability wait.',
     );
     let saved;
@@ -754,8 +771,21 @@ test(
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     control('close').click();
     assert.equal(page.doc.activeElement, lessonOpen);
-    page.$('collection-button').click();
-    await settle(() => page.$('journey-picture-grid').querySelectorAll('button').length === 2);
+    page.$('shell-collection').click();
+    assert.equal(page.$('collection-dialog').open, true);
+    // This finite host has no MutationObserver; advance its paused UI polling clock.
+    page.frame(100);
+    await settle(
+      () =>
+        page.$('collection-dialog').open &&
+        page.$('journey-picture-grid').querySelectorAll('button').length === 2 &&
+        page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`),
+    );
+    assert.equal(
+      page.doc.querySelector(`article[data-reward-id="${f.reward.id}"]`).dataset.earned,
+      'true',
+      'The public Collection exposes the same accepted successor reward.',
+    );
     const pictureCard = [...page.$('journey-picture-grid').children].find(
       (node) =>
         node.dataset.missionId ===
