@@ -10442,6 +10442,8 @@ try {
           resume({ alignCourseBoard, contentSwitchTicket, resumeCue });
         })
         .catch((error) => {
+          // Lifecycle and ownership cancellation are not missing-original failures.
+          if (error?.name === 'AbortError') return;
           if (pictureResume === ticket) {
             performanceSession?.reportFailure(`Preparation: ${error.message ?? String(error)}`);
             feedback.finish(() => flightPictureFailure(error), 'error');
@@ -12728,48 +12730,60 @@ try {
       };
     }
     async prepareBoard(signal) {
-      const state = {
+      const owner = {
         run,
         generation: painter.preparationGeneration,
         backdrop: flightPictures?.current(),
         actors: flightActorLease,
-        revision: this.revision,
       };
-      this.resizeBoard();
-      state.revision = this.revision;
-      await painter.prepare(this.boardTexture.context, run, this.drawOptions(), { signal });
-      signal.throwIfAborted();
-      state.paintRevision = painter.paintRevision;
-      this.lastPaint = null;
-      // The next game POST_RENDER confirms Phaser submitted the prepared board
-      // to its visible canvas while paused. This does not claim display scanout.
-      await new Promise((resolve, reject) => {
-        const cancel = () => {
-          if (this.preparedFrame === finish) this.preparedFrame = null;
-          if (this.preparedCancel === cancel) this.preparedCancel = null;
-          signal.removeEventListener('abort', cancel);
-          reject(signal.reason ?? new DOMException('Preparation cancelled.', 'AbortError'));
-        };
-        const finish = () => {
-          signal.removeEventListener('abort', cancel);
-          if (this.preparedCancel === cancel) this.preparedCancel = null;
-          resolve();
-        };
-        signal.addEventListener('abort', cancel, { once: true });
-        this.preparedCancel = cancel;
-        this.preparedFrame = finish;
-        if (signal.aborted) cancel();
-      });
-      signal.throwIfAborted();
-      if (
-        run !== state.run ||
-        this.revision !== state.revision ||
-        painter.paintRevision !== state.paintRevision ||
-        painter.preparationGeneration !== state.generation ||
-        rendererLost.size
-      )
-        throw new DOMException('Preparation superseded.', 'AbortError');
-      this.preparedState = state;
+      const current = () =>
+        run === owner.run &&
+        painter.preparationGeneration === owner.generation &&
+        flightPictures?.current() === owner.backdrop &&
+        flightActorLease === owner.actors &&
+        !rendererLost.size &&
+        !document.hidden &&
+        document.hasFocus() &&
+        !dialogOpen();
+      for (;;) {
+        signal.throwIfAborted();
+        if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        this.resizeBoard();
+        const state = { ...owner, revision: this.revision };
+        await painter.prepare(this.boardTexture.context, run, this.drawOptions(), { signal });
+        signal.throwIfAborted();
+        if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        state.paintRevision = painter.paintRevision;
+        this.lastPaint = null;
+        // The next game POST_RENDER confirms Phaser submitted the prepared board
+        // to its visible canvas while paused. This does not claim display scanout.
+        await new Promise((resolve, reject) => {
+          const cancel = () => {
+            if (this.preparedFrame === finish) this.preparedFrame = null;
+            if (this.preparedCancel === cancel) this.preparedCancel = null;
+            signal.removeEventListener('abort', cancel);
+            reject(signal.reason ?? new DOMException('Preparation cancelled.', 'AbortError'));
+          };
+          const finish = () => {
+            signal.removeEventListener('abort', cancel);
+            if (this.preparedCancel === cancel) this.preparedCancel = null;
+            resolve();
+          };
+          signal.addEventListener('abort', cancel, { once: true });
+          this.preparedCancel = cancel;
+          this.preparedFrame = finish;
+          if (signal.aborted) cancel();
+        });
+        signal.throwIfAborted();
+        if (!current() || painter.paintRevision !== state.paintRevision)
+          throw new DOMException('Preparation superseded.', 'AbortError');
+        // Theme acceptance and layout can invalidate only the scene while the
+        // same flight and originals remain owned. Prepare the new display context
+        // and await its own submission; never accept the superseded snapshot.
+        if (this.revision !== state.revision) continue;
+        this.preparedState = state;
+        return;
+      }
     }
     update(now) {
       if (practiceRenderFailure.failed) return;
