@@ -5,6 +5,29 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Restarted-offline expansion: first attempt retained, pause sampling repaired
+
+Observer `8facc4b8a`'s first all-six flight run remains **failed**. Gym and
+Academy complete the restarted offline launcher lift/pause witnesses. Worlds
+then records one active frame immediately after the ordinary pause key, followed
+by three paused frames at the same 0.2 m height. The strict four-paused-sample
+gate correctly refuses this receipt. The observer now waits at most 1.5 seconds
+for the maintained paused HUD before starting its unchanged four-sample stability
+interval, inside the existing 30-second case and overall journey budget. Fifteen
+focused imported-world tests pass, including delayed paint, missing pause and
+unexpected state. No app-state mutation, extra pause key or longer journey
+deadline is used. A fresh native all-six receipt is still required.
+[Original failed receipt, screenshots and executed authority](flight-practice-continuation-20261016/all-six-offline-first-failed-originals.tgz)
+have SHA-256 `3f46b98053ce92c745e0c38878b4e3d624cab5802e50f4850d5311911e936ab0`.
+
+The separately named installed-PWA activation lane is now implemented and passes
+17 focused tests, with all 24 independent offline-flight helper tests unchanged.
+It observes one real native target activation, trusted blur and maintained pause,
+then actual unfocused-to-focused return before the existing continuity verifier.
+It does not treat a command acknowledgment as focus proof, change simulator
+mechanics or supersede the failed minimization receipts. Native execution is
+still required. Hardware and hosting remain owner-deferred.
+
 ### Current continuation: fresh five-minute passes; production startup still open
 
 The newer feedback candidate now passes all three genuine five-minute runs:
