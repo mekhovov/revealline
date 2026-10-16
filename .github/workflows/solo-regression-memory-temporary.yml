@@ -1,4 +1,4 @@
-name: Temporary Solo combined scoped regression
+name: Temporary Solo corrected cadence and exact baselines
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,38 +28,146 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - label: touch-red
-            case: solo-touch-latency-host
-            source: 48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f
-          - label: touch-green
-            case: solo-touch-latency-host
-            source: f7b665906270f26c73f7e419a7258191532e3118
           - label: candidate
             case: solo-cadence-input-host
-            source: 02ee15b022e863baf9668b115f85b4020569a9f3
-          - label: candidate
-            case: solo-dense-replay-persistence
-            source: bb74b1eefa20120304f22468c924aa2955a717b3
-          - label: candidate
-            case: solo-pending-verification-gameplay-host
-            source: bb74b1eefa20120304f22468c924aa2955a717b3
-          - label: candidate
-            case: presentation-team-runtime
-            source: a8af8fdc3a94d7f4c6ddb195531b8863c9dfb99c
+            source: 605cbd6d36a87ab592ae16cdfede890a1b035ac6
           - label: baseline
-            case: content-team-recovery-host
+            case: starting-setup-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: coop-terminal-player-hud
+            case: gameplay-pressure-completion-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: mission-library-solo-lifecycle-host
+            case: first-journey-entry-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: operation-focus-host
+            case: journey-rewards-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: coop-startup-selection
+            case: profile-recovery-settings-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: history-picture-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: fresh-visual-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: current-art
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: sentry-impact-recovery-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-team-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-trail-impact-guidance
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-team-remote-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: pressure-combination-practice
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: sentinel-circuit
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-journey-discovery-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: ukraine-review-appearance-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: field-kit-surfaces
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-versus-degraded-capability-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: sentinel-spatial-candidates
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-journey-next-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: ukraine-role-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: couch-brand-title
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-versus-inventory-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: phase-spatial-candidates
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: sentinel-theme-distribution
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: ukrainian-ornament-atlas-routes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-custom-artwork-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: couch-built-in-picture-parity
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: first-light-playthrough
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-picker-older
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-partner-return-routes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: test-encounter-consumers
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-departure-locale
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: default-journey-endings-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: library-launch-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-picker
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: picture-production-history
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: published-journey-provider
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: still-workshop-build
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-pressure-assessment
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: ukrainian-ornament-candidates
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: test-expansion-proof-dispatch
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: couch-chapter
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: default-solo-entry-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: flight-information-combat-details-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: optional-chapters-refresh-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
