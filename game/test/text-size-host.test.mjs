@@ -73,9 +73,16 @@ function assertPausedUnchanged(page, before) {
 // DOM, Phaser drawing and browser storage are modeled; no layout/pixel claim.
 test('startup adopts persisted Large and a deliberate Standard change survives an actual app reload', async (t) => {
   const storage = initialStorage({ textSize: 'large' });
-  let dispose;
-  const lifetime = { after: (callback) => (dispose = callback) };
-  t.after(async () => dispose?.());
+  const disposals = [];
+  const lifetime = {
+    after(callback) {
+      disposals.push(callback);
+    },
+  };
+  const dispose = async () => {
+    while (disposals.length) await disposals.shift()();
+  };
+  t.after(dispose);
   const before = new Map(storage.map),
     writes = storage.writes.length;
   const page = await soloPage(lifetime, { campaign, storage });
@@ -89,9 +96,7 @@ test('startup adopts persisted Large and a deliberate Standard change survives a
   assert.equal(profile(storage).library.preferences.textSize, 'standard');
   assertPausedUnchanged(page, ready);
   assert.deepEqual(page.errors, []);
-  const close = dispose;
-  dispose = null;
-  await close();
+  await dispose();
   const afterClose = new Map(storage.map),
     afterWrites = storage.writes.length;
   const reloaded = await soloPage(lifetime, { campaign, storage });
