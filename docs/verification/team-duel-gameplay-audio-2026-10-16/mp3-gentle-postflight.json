@@ -1,0 +1,36 @@
+{
+  "format": "revealline-native-audio-materialized-postflight.v1",
+  "checkedAt": "2026-10-16T05:26:17.302928+00:00",
+  "sourceCommit": "6e74a45aa5aa892fc0903b2c36c98ed49ceb6201",
+  "scope": "Second native Team MP3 Gentle phase; same2179 exact members. A persisted next-mission selection requests absent Stepping exchange artwork; native discovery returns to supported Twin landings before play. Not public, complete-site, performance or production admission.",
+  "files": 2179,
+  "bytes": 214677185,
+  "checks": {
+    "allByteLengths": true,
+    "allSha256": true
+  },
+  "httpLogOriginal": {
+    "bytes": 72302,
+    "sha256": "246fcfd0416f00f3762710a5d7467edbb694c0da1573a6134069616aaf85aec4"
+  },
+  "requests": 717,
+  "non200": [
+    {
+      "path": "/game/content-design/assets/team-partners-r1/stepping-exchange.png",
+      "status": 404
+    },
+    {
+      "path": "/game/content-design/assets/team-partners-r1/stepping-exchange.png",
+      "status": 404
+    },
+    {
+      "path": "/game/content-design/assets/team-partners-r1/stepping-exchange.png",
+      "status": 404
+    },
+    {
+      "path": "/game/content-design/assets/team-partners-r1/stepping-exchange.png",
+      "status": 404
+    }
+  ],
+  "cleanup": "Owned tab6 closed; server50640 interrupted; visibility false."
+}

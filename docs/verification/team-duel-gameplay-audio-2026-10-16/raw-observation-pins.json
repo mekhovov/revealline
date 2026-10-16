@@ -75,6 +75,78 @@
       "originalSha256": "85661bcf193225af50ff4f063fb1128d497f329263cc69a0fd25468341ae03da"
     },
     {
+      "path": "team-mp3-actions.json.gz",
+      "originalName": "team-mp3-actions.json",
+      "originalBytes": 2850,
+      "originalSha256": "878c42391c13b19f154f442dbe053a24f24d0857423eff84f130e714c798fb2d"
+    },
+    {
+      "path": "team-mp3-attempts.json.gz",
+      "originalName": "team-mp3-attempts.json",
+      "originalBytes": 120812,
+      "originalSha256": "b1e3df569c4055dcddbcaf52f838b56d3d3d32fee858feb184f295ac91c67e45"
+    },
+    {
+      "path": "team-mp3-cold.json.gz",
+      "originalName": "team-mp3-cold.json",
+      "originalBytes": 51863,
+      "originalSha256": "3c6baecbb3bb13aaccb90f27ba7fbcbd6c9b2a11c8ace1016e66d12eddad8845"
+    },
+    {
+      "path": "team-mp3-final.json.gz",
+      "originalName": "team-mp3-final.json",
+      "originalBytes": 134506,
+      "originalSha256": "504b35145b2a551fb292727d9a8bb26e2b2392017508f8f49672518882f8e7e2"
+    },
+    {
+      "path": "team-mp3-gentle-actions.json.gz",
+      "originalName": "team-mp3-gentle-actions.json",
+      "originalBytes": 1455,
+      "originalSha256": "b2129ed49cb91dba72ad49b60feb8b69a354d1ac7eff594831e2334635977651"
+    },
+    {
+      "path": "team-mp3-gentle-cold.json.gz",
+      "originalName": "team-mp3-gentle-cold.json",
+      "originalBytes": 49216,
+      "originalSha256": "3b97f09a1716c86827c246e0e2e7f8501aeeaa92e2eff4a1fcfb53ba1e4aa2b8"
+    },
+    {
+      "path": "team-mp3-gentle-followup.json.gz",
+      "originalName": "team-mp3-gentle-followup.json",
+      "originalBytes": 71090,
+      "originalSha256": "13abdc01c5456dd55fd8678953bdc2981c9c897481777f906082519cbb670367"
+    },
+    {
+      "path": "team-mp3-gentle-ready.json.gz",
+      "originalName": "team-mp3-gentle-ready.json",
+      "originalBytes": 71103,
+      "originalSha256": "95aeece77f211455a85d8ee7762a8eb64ab437ac245c964982aa193b04d53ff8"
+    },
+    {
+      "path": "team-ogg-actions.json.gz",
+      "originalName": "team-ogg-actions.json",
+      "originalBytes": 2086,
+      "originalSha256": "09a4e2b1f988ec95daf0aa787421bc8e72a2e68030ff8ba50afaabfa583aaaef"
+    },
+    {
+      "path": "team-ogg-cold.json.gz",
+      "originalName": "team-ogg-cold.json",
+      "originalBytes": 56145,
+      "originalSha256": "b14653c9987d4e9095f468b961c78d2f03107f73252a3cb597459bcbfacbe1a6"
+    },
+    {
+      "path": "team-ogg-followup.json.gz",
+      "originalName": "team-ogg-followup.json",
+      "originalBytes": 84707,
+      "originalSha256": "5f9fcd4c09cf15a4ab890d8f33656bcc63231c456a3675646e60a23c2fa89692"
+    },
+    {
+      "path": "team-ogg-ready.json.gz",
+      "originalName": "team-ogg-ready.json",
+      "originalBytes": 84717,
+      "originalSha256": "d182e304eebf2ddbb90e9fd56a6b401f7b18e09d98b0f9a3ca65d5295d507355"
+    },
+    {
       "path": "team-ready.json.gz",
       "originalName": "team-ready.json",
       "originalBytes": 102950,
