@@ -6,6 +6,8 @@ Runtime revision: `1c505dcd038ed908c9f0ede696143d4f6d59251e`. Later documentatio
 
 The branch implements the timing, preparation, rendering and recovery changes from phases 0–4. Measurement limits and incomplete qualification are listed below; this report does not label the candidate release-qualified.
 
+The [2026-10-16 follow-up plan](solo-performance-followup-plan.md) records the subsequent research, regression closure and remaining execution gates. The historical observations below retain their original runtime identities; later corrections do not turn earlier runs into final-candidate qualification.
+
 ## Implemented changes
 
 1. **Timing and evidence.** Native Phaser callbacks remain unlimited, with smoothing disabled. A monotonic scene clock feeds the existing 120 Hz simulation. Actual interruptions over 250 ms pause before catch-up; lifecycle transitions clear debt and pending input observations. Diagnostics retain startup, interrupted and partial windows, lifetime histograms, bounded recent samples and failure reasons. No automatic uploads occur.
