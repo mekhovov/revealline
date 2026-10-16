@@ -50,7 +50,7 @@ test('default channels retain their exact spellings; same-release company profil
   assert.equal(resolveEditionContext({ version: 'v0.132.1' }).channel, 'release-v0.132.1');
   assert.equal(resolveEditionContext({ version: 'DEV' }).channel, 'dev');
   const a = resolveEditionContext({ editionId: 'coupa', version }),
-    b = resolveEditionContext({ editionId: 'droneaid', version });
+    b = resolveEditionContext({ editionId: 'droneaid-nl-community', version });
   assert.notEqual(a.profileKey, b.profileKey);
   assert.equal(a.writerKey, `${a.profileKey}.writer`);
   assert.deepEqual(editionAppIdentity({ editionId: 'coupa', basePath }), {
@@ -60,7 +60,7 @@ test('default channels retain their exact spellings; same-release company profil
   });
   assert.notEqual(
     officialContentOwner({ editionId: 'coupa', packId: 'shared', revision: '1' }),
-    officialContentOwner({ editionId: 'droneaid', packId: 'shared', revision: '1' }),
+    officialContentOwner({ editionId: 'droneaid-nl-community', packId: 'shared', revision: '1' }),
   );
   for (const editionId of ['../coupa', 'coupa/other', 'Coupa', '', 'a'.repeat(65)])
     assert.throws(() => resolveEditionContext({ editionId, version }));
@@ -69,7 +69,7 @@ test('default channels retain their exact spellings; same-release company profil
 
 test('transfer discovers earlier same-edition profiles; read-only recovery protects other editions', () => {
   const h = harness('coupa');
-  for (const editionId of [undefined, 'coupa', 'droneaid']) {
+  for (const editionId of [undefined, 'coupa', 'droneaid-nl-community']) {
     const context = resolveEditionContext({ editionId, version: '0.131.0' });
     h.storage.setItem(context.profileKey, '{}');
   }
@@ -91,18 +91,21 @@ test('transfer discovers earlier same-edition profiles; read-only recovery prote
 test('same-release installed editions have independent state and writer locks', async () => {
   const h = harness('coupa');
   await activateInstalledEdition(candidate('coupa'), h);
-  const drone = { ...h, locationRef: { href: `${candidate('droneaid').scope}game/` } };
-  await activateInstalledEdition(candidate('droneaid'), drone);
+  const drone = { ...h, locationRef: { href: `${candidate('droneaid-nl-community').scope}game/` } };
+  await activateInstalledEdition(candidate('droneaid-nl-community'), drone);
   assert.equal(readInstalledState(h.storage, { editionId: 'coupa' }).active.editionId, 'coupa');
   assert.equal(
-    readInstalledState(h.storage, { editionId: 'droneaid' }).active.editionId,
-    'droneaid',
+    readInstalledState(h.storage, { editionId: 'droneaid-nl-community' }).active.editionId,
+    'droneaid-nl-community',
   );
   assert.equal(h.storage.getItem(installedStateKey()), null);
-  await assert.rejects(activateInstalledEdition(candidate('droneaid'), h), /identity/);
+  await assert.rejects(activateInstalledEdition(candidate('droneaid-nl-community'), h), /identity/);
   h.held.add(resolveEditionContext({ editionId: 'coupa', version }).writerKey);
   await assert.rejects(activateInstalledEdition(candidate('coupa'), h), /Close the game window/);
-  assert.equal((await activateInstalledEdition(candidate('droneaid'), drone)).activated, true);
+  assert.equal(
+    (await activateInstalledEdition(candidate('droneaid-nl-community'), drone)).activated,
+    true,
+  );
 });
 
 test('branded updates require source review and retain both profiles through rollback', async () => {
@@ -118,7 +121,7 @@ test('branded updates require source review and retain both profiles through rol
   const review = await reviewInstalledMigration(old.version, next.version, h);
   h.storage.setItem(nextKey, 'copied progress');
   await assert.rejects(
-    recordInstalledMigration({ ...review, editionId: 'droneaid' }, h),
+    recordInstalledMigration({ ...review, editionId: 'droneaid-nl-community' }, h),
     /another edition/,
   );
   await recordInstalledMigration(review, h);
@@ -129,4 +132,44 @@ test('branded updates require source review and retain both profiles through rol
   );
   assert.equal(h.storage.getItem(oldKey), 'old progress');
   assert.equal(h.storage.getItem(nextKey), 'copied progress');
+});
+
+test('canonical DroneAid launch reads existing installed state and migrates without changing profile identity', async () => {
+  const editionId = 'droneaid-nl-community';
+  const h = harness(editionId);
+  const old = candidate(editionId, '0.131.0');
+  await activateInstalledEdition(old, h);
+  const oldKey = resolveEditionContext(old).profileKey;
+  h.storage.setItem(oldKey, 'legacy route progress');
+  const next = {
+    ...candidate(editionId),
+    scope: candidate(editionId).scope.replace(`/editions/${editionId}/`, '/editions/droneaid/'),
+  };
+  const canonical = { ...h, locationRef: { href: `${next.scope}game/` } };
+  assert.equal(readInstalledState(h.storage, canonical).active.editionId, editionId);
+  assert.equal(readInstalledState(h.storage, canonical).active.scope, old.scope);
+  await stageInstalledEdition(next, canonical);
+  const review = await reviewInstalledMigration(old.version, next.version, canonical);
+  assert.equal(review.editionId, editionId);
+  const nextKey = resolveEditionContext(next).profileKey;
+  h.storage.setItem(nextKey, 'copied legacy route progress');
+  await recordInstalledMigration(review, canonical);
+  assert.equal((await activateInstalledEdition(next, canonical)).activated, true);
+  assert.equal(
+    (await activateInstalledEdition(old, { ...canonical, restorePrevious: true })).activated,
+    true,
+  );
+  assert.equal(h.storage.getItem(oldKey), 'legacy route progress');
+  assert.equal(h.storage.getItem(nextKey), 'copied legacy route progress');
+  assert.equal(h.storage.getItem(installedStateKey('droneaid')), null);
+  await assert.rejects(
+    activateInstalledEdition(
+      {
+        ...next,
+        scope: next.scope.replace('/editions/droneaid/', '/editions/droneaid-community/'),
+      },
+      canonical,
+    ),
+    /outside this app/,
+  );
 });

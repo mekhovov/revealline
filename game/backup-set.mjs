@@ -44,7 +44,7 @@ export async function prepareBackupSet(
   const gameIdentity = source.gameIdentity(),
     savedAt = new Date().toISOString(),
     // One prefix for this observed snapshot, independent of browser rename rules.
-    filenamePrefix = `RevealLine-backup-${savedAt.replace(/[^0-9TZ]/g, '')}-${crypto.randomUUID().replace(/-/g, '')}`,
+    filenamePrefix = `fpv-line-backup-${savedAt.replace(/[^0-9TZ]/g, '')}-${crypto.randomUUID().replace(/-/g, '')}`,
     metadata = await source.readMetadata({ signal }),
     generationIdentity = generations(metadata);
   abort(signal);

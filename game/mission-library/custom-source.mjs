@@ -38,6 +38,7 @@ export async function customLibrarySources(
     prepare,
     launch,
     progress,
+    progressState,
     card,
   } = {},
 ) {
@@ -47,7 +48,9 @@ export async function customLibrarySources(
     [isOfficial, compatibility, describe, availability, launch].some(
       (fn) => typeof fn !== 'function',
     ) ||
-    [prepare, progress, card].some((fn) => fn !== undefined && typeof fn !== 'function')
+    [prepare, progress, progressState, card].some(
+      (fn) => fn !== undefined && typeof fn !== 'function',
+    )
   )
     throw new TypeError('Custom browsing needs bounded owners and explicit host adapters.');
   const sources = [],
@@ -193,6 +196,7 @@ export async function customLibrarySources(
         return launch(binding, context);
       },
       progress,
+      progressState,
       card,
     });
   }

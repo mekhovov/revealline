@@ -1,0 +1,254 @@
+{
+  "format": "FPVTouchResponsiveEvidence.v1",
+  "layouts": [
+    {
+      "host": "World",
+      "scrollWidth": 844,
+      "size": [
+        844,
+        390
+      ],
+      "sticks": [
+        {
+          "id": "world-left-stick",
+          "rect": {
+            "bottom": 354,
+            "height": 119.84375,
+            "left": 12,
+            "right": 131.84375,
+            "top": 234.15625,
+            "width": 119.84375,
+            "x": 12,
+            "y": 234.15625
+          }
+        },
+        {
+          "id": "world-right-stick",
+          "rect": {
+            "bottom": 354,
+            "height": 119.84375,
+            "left": 712.15625,
+            "right": 832,
+            "top": 234.15625,
+            "width": 119.84375,
+            "x": 712.15625,
+            "y": 234.15625
+          }
+        }
+      ],
+      "viewport": {
+        "bottom": 390,
+        "height": 390,
+        "left": 0,
+        "right": 844,
+        "top": 0,
+        "width": 844,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "host": "World",
+      "scrollWidth": 1280,
+      "size": [
+        1280,
+        800
+      ],
+      "sticks": [
+        {
+          "id": "world-left-stick",
+          "rect": {
+            "bottom": 764,
+            "height": 128,
+            "left": 12,
+            "right": 140,
+            "top": 636,
+            "width": 128,
+            "x": 12,
+            "y": 636
+          }
+        },
+        {
+          "id": "world-right-stick",
+          "rect": {
+            "bottom": 764,
+            "height": 128,
+            "left": 1140,
+            "right": 1268,
+            "top": 636,
+            "width": 128,
+            "x": 1140,
+            "y": 636
+          }
+        }
+      ],
+      "viewport": {
+        "bottom": 800,
+        "height": 800,
+        "left": 0,
+        "right": 1280,
+        "top": 0,
+        "width": 1280,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "dialogWidth": 390,
+      "host": "World menu",
+      "mode": "self-level",
+      "modeDisabled": false,
+      "scrollWidth": 390,
+      "size": [
+        390,
+        844
+      ]
+    },
+    {
+      "host": "World",
+      "scrollWidth": 390,
+      "size": [
+        390,
+        844
+      ],
+      "sticks": [
+        {
+          "id": "world-left-stick",
+          "rect": {
+            "bottom": 808,
+            "height": 136,
+            "left": 12,
+            "right": 148,
+            "top": 672,
+            "width": 136,
+            "x": 12,
+            "y": 672
+          }
+        },
+        {
+          "id": "world-right-stick",
+          "rect": {
+            "bottom": 808,
+            "height": 136,
+            "left": 242,
+            "right": 378,
+            "top": 672,
+            "width": 136,
+            "x": 242,
+            "y": 672
+          }
+        }
+      ]
+    },
+    {
+      "host": "Academy",
+      "scrollWidth": 390,
+      "size": [
+        390,
+        844
+      ],
+      "sticks": [
+        {
+          "id": "left-stick",
+          "rect": {
+            "bottom": 808,
+            "height": 136,
+            "left": 12,
+            "right": 148,
+            "top": 672,
+            "width": 136,
+            "x": 12,
+            "y": 672
+          }
+        },
+        {
+          "id": "right-stick",
+          "rect": {
+            "bottom": 808,
+            "height": 136,
+            "left": 242,
+            "right": 378,
+            "top": 672,
+            "width": 136,
+            "x": 242,
+            "y": 672
+          }
+        }
+      ],
+      "throttle": "54% · held"
+    },
+    {
+      "host": "Academy UK",
+      "scrollWidth": 844,
+      "size": [
+        844,
+        390
+      ],
+      "sticks": [
+        {
+          "id": "left-stick",
+          "rect": {
+            "bottom": 354,
+            "height": 119.84375,
+            "left": 12,
+            "right": 131.84375,
+            "top": 234.15625,
+            "width": 119.84375,
+            "x": 12,
+            "y": 234.15625
+          }
+        },
+        {
+          "id": "right-stick",
+          "rect": {
+            "bottom": 354,
+            "height": 119.84375,
+            "left": 712.15625,
+            "right": 832,
+            "top": 234.15625,
+            "width": 119.84375,
+            "x": 712.15625,
+            "y": 234.15625
+          }
+        }
+      ]
+    },
+    {
+      "host": "Academy UK",
+      "scrollWidth": 1280,
+      "size": [
+        1280,
+        800
+      ],
+      "sticks": [
+        {
+          "id": "left-stick",
+          "rect": {
+            "bottom": 764,
+            "height": 128,
+            "left": 12,
+            "right": 140,
+            "top": 636,
+            "width": 128,
+            "x": 12,
+            "y": 636
+          }
+        },
+        {
+          "id": "right-stick",
+          "rect": {
+            "bottom": 764,
+            "height": 128,
+            "left": 1140,
+            "right": 1268,
+            "top": 636,
+            "width": 128,
+            "x": 1140,
+            "y": 636
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Actual in-app browser responsive viewports and real mouse pointer capture; not physical touch hardware or Steam Deck acceptance."
+}

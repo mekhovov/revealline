@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
@@ -9,10 +10,89 @@ import {
   loadFocusedExecutionInputs,
   packageScriptShellSemantics,
   runFocusedCommands,
+  runFocusedCommandsParallel,
 } from './focused-tests.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
+
+test('candidate measurement tooling always selects its security and archive regressions', () => {
+  for (const changed of [
+    'scripts/pages-candidate-measurement.mjs',
+    'scripts/pages-candidate-contract.mjs',
+    'scripts/pages-candidate-overlay.mjs',
+    'scripts/pages-candidate-archive.py',
+    '.github/workflows/measure-pages-candidate.yml',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    for (const kind of ['measurement', 'contract', 'overlay', 'archive'])
+      assert.ok(command.args.includes(`scripts/test-pages-candidate-${kind}.mjs`));
+  }
+});
+
+test('capacity comparison tooling selects its regression suite without broad runtime fallback', () => {
+  for (const changed of ['scripts/pages-capacity-report.mjs', 'scripts/test-pages-capacity-report.mjs']) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-pages-capacity-report.mjs'));
+  }
+});
+
+test('shared Pages evidence scripts retain their publishing regression gates', () => {
+  for (const kind of ['capacity', 'archive']) {
+    const plan = focusedTestPlan([`scripts/pages-${kind}-evidence.py`], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes(`scripts/test-pages-${kind}-evidence.mjs`));
+  }
+});
+
+test('rolling metadata scripts retain their publishing regression gates', () => {
+  for (const changed of [
+    'scripts/write-main-pages-metadata.mjs',
+    'scripts/test-main-pages-metadata.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-main-pages-metadata.mjs'));
+  }
+});
+
+test('the real company package script exposes all tests to exact focused deduplication', async () => {
+  const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
+  const prefix = 'node --test ';
+  assert.ok(scripts['company:test'].startsWith(prefix));
+  const patterns = scripts['company:test'].slice(prefix.length).trim().split(/\s+/u);
+  assert.ok(patterns.every((pattern) => /^[a-z0-9_./*-]+\.mjs$/iu.test(pattern)));
+  const showcase = 'game/test/showcase-studio-playthrough.test.mjs';
+  assert.ok(patterns.includes(showcase));
+  assert.equal(scripts['company:showcase:test'], prefix + showcase);
+  const commands = [
+    { id: 'company', command: 'npm', args: ['run', 'company:test'] },
+    { id: 'showcase', command: 'node', args: ['--test', showcase] },
+    { id: 'unrelated', command: 'node', args: ['--test', 'game/test/unrelated.test.mjs'] },
+  ];
+  // Complete synthetic glob inventory: no file execution is claimed here.
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: scripts,
+    repositoryFiles: patterns.map((pattern) => pattern.replaceAll('*', 'example')),
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(execution.diagnostics, []);
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['company', 'unrelated'],
+  );
+  assert.deepEqual(
+    execution.deduplicated.map(({ testFile }) => testFile),
+    [showcase],
+  );
+  assert.equal(execution.packageCoverage[0].tests.length, new Set(patterns).size);
+});
 
 test('ownership inventory changes select route coverage and artwork screening regressions', () => {
   const plan = focusedTestPlan(
@@ -27,6 +107,23 @@ test('ownership inventory changes select route coverage and artwork screening re
   );
   assert.ok(plan.commands[0].args.includes('game/test/content-lifecycle.test.mjs'));
   assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
+});
+
+test('combined company screening selects exact-copy, ownership and strict-review regressions', () => {
+  const plan = focusedTestPlan(['scripts/company-artwork-screening.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['content-inventory']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.ok(plan.commands[0].args.includes('scripts/test-company-artwork-screening.mjs'));
+});
+
+test('company ownership reports select retained identity and profile preservation checks', () => {
+  const plan = focusedTestPlan(['scripts/company-content-inventory.mjs'], manifest);
+  assert.ok(plan.categories.includes('company-content-inventory'));
+  assert.deepEqual(plan.unknownRuntime, []);
+  const command = plan.commands.find(({ id }) => id === 'company-content-inventory');
+  assert.ok(command.args.includes('scripts/test-company-content-inventory.mjs'));
+  assert.ok(command.args.includes('game/test/edition-retained-presentation.test.mjs'));
+  assert.ok(command.args.includes('game/test/edition-profile-compatibility.test.mjs'));
 });
 
 test('published size reports select metadata integrity and cache-owner measurement checks', () => {
@@ -126,6 +223,25 @@ test('other Team runtime paths retain the navigation gate', () => {
   const plan = focusedTestPlan(['game/couch/relay-rescue.mjs'], manifest);
   assert.deepEqual(plan.categories, ['localization', 'player-navigation-team']);
   assert.deepEqual(plan.unknownRuntime, []);
+  assert.equal(plan.commands.find(({ id }) => id === 'player-navigation-team')?.timeoutMs, 1200000);
+});
+
+test('Solo result-continuation coverage runs directly without the unrelated Team navigation bundle', () => {
+  const file = 'game/test/solo-result-continuation-host.test.mjs';
+  const plan = focusedTestPlan([file], manifest);
+  assert.ok(!plan.categories.includes('player-navigation-team'));
+  assert.deepEqual(plan.commands.map(({ id }) => id), [
+    'unknown-runtime-validate',
+    `changed-test:${file}`,
+  ]);
+});
+
+test('Versus runtime changes retain native controller Start ownership coverage once', () => {
+  const file = 'game/test/mission-library-controller-host.test.mjs';
+  const plan = focusedTestPlan(['game/couch/couch.mjs', file], manifest);
+  const command = plan.commands.find(({ id }) => id === 'player-navigation-team');
+  assert.ok(command.args.includes(file));
+  assert.equal(plan.commands.filter(({ args }) => args.includes(file)).length, 1);
 });
 
 test('documentation-only changes have a zero-command bounded plan', () => {
@@ -152,7 +268,7 @@ test('manifest-declared changed tests are not executed twice', () => {
   );
 });
 
-test('publishing changes run the exact-head controller, authority, determinism and public-byte gates', () => {
+test('publishing changes run the exact-head controller and release-object gates', () => {
   const plan = focusedTestPlan(['publishing/pages-controller/public-byte-audit.mjs'], manifest);
   assert.deepEqual(plan.categories, ['publishing']);
   const command = plan.commands.find(({ id }) => id === 'publishing-controller');
@@ -163,11 +279,7 @@ test('publishing changes run the exact-head controller, authority, determinism a
     'publishing/fastline-release-inputs.test.mjs',
     'publishing/fastline-release-objects.test.mjs',
     'publishing/fastline-release-publisher.test.mjs',
-    'publishing/pages-controller/archive-authority.test.mjs',
-    'publishing/pages-controller/assemble.test.mjs',
-    'publishing/pages-controller/metadata.test.mjs',
-    'publishing/pages-controller/public-byte-audit.test.mjs',
-    'publishing/pages-controller/release-asset.test.mjs',
+    'publishing/source-workflow.test.mjs',
   ])
     assert.ok(command.args.includes(required), `Missing focused gate: ${required}`);
 });
@@ -318,6 +430,32 @@ test('focused command execution uses real child exit status and still runs later
   assert.equal(summary.exitCode, 5);
 });
 
+test('focused command execution reports a timeout and stops the remaining queue', () => {
+  const calls = [];
+  const stderr = [];
+  const timeout = Object.assign(new Error('timed out'), { code: 'ETIMEDOUT' });
+  const summary = runFocusedCommands(
+    [
+      { id: 'blocked', command: 'node', args: ['blocked'], timeoutMs: 4321 },
+      { id: 'must-not-run', command: 'node', args: ['later'] },
+    ],
+    {
+      spawn(command, args, options) {
+        calls.push([command, ...args, options.timeout, options.killSignal]);
+        return { status: null, signal: 'SIGTERM', error: timeout };
+      },
+      stdout: { write() {} },
+      stderr: { write(message) { stderr.push(message); } },
+      timeoutMs: 1234,
+    },
+  );
+  assert.deepEqual(calls, [['node', 'blocked', 4321, 'SIGTERM']]);
+  assert.equal(summary.attempted, 1);
+  assert.deepEqual(summary.failures.map(({ id, timedOut }) => [id, timedOut]), [['blocked', true]]);
+  assert.equal(summary.exitCode, 124);
+  assert.match(stderr.at(-1), /timed out after 4321ms/u);
+});
+
 test('focused command execution succeeds only when every command succeeds', () => {
   const summary = runFocusedCommands([{ id: 'pass', command: 'node', args: ['pass'] }], {
     spawn() {
@@ -327,6 +465,75 @@ test('focused command execution succeeds only when every command succeeds', () =
     stderr: { write() {} },
   });
   assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
+});
+
+test('fallback validation receives its bounded thirty-minute budget without widening other commands', async () => {
+  const plan = focusedTestPlan(['game/new-player-runtime.mjs'], manifest);
+  const execution = focusedCommandExecutionPlan(plan.commands);
+  const fallback = execution.commands.find(({ id }) => id === 'unknown-runtime-validate');
+  assert.ok(fallback);
+  assert.equal(fallback.timeoutMs, 30 * 60 * 1000);
+  const calls = [];
+  const summary = await runFocusedCommandsParallel(
+    [...execution.commands, { id: 'ordinary', command: 'node', args: ['ordinary'] }],
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(command, args, options) {
+        calls.push([command, args, options.timeout, options.killSignal]);
+        const child = new EventEmitter();
+        setImmediate(() => child.emit('close', args.includes('validate') ? 7 : 0, null));
+        return child;
+      },
+    },
+  );
+  assert.deepEqual(calls, [
+    ['npm', ['run', 'validate'], 1800000, 'SIGTERM'],
+    ['node', ['ordinary'], 600000, 'SIGTERM'],
+  ]);
+  assert.equal(summary.exitCode, 7);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [
+    ['unknown-runtime-validate', 7],
+  ]);
+});
+
+test('bounded parallel focused execution retains every command verdict', async () => {
+  let active = 0;
+  let maximumActive = 0;
+  const summary = await runFocusedCommandsParallel(
+    [
+      { id: 'first', command: 'node', args: ['first'] },
+      { id: 'second', command: 'node', args: ['second'] },
+      { id: 'failure', command: 'node', args: ['failure'] },
+    ],
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(_command, args) {
+        const child = new EventEmitter();
+        active += 1;
+        maximumActive = Math.max(maximumActive, active);
+        setImmediate(() => {
+          active -= 1;
+          child.emit('close', args[0] === 'failure' ? 9 : 0, null);
+        });
+        return child;
+      },
+    },
+  );
+  assert.equal(summary.attempted, 3);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [['failure', 9]]);
+  assert.equal(summary.exitCode, 9);
+  assert.equal(maximumActive, 2, 'independent commands use the bounded worker pool');
+});
+
+test('parallel focused execution rejects invalid worker limits', async () => {
+  await assert.rejects(
+    runFocusedCommandsParallel([], { concurrency: 0, stdout: { write() {} }, stderr: { write() {} } }),
+    /concurrency/u,
+  );
 });
 
 test('execution planning removes only exact tests covered by the selected package script', () => {
@@ -655,4 +862,72 @@ test('neutral pilot recording changes select real engine replay and source parit
   assert.deepEqual(plan.categories, ['neutral-pilot-evidence']);
   assert.deepEqual(plan.unknownRuntime, []);
   assert.ok(plan.commands[0].args.includes('game/test/neutral-pilot-session.test.mjs'));
+});
+
+test('Journey star sidecars select previous-release storage and backup compatibility checks', () => {
+  for (const file of [
+    'game/journey/stars.mjs',
+    'game/journey/profile.mjs',
+    'game/mission-library/creator-source.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.ok(plan.categories.includes('journey-star-compatibility'));
+    const command = plan.commands.find(({ id }) => id === 'journey-star-compatibility');
+    assert.ok(command.args.includes('game/test/journey-stars.test.mjs'));
+    assert.ok(command.args.includes('game/test/journey-backup.test.mjs'));
+  }
+});
+
+test('focused CI installs the locked native fixture owner before selected checks', async () => {
+  const consumers = [
+    'game/test/community-ownership-concurrency.test.mjs',
+    'game/test/fpv-world-appearance-ui.test.mjs',
+    'game/test/fpv-world-content.test.mjs',
+  ];
+  const plan = focusedTestPlan(consumers, manifest);
+  for (const file of consumers)
+    assert.ok(plan.commands.some(({ command, args }) => command === 'node' && args.includes(file)));
+
+  const workflow = await readFile(
+    path.join(directory, '../.github/workflows/deploy-pages.yml'),
+    'utf8',
+  );
+  const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
+  assert.match(focused, /timeout-minutes: 90/u);
+  const steps = focused.split(/\n      - /);
+  const install = steps.findIndex((step) =>
+    step.startsWith('name: Install pinned authoring dependencies for selected focused gates\n'),
+  );
+  const rootInstall = steps.findIndex((step) =>
+    step.startsWith('name: Install dependencies once for selected focused gates\n'),
+  );
+  const execute = steps.findIndex((step) => step.startsWith('name: Run selected focused gates\n'));
+  assert.ok(rootInstall >= 0 && install > rootInstall && execute > install);
+  assert.match(steps[install], /if: steps\.plan\.outputs\.required == 'true'/);
+  assert.match(steps[install], /working-directory: source/);
+  assert.match(
+    steps[install],
+    /run: npm ci --prefix authoring\/fpv-worlds --ignore-scripts --include=dev --prefer-offline\s*$/,
+  );
+  assert.doesNotMatch(steps[install], /--omit=dev|continue-on-error|\|\|/);
+
+  const owner = JSON.parse(
+    await readFile(path.join(directory, '../authoring/fpv-worlds/package.json'), 'utf8'),
+  );
+  const lock = JSON.parse(
+    await readFile(path.join(directory, '../authoring/fpv-worlds/package-lock.json'), 'utf8'),
+  );
+  assert.match(owner.devDependencies['fake-indexeddb'], /^\d+\.\d+\.\d+$/);
+  for (const [name, version] of Object.entries({
+    ...owner.dependencies,
+    ...owner.devDependencies,
+  })) {
+    assert.equal(lock.packages['node_modules/' + name].version, version);
+    assert.match(lock.packages['node_modules/' + name].integrity, /^sha512-/);
+  }
+  assert.equal(
+    lock.packages[''].devDependencies['fake-indexeddb'],
+    owner.devDependencies['fake-indexeddb'],
+  );
+  assert.equal(lock.packages['node_modules/fake-indexeddb'].dev, true);
 });

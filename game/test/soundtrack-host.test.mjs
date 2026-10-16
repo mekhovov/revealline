@@ -10,6 +10,7 @@ import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
 import { ONLINE_SOUNDTRACK_CATALOGUE_URL } from '../online-soundtrack-catalogue.mjs';
+import { publicCatalogueResponse } from './helpers/soundtrack-public-catalogue.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
@@ -92,13 +93,25 @@ async function waitFor(predicate, label) {
 }
 async function setup(
   t,
-  { filePlayback = true, audioPreferences = {}, emptyMusic = false, fetchResponse } = {},
+  {
+    filePlayback = true,
+    audioPreferences = {},
+    emptyMusic = false,
+    fetchResponse,
+    publicStyles,
+    creatorSource,
+  } = {},
 ) {
   const original = await fixture(),
     db = memoryIndexedDB(),
-    store = createSoundtrackStore({ indexedDB: db.indexedDB });
+    store = createSoundtrackStore({ indexedDB: db.indexedDB, soundtrackCatalogue: !!publicStyles });
   const library = {
     ...original.library,
+    tracks: original.library.tracks.map((track) =>
+      creatorSource === undefined
+        ? track
+        : { ...track, rights: { ...track.rights, source: creatorSource } },
+    ),
     playlists: [
       {
         ...original.library.playlists[0],
@@ -110,7 +123,7 @@ async function setup(
   const prepared = await prepareSoundtrackLibrary(library, original.assets, {
     probeMedia: structuralProbe,
   });
-  if (!emptyMusic) await store.commit(prepared, { expectedGeneration: 0 });
+  if (!emptyMusic) await store.commit(prepared, { expectedGeneration: 0, publicStyles });
   store.close();
   const audio = {
     ...audioHarness(),
@@ -135,6 +148,55 @@ async function setup(
   return { page, audio, db, original };
 }
 
+const onlineRecordingHash = 'a'.repeat(64);
+function onlineCatalogueResponse(status = 200) {
+  const source = {
+    format: 'revealline-public-soundtrack-catalogue.v1',
+    archive: {
+      id: 'revealline-soundtracks',
+      baseURL: 'https://mekhovov.github.io/revealline-soundtracks/',
+    },
+    sources: [],
+    counts: { declaredTracks: 1, uniqueRecordings: 1, duplicateAliases: 0, audioBytes: 1234 },
+    tracks: [
+      {
+        id: 'fixture.recording',
+        title: 'Metadata-only fixture recording',
+        artist: 'Test fixture',
+        durationSeconds: 12,
+        tags: ['ambient'],
+        source: 'https://creator.example/fixture',
+        license: 'CC BY 4.0 International',
+        licenseURL: 'https://creativecommons.org/licenses/by/4.0/',
+        credit: 'Synthetic catalogue metadata fixture, no recording supplied.',
+        fileName: 'fixture.mp3',
+        archiveId: 'fixture-album',
+        collection: 'Fixture album',
+        collections: ['Fixture album'],
+        status: 'licensed-preview',
+        listeningApproval: 'not-reviewed',
+        gameCatalogueAdmission: false,
+        contentId: false,
+        recordingModeEligible: true,
+        audio: {
+          path: `https://github.com/mekhovov/revealline-soundtracks/releases/download/audio-test/${onlineRecordingHash}.mp3`,
+          bytes: 1234,
+          sha256: onlineRecordingHash,
+        },
+        aliases: [],
+      },
+    ],
+  };
+  const response = new Response(JSON.stringify(source), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+  // Node's synthetic Response has no URL; the real catalogue requires a direct,
+  // exact-URL HTTP response and reads its bounded stream before admitting it.
+  Object.defineProperty(response, 'url', { value: ONLINE_SOUNDTRACK_CATALOGUE_URL });
+  return response;
+}
+
 test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play', async (t) => {
   assert(
     SOUNDTRACK_CATALOGUE.tracks.some((track) => track.archiveId),
@@ -144,19 +206,61 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   const { page } = await setup(t, {
     emptyMusic: true,
     fetchResponse: async (url) => {
-      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) requests.push(String(url));
+      requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) return onlineCatalogueResponse();
     },
   });
   await waitFor(
     () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
     'Silent library preparation settles',
   );
+  await waitFor(
+    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
+    'The real bounded catalogue reader admits the metadata before Studio opens',
+  );
   await openStudio(page);
-  assert.deepEqual(requests, [ONLINE_SOUNDTRACK_CATALOGUE_URL]);
+  assert.deepEqual(
+    requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    [ONLINE_SOUNDTRACK_CATALOGUE_URL],
+  );
   assert.equal(
     requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
     false,
     'Silent catalogue discovery must not acquire recording bytes.',
+  );
+  assert(page.audioElements.every((media) => media.plays === 0));
+  assert.deepEqual(page.errors, []);
+});
+
+test('failed silent catalogue metadata is reported and Studio retries it once without acquiring recordings', async (t) => {
+  const requests = [];
+  let metadataRequests = 0;
+  const { page } = await setup(t, {
+    emptyMusic: true,
+    fetchResponse: async (url) => {
+      requests.push(String(url));
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL)
+        return onlineCatalogueResponse(++metadataRequests === 1 ? 503 : 200);
+    },
+  });
+  await waitFor(
+    () => /unavailable/i.test(page.$('soundtrack-online-status').textContent),
+    'A rejected HTTP response stays visible before a fresh explicit Studio visit',
+  );
+  assert.equal(metadataRequests, 1);
+  assert.equal(page.$(`soundtrack-online-play-${onlineRecordingHash}`), null);
+  await openStudio(page);
+  await waitFor(
+    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
+    'A normal Studio visit retries failed metadata and admits the successful response',
+  );
+  assert.deepEqual(
+    requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    [ONLINE_SOUNDTRACK_CATALOGUE_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL],
+  );
+  assert.equal(
+    requests.some((url) => /\.mp3(?:$|[?#])/.test(url)),
+    false,
   );
   assert(page.audioElements.every((media) => media.plays === 0));
   assert.deepEqual(page.errors, []);
@@ -213,6 +317,97 @@ test('Settings music text follows master immediately and remains coherent after 
     assert.deepEqual({ src: media.src, time: media.currentTime, plays: media.plays }, before);
     assert.equal(media.paused, false);
   }
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo playing banners and Audio summary expose creator links and clear them on a sourceless track', async (t) => {
+  const creatorSource = 'https://composer.example/album';
+  const { page } = await setup(t, { creatorSource });
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  await page.$('music-preview').onclick();
+  page.$('settings-master-mute').click();
+  const media = musicMedia(page),
+    mounts = ['game-now-playing-source', 'shell-now-playing-source', 'soundtrack-summary-source'];
+  assert.equal(media.paused, false);
+  assert.equal(media.muted, false);
+  for (const id of mounts) {
+    const link = page.$(id).querySelector('a');
+    assert.ok(link, id);
+    assert.equal(link.getAttribute('href'), creatorSource, id);
+    assert.equal(link.getAttribute('target'), '_blank', id);
+    assert.equal(link.getAttribute('rel'), 'noopener noreferrer', id);
+  }
+  const bannerLink = page.$('game-now-playing-source').querySelector('a');
+  media.emit('timeupdate');
+  assert.equal(page.$('game-now-playing-source').querySelector('a'), bannerLink);
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  const plays = media.plays;
+  page.$('soundtrack-summary-source').querySelector('a').click();
+  assert.equal(media.paused, true);
+  assert.equal(media.plays, plays, 'opening credits cannot restart paused music');
+  await page.$('soundtrack-next').onclick();
+  for (const id of mounts)
+    assert.equal(page.$(id).querySelector('a'), null, `${id} must remove the previous creator URL`);
+  assert.deepEqual(page.errors, []);
+});
+
+test('trusted Solo creator-link gestures cannot start, retry or restore music', async (t) => {
+  const { page } = await setup(t, {
+    creatorSource: 'https://composer.example/trusted-gesture',
+    audioPreferences: { musicEnabled: true },
+  });
+  const media = musicMedia(page);
+  await waitFor(() => !!media.src, 'The remembered recording is prepared');
+  // Landing labels sit outside both the Audio section and quick-control roots.
+  const landing = page.doc.createElement('span');
+  landing.setAttribute('data-landing-song', '');
+  page.doc.body.append(landing);
+  media.emit('timeupdate');
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  let attempts = 0,
+    rejectPlay = true;
+  const play = media.play.bind(media);
+  media.play = async () => {
+    attempts++;
+    if (rejectPlay) throw new DOMException('Gesture refused', 'NotAllowedError');
+    return play();
+  };
+  const creatorGestures = () => {
+    const link = landing.querySelector('a');
+    assert.ok(link?.closest('.music-creator-links'));
+    assert.equal(landing.parentNode, page.doc.body);
+    const nested = page.doc.createElement('span');
+    link.append(nested);
+    link.focus();
+    for (const type of ['pointerdown', 'touchstart', 'keydown', 'click'])
+      nested.emit(type, { isTrusted: true, key: 'Enter', code: 'Enter' });
+  };
+  creatorGestures();
+  assert.equal(attempts, 0, 'creator navigation is not a first menu playback gesture');
+  await page.$('music-preview').onclick();
+  await waitFor(
+    () => page.$('solo-quick-music-settings').textContent.includes('Choose Play music to retry'),
+    'Explicit playback reaches the blocked state',
+  );
+  assert.equal(attempts, 1);
+  rejectPlay = false;
+  creatorGestures();
+  assert.equal(attempts, 1, 'creator navigation cannot consume a blocked-playback retry');
+  assert.equal(media.paused, true);
+  page.doc.body.emit('pointerdown', { isTrusted: true });
+  await waitFor(() => !media.paused, 'An ordinary trusted gesture still retries listening');
+  page.win.emit('blur');
+  assert.equal(media.paused, true);
+  const beforeRestore = attempts;
+  creatorGestures();
+  assert.equal(attempts, beforeRestore, 'creator navigation cannot restore suspended music');
+  assert.equal(media.paused, true);
+  page.doc.body.emit('pointerdown', { isTrusted: true });
+  await waitFor(() => !media.paused, 'An ordinary trusted gesture still restores listening');
+  assert.equal(media.muted, false);
   assert.deepEqual(page.errors, []);
 });
 
@@ -770,32 +965,46 @@ test('Solo Audio exposes full current credits while compact Pause remains an ord
   assert.deepEqual(page.errors, []);
 });
 
-test('quick Solo controls play from the menu, pause independently and skip without resuming music', async (t) => {
+test('Settings Audio Play/Pause stays out of landing and Pause while Pause Next uses the shared transport', async (t) => {
   const { page } = await setup(t);
   await waitFor(() => !!musicMedia(page).src, 'Original prepared for first menu gesture');
-  const menu = page.$('solo-quick-music-0-toggle'),
-    pause = page.$('solo-quick-music-1-toggle'),
+  const menu = page.$('solo-quick-music-settings-toggle'),
+    next = page.$('overlay-next-song'),
     master = page.storage.getItem(AUDIO_PREFERENCES_KEY);
-  assert(menu && pause, 'Main and pause surfaces share the transport');
+  assert(menu && next, 'Settings Audio and Pause reuse the current transport');
+  assert.equal(menu.closest('[role="tabpanel"]')?.id, 'settings-panel-audio');
+  assert.equal(page.$('shell-home').querySelector('.quick-music-controls'), null);
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  assert.equal(page.$('solo-quick-music-1-toggle'), null, 'Pause has no music Play/Pause action');
   menu.click();
   assert.equal(musicMedia(page).paused, false, 'Play begins in the click task');
-  await waitFor(() => pause.textContent === 'Pause music', 'Both controls show playing');
+  await waitFor(() => menu.textContent === 'Pause music', 'Audio control shows playing');
+  page.$('settings-dialog').close();
   await startFlight(page);
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 2);
   const tick = page.rendered.run.tick;
-  pause.click();
+  page.$('pause-button').click();
+  page.frame(0);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(next.disabled, false);
+  page.$('overlay-settings').click();
+  page.$('settings-tab-audio').click();
+  menu.click();
+  page.$('settings-dialog').close();
   assert.equal(musicMedia(page).paused, true);
-  ticks(page, 2);
-  assert.equal(page.rendered.paused, false, 'Music Pause leaves gameplay running');
-  assert(page.rendered.run.tick > tick);
-  page.doc.body.emit('keydown', { code: 'KeyN', key: 'n' });
+  next.click();
   await waitFor(
-    () => page.$('solo-quick-music-0').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title),
+    () =>
+      page.$('solo-quick-music-settings').textContent.includes(BUILTIN_SOUNDTRACK_TRACKS[0].title),
     'Paused Next selects the next recording',
   );
-  assert.equal(pause.textContent, 'Play music');
+  ticks(page, 2);
+  assert.equal(page.rendered.paused, true, 'Next song keeps the flight paused');
+  assert.equal(page.rendered.run.tick, tick);
+  assert.equal(menu.textContent, 'Play music');
   assert.equal(musicMedia(page).paused, true);
   assert.equal(page.storage.getItem(AUDIO_PREFERENCES_KEY), master);
   assert.deepEqual(page.errors, []);
@@ -811,10 +1020,12 @@ for (const gesture of ['keyboard', 'pointer']) {
     media.play = async () => {
       throw Object.assign(new Error('Gesture refused'), { name: 'NotAllowedError' });
     };
-    const button = page.$('solo-quick-music-0-toggle');
+    const button = page.$('solo-quick-music-settings-toggle');
+    page.$('settings-button').click();
+    page.$('settings-tab-audio').click();
     button.click();
     await waitFor(
-      () => page.$('solo-quick-music-0').textContent.includes('Choose Play music to retry'),
+      () => page.$('solo-quick-music-settings').textContent.includes('Choose Play music to retry'),
       'Rejected playback is visible',
     );
     media.play = originalPlay;
@@ -832,3 +1043,78 @@ for (const gesture of ['keyboard', 'pointer']) {
     assert.deepEqual(page.errors, []);
   });
 }
+
+for (const [styles, action] of [
+  [['fpv'], 'start'],
+  [['fusion'], 'play'],
+]) {
+  test(`Solo reload uses saved ${styles[0]} on generic ${action} without rewriting preferences`, async (t) => {
+    let catalogueRequests = 0;
+    const { page, db } = await setup(t, {
+      publicStyles: styles,
+      audioPreferences: { musicEnabled: true },
+      fetchResponse: async (url) => {
+        if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) {
+          catalogueRequests++;
+          return publicCatalogueResponse();
+        }
+      },
+    });
+    await openStudio(page);
+    assert.equal(catalogueRequests, 1, 'only the pre-existing panel discovery runs before Play');
+    assert.equal(
+      musicMedia(page).src || '',
+      '',
+      'saved public choice does not prepare the old local projection',
+    );
+    assert.equal(musicMedia(page).plays, 0);
+    if (action === 'start') {
+      page.$('soundtrack-close').click();
+      page.$('settings-dialog').close();
+      await startFlight(page);
+    } else await playStudio(page);
+    const expectedHash = (styles[0] === 'fpv' ? '2' : '3').repeat(64);
+    await waitFor(
+      () => musicMedia(page).src?.includes(expectedHash),
+      'generic host action selects saved exact remote style',
+    );
+    assert.equal(
+      catalogueRequests,
+      2,
+      'explicit generic playback acquires the verified catalogue once',
+    );
+    assert.equal(musicMedia(page).paused, false);
+    const manager = createManagedMediaStore({ indexedDB: db.indexedDB, soundtrackCatalogue: true });
+    const saved = await manager.readDomain('audio');
+    manager.close();
+    assert.equal(saved.generation, 1);
+    assert.deepEqual(saved.publicStyles, styles);
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('closing Studio cancels a pending saved-style Play without a late stream', async (t) => {
+  let catalogueRequests = 0,
+    release;
+  const response = new Promise((resolve) => (release = resolve));
+  t.after(() => release(publicCatalogueResponse()));
+  const { page } = await setup(t, {
+    publicStyles: ['fpv'],
+    fetchResponse: async (url) => {
+      if (String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL) {
+        catalogueRequests++;
+        return catalogueRequests === 1 ? publicCatalogueResponse() : response;
+      }
+    },
+  });
+  await openStudio(page);
+  const playing = page.$('soundtrack-play').onclick();
+  await waitFor(() => catalogueRequests === 2, 'generic Play awaits catalogue');
+  page.$('soundtrack-close').click();
+  assert.equal(page.$('soundtrack-dialog').open, false);
+  release(publicCatalogueResponse());
+  await playing;
+  assert.equal(musicMedia(page).plays, 0);
+  assert.equal(musicMedia(page).src || '', '');
+  assert.deepEqual(page.errors, []);
+});

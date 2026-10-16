@@ -1,0 +1,138 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://harbour.invalid/delivery.json",
+    "bytes": 6617,
+    "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce"
+  },
+  "files": 38,
+  "verifiedResponses": 39,
+  "totalBytes": 7952305,
+  "totalWithDescriptor": 7958922,
+  "originalSourceUnchanged": true,
+  "sourceRevision": "f82604963cf8781e3e657ca9af37cf57300bc492",
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "covered-harbour",
+      "preparedResources": 2677784,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "lagoon-piers",
+      "preparedResources": 3259368,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "reef-rocks",
+      "preparedResources": 2077228,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "palm-valley",
+      "preparedResources": 3372340,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "hillside-huts",
+      "preparedResources": 4073564,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "bamboo-grove",
+      "preparedResources": 2603380,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "covered-harbour",
+      "preparedResources": 2677784,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "lagoon-piers",
+      "preparedResources": 3259368,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "reef-rocks",
+      "preparedResources": 2077228,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "palm-valley",
+      "preparedResources": 3372340,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "hillside-huts",
+      "preparedResources": 4073564,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "bamboo-grove",
+      "preparedResources": 2603380,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    }
+  ],
+  "liveCollision": {
+    "worlds": 2,
+    "colliders": 42,
+    "rigidBodies": 0
+  },
+  "disposedCollision": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "allResourcesDisposed": true,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Exact bytes and production prepare/explicit-arm/pause/dispose only. Library admission, package/offline and sustained real-device flight remain pending."
+}

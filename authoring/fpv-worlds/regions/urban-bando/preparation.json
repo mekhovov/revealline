@@ -1,0 +1,92 @@
+{
+  "format": "FPVUrbanBandoPreparation.v1",
+  "extentM": [384, 384],
+  "targetExtentM": [4096, 4096],
+  "authoredSolids": 71,
+  "licensedProps": 5,
+  "surfaces": 78,
+  "triangles": 4184,
+  "sceneBytes": 278876,
+  "sceneSHA256": "33f3f260df3e0f6b87f204728152d281ef9cbe3f44b51209dc73f8114bf7dbb9",
+  "glTFErrors": 0,
+  "glTFWarnings": 0,
+  "checks": [
+    {
+      "id": "mill-floor-lane",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "mill-vertical-atrium",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "mill-solid-slab",
+      "clear": false,
+      "passed": true
+    },
+    {
+      "id": "warehouse-loading-doors",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "warehouse-skylight",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "warehouse-side-wall",
+      "clear": false,
+      "passed": true
+    },
+    {
+      "id": "yard-crane-gap",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "yard-crane-beam",
+      "clear": false,
+      "passed": true
+    },
+    {
+      "id": "parking-side-entry",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "parking-shaft",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "parking-slab",
+      "clear": false,
+      "passed": true
+    },
+    {
+      "id": "viaduct-underpass",
+      "clear": true,
+      "passed": true
+    },
+    {
+      "id": "viaduct-pillar",
+      "clear": false,
+      "passed": true
+    },
+    {
+      "id": "tower-court-approach",
+      "clear": true,
+      "passed": true
+    }
+  ],
+  "flightReady": false,
+  "limitations": [
+    "Authoring-only original architecture and selected CC0 props",
+    "Regional terrain profile does not yet admit this scenery collision format",
+    "Representative 500 mm sphere sweeps, not exhaustive or flight qualification",
+    "No player package, default catalogue, scored objectives, recordings or long-session performance qualification"
+  ]
+}

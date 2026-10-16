@@ -1,3 +1,7 @@
+import { MOVEMENT_AUDIO_KEY } from '../ui/movement-audio.mjs';
+import { RADIO_AUDIO_KEY } from '../ui/radio-audio.mjs';
+import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { MENU_AUDIO_KEY } from '../ui/menu-audio.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -6,7 +10,13 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
+import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
+import { ENEMY_ARTWORK_PREFERENCES_KEY } from '../hunt/preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import {
+  THEME_PREFERENCES_KEY,
+  LEGACY_THEME_PREFERENCES_KEY,
+} from '../presentation/theme-system.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
@@ -296,6 +306,35 @@ test('edition theater reports unavailable catalog through its ordinary boot stat
   assert.match(p.$('boot-status').textContent, /could not start/i);
   assert.equal(p.frames.size, 0);
 });
+
+test('an empty edition recovers a focused Cancel to Verify because bundled examples are unavailable', async (t) => {
+  const p = fixture(t, { edition: await editionProviderFixture() });
+  await p.loading;
+  const cancel = p.$('cancel-load');
+  let finish,
+    hidden = cancel.hidden;
+  Object.defineProperty(cancel, 'hidden', {
+    configurable: true,
+    get: () => hidden,
+    set: (value) => {
+      hidden = value;
+      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
+    },
+  });
+  p.$('replay-file').files = [
+    { name: 'invalid.json', size: 2, text: () => new Promise((resolve) => (finish = resolve)) },
+  ];
+  p.$('replay-file').emit('change');
+  await until(() => finish, 'file read began');
+  cancel.focus();
+  finish('{}');
+  await until(() => cancel.hidden, 'file rejected');
+  assert.equal(p.$('load-example').disabled, true);
+  assert.equal(p.doc.activeElement, p.$('load-text'));
+  assert.equal(p.$('replay-import-feedback').dataset.error, 'true');
+  assert.equal(p.$('play-pause').disabled, true);
+  noPlayerAccess(p);
+});
 async function ready(page) {
   await page.loading;
   await until(
@@ -307,8 +346,38 @@ function raw(page) {
   return JSON.parse(page.data.get(DISPLAY_PREFERENCES_KEY));
 }
 function noPlayerAccess(page) {
-  assert.ok(page.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
-  assert.ok(page.writes.every(({ key }) => key === DISPLAY_PREFERENCES_KEY));
+  assert.ok(
+    page.reads.every((key) =>
+      [
+        DISPLAY_PREFERENCES_KEY,
+        ENCOUNTER_DISPLAY_PREFERENCES_KEY,
+        ENEMY_ARTWORK_PREFERENCES_KEY,
+        AUDIO_PREFERENCES_KEY,
+        MENU_AUDIO_KEY,
+        RADIO_AUDIO_KEY,
+        MOVEMENT_AUDIO_KEY,
+        THEME_PREFERENCES_KEY,
+        LEGACY_THEME_PREFERENCES_KEY,
+        'revealline.menu-style.v1',
+        'revealline.destruction.v1',
+        'revealline.journey-reactions.v1',
+        'revealline.reaction-presentation.v1',
+        'revealline.hunt-records.v1',
+      ].includes(key),
+    ),
+    `Unexpected reads: ${JSON.stringify([...new Set(page.reads)])}`,
+  );
+  assert.ok(
+    page.writes.every(({ key }) =>
+      [
+        DISPLAY_PREFERENCES_KEY,
+        AUDIO_PREFERENCES_KEY,
+        MENU_AUDIO_KEY,
+        RADIO_AUDIO_KEY,
+        MOVEMENT_AUDIO_KEY,
+      ].includes(key),
+    ),
+  );
   assert.equal(page.data.get('revealline.library.dev.v1'), 'untouched player profile');
   assert.equal(page.data.get('revealline.suspended.dev.v1'), 'untouched saved flight');
 }
@@ -594,4 +663,25 @@ test('recorded company receipt restores selected actors and rejects changed artw
       /fieldcraft|content-design\/themes|mission-library-index/.test(path),
     ),
   );
+});
+
+test('Theater adopts global remains without rewriting recordings or advancing a paused replay', async (t) => {
+  const p = fixture(t);
+  await ready(p);
+  const before = p.frame(0),
+    original = JSON.stringify(p.original);
+  assert.equal(before.showCombatScrap, true);
+  const raw = JSON.stringify({ format: 'EncounterDisplayPreferencesV1', showRemains: false });
+  p.data.set(ENCOUNTER_DISPLAY_PREFERENCES_KEY, raw);
+  p.win.emit('storage', {
+    key: ENCOUNTER_DISPLAY_PREFERENCES_KEY,
+    storageArea: p.storage,
+    newValue: raw,
+  });
+  const after = p.frame(16);
+  assert.equal(after.showCombatScrap, false);
+  assert.deepEqual(after.checkpoint, before.checkpoint);
+  assert.equal(JSON.stringify(p.original), original);
+  assert.deepEqual(p.writes, []);
+  noPlayerAccess(p);
 });

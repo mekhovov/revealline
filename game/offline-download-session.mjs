@@ -9,11 +9,12 @@ export function currentGameplayGroups(catalogue) {
 }
 export function gameplaySelection(catalogue, { all = false, selected = [] } = {}) {
   const choices = new Set(['base', ...selected]);
-  return (
-    all
-      ? currentGameplayGroups(catalogue)
-      : catalogue.groups.filter((group) => group.kind === 'gameplay' && choices.has(group.id))
-  ).map((group) => group.id);
+  // All-current intent adds new current packages without dropping previously
+  // chosen extras (SIM, archived chapters, tools). Music has its own consent.
+  if (all) for (const group of currentGameplayGroups(catalogue)) choices.add(group.id);
+  return catalogue.groups
+    .filter((group) => group.kind === 'gameplay' && choices.has(group.id))
+    .map((group) => group.id);
 }
 export function offlineReadinessCode(catalogue, ids) {
   const selected = new Set(ids);

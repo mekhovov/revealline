@@ -1,0 +1,80 @@
+{
+  "format": "FPVImportedExamplesSourcePackageComparison.v1",
+  "passed": true,
+  "source": {
+    "revision": "cc1ffbbadf092caf3871f52203e2edf2f119d74c",
+    "receiptBytes": 29494,
+    "receiptSha256": "9a73e2e1b3d1bf784aebe1d32acf5c2d21d50fb5296fb4d90a1e23c395cebfc2"
+  },
+  "package": {
+    "revision": "79a721dd19343726fed30f618a2d7c8cd164d691",
+    "receiptBytes": 29583,
+    "receiptSha256": "3370636451297172380e779c802d02729d72ef1368f9be3bb58c974e8cde7b33"
+  },
+  "identicalCheckOutcomes": 47,
+  "identicalPhaseLabels": true,
+  "playback": [
+    {
+      "mode": "self-level",
+      "ticks": 4024,
+      "finalStateIdentity": "c6a52efd455aeefa",
+      "pulses": 404
+    },
+    {
+      "mode": "acro",
+      "ticks": 3670,
+      "finalStateIdentity": "4a4560272f8dc41a",
+      "pulses": 368
+    }
+  ],
+  "identicalCandidateHostSha256": "6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c",
+  "errors": [],
+  "sourceRetainedPlayerVersusCandidatePackageDifferences": [
+    {
+      "path": "optional-package.json",
+      "sourcePlayer": {
+        "path": "optional-package.json",
+        "bytes": 18746,
+        "sha256": "d76bc8280cc1fdb33dcc9dea964cf87e72968fbadcdda592ef6085ece4e2e26d"
+      },
+      "packagePlayer": {
+        "path": "optional-package.json",
+        "bytes": 18746,
+        "sha256": "835561ea77f75e49db1d0ad0c6d9a16253087a56a061902095bbb2e72523aa8f"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sourcePlayer": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 248406,
+        "sha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc"
+      },
+      "packagePlayer": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 248880,
+        "sha256": "6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c"
+      }
+    },
+    {
+      "path": "optional-practice/fpv-worlds/worker.js",
+      "sourcePlayer": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 19909,
+        "sha256": "16bb978ec619c91cebed44c0a4dcd03bdbd92b0a70d3f56054d2979908958d5e"
+      },
+      "packagePlayer": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 19909,
+        "sha256": "4d16ee9891f8d71eebbd822516f07093df6260d3ad3aee1d74d75bc83e559a66"
+      }
+    }
+  ],
+  "workerDifferenceExactlyHostHashSizeAndPackageRevision": true,
+  "comparisonPreparationDiagnostic": "Initial third-member expectation incorrectly named index.html; exact admitted inventory showed worker.js. Comparison now asserts the observed worker byte delta is solely host hash/size and package revision; no file bytes or browser assertions changed.",
+  "limits": [
+    "Timing samples are retained in full receipts but are not equated and are not hardware performance measurements.",
+    "The source wrapper overlays the candidate host onto its retained player; the packaged wrapper reads that same host from the exact admitted ZIP.",
+    "Original79a721 package predates capacity integration;95-input integration audit and exact-head CI are separate from this browser run."
+  ]
+}

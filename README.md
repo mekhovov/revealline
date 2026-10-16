@@ -30,6 +30,8 @@ Use **Scores & saves → Saves & loads** for game-data backup and Undo. JSON ret
 
 **Create your own content:** [beginner guide and examples](authoring/community/index.html) · [step-by-step walkthrough](authoring/community/creator-guide.md) · [framework reference](authoring/community/framework-reference.md). Start with today's Playground expansion workflow; the [delivery plan](authoring/community/delivery-plan.md) tracks automatic image/video campaigns and the community store separately.
 
+**Company communities:** [public directory](https://mekhovov.github.io/revealline/game/communities/) · [routing and save-isolation guide](docs/company-communities.md). Public editions retain separate progress; the creator marketplace remains a separate service-backed tool.
+
 | Need                                                               | Start here                                                                                                                                                                                           |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Play, controls, gallery and couch race                             | [Game guide](game/README.md) · [Controller navigation](docs/controller-navigation.md) · [Controller practice](docs/controller-practice.md)                                                           |

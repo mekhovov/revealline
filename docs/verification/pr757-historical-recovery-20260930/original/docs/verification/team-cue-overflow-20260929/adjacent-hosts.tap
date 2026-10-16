@@ -1,0 +1,990 @@
+TAP version 13
+# Subtest: Team FPV changes only actor image identities, not whole presentation commands or state
+ok 1 - Team FPV changes only actor image identities, not whole presentation commands or state
+  ---
+  duration_ms: 162.238792
+  type: 'test'
+  ...
+# Subtest: Team campaign option exactly preserves historical commands (world false)
+ok 2 - Team campaign option exactly preserves historical commands (world false)
+  ---
+  duration_ms: 33.917584
+  type: 'test'
+  ...
+# Subtest: Team campaign option exactly preserves historical commands (world true)
+ok 3 - Team campaign option exactly preserves historical commands (world true)
+  ---
+  duration_ms: 27.636
+  type: 'test'
+  ...
+# Subtest: Team actor-only FPV also works without a world presentation and leaves its default field
+ok 4 - Team actor-only FPV also works without a world presentation and leaves its default field
+  ---
+  duration_ms: 38.884334
+  type: 'test'
+  ...
+# Subtest: selected Team state artwork wins generic fallbacks and does not inherit campaign actor overrides
+ok 5 - selected Team state artwork wins generic fallbacks and does not inherit campaign actor overrides
+  ---
+  duration_ms: 63.3235
+  type: 'test'
+  ...
+# Subtest: Team FPV failures occur before paint and preserve the previous actor/picture owner
+ok 6 - Team FPV failures occur before paint and preserve the previous actor/picture owner
+  ---
+  duration_ms: 110.44875
+  type: 'test'
+  ...
+# Subtest: FPV validation cannot be bypassed by reusing the whole presentation identity
+ok 7 - FPV validation cannot be bypassed by reusing the whole presentation identity
+  ---
+  duration_ms: 8.897125
+  type: 'test'
+  ...
+# Subtest: actor-only FPV cannot replace the whole picture validation owner
+ok 8 - actor-only FPV cannot replace the whole picture validation owner
+  ---
+  duration_ms: 81.0035
+  type: 'test'
+  ...
+# Subtest: Team actor appearance slot contract includes both pilot treatments and all state families
+ok 9 - Team actor appearance slot contract includes both pilot treatments and all state families
+  ---
+  duration_ms: 0.233167
+  type: 'test'
+  ...
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 10 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 35.39925
+  type: 'test'
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 11 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 6.948333
+  type: 'test'
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 12 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 160.899292
+  type: 'test'
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 13 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 93.354959
+  type: 'test'
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 14 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.965416
+  type: 'test'
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 15 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 6.779458
+  type: 'test'
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 16 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 24.357208
+  type: 'test'
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 17 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 2.897458
+  type: 'test'
+  ...
+# Subtest: Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+ok 18 - Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+  ---
+  duration_ms: 5.403667
+  type: 'test'
+  ...
+# Subtest: Standard Team commands retain the pre-Large-preference baseline
+ok 19 - Standard Team commands retain the pre-Large-preference baseline
+  ---
+  duration_ms: 54.351041
+  type: 'test'
+  ...
+# Subtest: Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+ok 20 - Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+  ---
+  duration_ms: 119.711959
+  type: 'test'
+  ...
+# Subtest: crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+ok 21 - crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+  ---
+  duration_ms: 0.12625
+  type: 'test'
+  ...
+# Subtest: invalid canvas text size fails before drawing or mutating the Team run
+ok 22 - invalid canvas text size fails before drawing or mutating the Team run
+  ---
+  duration_ms: 0.6905
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+ok 23 - 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+  ---
+  duration_ms: 42.253333
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+ok 24 - 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+  ---
+  duration_ms: 99.623417
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+ok 25 - 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+  ---
+  duration_ms: 52.06675
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+ok 26 - 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+  ---
+  duration_ms: 78.508667
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+ok 27 - 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+  ---
+  duration_ms: 62.647458
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+ok 28 - 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+  ---
+  duration_ms: 26.234833
+  type: 'test'
+  ...
+# Subtest: 362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions
+ok 29 - 362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions
+  ---
+  duration_ms: 196.967834
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed warning Hunters retain full danger captions, arrows and dashed rings
+ok 30 - 212 CSS px slowed warning Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 66.881792
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed commit Hunters retain full danger captions, arrows and dashed rings
+ok 31 - 212 CSS px slowed commit Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 85.769333
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed recovery Hunters retain full danger captions, arrows and dashed rings
+ok 32 - 212 CSS px slowed recovery Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 64.13525
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active cut.joint outcome
+ok 33 - 212 CSS px required cues remain complete with an active cut.joint outcome
+  ---
+  duration_ms: 77.440958
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active team.recovery outcome
+ok 34 - 212 CSS px required cues remain complete with an active team.recovery outcome
+  ---
+  duration_ms: 92.435875
+  type: 'test'
+  ...
+# Subtest: compact cue packing reuses identical geometry and invalidates changed arena or warnings
+ok 35 - compact cue packing reuses identical geometry and invalidates changed arena or warnings
+  ---
+  duration_ms: 19.822
+  type: 'test'
+  ...
+# Subtest: a moved locked target invalidates warm packing without changing warning text
+ok 36 - a moved locked target invalidates warm packing without changing warning text
+  ---
+  duration_ms: 7.808542
+  type: 'test'
+  ...
+# Subtest: an accepted won picture clears the last compact cue layout
+ok 37 - an accepted won picture clears the last compact cue layout
+  ---
+  duration_ms: 2.768584
+  type: 'test'
+  ...
+# Subtest: replacing or removing presentation clears its previous compact cue layout
+ok 38 - replacing or removing presentation clears its previous compact cue layout
+  ---
+  duration_ms: 15.778916
+  type: 'test'
+  ...
+# Subtest: tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+ok 39 - tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+  ---
+  duration_ms: 75.152125
+  type: 'test'
+  ...
+# Subtest: six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 40 - six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 40.901666
+  type: 'test'
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 41 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 3.267708
+  type: 'test'
+  ...
+# Subtest: Team prepared enemies reuse catalog surface motion without loading another body image
+ok 42 - Team prepared enemies reuse catalog surface motion without loading another body image
+  ---
+  duration_ms: 1.524958
+  type: 'test'
+  ...
+# Subtest: qualified Team roamers borrow the tracked body and its bounded motion treatment
+ok 43 - qualified Team roamers borrow the tracked body and its bounded motion treatment
+  ---
+  duration_ms: 132.409291
+  type: 'test'
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 44 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.443875
+  type: 'test'
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 45 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.198333
+  type: 'test'
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 46 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.187666
+  type: 'test'
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 47 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.896208
+  type: 'test'
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 48 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 12.53675
+  type: 'test'
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 49 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 8.699959
+  type: 'test'
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 50 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 7.297709
+  type: 'test'
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 51 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 3.590209
+  type: 'test'
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 52 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 36.158041
+  type: 'test'
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 53 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 24.496083
+  type: 'test'
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 54 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 1.240459
+  type: 'test'
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 55 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 0.999667
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+ok 56 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+  ---
+  duration_ms: 18.5895
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+ok 57 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+  ---
+  duration_ms: 14.055166
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+ok 58 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+  ---
+  duration_ms: 9.161125
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+ok 59 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+  ---
+  duration_ms: 3.664292
+  type: 'test'
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 60 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 140.119167
+  type: 'test'
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 61 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 3.4145
+  type: 'test'
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 62 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 4.663417
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+ok 63 - exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+  ---
+  duration_ms: 19.222542
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+ok 64 - exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+  ---
+  duration_ms: 8.278667
+  type: 'test'
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 65 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 1.743459
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (current progress)
+ok 66 - actual rescue of player 1 has one legible cue (current progress)
+  ---
+  duration_ms: 210.145667
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (legacy static role)
+ok 67 - actual rescue of player 1 has one legible cue (legacy static role)
+  ---
+  duration_ms: 144.130792
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (current progress)
+ok 68 - actual rescue of player 2 has one legible cue (current progress)
+  ---
+  duration_ms: 94.831583
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (legacy static role)
+ok 69 - actual rescue of player 2 has one legible cue (legacy static role)
+  ---
+  duration_ms: 123.648792
+  type: 'test'
+  ...
+# Subtest: new anchor slots are explicit and historical bundles remain valid without them
+ok 70 - new anchor slots are explicit and historical bundles remain valid without them
+  ---
+  duration_ms: 557.739166
+  type: 'test'
+  ...
+# Subtest: advertised malformed frames fail visibly, while unsupported old snapshots stay readable
+ok 71 - advertised malformed frames fail visibly, while unsupported old snapshots stay readable
+  ---
+  duration_ms: 0.317209
+  type: 'test'
+  ...
+# Subtest: replacement decoration is bounded and the functional square remains above it
+ok 72 - replacement decoration is bounded and the functional square remains above it
+  ---
+  duration_ms: 0.236041
+  type: 'test'
+  ...
+# Subtest: real Team painter selects actual anchor states in initial without changing the run
+ok 73 - real Team painter selects actual anchor states in initial without changing the run
+  ---
+  duration_ms: 42.337291
+  type: 'test'
+  ...
+# Subtest: real Team painter selects actual anchor states in anchors without changing the run
+ok 74 - real Team painter selects actual anchor states in anchors without changing the run
+  ---
+  duration_ms: 143.881166
+  type: 'test'
+  ...
+# Subtest: real Team painter selects actual anchor states in victory without changing the run
+ok 75 - real Team painter selects actual anchor states in victory without changing the run
+  ---
+  duration_ms: 82.933167
+  type: 'test'
+  ...
+# Subtest: ongoing two-relay specimen paints selected secured and shielded bodies with game-owned labels
+ok 76 - ongoing two-relay specimen paints selected secured and shielded bodies with game-owned labels
+  ---
+  duration_ms: 210.453334
+  type: 'test'
+  ...
+# Subtest: real initial state selects the shielded core without changing the run
+ok 77 - real initial state selects the shielded core without changing the run
+  ---
+  duration_ms: 27.670708
+  type: 'test'
+  ...
+# Subtest: real core state selects the exposed core without changing the run
+ok 78 - real core state selects the exposed core without changing the run
+  ---
+  duration_ms: 49.446
+  type: 'test'
+  ...
+# Subtest: real victory state selects the secured core without changing the run
+ok 79 - real victory state selects the secured core without changing the run
+  ---
+  duration_ms: 22.634291
+  type: 'test'
+  ...
+# Subtest: completed picture replaces the core, and preview messages never claim hidden objectives are visible
+ok 80 - completed picture replaces the core, and preview messages never claim hidden objectives are visible
+  ---
+  duration_ms: 39.561708
+  type: 'test'
+  ...
+# Subtest: old core snapshots preserve the shared body and secured opacity; malformed new bindings fail
+ok 81 - old core snapshots preserve the shared body and secured opacity; malformed new bindings fail
+  ---
+  duration_ms: 31.278417
+  type: 'test'
+  ...
+# Subtest: one objective upgrade appends only missing core states and preserves an anchor-only upgrade
+ok 82 - one objective upgrade appends only missing core states and preserves an anchor-only upgrade
+  ---
+  duration_ms: 1276.249834
+  type: 'test'
+  ...
+# Subtest: core image keeps its center readable while recipe and historical status dots remain
+ok 83 - core image keeps its center readable while recipe and historical status dots remain
+  ---
+  duration_ms: 0.332042
+  type: 'test'
+  ...
+# Subtest: clear historical cue placements remain exact and input measurements are untouched
+ok 84 - clear historical cue placements remain exact and input measurements are untouched
+  ---
+  duration_ms: 1.135833
+  type: 'test'
+  ...
+# Subtest: group packing repairs overlapping greedy positions without shrinking or covering heads
+ok 85 - group packing repairs overlapping greedy positions without shrinking or covering heads
+  ---
+  duration_ms: 1.368292
+  type: 'test'
+  ...
+# Subtest: oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+ok 86 - oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+  ---
+  duration_ms: 0.32325
+  type: 'test'
+  ...
+# Subtest: a malformed original rectangle cannot bypass the group head exclusion
+ok 87 - a malformed original rectangle cannot bypass the group head exclusion
+  ---
+  duration_ms: 0.123708
+  type: 'test'
+  ...
+# Subtest: actual imported maximum-density arena exposes all entries and one press enters paused reading
+ok 88 - actual imported maximum-density arena exposes all entries and one press enters paused reading
+  ---
+  duration_ms: 3704.33425
+  type: 'test'
+  ...
+# Subtest: fresh controller Confirm enters overflow details once and Back preserves the paused attempt
+ok 89 - fresh controller Confirm enters overflow details once and Back preserves the paused attempt
+  ---
+  duration_ms: 1454.042416
+  type: 'test'
+  ...
+# Subtest: clear ordinary Team canvas adds no overflow action or announcement
+ok 90 - clear ordinary Team canvas adds no overflow action or announcement
+  ---
+  duration_ms: 183.171584
+  type: 'test'
+  ...
+# Subtest: overflow admission requires an actual compact unplaced result
+ok 91 - overflow admission requires an actual compact unplaced result
+  ---
+  duration_ms: 0.418958
+  type: 'test'
+  ...
+# Subtest: complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+ok 92 - complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+  ---
+  duration_ms: 21.888708
+  type: 'test'
+  ...
+# Subtest: phase and half-open status expiry remain truthful while paused and translate through the current locale
+ok 93 - phase and half-open status expiry remain truthful while paused and translate through the current locale
+  ---
+  duration_ms: 1.772833
+  type: 'test'
+  ...
+# Subtest: Large reflow reveals the current Team control clipped inside the Settings scroller
+ok 94 - Large reflow reveals the current Team control clipped inside the Settings scroller
+  ---
+  duration_ms: 2176.800208
+  type: 'test'
+  ...
+# Subtest: a fully visible Team control is not scrolled by a display change
+ok 95 - a fully visible Team control is not scrolled by a display change
+  ---
+  duration_ms: 943.075917
+  type: 'test'
+  ...
+# Subtest: reveal reserves the focus ring even when the control rectangle fits
+ok 96 - reveal reserves the focus ring even when the control rectangle fits
+  ---
+  duration_ms: 1155.909417
+  type: 'test'
+  ...
+# Subtest: denied preference saving retains Large and the active paused action
+ok 97 - denied preference saving retains Large and the active paused action
+  ---
+  duration_ms: 1038.127666
+  type: 'test'
+  ...
+# Subtest: shared stored display updates reveal only the current paused action
+ok 98 - shared stored display updates reveal only the current paused action
+  ---
+  duration_ms: 741.413667
+  type: 'test'
+  ...
+# Subtest: a newer new-focus during layout wins over the old display action
+ok 99 - a newer new-focus during layout wins over the old display action
+  ---
+  duration_ms: 665.635583
+  type: 'test'
+  ...
+# Subtest: a newer closed-options during layout wins over the old display action
+ok 100 - a newer closed-options during layout wins over the old display action
+  ---
+  duration_ms: 665.658709
+  type: 'test'
+  ...
+# Subtest: a newer background during layout wins over the old display action
+ok 101 - a newer background during layout wins over the old display action
+  ---
+  duration_ms: 670.922833
+  type: 'test'
+  ...
+# Subtest: a newer hidden-document during layout wins over the old display action
+ok 102 - a newer hidden-document during layout wins over the old display action
+  ---
+  duration_ms: 630.085459
+  type: 'test'
+  ...
+# Subtest: a newer resumed during layout wins over the old display action
+ok 103 - a newer resumed during layout wins over the old display action
+  ---
+  duration_ms: 727.048208
+  type: 'test'
+  ...
+# Subtest: display reflow leaves a disabled action alone
+ok 104 - display reflow leaves a disabled action alone
+  ---
+  duration_ms: 776.627542
+  type: 'test'
+  ...
+# Subtest: display reflow leaves a hidden action alone
+ok 105 - display reflow leaves a hidden action alone
+  ---
+  duration_ms: 556.37825
+  type: 'test'
+  ...
+# Subtest: display reflow leaves a inert action alone
+ok 106 - display reflow leaves a inert action alone
+  ---
+  duration_ms: 579.885458
+  type: 'test'
+  ...
+# Subtest: display reflow leaves a invisible action alone
+ok 107 - display reflow leaves a invisible action alone
+  ---
+  duration_ms: 568.701167
+  type: 'test'
+  ...
+# Subtest: display reflow leaves a invalid-size action alone
+ok 108 - display reflow leaves a invalid-size action alone
+  ---
+  duration_ms: 575.810334
+  type: 'test'
+  ...
+# Subtest: a terminal page cannot reveal a stale display action on later storage delivery
+ok 109 - a terminal page cannot reveal a stale display action on later storage delivery
+  ---
+  duration_ms: 604.297084
+  type: 'test'
+  ...
+# Subtest: a newer shared display choice during layout keeps its own selection
+ok 110 - a newer shared display choice during layout keeps its own selection
+  ---
+  duration_ms: 541.290375
+  type: 'test'
+  ...
+# Subtest: actual emitter-warning draws only its registered decoration and leaves the run unchanged
+ok 111 - actual emitter-warning draws only its registered decoration and leaves the run unchanged
+  ---
+  duration_ms: 114.049125
+  type: 'test'
+  ...
+# Subtest: actual emitter-spark draws only its registered decoration and leaves the run unchanged
+ok 112 - actual emitter-spark draws only its registered decoration and leaves the run unchanged
+  ---
+  duration_ms: 34.004125
+  type: 'test'
+  ...
+# Subtest: versioned Team travelling fronts use shared shape-distinct markers and preserve authority
+ok 113 - versioned Team travelling fronts use shared shape-distinct markers and preserve authority
+  ---
+  duration_ms: 35.4265
+  type: 'test'
+  ...
+# Subtest: historical emitter remains procedural; malformed advertised frames fail; completed previews report hidden effects
+ok 114 - historical emitter remains procedural; malformed advertised frames fail; completed previews report hidden effects
+  ---
+  duration_ms: 200.0075
+  type: 'test'
+  ...
+# Subtest: full Team upgrade adds emitter slots atomically without replacing existing roles or exact historical revisions
+ok 115 - full Team upgrade adds emitter slots atomically without replacing existing roles or exact historical revisions
+  ---
+  duration_ms: 1235.335375
+  type: 'test'
+  ...
+# Subtest: Emitter team.emitter.warning preserves uploaded original bytes and history in bundle round trips
+ok 116 - Emitter team.emitter.warning preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 485.353583
+  type: 'test'
+  ...
+# Subtest: Emitter team.emitter.spark preserves uploaded original bytes and history in bundle round trips
+ok 117 - Emitter team.emitter.spark preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 503.133208
+  type: 'test'
+  ...
+# Subtest: first-connection capture renders command-earned outcome and preserves simulation
+ok 118 - first-connection capture renders command-earned outcome and preserves simulation
+  ---
+  duration_ms: 173.823875
+  type: 'test'
+  ...
+# Subtest: first-connection team-recovery renders command-earned outcome and preserves simulation
+ok 119 - first-connection team-recovery renders command-earned outcome and preserves simulation
+  ---
+  duration_ms: 179.813209
+  type: 'test'
+  ...
+# Subtest: relay-yard capture renders command-earned outcome and preserves simulation
+ok 120 - relay-yard capture renders command-earned outcome and preserves simulation
+  ---
+  duration_ms: 59.922625
+  type: 'test'
+  ...
+# Subtest: relay-yard team-recovery renders command-earned outcome and preserves simulation
+ok 121 - relay-yard team-recovery renders command-earned outcome and preserves simulation
+  ---
+  duration_ms: 147.863667
+  type: 'test'
+  ...
+# Subtest: fixed-step observation retains a joint event after the core clears it, without duplicate awards
+ok 122 - fixed-step observation retains a joint event after the core clears it, without duplicate awards
+  ---
+  duration_ms: 18.938792
+  type: 'test'
+  ...
+# Subtest: invalid declared outcome image fails before painter snapshot adoption
+ok 123 - invalid declared outcome image fails before painter snapshot adoption
+  ---
+  duration_ms: 1.027791
+  type: 'test'
+  ...
+# Subtest: completed pictures suppress transient outcome feedback
+ok 124 - completed pictures suppress transient outcome feedback
+  ---
+  duration_ms: 123.559542
+  type: 'test'
+  ...
+# Subtest: player 1 rescue uses real state and preserves fixed identity cues
+ok 125 - player 1 rescue uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 141.356792
+  type: 'test'
+  ...
+# Subtest: player 1 recovered uses real state and preserves fixed identity cues
+ok 126 - player 1 recovered uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 42.507333
+  type: 'test'
+  ...
+# Subtest: player 2 rescue uses real state and preserves fixed identity cues
+ok 127 - player 2 rescue uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 30.110208
+  type: 'test'
+  ...
+# Subtest: player 2 recovered uses real state and preserves fixed identity cues
+ok 128 - player 2 recovered uses real state and preserves fixed identity cues
+  ---
+  duration_ms: 20.457583
+  type: 'test'
+  ...
+# Subtest: decoration is below shared actor artwork; normal and reduced modes use the same actual rescue percentage
+ok 129 - decoration is below shared actor artwork; normal and reduced modes use the same actual rescue percentage
+  ---
+  duration_ms: 143.349667
+  type: 'test'
+  ...
+# Subtest: historical frames stay procedural; inactive and completed scenes show no custom rescue decoration
+ok 130 - historical frames stay procedural; inactive and completed scenes show no custom rescue decoration
+  ---
+  duration_ms: 270.7265
+  type: 'test'
+  ...
+# Subtest: released contact rescue state disappears on real pause and returns only through public commands
+ok 131 - released contact rescue state disappears on real pause and returns only through public commands
+  ---
+  duration_ms: 16.403125
+  type: 'test'
+  ...
+# Subtest: full Team upgrade adds rescue slots atomically without replacing existing roles or exact historical revisions
+ok 132 - full Team upgrade adds rescue slots atomically without replacing existing roles or exact historical revisions
+  ---
+  duration_ms: 1068.376375
+  type: 'test'
+  ...
+# Subtest: Rescue team.rescue.progress preserves uploaded original bytes and history in bundle round trips
+ok 133 - Rescue team.rescue.progress preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 533.303083
+  type: 'test'
+  ...
+# Subtest: Rescue team.player.recovery preserves uploaded original bytes and history in bundle round trips
+ok 134 - Rescue team.player.recovery preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 433.149542
+  type: 'test'
+  ...
+# Subtest: recovered player 1 advances through actual grace expiry before reset
+ok 135 - recovered player 1 advances through actual grace expiry before reset
+  ---
+  duration_ms: 27.053
+  type: 'test'
+  ...
+# Subtest: recovered player 2 advances through actual grace expiry before reset
+ok 136 - recovered player 2 advances through actual grace expiry before reset
+  ---
+  duration_ms: 16.991167
+  type: 'test'
+  ...
+# Subtest: specialist pulses retain distinct non-colour role glyphs with reduced effects
+ok 137 - specialist pulses retain distinct non-colour role glyphs with reduced effects
+  ---
+  duration_ms: 0.800041
+  type: 'test'
+  ...
+# Subtest: Team Support first-connection draws two registered pulses and slowed decorations without mutating simulation
+ok 138 - Team Support first-connection draws two registered pulses and slowed decorations without mutating simulation
+  ---
+  duration_ms: 81.366709
+  type: 'test'
+  ...
+# Subtest: Team Support relay-yard draws two registered pulses and slowed decorations without mutating simulation
+ok 139 - Team Support relay-yard draws two registered pulses and slowed decorations without mutating simulation
+  ---
+  duration_ms: 75.784792
+  type: 'test'
+  ...
+# Subtest: historical Support needs no images; unavailable advertised frames fail instead of substituting
+ok 140 - historical Support needs no images; unavailable advertised frames fail instead of substituting
+  ---
+  duration_ms: 38.315084
+  type: 'test'
+  ...
+# Subtest: explicit presentation upgrade preserves old objective bindings and revisions
+ok 141 - explicit presentation upgrade preserves old objective bindings and revisions
+  ---
+  duration_ms: 1387.603833
+  type: 'test'
+  ...
+# Subtest: Support team.support.pulse preserves uploaded original bytes and history in bundle round trips
+ok 142 - Support team.support.pulse preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 474.056625
+  type: 'test'
+  ...
+# Subtest: Support team.enemy.slowed preserves uploaded original bytes and history in bundle round trips
+ok 143 - Support team.enemy.slowed preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 530.999791
+  type: 'test'
+  ...
+# Subtest: legal shared loss ends both full and compact player instructions until an explicit keyboard Retry
+ok 144 - legal shared loss ends both full and compact player instructions until an explicit keyboard Retry
+  ---
+  duration_ms: 3510.216709
+  type: 'test'
+  ...
+# Subtest: a Support pulse on the winning step is remembered while terminal copy stays final
+ok 145 - a Support pulse on the winning step is remembered while terminal copy stays final
+  ---
+  duration_ms: 6656.813125
+  type: 'test'
+  ...
+# Subtest: P1 alone with zero reserves retains rescue guidance and keyboard Help returns without resuming
+ok 146 - P1 alone with zero reserves retains rescue guidance and keyboard Help returns without resuming
+  ---
+  duration_ms: 2730.471833
+  type: 'test'
+  ...
+# Subtest: P2 alone with zero reserves retains rescue guidance and keyboard Help returns without resuming
+ok 147 - P2 alone with zero reserves retains rescue guidance and keyboard Help returns without resuming
+  ---
+  duration_ms: 2526.183583
+  type: 'test'
+  ...
+# Subtest: first-connection: an earned Team victory shows finished player states and Retry restores active guidance
+ok 148 - first-connection: an earned Team victory shows finished player states and Retry restores active guidance
+  ---
+  duration_ms: 9435.707084
+  type: 'test'
+  ...
+# {"boundary":"rehearsed keyboard host; finite DOM/inert Canvas, no native or human-win claim","level":"first-connection","coreReferenceCommands":2081,"hostCommandTicks":2081}
+# Subtest: relay-yard: an earned Team victory shows finished player states and Retry restores active guidance
+ok 149 - relay-yard: an earned Team victory shows finished player states and Retry restores active guidance
+  ---
+  duration_ms: 6372.971
+  type: 'test'
+  ...
+# {"boundary":"rehearsed keyboard host; finite DOM/inert Canvas, no native or human-win claim","level":"relay-yard","coreReferenceCommands":1128,"hostCommandTicks":1128}
+# Subtest: the ordinary UI-importable QA loss arena reaches its terminal result through keyboard play
+ok 150 - the ordinary UI-importable QA loss arena reaches its terminal result through keyboard play
+  ---
+  duration_ms: 722.26975
+  type: 'test'
+  ...
+# Subtest: the ordinary UI-importable QA win arena reaches its terminal result through keyboard play
+ok 151 - the ordinary UI-importable QA win arena reaches its terminal result through keyboard play
+  ---
+  duration_ms: 4381.546875
+  type: 'test'
+  ...
+# Subtest: a legal active Relay Yard contact rescue retains its player-specific guidance and shared reserves
+ok 152 - a legal active Relay Yard contact rescue retains its player-specific guidance and shared reserves
+  ---
+  duration_ms: 5576.289542
+  type: 'test'
+  ...
+# Subtest: legacy callers retain procedural painting and restoring the page snapshot restores that look
+ok 153 - legacy callers retain procedural painting and restoring the page snapshot restores that look
+  ---
+  duration_ms: 58.81
+  type: 'test'
+  ...
+# Subtest: the prepared original is drawn once with nearest sampling and only claimed land exposes it
+ok 154 - the prepared original is drawn once with nearest sampling and only claimed land exposes it
+  ---
+  duration_ms: 6.7
+  type: 'test'
+  ...
+# Subtest: an explicit procedural binding uses the selected palette without pretending an image exists
+ok 155 - an explicit procedural binding uses the selected palette without pretending an image exists
+  ---
+  duration_ms: 2.220292
+  type: 'test'
+  ...
+# Subtest: Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+ok 156 - Team terrain uses shared non-color symbols only on unclaimed ground, including reduced effects
+  ---
+  duration_ms: 116.863875
+  type: 'test'
+  ...
+# Subtest: Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects
+ok 157 - Team reclaimed roamers retain tracked silhouettes and distinct state labels through pause and reduced effects
+  ---
+  duration_ms: 32.439583
+  type: 'test'
+  ...
+# Subtest: wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+ok 158 - wrong arena, stale presentation, cropped dimensions and non-nearest bindings refuse before drawing
+  ---
+  duration_ms: 2.22775
+  type: 'test'
+  ...
+# Subtest: snapshot validation is atomic and plain text keeps its existing system-font roles
+ok 159 - snapshot validation is atomic and plain text keeps its existing system-font roles
+  ---
+  duration_ms: 1.688833
+  type: 'test'
+  ...
+# Subtest: existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+ok 160 - existing Team non-trail cues and geometry remain above the picture in reduced paused paint
+  ---
+  duration_ms: 2.5425
+  type: 'test'
+  ...
+# Subtest: motion scale affects only optional pulse while paused repetition and real simulation remain identical
+ok 161 - motion scale affects only optional pulse while paused repetition and real simulation remain identical
+  ---
+  duration_ms: 182.031042
+  type: 'test'
+  ...
+# Subtest: drawing errors restore the borrowed canvas state without closing the supplied image
+ok 162 - drawing errors restore the borrowed canvas state without closing the supplied image
+  ---
+  duration_ms: 0.777833
+  type: 'test'
+  ...
+# Subtest: the existing page lease applies/restores the Team snapshot without overriding a newer owner
+ok 163 - the existing page lease applies/restores the Team snapshot without overriding a newer owner
+  ---
+  duration_ms: 0.469708
+  type: 'test'
+  ...
+1..163
+# tests 163
+# suites 0
+# pass 163
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 42763.223292

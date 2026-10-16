@@ -1,21 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#091324" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
     <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="navigation.css" />
     <link rel="stylesheet" href="i18n/style.css" />
-    <script type="module" src="app.mjs"></script>
-    <title data-i18n="interface:revealLine">Reveal Line</title>
+    <script src="app.mjs" type="application/x-revealline-locked" data-access-type="module"></script>
+    <title data-i18n="interface:revealLine">FPV / LINE</title>
   </head>
-  <body>
+  <body class="offline-launcher">
     <main>
-      <h1 data-i18n="interface:revealLine">Reveal Line</h1>
+      <div class="launcher-identity">
+        <img class="launcher-app-icon" src="icon-192.png" width="64" height="64" alt="" />
+        <h1 data-i18n="interface:revealLine">FPV / LINE</h1>
+      </div>
       <div data-language-control></div>
       <noscript>
         <p>JavaScript is required to open or manage the installed game.</p>

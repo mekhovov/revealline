@@ -1,0 +1,247 @@
+{
+  "sourceBase": "29e3bd4a831834c55b8ecf14a204b14784252f38",
+  "implementedAt": "218675159",
+  "sourceNote": "Loaded from the feature working tree before reconciliation. Renderer/core feature code matches the committed implementation. Raw receipt includes exact project and appearance identities. Concurrent CPU checks/build work mean timings are diagnostic, not isolated performance qualification.",
+  "capturedAt": "2026-10-14T04:07:48.866Z",
+  "viewport": {
+    "width": 1920,
+    "height": 1080,
+    "devicePixelRatio": 1
+  },
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "protocol": {
+    "arrangement": "One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.",
+    "warmupSeconds": 30,
+    "measurementSeconds": 900,
+    "repetitions": 1,
+    "windows": [
+      {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 899.9995,
+        "cadenceMs": {
+          "samples": 107886,
+          "p50": 8.299999982118607,
+          "p95": 10.5,
+          "p99": 14.099999994039536,
+          "worst": 128.40000000596046
+        },
+        "cadenceHz": 119.87339992966663,
+        "slowFraction": 0.0007878686761952431,
+        "passes": true
+      }
+    ],
+    "acceptance": true,
+    "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+  },
+  "trialValid": true,
+  "invalidReasons": [],
+  "atlas": {
+    "width": 2040,
+    "height": 1964,
+    "maxTextureSize": 2048,
+    "spriteRGBABytes": 16026240,
+    "pages": [
+      {
+        "index": 0,
+        "width": 2040,
+        "height": 1964,
+        "frameCount": 1327
+      }
+    ],
+    "textures": 7,
+    "worldRGBABytes": 12441600,
+    "worldTiles": [
+      {
+        "index": 0,
+        "x": 0,
+        "y": 0,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 1,
+        "x": 960,
+        "y": 0,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 2,
+        "x": 1920,
+        "y": 0,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 3,
+        "x": 0,
+        "y": 540,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 4,
+        "x": 960,
+        "y": 540,
+        "width": 960,
+        "height": 540
+      },
+      {
+        "index": 5,
+        "x": 1920,
+        "y": 540,
+        "width": 960,
+        "height": 540
+      }
+    ],
+    "baseRGBABytes": 28467840,
+    "groundRGBABytes": 0,
+    "groundTileEdge": 256,
+    "retainedCanvasBytes": 28467840,
+    "preparationScratchBytes": 16384,
+    "customActorFrames": 0,
+    "acceptedActorOverrides": [],
+    "combatStateFrames": 420,
+    "escortFrames": 24,
+    "soldierFrames": 216,
+    "machineryFrames": 36,
+    "heroFrames": 12,
+    "equipmentFrames": 13,
+    "remainsFrames": 120,
+    "defeatFrames": 480,
+    "frameCount": 1327
+  },
+  "spriteHighWater": 1845,
+  "lastResourceSamples": [
+    {
+      "time": 885,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 12,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1406,
+      "allocatedSprites": 1845,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 86424457,
+      "heapTotalBytes": 126926725,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 900,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 159,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1527,
+      "allocatedSprites": 1845,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 89936816,
+      "heapTotalBytes": 127187668,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 915,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1394,
+      "allocatedSprites": 1845,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 86572399,
+      "heapTotalBytes": 126927543,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 930,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 93,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1498,
+      "allocatedSprites": 1845,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 64107397,
+      "heapTotalBytes": 127713105,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    }
+  ],
+  "clock": {
+    "steps": 55800,
+    "droppedSeconds": 0,
+    "accumulator": 0.00209999999404507
+  }
+}

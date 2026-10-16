@@ -1,0 +1,32 @@
+{
+  "kind": "in-memory lossless encoding feasibility; no production source or asset edited",
+  "encoder": "Pillow 12.1.1 lossless WebP method6 exact true",
+  "results": [
+    {
+      "source": "game/ui/art/menu-scenes/droneaid-main-background.png",
+      "width": 2000,
+      "height": 1545,
+      "sourceBytes": 880307,
+      "sourceSha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515",
+      "losslessWebPBytes": 493598,
+      "losslessWebPSha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000",
+      "bytesSaved": 386709,
+      "exactRGBA": true,
+      "encodingSeconds": 1.279896334017394,
+      "sourceUnchanged": true
+    },
+    {
+      "source": "game/ui/art/identity/fpv-line/wordmark.png",
+      "width": 2172,
+      "height": 724,
+      "sourceBytes": 485216,
+      "sourceSha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+      "losslessWebPBytes": 328104,
+      "losslessWebPSha256": "08d872b5fb18343ee1cfe512fbe316c4da30b185eee82e35e2e2d33bca6e1285",
+      "bytesSaved": 157112,
+      "exactRGBA": true,
+      "encodingSeconds": 0.6581317920063157,
+      "sourceUnchanged": true
+    }
+  ]
+}

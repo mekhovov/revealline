@@ -39,7 +39,12 @@ function nativeDialogs(t) {
 function key(page, value, { release = true, repeat = false } = {}) {
   const target = page.doc.activeElement;
   const event = target.emit('keydown', { key: value, code: value, repeat });
-  if (!event.defaultPrevented && value === 'Enter' && target.tagName === 'BUTTON') target.click();
+  if (
+    !event.defaultPrevented &&
+    value === 'Enter' &&
+    ['BUTTON', 'SUMMARY'].includes(target.tagName)
+  )
+    target.click();
   // Escape's cancellable modal close is a browser default, not game behavior.
   const dialog = target.closest('dialog[open]');
   if (
@@ -82,7 +87,9 @@ async function practice(
   return Object.assign(page, { previewStorage });
 }
 function pad(page, t) {
-  let now = 1000;
+  // Boot has already sampled this clock. Continue it monotonically so the
+  // Confirm lifecycle sees elapsed physical-neutral time in complete-file runs.
+  let now = performance.now();
   const descriptor = Object.getOwnPropertyDescriptor(performance, 'now');
   Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
   t.after(() =>
@@ -109,6 +116,9 @@ function pad(page, t) {
     frame();
     set(index, false);
     frame();
+    // Separate deliberate Confirm presses by the existing 120 ms release
+    // guard. Back/direction pulses remain immediate for held-input assertions.
+    if (index === 0) for (let i = 0; i < 8; i++) frame();
   };
   const find = (id) => {
     for (let i = 0; i < 35 && page.doc.activeElement.id !== id; i++) pulse(13);
@@ -145,6 +155,7 @@ for (const policy of ['immediate', 'grid-center']) {
     assert.equal(page.$('shell-missions').open, true);
     key(page, 'Escape');
     assert.equal(page.$('shell-missions').open, false);
+    assert.equal(page.doc.activeElement.id, 'overlay-brief');
     assert.equal(page.$('shell-mission-content').hidden, false);
     assert.equal(page.$('shell-brief-content').hidden, true);
     assert.equal(page.$('mission-brief-unit').parentElement, page.$('mission-brief'));
@@ -163,14 +174,26 @@ for (const policy of ['immediate', 'grid-center']) {
     const checkpoint = authoritativeCheckpoint(page.rendered.run),
       pausedTick = page.rendered.run.tick;
     assert.ok(page.rendered.run.trail.length > 0);
+    assert.equal(
+      page.$('pause-mission-info').open,
+      false,
+      'Pause starts with optional info collapsed.',
+    );
+    reach(page, 'pause-mission-info-toggle');
+    key(page, 'Enter');
+    assert.equal(page.$('pause-mission-info').open, true);
     reach(page, 'overlay-brief');
     key(page, 'Enter');
     key(page, 'Enter');
     key(page, 'ArrowDown');
     key(page, 'Escape');
+    assert.equal(page.doc.activeElement.id, 'mission-brief-read');
     key(page, 'ArrowRight');
     key(page, 'Escape');
+    assert.equal(page.doc.activeElement.id, 'overlay-brief');
+    assert.equal(page.$('pause-mission-info').open, true, 'Returning retains the visible opener.');
     frames(page, 20);
+    assert.equal(page.doc.activeElement.id, 'overlay-brief');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.equal(page.$('game-overlay').dataset.kind, 'pause');
     reach(page, 'start-button');
@@ -192,11 +215,20 @@ for (const policy of ['immediate', 'grid-center']) {
     controls.pulse(9);
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+    assert.equal(
+      page.$('pause-mission-info').open,
+      false,
+      'Pause starts with optional info collapsed.',
+    );
+    controls.find('pause-mission-info-toggle');
+    controls.pulse(0);
+    assert.equal(page.$('pause-mission-info').open, true);
     controls.find('overlay-brief');
     controls.pulse(0);
     assert.equal(page.doc.activeElement.id, 'mission-brief-read');
     assert.equal(page.$('shell-mission-content').hidden, true);
     controls.pulse(0);
+    assert.equal(page.doc.activeElement.id, 'mission-brief-reading');
     controls.set(13, true);
     controls.frame();
     controls.pulse(1);
@@ -212,6 +244,8 @@ for (const policy of ['immediate', 'grid-center']) {
     controls.set(13, true);
     controls.pulse(1);
     assert.equal(page.$('shell-missions').open, false);
+    assert.equal(page.doc.activeElement.id, 'overlay-brief');
+    assert.equal(page.$('pause-mission-info').open, true, 'Returning retains the visible opener.');
     const focus = page.doc.activeElement;
     for (let i = 0; i < 35; i++) controls.frame();
     assert.equal(page.doc.activeElement, focus);

@@ -1,0 +1,285 @@
+TAP version 13
+# Subtest: objective plates pair readable text with every collection panel while authored profiles retain the old path
+ok 1 - objective plates pair readable text with every collection panel while authored profiles retain the old path
+  ---
+  duration_ms: 2.63175
+  ...
+# Subtest: active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+ok 2 - active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+  ---
+  duration_ms: 1.007833
+  ...
+# Subtest: inactive, behind-camera and invalid viewport labels retain original bounds
+ok 3 - inactive, behind-camera and invalid viewport labels retain original bounds
+  ---
+  duration_ms: 0.378583
+  ...
+# Subtest: real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved
+ok 4 - real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved
+  ---
+  duration_ms: 71.046959
+  ...
+# Subtest: active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+ok 5 - active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+  ---
+  duration_ms: 6.54525
+  ...
+# Subtest: renderer exposes only the active themed gate brackets at every quality and releases shared resources once
+ok 6 - renderer exposes only the active themed gate brackets at every quality and releases shared resources once
+  ---
+  duration_ms: 439.5385
+  ...
+# Subtest: SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+ok 7 - SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+  ---
+  duration_ms: 4.093458
+  ...
+# Subtest: SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+ok 8 - SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+  ---
+  duration_ms: 18.076792
+  ...
+# Subtest: injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+ok 9 - injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+  ---
+  duration_ms: 3.161
+  ...
+# Subtest: all production family collection pins round-trip through World and Academy presentation metadata
+ok 10 - all production family collection pins round-trip through World and Academy presentation metadata
+  ---
+  duration_ms: 15.261541
+  ...
+# Subtest: complete apply from another tab updates SIM intent while preserving the armed appearance
+ok 11 - complete apply from another tab updates SIM intent while preserving the armed appearance
+  ---
+  duration_ms: 8.0195
+  ...
+# Subtest: optional SIM re-exports the same shared offline collection authority
+ok 12 - optional SIM re-exports the same shared offline collection authority
+  ---
+  duration_ms: 0.563416
+  ...
+# Subtest: versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+ok 13 - versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+  ---
+  duration_ms: 4.181833
+  ...
+# Subtest: collection effect palettes are immutable semantic cues with exact-revision fallback
+ok 14 - collection effect palettes are immutable semantic cues with exact-revision fallback
+  ---
+  duration_ms: 0.356417
+  ...
+# Subtest: SIM appearance resolution preserves authored profiles and never mutates course data
+ok 15 - SIM appearance resolution preserves authored profiles and never mutates course data
+  ---
+  duration_ms: 9.887667
+  ...
+# Subtest: industrial textures are deterministic local sRGB art with quality-capped world filtering
+ok 16 - industrial textures are deterministic local sRGB art with quality-capped world filtering
+  ---
+  duration_ms: 4.904625
+  ...
+# Subtest: bevel calibration normals are bounded deterministic linear tangent-space data
+ok 17 - bevel calibration normals are bounded deterministic linear tangent-space data
+  ---
+  duration_ms: 9.819084
+  ...
+# Subtest: all built-in environments have industrial materials without moving world geometry
+ok 18 - all built-in environments have industrial materials without moving world geometry
+  ---
+  duration_ms: 421.572625
+  ...
+# Subtest: flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+ok 19 - flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+  ---
+  duration_ms: 36.758375
+  ...
+# Subtest: container detail batches retain all fittings outside flight bounds without per-container draws
+ok 20 - container detail batches retain all fittings outside flight bounds without per-container draws
+  ---
+  duration_ms: 3.282
+  ...
+# Subtest: instanced replacements retain and release registered shadow owners without a later world traversal
+ok 21 - instanced replacements retain and release registered shadow owners without a later world traversal
+  ---
+  duration_ms: 172.1335
+  ...
+# Subtest: specimen collections bind the same model roles and geometry to distinct material palettes
+ok 22 - specimen collections bind the same model roles and geometry to distinct material palettes
+  ---
+  duration_ms: 80.469917
+  ...
+# Subtest: calibration disposal releases shared resources exactly once
+ok 23 - calibration disposal releases shared resources exactly once
+  ---
+  duration_ms: 3.729708
+  ...
+# Subtest: imported mesh material bindings are opt-in, bounded and revision-specific
+ok 24 - imported mesh material bindings are opt-in, bounded and revision-specific
+  ---
+  duration_ms: 1.3695
+  ...
+# Subtest: transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+ok 25 - transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+  ---
+  duration_ms: 0.670166
+  ...
+# Subtest: a glTF mesh-node binding covers only its own loader-identified primitives
+ok 26 - a glTF mesh-node binding covers only its own loader-identified primitives
+  ---
+  duration_ms: 0.5345
+  ...
+# Subtest: all collections cover every environment with protected course data and exterior dressing
+ok 27 - all collections cover every environment with protected course data and exterior dressing
+  ---
+  duration_ms: 619.423916
+  ...
+# Subtest: family surface recipes provide distinct luminance structure beyond a global tint
+ok 28 - family surface recipes provide distinct luminance structure beyond a global tint
+  ---
+  duration_ms: 20.578209
+  ...
+# Subtest: collection capability requires explicit opt-in and a registered matching family
+ok 29 - collection capability requires explicit opt-in and a registered matching family
+  ---
+  duration_ms: 0.602834
+  ...
+# Subtest: native industrial texture is deterministic and keeps every alpha pixel of every sprite
+ok 30 - native industrial texture is deterministic and keeps every alpha pixel of every sprite
+  ---
+  duration_ms: 40.297208
+  ...
+# Subtest: material treatment adds bounded surface detail while rejecting giant inputs
+ok 31 - material treatment adds bounded surface detail while rejecting giant inputs
+  ---
+  duration_ms: 0.395083
+  ...
+# Subtest: adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+ok 32 - adapter caches prepared pixels, preserves exact geometry/source and owns only its derived canvases
+  ---
+  duration_ms: 0.576666
+  ...
+# Subtest: uploaded/custom hashes and failed Canvas reads retain original artwork
+ok 33 - uploaded/custom hashes and failed Canvas reads retain original artwork
+  ---
+  duration_ms: 0.173875
+  ...
+# Subtest: Solo freezes selection at a new level and preserves source presentation identity
+ok 34 - Solo freezes selection at a new level and preserves source presentation identity
+  ---
+  duration_ms: 0.387791
+  ...
+# Subtest: every current published builtin sprite is pinned without importing its manifest at runtime
+ok 35 - every current published builtin sprite is pinned without importing its manifest at runtime
+  ---
+  duration_ms: 5.806834
+  ...
+# Subtest: current red Vyshyvanka has new exact interface/Arcade pins while the original bytes and SIM binding remain retained
+ok 36 - current red Vyshyvanka has new exact interface/Arcade pins while the original bytes and SIM binding remain retained
+  ---
+  duration_ms: 74.650292
+  ...
+# Subtest: Classic Field Kit changes its current display name through a new revision and keeps exact legacy documents
+ok 37 - Classic Field Kit changes its current display name through a new revision and keeps exact legacy documents
+  ---
+  duration_ms: 0.120042
+  ...
+# Subtest: each new family resolves complete interface, Arcade and SIM contracts with readable state pairs
+ok 38 - each new family resolves complete interface, Arcade and SIM contracts with readable state pairs
+  ---
+  duration_ms: 10.927542
+  ...
+# Subtest: new Arcade finishes are distinct, deterministic and leave alpha, dimensions and source pixels intact
+ok 39 - new Arcade finishes are distinct, deterministic and leave alpha, dimensions and source pixels intact
+  ---
+  duration_ms: 103.714958
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 40 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 27.83725
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 41 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 2.948334
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 42 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 1.227666
+  ...
+# Subtest: ornaments Off suppresses texture for every installed family without removing semantic state cues
+ok 43 - ornaments Off suppresses texture for every installed family without removing semantic state cues
+  ---
+  duration_ms: 20.155875
+  ...
+# Subtest: shared controls and reading cards use quiet fills while preserving bevel, focus and selection
+ok 44 - shared controls and reading cards use quiet fills while preserving bevel, focus and selection
+  ---
+  duration_ms: 1.367
+  ...
+# Subtest: gallery previews are uninterrupted palette strips and ornament is confined to a single outer accent
+ok 45 - gallery previews are uninterrupted palette strips and ornament is confined to a single outer accent
+  ---
+  duration_ms: 0.591917
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 46 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 1.3075
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 47 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 2.108166
+  ...
+# Subtest: custom interface identity retains its material recipe and restores the prior DOM lease
+ok 48 - custom interface identity retains its material recipe and restores the prior DOM lease
+  ---
+  duration_ms: 2.019083
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 49 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 0.913166
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 50 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.168917
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 51 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 9.169375
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 52 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 4.677792
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 53 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 1.446792
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 54 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 1.063958
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 55 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 1.114291
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1661.624375

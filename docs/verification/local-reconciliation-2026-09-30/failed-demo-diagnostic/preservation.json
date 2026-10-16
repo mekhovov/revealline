@@ -1,0 +1,25 @@
+{
+  "format": "revealline.historical-diagnostic-preservation.v1",
+  "sourceStash": "859df669131559460ecacd787cf81b1439c333d0",
+  "disposition": "failed historical evidence only; not a runtime input or current release gate",
+  "files": [
+    {
+      "path": "check-edition.mjs.txt",
+      "originalGitBlob": "bb239bb2367a86af681f3fe0e21f81a5a79bbf75",
+      "originalBytes": 5751,
+      "originalSha256": "e496d775a42518fbe39e294fa749961bdcc5f5727c090881e653c1fde22c54dd",
+      "storedBytes": 5707,
+      "storedSha256": "15af09200a4814c6cd5226d366525525a85efe9075a689e30bdd279913e6ca3e",
+      "redaction": "one absolute worktree path"
+    },
+    {
+      "path": "edition-inventory.json",
+      "originalGitBlob": "898ff2848b95974fb16447a69918d6a93aa1ff2e",
+      "originalBytes": 6504,
+      "originalSha256": "0941ffc3ac0091df27694f1267159d0a4f780506fb44243b7825e24cf3c257e8",
+      "storedBytes": 6504,
+      "storedSha256": "0941ffc3ac0091df27694f1267159d0a4f780506fb44243b7825e24cf3c257e8",
+      "redaction": null
+    }
+  ]
+}

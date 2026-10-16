@@ -1,0 +1,8 @@
+{
+  "candidate": "589ddb66420e3f03fac16fce3869b3147af79e27",
+  "url": "http://127.0.0.1:8789/dist/fpv-woodland-main883-player/optional-practice/fpv-worlds/index.html",
+  "english": "\n  - paragraph: Crossing trail\n  - button \"Menu\"\n  - button \"Arm / resume\"\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.0 s · ♥ 100\n  - strong: 1/4 · Hold position\n  - status: Ready. Choose your controls, then arm.\n  - generic \"Yaw 0%, Throttle 0%\":\n    - generic: Yaw / Throttle\n    - status: 0% · held\n  - generic \"Roll 0%, Pitch 0%\":\n    - generic: Roll / Pitch",
+  "ukrainian": "\n  - paragraph: Перетин стежки\n  - button \"Меню\"\n  - button \"Увімкнути / продовжити\"\n  - generic: +\n  - generic: 0.0 m · 0 m/s · 0.0 s · ♥ 100\n  - strong: 1/4 · Утримуйте позицію\n  - status: Пауза. Натисніть «Увімкнути», щоб продовжити.\n  - generic \"Рискання 0%, Газ 0%\":\n    - generic: Рискання / Газ\n    - status: 0% · утримується\n  - generic \"Крен 0%, Тангаж 0%\":\n    - generic: Крен / Тангаж",
+  "consoleErrors": [],
+  "scope": "Actual frozen package launch after main883 localization changes; both loaded paused at zero throttle. Not physical-device acceptance."
+}

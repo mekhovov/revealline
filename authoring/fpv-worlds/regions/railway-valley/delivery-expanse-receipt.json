@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "sourceRecipe": "4c252d9364fc13d518f24bd34aad6b7541a28889",
+  "pin": {
+    "url": "https://railway-delivery.invalid/delivery.json",
+    "bytes": 98773,
+    "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7"
+  },
+  "payloadFiles": 618,
+  "payloadBytes": 17844865,
+  "totalWithDescriptorBytes": 17943638,
+  "verifiedResponses": 619,
+  "productionSessionCases": [
+    {
+      "mode": "self-level",
+      "spawnId": "freight-hall",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 676872,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "viaduct-river-gap",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 590328,
+      "textureBytes": 0
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "quarry-under-conveyor",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 597264,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "station-canopy",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 597216,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "foundry-gantries",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 709584,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "timber-crane-line",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 599376,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "freight-hall",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 676872,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "viaduct-river-gap",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 590328,
+      "textureBytes": 0
+    },
+    {
+      "mode": "acro",
+      "spawnId": "quarry-under-conveyor",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 597264,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "station-canopy",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 597216,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "foundry-gantries",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 709584,
+      "textureBytes": 2446676
+    },
+    {
+      "mode": "acro",
+      "spawnId": "timber-crane-line",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 599376,
+      "textureBytes": 2446676
+    }
+  ],
+  "disposalZero": true,
+  "playerAdmission": false,
+  "limitations": [
+    "Filesystem-backed HTTP response fixture, not internet throughput",
+    "No native rendering, IndexedDB installation, Library selection or public admission",
+    "Short actual shared-flight commands, not whole-region endurance"
+  ],
+  "execution": {
+    "runtimeSource": "a07c0a9c36e2e0af4cda3a5a53a45573ba2712e8",
+    "worldsArchiveSHA256": "87de7ccaea1ada670e3cb7a549e449782ff2a28c1d2efd8d9d9fb55c0ca8f6ad",
+    "scenarioSHA256": "f23a690d0a35da20b6f33c890030ea88c65c77f0211638132054a3e7e8c8d079",
+    "adaptedScenarioSHA256": "6c9a9993dbfa3d0601ec03a7bb48c47348660610133a9bc83087abb9936deba3"
+  }
+}

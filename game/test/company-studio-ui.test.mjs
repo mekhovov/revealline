@@ -171,7 +171,7 @@ test('compiler report preserves review-required checks and only opens local comp
   );
   assert.equal(
     studioPreviewURL(checked, 'http://localhost:8768/authoring/company-studio/').href,
-    'http://localhost:8768/dist/company-previews/acme/game/company.html',
+    'http://localhost:8768/dist/company-previews/acme/game/company.html?studio-preview=1',
   );
   for (const path of [
     'https://unrelated.test/game/company.html',
@@ -229,6 +229,7 @@ function previewUI(overrides = {}) {
       if (!elements.has(id))
         elements.set(id, {
           hidden: true,
+          focus() {},
           removeAttribute(name) {
             delete this[name];
           },
@@ -248,7 +249,7 @@ function previewUI(overrides = {}) {
     clearTimeout: (id) => timers.delete(id),
     ...overrides,
   });
-  for (const name of ['readJSON', 'readSource', 'showStep', 'openPreview']) {
+  for (const name of ['stepTargets', 'readJSON', 'readSource', 'showStep', 'openPreview']) {
     const declaration = studioTree.body.find(
       (entry) => entry.type === 'FunctionDeclaration' && entry.id.name === name,
     );
@@ -272,7 +273,7 @@ test('leaving preview cancels verification and a late completion cannot mount an
   const entered = new Promise((resolve) => {
     started = resolve;
   });
-  const { context, elements, timers } = previewUI({
+  const { context, elements, timers, messages } = previewUI({
     verifyStudioPreview: async () => {
       started();
       return pending;
@@ -286,8 +287,11 @@ test('leaving preview cancels verification and a late completion cannot mount an
   assert.equal(context.previewController, null);
   // Returning before the stale request finishes must not revive its ownership.
   context.showStep(5);
+  const visibleMessages = [...messages];
   finish({ url: new URL('http://localhost/preview/game/company.html'), verifiedFiles: 1 });
-  await assert.rejects(operation, (error) => error.name === 'AbortError');
+  // A superseded request is intentionally consumed; it cannot own a new error.
+  await operation;
+  assert.deepEqual(messages, visibleMessages);
   assert.equal(elements.get('preview-frame').src, undefined);
   assert.equal(elements.get('preview-frame').hidden, true);
   assert.equal(timers.size, 0);

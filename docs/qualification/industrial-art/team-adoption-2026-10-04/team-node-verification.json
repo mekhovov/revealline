@@ -1,0 +1,107 @@
+{
+  "format": "pursuit-pilot-recording-receipt.v2",
+  "source": {
+    "commit": "5ac6d674303f9151a68f78f23436bd52fbfb4c0d",
+    "dirty": true
+  },
+  "pilot": "pincer-yard",
+  "mode": "team",
+  "pace": "standard",
+  "seed": 17,
+  "recipe": {
+    "format": "revealline-coop-level.v11",
+    "identity": "8fd470190b7ea7a1",
+    "sha256": "eec09ec1411948825897dec39ca8e988a4d7f2c59ff73c2c24cff76ce26c8859"
+  },
+  "recordingSha256": "70267ce3b7fe79f4321c1518a5f087578bf1ddb1d5dfdb74386a39bcc88a1294",
+  "verification": "native-terminal-observation-completion",
+  "outcome": {
+    "summary": {
+      "ruleset": "revealline-coop.v13",
+      "levelId": "pincer-yard",
+      "levelRevision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-b609455dc00eb3fa",
+      "status": "won",
+      "tick": 5925,
+      "time": 49.375,
+      "seed": 17,
+      "difficulty": "standard",
+      "config": {
+        "jointCuts": true,
+        "assistCaptures": true,
+        "advancedCooperation": true
+      },
+      "coverage": 0.583041958041958,
+      "goal": 0.55,
+      "requiredCores": [],
+      "hunt": {
+        "version": "humanoid-hunt-state.v1",
+        "mode": "bonus",
+        "quota": 0,
+        "total": 2,
+        "remaining": 2,
+        "kills": 0,
+        "touchKills": 0,
+        "captureKills": 0,
+        "score": 0
+      },
+      "strongholds": [],
+      "claimedCount": 1334,
+      "totalClaimable": 2288,
+      "reserves": 0,
+      "teamwork": {
+        "interceptions": 0,
+        "jointCuts": 0,
+        "rescues": 0
+      },
+      "players": [
+        {
+          "id": 0,
+          "status": "active",
+          "cutting": false,
+          "trailCells": 0,
+          "x": 16.5,
+          "y": 29.5,
+          "downedUntil": null,
+          "graceUntil": 49.67307692307698,
+          "supportCooldown": 0,
+          "supportRole": "hybrid",
+          "rescue": null
+        },
+        {
+          "id": 1,
+          "status": "active",
+          "cutting": false,
+          "trailCells": 0,
+          "x": 17,
+          "y": 6.5,
+          "downedUntil": null,
+          "graceUntil": 0,
+          "supportCooldown": 0,
+          "supportRole": "hybrid",
+          "rescue": null
+        }
+      ]
+    },
+    "ticks": 5925,
+    "recordedBuild": "dev",
+    "completedBoards": [
+      1
+    ],
+    "recipeSha256": "e9af223fe7d18f8e241eebd86203b60c8e6328f5cb068ff9efd290481d8ce05d",
+    "provenance": {
+      "sourceLevelId": "pincer-yard",
+      "sourceRevision": "pursuit-2",
+      "sourceIdentity": "dd6a6ab675e94bd1",
+      "packageIdentity": "3c94b3042b431eb7"
+    },
+    "authority": "local-terminal-observations-only",
+    "verificationScope": "revealline-capture-terminal-observations.v1",
+    "exactStateMatch": false,
+    "terminalObservationMatch": true,
+    "observationSha256": "0cd84164dff41a8b4040c7f429fd3c3ac311591e8bc229a6d97fbe94a24f5393"
+  },
+  "humanPlay": "pending",
+  "deviceAndAccessibility": "pending",
+  "publicRelease": "not-qualified",
+  "scope": "Only declared terminal gameplay observations are required to match; exactStateMatch separately reports the raw state digest. This is not a resumable checkpoint or proof of cross-device deterministic simulation. Replay integrity is not an author signature, proof of human input, device qualification or release approval."
+}

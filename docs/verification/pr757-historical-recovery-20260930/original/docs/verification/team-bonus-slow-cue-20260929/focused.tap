@@ -1,0 +1,430 @@
+TAP version 13
+# Subtest: tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+ok 1 - tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+  ---
+  duration_ms: 19.366958
+  type: 'test'
+  ...
+# Subtest: six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 2 - six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 6.819125
+  type: 'test'
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 3 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 2.238166
+  type: 'test'
+  ...
+# Subtest: Team prepared enemies reuse catalog surface motion without loading another body image
+ok 4 - Team prepared enemies reuse catalog surface motion without loading another body image
+  ---
+  duration_ms: 1.513
+  type: 'test'
+  ...
+# Subtest: qualified Team roamers borrow the tracked body and its bounded motion treatment
+ok 5 - qualified Team roamers borrow the tracked body and its bounded motion treatment
+  ---
+  duration_ms: 25.066125
+  type: 'test'
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 6 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.407542
+  type: 'test'
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 7 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.246084
+  type: 'test'
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 8 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.210708
+  type: 'test'
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 9 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.097542
+  type: 'test'
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 10 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.192791
+  type: 'test'
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 11 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 0.920834
+  type: 'test'
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 12 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 8.423375
+  type: 'test'
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 13 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 1.060792
+  type: 'test'
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 14 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 3.423375
+  type: 'test'
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 15 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 1.119917
+  type: 'test'
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 16 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 0.9775
+  type: 'test'
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 17 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 0.905667
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+ok 18 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+  ---
+  duration_ms: 8.229042
+  type: 'test'
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+ok 19 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+  ---
+  duration_ms: 5.766916
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+ok 20 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+  ---
+  duration_ms: 2.26525
+  type: 'test'
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+ok 21 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+  ---
+  duration_ms: 1.500916
+  type: 'test'
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 22 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 27.898958
+  type: 'test'
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 23 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 4.269042
+  type: 'test'
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 24 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 1.752125
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+ok 25 - exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+  ---
+  duration_ms: 2.507792
+  type: 'test'
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+ok 26 - exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+  ---
+  duration_ms: 2.117125
+  type: 'test'
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 27 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 3.239
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (current progress)
+ok 28 - actual rescue of player 1 has one legible cue (current progress)
+  ---
+  duration_ms: 55.076625
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (legacy static role)
+ok 29 - actual rescue of player 1 has one legible cue (legacy static role)
+  ---
+  duration_ms: 44.981125
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (current progress)
+ok 30 - actual rescue of player 2 has one legible cue (current progress)
+  ---
+  duration_ms: 45.97775
+  type: 'test'
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (legacy static role)
+ok 31 - actual rescue of player 2 has one legible cue (legacy static role)
+  ---
+  duration_ms: 36.366042
+  type: 'test'
+  ...
+# Subtest: public timed pickup paints Slowed despite unchanged Support fields, and exact expiry removes it
+ok 32 - public timed pickup paints Slowed despite unchanged Support fields, and exact expiry removes it
+  ---
+  duration_ms: 90.348292
+  type: 'test'
+  ...
+# Subtest: public Support and pickup overlap keeps one cue when Support expires first
+ok 33 - public Support and pickup overlap keeps one cue when Support expires first
+  ---
+  duration_ms: 31.447
+  type: 'test'
+  ...
+# Subtest: public Support and pickup overlap keeps one cue when the pickup expires first
+ok 34 - public Support and pickup overlap keeps one cue when the pickup expires first
+  ---
+  duration_ms: 31.301417
+  type: 'test'
+  ...
+# Subtest: a second real freeze pickup holds movement without hiding or duplicating the still-active slow cue
+ok 35 - a second real freeze pickup holds movement without hiding or duplicating the still-active slow cue
+  ---
+  duration_ms: 23.39575
+  type: 'test'
+  ...
+# Subtest: real Hunter warning, commitment and recovery retain their full compact captions alongside pickup slowdown
+ok 36 - real Hunter warning, commitment and recovery retain their full compact captions alongside pickup slowdown
+  ---
+  duration_ms: 66.23225
+  type: 'test'
+  ...
+# Subtest: a removed actor is excluded even while a real collected slow effect remains active
+ok 37 - a removed actor is excluded even while a real collected slow effect remains active
+  ---
+  duration_ms: 16.976375
+  type: 'test'
+  ...
+# Subtest: freeze alone is never relabelled as a slow pickup
+ok 38 - freeze alone is never relabelled as a slow pickup
+  ---
+  duration_ms: 11.102375
+  type: 'test'
+  ...
+# Subtest: legacy boards without bonuses retain the exact pre-change painter commands
+ok 39 - legacy boards without bonuses retain the exact pre-change painter commands
+  ---
+  duration_ms: 14.644417
+  type: 'test'
+  ...
+# Subtest: clear historical cue placements remain exact and input measurements are untouched
+ok 40 - clear historical cue placements remain exact and input measurements are untouched
+  ---
+  duration_ms: 0.875959
+  type: 'test'
+  ...
+# Subtest: group packing repairs overlapping greedy positions without shrinking or covering heads
+ok 41 - group packing repairs overlapping greedy positions without shrinking or covering heads
+  ---
+  duration_ms: 0.98625
+  type: 'test'
+  ...
+# Subtest: oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+ok 42 - oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+  ---
+  duration_ms: 0.175292
+  type: 'test'
+  ...
+# Subtest: a malformed original rectangle cannot bypass the group head exclusion
+ok 43 - a malformed original rectangle cannot bypass the group head exclusion
+  ---
+  duration_ms: 0.390416
+  type: 'test'
+  ...
+# Subtest: overflow admission requires an actual compact unplaced result
+ok 44 - overflow admission requires an actual compact unplaced result
+  ---
+  duration_ms: 0.3835
+  type: 'test'
+  ...
+# Subtest: complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+ok 45 - complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+  ---
+  duration_ms: 11.655917
+  type: 'test'
+  ...
+# Subtest: phase and half-open status expiry remain truthful while paused and translate through the current locale
+ok 46 - phase and half-open status expiry remain truthful while paused and translate through the current locale
+  ---
+  duration_ms: 1.531666
+  type: 'test'
+  ...
+# Subtest: specialist pulses retain distinct non-colour role glyphs with reduced effects
+ok 47 - specialist pulses retain distinct non-colour role glyphs with reduced effects
+  ---
+  duration_ms: 0.977416
+  type: 'test'
+  ...
+# Subtest: Team Support first-connection draws two registered pulses and slowed decorations without mutating simulation
+ok 48 - Team Support first-connection draws two registered pulses and slowed decorations without mutating simulation
+  ---
+  duration_ms: 21.49075
+  type: 'test'
+  ...
+# Subtest: Team Support relay-yard draws two registered pulses and slowed decorations without mutating simulation
+ok 49 - Team Support relay-yard draws two registered pulses and slowed decorations without mutating simulation
+  ---
+  duration_ms: 14.288833
+  type: 'test'
+  ...
+# Subtest: historical Support needs no images; unavailable advertised frames fail instead of substituting
+ok 50 - historical Support needs no images; unavailable advertised frames fail instead of substituting
+  ---
+  duration_ms: 6.762458
+  type: 'test'
+  ...
+# Subtest: explicit presentation upgrade preserves old objective bindings and revisions
+ok 51 - explicit presentation upgrade preserves old objective bindings and revisions
+  ---
+  duration_ms: 468.485791
+  type: 'test'
+  ...
+# Subtest: Support team.support.pulse preserves uploaded original bytes and history in bundle round trips
+ok 52 - Support team.support.pulse preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 292.348125
+  type: 'test'
+  ...
+# Subtest: Support team.enemy.slowed preserves uploaded original bytes and history in bundle round trips
+ok 53 - Support team.enemy.slowed preserves uploaded original bytes and history in bundle round trips
+  ---
+  duration_ms: 295.000041
+  type: 'test'
+  ...
+# Subtest: Team bonus edition validates owned v2 data; old editions and unqualified mechanics reject it
+ok 54 - Team bonus edition validates owned v2 data; old editions and unqualified mechanics reject it
+  ---
+  duration_ms: 16.291792
+  type: 'test'
+  ...
+# Subtest: public shared contact grants extra-life once with bounded ownership
+ok 55 - public shared contact grants extra-life once with bounded ownership
+  ---
+  duration_ms: 8.495875
+  type: 'test'
+  ...
+# Subtest: public shared contact grants player-speed once with bounded ownership
+ok 56 - public shared contact grants player-speed once with bounded ownership
+  ---
+  duration_ms: 12.113958
+  type: 'test'
+  ...
+# Subtest: public shared contact grants enemy-slow once with bounded ownership
+ok 57 - public shared contact grants enemy-slow once with bounded ownership
+  ---
+  duration_ms: 9.94075
+  type: 'test'
+  ...
+# Subtest: public shared contact grants enemy-freeze once with bounded ownership
+ok 58 - public shared contact grants enemy-freeze once with bounded ownership
+  ---
+  duration_ms: 5.624959
+  type: 'test'
+  ...
+# Subtest: announcements, pause and misses use one finite seeded schedule and relocate after expiry
+ok 59 - announcements, pause and misses use one finite seeded schedule and relocate after expiry
+  ---
+  duration_ms: 30.392666
+  type: 'test'
+  ...
+# Subtest: shared schedule continues identically from an owned state clone, without claiming a public Team save format
+ok 60 - shared schedule continues identically from an owned state clone, without claiming a public Team save format
+  ---
+  duration_ms: 15.12
+  type: 'test'
+  ...
+# Subtest: v7 roamers remain nonretaining and freeze pauses activation clocks without stopping bonus time
+ok 61 - v7 roamers remain nonretaining and freeze pauses activation clocks without stopping bonus time
+  ---
+  duration_ms: 10.187875
+  type: 'test'
+  ...
+# Subtest: slow uses strongest support factor and does not corrupt authored velocity
+ok 62 - slow uses strongest support factor and does not corrupt authored velocity
+  ---
+  duration_ms: 7.676625
+  type: 'test'
+  ...
+# Subtest: simultaneous public contact grants one shared life or equal speed to both pilots
+ok 63 - simultaneous public contact grants one shared life or equal speed to both pilots
+  ---
+  duration_ms: 12.817916
+  type: 'test'
+  ...
+# Subtest: expiry-tick removal wins a simultaneous contact and capped life still consumes one item
+ok 64 - expiry-tick removal wins a simultaneous contact and capped life still consumes one item
+  ---
+  duration_ms: 13.498292
+  type: 'test'
+  ...
+# Subtest: damage precedes collection even when a tied partner closure immediately revives the victim
+ok 65 - damage precedes collection even when a tied partner closure immediately revives the victim
+  ---
+  duration_ms: 3.538917
+  type: 'test'
+  ...
+# Subtest: freeze suppresses enemy contact but not lethal terrain or self-trail hazards
+ok 66 - freeze suppresses enemy contact but not lethal terrain or self-trail hazards
+  ---
+  duration_ms: 14.676333
+  type: 'test'
+  ...
+# Subtest: same-instant damage exclusion survives a tick boundary and cloned continuation
+ok 67 - same-instant damage exclusion survives a tick boundary and cloned continuation
+  ---
+  duration_ms: 3.535917
+  type: 'test'
+  ...
+# Subtest: a surviving simultaneous collector receives the grant regardless of seat number
+ok 68 - a surviving simultaneous collector receives the grant regardless of seat number
+  ---
+  duration_ms: 6.968834
+  type: 'test'
+  ...
+# Subtest: two public speed collections refresh one window, not stacked speed or a one-tick gap
+ok 69 - two public speed collections refresh one window, not stacked speed or a one-tick gap
+  ---
+  duration_ms: 11.290458
+  type: 'test'
+  ...
+# Subtest: freeze preserves the full roamer activation warning and ready/terminal states freeze schedules
+ok 70 - freeze preserves the full roamer activation warning and ready/terminal states freeze schedules
+  ---
+  duration_ms: 10.772916
+  type: 'test'
+  ...
+1..70
+# tests 70
+# suites 0
+# pass 70
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1318.428042

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { importCompanyArt } from '../../scripts/import-company-art.mjs';
 import { COMPANY_MISSIONS, COMPANY_CAMPAIGNS } from '../company-campaigns/catalog.mjs';
+import { CURRICULUM_CAMPAIGNS, CURRICULUM_MISSIONS } from '../company-campaigns/curriculum.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { validateRetainedPresentation } from '../editions/retained-presentation.mjs';
@@ -29,9 +30,55 @@ const [assets, artwork, sources, catalog, ...receipts] = await Promise.all(
 
 test('every current and historical mission has a distinct pinned picture with complete bulk provenance', async () => {
   assert.equal(COMPANY_MISSIONS.length, 69);
-  assert.equal(artwork.length, 106);
-  assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, 106);
-  assert.equal(selectCurrentCompanyArtwork(artwork).length, 69);
+  const homeIds = [
+    ...new Set(CURRICULUM_CAMPAIGNS.map((campaign) => `${campaign.brandId}-home-picture`)),
+  ];
+  assert.equal(homeIds.length, 4);
+  const initialDiscoveryPictures = [
+    'social-drone-people-workshop-01-picture',
+    'ukraine-threads-03-picture',
+    'fpv-meet-aircraft-01-picture',
+  ];
+  const distinctDiscoveryPictures = CURRICULUM_MISSIONS.map(
+    (mission) => `${mission.id}-picture`,
+  ).filter((id) => artwork.some((asset) => asset.id === id));
+  for (const id of initialDiscoveryPictures) assert.ok(distinctDiscoveryPictures.includes(id), id);
+  const campaignKeyIds = CURRICULUM_CAMPAIGNS.map((campaign) => `${campaign.id}-key-picture`);
+  assert.equal(campaignKeyIds.length, 18);
+  const legacyArtwork = artwork.filter(
+    (asset) =>
+      !homeIds.includes(asset.id) &&
+      !distinctDiscoveryPictures.includes(asset.id) &&
+      !campaignKeyIds.includes(asset.id),
+  );
+  assert.equal(legacyArtwork.length, 106);
+  assert.equal(new Set(legacyArtwork.map((asset) => asset.sha256)).size, 106);
+  const totalPictures =
+    106 + homeIds.length + campaignKeyIds.length + distinctDiscoveryPictures.length;
+  assert.equal(artwork.length, totalPictures);
+  assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, totalPictures);
+  assert.deepEqual(
+    artwork
+      .filter((asset) => campaignKeyIds.includes(asset.id))
+      .map((asset) => asset.id)
+      .sort(),
+    campaignKeyIds.sort(),
+  );
+  assert.deepEqual(
+    artwork
+      .filter((asset) => distinctDiscoveryPictures.includes(asset.id))
+      .map((asset) => asset.id)
+      .sort(),
+    distinctDiscoveryPictures.sort(),
+  );
+  assert.equal(selectCurrentCompanyArtwork(legacyArtwork).length, 69);
+  assert.deepEqual(
+    artwork
+      .filter((asset) => homeIds.includes(asset.id))
+      .map((asset) => asset.id)
+      .sort(),
+    [...homeIds].sort(),
+  );
   for (const mission of COMPANY_MISSIONS)
     assert.ok(
       artwork.find((asset) => asset.id === `${mission.id}-picture`),
@@ -63,7 +110,10 @@ test('every current and historical mission has a distinct pinned picture with co
 });
 
 test('bulk artwork preserves all pre-batch gameplay manifests and exact recoverable source', async () => {
-  const selected = catalog.editions.filter((edition) => edition.id !== 'droneaid-community');
+  const legacyBrands = new Set(COMPANY_CAMPAIGNS.map((campaign) => campaign.brandId));
+  const selected = catalog.editions.filter(
+    (edition) => legacyBrands.has(edition.brandId) && edition.id !== 'droneaid-community',
+  );
   assert.equal(selected.length, 13);
   const originals = new Map();
   for (const edition of selected) {
@@ -119,7 +169,10 @@ test('all 36 current Dutch pictures advance without changing gameplay or losing 
     });
     assert.equal(
       snapshot.catalog.editions[0].revision +
-        (['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(edition.id) ? 2 : 1),
+        (['droneaid-nl-community', 'droneaid-nl-parts-in-motion'].includes(edition.id) ? 2 : 1) +
+        // Discovery rewards advance these exact presentation editions once more;
+        // their retained originals and every gameplay comparison below still apply.
+        (['droneaid-nl-community', 'droneaid-nl-workshop-lights'].includes(edition.id) ? 1 : 0),
       edition.revision,
     );
     for (const campaign of snapshot.catalog.campaigns)
@@ -168,7 +221,10 @@ test('the corrected FPV crop advances only its campaign and combined edition wit
     assert.equal(bytes.length, descriptor.bytes);
     const { snapshot } = await validateRetainedPresentation(JSON.parse(bytes), { edition });
     assert.equal(snapshot.authoredPresentationSha256, descriptor.id);
-    assert.equal(snapshot.catalog.editions[0].revision + 1, edition.revision);
+    assert.equal(
+      snapshot.catalog.editions[0].revision + 1 + (editionId === 'droneaid-nl-community' ? 1 : 0),
+      edition.revision,
+    );
     const prior = snapshot.catalog.assets.find(
       (asset) => asset.id === 'droneaid-nl-parts-in-motion-03-reveal-v2',
     );

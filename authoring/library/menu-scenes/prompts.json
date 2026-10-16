@@ -1,0 +1,18 @@
+{
+  "format": "revealline-menu-scene-prompts.v1",
+  "created": "2026-09-28",
+  "generator": "OpenAI built-in image_gen",
+  "images": [
+    {
+      "id": "ukraine",
+      "file": "ukraine-dawn-v1.png",
+      "prompt": "Use case: stylized-concept. Asset type: original pixel art backdrop for the Reveal Line game start menu, a single seamless still scene that will receive gentle live ambient layers in code. Primary request: welcoming Ukrainian dawn landscape, tranquil terraced meadow with wildflowers and a riverside village, distant hills and pale early-sun clouds; small traditional geometric decorative details on a weathered wooden lookout railing, no flags or symbols required. Style: refined hand-placed pixel art, clean 3-5px blocks, dark indigo foreground, warm amber sunlight and sky-blue mist, game-quality atmospheric depth. Composition: wide 1536x1024 landscape, left 40% deliberately very dark low-detail blue silhouette for readable menu text, main village panorama and sunrise in right 60%; strongest focal view near 68% horizontal so a portrait crop remains beautiful; keep a generous quiet upper sky. Lighting: warm hopeful early morning, inviting, calm. No text, logos, watermark, UI, borders or embedded menus. Entire frame fully illustrated, no transparency."
+    },
+    {
+      "id": "retro",
+      "file": "retro-rainy-arcade-v1.png",
+      "generator": "OpenAI built-in image_gen",
+      "prompt": "Use case: stylized-concept\nAsset type: original pixel-art game landing background for Reveal Line's \"1994 Forever\" retro variation.\nPrimary request: a welcoming rain-soaked 1994 arcade street at night, with warm arcade cabinets visible through an open storefront on the right, cyan and soft magenta neon, rainy city silhouettes, wet pavement reflections. The scene should feel alive and inviting, nostalgic rather than dystopian.\nStyle/medium: carefully authored 16-bit pixel art with crisp deliberate pixel clusters, limited harmonious palette, atmospheric depth, no photographic texture or blur. Landscape 1536x1024.\nComposition/framing: leftmost 45 percent quiet very dark sheltered brick wall and awning for an overlaid game menu. Main neon arcade entrance at 68 percent horizontal, with pavement reflections beneath it. Keep this middle-right arcade focal point intact when the image is cropped to portrait centered at 68 percent. Skyline in upper right. No people needed. Static artwork that can support separately animated subtle rain and reflection light layers.\nLighting/mood: rich midnight navy, warm amber arcade glow, restrained cyan and violet rain reflections.\nConstraints: no words, no letters, no numbers, no logos, no UI, no borders, no watermark, no planet, no space station, no fantasy weapons."
+    }
+  ]
+}

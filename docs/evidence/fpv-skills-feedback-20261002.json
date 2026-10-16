@@ -1,0 +1,82 @@
+{
+  "format": "FPVSkillTeachingFunctionalEvidence.v1",
+  "sourcePath": "optional-practice/civilian-fpv/sim-presentation.mjs",
+  "createdAt": "2026-10-02T02:29:52.976Z",
+  "sourceSha256": "ddc3c4c9889948f24fe7cae0fd6d32ed58d686f84bd719d89a6b0701db64df3b",
+  "observerOnly": true,
+  "oldTargetFeedbackRemainsNull": true,
+  "matchingStepRequired": true,
+  "fullRotationNeedsIntermediateAttitudesAndSettling": true,
+  "locales": ["en", "uk"],
+  "types": ["rotation-v1", "attitude-v1", "path-v1", "crossing-v1"],
+  "samples": 16734,
+  "reasons": 13,
+  "lessons": [
+    {
+      "id": "beginner-43",
+      "complete": true
+    },
+    {
+      "id": "beginner-44",
+      "complete": true
+    },
+    {
+      "id": "beginner-45",
+      "complete": true
+    },
+    {
+      "id": "beginner-46",
+      "complete": true
+    },
+    {
+      "id": "beginner-47",
+      "complete": true
+    },
+    {
+      "id": "beginner-48",
+      "complete": true
+    },
+    {
+      "id": "beginner-49",
+      "complete": true
+    },
+    {
+      "id": "beginner-50",
+      "complete": true
+    },
+    {
+      "id": "beginner-51",
+      "complete": true
+    },
+    {
+      "id": "beginner-52",
+      "complete": true
+    },
+    {
+      "id": "beginner-53",
+      "complete": true
+    },
+    {
+      "id": "beginner-54",
+      "complete": true
+    },
+    {
+      "id": "beginner-55",
+      "complete": true
+    },
+    {
+      "id": "beginner-56",
+      "complete": true
+    },
+    {
+      "id": "beginner-57",
+      "complete": true
+    },
+    {
+      "id": "beginner-58",
+      "complete": true
+    }
+  ],
+  "browserVerified": false,
+  "newUnitCoverage": false
+}

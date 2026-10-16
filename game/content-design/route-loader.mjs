@@ -12,7 +12,25 @@ export async function loadAuthoredJourneyRoute(id, options = {}) {
   if (!isAuthoredJourneyRouteId(id)) return null;
   if (SHIPPED_ROUTE_SNAPSHOT?.id === id) return loadRouteSnapshot(SHIPPED_ROUTE_SNAPSHOT, options);
   let factories;
-  if (id === 'whole-spatial-v34') {
+  if (id === 'duel-expedition-v1') {
+    factories = await import('./multiplayer-expansion.mjs');
+  } else if (id === 'pursuit-campaigns-v1') {
+    factories = await import('./pursuit-campaign-candidates.mjs');
+  } else if (id === 'pursuit-pilots-v1') {
+    factories = await import('./pursuit-pilot-candidates.mjs');
+  } else if (id === 'snake-hunt-v1') {
+    factories = await import('./snake-hunt-candidates.mjs');
+  } else if (id === 'humanoid-hunt-v1') {
+    factories = await import('./hunt-training-candidates.mjs');
+  } else if (id === 'whole-spatial-v38') {
+    factories = await import('./cooling-loop-erosion-candidates.mjs');
+  } else if (id === 'whole-spatial-v37') {
+    factories = await import('./pressure-corridor-triptych-candidates.mjs');
+  } else if (id === 'whole-spatial-v36') {
+    factories = await import('./contested-wall-triptych-candidates.mjs');
+  } else if (id === 'whole-spatial-v35') {
+    factories = await import('./current-remix-pressure-candidates.mjs');
+  } else if (id === 'whole-spatial-v34') {
     factories = await import('./cultural-pressure-triptych-candidates.mjs');
   } else if (id === 'whole-spatial-v33') {
     factories = await import('./cultural-timed-bonus-pressure-candidates.mjs');

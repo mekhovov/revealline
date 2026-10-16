@@ -1,0 +1,700 @@
+TAP version 13
+# Subtest: master starts silent, publishes explicit intent synchronously and never exposes mutable state
+ok 1 - master starts silent, publishes explicit intent synchronously and never exposes mutable state
+  ---
+  duration_ms: 0.993833
+  ...
+# Subtest: invalid master changes leave state and observers untouched
+ok 2 - invalid master changes leave state and observers untouched
+  ---
+  duration_ms: 3.533708
+  ...
+# Subtest: a failed output cannot prevent other outputs from muting, and newer observer intent wins
+ok 3 - a failed output cannot prevent other outputs from muting, and newer observer intent wins
+  ---
+  duration_ms: 0.304875
+  ...
+# Subtest: native output composes local and shared volume once and preserves local mute
+ok 4 - native output composes local and shared volume once and preserves local mute
+  ---
+  duration_ms: 0.355791
+  ...
+# Subtest: queued native volume/play events reassert the current gate without cumulative gain or loops
+ok 5 - queued native volume/play events reassert the current gate without cumulative gain or loops
+  ---
+  duration_ms: 0.905458
+  ...
+# Subtest: native bindings have independent cleanup and refuse two owners of one element
+ok 6 - native bindings have independent cleanup and refuse two owners of one element
+  ---
+  duration_ms: 0.450292
+  ...
+# Subtest: zero master/local volume enforces native mute without changing either mute preference
+ok 7 - zero master/local volume enforces native mute without changing either mute preference
+  ---
+  duration_ms: 0.4055
+  ...
+# Subtest: a native platform ignoring volume writes cannot loop and zero still uses its mute gate
+ok 8 - a native platform ignoring volume writes cannot loop and zero still uses its mute gate
+  ---
+  duration_ms: 0.52725
+  ...
+# Subtest: Soundscape master changes do not create a context and retain local preview attenuation
+ok 9 - Soundscape master changes do not create a context and retain local preview attenuation
+  ---
+  duration_ms: 46.379792
+  ...
+# Subtest: master mute wins over deferred enable and resume without changing transport preference
+ok 10 - master mute wins over deferred enable and resume without changing transport preference
+  ---
+  duration_ms: 7.289333
+  ...
+# Subtest: master disposal silences outputs and disposed Soundscapes release only their subscription
+ok 11 - master disposal silences outputs and disposed Soundscapes release only their subscription
+  ---
+  duration_ms: 16.834542
+  ...
+# Subtest: valid global preferences override legacy fallback synchronously without writing
+ok 12 - valid global preferences override legacy fallback synchronously without writing
+  ---
+  duration_ms: 2.739125
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: not json
+ok 13 - invalid stored record retains fallback and original bytes: not json
+  ---
+  duration_ms: 0.33
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: null
+ok 14 - invalid stored record retains fallback and original bytes: null
+  ---
+  duration_ms: 0.940625
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: []
+ok 15 - invalid stored record retains fallback and original bytes: []
+  ---
+  duration_ms: 0.071083
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false}
+ok 16 - invalid stored record retains fallback and original bytes: {"muted":false}
+  ---
+  duration_ms: 0.148416
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":0,"volume":0.5}
+ok 17 - invalid stored record retains fallback and original bytes: {"muted":0,"volume":0.5}
+  ---
+  duration_ms: 2.318667
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false,"volume":2}
+ok 18 - invalid stored record retains fallback and original bytes: {"muted":false,"volume":2}
+  ---
+  duration_ms: 0.671291
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false,"volume":1e999}
+ok 19 - invalid stored record retains fallback and original bytes: {"muted":false,"volume":1e999}
+  ---
+  duration_ms: 0.41525
+  ...
+# Subtest: invalid stored record retains fallback and original bytes: {"muted":false,"volume":0.5,"version":2}
+ok 20 - invalid stored record retains fallback and original bytes: {"muted":false,"volume":0.5,"version":2}
+  ---
+  duration_ms: 0.630709
+  ...
+# Subtest: invalid stored record retains fallback and original bytes:
+ok 21 - invalid stored record retains fallback and original bytes:
+  ---
+  duration_ms: 0.735792
+  ...
+# Subtest: profile seed stays in memory; an explicit action saves only the two global scalars
+ok 22 - profile seed stays in memory; an explicit action saves only the two global scalars
+  ---
+  duration_ms: 0.543583
+  ...
+# Subtest: same-value explicit intent and direct newer authority revisions reject late profile seeds
+ok 23 - same-value explicit intent and direct newer authority revisions reject late profile seeds
+  ---
+  duration_ms: 0.6215
+  ...
+# Subtest: a global record arriving before the profile seed wins even before its storage event
+ok 24 - a global record arriving before the profile seed wins even before its storage event
+  ---
+  duration_ms: 1.350125
+  ...
+# Subtest: navigation reads saved intent and does not save fallback again
+ok 25 - navigation reads saved intent and does not save fallback again
+  ---
+  duration_ms: 0.588416
+  ...
+# Subtest: practice can change session audio without writing, and cannot lose it to a remote event
+ok 26 - practice can change session audio without writing, and cannot lose it to a remote event
+  ---
+  duration_ms: 0.597166
+  ...
+# Subtest: unavailable storage and a throwing notice leave sound working in memory
+ok 27 - unavailable storage and a throwing notice leave sound working in memory
+  ---
+  duration_ms: 0.328292
+  ...
+# Subtest: quota failure protects unsaved intent; a later successful action resumes sharing
+ok 28 - quota failure protects unsaved intent; a later successful action resumes sharing
+  ---
+  duration_ms: 0.345542
+  ...
+# Subtest: storage events require the exact key, storage area and still-current raw value
+ok 29 - storage events require the exact key, storage area and still-current raw value
+  ---
+  duration_ms: 0.238625
+  ...
+# Subtest: deleted and malformed remote values do not reset live sound or get rewritten
+ok 30 - deleted and malformed remote values do not reset live sound or get rewritten
+  ---
+  duration_ms: 0.181209
+  ...
+# Subtest: a remote unmute changes the media gate without calling play or changing transport
+ok 31 - a remote unmute changes the media gate without calling play or changing transport
+  ---
+  duration_ms: 0.2425
+  ...
+# Subtest: reentrant newer intent during a seed cannot be overwritten by its remaining fields
+ok 32 - reentrant newer intent during a seed cannot be overwritten by its remaining fields
+  ---
+  duration_ms: 0.410625
+  ...
+# Subtest: invalid explicit scalars change neither authority nor stored intent
+ok 33 - invalid explicit scalars change neither authority nor stored intent
+  ---
+  duration_ms: 0.267167
+  ...
+# Subtest: accepted intent still persists if an output subscriber throws after the state change
+ok 34 - accepted intent still persists if an output subscriber throws after the state change
+  ---
+  duration_ms: 1.00625
+  ...
+# Subtest: disposal stops persistence and remote adoption without disposing the shared authority
+ok 35 - disposal stops persistence and remote adoption without disposing the shared authority
+  ---
+  duration_ms: 0.107167
+  ...
+# Subtest: persisted pageshow adopts missed audio settings without saving or changing media transport
+ok 36 - persisted pageshow adopts missed audio settings without saving or changing media transport
+  ---
+  duration_ms: 0.154167
+  ...
+# Subtest: restored audio uses the current storage object and rejects an old queued unmute
+ok 37 - restored audio uses the current storage object and rejects an old queued unmute
+  ---
+  duration_ms: 0.077417
+  ...
+# Subtest: missing, malformed and unavailable latest audio storage do not reset or unmute restored output
+ok 38 - missing, malformed and unavailable latest audio storage do not reset or unmute restored output
+  ---
+  duration_ms: 0.110042
+  ...
+# Subtest: restoration protects failed and read-only audio intent until an explicit successful save
+ok 39 - restoration protects failed and read-only audio intent until an explicit successful save
+  ---
+  duration_ms: 0.229542
+  ...
+# Subtest: a disposed audio owner ignores persisted pageshow without reading storage
+ok 40 - a disposed audio owner ignores persisted pageshow without reading storage
+  ---
+  duration_ms: 0.047833
+  ...
+# Subtest: new audio intent or disposal during a restoration read rejects its captured unmute
+ok 41 - new audio intent or disposal during a restoration read rejects its captured unmute
+  ---
+  duration_ms: 0.078375
+  ...
+# Subtest: new mute intent or disposal while restoring the fader prevents the later unmute
+ok 42 - new mute intent or disposal while restoring the fader prevents the later unmute
+  ---
+  duration_ms: 0.083833
+  ...
+# Subtest: disposal during an explicit audio notification or permission check prevents late persistence
+ok 43 - disposal during an explicit audio notification or permission check prevents late persistence
+  ---
+  duration_ms: 0.067875
+  ...
+# Subtest: a mute recovered on persisted pageshow wins over late audio activation
+ok 44 - a mute recovered on persisted pageshow wins over late audio activation
+  ---
+  duration_ms: 30.353459
+  ...
+# Subtest: playback audio session opts out of iPhone ambient mute and safely falls back elsewhere
+ok 45 - playback audio session opts out of iPhone ambient mute and safely falls back elsewhere
+  ---
+  duration_ms: 0.591125
+  ...
+# Subtest: classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music
+ok 46 - classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music
+  ---
+  duration_ms: 21.765625
+  ...
+# Subtest: no context or sound is created before an explicit user audio action
+ok 47 - no context or sound is created before an explicit user audio action
+  ---
+  duration_ms: 2.62625
+  ...
+# Subtest: all five styles have deterministic distinct original orchestration with bounded notes
+ok 48 - all five styles have deterministic distinct original orchestration with bounded notes
+  ---
+  duration_ms: 8.613042
+  ...
+# Subtest: scheduler preserves musical deadlines under frequent calls and avoids backlog bursts
+ok 49 - scheduler preserves musical deadlines under frequent calls and avoids backlog bursts
+  ---
+  duration_ms: 3.738125
+  ...
+# Subtest: master/music/sfx buses are independently controlled and invalid changes are atomic
+ok 50 - master/music/sfx buses are independently controlled and invalid changes are atomic
+  ---
+  duration_ms: 3.459625
+  ...
+# Subtest: track descriptors are copied, styles switch cleanly, and unsupported media are rejected
+ok 51 - track descriptors are copied, styles switch cleanly, and unsupported media are rejected
+  ---
+  duration_ms: 15.951583
+  ...
+# Subtest: pause cancels scheduled notes, freezes scheduling and resumes only through explicit method
+ok 52 - pause cancels scheduled notes, freezes scheduling and resumes only through explicit method
+  ---
+  duration_ms: 4.34875
+  ...
+# Subtest: adopting mute disables active preview immediately and ordinary resume cannot re-enable it
+ok 53 - adopting mute disables active preview immediately and ordinary resume cannot re-enable it
+  ---
+  duration_ms: 16.83875
+  ...
+# Subtest: mute needs no context and wins an in-flight preview enable
+ok 54 - mute needs no context and wins an in-flight preview enable
+  ---
+  duration_ms: 3.164834
+  ...
+# Subtest: terminal events distinguish victory and failure, stop backing music, and survive inactive update
+ok 55 - terminal events distinguish victory and failure, stop backing music, and survive inactive update
+  ---
+  duration_ms: 3.104792
+  ...
+# Subtest: polyphony is capped and event bursts deduplicate instead of allocating forever
+ok 56 - polyphony is capped and event bursts deduplicate instead of allocating forever
+  ---
+  duration_ms: 3.102625
+  ...
+# Subtest: failed autoplay resume reports disabled and disposal wins pending enable race
+ok 57 - failed autoplay resume reports disabled and disposal wins pending enable race
+  ---
+  duration_ms: 10.04525
+  ...
+# Subtest: tension is derived read-only and does not change the musical tempo or game state
+ok 58 - tension is derived read-only and does not change the musical tempo or game state
+  ---
+  duration_ms: 0.23375
+  ...
+# Subtest: gesture preview plays from an inactive terminal screen and stops at its bounded deadline
+ok 59 - gesture preview plays from an inactive terminal screen and stops at its bounded deadline
+  ---
+  duration_ms: 7.118792
+  ...
+# Subtest: pause, reset, mute and disposal cancel preview without restarting after a delayed gesture
+ok 60 - pause, reset, mute and disposal cancel preview without restarting after a delayed gesture
+  ---
+  duration_ms: 29.724333
+  ...
+# Subtest: persistent soundtrack opt-in remains silent until an allowed audio action
+ok 61 - persistent soundtrack opt-in remains silent until an allowed audio action
+  ---
+  duration_ms: 1.831416
+  ...
+# Subtest: persistent music survives menu, gameplay pause, terminal cues and attempt reset
+ok 62 - persistent music survives menu, gameplay pause, terminal cues and attempt reset
+  ---
+  duration_ms: 1.939625
+  ...
+# Subtest: automatic authored tracks wait for a real song boundary and adopt the new tempo there
+ok 63 - automatic authored tracks wait for a real song boundary and adopt the new tempo there
+  ---
+  duration_ms: 49.783458
+  ...
+# Subtest: same authored context cancels a queued change without restart; explicit selection replaces it
+ok 64 - same authored context cancels a queued change without restart; explicit selection replaces it
+  ---
+  duration_ms: 7.620333
+  ...
+# Subtest: persistent lifecycle suspension and mute silence sources but retain the musical position
+ok 65 - persistent lifecycle suspension and mute silence sources but retain the musical position
+  ---
+  duration_ms: 1.82275
+  ...
+# Subtest: persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes
+ok 66 - persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes
+  ---
+  duration_ms: 19.36475
+  ...
+# Subtest: persistent audition returns to the ongoing soundtrack without a cursor reset
+ok 67 - persistent audition returns to the ongoing soundtrack without a cursor reset
+  ---
+  duration_ms: 2.78425
+  ...
+# Subtest: persistent scheduler remains bounded after a stall and only explicit music reset restarts it
+ok 68 - persistent scheduler remains bounded after a stall and only explicit music reset restarts it
+  ---
+  duration_ms: 4.174833
+  ...
+# Subtest: company notices retain a live message producer in the page and open dialog
+ok 69 - company notices retain a live message producer in the page and open dialog
+  ---
+  duration_ms: 1.216584
+  ...
+# Subtest: company player leaves only technical tokens outside the localization catalogs
+ok 70 - company player leaves only technical tokens outside the localization catalogs
+  ---
+  duration_ms: 79.565833
+  ...
+# Subtest: the company host keeps multiple read-only wins in exported progress without writing another tab’s store
+ok 71 - the company host keeps multiple read-only wins in exported progress without writing another tab’s store
+  ---
+  duration_ms: 5.738625
+  ...
+# Subtest: company pagehide uses real preference teardown APIs and preserves a cached page until final navigation
+ok 72 - company pagehide uses real preference teardown APIs and preserves a cached page until final navigation
+  ---
+  duration_ms: 2.897875
+  ...
+# Subtest: Home retires a staged mission and ignores its late abort or response without replacing the current run
+ok 73 - Home retires a staged mission and ignores its late abort or response without replacing the current run
+  ---
+  duration_ms: 10.428375
+  ...
+# Subtest: an active mission preparation still surfaces a real failure when Home did not cancel it
+ok 74 - an active mission preparation still surfaces a real failure when Home did not cancel it
+  ---
+  duration_ms: 0.798333
+  ...
+# Subtest: demo routes the same full event batch and run context as ordinary gameplay
+ok 75 - demo routes the same full event batch and run context as ordinary gameplay
+  ---
+  duration_ms: 0.9865
+  ...
+# Subtest: every packaged effect has calibrated short-window loudness and peak headroom
+ok 76 - every packaged effect has calibrated short-window loudness and peak headroom
+  ---
+  duration_ms: 442.1035
+  ...
+# Subtest: attenuation matches design anchors, is monotonic, bounded and resolution independent
+ok 77 - attenuation matches design anchors, is monotonic, bounded and resolution independent
+  ---
+  duration_ms: 0.848792
+  ...
+# Subtest: capture tiers use unique new cells over claimable area
+ok 78 - capture tiers use unique new cells over claimable area
+  ---
+  duration_ms: 0.341458
+  ...
+# Subtest: same events deduplicate within a run but not across boards; victory supersedes capture
+ok 79 - same events deduplicate within a run but not across boards; victory supersedes capture
+  ---
+  duration_ms: 0.897917
+  ...
+# Subtest: enemy movement survives repeated render frames and stops on freeze and pause
+ok 80 - enemy movement survives repeated render frames and stops on freeze and pause
+  ---
+  duration_ms: 0.866041
+  ...
+# Subtest: Versus voice budget is fair and urgent cues remain foreground at any distance
+ok 81 - Versus voice budget is fair and urgent cues remain foreground at any distance
+  ---
+  duration_ms: 0.636541
+  ...
+# Subtest: storage failures and malformed menu settings retain safe defaults
+ok 82 - storage failures and malformed menu settings retain safe defaults
+  ---
+  duration_ms: 0.190208
+  ...
+# Subtest: bank assets match provenance and stay below transfer and decoded budgets
+ok 83 - bank assets match provenance and stay below transfer and decoded budgets
+  ---
+  duration_ms: 147.175417
+  ...
+# Subtest: Team shared source uses the nearest active player exactly once
+ok 84 - Team shared source uses the nearest active player exactly once
+  ---
+  duration_ms: 0.461833
+  ...
+# Subtest: captured terrain stops its zone source and erosion restores it without duplicate tiles
+ok 85 - captured terrain stops its zone source and erosion restores it without duplicate tiles
+  ---
+  duration_ms: 1.310833
+  ...
+# Subtest: blocked held direction sounds once and can sound after release and a fresh contact
+ok 86 - blocked held direction sounds once and can sound after release and a fresh contact
+  ---
+  duration_ms: 0.254417
+  ...
+# Subtest: a decoded buffer becomes available for future events only, never replays a missed cue
+ok 87 - a decoded buffer becomes available for future events only, never replays a missed cue
+  ---
+  duration_ms: 2.000792
+  ...
+# Subtest: FPV boot schedules one localized radio voice after its ESC cue and urgent threats cancel it
+ok 88 - FPV boot schedules one localized radio voice after its ESC cue and urgent threats cancel it
+  ---
+  duration_ms: 0.364792
+  ...
+# Subtest: radio opt-out, non-FPV bodies, replay silent start and reset never leave speech scheduled
+ok 89 - radio opt-out, non-FPV bodies, replay silent start and reset never leave speech scheduled
+  ---
+  duration_ms: 0.261875
+  ...
+# Subtest: radio storage corruption and denied access keep independent safe defaults
+ok 90 - radio storage corruption and denied access keep independent safe defaults
+  ---
+  duration_ms: 0.111416
+  ...
+# Subtest: pending radio speech is retired by pause, suspension, disabling and disposal
+ok 91 - pending radio speech is retired by pause, suspension, disabling and disposal
+  ---
+  duration_ms: 2.204083
+  ...
+# Subtest: radio volume is separate from menu volume and opting out stops pending speech
+ok 92 - radio volume is separate from menu volume and opting out stops pending speech
+  ---
+  duration_ms: 0.629584
+  ...
+# Subtest: twenty simulated minutes of two-board feedback stay bounded and reset cleanly
+ok 93 - twenty simulated minutes of two-board feedback stay bounded and reset cleanly
+  ---
+  duration_ms: 1750.121625
+  ...
+# Subtest: crowded boards reserve a moving player and nearby enemy within the shared voice ceiling
+ok 94 - crowded boards reserve a moving player and nearby enemy within the shared voice ceiling
+  ---
+  duration_ms: 0.533
+  ...
+# Subtest: rapid routine feedback shares a cooldown across variations without suppressing a warning
+ok 95 - rapid routine feedback shares a cooldown across variations without suppressing a warning
+  ---
+  duration_ms: 0.259125
+  ...
+# Subtest: a capture transaction uses its reveal seal without stacking a separate closure
+ok 96 - a capture transaction uses its reveal seal without stacking a separate closure
+  ---
+  duration_ms: 0.155166
+  ...
+# Subtest: movement opt-out retires both actor loops while warnings, rewards and radio remain enabled
+ok 97 - movement opt-out retires both actor loops while warnings, rewards and radio remain enabled
+  ---
+  duration_ms: 0.406625
+  ...
+# Subtest: movement settings keep session defaults on storage failure and use a separate mixer bus
+ok 98 - movement settings keep session defaults on storage failure and use a separate mixer bus
+  ---
+  duration_ms: 0.592167
+  ...
+# Subtest: all moving enemy roles receive recorded voices when near, including Team and combat actors
+ok 99 - all moving enemy roles receive recorded voices when near, including Team and combat actors
+  ---
+  duration_ms: 0.345542
+  ...
+# Subtest: authoritative freeze and dormant details suppress movement despite a position correction
+ok 100 - authoritative freeze and dormant details suppress movement despite a position correction
+  ---
+  duration_ms: 0.123375
+  ...
+# Subtest: retry and backward seek clear only the affected board gameplay tails and cooldowns
+ok 101 - retry and backward seek clear only the affected board gameplay tails and cooldowns
+  ---
+  duration_ms: 0.1095
+  ...
+# Subtest: pause clears gameplay tails while a terminal update preserves the victory ending
+ok 102 - pause clears gameplay tails while a terminal update preserves the victory ending
+  ---
+  duration_ms: 0.0495
+  ...
+# Subtest: retired movement rejoins its playback-rate-adjusted phase without restarting the recording
+ok 103 - retired movement rejoins its playback-rate-adjusted phase without restarting the recording
+  ---
+  duration_ms: 0.043209
+  ...
+# Subtest: hardware launch follows equipped FPV class and appearance, not just a name substring
+ok 104 - hardware launch follows equipped FPV class and appearance, not just a name substring
+  ---
+  duration_ms: 0.097917
+  ...
+# Subtest: owned campaign ending replaces capture and default victory once in every host
+ok 105 - owned campaign ending replaces capture and default victory once in every host
+  ---
+  duration_ms: 0.795167
+  ...
+# Subtest: every shipped player body has an explicit recorded movement assignment
+ok 106 - every shipped player body has an explicit recorded movement assignment
+  ---
+  duration_ms: 3.515625
+  ...
+# Subtest: all four worlds cover every enemy role and explicit skins override world defaults
+ok 107 - all four worlds cover every enemy role and explicit skins override world defaults
+  ---
+  duration_ms: 0.602
+  ...
+# Subtest: all Journey palettes, Team threats, combat patrols and unknown appearances retain recorded fallbacks
+ok 108 - all Journey palettes, Team threats, combat patrols and unknown appearances retain recorded fallbacks
+  ---
+  duration_ms: 0.248125
+  ...
+# Subtest: company recipes follow their visible rotor or paper bodies even on ground enemy roles
+ok 109 - company recipes follow their visible rotor or paper bodies even on ground enemy roles
+  ---
+  duration_ms: 1.131916
+  ...
+# Subtest: player body selection follows equipped class, per-player body and appearance override
+ok 110 - player body selection follows equipped class, per-player body and appearance override
+  ---
+  duration_ms: 0.115542
+  ...
+# Subtest: material bodies and eroders use their distinct recorded ingredients
+ok 111 - material bodies and eroders use their distinct recorded ingredients
+  ---
+  duration_ms: 0.074375
+  ...
+# Subtest: published theme music is lazy and wins over automatic FPV recipes without overriding manual assignments
+ok 112 - published theme music is lazy and wins over automatic FPV recipes without overriding manual assignments
+  ---
+  duration_ms: 51.913792
+  ...
+# Subtest: Pause and disposal reject a late published download without URLs or media playback
+ok 113 - Pause and disposal reject a late published download without URLs or media playback
+  ---
+  duration_ms: 1.225042
+  ...
+# Subtest: published cue loading never enables audio, replays a stale cue, or survives a muted decode
+ok 114 - published cue loading never enables audio, replays a stale cue, or survives a muted decode
+  ---
+  duration_ms: 29.510791
+  ...
+# Subtest: published victory owns an authored campaign win; only an unavailable cue uses its motif and existing gates still win
+ok 115 - published victory owns an authored campaign win; only an unavailable cue uses its motif and existing gates still win
+  ---
+  duration_ms: 17.729125
+  ...
+# Subtest: page cue listeners use native actions only and cleanup leaves no active audio adapter
+ok 116 - page cue listeners use native actions only and cleanup leaves no active audio adapter
+  ---
+  duration_ms: 0.594875
+  ...
+# Subtest: release audio is fetched only on demand and rejects bad bytes and cancellation
+ok 117 - release audio is fetched only on demand and rejects bad bytes and cancellation
+  ---
+  duration_ms: 330.823416
+  ...
+# Subtest: music-only Team binding leaves cue ownership untouched while retaining verified music
+ok 118 - music-only Team binding leaves cue ownership untouched while retaining verified music
+  ---
+  duration_ms: 0.636417
+  ...
+# Subtest: music-only disposal cannot replace an existing cue owner or attach after late readiness
+ok 119 - music-only disposal cannot replace an existing cue owner or attach after late readiness
+  ---
+  duration_ms: 4.089084
+  ...
+# Subtest: explicit retained audio adoption defeats late page readiness and invalidates stale readers
+ok 120 - explicit retained audio adoption defeats late page readiness and invalidates stale readers
+  ---
+  duration_ms: 0.566208
+  ...
+# Subtest: switching presentation rejects an in-flight music read before the real player adopts old bytes
+ok 121 - switching presentation rejects an in-flight music read before the real player adopts old bytes
+  ---
+  duration_ms: 14.765167
+  ...
+# Subtest: switching presentation during cue decoding discards the old cache and uses the new Soundscape owner
+ok 122 - switching presentation during cue decoding discards the old cache and uses the new Soundscape owner
+  ---
+  duration_ms: 10.48975
+  ...
+# Subtest: edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+ok 123 - edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+  ---
+  duration_ms: 292.947542
+  ...
+# Subtest: edition theater reports unavailable catalog through its ordinary boot status
+ok 124 - edition theater reports unavailable catalog through its ordinary boot status
+  ---
+  duration_ms: 47.950917
+  ...
+# Subtest: real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+ok 125 - real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+  ---
+  duration_ms: 78.054375
+  ...
+# Subtest: real theater preserves denied-save intent and its recording across a persisted return
+ok 126 - real theater preserves denied-save intent and its recording across a persisted return
+  ---
+  duration_ms: 32.285583
+  ...
+# Subtest: real theater boot failure retains usable shared reading controls without playback
+ok 127 - real theater boot failure retains usable shared reading controls without playback
+  ---
+  duration_ms: 9.169542
+  ...
+# Subtest: terminal exit during delayed boot retires authority and fences late replay startup
+ok 128 - terminal exit during delayed boot retires authority and fences late replay startup
+  ---
+  duration_ms: 21.881917
+  ...
+# Subtest: history-restored replay controls follow unchanged saved intent without touching playback
+ok 129 - history-restored replay controls follow unchanged saved intent without touching playback
+  ---
+  duration_ms: 38.115958
+  ...
+# Subtest: history-restored replay controls follow unchanged session-only intent without touching playback
+ok 130 - history-restored replay controls follow unchanged session-only intent without touching playback
+  ---
+  duration_ms: 30.059875
+  ...
+# Subtest: recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+ok 131 - recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+  ---
+  duration_ms: 234.237209
+  ...
+# Subtest: Theater adopts global remains without rewriting recordings or advancing a paused replay
+ok 132 - Theater adopts global remains without rewriting recordings or advancing a paused replay
+  ---
+  duration_ms: 13.309708
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 133 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 44.3125
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 134 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.23525
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 135 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 2.959875
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 136 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 1.974
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 137 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 1.094833
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 138 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 0.643208
+  ...
+1..138
+# tests 138
+# suites 0
+# pass 138
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2460.528083

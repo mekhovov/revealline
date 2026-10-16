@@ -160,7 +160,7 @@ test('late native install opportunity is suggested once at a safe menu boundary'
   safe = true;
   h.window.emit('beforeinstallprompt', { prompt() {} });
   assert.equal(h.statuses.length, 1);
-  assert.match(h.statuses[0], /Install Reveal Line/);
+  assert.match(h.statuses[0], /Install FPV \/ LINE/);
   assert.equal(h.panel.suggest(), false);
   assert.equal(h.document.querySelector('iframe'), null);
   h.panel.dispose();
@@ -176,8 +176,8 @@ test('cold menu reports saved metadata without treating it as verified readiness
             JSON.stringify({
               edition: 'https://game.example/revealline/releases/v2.0.0/site/',
               group: 'gameplay',
-              complete: true,
               hashes: ['a'.repeat(64)],
+              complete: true,
             }),
           ),
       }),
@@ -187,6 +187,34 @@ test('cold menu reports saved metadata without treating it as verified readiness
   assert.deepEqual(h.statuses, ['Saved offline selection · open Offline play to verify.']);
   assert.equal(h.document.querySelector('iframe'), null);
   h.panel.dispose();
+});
+
+test('cold menu ignores malformed ownership metadata without claiming saved readiness', async () => {
+  for (const hashes of [undefined, null, ['not-a-sha256']]) {
+    const h = setup({
+      caches: {
+        open: async () => ({
+          keys: async () => ['checkpoint'],
+          match: async () =>
+            new Response(
+              JSON.stringify({
+                edition: 'https://game.example/revealline/releases/v2.0.0/site/',
+                group: 'gameplay',
+                hashes,
+                complete: true,
+              }),
+            ),
+        }),
+      },
+    });
+    try {
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.deepEqual(h.statuses, []);
+      assert.equal(h.document.querySelector('iframe'), null);
+    } finally {
+      h.panel.dispose();
+    }
+  }
 });
 
 test('owned iframe focus keeps a pending package request; actual window loss still cancels it', async () => {

@@ -1,0 +1,27 @@
+{
+  "format": "revealline-practice-description.v1",
+  "id": "fpv-worlds",
+  "support": "https://github.com/mekhovov/revealline/issues",
+  "changelog": {
+    "en": "Initial directory release: localized launcher, offline verification, and player guide.",
+    "uk": "Перший випуск каталогу: локалізований запуск, перевірка офлайн і посібник гравця."
+  },
+  "copy": {
+    "en": {
+      "name": "FPV World Studio",
+      "description": "Explore flight challenges, build playlists and create your own worlds.",
+      "purpose": "Practice routes, racing and precision; create and share content.",
+      "inputs": "Keyboard, touch or calibrated controller",
+      "requirements": "WebGL graphics required; richer scenes use more resources",
+      "firstFlight": "Open Explore and choose a challenge. Use Watch first flight or Try first flight, then follow the app’s coaching. Import .rlpack content through World packs."
+    },
+    "uk": {
+      "name": "Студія FPV-світів",
+      "description": "Досліджуйте льотні завдання, складайте списки та створюйте власні світи.",
+      "purpose": "Тренуйте маршрути, перегони й точність; створюйте вміст і діліться ним.",
+      "inputs": "Клавіатура, дотик або відкалібрований контролер",
+      "requirements": "Потрібна графіка WebGL; складніші сцени потребують більше ресурсів",
+      "firstFlight": "Відкрийте «Огляд» і оберіть завдання. Скористайтеся переглядом або спробою першого польоту та підказками застосунку. Вміст .rlpack імпортується через «Пакети світів»."
+    }
+  }
+}

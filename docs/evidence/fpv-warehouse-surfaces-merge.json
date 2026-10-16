@@ -1,0 +1,1531 @@
+{
+  "baseline": "e8af6651fae03d1c5cc5e4d3dad8897be0d2b60b",
+  "worldVisualsSha256": "02eb4dc0c156316bf7634fad51d61365e48e4a5dac81ad62a032b1efc2e0172d",
+  "rendererSha256": "2e0896fa2b5acc3b71a05b729e277b48f16aaa57b43b960c12406d495de88346",
+  "originalPixelComparisons": 72,
+  "allOriginalPixelsExact": true,
+  "warehouseBeforeMergeExact": true,
+  "allGeometryPositionsNormalsIndicesTransformsExact": true,
+  "resourceCountsEqual": true,
+  "warehouseExtraUVBytes": 0,
+  "outwardLabelFaces": 96,
+  "cases": [
+    {
+      "courseId": "warehouse-08",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 2306888,
+        "fog": 3425879,
+        "ground": 3358796,
+        "wall": 3425879,
+        "accent": 6743772,
+        "warm": 15838837
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "warehouse-08",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 11916770,
+        "fog": 12965849,
+        "ground": 5400931,
+        "wall": 3625316,
+        "accent": 11135933,
+        "warm": 15054977
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 43,
+          "geometries": 141,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-38",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 2306888,
+        "fog": 3425879,
+        "ground": 3358796,
+        "wall": 3425879,
+        "accent": 6743772,
+        "warm": 15838837
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 64,
+              "filters": [
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ],
+                [
+                  1003,
+                  1004,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "courseId": "beginner-38",
+      "environment": "warehouse",
+      "theme": {
+        "sky": 11916770,
+        "fog": 12965849,
+        "ground": 5400931,
+        "wall": 3625316,
+        "accent": 11135933,
+        "warm": 15054977
+      },
+      "cycles": [
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "high",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 512,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ],
+                [
+                  1006,
+                  1008,
+                  8
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "balanced",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 256,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ],
+                [
+                  1006,
+                  1008,
+                  4
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "quality": "low",
+          "materials": 46,
+          "geometries": 162,
+          "textures": 9,
+          "uvDelta": 0,
+          "nonWarehouseExact": false,
+          "surfaces": [
+            {
+              "kind": "concrete",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "painted-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            },
+            {
+              "kind": "storage-steel",
+              "size": 128,
+              "filters": [
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ],
+                [
+                  1006,
+                  1008,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "CPU functional qualification of actual Three.js objects and extracted production renderer helpers; no WebGL, FPS or hardware claim."
+}

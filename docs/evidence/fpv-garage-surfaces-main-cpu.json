@@ -1,0 +1,1680 @@
+{
+  "format": "FPVGarageSurfacesFunctionalEvidence.v1",
+  "date": "2026-10-03T17:56:59.339Z",
+  "baseline": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+  "integratedMain": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+  "originalBaseline": "822188e9bebdcf3d46119b48bfd0558e708eb051",
+  "sourceSha256": {
+    "renderer.mjs": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+    "world-visuals.mjs": "2efb2ab746751a4c0facefacc77f92a10150a5000eda3afc9a1ac49ea59dd5c0"
+  },
+  "scope": "Manual source-bound canonical geometry, collision support and actual bundled demonstration replay; no browser, package, physical-device performance or human art acceptance claim.",
+  "passed": true,
+  "checks": [
+    {
+      "title": "world-catalogue.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-catalogue.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "expressive-hunt-courses.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "world-model.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "world-collision.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "world-demonstrations.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "world-assets.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "world-themes.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "world-progress.mjs byte-identical to baseline",
+      "pass": true
+    },
+    {
+      "title": "18 Garage courses contain exactly 9 canonical and 9 unaffected Snake layouts",
+      "pass": true
+    },
+    {
+      "title": "Authored ramp crest and deck edge share their derived plane",
+      "pass": true
+    },
+    {
+      "title": "column-0-0 has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "column-0-0 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-0-0 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-0-0 input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "column-0-1 has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "column-0-1 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-0-1 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-0-1 input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "column-0-2 has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "column-0-2 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-0-2 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-0-2 input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "column-1-0 has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "column-1-0 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-1-0 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-1-0 input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "column-1-1 has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "column-1-1 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-1-1 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-1-1 input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "column-1-2 has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "column-1-2 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-1-2 detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "column-1-2 input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "garage-deck has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "garage-deck detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "garage-deck input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "garage-ramp has bounded role/layer surface batches",
+      "pass": true
+    },
+    {
+      "title": "garage-ramp detail has finite triangle attributes",
+      "pass": true
+    },
+    {
+      "title": "garage-ramp input obstacle remains immutable",
+      "pass": true
+    },
+    {
+      "title": "Total detail work remains bounded",
+      "pass": true,
+      "detail": [
+        {
+          "id": "column-0-0",
+          "batches": 2,
+          "vertices": 264
+        },
+        {
+          "id": "column-0-1",
+          "batches": 2,
+          "vertices": 264
+        },
+        {
+          "id": "column-0-2",
+          "batches": 2,
+          "vertices": 240
+        },
+        {
+          "id": "column-1-0",
+          "batches": 2,
+          "vertices": 288
+        },
+        {
+          "id": "column-1-1",
+          "batches": 2,
+          "vertices": 288
+        },
+        {
+          "id": "column-1-2",
+          "batches": 2,
+          "vertices": 264
+        },
+        {
+          "id": "garage-deck",
+          "batches": 1,
+          "vertices": 36
+        },
+        {
+          "id": "garage-ramp",
+          "batches": 1,
+          "vertices": 72
+        }
+      ]
+    },
+    {
+      "title": "Both enamel edge bands meet at four matching ramp/deck crest vertices",
+      "pass": true,
+      "detail": [
+        {
+          "ramp": {
+            "point": [-34.65999984741211, 5, -8],
+            "uv": [-5.776666641235352, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-34.65999984741211, 5.000000005960464, -8],
+            "uv": [-5.776666641235352, -1.3333333730697632]
+          }
+        },
+        {
+          "ramp": {
+            "point": [-34.81999969482422, 5, -8],
+            "uv": [-5.803333282470703, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-34.82000017166138, 5.000000005960464, -8],
+            "uv": [-5.803333282470703, -1.3333333730697632]
+          }
+        },
+        {
+          "ramp": {
+            "point": [-24.18000030517578, 5, -8],
+            "uv": [-4.03000020980835, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-24.179999828338623, 5.000000005960464, -8],
+            "uv": [-4.03000020980835, -1.3333333730697632]
+          }
+        },
+        {
+          "ramp": {
+            "point": [-24.34000015258789, 5, -8],
+            "uv": [-4.056666851043701, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-24.34000015258789, 5.000000005960464, -8],
+            "uv": [-4.056666851043701, -1.3333333730697632]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Ramp/deck crest paint retains equal six-metre world UV phase",
+      "pass": true,
+      "detail": [
+        {
+          "ramp": {
+            "point": [-34.65999984741211, 5, -8],
+            "uv": [-5.776666641235352, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-34.65999984741211, 5.000000005960464, -8],
+            "uv": [-5.776666641235352, -1.3333333730697632]
+          }
+        },
+        {
+          "ramp": {
+            "point": [-34.81999969482422, 5, -8],
+            "uv": [-5.803333282470703, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-34.82000017166138, 5.000000005960464, -8],
+            "uv": [-5.803333282470703, -1.3333333730697632]
+          }
+        },
+        {
+          "ramp": {
+            "point": [-24.18000030517578, 5, -8],
+            "uv": [-4.03000020980835, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-24.179999828338623, 5.000000005960464, -8],
+            "uv": [-4.03000020980835, -1.3333333730697632]
+          }
+        },
+        {
+          "ramp": {
+            "point": [-24.34000015258789, 5, -8],
+            "uv": [-4.056666851043701, -1.3333333730697632]
+          },
+          "deck": {
+            "point": [-24.34000015258789, 5.000000005960464, -8],
+            "uv": [-4.056666851043701, -1.3333333730697632]
+          }
+        }
+      ]
+    },
+    {
+      "title": "snake-hunt-heights-01/target-platform-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-02/target-platform-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-02/target-platform-3 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-02/target-platform-4 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-03/target-platform-1 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-03/target-platform-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-03/target-platform-3 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-03/target-platform-4 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-03/target-platform-5 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-04/target-platform-3 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-04/target-platform-4 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-04/target-platform-5 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-04/target-platform-6 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-05/target-platform-1 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-05/target-platform-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-05/target-platform-3 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-05/target-platform-4 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-05/target-platform-5 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-06/target-platform-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-06/target-platform-3 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-06/target-platform-4 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-06/target-platform-5 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-06/target-platform-7 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-heights-06/target-platform-8 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-interception-island-bypass/obstacle-1 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-interception-island-bypass/obstacle-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-route-choices-platform-perimeter/obstacle-1 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-route-choices-platform-perimeter/obstacle-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-route-choices-airfield-circuit/obstacle-1 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-route-choices-airfield-circuit/obstacle-2 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "snake-hunt-route-choices-airfield-circuit/obstacle-3 remains excluded",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/school-upper-deck remains excluded",
+      "pass": true
+    },
+    {
+      "title": "garage-02/deck-top retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-low retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-low retains slope normal",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-middle retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-middle retains slope normal",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-high retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-high retains slope normal",
+      "pass": true
+    },
+    {
+      "title": "garage-02/floor-under-deck retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/outside-deck-west retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/outside-deck-east retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/outside-ramp-west retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/outside-ramp-east retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/school-deck retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-toe remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "garage-02/ramp-crest remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "garage-02/deck-ramp-seam remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "garage-02/deck-inside-west-edge remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "garage-02/deck-inside-east-edge remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/deck-top retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-low retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-low retains slope normal",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-middle retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-middle retains slope normal",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-high retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-high retains slope normal",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/floor-under-deck retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/outside-deck-west retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/outside-deck-east retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/outside-ramp-west retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/outside-ramp-east retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/school-deck retains support identity and exact height",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-toe remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/ramp-crest remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/deck-ramp-seam remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/deck-inside-west-edge remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/deck-inside-east-edge remains a supported canonical surface",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/acro elevated landing completes on exact support",
+      "pass": true
+    },
+    {
+      "title": "beginner-41/acro leaves elevated support and completes unchanged",
+      "pass": true
+    },
+    {
+      "title": "garage-01/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-01/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-02/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-02/self-level elevated landing completes on exact support",
+      "pass": true
+    },
+    {
+      "title": "garage-02/self-level leaves elevated support and completes unchanged",
+      "pass": true
+    },
+    {
+      "title": "garage-02/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-02/acro elevated landing completes on exact support",
+      "pass": true
+    },
+    {
+      "title": "garage-02/acro leaves elevated support and completes unchanged",
+      "pass": true
+    },
+    {
+      "title": "garage-03/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-03/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-04/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-04/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-05/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-05/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-06/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-06/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-07/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-07/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-08/self-level actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "garage-08/acro actual replay completes exactly",
+      "pass": true
+    },
+    {
+      "title": "All 17 Garage demonstrations and three elevated support witnesses verified",
+      "pass": true
+    },
+    {
+      "title": "All 38,251 recorded commands retained",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-catalogue.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-model.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-collision.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-demonstrations.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-assets.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-themes.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "optional-practice/civilian-fpv/world-progress.mjs remains immutable after verification",
+      "pass": true
+    },
+    {
+      "title": "renderer.mjs remains bound after verification",
+      "pass": true
+    },
+    {
+      "title": "world-visuals.mjs remains bound after verification",
+      "pass": true
+    }
+  ],
+  "immutable": {
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-assets.mjs": "13a5711d9002e0eefb91c9899d02f7ded9b11d0fc6755c8957f9d5dbcb61cac7",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d"
+  },
+  "inventory": {
+    "totalCourses": 196,
+    "worldCourses": 138,
+    "schoolCourses": 58,
+    "environmentCount": 14,
+    "garageCourses": 18,
+    "canonical": [
+      "garage-01",
+      "garage-02",
+      "garage-03",
+      "garage-04",
+      "garage-05",
+      "garage-06",
+      "garage-07",
+      "garage-08",
+      "beginner-41"
+    ],
+    "unchangedSnake": [
+      {
+        "id": "snake-hunt-heights-01",
+        "obstacles": ["target-platform-2"]
+      },
+      {
+        "id": "snake-hunt-heights-02",
+        "obstacles": ["target-platform-2", "target-platform-3", "target-platform-4"]
+      },
+      {
+        "id": "snake-hunt-heights-03",
+        "obstacles": [
+          "target-platform-1",
+          "target-platform-2",
+          "target-platform-3",
+          "target-platform-4",
+          "target-platform-5"
+        ]
+      },
+      {
+        "id": "snake-hunt-heights-04",
+        "obstacles": [
+          "target-platform-3",
+          "target-platform-4",
+          "target-platform-5",
+          "target-platform-6"
+        ]
+      },
+      {
+        "id": "snake-hunt-heights-05",
+        "obstacles": [
+          "target-platform-1",
+          "target-platform-2",
+          "target-platform-3",
+          "target-platform-4",
+          "target-platform-5"
+        ]
+      },
+      {
+        "id": "snake-hunt-heights-06",
+        "obstacles": [
+          "target-platform-2",
+          "target-platform-3",
+          "target-platform-4",
+          "target-platform-5",
+          "target-platform-7",
+          "target-platform-8"
+        ]
+      },
+      {
+        "id": "snake-hunt-interception-island-bypass",
+        "obstacles": ["obstacle-1", "obstacle-2"]
+      },
+      {
+        "id": "snake-hunt-route-choices-platform-perimeter",
+        "obstacles": ["obstacle-1", "obstacle-2"]
+      },
+      {
+        "id": "snake-hunt-route-choices-airfield-circuit",
+        "obstacles": ["obstacle-1", "obstacle-2", "obstacle-3"]
+      }
+    ]
+  },
+  "geometry": [
+    {
+      "id": "column-0-0",
+      "batches": 2,
+      "vertices": 264
+    },
+    {
+      "id": "column-0-1",
+      "batches": 2,
+      "vertices": 264
+    },
+    {
+      "id": "column-0-2",
+      "batches": 2,
+      "vertices": 240
+    },
+    {
+      "id": "column-1-0",
+      "batches": 2,
+      "vertices": 288
+    },
+    {
+      "id": "column-1-1",
+      "batches": 2,
+      "vertices": 288
+    },
+    {
+      "id": "column-1-2",
+      "batches": 2,
+      "vertices": 264
+    },
+    {
+      "id": "garage-deck",
+      "batches": 1,
+      "vertices": 36
+    },
+    {
+      "id": "garage-ramp",
+      "batches": 1,
+      "vertices": 72
+    }
+  ],
+  "paintSeam": [
+    {
+      "ramp": {
+        "point": [-34.65999984741211, 5, -8],
+        "uv": [-5.776666641235352, -1.3333333730697632]
+      },
+      "deck": {
+        "point": [-34.65999984741211, 5.000000005960464, -8],
+        "uv": [-5.776666641235352, -1.3333333730697632]
+      }
+    },
+    {
+      "ramp": {
+        "point": [-34.81999969482422, 5, -8],
+        "uv": [-5.803333282470703, -1.3333333730697632]
+      },
+      "deck": {
+        "point": [-34.82000017166138, 5.000000005960464, -8],
+        "uv": [-5.803333282470703, -1.3333333730697632]
+      }
+    },
+    {
+      "ramp": {
+        "point": [-24.18000030517578, 5, -8],
+        "uv": [-4.03000020980835, -1.3333333730697632]
+      },
+      "deck": {
+        "point": [-24.179999828338623, 5.000000005960464, -8],
+        "uv": [-4.03000020980835, -1.3333333730697632]
+      }
+    },
+    {
+      "ramp": {
+        "point": [-24.34000015258789, 5, -8],
+        "uv": [-4.056666851043701, -1.3333333730697632]
+      },
+      "deck": {
+        "point": [-24.34000015258789, 5.000000005960464, -8],
+        "uv": [-4.056666851043701, -1.3333333730697632]
+      }
+    }
+  ],
+  "supportProbes": [
+    {
+      "course": "garage-02",
+      "name": "deck-top",
+      "position": {
+        "x": -30000,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "ramp-low",
+      "position": {
+        "x": -30000,
+        "y": 1020,
+        "z": 9600
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 1006,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "ramp-middle",
+      "position": {
+        "x": -30000,
+        "y": 2520,
+        "z": 3000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 2506,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "ramp-high",
+      "position": {
+        "x": -30000,
+        "y": 4020,
+        "z": -3600
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 4006,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "floor-under-deck",
+      "position": {
+        "x": -30000,
+        "y": 20,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "$floor",
+        "y": 0,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "outside-deck-west",
+      "position": {
+        "x": -35010,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "garage-02",
+      "name": "outside-deck-east",
+      "position": {
+        "x": -23990,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "garage-02",
+      "name": "outside-ramp-west",
+      "position": {
+        "x": -35010,
+        "y": 2520,
+        "z": 3000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "garage-02",
+      "name": "outside-ramp-east",
+      "position": {
+        "x": -23990,
+        "y": 2520,
+        "z": 3000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "garage-02",
+      "name": "school-deck",
+      "position": {
+        "x": 0,
+        "y": 5020,
+        "z": -16000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "garage-02",
+      "name": "ramp-toe",
+      "position": {
+        "x": -30000,
+        "y": 20,
+        "z": 13990
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 8,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "ramp-crest",
+      "position": {
+        "x": -30000,
+        "y": 5020,
+        "z": -7990
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 5004,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "deck-ramp-seam",
+      "position": {
+        "x": -30000,
+        "y": 5020,
+        "z": -8000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 5006,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "deck-inside-west-edge",
+      "position": {
+        "x": -34990,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "garage-02",
+      "name": "deck-inside-east-edge",
+      "position": {
+        "x": -24010,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "deck-top",
+      "position": {
+        "x": -30000,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "ramp-low",
+      "position": {
+        "x": -30000,
+        "y": 1020,
+        "z": 9600
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 1006,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "ramp-middle",
+      "position": {
+        "x": -30000,
+        "y": 2520,
+        "z": 3000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 2506,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "ramp-high",
+      "position": {
+        "x": -30000,
+        "y": 4020,
+        "z": -3600
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 4006,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "floor-under-deck",
+      "position": {
+        "x": -30000,
+        "y": 20,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "$floor",
+        "y": 0,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "outside-deck-west",
+      "position": {
+        "x": -35010,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "beginner-41",
+      "name": "outside-deck-east",
+      "position": {
+        "x": -23990,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "beginner-41",
+      "name": "outside-ramp-west",
+      "position": {
+        "x": -35010,
+        "y": 2520,
+        "z": 3000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "beginner-41",
+      "name": "outside-ramp-east",
+      "position": {
+        "x": -23990,
+        "y": 2520,
+        "z": 3000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": null
+    },
+    {
+      "course": "beginner-41",
+      "name": "school-deck",
+      "position": {
+        "x": 0,
+        "y": 5020,
+        "z": -16000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "school-upper-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "ramp-toe",
+      "position": {
+        "x": -30000,
+        "y": 20,
+        "z": 13990
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 8,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "ramp-crest",
+      "position": {
+        "x": -30000,
+        "y": 5020,
+        "z": -7990
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 5004,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "deck-ramp-seam",
+      "position": {
+        "x": -30000,
+        "y": 5020,
+        "z": -8000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-ramp",
+        "y": 5006,
+        "normal": {
+          "x": 0,
+          "y": 975133,
+          "z": 221621
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "deck-inside-west-edge",
+      "position": {
+        "x": -34990,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "name": "deck-inside-east-edge",
+      "position": {
+        "x": -24010,
+        "y": 5020,
+        "z": -18000
+      },
+      "radius": 220,
+      "drop": 100,
+      "support": {
+        "id": "garage-deck",
+        "y": 5001,
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        }
+      }
+    }
+  ],
+  "demonstrations": [
+    {
+      "course": "beginner-41",
+      "mode": "acro",
+      "ticks": 2510,
+      "finalStateIdentity": "3d33e5a01e58079c",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-01",
+      "mode": "self-level",
+      "ticks": 1285,
+      "finalStateIdentity": "609edeb258b70d73",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-01",
+      "mode": "acro",
+      "ticks": 1280,
+      "finalStateIdentity": "ea531d66c8ed2fe5",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-02",
+      "mode": "self-level",
+      "ticks": 3292,
+      "finalStateIdentity": "fa5476f8e37b5044",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-02",
+      "mode": "acro",
+      "ticks": 3204,
+      "finalStateIdentity": "ab307058c45e2fb8",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-03",
+      "mode": "self-level",
+      "ticks": 3160,
+      "finalStateIdentity": "cd48b495f0204883",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-03",
+      "mode": "acro",
+      "ticks": 3182,
+      "finalStateIdentity": "6560c09cbddb494b",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-04",
+      "mode": "self-level",
+      "ticks": 1364,
+      "finalStateIdentity": "d9e797e2b9f7ce26",
+      "contacts": 0,
+      "health": 85
+    },
+    {
+      "course": "garage-04",
+      "mode": "acro",
+      "ticks": 1381,
+      "finalStateIdentity": "b98d544fb8d517a0",
+      "contacts": 0,
+      "health": 85
+    },
+    {
+      "course": "garage-05",
+      "mode": "self-level",
+      "ticks": 1532,
+      "finalStateIdentity": "eaddebb3ffe0a98f",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-05",
+      "mode": "acro",
+      "ticks": 1646,
+      "finalStateIdentity": "0649d04fe9020e34",
+      "contacts": 0,
+      "health": 95
+    },
+    {
+      "course": "garage-06",
+      "mode": "self-level",
+      "ticks": 1785,
+      "finalStateIdentity": "9764832eca622d9f",
+      "contacts": 0,
+      "health": 90
+    },
+    {
+      "course": "garage-06",
+      "mode": "acro",
+      "ticks": 1799,
+      "finalStateIdentity": "72c8eacb496e36c1",
+      "contacts": 0,
+      "health": 90
+    },
+    {
+      "course": "garage-07",
+      "mode": "self-level",
+      "ticks": 1779,
+      "finalStateIdentity": "879fabcaa232b5d8",
+      "contacts": 0,
+      "health": 95
+    },
+    {
+      "course": "garage-07",
+      "mode": "acro",
+      "ticks": 1812,
+      "finalStateIdentity": "45e75f04771f21fe",
+      "contacts": 0,
+      "health": 95
+    },
+    {
+      "course": "garage-08",
+      "mode": "self-level",
+      "ticks": 3606,
+      "finalStateIdentity": "0d8cf1a2fcf7bb11",
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "course": "garage-08",
+      "mode": "acro",
+      "ticks": 3634,
+      "finalStateIdentity": "29ac18478b582675",
+      "contacts": 0,
+      "health": 100
+    }
+  ],
+  "landingWitnesses": [
+    {
+      "course": "beginner-41",
+      "mode": "acro",
+      "landed": {
+        "tick": 1153,
+        "step": 5,
+        "position": {
+          "x": 1020,
+          "y": 5002,
+          "z": -15929
+        },
+        "support": {
+          "id": "school-upper-deck",
+          "y": 5000,
+          "normal": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "landingSpeed": 474,
+        "landingTilt": 50
+      },
+      "departed": {
+        "tick": 1161,
+        "step": 5,
+        "position": {
+          "x": 1007,
+          "y": 5064,
+          "z": -15929
+        },
+        "support": null
+      }
+    },
+    {
+      "course": "garage-02",
+      "mode": "self-level",
+      "landed": {
+        "tick": 1310,
+        "step": 3,
+        "position": {
+          "x": -29990,
+          "y": 5002,
+          "z": -17998
+        },
+        "support": {
+          "id": "garage-deck",
+          "y": 5000,
+          "normal": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "landingSpeed": 1137,
+        "landingTilt": 0
+      },
+      "departed": {
+        "tick": 1317,
+        "step": 3,
+        "position": {
+          "x": -29990,
+          "y": 5054,
+          "z": -17998
+        },
+        "support": null
+      }
+    },
+    {
+      "course": "garage-02",
+      "mode": "acro",
+      "landed": {
+        "tick": 1231,
+        "step": 3,
+        "position": {
+          "x": -29991,
+          "y": 5002,
+          "z": -18001
+        },
+        "support": {
+          "id": "garage-deck",
+          "y": 5000,
+          "normal": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "landingSpeed": 1138,
+        "landingTilt": 12
+      },
+      "departed": {
+        "tick": 1238,
+        "step": 3,
+        "position": {
+          "x": -29991,
+          "y": 5054,
+          "z": -18001
+        },
+        "support": null
+      }
+    }
+  ]
+}

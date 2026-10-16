@@ -1,8 +1,11 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
@@ -13,6 +16,18 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { createRewardMissionBindings } from '../rewards/bindings.mjs';
+
+function openEditionSettings(page, category) {
+  page.$('shell-options').click();
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$(`settings-tab-${category}`).click();
+  assert.equal(page.$(`settings-panel-${category}`).hidden, false);
+  if (category === 'data') {
+    const details = page.$('edition-presentation-select')?.closest('details');
+    if (details && !details.open) details.querySelector('summary').click();
+  }
+}
 
 test('artwork update offers explicit exact-snapshot recovery and Continue retains the original save', async (t) => {
   const f = await retainedEditionFixture(),
@@ -37,7 +52,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     await settle(() => storage.getItem(key) !== null);
     original = storage.getItem(key);
     assert.equal(
-      JSON.parse(original).actorAppearancePin.authoredPresentationSha256,
+      nativeSession(JSON.parse(original)).actorAppearancePin.authoredPresentationSha256,
       f.descriptor.id,
     );
   });
@@ -55,8 +70,13 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     });
     const recover = page.$('edition-recover-presentation');
     assert.ok(recover, 'The exact registered receipt offers an explicit recovery action.');
+    assert.ok(
+      recover.closest('#shell-home'),
+      'A known saved-flight mismatch stays immediately reachable.',
+    );
     const before = page.win.location.href;
     assert.equal(storage.getItem(key), original);
+    assert.equal(page.$('settings-dialog').open, false);
     await recover.onclick();
     assert.notEqual(page.win.location.href, before);
     assert.equal(new URL(page.win.location.href).searchParams.get('presentation'), f.descriptor.id);
@@ -87,6 +107,7 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
       page.$('shell-featured').click();
       await settle(() => page.doc.body.dataset.flightState === 'running');
       page.$('shell-menu').click();
+      openEditionSettings(page, 'data');
       const href = page.win.location.href;
       const choice = page.$('edition-presentation-select');
       choice.value = f.descriptor.id;
@@ -124,11 +145,20 @@ test('artwork update offers explicit exact-snapshot recovery and Continue retain
     page.$('save-attempt-button').click();
     const resumed = JSON.parse(storage.getItem(key)),
       saved = JSON.parse(original);
-    assert.equal(resumed.campaignKey, saved.campaignKey);
-    assert.equal(resumed.runId, saved.runId);
-    assert.deepEqual(resumed.actorAppearancePin, saved.actorAppearancePin);
-    assert.deepEqual(resumed.replay, saved.replay);
+    assert.equal(nativeSession(resumed).campaignKey, nativeSession(saved).campaignKey);
+    assert.equal(nativeSession(resumed).runId, nativeSession(saved).runId);
+    assert.deepEqual(
+      nativeSession(resumed).actorAppearancePin,
+      nativeSession(saved).actorAppearancePin,
+    );
+    assert.deepEqual(nativeSession(resumed).replay, nativeSession(saved).replay);
+    assert.deepEqual(
+      resumed.appearance ?? null,
+      saved.appearance ?? null,
+      'Continue retains the accepted presentation envelope.',
+    );
     page.$('shell-menu').click();
+    openEditionSettings(page, 'data');
     const choice = page.$('edition-presentation-select'),
       href = page.win.location.href;
     choice.value = '';
@@ -159,6 +189,21 @@ async function editionSwitchHost(t, { occupied = false, start = true } = {}) {
   const f = await editionProviderFixture();
   const catalog = structuredClone(f.catalog);
   catalog.editions.push({ ...catalog.editions[0], id: 'sample-other', name: 'Other audience' });
+  catalog.brands.push({ ...catalog.brands[0], id: 'another-company', name: 'Another company' });
+  catalog.campaigns.push({
+    ...catalog.campaigns[0],
+    id: 'another-campaign',
+    brandId: 'another-company',
+    sourcePath: 'game/content/another-company/project.json',
+  });
+  catalog.editions.push({
+    ...catalog.editions[0],
+    id: 'sample-foreign',
+    name: 'Another community',
+    brandId: 'another-company',
+    campaignIds: ['another-campaign'],
+    entryCampaignId: 'another-campaign',
+  });
   for (const path of ['game/editions/catalog.json', 'edition-catalog.json'])
     f.files.set(path, catalog);
   const page = await soloPage(t, {
@@ -207,29 +252,29 @@ test('edition chrome and retained-artwork recovery switch locale without remount
     artwork = page.$('edition-presentation-select'),
     actorNote = page.$('menu-actor-note'),
     authoredOptions = [...picker.options].map((option) => option.textContent);
-  assert.match(picker.parentNode.textContent, /Company & campaign edition/);
-  assert.match(artwork.parentNode.textContent, /Artwork snapshot/);
+  assert.match(picker.parentNode.textContent, /Choose a world/);
+  assert.match(artwork.parentNode.textContent, /Artwork version/);
   assert.equal(artwork.options[0].textContent, 'Current artwork');
-  assert.match(artwork.options[1].textContent, /^Retained original · /);
-  assert.match(actorNote.textContent, /campaign artwork/);
+  assert.match(artwork.options[1].textContent, /^Saved original · /);
+  assert.match(actorNote.textContent, /shared Solo rules/);
   assert.ok(
     page.doc
       .querySelectorAll('summary')
-      .some((summary) => summary.textContent === 'About this edition & artwork'),
+      .some((summary) => summary.textContent === 'About this world & its artwork'),
   );
 
   setLocale('uk', { persist: false });
   assert.equal(page.$('edition-select'), picker);
   assert.equal(page.$('edition-presentation-select'), artwork);
-  assert.match(picker.parentNode.textContent, /Видання компанії та кампанії/);
-  assert.match(artwork.parentNode.textContent, /Знімок оформлення/);
-  assert.equal(artwork.options[0].textContent, 'Поточне оформлення');
+  assert.match(picker.parentNode.textContent, /Оберіть світ/);
+  assert.match(artwork.parentNode.textContent, /Версія зображень/);
+  assert.equal(artwork.options[0].textContent, 'Поточні зображення');
   assert.match(artwork.options[1].textContent, /^Збережений оригінал · /);
-  assert.match(actorNote.textContent, /оформлення своєї кампанії/);
+  assert.match(actorNote.textContent, /спільним правилам Соло/);
   assert.ok(
     page.doc
       .querySelectorAll('summary')
-      .some((summary) => summary.textContent === 'Про це видання й оформлення'),
+      .some((summary) => summary.textContent === 'Про цей світ і його зображення'),
   );
   assert.deepEqual(
     [...picker.options].map((option) => option.textContent),
@@ -252,6 +297,7 @@ for (const saving of ['verified', 'quota', 'occupied'])
       };
     }
     page.$('shell-menu').click();
+    openEditionSettings(page, 'content');
     const before = authoritativeCheckpoint(page.rendered.run),
       origin = page.win.location.href,
       picker = page.$('edition-select');
@@ -275,7 +321,10 @@ for (const saving of ['verified', 'quota', 'occupied'])
     );
     const retained = page.storage.getItem(key);
     if (saving === 'verified')
-      assert.equal(JSON.parse(retained).actorAppearancePin.content.editionId, 'sample-public');
+      assert.equal(
+        nativeSession(JSON.parse(retained)).actorAppearancePin.content.editionId,
+        'sample-public',
+      );
     else assert.equal(retained, null);
     page.$('mode-leave-stay').click();
     assert.equal(page.$('mode-leave-dialog').open, false);
@@ -299,6 +348,7 @@ for (const saving of ['verified', 'quota', 'occupied'])
 test('edition switch cancellation retires pending retention and cannot navigate after a late completion', async (t) => {
   const page = await editionSwitchHost(t);
   page.$('shell-menu').click();
+  openEditionSettings(page, 'content');
   const origin = page.win.location.href,
     key = 'revealline.suspended.journey-sample-public.v1.solo-v2',
     retained = page.storage.getItem(key),
@@ -332,11 +382,21 @@ test('edition switch cancellation retires pending retention and cannot navigate 
   assert.deepEqual(page.errors, []);
 });
 
-test('edition switch permits only declared destinations and does not prompt when no flight exists', async (t) => {
+test('edition switch permits only its company destinations and does not prompt when no flight exists', async (t) => {
   const page = await editionSwitchHost(t, { start: false }),
     origin = page.win.location.href,
     picker = page.$('edition-select');
-  for (const id of ['sample-public', 'omitted-audience', 'https://foreign.test/']) {
+  openEditionSettings(page, 'content');
+  assert.deepEqual(
+    [...picker.options].map((option) => option.value),
+    ['sample-public', 'sample-other'],
+  );
+  for (const id of [
+    'sample-public',
+    'sample-foreign',
+    'omitted-audience',
+    'https://foreign.test/',
+  ]) {
     picker.value = id;
     await picker.onchange();
     assert.equal(picker.value, 'sample-public');
@@ -347,6 +407,53 @@ test('edition switch permits only declared destinations and does not prompt when
   await picker.onchange();
   assert.equal(page.win.location.href, 'http://localhost/game/index.html?edition=sample-other');
   assert.equal(page.$('mode-leave-dialog').open, false);
+  assert.deepEqual(page.errors, []);
+});
+
+test('a forged cross-company selection cannot save, replace or leave the current attempt', async (t) => {
+  const page = await editionSwitchHost(t);
+  page.$('shell-menu').click();
+  openEditionSettings(page, 'content');
+  const before = authoritativeCheckpoint(page.rendered.run);
+  const origin = page.win.location.href;
+  const key = 'revealline.suspended.journey-sample-public.v1.solo-v2';
+  const saved = page.storage.getItem(key);
+  const picker = page.$('edition-select');
+  picker.value = 'sample-foreign';
+  assert.equal(await picker.onchange(), false);
+  assert.equal(picker.value, 'sample-public');
+  assert.equal(page.$('mode-leave-dialog').open, false);
+  assert.equal(page.win.location.href, origin);
+  assert.equal(page.storage.getItem(key), saved);
+  assert.equal(
+    page.storage.getItem('revealline.suspended.journey-sample-foreign.v1.solo-v2'),
+    null,
+  );
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), before);
+  assert.deepEqual(page.errors, []);
+});
+
+test('retained edition chrome does not borrow a newly adopted logo outside its saved asset closure', async (t) => {
+  const f = await retainedEditionFixture({ originalArtwork: true });
+  const currentLogo = f.replacePicture('new-company-logo');
+  f.catalog.brands[0].logoAssetId = currentLogo.id;
+  f.catalog.brands[0].assetIds = [currentLogo.id];
+  const requests = [];
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&presentation=${f.descriptor.id}`,
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    pictures: { Image: PNGImage },
+    fetchResponse(url) {
+      requests.push(String(url));
+      return f.fetcher(url);
+    },
+  });
+  assert.equal(page.doc.body.dataset.editionId, 'sample-public');
+  assert.equal(page.$('edition-presentation-select').value, f.descriptor.id);
+  assert.ok(!requests.some((url) => url.endsWith(currentLogo.path)));
+  for (const image of page.doc.querySelectorAll('img'))
+    assert.ok(!String(image.src).includes('new-company-logo'));
   assert.deepEqual(page.errors, []);
 });
 
@@ -388,16 +495,22 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   page.$('settings-dialog').close();
   page.$('save-attempt-button').click();
   const saved = JSON.parse(storage.getItem(`${legacyKey}.solo-v2`));
-  assert.equal(saved.format, 'xonix-session.v6');
-  assert.equal(saved.actorAppearancePin.style, 'campaign');
-  assert.equal(saved.actorAppearancePin.format, 'revealline-actor-appearance-pin.v2');
-  assert.match(saved.actorAppearancePin.authoredPresentationSha256, /^[a-f0-9]{64}$/);
-  assert.equal(saved.actorAppearancePin.content.editionId, 'sample-public');
+  assert.equal(nativeSession(saved).format, 'xonix-session.v6');
+  assert.equal(nativeSession(saved).actorAppearancePin.style, 'campaign');
+  assert.equal(
+    nativeSession(saved).actorAppearancePin.format,
+    'revealline-actor-appearance-pin.v2',
+  );
+  assert.match(
+    nativeSession(saved).actorAppearancePin.authoredPresentationSha256,
+    /^[a-f0-9]{64}$/,
+  );
+  assert.equal(nativeSession(saved).actorAppearancePin.content.editionId, 'sample-public');
   assert.equal(storage.getItem(legacyKey), legacy);
   await page.$('export-replay').onclick();
   const recording = JSON.parse(page.$('replay-json').value);
   assert.equal(recording.format, 'revealline-replay-presentation.v2');
-  assert.deepEqual(recording.actorAppearancePin, saved.actorAppearancePin);
+  assert.deepEqual(recording.actorAppearancePin, nativeSession(saved).actorAppearancePin);
   page.$('replay-dialog').close();
   assert.ok(page.$('settings-panel-data').textContent.includes('Earlier preview save retained'));
   page.$('shell-worlds').click();
@@ -599,6 +712,8 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         journeyIndexedDB: managedIndexedDB().indexedDB,
         fetchResponse: f.fetcher,
       });
+    assert.equal(page.$('continue-saved').hidden, true);
+    assert.equal(page.$('continue-saved-note').textContent, '');
     page.$('shell-featured').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
@@ -616,14 +731,25 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
         journeyIndexedDB: managedIndexedDB().indexedDB,
         fetchResponse: f.fetcher,
       });
+    assert.ok(
+      page
+        .$('continue-saved-note')
+        .textContent.includes(nativeSession(JSON.parse(saved)).replay.level.name),
+      'The preview resolves the exact saved candidate mission from its owned execution key.',
+    );
+    const beforeContinue = storage.getItem(key);
     page.$('shell-continue').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
+    assert.deepEqual(
+      authoritativeCheckpoint(page.rendered.run),
+      nativeSession(JSON.parse(beforeContinue)).replay.checkpoint,
+    );
     page.$('pause-button').click();
     page.$('save-attempt-button').click();
     assert.deepEqual(
-      JSON.parse(storage.getItem(key)).actorAppearancePin,
-      JSON.parse(saved).actorAppearancePin,
+      nativeSession(JSON.parse(storage.getItem(key))).actorAppearancePin,
+      nativeSession(JSON.parse(saved)).actorAppearancePin,
     );
   });
   for (const change of ['palette', 'missing receipt'])
@@ -633,8 +759,8 @@ test('edition Continue preserves a matching receipt and rejects a same-ID change
       if (change === 'palette') f.data.themes.themes[0].palette.accent = '#ff00ff';
       else {
         const prior = JSON.parse(saved);
-        prior.actorAppearancePin.format = 'revealline-actor-appearance-pin.v1';
-        delete prior.actorAppearancePin.authoredPresentationSha256;
+        nativeSession(prior).actorAppearancePin.format = 'revealline-actor-appearance-pin.v1';
+        delete nativeSession(prior).actorAppearancePin.authoredPresentationSha256;
         raw = JSON.stringify(prior);
       }
       storage.setItem(key, raw);
@@ -696,11 +822,33 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
   page.$('pause-button').click();
   assert.equal(page.$('game-overlay').hidden, false);
   assert.equal(page.$('demo-button').hidden, false);
+  const retainedRun = page.rendered.run,
+    paused = authoritativeCheckpoint(retainedRun);
   page.$('demo-button').click();
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  assert.equal(page.$('demo-dialog').open, true, 'Watch first cut opens the shared Demo player.');
+  // This boundary includes exact-edition Demo planning and verified asset work.
+  // Keep the real scene predicate and paused-attempt assertions; a crowded
+  // company cohort may take longer than an ordinary five-second UI transition.
+  await waitFor(() => page.$('demo-dialog').dataset.scene === 'playing', {
+    timeoutMs: 20000,
+    message: 'Exact-edition Demo preparation did not reach its playable scene.',
+  });
+  assert.ok(
+    f.source.missions.some((mission) => mission.name === page.$('demo-level').textContent),
+    'The presentation-only Demo rotation stays within this edition, without requiring its first mission.',
+  );
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.deepEqual(
+    authoritativeCheckpoint(retainedRun),
+    paused,
+    'Watching does not replace the paused attempt.',
+  );
+  page.$('demo-back').click();
+  assert.equal(page.$('demo-dialog').open, false);
   page.frame(0);
-  assert.equal(page.rendered.run.levelId, f.project.missions[0].id);
-  assert.match(page.$('run-message').textContent, /Demonstration.*no.*(award|reward)/i);
+  assert.equal(page.rendered.run, retainedRun);
+  assert.equal(page.rendered.run.levelId, second.id);
+  assert.deepEqual(authoritativeCheckpoint(retainedRun), paused);
   assert.deepEqual(page.errors, []);
 });
 
@@ -737,6 +885,125 @@ test('edition controller practice reconstructs only its selected mission without
   assert.deepEqual(page.errors, []);
 });
 
+test('reward-enabled controller practice boots without a Journey authority and cannot earn discoveries', async (t) => {
+  const f = await editionProviderFixture(),
+    catalog = structuredClone(f.catalog);
+  const descriptor = catalog.campaigns[0],
+    mission = createRewardMissionBindings(f.source)[0];
+  descriptor.rewardPath = 'game/content/sample/rewards.json';
+  const copy = { title: 'Practice discovery', teaser: 'Win this mission in Solo to collect.' };
+  f.files.set('game/editions/catalog.json', catalog);
+  f.files.set('edition-catalog.json', catalog);
+  f.files.set(descriptor.rewardPath, [
+    {
+      format: 'revealline-completion-reward.v1',
+      id: 'sample-discovery',
+      revision: '1',
+      brandId: 'sample',
+      campaignId: descriptor.id,
+      scope: { kind: 'mission', id: mission.missionId },
+      locales: { en: copy, uk: copy },
+      requirements: {
+        missions: [{ missionId: mission.missionId, bindings: mission.bindings }],
+        learning: [],
+        mastery: [],
+      },
+      payloads: [
+        {
+          id: 'explanation',
+          type: 'knowledge',
+          locales: {
+            en: { title: 'Explanation', paragraphs: ['A public discovery.'] },
+            uk: { title: 'Пояснення', paragraphs: ['Публічне відкриття.'] },
+          },
+        },
+      ],
+    },
+  ]);
+  const page = await soloPage(t, {
+    search: `?edition=sample-public&practice=1&edition-mission=${mission.missionId}&difficulty=expert`,
+    fetchResponse: f.fetcher,
+  });
+  assert.equal(page.rendered.run.levelId, mission.missionId);
+  for (let i = 0; i < 20; i++) page.frame();
+  const card = page.$('completion-reward-shelf').querySelector('article');
+  assert.equal(card.dataset.earned, 'false');
+  assert.equal(card.querySelector('button'), null);
+  assert.deepEqual(page.errors, []);
+});
+
+test('official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback', async (t) => {
+  const bytes = new Map();
+  const fetchResponse = async (value) => {
+    const request = new URL(String(value), 'http://localhost/game/');
+    const pathname =
+      request.protocol === 'file:'
+        ? request.pathname.slice(new URL('../../', import.meta.url).pathname.length)
+        : request.pathname.slice(1);
+    if (!/^game\/(?:editions\/|content\/company-)/.test(pathname)) return undefined;
+    if (!bytes.has(pathname))
+      bytes.set(pathname, await readFile(new URL(`../../${pathname}`, import.meta.url)));
+    return new Response(bytes.get(pathname));
+  };
+  for (const edition of ['droneaid', 'droneaid-nl-workshop-lights'])
+    await t.test(edition, async (t) => {
+      const locale = getLocale();
+      t.after(() => setLocale(locale, { persist: false }));
+      const page = await soloPage(t, {
+        search: `?edition=${edition}`,
+        titleScreen: true,
+        journeyIndexedDB: managedIndexedDB().indexedDB,
+        pictures: { Image: PNGImage },
+        fetchResponse,
+      });
+      const home = page.$('shell-home');
+      const title = page.$('shell-title');
+      const wordmark = title.querySelector('.droneaid-landing-wordmark');
+      const compact = page.doc.querySelector('.edition-brand-logo');
+      assert.ok(compact.src.endsWith('/editions/assets/droneaid-nl/propeller.png'));
+      const icon = [...page.doc.head.querySelectorAll('link')].find((link) => link.rel === 'icon');
+      assert.ok(icon.href.endsWith('/droneaid-nl/icon-512.png'));
+      if (edition === 'droneaid') {
+        assert.equal(page.doc.body.dataset.editionId, 'droneaid-nl-community');
+        assert.equal(home.dataset.landingIdentity, 'droneaid');
+        assert.ok(wordmark.src.endsWith('/ui/art/menu-scenes/droneaid-wordmark-light.svg'));
+        assert.equal(wordmark.alt, '');
+        assert.equal(wordmark.getAttribute('aria-hidden'), 'true');
+        assert.equal(home.querySelector('.edition-home-logo'), null);
+        assert.equal(title.textContent, 'DroneAid / LINE');
+        assert.equal(title.dataset.wordmarkLoaded, 'false');
+        const action = page.$('shell-featured');
+        action.focus();
+        wordmark.emit('load');
+        assert.equal(title.dataset.wordmarkLoaded, 'true');
+        setLocale('uk', { persist: false });
+        assert.equal(title.querySelector('.droneaid-landing-wordmark'), wordmark);
+        assert.equal(title.textContent, 'DroneAid / LINE');
+        assert.equal(page.doc.activeElement, action);
+        wordmark.emit('error');
+        assert.equal(title.dataset.wordmarkLoaded, 'false');
+        assert.equal(title.querySelector('.native-brand-fallback').textContent, 'DroneAid');
+        wordmark.emit('load');
+        assert.equal(title.dataset.wordmarkLoaded, 'true');
+        page.win.emit('pagehide', { persisted: false });
+        assert.equal(wordmark.listeners.get('load').size, 0);
+        assert.equal(wordmark.listeners.get('error').size, 0);
+        assert.equal(title.querySelector('.droneaid-landing-wordmark'), null);
+        assert.equal(title.dataset.wordmarkLoaded, undefined);
+        wordmark.emit('load');
+        assert.equal(title.dataset.wordmarkLoaded, undefined);
+      } else {
+        assert.equal(wordmark, null);
+        assert.equal(home.dataset.landingIdentity, undefined);
+        const logo = home.querySelector('.edition-home-logo');
+        assert.ok(logo.classList.contains('edition-propeller'));
+        assert.ok(logo.src.endsWith('/droneaid-nl/propeller.png'));
+        assert.equal(title.textContent, 'Workshop Lights / LINE');
+      }
+      assert.deepEqual(page.errors, []);
+    });
+});
+
 // The actual entry, provider, canonical catalogue and first attempt for every
 // declared audience. Only browser DOM/canvas/PNG decoding are modeled.
 test('every declared edition boots and starts through the canonical Solo host', async (t) => {
@@ -761,10 +1028,17 @@ test('every declared edition boots and starts through the canonical Solo host', 
         search: `?edition=${edition.id}`,
         titleScreen: true,
         journeyIndexedDB: managedIndexedDB().indexedDB,
-        pictures: { Image: PNGImage },
+        pictures: { Image: RasterImage },
         fetchResponse,
       });
       assert.equal(page.doc.body.dataset.editionId, edition.id);
+      if (edition.brandId === 'droneaid-nl') {
+        const options = [...page.$('theme-select').options];
+        assert.ok(options.length > 0);
+        assert.ok(options.every((option) => option.textContent.startsWith('DroneAid')));
+        assert.ok(options.every((option) => !option.textContent.includes('Netherlands')));
+        assert.ok(options.every((option) => option.value.startsWith('droneaid-nl-')));
+      }
       page.$('shell-worlds').click();
       await settle(() => page.$('journey-chooser')?.open === true);
       const count = catalog.campaigns
@@ -861,5 +1135,25 @@ test('same-origin installed creator campaign cannot inject missions into a selec
     ['', 'Journey'],
   );
   assert.ok(!page.$('journey-cards').textContent.includes('Unrelated creator campaign'));
+  assert.deepEqual(page.errors, []);
+});
+
+test('edition home keeps play primary while Settings retains localized world choice and context', async (t) => {
+  const page = await editionSwitchHost(t, { start: false });
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const picker = page.$('edition-select');
+  assert.ok(picker.closest('#settings-panel-content'));
+  assert.equal(page.doc.querySelectorAll('#edition-select').length, 1);
+  assert.equal(page.$('shell-home').querySelector('.edition-about'), null);
+  assert.match(picker.parentElement.textContent, /Choose a world/);
+  openEditionSettings(page, 'content');
+  assert.equal(page.$('edition-select'), picker);
+  setLocale('uk', { persist: false });
+  assert.match(picker.parentElement.textContent, /Оберіть світ/);
+  page.$('settings-tab-extras').click();
+  assert.equal(page.$('settings-panel-extras').hidden, false);
+  assert.match(page.$('settings-panel-extras').textContent, /Про цей світ і його зображення/);
   assert.deepEqual(page.errors, []);
 });

@@ -4,7 +4,10 @@ import {
   installedPresentation,
 } from './installed-app.mjs';
 import { localizedText, t } from './i18n/index.mjs';
+import { attachLauncherNavigation } from './ui/launcher-navigation.mjs';
+import { editionIdFromLocation } from './edition-context.mjs';
 const $ = (id) => document.getElementById(id);
+attachLauncherNavigation();
 localizedText($('status'), () => t('interface:launcher.opening'));
 const localError = (key, values) =>
   Object.assign(new Error(t(key, values)), { localization: { key, values } });
@@ -21,8 +24,13 @@ $('install').onclick = async () => {
   installPrompt = null;
   $('install').hidden = true;
 };
-const game = (edition, page = '') =>
-  new URL(`game/${page}`, validateInstalledEdition(edition).scope).href;
+const game = (edition, page = '') => {
+  const destination = new URL(`game/${page}`, validateInstalledEdition(edition).scope);
+  // Diagnostics are opt-in for this launch; the selected installed edition stays pinned.
+  if (new URL(location.href).searchParams.get('controllerTrace') === '1')
+    destination.searchParams.set('controllerTrace', '1');
+  return destination.href;
+};
 async function check() {
   $('updates').disabled = true;
   try {
@@ -36,7 +44,7 @@ async function check() {
     const active = readInstalledState().active;
     localizedText($('edition'), () =>
       t(
-        active?.scope === candidate.scope
+        active?.scope === candidate.scope && active?.buildId && active.buildId === candidate.buildId
           ? 'interface:launcher.editionSelected'
           : 'interface:launcher.editionAvailable',
         { version: candidate.version },
@@ -53,7 +61,16 @@ async function check() {
     $('updates').disabled = false;
   }
 }
-$('updates').onclick = check;
+$('updates').onclick = () => {
+  // Branded launchers manage their own published edition and may not expose the
+  // default game's update surface. Keep their existing explicit check route.
+  if (editionIdFromLocation(location) !== undefined) return check();
+  // A refresh of the selected game can keep serving its cached build. The
+  // explicit updater runs under the narrow launcher and identifies fresh bytes.
+  const destination = new URL('update.html', location.href);
+  destination.searchParams.set('check', String(Date.now()));
+  location.assign(destination.href);
+};
 try {
   const state = readInstalledState();
   if (state.active) {

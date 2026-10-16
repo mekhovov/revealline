@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>Edition landing verification</title>
+  <style>
+    body {
+      margin: 16px;
+      color: #edf4fa;
+      background: #101923;
+      font: 16px system-ui;
+    }
+    button {
+      font: inherit;
+      padding: 12px;
+    }
+    iframe {
+      display: block;
+      border: 0;
+      margin-top: 16px;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+  </style>
+  <h1>Edition landing verification</h1>
+  <p>
+    Loads real edition pages at portrait and landscape sizes in English and Ukrainian with both menu
+    palettes. Use a dedicated test origin. No gameplay actions are invoked. Preferences are restored
+    after the run.
+  </p>
+  <button id="run">Run edition matrix</button>
+  <pre id="status" role="status">Ready.</pre>
+  <iframe id="host" title="Current edition landing" allow="fullscreen"></iframe>
+  <script type="module" src="./edition-menu-matrix.mjs"></script>
+</html>

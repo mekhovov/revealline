@@ -91,3 +91,8 @@ session envelope. Giving that independent case its own storage preserved the
 existing exact-byte restoration assertions; no product save behavior changed.
 No full local build was attempted with less than 1 GiB free. Integrated release
 qualification and installed-device evidence remain required before publication.
+
+
+## Reconciliation context — 28 September 2026
+
+PR #768 subsequently merged as commit `7138e7b6187bf69991d50313c3f9ac1620427778` with the offline ownership fixture correction. This follow-up is prepared from that accepted source: it keeps the corrected fixture unchanged and adds only optional published-chapter loading plus its focused tests and documentation. The historical v0.142.0 receipts under `docs/verification/online-play-optional-20260928/` remain byte-for-byte records of their original observations and are not current release qualification. This preparation allocates no later version or release.

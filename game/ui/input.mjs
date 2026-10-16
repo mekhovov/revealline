@@ -1,6 +1,7 @@
 import { t } from '../i18n/index.mjs';
 import { actionForKey, keyCodeForEvent, resolveKeyBindings } from '../key-bindings.mjs';
 import { attachTouchSteering } from './touch-steering.mjs';
+import { attachPlayfieldContextMenu } from './playfield-context-menu.mjs';
 const neutral = () => ({ direction: null, boost: false, action: false, pickup: false });
 export function gamepadCommand(pad) {
   if (!pad?.connected) return { ...neutral(), pause: false };
@@ -16,6 +17,7 @@ export function attachInput({
   arena,
   onPause = () => {},
   onActivity = () => {},
+  onSteer = () => {},
   onClear = () => {},
   tapMode = () => false,
   continuousSteering = () => false,
@@ -57,6 +59,7 @@ export function attachInput({
     localDirectionPending = false,
     lastPadDirection = null,
     destroyed = false;
+  const detachPlayfieldContextMenu = attachPlayfieldContextMenu({ roots: [arena], active });
   const continuous = () => continuousSteering() === true;
   const listen = (target, type, fn, options) => {
     if (target) {
@@ -187,6 +190,7 @@ export function attachInput({
       latched = null;
       (pointer ? buttons : held).set(key, { direction, order: ++order, element });
     }
+    onSteer(direction);
     syncPressed();
   };
   const startBoost = (key, pointer = false, toggle = tapMode()) => {
@@ -504,8 +508,10 @@ export function attachInput({
       // Local events since the previous sample win an unobservable same-sample
       // tie. Consume the pad transition either way: an old hold never reclaims
       // the heading on a later poll. Physical release only rearms that source.
-      if (cmd.direction && cmd.direction !== lastPadDirection && !localDirectionPending)
+      if (cmd.direction && cmd.direction !== lastPadDirection && !localDirectionPending) {
         intentDirection = cmd.direction;
+        onSteer(cmd.direction);
+      }
       lastPadDirection = cmd.direction;
       localDirectionPending = false;
     }
@@ -539,6 +545,7 @@ export function attachInput({
       destroyed = true;
       clearTimeout(boostClickTimer);
       touchSteering?.destroy();
+      detachPlayfieldContextMenu();
       for (const remove of listeners) remove();
     },
   };

@@ -1,0 +1,137 @@
+# Optional alternate School examples
+
+This increment adds 28 optional command recordings for existing School lessons:
+`beginner-01`–`beginner-12` in Acro and `beginner-27`–`beginner-42` in Self-level.
+The existing 178 built-in recordings, course definitions, scoring, physics and
+player code remain unchanged. These files are explicit imports, not additional
+content in the built-in registry or the admitted Worlds ZIP.
+
+The 14 foundation Self-level examples (`beginner-13`–`beginner-26`) already have
+their own optional archive. The 16 lessons at `beginner-43`–`beginner-58` contain
+Acro skill objectives; Self-level remains unscored practice there and is excluded
+from this batch. Eligibility follows `worldCourseRequiresAcro(course)`, which
+checks `rotation-v1`, `attitude-v1`, `path-v1` and `crossing-v1` objectives across
+both modes. It does not infer eligibility from a nonexistent `step.skill` field.
+
+## Import and use
+
+Download either or both files from
+[`authoring/fpv-worlds/demonstrations/optional/school-alternates-v1`](../authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/):
+
+| File                                           | Examples |   Bytes | SHA-256                                                            |
+| ---------------------------------------------- | -------: | ------: | ------------------------------------------------------------------ |
+| `fpv-school-acro-proof-part-1-of-1.json`       |       12 | 176,551 | `81f5a88402188a5632991e53ed3e5fbabd919ffcdbeb7916c0acc91ca0937422` |
+| `fpv-school-self-level-proof-part-1-of-1.json` |       16 | 603,794 | `db03219d3e9925b34e7d99769af3ba630ac94f8148365d906b3d88a200ad4c2b` |
+
+In World Studio's Flight Lab, import the chosen proof archive. Select the matching
+flight mode for the lesson. Imported examples become available only after the
+player resolves their original dependencies and replays their commands against
+the matching course, response and model identities. Watching an example does not
+score a personal attempt or advance progress. The original recommended-mode
+example remains available in its own mode.
+
+## Authoring qualification
+
+Generation uses the existing `scripts/qualify-fpv-acro-school.mjs`, with explicit
+`mode` and `proofArchive: true`; it never installs into the built-in registry.
+The command pilot advances the unchanged 50 Hz runtime through ordinary
+normalized controls. It does not inject positions, completion or objective
+state. The existing pilot required no change.
+
+- The 12 Acro examples completed in 9,104 ticks; the 16 Self-level examples in
+  30,657 ticks. All 28 had zero contacts and full health.
+- Every exported proof independently replayed to the identical terminal state.
+  Every archive then imported through `importProofPart` as untrusted
+  `missing-dependency` records and replayed again to the identical terminal state.
+- The two archives total 780,345 bytes. Authoring-only data adds zero runtime
+  source-input bytes and does not change package or library limits.
+- The eligibility receipt pins both production trees to main baseline
+  `bf167a4fdfc81d7327fd94518da65ac82d64eb7e`, checks the exact 28 pairs and excluded
+  groups, and retains the 154 World plus 24 Flight recordings.
+
+Full generator receipts are
+[`Acro`](evidence/fpv-school-alternate-acro-physics.json) and
+[`Self-level`](evidence/fpv-school-alternate-self-level-physics.json). The manual
+[`eligibility probe`](evidence/fpv-school-alternate-eligibility-probe.mjs) and its
+[`receipt`](evidence/fpv-school-alternate-eligibility.json) preserve the exact
+selection and byte audit. Intermediate generator outputs, including duplicate
+demonstration payloads, remain in ignored
+`dist/fpv-school-alternates-generated-bf167a4fd`.
+
+Reproduce Acro generation with Node 22:
+
+```sh
+node scripts/qualify-fpv-acro-school.mjs --self-level --mode acro --proof-archive --output NEW_ACRO_DIRECTORY
+```
+
+Here `--self-level` selects the 12 original Self-level lessons and `--mode acro`
+selects the recording's actual flight mode. For the other group, call the
+exported `qualifyAcroSchool` with
+`ids: [...EXPERIENCED_LESSON_ORDER, ...ADVANCED_LESSON_ORDER]`,
+`mode: 'self-level'`, `proofArchive: true` and a new output directory. The CLI
+does not provide an arbitrary multi-ID option. Do not select all School lessons
+in Self-level: the Acro skill group is deliberately outside this archive.
+
+## Scope of acceptance
+
+Normal main integration at `114011bead19c5114ebf7c4273bcf1bb3fda4a3f` includes
+Orchard PR #1021, main `5e4abe273`. Its only incoming production change is the
+Orchard material path in `world-visuals.mjs`. The scoped
+[`39-check integration audit`](evidence/fpv-school-alternate-main-integration.json)
+confirms all frozen School data/tool bytes and all other production modules stay
+exact. Each of the 28 School IDs fails the canonical Orchard guard. The final
+School branch has no production delta against that main; replay, host and
+registry identities retain their original qualification.
+
+Actual-player qualification passes **393 of 393 checks / 30 playbacks**: all 28
+whole recordings and one recorded section in each flight mode. Both mode
+archives import through the actual File input, resolve original dependencies,
+and replay to exact complete identities with full health and zero contacts.
+The full drawn states match the authoritative proofs and final host snapshots.
+Mode-specific School/catalogue actions, whole-lesson lab previews, repeat
+imports, pinning, native reload, removal, invalid dependencies and retained
+progress/recovery/bookmarks pass with no reported errors. The run took 60,838 ms;
+this is a fixture duration, not a hardware-performance result.
+
+The [complete browser receipt](evidence/fpv-school-alternate-browser.json) is
+138,741 bytes, SHA-256
+`0e587322a86cc5e03c0498cdf52f0f20e26a6447755d155ee1abf49f57f6110b`.
+Its [screenshot](evidence/fpv-school-alternate-browser.png) and
+[frozen manifest](evidence/fpv-school-alternate-final-fixture.json) retain
+candidate `8f5a97373e10c289f2bec8d120f21b2179fe564c`. The fixture reuses the
+complete 102-file Railworks admitted player at
+`9efa36364425e2846002748bb29478b378d2b5cb`, through verified immutable hardlinks.
+Its 70-module host closure uses the original package projection; the optional
+archives remain separate explicit imports. This is retained package provenance,
+not a new package admission or a claim that these archives are bundled.
+
+The later unrelated main demo-player update `a087facd9ca57f0e7519aa161cb6acc86a7eee3e`
+is integrated. The [final scoped audit](evidence/fpv-school-alternate-final-integration.json)
+confirms none of its changed paths intersect either the 70 host modules or the
+102 admitted player members; this School branch adds no production changes.
+
+The retained [v3 browser failure](evidence/fpv-school-alternate-browser-v3-failure.json)
+passed 51 of 52 checks before playback. Both archives imported and all 28
+records independently verified. The failed fixture assertion incorrectly
+expected the earlier wrong-pack control to survive the authenticated import.
+`worldRecordIdentity` hashes course, proof and optional presentation, excluding
+the dependency hint `packIdentity`; the valid record therefore correctly
+replaces that same-ID row. This is a fixture expectation error, not an importer
+or recording failure. Its [original frozen manifest](evidence/fpv-school-alternate-v3-fixture.json)
+and complete failed receipt remain preserved. The initial missing-dependency
+rejection and no-unlock checks passed and must remain in the corrected fixture.
+
+The manual playback observer also avoids repeatedly cloning the entire stored
+recording library during an active frame. It observes transparently forwarded
+renderer draws, then compares the completed draw's identity with the full host
+snapshot and authoritative proof. Paused zero-time renderer preparation retains
+unchanged simulation ticks and records its timings. Focus and long-frame pause
+guards remain enabled; a pause during active playback fails rather than silently
+resuming. This instrumentation is not a hardware or frame-rate measurement.
+
+Controlled-input reachability does not establish novice teaching quality,
+physical-radio acceptance or hardware performance. Additional unit coverage,
+coaching improvements and public deployment remain separate gates. Native HTTP
+reload verifies persistence, not installed/offline acceptance. Explicit
+`app.dispose` qualification remains the separately owned lifecycle repair; this
+fixture uses native iframe navigation and teardown.

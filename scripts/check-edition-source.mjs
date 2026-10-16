@@ -31,7 +31,8 @@ export async function checkEditionSourceEligibility(root) {
     ignored = new Set(['.git', '.cache', 'node_modules', 'dist', 'releases']);
   async function walk(directory, prefix = '') {
     for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
-      if (!prefix && ignored.has(entry.name)) continue;
+      // Workspace dependencies are excluded by the build at every depth.
+      if (entry.name === 'node_modules' || (!prefix && ignored.has(entry.name))) continue;
       const name = `${prefix}${entry.name}`;
       if (entry.isDirectory()) await walk(path.join(directory, entry.name), `${name}/`);
       else if (entry.isFile())

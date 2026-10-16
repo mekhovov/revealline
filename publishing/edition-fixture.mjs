@@ -6,6 +6,7 @@ export function editionAdmissionFixture({
   version = 'v0.140.0',
   editionId = 'coupa',
   basePath = '/revealline/',
+  legacyPublicAddress = false,
 } = {}) {
   const sourceRevision = 'a'.repeat(40),
     sourceTree = 'b'.repeat(40);
@@ -17,6 +18,9 @@ export function editionAdmissionFixture({
     assets: [],
   };
   const identity = editionAppIdentity({ editionId, basePath });
+  const appIdentity = legacyPublicAddress
+    ? { id: identity.id, scope: identity.id, start_url: `${identity.id}app/` }
+    : identity;
   const sourceFiles = new Map([
     ['game/company.html', Buffer.from('<html>game</html>')],
     ['game/content/campaign.json', editionJSON({ missions: [] })],
@@ -26,7 +30,7 @@ export function editionAdmissionFixture({
     ['edition-catalog.json', editionJSON(catalog)],
     [
       'app/manifest.webmanifest',
-      editionJSON({ ...identity, name: 'Example edition', display: 'standalone' }),
+      editionJSON({ ...appIdentity, name: 'Example edition', display: 'standalone' }),
     ],
     [
       'app/current.json',

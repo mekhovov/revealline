@@ -1,0 +1,218 @@
+{
+  "format": "FPVCanalCityPreparation.v1",
+  "actualSizeM": [
+    384,
+    384
+  ],
+  "terrainCells": 9,
+  "sceneryCells": 9,
+  "spawns": [
+    {
+      "id": "north-arch",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 24000
+      }
+    },
+    {
+      "id": "warehouse-passage",
+      "position": {
+        "x": 156000,
+        "y": 7000,
+        "z": 80000
+      }
+    },
+    {
+      "id": "highwalk",
+      "position": {
+        "x": 128000,
+        "y": 9000,
+        "z": 144000
+      }
+    },
+    {
+      "id": "lock-bend",
+      "position": {
+        "x": 64000,
+        "y": 3000,
+        "z": 220000
+      }
+    },
+    {
+      "id": "courtyard",
+      "position": {
+        "x": 200000,
+        "y": 7000,
+        "z": 288000
+      }
+    },
+    {
+      "id": "turning-basin",
+      "position": {
+        "x": 304000,
+        "y": 3000,
+        "z": 304000
+      }
+    }
+  ],
+  "routes": [
+    {
+      "id": "arch-canal",
+      "halfWidth": 3,
+      "points": [
+        [
+          128,
+          3,
+          12
+        ],
+        [
+          128,
+          3,
+          64
+        ],
+        [
+          128,
+          3,
+          112
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-through",
+      "halfWidth": 0.8,
+      "points": [
+        [
+          156,
+          7,
+          80
+        ],
+        [
+          184,
+          7,
+          80
+        ],
+        [
+          224,
+          7,
+          80
+        ],
+        [
+          250,
+          7,
+          80
+        ]
+      ]
+    },
+    {
+      "id": "highwalk-under",
+      "halfWidth": 3,
+      "points": [
+        [
+          128,
+          9,
+          136
+        ],
+        [
+          128,
+          9,
+          176
+        ],
+        [
+          128,
+          9,
+          208
+        ]
+      ]
+    },
+    {
+      "id": "lock-through",
+      "halfWidth": 2,
+      "points": [
+        [
+          64,
+          3,
+          218
+        ],
+        [
+          64,
+          3,
+          232
+        ],
+        [
+          64,
+          3,
+          246
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-return",
+      "halfWidth": 2,
+      "points": [
+        [
+          200,
+          7,
+          288
+        ],
+        [
+          200,
+          7,
+          302
+        ],
+        [
+          200,
+          7,
+          320
+        ]
+      ]
+    },
+    {
+      "id": "basin-slalom",
+      "halfWidth": 3,
+      "points": [
+        [
+          304,
+          3,
+          248
+        ],
+        [
+          304,
+          3,
+          284
+        ],
+        [
+          296,
+          3,
+          308
+        ],
+        [
+          312,
+          3,
+          326
+        ]
+      ]
+    }
+  ],
+  "licensedPlacements": 60,
+  "originalBoxes": 110,
+  "archedBridges": 1,
+  "gabledRoofs": 10,
+  "sourceBytes": 6756656,
+  "geometryBytes": 993584,
+  "textureBytes": 468316,
+  "resourceBytes": 1461900,
+  "retainedAndCandidateBytes": 3836616,
+  "terrainManifestSHA256": "d5f4d8be1ff3da5ce65e56075282794bb18cf31de28c5cfe76962ded50fcac11",
+  "sceneryManifestSHA256": "e2ee7fff225123d15fe03cb189560b5431d4144f78899a4d15fed7f3c9af41a8",
+  "paletteConversion": "Exact original texels in 256x128 atlas crop; UVs remapped at original texel density with 16px halo, normals retained. Distant mip averages can differ.",
+  "paletteCrop": {
+    "x": 128,
+    "y": 384,
+    "width": 256,
+    "height": 128
+  },
+  "sourceReceiptSHA256": "fe34bc7c5f3968c2cab25bf6e6aab9c14c0a0a59d751b90b741017d090e16822",
+  "water": "Visual-only; no fluid physics",
+  "playerReady": false
+}

@@ -1,0 +1,473 @@
+{
+  "format": "snake-jammer-seed-qualification.v1",
+  "scope": "Deterministic public-input pilot plus exact replay verification. Solo and normal pace only, level seed17 and hazard seeds1/42/2026; not exhaustive schedule, arbitrary-seed, human tracking, or mobile ergonomics proof. The pilot reads simulation state while rendered enemies may be hidden.",
+  "results": [
+    {
+      "id": "classic-field-signal-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 40,
+      "levelIdentity": "0bafd878ee504dfb"
+    },
+    {
+      "id": "classic-field-signal-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 40,
+      "levelIdentity": "0bafd878ee504dfb"
+    },
+    {
+      "id": "classic-field-signal-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 40,
+      "levelIdentity": "0bafd878ee504dfb"
+    },
+    {
+      "id": "classic-field-quiet-return",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 78,
+      "levelIdentity": "d5b469e0264c06f7",
+      "pilotExposedSteps": 1,
+      "pilotMovingPreySteps": 0
+    },
+    {
+      "id": "classic-field-quiet-return",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 78,
+      "levelIdentity": "d5b469e0264c06f7",
+      "pilotExposedSteps": 0,
+      "pilotMovingPreySteps": 0
+    },
+    {
+      "id": "classic-field-quiet-return",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 78,
+      "levelIdentity": "d5b469e0264c06f7",
+      "pilotExposedSteps": 0,
+      "pilotMovingPreySteps": 0
+    },
+    {
+      "id": "classic-field-broadcast-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 60,
+      "levelIdentity": "0624f8d1c86fdf20"
+    },
+    {
+      "id": "classic-field-broadcast-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 60,
+      "levelIdentity": "0624f8d1c86fdf20"
+    },
+    {
+      "id": "classic-field-broadcast-check",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 60,
+      "levelIdentity": "0624f8d1c86fdf20"
+    },
+    {
+      "id": "classic-field-quiet-channel",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 85,
+      "levelIdentity": "0c73cc30378d086a"
+    },
+    {
+      "id": "classic-field-quiet-channel",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 85,
+      "levelIdentity": "0c73cc30378d086a"
+    },
+    {
+      "id": "classic-field-quiet-channel",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 85,
+      "levelIdentity": "0c73cc30378d086a"
+    },
+    {
+      "id": "classic-field-signal-crossing",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 88,
+      "levelIdentity": "3aef3078d5124c74"
+    },
+    {
+      "id": "classic-field-signal-crossing",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 88,
+      "levelIdentity": "3aef3078d5124c74"
+    },
+    {
+      "id": "classic-field-signal-crossing",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 88,
+      "levelIdentity": "3aef3078d5124c74"
+    },
+    {
+      "id": "classic-field-relay-airfield",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 96,
+      "levelIdentity": "73011a72c515977c"
+    },
+    {
+      "id": "classic-field-relay-airfield",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 96,
+      "levelIdentity": "73011a72c515977c"
+    },
+    {
+      "id": "classic-field-relay-airfield",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 96,
+      "levelIdentity": "73011a72c515977c"
+    },
+    {
+      "id": "classic-field-field-links",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 63,
+      "levelIdentity": "b93e4eace6e814f5",
+      "pilotExposedSteps": 1,
+      "pilotMovingPreySteps": 0
+    },
+    {
+      "id": "classic-field-field-links",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 63,
+      "levelIdentity": "b93e4eace6e814f5",
+      "pilotExposedSteps": 0,
+      "pilotMovingPreySteps": 0
+    },
+    {
+      "id": "classic-field-field-links",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 63,
+      "levelIdentity": "b93e4eace6e814f5",
+      "pilotExposedSteps": 0,
+      "pilotMovingPreySteps": 0
+    },
+    {
+      "id": "classic-expedition-edge-of-reception",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 79,
+      "levelIdentity": "5d8f6a3e67947236"
+    },
+    {
+      "id": "classic-expedition-edge-of-reception",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 79,
+      "levelIdentity": "5d8f6a3e67947236"
+    },
+    {
+      "id": "classic-expedition-edge-of-reception",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 79,
+      "levelIdentity": "5d8f6a3e67947236"
+    },
+    {
+      "id": "classic-expedition-blind-bend",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 43,
+      "levelIdentity": "a9a738adc504b46c"
+    },
+    {
+      "id": "classic-expedition-blind-bend",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 43,
+      "levelIdentity": "a9a738adc504b46c"
+    },
+    {
+      "id": "classic-expedition-blind-bend",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 43,
+      "levelIdentity": "a9a738adc504b46c"
+    },
+    {
+      "id": "classic-expedition-moving-shadow",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 51,
+      "levelIdentity": "1ac5594ec1cbc09d"
+    },
+    {
+      "id": "classic-expedition-moving-shadow",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 51,
+      "levelIdentity": "1ac5594ec1cbc09d"
+    },
+    {
+      "id": "classic-expedition-moving-shadow",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 51,
+      "levelIdentity": "1ac5594ec1cbc09d"
+    },
+    {
+      "id": "classic-expedition-quiet-relay",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 80,
+      "levelIdentity": "d4dd21a66e56a84a"
+    },
+    {
+      "id": "classic-expedition-quiet-relay",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 80,
+      "levelIdentity": "d4dd21a66e56a84a"
+    },
+    {
+      "id": "classic-expedition-quiet-relay",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 80,
+      "levelIdentity": "d4dd21a66e56a84a"
+    },
+    {
+      "id": "classic-expedition-clear-ground",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 55,
+      "levelIdentity": "404d5118f3010d8f"
+    },
+    {
+      "id": "classic-expedition-clear-ground",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 55,
+      "levelIdentity": "404d5118f3010d8f"
+    },
+    {
+      "id": "classic-expedition-clear-ground",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 55,
+      "levelIdentity": "404d5118f3010d8f"
+    },
+    {
+      "id": "classic-expedition-radio-chase",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 98,
+      "levelIdentity": "83044fe45da47444"
+    },
+    {
+      "id": "classic-expedition-radio-chase",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 98,
+      "levelIdentity": "83044fe45da47444"
+    },
+    {
+      "id": "classic-expedition-radio-chase",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 98,
+      "levelIdentity": "83044fe45da47444"
+    },
+    {
+      "id": "classic-expedition-signal-workshop",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 65,
+      "levelIdentity": "9b45a92936f9cdb8"
+    },
+    {
+      "id": "classic-expedition-signal-workshop",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 65,
+      "levelIdentity": "9b45a92936f9cdb8"
+    },
+    {
+      "id": "classic-expedition-signal-workshop",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 65,
+      "levelIdentity": "9b45a92936f9cdb8"
+    },
+    {
+      "id": "classic-expedition-four-routes-home",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 1,
+      "status": "verified-win",
+      "steps": 123,
+      "levelIdentity": "c991d3126b29f5a3"
+    },
+    {
+      "id": "classic-expedition-four-routes-home",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 42,
+      "status": "verified-win",
+      "steps": 123,
+      "levelIdentity": "c991d3126b29f5a3"
+    },
+    {
+      "id": "classic-expedition-four-routes-home",
+      "mode": "solo",
+      "pace": "normal",
+      "seed": 17,
+      "hazardSeed": 2026,
+      "status": "verified-win",
+      "steps": 123,
+      "levelIdentity": "c991d3126b29f5a3"
+    }
+  ],
+  "refresh": {
+    "changedIds": ["classic-field-quiet-return", "classic-field-field-links"],
+    "regenerated": 6,
+    "retained": 39
+  }
+}

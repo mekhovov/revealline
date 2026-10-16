@@ -1,0 +1,52 @@
+{
+  "format": "fpv-line-edition-committed-input-verification.v1",
+  "date": "2026-09-29T03:18:29.655779+00:00",
+  "scope": "SHA-256 comparison of all previously captured runtime inputs and six compiler/checker implementation paths with Git blobs at the exact committed revision. No recompile, materialization, archive, installation or publication.",
+  "commit": "98577732c03e771fc7af40b969f19de7750bdd86",
+  "capturedCompileHead": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+  "sourceReport": "/private/tmp/edition-package-matrix-enemy-retro-coupa-20260929.json",
+  "sourceReportSha256": "059be698a27509b890c946331c551f5e59917fe8243aa17f6d865e44cca0623a",
+  "sourceCaptureReport": "/private/tmp/edition-package-matrix-enemy-retro-coupa-20260929-capture.json",
+  "sourceCaptureReportSha256": "f38e86f34371013fcc1eed4de1eef98f52dd8d130f5e96bebfcf745dadb5a14a",
+  "inputInventorySha256": "bab38a91b5b90631d561fa1248b680dd26218188c5f112d10288e50b3a7622cf",
+  "capturedInputCount": 835,
+  "compilerInputCount": 6,
+  "verifiedPathCount": 841,
+  "uniqueVerifiedPathCount": 841,
+  "allCapturedInputsMatchCommit": true,
+  "allCompilerInputsMatchCommit": true,
+  "passed": true,
+  "compilerInputs": [
+    {
+      "path": "game/test/manual/edition-package-check.mjs",
+      "bytes": 8566,
+      "sha256": "f3f4cce183c2cf0090033d5f3998c0178dcd176ce5008ee99de6c74d954c7a7c"
+    },
+    {
+      "path": "scripts/compile-edition.mjs",
+      "bytes": 37302,
+      "sha256": "e13de3541258ef393a17d76c200f4ac8b1bf7246f9ca974a8cece4cabf16a084"
+    },
+    {
+      "path": "scripts/edition-runtime.mjs",
+      "bytes": 9859,
+      "sha256": "23955a7e926ee44cf7919d906b01d4f6ff53d88cfc8c6c17146834af60f93cdb"
+    },
+    {
+      "path": "scripts/edition-offline.mjs",
+      "bytes": 14296,
+      "sha256": "e8dfae3e5f5d63f9fa3bbcea3043bb4f9b9dbb9e8fbe2cc6173e426c7814e911"
+    },
+    {
+      "path": "scripts/edition-localization.mjs",
+      "bytes": 3734,
+      "sha256": "3ae43b285ecdfba0fa1b9f21dc8030d5dd83a638d5e810113b8fca0fb7625e49"
+    },
+    {
+      "path": "scripts/offline-launcher.mjs",
+      "bytes": 6886,
+      "sha256": "8593a113fe0b823d67053eb2d4a7cf5725bbdbc8800e91f0d82af8033d1a9972"
+    }
+  ],
+  "failures": []
+}

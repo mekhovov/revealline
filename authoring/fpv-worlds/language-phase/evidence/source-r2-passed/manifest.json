@@ -1,0 +1,22 @@
+{
+  "source": "bf3597703763584c79119bdeab50bfa03198ae6f",
+  "checksPassed": 433,
+  "overallPassed": true,
+  "scope": "Historical baseline reproduction and corrected source candidate, native rendering/storage, scripted public controls. No package, hardware-performance, new offline or deployment claim.",
+  "files": [
+    {
+      "path": "fpv-language-phase-8949-passed.json.gz",
+      "bytes": 241026,
+      "sha256": "810636c367a0b0ec014d75012dd7abc1ce3db558b4f365eb6e2214b50b90c8c1",
+      "storedBytes": 18149,
+      "storedSha256": "e2a0608f44ac5c5dcc0ad2ec187756418b07ec667884a53a50dd41dfebb53c0e"
+    },
+    {
+      "path": "fpv-language-phase-8949-passed.png",
+      "bytes": 58485,
+      "sha256": "bfd2d9e1a230955656409ea4337e14c207c409c73975dd6fa0dfe1aa94cac39c",
+      "storedBytes": 58485,
+      "storedSha256": "bfd2d9e1a230955656409ea4337e14c207c409c73975dd6fa0dfe1aa94cac39c"
+    }
+  ]
+}
