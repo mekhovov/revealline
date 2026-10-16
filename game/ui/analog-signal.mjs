@@ -57,28 +57,36 @@ export function applyAnalogSignalNoise(
     randomState ^= randomState << 5;
     return (randomState >>> 0) / 4294967296;
   };
-  const clusters = [random() * height, random() * height, random() * height];
+  const cluster0 = random() * height,
+    cluster1 = random() * height,
+    cluster2 = random() * height,
+    radius = Math.max(2, height * 0.065),
+    streakLimit = Math.max(2, width * 0.045);
   for (let y = 0; y < height; y++) {
     const envelope = Math.max(
-      ...clusters.map((center) =>
-        Math.max(0, 1 - Math.abs(y - center) / Math.max(2, height * 0.065)),
-      ),
+      Math.max(0, 1 - Math.abs(y - cluster0) / radius),
+      Math.max(0, 1 - Math.abs(y - cluster1) / radius),
+      Math.max(0, 1 - Math.abs(y - cluster2) / radius),
     );
-    const rowBias = (random() - 0.5) * (3 + envelope * 10);
+    const rowBias = (random() - 0.5) * (3 + envelope * 10),
+      grainScale = 28 + envelope * 18,
+      streakChance = 0.0015 + envelope * 0.025;
     let tail = 0,
       streak = 0,
       length = 0;
     for (let x = 0; x < width; x++) {
       const index = (y * width + x) * 4;
       tail = tail * 0.35 + (random() - 0.5) * 28;
-      const grain = (random() + random() - 1) * (28 + envelope * 18) + tail;
-      if (length <= 0 && random() < 0.0015 + envelope * 0.025) {
-        length = 1 + Math.floor(random() * Math.max(2, width * 0.045));
+      const grain = (random() + random() - 1) * grainScale + tail;
+      if (length <= 0 && random() < streakChance) {
+        length = 1 + Math.floor(random() * streakLimit);
         streak = (random() < 0.5 ? -1 : 1) * (32 + random() * 48);
       }
       const impulse = length-- > 0 ? streak : 0;
-      for (let channel = 0; channel < 3; channel++)
-        output[index + channel] = base[index + channel] + (grain + rowBias + impulse) * strength;
+      const noise = (grain + rowBias + impulse) * strength;
+      output[index] = base[index] + noise;
+      output[index + 1] = base[index + 1] + noise;
+      output[index + 2] = base[index + 2] + noise;
       output[index + 3] = 255;
     }
   }
