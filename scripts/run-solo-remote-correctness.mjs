@@ -441,11 +441,13 @@ async function main() {
           ? 'auxiliary'
           : plan.format === 'SoloHostedDemoRecoveryPlanV1'
             ? 'demo'
-            : null;
+            : plan.format === 'SoloHostedRasterPlanV1'
+              ? 'raster'
+              : null;
   let adapter = null,
     defaultBaselineReuse = false,
     modeState = null,
-    setupActive = ['sustained', 'auxiliary', 'demo'].includes(extension);
+    setupActive = ['sustained', 'auxiliary', 'demo', 'raster'].includes(extension);
   if (extension) {
     adapter = await import(`./solo-remote-${extension}.mjs`);
     adapter[
@@ -454,6 +456,7 @@ async function main() {
         sustained: 'validateSustainedPlan',
         auxiliary: 'validateAuxiliaryPlan',
         demo: 'validateDemoPlan',
+        raster: 'validateRasterPlan',
       }[extension]
     ](plan);
   }
@@ -469,7 +472,9 @@ async function main() {
             ? 'SoloHostedAuxiliary.v1'
             : extension === 'demo'
               ? 'SoloHostedDemoRecoveryCohortV1'
-              : 'SoloHostedCorrectness.v1',
+              : extension === 'raster'
+                ? 'SoloHostedNativeRasterCohortV1'
+                : 'SoloHostedCorrectness.v1',
     status: 'failed',
     performanceExclusion: extension === 'sustained' ? plan.performanceExclusion : true,
     timingQualification:
@@ -947,7 +952,7 @@ async function main() {
         (extension === 'auxiliary' && plan.rows.some((row) => row.source === 'baseline'))
       )
         await ensureBaseline();
-      if (['auxiliary', 'demo'].includes(extension)) await inspect();
+      if (['sustained', 'auxiliary', 'demo', 'raster'].includes(extension)) await inspect();
       setupActive = false;
       report.setupCompletedAt = new Date().toISOString();
       report.modePreparationStartedAt = report.setupCompletedAt;
@@ -958,6 +963,7 @@ async function main() {
             sustained: 'prepareSustainedMode',
             auxiliary: 'prepareAuxiliaryMode',
             demo: 'prepareDemoMode',
+            raster: 'prepareRasterMode',
           }[extension]
         ](context);
       context.modeState = modeState;
@@ -1021,6 +1027,7 @@ async function main() {
               sustained: 'runSustainedRow',
               auxiliary: 'runAuxiliaryRow',
               demo: 'runDemoRow',
+              raster: 'runRasterRow',
             }[extension]
           ](context, row, dir, tmp);
         } else {
