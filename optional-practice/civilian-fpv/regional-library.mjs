@@ -692,6 +692,67 @@ export function regionalOperationDeadline(win, controller, kind) {
   };
 }
 
+// Explicit presentation families only: names, revisions and hashes never decide identity.
+const regionalFamilies = [
+  ['alpine', { en: 'Alpine Highlands', uk: 'Альпійське високогір’я' }, ['alpine-highlands-study']],
+  ['lunar', { en: 'Lunar Basin', uk: 'Місячна улоговина' }, ['lunar-basin-study']],
+  ['canal', { en: 'Canal City', uk: 'Місто каналів' }, ['canal-city-study']],
+  ['desert', { en: 'Desert Expedition', uk: 'Пустельна експедиція' }, ['desert-expedition-study']],
+  [
+    'tropical',
+    { en: 'Tropical coast', uk: 'Тропічне узбережжя' },
+    ['tropical-coastal-districts', 'tropical-coastal-study'],
+  ],
+  [
+    'railway',
+    { en: 'Railway Valley', uk: 'Залізнична долина' },
+    ['railway-valley-expanse', 'railway-valley-study'],
+  ],
+  ['coaster', { en: 'Coaster Gardens', uk: 'Сад атракціонів' }, ['coaster-gardens-study']],
+  ['hillside', { en: 'Hillside Town', uk: 'Містечко на схилі' }, ['hillside-town-study']],
+  [
+    'canyon',
+    { en: 'Canyon worlds', uk: 'Світи каньйонів' },
+    ['canyon-expanse-study', 'canyon-arrival-landmarks-study'],
+  ],
+  ['urban', { en: 'Urban earthworks', uk: 'Міські земляні споруди' }, ['urban-earthworks-study']],
+];
+const familyById = new Map(
+  regionalFamilies.flatMap(([key, title, ids]) => ids.map((id) => [id, { key, title }])),
+);
+const regionalFamilyKey = (id) => familyById.get(id)?.key ?? `retained:${id}`;
+const regionalRowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+
+/** Observer-only grouping. Catalogue order ranks offers; saved active pointers win
+ * presentation defaults. Explicit Fly still verifies the selected retained bytes. */
+export function regionalLibraryFamilies(pins = REGIONAL_LIBRARY_PINS, records = []) {
+  const offered = new Set(pins.map((row) => `${row.id}:${row.pin.sha256}`));
+  const rows = [
+    ...pins.map((row) => ({
+      ...row,
+      saved: records.find((saved) => saved.id === row.id && saved.sha256 === row.pin.sha256),
+    })),
+    ...records
+      .filter((row) => !offered.has(`${row.id}:${row.sha256}`))
+      .map((saved) => ({ id: saved.id, title: saved.descriptor.title, saved })),
+  ];
+  const groups = new Map();
+  for (const row of rows) {
+    const key = regionalFamilyKey(row.id);
+    if (!groups.has(key))
+      groups.set(key, { key, title: familyById.get(row.id)?.title ?? row.title, rows: [] });
+    groups.get(key).rows.push(row);
+  }
+  return [...groups.values()].map((family) => ({
+    ...family,
+    title: { ...family.title },
+    primary:
+      family.rows.find((row) => row.saved?.active) ??
+      family.rows.find((row) => row.saved) ??
+      family.rows[0],
+  }));
+}
+
 /** Regional installations stay separate from scored WorldPack courses. */
 export function mountRegionalLibrary({
   el,
@@ -730,6 +791,7 @@ export function mountRegionalLibrary({
     removal = null,
     notice = ['', ''],
     database = null;
+  const expandedFamilies = new Set();
   const dbReady = Promise.resolve().then(() => openLibrary({ indexedDB: win.indexedDB }));
   // A missing browser store remains a visible, recoverable state, never an unhandled rejection.
   dbReady.then(
@@ -766,6 +828,11 @@ export function mountRegionalLibrary({
     button.onclick = callback;
     return button;
   }
+  function focusControl(node, deviceFocus) {
+    if (!node) return;
+    if (deviceFocus) node.dataset.fpvMenuFocus = '';
+    node.focus();
+  }
   function waitFor(value, signal) {
     return new Promise((resolve, reject) => {
       const cancel = () => reject(signal.reason);
@@ -780,8 +847,8 @@ export function mountRegionalLibrary({
     if (closed) return;
     heading.textContent = txt('Regional free flight', 'Вільний політ у регіонах');
     help.textContent = txt(
-      'Download a region once, then choose Fly. Regions are unscored practice areas. Save the simulator offline separately; this download saves the scenery.',
-      'Завантажте регіон один раз і виберіть «Летіти». Це тренувальні зони без заліку. Симулятор готується офлайн окремо; тут зберігається місцевість.',
+      'Choose a region. Versions keeps every offered and saved edition available. Fly uses the shown saved version; downloads and removals always need your action. Prepare the simulator offline separately.',
+      'Виберіть регіон. У «Версіях» доступні всі запропоновані та збережені варіанти. «Летіти» використовує показану збережену версію; завантаження й вилучення потребують вашої дії. Симулятор готується офлайн окремо.',
     );
     refresh.textContent = txt('Refresh saved regions', 'Оновити збережені регіони');
     cancel.textContent = txt('Cancel', 'Скасувати');
@@ -790,50 +857,40 @@ export function mountRegionalLibrary({
     message.textContent = txt(...notice);
     const focused = parent.ownerDocument.activeElement,
       focusKey = focused?.closest?.('[data-region-key]')?.dataset.regionKey,
+      focusId = focused?.closest?.('[data-region-key]')?.dataset.regionId,
+      focusPrimary = focused?.closest?.('[data-region-primary]')?.dataset.regionPrimary,
+      focusFamily = focused?.closest?.('[data-region-family]')?.dataset.regionFamily,
+      focusSummary = focused?.tagName === 'SUMMARY',
+      deviceFocus = focused?.dataset.fpvMenuFocus !== undefined,
       focusAction = focused?.dataset.regionAction;
+    for (const details of cards.querySelectorAll('[data-region-versions]')) {
+      if (details.open) expandedFamilies.add(details.dataset.regionVersions);
+      else expandedFamilies.delete(details.dataset.regionVersions);
+    }
     cards.replaceChildren();
-    const offered = new Set(pins.map((row) => row.pin.sha256));
-    const rows = [
-      ...pins.map((row) => ({
-        ...row,
-        saved: records.find((saved) => saved.sha256 === row.pin.sha256 && saved.id === row.id),
-      })),
-      ...records
-        .filter((row) => !offered.has(row.sha256))
-        .map((saved) => ({
-          id: saved.id,
-          title: saved.descriptor.title,
-          saved,
-        })),
-    ];
-    // Labels are presentation only. Identity and focus continue to use the full pin hash.
-    const rowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const families = regionalLibraryFamilies(pins, records),
+      rows = families.flatMap((family) => family.rows);
     const edition = (row) => {
       if (row.edition) return title(row.edition);
       if (row.saved) return `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`;
       return '';
     };
     const identitySuffix = (row, peers) => {
-      const hash = rowHash(row);
+      const hash = regionalRowHash(row);
       let length = 8;
       while (
         length < hash.length &&
         peers.some(
           (other) =>
             other !== row &&
-            rowHash(other) !== hash &&
-            rowHash(other).slice(0, length) === hash.slice(0, length),
+            regionalRowHash(other) !== hash &&
+            regionalRowHash(other).slice(0, length) === hash.slice(0, length),
         )
       )
         length++;
       return hash.slice(0, length);
     };
-    for (const row of rows) {
-      const saved = row.saved,
-        hash = saved?.sha256 ?? row.pin.sha256,
-        card = el('article', undefined, 'world-catalogue-card'),
-        name = row.title ?? saved?.descriptor.title,
-        buttons = el('div', undefined, 'button-row');
+    const labels = (row) => {
       const peers = rows.filter((other) => other.id === row.id),
         baseEdition = edition(row),
         needsIdentity =
@@ -846,9 +903,32 @@ export function mountRegionalLibrary({
           .filter(Boolean)
           .join(' · '),
         revisionLabel =
-          saved && row.edition ? `${txt('Version', 'Версія')} ${saved.descriptor.revision}` : '',
-        actionName = [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · ');
+          row.saved && row.edition
+            ? `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`
+            : '',
+        name = row.title ?? row.saved?.descriptor.title;
+      return {
+        hash: regionalRowHash(row),
+        name,
+        editionLabel,
+        revisionLabel,
+        actionName: [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · '),
+      };
+    };
+    const storageCopy = (row) =>
+      row.saved
+        ? `${txt('Saved for offline flight', 'Збережено для польоту офлайн')} · ${size(row.saved.bytes)} · ${row.saved.descriptor.revision}`
+        : txt(
+            `Optional scenery download${row.bytes ? ` · ${size(row.bytes)}` : ''} · unscored`,
+            `Окреме завантаження місцевості${row.bytes ? ` · ${size(row.bytes)}` : ''} · без заліку`,
+          );
+    function versionCard(row) {
+      const saved = row.saved,
+        { hash, name, editionLabel, actionName } = labels(row),
+        card = el('section', undefined, 'regional-version'),
+        buttons = el('div', undefined, 'button-row');
       card.dataset.regionKey = hash;
+      card.dataset.regionId = row.id;
       card.append(el('strong', title(name)));
       if (editionLabel) {
         const label = el('p', editionLabel);
@@ -856,17 +936,7 @@ export function mountRegionalLibrary({
         card.append(label);
       }
       if (row.description) card.append(el('p', title(row.description)));
-      card.append(
-        el(
-          'p',
-          saved
-            ? `${txt('Saved for offline flight', 'Збережено для польоту офлайн')} · ${size(saved.bytes)} · ${saved.descriptor.revision}`
-            : txt(
-                `Optional scenery download${row.bytes ? ` · ${size(row.bytes)}` : ''} · unscored`,
-                `Окреме завантаження місцевості${row.bytes ? ` · ${size(row.bytes)}` : ''} · без заліку`,
-              ),
-        ),
-      );
+      card.append(el('p', storageCopy(row)));
       if (saved) {
         const play = action(txt('Fly', 'Летіти'), () => run('fly', row), Boolean(operation));
         play.dataset.regionAction = 'fly';
@@ -951,14 +1021,81 @@ export function mountRegionalLibrary({
           ),
         );
       }
-      cards.append(card);
-      if (focusKey === hash)
-        (
-          card.querySelector(`[data-region-action="${focusAction}"]`) ??
-          card.querySelector('button')
-        )?.focus();
+      return card;
     }
-    if (!rows.length)
+    for (const family of families) {
+      const card = el('article', undefined, 'world-catalogue-card'),
+        primary = family.primary,
+        primaryLabels = labels(primary),
+        primaryView = el('div', undefined, 'regional-primary'),
+        selected = el('p'),
+        details = el('details', undefined, 'regional-versions'),
+        summary = el('summary'),
+        versions = el('div', undefined, 'regional-version-list');
+      card.dataset.regionFamily = family.key;
+      card.append(el('h3', title(family.title)));
+      primaryView.dataset.regionPrimary = primaryLabels.hash;
+      const chosen = primary.saved
+        ? primary.saved.active
+          ? txt('Current saved version', 'Поточна збережена версія')
+          : txt('Saved version', 'Збережена версія')
+        : txt('Recommended version', 'Рекомендована версія');
+      selected.dataset.regionSelected = '';
+      selected.textContent = `${chosen} · ${primaryLabels.actionName}`;
+      primaryView.append(selected);
+      if (primary.description) primaryView.append(el('p', title(primary.description)));
+      primaryView.append(el('p', storageCopy(primary)));
+      const primaryAction = action(
+        primary.saved ? txt('Fly', 'Летіти') : txt('Download region', 'Завантажити регіон'),
+        () => run(primary.saved ? 'fly' : 'install', primary, 'primary'),
+        Boolean(operation),
+      );
+      primaryAction.dataset.regionAction = primary.saved ? 'fly' : 'install';
+      primaryAction.setAttribute(
+        'aria-label',
+        `${primary.saved ? txt('Fly', 'Летіти') : txt('Download', 'Завантажити')}: ${primaryLabels.actionName}`,
+      );
+      primaryView.append(primaryAction);
+      details.dataset.regionVersions = family.key;
+      summary.textContent = txt(
+        `Versions (${family.rows.length})`,
+        `Версії (${family.rows.length})`,
+      );
+      summary.setAttribute(
+        'aria-label',
+        `${txt('Versions for', 'Версії регіону')} ${title(family.title)} (${family.rows.length})`,
+      );
+      details.append(summary, versions);
+      for (const row of family.rows) versions.append(versionCard(row));
+      details.open =
+        expandedFamilies.has(family.key) ||
+        family.rows.some((row) => row.id === focusId && regionalRowHash(row) === focusKey);
+      details.addEventListener('toggle', () => {
+        if (closed || !details.isConnected) return;
+        if (details.open) expandedFamilies.add(family.key);
+        else expandedFamilies.delete(family.key);
+      });
+      card.append(primaryView, details);
+      cards.append(card);
+      if (focusFamily === family.key) {
+        if (focusSummary) focusControl(summary, deviceFocus);
+        else if (focusPrimary === primaryLabels.hash)
+          focusControl(
+            primaryView.querySelector(`[data-region-action="${focusAction}"]`) ?? primaryAction,
+            deviceFocus,
+          );
+        else if (focusKey) {
+          const version = [...versions.children].find(
+            (node) => node.dataset.regionId === focusId && node.dataset.regionKey === focusKey,
+          );
+          focusControl(
+            version?.querySelector(`[data-region-action="${focusAction}"]`),
+            deviceFocus,
+          );
+        }
+      }
+    }
+    if (!families.length)
       cards.append(
         el(
           'p',
@@ -969,15 +1106,28 @@ export function mountRegionalLibrary({
         ),
       );
   }
-  async function run(kind, row = null) {
+  async function run(kind, row = null, focusOrigin = 'version') {
     if (closed || operation) return;
     const controller = new AbortController(),
       signal = controller.signal,
       requestEpoch = epoch;
-    const doc = parent.ownerDocument;
+    const doc = parent.ownerDocument,
+      deviceFocus = doc.activeElement?.dataset.fpvMenuFocus !== undefined;
     let restoreFocus = Boolean(row);
     const trackFocus = (event) => {
-      if (event.target !== doc.body && !root.contains(event.target)) restoreFocus = false;
+      if (event.target === doc.body) return;
+      const family = event.target.closest?.('[data-region-family]'),
+        version = event.target.closest?.('[data-region-key]'),
+        primary = event.target.closest?.('[data-region-primary]'),
+        hash = row && regionalRowHash(row);
+      if (
+        !root.contains(event.target) ||
+        family?.dataset.regionFamily !== (row && regionalFamilyKey(row.id)) ||
+        (focusOrigin === 'primary'
+          ? primary?.dataset.regionPrimary !== hash
+          : version?.dataset.regionKey !== hash || version?.dataset.regionId !== row?.id)
+      )
+        restoreFocus = false;
     };
     doc.addEventListener('focusin', trackFocus);
     operation = controller;
@@ -1150,17 +1300,34 @@ export function mountRegionalLibrary({
       if (!closed) {
         paint();
         if (restoreFocus && requestEpoch === epoch && visible()) {
-          const hash = row.saved?.sha256 ?? row.pin?.sha256;
-          const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
-          (
-            card?.querySelector(
+          const hash = row.saved?.sha256 ?? row.pin?.sha256,
+            family = [...cards.children].find(
+              (item) => item.dataset.regionFamily === regionalFamilyKey(row.id),
+            ),
+            version = [...(family?.querySelectorAll('[data-region-key]') ?? [])].find(
+              (item) => item.dataset.regionId === row.id && item.dataset.regionKey === hash,
+            ),
+            repair = failedLoads.has(failureKey(row)) && row.pin;
+          let target;
+          if (
+            version &&
+            (focusOrigin !== 'primary' || kind.startsWith('review-remove') || repair)
+          ) {
+            const details = version.closest('details');
+            details.open = true;
+            expandedFamilies.add(details.dataset.regionVersions);
+            target = version.querySelector(
               kind.startsWith('review-remove')
                 ? '[data-region-action="confirm-remove"]'
-                : failedLoads.has(failureKey(row)) && row.pin
+                : repair
                   ? '[data-region-action="repair"]'
                   : 'button',
-            ) ?? refresh
-          ).focus();
+            );
+          }
+          focusControl(
+            target ?? family?.querySelector('[data-region-primary] button') ?? refresh,
+            deviceFocus,
+          );
         }
         if (pendingRefresh && visible()) {
           pendingRefresh = false;
