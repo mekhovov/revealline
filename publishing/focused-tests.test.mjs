@@ -130,6 +130,8 @@ test('Studio gameplay audio and the shared picture fixture retain both host tran
   for (const file of [
     'game/test/team-duel-studio-gameplay-host.test.mjs',
     'game/test/helpers/coop-presentation-fixture.mjs',
+    'game/test/coop-presentation-bootstrap-retry.test.mjs',
+    'game/test/coop-picture-host.test.mjs',
   ]) {
     const plan = focusedTestPlan([file], manifest);
     assert.deepEqual(plan.unknownRuntime, []);
