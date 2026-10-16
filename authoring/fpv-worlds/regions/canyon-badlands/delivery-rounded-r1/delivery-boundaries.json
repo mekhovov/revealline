@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "scratch": "/Volumes/alex/CodexMigrationStaging/fpv-temp/delivery-verification-HzjBg1",
+  "files": 38,
+  "totalBytes": 1173350,
+  "pin": {
+    "bytes": 6781,
+    "sha256": "aad4fcf2fbd86466195c31c62efbe51fd8b158b2f86df73fcd172df12def1b95"
+  },
+  "checks": [
+    "deterministic closure",
+    "all copied hashes",
+    "existing output retained",
+    "unsafe identity rejected",
+    "corrupt source rejected before output",
+    "paired spawn mismatch rejected",
+    "paired ID/revision/cell-ID/cell-coordinate mismatches rejected before output",
+    "traversal rejected",
+    "unrelated output preserved",
+    "invalid UTF-8 rejected before output"
+  ]
+}

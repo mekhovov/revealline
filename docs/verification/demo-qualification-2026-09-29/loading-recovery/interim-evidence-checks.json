@@ -1,0 +1,133 @@
+{
+  "checkedAt": "2026-09-29T03:49:41.129046+00:00",
+  "runtimeSource": "55c5ec57cc1ed478b44e065951073c0bdd3c3ead",
+  "relativeLinks": [
+    {
+      "document": "README.md",
+      "target": "../README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "loading.tap"
+    },
+    {
+      "document": "README.md",
+      "target": "library.tap"
+    },
+    {
+      "document": "README.md",
+      "target": "checkpoints.tap"
+    },
+    {
+      "document": "README.md",
+      "target": "host-offline.tap"
+    },
+    {
+      "document": "README.md",
+      "target": "joined-watchdog-director.tap"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-checkpoint-before-reload.json"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-checkpoint-recovered.json"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-finalization-smoke.json"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-finalization-recovered.json"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-finalization-recovered.png"
+    },
+    {
+      "document": "README.md",
+      "target": "dutch-edition-memory.json"
+    },
+    {
+      "document": "README.md",
+      "target": "check-dutch-edition-memory.mjs"
+    },
+    {
+      "document": "README.md",
+      "target": "worker-regression.json"
+    },
+    {
+      "document": "README.md",
+      "target": "worker-regression.log"
+    },
+    {
+      "document": "README.md",
+      "target": "host-load-after-worker-failure.json"
+    },
+    {
+      "document": "README.md",
+      "target": "courtyard-worker-diagnostic.json"
+    },
+    {
+      "document": "README.md",
+      "target": "courtyard-worker-diagnostic.mjs"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-observation-handoff.md"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-observation-running.json"
+    },
+    {
+      "document": "README.md",
+      "target": "interim-review.md"
+    },
+    {
+      "document": "README.md",
+      "target": "pr781-279d6b67-ci.json"
+    },
+    {
+      "document": "README.md",
+      "target": "pr781-279d6b67-candidate.log.gz"
+    },
+    {
+      "document": "README.md",
+      "target": "candidate-log-receipt.json"
+    },
+    {
+      "document": "README.md",
+      "target": "browser-observation-handoff.md"
+    },
+    {
+      "document": "interim-review.md",
+      "target": "browser-observation-10min.json"
+    },
+    {
+      "document": "browser-observation-handoff.md",
+      "target": "../browser-observation-handoff.md"
+    }
+  ],
+  "parsedReports": [
+    {
+      "file": "pr781-279d6b67-ci.json",
+      "sha256": "4f416b56386eb687cbd63fee55616ebc10977f51ea71280ab9a7056c9155de7e",
+      "bytes": 2690
+    },
+    {
+      "file": "candidate-log-receipt.json",
+      "sha256": "30f8f5d814acaf04bf23be1c5faf8e0845972b95899ccffcf7c67a02521b7fb5",
+      "bytes": 439
+    },
+    {
+      "file": "browser-observation-running.json",
+      "sha256": "4d5dfb0bafb9fa0cd98f095bb702254052ceb78e287c5c0a9ba8250f06cba32a",
+      "bytes": 517262
+    }
+  ],
+  "immutable10minHashVerified": true,
+  "limitation": "The active running checkpoint changes on later collection; this receipt pins only its checked version."
+}

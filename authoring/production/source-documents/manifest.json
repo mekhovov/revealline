@@ -1,0 +1,17 @@
+{
+  "format": "fpv-line-production-source-documents.v1",
+  "documents": [
+    {
+      "sourcePath": "authoring/library/route-worlds/build.mjs",
+      "documentPath": "authoring/production/source-documents/8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43.txt",
+      "bytes": 13370,
+      "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+    },
+    {
+      "sourcePath": "authoring/library/sentinel-circuit-external/build.mjs",
+      "documentPath": "authoring/production/source-documents/ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88.txt",
+      "bytes": 10172,
+      "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+    }
+  ]
+}

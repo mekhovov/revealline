@@ -1,0 +1,247 @@
+{
+  "format": "FPVReservoirR16ProofParity.v1",
+  "beforePack": {
+    "path": "/tmp/fpv-reservoir-required-coating-r14-v1/prepared/mountain-reservoir.r14.rlpack",
+    "bytes": 1382004,
+    "sha256": "98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714",
+    "identity": "fpv-pack:98dc5237b8e809029a0c08f414f36689c7a58313f911a84971d3ed0429477714"
+  },
+  "afterPack": {
+    "path": "/tmp/fpv-reservoir-maintenance-r16-v1/prepared/mountain-reservoir.r16.rlpack",
+    "bytes": 1379988,
+    "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+    "identity": "fpv-pack:50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554"
+  },
+  "beforeQualificationSHA256": "b6f726776d531863724cc6441b996b58998e59e192ec5136abf8db41e6d93f3e",
+  "afterQualificationSHA256": "f126537cac8813bb142535c18ce3ebd0bc353064b431804a075d8d57a52368e0",
+  "pairs": [
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "ticks": 2990,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "acro",
+      "ticks": 3002,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "self-level",
+      "ticks": 2293,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "acro",
+      "ticks": 2331,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "self-level",
+      "ticks": 2016,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "acro",
+      "ticks": 2185,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "self-level",
+      "ticks": 2691,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "acro",
+      "ticks": 2674,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "self-level",
+      "ticks": 3458,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "acro",
+      "ticks": 3447,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "self-level",
+      "ticks": 1809,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "acro",
+      "ticks": 1743,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "self-level",
+      "ticks": 3931,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "acro",
+      "ticks": 3972,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "self-level",
+      "ticks": 1616,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "acro",
+      "ticks": 1675,
+      "inputFramesExact": true,
+      "physicalFlightAndSampledPathExact": true,
+      "changedProofFields": [
+        "courseIdentity"
+      ],
+      "changedFlightMetadata": [
+        "revision",
+        "proof.sha256"
+      ]
+    }
+  ],
+  "limitations": [
+    "Fresh ordinary flights and complete/archive replays; browser Watch/offline/hardware remain separate.",
+    "Initial comparison retained the encoded proof checksum and rejected it, correctly identifying revision-bound courseIdentity changes. All input and physical records are exact."
+  ]
+}

@@ -323,9 +323,9 @@ test('registered v11 successor preserves v10 and authored order with isolated pr
   assert(authoredJourneyUsesActorMaterials(current.id));
   assert(AUTHORED_JOURNEY_ROUTE_IDS.includes(current.id));
   assert.deepEqual(DEFAULT_JOURNEY_ROUTES, {
-    solo: 'whole-spatial-v11',
-    versus: 'whole-spatial-v11',
-    team: 'team-trail-impact-originals-1',
+    solo: 'whole-spatial-v25',
+    versus: 'whole-spatial-v25',
+    team: 'team-cultural-specialist-originals-2',
   });
   assert.equal(authoredJourneyModeHref(current.id, 'solo'), '../?journey=whole-spatial-v11');
   assert.equal(
@@ -343,7 +343,7 @@ test('registered v11 successor preserves v10 and authored order with isolated pr
     );
 });
 
-test('Studio exposes v10 and v11 separately and defaults its selector to v11', async () => {
+test('Studio retains v10 and v11 after the selector advances to v20', async () => {
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   const script = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
   const nodes = [];
@@ -363,7 +363,11 @@ test('Studio exposes v10 and v11 separately and defaults its selector to v11', a
     options
       .filter((node) => attribute(node, 'selected') !== undefined)
       .map((node) => attribute(node, 'value')),
-    ['horizon-cultural-joins-1'],
+    ['apex-cultural-routes-1'],
+  );
+  assert.equal(
+    options.filter((node) => attribute(node, 'value') === 'border-cultural-routes-1').length,
+    1,
   );
   assert.match(html, /journey=whole-spatial-v11/);
   assert.match(script, /'horizon-cultural-joins-1': createHorizonNextBatchCandidates/);

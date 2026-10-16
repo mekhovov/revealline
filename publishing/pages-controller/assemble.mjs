@@ -1,4 +1,4 @@
-import { publishOfflineLauncher } from './launcher.mjs';
+import { publishOfflineLauncher } from "./launcher.mjs";
 /** Publishing infrastructure only: one verified current graph plus authenticated historical bridges. */
 import * as fs from "node:fs/promises";
 import { createReadStream, createWriteStream } from "node:fs";
@@ -31,9 +31,10 @@ import {
   VERSION,
   COMMIT,
   SHA,
-  retainRecentMetadata,
-  validReleaseRetention,
+  selectReleaseMetadata,
+  validRetentionConfiguration,
 } from "./metadata.mjs";
+import { mainRepositoryRoutes, MAIN_REPOSITORY_POLICY } from "./main-repository-policy.mjs";
 import { validateWaivedSourceQualification } from "./source-qualification.mjs";
 
 const root = path.resolve(
@@ -99,22 +100,27 @@ export async function validateAdmissions({
   directory,
   configuration,
   metadata,
+  catalogMetadata = metadata,
   requireBrowser = true,
   readSourceFile = readGitSourceFile,
 }) {
   if (
     !exact(configuration, [
       "format",
+      ...(Object.hasOwn(configuration, "hostingPolicy") ? ["hostingPolicy"] : []),
       "currentVersion",
       "catalogSha256",
       "allocationSha256",
       "admissions",
       "deploymentEnabled",
       "currentSourceQualification",
-      "retainedReleasesPerMajor",
+      Object.hasOwn(configuration, "retainedReleaseCount")
+        ? "retainedReleaseCount"
+        : "retainedReleasesPerMajor",
       "testingRoutes",
     ]) ||
     configuration.format !== "revealline-pages-controller.v1" ||
+    (Object.hasOwn(configuration, "hostingPolicy") && configuration.hostingPolicy !== MAIN_REPOSITORY_POLICY) ||
     typeof configuration.deploymentEnabled !== "boolean" ||
     !VERSION.test(configuration.currentVersion) ||
     !metadata.has(configuration.currentVersion) ||
@@ -122,7 +128,7 @@ export async function validateAdmissions({
     !SHA.test(configuration.allocationSha256) ||
     !Array.isArray(configuration.admissions) ||
     configuration.admissions.length > MAX_ARCHIVE_SHARDS ||
-    !validReleaseRetention(configuration.retainedReleasesPerMajor) ||
+    !validRetentionConfiguration(configuration) ||
     !configuration.testingRoutes ||
     typeof configuration.testingRoutes !== "object" ||
     Array.isArray(configuration.testingRoutes) ||
@@ -207,6 +213,9 @@ export async function validateAdmissions({
   const allocationsBytes = await readOrdinary(directory, "allocations.json");
   if (digest(allocationsBytes) !== configuration.allocationSha256)
     throw new Error("Allocation byte pin mismatch.");
+  if (configuration.hostingPolicy === MAIN_REPOSITORY_POLICY)
+    return { ...mainRepositoryRoutes(configuration, allocationsBytes, metadata), qualification };
+  // Legacy validation remains available only for historical fixtures/tools, not the active publisher.
   const allocation = parseJSON(allocationsBytes),
     records = [...metadata.values()].map((m) => m.record),
     admitted = new Map(),
@@ -237,9 +246,8 @@ export async function validateAdmissions({
       throw new Error("Invalid archive admission.");
     const shard = allocation.shards.find((s) => s.id === admission.id);
     if (!shard) throw new Error("Admission has no allocation.");
-    // Retired versions remain in the immutable catalog, but are intentionally not
-    // routed or validated by a bounded public Pages deployment.
-    if (!shard.versions.some((version) => metadata.has(version))) continue;
+    // All local records and evidence remain validated. Only selected routes
+    // require a fresh remote authority read in the publication critical path.
     let http = null,
       inventory = null,
       inventoryPin = null,
@@ -293,7 +301,7 @@ export async function validateAdmissions({
           evidence.deploymentId !== admission.deploymentId ||
           !Array.isArray(evidence.versions) ||
           shard.versions.some(
-            (v) => metadata.has(v) && !evidence.versions.includes(v),
+            (v) => catalogMetadata.has(v) && !evidence.versions.includes(v),
           ) ||
           !Array.isArray(evidence.evidence) ||
           !evidence.evidence.length ||
@@ -336,8 +344,10 @@ export async function validateAdmissions({
       throw new Error(
         "Archive HTTP report is not bound to its complete inventory.",
       );
-    for (const version of shard.versions.filter((v) => metadata.has(v))) {
-      const item = metadata.get(version),
+    for (const version of shard.versions.filter((v) =>
+      catalogMetadata.has(v),
+    )) {
+      const item = catalogMetadata.get(version),
         prefix = `releases/${version}/site/`;
       const rows = [
         ...item.manifest.files,
@@ -376,7 +386,8 @@ export async function validateAdmissions({
         );
     }
     admitted.set(admission.id, shard);
-    relevantAdmissions.push(admission);
+    if (shard.versions.some((version) => metadata.has(version)))
+      relevantAdmissions.push(admission);
   }
   const plan = {
     formatVersion: 1,
@@ -405,6 +416,13 @@ export async function validateAdmissions({
       throw new Error(
         `Historical edition lacks an admitted archive: ${version}`,
       );
+  for (const [version, site] of Object.entries(configuration.testingRoutes)) {
+    if (
+      Object.hasOwn(configuration, "retainedReleaseCount") &&
+      canonicalSites[version] !== site
+    )
+      throw new Error("Testing route does not match its admitted archive.");
+  }
   return {
     plan,
     canonicalSites,
@@ -470,6 +488,93 @@ export async function directoryInventory(
   return boundedMap(files, concurrency, streamedInventoryRow);
 }
 
+export async function extractionInventory(
+  directory,
+  receipt,
+  { record, manifest, manifestBytes, checksumBytes },
+) {
+  if (
+    !exact(receipt, [
+      "format",
+      "distributionSha256",
+      "manifestSha256",
+      "gameSourceRevision",
+      "version",
+      "membersVerified",
+      "manifestFilesVerified",
+      "uncompressedBytesVerified",
+      "crcAndHashesVerified",
+      "files",
+    ]) ||
+    receipt.format !== "revealline-current-extraction.v1" ||
+    receipt.distributionSha256 !== record.distributionSha256 ||
+    receipt.manifestSha256 !== record.manifestSha256 ||
+    receipt.gameSourceRevision !== record.sourceRevision ||
+    receipt.version !== record.version ||
+    receipt.membersVerified !== manifest.files.length + 1 ||
+    receipt.manifestFilesVerified !== manifest.files.length ||
+    receipt.uncompressedBytesVerified !==
+      manifest.totalBytes + manifestBytes.length ||
+    receipt.crcAndHashesVerified !== true ||
+    !Array.isArray(receipt.files) ||
+    receipt.files.length !== manifest.files.length + 3
+  )
+    throw new Error("Current extraction receipt is invalid or mismatched.");
+  const rows = receipt.files.map((row) => {
+    if (
+      !exact(row, ["path", "bytes", "sha256"]) ||
+      !Number.isSafeInteger(row.bytes) ||
+      row.bytes < 0 ||
+      !SHA.test(row.sha256)
+    )
+      throw new Error("Current extraction inventory row is invalid.");
+    safePath(row.path);
+    return { path: row.path, bytes: row.bytes, sha256: row.sha256 };
+  });
+  const sorted = [...rows].sort((left, right) =>
+    left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+  );
+  if (
+    JSON.stringify(rows) !== JSON.stringify(sorted) ||
+    new Set(rows.map((row) => row.path)).size !== rows.length
+  )
+    throw new Error("Current extraction inventory is unsorted or duplicated.");
+  const ordinaryPaths = (await enumerateOrdinaryFiles(directory))
+    .map((file) => file.path)
+    .sort();
+  if (
+    JSON.stringify(ordinaryPaths) !==
+    JSON.stringify(rows.map((row) => row.path))
+  )
+    throw new Error("Current extraction contains missing or extra files.");
+  const marker = Buffer.from(
+      '{\n  "tool": "xonix-game-cli",\n  "formatVersion": 1\n}\n',
+    ),
+    expected = [
+      ...manifest.files,
+      {
+        path: "manifest.json",
+        bytes: manifestBytes.length,
+        sha256: digest(manifestBytes),
+      },
+      {
+        path: "distribution.zip.sha256",
+        bytes: checksumBytes.length,
+        sha256: digest(checksumBytes),
+      },
+      {
+        path: ".xonix-build.json",
+        bytes: marker.length,
+        sha256: digest(marker),
+      },
+    ].sort((left, right) =>
+      left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+    );
+  if (JSON.stringify(rows) !== JSON.stringify(expected))
+    throw new Error("Current extraction inventory differs from its manifest.");
+  return rows;
+}
+
 async function copyVerifiedFile(source, destination, expected) {
   await fs.mkdir(path.dirname(destination), { recursive: true });
   const hash = createHash("sha256");
@@ -533,6 +638,7 @@ export async function assemble({
   currentSite,
   outputDirectory,
   requireBrowser = true,
+  extractionReceipt = null,
 }) {
   const {
       lock,
@@ -550,13 +656,13 @@ export async function assemble({
     testingMetadata = new Map(
       [...catalogMetadata].filter(([version]) => testingVersions.has(version)),
     ),
-    metadata = retainRecentMetadata(
+    metadata = selectReleaseMetadata(
       new Map(
         [...catalogMetadata].filter(
           ([version]) => !testingVersions.has(version),
         ),
       ),
-      configuration.retainedReleasesPerMajor,
+      configuration,
     ),
     _testingRoutesExist =
       testingMetadata.size === testingVersions.size ||
@@ -566,7 +672,8 @@ export async function assemble({
     { canonicalSites } = await validateAdmissions({
       directory,
       configuration,
-      metadata,
+      metadata: new Map([...metadata, ...testingMetadata]),
+      catalogMetadata,
       requireBrowser,
     }),
     current = metadata.get(configuration.currentVersion),
@@ -578,7 +685,9 @@ export async function assemble({
     (await fs.lstat(currentSite)).isSymbolicLink()
   )
     throw new Error("Explicit ordinary current site and output required.");
-  const inputRows = await directoryInventory(currentSite);
+  const inputRows = extractionReceipt
+    ? await extractionInventory(currentSite, extractionReceipt, current)
+    : await directoryInventory(currentSite);
   const originalZip = inputRows.find((row) => row.path === "distribution.zip");
   if (
     originalZip &&
@@ -612,7 +721,12 @@ export async function assemble({
     ].sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
   if (JSON.stringify(currentRows) !== JSON.stringify(expectedRows))
     throw new Error("Current site has mismatched, missing or extra files.");
-  await verifyFrozenSite(currentSite, current.record);
+  // The extractor already streamed and hashed every original member. Reuse
+  // that immutable inventory here; copyVerifiedFile below still rereads and
+  // hashes every source byte while copying, and the final output is inventoried
+  // and independently reread after assembly. Direct library callers without a
+  // receipt retain the legacy full verification path.
+  if (!extractionReceipt) await verifyFrozenSite(currentSite, current.record);
   const entries = await planCurrentEntries({
     source: currentSite,
     repository: lock.sourceRepository,
@@ -635,7 +749,7 @@ export async function assemble({
     if (rootPaths.has(row.path))
       await copyVerifiedFile(source, path.join(outputDirectory, row.path), row);
   }
-  let redirectedHTMLFiles = 0;
+  let redirectedHTMLFiles = 0, downloadLandingHTMLFiles = 0;
   for (const [version, item] of publicationMetadata) {
     await writeFile(
       outputDirectory,
@@ -650,20 +764,26 @@ export async function assemble({
         `releases/${version}/site/${relative}`,
         bytes,
       );
-      if (relative.endsWith(".html")) redirectedHTMLFiles++;
+      if (relative.endsWith(".html")) {
+        if (publicationSites[version]) redirectedHTMLFiles++;
+        else downloadLandingHTMLFiles++;
+      }
     }
   }
   const catalogPresentation = await copyCatalogPresentation(
     currentSite,
     outputDirectory,
   );
-  const records = [...publicationMetadata.values()].map((m) => m.record),
+  const publicMetadata = Object.hasOwn(configuration, "retainedReleaseCount")
+    ? metadata
+    : publicationMetadata;
+  const records = [...publicMetadata.values()].map((m) => m.record),
     index = publishedReleaseIndex(
       records,
       lock.sourceRepository,
       current.record.version,
       publicationSites,
-      { presentation: Boolean(catalogPresentation) },
+      { presentation: Boolean(catalogPresentation), hostingPolicy: configuration.hostingPolicy },
     );
   await writeFile(
     outputDirectory,
@@ -678,7 +798,11 @@ export async function assemble({
   );
   await writeFile(outputDirectory, ".nojekyll", "");
   await writeCurrentEntries(entries, outputDirectory);
-  await publishOfflineLauncher(currentSite, outputDirectory, current.record.version);
+  await publishOfflineLauncher(
+    currentSite,
+    outputDirectory,
+    current.record.version,
+  );
   await writeFile(
     outputDirectory,
     "archive-routing.json",
@@ -711,7 +835,9 @@ export async function assemble({
     historicalBridges: publicationMetadata.size - 1,
     testingVersions: testingMetadata.size,
     redirectedHTMLFiles,
-    browserAdmissionsRequired: requireBrowser,
+    downloadLandingHTMLFiles,
+    browserAdmissionsRequired: configuration.hostingPolicy === MAIN_REPOSITORY_POLICY ? false : requireBrowser,
+    hostingPolicy: configuration.hostingPolicy || "legacy-archives",
     catalogPresentation,
     currentGraphLayout: "single-canonical-with-root-metadata-v1",
     rootCompatibilityFiles: rootRows,

@@ -229,3 +229,29 @@ and isolation wins, repeated openings and timing behavior in both turning modes;
 controlled precondition fixtures separately exercise contact/transaction edges.
 Existing frozen proof entries are not regenerated. These core checks do not stand
 in for integrated save/restore, editor, browser presentation or hardware testing.
+
+### Reachable-route coverage
+
+Classic and Foundation levels can opt into `classic.coverage: { "version":
+"reachable-routes.v1" }`. New Neon revisions and the text/symbol generator use
+this policy. Levels without it retain the historical calculation above.
+
+The denominator is a fixed mask derived from the initial geometry. Starting at
+spawn, the analyzer repeatedly joins reachable safe ground to another safe cell
+with a non-retracing four-neighbor cut. Walls and unclaimed lethal terrain are
+blocked; slow terrain is traversable. Joining an isolated safe island makes it
+available for later cuts. The trail-cell limit is respected. Cells without such
+a constructive route, including dead ends and sealed pockets, do not enter the
+budget. A zero-budget layout is rejected, as is a required objective outside
+that budget.
+
+This intentionally conservative policy also treats lethal terrain as bonus
+territory, even where enemy-seeded flood fill can reveal it. Bonus cells still
+reveal, capture objects and score, but never change the percentage. Claims and
+erosion use the same fixed mask for the numerator; the denominator never changes
+during a run. The policy and mask enter the existing Classic replay projection.
+
+`node scripts/audit-neon-coverage.mjs` checks all bundled Neon layouts by feeding
+constructive routes to the actual capture transaction, verifies every percentage,
+and writes `authoring/library/neon-artwork/coverage-audit.json`. It proves
+geometry and accounting, not enemy avoidance, time limits or human balance.

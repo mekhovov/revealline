@@ -1,0 +1,88 @@
+{
+  "format": "FPVPublicGhostSettingsHistoricalEvidence.v1",
+  "focusedSource": "4cfa2ec8188437a454c8f8629c8062a9a7b4aa5e",
+  "fixtureSource": "f8ebdcb8fab909de6a5b91b0ab3b146dfe041d36",
+  "overallPass": false,
+  "passingChecks": 173,
+  "failedAssertions": [],
+  "error": {
+    "message": "Error: Timeout: ordinary deliberate Arm",
+    "stack": "Error: Timeout: ordinary deliberate Arm\n    at until (http://127.0.0.1:8945/run.mjs:30:40)\n    at async arm (http://127.0.0.1:8945/run.mjs:152:3)\n    at async HTMLButtonElement.run (http://127.0.0.1:8945/run.mjs:383:5)"
+  },
+  "qualifiedScope": "Trusted pointer Show and keyboard Tab/Return Hide; native record/reference, paused state,320px fit, EN/UK, repeated control ownership. Missing replay tail timed out and is not claimed.",
+  "cause": "Not established by r1. Phase/label/dialog trace and corrected native Watch contract are a separate unchanged-runtime r2 fixture.",
+  "rows": [
+    {
+      "source": "/tmp/fpv-ghost-settings-8945-failed.json",
+      "archive": "fpv-ghost-settings-8945-failed.json.gz",
+      "bytes": 274099,
+      "sha256": "e186ff0a47f66c8dcae965a6de546cd9dd3468cc435e1f315333abca0c85cae8",
+      "storedBytes": 19794,
+      "storedSHA256": "cc2ae9186e0af73190616bca58becb9475c85ad46640479e8f94f1e39007ef2e"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-8945-pointer.png",
+      "archive": "fpv-ghost-settings-8945-pointer.png.gz",
+      "bytes": 45551,
+      "sha256": "5e91c4e2dbbb7b92c9af9e3a6c014894fabbfb3110a2f284d74ed4c231628718",
+      "storedBytes": 36853,
+      "storedSHA256": "344a0403bf4702e413c2bfe6fb5daab13629d22ad679c8e5ba11ca3df29d30f2"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-8945-keyboard.png",
+      "archive": "fpv-ghost-settings-8945-keyboard.png.gz",
+      "bytes": 70523,
+      "sha256": "cea49d7f821616a17d4e43035d120c10a6c3cc178336d4ae98433a0292df6d36",
+      "storedBytes": 55469,
+      "storedSHA256": "a7d0f9e4dcb66d71a1a1a9aebc422a1857bf66693736615ee0125a97cf77781a"
+    },
+    {
+      "source": "/tmp/fpv-ghost-settings-8945-failed.png",
+      "archive": "fpv-ghost-settings-8945-failed.png.gz",
+      "bytes": 22255,
+      "sha256": "b7261e1083fba140b2588d586e43b0f293c15c0ff7898d748262762fb3473d36",
+      "storedBytes": 13292,
+      "storedSHA256": "25d1e7ebe456633d8f772d86e4ed22a63b140e40546e369ba984bfecceb49dc1"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-source-f8eb-r1/fixture.json",
+      "archive": "r1-fixture.json.gz",
+      "bytes": 45020,
+      "sha256": "556946bd41cdb7c748c257f4ee563b4c795ed65a20556cde2db7dda0367d2294",
+      "storedBytes": 8048,
+      "storedSHA256": "cd4ccc3942ab18fdc8904caa3754be21a21c9f529ecedf7a8ec791e0e0177297"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-source-f8eb-r1/host.mjs",
+      "archive": "r1-host.mjs.gz",
+      "bytes": 2947,
+      "sha256": "2ca87cd569d6bf711e73f7e2397304f3914fd16198b2df861c0e389a64f908a2",
+      "storedBytes": 1215,
+      "storedSHA256": "18343b2df343573bcd74347af7e7b6df2b07d0ed174309d6f9098911875611bb"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-source-f8eb-r1/run.mjs",
+      "archive": "r1-run.mjs.gz",
+      "bytes": 15278,
+      "sha256": "929a970cf3d72d5a9071290cf3d95cd82347ebc9b500facce028c66d87544542",
+      "storedBytes": 4852,
+      "storedSHA256": "7adb1a98ff2e072b96e7916d25bc533ae686bb4c375fd9d08f959684c461c9d3"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-source-f8eb-r1/index.html",
+      "archive": "r1-index.html.gz",
+      "bytes": 784,
+      "sha256": "7f0a41d7a013226ed30c88471461c24b346c449b97d5c8b46ea9cdf19e8be0c9",
+      "storedBytes": 490,
+      "storedSHA256": "cd9aac842f4eb0827913d34c10ad8ddad824347fa62a59e4d3175d0d3042e5ba"
+    },
+    {
+      "source": "/private/tmp/fpv-ghost-settings-source-f8eb-r1/diagnostic.rlpack",
+      "archive": "r1-diagnostic.rlpack.gz",
+      "bytes": 2803,
+      "sha256": "f50172e5d8e9e0666f6a07f91e5f3ede3c37490c570adbb845f265a21f963388",
+      "storedBytes": 1218,
+      "storedSHA256": "a6341f2f15678563a81c807be129f47f450bd8cdf51021e18a82393d449697a1"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "admission": {
+    "editions": [
+      {
+        "distributionSha256": "084cd47ca7e9b1e041814abaab4867cbd2d167ddbf46f4967459ad3ab10338ca",
+        "files": 824,
+        "id": "droneaid-nl-community",
+        "sourceArchiveSha256": "7860c0b7efb292f46ab9250721ce225f3541c333628a927a518d216e16e8b2d0",
+        "totalBytes": 67103443
+      }
+    ],
+    "format": "revealline-editions-admission.v1",
+    "publicEligible": false,
+    "sourceRevision": "9cb659d3cde6efb0275ec28f4ffedc6d8371e6f0",
+    "sourceTree": "48e9a5c44d0aa7491376036ce54c5515074dcb2e",
+    "status": "verified-candidate-members",
+    "version": "v0.142.4",
+    "zipMembersVerified": true
+  },
+  "envelopeSha256": "f08dd3531454c9d25f0d0264e2ee49ccf3cfef782f94d0adea0c788d673ede04",
+  "format": "revealline-edition-candidate-verification.v1",
+  "presentationReceipts": [
+    {
+      "authoredPresentationSha256": "d141c4a6b967be2089c08efb94c01e4560b51224a64d4ff076c039e2b8621a22",
+      "editionId": "droneaid-nl-community",
+      "retained": [
+        {
+          "authoredPresentationSha256": "13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679"
+        },
+        {
+          "authoredPresentationSha256": "3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67"
+        },
+        {
+          "authoredPresentationSha256": "389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85"
+        },
+        {
+          "authoredPresentationSha256": "8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb"
+        }
+      ]
+    }
+  ],
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "requiredExternalQualification": [
+    "human-artwork-and-brand-review",
+    "human-learning-and-pacing-review",
+    "install-offline-upgrade-rollback-matrix",
+    "performance-and-accessibility-review",
+    "downloaded-release-byte-verification"
+  ],
+  "sourceEligibility": {
+    "assets": 346,
+    "files": 23882,
+    "format": "revealline-public-source-eligibility.v1",
+    "status": "verified"
+  },
+  "sourceRevision": "9cb659d3cde6efb0275ec28f4ffedc6d8371e6f0",
+  "sourceTree": "48e9a5c44d0aa7491376036ce54c5515074dcb2e",
+  "version": "v0.142.4"
+}

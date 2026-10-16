@@ -1,3 +1,4 @@
+import { createReactionOptions, REACTION_OPTIONS_KEY } from '../journey/reaction-options.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -328,6 +329,81 @@ test('terminal events distinguish victory and failure, stop backing music, and s
   assert.notDeepEqual(victory, failure);
   await sound.dispose();
 });
+test('picture victory uses soft layered chimes even after the old sample bank has loaded', async () => {
+  for (const family of ['fpv', 'atlas', 'retro']) {
+    const { sound, context } = await setup();
+    sound.themeFamily = family;
+    sound.feedbackDirector.buffers.set('win', { duration: 1, legacy: true });
+    const event = { type: 'run.completed', won: true, levelId: 'picture', tick: 42 },
+      run = { status: 'won', width: 64, height: 48, player: { x: 32, y: 24 } };
+    sound.events([event], run, { family });
+    const sources = [...context.sources];
+    assert.ok(
+      sources.length >= 6 && sources.length <= 18,
+      'The complete layered ending has bounded polyphony.',
+    );
+    assert.ok(
+      sources.every((source) => source.type === 'sine' && !source.buffer),
+      family,
+    );
+    assert.ok(sources.every((source) => source.started >= 0.025 && source.stopped < 2.4));
+    assert.ok(sources.at(-1).stopped > 2, 'A warm resolution lasts beyond the ascending phrase.');
+    for (const source of sources) {
+      const envelope = source.connections[0].gain.calls;
+      assert.equal(envelope[0].value, 0.0001);
+      assert.ok(envelope[1].value <= 0.07, 'Layered notes leave mix headroom.');
+      assert.ok(envelope[1].time - source.started >= 0.011);
+      assert.equal(envelope.at(-1).value, 0.0001);
+    }
+    sound.events([event], run, { family });
+    assert.equal(context.sources.length, sources.length, 'Frames cannot retrigger a victory.');
+    sound.update(false, { family }, run);
+    assert.equal(
+      sound.voices.size,
+      sources.length,
+      'The picture can stay without cutting the ending.',
+    );
+    context.advance(2.5);
+    assert.equal(sound.voices.size, 0, 'Every scheduled note releases without another frame.');
+    assert.ok(sources.every((source) => source.disconnected));
+    await sound.dispose();
+  }
+});
+
+test('picture victory keeps gesture, effects volume, master mute and lifecycle cancellation', async () => {
+  const event = { type: 'run.completed', won: true, tick: 42 };
+  let contexts = 0;
+  const locked = new Soundscape({
+    contextFactory: () => {
+      contexts++;
+      return new AudioContextFake();
+    },
+  });
+  locked.event(event);
+  assert.equal(contexts, 0, 'A completed picture cannot grant audio activation.');
+  await locked.dispose();
+  for (const setting of ['master', 'sfx', 'mute']) {
+    const { sound, context } = await setup();
+    if (setting === 'mute') sound.audioMaster = { muted: true, volume: 1 };
+    else sound.configure({ [setting]: 0 });
+    sound.event(event);
+    assert.equal(context.sources.length, 0, setting);
+    await sound.dispose();
+  }
+  for (const cancel of ['pause', 'reset', 'disable', 'dispose']) {
+    const { sound, context } = await setup();
+    sound.event(event);
+    assert.ok(context.sources.some((source) => source.started > context.currentTime));
+    await sound[cancel]();
+    assert.equal(sound.voices.size, 0, cancel);
+    assert.ok(
+      context.sources.every((source) => source.stopped === context.currentTime),
+      cancel,
+    );
+    await sound.dispose();
+  }
+});
+
 test('polyphony is capped and event bursts deduplicate instead of allocating forever', async () => {
   const { sound, context } = await setup();
   for (let i = 0; i < 500; i++) sound.event('cells.claimed');
@@ -685,4 +761,73 @@ test('persistent scheduler remains bounded after a stall and only explicit music
   sound.update(false, {});
   assert.equal(sound.cursor.index, 1);
   await sound.dispose();
+});
+
+test('spoken reactions default off while captions and saved opt-in remain intact', () => {
+  for (const raw of [null, 'invalid']) {
+    const storage = {
+      getItem: () => raw,
+      setItem() {
+        throw new Error('read only');
+      },
+    };
+    const prefs = createReactionOptions({ getStorage: () => storage });
+    assert.equal(prefs.snapshot().volume, 0.25);
+    assert.equal(prefs.snapshot().speech, false);
+    assert.equal(prefs.snapshot().subtitles, true);
+    prefs.dispose();
+  }
+  const record = JSON.stringify({
+    format: 'ReactionPresentationV1',
+    sounds: true,
+    speech: true,
+    subtitles: true,
+    volume: 0.65,
+    scale: 1,
+    background: true,
+  });
+  const prefs = createReactionOptions({
+    getStorage: () => ({
+      getItem: (key) => (key === REACTION_OPTIONS_KEY ? record : null),
+      setItem() {
+        throw new Error('must not rewrite saved choice');
+      },
+    }),
+  });
+  assert.equal(prefs.snapshot().volume, 0.65);
+  assert.equal(prefs.snapshot().speech, true);
+  prefs.dispose();
+  const unavailable = createReactionOptions({
+    getStorage() {
+      throw new Error('denied');
+    },
+  });
+  assert.equal(unavailable.snapshot().volume, 0.25);
+  assert.equal(unavailable.snapshot().speech, false);
+  unavailable.choose({ volume: 0.15, speech: true });
+  assert.equal(unavailable.snapshot().speech, true);
+  assert.equal(unavailable.snapshot().volume, 0.15);
+  assert.equal(unavailable.snapshot().durable, false);
+  unavailable.dispose();
+});
+
+test('spoken reactions use a background mix for default and saved levels without lowering effects', async () => {
+  const { sound } = await setup();
+  const music = sound.musicBus.gain.value,
+    effects = sound.sfxBus.gain.value;
+  sound.configureDialogue({ enabled: true });
+  assert.equal(sound.dialogueSettings.volume, 0.25);
+  assert.equal(sound.dialogueBus.gain.value, 0.1);
+  sound.configureDialogue({ volume: 0.65 });
+  assert.equal(sound.dialogueBus.gain.value, 0.26);
+  sound.configureDialogue({ volume: 1 });
+  assert.equal(sound.dialogueBus.gain.value, 0.4);
+  const voice = sound.playDialogue({ duration: 1 });
+  assert.ok(voice);
+  sound.configureDialogue({ volume: 0 });
+  assert.equal(voice.ended, true);
+  assert.equal(sound.dialogueBus.gain.value, 0);
+  assert.equal(sound.musicBus.gain.value, music);
+  assert.equal(sound.sfxBus.gain.value, effects);
+  sound.dispose();
 });

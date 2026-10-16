@@ -1,0 +1,846 @@
+{
+  "format": "revealline-art-prompts.v1",
+  "tool": "image_gen.imagegen",
+  "date": "2026-09-26",
+  "review": "All 17 masters and 960×480 derivatives inspected as fictional artwork candidates; no human approval or in-game crop approval claimed.",
+  "palette": {
+    "ink": "#0D0B2E",
+    "violet": "#4238EB",
+    "white": "#FFFFFF",
+    "yellow": "#FFD62C"
+  },
+  "sources": [
+    {
+      "title": "DroneAid Netherlands official identity",
+      "url": "https://drone-aid.nl/nl"
+    },
+    {
+      "title": "Current authored mission source",
+      "paths": [
+        "game/content/company-campaigns/droneaid-nl-workshop-lights.json",
+        "game/content/company-campaigns/droneaid-nl-parts-in-motion.json",
+        "game/content/company-campaigns/droneaid-nl-makers-together.json"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "droneaid-nl-workshop-lights-02",
+      "title": "Find Your Bench",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Find Your Bench (do not write the title in the image): A bright cutaway workshop with two distinct inviting maker benches: a long shared pale-wood table and a smaller quiet preparation table, divided by a generous violet central aisle. Warm yellow articulated lamps shine on neatly nested blank material trays and a few oversize nontechnical craft shapes. White industrial windows, round lilac stools, a small fern; early-morning sidelight. Two asymmetrically placed short shelving partitions leave the central floor calm. Make the benches the unmistakable visual subjects.",
+      "missionId": "droneaid-nl-workshop-lights-02",
+      "alt": "Find Your Bench — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-bdc53d7d-609e-4f36-9432-c816713310b6.png",
+        "sha256": "6e9d420d36a31bc0d3d2c169773873fe43c4580055b9b9c34cf2c91604e422f7",
+        "bytes": 2587304,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-02.png",
+        "sha256": "67b6d6d796c66b10c72a490cec393d895f0af4092e5a2e7e212edf5b9f2224f0",
+        "bytes": 872124,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-bdc53d7d-609e-4f36-9432-c816713310b6.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-02.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected generated master: distinct mission scene, violet/white workshop palette, opaque 2:1, no people or operational content; no legible text or logo.",
+        "selected": "Inspected 960×480 derivative: scene and calm floor passages remain legible; no clipping introduced by resize.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-03",
+      "title": "Tool Library",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Tool Library (do not write the title in the image): An enchanting oversized tool-library wall rises at the rear of a miniature workshop: sculptural pegboard display of large simple generic craft tools and blank geometric tool silhouettes, tidy white pull-out drawers and violet shelves. Broad quiet pale floor at centre, two side borrowing stations with empty yellow trays. The rear wall and side shelves frame an inviting reading-room-like space. Golden late-morning side light, gently playful scale and physically convincing materials.",
+      "missionId": "droneaid-nl-workshop-lights-03",
+      "alt": "Tool Library — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3d7e5bc1-6af1-427b-a9c7-ffb7090c510d.png",
+        "sha256": "91d55a90452f759e153a1a0d1bb4d7addef176c73e7aa2a15eec497cf3d6a569",
+        "bytes": 2421171,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-03.png",
+        "sha256": "6cec9ee25cd7595337b1154aa9760ad2cf6a21e141191308e51af8a7afa77dd0",
+        "bytes": 836720,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-3d7e5bc1-6af1-427b-a9c7-ffb7090c510d.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-03.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected generated master: distinct mission scene, violet/white workshop palette, opaque 2:1, no people or operational content; no legible text or logo.",
+        "selected": "Inspected 960×480 derivative: scene and calm floor passages remain legible; no clipping introduced by resize.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-04",
+      "title": "First Connections",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission First Connections (do not write the title in the image): Three separate white-and-violet worktable pavilions are joined by a single generous circular central landing in a miniature cutaway studio. On each table sits a different abstract wooden craft contribution; together their shapes suggest cooperation without being an instruction diagram. Large curved violet shelving partitions, soft yellow lamps, frosted skylight. Camera elevated from the corner, distinct connected architectural masses and quiet central landing, daylight.",
+      "missionId": "droneaid-nl-workshop-lights-04",
+      "alt": "First Connections — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-543a6d5f-b2e2-424f-96da-400825709dae.png",
+        "sha256": "e09be60ef3d0d8c960322679e2ca1d9d8a860825ee08da629fc867d0633cd7a3",
+        "bytes": 2396064,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-04.png",
+        "sha256": "38f7c6178608e9c0b0f3776f8ee985621e34518dd88927e2bd5a36e88099ba11",
+        "bytes": 836235,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-543a6d5f-b2e2-424f-96da-400825709dae.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-04.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected generated master: distinct mission scene, violet/white workshop palette, opaque 2:1, no people or operational content; no legible text or logo.",
+        "selected": "Inspected 960×480 derivative: scene and calm floor passages remain legible; no clipping introduced by resize.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "kind": "rejected-master",
+          "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-79ec45f0-4d92-4996-89d3-deefe6736156.png",
+          "sha256": "6405fb67c7b9fc87d86f1c5f72f0e2984d9c31ed18970793cdb4e57c25179fe1",
+          "bytes": 2539757,
+          "reason": "Human-shaped decorative figurines and central flower emblem removed through built-in image edit."
+        },
+        {
+          "kind": "imagegen-edit",
+          "prompt": "Edit this exact fictional miniature community workshop scene. Preserve the 2:1 opaque aspect ratio, violet/white/yellow palette, three table pavilions, central landing, camera and lighting. Remove every small human-shaped figurine or sculpture from the right-hand table; replace them with clearly non-anthropomorphic smooth interlocking wooden cubes and curved blocks. Remove the tulip emblem from the circular floor, leaving a beautifully plain quiet pale stone circle. Remove any text-like decoration on books. No people or anthropomorphic forms anywhere. Do not add logos, text, symbols, screens or instructions. Keep all other composition and architecture unchanged."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-05",
+      "title": "Shared Worktable",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Shared Worktable (do not write the title in the image): One spectacular long white communal worktable stretches diagonally through a miniature workshop, surrounded by many empty round stools and distinct tidy contributions: folded paper forms, wooden geometric maquettes, color swatch tiles without markings and fabric scraps. Violet storage islands and low partitions create small safe-feeling alcoves around an uncluttered central floor. Warm pools of yellow lamp light against lavender daylight, welcoming and collaborative, no people. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-workshop-lights-05",
+      "alt": "Shared Worktable — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-6a24ba89-2424-43e3-a9b4-60671f71bb7f.png",
+        "sha256": "f14fff7725901ad21b5672943d70e08d841b389da7d5628cfe92c7903e8fc8d1",
+        "bytes": 2655787,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-05.png",
+        "sha256": "a9a4de1f39eb00d2c31f96fe9f33feb0a7f8f55abd6675d20ea59a9f4e6a3fe1",
+        "bytes": 877779,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-6a24ba89-2424-43e3-a9b4-60671f71bb7f.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-05.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-workshop-lights-06",
+      "title": "Lights Across the Room",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Lights Across the Room (do not write the title in the image): A jewel-like miniature workshop at blue hour, seen in wide elevated cutaway: a constellation of six white maker tables each softly lit by its own warm yellow pendant, framed by rich violet cabinetry and tall glowing frosted windows. A few celebratory abstract craft sculptures unite the tables. Gentle light pools, readable large forms and dark violet depth, no thin luminous connecting lines. The whole room feels completed and welcoming, quiet central circulation. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-workshop-lights-06",
+      "alt": "Lights Across the Room — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/droneaid-nl-workshop-lights-06-returned.png",
+        "sha256": "a7239d4312335076c31c83419f8782e710f070816e0b4a4721b738e02d2f43ae",
+        "bytes": 2362888,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-06.png",
+        "sha256": "be181ebb1be6676976bfcd5b3c11158eb32569108183918a4121c89b596252c5",
+        "bytes": 826921,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/droneaid-nl-workshop-lights-06-returned.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-workshop-lights-06.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      },
+      "generationHistory": [
+        {
+          "kind": "lossless-returned-png-persistence",
+          "note": "Built-in returned PNG bytes saved losslessly under its generated_images directory because this result supplied no saved-path hint."
+        }
+      ]
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-01",
+      "title": "Six Little Stations",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Six Little Stations (do not write the title in the image): A playful miniature component gallery arranged as six distinct white exhibition islands around a calm central lilac court. Each island displays a single oversized decorative category: generic craft tools, an abstract open frame sculpture, a camera-shaped prop with an opaque lens, a smooth cylindrical motor-shaped sculpture, a sealed yellow power-themed block and a nonfunctional abstract electronics tile. No exposed circuits or technical detail. Violet storage walls and gentle daylight, museum-like clarity. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-parts-in-motion-01",
+      "alt": "Six Little Stations — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-add43d7e-1c49-455c-93e3-68e8e1fd6ba8.png",
+        "sha256": "14cf1317330a61ccddba29079bcc2dd2baac0b621e980bb3c90ee0f151c4d65d",
+        "bytes": 2429186,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-01.png",
+        "sha256": "9d06073bd8ff9b3c7b00d6b7dfc5e65fe66a4c1015ab01e69d9b2a27b245ec80",
+        "bytes": 823311,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-add43d7e-1c49-455c-93e3-68e8e1fd6ba8.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-01.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-02",
+      "title": "Frame Courtyard",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Frame Courtyard (do not write the title in the image): An airy component-depot courtyard dominated by a large lightweight abstract open-frame sculpture, purely architectural and nonfunctional, supported over a low white display plinth. Two tidy violet storage courts flank it, filled with smooth nested white frame shapes and blank trays. A lower yellow sorting tray gives foreground interest; generous pale walking aisles. Late-afternoon angled sunlight, tactile model-making materials, bold unmistakable sculptural outline. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-parts-in-motion-02",
+      "alt": "Frame Courtyard — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-d09b3ed0-432c-441d-aa88-2d011c0d5bbd.png",
+        "sha256": "b09b7e6c78a07c915cb2163bf0eaedf4f71c13f73bdec454a54f445d6fb39143",
+        "bytes": 2733454,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-02.png",
+        "sha256": "5df1f5b27bf1b2f446576cf0423a9df5736153e06d1412916bbfc37edbe033c7",
+        "bytes": 907704,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-d09b3ed0-432c-441d-aa88-2d011c0d5bbd.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-02.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-03",
+      "title": "Eyes on the Shelf",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Eyes on the Shelf (do not write the title in the image): An exquisite miniature observation-prop library: rounded oversized camera-shaped display sculptures with opaque violet and frosted white lenses rest on stepped white shelves, looking like friendly abstract eyes without faces. A long calm lavender aisle runs through the centre, lower quiet shelving courts on either side, yellow task lamps and small potted greenery. No surveillance imagery or working equipment. Clean cinematic daylight, crafted object photography. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-parts-in-motion-03",
+      "alt": "Eyes on the Shelf — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4d9875e1-9a18-4d9b-91b1-a29c1f9b91dd.png",
+        "sha256": "1654b5a21bf615858164bdf5b26fe8de8dda86b47de46eb74dea0246cad34379",
+        "bytes": 2554325,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-03.png",
+        "sha256": "d0da2b8aafa3879a468864b63ee4fe86cc38db7f7684d923e40792818907d2ca",
+        "bytes": 859788,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4d9875e1-9a18-4d9b-91b1-a29c1f9b91dd.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-03.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-04",
+      "title": "Power Corner",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Power Corner (do not write the title in the image): A cheerful miniature design exhibition centred on a large sealed warm-yellow sculptural power block inside a clear rounded museum case. White cabinets with violet bases surround it, holding closed abstract geometric cases, all unlabeled and nonfunctional. A calm circular interior return plaza offsets a wider loading-side arch, blank violet trays add rhythm. Warm luminous glass and polished tactile surfaces, no wires, circuitry or assembly detail. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-parts-in-motion-04",
+      "alt": "Power Corner — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-f518cccc-b5dd-4870-ba5b-f17772c79c8c.png",
+        "sha256": "5e6214c80106211775c625e44d2927b5e7298457c7fae5fcdbaf0aa36ccbf248",
+        "bytes": 2386668,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-04.png",
+        "sha256": "48d50c7c9a667912dfad48bab231020a840bc55e5a3871ba652b444422c7762c",
+        "bytes": 825737,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-f518cccc-b5dd-4870-ba5b-f17772c79c8c.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-04.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-05",
+      "title": "The Parts Parade",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission The Parts Parade (do not write the title in the image): A magical-but-physical miniature sorting depot with staggered rows of large colorful trays carrying smooth abstract white and lavender component shapes. Trays sit on low stationary violet trolley plinths in a rhythmic diagonal parade, with two broad empty cross aisles and a quiet central resting platform. Yellow handles and warm overhead light add gentle movement through composition, no motors in action or instructions. Wide crafted architectural model photography. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-parts-in-motion-05",
+      "alt": "The Parts Parade — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2c00ef07-aedf-4083-a427-5205c23ceb3b.png",
+        "sha256": "415aef469f351cadd9faab3066bb3a13e9c8343fee485a0d33f1e66e61313ea7",
+        "bytes": 2644033,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-05.png",
+        "sha256": "d53c35b012f03888db667b4687ee619860076f17b0c41411fd7f02bf9c9f1eb2",
+        "bytes": 903215,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2c00ef07-aedf-4083-a427-5205c23ceb3b.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-05.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion-06",
+      "title": "Everything in Place",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Everything in Place (do not write the title in the image): A celebratory miniature depot mosaic where six types of decorative component displays are neatly united around a large white hexagonal sorting plaza. Violet shelves form an elegant perimeter, each softly lit bay holding smooth tools, abstract frames, opaque lens props, sealed cylinders, yellow blocks and nontechnical tiles. One spacious centre tray anchors the image; uncluttered paths radiate between broad physical masses without arrows. Warm afternoon light, satisfying visual order. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-parts-in-motion-06",
+      "alt": "Everything in Place — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-7757775e-803c-4e6e-865a-ccedb7cf69ca.png",
+        "sha256": "106d08bae7d93db0fc4c1474b66cb227908db2ba058ff7339bd5c9fa63b127e3",
+        "bytes": 2506712,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-06.png",
+        "sha256": "990fde82ac4314cbaf31961e4224aeaf2aff1d45fc5ea897486fc5665bfd65bb",
+        "bytes": 868489,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-7757775e-803c-4e6e-865a-ccedb7cf69ca.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-parts-in-motion-06.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-01",
+      "title": "A Friendly Welcome",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission A Friendly Welcome (do not write the title in the image): A charming miniature Dutch community room with an open violet entrance arch, a white welcome counter bearing a vase and blank folded cards, and a round shared pale-wood table. Two quiet curved seating nooks flank a generous empty centre. Warm yellow lamps, lavender cushions, lush small plants and broad tall windows. No people; the empty room itself communicates belonging. Cinematic morning sunshine, tactile furniture and welcoming architectural depth. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-makers-together-01",
+      "alt": "A Friendly Welcome — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2b67c585-6fa0-4546-add0-5cd61a1c641e.png",
+        "sha256": "df8af925d0e4998d8588b6f9a6fd4123be10a92f5d6deb4eba58054a9eaf2814",
+        "bytes": 2724737,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-01.png",
+        "sha256": "4db5bb677e1b5a63ad1452525976d3b2d22c037d3abffa19ebed29aa38d8c579",
+        "bytes": 890902,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-2b67c585-6fa0-4546-add0-5cd61a1c641e.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-01.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-02",
+      "title": "Watch and Try",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Watch and Try (do not write the title in the image): A miniature learning studio with two paired tables: a raised demonstration plinth holds one elegant abstract folded-paper sculpture, while a lower practice bench holds several different playful unfinished paper and wooden forms. No step-by-step arrangement. White ceramic surfaces, violet cupboards, yellow task lights and a quiet shared gap between the tables. Soft skylight and warm natural wood, the atmosphere of encouragement expressed entirely through objects. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-makers-together-02",
+      "alt": "Watch and Try — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5fe52cd3-e7b3-4089-8914-235eb609a073.png",
+        "sha256": "a35f68325bea04396efac26d1146c1bff678a055de625a0446917d0e38c217ee",
+        "bytes": 2485422,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-02.png",
+        "sha256": "35283125b812d4322e383affa5856748eacfd716ffca4b9fd29a3b5a23d9aa86",
+        "bytes": 852766,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5fe52cd3-e7b3-4089-8914-235eb609a073.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-02.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-03",
+      "title": "Pass It On",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Pass It On (do not write the title in the image): A cinematic miniature community atelier featuring three small contribution tables connected visually by a broad lavender gathering floor. Each table holds different handmade blank fabric rosettes and sculptural friendship tokens with no symbols, alongside folded paper envelopes and wooden shapes. A small side table presents one carefully wrapped gift box. Violet wall niches, white curved furniture, soft yellow pendants and afternoon windowlight; generous calm centre, no hands or people. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-makers-together-03",
+      "alt": "Pass It On — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-8eb4deec-6573-4c84-bfa6-ecfc4b2dcbd3.png",
+        "sha256": "3247a56674b7973abacacd11d89e779a87b12f79e2e41fb3bc1a0ec0da376bbc",
+        "bytes": 2373453,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-03.png",
+        "sha256": "629792d4bf4d964c546d70a283246646793186d4170bdc2944633099c412f6b8",
+        "bytes": 812369,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-8eb4deec-6573-4c84-bfa6-ecfc4b2dcbd3.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-03.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-04",
+      "title": "Room for Every Maker",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Room for Every Maker (do not write the title in the image): An inclusive miniature community interior composed of a quiet cushioned reading nook, a broad-height open workbench, a spacious shared circular table and a small contemplative plant alcove. All empty, with broad accessible uncluttered circulation and varied seating. Deep violet partitions, clean white surfaces, lavender fabric and small amber lamps. Elevated camera clearly connects the different spaces through one calm central passage, soft afternoon daylight. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-makers-together-04",
+      "alt": "Room for Every Maker — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5c12328f-8406-4bbe-92c1-007996007683.png",
+        "sha256": "d704c9594f8a82c2772aabc4f5207f826478d5025c3a261d40ea0a6daaae92e3",
+        "bytes": 2661652,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-04.png",
+        "sha256": "780131b1914aa8b904e4818b56405e96aeab4877d914371ed24cb6d77f1f54a0",
+        "bytes": 881660,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-5c12328f-8406-4bbe-92c1-007996007683.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-04.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-05",
+      "title": "Many Hands",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission Many Hands (do not write the title in the image): A spectacular miniature collaborative mural room with no people: a wide physical mosaic of raised paper cutouts, wooden tiles and layered violet-white geometric shapes fills the rear wall. In front, two paired craft tables hold distinct partial contributions, arranged around one generous circular gathering island. Warm yellow lamps illuminate tactile edges and tiny curled paper offcuts. The crafted mural evokes many contributions through variety, not hand symbols, text or diagrams. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-makers-together-05",
+      "alt": "Many Hands — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4a2aac2a-98dc-4f44-9f66-a978eaadce20.png",
+        "sha256": "4d735eb3fd0a3fc66f902152b092b66323cb37fe31e64778acdc8e6245bfc181",
+        "bytes": 2744923,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-05.png",
+        "sha256": "d0265c0126171227ab226ad9b9d9df22ca70f3b2616b054cbb52ed127a6fc5e2",
+        "bytes": 913329,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-4a2aac2a-98dc-4f44-9f66-a978eaadce20.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-05.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    },
+    {
+      "id": "droneaid-nl-makers-together-06",
+      "title": "A New Instructor",
+      "prompt": "Use case: stylized-concept. Asset type: a finished 2:1 opaque landscape mission-reveal background for a fictional Netherlands community workshop game. Photogenic cinematic miniature physical diorama, premium tactile ceramic, painted wood and translucent acrylic, sophisticated oblique overhead photography, sharp meaningful silhouettes and discoverable crafted detail. Palette predominantly violet #4238EB, deep midnight #0D0B2E, clean white, pale lavender and sparse warm yellow #FFD62C. Warm, inviting Dutch community-workshop character with broad quiet floor passages and balanced negative space; all objects plausible decorative props, not functioning equipment. Fill the entire wide rectangular frame with one coherent scene. No text, letters, digits, logos, people, hands, weapons, military motifs, operational drone assembly or flight instructions, active screens, UI, grid, game enemies, capture lines, montage, watermark or transparent background. Clearly fictional scene, never documentary evidence of actual operations.\nScene specific to mission A New Instructor (do not write the title in the image): A quietly celebratory miniature community workshop: a beautifully finished abstract folded-paper sculpture stands on a central white teaching table, echoed by varied exploratory craft forms on a semicircle of lower tables. An empty violet chair is drawn up invitingly beside the display; warm yellow lamps, white shelves, lavender curtains and a simple paper garland of unmarked shapes signal confidence being passed forward. Golden evening light, generous familiar walking routes, no people or graduation text. Additional exclusions: no human-shaped figurines or statues, no emblems on floor, no writing or markings on books, drawers or labels.",
+      "missionId": "droneaid-nl-makers-together-06",
+      "alt": "A New Instructor — fictional violet and white community workshop miniature.",
+      "original": {
+        "path": "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-219f8a10-9db9-4d7f-a0e6-29bab44f3de5.png",
+        "sha256": "85273e7d9365952fb4499f2d0c7182e59985f5e78f67963a247f3b2bbec6a4ff",
+        "bytes": 2484270,
+        "width": 1774,
+        "height": 887
+      },
+      "selected": {
+        "path": "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-06.png",
+        "sha256": "f037acab298db406f58539ce3b2de444716b0690e85f46647669ccae923c3a8d",
+        "bytes": 853971,
+        "width": 960,
+        "height": 480
+      },
+      "derivation": {
+        "kind": "mechanical-resize",
+        "tool": "macOS sips",
+        "command": [
+          "sips",
+          "--resampleHeightWidth",
+          "480",
+          "960",
+          "$CODEX_HOME/generated_images/01a0dbeb-dea5-7871-a49c-fd67410d1669/exec-219f8a10-9db9-4d7f-a0e6-29bab44f3de5.png",
+          "--out",
+          "game/editions/assets/droneaid-nl/bulk-workshop-02/droneaid-nl-makers-together-06.png"
+        ],
+        "changes": "Resize only, no crop, repaint, or composition changes.",
+        "opaque": true
+      },
+      "review": {
+        "status": "candidate",
+        "original": "Inspected full generated master: coherent fictional miniature, violet/white palette, no people, legible text, branding marks or operational instructions.",
+        "selected": "Inspected 960×480 derivative: distinct large forms and quiet passages remain readable, opaque 2:1, no resize clipping.",
+        "inGame": "pending",
+        "humanArtworkApproval": "pending",
+        "inspections": {
+          "original": "complete",
+          "selected": "complete"
+        }
+      }
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter, playerPaintSize } from '../ui/render.mjs';
 import { rotorAnchors } from '../../authoring/motion-lab/animation.mjs';
+import { canvasPresentation, imagePresentation } from '../presentation/runtime.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import {
@@ -409,6 +410,107 @@ function playerFixture({ wide = true, css = 600, bodyId = 'fpv-body', image } = 
   p.image = image ?? { id: 'player-original', naturalWidth: 1280, naturalHeight: 1280 };
   return { p, s, run };
 }
+
+// Follow the actual BoardPainter/paintCharacter command stream. This proves
+// rendered rotor paths rather than only a changing clock; decoded pixel and
+// small-screen visual reviews remain separate evidence.
+function paintedPlayerCommands(calls, image) {
+  const index = calls.findIndex((call) => call.op === 'drawImage' && call.args[0] === image);
+  assert.ok(index >= 0, 'the selected prepared body is painted');
+  let depth = 0;
+  for (const call of calls.slice(0, index + 1))
+    depth += call.op === 'save' ? 1 : call.op === 'restore' ? -1 : 0;
+  const bodyDepth = depth,
+    result = [];
+  for (const call of calls.slice(index + 1)) {
+    depth += call.op === 'save' ? 1 : call.op === 'restore' ? -1 : 0;
+    if (depth < bodyDepth) break;
+    result.push(call);
+  }
+  return result;
+}
+
+function preparedPlayerFixture(css) {
+  const fixture = playerFixture({ css, bodyId: 'fpv-scout-v1' }),
+    compiled = JSON.parse(
+      readFileSync(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+    ),
+    sprites = new Map();
+  for (const treatment of ['compact', 'detailed']) {
+    const slot = `player.scout.${treatment}`,
+      asset = compiled.resolved.assets[slot];
+    sprites.set(slot, {
+      image: { slot, width: asset.file.width, height: asset.file.height },
+      geometry: imagePresentation(asset),
+      asset,
+    });
+  }
+  fixture.p.theme = themes.find((theme) => theme.id === 'fpv');
+  fixture.p.bodyId = 'fpv-scout-v1';
+  fixture.p.setPresentation({
+    canvas: canvasPresentation(compiled.resolved),
+    image: (slot) => sprites.get(slot) ?? null,
+  });
+  return {
+    ...fixture,
+    sprites,
+    sprite: sprites.get(`player.scout.${css < 480 ? 'compact' : 'detailed'}`),
+  };
+}
+
+for (const css of [240, 390, 1152])
+  test(`prepared player rotor paths visibly advance and hold on pause/reduced effects at ${css}px`, () => {
+    const { p, s, run, sprite } = preparedPlayerFixture(css),
+      before = authoritativeCheckpoint(run),
+      preset = structuredClone(p.body),
+      geometry = structuredClone(sprite.geometry),
+      draw = (dt, options = {}) => {
+        s.calls.length = 0;
+        p.draw(s.ctx, run, dt, options);
+        return paintedPlayerCommands(s.calls, sprite.image);
+      };
+    const first = draw(FIXED_DT),
+      second = draw(FIXED_DT);
+    assert.ok(
+      first.some((call) => call.op === 'lineTo'),
+      'prepared hubs receive connected blade polygons',
+    );
+    assert.notDeepEqual(second, first, 'rotor painting changes between running frames');
+    assert.deepEqual(draw(0.1, { paused: true }), second, 'pause retains the painted rotor pose');
+    const reduced = draw(0.1, { reduced: true });
+    assert.ok(
+      reduced.some((call) => call.op === 'lineTo'),
+      'reduced effects retains static blades',
+    );
+    assert.deepEqual(draw(0.1, { reduced: true }), reduced, 'reduced effects is a stable pose');
+    assert.deepEqual(p.body, preset, 'selected source presets remain immutable');
+    assert.deepEqual(sprite.geometry, geometry, 'prepared geometry remains immutable');
+    assert.deepEqual(authoritativeCheckpoint(run), before, 'rotors never change the simulation');
+  });
+
+test('explicit original player pixels never inherit the prepared snapshot rotor rig', () => {
+  const { p, s, run, sprites } = preparedPlayerFixture(390),
+    original = p.image,
+    before = authoritativeCheckpoint(run);
+  p.overrides.player = { dataUrl: 'existing original player choice' };
+  p.draw(s.ctx, run, FIXED_DT);
+  const afterBody = paintedPlayerCommands(s.calls, original);
+  assert.equal(
+    afterBody.some((call) => call.op === 'translate'),
+    false,
+    'unreviewed original art cannot receive detached or duplicate rotor parts',
+  );
+  assert.equal(
+    s.calls.some(
+      (call) =>
+        call.op === 'drawImage' &&
+        [...sprites.values()].some((sprite) => sprite.image === call.args[0]),
+    ),
+    false,
+    'manual player selection retains its exact original image',
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+});
 
 test('foundation craft keeps its contact cue without detached corner brackets', () => {
   const level = resolveMission(

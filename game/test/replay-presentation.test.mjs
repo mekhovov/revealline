@@ -65,6 +65,19 @@ function fixture({ wide = false, finished = false } = {}) {
   };
 }
 const envelope = (source = fixture()) => ({ format: REPLAY_PRESENTATION_FORMAT, ...source });
+test('replay export never executes a nested authored-receipt accessor while selecting its version', () => {
+  const source = fixture();
+  let calls = 0;
+  Object.defineProperty(source.actorAppearancePin, 'authoredPresentationSha256', {
+    enumerable: true,
+    get() {
+      calls++;
+      return 'a'.repeat(64);
+    },
+  });
+  assert.throws(() => exportReplayPresentation(source));
+  assert.equal(calls, 0);
+});
 
 for (const wide of [false, true])
   for (const finished of [false, true])

@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://expanse.invalid/delivery.json",
+    "bytes": 329372,
+    "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+  },
+  "files": 2050,
+  "verifiedResponses": 2051,
+  "totalBytes": 47646152,
+  "totalWithDescriptor": 47975524,
+  "unchangedTerrainManifest": true,
+  "sceneryRequests": 0,
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "braided-basin",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "high-mesa",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "red-escarpment",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "confluence",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "hoodoo-flats",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "self-level",
+      "id": "amphitheatre",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "braided-basin",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "high-mesa",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "red-escarpment",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "confluence",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "hoodoo-flats",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    },
+    {
+      "mode": "acro",
+      "id": "amphitheatre",
+      "geometryBytes": 456408,
+      "ticks": 200,
+      "contacts": 0
+    }
+  ],
+  "nativeStorageVerified": false,
+  "playerAdmission": false
+}

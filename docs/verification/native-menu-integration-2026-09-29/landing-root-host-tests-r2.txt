@@ -1,0 +1,307 @@
+TAP version 13
+# Subtest: real Versus ready renders and locale changes keep one wordmark; pause owns its localized status
+ok 1 - real Versus ready renders and locale changes keep one wordmark; pause owns its localized status
+  ---
+  duration_ms: 7322.525959
+  ...
+# Subtest: Versus busy/ready transitions replace only retired brand owners and destroy releases the latest image
+ok 2 - Versus busy/ready transitions replace only retired brand owners and destroy releases the latest image
+  ---
+  duration_ms: 126.985167
+  ...
+# Subtest: Workshop destinations ship their actual authoring runtime and return paths
+not ok 3 - Workshop destinations ship their actual authoring runtime and return paths
+  ---
+  duration_ms: 1722.6945
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/field-kit-surfaces.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, lstat '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/authoring/motion-lab/assets'"
+  code: 'ENOENT'
+  stack: |-
+    async Module.lstat (node:internal/fs/promises:1025:18)
+    async noSymlinkPath (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/scripts/game-cli.mjs:124:10)
+    async regularFiles (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/scripts/game-cli.mjs:132:18)
+    async collectBuildFiles (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/scripts/game-cli.mjs:224:24)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/field-kit-surfaces.test.mjs:14:17)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: settings categories keep the real controls and preferences without starting the flight
+ok 4 - settings categories keep the real controls and preferences without starting the flight
+  ---
+  duration_ms: 4778.032167
+  ...
+# Subtest: leaving Controls cancels a pending physical-key capture through its native cancel action
+ok 5 - leaving Controls cancels a pending physical-key capture through its native cancel action
+  ---
+  duration_ms: 3105.726459
+  ...
+# Subtest: settings tabs support arrow and end navigation without leaking the key to the game
+ok 6 - settings tabs support arrow and end navigation without leaking the key to the game
+  ---
+  duration_ms: 1485.989583
+  ...
+# Subtest: data and collection shortcuts reuse the existing nested Library sections without changing saved data
+ok 7 - data and collection shortcuts reuse the existing nested Library sections without changing saved data
+  ---
+  duration_ms: 1807.385667
+  ...
+# Subtest: supporting page text size remains presentation only and listeners are released
+ok 8 - supporting page text size remains presentation only and listeners are released
+  ---
+  duration_ms: 0.3115
+  ...
+# Subtest: supporting pages read the shared UI skin without writing or competing with native game controls
+ok 9 - supporting pages read the shared UI skin without writing or competing with native game controls
+  ---
+  duration_ms: 2.039375
+  ...
+# Subtest: support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus
+ok 10 - support-skin CSS owns chrome tokens but never canvas, board geometry or hidden focus
+  ---
+  duration_ms: 9.462084
+  ...
+# Subtest: edition tool chrome cannot be replaced by a saved default-game palette
+ok 11 - edition tool chrome cannot be replaced by a saved default-game palette
+  ---
+  duration_ms: 0.632584
+  ...
+# Subtest: surface copy supports regional locales and preserves native controls
+ok 12 - surface copy supports regional locales and preserves native controls
+  ---
+  duration_ms: 0.37525
+  ...
+# Subtest: explicit committed navigation paints only one inert decorative layer and never owns input or focus
+ok 13 - explicit committed navigation paints only one inert decorative layer and never owns input or focus
+  ---
+  duration_ms: 16.665167
+  ...
+# Subtest: rapid navigation cancels the old burst without restarting or queueing another
+ok 14 - rapid navigation cancels the old burst without restarting or queueing another
+  ---
+  duration_ms: 0.621375
+  ...
+# Subtest: hidden cancels a live burst, clears timers and never replays it on return
+ok 15 - hidden cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 5.386333
+  ...
+# Subtest: reduced cancels a live burst, clears timers and never replays it on return
+ok 16 - reduced cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.310459
+  ...
+# Subtest: preference cancels a live burst, clears timers and never replays it on return
+ok 17 - preference cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 1.159334
+  ...
+# Subtest: context cancels a live burst, clears timers and never replays it on return
+ok 18 - context cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.647375
+  ...
+# Subtest: pagehide cancels a live burst, clears timers and never replays it on return
+ok 19 - pagehide cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 0.746625
+  ...
+# Subtest: detached cancels a live burst, clears timers and never replays it on return
+ok 20 - detached cancels a live burst, clears timers and never replays it on return
+  ---
+  duration_ms: 1.761542
+  ...
+# Subtest: settings, dialogs, focus and controls do not opt into navigation decoration
+ok 21 - settings, dialogs, focus and controls do not opt into navigation decoration
+  ---
+  duration_ms: 0.412
+  ...
+# Subtest: a legacy mission dialog used for reading is outside retune navigation
+ok 22 - a legacy mission dialog used for reading is outside retune navigation
+  ---
+  duration_ms: 0.313709
+  ...
+# Subtest: a replacement picker releases old layers and a covering dialog cancels the active one
+ok 23 - a replacement picker releases old layers and a covering dialog cancels the active one
+  ---
+  duration_ms: 0.726167
+  ...
+# Subtest: solo: actual chooser commits only open and Back, never filters or recovery
+ok 24 - solo: actual chooser commits only open and Back, never filters or recovery
+  ---
+  duration_ms: 47.906834
+  ...
+# Subtest: versus: actual chooser commits only open and Back, never filters or recovery
+ok 25 - versus: actual chooser commits only open and Back, never filters or recovery
+  ---
+  duration_ms: 8.172334
+  ...
+# Subtest: team: actual chooser commits only open and Back, never filters or recovery
+ok 26 - team: actual chooser commits only open and Back, never filters or recovery
+  ---
+  duration_ms: 7.810583
+  ...
+# Subtest: the stylesheet reuses stepped local noise below content without transforms or filters
+ok 27 - the stylesheet reuses stepped local noise below content without transforms or filters
+  ---
+  duration_ms: 39.498208
+  ...
+# Subtest: all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
+ok 28 - all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
+  ---
+  duration_ms: 0.573959
+  ...
+# Subtest: every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers
+ok 29 - every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers
+  ---
+  duration_ms: 113.291375
+  ...
+# Subtest: every landing has restrained signal styling, with all drone and technical scenes stronger
+ok 30 - every landing has restrained signal styling, with all drone and technical scenes stronger
+  ---
+  duration_ms: 0.576
+  ...
+# Subtest: the CSS noise atlas is reproducible, small, opaque monochrome and contains four distinct frames
+ok 31 - the CSS noise atlas is reproducible, small, opaque monochrome and contains four distinct frames
+  ---
+  duration_ms: 322.996666
+  ...
+# Subtest: scene files and provenance exist, match checksums and stay below 2 MiB per active scene
+ok 32 - scene files and provenance exist, match checksums and stay below 2 MiB per active scene
+  ---
+  duration_ms: 87.443833
+  ...
+# Subtest: DroneAid aggregate uses the exact supplied photograph and records its unchanged source
+ok 33 - DroneAid aggregate uses the exact supplied photograph and records its unchanged source
+  ---
+  duration_ms: 2.503917
+  ...
+# Subtest: DroneAid photograph keeps a full static source in both orientations and WebGL fallback
+ok 34 - DroneAid photograph keeps a full static source in both orientations and WebGL fallback
+  ---
+  duration_ms: 0.616
+  ...
+# Subtest: Solo, Versus and Team changes preserve focus, the artwork source and a single renderer
+ok 35 - Solo, Versus and Team changes preserve focus, the artwork source and a single renderer
+  ---
+  duration_ms: 0.323
+  ...
+# Subtest: a ready decoded image creates one renderer and handoff follows its readiness without taking focus
+ok 36 - a ready decoded image creates one renderer and handoff follows its readiness without taking focus
+  ---
+  duration_ms: 0.462417
+  ...
+# Subtest: receiver interference samples the original artwork into its own canvas and keeps that source after handoff
+ok 37 - receiver interference samples the original artwork into its own canvas and keeps that source after handoff
+  ---
+  duration_ms: 0.32175
+  ...
+# Subtest: receiver source generation resets on changed artwork but not mode, resize, pause or repeated load
+ok 38 - receiver source generation resets on changed artwork but not mode, resize, pause or repeated load
+  ---
+  duration_ms: 0.686792
+  ...
+# Subtest: hidden defers renderer creation until a loaded scene can actually animate
+ok 39 - hidden defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 3.309125
+  ...
+# Subtest: pagehide defers renderer creation until a loaded scene can actually animate
+ok 40 - pagehide defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.959917
+  ...
+# Subtest: reduced defers renderer creation until a loaded scene can actually animate
+ok 41 - reduced defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 1.085208
+  ...
+# Subtest: local-setting defers renderer creation until a loaded scene can actually animate
+ok 42 - local-setting defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.7375
+  ...
+# Subtest: gameplay defers renderer creation until a loaded scene can actually animate
+ok 43 - gameplay defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.391833
+  ...
+# Subtest: body-effects defers renderer creation until a loaded scene can actually animate
+ok 44 - body-effects defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.755709
+  ...
+# Subtest: body-reduced-effects defers renderer creation until a loaded scene can actually animate
+ok 45 - body-reduced-effects defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.558291
+  ...
+# Subtest: html-reduced-motion defers renderer creation until a loaded scene can actually animate
+ok 46 - html-reduced-motion defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.203542
+  ...
+# Subtest: reduced motion, local setting, hidden menu, gameplay and background tab stop ambient motion
+ok 47 - reduced motion, local setting, hidden menu, gameplay and background tab stop ambient motion
+  ---
+  duration_ms: 0.443791
+  ...
+# Subtest: portrait selection, error fallback and cleanup never replace interactive content
+ok 48 - portrait selection, error fallback and cleanup never replace interactive content
+  ---
+  duration_ms: 1.319042
+  ...
+# Subtest: visible decoration keeps moving without keyboard focus, but stops while hidden or suspended
+ok 49 - visible decoration keeps moving without keyboard focus, but stops while hidden or suspended
+  ---
+  duration_ms: 0.195583
+  ...
+# Subtest: a sibling settings dialog pauses the actual visible landing owner and closes without recreating it
+ok 50 - a sibling settings dialog pauses the actual visible landing owner and closes without recreating it
+  ---
+  duration_ms: 0.268375
+  ...
+# Subtest: the image/canvas plane stays registered to original artwork through cover crops and orientation changes
+ok 51 - the image/canvas plane stays registered to original artwork through cover crops and orientation changes
+  ---
+  duration_ms: 0.170792
+  ...
+# Subtest: storage denial retains current-page preference and cross-tab updates are applied
+ok 52 - storage denial retains current-page preference and cross-tab updates are applied
+  ---
+  duration_ms: 0.870958
+  ...
+# Subtest: solo landing and Display share fullscreen state and native keyboard access
+ok 53 - solo landing and Display share fullscreen state and native keyboard access
+  ---
+  duration_ms: 4164.222
+  ...
+# Subtest: versus landing and Display share fullscreen state and native keyboard access
+ok 54 - versus landing and Display share fullscreen state and native keyboard access
+  ---
+  duration_ms: 5250.738708
+  ...
+# Subtest: team landing and Display share fullscreen state and native keyboard access
+ok 55 - team landing and Display share fullscreen state and native keyboard access
+  ---
+  duration_ms: 433.269625
+  ...
+# Subtest: the Versus controller can reach the landing utility and a denied request remains visible and truthful
+ok 56 - the Versus controller can reach the landing utility and a denied request remains visible and truthful
+  ---
+  duration_ms: 2820.946625
+  ...
+# Subtest: native menu inventory covers every shipped edition and both launch routes
+ok 57 - native menu inventory covers every shipped edition and both launch routes
+  ---
+  duration_ms: 31.576166
+  ...
+1..57
+# tests 57
+# suites 0
+# pass 56
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13958.63775

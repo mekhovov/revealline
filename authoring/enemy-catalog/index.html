@@ -1,36 +1,108 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../game/access-gate.css" />
+    <script src="../../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="tools:reveallineEnemyWorkshop">RevealLine — enemy workshop</title>
+    <title data-i18n="tools:reveallineEnemyWorkshop">FPV / LINE — enemy workshop</title>
     <link rel="stylesheet" href="../../game/ui/enemy-catalog-panel.css" />
     <link rel="stylesheet" href="../../game/ui/pixel-theme.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
-    <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+    <script
+      src="../../game/presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <style>
-      #catalog-host-status + .button {
-        box-sizing: border-box;
-        padding-block: 0;
-      }
-      @media (max-height: 480px) {
-        body > p {
-          margin-block: 8px;
+      @layer legacy {
+        .catalog-host-actions {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 16px;
+        }
+        .catalog-host-actions > :is(button, a) {
+          box-sizing: border-box;
+          display: inline-flex;
+          align-items: center;
+          min-block-size: 44px;
+          min-inline-size: 44px;
+          max-inline-size: 100%;
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
+        #catalog-host-status + .button {
+          box-sizing: border-box;
+          padding-block: 0;
+        }
+        @media (max-height: 480px) {
+          body > p {
+            margin-block: 8px;
+          }
         }
       }
     </style>
     <link rel="stylesheet" href="../../game/i18n/style.css" />
-    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
-    <script src="../../game/i18n/catalogs.mjs"></script>
-    <script src="../../game/i18n/bootstrap.mjs"></script>
+    <script
+      src="../../game/vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../../game/i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../../game/i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
-    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <script
+      src="../../game/ui/workshop-return-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body
     data-workshop-tool="enemy-catalog"
@@ -44,30 +116,31 @@
       Preview every registered role, prepare future generator choices and try a separate practice
       map.
     </p>
-    <button id="open-catalog" disabled type="button" data-i18n="tools:openWorkshop">
-      Open workshop
-    </button>
-    <a
-      href="../../game/playground/"
-      style="display: inline-flex; align-items: center; min-height: 44px"
-      data-workshop-tool="playground"
-      data-i18n="tools:levelPlayground"
-      >Level playground</a
-    >
-    <a
-      id="return-game"
-      class="button"
-      href="../../game/?workshop=enemy-catalog"
-      style="display: inline-flex; align-items: center; min-height: 44px"
-      data-workshop-return="workshop"
-      inert
-      aria-disabled="true"
-      data-i18n="common:navigation.returnToWorkshop"
-      >Return to Workshop</a
-    >
-    <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame"
-      >Return to game</a
-    >
+    <div class="catalog-host-actions">
+      <button id="open-catalog" disabled type="button" data-i18n="tools:openWorkshop">
+        Open workshop
+      </button>
+      <a
+        href="../../game/playground/"
+        data-workshop-tool="playground"
+        data-i18n="tools:levelPlayground"
+        >Level playground</a
+      >
+      <a
+        id="return-game"
+        class="button"
+        href="../../game/?workshop=enemy-catalog"
+        data-workshop-return="workshop"
+        inert
+        aria-disabled="true"
+        data-i18n="common:navigation.returnToWorkshop"
+        >Return to Workshop</a
+      >
+      <a data-workshop-return="game" href="../../game/" data-i18n="tools:returnToGame"
+        >Return to game</a
+      >
+      <a href="../game-feel-lab/">Feedback comparison</a>
+    </div>
     <p id="catalog-host-status" class="operation-status" data-state="busy">
       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
       ><span class="operation-status-label" role="status" data-i18n="tools:loadingRegisteredThemes"
@@ -90,6 +163,8 @@
       src="../../game/ui/direct-tool-launch.js"
       data-module="./workshop.mjs"
       data-status="catalog-host-status"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
   </body>
 </html>

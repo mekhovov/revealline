@@ -1,0 +1,228 @@
+{
+  "source": {
+    "revision": "60b0c25ab2703371691d4d203df7d5067638ca14",
+    "tree": "e8a4f345bd33ca03008b4fb9dd886b240430e05b",
+    "dirty": "",
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "manifestSha256": "d7e368c931853210c79467947085d492d5dd5cc0e7c00629b277d6893379941c",
+  "files": [
+    {
+      "file": "game/test/art-review-navigation.test.mjs",
+      "sha256": "869bc1e6a310db38b2b850546115796d85ca103661c9c5e4d0befa622141d153"
+    },
+    {
+      "file": "game/test/art-review-host-navigation.test.mjs",
+      "sha256": "0f38b74dc0c2741cdf6300533ca7982a52e6be043b6493ab38b3ca923afcf1e3"
+    },
+    {
+      "file": "game/test/classic-snake-ui.test.mjs",
+      "sha256": "ab1f360758c23766cf1f601472950f9b9e6c80ba335e2199aa5967c9ad2a5f99"
+    },
+    {
+      "file": "game/test/hunt-host.test.mjs",
+      "sha256": "48f977c3fa3eb15d5ce4339c04c8ea2536a2e355721f001e345fade1c5801401"
+    },
+    {
+      "file": "game/test/coop-briefing-host.test.mjs",
+      "sha256": "ecadc8115308c83a02d250c4eb7c5d7f2232934b9a626e308c3bc034dd229c08"
+    },
+    {
+      "file": "game/test/mode-play-shell.test.mjs",
+      "sha256": "d8e4d7574c3b398285d64e2823ee274e1c6cdb1783ea400474f36aaf4f2f9a6e"
+    },
+    {
+      "file": "game/test/phase-briefing.test.mjs",
+      "sha256": "ffac02e3a48d18c2d521b57cc6e44e4554c9d8602215de747ce7f9af37fcce90"
+    },
+    {
+      "file": "game/test/civilian-practice-ui.test.mjs",
+      "sha256": "17ef244e0e21fad1e6542b28fcc7dbcb471d1603bb89b9d2b903cb6c8cb0e40e"
+    },
+    {
+      "file": "game/test/fpv-flight-ui.test.mjs",
+      "sha256": "29442a95c98534968ab279a4358a8e7d74651fb344b3823ed47ffb886ca6f093"
+    },
+    {
+      "file": "game/test/workshop-return.test.mjs",
+      "sha256": "292c3fb9025253662f13563da64680220592972daae2c66756582d1f9285774a"
+    },
+    {
+      "file": "game/test/content-studio-navigation.test.mjs",
+      "sha256": "25023c9197275d2c4369fc467f527510d7743c742e2eef5af9ec60535e9315a4"
+    },
+    {
+      "file": "game/test/couch-departure.test.mjs",
+      "sha256": "ce8711a43c2c1765e17635d73f9437dff8e8212894fa3a95818ee51aceeb7dfc"
+    },
+    {
+      "file": "game/test/title-mode-departure-host.test.mjs",
+      "sha256": "5cce34c29d92d1635291942cee3710ec3f1429236d4a8375e3f9815e9ba5ad2a"
+    },
+    {
+      "file": "game/test/mode-choice-appearance.test.mjs",
+      "sha256": "1cfd44a2fca47019f49451e389ad6f010dee19646a575d7cde8e942fb8f2a48d"
+    },
+    {
+      "file": "game/test/enemy-appearance-controls.test.mjs",
+      "sha256": "f75a78cee06d6175eb63f72010c0e556dccc938ba97dd20305204506bcfd57a7"
+    },
+    {
+      "file": "game/test/military-level-directory.test.mjs",
+      "sha256": "74736fd887b0186b8022cb0ad0efb9cfe1289ec1d6282f9d45539b7450665935"
+    },
+    {
+      "file": "game/test/fpv-theme-family-controls.test.mjs",
+      "sha256": "84c1f2540d2f3ad927ccf046b7d7b3903061320198f65ab93878b404a9570c7b"
+    },
+    {
+      "file": "game/test/download-initialization.test.mjs",
+      "sha256": "6a40d4bd77d6665a7e960d4524a677fe97144ba8ae6c80b783824f5fb71e792b"
+    },
+    {
+      "file": "game/test/offline.test.mjs",
+      "sha256": "d3cf55f8b6a3335ba35fa53a5cea94a7e12eff21a97f178e62138e33128a7297"
+    },
+    {
+      "file": "game/test/classic-environment.test.mjs",
+      "sha256": "2714833a1a422305610881cce41551a123073ac736ad004c9593813904c361e8"
+    },
+    {
+      "file": "game/test/capture-attempt-appearance-host.test.mjs",
+      "sha256": "2c389d5c6dd8617a18236b79f543f7c53f58c43c9b91ca43605bd0392c1f23c6"
+    },
+    {
+      "file": "game/test/fpv-world-appearance-ui.test.mjs",
+      "sha256": "7576b6301a85b8ede65592b8a39b6dbf213b8d02520e75f2e35151de1295bf69"
+    },
+    {
+      "file": "game/test/industrial-environment-review.test.mjs",
+      "sha256": "61a0d4e23b6d364e038a19804672f29b4ab2a64ef467a08142c9370715e452fc"
+    },
+    {
+      "file": "game/test/continuous-host.test.mjs",
+      "sha256": "4911c6087fe2f56a8f111717631dc0e3e81259a2f38f20b30d10a365889abd4a"
+    },
+    {
+      "file": "game/test/overflight-host.test.mjs",
+      "sha256": "251832815960e275bec5b5367c3267e854a65890b04f99ec85bd59c1ddcc6c49"
+    },
+    {
+      "file": "game/test/overflight-sortie.test.mjs",
+      "sha256": "e26350cb877cf92a86e4c06059af2400957501aeb430970cd5ff201f9d8515fb"
+    },
+    {
+      "file": "game/test/overflight-controller.test.mjs",
+      "sha256": "da2dbdad03a6f24a57064b4f4fc4b07b3f04ce7c32e864fed8ce83f7c1ad319e"
+    },
+    {
+      "file": "game/test/overflight-upgrade-preview.test.mjs",
+      "sha256": "dad5b8c758d8bb770de449a34f69cebf6ba7cedd8259174078d119f0c08e3bbe"
+    },
+    {
+      "file": "game/test/overflight-upgrade-card.test.mjs",
+      "sha256": "c5a5af611443e09fbb34d04a406b83735cce5c1ad7075eef94b77730581ec403"
+    },
+    {
+      "file": "game/test/overflight-review-audio.test.mjs",
+      "sha256": "1602d7cb31f3de0bd981a97b6d3eb5d64fe205a71c68c527b5be442012727900"
+    }
+  ],
+  "output": "/tmp/overflight-local-ux-60b0c25ab-Id7x0B",
+  "startedAt": "2026-10-14T18:51:27.723Z",
+  "checks": [
+    {
+      "name": "verifier-policy",
+      "command": [
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=2",
+        "scripts/test-industrial-verifier.mjs",
+        "publishing/test-policy.test.mjs"
+      ],
+      "result": {
+        "exitCode": 0,
+        "signal": null,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null
+      },
+      "summary": {
+        "tests": 13,
+        "pass": 13,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 0,
+        "signal": null,
+        "passed": true
+      },
+      "log": "/tmp/overflight-local-ux-60b0c25ab-Id7x0B/verifier-policy.tap"
+    },
+    {
+      "name": "local-ux",
+      "command": [
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=2",
+        "game/test/art-review-navigation.test.mjs",
+        "game/test/art-review-host-navigation.test.mjs",
+        "game/test/classic-snake-ui.test.mjs",
+        "game/test/hunt-host.test.mjs",
+        "game/test/coop-briefing-host.test.mjs",
+        "game/test/mode-play-shell.test.mjs",
+        "game/test/phase-briefing.test.mjs",
+        "game/test/civilian-practice-ui.test.mjs",
+        "game/test/fpv-flight-ui.test.mjs",
+        "game/test/workshop-return.test.mjs",
+        "game/test/content-studio-navigation.test.mjs",
+        "game/test/couch-departure.test.mjs",
+        "game/test/title-mode-departure-host.test.mjs",
+        "game/test/mode-choice-appearance.test.mjs",
+        "game/test/enemy-appearance-controls.test.mjs",
+        "game/test/military-level-directory.test.mjs",
+        "game/test/fpv-theme-family-controls.test.mjs",
+        "game/test/download-initialization.test.mjs",
+        "game/test/offline.test.mjs",
+        "game/test/classic-environment.test.mjs",
+        "game/test/capture-attempt-appearance-host.test.mjs",
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/industrial-environment-review.test.mjs",
+        "game/test/continuous-host.test.mjs",
+        "game/test/overflight-host.test.mjs",
+        "game/test/overflight-sortie.test.mjs",
+        "game/test/overflight-controller.test.mjs",
+        "game/test/overflight-upgrade-preview.test.mjs",
+        "game/test/overflight-upgrade-card.test.mjs",
+        "game/test/overflight-review-audio.test.mjs"
+      ],
+      "result": {
+        "exitCode": 1,
+        "signal": null,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null
+      },
+      "summary": {
+        "tests": 541,
+        "pass": 540,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "exitCode": 1,
+        "signal": null,
+        "passed": false
+      },
+      "log": "/tmp/overflight-local-ux-60b0c25ab-Id7x0B/local-ux.tap"
+    }
+  ],
+  "finishedAt": "2026-10-14T18:55:39.827Z",
+  "sourceAfter": {
+    "revision": "895431b744040688da4ec6ec78a5bf617222d253",
+    "dirty": "?? docs/qualification/overflight/maps-movement-20261014/RIY-COVER-SANITY.md\n?? docs/qualification/overflight/maps-movement-20261014/native/upgrade-native-sprites-60b0.jpg\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-config.json\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-final.json.gz\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-matrix.mjs\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-output.txt\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-plan.json\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-provenance.json\n?? docs/qualification/overflight/maps-movement-20261014/riy-cover-summary.json"
+  }
+}

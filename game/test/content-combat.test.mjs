@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { validateScenario } from '../content.mjs';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import {
@@ -252,22 +254,38 @@ test('active optional actors in initially empty chambers get honest auto-fill di
   assert.equal(warning.severity, 'warning');
 });
 
-test('enabled gameplay preview cannot launch invisible hazards; static preview remains exact', () => {
-  const p = fixture();
-  assert.throws(
-    () => prepareContentPreview(p, 'nearby-shore', { theme: { id: 'horizon' } }),
-    /qualified actor\/projectile presentation/,
+test('Solo optional encounters prepare an exact no-awards practice scenario with explicit state', async () => {
+  const themes = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url)),
   );
-  assert.equal(
-    prepareContentPreview(p, 'nearby-shore').manifest.level.classic.combatPatrols.enabled,
-    true,
-  );
-  const off = fixture(false);
-  // This deliberately incomplete theme reaches ordinary theme validation, not the combat guard.
-  assert.throws(
-    () => prepareContentPreview(off, 'nearby-shore', { theme: { id: 'horizon' } }),
-    (e) => !/qualified actor\/projectile presentation/.test(e.message),
-  );
+  const theme = themes.themes.find((candidate) => candidate.id === 'horizon');
+  for (const enabled of [false, true]) {
+    const project = fixture(enabled);
+    const before = JSON.stringify(project);
+    const preview = prepareContentPreview(project, 'nearby-shore', { theme });
+    assert.equal(validateScenario(preview.scenario).valid, true);
+    assert.equal(preview.scenario.level.classic.combatPatrols.enabled, enabled);
+    assert.deepEqual(preview.scenario.level, preview.manifest.level);
+    assert.deepEqual(preview.scenario.settings, {
+      classId: 'scout',
+      turnPolicy: 'immediate',
+      seed: 1,
+    });
+    assert.match(preview.scenario.metadata.description, /No campaign awards/);
+    assert.equal(JSON.stringify(project), before);
+    assert.deepEqual(
+      authoritativeCheckpoint(createRun(preview.scenario.level, preview.scenario.settings)),
+      authoritativeCheckpoint(createRun(preview.manifest.level, preview.scenario.settings)),
+    );
+    assert.throws(
+      () => prepareContentPreview(project, 'nearby-shore', { theme, mode: 'versus' }),
+      /Only Solo/,
+    );
+    assert.throws(
+      () => prepareContentPreview(project, 'nearby-shore', { theme: { ...theme, id: 'wrong' } }),
+      /match/,
+    );
+  }
 });
 
 test('authoring silhouettes distinguish scout, sentry and retaining keeper without colour', () => {

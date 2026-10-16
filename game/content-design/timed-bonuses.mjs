@@ -43,7 +43,7 @@ export function editTimedBonus(
     );
     // Explicit schedule Apply creates this mission's new edition, not a live
     // attempt or an automatic migration of other Team missions.
-    mission.team.format = 'TeamMissionV4';
+    if (mission.team.format !== 'TeamMissionV10') mission.team.format = 'TeamMissionV4';
   }
   const schedules = mission.timedBonuses?.schedules ?? [];
   const index = schedules.findIndex((entry) => entry.id === command.id);

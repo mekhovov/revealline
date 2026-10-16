@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-02",
+  "focused": {
+    "tests": 111,
+    "passed": 111
+  },
+  "practice": {
+    "tests": 207,
+    "passed": 207
+  },
+  "world": {
+    "tests": 62,
+    "passed": 62
+  },
+  "lint": "passed",
+  "validation": "passed",
+  "generatedProjection": "byte-identical",
+  "fullSuite": {
+    "status": "stopped after repeated failures; no full-suite pass claimed",
+    "topLevelFailureLines": 114,
+    "classification": "startup-triage/README.md and final README distinguish verified baseline from untriaged wider-suite failures"
+  },
+  "packageCaps": {
+    "academy": {
+      "runtimeFiles": 62,
+      "maximumFiles": 64,
+      "uncompressedBytes": 4054847,
+      "maximumBytes": 8388608
+    },
+    "world": {
+      "runtimeFiles": 93,
+      "maximumFiles": 96,
+      "uncompressedBytes": 14497803,
+      "maximumBytes": 16777216
+    }
+  },
+  "build": {
+    "status": "passed",
+    "version": "0.142.4",
+    "files": 2748,
+    "sha256": "ae4107ff78af22fa8af1e13bc76e860a6861320290cb78c266e7a77c67cacb34",
+    "published": false
+  },
+  "packagedBrowser": {
+    "eightThemeApply": "passed",
+    "primaryAndSelectedContrast": "passed",
+    "pauseResume": "passed",
+    "studioExportToSim": "passed",
+    "pageErrors": [],
+    "narrowCombinedAccessibility": "passed; 390px, Plain + Large + high contrast + ornaments Off + reduced effects, no overflow"
+  }
+}

@@ -1,0 +1,4678 @@
+{
+  "format": "FPVWarehouseExteriorCPU.v1",
+  "createdAt": "2026-10-03T20:04:18.733Z",
+  "baseline": "e40809f25ea8fe248dea6f8443876d811d21a777",
+  "candidate": "e40809f25ea8fe248dea6f8443876d811d21a777",
+  "candidateStatus": "M authoring/fpv-worlds/assets/kenney/runtime-provenance.json\n M authoring/fpv-worlds/scenery-runtime.template.mjs\n M optional-practice/civilian-fpv/world-assets.mjs\n?? scripts/qualify-fpv-warehouse-exterior.mjs",
+  "runtimeSha256": "1191d5ce7df7ae6a80a30bcf49094baa1ad8e2ad5148aabadc915caf36f949da",
+  "librarySha256": "6153c9c7e5dbe571e91a1ba54d021a95bf618db13873e7e661f1ea593c71573e",
+  "libraryBytes": 861504,
+  "qualifierSha256": "5b27ad84ea33650bc584a8f3b36feebca7cba41d35b77772908cbfda46a6c9aa",
+  "immutable": {
+    "authoring/fpv-worlds/assets/kenney/city-industrial/License.txt": "60a8c5c31191256ec9779dc18745dea6d69c46f4b29703459ce064c1765a59ea",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/Textures/colormap.png": "950f4f891ebd05a2affac810e6eeb0fea1511bc39039b65a3cbf2e17d17bc6a2",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/building-a.glb": "0e6ef8eb1e1bdbb9d06b5496b5daf3066e00eaf74b3fcd61b74072116a1c86cf",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/building-d.glb": "72b9e9e29986df0778ffa7c56e2f92fcfadfaa0f89bf167603877db4f38a789e",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/building-h.glb": "5a6a6c6824467972ba00b5a3c3cbb19da6e96673bc4e42daf1f09cfd4d2ed0e1",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/building-l.glb": "86f03eb0b0c5882c59de79b505ffba4377a9b4591588215aa880ab6362087066",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/detail-tank.glb": "9e955732e4ef9ccff4a4d6967d29d8a7d2f9ed16c903923f2568216d9f0b50d2",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/provenance.json": "68ec564541de04d76afd571df44cd7e90557cdb351feebc97ac6be5b57b78373",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/shipping-container-a.glb": "7b2d5ca874c8e659ee6cfd1614f0470b70410b2ddc7620ac83b8954dedeb861d",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/shipping-container-b.glb": "290b3808149f8a9456ee96ff682fcf6a99f76adeac8e3b7b38234be434ea455c",
+    "authoring/fpv-worlds/assets/kenney/city-industrial/water-tower.glb": "11ac7ae19f32ce889bfe7a9c8e78c8ce8c77b7a76b52fd4ffa439a022ea2ef40",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/License.txt": "83d0de4f34000323da12cf54bc542dbc24ba48cfad101510dccddaa69483ebeb",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/concrete.png": "3431cb462e8f8c120d29c23fa06e730ae488fceeb3e8d86945724675ff2be294",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/dirt.png": "ffba913266008f95b2ab329683a30726d1d4aadaf7aec80aa98e7375aea3f255",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/doors.png": "8c5b729739cde0c9eae9f62ffe4acd194bbdba99cdd83e628bc638f0a45acf8d",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/metal.png": "3893724d52a5788341345e16319fb8f5f7182d588b5d5b2babf577176ca3d701",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/metal_wall.png": "2700c58f6063520dd447ea6addc9477898bf4e0924b2ab6eb63b4340f36526c5",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/planks.png": "1da26c7f5094b1164b22b7b8c63baf1a824ef9845ab0f6bef0ee6d59f31a6a0f",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/roof.png": "50a09bac9a57a1732af6b6e4de0192efaba3627a997e0b1dc5fc1c1c6369acd6",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/tiles.png": "6bb08a68e1bc92d9bb4ad6427e71dcd4abb71bdf10f1add5f8c47e25c7f8b313",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/treeA.png": "8445833d6aef70e984bc8beae80389f407fe7caf556d4909da965e8919e36b0a",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/treeB.png": "51f87841b583de065c6a20252289f77827b1c6d1102a5a87b9511c49c17dd7b4",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/truck_alien.png": "950f4dcefecb6cd848d3f01ddd08bdef2b4948966c80980a70db71d05e01790c",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/wall.png": "18dc996f37c4ac4510d09e6cb505c1decbd249d15108d0bfe6efdbd489425690",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/wall_garage.png": "ffb88c17f3497e8d3991cef4ac081743fafe91236cfd96d84ca0ccc2980dce56",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/wall_lines.png": "322d198d1ff4ce006c7029eee416ba96a981ba080756f829110ac8c34faa00f2",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/windows.png": "9a99b16d1caa9b08dfd72eb74ac624b546df89ed6fcfefabe2e4a0933f632a42",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/detail-bench.glb": "ccf6f0a95b04db1720c9a7040404ca0d676a0f850815aee90de5edc33b96c47c",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/detail-dumpster-closed.glb": "c2b54e446c95fa413929793f3d89cb0176077fa29e4a449dc03cada558bd07d9",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/detail-light-double.glb": "7ffb129be2565400449b32e349b3aeb33a4a2617d230320c4a03088f61507f63",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/pallet.glb": "1844660dfffda177d42efc35db47c22e7476f991737f4c35f6b5fbaf0d2ccf8b",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/provenance.json": "47bb3d4ded52a9711891f15911cd548b29bd897d9d32d64338c14284ad495064",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/tree-park-large.glb": "ef15a84309719f770da2efc0de42052882274e132ccc2ed72c254d7fe51678cd",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/tree-park-pine-large.glb": "7f8854543965e906e655c20140fbb2e79be9093157896af63821bbbc69092c9d",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/tree-shrub.glb": "b75bd1b2cddbae7d6b517a6ecd34c2beaddf9a19d4a0b4fc48a9bc61cf58b4fa",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/truck-green-cargo.glb": "0352d5a34094b766a6d5d0d5805aa0c967a4da71f976f2a12c900e748890c289",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/truck-green.glb": "a322288e2dbdc56b126751951451cf5d3014f5b04232fa66e84b74d1a941f9f4",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-corner.glb": "d65f9899e415af46f1340220e3d83e8af217eecbb2dfef3012f69ba1f97a0e3a",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-door.glb": "554f1c0cedac9b31b73ee8c623395059a4bca05290ecf8f6a8920363d6f487bf",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-flat-window.glb": "bb171dffa5015747641e3131bf171dbf429042ee3b47408c409a7e4acc17cf66",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-garage.glb": "1388f38936e576e73c2df01f12d5afdaf78f22bf9af01132d77d38f8c0949d1c",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-roof.glb": "74b8263e1a28ecfca6b59e84709dd9dae1df9c9aa9b81ec0d3f83906c934545c",
+    "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-window.glb": "4a5ecc11c1c8820f555375ccabb426c6420ebd2bc9c7bcb5f2c472f655c3b03b",
+    "optional-practice/civilian-fpv/README.md": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+    "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
+    "optional-practice/civilian-fpv/app.webmanifest": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0",
+    "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "optional-practice/civilian-fpv/copy.mjs": "075ee9dbcf7de69e7f5c9a22e80a42de7cc49b4b2f2d06e9245c2034914b3e89",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/flight-fullscreen.css": "b9568785f441fbb52f78b6be3399688aa619183d89f38838f9de58f89d894de2",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "f60358ea99f70f1afe9ff16ce0323ad1b5d9a92e742ecf1544b241faa6e59efc",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/guide.html": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2",
+    "optional-practice/civilian-fpv/index.html": "db74aa6e180ce5d8ffa1caaf5e9f817878f9da05813ea9e20127b6ebf9e87772",
+    "optional-practice/civilian-fpv/input.mjs": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+    "optional-practice/civilian-fpv/package-info.json": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/preview.png": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "optional-practice/civilian-fpv/renderer.mjs": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/studio.mjs": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485",
+    "optional-practice/civilian-fpv/style.css": "fdf8a71b22970d3ec2c608d36dd58a213f14596f0c5cfa4690e2019d73b77e3c",
+    "optional-practice/civilian-fpv/vendor/LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/provenance.json": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/rapier/LICENSE": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+    "optional-practice/civilian-fpv/vendor/rapier/provenance.json": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/world-actor-editor.mjs": "9ca630e6c850d85fd69959ee940195ddaa77daf9da2e31b397e1a6edc1e54350",
+    "optional-practice/civilian-fpv/world-app.mjs": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+    "optional-practice/civilian-fpv/world-audio.mjs": "104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-editor.mjs": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+    "optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
+    "optional-practice/civilian-fpv/world-hunt-reactions.mjs": "07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-store.mjs": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+    "optional-practice/civilian-fpv/world-style.css": "fb8ebd479ba6c78bdba0206173295fb5d01f5a5cc8de1c14695c0cf4c15fed78",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "optional-practice/civilian-fpv/world-visuals.mjs": "640107863d738020223ed42c8654c533e40cea31b34355543c2b1809e417ea9b",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+  },
+  "checks": [
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/License.txt retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/Textures/colormap.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/building-a.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/building-d.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/building-h.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/building-l.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/detail-tank.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/provenance.json retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/shipping-container-a.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/shipping-container-b.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/city-industrial/water-tower.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/License.txt retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/concrete.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/dirt.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/doors.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/metal.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/metal_wall.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/planks.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/roof.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/tiles.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/treeA.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/treeB.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/truck_alien.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/wall.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/wall_garage.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/wall_lines.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/Textures/windows.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/detail-bench.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/detail-dumpster-closed.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/detail-light-double.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/pallet.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/provenance.json retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/tree-park-large.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/tree-park-pine-large.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/tree-shrub.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/truck-green-cargo.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/truck-green.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-corner.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-door.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-flat-window.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-garage.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-roof.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/retro-urban/wall-a-window.glb retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/README.md retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.webmanifest retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/attempts.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/beginner-coach.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/catalogue.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/content-definitions.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/copy.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/demonstrations.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.css retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-sectors.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/guide.html retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/index.html retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/input.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/math.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/notebook.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/offline.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/package-info.json retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/playlists.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/preview.png retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-controls.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-guide.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-profile.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-runtime.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-session.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-setup.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/rotation-table.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/sim-presentation.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/studio.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/style.css retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/LICENSE.txt retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/provenance.json retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/LICENSE retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/provenance.json retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.core.js retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.module.js retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-actor-editor.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-audio.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-content.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-editor.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hangar.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hunt-reactions.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-progress.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-reaction-runtime.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-records.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-store.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-style.css retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-visuals.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-zip.mjs retains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "embedded original GLB library is byte-identical",
+      "passed": true
+    },
+    {
+      "name": "generated provenance binds the current runtime and unchanged library",
+      "passed": true
+    },
+    {
+      "name": "29 Warehouse courses across four arena bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-01: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-weave-02: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-02: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-weave-03: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-03: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-weave-04: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-04: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-weave-05: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-05: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-weave-06: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-weave-06: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-two-return-lanes: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-corner-approach: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-interception-staggered-interception: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-warehouse-return: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-boundary-cutback: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-low-pass-depot: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-split-yard-return: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-shelter-arc: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-ground-routes-freight-slalom: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-low-roof-window: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-roofline-exchange: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-staggered-roofs: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-window-chain: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-01: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-02: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-03: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-04: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-05: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-06: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-07: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "warehouse-08: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "beginner-36: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "beginner-36: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "beginner-36: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "beginner-36/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-36/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-36/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-36/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-36: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "beginner-38: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "beginner-38: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "beginner-38: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "beginner-38/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-38/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-38/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-38/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "beginner-38: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "all five other supported scenery environments are represented",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-cross-route-choice: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-route-choices-airfield-circuit: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-chase-06: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "snake-hunt-approach-windows-three-yard-finale: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "woodland-08: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "courtyard-08: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "stadium-08: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "container-yard-08: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "garage-08: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-40: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-42: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-39: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-37: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-41: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-57: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "beginner-52: unaffected environment GLB remains byte-identical",
+      "passed": true
+    },
+    {
+      "name": "creator 48x48m at translated origin: small-layout fallback retains the exact prior GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 63.999x88m at translated origin: small-layout fallback retains the exact prior GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 88x63.999m at translated origin: small-layout fallback retains the exact prior GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 24x100m at translated origin: small-layout fallback retains the exact prior GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 100x24m at translated origin: small-layout fallback retains the exact prior GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x64m at translated origin: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "creator 64x88m at translated origin: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 64x88m at translated origin: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "creator 88x64m at translated origin: only six building and 32 window translations change in the actual GLB",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin: exact 57 placements, six batches, 42 instances and 15 individually sorted meshes",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin: all placed model envelopes remain strictly outside flight bounds",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin/side0: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin/side1: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin/side2: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin/side3: two four-bay runs at 6.04 m pitch with clear ends and centre",
+      "passed": true
+    },
+    {
+      "name": "creator 88x64m at translated origin: regrouped windows/buildings overlap no other model envelope",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "unsupported scenery request remains absent: undefined",
+      "passed": true
+    },
+    {
+      "name": "unsupported scenery request remains absent: null",
+      "passed": true
+    },
+    {
+      "name": "unsupported scenery request remains absent: {}",
+      "passed": true
+    },
+    {
+      "name": "unsupported scenery request remains absent: \"unknown\"",
+      "passed": true
+    },
+    {
+      "name": "unsupported scenery request remains absent: {\"environment\":\"unknown\"}",
+      "passed": true
+    },
+    {
+      "name": "unsupported scenery request remains absent: {\"environment\":\"gym\"}",
+      "passed": true
+    },
+    {
+      "name": "18 installed Warehouse World recordings and no legacy recordings",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-01/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-02/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-03/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-04/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-05/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-06/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-07/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08/self-level: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "warehouse-08/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "beginner-36/acro: exact completed World replay",
+      "passed": true
+    },
+    {
+      "name": "beginner-38/acro: exact completed World replay",
+      "passed": true
+    }
+  ],
+  "scenes": [
+    {
+      "course": "snake-hunt-weave-01",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-weave-02",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-weave-03",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-weave-04",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-weave-05",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-weave-06",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-interception-two-return-lanes",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-interception-corner-approach",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-interception-staggered-interception",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-route-choices-warehouse-return",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-route-choices-boundary-cutback",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      },
+      "beforeSha256": "04f01bbc809019ec4772a10fd3c4cadd47b3dbf0a920df9b10beacfac9d7f548",
+      "afterSha256": "45f54d062bb866c3e8422346ee84fa06a80d5ca44ebc17b7e802c19725b122fa",
+      "bytes": 877380,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.039999999999995595,
+            5.799999999999994,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.939999999999998,
+            9.019999999999996
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.03999999999999915,
+            6.479999999999997,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.34,
+            4.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            6.48,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            7.659999999999997,
+            5.619999999999997
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            7.159999999999993,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            4.259999999999998,
+            8.339999999999996
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-ground-routes-low-pass-depot",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-ground-routes-split-yard-return",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-ground-routes-shelter-arc",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-ground-routes-freight-slalom",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-approach-windows-low-roof-window",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-approach-windows-roofline-exchange",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-approach-windows-staggered-roofs",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "snake-hunt-approach-windows-window-chain",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      },
+      "beforeSha256": "c33904f1ff213dd44f89d181e371629d07093feb3f214a3c4a4c39319502aa35",
+      "afterSha256": "74a51534b67e1f59f7dcfe6282f7edc887f902e0a332d2dc3814e34830df397b",
+      "bytes": 877336,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            9.180000000000003,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            10.139999999999997,
+            6.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.03999999999999915,
+            9.920000000000002,
+            0.03999999999999204,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            5.699999999999999,
+            10.140000000000008
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-01",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-02",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-03",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-04",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-05",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-06",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-07",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "warehouse-08",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      },
+      "beforeSha256": "1162d45c73334db7d632d61371a11340b25a3a2b2f2f4f244848991ec414ac60",
+      "afterSha256": "6a9a64ba4b6ed52759bfa1b49abfb452b947348492364557a5b469ca8920f001",
+      "bytes": 877324,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.0400000000000027,
+            0.03999999999999915,
+            9.319999999999993,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999204
+          ],
+          "endClearance": [
+            6.939999999999998,
+            11.500000000000007
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            7.3799999999999955,
+            0.03999999999999915,
+            0.04000000000000625,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            8.939999999999998,
+            5.439999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.03999999999999915,
+            0.0400000000000027,
+            0.0400000000000027,
+            10.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            9.979999999999997,
+            7.700000000000003
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.04000000000000625,
+            0.03999999999999915,
+            0.03999999999999915,
+            8.079999999999998,
+            0.03999999999999915,
+            0.03999999999999915,
+            0.03999999999999915
+          ],
+          "endClearance": [
+            4.739999999999995,
+            8.940000000000005
+          ]
+        }
+      ]
+    },
+    {
+      "course": "beginner-36",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "beforeSha256": "3de7866a979164f467f72683da2fc672914ec07673e38260e1b8ab3805d4b149",
+      "afterSha256": "c3ef859a01370bbffeb0f4495a192f4422c8903afab9fb2b73fb05e46a976870",
+      "bytes": 877164,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            14.599999999999987,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            9.939999999999998,
+            15.219999999999999
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            15.479999999999997,
+            0.04000000000000625,
+            0.03999999999999204,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            14.339999999999996,
+            9.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.039999999999995595,
+            0.0400000000000027,
+            15.479999999999997,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            13.459999999999997,
+            10.819999999999993
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.03999999999999915,
+            0.039999999999995595,
+            0.0400000000000027,
+            16.359999999999992,
+            0.04000000000000625,
+            0.03999999999999204,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            9.060000000000002,
+            14.340000000000003
+          ]
+        }
+      ]
+    },
+    {
+      "course": "beginner-38",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      },
+      "beforeSha256": "3de7866a979164f467f72683da2fc672914ec07673e38260e1b8ab3805d4b149",
+      "afterSha256": "c3ef859a01370bbffeb0f4495a192f4422c8903afab9fb2b73fb05e46a976870",
+      "bytes": 877164,
+      "runs": [
+        {
+          "side": 0,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            14.599999999999987,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            9.939999999999998,
+            15.219999999999999
+          ]
+        },
+        {
+          "side": 1,
+          "gaps": [
+            0.0400000000000027,
+            0.03999999999999915,
+            0.0400000000000027,
+            15.479999999999997,
+            0.04000000000000625,
+            0.03999999999999204,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            14.339999999999996,
+            9.939999999999998
+          ]
+        },
+        {
+          "side": 2,
+          "gaps": [
+            0.0400000000000027,
+            0.039999999999995595,
+            0.0400000000000027,
+            15.479999999999997,
+            0.04000000000000625,
+            0.03999999999999915,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            13.459999999999997,
+            10.819999999999993
+          ]
+        },
+        {
+          "side": 3,
+          "gaps": [
+            0.03999999999999915,
+            0.039999999999995595,
+            0.0400000000000027,
+            16.359999999999992,
+            0.04000000000000625,
+            0.03999999999999204,
+            0.04000000000000625
+          ],
+          "endClearance": [
+            9.060000000000002,
+            14.340000000000003
+          ]
+        }
+      ]
+    }
+  ],
+  "unaffectedCases": [
+    {
+      "course": "snake-hunt-route-choices-cross-route-choice",
+      "environment": "stadium",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "course": "snake-hunt-route-choices-airfield-circuit",
+      "environment": "garage",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "course": "snake-hunt-chase-06",
+      "environment": "container-yard",
+      "bounds": {
+        "min": {
+          "x": -34000,
+          "y": 0,
+          "z": -34000
+        },
+        "max": {
+          "x": 34000,
+          "y": 18000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "course": "snake-hunt-approach-windows-three-yard-finale",
+      "environment": "stadium",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -36000
+        },
+        "max": {
+          "x": 38000,
+          "y": 20000,
+          "z": 38000
+        }
+      }
+    },
+    {
+      "course": "woodland-08",
+      "environment": "woodland",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "course": "courtyard-08",
+      "environment": "courtyard",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "course": "stadium-08",
+      "environment": "stadium",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "course": "container-yard-08",
+      "environment": "container-yard",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "course": "garage-08",
+      "environment": "garage",
+      "bounds": {
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        },
+        "max": {
+          "x": 38000,
+          "y": 18000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "course": "beginner-40",
+      "environment": "woodland",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      }
+    },
+    {
+      "course": "beginner-42",
+      "environment": "stadium",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      }
+    },
+    {
+      "course": "beginner-39",
+      "environment": "courtyard",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      }
+    },
+    {
+      "course": "beginner-37",
+      "environment": "container-yard",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      }
+    },
+    {
+      "course": "beginner-41",
+      "environment": "garage",
+      "bounds": {
+        "min": {
+          "x": -44000,
+          "y": 0,
+          "z": -44000
+        },
+        "max": {
+          "x": 44000,
+          "y": 20000,
+          "z": 44000
+        }
+      }
+    },
+    {
+      "course": "beginner-57",
+      "environment": "stadium",
+      "bounds": {
+        "min": {
+          "x": -75000,
+          "y": 0,
+          "z": -75000
+        },
+        "max": {
+          "x": 75000,
+          "y": 100000,
+          "z": 75000
+        }
+      }
+    },
+    {
+      "course": "beginner-52",
+      "environment": "courtyard",
+      "bounds": {
+        "min": {
+          "x": -75000,
+          "y": 0,
+          "z": -75000
+        },
+        "max": {
+          "x": 75000,
+          "y": 100000,
+          "z": 75000
+        }
+      }
+    }
+  ],
+  "creatorCases": [
+    {
+      "width": 48,
+      "depth": 48,
+      "beforeSha256": "112b80497a4450a556228f77296d27be50c147e3039ed88a2a9e1821091d4ed1",
+      "afterSha256": "112b80497a4450a556228f77296d27be50c147e3039ed88a2a9e1821091d4ed1"
+    },
+    {
+      "width": 63.999,
+      "depth": 88,
+      "beforeSha256": "87d5accc19dfd5756a0d06fff387db3e25359c4e4c657455404de25605cbe1ef",
+      "afterSha256": "87d5accc19dfd5756a0d06fff387db3e25359c4e4c657455404de25605cbe1ef"
+    },
+    {
+      "width": 88,
+      "depth": 63.999,
+      "beforeSha256": "2f4588fb8ccc860fe1b41db31993d56699114f1969594f87d333d466bf99bb35",
+      "afterSha256": "2f4588fb8ccc860fe1b41db31993d56699114f1969594f87d333d466bf99bb35"
+    },
+    {
+      "width": 24,
+      "depth": 100,
+      "beforeSha256": "5ec46d0dae5e2a6eb703a633185ebf3a11696e7d1bb8b6f206185a556ae30a46",
+      "afterSha256": "5ec46d0dae5e2a6eb703a633185ebf3a11696e7d1bb8b6f206185a556ae30a46"
+    },
+    {
+      "width": 100,
+      "depth": 24,
+      "beforeSha256": "af524ee5e1161fa4529dc68fa9a2592f6afd4934fc863b965e32b528e2cdfca1",
+      "afterSha256": "af524ee5e1161fa4529dc68fa9a2592f6afd4934fc863b965e32b528e2cdfca1"
+    },
+    {
+      "width": 64,
+      "depth": 64,
+      "beforeSha256": "ebe704d7bdddad3054097dd2923b3941e9ac368e179e3492e93b6fbaede32d6b",
+      "afterSha256": "a0d158c5074a2d4693626f295ff1e14762a127c03910bb4551b06b5ca018046f"
+    },
+    {
+      "width": 64,
+      "depth": 88,
+      "beforeSha256": "9cc1652c12853465516b6e0fc615b1bf6cc23f2ce9832bcccf1e97c75c49efc7",
+      "afterSha256": "4d6b5af93db5f50c714fba7013f8395f3a84b9120ebccd0a9368fefbc5d9e792"
+    },
+    {
+      "width": 88,
+      "depth": 64,
+      "beforeSha256": "d810c5bf330daf65188b1029f2c5e8c593a9dbd533cba75a0d3b59f491c1de5c",
+      "afterSha256": "e70f3801e723a0e49f164ad5a6dbe8c36ab1f26a003e71dcf48cbf818a27aef6"
+    }
+  ],
+  "recordings": [
+    {
+      "course": "warehouse-01",
+      "mode": "self-level",
+      "ticks": 1210,
+      "identity": "41db103acc80925b"
+    },
+    {
+      "course": "warehouse-01",
+      "mode": "acro",
+      "ticks": 1210,
+      "identity": "15d951253dc8d4d9"
+    },
+    {
+      "course": "warehouse-02",
+      "mode": "self-level",
+      "ticks": 2405,
+      "identity": "d518873da8cc66b5"
+    },
+    {
+      "course": "warehouse-02",
+      "mode": "acro",
+      "ticks": 2421,
+      "identity": "85c8bac3a2033e45"
+    },
+    {
+      "course": "warehouse-03",
+      "mode": "self-level",
+      "ticks": 2786,
+      "identity": "66b0ecfef252cf72"
+    },
+    {
+      "course": "warehouse-03",
+      "mode": "acro",
+      "ticks": 2794,
+      "identity": "bde7bda4e031151a"
+    },
+    {
+      "course": "warehouse-04",
+      "mode": "self-level",
+      "ticks": 2538,
+      "identity": "a19ec1aba40becbd"
+    },
+    {
+      "course": "warehouse-04",
+      "mode": "acro",
+      "ticks": 2546,
+      "identity": "a0777336d75a5f36"
+    },
+    {
+      "course": "warehouse-05",
+      "mode": "self-level",
+      "ticks": 2823,
+      "identity": "36ef3ac03410ced6"
+    },
+    {
+      "course": "warehouse-05",
+      "mode": "acro",
+      "ticks": 2832,
+      "identity": "eaa43473fd3d1b38"
+    },
+    {
+      "course": "warehouse-06",
+      "mode": "self-level",
+      "ticks": 2984,
+      "identity": "ed2326d7dcf10c27"
+    },
+    {
+      "course": "warehouse-06",
+      "mode": "acro",
+      "ticks": 2994,
+      "identity": "e66baef405ba7adc"
+    },
+    {
+      "course": "warehouse-07",
+      "mode": "self-level",
+      "ticks": 2602,
+      "identity": "742f22d7565f1526"
+    },
+    {
+      "course": "warehouse-07",
+      "mode": "acro",
+      "ticks": 2608,
+      "identity": "876eadd302310117"
+    },
+    {
+      "course": "warehouse-08",
+      "mode": "self-level",
+      "ticks": 2918,
+      "identity": "2e379faf2409bef2"
+    },
+    {
+      "course": "warehouse-08",
+      "mode": "acro",
+      "ticks": 2932,
+      "identity": "2f8f89557acbeb08"
+    },
+    {
+      "course": "beginner-36",
+      "mode": "acro",
+      "ticks": 1796,
+      "identity": "ad7aa5de2e99f9fe"
+    },
+    {
+      "course": "beginner-38",
+      "mode": "acro",
+      "ticks": 1769,
+      "identity": "cabf135da49422b0"
+    }
+  ],
+  "limitation": "CPU functional evidence only; no WebGL, image acceptance or hardware-performance claim. Other recordings retain byte-identical source inputs but are not claimed as freshly replayed."
+}

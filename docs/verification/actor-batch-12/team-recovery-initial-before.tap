@@ -1,0 +1,520 @@
+TAP version 13
+# (node:97814) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/tmp/team-recovery-baseline-loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: first-connection gentle {}: same-tick team recovery is not flight toward the spawn
+not ok 1 - first-connection gentle {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 11.414375
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:46:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: first-connection gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+not ok 2 - first-connection gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 4.138333
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+not ok 3 - first-connection gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 5.694542
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection standard {}: same-tick team recovery is not flight toward the spawn
+not ok 4 - first-connection standard {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.186875
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:46:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+not ok 5 - first-connection standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.552834
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+not ok 6 - first-connection standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.907583
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection expert {}: same-tick team recovery is not flight toward the spawn
+not ok 7 - first-connection expert {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.470958
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:46:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+not ok 8 - first-connection expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.950459
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: first-connection expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+not ok 9 - first-connection expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.012417
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard gentle {}: same-tick team recovery is not flight toward the spawn
+not ok 10 - relay-yard gentle {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 4.100667
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:46:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+not ok 11 - relay-yard gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.318916
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+not ok 12 - relay-yard gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.7905
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard standard {}: same-tick team recovery is not flight toward the spawn
+not ok 13 - relay-yard standard {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.548375
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:46:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+not ok 14 - relay-yard standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.249667
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+not ok 15 - relay-yard standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.69525
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard expert {}: same-tick team recovery is not flight toward the spawn
+not ok 16 - relay-yard expert {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.193208
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:46:11)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+not ok 17 - relay-yard expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.001041
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: relay-yard expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+not ok 18 - relay-yard expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 2.43375
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:39:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 191.99999999999997
+    - 0
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 191.99999999999997
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:50:18)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: recovery is observed after skipped rendering even when its core events have retired
+not ok 19 - recovery is observed after skipped rendering even when its core events have retired
+  ---
+  duration_ms: 4.678459
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:67:1'
+  failureType: 'testCodeFailure'
+  error: '0.9707963267948965 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:87:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: pause and held neutral retain the recovered nose; real safe-ground motion resumes it
+not ok 20 - pause and held neutral retain the recovered nose; real safe-ground motion resumes it
+  ---
+  duration_ms: 5.250875
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:94:1'
+  failureType: 'testCodeFailure'
+  error: '0.9707963267948966 != 1.0707963267948966'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:112:5)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual prepared image keeps the last heading and opacity through real recovery
+not ok 21 - actual prepared image keeps the last heading and opacity through real recovery
+  ---
+  duration_ms: 60.807584
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:131:1'
+  failureType: 'testCodeFailure'
+  error: '1.0707963267948966 != 1.1707963267948964'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:15:31)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/coop-recovery-pose.test.mjs:172:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 0
+# fail 21
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 447.376625

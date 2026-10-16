@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import {readFile, writeFile, stat} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+const actor='/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test';
+const publisher='/Users/oleksandr.mekhovov/.codex/worktrees/publish-v01321/go_test';
+const {validateArtworkCollection,verifyArtworkCollection,exportArtworkCollection,importArtworkCollection}=await import(pathToFileURL(`${actor}/authoring/asset-studio/artwork-collection.mjs`));
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const metadataPath='authoring/library/community-art-cohort-v2/board-candidates-v1/collection.json';
+const priorPath='authoring/library/community-art-cohort-v2/collection.json';
+const inputs=[];
+async function source(path){const bytes=await readFile(`${actor}/${path}`);inputs.push({path,bytes:bytes.length,sha256:sha(bytes)});return bytes;}
+const document=validateArtworkCollection((await source(metadataPath)).toString());
+const prior=validateArtworkCollection((await source(priorPath)).toString());
+assert.equal(document.revision,7);assert.equal(document.artworks.length,9);assert.equal(prior.revision,6);
+assert.deepEqual(document.artworks.slice(0,8),prior.artworks);
+assert.deepEqual({...document,revision:6,artworks:prior.artworks},prior);
+const dirs=['authoring/library/community-art-cohort-v1','authoring/library/community-art-cohort-v1/board-candidates-v1','authoring/library/community-art-cohort-v2','authoring/library/community-art-cohort-v2/board-candidates-v1'];
+const assets=new Map();
+for(const {file} of document.artworks){const matches=[];for(const dir of dirs){try{const s=await stat(`${actor}/${dir}/${file.name}`);if(s.isFile())matches.push(`${dir}/${file.name}`);}catch(error){if(error.code!=='ENOENT')throw error;}}assert.equal(matches.length,1,file.name);assets.set(file.name,new Blob([await source(matches[0])],{type:file.mime}));}
+let decodes=0;
+const decodeImage=async blob=>{decodes++;const bytes=Buffer.from(await blob.arrayBuffer());assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a');return {naturalWidth:bytes.readUInt32BE(16),naturalHeight:bytes.readUInt32BE(20)};};
+const verified=await verifyArtworkCollection(document,assets,{decodeImage});
+assert.equal(decodes,9);
+assert.equal(document.artworks.reduce((n,a)=>n+a.file.bytes,0),17884748);
+const expectedParents={'workshop-original-wide-r2':'workshop-original','poltava-original-wide-r3':'poltava-original','synevyr-original-wide-r4':'synevyr-original','workshop-original-classic-r5':'workshop-original','poltava-revised-r6':'poltava-original','poltava-revised-r6-wide-r7':'poltava-revised-r6'};
+for(const [id,parent] of Object.entries(expectedParents))assert.equal(document.artworks.find(a=>a.id===id).provenance.derivative.parent,parent);
+const packet=await exportArtworkCollection(verified.document,verified.assets,{decodeImage});
+const encoded=Buffer.from(await packet.arrayBuffer());
+const nativePath='/Users/oleksandr.mekhovov/Downloads/ukrainian-pixel-scenes-r7.rlart';
+const native=await readFile(nativePath);assert.deepEqual(encoded,native);assert.equal(sha(native),'942580e3d25345f24ee83509d719a3f4033c77d878aabe82b28a127f4aec4967');
+const imported=await importArtworkCollection(new Blob([native]),{decodeImage});assert.deepEqual(imported.document,document);
+for(const {file} of document.artworks)assert.deepEqual(Buffer.from(await imported.assets.get(file.name).arrayBuffer()),Buffer.from(await assets.get(file.name).arrayBuffer()));
+const before=decodes,corrupt=structuredClone(document);corrupt.artworks[0].file.sha256='0'.repeat(64);
+await assert.rejects(verifyArtworkCollection(corrupt,assets,{decodeImage}),/SHA-256/);assert.equal(decodes,before);
+await assert.rejects(importArtworkCollection(new Blob([native.subarray(0,-1)]),{decodeImage}),/Truncated/);assert.equal(decodes,before);
+await assert.rejects(importArtworkCollection(new Blob([native,new Uint8Array([1])]),{decodeImage}),/trailing/);assert.equal(decodes,before);
+const orphan=structuredClone(document);orphan.artworks.at(-1).provenance.derivative.parent='missing';assert.throws(()=>validateArtworkCollection(orphan),/parent must be retained/);
+const reviewed=[];for(const name of ['artwork-panel.mjs','artwork-collection.mjs','artwork-comparison.mjs','artwork-derivative.mjs','download.mjs','operation.mjs','picture-context.mjs','preview.mjs','scene-preview.mjs','studio.mjs']){const path=`authoring/asset-studio/${name}`,a=await readFile(`${actor}/${path}`),b=await readFile(`${publisher}/${path}`);reviewed.push({path,actorSha256:sha(a),publisherSha256:sha(b),identical:a.equals(b)});}
+const result={actorHead:'049bd1f7da058209119230aa4f60e5be0ce6884c',publisherHead:'81df80dda259ba8e1cef5378af1cec91260eb51e',result:'No new source defect demonstrated; no repository edits',inputs,nativePacket:{path:nativePath,bytes:native.length,sha256:sha(native)},checks:{allNineBytesHeadersDimensionsMatch:true,allEightPredecessorDeclarationsUnchanged:true,allOtherCollectionDeclarationsUnchanged:true,sixExactParentRelationships:true,exportMatchesNativeDownload:true,importPreservesAllNinePayloads:true,badHashTruncationAndTrailingBytesRejectedBeforeDecode:true,unknownParentRejected:true},reviewed,limits:['PNG dimension adapter reads IHDR; no new native browser decoding or visual review.','No production or art admission.','No build or broad test run.','Publisher studio.mjs differs: separate reward export and invalid metadata focus recovery; not ported or duplicated.']};
+await writeFile('/tmp/cohort-r7-preservation-audit.json',JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({result:result.result,artworks:document.artworks.length,payloadBytes:17884748,nativePacket:result.nativePacket,checks:result.checks,receipt:'/tmp/cohort-r7-preservation-audit.json'},null,2));

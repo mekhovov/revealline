@@ -1,0 +1,141 @@
+{
+  "format": "revealline-production101-checkpoint-evidence.v1",
+  "publicEligible": false,
+  "source": {
+    "head": "2baaad3e111d04f1bcc47d7d0423e5f7299441d5",
+    "tree": "56e6e67fcfe566049f91e820defd75bba747d361",
+    "workingTreeModified": true,
+    "workingInputPins": [
+      {
+        "path": "scripts/produce-field-kit-theme.mjs",
+        "bytes": 57443,
+        "sha256": "722301310f9602891ce4fd0b985095eeb8e758b64bca9ae0f5fd08d5204e86f8"
+      },
+      {
+        "path": "scripts/test-field-kit-recipe-sources.mjs",
+        "bytes": 22788,
+        "sha256": "23a57e8059559be2c1ad849e1c351d2baf2dc646ac8290687d566732062287f4"
+      },
+      {
+        "path": "game/test/presentation-production-history.test.mjs",
+        "bytes": 70155,
+        "sha256": "dad90c0940d65ce453a1373138753b081c204b9c6b2423bc610d7c935f19b637"
+      },
+      {
+        "path": "game/test/fixtures/production-v01423-6a67-fpv100.json",
+        "bytes": 1659,
+        "sha256": "cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7"
+      },
+      {
+        "path": "docs/verification/discovery-audio-continuation-2026-09-29/review.json",
+        "bytes": 28249,
+        "sha256": "edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 8324280,
+      "sha256": "faf48769df378b53888fc7598e86f70477b3fe2d0ee10fb7d14aab1c171f5731"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 29119,
+      "sha256": "7afa14491ba0db5297ccf4ecbcac0fc0bf96e588b2e9471cf70a04c96bc33f27"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 1178803,
+      "sha256": "ca5f264f6a62c10a4e51c6a0296866edbb340f6db75118d8aa11f92a8c9a9f93"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 4314927,
+      "sha256": "fbd4fca4a1bc9e4416760e0b835796990a9a91e214b33b0a10621e203fe6cb6c"
+    }
+  ],
+  "actualCheckpoint": {
+    "revision": 101,
+    "assets": 2638,
+    "themes": 102,
+    "immutablePreviousRevision": 100,
+    "immutablePreviousAssets": 2606,
+    "addedReviewedAudio": 8,
+    "audioRevision": 53,
+    "addedSourceUI": 24,
+    "uiRevision": 23,
+    "originalPayloadCount": 132,
+    "originalPayloadBytes": 4009342
+  },
+  "tests": {
+    "initialFullTwoSuites": {
+      "tests": 36,
+      "pass": 34,
+      "fail": 2,
+      "cancelled": 0,
+      "durationMs": 153065.226167,
+      "failures": [
+        {
+          "test": "shared-host UI and managed-media audio bind only reviewed current inputs",
+          "cause": "game/presentation/host.mjs expected29880bytes from v0.141.8 UI review; actual29899 after branch WebP original import extension. Current UI review gate remains open."
+        },
+        {
+          "test": "discovery continuation preserves exact production100 and appends only eight audio53 successors",
+          "cause": "Initial audio-only expectation2614records differs from correctly source-demoted2638record checkpoint; replaced by strict actual mixed source/reviewed transition test."
+        }
+      ]
+    },
+    "correctedCheckpointTest": {
+      "selectedPass": 1,
+      "filtered": 19,
+      "fail": 0,
+      "durationMs": 3328.687459
+    },
+    "recipeSourceSuite": {
+      "tests": 16,
+      "pass": 16,
+      "fail": 0
+    },
+    "reproductionCheck": {
+      "passed": true,
+      "revision": 101,
+      "files": 140,
+      "assetBytes": 4009342
+    },
+    "lintFormatDiffCheck": "passed"
+  },
+  "logs": [
+    {
+      "bytes": 9678,
+      "sha256": "a3bc9093dff8408041c3e8010d42b0d1b8048e1677208274d39880dae2e2bc4f",
+      "name": "discovery-production101-focused-tests.log",
+      "rawKeptLocal": true
+    },
+    {
+      "bytes": 247,
+      "sha256": "8aaf91cbae123b2696c23388cc4e38ab34f4ec471a6acf0f7b540b5c1b242c42",
+      "name": "discovery-production101-reproduction-check.log",
+      "rawKeptLocal": true
+    },
+    {
+      "bytes": 5448,
+      "sha256": "ffb853cb5c7b31ffec65e1601cee84d717ef8bbe5645270eab30f11a39018b1d",
+      "name": "discovery-production101-checkpoint-test.log",
+      "rawKeptLocal": true
+    },
+    {
+      "bytes": 3538,
+      "sha256": "19acd1b969c15c57c9ab065234bbb3ed64aa9a24f910eb9534321038f1c3eb63",
+      "name": "discovery-audio-recipe-source-tests-final.log",
+      "rawKeptLocal": true
+    }
+  ],
+  "scope": "Local software continuation and immutable-history validation only. The current UI review gate remains unsatisfied; no full green history suite, human/listening/device approval, frozen build or public release qualification.",
+  "reviewExpectation": {
+    "path": "docs/verification/discovery-audio-continuation-2026-09-29/review.json",
+    "sha256": "edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea",
+    "audioOnlyExpectationMet": false,
+    "actualOutcome": "The scoped eight-audio continuation passed; the producer also correctly reopened24 UI recipes because the pre-existing WebP host extension differs from the previous UI approval. Production101 is an immutable source-stage checkpoint; a separate UI review and append-only successor follow."
+  }
+}

@@ -355,6 +355,7 @@ export async function prepareCreatorMediaIntake(
   {
     signal,
     inspectVideo = openVideoPosterSource,
+    prepareVideo,
     prepareImage = prepareCreatorImage,
     pairingFor,
     posterTimeFor = ({ video }) => video.durationSeconds * 0.5,
@@ -362,6 +363,7 @@ export async function prepareCreatorMediaIntake(
       startSeconds: 0,
       endSeconds: video.durationSeconds,
     }),
+    preserveOrder = false,
   } = {},
 ) {
   creatorAbort(signal);
@@ -371,6 +373,13 @@ export async function prepareCreatorMediaIntake(
     creatorAbort(signal);
     if (row.error) continue;
     try {
+      if (row.kind === 'video' && prepareVideo) {
+        // Editing choices follow selected bytes; conversion may rewrite MP4 metadata.
+        row.sourceSha256 = await creatorSHA256(await row.blob.arrayBuffer());
+        creatorAbort(signal);
+        row.blob = await prepareVideo(row.blob, { signal });
+        row.bytes = row.blob.size;
+      }
       const bytes = await row.blob.arrayBuffer();
       creatorAbort(signal);
       row.sha256 = await creatorSHA256(bytes);
@@ -414,6 +423,19 @@ export async function prepareCreatorMediaIntake(
         origin: { kind: 'supplied-image', sourceImageSha256: row.sha256 },
       });
       imageByHash.set(row.sha256, poster);
+      // The reviewed PNG is the only image shared in an .rlpack. Keep the
+      // selected source bytes separately so a private creator checkpoint can
+      // reopen the exact media choices without widening the portable pack.
+      assets.set(row.sha256, {
+        sha256: row.sha256,
+        role: 'source-image-original',
+        blob: Blob.prototype.slice.call(
+          row.blob,
+          0,
+          row.blob.size,
+          prepared.original.mime || row.blob.type,
+        ),
+      });
       assets.set(poster.sha256, {
         sha256: poster.sha256,
         role: 'poster',
@@ -444,7 +466,11 @@ export async function prepareCreatorMediaIntake(
       errorCode = 'invalid-playback-range';
       const playbackRange = validateCreatorPlaybackRange(
           video,
-          playbackRangeFor({ video, assetSha256: row.sha256 }),
+          playbackRangeFor({
+            video,
+            assetSha256: row.sha256,
+            sourceSha256: row.sourceSha256 ?? row.sha256,
+          }),
         ),
         suggestion = suggestions.get(row.index),
         posterCandidates = [];
@@ -453,6 +479,7 @@ export async function prepareCreatorMediaIntake(
       const pairingChoice = pairingFor?.({
         video,
         assetSha256: row.sha256,
+        sourceSha256: row.sourceSha256 ?? row.sha256,
         suggestion,
         imageAssetSha256s: Object.freeze([...imageByHash.keys()].sort()),
       });
@@ -486,6 +513,7 @@ export async function prepareCreatorMediaIntake(
         const selectedTime = posterTimeFor({
           video,
           assetSha256: row.sha256,
+          sourceSha256: row.sourceSha256 ?? row.sha256,
           suggestion,
         });
         required(
@@ -577,50 +605,50 @@ export async function prepareCreatorMediaIntake(
       format: CREATOR_MEDIA_DEPENDENCIES_FORMAT,
       stories,
     }),
-    items = rows
-      .map((row) => {
-        const pairing = suggestions.get(row.index) ?? null,
-          errors = [];
-        const ambiguityResolved =
-          pairing?.status === 'ambiguous' &&
-          rows
-            .filter((candidate) => candidate.kind === 'video' && candidate.stem === row.stem)
-            .every((candidate) => resolvedVideoPairings.has(candidate.index));
-        if (pairing?.status === 'ambiguous' && !ambiguityResolved)
-          errors.push(
-            issue(
-              'ambiguous-pairing',
-              fail('Multiple files share this name. Choose the exact poster/video pairing.'),
-            ),
-          );
-        if (row.error && row.error.creatorCode !== 'ambiguous-pairing')
-          errors.push(
-            issue(
-              row.error.creatorCode ??
-                row.errorCode ??
-                (row.blob
-                  ? row.kind === 'video'
-                    ? 'video-inspection-failed'
-                    : 'image-preparation-failed'
-                  : 'missing-original'),
-              row.error,
-            ),
-          );
-        return freezeMedia({
-          index: row.index,
-          name: row.name,
-          kind: row.kind,
-          normalizedStem: row.stem ?? null,
-          assetSha256: row.sha256 ?? null,
-          ...(row.kind === 'image'
-            ? { poster: row.sha256 ? (imageByHash.get(row.sha256) ?? null) : null }
-            : {}),
-          pairing,
-          video: videoDetails.get(row.index) ?? null,
-          errors,
-        });
-      })
-      .sort((a, b) => natural.compare(a.name, b.name) || a.index - b.index);
+    items = rows.map((row) => {
+      const pairing = suggestions.get(row.index) ?? null,
+        errors = [];
+      const ambiguityResolved =
+        pairing?.status === 'ambiguous' &&
+        rows
+          .filter((candidate) => candidate.kind === 'video' && candidate.stem === row.stem)
+          .every((candidate) => resolvedVideoPairings.has(candidate.index));
+      if (pairing?.status === 'ambiguous' && !ambiguityResolved)
+        errors.push(
+          issue(
+            'ambiguous-pairing',
+            fail('Multiple files share this name. Choose the exact poster/video pairing.'),
+          ),
+        );
+      if (row.error && row.error.creatorCode !== 'ambiguous-pairing')
+        errors.push(
+          issue(
+            row.error.creatorCode ??
+              row.errorCode ??
+              (row.blob
+                ? row.kind === 'video'
+                  ? 'video-inspection-failed'
+                  : 'image-preparation-failed'
+                : 'missing-original'),
+            row.error,
+          ),
+        );
+      return freezeMedia({
+        index: row.index,
+        name: row.name,
+        kind: row.kind,
+        normalizedStem: row.stem ?? null,
+        assetSha256: row.sha256 ?? null,
+        sourceSha256: row.sourceSha256 ?? row.sha256 ?? null,
+        ...(row.kind === 'image'
+          ? { poster: row.sha256 ? (imageByHash.get(row.sha256) ?? null) : null }
+          : {}),
+        pairing,
+        video: videoDetails.get(row.index) ?? null,
+        errors,
+      });
+    });
+  if (!preserveOrder) items.sort((a, b) => natural.compare(a.name, b.name) || a.index - b.index);
   return Object.freeze({
     format: 'revealline-creator-media-intake.v1',
     items: Object.freeze(items),

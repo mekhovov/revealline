@@ -69,7 +69,7 @@ test('compact Team menus translate in place while the shared pause controls keep
   setLocale('uk', { persist: false });
   assert.equal(f.$('coop-optional-setup').open, true);
   assert.equal(f.doc.activeElement.id, 'coop-optional-setup-toggle');
-  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Параметри команди');
+  assert.equal(f.$('coop-optional-setup-toggle').textContent, 'Арена й параметри команди');
   assert.equal(f.$('coop-more-catalogue').textContent, t('interface:newJourney2'));
   assert.match(f.$('coop-preview-caption').textContent, /лише перегляд/);
   assert.doesNotMatch(f.$('coop-preview-caption').textContent, /teaser|geometry/);

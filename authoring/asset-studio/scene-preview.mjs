@@ -1,4 +1,6 @@
-import { t, localizedText } from '../../game/i18n/index.mjs';
+import { isStudioActorSlot, studioActorImage, studioActorCanvas } from './actor-resources.mjs';
+import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
 import { startPreviewMotion } from './preview-motion.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createRun } from '../../game/core/index.mjs';
@@ -17,16 +19,19 @@ import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentat
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
 import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
 import { crossModeContextPreview, stageBoardPreviewEffect } from './cross-mode-preview.mjs';
+import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import { getArcadeCollection } from '../../game/presentation/industrial-arcade.mjs';
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
-  localizedText(node, () =>value);
+  localizedText(node, typeof value === 'function' ? value : () => value);
   node.className = className;
   if (hostRole) node.dataset.studioHost = hostRole;
   return node;
 };
 const read = async (url) => {
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`Preview fixture unavailable (${response.status}).`);
+  if (!response.ok)
+    throw new Error(t('tools:studio.scenePreview.fixtureUnavailable', { status: response.status }));
   return response.json();
 };
 const optionalFixtureLevels = {
@@ -43,7 +48,7 @@ function metadataFixturePack(id) {
     ),
   );
   if (rows.some((row) => !row?.level || !row.theme))
-    throw new Error(`Code-owned inspection metadata is unavailable for ${id}.`);
+    throw new Error(t('tools:studio.scenePreview.metadataUnavailable', { id }));
   // Only trusted level/theme metadata: no original picture bytes or player storage.
   return { themes: [rows[0].theme], campaigns: [{ levels: rows.map((row) => row.level) }] };
 }
@@ -73,9 +78,7 @@ export function createStudioFixtureLoader({ readJSON = read } = {}) {
     presets,
     async context(slotId, pictureOwner = null) {
       if (pictureOwner && (!pictureOwner.level || !pictureOwner.theme))
-        throw new Error(
-          t("tools:exactPictureOwnerMetadataIsUnavailableNoSubstituteBoardIs"),
-        );
+        throw new Error(t('tools:exactPictureOwnerMetadataIsUnavailableNoSubstituteBoardIs'));
       const preset = await presets();
       if (pictureOwner)
         return {
@@ -144,9 +147,10 @@ export function createStudioContextPresentation(resolved, decoded, selectedPlaye
   });
 }
 
-async function croppedImage(asset, blobs, options) {
+export async function croppedImage(asset, blobs, options, own) {
   const blob = blobs.get(asset.file.sha256);
-  if (!blob) throw new Error(t("tools:previewMediaIsMissing"));
+  if (!blob) throw new Error(t('tools:previewMediaIsMissing'));
+  if (isStudioActorSlot(options.slotId)) return studioActorImage(asset, blob, options, own);
   const bitmap = await createImageBitmap(blob),
     f = asset.geometry.frame,
     canvas = document.createElement('canvas');
@@ -172,19 +176,19 @@ function loop(own, draw, options) {
   });
 }
 export async function playerRecipePreview(surface, slot, resolved, blobs, options, own) {
-  options.onStatus?.('loading player preview fixtures…', 'downloading');
+  options.onStatus?.(() => t('tools:studio.scenePreview.loadingPlayerFixtures'), 'downloading');
   const presets = await fixtureLoader.presets(),
     classId = slot.id.split('.')[1],
     bodyId = bodyIds[classId] || bodyIds.scout;
   if (!options.isCurrent()) return;
-  options.onStatus?.('decoding player preview artwork…', 'decoding');
+  options.onStatus?.(() => t('tools:studio.scenePreview.decodingPlayerArtwork'), 'decoding');
   let body = structuredClone(presets.characters[bodyId]);
   const recipe = structuredClone(presets.animationRecipes[body.animationRecipe]);
-  const imageAsset =
-    resolved.assets[`player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`];
+  const imageSlot = `player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`,
+    imageAsset = resolved.assets[imageSlot];
   let image;
   if (imageAsset?.kind === 'image') {
-    image = await croppedImage(imageAsset, blobs, options);
+    image = await croppedImage(imageAsset, blobs, { ...options, slotId: imageSlot }, own);
     if (!options.isCurrent()) return;
     const geometry = imagePresentation(imageAsset);
     body.rotors = geometry.rotors;
@@ -195,14 +199,27 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
     await image.decode();
   }
   if (!options.isCurrent()) return;
-  const canvas = document.createElement('canvas');
-  canvas.width = 320;
-  canvas.height = 220;
+  const canvas =
+    imageAsset?.kind === 'image'
+      ? await studioActorCanvas(320, 220, options, own)
+      : document.createElement('canvas');
+  if (!options.isCurrent()) return;
+  if (imageAsset?.kind !== 'image') {
+    canvas.width = 320;
+    canvas.height = 220;
+    own(() => {
+      canvas.width = canvas.height = 0;
+    });
+  }
   surface.append(
     canvas,
     text(
       'small',
-      `${bodyId} · actual body and registered rotor renderer · ${options.motion}`,
+      () =>
+        t('tools:studio.scenePreview.playerRenderer', {
+          bodyId,
+          motion: options.motion,
+        }),
       'bounded-label',
       'secondary',
     ),
@@ -243,11 +260,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       context: (id, owner) => fixtureLoader.context(id, owner),
       bodyIds,
       imageRoles,
-      decode: croppedImage,
+      decode: (candidate, bytes, context, resourceOwner = own) =>
+        croppedImage(candidate, bytes, context, resourceOwner),
       presentation: createStudioContextPresentation,
       loop,
     });
-  options.onStatus?.('loading scene fixtures…', 'downloading');
+  options.onStatus?.(() => t('tools:studio.scenePreview.loadingFixtures'), 'downloading');
   const classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout',
     pictureOwner = options.pictureOwner || options.sourcePicture,
     {
@@ -257,7 +275,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       theme: fixtureTheme,
     } = await fixtureLoader.context(slot.id, pictureOwner);
   if (!options.isCurrent()) return;
-  options.onStatus?.('preparing scene artwork…', 'decoding');
+  options.onStatus?.(() => t('tools:studio.scenePreview.preparingArtwork'), 'decoding');
   const painter = new BoardPainter(presets),
     theme = {
       ...fixtureTheme,
@@ -273,7 +291,10 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     painter.enemyBodies.clear();
     return;
   }
-  painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
+  painter.setLevel(level, {
+    seed: pictureOwner?.descriptor?.seed ?? 42,
+    arcadeCollection: actorArtReviewRevision() ? getArcadeCollection('military-field', 'r1') : null,
+  });
   stageBoardPreviewEffect(painter, slot, run);
   const scoped = { ...resolved.assets, [slot.id]: asset },
     decoded = new Map();
@@ -284,8 +305,8 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     if (id === slot.id && (slot.group === 'pictures' || slot.group === 'screens'))
       role = 'background';
     if (!role) continue;
-    options.onStatus?.(`decoding ${id} for the scene…`, 'decoding');
-    const image = await croppedImage(candidate, blobs, options);
+    options.onStatus?.(() => t('tools:studio.scenePreview.decodingAsset', { id }), 'decoding');
+    const image = await croppedImage(candidate, blobs, { ...options, slotId: id }, own);
     if (!options.isCurrent()) return;
     if (role === 'background') painter.images.background = image;
     else decoded.set(id, { asset: candidate, image });
@@ -303,16 +324,34 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     canvas = document.createElement('canvas');
   canvas.width = size.width;
   canvas.height = size.height;
-  canvas.setAttribute('aria-label', t("tools:actualBoardRendererInAnIsolatedMissionFixture"));
+  localizedAttribute(canvas, 'aria-label', () =>
+    t('tools:actualBoardRendererInAnIsolatedMissionFixture'),
+  );
   const frame = text('div', '', 'board-context-frame'),
     hud = text('div', '', 'context-hud', 'secondary');
-  hud.append(text('span', t("tools:flightStudio")), text('span', t("tools:iii00000"), '', 'count'));
+  hud.append(text('span', t('tools:flightStudio')), text('span', t('tools:iii00000'), '', 'count'));
   frame.append(hud, canvas);
   surface.append(
     frame,
     text(
       'small',
-      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${pictureOwner ? 'exact source level' : 'isolated fixture'}${/^player\.[^.]+\.(compact|detailed)$/.test(slot.id) ? ` · selected ${slot.id.split('.')[2]} body at every preview width` : ''}${warning ? ` · ${warning}` : ''}`,
+      () =>
+        t('tools:studio.scenePreview.boardPainter', {
+          level: level.name,
+          width: run.width,
+          height: run.height,
+          source: t(
+            pictureOwner
+              ? 'tools:studio.scenePreview.exactSourceLevel'
+              : 'tools:studio.scenePreview.isolatedFixture',
+          ),
+          playerBody: /^player\.[^.]+\.(compact|detailed)$/.test(slot.id)
+            ? t('tools:studio.scenePreview.selectedPlayerBody', {
+                treatment: slot.id.split('.')[2],
+              })
+            : '',
+          warning: warning ? ` · ${warning}` : '',
+        }),
       'bounded-label',
       'secondary',
     ),
@@ -345,41 +384,49 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       });
   };
   if (slot.group === 'pictures') {
-    const toggle = text('button', t("tools:showPictureViewer"), '', 'control');
+    const toggle = text('button', t('tools:showPictureViewer'), '', 'control');
     toggle.type = 'button';
     toggle.onclick = () => {
       gallery = !gallery;
-      localizedText(toggle, () =>gallery ? t("tools:showConcealedField") : t("tools:showPictureViewer"));
+      localizedText(toggle, () =>
+        gallery ? t('tools:showConcealedField') : t('tools:showPictureViewer'),
+      );
       render(0, true);
     };
     surface.append(toggle);
   }
   loop(own, render, options);
 }
-export function audioRecipePreview(surface, slot, own, { audioMaster = null } = {}) {
+export function audioRecipePreview(
+  surface,
+  slot,
+  own,
+  { audioMaster = null, readAudio = null } = {},
+) {
   const player = new Soundscape({ audioMaster }),
     box = text('div', '', 'recipe-sample'),
     play = text(
       'button',
-      slot.id === 'audio.music' ? t("tools:audition4Seconds") : t("tools:auditionCue"),
+      slot.id === 'audio.music' ? t('tools:audition4Seconds') : t('tools:auditionCue'),
       '',
       'control',
     ),
-    stop = text('button', t("tools:stop"), '', 'control'),
+    stop = text('button', t('tools:stop'), '', 'control'),
     result = text(
       'p',
-      t("tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35"),
+      t('tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35'),
       '',
       'control',
     );
+  if (readAudio) player.setPublishedAudio(readAudio);
   play.type = 'button';
   stop.type = 'button';
   box.append(text('h3', slot.label, '', 'heading'), play, stop, result);
   surface.append(box);
   const auditionStatus = createOperationStatus(result);
   auditionStatus
-    .begin({ message: t("tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35") })
-    .finish({ message: t("tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35") });
+    .begin({ message: t('tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35') })
+    .finish({ message: t('tools:soundStartsOnlyFromThisButtonLocalAuditionVolume35') });
   let audition = 0;
   let frame,
     alive = true,
@@ -387,10 +434,10 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
   const playbackCaption = () => {
     const master = audioMaster?.snapshot();
     return master?.muted
-      ? t("tools:auditionPlayingMasterSoundIsMuted")
+      ? t('tools:auditionPlayingMasterSoundIsMuted')
       : master?.volume === 0
-        ? t("tools:auditionPlayingMasterSoundVolumeIsZero")
-        : t("tools:playingTheRegisteredSoundscapeRecipe");
+        ? t('tools:auditionPlayingMasterSoundVolumeIsZero')
+        : t('tools:playingTheRegisteredSoundscapeRecipe');
   };
   // Rendering master output never starts a preview or replaces pending/error/Stop feedback.
   const stopMasterView = audioMaster?.subscribe(() => {
@@ -413,18 +460,18 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
   play.onclick = async () => {
     playbackLease = null;
     const request = ++audition;
-    const lease = auditionStatus.begin({ message: t("tools:preparingTheSoundAudition") });
+    const lease = auditionStatus.begin({ message: t('tools:preparingTheSoundAudition') });
     try {
       player.configure({ master: 0.35, music: 0.5, sfx: 0.7 });
       if (slot.id === 'audio.music') {
         const ready = await player.preview({ seconds: 4 });
         if (!alive || request !== audition) return;
-        if (!ready) throw new Error(t("tools:audioIsUnavailable"));
+        if (!ready) throw new Error(t('tools:audioIsUnavailable'));
         tick();
       } else {
         const enabled = await player.enable();
         if (!alive || request !== audition) return;
-        if (!enabled) throw new Error(t("tools:audioIsUnavailable"));
+        if (!enabled) throw new Error(t('tools:audioIsUnavailable'));
         const cue = slot.id.slice(6);
         const event = {
           capture: 'cells.claimed',
@@ -435,12 +482,40 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
           focus: 'class.switched',
           cancel: 'craft.redeployed',
         }[cue];
-        player.event({ type: event, won: true, tick: performance.now() });
+        if (cue.startsWith('human-reaction-')) {
+          if (readAudio) await player.publishedAudio.prepare([cue]);
+          else await player.feedbackDirector.load(cue);
+          if (!alive || request !== audition) return;
+          const options = {
+            board: 'studio',
+            gain: 0.45,
+            priority: 2,
+            feedback: true,
+            humanReaction: true,
+            maxDuration: 0.7,
+          };
+          const played = readAudio
+            ? player.publishedAudio.play(cue, options)
+            : player.feedbackDirector.play(cue, options);
+          if (!played) throw new Error(t('tools:audioIsUnavailable'));
+        } else if (cue.startsWith('destroy-')) {
+          const name = cue;
+          if (readAudio) {
+            await player.publishedAudio.prepare([name]);
+            if (!player.publishedAudio.has(name)) throw new Error(t('tools:audioIsUnavailable'));
+          } else
+            await Promise.all(
+              [name, `${name}-1`, `${name}-2`].map((id) => player.feedbackDirector.load(id)),
+            );
+          if (!alive || request !== audition) return;
+          player.encounter('catch', { category: cue.slice(8), board: 'studio' });
+        } else player.event({ type: event, won: true, tick: performance.now() });
       }
       playbackLease = lease;
       lease.finish({ message: playbackCaption() });
     } catch (error) {
-      if (alive && request === audition) lease.finish({ message: error.message, state: 'error' });
+      if (alive && request === audition)
+        lease.finish({ message: assetStudioErrorMessage(error), state: 'error' });
     }
   };
   stop.onclick = () => {
@@ -449,8 +524,8 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
     player.disable();
     cancelAnimationFrame(frame);
     auditionStatus
-      .begin({ message: t("tools:auditionStopped") })
-      .finish({ message: t("tools:auditionStopped"), state: 'cancelled' });
+      .begin({ message: t('tools:auditionStopped') })
+      .finish({ message: t('tools:auditionStopped'), state: 'cancelled' });
   };
 }
 export function effectRecipePreview(surface, slot, resolved, options, own) {
@@ -463,7 +538,7 @@ export function effectRecipePreview(surface, slot, resolved, options, own) {
     canvas,
     text(
       'small',
-      t("tools:actualGameEffectHelperIsolatedEventFixture"),
+      t('tools:actualGameEffectHelperIsolatedEventFixture'),
       'bounded-label',
       'secondary',
     ),

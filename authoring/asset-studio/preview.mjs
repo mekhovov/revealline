@@ -1,4 +1,8 @@
-import { t, localizedText } from '../../game/i18n/index.mjs';
+import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
+import {
+  OVERFLIGHT_FIELD_KIT_IDS,
+  overflightFieldKitArt,
+} from '../../game/presentation/overflight-field-kit-art.mjs';
 import {
   TEAM_OUTCOME_SLOTS,
   drawTeamOutcomeBadge,
@@ -20,7 +24,10 @@ import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
+import { assetStudioErrorMessage, assetStudioErrorText } from './error-copy.mjs';
+import { isStudioActorSlot, studioActorCanvas } from './actor-resources.mjs';
 import {
+  croppedImage,
   playerRecipePreview,
   boardContextPreview,
   audioRecipePreview,
@@ -38,7 +45,7 @@ import { drawClassicTerrain, drawPickupIcon } from '../../game/ui/classic-view.m
 const fonts = new Map();
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
-  localizedText(node, () => value);
+  localizedText(node, typeof value === 'function' ? value : () => value);
   node.className = className;
   if (hostRole) node.dataset.studioHost = hostRole;
   return node;
@@ -55,7 +62,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     state = 'default',
     statusTarget,
     cancelButton,
-    label = t('tools:assetPreview'),
+    label = () => t('tools:assetPreview'),
     isCurrent: hostCurrent = () => true,
     audioMaster = null,
     motionPreferences = null,
@@ -65,9 +72,16 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   surface.previewMarker = marker;
   const isCurrent = () => surface.previewMarker === marker && hostCurrent();
   const presenter = statusTarget ? createOperationStatus(statusTarget, { isCurrent }) : null;
-  const lease = presenter?.begin({ message: `${label}: preparing ${slot.label}…` });
+  const valueOf = (value) => (typeof value === 'function' ? value() : value);
+  const lease = presenter?.begin({
+    message: () => t('tools:studio.preview.preparing', { label: valueOf(label), slot: slot.label }),
+  });
   const phase = (message, stage = 'preparing') =>
-    lease?.update({ message: `${label}: ${message}`, stage });
+    lease?.update({
+      message: () =>
+        t('tools:studio.preview.status', { label: valueOf(label), message: valueOf(message) }),
+      stage,
+    });
   let failed = false;
   surface.setAttribute('aria-busy', 'true');
   surface.replaceChildren();
@@ -118,7 +132,10 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     localizedText(cancelButton, () => t('common:actions.stopWaiting'));
     cancelButton.onclick = () => {
       if (!isCurrent()) return;
-      lease?.finish({ message: `${label}: stopped waiting.`, state: 'detached' });
+      lease?.finish({
+        message: () => t('tools:studio.preview.stoppedWaiting', { label: valueOf(label) }),
+        state: 'detached',
+      });
       // A decoder or shared fixture fetch may finish, but cannot draw after this fence.
       surface.previewCleanup(true);
       localizedText(cancelButton, () => t('common:preview.retry'));
@@ -144,11 +161,26 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       const fontAsset = resolved.assets[id];
       if (fontAsset?.kind !== 'font') continue;
       const fontBlob = blobs.get(fontAsset.file.sha256);
-      if (!fontBlob)
-        throw new Error(`Missing bytes for ${id}. Re-import the complete theme bundle.`);
-      phase(`reading and decoding ${id}…`, 'decoding');
+      if (!fontBlob) throw new Error(t('tools:studio.preview.missingBytes', { id }));
+      phase(() => t('tools:studio.preview.readingAndDecodingAsset', { id }), 'decoding');
       await prepareFont(fontAsset, fontBlob, resolved);
       if (!isCurrent()) return;
+    }
+    if (OVERFLIGHT_FIELD_KIT_IDS.includes(slot.id) && asset.kind === 'recipe') {
+      const pixels = overflightFieldKitArt(slot.id);
+      const canvas = document.createElement('canvas');
+      canvas.width = pixels.width;
+      canvas.height = pixels.height;
+      const ctx = canvas.getContext('2d');
+      const data = ctx.createImageData(pixels.width, pixels.height);
+      data.data.set(pixels.rgba);
+      ctx.putImageData(data, 0, 0);
+      canvas.style.imageRendering = 'pixelated';
+      canvas.style.width = mode === 'native' ? '16px' : '192px';
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', slot.label);
+      surface.append(canvas);
+      return;
     }
     if (TEAM_OUTCOME_SLOTS.includes(slot.id)) {
       if (mode === 'context' && fieldMode !== 'team')
@@ -157,7 +189,9 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         const canvas = document.createElement('canvas');
         canvas.width = canvas.height = 32;
         canvas.setAttribute('role', 'img');
-        canvas.setAttribute('aria-label', `${slot.label} recipe preview`);
+        localizedAttribute(canvas, 'aria-label', () =>
+          t('tools:studio.preview.recipeLabel', { slot: slot.label }),
+        );
         drawTeamOutcomeBadge(
           canvas.getContext('2d'),
           { kind: 'recipe' },
@@ -188,13 +222,11 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         const inherited = teamEnemyInheritance(slot.id);
         asset = resolved.assets[inherited];
         if (asset?.kind !== 'image')
-          throw new Error(
-            `Shared body ${inherited} is not prepared. Choose a complete collection.`,
-          );
+          throw new Error(t('tools:studio.preview.sharedEnemyBodyMissing', { slotId: inherited }));
         surface.append(
           text(
             'small',
-            `Explicit shared-body inheritance: ${inherited}. Uploads replace only the selected Team enemy role/state.`,
+            () => t('tools:studio.preview.sharedEnemyBody', { slotId: inherited }),
             'bounded-label',
             'secondary',
           ),
@@ -208,13 +240,11 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         const inherited = `player.scout.${slot.id.split('.').at(-1)}`;
         asset = resolved.assets[inherited];
         if (asset?.kind !== 'image')
-          throw new Error(
-            `This Team recipe inherits ${inherited}, which has no prepared artwork. Load a reviewed collection or upload a body.`,
-          );
+          throw new Error(t('tools:studio.preview.sharedPilotBodyMissing', { slotId: inherited }));
         surface.append(
           text(
             'small',
-            `Explicit shared-body inheritance: ${inherited}. Uploads replace only the selected Team seat/state/treatment.`,
+            () => t('tools:studio.preview.sharedPilotBody', { slotId: inherited }),
             'bounded-label',
             'secondary',
           ),
@@ -225,8 +255,15 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (asset.file && !blob) {
       throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
     }
+    if (
+      asset.kind === 'audio' &&
+      (slot.id.startsWith('audio.destroy-') || slot.id.startsWith('audio.human-reaction-'))
+    ) {
+      audioRecipePreview(surface, slot, own, { audioMaster, readAudio: async () => ({ blob }) });
+      return;
+    }
     if (asset.kind === 'audio') {
-      phase('loading audio metadata…', 'decoding');
+      phase(() => t('tools:studio.preview.loadingAudioMetadata'), 'decoding');
       const audio = document.createElement('audio');
       const audioBinding = audioMaster
         ? bindAudioMasterMedia({ audioMaster, element: audio })
@@ -281,7 +318,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (asset.kind === 'font') {
       const family = `RLAsset-${asset.file.sha256}`;
-      phase('reading and decoding the font…', 'decoding');
+      phase(() => t('tools:studio.preview.readingAndDecodingFont'), 'decoding');
       await prepareFont(asset, blob, resolved);
       if (!isCurrent()) return;
       // The selected slot owns the specimen, even when several roles share a file.
@@ -322,7 +359,9 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         canvas = document.createElement('canvas');
       canvas.width = canvas.height = size;
       canvas.setAttribute('role', 'img');
-      canvas.setAttribute('aria-label', `${slot.label} fixed recipe preview`);
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.fixedRecipeLabel', { slot: slot.label }),
+      );
       const ctx = canvas.getContext('2d'),
         frames = { [slot.id]: { kind: 'recipe' } };
       ctx.save();
@@ -364,7 +403,9 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = size;
       canvas.setAttribute('role', 'img');
-      canvas.setAttribute('aria-label', `${slot.label} fixed recipe preview`);
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.fixedRecipeLabel', { slot: slot.label }),
+      );
       const ctx = canvas.getContext('2d'),
         frames = { [slot.id]: { kind: 'recipe' } };
       ctx.save();
@@ -409,9 +450,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = 24;
       canvas.setAttribute('role', 'img');
-      canvas.setAttribute(
-        'aria-label',
-        `${slot.label} decoration; live anchor labels are drawn separately`,
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.anchorDecorationLabel', { slot: slot.label }),
       );
       const ctx = canvas.getContext('2d');
       drawTeamAnchor(
@@ -448,9 +488,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = 64;
       canvas.setAttribute('role', 'img');
-      canvas.setAttribute(
-        'aria-label',
-        `${slot.label} state-overlay recipe; shared core body is shown in Team context`,
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.coreOverlayLabel', { slot: slot.label }),
       );
       const ctx = canvas.getContext('2d');
       ctx.save();
@@ -499,13 +538,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (asset.kind === 'recipe' && slot.group === 'pictures') {
       const loader = createCurrentArtPreview();
       own(() => loader.close());
-      phase('loading the exact current picture…', 'downloading');
+      phase(() => t('tools:studio.preview.loadingCurrentPicture'), 'downloading');
       try {
         const source = await loader.load(slot.id);
         if (!isCurrent()) return;
         surface.replaceChildren();
         if (mode === 'context') {
-          phase('preparing the exact picture scene…');
+          phase(() => t('tools:studio.preview.preparingPictureScene'));
           await boardContextPreview(
             surface,
             slot,
@@ -518,9 +557,10 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         } else {
           const canvas = document.createElement('canvas');
           canvas.setAttribute('role', 'img');
-          canvas.setAttribute(
-            'aria-label',
-            `${source.descriptor.label} — exact current source preview`,
+          localizedAttribute(canvas, 'aria-label', () =>
+            t('tools:studio.preview.currentSourceLabel', {
+              label: source.descriptor.label,
+            }),
           );
           canvas.width = source.image.width;
           canvas.height = source.image.height;
@@ -548,7 +588,12 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
           surface.append(
             text(
               'small',
-              `${source.descriptor.label} · ${source.origin.label} · ${source.fit} · source stage`,
+              () =>
+                t('tools:studio.preview.sourceStage', {
+                  label: source.descriptor.label,
+                  origin: source.origin.label,
+                  fit: source.fit,
+                }),
               'bounded-label',
               'secondary',
             ),
@@ -565,7 +610,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         const controller = new AbortController();
         own(() => controller.abort());
         try {
-          phase('loading exact picture owner metadata…', 'downloading');
+          phase(() => t('tools:studio.preview.loadingPictureOwner'), 'downloading');
           options.pictureOwner = await pictureOwnerContext(slot.id, { signal: controller.signal });
         } catch (error) {
           if (!isCurrent()) return;
@@ -598,7 +643,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     ) {
       let url = null;
       if (blob) {
-        phase('decoding the component artwork…', 'decoding');
+        phase(() => t('tools:studio.preview.decodingComponent'), 'decoding');
         const bitmap = await createImageBitmap(blob),
           frame = asset.geometry.frame,
           canvas = document.createElement('canvas');
@@ -630,18 +675,31 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     if (asset.kind === 'image') {
-      phase('decoding the asset image…', 'decoding');
-      const bitmap = await createImageBitmap(blob);
+      phase(() => t('tools:studio.preview.decodingImage'), 'decoding');
+      const actor = isStudioActorSlot(slot.id),
+        actorOptions = { ...options, slotId: slot.id },
+        bitmap = actor
+          ? await croppedImage(asset, blobs, actorOptions, own)
+          : await createImageBitmap(blob);
       if (!isCurrent()) {
-        bitmap.close();
+        if (!actor) bitmap.close();
         return;
       }
       const frame = asset.geometry.frame,
-        canvas = document.createElement('canvas');
-      const contextual = mode === 'context';
-      canvas.width = contextual ? 320 : frame.width;
-      canvas.height = contextual ? 200 : frame.height;
-      canvas.setAttribute('aria-label', `${slot.label} ${mode} preview`);
+        contextual = mode === 'context',
+        width = contextual ? 320 : frame.width,
+        height = contextual ? 200 : frame.height,
+        canvas = actor
+          ? await studioActorCanvas(width, height, actorOptions, own)
+          : document.createElement('canvas');
+      if (!isCurrent()) return;
+      if (!actor) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.imageLabel', { slot: slot.label, mode }),
+      );
       const ctx = canvas.getContext('2d');
       ctx.imageSmoothingEnabled = slot.sampling !== 'nearest';
       const scale = contextual ? Math.min(1, 140 / frame.width, 120 / frame.height) : 1;
@@ -650,8 +708,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       if (contextual) field(ctx, palette);
       ctx.drawImage(
         bitmap,
-        frame.x,
-        frame.y,
+        actor && !asset.animation ? 0 : frame.x,
+        actor && !asset.animation ? 0 : frame.y,
         frame.width,
         frame.height,
         x,
@@ -659,7 +717,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         frame.width * scale,
         frame.height * scale,
       );
-      bitmap.close();
+      if (!actor) bitmap.close();
       if (mode === 'alpha') {
         const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
         for (let at = 0; at < pixels.data.length; at += 4) {
@@ -754,8 +812,16 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   } catch (error) {
     if (!isCurrent()) return;
     failed = true;
-    lease?.finish({ message: `${label}: ${error.message || error}`, state: 'error' });
-    surface.replaceChildren(text('p', error.message || String(error), '', 'body'));
+    lease?.finish({
+      message: () =>
+        t('tools:studio.preview.status', {
+          label: valueOf(label),
+          message: assetStudioErrorText(error),
+        }),
+      state: 'error',
+    });
+    surface.previewCleanup(true);
+    surface.replaceChildren(text('p', assetStudioErrorMessage(error), '', 'body'));
     if (cancelButton) {
       localizedText(cancelButton, () => t('common:preview.retry'));
       cancelButton.onclick = () =>
@@ -765,7 +831,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (isCurrent()) {
       surface.setAttribute('aria-busy', 'false');
       if (!failed) {
-        lease?.finish({ message: `${label}: ${asset ? 'ready.' : t('tools:noAssetBound')}` });
+        lease?.finish({
+          message: () =>
+            t('tools:studio.preview.status', {
+              label: valueOf(label),
+              message: asset ? t('common:status.ready') : t('tools:noAssetBound'),
+            }),
+        });
         if (cancelButton) cancelButton.hidden = true;
       }
     }

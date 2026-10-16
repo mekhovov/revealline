@@ -8,10 +8,12 @@ export function mountToolDisplay({
   document: doc = globalThis.document,
   window: host = doc?.defaultView ?? globalThis,
   getStorage = () => host.localStorage,
+  preferences: sharedPreferences,
 } = {}) {
   if (!doc?.body) throw new Error(t('interface:theDisplayHostNeedsADocumentBody'));
   applyFieldKitCopy(doc);
   const controls = [...doc.querySelectorAll('[data-tool-text-size]')];
+  const faces = [...doc.querySelectorAll('[data-tool-text-face]')];
   const notice = doc.getElementById('host-display-notice');
   const ordinaryNotice = () => fieldKitCopy('display.sharedToolNotice', getLocale());
   // This live notice has one owner. Later cosmetic copy mounting must not erase
@@ -21,20 +23,23 @@ export function mountToolDisplay({
     restoreTimer = null;
   const defer = host.setTimeout?.bind(host) ?? globalThis.setTimeout;
   const cancelDeferred = host.clearTimeout?.bind(host) ?? globalThis.clearTimeout;
-  const preferences = createDisplayPreferences({
-    window: host,
-    getStorage,
-    onWarning(message, key) {
-      if (!disposed && notice)
-        localizedText(notice, () => (key ? t(key) : message || ordinaryNotice()));
-    },
-  });
+  const preferences =
+    sharedPreferences ??
+    createDisplayPreferences({
+      window: host,
+      getStorage,
+      onWarning(message, key) {
+        if (!disposed && notice)
+          localizedText(notice, () => (key ? t(key) : message || ordinaryNotice()));
+      },
+    });
   const render = (state) => {
     if (disposed) return;
     doc.body.dataset.textFace = state.textFace;
     doc.body.dataset.textSize = state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     for (const control of controls) control.value = state.textSize;
+    for (const control of faces) control.value = state.textFace;
   };
   const stopView = preferences.subscribe(render);
   const cancelRestore = () => {
@@ -56,14 +61,20 @@ export function mountToolDisplay({
     if (disposed) return;
     preferences.set({ textSize: event.currentTarget.value === 'large' ? 'large' : 'standard' });
   };
+  const faceChanged = (event) => {
+    if (disposed) return;
+    preferences.set({ textFace: event.currentTarget.value === 'plain' ? 'plain' : 'pixel' });
+  };
   for (const control of controls) control.addEventListener('change', changed);
+  for (const control of faces) control.addEventListener('change', faceChanged);
   const dispose = () => {
     if (disposed) return;
     disposed = true;
     cancelRestore();
     for (const control of controls) control.removeEventListener('change', changed);
+    for (const control of faces) control.removeEventListener('change', faceChanged);
     stopView();
-    preferences.dispose();
+    if (!sharedPreferences) preferences.dispose();
     host.removeEventListener?.('pagehide', pagehide);
     host.removeEventListener?.('pageshow', pageshow);
   };

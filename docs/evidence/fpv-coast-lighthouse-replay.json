@@ -1,0 +1,1576 @@
+{
+  "format": "FPVCoastLighthouseReplay.v1",
+  "startedAt": "2026-10-03T21:53:44.711Z",
+  "finishedAt": "2026-10-03T21:53:51.806Z",
+  "candidate": "1949ff56fa46727deb04b88ecc86a2e237e22f98",
+  "candidateTree": "6ec046350e3b04236a188739d6a5da749c853306",
+  "headAfterReplay": "1949ff56fa46727deb04b88ecc86a2e237e22f98",
+  "visualSha256": "23663ba5c6027611d147fd6e01c3a7c11cbdf4575a61c2554424901c5c463715",
+  "probeSha256": "10f1389a2f3b2658c79f0f7734f4012c4ed90c5d31fbb7b089967bd0ea7a9d0f",
+  "inputBundleSha256": "14030b002aebc4c07b0b066c54b1d85c38cbfa3f9aeb338e5d638f5f5ddfd4d1",
+  "archive": {
+    "path": "/tmp/fpv-adventures-proofs-qualified.zip",
+    "bytes": 493982,
+    "sha256": "273a68519c195f8f0ca001ce42497a28e288cf2710cc7fcb84c120003d6a2db2",
+    "manifestSha256": "fcd36fd2e3de39bfd65a423d37b5ea53d237bd7f5b2f2b72375b5ff233a07bcb"
+  },
+  "method": "Fresh replayWorldFlight of all ten authenticated retained Coast proofs using the current committed 50 Hz model, original recorded controls and current normalized catalogue courses. Existing replay validates every runtime/course/world/mode/response/rules/conditions identity and exact final state. No recording generation, injected state, altered controls or course edits. Transparent wrappers around the actual Rapier World createCollider/free methods observe construction and cleanup while forwarding all calls and return values unchanged; wrappers are restored in finally.",
+  "sources": {
+    "optional-practice/civilian-fpv/README.md": {
+      "bytes": 25804,
+      "sha256": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774"
+    },
+    "optional-practice/civilian-fpv/app.mjs": {
+      "bytes": 61991,
+      "sha256": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de"
+    },
+    "optional-practice/civilian-fpv/app.webmanifest": {
+      "bytes": 513,
+      "sha256": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0"
+    },
+    "optional-practice/civilian-fpv/attempts.mjs": {
+      "bytes": 13389,
+      "sha256": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494"
+    },
+    "optional-practice/civilian-fpv/beginner-coach.mjs": {
+      "bytes": 101913,
+      "sha256": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c"
+    },
+    "optional-practice/civilian-fpv/catalogue.mjs": {
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    "optional-practice/civilian-fpv/content-definitions.mjs": {
+      "bytes": 10543,
+      "sha256": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd"
+    },
+    "optional-practice/civilian-fpv/copy.mjs": {
+      "bytes": 14421,
+      "sha256": "075ee9dbcf7de69e7f5c9a22e80a42de7cc49b4b2f2d06e9245c2034914b3e89"
+    },
+    "optional-practice/civilian-fpv/demonstrations.mjs": {
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": {
+      "bytes": 12582,
+      "sha256": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede"
+    },
+    "optional-practice/civilian-fpv/flight-fullscreen.css": {
+      "bytes": 14741,
+      "sha256": "b9568785f441fbb52f78b6be3399688aa619183d89f38838f9de58f89d894de2"
+    },
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": {
+      "bytes": 26481,
+      "sha256": "f60358ea99f70f1afe9ff16ce0323ad1b5d9a92e742ecf1544b241faa6e59efc"
+    },
+    "optional-practice/civilian-fpv/flight-sectors.mjs": {
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    "optional-practice/civilian-fpv/guide.html": {
+      "bytes": 15992,
+      "sha256": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2"
+    },
+    "optional-practice/civilian-fpv/index.html": {
+      "bytes": 14089,
+      "sha256": "db74aa6e180ce5d8ffa1caaf5e9f817878f9da05813ea9e20127b6ebf9e87772"
+    },
+    "optional-practice/civilian-fpv/input.mjs": {
+      "bytes": 36565,
+      "sha256": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a"
+    },
+    "optional-practice/civilian-fpv/math.mjs": {
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    "optional-practice/civilian-fpv/model.mjs": {
+      "bytes": 17641,
+      "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+    },
+    "optional-practice/civilian-fpv/notebook.mjs": {
+      "bytes": 18432,
+      "sha256": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129"
+    },
+    "optional-practice/civilian-fpv/offline.mjs": {
+      "bytes": 1045,
+      "sha256": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444"
+    },
+    "optional-practice/civilian-fpv/package-info.json": {
+      "bytes": 1722,
+      "sha256": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158"
+    },
+    "optional-practice/civilian-fpv/playlists.mjs": {
+      "bytes": 5130,
+      "sha256": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77"
+    },
+    "optional-practice/civilian-fpv/preview.png": {
+      "bytes": 211231,
+      "sha256": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a"
+    },
+    "optional-practice/civilian-fpv/radio-controls.mjs": {
+      "bytes": 5726,
+      "sha256": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb"
+    },
+    "optional-practice/civilian-fpv/radio-guide.mjs": {
+      "bytes": 37387,
+      "sha256": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1"
+    },
+    "optional-practice/civilian-fpv/radio-profile.mjs": {
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+    },
+    "optional-practice/civilian-fpv/radio-runtime.mjs": {
+      "bytes": 8037,
+      "sha256": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b"
+    },
+    "optional-practice/civilian-fpv/radio-session.mjs": {
+      "bytes": 3780,
+      "sha256": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef"
+    },
+    "optional-practice/civilian-fpv/radio-setup.mjs": {
+      "bytes": 45087,
+      "sha256": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6"
+    },
+    "optional-practice/civilian-fpv/renderer.mjs": {
+      "bytes": 103573,
+      "sha256": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75"
+    },
+    "optional-practice/civilian-fpv/rotation-table.mjs": {
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    "optional-practice/civilian-fpv/sim-presentation.mjs": {
+      "bytes": 500292,
+      "sha256": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5"
+    },
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": {
+      "bytes": 23242,
+      "sha256": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a"
+    },
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": {
+      "bytes": 8990,
+      "sha256": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81"
+    },
+    "optional-practice/civilian-fpv/snake-hunt.mjs": {
+      "bytes": 3683,
+      "sha256": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da"
+    },
+    "optional-practice/civilian-fpv/studio.mjs": {
+      "bytes": 17754,
+      "sha256": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485"
+    },
+    "optional-practice/civilian-fpv/style.css": {
+      "bytes": 87550,
+      "sha256": "fdf8a71b22970d3ec2c608d36dd58a213f14596f0c5cfa4690e2019d73b77e3c"
+    },
+    "optional-practice/civilian-fpv/vendor/LICENSE.txt": {
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": {
+      "bytes": 51722,
+      "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8"
+    },
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": {
+      "bytes": 117586,
+      "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f"
+    },
+    "optional-practice/civilian-fpv/vendor/addons/provenance.json": {
+      "bytes": 1689,
+      "sha256": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1"
+    },
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": {
+      "bytes": 37728,
+      "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800"
+    },
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": {
+      "bytes": 11551,
+      "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17"
+    },
+    "optional-practice/civilian-fpv/vendor/rapier/LICENSE": {
+      "bytes": 11343,
+      "sha256": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519"
+    },
+    "optional-practice/civilian-fpv/vendor/rapier/provenance.json": {
+      "bytes": 1030,
+      "sha256": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074"
+    },
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": {
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    "optional-practice/civilian-fpv/vendor/three.core.js": {
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    "optional-practice/civilian-fpv/vendor/three.module.js": {
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    "optional-practice/civilian-fpv/world-actor-editor.mjs": {
+      "bytes": 40167,
+      "sha256": "9ca630e6c850d85fd69959ee940195ddaa77daf9da2e31b397e1a6edc1e54350"
+    },
+    "optional-practice/civilian-fpv/world-app.mjs": {
+      "bytes": 247664,
+      "sha256": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49"
+    },
+    "optional-practice/civilian-fpv/world-assets.mjs": {
+      "bytes": 1168270,
+      "sha256": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c"
+    },
+    "optional-practice/civilian-fpv/world-audio.mjs": {
+      "bytes": 20068,
+      "sha256": "104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b"
+    },
+    "optional-practice/civilian-fpv/world-catalogue.mjs": {
+      "bytes": 240477,
+      "sha256": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+    },
+    "optional-practice/civilian-fpv/world-collision.mjs": {
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    "optional-practice/civilian-fpv/world-content.mjs": {
+      "bytes": 49402,
+      "sha256": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0"
+    },
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": {
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    },
+    "optional-practice/civilian-fpv/world-editor.mjs": {
+      "bytes": 5402,
+      "sha256": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c"
+    },
+    "optional-practice/civilian-fpv/world-hangar.mjs": {
+      "bytes": 5740,
+      "sha256": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef"
+    },
+    "optional-practice/civilian-fpv/world-hunt-reactions.mjs": {
+      "bytes": 4774,
+      "sha256": "07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d"
+    },
+    "optional-practice/civilian-fpv/world-model.mjs": {
+      "bytes": 55549,
+      "sha256": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+    },
+    "optional-practice/civilian-fpv/world-progress.mjs": {
+      "bytes": 8341,
+      "sha256": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d"
+    },
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+      "bytes": 849454,
+      "sha256": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2"
+    },
+    "optional-practice/civilian-fpv/world-records.mjs": {
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    "optional-practice/civilian-fpv/world-store.mjs": {
+      "bytes": 14207,
+      "sha256": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0"
+    },
+    "optional-practice/civilian-fpv/world-style.css": {
+      "bytes": 109195,
+      "sha256": "fb8ebd479ba6c78bdba0206173295fb5d01f5a5cc8de1c14695c0cf4c15fed78"
+    },
+    "optional-practice/civilian-fpv/world-themes.mjs": {
+      "bytes": 20974,
+      "sha256": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549"
+    },
+    "optional-practice/civilian-fpv/world-visuals.mjs": {
+      "bytes": 151260,
+      "sha256": "23663ba5c6027611d147fd6e01c3a7c11cbdf4575a61c2554424901c5c463715"
+    },
+    "optional-practice/civilian-fpv/world-zip.mjs": {
+      "bytes": 6269,
+      "sha256": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8"
+    },
+    "game/data-json.mjs": {
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    "game/presentation/theme-system.mjs": {
+      "bytes": 65920,
+      "sha256": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6"
+    }
+  },
+  "checks": [
+    {
+      "name": "current source is the intended normally merged candidate",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/README.md: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.webmanifest: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/attempts.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/beginner-coach.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/catalogue.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/content-definitions.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/copy.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/demonstrations.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.css: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-sectors.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/guide.html: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/index.html: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/input.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/math.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/notebook.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/offline.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/package-info.json: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/playlists.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/preview.png: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-controls.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-guide.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-profile.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-runtime.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-session.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-setup.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/rotation-table.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/sim-presentation.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/studio.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/style.css: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/LICENSE.txt: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/provenance.json: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/LICENSE: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/provenance.json: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.core.js: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.module.js: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-actor-editor.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-assets.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-audio.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-content.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-editor.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hangar.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hunt-reactions.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-progress.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-reaction-runtime.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-records.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-store.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-style.css: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-visuals.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-zip.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "game/data-json.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "game/presentation/theme-system.mjs: current probe input equals its committed candidate bytes",
+      "passed": true
+    },
+    {
+      "name": "whole authoritative archive retains its pinned bytes and SHA-256",
+      "passed": true
+    },
+    {
+      "name": "authenticated extraction is bound to the retained manifest",
+      "passed": true
+    },
+    {
+      "name": "current adventure pack retains the archived identity",
+      "passed": true
+    },
+    {
+      "name": "exactly both modes for each of the five current Coast courses are present",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: complete extracted proof bytes match archive manifest",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: complete proof retains historical authoring hash and final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: current normalized course and recorded mode identities match",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: real fixed-step replay completes every objective with exact final identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: every runtime, world, course, mode, response, rule and condition identity is exact",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: collision, health and weapon outcomes match authoritative recording",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: sampled replay positions remain in the authored flight bounds",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: no final actor is blocked",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level: exactly one Rapier collision world is released once before return",
+      "passed": true
+    },
+    {
+      "name": "all ten authenticated proofs replay through exactly 41868 ticks",
+      "passed": true
+    },
+    {
+      "name": "all ten collision worlds are freed exactly once with none left live",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/README.md: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.webmanifest: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/attempts.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/beginner-coach.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/catalogue.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/content-definitions.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/copy.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/demonstrations.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.css: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-sectors.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/guide.html: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/index.html: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/input.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/math.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/notebook.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/offline.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/package-info.json: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/playlists.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/preview.png: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-controls.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-guide.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-profile.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-runtime.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-session.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-setup.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/rotation-table.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/sim-presentation.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/studio.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/style.css: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/LICENSE.txt: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/provenance.json: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/LICENSE: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/provenance.json: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.core.js: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.module.js: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-actor-editor.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-assets.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-audio.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-content.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-editor.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hangar.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hunt-reactions.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-progress.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-reaction-runtime.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-records.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-store.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-style.css: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-visuals.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-zip.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "game/data-json.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    },
+    {
+      "name": "game/presentation/theme-system.mjs: qualified source bytes remained unchanged during replay",
+      "passed": true
+    }
+  ],
+  "results": [
+    {
+      "id": "adventure-coast-01",
+      "mode": "acro",
+      "sourceIdentity": "d393d9dc2cdbf8ac",
+      "courseIdentity": "927f60f5b9aed1af",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-01-acro.json",
+      "proofFileSha256": "9c0843a55623d532c436f1c711b228b0afa644596c8b833e17342ffdeca58502",
+      "proofSha256": "2ddd4c535560a2e43ff8dc02199c192c535717a8968f4cb86eec32933ee98434",
+      "completed": true,
+      "replayed": true,
+      "ticks": 4843,
+      "status": "complete",
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "2a8b70b9435283a4",
+      "pathSamples": 98,
+      "pathSampleSha256": "eb168ce4ed19282528f4f34d06c25aac4eab1fc41fe0a01a63db2233a358d24e",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-01",
+      "mode": "self-level",
+      "sourceIdentity": "d393d9dc2cdbf8ac",
+      "courseIdentity": "927f60f5b9aed1af",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-01-self-level.json",
+      "proofFileSha256": "bc72b16f3715df887616e46575b0120e3d2366250e3b1634def7a568ed95553e",
+      "proofSha256": "a06e954a1208df9d1e347420d693ac08635d1c264d23002ca8c80c3132b76870",
+      "completed": true,
+      "replayed": true,
+      "ticks": 4843,
+      "status": "complete",
+      "step": 4,
+      "total": 4,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "927ca0248786dd14",
+      "pathSamples": 98,
+      "pathSampleSha256": "609cd34afb0a18443734730e80a154aaf090f1f807d75b5584f5c6aa682fe786",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-02",
+      "mode": "acro",
+      "sourceIdentity": "3b4dfcf92ac24b24",
+      "courseIdentity": "ccae004995049c44",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-02-acro.json",
+      "proofFileSha256": "ddc83d284e2d1f09589ed241355ad5023359c03e5c054faabf0b31bc8e95f4ad",
+      "proofSha256": "c165ee7cd1bb1796692e133dc8a80c3eadca1be59acbe947e1b6381b3c3816cc",
+      "completed": true,
+      "replayed": true,
+      "ticks": 3740,
+      "status": "complete",
+      "step": 8,
+      "total": 8,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "d25371f27f994de8",
+      "pathSamples": 76,
+      "pathSampleSha256": "972dad1d2fd70077daa8713dbab1cfce9fecaafc6dc7cf612990af99b3e1fde6",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-02",
+      "mode": "self-level",
+      "sourceIdentity": "3b4dfcf92ac24b24",
+      "courseIdentity": "ccae004995049c44",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-02-self-level.json",
+      "proofFileSha256": "a7f0a7b61af2c612c50ad4ceb99ecc95b2ccf456e1180bdce82715c5cd30d88a",
+      "proofSha256": "08fe2c1cbb3f7709927c49c0ebdf92a18a36ec225b6ef1848f7af504d12097e2",
+      "completed": true,
+      "replayed": true,
+      "ticks": 3748,
+      "status": "complete",
+      "step": 8,
+      "total": 8,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "0d2d060b9c07f5cd",
+      "pathSamples": 76,
+      "pathSampleSha256": "eceda4d8105cce4f4ff0673a78a88683bd89ca6b7d21f5369bf559a4d0042aaf",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-03",
+      "mode": "acro",
+      "sourceIdentity": "d4e57d46b263b9b3",
+      "courseIdentity": "1c888566bde56f4c",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-03-acro.json",
+      "proofFileSha256": "03d41b0ca443bceb66a19113313483154ab8538a4aa3469f404f2f94bd08c0da",
+      "proofSha256": "f93d8854b52fe415f8209060a0ff236b03dbd2fb0d244a0a728857f2ebaaa9c5",
+      "completed": true,
+      "replayed": true,
+      "ticks": 2685,
+      "status": "complete",
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "ac0f784d4eb59625",
+      "pathSamples": 55,
+      "pathSampleSha256": "4c4de8a5248a9df05ef8092e890869e9db621772bb664f1eebc11b8bc0bfbf08",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-03",
+      "mode": "self-level",
+      "sourceIdentity": "d4e57d46b263b9b3",
+      "courseIdentity": "1c888566bde56f4c",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-03-self-level.json",
+      "proofFileSha256": "6eb72630c4946ec30b3bfb65e977264423fd272378af020f5a6e5d1778a1edc5",
+      "proofSha256": "be622065d9b4846fec4f4a0e944bb4b6db2fba47e7c0582966d4edbb3eeb5935",
+      "completed": true,
+      "replayed": true,
+      "ticks": 2577,
+      "status": "complete",
+      "step": 3,
+      "total": 3,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "d19205ce91c6bf0a",
+      "pathSamples": 53,
+      "pathSampleSha256": "e367230bdd89300293ec876c175dba6170a57b89539182ab0a253162b6f25f9f",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-04",
+      "mode": "acro",
+      "sourceIdentity": "210391f9a173f079",
+      "courseIdentity": "16383cab0411b58b",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-04-acro.json",
+      "proofFileSha256": "d2b3d65b4a5b5aabd31a756273e35d4c0dd42a086a9b154e78488bc156aaf727",
+      "proofSha256": "bcfc396f6539749cd924fed923fecad0c0bd0959f29f1c37df480f15ba9e9da0",
+      "completed": true,
+      "replayed": true,
+      "ticks": 3089,
+      "status": "complete",
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "882f6968e4036ed6",
+      "pathSamples": 63,
+      "pathSampleSha256": "a12bf938599fb2a5abb6f195714333c3588b23555c780d2f2cf1a582703c5bb3",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-04",
+      "mode": "self-level",
+      "sourceIdentity": "210391f9a173f079",
+      "courseIdentity": "16383cab0411b58b",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-04-self-level.json",
+      "proofFileSha256": "c9e035ee506892ece01dd474e34a8a05068dc7e626760e98c07659809360e814",
+      "proofSha256": "58429ba213cd2ae27e7dca2118fb067d803cb16013b5cb3238172c312946c13b",
+      "completed": true,
+      "replayed": true,
+      "ticks": 3093,
+      "status": "complete",
+      "step": 5,
+      "total": 5,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "f6ecd28c8c2fc3dd",
+      "pathSamples": 63,
+      "pathSampleSha256": "859a5b4721a387a0b065127ae1251edc35127bc2586691bfcd9b863fc1e1fcd9",
+      "resources": {
+        "collidersCreated": 10,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-05",
+      "mode": "acro",
+      "sourceIdentity": "923d46f923372d2d",
+      "courseIdentity": "e8d1b69badf29e9b",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-05-acro.json",
+      "proofFileSha256": "8ba52143a267059842a39d41b6f1368baf919e6ee9423e2a918545659fb9f112",
+      "proofSha256": "a7e7b1c7ab5c1b946845547fdea6496ae6f23badc2d365ccdc2e6e2c196016b8",
+      "completed": true,
+      "replayed": true,
+      "ticks": 6606,
+      "status": "complete",
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "5c485b6711e9fe14",
+      "pathSamples": 134,
+      "pathSampleSha256": "b85e0795aa7930de38e98e316bde32e70ca03362021f6890366e4f29562f496a",
+      "resources": {
+        "collidersCreated": 9,
+        "freeCalls": 1,
+        "freed": true
+      }
+    },
+    {
+      "id": "adventure-coast-05",
+      "mode": "self-level",
+      "sourceIdentity": "923d46f923372d2d",
+      "courseIdentity": "e8d1b69badf29e9b",
+      "worldIdentity": "3ae60e7a44236cee",
+      "proofFile": "adventure-coast-05-self-level.json",
+      "proofFileSha256": "9700e59679fdbea75b0950188a286d06d42a251c149f2d8465f0dfa32ce71550",
+      "proofSha256": "8b47b15a7004a2a98dc6353faedcef612ffb33bba96a7b8787aad5340cef7955",
+      "completed": true,
+      "replayed": true,
+      "ticks": 6644,
+      "status": "complete",
+      "step": 7,
+      "total": 7,
+      "contacts": 0,
+      "health": 100,
+      "maxHealth": 100,
+      "shots": 0,
+      "hits": 0,
+      "finalBlockedActors": 0,
+      "finalStateIdentity": "2faf59b7419ced33",
+      "pathSamples": 134,
+      "pathSampleSha256": "81cd36732fe7ccbce57e0c63ee58ac403793ee5fc0cefbfa06b6792ca1e13592",
+      "resources": {
+        "collidersCreated": 9,
+        "freeCalls": 1,
+        "freed": true
+      }
+    }
+  ],
+  "summary": {
+    "courses": 5,
+    "modes": [
+      "acro",
+      "self-level"
+    ],
+    "recordings": 10,
+    "ticks": 41868,
+    "completed": 10,
+    "replayed": 10,
+    "contacts": 0,
+    "fullHealth": true,
+    "finalBlockedActors": 0,
+    "collisionWorldsCreated": 10,
+    "collisionWorldsFreed": 10,
+    "peakLiveCollisionWorlds": 1,
+    "liveCollisionWorldsAfter": 0
+  },
+  "limitations": [
+    "Fresh CPU deterministic replay is not WebGL, visual acceptance, public launch, human learning or physical-controller qualification.",
+    "Path samples are one-second interval snapshots plus terminal state, not a swept-clearance proof. Zero contacts is the authoritative simulation contact counter. Actor blockage is reported at the exact final state; no claim of continuous actor-clearance sampling.",
+    "Observed Rapier free calls confirm collision-world cleanup, not a measured process-memory plateau or GPU resource result.",
+    "Additional unit coverage remains deferred; this is a manual functional replay command."
+  ]
+}

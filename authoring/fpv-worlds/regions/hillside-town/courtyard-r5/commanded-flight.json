@@ -1,0 +1,1151 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "terrain": "cb8604a0f175a11e9ec4202d25dadd33313e798d6268e6750d91ed32bd662388",
+    "scenery": "dee66643576dd3413ade268408f049affb9da15a3b63c187779ab802015faeda"
+  },
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "lower-main-street",
+      "ticks": 8250,
+      "contacts": 0,
+      "recentres": 3,
+      "commandSha256": "87dcd64af49e4e344f1228d83fa326d9a587ce9128b6a4444db4729e422e7909",
+      "segments": [
+        {
+          "from": [
+            20,
+            4,
+            64
+          ],
+          "to": [
+            192,
+            4,
+            64
+          ],
+          "ticks": 4187,
+          "position": {
+            "x": 192525,
+            "y": 3916,
+            "z": 64000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [
+            192,
+            4,
+            64
+          ],
+          "to": [
+            360,
+            4,
+            64
+          ],
+          "ticks": 4063,
+          "position": {
+            "x": 360523,
+            "y": 3908,
+            "z": 64000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000008
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "graded-ascent",
+      "ticks": 6344,
+      "contacts": 0,
+      "recentres": 3,
+      "commandSha256": "128e0a8b6ed4b073a6be1d2a09a543ddc85270cfff5d015820ce34e66ac1ab7d",
+      "segments": [
+        {
+          "from": [
+            128,
+            5,
+            96
+          ],
+          "to": [
+            128,
+            5,
+            112
+          ],
+          "ticks": 472,
+          "position": {
+            "x": 128000,
+            "y": 4916,
+            "z": 112512
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            128,
+            5,
+            112
+          ],
+          "to": [
+            128,
+            17,
+            144
+          ],
+          "ticks": 826,
+          "position": {
+            "x": 128000,
+            "y": 16928,
+            "z": 144551
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.4016250000000019
+        },
+        {
+          "from": [
+            128,
+            17,
+            144
+          ],
+          "to": [
+            128,
+            17,
+            240
+          ],
+          "ticks": 2348,
+          "position": {
+            "x": 128000,
+            "y": 16895,
+            "z": 240517
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.10500000000000043
+        },
+        {
+          "from": [
+            128,
+            17,
+            240
+          ],
+          "to": [
+            128,
+            29,
+            272
+          ],
+          "ticks": 826,
+          "position": {
+            "x": 128000,
+            "y": 28929,
+            "z": 272551
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.39925000000000566
+        },
+        {
+          "from": [
+            128,
+            29,
+            272
+          ],
+          "to": [
+            128,
+            29,
+            348
+          ],
+          "ticks": 1872,
+          "position": {
+            "x": 128000,
+            "y": 28896,
+            "z": 348521
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.1039999999999992
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "courtyard-turn",
+      "ticks": 2609,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "2ae10eec8bb5aed479ffb3f4c662d20ceefb80e5e44becb23969c1951301c1aa",
+      "segments": [
+        {
+          "from": [
+            160,
+            16,
+            192
+          ],
+          "to": [
+            192,
+            16,
+            192
+          ],
+          "ticks": 854,
+          "position": {
+            "x": 192528,
+            "y": 15916,
+            "z": 192000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            192,
+            16,
+            192
+          ],
+          "to": [
+            192,
+            16,
+            228
+          ],
+          "ticks": 948,
+          "position": {
+            "x": 191970,
+            "y": 15884,
+            "z": 228517
+          },
+          "maxCrossTrackM": 0.8400000000000034,
+          "maxHeightErrorM": 0.11599999999999966
+        },
+        {
+          "from": [
+            192,
+            16,
+            228
+          ],
+          "to": [
+            222,
+            16,
+            228
+          ],
+          "ticks": 807,
+          "position": {
+            "x": 222528,
+            "y": 15884,
+            "z": 228005
+          },
+          "maxCrossTrackM": 0.835000000000008,
+          "maxHeightErrorM": 0.11599999999999966
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "upper-switchback",
+      "ticks": 4889,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "62931ec5fcdad9632506ae2bca31d3a95158eec4970c13dc65896568fcd4dcfc",
+      "segments": [
+        {
+          "from": [
+            256,
+            29,
+            280
+          ],
+          "to": [
+            256,
+            29,
+            320
+          ],
+          "ticks": 1044,
+          "position": {
+            "x": 256000,
+            "y": 28916,
+            "z": 320522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            256,
+            29,
+            320
+          ],
+          "to": [
+            328,
+            29,
+            320
+          ],
+          "ticks": 1806,
+          "position": {
+            "x": 328527,
+            "y": 28885,
+            "z": 320042
+          },
+          "maxCrossTrackM": 0.8360000000000127,
+          "maxHeightErrorM": 0.11499999999999844
+        },
+        {
+          "from": [
+            328,
+            29,
+            320
+          ],
+          "to": [
+            328,
+            29,
+            350
+          ],
+          "ticks": 806,
+          "position": {
+            "x": 327997,
+            "y": 28885,
+            "z": 350521
+          },
+          "maxCrossTrackM": 0.8349999999999795,
+          "maxHeightErrorM": 0.11499999999999844
+        },
+        {
+          "from": [
+            328,
+            29,
+            350
+          ],
+          "to": [
+            280,
+            29,
+            350
+          ],
+          "ticks": 1233,
+          "position": {
+            "x": 279485,
+            "y": 28885,
+            "z": 349964
+          },
+          "maxCrossTrackM": 0.8360000000000127,
+          "maxHeightErrorM": 0.11499999999999844
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "house-open-pass",
+      "ticks": 711,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "313b68de392b57d9b2d43189080790aa3d7c8b031c3bd742bd37733428ec1817",
+      "segments": [
+        {
+          "from": [
+            35,
+            3,
+            48
+          ],
+          "to": [
+            61,
+            3,
+            48
+          ],
+          "ticks": 711,
+          "position": {
+            "x": 61526,
+            "y": 2916,
+            "z": 48000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "pad-approach",
+      "ticks": 568,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "e00349671f24cb17d134a669bc4184e072120dc9520e617898758919316a0b2d",
+      "segments": [
+        {
+          "from": [
+            320,
+            33,
+            268
+          ],
+          "to": [
+            320,
+            33,
+            288
+          ],
+          "ticks": 568,
+          "position": {
+            "x": 320000,
+            "y": 32916,
+            "z": 288527
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000318
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "under-pad",
+      "ticks": 1044,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "5390a2a4b8c561bfdde0dd9bb58ae8e972680a2bb446e9ef0d8aa0a2c33ec118",
+      "segments": [
+        {
+          "from": [
+            320,
+            27,
+            268
+          ],
+          "to": [
+            320,
+            27,
+            308
+          ],
+          "ticks": 1044,
+          "position": {
+            "x": 320000,
+            "y": 26916,
+            "z": 308522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "market-open-arcade",
+      "ticks": 401,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "1391916237cf3c3e3ecf6dbce9ceaed27e5f37ba7720fac026c50b2687f5a242",
+      "segments": [
+        {
+          "from": [
+            176,
+            14.5,
+            222
+          ],
+          "to": [
+            176,
+            14.5,
+            235
+          ],
+          "ticks": 401,
+          "position": {
+            "x": 176000,
+            "y": 14416,
+            "z": 235520
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        }
+      ]
+    },
+    {
+      "mode": "self-level",
+      "route": "civic-marker-orbit",
+      "ticks": 1463,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "90ed76690a95112b2c9b9090f66de15faf5a34c3e72c792dbe3d431d636a1031",
+      "segments": [
+        {
+          "from": [
+            198,
+            18,
+            231
+          ],
+          "to": [
+            198,
+            18,
+            247
+          ],
+          "ticks": 472,
+          "position": {
+            "x": 198000,
+            "y": 17916,
+            "z": 247512
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            198,
+            18,
+            247
+          ],
+          "to": [
+            216,
+            18,
+            247
+          ],
+          "ticks": 520,
+          "position": {
+            "x": 216525,
+            "y": 17885,
+            "z": 247028
+          },
+          "maxCrossTrackM": 0.8389999999999986,
+          "maxHeightErrorM": 0.11499999999999844
+        },
+        {
+          "from": [
+            216,
+            18,
+            247
+          ],
+          "to": [
+            216,
+            18,
+            231
+          ],
+          "ticks": 471,
+          "position": {
+            "x": 216074,
+            "y": 17885,
+            "z": 230479
+          },
+          "maxCrossTrackM": 0.8410000000000082,
+          "maxHeightErrorM": 0.11499999999999844
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "lower-main-street",
+      "ticks": 8250,
+      "contacts": 0,
+      "recentres": 3,
+      "commandSha256": "bec60806fcb26a6e7ff866255faea02d9ccc70d73478868f73941fa3f10a5318",
+      "segments": [
+        {
+          "from": [
+            20,
+            4,
+            64
+          ],
+          "to": [
+            192,
+            4,
+            64
+          ],
+          "ticks": 4187,
+          "position": {
+            "x": 192525,
+            "y": 3916,
+            "z": 64000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        },
+        {
+          "from": [
+            192,
+            4,
+            64
+          ],
+          "to": [
+            360,
+            4,
+            64
+          ],
+          "ticks": 4063,
+          "position": {
+            "x": 360522,
+            "y": 3908,
+            "z": 64000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.09200000000000008
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "graded-ascent",
+      "ticks": 6344,
+      "contacts": 0,
+      "recentres": 3,
+      "commandSha256": "3feb4052e51837bd4b244eb6de4e4864a81ec7139b6d0fbd0fa7abad20954411",
+      "segments": [
+        {
+          "from": [
+            128,
+            5,
+            96
+          ],
+          "to": [
+            128,
+            5,
+            112
+          ],
+          "ticks": 472,
+          "position": {
+            "x": 128000,
+            "y": 4916,
+            "z": 112512
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            128,
+            5,
+            112
+          ],
+          "to": [
+            128,
+            17,
+            144
+          ],
+          "ticks": 826,
+          "position": {
+            "x": 128000,
+            "y": 16930,
+            "z": 144549
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.40275000000000194
+        },
+        {
+          "from": [
+            128,
+            17,
+            144
+          ],
+          "to": [
+            128,
+            17,
+            240
+          ],
+          "ticks": 2348,
+          "position": {
+            "x": 128000,
+            "y": 16896,
+            "z": 240512
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.1039999999999992
+        },
+        {
+          "from": [
+            128,
+            17,
+            240
+          ],
+          "to": [
+            128,
+            29,
+            272
+          ],
+          "ticks": 826,
+          "position": {
+            "x": 128000,
+            "y": 28928,
+            "z": 272552
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.3986250000000062
+        },
+        {
+          "from": [
+            128,
+            29,
+            272
+          ],
+          "to": [
+            128,
+            29,
+            348
+          ],
+          "ticks": 1872,
+          "position": {
+            "x": 128000,
+            "y": 28895,
+            "z": 348520
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.10500000000000043
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "courtyard-turn",
+      "ticks": 2608,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "3ae7e2fc6eed32d529793794c3436430620509805d7dee9b1e47e69c0d905d02",
+      "segments": [
+        {
+          "from": [
+            160,
+            16,
+            192
+          ],
+          "to": [
+            192,
+            16,
+            192
+          ],
+          "ticks": 853,
+          "position": {
+            "x": 192511,
+            "y": 15916,
+            "z": 192000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            192,
+            16,
+            192
+          ],
+          "to": [
+            192,
+            16,
+            228
+          ],
+          "ticks": 948,
+          "position": {
+            "x": 191945,
+            "y": 15885,
+            "z": 228513
+          },
+          "maxCrossTrackM": 0.8379999999999939,
+          "maxHeightErrorM": 0.11500000000000021
+        },
+        {
+          "from": [
+            192,
+            16,
+            228
+          ],
+          "to": [
+            222,
+            16,
+            228
+          ],
+          "ticks": 807,
+          "position": {
+            "x": 222515,
+            "y": 15885,
+            "z": 228036
+          },
+          "maxCrossTrackM": 0.8340000000000032,
+          "maxHeightErrorM": 0.11500000000000021
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "upper-switchback",
+      "ticks": 4891,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "6d54e5370eff90b1ed58ebae00f0fe72725a0440eeac651763f014d0253fe6c9",
+      "segments": [
+        {
+          "from": [
+            256,
+            29,
+            280
+          ],
+          "to": [
+            256,
+            29,
+            320
+          ],
+          "ticks": 1044,
+          "position": {
+            "x": 256000,
+            "y": 28916,
+            "z": 320522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            256,
+            29,
+            320
+          ],
+          "to": [
+            328,
+            29,
+            320
+          ],
+          "ticks": 1806,
+          "position": {
+            "x": 328526,
+            "y": 28884,
+            "z": 319943
+          },
+          "maxCrossTrackM": 0.8360000000000127,
+          "maxHeightErrorM": 0.11599999999999966
+        },
+        {
+          "from": [
+            328,
+            29,
+            320
+          ],
+          "to": [
+            328,
+            29,
+            350
+          ],
+          "ticks": 807,
+          "position": {
+            "x": 328033,
+            "y": 28884,
+            "z": 350516
+          },
+          "maxCrossTrackM": 0.8340000000000032,
+          "maxHeightErrorM": 0.11599999999999966
+        },
+        {
+          "from": [
+            328,
+            29,
+            350
+          ],
+          "to": [
+            280,
+            29,
+            350
+          ],
+          "ticks": 1234,
+          "position": {
+            "x": 279477,
+            "y": 28884,
+            "z": 349941
+          },
+          "maxCrossTrackM": 0.8349999999999795,
+          "maxHeightErrorM": 0.11599999999999966
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "house-open-pass",
+      "ticks": 711,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "95bf9d38e874dc03b303337696a1c18321cbe685ad217810cbb693fd0bd99fa4",
+      "segments": [
+        {
+          "from": [
+            35,
+            3,
+            48
+          ],
+          "to": [
+            61,
+            3,
+            48
+          ],
+          "ticks": 711,
+          "position": {
+            "x": 61526,
+            "y": 2916,
+            "z": 48000
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000007
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "pad-approach",
+      "ticks": 568,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "338d33b8336508d6abcc9ceac22b627ae27fc0eb2279026ac950cf0b8ce92aa5",
+      "segments": [
+        {
+          "from": [
+            320,
+            33,
+            268
+          ],
+          "to": [
+            320,
+            33,
+            288
+          ],
+          "ticks": 568,
+          "position": {
+            "x": 320000,
+            "y": 32916,
+            "z": 288527
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08400000000000318
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "under-pad",
+      "ticks": 1044,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "a98bdef83613ff153f8555c016442baceb45690982acd0a3725d388caefcad34",
+      "segments": [
+        {
+          "from": [
+            320,
+            27,
+            268
+          ],
+          "to": [
+            320,
+            27,
+            308
+          ],
+          "ticks": 1044,
+          "position": {
+            "x": 320000,
+            "y": 26916,
+            "z": 308522
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "market-open-arcade",
+      "ticks": 401,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "622c335902d35aa82a251d9ff4ff98ec8f4b79577109b44b99c120ef0786d7e9",
+      "segments": [
+        {
+          "from": [
+            176,
+            14.5,
+            222
+          ],
+          "to": [
+            176,
+            14.5,
+            235
+          ],
+          "ticks": 401,
+          "position": {
+            "x": 176000,
+            "y": 14416,
+            "z": 235520
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        }
+      ]
+    },
+    {
+      "mode": "acro",
+      "route": "civic-marker-orbit",
+      "ticks": 1463,
+      "contacts": 0,
+      "recentres": 1,
+      "commandSha256": "5cd495b9b211092bda14cb5b3cdc77d79af67d4b3db83db9547200e6068ce67f",
+      "segments": [
+        {
+          "from": [
+            198,
+            18,
+            231
+          ],
+          "to": [
+            198,
+            18,
+            247
+          ],
+          "ticks": 472,
+          "position": {
+            "x": 198000,
+            "y": 17916,
+            "z": 247512
+          },
+          "maxCrossTrackM": 0,
+          "maxHeightErrorM": 0.08399999999999963
+        },
+        {
+          "from": [
+            198,
+            18,
+            247
+          ],
+          "to": [
+            216,
+            18,
+            247
+          ],
+          "ticks": 520,
+          "position": {
+            "x": 216522,
+            "y": 17885,
+            "z": 247037
+          },
+          "maxCrossTrackM": 0.8389999999999986,
+          "maxHeightErrorM": 0.11499999999999844
+        },
+        {
+          "from": [
+            216,
+            18,
+            247
+          ],
+          "to": [
+            216,
+            18,
+            231
+          ],
+          "ticks": 471,
+          "position": {
+            "x": 216074,
+            "y": 17885,
+            "z": 230475
+          },
+          "maxCrossTrackM": 0.8460000000000036,
+          "maxHeightErrorM": 0.11499999999999844
+        }
+      ]
+    }
+  ],
+  "authoredStarts": [
+    {
+      "mode": "self-level",
+      "id": "lower-square",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 64000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "middle-courtyard",
+      "position": {
+        "x": 192000,
+        "y": 15000,
+        "z": 228000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "upper-terrace",
+      "position": {
+        "x": 256000,
+        "y": 27000,
+        "z": 320000
+      }
+    },
+    {
+      "mode": "self-level",
+      "id": "elevated-pad",
+      "position": {
+        "x": 320000,
+        "y": 31500,
+        "z": 288000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "lower-square",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 64000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "middle-courtyard",
+      "position": {
+        "x": 192000,
+        "y": 15000,
+        "z": 228000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "upper-terrace",
+      "position": {
+        "x": 256000,
+        "y": 27000,
+        "z": 320000
+      }
+    },
+    {
+      "mode": "acro",
+      "id": "elevated-pad",
+      "position": {
+        "x": 320000,
+        "y": 31500,
+        "z": 288000
+      }
+    }
+  ],
+  "contacts": [
+    {
+      "mode": "self-level",
+      "scenario": "house-roof",
+      "ticks": 300,
+      "position": {
+        "x": 48000,
+        "y": 6422,
+        "z": 48000
+      },
+      "contacts": 257
+    },
+    {
+      "mode": "self-level",
+      "scenario": "elevated-pad",
+      "ticks": 300,
+      "position": {
+        "x": 320000,
+        "y": 30302,
+        "z": 288000
+      },
+      "contacts": 250
+    },
+    {
+      "mode": "acro",
+      "scenario": "house-roof",
+      "ticks": 300,
+      "position": {
+        "x": 48000,
+        "y": 6422,
+        "z": 48000
+      },
+      "contacts": 257
+    },
+    {
+      "mode": "acro",
+      "scenario": "elevated-pad",
+      "ticks": 300,
+      "position": {
+        "x": 320000,
+        "y": 30302,
+        "z": 288000
+      },
+      "contacts": 250
+    }
+  ],
+  "playerReady": false,
+  "claim": "Production regional-session controlled command evidence; no native player/device FPS or default admission claim."
+}

@@ -1,0 +1,240 @@
+<!doctype html><meta charset="utf-8" /><title>Admitted spatial editor graphics loss</title>
+<style>
+  body {
+    font: 14px system-ui;
+    background: #15212c;
+    color: #edf4ef;
+    margin: 16px;
+  }
+  canvas {
+    width: 640px;
+    height: 360px;
+    touch-action: none;
+  }
+  button {
+    font: inherit;
+    padding: 8px;
+  }
+  pre {
+    white-space: pre-wrap;
+    max-height: 220px;
+    overflow: auto;
+  }
+  textarea {
+    width: 98%;
+    height: 180px;
+  }
+</style>
+<h1>Actual spatial editor: cleared-control smoke</h1>
+<p>
+  Verifies every admitted file, then mounts the real World Studio spatial editor and real
+  TransformControls on a real WebGL canvas. Actual graphics loss/restoration brackets calls to the
+  same controls used by pointer, wheel and snap UI. The existing editor asks the user to reload;
+  this checks inert cleared controls and cleanup, not automatic editor recovery. Flight Retry was
+  qualified separately.
+</p>
+<button id="run" disabled>Run editor loss interaction smoke</button>
+<p id="status">Verifying admitted files</p>
+<canvas
+  id="editor"
+  width="640"
+  height="360"
+  tabindex="0"
+  aria-label="Actual spatial editor"
+></canvas>
+<pre id="summary">Not run</pre>
+<label
+  >Full read-only receipt<textarea id="receipt" aria-label="Full editor recovery receipt" readonly>
+No receipt yet.</textarea
+  >
+</label>
+<script type="module">
+  const $ = (id) => document.getElementById(id),
+    digest = async (bytes) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+        .map((x) => x.toString(16).padStart(2, '0'))
+        .join('');
+  const receipt = {
+    format: 'fpv-admitted-editor-recovery.v1',
+    checks: [],
+    events: [],
+    stages: [],
+    notifications: [],
+    errors: [],
+    warnings: [],
+    visibility: [],
+  };
+  const check = (name, pass) => receipt.checks.push({ name, pass: !!pass }),
+    raf = () => new Promise(requestAnimationFrame),
+    clone = (x) => JSON.parse(JSON.stringify(x));
+  document.addEventListener('visibilitychange', () =>
+    receipt.visibility.push({ state: document.visibilityState, time: performance.now() }),
+  );
+  window.addEventListener('error', (e) => receipt.errors.push(e.message));
+  window.addEventListener('unhandledrejection', (e) => receipt.errors.push(String(e.reason)));
+  const originalError = console.error,
+    originalWarn = console.warn;
+  console.error = (...args) => {
+    receipt.errors.push(args.map(String).join(' '));
+    originalError(...args);
+  };
+  console.warn = (...args) => {
+    receipt.warnings.push(args.map(String).join(' '));
+    originalWarn(...args);
+  };
+  let owner, runtime, controls, gl;
+  function stage(name) {
+    const codes = [];
+    if (gl)
+      for (let n = 0; n < 16; n++) {
+        const code = gl.getError();
+        if (code === gl.NO_ERROR) break;
+        codes.push({
+          code,
+          hex: '0x' + code.toString(16),
+          expectedLossSignal: code === gl.CONTEXT_LOST_WEBGL && gl.isContextLost(),
+        });
+      }
+    receipt.stages.push({
+      name,
+      codes,
+      isContextLost: gl?.isContextLost(),
+      resources: runtime ? clone(runtime.resources()) : null,
+    });
+  }
+  function event(name, action) {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(Error(name + ' timeout')), 6000);
+      $('editor').addEventListener(
+        name,
+        () => {
+          clearTimeout(timer);
+          receipt.events.push({ name, time: performance.now() });
+          resolve();
+        },
+        { once: true },
+      );
+      action();
+    });
+  }
+  function interact(label) {
+    check(label + ' pointer selection inert', controls.pick(320, 180) === false);
+    controls.setSnap(0.5);
+    controls.zoom(120);
+    controls.orbit(4, 2);
+    controls.home();
+    controls.select(null);
+    runtime.setCosmetic({ color: '#66aaff' });
+    check(label + ' no dragging', controls.isDragging() === false);
+    check(
+      label + ' scene resources stay cleared',
+      Object.values(runtime.resources().registered).every((n) => n === 0),
+    );
+    stage(label);
+  }
+  try {
+    const binding = await (await fetch('./binding.json', { cache: 'no-store' })).json();
+    receipt.binding = binding;
+    receipt.verifiedFiles = 0;
+    for (const row of binding.files) {
+      const response = await fetch('./player/' + row.path, { cache: 'no-store' }),
+        bytes = await response.arrayBuffer();
+      if (!response.ok || bytes.byteLength !== row.bytes || (await digest(bytes)) !== row.sha256)
+        throw Error('Admitted file mismatch ' + row.path);
+      receipt.verifiedFiles++;
+    }
+    const [editor, assets, catalogue] = await Promise.all(
+      ['world-editor.mjs', 'world-assets.mjs', 'world-catalogue.mjs'].map(
+        (path) => import('./player/optional-practice/civilian-fpv/' + path),
+      ),
+    );
+    $('status').textContent = 'Prepared; not run. Keep visible and run alone.';
+    $('run').disabled = false;
+    $('run').onclick = async () => {
+      $('run').disabled = true;
+      receipt.startedAt = new Date().toISOString();
+      receipt.start = {
+        visibility: document.visibilityState,
+        focus: document.hasFocus(),
+        viewport: [innerWidth, innerHeight],
+        dpr: devicePixelRatio,
+      };
+      try {
+        const course = structuredClone(
+          catalogue.BEGINNER_CATALOGUE.find((row) => row.id === 'beginner-40').course,
+        );
+        owner = editor.mountWorldEditor({
+          canvas: $('editor'),
+          course,
+          onError: (error) => receipt.notifications.push(String(error.message ?? error)),
+          rendererFactory: (options) => {
+            runtime = assets.createFlightRenderer(options);
+            const original = runtime.createEditor;
+            runtime.createEditor = async (...args) => {
+              controls = await original(...args);
+              return controls;
+            };
+            return runtime;
+          },
+        });
+        await owner.ready;
+        await raf();
+        await raf();
+        gl = $('editor').getContext('webgl2');
+        stage('mounted');
+        check('real editor initialized', !!controls && runtime.resources().renderer.calls > 0);
+        const extension = gl.getExtension('WEBGL_lose_context');
+        if (!extension) throw Error('Context-loss extension unavailable');
+        await event('webglcontextlost', () => extension.loseContext());
+        interact('while lost');
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        await event('webglcontextrestored', () => extension.restoreContext());
+        interact('after restore before reload');
+        owner.dispose();
+        owner = null;
+        stage('final cleanup');
+        check(
+          'final registered resources zero',
+          Object.values(runtime.resources().registered).every((n) => n === 0),
+        );
+        check(
+          'host reports its existing reload requirement',
+          receipt.notifications.length === 1 &&
+            receipt.notifications[0] === 'Editor graphics context lost. Reload the editor.',
+        );
+        check(
+          'no unexpected GL errors',
+          receipt.stages.every((s) => s.codes.every((c) => c.expectedLossSignal)),
+        );
+        check('no uncaught errors or warnings', !receipt.errors.length && !receipt.warnings.length);
+      } catch (error) {
+        receipt.errors.push(String(error.stack ?? error));
+      } finally {
+        owner?.dispose();
+        receipt.finishedAt = new Date().toISOString();
+        receipt.pass = receipt.checks.every((c) => c.pass) && receipt.errors.length === 0;
+        const text = JSON.stringify(receipt, null, 2);
+        $('receipt').value = text;
+        $('receipt').textContent = text;
+        $('summary').textContent = JSON.stringify(
+          {
+            pass: receipt.pass,
+            verifiedFiles: receipt.verifiedFiles,
+            checks: receipt.checks,
+            notifications: receipt.notifications,
+            errors: receipt.errors,
+          },
+          null,
+          2,
+        );
+        $('status').textContent = receipt.pass
+          ? 'PASS — receipt ready'
+          : 'Review required — receipt ready';
+      }
+    };
+  } catch (error) {
+    receipt.errors.push(String(error.stack ?? error));
+    $('status').textContent = 'Preparation failed: ' + error.message;
+    $('receipt').value = JSON.stringify(receipt, null, 2);
+  }
+</script>

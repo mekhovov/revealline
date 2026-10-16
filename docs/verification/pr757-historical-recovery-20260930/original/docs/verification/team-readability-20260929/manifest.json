@@ -1,0 +1,61 @@
+{
+  "formatVersion": 1,
+  "sourceBase": "6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8",
+  "integratedRuntime": "aa32c591e7a7b57dabc2ab122d0125f0a35fbbf5",
+  "files": {
+    "combined-team.tap": {
+      "bytes": 26848,
+      "sha256": "3ce289931c3b0fadb17daff7b070920c7e67e4dd0a08a3de74c7db640822e733"
+    },
+    "display-controller-fixture-notes.md": {
+      "bytes": 1491,
+      "sha256": "5c995fafa905286aa4bc91e0e85d090a438b4da63a8d6b08dd10c49b417dbb08"
+    },
+    "display-original-controller-observed-red.tap": {
+      "bytes": 1288,
+      "sha256": "d391103841d0e504f64287ba7d5060b3d0f7ba372ac970157338878d2d3972ea",
+      "rawSha256": "5bfe89a84b40cf3c3fede2fc1f72334f178abba5f27730620b017dd91d0652f8",
+      "preparation": "Trailing spaces removed for repository diff hygiene; original logs retained in local .cache/team-readability."
+    },
+    "display-original-controller-red.tap": {
+      "bytes": 1087,
+      "sha256": "06481ee57940b44f02d92902faeb3f7bea36a38dc700888807e7704cef22157c",
+      "rawSha256": "b48a9a2ddfa59f93a10805f99364655ce8cd33588c82ef725115120e2b437b88",
+      "preparation": "Trailing spaces removed for repository diff hygiene; original logs retained in local .cache/team-readability."
+    },
+    "display-preferences-host-final.tap": {
+      "bytes": 2194,
+      "sha256": "b08f69a4a7ee4a9b2284269a8faee21e481dfe23695e4ce6113561d870bdcc00"
+    },
+    "first-connection-large-390x844.png": {
+      "bytes": 32540,
+      "sha256": "a969adccedc593fdaeb9892ade1f7b3b580e8782ee69698e744af58aec572c07"
+    },
+    "first-connection-large-844x390.png": {
+      "bytes": 38433,
+      "sha256": "1207edc04f8404e948eb9e6589bc61ae504959f130071ccfda73f1d9eefa0adc"
+    },
+    "more-original-red.tap": {
+      "bytes": 1014,
+      "sha256": "68efa90f48faf73f362b99edff06e316b6e7e5015cc34c43aa687018dae73100",
+      "rawSha256": "82e114273966bad5bd9619b2a1f16d21dcb9be411bd05a517740147dd5a129a4",
+      "preparation": "Trailing spaces removed for repository diff hygiene; original logs retained in local .cache/team-readability."
+    },
+    "presentation-metadata.log": {
+      "bytes": 161,
+      "sha256": "fe891b5949feec25294bba8096a17c05295205f23250e9ad40c7aa9e5ec0db93"
+    },
+    "relay-yard-large-uk-390x844.png": {
+      "bytes": 37129,
+      "sha256": "215750e011f172dec6c847d25d3fa92685006791027552cd0dbce26eeaeee14f"
+    },
+    "relay-yard-large-uk-568x320-known-hud-limit.png": {
+      "bytes": 33119,
+      "sha256": "27c72f13602e1ebf39df4996b483b4126ade6aec61ad0caa2147ad17efe6f1ef"
+    },
+    "source-dependency-tests.tap": {
+      "bytes": 566,
+      "sha256": "be48310aa31720c45bc41048b01cb3cdd5d7ba34e29ec1cf6ece94b28db7de4a"
+    }
+  }
+}

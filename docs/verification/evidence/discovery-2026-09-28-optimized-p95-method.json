@@ -1,0 +1,277 @@
+{
+  "format": "revealline-current-desktop-performance-observation.v1",
+  "qualified": false,
+  "source": {
+    "sourceRevision": "61a31509008da07d0163bfd9aa693014cc7c8f8f",
+    "sourceTree": "047223919bc9f96b50f91c3c9def829a4f3bcb42",
+    "editionId": "fpv-learning",
+    "editionRevision": 8,
+    "distribution": {
+      "bytes": 32414728,
+      "path": "distribution-fpv-learning.zip",
+      "sha256": "efb0dd74f216ac46ea68f8b205e5608075883e530dbb84885bb167909b64dbc1"
+    },
+    "manifest": {
+      "bytes": 92255,
+      "path": "manifest-fpv-learning.json",
+      "sha256": "5400cab03af90d058352ceae0b51b00e37584d7830ee9a175ce38d703a7e6617"
+    },
+    "gameplayId": "7feffc97157784af",
+    "reproducibleBuilds": 2,
+    "publicEligible": false,
+    "origin": "Local double compilation of exact clean committed source, selected members admitted before extraction. Later docs-only PR head does not alter these player bytes."
+  },
+  "baseline": {
+    "sourceRevision": "a0eefe5780756bf063f5e13af536da0e75010740",
+    "distributionSha256": "35adf3aeb8a5fd6058d136d96d0858a871fec95f72bf2bf1f0e278b4eff6ad99",
+    "origin": "Preserved downloaded successful CI candidate; baseline samples unchanged."
+  },
+  "instrumentation": {
+    "sourceRevision": "a0eefe5780756bf063f5e13af536da0e75010740",
+    "files": [
+      {
+        "path": "docs/verification/discovery-observer.mjs",
+        "bytes": 15839,
+        "sha256": "69262e55dfb17ed9636980212e44cf4a7d71b4325fb1f65b2f9859d34f716777"
+      },
+      {
+        "path": "docs/verification/discovery-comparison.mjs",
+        "bytes": 11187,
+        "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+      },
+      {
+        "path": "docs/verification/company-review-model.mjs",
+        "bytes": 7785,
+        "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+      }
+    ]
+  },
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "hardwareConcurrency": 14,
+    "width": 1280,
+    "height": 633,
+    "dpr": 1,
+    "timeOrigin": 1790609345811.1,
+    "headlessReported": true
+  },
+  "deviceLabel": "local-Mac16,7-AppleM4Pro-48GiB-macOS26.7",
+  "settings": "en;standard;immediate;scout;full;muted;neon;hybrid;grid-off;reactions-on;1280x633@1",
+  "serving": {
+    "url": "http://127.0.0.1:54429/current-61a315090/game/index.html?edition=fpv-learning",
+    "sameOriginAsBaseline": true,
+    "freshIsolatedProfile": true,
+    "pwaInstalled": false,
+    "rewrittenPlayerBytes": false,
+    "immutableCachePolicy": true
+  },
+  "quietWindow": {
+    "root": "Root confirmed no builds/tests or browser during accepted windows. Measurement completion notified before other suites resumed.",
+    "otherAgent": "Content agent reported a4.6s media cohort and1s follow-up during rejected/non-result work; no overlap with accepted samples. Held further tests before final successful cut.",
+    "monitoring": "Coordination evidence only; no external system-load monitor."
+  },
+  "runOrder": [
+    "Open exact61a URL in fresh isolated profile; set1280x633/DPR1. Inspect English, Neon Arcade, balanced detail, grid off, full effects, reactions on, sound off, standard/immediate/scout.",
+    "Start normally and use the visible Pause control, then Restart mission, to reach its actual confirmation. An initial measurement eval failed syntax before observer creation; the harmless unmeasured restart was repeated normally. No report or progress was fabricated.",
+    "Attach exact frozen observer at restart confirmation; arm active-play20s and click actual Restart mission. Keep first valid20,007.6ms stationary sample with every stall. Export and dispose active observer.",
+    "Ordinary Down1800ms/Down3200ms sequence was caught once:0.5% and2 lives. Repeat the sequence:47.0% and2 lives.",
+    "Attach result observer, arm20s entry, ordinary Up1800ms/Right4500ms sequence is caught:47.0% and1 life. Preserve30s result timeout.",
+    "Arm again; Right4500ms/Down1200ms/Left4500ms fails to yield a win. Next screenshot shows a restarted0% attempt with3 lives. Preserve second timeout; no storage or engine writes were made. A screenshot was taken near the end of this rejected window only.",
+    "Ordinary Down1800ms/Down3200ms yields54.2% with3 lives. Travel Up4500ms/Left4000ms along safe borders.",
+    "Arm result entry; Down1200ms/Right3900ms captures86.0% but leaves marked objective unclaimed. Preserve third30s timeout.",
+    "Arm again; Left2100ms/Up1500ms makes a short legal cut through the remaining rectangle and produces the actual first Frame win:92.1%,21,540points,3 lives,HUD2:33. No input/screenshot follows until the first valid20,004.5ms result sample completes. HUD time includes tool delays and is not human pacing.",
+    "Export raw reports and actual result text, take screenshot after accepted window, dispose observer and close owned browser. Compare with the unchanged baseline using the exact frozen validator."
+  ],
+  "actualResult": {
+    "focused": true,
+    "hidden": false,
+    "location": "http://127.0.0.1:54429/current-61a315090/game/index.html?edition=fpv-learning",
+    "bodyText": "\u25e9\n\u26f6\nCollection\nSettings\n\nMISSION 01 / THE FRAME\n\nA little more light.\n\n92.1% captured \u00b7 21,540 points \u00b7 2:33. Mission complete. Keep exploring your campaign.\n\nFirst verified performance record for this setup. Your next win can be compared.\n\nJourney Standard. 3 starting lives; no failing countdown. 1 enemies \u00b7 8.8 craft cells/s.\n\n\u2605\n\nA quadcopter frame is its supporting structure. It holds components in an arrangement; it does not itself sense motion or create motor commands.\n\nThe Whole Aircraft Atlas \u00b7 1 / 6 complete\n\nA new discovery\n\nThe Frame\n\nExplore discovery\nRead details\nNext: Motion Makers\nView picture \u2922\nTry again \u21bb\nMore\n\nPicture unlocked. A whole world, from one brave line.",
+    "viewport": {
+      "width": 1280,
+      "height": 633,
+      "dpr": 1
+    }
+  },
+  "inputTrust": "Normal agent-browser pointer and arrow-key commands only. No Escape was sent. Every sample has zero synthetic DOM input. Evaluation wrote measurement globals only, never engine, Journey, reward, replay or browser storage.",
+  "measurements": [
+    {
+      "scenario": "active-play",
+      "raw": {
+        "path": "active-play.json",
+        "bytes": 5056,
+        "sha256": "ba603bed7019b3424320e4a045eb7a6d1a85d4f056c775c170c618f36d6bb81e"
+      },
+      "baseline": {
+        "path": "baseline-active-play.json",
+        "bytes": 7051,
+        "sha256": "e94087c0bd1112be6397668f95046a7575e8ea60d3979306074396addae3f702"
+      },
+      "comparison": {
+        "path": "comparison-active-play.json",
+        "bytes": 915,
+        "sha256": "33abed59322b402197db3406be32289be2af144c25f922d85b2513628383f63d"
+      },
+      "result": {
+        "scenario": "active-play",
+        "baselineP95Ms": 16.70000000001164,
+        "candidateP95Ms": 16.79999999998836,
+        "changePercent": 0.598802395069753,
+        "withinFivePercentEngineeringTarget": true
+      },
+      "samples": [
+        {
+          "scenario": "active-play",
+          "outcome": "observed",
+          "durationMs": 20000,
+          "activeElapsedMs": 20007.600000023842,
+          "surfaceVisibleWhenArmed": false,
+          "frameIntervals": {
+            "frames": 1179,
+            "p50Ms": 16.69999999999709,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 383.3000000000029,
+            "over33ms": 1
+          },
+          "pageLongTasks": {
+            "supported": true,
+            "count": 3,
+            "over50Ms": 3,
+            "maxMs": 386,
+            "scope": "page-wide from arming through completion; not attributed to reward rendering"
+          },
+          "inputEvents": {
+            "trusted": 2,
+            "synthetic": 0
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "result-entry",
+      "raw": {
+        "path": "result-entry.json",
+        "bytes": 11155,
+        "sha256": "76cb8ab5ac27d02398105a9cb0cc9c7824179c28da3b3bb8e6d2be982b5fc2b6"
+      },
+      "baseline": {
+        "path": "baseline-result-entry.json",
+        "bytes": 7113,
+        "sha256": "9d5e4d16052f30b46a34f87cc16734fe02c5f001ffa73e8b19accf6b5468b4cd"
+      },
+      "comparison": {
+        "path": "comparison-result-entry.json",
+        "bytes": 917,
+        "sha256": "4d8318e472065dc7c52a540ec9ce1e16f0f52d45faae8fe08d2d4067ea418b11"
+      },
+      "result": {
+        "scenario": "result-reveal",
+        "baselineP95Ms": 16.70000000001164,
+        "candidateP95Ms": 16.79999999998836,
+        "changePercent": 0.598802395069753,
+        "withinFivePercentEngineeringTarget": true
+      },
+      "samples": [
+        {
+          "scenario": "result-reveal",
+          "outcome": "discarded: target surface did not appear within 30 seconds",
+          "durationMs": 20000,
+          "activeElapsedMs": null,
+          "surfaceVisibleWhenArmed": false,
+          "frameIntervals": null,
+          "pageLongTasks": {
+            "supported": true,
+            "count": 0,
+            "over50Ms": 0,
+            "maxMs": 0,
+            "scope": "page-wide from arming through completion; not attributed to reward rendering"
+          },
+          "inputEvents": {
+            "trusted": 2,
+            "synthetic": 0
+          }
+        },
+        {
+          "scenario": "result-reveal",
+          "outcome": "discarded: target surface did not appear within 30 seconds",
+          "durationMs": 20000,
+          "activeElapsedMs": null,
+          "surfaceVisibleWhenArmed": false,
+          "frameIntervals": null,
+          "pageLongTasks": {
+            "supported": true,
+            "count": 4,
+            "over50Ms": 4,
+            "maxMs": 430,
+            "scope": "page-wide from arming through completion; not attributed to reward rendering"
+          },
+          "inputEvents": {
+            "trusted": 3,
+            "synthetic": 0
+          }
+        },
+        {
+          "scenario": "result-reveal",
+          "outcome": "discarded: target surface did not appear within 30 seconds",
+          "durationMs": 20000,
+          "activeElapsedMs": null,
+          "surfaceVisibleWhenArmed": false,
+          "frameIntervals": null,
+          "pageLongTasks": {
+            "supported": true,
+            "count": 0,
+            "over50Ms": 0,
+            "maxMs": 0,
+            "scope": "page-wide from arming through completion; not attributed to reward rendering"
+          },
+          "inputEvents": {
+            "trusted": 2,
+            "synthetic": 0
+          }
+        },
+        {
+          "scenario": "result-reveal",
+          "outcome": "observed",
+          "durationMs": 20000,
+          "activeElapsedMs": 20004.5,
+          "surfaceVisibleWhenArmed": false,
+          "frameIntervals": {
+            "frames": 1124,
+            "p50Ms": 16.699999999953434,
+            "p95Ms": 16.79999999998836,
+            "maxMs": 416.70000000001164,
+            "over33ms": 5
+          },
+          "pageLongTasks": {
+            "supported": true,
+            "count": 6,
+            "over50Ms": 6,
+            "maxMs": 417,
+            "scope": "page-wide from arming through completion; not attributed to reward rendering"
+          },
+          "inputEvents": {
+            "trusted": 2,
+            "synthetic": 0
+          }
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "rawReportsAccepted": true,
+    "actualSelectedSettingsMatchBaseline": true,
+    "viewportMatchesBaseline": true,
+    "manifestHashMatchesCandidate": true,
+    "fetchedObserverHashesMatchBaseline": true,
+    "comparisonsComparable": true
+  },
+  "limitations": [
+    "One accepted20s sample per scenario per build; about0.5988% p95 increase, within5% for these observations only. No repeated-trial confidence interval or release qualification.",
+    "Stationary active-play is background simulation/rendering, not sustained active-input play.",
+    "Real first wins use the same public settings and input protocol but different routes, enemy locations, score and duration; this is not identical-replay timing.",
+    "Frame intervals include observer and browser scheduling overhead. Page-wide long tasks from arming through completion do not attribute reward work or establish its50ms target.",
+    "Connected resources and approximate heap do not measure detached owners, unreleased object URLs, retained decoder allocations or total edition-owned memory.",
+    "Current candidate was locally compiled twice; this does not prove downloaded/deployed current release bytes or PWA installation behaviour."
+  ]
+}

@@ -1,10 +1,160 @@
 # Reveal Line: player-first UX execution
 
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
+> **Historical reference:** the [1 October historical review and priority choices](plan-priorities-2026-10-01.md).
+> The recommendation is presented for user review; existing approvals/deferrals
+> remain intact. The [30 September completed/remaining review](plan-review-2026-09-30.md)
+> and [daily source register](plan-status-2026-09-30.md) preserve the earlier snapshots.
+> These distinguish integrated
+> UX foundations, current owner corrections, continuous-main Pages, immutable
+> releases, prepared artwork and unfinished device/public acceptance. The dated
+> checkpoints below retain historical evidence; old serial version allocations,
+> test totals and pending PR labels are not today's queue or fresh passing checks.
+
+> **Current release-coordination policy (27 September 2026):** the dedicated
+> release-coordinator chat is the sole merge, version, freeze, archive, selector,
+> Pages, and publication authority. User-directed delivery is latest-first across
+> compatible reviewed changes. Older version groupings and PR chains are
+> preparation labels rather than mandatory separate or serial releases. A new
+> release does not require deploying another historical archive first. Existing
+> immutable releases and archives remain preserved. Focused behavior, source and
+> provenance, current public bytes, and scoped player-flow gates still block
+> acceptance.
+
 Approved 24 September 2026. This replaces the execution order in the older
 whole-game plans; it does not erase their content, compatibility or qualification
-requirements. Each independent feature is released before the next is accepted.
+requirements. The later approved batch policy permits parallel implementation and
+compatible aggregate delivery; public acceptance still requires its own evidence.
+
+## Current checkpoint — 26 September 2026
+
+This checkpoint supersedes older paragraphs below that describe themselves as
+current. Those paragraphs remain unchanged as dated implementation and release
+evidence.
+
+**Accepted public baseline:** v0.141.6 is immutable and selected on Pages from
+exact source `d3b48436318c9d056678089b219e47534b554897`. Archive99 preserves its v0.141.5
+predecessor. Selector PR #703 merged as `b7857fff816434f950a9c895ef4de00bd7a9895e`, and Pages run
+`36272082479` passed assembly, deployment, and the exact 1,730-file / 629,207,913-byte public audit.
+Browser review confirmed ordinary Solo with 91 Journey missions, the 286-mission library, Creator,
+and exact AVC+AAC video inspection and three-second poster capture. The complete acceptance record
+is in `docs/community-v01416-public-acceptance.md`.
+
+**Completed release infrastructure:** PR #692 merged exact draft recovery, PR #658 merged source/metadata-bound admission, and PR #659 merged the five-release global selector. Pages run `36261378630` passed assembly, deployment and public-byte audit. The public explorer now presents exactly five playable releases while preserving every historical tag, release, asset and archive. These infrastructure changes do not alter frozen game bytes.
+
+**Accepted source-preservation canary:** v0.141.6 introduces dual readers and completed the first
+reviewed deterministic commit-plus-manifest source-preservation canary. PR #662
+contains the required fixture correction that superseded closed PR #689. Its
+exact-head focused gate, qualification, format-v2 manifest freeze, independent
+inspection, evidence assembly and guarded publication all passed for source
+`d3b48436318c9d056678089b219e47534b554897`. The immutable release has nine
+hashed assets and no `source.tar`. Archive99, public selection, exact-byte audit, and
+built-in-browser acceptance have passed.
+
+**Active candidate — v0.141.7:** the Team teaching, reward and navigation batch
+is reconciled onto current integration main
+`e3baddb3ed59bbb698c02a8f97af52c01c79249b`, including PR #706's accepted
+private soundtrack intake, while the accepted public baseline remains v0.141.6.
+The repaired teaching helper consumes semantic ground context
+and Support capabilities derived from actual arena threats, including travelling
+line impacts and relay sparks. It uses live English and Ukrainian catalog keys,
+preserves each arena's authoritative opening rule, and suppresses already
+introduced cues on Retry. Collection result, theme, difficulty, loading, progress
+and success copy resolve through the same live locale boundary without repainting
+the picture. The previously reported focused contextual host, navigation,
+localization, Collection, gallery, and specialist cohort is reconciled at 125/125
+sequentially. The review-correction Team/Library cohort passes 110/110
+sequentially, and the inherited soundtrack-intake cohort passes 108/108
+sequentially. Repository validation, localization, full lint, game/native
+formatting, Motion Lab syntax, diff check, and version parity pass locally.
+Hosted exact-head qualification and built-in-browser cut → Support → rescue
+review remain before freeze; long suites are waived by the committed temporary
+policy and are not reported as passing.
+
+**Ordered continuation:** Player-first work resumes at v0.141.7 in the approved
+compatible batches below. Reconcile every batch onto the accepted predecessor
+and rerun its cumulative exact-source gates before release. Older target versions
+in draft titles are stale where they disagree with this order. Physical
+controller/touch, comprehensive offline and human balance checks remain separate
+from modeled or built-in-browser evidence.
+
+| Order | Working release | Scope                                                      | Current source input                                                                |
+| ----- | --------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 1     | v0.141.4        | Couch secondary navigation and Team continuation           | publicly accepted exact source `cc0309ffaaea9050a44f7b7592d38ba5a0ade78c`           |
+| 2     | v0.141.5        | Bounded community S3 package and resumable-upload storage  | publicly accepted exact source `edd5fa39ae3f0bdf7bc6fa156c461925df794577`           |
+| 3     | v0.141.6        | Dual-reader source-manifest release and opt-in canary path | immutable release and public acceptance complete                                    |
+| 4     | v0.141.7        | Teaching, reward and navigation batch                      | semantic bilingual source prepared on accepted v0.141.6 main; PR/browser gates next |
+| 5     | v0.141.8        | Failure and continuation batch                             | PR #545 → #552 → #557; rerun cumulative exact-source gates                          |
+| 6     | v0.141.9        | Pause, Settings/Help and Collection return batch           | PR #542 → #548; rerun cumulative exact-source gates                                 |
+| 7     | v0.142.0        | Existing offline delivery batch                            | preserve PR #605 → #609 → #619 → #588 ownership and allocation                      |
+| 8     | v0.143.0        | Existing soundtrack batch                                  | preserve its current owner and release allocation                                   |
+| 9     | after v0.143.0  | UX6 cumulative qualification                               | exact accepted predecessor; no aggregation of stale component evidence              |
+
+Known corrections remain part of these working allocations:
+
+- v0.141.3 keeps **Cancel preparation** as an explicit recovery action for a
+  stalled artwork request, but passive loading leaves focus unclaimed. Local
+  correction `651b78756039f48d332a97528503193d9111c382` updates the stale focus
+  contract and selected Team fixtures; its sequential recovery, bootstrap,
+  quick-start and complete Team host evidence passes 109/109. Restoring passive
+  Cancel focus would reintroduce the reported controller/Steam Deck failure.
+- The v0.141.8 Versus-cue input retains local correction `9360ef07279400c59bb7c7111e7015738b84df02`
+  restarts the full cue after an interruption during visible **Go**, while
+  keeping explicit Retry on its shorter recipe. Complete cue, candidate Versus
+  and continuation evidence passes 17/17, 13/13 and 10/10 sequentially.
+- v0.141.8 requires an isolated complete Solo host rerun. Its new named-destination
+  cases pass when selected alone, while a broader run under concurrent host load
+  hit bounded settling timeouts.
+- v0.141.9 must take only the prepared five-path donor delta after v0.141.8 plus
+  local correction `b272bec9d30155a3fa51857c01a2810e4b55ccd0`. The correction
+  repairs deterministic Soundtrack fixture setup without weakening controller
+  Back/Escape semantics and adds live-flight Help return coverage. All three
+  complete focused files pass 72/72 sequentially; modeled input remains separate
+  from physical touch and controller evidence.
+
+**Remaining:** UX6 still owns one cumulative whole-player qualification after
+the v0.143.0 batch. It must exercise complete Solo, Versus and Team journeys; real browser
+layout and focus at desktop, 1280×800, portrait, short landscape and 200% zoom;
+keyboard, touch, reduced-effects and accessibility behavior; gallery memory and
+frame-time comparison; offline install/update/recovery; and deployed public-byte
+regression. Existing focused PR passes are component evidence and cannot be added
+together as proof of the cumulative source.
+
+The temporary fast-release policy waives long automated suites; a waived, skipped
+or cancelled run is not a pass. Modeled gamepads and DOM clicks are not physical
+controller, Steam Deck or touch-device evidence. The current offline browser
+record was captured against an earlier implementation and leaves complete Team
+play and installed-device coverage open. Physical devices, human balance,
+cross-runtime replay portability and comprehensive offline acceptance therefore
+remain separately reported gates.
+
+The v0.141.7 reconciliation audit found that PR #543's original teaching helper
+derived behavior from localized display labels and hard-coded English ground
+text. The repaired batch must consume semantic `groundContext` and
+`supportCapabilities`, add English and Ukrainian catalog keys, update an active cue
+when the language changes, and cover the real host path. PR #580's gallery
+commits carry cleanly after that runtime layer. PR #553 is historical status text
+and must be represented by this live checkpoint instead of cherry-picked.
 
 ## Current delivery status
+
+Checkpoint on 26 September 2026: **v0.132.5 is immutable, selected publicly and playable.** The corrective Team artwork deadline preserves
+exact byte/digest/dimension verification while allowing slower public devices to
+reach the ready state. Public browser review reached ready Solo, Versus and Team
+entry, including the Team picture binding and Ukrainian interface. A later live
+language-switch audit found that Solo's primary Continue label and destination
+can remain English after changing the surrounding UI to Ukrainian; that defect
+belongs to the next corrective release and does not alter the immutable tag.
+
+The current order starts from released v0.141.3 Team quick start, then v0.141.4 Couch secondary
+navigation, v0.141.5 Team teaching, v0.141.6 deliberate Team terminal Retry,
+v0.141.7 Versus countdown, v0.141.8 named result destinations and v0.141.9
+Settings/Help/Collection return closure, then UX6 qualification. Prepared
+branches must rebase onto each accepted predecessor; their focused evidence is
+not cumulative release acceptance.
 
 Checkpoint on 25 September 2026: **the public selector reports v0.109.0 from
 source `b13089b702391c275f2505d1a76c87eebb9dcce0`. The v0.110.0 actor-size

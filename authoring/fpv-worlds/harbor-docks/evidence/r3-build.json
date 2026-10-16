@@ -1,0 +1,127 @@
+{
+  "format": "FPVHarborWorldBuild.v1",
+  "stage": "Eight authored challenges; qualification is recorded separately against this exact pack",
+  "revision": "r3",
+  "source": {
+    "bytes": 761036,
+    "sha256": "c7609e2bb9b2371124a311e4128c3a3e6c81aaadd3613806bb6405270821d246",
+    "triangles": 7900,
+    "materials": 10,
+    "nodes": 53,
+    "textures": 2,
+    "colliders": 38
+  },
+  "prepared": {
+    "bytes": 760368,
+    "sha256": "9a0ec37f294afad1ac906e10f5483769bfca9dc1f7a0e30769fda110ecbc1854",
+    "validatorErrors": 0
+  },
+  "pack": {
+    "bytes": 878942,
+    "sha256": "97887c21d200f6e1bc180eea7aeb2e1ed99e72eb4e86e089ab39dd0ab108dcad",
+    "identity": "fpv-pack:97887c21d200f6e1bc180eea7aeb2e1ed99e72eb4e86e089ab39dd0ab108dcad"
+  },
+  "zip": {
+    "bytes": 878998,
+    "sha256": "3cd3d47d1406a2fb7c4ae103368cc1f2924997209136eb12ed8ed2521ee7aa9b"
+  },
+  "courses": [
+    {
+      "id": "harbor-docks-01",
+      "title": "Quay check-in",
+      "activity": "orientation",
+      "steps": {
+        "self-level": 5,
+        "acro": 5
+      },
+      "actors": 0
+    },
+    {
+      "id": "harbor-docks-02",
+      "title": "Container perimeter",
+      "activity": "race",
+      "steps": {
+        "self-level": 10,
+        "acro": 10
+      },
+      "actors": 0
+    },
+    {
+      "id": "harbor-docks-03",
+      "title": "Gantry height line",
+      "activity": "race",
+      "steps": {
+        "self-level": 9,
+        "acro": 9
+      },
+      "actors": 0
+    },
+    {
+      "id": "harbor-docks-04",
+      "title": "Service-deck landing",
+      "activity": "precision",
+      "steps": {
+        "self-level": 3,
+        "acro": 3
+      },
+      "actors": 0
+    },
+    {
+      "id": "harbor-docks-05",
+      "title": "Terminal cart escort",
+      "activity": "follow",
+      "steps": {
+        "self-level": 4,
+        "acro": 4
+      },
+      "actors": 1
+    },
+    {
+      "id": "harbor-docks-06",
+      "title": "Deck inspection",
+      "activity": "observe",
+      "steps": {
+        "self-level": 4,
+        "acro": 4
+      },
+      "actors": 1
+    },
+    {
+      "id": "harbor-docks-07",
+      "title": "Training-drone bay",
+      "activity": "combat",
+      "steps": {
+        "self-level": 6,
+        "acro": 6
+      },
+      "actors": 1
+    },
+    {
+      "id": "harbor-docks-08",
+      "title": "Harbor circuit",
+      "activity": "capstone",
+      "steps": {
+        "self-level": 10,
+        "acro": 10
+      },
+      "actors": 0
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "source/courses.mjs",
+      "bytes": 11545,
+      "sha256": "1d19a3a3fe7063fef26faf5417da73630b15d32e03fda038184e3441dd3e6382"
+    },
+    {
+      "path": "build-world.mjs",
+      "bytes": 7272,
+      "sha256": "979e2e681d340369a33baf74a269d0e57d1b65309456f2c2d609f7acb6976178"
+    }
+  ],
+  "worldCount": 1,
+  "layoutCount": 8,
+  "acceptedArtBytesUnchanged": true,
+  "runtimeChanges": 0,
+  "limitsUnchanged": true
+}

@@ -1,3 +1,5 @@
+import { contentCombatMarkers, traceContentActor } from '../content-design/actor-marker.mjs';
+import { drawHumanoidPixelBody } from '../hunt/destruction.mjs';
 import { t } from '../i18n/index.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { boardPaintSizeForLevel } from '../ui/render.mjs';
@@ -19,6 +21,12 @@ export function paintEditorMap(canvas, current) {
     'xonix-level.v6',
     'xonix-level.v7',
     'xonix-level.v8',
+    'xonix-level.v9',
+    'xonix-level.v11',
+    'xonix-level.v12',
+    'xonix-level.v13',
+    'xonix-level.v14',
+    'xonix-level.v15',
   ].includes(current.level.version)
     ? createRun(current.level, { ...current.settings, classRecipes: current.classRecipes })
     : null;
@@ -92,6 +100,28 @@ export function paintEditorMap(canvas, current) {
     c.beginPath();
     c.arc(e.x * s, e.y * s, e.type === 'lane-boss' ? 12 : 6, 0, Math.PI * 2);
     c.fill();
+  }
+  for (const actor of contentCombatMarkers(current.level)) {
+    c.save();
+    if (actor.inactive) c.globalAlpha = 0.5;
+    if (actor.huntKind) {
+      c.translate(actor.x * s - 8, actor.y * s - 8);
+      const policy = current.level.pursuit?.actors.find((entry) => entry.id === actor.id);
+      const native = (run?.classic ?? run?.runningEnemies)?.combatPatrols?.actors.find(
+        (entry) => entry.id === actor.id,
+      );
+      drawHumanoidPixelBody(
+        c,
+        { ...native, kind: actor.huntKind, family: policy?.behavior ?? actor.huntKind },
+        current.theme.palette,
+      );
+    } else {
+      c.fillStyle = current.theme.palette.accent;
+      c.beginPath();
+      traceContentActor(c, actor.type, actor.x * s, actor.y * s, 7);
+      c.fill();
+    }
+    c.restore();
   }
   for (const o of current.level.objectives) {
     c.strokeStyle = current.theme.palette.accent;

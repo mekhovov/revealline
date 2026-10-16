@@ -123,34 +123,57 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
     'shell-play',
-    'shell-gallery',
     'shell-options',
-    'shell-workshop',
     'shell-sound',
   ]);
+  for (const id of ['shell-offline', 'shell-offline-status'])
+    assert.equal(page.$(id).closest('[role="tabpanel"]').id, 'settings-panel-content');
   assert.equal(
     page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]'),
     null,
   );
   assert.equal(page.$('shell-release-explorer').getAttribute('href'), 'http://localhost/releases/');
-  assert.equal(page.$('shell-play-options').open, false, 'Advanced play options stay collapsed.');
+  assert.equal(
+    page.$('shell-play-options').open,
+    true,
+    'Advanced play options are expanded inside Gameplay.',
+  );
+  assert.equal(
+    page.$('shell-play-options').closest('[role="tabpanel"]').id,
+    'settings-panel-gameplay',
+  );
   assert.match(page.$('shell-destination').textContent, /Start · First Signal/);
+  page.$('shell-options').click();
+  page.$('settings-tab-extras').click();
+  for (const id of ['shell-help', 'shell-home-fpv', 'shell-home-practice'])
+    assert.equal(page.$(id).closest('[role="tabpanel"]').id, 'settings-panel-extras');
+  page.$('shell-home-practice').focus();
+  page.$('shell-home-practice').click();
+  assert.equal(page.$('optional-practice-dialog').open, true);
+  assert.equal(page.doc.activeElement.id, 'optional-practice-close');
+  page.$('optional-practice-close').click();
+  assert.equal(page.doc.activeElement.id, 'shell-home-practice');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual([...page.storage.map], stored);
+  assert.equal(page.$('settings-dialog').open, true);
+  assert.equal(page.$('shell-workshop').closest('[role="tabpanel"]').id, 'settings-panel-extras');
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
-  assert.equal(page.doc.activeElement.closest('dialog'), page.$('shell-workshop-dialog'));
-  const buildInformation = [...page.$('shell-workshop-dialog').querySelectorAll('a')].filter(
+  assert.ok(
+    page.doc.activeElement.closest('dialog') === page.$('shell-workshop-dialog'),
+    page.doc.activeElement?.id,
+  );
+  const extras = page.$('settings-panel-extras');
+  const buildInformation = [...extras.querySelectorAll('a')].filter(
     (link) => link.getAttribute('href') === '../site/about.html#versions',
   );
-  assert.equal(buildInformation.length, 1, 'More has one About route.');
-  assert.equal(
-    buildInformation[0].textContent.replaceAll('&amp;', '&'),
-    'AboutCredits and current build',
+  assert.equal(buildInformation.length, 1, 'Extras has one About route.');
+  assert.ok(
+    page.$('shell-workshop-dialog').querySelector('[data-release-explorer]') ===
+      page.$('shell-release-explorer'),
+    'Release history remains reachable through the retained Workshop owner in Extras',
   );
-  assert.equal(
-    page.$('shell-workshop-dialog').querySelector('[data-release-explorer]'),
-    page.$('shell-release-explorer'),
-  );
-  assert.ok(page.$('shell-workshop-dialog').contains(page.$('shell-catalogue')));
+  assert.ok(page.$('settings-panel-content').contains(page.$('shell-catalogue')));
   assert.ok(
     [...page.$('shell-workshop-dialog').querySelectorAll('a')].some(
       (link) => link.getAttribute('href') === '../authoring/asset-studio/',
@@ -158,10 +181,12 @@ test('title keeps its game destinations and quick sound; Workshop and unified Mi
   );
   page.$('shell-workshop-dialog').querySelector('button').click();
   assert.equal(page.$('shell-workshop-dialog').open, false);
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-dialog').close();
   assert.equal(page.$('shell-home').open, true);
   await openMissions(page);
   const setup = page.$('mission-picker-setup');
-  assert.equal(setup.closest('dialog'), page.$('journey-chooser'));
+  assert.ok(setup.closest('dialog') === page.$('journey-chooser'), setup.closest('dialog')?.id);
   assert.equal(setup.querySelector('summary').textContent, 'Current Solo flight setup');
   assert.equal(page.$('pack-select').closest('label').hidden, true);
   page.$('journey-back').click();
@@ -233,9 +258,7 @@ test('visible title Start launches directly and Continue explicitly resumes the 
   assert.deepEqual(visibleActions(page), [
     'shell-continue',
     'shell-play',
-    'shell-gallery',
     'shell-options',
-    'shell-workshop',
     'shell-sound',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);
@@ -380,5 +403,30 @@ test('controller Back retains a cancellation warning when a transaction keeps it
   assert.equal(page.$('shell-home').open, true);
   assert.match(page.$('controller-ui-hint').textContent, /operation is still in progress/);
   assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('Settings Extras FPV simulator uses the bundled route and preserves the game return address', async (t) => {
+  const page = await soloPage(t, { titleScreen: true });
+  // The finite DOM keeps defaultView separate from the host window. Browsers
+  // expose the same location object through both.
+  page.doc.defaultView.location = page.win.location;
+  let destination;
+  page.win.location.assign = (url) => {
+    destination = url;
+  };
+  const stored = [...page.storage.map];
+  page.$('shell-options').click();
+  page.$('settings-tab-extras').click();
+  assert.equal(page.$('shell-home-fpv').closest('[role="tabpanel"]').id, 'settings-panel-extras');
+  assert.equal(page.$('shell-home-fpv').hidden, false);
+  page.$('shell-home-fpv').click();
+  const target = new URL(destination);
+  assert.equal(target.pathname, '/optional-practice/civilian-fpv/index.html');
+  assert.equal(
+    target.searchParams.get('game-return'),
+    new URL(page.win.location.href).pathname + new URL(page.win.location.href).search,
+  );
+  assert.deepEqual([...page.storage.map], stored);
   assert.deepEqual(page.errors, []);
 });

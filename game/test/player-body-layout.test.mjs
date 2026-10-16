@@ -157,17 +157,17 @@ function poseFor(
   };
 }
 
-test('gameplay player bodies can suppress detached procedural rotor overlays', () => {
+test('original player bodies can suppress the separately drawn hub-connected blades', () => {
   const pose = poseFor(390, { width: 64, height: 64 }),
     withRotors = surface(),
     cleanBody = surface();
   paintCharacter(withRotors.ctx, { ...pose, x: 12, y: 8 });
   paintCharacter(cleanBody.ctx, { ...pose, x: 12, y: 8, showRotors: false });
-  assert.ok(withRotors.calls.some((call) => call.op === 'arc'));
+  assert.ok(withRotors.calls.some((call) => call.op === 'lineTo'));
   assert.equal(
-    cleanBody.calls.some((call) => call.op === 'arc'),
+    cleanBody.calls.some((call) => call.op === 'lineTo'),
     false,
-    'the approved body remains without external corner-blade circles',
+    'the original body remains without an additional blade layer',
   );
   assert.equal(cleanBody.calls.filter((call) => call.op === 'drawImage').length, 1);
 });

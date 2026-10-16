@@ -52,7 +52,7 @@ test('all packaged optional pack names stay in details through real host progres
     ...(await Promise.all(config.optionalOffline.map(readJSON))),
     ...catalog.packs,
   ].map(({ name }) => ({ name }));
-  assert.equal(optionalPacks.length, 12, 'Exercise the full current packaged optional list');
+  assert.equal(optionalPacks.length, 14, 'Exercise the full current packaged optional list');
   const scope = 'https://game.example/releases/v057/site/';
   const marker = {
     format: 'revealline-offline.v1',
@@ -155,7 +155,9 @@ test('optional notes use plain text and are hidden when unavailable', () => {
     availability: () => ({ available: true, note: '<b>Pack</b> is optional.' }),
   });
   assert.equal(page.note.textContent, '<b>Pack</b> is optional.');
-  assert.equal(page.note.children.length, 0);
+  // The fixture stores text nodes in its children array; inspect actual elements.
+  assert.equal(page.note.querySelectorAll('*').length, 0);
+  assert.equal(page.note.firstChild.nodeType, 3);
   assert.equal(page.note.hidden, false);
   page.panel.destroy();
   const empty = boundary();

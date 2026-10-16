@@ -1,0 +1,58 @@
+{
+  "format": "FPVAlpineStationApproachDeliveryPreparation.v1",
+  "sourceGeometryHead": "808a03d906cadb6778b5ac684d005e542ea37bfa",
+  "sourceNativeHead": "b6cc53c8808a172f19e1f382944b90bf7d4c9d1f",
+  "sourceReceiptHead": "6ec1f1448305b46dc63ff0c05302dc7ea21597ff",
+  "sourceMerge": "5388647fca9777b26c24c52e7f4f8d2c9e4931d4",
+  "sourceRevision": "relief-r6-station-approach",
+  "oldImmutableHead": "95b2f108c7c0ef347e120e6f66775805ee5d6e8a",
+  "oldNamespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/",
+  "newNamespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r6/",
+  "revision": "station-r6",
+  "pin": {
+    "bytes": 115316,
+    "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804"
+  },
+  "payloadFiles": 722,
+  "payloadBytes": 22698929,
+  "totalWithDescriptorBytes": 22814245,
+  "reusedBlobCount": 716,
+  "changedPayloads": [
+    {
+      "path": "scenery/alpine-12-12.glb",
+      "bytes": 84600,
+      "sha256": "12b583ab7e9c2d751ce0715860b932149b7b67b625e68f1cc923da4a73ef84a7"
+    },
+    {
+      "path": "scenery/alpine-12-12.json",
+      "bytes": 94535,
+      "sha256": "4aba9f0e57f6fd6dd8d3763fd7910f0b331a0952e0de715ef29a285a0d26b3eb"
+    },
+    {
+      "path": "scenery/alpine-13-12.glb",
+      "bytes": 289844,
+      "sha256": "dbc5c3c50dcc3217b0e4467971298ecbcf6eed21506df63a70cfd12f11c0c73b"
+    },
+    {
+      "path": "scenery/alpine-13-12.json",
+      "bytes": 359434,
+      "sha256": "e8bc8322ba19fe47f7ac22b35a279e4510dc8d3acf19daa408b74ee56dd180fa"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 50341,
+      "sha256": "8aa0e223d8416b7fa8053c1be28d28f3a06456a73c6e3f06024409b19441eb56"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 105525,
+      "sha256": "c358b01a806e53798cac41f0d5e59dd3bdc1e94bb6d815543525741112e1f39a"
+    }
+  ],
+  "oldFilesPreserved": true,
+  "sourceNativeAccepted": true,
+  "nativeReceiptSHA256": "4b3143e39983eae1383bad9de7ea1c067d02c65f306b7fa82908b0afb206f38b",
+  "actualDownloadedByteQualification": false,
+  "productionSessionQualification": false,
+  "playerAdmission": false
+}
