@@ -9,6 +9,11 @@ import { validateOptionalPackageAdmission } from '../publishing/optional-package
 import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
 import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
+import {
+  selectInstallationDownloadFaults,
+  readPreparedCacheFingerprints,
+  observeInstallationDownloadFault,
+} from './optional-installation-download-check.mjs';
 import { admitPinnedHistoricalPractice } from './practice-historical-admission.mjs';
 import {
   selectHistoricalInstallationMode,
@@ -173,6 +178,24 @@ const worldSeed = worldSeedEnabled
     }
   : null;
 const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
+const downloadFaultsEnabled = selectInstallationDownloadFaults(
+  process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+);
+assert(
+  !downloadFaultsEnabled || worldSeedEnabled,
+  'Short download faults require the saved-world seed.',
+);
+const downloadAuthority = downloadFaultsEnabled
+  ? await Promise.all(
+      ['optional-installation-download-check.mjs', 'practice-download-fault.mjs'].map(
+        async (name) => ({
+          path: name,
+          sha256: sha(await readFile(new URL(name, import.meta.url))),
+        }),
+      ),
+    )
+  : [];
+const downloadFaults = { mode: 'all-short', cases: [], retries: [], publicEligible: false };
 const transition = {
   kind: historicalPrevious
     ? 'distinct-historically-admitted-candidates'
@@ -343,6 +366,8 @@ try {
       await stage(fpv, priorVersion, priorEntries);
       await stageLauncher(fpv, priorEntries);
       await stage(fpv, failedFixture);
+      if (downloadFaultsEnabled)
+        for (const id of packageIds) if (id !== fpv) await stage(id, failedFixture);
       if (quotaProbeEnabled)
         for (const id of quotaPackageIds) if (id !== fpv) await stage(id, failedFixture);
       await pointer(fpv, priorVersion);
@@ -803,6 +828,116 @@ try {
       });
       await inspect('all-three-offline-after-browser-process-restart');
       await context.setOffline(false);
+      if (downloadFaultsEnabled) {
+        const baseline = await inspect('download-fault-baseline');
+        const cacheInventories = packageIds.map((id) => {
+          const selected = id === fpv ? priorVersion : version,
+            files = id === fpv ? priorEntries : entries.get(id),
+            manifest = JSON.parse(files.get('optional-package.json')),
+            scope = '/' + site(id, selected) + `optional-practice/${id}/`,
+            name = baseline.caches.find((name) => name.includes(`:${scope}:`));
+          assert(
+            name?.endsWith(':' + manifest.revision),
+            'Require the original admitted prepared cache.',
+          );
+          return {
+            name,
+            files: manifest.files
+              .filter((file) => file.path !== `optional-practice/${id}/worker.js`)
+              .map((file) => ({
+                url: url(site(id, selected) + file.path),
+                bytes: file.bytes,
+                sha256: file.sha256,
+              })),
+          };
+        });
+        assert.equal(cacheInventories.length, baseline.caches.length);
+        downloadFaults.preparedCaches = await readPreparedCacheFingerprints(page, cacheInventories);
+        async function retainedDownloadRecords() {
+          await open(fpv, priorVersion);
+          assert.equal(await exportedProof(), savedProof);
+          assert.equal(await exportedProfiles(), savedProfiles);
+          await open(worlds);
+          await openInstallationWorldTab(page, 'packs');
+          const retained = {
+            card: await readInstallationWorldCard(page),
+            database: await readWorldDatabase(page),
+          };
+          assertInstallationWorldSeed(retained, worldSeed.baseline);
+          return retained;
+        }
+        function retainedDownloadOwnership(state, id) {
+          assert.deepEqual(state.keys, baseline.keys);
+          assertQuotaFailedScopeAbsent(state, '/' + site(id, failedFixture));
+          for (const worker of baseline.workers)
+            assert(
+              state.workers.some(
+                (row) => row.scope === worker.scope && row.active === worker.active,
+              ),
+            );
+        }
+        for (const id of packageIds) {
+          const member = `optional-practice/${id}/README.md`,
+            body = entries.get(id).get(member);
+          assert(body, 'The exact admitted README dependency is required.');
+          for (const mode of ['idle', 'cancel-hold']) {
+            await open(id, failedFixture);
+            await revealOfflineUI(id);
+            currentStep = `real download fault ${id} ${mode}`;
+            const observed = { id, mode, passed: false };
+            downloadFaults.cases.push(observed);
+            await observeInstallationDownloadFault({
+              page,
+              server: served.server,
+              origin: new URL(served.url).origin,
+              dependency: {
+                pathname: '/' + site(id, failedFixture) + member,
+                bytes: body.length,
+                sha256: sha(body),
+              },
+              body,
+              mode,
+              prepare: OBSERVED_PACKAGES[id].prepare,
+              status: OBSERVED_PACKAGES[id].status,
+              receipt: observed,
+            });
+            assert.equal(observed.passed, true);
+            const after = await inspect(`download-fault-preserves-all-pointers:${id}:${mode}`);
+            retainedDownloadOwnership(after, id);
+            assert.deepEqual(
+              await readPreparedCacheFingerprints(page, cacheInventories),
+              downloadFaults.preparedCaches,
+            );
+            const retained = await retainedDownloadRecords();
+            observed.recordsPreserved = true;
+            observed.world = retained;
+          }
+          // The fault wrapper is closed before retry; no file is altered.
+          await open(id, failedFixture);
+          await prepare(id);
+          const ready = await inspect(`download-fault-pristine-retry:${id}`);
+          assert.equal(installed(ready, id).active.version, failedFixture);
+          const remove = await revealOfflineRemoval(id);
+          await activateOfflineAction(page, {
+            button: remove,
+            status: OBSERVED_PACKAGES[id].status,
+            expected: /removed/i,
+          });
+          const restored = await inspect(`download-fault-retry-removal-restores-baseline:${id}`);
+          retainedDownloadOwnership(restored, id);
+          assert.deepEqual(
+            await readPreparedCacheFingerprints(page, cacheInventories),
+            downloadFaults.preparedCaches,
+          );
+          const retained = await retainedDownloadRecords();
+          downloadFaults.retries.push({
+            id,
+            preparedAndRemoved: true,
+            recordsPreserved: true,
+            world: retained,
+          });
+        }
+      }
       await stageLauncher(fpv);
       await pointer(fpv, version);
       await page.goto(url(relativeRoot(fpv) + 'app/'));
@@ -984,6 +1119,12 @@ try {
           item.sha256,
           sha(await readFile(new URL(item.path, import.meta.url))),
           'Historical observer authority changed.',
+        );
+      for (const item of downloadAuthority)
+        assert.equal(
+          item.sha256,
+          sha(await readFile(new URL(item.path, import.meta.url))),
+          'Download observer authority changed.',
         );
       const harnessStable =
         harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url))) &&
@@ -1180,6 +1321,26 @@ try {
           quotaProbePerPackage[id]?.completed === true &&
           quotaProbePerPackage[id]?.retryPreparedAndRemoved === true,
       );
+  }
+  if (downloadFaultsEnabled) {
+    downloadFaults.authority = downloadAuthority;
+    downloadFaults.sourceStable = (
+      await Promise.all(
+        downloadAuthority.map(
+          async (item) => item.sha256 === sha(await readFile(new URL(item.path, import.meta.url))),
+        ),
+      )
+    ).every(Boolean);
+    downloadFaults.passed =
+      downloadFaults.sourceStable &&
+      downloadFaults.cases.length === 6 &&
+      downloadFaults.cases.every((item) => item.passed && item.recordsPreserved) &&
+      downloadFaults.retries.length === 3 &&
+      downloadFaults.retries.every((item) => item.preparedAndRemoved && item.recordsPreserved);
+    downloadFaults.scope =
+      'Six native download idle/cancel cases on exact admitted bytes at explicitly synthetic v0.0.1 paths. One original byte then held EOF at a pinned owned-loopback dependency. No virtual clocks, runtime modifications, actual verification-phase cancellation, five-minute limit, real eviction or physical hardware. Gym records are unpopulated; Academy synthetic proof/profile and populated World fingerprints are retained.';
+    report.downloadFaults = downloadFaults;
+    report.passed &&= downloadFaults.passed;
   }
   if (statusDiagnosticsEnabled) {
     report.statusDiagnostics = {
