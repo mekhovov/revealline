@@ -92,6 +92,8 @@ function fixture({
   initialHash = '',
   navigationHash = '#packs',
   backSteps = 2,
+  pauseRenderSamples = 0,
+  pauseRenderPhase = 'active',
 } = {}) {
   const calls = [];
   let phase = 'paused',
@@ -99,7 +101,8 @@ function fixture({
     down = false,
     currentURL = URL + initialHash,
     settingsOpen = false,
-    backs = 0;
+    backs = 0,
+    pauseIssued = false;
   const page = {
     url: () => currentURL,
     waitForEvent: async (event) => {
@@ -115,6 +118,7 @@ function fixture({
     keyboard: {
       press: async (key) => {
         calls.push(['key', key]);
+        if (phase === 'active') pauseIssued = true;
         phase = phase === 'active' ? 'paused' : 'active';
       },
       down: async (key) => {
@@ -135,7 +139,7 @@ function fixture({
       if (down && phase === 'active') height = 0.2;
     },
     evaluate: async () => ({
-      ...hud(height, phase),
+      ...hud(height, pauseIssued && pauseRenderSamples-- > 0 ? pauseRenderPhase : phase),
       ...(wrongGauge || (failAfterDown && down) ? { gauge: 'Speed' } : {}),
     }),
     locator(selector) {
@@ -396,6 +400,36 @@ test('real adapter uses paused pack Fly, explicit native keys, motion and pause'
     ],
   );
   assert.equal(opts.receipt.acceptance.machineWideOutageQualified, false);
+});
+test('pause render delay is observed before four stable samples, without a second pause action', async () => {
+  const { page, calls } = fixture({ pauseRenderSamples: 2 }),
+    opts = options({ restartConfirmed: true, networkProbeFailed: true });
+  await flyRetainedC4WorldOffline(page, opts);
+  assert(opts.receipt.passed && opts.receipt.cleanup.completed);
+  assert.deepEqual(
+    opts.receipt.pauseTransition.observations.map((s) => s.phase),
+    ['active', 'active', 'paused'],
+  );
+  assert(opts.receipt.pauseTransition.passed);
+  assert.equal(opts.receipt.paused.length, 4);
+  assert(opts.receipt.paused.every((s) => s.phase === 'paused'));
+  assert(opts.receipt.paused.at(-1).at - opts.receipt.paused[0].at >= 600);
+  assert.equal(calls.filter((r) => r[0] === 'key' && r[1] === 'Space').length, 2);
+});
+test('missing or wrong native pause state fails with transition evidence and no repeated activation', async () => {
+  for (const pauseRenderPhase of ['active', 'disarmed']) {
+    const { page, calls } = fixture({ pauseRenderSamples: Infinity, pauseRenderPhase }),
+      opts = options({ restartConfirmed: true, networkProbeFailed: true });
+    await assert.rejects(
+      flyRetainedC4WorldOffline(page, opts),
+      /paused HUD|pause transition|timed out|absolute deadline/,
+    );
+    assert(!opts.receipt.passed && !opts.receipt.pauseTransition.passed);
+    assert(opts.receipt.pauseTransition.observations.length > 0);
+    assert.equal(opts.receipt.paused, undefined);
+    assert.equal(typeof opts.receipt.cleanup.completed, 'boolean');
+    assert.equal(calls.filter((r) => r[0] === 'key' && r[1] === 'Space').length, 2);
+  }
 });
 test('wrong public gauge stops before throttle and preserves failed receipt', async () => {
   const { page, calls } = fixture({ wrongGauge: true }),
