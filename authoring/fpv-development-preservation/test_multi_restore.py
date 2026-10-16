@@ -9,7 +9,9 @@ import unittest
 from unittest.mock import patch
 
 from multi_restore_check import EXPECTED, estimate_set, load_set, verify_set
+from pack import pack_part
 from portable_restore_check import verify
+from restore import disk_preflight
 from verify_upload import REPO
 
 
@@ -78,6 +80,29 @@ class MultiRestoreTests(unittest.TestCase):
                     load_set(self.root / 'candidate.json')
                 network.assert_not_called()
 
+    def test_existing_shared_cache_capacity_is_not_reserved_twice(self):
+        entries, sha = load_set(self.root / 'preservation-rollup.json')
+        # Enough actual remaining capacity for the second logical tree, but not for a
+        # second allocation of its already present exclusive cached asset.
+        remaining = 2 * 1024 ** 3 + 256 * 1024 ** 2 + 8192 + len(self.raw) + 1
+        cached = self.root / 'output/shared-cache' / ('asset-1-' + self.sha)
+
+        def free_space(path):
+            return SimpleNamespace(free=remaining if cached.exists() else 100 * 1024 ** 3)
+
+        with (patch('multi_restore_check.shutil.disk_usage', side_effect=free_space),
+              patch('restore.subprocess.run', side_effect=self.download) as network):
+            result = verify_set(entries, sha, self.root / 'output', self.root / 'verified.json')
+        self.assertEqual(network.call_count, 1)
+        self.assertEqual(result['indexes'][0]['diskPreflight']['existingCacheCapacityCreditBytes'], 0)
+        self.assertEqual(result['indexes'][1]['diskPreflight']['existingCacheCapacityCreditBytes'], len(self.raw))
+        self.assertEqual(result['indexes'][1]['diskPreflight']['additionalCacheEstimatedBytes'], 0)
+        # Capacity credit examines size/type only; all content checks remain in real restoration.
+        with patch('restore.digest') as digest:
+            disk_preflight(entries[1]['index'], cached.parent, self.root / 'new-target',
+                           credit_existing_cache=True)
+            digest.assert_not_called()
+
     def test_combined_space_and_asset_conflicts_refuse_before_work_or_network(self):
         entries, sha = load_set(self.root / 'preservation-rollup.json')
         with patch('multi_restore_check.shutil.disk_usage') as disk, patch('restore.subprocess.run') as network:
@@ -93,6 +118,47 @@ class MultiRestoreTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'contradictory'):
             estimate_set(bad)
 
+    def test_real_shared_cas_archive_and_member_receive_only_capacity_credit(self):
+        source, parts, receipts = [self.root / name for name in ['source', 'parts', 'local-receipts']]
+        for path in [source, parts, receipts]:
+            path.mkdir()
+        original = source / 'original.bin'
+        original.write_bytes(self.raw)
+        os.utime(original, ns=(1_500_000_000_000_000_000, 1_500_000_000_000_000_000))
+        row = {'path': original.name, 'bytes': len(self.raw), 'sha256': self.sha,
+               'mtime_ns': original.stat().st_mtime_ns, 'mode': 0o644}
+        sealed = pack_part(source, parts, receipts, 1,
+                           [{'sha256': self.sha, 'bytes': len(self.raw), 'candidates': [row]}])
+        compressed = Path(sealed['archive']).read_bytes()
+        for binding in self.rollup['indexes']:
+            index = json.loads((self.root / binding['file']).read_text())
+            index['directAssets'] = {}
+            index['parts'] = {sealed['sha256']: {'assetId': 2, 'sha256': sealed['sha256'],
+                                               'bytes': sealed['bytes'], 'partManifest': sealed['partManifest']}}
+            binding['sha256'] = self.write_json(binding['file'], index)
+        self.write_json('preservation-rollup.json', self.rollup)
+        entries, sha = load_set(self.root / 'preservation-rollup.json')
+        cached = self.root / 'output/shared-cache' / ('asset-2-' + sealed['sha256'])
+        remaining = 2 * 1024 ** 3 + 256 * 1024 ** 2 + 8192 * 2 + len(self.raw) + 1
+
+        def free_space(path):
+            return SimpleNamespace(free=remaining if cached.exists() else 100 * 1024 ** 3)
+
+        def download(command, stdout):
+            self.assertEqual(command[-1], 'repos/' + REPO + '/releases/assets/2')
+            stdout.write(compressed)
+            return SimpleNamespace(returncode=0)
+
+        with (patch('multi_restore_check.shutil.disk_usage', side_effect=free_space),
+              patch('restore.subprocess.run', side_effect=download) as network):
+            result = verify_set(entries, sha, self.root / 'output', self.root / 'verified.json')
+        self.assertEqual(network.call_count, 1)
+        second = result['indexes'][1]['diskPreflight']
+        self.assertEqual(second['existingCacheCapacityCreditBytes'], len(compressed) + len(self.raw))
+        self.assertEqual(second['additionalCacheEstimatedBytes'], 0)
+        for name in EXPECTED:
+            self.assertEqual((self.root / 'output' / name / 'logical-files/alias').read_bytes(), self.raw)
+
     def test_tampered_shared_cache_is_rejected_without_overwrite(self):
         entries, sha = load_set(self.root / 'preservation-rollup.json')
         counter = 0
@@ -102,7 +168,7 @@ class MultiRestoreTests(unittest.TestCase):
             result = verify(*args, **kwargs)
             counter += 1
             if counter == 1:
-                (self.root / 'output/shared-cache' / ('asset-1-' + self.sha)).write_bytes(b'corrupt')
+                (self.root / 'output/shared-cache' / ('asset-1-' + self.sha)).write_bytes(b'X' * len(self.raw))
             return result
 
         with (patch('restore.subprocess.run', side_effect=self.download) as network,
@@ -111,7 +177,7 @@ class MultiRestoreTests(unittest.TestCase):
                 verify_set(entries, sha, self.root / 'output', self.root / 'no-global-success.json')
         self.assertEqual(network.call_count, 1)
         self.assertFalse((self.root / 'no-global-success.json').exists())
-        self.assertEqual((self.root / 'output/shared-cache' / ('asset-1-' + self.sha)).read_bytes(), b'corrupt')
+        self.assertEqual((self.root / 'output/shared-cache' / ('asset-1-' + self.sha)).read_bytes(), b'X' * len(self.raw))
 
 
 if __name__ == '__main__':

@@ -21,7 +21,8 @@ def verify(index, index_sha, work, receipt_path, shared_cache=None):
     work.mkdir()
     cache = real_directory(shared_cache) if shared_cache is not None else work / 'cache'
     # restore() measures fresh free space before creating cache/output or performing any GET.
-    result = restore(index, cache, work / 'logical-files', work / 'restore-details.json')
+    result = restore(index, cache, work / 'logical-files', work / 'restore-details.json',
+                     credit_existing_cache=shared_cache is not None)
     if (not result['complete'] or result['files'] != checked['logicalFilePaths']
             or result['logicalBytes'] != checked['logicalBytes']
             or result['githubDependencyFileCount'] != checked['dependencyFiles']

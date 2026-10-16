@@ -7,6 +7,7 @@ import os
 from pathlib import Path, PurePosixPath
 import posixpath
 import shutil
+import stat
 import subprocess
 import time
 from pack import digest, safe_relative
@@ -15,7 +16,7 @@ from restore_paths import mkdir_safe, real_directory
 from github_dependencies import restore_dependencies, validate_dependency
 
 
-def disk_preflight(index, cache, target, reserve=2 * 1024 ** 3):
+def disk_preflight(index, cache, target, reserve=2 * 1024 ** 3, credit_existing_cache=False):
     """Conservative fresh-space gate; never clear a runner to make the restore fit."""
     def ancestor(path):
         while not path.exists():
@@ -25,17 +26,43 @@ def disk_preflight(index, cache, target, reserve=2 * 1024 ** 3):
     objects = [row for part in parts for row in part['partManifest']['objects']]
     dependencies = [row for dep in index.get('githubLinkDependencies', []) for row in dep['files']]
     cache_bytes = sum(p['bytes'] for p in parts + direct) + sum(r['bytes'] for r in objects + dependencies)
+    present_cache_bytes = 0
+    if credit_existing_cache:
+        # Existing exclusive caches are never rewritten. Capacity credit is not content trust:
+        # obtain_asset(), restore_part cache checks and obtain_blob() still hash before reuse.
+        def present(path, expected_bytes):
+            real_directory(path.parent)
+            try:
+                current = path.lstat()
+            except FileNotFoundError:
+                return 0
+            return expected_bytes if stat.S_ISREG(current.st_mode) and current.st_size == expected_bytes else 0
+        for row in parts + direct:
+            sha = row['sha256']
+            if (type(row.get('assetId')) is not int or row['assetId'] <= 0
+                    or len(sha) != 64 or any(c not in '0123456789abcdef' for c in sha)):
+                raise ValueError('Unsafe existing-cache asset identity')
+            present_cache_bytes += present(cache / ('asset-' + str(row['assetId']) + '-' + row['sha256']), row['bytes'])
+        for part in parts:
+            validate_header(part['partManifest'])
+            for row in part['partManifest']['objects']:
+                present_cache_bytes += present(cache / ('part-' + part['sha256']) / row['member'], row['bytes'])
+        for row in dependencies:
+            present_cache_bytes += present(cache / ('git-blob-' + row['gitBlobSHA1'] + '-' + row['sha256']), row['bytes'])
+    additional_cache_bytes = cache_bytes - present_cache_bytes
     logical_bytes = sum(r['bytes'] for r in index['files'] + dependencies)
     allowance = 256 * 1024 ** 2 + 8192 * (len(index['files']) + len(objects) + len(dependencies) * 2)
     cache_parent, target_parent = ancestor(cache), ancestor(target.parent)
     cache_free, target_free = shutil.disk_usage(cache_parent).free, shutil.disk_usage(target_parent).free
     same_disk = cache_parent.stat().st_dev == target_parent.stat().st_dev
-    if (same_disk and cache_bytes + logical_bytes + allowance + reserve > min(cache_free, target_free)
-            or not same_disk and (cache_bytes + allowance + reserve > cache_free
+    if (same_disk and additional_cache_bytes + logical_bytes + allowance + reserve > min(cache_free, target_free)
+            or not same_disk and (additional_cache_bytes + allowance + reserve > cache_free
                                   or logical_bytes + allowance + reserve > target_free)):
         raise ValueError('Insufficient free disk before restoration; use bounded partitions on fresh runners')
     return {'cacheEstimatedBytes': cache_bytes, 'logicalCopyEstimatedBytes': logical_bytes,
-            'metadataAllowanceBytes': allowance, 'estimatedPeakBytes': cache_bytes + logical_bytes + allowance,
+            'existingCacheCapacityCreditBytes': present_cache_bytes,
+            'additionalCacheEstimatedBytes': additional_cache_bytes,
+            'metadataAllowanceBytes': allowance, 'estimatedPeakBytes': additional_cache_bytes + logical_bytes + allowance,
             'freeDiskReserveBytes': reserve, 'cacheFreeBytesBeforeRestore': cache_free,
             'targetFreeBytesBeforeRestore': target_free, 'cacheAndTargetOnSameFilesystem': same_disk}
 
@@ -77,7 +104,7 @@ def link_target(path, target, source_root):
     return relative, None
 
 
-def restore(index, cache, target, receipt_path, defer_external=False):
+def restore(index, cache, target, receipt_path, defer_external=False, credit_existing_cache=False):
     if index.get('format') != 'FPVPreservationIndex.v1':
         raise ValueError('Unsupported preservation index')
     link_rows = {r['path']: r for r in index.get('symlinks', [])}
@@ -88,7 +115,7 @@ def restore(index, cache, target, receipt_path, defer_external=False):
     cache, target = real_directory(cache), real_directory(target)
     if target.exists():
         raise FileExistsError('Restore destination must be fresh')
-    disk = disk_preflight(index, cache, target)
+    disk = disk_preflight(index, cache, target, credit_existing_cache=credit_existing_cache)
     target.mkdir()  # Existing destinations are never merged, cleared or overwritten.
     cache.mkdir(parents=True, exist_ok=True)
     if cache.is_symlink() or target.is_symlink():
