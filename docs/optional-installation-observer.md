@@ -222,6 +222,36 @@ and independent receipt review are required; unit fixtures do not close C4.
 
 ## Production directory source and delivery binding
 
+### Narrow package-bound native zoom / keyboard / reduced-motion matrix
+
+`PRACTICE_NATIVE_DIRECTORY_A11Y=1 node
+scripts/observe-practice-directory-native-a11y.mjs PLAN_JSON
+ABSOLUTE_EXISTING_PLAYWRIGHT_MODULE FRESH_OUTPUT_DIRECTORY` requires an exact
+`revealline-practice-directory-native-a11y-plan.v1` plan. Declare protocol
+`practice-directory-native-zoom-a11y.v1`, absolute `repository` and `bundle`,
+clean source-shell `shellRevision`/`shellTree`, original candidate
+`sourceRevision`/`sourceTree`, `envelopeSha256`, Academy `packageRevision`, and
+exactly the six EN/UK-by-package `cases` exported by the adapter. No arbitrary
+selectors, endpoints, scripts or production substitution are accepted.
+
+The owned headed profile uses ordinary native 100→200→100 selection and actual
+geometry. Each fixed case has 90 seconds within ten minutes, ten-second actions,
+32 ordinary Tabs per target and independent five-second cleanup attempts. It
+uses the full committed source shell plus admitted overlay, normal access form,
+directory Details, actual launcher/guide/return controls and Escape focus return.
+Play destinations are inspected but no flight is started. Localization and exact
+descriptor onboarding are checked. Sampled focused controls must be active,
+`:focus-visible`, unobscured, in the viewport, have computed outlines, and show no
+animation/transition under the explicit browser `reducedMotion: reduce` override.
+Role/live attributes are semantics, not proof that assistive technology speaks.
+
+Source/overlay/helper identities are checked before and after. Pending native or
+server operations, failed reset/cleanup or unresolved Chrome launch prevent safe
+profile deletion and a passing result. Native PNGs can be cropped/blank; their
+visual review flags remain false. This protocol does not qualify human
+readability, contrast, screen-reader speech, OS preferences, physical input,
+app flight or a production build. Hardware and hosting remain separate.
+
 ### Separate native Chrome zoom capability (not package qualification)
 
 `PRACTICE_NATIVE_ZOOM_CAPABILITY=1 node scripts/observe-practice-native-zoom.mjs
@@ -259,6 +289,17 @@ loaded as a whole distribution. Every original member and external manifest pin
 remain mandatory; pending I/O cannot pass cleanup. The 90/10/600-second browser
 case/action/overall limits are unchanged. These integrity-I/O durations are not
 startup or player-performance measurements.
+
+For the explicit production-v2 comparison only, set
+`PRACTICE_DIRECTORY_DELIVERY=bounded-original-memory-v1`. Omitted/unknown/non-v2
+modes never silently enable it. The manifest deterministically prioritizes bounded
+text/JSON/image/font originals, retaining at most 128 MiB during full before-hash
+verification, not another unverified copy or an entire gigabyte build. Private
+copied pins/buffers are checked on reads; unselected files use the original
+hash-verified path. The receipt names exact policy, retained/delivered members,
+memory/file requests, pending reads and disposal. Full after-verification remains
+mandatory, with no source fallback, startup-budget increase or hosted-performance
+claim. Native qualification requires a new clean observer receipt.
 
 ## All-three historical migration details
 
