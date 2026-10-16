@@ -99,16 +99,22 @@
       discards the sample. Active samples arm until the player starts or resumes through the game,
       then discard on pause, result, focus loss, mission change or navigation. No input is
       generated. Keyboard counts record only gameplay keys; HUD snapshots describe the observed
-      activity. Canvas and DOM-image pixel estimates are not complete decoded-media or GPU memory
-      measurements. Compare the same scene, viewport, device, browser and input sequence against the
-      selected baseline commit. Frame intervals include browser scheduling and are not CPU render
-      duration. Long tasks are page-wide and cannot identify a reward renderer by themselves.
-      Unsupported browser counters remain unavailable, never a zero result. Supported JavaScript
-      heap counters are sampled every five seconds and at the endpoints, with at most 62 readings.
-      Their peak is only the highest observed value; sampling can miss short peaks. Neither a rising
-      endpoint nor this bounded timeline establishes a memory leak, retained-object ownership, or
-      complete decoded-media/GPU usage. Frame storage is capped at 120,000 intervals; exceeding it
-      discards the sample. HUD observations stay bounded at 120 and cover the requested window.
+      activity. Duel samples also retain each shown encounter card's actual phase, title and
+      instruction at the endpoints and bounded HUD snapshots. Hidden/inert cards do not expose stale
+      phases. Missing cards and other modes remain explicitly unsupported for this additional
+      observation. Phase strings are capped at 80 characters and each text label at 512, with
+      truncation flags. Matching headline HUD values alone cannot establish equivalent encounter
+      work; phase observations still do not synchronize engine state or certify a benchmark. Canvas
+      and DOM-image pixel estimates are not complete decoded-media or GPU memory measurements.
+      Compare the same scene, viewport, device, browser and input sequence against the selected
+      baseline commit. Frame intervals include browser scheduling and are not CPU render duration.
+      Long tasks are page-wide and cannot identify a reward renderer by themselves. Unsupported
+      browser counters remain unavailable, never a zero result. Supported JavaScript heap counters
+      are sampled every five seconds and at the endpoints, with at most 62 readings. Their peak is
+      only the highest observed value; sampling can miss short peaks. Neither a rising endpoint nor
+      this bounded timeline establishes a memory leak, retained-object ownership, or complete
+      decoded-media/GPU usage. Frame storage is capped at 120,000 intervals; exceeding it discards
+      the sample. HUD observations stay bounded at 120 and cover the requested window.
     </p>
     <p id="status" role="status">Ready to observe the current default Journey.</p>
     <details>

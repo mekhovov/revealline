@@ -113,6 +113,37 @@ test('release reader changes select frozen-consumer policy and original archive 
   }
 });
 
+test('multiplayer observer sources retain phase, visibility and lifecycle regressions', () => {
+  for (const file of [
+    'docs/verification/journey-performance.mjs',
+    'docs/verification/journey-performance.html',
+    'scripts/test-journey-performance-observer.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'multiplayer-performance-observer');
+    assert.deepEqual(command.args, ['--test', 'scripts/test-journey-performance-observer.mjs']);
+  }
+});
+
+test('Studio gameplay audio and the shared picture fixture retain both host transports', () => {
+  for (const file of [
+    'game/test/team-duel-studio-gameplay-host.test.mjs',
+    'game/test/helpers/coop-presentation-fixture.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'multiplayer-delivery-acceptance');
+    for (const expected of [
+      'game/test/team-duel-studio-audio.test.mjs',
+      'game/test/team-duel-studio-gameplay-host.test.mjs',
+      'game/test/coop-presentation-bootstrap-retry.test.mjs',
+      'game/test/coop-picture-host.test.mjs',
+    ])
+      assert.ok(command.args.includes(expected));
+  }
+});
+
 test('the separate codec observer retains capture and codec ownership coverage', () => {
   const plan = focusedTestPlan(
     ['docs/verification/team-duel-desktop-audio/studio-codecs.mjs'],

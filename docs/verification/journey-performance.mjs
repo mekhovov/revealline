@@ -299,6 +299,35 @@ document.querySelector('#load').addEventListener('click', () => {
             ]
         ).map((id) => [id, doc.getElementById(id)?.textContent ?? null]),
       );
+    const encounterSnapshot = () => {
+      if (mode !== 'versus')
+        return {
+          supported: false,
+          reason: 'Independent encounter cards are observed only in Duel.',
+        };
+      const text = (node) => {
+        if (!shown(node)) return null;
+        const original = String(node.textContent ?? '');
+        return { text: original.slice(0, 512), truncated: original.length > 512 };
+      };
+      const players = [0, 1].map((seat) => {
+        const group = doc.getElementById(`racer-encounter-${seat}`),
+          title = doc.getElementById(`racer-encounter-title-${seat}`),
+          instruction = doc.getElementById(`racer-encounter-instruction-${seat}`),
+          visible = shown(group),
+          phase = visible && typeof group.dataset?.phase === 'string' ? group.dataset.phase : '';
+        return {
+          player: seat + 1,
+          available: Boolean(group && title && instruction),
+          shown: visible,
+          phase: phase.slice(0, 80) || null,
+          phaseTruncated: phase.length > 80,
+          title: visible ? text(title) : null,
+          instruction: visible ? text(instruction) : null,
+        };
+      });
+      return { supported: players.every((player) => player.available), players };
+    };
     let stopSample = () => {};
     const sample = () => {
       stopSample();
@@ -339,6 +368,7 @@ document.querySelector('#load').addEventListener('click', () => {
         before,
         mediaBefore,
         hudBefore,
+        encounterBefore,
         sampledMission,
         beforeResources,
         previous = null,
@@ -495,6 +525,9 @@ document.querySelector('#load').addEventListener('click', () => {
           activity,
           hudBefore,
           hudAfter: hudSnapshot(),
+          encounterObservationVersion: 1,
+          encounterBefore,
+          encounterAfter: encounterSnapshot(),
           browserBefore: before,
           browserAfter: browserSnapshot(),
           jsHeapTimeline: heapSamples.length
@@ -520,6 +553,7 @@ document.querySelector('#load').addEventListener('click', () => {
         collectHeap(beganAt);
         mediaBefore = mediaSnapshot();
         hudBefore = hudSnapshot();
+        encounterBefore = encounterSnapshot();
         sampledMission = mission();
         beforeResources = win.performance.getEntriesByType('resource').length;
         try {
@@ -557,7 +591,11 @@ document.querySelector('#load').addEventListener('click', () => {
           // Bounded DOM observations preserve real cutting/support/score labels
           // without exposing or mutating the engine. They are included overhead.
           if (now - lastActivityAt >= activityIntervalMs && activity.length < 120) {
-            activity.push({ atMs: now - beganAt, hud: hudSnapshot() });
+            activity.push({
+              atMs: now - beganAt,
+              hud: hudSnapshot(),
+              encounter: encounterSnapshot(),
+            });
             lastActivityAt = now;
           }
           if (previous !== null) {

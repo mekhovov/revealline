@@ -1,0 +1,95 @@
+# Team and Duel — reviewed continuation plan, 16 October 2026
+
+This is the current execution order for the [original expansion plan](team-duel-expansion-plan-2026-10-14.md).
+The original 96 Team / 72 Duel levels and twelve chapter families are delivered;
+six existing Hunt lessons per mode are also discoverable. These are 180 admitted
+missions, not 180 newly authored levels. The [acceptance register](team-duel-qualification-2026-10-15.md)
+retains the exact completed and partial evidence. Human balance playtesting stays
+waived. Native Duel controller testing stays deferred for this run. Desktop on
+this Mac remains the current physical target.
+
+## Review findings
+
+The source/count target is complete. Further bulk authoring would not close the
+remaining delivery, performance or audio gaps. Preserve the authored chapter
+decisions, distinct routes, original media and Studio round trips; concentrate on
+whether players can launch, understand, recover and continue those missions.
+
+At PR source `0fbc1b8cd`, all six industrial feature checks, appearance, candidate
+and utility checks passed. Focused validation still failed one stale blanket
+exclusion of authoring files, after the full build's original-body and core-budget
+checks passed. The build already intentionally includes selected Production
+Workshop descriptors/originals/provenance. Replace that assertion with exact
+admission and byte checks; do not remove selected originals or weaken the build.
+Main has since advanced; this continuation rebases onto `2169552a0` before editing.
+
+The four prior native initial-scene samples are useful bounded evidence. Team's
+reported starting conditions match; Duel's warning phases do not. Zero movement
+keys and unchanged territory cannot qualify sustained pressure. Add actual shown
+encounter phases to observation before making another comparison; never infer
+identical state or improved performance from matching headline HUD values.
+
+## Additional research and its application
+
+These first-party references were checked on 16 October 2026. The applications
+are project recommendations, not claims that the other games use this engine or
+that their player outcomes have been reproduced here. No art, music or layouts
+are copied.
+
+| Reference                                                                                                                                                        | Relevant example                                                                               | Application to the remaining work                                                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Split Fiction — EA](https://www.ea.com/games/split-fiction/split-fiction)                                                                                       | Varied worlds and activities ask partners to coordinate different contributions.               | Keep the chapter's distinguishing decision and partner benefit explicit. Existing layout/alternative-route evidence supplies variety; avoid counting cosmetic swaps as new challenges.                                           |
+| [Super Mario Bros. Wonder developer interview, part 4 — Nintendo](https://www.nintendo.com/us/whatsnew/ask-the-developer-vol-11-super-mario-bros-wonder-part-4/) | Local cooperation supports shared lives, rescue and approachable participation.                | Prioritize understandable recovery and retained progress. Keep the existing Team support/rescue model and explicit Resume; do not invent hidden catch-up rules or auto-resume.                                                   |
+| [TowerFall — developer site](https://www.towerfall-game.com/)                                                                                                    | Limited resources create visible risk/reward; the final-exchange replay helps newcomers learn. | Retain the two demonstrated route choices, equal-input outcomes and deliberate Next/rematch. Use existing recording/replay evidence for review before proposing a separate replay UI.                                            |
+| [Xbox accessibility guideline 103 — Microsoft](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103)                           | Important events need more than one sensory channel; color alone is insufficient.              | Verify numbered seat/shape/text warnings alongside audio, including overlapping two-seat events. Record actual visible encounter phases so a performance sample cannot hide different warning work.                              |
+| [Xbox accessibility guideline 105 — Microsoft](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/105)                           | Independent audio categories and mono output help retain important cues.                       | Audit existing controls before adding settings. Trace custom audio through ordinary gameplay owners; preserve mute/pause/fallback. Digital checks and native decoding do not substitute for speaker/headphone or mono listening. |
+| [The Last of Us Part II accessibility — PlayStation / Naughty Dog](https://www.playstation.com/en-us/games/the-last-of-us-part-ii/accessibility/)                | Traversal/combat cues have a glossary for identifying and listening to gameplay sounds.        | Keep each verification cue named by its gameplay meaning and actual event. Use the existing Studio audition and event probes; prove the ordinary host dispatch before considering another player-facing glossary.                |
+
+## Execution phases and completion conditions
+
+| Phase / priority                       | Work and why it is needed                                                                                                                                                                                                                            | Completion condition                                                                                                                                                                         | Impact if omitted / present status                                                                                                                                                                   |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| C1 / P0 — integration correctness      | Rebase latest main; replace the stale authoring exclusion with the exact selected original-byte contract; test unwanted neighboring sources and corrupt/missing bytes.                                                                               | Retained selected files match source, loose output, ZIP and manifest; unselected neighbors remain excluded; scoped and final-head hosted checks pass.                                        | The PR remains blocked, or a superficial fix silently drops Studio originals. **In progress.**                                                                                                       |
+| C2 / P1 — honest pressure observations | Record the real visible Duel encounter phases/instructions before, during and after each bounded sample. Recheck missing/hidden cards and existing pause/focus/disposal guards. Then attempt sustained native two-seat play using ordinary controls. | Observer regressions pass; receipts distinguish active cutting, safe-ground/idle time, exact mission/options and encountered warnings. Only a completed window can carry frame statistics.   | A scene may look matched while doing different work, and idle results may be mistaken for combat performance. **Observer implementation and all 38 regressions pass; native pressure remains open.** |
+| C3 / P1 — normal-gameplay custom audio | Trace Studio-restored cues through actual Team/Duel host event flow and ordinary player inputs, complementing the existing isolated 35/102 digital checks. Fix only a witnessed ownership/precedence/recovery gap.                                   | Exact restored bytes reach the expected ready custom buffer for each actual host event; mute, pause, cancellation and both Duel owners stay correct. Native event evidence remains separate. | A decoder or direct-call probe could pass while normal gameplay selects the wrong cue. **Actual-host qualification in progress through a supported compiled candidate transport.**                   |
+| C4 / P1 — public/offline continuation  | After integration, verify fixed Next/retry/Studio flows on the resulting rolling source across additional mechanic families. Exercise an actual cross-version interruption/restart and genuine storage pressure.                                     | Final-source public dependency pin plus native player journeys and recovery receipts. Source fault adapters alone do not close this phase.                                                   | Correct local code may still fail through deployed dependencies, old cache or storage recovery. **Waiting for integration/public source; native storage remains open.**                              |
+| C5 / P1 — downloadable/native delivery | Reconcile actual required gate authorities, exact-version source preservation, canonical frozen candidate and independent native size scope. Preserve all originals and current budgets.                                                             | Canonical publisher's own exact-source original artifact, successful required evidence and independent inspection; supported native payload passes its existing contract.                    | A locally readable archive can still be unpublishable or too large after extraction. **Blocked by the recorded required-evidence/source-admission/native-capacity boundaries; not waived.**          |
+| C6 / P2 — listening and other devices  | Perform natural custom-cue listening, warning clarity/fatigue and additional codecs/devices after source corrections. Keep the requested hardware deferral.                                                                                          | Separate actual listener/device receipts; no inferred acoustic or all-device pass.                                                                                                           | Digital signal correctness alone cannot establish audible clarity, accessibility or device behavior. **External acceptance open; Duel hardware deferred for this run.**                              |
+
+C1 precedes dependent publication. C2 and C3 proceed independently while hosted
+checks run. C4 requires the corrected integrated public source. C5 retains the
+single publisher's integration/version/public-acceptance ownership; this plan
+does not authorize replacing required gates, broadening approved source formats,
+raising limits, removing retained assets or manufacturing approval pins.
+
+## Current implementation evidence
+
+The Duel observer retains the shown `data-phase`, title and instruction for both
+players at the endpoints and bounded activity snapshots. Hidden or inert cards
+cannot contribute stale text. Missing cards, unsupported modes and truncated
+labels are explicit. The existing duration, frame-count, pause, focus, navigation
+and mission-change guards remain intact. All 38 observer tests and the combined
+88 observer/routing checks pass with zero failures or skips. A red run against the
+previous observer fails the four new observation cases while preserving the
+partial-window guard. This establishes observation capability, not a new native
+pressure or performance result.
+
+Native steering must follow the real input contract: releasing a direction does
+not stop continuous movement. Both Team and Duel clear that seat's input after a
+banked cut. Use visible closure/coverage checkpoints, then choose fresh field
+edges; repeating the same loop can become idle traversal on claimed ground.
+Direct-core neutral-input fixtures do not establish native key-release behavior
+or a 120-second survivor route.
+
+## Tracking and stopping rules
+
+- Update each row from actual evidence, including failed/discarded attempts and
+  the exact measured source. Old receipts are not relabeled after a rebase.
+- Keep source implementation, bounded adapters, native browser observations,
+  acoustic/device acceptance and publication as separate statuses.
+- Reuse existing chapter/compiler/Studio/audio owners. Necessary tooling remains
+  development-only unless a player-facing correction is demonstrated.
+- Push completed changes to the existing PR and inspect final-head results.
+  Resolve diagnosed failures; do not skip gates to call the plan complete.
+- An external prerequisite stays open with its concrete dependency. Human balance
+  and the user's Duel hardware deferral are not silently converted to passes.

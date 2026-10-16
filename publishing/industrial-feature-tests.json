@@ -122,7 +122,8 @@
         "game/test/overflight-renderer.test.mjs",
         "game/test/overflight-trial-report.test.mjs",
         "game/test/team-duel-audio-qualification.test.mjs",
-        "game/test/team-duel-studio-audio.test.mjs"
+        "game/test/team-duel-studio-audio.test.mjs",
+        "game/test/team-duel-studio-gameplay-host.test.mjs"
       ]
     },
     {

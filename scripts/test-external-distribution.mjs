@@ -28,6 +28,51 @@ const option = {
   catalog: 'game/content/external-worlds.json',
 };
 const sha = (b) => createHash('sha256').update(b).digest('hex');
+const externalAuthoringSource =
+  /^authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters|fracture-lines|fracture-lines-art|fracture-lines-chapter|fracture-ukraine-art|fracture-retro-art|fracture-theme-chapters|countercurrent-chapters|countercurrent-art)\//;
+async function admittedExternalSourcePins(root, config) {
+  const pins = new Map();
+  for (const name of config.include.filter((name) => externalAuthoringSource.test(name))) {
+    const body = await readFile(path.join(root, name));
+    pins.set(name, { path: name, bytes: body.length, sha256: sha(body) });
+  }
+  return pins;
+}
+function assertExternalSourceMembers(files, pins) {
+  const byPath = (a, b) => a.path.localeCompare(b.path);
+  assert.deepEqual(
+    files.filter((file) => externalAuthoringSource.test(file.path)).sort(byPath),
+    [...pins.values()].sort(byPath),
+    'Only exact, explicitly admitted external authoring sources may ship',
+  );
+}
+function assertZipMemberPins(zip, wanted) {
+  const counts = new Map();
+  let offset = 0;
+  while (zip.readUInt32LE(offset) === 0x04034b50) {
+    const method = zip.readUInt16LE(offset + 8);
+    assert.ok(method === 0 || method === 8);
+    const originalBytes = zip.readUInt32LE(offset + 22);
+    const bytes = zip.readUInt32LE(offset + 18),
+      n = zip.readUInt16LE(offset + 26),
+      extra = zip.readUInt16LE(offset + 28),
+      start = offset + 30 + n + extra,
+      name = zip.subarray(offset + 30, offset + 30 + n).toString();
+    if (wanted.has(name)) {
+      counts.set(name, (counts.get(name) || 0) + 1);
+      const compressed = zip.subarray(start, start + bytes);
+      const body =
+        method === 8 ? inflateRawSync(compressed, { maxOutputLength: originalBytes }) : compressed;
+      assert.equal(body.length, originalBytes);
+      assert.equal(body.length, wanted.get(name).bytes);
+      assert.equal(sha(body), wanted.get(name).sha256);
+    }
+    offset = start + bytes;
+  }
+  assert.equal(zip.readUInt32LE(offset), 0x02014b50);
+  assert.equal(counts.size, wanted.size);
+  assert([...counts.values()].every((n) => n === 1));
+}
 async function directory(t) {
   const p = await realpath(await mkdtemp(path.join(os.tmpdir(), 'revealline-external-build-')));
   t.after(() => rm(p, { recursive: true, force: true }));
@@ -73,6 +118,96 @@ test('catalog symlink and missing catalog refuse before source compiler import o
   await assert.rejects(readExternalDistributionEntries(root, option), /symbolic links/);
 });
 
+test('explicit Production originals retain exact source pins without shipping neighboring authoring inputs', async (t) => {
+  const dir = await directory(t),
+    root = path.join(dir, 'source'),
+    out = path.join(dir, 'out');
+  const admitted = [
+    'authoring/library/route-worlds/descriptors/retro.json',
+    'authoring/library/retro-route-art/provenance.json',
+    'authoring/library/retro-route-art/originals/crosswind-courier.png',
+  ];
+  const production = await readBuildConfig(source);
+  for (const name of admitted) {
+    assert(production.include.includes(name));
+    await mkdir(path.dirname(path.join(root, name)), { recursive: true });
+    await writeFile(path.join(root, name), await readFile(path.join(source, name)));
+  }
+  const unselected = [
+    'authoring/library/route-worlds/build.mjs',
+    'authoring/library/route-worlds/descriptors/not-selected.json',
+    'authoring/library/retro-route-art/originals/not-selected.png',
+    'authoring/library/retro-route-art/.private',
+  ];
+  for (const name of unselected) await writeFile(path.join(root, name), 'unselected neighbor');
+  await mkdir(path.join(root, 'game'), { recursive: true });
+  await writeFile(
+    path.join(root, 'game/index.html'),
+    '<html><head></head><body>Fixture</body></html>',
+  );
+  await writeFile(
+    path.join(root, 'game/build-config.json'),
+    JSON.stringify({
+      version: 'fixture',
+      entry: 'game/index.html',
+      include: ['game', ...admitted],
+    }),
+  );
+  const expected = await admittedExternalSourcePins(root, await readBuildConfig(root));
+  await buildProject({ root, out });
+  const manifest = JSON.parse(await readFile(path.join(out, 'manifest.json')));
+  assertExternalSourceMembers(manifest.files, expected);
+  const zip = await readFile(path.join(out, 'distribution.zip'));
+  assertZipMemberPins(zip, expected);
+  for (const name of admitted)
+    assert.deepEqual(await readFile(path.join(out, name)), await readFile(path.join(source, name)));
+  for (const name of unselected) {
+    assert(!manifest.files.some((file) => file.path === name));
+    await assert.rejects(readFile(path.join(out, name)), /ENOENT/);
+    assert.throws(() =>
+      assertExternalSourceMembers(
+        [...manifest.files, { path: name, bytes: 1, sha256: sha(Buffer.from('x')) }],
+        expected,
+      ),
+    );
+  }
+  const missing = admitted[0];
+  assert.throws(() =>
+    assertExternalSourceMembers(
+      manifest.files.filter((file) => file.path !== missing),
+      expected,
+    ),
+  );
+  assert.throws(() =>
+    assertExternalSourceMembers([...manifest.files, expected.get(missing)], expected),
+  );
+  const original = await readFile(path.join(source, admitted[2])),
+    altered = Buffer.from(original);
+  altered[altered.length - 1] ^= 1;
+  assert.equal(altered.length, original.length);
+  assert.throws(() =>
+    assertExternalSourceMembers(
+      manifest.files.map((file) =>
+        file.path === admitted[2] ? { ...file, sha256: sha(altered) } : file,
+      ),
+      expected,
+    ),
+  );
+  // The optional fixture uses the original STORE contract, so changing one
+  // payload byte leaves offsets and lengths valid while violating the source pin.
+  const originalOffset = zip.indexOf(original);
+  assert(originalOffset >= 0);
+  const alteredZip = Buffer.from(zip);
+  alteredZip[originalOffset + original.length - 1] ^= 1;
+  assert.throws(() => assertZipMemberPins(alteredZip, expected));
+  assert.throws(() =>
+    assertZipMemberPins(
+      zip,
+      new Map([...expected, [unselected[0], { bytes: 1, sha256: '0'.repeat(64) }]]),
+    ),
+  );
+});
+
 test('explicit real-source build ships thirty-two exact generated bodies once in loose/ZIP/manifest and excludes them from all core metadata', async (t) => {
   const dir = await directory(t),
     out = path.join(dir, 'out');
@@ -85,6 +220,13 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   const manifest = JSON.parse(await readFile(path.join(out, 'manifest.json'))),
     offline = JSON.parse(await readFile(path.join(out, 'offline-cache.json'))),
     zip = await readFile(path.join(out, 'distribution.zip'));
+  const coreConfig = await readBuildConfig(source),
+    sourcePins = await admittedExternalSourcePins(source, coreConfig);
+  // Production ships selected descriptors, provenance and originals. Comparing
+  // the entire matching subtree still rejects unselected compiler/private inputs.
+  assertExternalSourceMembers(manifest.files, sourcePins);
+  for (const name of sourcePins.keys())
+    assert.deepEqual(await readFile(path.join(out, name)), await readFile(path.join(source, name)));
   const wanted = new Map(
       EXTERNAL_CATALOG.chapters.flatMap((c) => ['pack', 'media'].map((k) => [c[k].path, c[k]])),
     ),
@@ -143,37 +285,12 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
       bodySizes.slice(start, end).reduce((total, bytes) => total + bytes, 0),
       expected,
     );
-  const counts = new Map();
-  let offset = 0;
-  while (zip.readUInt32LE(offset) === 0x04034b50) {
-    const method = zip.readUInt16LE(offset + 8);
-    assert.ok(method === 0 || method === 8);
-    const originalBytes = zip.readUInt32LE(offset + 22);
-    const bytes = zip.readUInt32LE(offset + 18),
-      n = zip.readUInt16LE(offset + 26),
-      extra = zip.readUInt16LE(offset + 28),
-      start = offset + 30 + n + extra,
-      name = zip.subarray(offset + 30, offset + 30 + n).toString();
-    if (wanted.has(name)) {
-      counts.set(name, (counts.get(name) || 0) + 1);
-      const compressed = zip.subarray(start, start + bytes);
-      const body =
-        method === 8 ? inflateRawSync(compressed, { maxOutputLength: originalBytes }) : compressed;
-      assert.equal(body.length, originalBytes);
-      assert.equal(body.length, wanted.get(name).bytes);
-      assert.equal(sha(body), wanted.get(name).sha256);
-    }
-    offset = start + bytes;
-  }
-  assert.equal(zip.readUInt32LE(offset), 0x02014b50);
-  assert.equal(counts.size, 32);
-  assert([...counts.values()].every((n) => n === 1));
+  assertZipMemberPins(zip, new Map([...wanted, ...sourcePins]));
   const legacy = JSON.parse(await readFile(path.join(source, 'game/content/optional-worlds.json')));
   for (const old of legacy.packs) {
     assert(offline.optionalPacks.some((f) => f.path === old.path));
     assert.equal(manifest.files.find((f) => f.path === old.path).sha256, old.sha256);
   }
-  const coreConfig = await readBuildConfig(source);
   assert.equal(
     offline.optionalPacks.length,
     coreConfig.optionalOffline.length + legacy.packs.length,
@@ -223,13 +340,6 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
     );
   }
   assert(offline.files.some((entry) => entry.path === 'game/content/packs/index.json'));
-  assert(
-    !manifest.files.some((f) =>
-      /authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters|fracture-lines|fracture-lines-art|fracture-lines-chapter|fracture-ukraine-art|fracture-retro-art|fracture-theme-chapters|countercurrent-chapters|countercurrent-art)\//.test(
-        f.path,
-      ),
-    ),
-  );
   const worker = await readFile(path.join(out, 'service-worker.js'), 'utf8');
   for (const name of wanted.keys())
     assert(

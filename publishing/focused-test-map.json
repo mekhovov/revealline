@@ -98,6 +98,20 @@
       ]
     },
     {
+      "id": "multiplayer-performance-observer",
+      "pathPatterns": [
+        "^docs/verification/journey-performance\\.(?:mjs|html)$",
+        "^scripts/test-journey-performance-observer\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "multiplayer-performance-observer",
+          "command": "node",
+          "args": ["--test", "scripts/test-journey-performance-observer.mjs"]
+        }
+      ]
+    },
+    {
       "id": "restored-studio-audio-observer",
       "pathPatterns": ["^docs/verification/team-duel-desktop-audio/studio.*\\.(?:mjs|html)$"],
       "commands": [
@@ -117,7 +131,8 @@
       "pathPatterns": [
         "^game/(installed-app|downloads)\\.mjs$",
         "^game/ui/(install-offline-panel|feedback-director|published-audio)\\.mjs$",
-        "^game/test/(multiplayer-offline-upgrade|team-duel-studio-audio|asset-studio-sound-transfer|content-studio-host)\\.test\\.mjs$",
+        "^game/test/(multiplayer-offline-upgrade|team-duel-studio-audio|team-duel-studio-gameplay-host|asset-studio-sound-transfer|content-studio-host)\\.test\\.mjs$",
+        "^game/test/helpers/coop-presentation-fixture\\.mjs$",
         "^game/couch/index\\.html$",
         "^game/test/duel-result-continuation-host\\.test\\.mjs$"
       ],
@@ -131,6 +146,9 @@
             "game/test/installed-app.test.mjs",
             "game/test/install-offline-panel.test.mjs",
             "game/test/team-duel-studio-audio.test.mjs",
+            "game/test/team-duel-studio-gameplay-host.test.mjs",
+            "game/test/coop-presentation-bootstrap-retry.test.mjs",
+            "game/test/coop-picture-host.test.mjs",
             "game/test/asset-studio-sound-transfer.test.mjs",
             "game/test/content-studio-host.test.mjs",
             "game/test/duel-result-continuation-host.test.mjs"
