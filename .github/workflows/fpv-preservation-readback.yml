@@ -43,7 +43,13 @@ jobs:
           PY
   verify:
     needs: plans
+    if: >-
+      github.event.pull_request.number == 1552 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'codex/fpv-development-preservation-tools-20261016'
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write # Required to read this push-visible draft release; verifier uses GET only.
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -51,7 +57,6 @@ jobs:
       matrix:
         plan: ${{ fromJSON(needs.plans.outputs.plans) }}
     env:
-      GH_TOKEN: ${{ github.token }}
       PLAN_PATH: ${{ matrix.plan }}
       EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
     steps:
@@ -70,6 +75,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y zstd
       - name: Authenticate readback and restore every sealed member
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           mkdir "$RUNNER_TEMP/preservation-receipts"
