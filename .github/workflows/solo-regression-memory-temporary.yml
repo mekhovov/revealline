@@ -1,0 +1,327 @@
+name: Temporary Solo bounded memory comparison
+
+# Task-only exact-source diagnostics, not release qualification.
+on:
+  push:
+    branches: [codex/solo-performance]
+    paths:
+      - '.github/workflows/solo-regression-memory-temporary.yml'
+      - 'docs/performance/solo-regression-memory-diagnostic.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-memory-diagnostic-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  memory:
+    if: github.repository == 'mekhovov/revealline' && github.ref == 'refs/heads/codex/solo-performance'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    defaults:
+      run:
+        working-directory: source
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - label: baseline
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
+    env:
+      CI: '1'
+      SOLO_LABEL: ${{ matrix.label }}
+      SOLO_TARGET: ${{ matrix.source }}
+      SOLO_EVIDENCE: .cache/solo-memory-diagnostic
+    steps:
+      - name: Check out only the diagnostic authority from its workflow revision
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          path: task-tools
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-regression-memory-temporary.yml
+            /docs/performance/solo-regression-memory-diagnostic.json
+
+      - name: Check out the exact historical target without persisted credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ matrix.source }}
+          path: source
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Use the pinned Node version
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.22.2'
+          package-manager-cache: false
+
+      - name: Retain target and workflow identities before testing
+        id: selection
+        run: |
+          set -euo pipefail
+          mkdir -p "$SOLO_EVIDENCE"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path.cwd()
+          tools = root.parent / 'task-tools'
+          out = root / os.environ['SOLO_EVIDENCE']
+          mp = tools / 'docs/performance/solo-regression-memory-diagnostic.json'
+          wp = tools / '.github/workflows/solo-regression-memory-temporary.yml'
+          raw = mp.read_bytes()
+          manifest = json.loads(raw)
+          digest = lambda data: hashlib.sha256(data).hexdigest()
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          workflow_head = subprocess.check_output(['git', '-C', str(tools), 'rev-parse', 'HEAD'], text=True).strip()
+          assert head == os.environ['SOLO_TARGET'] and workflow_head == os.environ['GITHUB_SHA']
+          assert subprocess.check_output(['node', '--version'], text=True).strip() == manifest['nodeVersion'] == 'v22.22.2'
+          entry = next(row for row in manifest['entries'] if row['label'] == os.environ['SOLO_LABEL'])
+          assert entry['sourceRevision'] == head
+          assert digest((root / entry['file']).read_bytes()) == entry['testSHA256']
+          receipt = {'format': 'SoloBoundedMemorySelectionV1', 'sourceRevision': head,
+                     'sourceTree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+                     'workflowSourceRevision': workflow_head, 'workflowSHA256': digest(wp.read_bytes()),
+                     'manifestSHA256': digest(raw), 'runtimeRevision': entry['runtimeRevision'],
+                     'batch': 1, 'selected': [{'path': entry['file'], 'sha256': entry['testSHA256']}],
+                     'nodeVersion': 'v22.22.2', 'CI': '1', 'platform': 'ubuntu-latest',
+                     'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
+                     'dependencyHashes': {name: digest((root / name).read_bytes()) for name in [
+                         'package.json', 'package-lock.json', 'authoring/fpv-worlds/package.json',
+                         'authoring/fpv-worlds/package-lock.json']},
+                     'resourceBoundary': manifest['resourceBoundary'],
+                     'scope': 'Historical target source and diagnostic workflow source are separate authorities. Resource exhaustion is incomplete evidence.'}
+          (out / 'manifest.json').write_bytes(raw)
+          (out / 'selection.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          PY
+          node scripts/check-source-identity.mjs --root . > "$SOLO_EVIDENCE/source-before.json"
+
+      - name: Retain authority before admitting the test
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-memory-${{ matrix.label }}-selection-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: source/.cache/solo-memory-diagnostic/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Install the exact target root dependencies
+        run: npm ci
+
+      - name: Install the exact target optional SIM fixture dependencies
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --include=dev
+
+      - name: Run the unchanged complete file with explicit resource boundaries
+        timeout-minutes: 150
+        run: |
+          cat > "$RUNNER_TEMP/solo-memory-checkpoint.py" <<'PY'
+          import datetime, hashlib, json, os, pathlib, re, signal, subprocess, sys, time
+          root = pathlib.Path.cwd()
+          base = root / os.environ['SOLO_EVIDENCE']
+          selection = json.loads((base / 'selection.json').read_text())
+          segment = int(sys.argv[1])
+          assert 1 <= segment <= 4
+          out = base / ('checkpoint-' + str(segment))
+          out.mkdir(exist_ok=False)
+          selected = selection['selected'][(segment - 1) * 5:segment * 5]
+          now = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
+          digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+          head = lambda: subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          started = now()
+          deadline_path = base / 'batch-deadline.json'
+          if not deadline_path.exists():
+              deadline_path.write_text(json.dumps({'deadlineUnix': time.time() + 145 * 60}) + '\n')
+          deadline = json.loads(deadline_path.read_text())['deadlineUnix']
+          def resources():
+              values = {}
+              for line in pathlib.Path('/proc/meminfo').read_text().splitlines():
+                  key, value = line.split(':', 1)
+                  if key in ['MemTotal', 'MemAvailable', 'SwapTotal', 'SwapFree']:
+                      values[key + 'Bytes'] = int(value.split()[0]) * 1024
+              disk = os.statvfs(root)
+              values['diskAvailableBytes'] = disk.f_bavail * disk.f_frsize
+              for name in ['memory.current', 'memory.max', 'memory.events']:
+                  path = pathlib.Path('/sys/fs/cgroup') / name
+                  if path.is_file(): values['cgroup.' + name] = path.read_text().strip()
+              return values
+          def group_members(group):
+              members = []
+              for path in pathlib.Path('/proc').glob('[0-9]*/stat'):
+                  try:
+                      parts = path.read_text().rsplit(')', 1)[1].split()
+                      if int(parts[2]) == group:
+                          members.append({'pid': int(path.parent.name), 'state': parts[0],
+                                          'rssBytes': int(parts[21]) * os.sysconf('SC_PAGE_SIZE')})
+                  except (OSError, ValueError, IndexError): pass
+              return members
+          def group_rss(group):
+              return sum(member['rssBytes'] for member in group_members(group))
+          def cleanup_group(group):
+              receipt = {'group': group, 'before': group_members(group), 'termSent': False, 'killSent': False}
+              alive = lambda: [member for member in group_members(group) if member['state'] != 'Z']
+              if alive():
+                  try: os.killpg(group, signal.SIGTERM); receipt['termSent'] = True
+                  except ProcessLookupError: pass
+                  limit = time.monotonic() + 5
+                  while alive() and time.monotonic() < limit: time.sleep(0.1)
+                  if alive():
+                      try: os.killpg(group, signal.SIGKILL); receipt['killSent'] = True
+                      except ProcessLookupError: pass
+                      limit = time.monotonic() + 5
+                      while alive() and time.monotonic() < limit: time.sleep(0.1)
+              receipt['after'] = group_members(group)
+              receipt['remainingLive'] = [member for member in receipt['after'] if member['state'] != 'Z']
+              return receipt
+          rows, fatal = [], []
+          child = None
+          interrupted = False
+          def stop_child(kind):
+              if child is not None:
+                  try: os.killpg(child.pid, kind)
+                  except ProcessLookupError: pass
+          def interrupt(_signum, _frame):
+              global interrupted
+              interrupted = True
+              stop_child(signal.SIGTERM)
+          signal.signal(signal.SIGTERM, interrupt)
+          signal.signal(signal.SIGINT, interrupt)
+          try:
+              for entry in selected:
+                  if interrupted or time.time() >= deadline: break
+                  name = entry['path']
+                  assert head() == selection['sourceRevision']
+                  assert digest(root / name) == entry['sha256'], name
+                  log = out / (str(len(rows)).zfill(3) + '-' + pathlib.Path(name).name + '.tap')
+                  usage = log.with_suffix('.time.txt')
+                  command = ['node', '--test', '--test-concurrency=1', '--test-reporter=tap', name]
+                  row = {'file': name, 'startedAt': now(), 'command': command,
+                         'sourceRevision': selection['sourceRevision'], 'testSHA256Before': entry['sha256'],
+                         'log': log.name, 'timedOut': False, 'resourceExhausted': None, 'resourcesBefore': resources(),
+                         'ownedProcessCleanup': None,
+                         'resourceSampling': 'Linux /proc group RSS and memory/disk once per second; GNU time peak RSS. Sampling does not prove no intervening peak.'}
+                  (out / 'active.json').write_text(json.dumps(row, indent=2) + '\n')
+                  print(json.dumps({'startedFile': name, 'resourcesBefore': row['resourcesBefore']}), flush=True)
+                  stamp = time.monotonic()
+                  samples, peak = [], 0
+                  with log.open('xb') as stream:
+                      if row['resourcesBefore']['MemAvailableBytes'] < 512 * 1024**2:
+                          row['resourceExhausted'] = {'kind': 'admission', 'sample': row['resourcesBefore'],
+                              'minimumAvailableBytes': 512 * 1024**2,
+                              'scope': 'No child started because host memory was already below the resource boundary; incomplete evidence.'}
+                          code = None
+                      else:
+                          child = subprocess.Popen(['/usr/bin/time', '-v', '-o', str(usage), *command], cwd=root,
+                                                   stdout=stream, stderr=subprocess.STDOUT, start_new_session=True,
+                                                   env={**os.environ, 'CI': '1'})
+                          try:
+                              while True:
+                                  observed = resources()
+                                  observed.update({'at': now(), 'groupRSSBytes': group_rss(child.pid)})
+                                  peak = max(peak, observed['groupRSSBytes'])
+                                  samples.append(observed)
+                                  if observed['MemAvailableBytes'] < 512 * 1024**2 or observed['groupRSSBytes'] > 12 * 1024**3:
+                                      row['resourceExhausted'] = {'sample': observed, 'minimumAvailableBytes': 512 * 1024**2, 'maximumOwnedGroupRSSBytes': 12 * 1024**3, 'scope': 'Infrastructure capacity bound, not an assertion or test-deadline change; this file remains incomplete.'}
+                                      print(json.dumps({'resourceExhausted': name, 'boundary': row['resourceExhausted']}), flush=True)
+                                      stop_child(signal.SIGTERM)
+                                      try: code = child.wait(timeout=5)
+                                      except subprocess.TimeoutExpired:
+                                          stop_child(signal.SIGKILL)
+                                          code = child.wait(timeout=5)
+                                      break
+                                  if len(samples) % 30 == 1:
+                                      print(json.dumps({'activeFile': name, 'resourceSample': observed}), flush=True)
+                                  try:
+                                      code = child.wait(timeout=min(1, max(0.001, deadline - time.time())))
+                                      break
+                                  except subprocess.TimeoutExpired:
+                                      if not interrupted and time.time() < deadline: continue
+                                      row['timedOut'] = time.time() >= deadline
+                                      stop_child(signal.SIGTERM)
+                                      try: code = child.wait(timeout=5)
+                                      except subprocess.TimeoutExpired:
+                                          stop_child(signal.SIGKILL)
+                                          code = child.wait(timeout=5)
+                                      break
+                          finally:
+                              if row['timedOut'] or row['resourceExhausted'] or interrupted: stop_child(signal.SIGKILL)
+                              row['ownedProcessCleanup'] = cleanup_group(child.pid)
+                  child = None
+                  text = log.read_text(errors='replace')
+                  counts = {}
+                  for key in ['tests', 'suites', 'pass', 'fail', 'cancelled', 'skipped', 'todo', 'duration_ms']:
+                      match = re.search(r'^# ' + key + r' ([0-9.]+)$', text, re.M)
+                      if match: counts[key] = float(match[1]) if key == 'duration_ms' else int(match[1])
+                  complete = all(key in counts for key in ['tests', 'pass', 'fail', 'duration_ms'])
+                  resource_log = log.with_suffix('.resources.json')
+                  resource_log.write_text(json.dumps({'samples': samples, 'resourcesAfter': resources(),
+                                                     'sampledGroupPeakRSSBytes': peak}, indent=2) + '\n')
+                  row.update({'finishedAt': now(), 'elapsedSeconds': time.monotonic() - stamp,
+                              'exitCode': code, 'interrupted': interrupted, 'completeTap': complete,
+                              'counts': counts, 'failureNames': re.findall(r'^\s*not ok \d+ - (.+)$', text, re.M),
+                              'logBytes': log.stat().st_size, 'logSHA256': digest(log),
+                              'testSHA256After': digest(root / name), 'sourceRevisionAfter': head(),
+                              'resources': {'file': resource_log.name, 'sha256': digest(resource_log),
+                                            'sampledGroupPeakRSSBytes': peak},
+                              'gnuTime': {'file': usage.name, 'sha256': digest(usage)} if usage.is_file() else None})
+                  row['passed'] = (code == 0 and complete and not row['timedOut'] and not row['resourceExhausted'] and not interrupted
+                                   and counts.get('fail') == 0 and counts.get('cancelled', 0) == 0
+                                   and row['testSHA256After'] == entry['sha256']
+                                   and row['sourceRevisionAfter'] == selection['sourceRevision'])
+                  if row['ownedProcessCleanup'] and row['ownedProcessCleanup']['remainingLive']:
+                      fatal.append('Owned descendants survived cleanup; no later file may start')
+                      row['passed'] = False
+                  rows.append(row)
+                  with (out / 'results.jsonl').open('a') as stream: stream.write(json.dumps(row) + '\n')
+                  (out / 'active.json').write_text('null\n')
+                  print(json.dumps({'file': name, 'exitCode': code, 'completeTap': complete,
+                                    'counts': counts, 'passed': row['passed'], 'sampledGroupPeakRSSBytes': peak}), flush=True)
+                  if fatal: break
+          except BaseException as error:
+              fatal.append(repr(error))
+              stop_child(signal.SIGKILL)
+              if child is not None:
+                  try: child.wait(timeout=5)
+                  except subprocess.TimeoutExpired: fatal.append('Child did not settle after SIGKILL')
+                  cleanup = cleanup_group(child.pid)
+                  (out / 'exception-process-cleanup.json').write_text(json.dumps(cleanup, indent=2) + '\n')
+          finally:
+              source_code = None
+              if not interrupted:
+                  with (out / 'source-after.json').open('wb') as stream, (out / 'source-after.stderr.log').open('wb') as errors:
+                      source_code = subprocess.run(['node', 'scripts/check-source-identity.mjs', '--root', '.'],
+                                                   stdout=stream, stderr=errors).returncode
+              observed = {row['file'] for row in rows}
+              unobserved = [entry for entry in selected if entry['path'] not in observed]
+              complete = not unobserved and not fatal and not interrupted and all(row['completeTap'] and not row['resourceExhausted'] for row in rows)
+              verified = source_code == 0
+              passed = complete and verified and all(row['passed'] for row in rows)
+              summary = {'format': 'SoloRemoteRemainingCheckpointV2', 'startedAt': started, 'finishedAt': now(),
+                         'sourceRevision': selection['sourceRevision'], 'manifestSHA256': selection['manifestSHA256'],
+                         'batch': selection['batch'], 'checkpoint': segment, 'selected': selected,
+                         'observedFiles': len(rows), 'complete': complete, 'passed': passed,
+                         'sourceIdentityVerified': verified, 'sourceIdentityExitCode': source_code,
+                         'failedFiles': [row['file'] for row in rows if not row['passed'] and not row['resourceExhausted']],
+                         'resourceExhaustedFiles': [row['file'] for row in rows if row['resourceExhausted']],
+                         'unobserved': unobserved, 'interrupted': interrupted, 'fatal': fatal,
+                         'scope': 'Complete failed files are observations, not passes. Missing/partial/uncorroborated receipts grant no coverage. This is source-regression evidence, not timing or device acceptance.'}
+              (out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          raise SystemExit(0 if passed else 1)
+          PY
+          python3 "$RUNNER_TEMP/solo-memory-checkpoint.py" 1
+
+      - name: Retain raw TAP, resource-abort and process-cleanup receipts
+        if: always() && steps.selection.outcome == 'success'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-memory-${{ matrix.label }}-result-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: source/.cache/solo-memory-diagnostic/checkpoint-1/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

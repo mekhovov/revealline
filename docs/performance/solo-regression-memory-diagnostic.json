@@ -1,0 +1,49 @@
+{
+  "format": "SoloBoundedMemoryDiagnosticManifestV1",
+  "purpose": "Temporary exact-source diagnostic of a remote host test that exhausted runner memory. No test assertions, goldens or test deadlines are changed. This is not a passing qualification run.",
+  "entries": [
+    {
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-lobby-preview.test.mjs",
+      "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
+      "bytes": 28942,
+      "label": "baseline",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371"
+    },
+    {
+      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "file": "game/test/coop-lobby-preview.test.mjs",
+      "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
+      "bytes": 28942,
+      "label": "candidate",
+      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b"
+    }
+  ],
+  "sameTestBytes": true,
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/coop-lobby-preview.test.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "CI": "1",
+  "resourceBoundary": {
+    "minimumAvailableBytes": 536870912,
+    "maximumOwnedGroupRSSBytes": 12884901888,
+    "terminate": "Only the child-owned process group: SIGTERM;5-second cleanup allowance thenSIGKILL",
+    "result": "Explicit resource-exhausted incomplete; no passing verdict or assertion/deadline reduction",
+    "admission": "Check available memory before starting a child; insufficient capacity is incomplete.",
+    "postExit": "Inspect and clean only owned process-group descendants even when the parent exits normally; retain before/after PID/state/RSS receipts. Do not admit a later file if live descendants survive cleanup."
+  },
+  "priorEvidence": {
+    "runId": 38865274741,
+    "jobId": 116856540740,
+    "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+    "sampledRSSBytes": 15758639104,
+    "sampledAvailableBytes": 204603392,
+    "scope": "Sample before shutdown establishes severe memory pressure, not a captured kernel OOM verdict."
+  },
+  "scope": "Two separate exact checkouts retain workflow and target revisions independently. Aborted/resource-exhausted files are incomplete. Later358 layout correction is not part of this historical comparison."
+}
