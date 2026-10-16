@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
-import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, stat, realpath } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readEditionZip } from '../publishing/edition-zip.mjs';
@@ -11,7 +12,7 @@ import {
 } from '../publishing/practice-directory.mjs';
 import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 import { validateOptionalPracticeCatalog } from '../game/optional-practice-catalog.mjs';
-import { PREVIEW_SECURITY_HEADERS } from './game-cli.mjs';
+import { PREVIEW_SECURITY_HEADERS, PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { frozenSource, committedInputMap, verifyCommittedInputs } from './frozen-source.mjs';
 import {
   loadFPVObservationArtifact,
@@ -43,8 +44,14 @@ export const DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL = Object.freeze({
   ...DIRECTORY_JOURNEY_PROTOCOL,
   id: 'practice-directory-personal-appearance.v1',
 });
+export const DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL = Object.freeze({
+  ...DIRECTORY_JOURNEY_PROTOCOL,
+  id: 'practice-directory-production-personal-appearance.v1',
+});
 export function directoryJourneyProtocol(plan) {
   if (plan.protocol === DIRECTORY_JOURNEY_PROTOCOL.id) return DIRECTORY_JOURNEY_PROTOCOL;
+  if (plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id)
+    return DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL;
   assert.equal(plan.protocol, DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id);
   return DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL;
 }
@@ -98,13 +105,27 @@ export function validateDirectoryJourneyPlan(input) {
     'shellTree',
   ];
   assert(plan && !Array.isArray(plan) && typeof plan === 'object');
+  const production = directoryJourneyProtocol(plan) === DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL;
+  if (production) {
+    fields.push('distribution', 'distributionManifestSha256');
+    assert(
+      typeof plan.distribution === 'string' &&
+        plan.distribution.length <= 4096 &&
+        !/[\x00-\x1f]/.test(plan.distribution) &&
+        path.isAbsolute(plan.distribution),
+      'Use a bounded absolute production distribution directory.',
+    );
+    assert.match(plan.distributionManifestSha256, /^[a-f0-9]{64}$/);
+  }
   assert.deepEqual(Object.keys(plan).sort(), fields.sort(), 'Unexpected directory plan fields.');
   const personal = directoryJourneyProtocol(plan) === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL;
   assert.equal(
     plan.format,
-    personal
-      ? 'revealline-practice-directory-personal-appearance-plan.v1'
-      : 'revealline-practice-directory-journey-plan.v1',
+    production
+      ? 'revealline-practice-directory-production-personal-appearance-plan.v1'
+      : personal
+        ? 'revealline-practice-directory-personal-appearance-plan.v1'
+        : 'revealline-practice-directory-journey-plan.v1',
   );
   assert.match(plan.caseId, /^[a-z0-9-]{1,64}$/);
   for (const key of ['shellRevision', 'shellTree']) assert.match(plan[key], /^[a-f0-9]{40}$/);
@@ -121,6 +142,163 @@ export function validateDirectoryJourneyPlan(input) {
   validateFPVArtifactBinding(plan);
   assert(path.isAbsolute(plan.bundle), 'Use an absolute admitted candidate path.');
   return plan;
+}
+
+// These are local observation bounds, not publisher/hosting eligibility limits.
+const DISTRIBUTION_LIMITS = Object.freeze({
+  files: 20000,
+  totalBytes: 2 * 1024 ** 3,
+  fileBytes: 128 * 1024 ** 2,
+  manifestBytes: 8 * 1024 ** 2,
+});
+function distributionMember(name) {
+  assert(
+    typeof name === 'string' &&
+      name.length > 0 &&
+      name.length <= 1024 &&
+      !/[\\\x00-\x1f]/.test(name) &&
+      !path.isAbsolute(name) &&
+      name.split('/').every((part) => part && !part.startsWith('.')),
+    'Unsafe production manifest member.',
+  );
+  return name;
+}
+async function distributionTarget(root, name, expectedBytes) {
+  distributionMember(name);
+  const target = path.join(root, name);
+  assert.equal(await realpath(target), target, 'Production member symlink refused.');
+  const info = await stat(target);
+  assert(
+    info.isFile() && info.size === expectedBytes,
+    'Production member missing or size changed.',
+  );
+  return target;
+}
+async function boundedDistributionBytes(target, limit) {
+  const chunks = [];
+  let count = 0;
+  for await (const chunk of createReadStream(target, { signal: AbortSignal.timeout(30000) })) {
+    count += chunk.length;
+    assert(count <= limit, 'Production file exceeded read bound.');
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks, count);
+}
+/** Verify the original generated manifest and every original member before
+ * serving. Hash sequential streams rather than retaining a whole distribution.
+ * The external manifest pin is supplied by the build owner, never synthesized.
+ */
+export async function verifyDirectoryDistribution(plan) {
+  assert.equal(plan.protocol, DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id);
+  assert(path.isAbsolute(plan.distribution));
+  const root = await realpath(plan.distribution);
+  assert((await stat(root)).isDirectory());
+  const manifestPath = path.join(root, 'manifest.json');
+  assert.equal(await realpath(manifestPath), manifestPath, 'Manifest symlink refused.');
+  const info = await stat(manifestPath);
+  assert(info.isFile() && info.size > 0 && info.size <= DISTRIBUTION_LIMITS.manifestBytes);
+  const manifestBytes = await boundedDistributionBytes(
+    manifestPath,
+    DISTRIBUTION_LIMITS.manifestBytes,
+  );
+  assert(manifestBytes.length <= DISTRIBUTION_LIMITS.manifestBytes);
+  assert.equal(
+    sha(manifestBytes),
+    plan.distributionManifestSha256,
+    'Production manifest pin mismatch.',
+  );
+  const manifest = JSON.parse(manifestBytes);
+  assert.deepEqual(Object.keys(manifest).sort(), [
+    'entry',
+    'files',
+    'formatVersion',
+    'sourceRevision',
+    'totalBytes',
+    'version',
+  ]);
+  assert.equal(manifest.formatVersion, 1);
+  assert.equal(
+    manifest.sourceRevision,
+    plan.shellRevision,
+    'Production source differs from frozen shell source.',
+  );
+  assert.match(manifest.version, /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/);
+  assert.equal(manifest.entry, 'game/index.html');
+  assert(
+    Number.isSafeInteger(manifest.totalBytes) &&
+      manifest.totalBytes > 0 &&
+      manifest.totalBytes <= DISTRIBUTION_LIMITS.totalBytes,
+  );
+  assert(
+    Array.isArray(manifest.files) &&
+      manifest.files.length > 0 &&
+      manifest.files.length <= DISTRIBUTION_LIMITS.files,
+  );
+  const files = new Map();
+  let total = 0;
+  for (const row of manifest.files) {
+    assert(row && typeof row === 'object');
+    assert.deepEqual(Object.keys(row).sort(), ['bytes', 'path', 'sha256']);
+    distributionMember(row.path);
+    assert(
+      row.path !== 'manifest.json' && !files.has(row.path),
+      'Duplicate/self-referential production member.',
+    );
+    assert(
+      Number.isSafeInteger(row.bytes) &&
+        row.bytes >= 0 &&
+        row.bytes <= DISTRIBUTION_LIMITS.fileBytes,
+    );
+    assert.match(row.sha256, /^[a-f0-9]{64}$/);
+    total += row.bytes;
+    assert(total <= DISTRIBUTION_LIMITS.totalBytes);
+    files.set(row.path, { ...row });
+  }
+  assert.equal(total, manifest.totalBytes);
+  assert(
+    files.has('game/index.html') && files.has('game/build-info.json'),
+    'Production entry/build-info missing.',
+  );
+  const signal = AbortSignal.timeout(120000);
+  for (const row of files.values()) {
+    signal.throwIfAborted();
+    const target = await distributionTarget(root, row.path, row.bytes);
+    const hash = createHash('sha256');
+    let count = 0;
+    for await (const chunk of createReadStream(target, { signal })) {
+      count += chunk.length;
+      assert(count <= row.bytes, 'Production member grew while hashing.');
+      hash.update(chunk);
+    }
+    assert.equal(count, row.bytes);
+    assert.equal(hash.digest('hex'), row.sha256, `Production member hash mismatch: ${row.path}`);
+  }
+  const verified = { root, manifest, manifestBytes, files };
+  const buildInfo = JSON.parse(
+    await readDirectoryDistributionFile(verified, 'game/build-info.json'),
+  );
+  assert.deepEqual(buildInfo, {
+    formatVersion: 1,
+    version: manifest.version,
+    sourceRevision: manifest.sourceRevision,
+    entry: manifest.entry,
+  });
+  assert.equal(
+    sha(await boundedDistributionBytes(manifestPath, DISTRIBUTION_LIMITS.manifestBytes)),
+    plan.distributionManifestSha256,
+    'Production manifest changed during verification.',
+  );
+  return verified;
+}
+export async function readDirectoryDistributionFile(distribution, name) {
+  const row =
+    name === 'manifest.json' ? pin(name, distribution.manifestBytes) : distribution.files.get(name);
+  assert(row, 'Not a verified production distribution member.');
+  const target = await distributionTarget(distribution.root, name, row.bytes);
+  const bytes = await boundedDistributionBytes(target, row.bytes);
+  assert.equal(bytes.length, row.bytes);
+  assert.equal(sha(bytes), row.sha256, 'Production member changed before serving.');
+  return bytes;
 }
 
 /** Local selection fixture only. Full envelope admission precedes this function;
@@ -233,18 +411,42 @@ const MIME = {
   '.wav': 'audio/wav',
   '.webmanifest': 'application/manifest+json',
 };
-async function sourceServer(overlay, tree, report) {
+const PRODUCTION_MIME = {
+  ...MIME,
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.mp3': 'audio/mpeg',
+  '.ogg': 'audio/ogg',
+  '.ttf': 'font/ttf',
+  '.txt': 'text/plain; charset=utf-8',
+  '.md': 'text/plain; charset=utf-8',
+  '.zip': 'application/zip',
+};
+export async function directoryJourneyServer(overlay, tree, report, distribution = null) {
+  const security = distribution ? PUBLIC_SECURITY_HEADERS : PREVIEW_SECURITY_HEADERS;
+  if (distribution)
+    assert(
+      [...overlay.keys()].every((name) => name.startsWith('practice/')),
+      'Only the explicit practice fixture may overlay production.',
+    );
   const served = new Map();
   const server = createServer(async (req, res) => {
     try {
       if (!['GET', 'HEAD'].includes(req.method)) {
-        res.writeHead(405);
+        res.writeHead(405, distribution ? security : undefined);
         res.end();
         return;
       }
       const name = directorySourcePath(req.url);
       let bytes = overlay.get(name);
-      if (!bytes) {
+      if (!bytes && distribution) {
+        bytes = await readDirectoryDistributionFile(distribution, name);
+        if (!served.has(name)) {
+          const value = pin(name, bytes);
+          served.set(name, value);
+          (report.servedDistribution ??= []).push(value);
+        }
+      } else if (!bytes) {
         assert(
           /^(game|site|optional-practice|authoring|docs)\//.test(name),
           'Not a public source file.',
@@ -260,10 +462,11 @@ async function sourceServer(overlay, tree, report) {
         }
       }
       res.writeHead(200, {
-        'content-type': MIME[path.extname(name)] ?? 'application/octet-stream',
+        'content-type':
+          (distribution ? PRODUCTION_MIME : MIME)[path.extname(name)] ?? 'application/octet-stream',
         'content-length': bytes.length,
         'cache-control': 'no-store',
-        ...PREVIEW_SECURITY_HEADERS,
+        ...security,
       });
       res.end(req.method === 'HEAD' ? undefined : bytes);
     } catch (error) {
@@ -274,9 +477,13 @@ async function sourceServer(overlay, tree, report) {
         });
       res.writeHead(404, {
         'content-type': 'text/plain',
-        ...PREVIEW_SECURITY_HEADERS,
+        ...security,
       });
-      res.end('Not part of the source-shell fixture.');
+      res.end(
+        distribution
+          ? 'Not a verified production member.'
+          : 'Not part of the source-shell fixture.',
+      );
     }
   });
   await new Promise((resolve, reject) => {
@@ -444,7 +651,10 @@ async function runJourney(page, spec, fixture, report, output, password) {
     result.unlocked = true;
     await page.locator('#shell-home[open]').waitFor({ state: 'visible' });
     assert.equal(await page.locator('html').getAttribute('lang'), spec.locale);
-    const personal = report.protocol.id === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id;
+    const personal = [
+      DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id,
+      DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id,
+    ].includes(report.protocol.id);
     await openMainGamePractice(
       page,
       click,
@@ -619,11 +829,14 @@ export async function observePracticeDirectoryJourney({
   assert((await stat(planFile)).size <= 65536);
   const planBytes = await readFile(planFile),
     plan = validateDirectoryJourneyPlan(planBytes.toString());
+  const production = plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id;
+  const personal = production || plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id;
   await mkdir(output);
   const scrub = (s) => (password ? String(s).split(password).join('[REDACTED]') : String(s));
   const report = {
-    format:
-      plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id
+    format: production
+      ? 'PracticeDirectoryProductionPersonalAppearanceObservation.v1'
+      : plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id
         ? 'PracticeDirectoryPersonalAppearanceObservation.v1'
         : 'PracticeDirectoryJourneyObservation.v1',
     plan,
@@ -637,16 +850,23 @@ export async function observePracticeDirectoryJourney({
     requestFailures: [],
     resourceAcquisitions: [],
     limitations: [
-      'Full unchanged committed main-game source shell, not a minimal panel host and not a completed production distribution build.',
-      'This protocol does not build a production distribution. Sparse-checkout exclusions must be distinguished from genuinely missing committed build inputs; no build, hosting or release-review guard is weakened.',
+      ...(production
+        ? [
+            'Requires original generated distribution member hashes verified before and after observation; only the explicitly reported admitted practice catalogue/release fixture overlays it. No source-shell fallback.',
+            'Production security headers apply. This local observation does not assess hosted capacity, publish a release, or supply human review approval.',
+          ]
+        : [
+            'Full unchanged committed main-game source shell, not a minimal panel host and not a completed production distribution build.',
+            'This protocol does not build a production distribution. Sparse-checkout exclusions must be distinguished from genuinely missing committed build inputs; no build, hosting or release-review guard is weakened.',
+          ]),
       'Locally admitted practice package bytes with an explicit unpublished catalogue/current.json fixture; not a reviewed selector or public release.',
       'Six EN/UK one-Play start-screen and guide/navigation journeys only; no arming, exercise, installation, human learning or physical accessibility qualification.',
-      plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id
+      personal
         ? 'Fixed Tryzub personal preference transfer through visible Settings only. Null edition URL pins are expected; positive compiled-edition URL-pair qualification remains open. No all-theme or rendered-world qualification.'
         : 'Default validated appearance handoff only, not all appearance themes or physical inputs.',
     ],
   };
-  let server, browser;
+  let server, browser, distribution;
   try {
     await writeFile(path.join(output, 'plan.json'), planBytes, { flag: 'wx' });
     await mkdir(path.join(output, 'authority'));
@@ -668,10 +888,31 @@ export async function observePracticeDirectoryJourney({
     report.artifact = overlay.loaded.binding;
     report.admission = overlay.loaded.admission;
     report.overlay = [...overlay.files].map(([name, bytes]) => pin(name, bytes));
+    if (production) {
+      distribution = await verifyDirectoryDistribution(plan);
+      report.distribution = {
+        directory: distribution.root,
+        manifest: pin('manifest.json', distribution.manifestBytes),
+        sourceRevision: distribution.manifest.sourceRevision,
+        sourceTree: plan.shellTree,
+        sourceTreeAuthority:
+          'Frozen source binding; generated build manifest records revision only.',
+        version: distribution.manifest.version,
+        entry: distribution.manifest.entry,
+        totalBytes: distribution.manifest.totalBytes,
+        originalFiles: [...distribution.files.values()],
+        securityHeaders: PUBLIC_SECURITY_HEADERS,
+        originalsVerifiedBefore: true,
+        originalsVerifiedAfter: false,
+      };
+      await writeFile(path.join(output, 'production-manifest.json'), distribution.manifestBytes, {
+        flag: 'wx',
+      });
+    }
     server = await acquirePointerResource(
       report.resourceAcquisitions,
       'server',
-      () => sourceServer(overlay.files, tree, report),
+      () => directoryJourneyServer(overlay.files, tree, report, distribution),
       closeServer,
     );
     const { chromium } = await import(pathToFileURL(path.resolve(playwrightModule)).href);
@@ -749,6 +990,10 @@ export async function observePracticeDirectoryJourney({
             { flag: 'wx' },
           );
       }
+    }
+    if (production) {
+      await verifyDirectoryDistribution(plan);
+      report.distribution.originalsVerifiedAfter = true;
     }
     for (const source of [...report.authority, ...report.servedSources])
       assert.equal(

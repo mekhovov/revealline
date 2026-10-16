@@ -138,7 +138,7 @@ export async function observeInstallationDownloadFault({
     operation = activateOfflineAction(page, {
       button: prepare,
       status,
-      expected: /failed|timed out|cancelled|canceled|not available|not supported/i,
+      expected: /failed|timed out|stalled|cancelled|canceled|not available|not supported/i,
     });
     // Join immediately; a UI failure must never become an unhandled rejection.
     void operation.catch((error) => {
