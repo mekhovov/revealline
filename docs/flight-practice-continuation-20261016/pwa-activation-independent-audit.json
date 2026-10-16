@@ -1,0 +1,192 @@
+{
+  "format": "IndependentPWAActivationAudit.v1",
+  "passed": true,
+  "receipt": {
+    "path": "/tmp/practice-active-session-20261016-run7.json",
+    "bytes": 101163,
+    "sha256": "84b006ef2598341c34ea0f484e6a2888aeaa170a3bd6b97d6e336866a10864fd"
+  },
+  "authorityArchive": {
+    "path": "/tmp/practice-native-57d3-authority-20261016.tgz",
+    "sha256": "0fdeb723a1a3824b9ccc1bc088c0abb9bd5797c6bbfb9714c0e4a6ba51402aae"
+  },
+  "authority": [
+    {
+      "path": "scripts/observe-optional-installation.mjs",
+      "sha256": "452cd46a15a07641c5acd1569d4dbcfb7fc9f0331a14370614ee7d1833d421c7",
+      "archiveAndCommitMatch": true
+    },
+    {
+      "path": "scripts/optional-installation-observer-helpers.mjs",
+      "sha256": "f9dc958bed7445d284a0d906ab18f55f87ef7779d475963b219a3ac44baccb88",
+      "archiveAndCommitMatch": true
+    },
+    {
+      "path": "scripts/optional-installation-active-session.mjs",
+      "sha256": "61541e20e6605a6548a6ff8e3ca706d20f268e8b13ee1418cf8ad61ecb222e53",
+      "archiveAndCommitMatch": true
+    },
+    {
+      "path": "scripts/optional-installation-pwa-activation.mjs",
+      "sha256": "505eaa644d0318535ddf7056eea46a1d1327f1891a0fea35f8f5fa6bf4b401b3",
+      "archiveAndCommitMatch": true
+    },
+    {
+      "path": "scripts/optional-installation-world-seed.mjs",
+      "sha256": "571cccb535fc764a02872bbaa0135d82674bcd3ca7c032d8f21db35db7b8cd07",
+      "archiveAndCommitMatch": true
+    },
+    {
+      "path": "scripts/practice-historical-admission.mjs",
+      "sha256": "3a2b1fc6ae78d8e886109bef6647cbcab072b2f3fb776ca871ba960858e99683",
+      "archiveAndCommitMatch": true
+    },
+    {
+      "path": "scripts/practice-historical-ui.mjs",
+      "sha256": "2bd44665cdb4b8129f353a8b00bb004df108aa882cc4f7b74be1c9e02ac31c0b",
+      "archiveAndCommitMatch": true
+    }
+  ],
+  "artifactPins": [
+    {
+      "bytes": 3780117,
+      "path": "distribution-optional-civilian-flight.zip",
+      "sha256": "d2597fce476e52698220a30704d199ef12790d7bda403a57ab58d5b12a841ac9",
+      "matched": true
+    },
+    {
+      "bytes": 16741,
+      "path": "manifest-optional-civilian-flight.json",
+      "sha256": "f9c5c4f5269d94b9c65b327b1cd25cabd61ada0613687aea64cfb068e577f546",
+      "matched": true
+    },
+    {
+      "bytes": 6799198,
+      "path": "distribution-optional-civilian-fpv.zip",
+      "sha256": "0985b80110fab4ff4073b0b793e4c7d261398010bcd0c76d3eeeb946596049d8",
+      "matched": true
+    },
+    {
+      "bytes": 18095,
+      "path": "manifest-optional-civilian-fpv.json",
+      "sha256": "af899bbb13a6f1eb7d0a93de1a1a763eebec50c4101c5a8fadf5e9c51333983f",
+      "matched": true
+    },
+    {
+      "bytes": 17608427,
+      "path": "distribution-optional-fpv-worlds.zip",
+      "sha256": "c433f2299a1a3ed85092dabc7a902bf0f6806d2298165abf6ab9d3ceafa644b4",
+      "matched": true
+    },
+    {
+      "bytes": 29757,
+      "path": "manifest-optional-fpv-worlds.json",
+      "sha256": "db0465ed8d3dc8fe91ea147e51c825a1233587c63b8d658642353e77f2f8ba61",
+      "matched": true
+    },
+    {
+      "bytes": 4566844,
+      "path": "distribution-optional-civilian-fpv.zip",
+      "sha256": "4ddedaaf8ad3ed340ba543c563ed102d48bd7b9fcffa6cef55458c37abf46ea2",
+      "matched": true
+    },
+    {
+      "bytes": 13816,
+      "path": "manifest-optional-civilian-fpv.json",
+      "sha256": "672862b1aac9cac9e85638134365033fddecbf3fc2365874eb0a29434f4d2f73",
+      "matched": true
+    },
+    {
+      "bytes": 4596786,
+      "path": "source-optional-civilian-fpv.zip",
+      "sha256": "e0ecb53a2434d5b86a042adc68e980c9f7682a5026c723be64c13c2226878702",
+      "matched": true
+    },
+    {
+      "bytes": 23050,
+      "path": "source-inventory-optional-civilian-fpv.json",
+      "sha256": "33946308acbca71e5441eb7617b1b010f8f11da70283ce90a6400aa3e8dbca81",
+      "matched": true
+    }
+  ],
+  "changedAcademyMembers": 54,
+  "checkpoints": [
+    {
+      "label": "all-three-prepared",
+      "caches": 3,
+      "workers": 3
+    },
+    {
+      "label": "all-three-relaunched-offline-after-all-windows-closed",
+      "caches": 6,
+      "workers": 6
+    },
+    {
+      "label": "all-three-open-offline",
+      "caches": 6,
+      "workers": 6
+    },
+    {
+      "label": "all-three-offline-after-browser-process-restart",
+      "caches": 6,
+      "workers": 6
+    },
+    {
+      "label": "candidate-installed-over-previous-candidate",
+      "caches": 8,
+      "workers": 7
+    },
+    {
+      "label": "failed-install-preserves-pointers",
+      "caches": 8,
+      "workers": 7
+    },
+    {
+      "label": "candidate-removed-retained-path-restored",
+      "caches": 7,
+      "workers": 6
+    },
+    {
+      "label": "rollback-and-other-package-work-offline",
+      "caches": 7,
+      "workers": 6
+    },
+    {
+      "label": "gym-cache-removal-preserves-fpv-and-worlds",
+      "caches": 6,
+      "workers": 5
+    }
+  ],
+  "motionHeights": [
+    0,
+    0.2,
+    0.2,
+    0.3,
+    0.3,
+    0.3,
+    0.4,
+    0.4
+  ],
+  "lastMotionElapsedMs": 7499,
+  "transferElapsedMs": 74,
+  "returnElapsedMs": 55,
+  "screenshot": {
+    "path": "/tmp/practice-active-session-20261016-run7.json.active-session-paused.png",
+    "bytes": 627738,
+    "sha256": "1e4b02333a459c1779141226c2a23987f909ab2138e7bd68e2983b994159c9a4"
+  },
+  "worldWitnesses": [
+    "before-installation",
+    "closed-window-round-1",
+    "offline-standalone-window",
+    "browser-process-restart-launcher",
+    "browser-process-restart-standalone"
+  ],
+  "limits": [
+    "English historical Academy self-level installed-PWA native target activation only; no minimization, physical-device, all-app active-flight or human qualification.",
+    "Identity and exported proof/profile equality are enforced by archived source; raw document handle/timeOrigin and post-update exports are not serialized.",
+    "This lane records cache names/worker scopes, not cached member hashes; five World DB witnesses precede active update and do not prove post-update World DB equality.",
+    "No uninterrupted background flight or exact-tick continuity; retained pause and explicit positive-motion resume only.",
+    "No public release approval; current and historical candidates retain separate admission scope."
+  ]
+}

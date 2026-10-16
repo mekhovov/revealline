@@ -222,6 +222,26 @@ and independent receipt review are required; unit fixtures do not close C4.
 
 ## Production directory source and delivery binding
 
+### Separate native Chrome zoom capability (not package qualification)
+
+`PRACTICE_NATIVE_ZOOM_CAPABILITY=1 node scripts/observe-practice-native-zoom.mjs
+--playwright ABSOLUTE_EXISTING_MODULE --output FRESH_ABSOLUTE_DIRECTORY` creates
+only a disposable headed Chrome profile and literal loopback metrics fixture.
+Ordinary visible Chrome Appearance controls select 100→200→100; unchanged outer
+geometry, halved CSS viewport, doubled DPR, visual scale 1 and unchanged fixture
+CSS corroborate native zoom. No user profile, CSS/pinch zoom, private Settings
+API, device-metrics override or OS preference is used. Symlinked command paths
+must execute the same explicit opt-in guard rather than silently exiting zero.
+
+The 90-second total, ten-second action and independent five-second cleanup bounds
+retain pending operation ownership. Zoom reset, owned browser/server closure and
+profile deletion are required. Unsupported UI fails rather than falling back.
+Native page/locator captures on the tested Chrome can be cropped or blank despite
+valid control geometry. Retain image dimensions and the explicit unreviewed visual
+flag; a successful capability receipt does not establish a visible selected-option
+PNG, package readability/focus, screen-reader speech, reduced motion or devices.
+Those require separately bound protocols and real observations.
+
 The explicit `practice-directory-production-personal-appearance.v2` protocol
 adds exactly `observerRevision` and `observerTree` to the v1 plan. The actual
 observer checkout must be clean and match those pins before and after the run.

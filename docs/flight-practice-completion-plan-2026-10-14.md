@@ -2,16 +2,22 @@
 
 ## 16 October research and execution update
 
-Current checkpoint: fresh `b8aec0821` packages pass all three real five-minute
-timeouts with explicit reasons, retained records and public retry/removal.
-The full current practice suite passes 388/388. Production run 2 verifies all
-original build bytes before and after, but all six Home-startup cases fail at
-the unchanged ten-second action deadline; delivery latency versus app startup
-is unresolved. Do not turn that failure into a pass by changing startup limits.
-Native 200% browser zoom capability is now proved in a disposable profile,
-not yet on the packages. Next source-bound run adds Gym/Academy offline flights
-to the already passing restarted Worlds routes. The next installed-PWA probe
-uses actual activation/blur/focus observations, not the failed minimization path.
+Current checkpoint: unchanged `b8aec0821` packages pass all six restarted-offline
+flight routes, the three real five-minute timeouts, and installed Academy
+different-version update continuity through actual native activation/blur/return.
+Independent audits verify these narrow passes; failed first attempts are retained.
+The full practice suite passes 388/388; observer `57d3b748c` passes 317 tests plus
+one explicit historical-fixture skip. Native browser zoom geometry is proved,
+but screenshots are cropped/blank and package accessibility remains unqualified.
+
+Production run 2 verifies every original build byte before/after but fails all six
+Home startups. A matched identical-byte diagnostic now isolates delivery-path
+sensitivity: repeated original-file reads fail the unchanged ten-second limit,
+verified memory delivery reaches Home in 7.47 seconds. Next: bounded original-byte
+test delivery and the full six-case production journey, without increasing startup
+limits or substituting source. Then the narrow package-bound EN/UK keyboard/native
+zoom/reduced-motion matrix and synchronization of World's old menu wording.
+See [current receipts, limits and remaining priorities](flight-practice-continuation-2026-10-16.md).
 
 Fresh audited software progress: observer `8e29a04c3` passes real imported-model
 offline flight through both restarted Worlds routes, all-three final verification
