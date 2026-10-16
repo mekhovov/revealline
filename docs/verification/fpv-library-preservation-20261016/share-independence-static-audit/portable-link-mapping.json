@@ -23,7 +23,9 @@
       "After the global restore has created safe real parent directories, create the one missing leaf symlink using relativeSymlinkValue. Refuse an existing destination or link; do not follow symlink parents.",
       "Record this explicitly reviewed mapping and all39verified file identities; then resolve all282restored links and require every selected file hash, target and separate source-checkout receipt before a complete portable restore claim."
     ],
-    "performedByThisAudit": false
+    "performedByThisAudit": false,
+    "originalTargetSHA256": "b01face14009c2f3263d6f014d5f45acf3c2e84e3616e2da2b371a3889ed9cc0",
+    "originalTargetSHA256Encoding": "UTF-8 bytes of the exact captured symlink value; no path normalization, alias substitution or newline"
   },
   "capturedRootOtherLinks": "The other281targets use the existing sourceRoot-prefix\u2192newRestoreRoot relative rewrite. exact-link-dispositions.json records their selected terminal payload counts and alias chains.",
   "scope": "Read-only proven data closure plus explicit portable recipe; no original link, source file, player data or restore destination was mutated."
