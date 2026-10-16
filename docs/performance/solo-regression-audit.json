@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T16:18:32.647891+00:00",
-  "status": "Incomplete repository regression inventory:1895/1948 original files have complete mixed-source observations;53 remain unobserved. Complete failures, resource stops and source-scoped supplementary proofs remain explicit.",
+  "updatedAt": "2026-10-16T18:39:08.374418+00:00",
+  "status": "complete-file-observations-with-one-original-file-gap-and-retained-failures",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
   "frozenRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
@@ -2665,7 +2665,7 @@
     }
   ],
   "limits": [
-    "715 original files remain unexecuted by this inventory.",
+    "The historical local runner did not execute715 files; later source-bound receipts now leave one original file without a complete canonical result. One completed script contains only a skipped test.",
     "Original files span recorded HEADs. Runtime-boundary and fixture retests are separate, not a claim that all1233 ran on one final revision.",
     "Baseline reproduction covers named diagnostics and executed cases only; cancelled, unregistered, or later unreachable assertions receive no coverage credit.",
     "Unrelated Team golden, registry, access-page, and decoder fixture failures remain visible. Production validation and deadlines were not weakened.",
@@ -2673,13 +2673,13 @@
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
   ],
   "remoteContinuation": {
-    "checkpointAt": "2026-10-16T16:18:32.647891+00:00",
-    "currentRuntimeContext": "Production package source dbf61c518 (runtime24b9d38ed) has separate verification and native qualification. Historical inventory observations keep their recorded revisions. Canonical fixture-only successor source b2a6aadfd retains unchanged production runtime.",
+    "checkpointAt": "2026-10-16T18:37:31.322414+00:00",
+    "currentRuntimeContext": "Verified artifact source8c1af9d1/runtime138e3284b. Completed inventory remains mixed-source; latest formatter source d12fcb945 and finite-owner fixture source6b9dadba4 share runtime138e. No single-final-source whole-suite pass.",
     "originalInventoryFiles": 1948,
     "historicalLocalCompleteFiles": 1233,
-    "remoteUniqueCompleteFiles": 659,
-    "totalUniqueOriginalFilesObserved": 1895,
-    "originalFilesStillUnobserved": 53,
+    "remoteUniqueCompleteFiles": 711,
+    "totalUniqueOriginalFilesObserved": 1947,
+    "originalFilesStillUnobserved": 1,
     "overlap": [],
     "original715": {
       "runId": 38865274741,
@@ -2725,7 +2725,7 @@
         "sha256": "5e4a5d97303970d636d475598930545a5f40ecf99c1cedbb5bf16b6c325db1d0"
       }
     },
-    "classificationStatus": "Incomplete overall. New7 retains four exact all-error baseline comparisons; Journey reproduces its savedAt-only envelope mismatch with narrowly declared generated-field mapping. Solo library10/13 errors match exactly;3 candidate ready-briefing boundaries differ from earlier baseline failures and receive explicit public Start fixture review. Eleven newly complete failure groups await exact-baseline execution. No failed group becomes a pass.",
+    "classificationStatus": "Four newly retained untouched-b117 comparisons match all18 named failures exactly. Five canonical formatter files retain22 named failures:20 match both earlier diagnostic revisions exactly; two restoration errors differ only in disclosed generated writer/attempt/session identities. Couch static completes2/36 on both current canonical and b117 with the same declared corrected fixture; all34 named failures match. Seven newly retained script failure groups remain unclassified. All failures remain failures.",
     "boundedIdentityPair": {
       "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
       "bytes": 24352,
@@ -2738,7 +2738,7 @@
     },
     "activeSupplementaryRuns": [],
     "scope": "Unique-file progress across explicitly recorded sources, not an aggregate one-revision suite pass or final device/release acceptance. Historical frozenRuntimeRevision/currentHeadContext fields above belong to the06:33 local snapshot. Later copies/diagnostics are not counted twice. Remote artifacts retained with size,digest,ZIP CRC,source,test andTAP checks; resource-aborted files remain unobserved.",
-    "classificationUpdatedAt": "2026-10-16T12:16:24.163601+00:00",
+    "classificationUpdatedAt": "2026-10-16T17:29:32.482813+00:00",
     "retainedClassifications": {
       "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "baselineFiles": 23,
@@ -3714,9 +3714,9 @@
       "sha256": "3a0b6f5a447ee577259c32b3a858c6207eba8820fc02e1584437f4bf9133be0c"
     },
     "checkpointProof": {
-      "path": ".cache/solo-followup/regression-audit/post-ingestion-regression-successor-01/coverage-checkpoint.json",
-      "bytes": 189538,
-      "sha256": "880f087ba53d297f10704d3a105432fcdf681def883ac8c90a129e455ae55afd"
+      "path": ".cache/solo-followup/regression-audit/retained-closure-1835/coverage.json",
+      "bytes": 218702,
+      "sha256": "3454ffd1985f16399641d0311b86ec890f4cdbd7fdb6c63745432f7c49a5771b"
     },
     "completedCombinedRun": {
       "runId": 38885848296,
@@ -4160,13 +4160,14 @@
       "scope": "Exact disjoint179+525+11 partition of original715. Dispatch is not passing or completion evidence. No duplicate coverage for earlier failures or supplementary files."
     },
     "currentAdditionsInventory": {
-      "path": ".cache/solo-followup/regression-audit/inventory-additions-1610.json",
-      "bytes": 2920,
-      "sha256": "f7903d3c6bc25ef0b8587c81dc47d8bd83ef436675ed7972bd61a7d0fcef2e2a"
+      "path": ".cache/solo-followup/regression-audit/remote73-ledger-checkpoint-1721/inventory-8c1af9d1.json",
+      "bytes": 3762,
+      "sha256": "cad3312b73020cad842a1c36a514dce946dab1478c80210410742a93aea98262"
     },
     "latestSourceBoundary": {
-      "revision": "dbf61c518e9df3ed68b24f693686c9600405f3f2",
-      "scope": "Verified frozen package source/runtime24b9; fixture successor b2a6 changes only8 test files. Runtime qualification is separate."
+      "revision": "8c1af9d191224893bad9012f7638940a869d6096",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "scope": "New Demo admission source committed; focused proof binds exact bytes. Full lint/validation passed; formatting retains eight byte-identical baseline files. Appearance run38939661031 succeeded; artifact acquisition is active and inner source/CSP/native qualification remains pending."
     },
     "earlierCheckpoint1216": {
       "checkpointAt": "2026-10-16T12:16:24.163601+00:00",
@@ -4673,7 +4674,10 @@
         "bytes": 51654,
         "sha256": "0b89c298bb5eed58bdf07db365a0ae29f444dbd73307d06357708a32661a3b11"
       },
-      "candidateOnlyBaselinePassCases": ["flight-preparation-status-host", "hud-status-cues"],
+      "candidateOnlyBaselinePassCases": [
+        "flight-preparation-status-host",
+        "hud-status-cues"
+      ],
       "scope": "Nine complete canonical targets add eight new paths; Still Workshop was already observed. Selected-identity copies remain diagnostic only. Baseline-pass/candidate-fail cases are under separate concrete readiness review, never waived."
     },
     "latestBaselineClassification": {
@@ -4685,7 +4689,10 @@
       "groupsCompared": 14,
       "exactSemanticGroups": 10,
       "groupsAfterNamedRandomStorageIDNormalization": 12,
-      "candidateOnlyGroups": ["flight-preparation-status-host", "hud-status-cues"],
+      "candidateOnlyGroups": [
+        "flight-preparation-status-host",
+        "hud-status-cues"
+      ],
       "scope": "Fourteen complete canonical baseline comparisons. Ten byte-identical semantic groups plus two matching only named random writer/session/attempt IDs; two baseline-pass groups remain candidate-specific and owned for diagnosis. Later assertions after any failure remain unobserved."
     },
     "boundedFourDiagnosticPairs": {
@@ -4866,7 +4873,7 @@
     "canonicalFixtureSuccessor": {
       "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
       "files": 8,
-      "status": "committed-static-checked-full-canonical-jobs-pending",
+      "status": "all-eight-canonical-files-complete-first-remote73-snapshot",
       "sixAndSoloProof": {
         "path": ".cache/solo-followup/regression-audit/canonical-seven-application-01.json",
         "bytes": 2508,
@@ -4877,10 +4884,129 @@
         "bytes": 2121,
         "sha256": "fbda52e50765045a6276d528c8b754fd9b57defb80aae39d538160f989d4fa38"
       },
-      "scope": "Six bounded assertion-message repairs preserve equality truth; explicit Start and public Resume readiness preserve assertions/deadlines. Existing failed results retained."
+      "scope": "Six bounded assertion-message repairs preserve equality truth; explicit Start and public Resume readiness preserve assertions/deadlines. Existing failed results retained.",
+      "observations": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-1721.json",
+        "bytes": 267114,
+        "sha256": "143c2776f2a4d27a6dc7eab9c80934a8e0f5e41f15384f7bf4243a110d56fae8"
+      },
+      "outcomes": [
+        {
+          "file": "game/test/controller-practice-pause-host.test.mjs",
+          "counts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 4,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 29747.877742
+          },
+          "passed": false
+        },
+        {
+          "file": "game/test/coop-shared-settings.test.mjs",
+          "counts": {
+            "tests": 16,
+            "suites": 0,
+            "pass": 2,
+            "fail": 14,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 15357.931169
+          },
+          "passed": false
+        },
+        {
+          "file": "game/test/coop-host.test.mjs",
+          "counts": {
+            "tests": 81,
+            "suites": 0,
+            "pass": 67,
+            "fail": 14,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 63123.82838
+          },
+          "passed": false
+        },
+        {
+          "file": "game/test/couch-gameplay-pressure-host.test.mjs",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 2,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 22113.107761
+          },
+          "passed": false
+        },
+        {
+          "file": "game/test/field-kit-retained-runtime.test.mjs",
+          "counts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 3,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 86553.54814
+          },
+          "passed": false
+        },
+        {
+          "file": "game/test/couch-installed-chapters.test.mjs",
+          "counts": {
+            "tests": 27,
+            "suites": 0,
+            "pass": 25,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 328023.866356
+          },
+          "passed": false
+        },
+        {
+          "file": "game/test/touchscreen-controller-host.test.mjs",
+          "counts": {
+            "tests": 18,
+            "suites": 0,
+            "pass": 18,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 146785.503199
+          },
+          "passed": true
+        },
+        {
+          "file": "game/test/mission-library-solo-host.test.mjs",
+          "counts": {
+            "tests": 22,
+            "suites": 0,
+            "pass": 12,
+            "fail": 10,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 501923.763488
+          },
+          "passed": false
+        }
+      ]
     },
     "nextBoundedSuccessor": {
-      "status": "prepared-not-dispatched",
+      "status": "dispatched-in-progress",
       "manifest": "docs/performance/solo-regression-memory-diagnostic.json",
       "manifestSHA256": "96e3e83e11fb30ac25defeba66874a1e7d66c81c55dc7bc201866d7778c04af7",
       "workflow": ".github/workflows/solo-regression-memory-temporary.yml",
@@ -4898,7 +5024,1023 @@
       "baselineComparisons": 11,
       "diagnosticCopies": 14,
       "withheldOriginal": 7,
-      "scope": "40 ordinary+6 replacement canonical selections;14diagnostic copies include2filtered Couch owner cases, none earns canonical credit. Seven original pathology files stay withheld pending mechanism evidence. All resource/internal deadlines unchanged."
+      "scope": "40 ordinary+6 replacement canonical selections;14diagnostic copies include2filtered Couch owner cases, none earns canonical credit. Seven original pathology files stay withheld pending mechanism evidence. All resource/internal deadlines unchanged.",
+      "runId": 38931406471,
+      "workflowSourceRevision": "085e738d467e7006e111d76b9dd48fb0119ceb68",
+      "checkpoint": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-1731.json",
+        "bytes": 322061,
+        "sha256": "12c5d72eee21932ed800adcacab9cd9490d1c26df73fbc3d8d80d9e523340bee"
+      }
+    },
+    "previousCheckpoint1620": {
+      "checkpointAt": "2026-10-16T16:18:32.647891+00:00",
+      "remoteUniqueCompleteFiles": 659,
+      "totalUniqueOriginalFilesObserved": 1895,
+      "originalFilesStillUnobserved": 53,
+      "checkpointProof": {
+        "path": ".cache/solo-followup/regression-audit/post-ingestion-regression-successor-01/coverage-checkpoint.json",
+        "bytes": 189538,
+        "sha256": "880f087ba53d297f10704d3a105432fcdf681def883ac8c90a129e455ae55afd"
+      }
+    },
+    "remote73Checkpoint": {
+      "runId": 38931406471,
+      "workflowSourceRevision": "085e738d467e7006e111d76b9dd48fb0119ceb68",
+      "workflowSHA256": "29ece4669c11fe01c3bbc21dd7ae716ae8e61c8b75715fa78c8b131ab5bea3f9",
+      "manifestSHA256": "96e3e83e11fb30ac25defeba66874a1e7d66c81c55dc7bc201866d7778c04af7",
+      "status": "in-progress-first-33-retained",
+      "verifiedTargets": 33,
+      "retainedArtifacts": 66,
+      "pendingTargets": 40,
+      "integrityProblems": 0,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-1721.json",
+        "bytes": 267114,
+        "sha256": "143c2776f2a4d27a6dc7eab9c80934a8e0f5e41f15384f7bf4243a110d56fae8"
+      },
+      "newUniqueOriginalFiles": [
+        {
+          "file": "game/test/controller-practice-pause-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "3a4dbb834290a015a5f712d57ce767d623a2267795b265046b785defd121aae0",
+          "counts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 4,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 29747.877742
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-controller-practice-pause-host.tap",
+            "bytes": 2087,
+            "sha256": "e7afb37467c0585a9dfb9211f3fab0f7c43cffa4fb46922bb977727bae3e3147"
+          }
+        },
+        {
+          "file": "game/test/coop-shared-settings.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "9e5baab2b50c154cb9cebe6fd427639708b2568ac57a2c8db17a3c20c22a0cbe",
+          "counts": {
+            "tests": 16,
+            "suites": 0,
+            "pass": 2,
+            "fail": 14,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 15357.931169
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-coop-shared-settings.tap",
+            "bytes": 17127,
+            "sha256": "2c5a35aab28367b8c1a8ae107b0ca6171b48c22e57ed86ac41ef7790ab48bb92"
+          }
+        },
+        {
+          "file": "game/test/coop-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "542a7cb7df32f20cb661612393f3f91b1b7f2c8bb49f4e01a15f76055942972e",
+          "counts": {
+            "tests": 81,
+            "suites": 0,
+            "pass": 67,
+            "fail": 14,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 63123.82838
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-coop-host.tap",
+            "bytes": 30565,
+            "sha256": "4596afbee78c70b9d39f82ca8078f0a49169c4a11a3241acd54031deb23b94a1"
+          }
+        },
+        {
+          "file": "game/test/couch-gameplay-pressure-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "7dd0892e46ac65bcbb39aa05ebe50b9ffe8d2e9d168e82f60d614fa24ef7a015",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 2,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 22113.107761
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-couch-gameplay-pressure-host.tap",
+            "bytes": 2606,
+            "sha256": "facfdfe615f6b9b7e71aaa9242717941bc04bf45c95bce7800b9e2d5f12976ca"
+          }
+        },
+        {
+          "file": "game/test/field-kit-retained-runtime.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "a76367cfc139acb4245e93994cf21452360b8c9b99e8fa16113b0ead5d31332a",
+          "counts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 3,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 86553.54814
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-field-kit-retained-runtime.tap",
+            "bytes": 11410,
+            "sha256": "8dafe540c0c25010e4ef98a5a294d0876bb0b6cddebbcd867daf06dae70b7f43"
+          }
+        },
+        {
+          "file": "game/test/couch-installed-chapters.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "9975098848bc96af670fe065c69a26fd8aedbce118b88ddfa79d5a4561faba7c",
+          "counts": {
+            "tests": 27,
+            "suites": 0,
+            "pass": 25,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 328023.866356
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-couch-installed-chapters.tap",
+            "bytes": 9314,
+            "sha256": "5b4b438c9332c96ded35d5343082b61f4282ae59065a914ad160ec8d1b182912"
+          }
+        }
+      ],
+      "supplementaryCanonical": [
+        {
+          "file": "game/test/touchscreen-controller-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "counts": {
+            "tests": 18,
+            "suites": 0,
+            "pass": 18,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 146785.503199
+          },
+          "passed": true,
+          "tapSHA256": "43d10cac60eff0da29c036ad7b4eeb3a593f918cf0170e207849c20e68016e92"
+        },
+        {
+          "file": "game/test/mission-library-solo-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "counts": {
+            "tests": 22,
+            "suites": 0,
+            "pass": 12,
+            "fail": 10,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 501923.763488
+          },
+          "passed": false,
+          "tapSHA256": "f72dc24767a4d58926b27d548d58b2bfef15a300c231c2d1f6c768443fc4d2ff"
+        }
+      ],
+      "diagnostics": {
+        "observations": 14,
+        "canonicalCoverage": 0,
+        "resourceIncompleteTargets": [
+          "baseline-couch-encounter-help-case3-comparison",
+          "candidate-couch-encounter-help-case3-comparison"
+        ]
+      },
+      "scope": "First retained source-bound snapshot only. Six newly complete original files all fail; two supplementary full files were already covered. Diagnostic copies and filtered cases grant no inventory credit. Forty target results remain pending retention/execution."
+    },
+    "elevenBaselineComparisons": {
+      "groups": 11,
+      "exactAllNamedErrorGroups": 9,
+      "writerUUIDOnlyGroups": 1,
+      "touchscreen": {
+        "baseline": {
+          "tests": 18,
+          "pass": 18,
+          "fail": 0
+        },
+        "correctedCanonical": {
+          "tests": 18,
+          "pass": 18,
+          "fail": 0
+        },
+        "classification": "Historical three candidate-only prepared-Resume fixture failures repaired by explicit public readiness; not an original-baseline failure match."
+      },
+      "classification": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/eleven-baseline-classification.json",
+        "bytes": 1740,
+        "sha256": "42d33e12762cabfa6b8f9016c56cf9d63b4f4bffc579943d53d3ef56bccc3e5d"
+      },
+      "rawSemanticComparison": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/eleven-baseline-comparison.json",
+        "bytes": 572896,
+        "sha256": "be636758fd5b921b0a6c3a73221c406e391793efa21ee49a04e8a18e0df66f19"
+      },
+      "scope": "Identical test bytes in original candidate/baseline pairs. Only observed named errors classified; later assertions in failed cases may remain unreached. Raw UUID difference retained; no goldens or assertions relaxed."
+    },
+    "demoMediaAdmission": {
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "proof": {
+        "path": ".cache/solo-followup/demo-media-admission-01/handoff-receipt.json",
+        "bytes": 13526,
+        "sha256": "bc6212b49989fa7fb6d8cc6a6cfb504de435ea6d86a6ab6c273eeb4099329776"
+      },
+      "completeFiles": 6,
+      "distinctTests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "newFile": "game/test/solo-demo-media-admission-host.test.mjs",
+      "newFileTests": 7,
+      "originalInventoryAdded": 0,
+      "scope": "Real shared Soundscape queue and public lifecycle correctness, same exact production bytes across retained runs. Five passing full files plus the corrected complete demo-host file are counted once. Unchanged-runtime reds, interrupted initial green, failed47/49 aggregate, formatting equivalence and source-proven stale fixtures all retained. No browser timing, physical heat or native Capacitor background claim."
+    },
+    "newInputMechanicsFile": {
+      "file": "scripts/test-solo-qualification-input-mechanics.mjs",
+      "testSHA256": "f6e50e2b2592d446399d28bc694a3d93da89b9ca1b92f30b52f3d0dcd02be19f",
+      "sourceRevision": "d247d3ca6a0d057e616e36b8dbdf6d97dcaa059c",
+      "proof": {
+        "path": ".cache/solo-followup/qualification-first30-prospective-02/execution-receipt.json",
+        "bytes": 3773,
+        "sha256": "d8f521fa9bcd8fb3b32cae4b75d447637aca79a02bdb1056ad8b0bae5dc6d62d"
+      },
+      "completeFileTests": 5,
+      "completeFilePass": 5,
+      "combinedExistingQualificationTests": 39,
+      "combinedGroupTests": 44,
+      "combinedGroupPass": 44,
+      "originalInventoryAdded": 0,
+      "scope": "New canonical correctness/tooling file outside original1948. Complete two-file TAP with real signal01 recovery/respawn test; existing39 cases are not added to new-file coverage. Model56 variants and native qualification remain separate."
+    },
+    "currentRepositoryInventory": {
+      "originalFiles": 1948,
+      "addedFiles": 16,
+      "totalFiles": 1964,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote73-ledger-checkpoint-1721/inventory-8c1af9d1.json",
+        "bytes": 3762,
+        "sha256": "cad3312b73020cad842a1c36a514dce946dab1478c80210410742a93aea98262"
+      },
+      "scope": "Path inventory only; mixed-source original coverage and supplementary canonical results remain separate."
+    },
+    "previousCheckpoint1721": {
+      "checkpointAt": "2026-10-16T17:29:32.482813+00:00",
+      "remoteUniqueCompleteFiles": 665,
+      "totalUniqueOriginalFilesObserved": 1901,
+      "originalFilesStillUnobserved": 47,
+      "checkpointProof": {
+        "path": ".cache/solo-followup/regression-audit/remote73-ledger-checkpoint-1721/coverage-checkpoint.json",
+        "bytes": 194296,
+        "sha256": "448fb6127f740ad5ca87a93e69ddd98329cc2113c469b64710d6711cd5761da6"
+      }
+    },
+    "remote73SecondCheckpoint": {
+      "runId": 38931406471,
+      "workflowSourceRevision": "085e738d467e7006e111d76b9dd48fb0119ceb68",
+      "verifiedTargets": 41,
+      "retainedArtifacts": 83,
+      "pendingTargets": 32,
+      "integrityProblems": 0,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-1731.json",
+        "bytes": 322061,
+        "sha256": "12c5d72eee21932ed800adcacab9cd9490d1c26df73fbc3d8d80d9e523340bee"
+      },
+      "newUniqueOriginalFiles": [
+        {
+          "file": "game/test/creator-guide-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "e3f07002e7ca95bc98dd770300af50cd9595db20da1bf5fbd61d5735dbb57778",
+          "counts": {
+            "tests": 16,
+            "suites": 0,
+            "pass": 16,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1731.219084
+          },
+          "passed": true,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-creator-guide-host.tap",
+            "bytes": 4174,
+            "sha256": "78110cc7c15507dc4a665004c54060cfe5297269722ee02e1c8bfac254d85180"
+          }
+        },
+        {
+          "file": "game/test/timed-bonus-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "970374f8c9a139a5179f2f79a7efd94ac0962f74823f4d03afcfa7e53ebd4748",
+          "counts": {
+            "tests": 1,
+            "suites": 0,
+            "pass": 1,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 64883.677751
+          },
+          "passed": true,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-timed-bonus-host.tap",
+            "bytes": 390,
+            "sha256": "0bf32dec5979317350a18d67026ff17d5415880acfdbe7cb2cdc9a0c75a40e8c"
+          }
+        },
+        {
+          "file": "game/test/video-poster-workshop.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "ded7ab6fa3ae82de96214443d6c20b1f9f6c7b031e7f3b8fe760eb5caefc9d2d",
+          "counts": {
+            "tests": 41,
+            "suites": 0,
+            "pass": 41,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1000.169312
+          },
+          "passed": true,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-video-poster-workshop.tap",
+            "bytes": 9285,
+            "sha256": "8707fe3fa3cfc395c432b3d6bc0c20962c0f1c0a519aecebbf5e9f2816ede386"
+          }
+        },
+        {
+          "file": "game/test/viewport-startup-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "b2bc480aa42a87da436e29fac2c966d6c63d9b1910c149a978fffcf389bce080",
+          "counts": {
+            "tests": 12,
+            "suites": 0,
+            "pass": 8,
+            "fail": 4,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 447.538462
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-viewport-startup-host.tap",
+            "bytes": 6603,
+            "sha256": "7a7adacdbdff03c0137ef475b0d59db17f203b37a0e588acfcb4991ee656b118"
+          }
+        },
+        {
+          "file": "game/test/visual-theme-lease.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "31b1be1fd22abbdf8bbfb2c4f525100f3d2da9e157961b7278309ed20777f52b",
+          "counts": {
+            "tests": 13,
+            "suites": 0,
+            "pass": 5,
+            "fail": 8,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1549.042441
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-visual-theme-lease.tap",
+            "bytes": 7415,
+            "sha256": "40f198a12894899d9644c286d4f300fbfe405d818efde25aae0e8603462c1701"
+          }
+        },
+        {
+          "file": "game/test/whole-timed-host.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "e90e67c9b9c880cef680fa54a5665bc1a5720cfc7112bf72cf50dcc2e5531d1e",
+          "counts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 0,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 124008.932504
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-whole-timed-host.tap",
+            "bytes": 11573,
+            "sha256": "c4d6142a808d81dc5d8e4641239c8c4477411ed1084e64f45ea7b1f382dd3199"
+          }
+        },
+        {
+          "file": "game/test/wide-content.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "e304e3f97263ca0bddc2cd6288753779f9d40be26d7d90508d564f16af607c99",
+          "counts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 5,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 694.438108
+          },
+          "passed": true,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-wide-content.tap",
+            "bytes": 1520,
+            "sha256": "a71e503b700f35172ceb600603bebc2e8f7279835c593f56d67283ceb26cc60e"
+          }
+        },
+        {
+          "file": "game/test/workshop-art-integration.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "34f746166c41daaf8b13909c5a5ab0b08ebb04177e61f20de2beea463cdb2987",
+          "counts": {
+            "tests": 15,
+            "suites": 0,
+            "pass": 14,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 38618.167373
+          },
+          "passed": false,
+          "tap": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-workshop-art-integration.tap",
+            "bytes": 5430,
+            "sha256": "0e822a34c598a933b5a0fe51623e48a4c16f0feda8c2c3d9823282bbdb820665"
+          }
+        }
+      ],
+      "scope": "Eight newly complete original files; four pass/four fail. Earlier first33 snapshot remains immutable. Four new failures require baseline/source classification; complete observations are not all passes."
+    },
+    "remote73NewFailures": {
+      "path": ".cache/solo-followup/regression-audit/remote73-ledger-checkpoint-1721/four-new-baselines-proposal.json",
+      "bytes": 5398,
+      "sha256": "395e607b6055846648c7d5c98ebf1fca824c49ce94ca5ba7c247731927786e6e"
+    },
+    "remote73DiagnosticInterpretation": {
+      "stageTriage": {
+        "path": ".cache/solo-followup/regression-audit/retained-diagnostic-triage-1735-01/triage.json",
+        "bytes": 23188,
+        "sha256": "62f22918e9a743d70b4380e87c32fb1bad5fe0f68c03a8c969f262bbd5e9a5bc"
+      },
+      "exactNamedComparison": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/seven-diagnostic-pair-comparison.json",
+        "bytes": 19743,
+        "sha256": "977c4772eeb1de78a423788dc42e5aa025440825421fc6184028ec15b2a387c4"
+      },
+      "classification": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/seven-diagnostic-pair-classification.json",
+        "bytes": 2574,
+        "sha256": "e297f5939ff1c23976044162bd1fbef510d041b8571b5aaab1d6d5c5725b2fe9"
+      },
+      "completeUnfilteredDiagnosticPairs": 5,
+      "matchedNamedErrors": 22,
+      "settingsRestorationGeneratedIdentityDifferenceCount": 2,
+      "couchEncounter": {
+        "complete": false,
+        "case3DeepArrayComparison": true,
+        "lastCompletedCase": 4,
+        "laterResourceStopCause": "unlocalized",
+        "canonicalCoverage": false
+      },
+      "couchStatic": {
+        "filteredCaseTests": 1,
+        "filteredCasePass": 0,
+        "sameFailureBothSources": true,
+        "decoderRequestsObserved": 0,
+        "canonicalCoverage": false
+      },
+      "soloLibrary": {
+        "canonicalTests": 22,
+        "canonicalPass": 12,
+        "canonicalFail": 10,
+        "scope": "Remaining waits precede revised Start helper or fail distinct decoder/catalogue assertions. Earlier baseline8/22, original candidate9/22 and new12/22 remain separate; no blanket equivalence or product-defect claim."
+      },
+      "scope": "Five complete full-file diagnostic pairs reproduce22 named failures, including two restoration diagnostics with only exact recorded generated ID mappings. These are diagnostic observations, zero canonical credit. Two emitted Couch encounter diagnostics match but both arms stop aftercase4; Couch static is filtered. No inferred execution after a failure."
+    },
+    "postDemoSourceChecks": {
+      "revision": "8c1af9d191224893bad9012f7638940a869d6096",
+      "proof": {
+        "path": ".cache/solo-followup/final-source-checks-20261016T172605Z-8c1af9d1/receipt.json",
+        "bytes": 5540,
+        "sha256": "a88998ae5f94e622edab0c949ab1fc9f3c654e49cd14e01b19ad09b236889a01"
+      },
+      "lint": "passed",
+      "validate": "passed",
+      "format": "failed-eight-exact-baseline-files",
+      "scope": "Root full checks closed cleanly on unchanged committed source; baseline formatting is retained, not fixed by unrelated reformatting. Independent of full original inventory and pending artifact/native acceptance."
+    },
+    "nextFourBaselineProposal": {
+      "staticReceipt": {
+        "path": ".cache/solo-followup/regression-audit/remote73-four-baselines-successor-01/static-receipt.json",
+        "bytes": 1370,
+        "sha256": "8cb2e724f983d4ae203f25f3739456e8c19327d386a6b11090b89fe8261e6e07"
+      },
+      "status": "executed-and-retained-in-run38945838622",
+      "scope": "Four approved exact b117 comparisons will be bundled with five separately reviewed bounded-message canonical reruns after ingestion. No new actor-coverage baseline requested; no active candidate reruns or source edits.",
+      "resultProof": {
+        "path": ".cache/solo-followup/regression-audit/retained-closure-1835/comparisons.json",
+        "bytes": 223171,
+        "sha256": "e22462c00b13980e3228457d8b02a4a8ea9081e2b9ae2f0370254a6e8cda1cd5"
+      }
+    },
+    "previousCheckpoint1731": {
+      "checkpointAt": "2026-10-16T17:34:36.597033+00:00",
+      "remoteUniqueCompleteFiles": 673,
+      "totalUniqueOriginalFilesObserved": 1909,
+      "originalFilesStillUnobserved": 39,
+      "checkpointProof": {
+        "path": ".cache/solo-followup/regression-audit/remote73-ledger-checkpoint-1721/coverage-checkpoint-1731.json",
+        "bytes": 195897,
+        "sha256": "ad75e77613de4d7f819c381561ac003b6d5ba9ed05d00efadd55f1ad20080dee"
+      }
+    },
+    "remote73ThirdCheckpoint": {
+      "runId": 38931406471,
+      "workflowSourceRevision": "085e738d467e7006e111d76b9dd48fb0119ceb68",
+      "verifiedTargets": 51,
+      "retainedArtifacts": 104,
+      "pendingTargets": 22,
+      "integrityProblems": 0,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-1742.json",
+        "bytes": 388940,
+        "sha256": "14d6b5860af294ffe65e03b2172e5138973f5fbb26b66a04199d734586a301f3"
+      },
+      "newUniqueOriginalFiles": [
+        {
+          "file": "platforms/desktop/test/package-security.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "92a77902f83fde27da66c26e6eff9d1c6e141f4f60cd31cb07dbc9d1ba4222da",
+          "counts": {
+            "tests": 7,
+            "suites": 0,
+            "pass": 7,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 86.224652
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-package-security.tap",
+            "bytes": 1693,
+            "sha256": "78eb993ee4e54904387b23bcd5972808aef3a4690192ff7aed68860d08919686"
+          }
+        },
+        {
+          "file": "platforms/desktop/test/policy.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "375d18923d8a41b07324d6aa68b303aa18b8f8cb337c8f6814078eda4cb567aa",
+          "counts": {
+            "tests": 7,
+            "suites": 0,
+            "pass": 7,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 63.460364
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-policy.tap",
+            "bytes": 1731,
+            "sha256": "2ff55246b6383a3db64fb710e84d783b2b34d2cede2905d0ed04103d9730feb4"
+          }
+        },
+        {
+          "file": "platforms/ios/test/bridge.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "8f67f02fc8936a275b802d2c974e73e4fd931c523a65da66b50f828affe1da18",
+          "counts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 8,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 77.53866
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-bridge.tap",
+            "bytes": 1931,
+            "sha256": "75b4bc3398a006a0d500c431e7391d0cba536c2bccc2bf50eb081e916dc95aea"
+          }
+        },
+        {
+          "file": "scripts/brand-icons.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "cedc56f0c353151f7f1cd8b049e79db674a046b48fdb377c10be45245106cd25",
+          "counts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 3,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 2017.124038
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-brand-icons.tap",
+            "bytes": 879,
+            "sha256": "c1c3860d6d7f687a2a1bfdc35fb97bc8eb60278e2ef9ce604395ef07539da8ba"
+          }
+        },
+        {
+          "file": "scripts/source-manifest-snapshot.test.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "c2a82ad0fa4256ed4bd7386af2727f47257264d9f3cbcafe857bfcba6fdf671e",
+          "counts": {
+            "tests": 1,
+            "suites": 0,
+            "pass": 1,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 696.673825
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-source-manifest-snapshot.tap",
+            "bytes": 358,
+            "sha256": "b615e7e79bc6b0bb0340f1b707cf263a34e08a2f6e3f6d9d11344efe810e8a64"
+          }
+        },
+        {
+          "file": "scripts/test-actor-coverage.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "fe66608c8910612decd4ddef65caf00b70d0d58769c39b5cea8d98c6240d587d",
+          "counts": {
+            "tests": 6,
+            "suites": 0,
+            "pass": 5,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 17853.010685
+          },
+          "passed": false,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-test-actor-coverage.tap",
+            "bytes": 2688,
+            "sha256": "51d6abbd3e71028d93f0278fa31992b26559307112771d8d8aef13a46f7df3aa"
+          }
+        },
+        {
+          "file": "scripts/test-analyze-discovery-heap.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "7f55b209aac5af2f501341c64853476af58a93073076e1e2b65a512e9d761518",
+          "counts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 5,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 98.630574
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-test-analyze-discovery-heap.tap",
+            "bytes": 1346,
+            "sha256": "36acc325330a465e3e7a5e608a2428f9d62cc1e805e9612ac31a92d06211925a"
+          }
+        },
+        {
+          "file": "scripts/test-analyze-fpv-heap.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "a76ec4bb4a49dfbacce9b7920b6d70a764693e404c4c675abe625a0f835a93be",
+          "counts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 5,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 79.84891
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-test-analyze-fpv-heap.tap",
+            "bytes": 1310,
+            "sha256": "27f4fd49949a301ce54d47e73a8535bb807e5e20c73c63e421e72ef3e7800638"
+          }
+        },
+        {
+          "file": "scripts/test-build-workshop-pack.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "27e53508adbc6429ce1a0edb58e7f37ac0990c293b05daa615318617fd03c5a4",
+          "counts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 8,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 16221.460755
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-test-build-workshop-pack.tap",
+            "bytes": 2118,
+            "sha256": "6378c21e3e3119f90d0c65e2d9973446a71980239d12c9288ec9806d015bc8d9"
+          }
+        },
+        {
+          "file": "scripts/test-company-artwork-screening.mjs",
+          "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+          "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+          "testSHA256": "1133f2d2cb77afaf9a82959fb326416a6f789efa9728055fcc92ceaba8bf1b83",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 514.745805
+          },
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-test-company-artwork-screening.tap",
+            "bytes": 1178,
+            "sha256": "c6428a67499c676a5728fd70113d2bc29305e4aa23c05dafd92ad8d9b50172fa"
+          }
+        }
+      ],
+      "scope": "Ten additional exact complete original file observations; nine pass, actor-coverage5/6 fails. No aggregate final-source pass."
+    },
+    "actorCoverageUnclassified": {
+      "observation": {
+        "file": "scripts/test-actor-coverage.mjs",
+        "sourceRevision": "b2a6aadfd68357c6b4090f1d9debf249f0b97f6d",
+        "runtimeRevision": "24b9d38ed52fea754f61756866ba46b7576cb3ef",
+        "testSHA256": "fe66608c8910612decd4ddef65caf00b70d0d58769c39b5cea8d98c6240d587d",
+        "counts": {
+          "tests": 6,
+          "suites": 0,
+          "pass": 5,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 17853.010685
+        },
+        "passed": false,
+        "tap": {
+          "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/candidate-test-actor-coverage.tap",
+          "bytes": 2688,
+          "sha256": "51d6abbd3e71028d93f0278fa31992b26559307112771d8d8aef13a46f7df3aa"
+        }
+      },
+      "namedFailure": "Team inventory covers every lifecycle route and refuses an unknown successor",
+      "expectedErrorRegex": "No inventory factory",
+      "actualError": "Team route is missing from the content inventory: unregistered-team-next",
+      "status": "unclassified-complete-failure",
+      "scope": "Raw candidate failure retained. No exact baseline execution or product-regression inference; not included in the approved four-baseline queue."
+    },
+    "namedDiagnosticParserAudit": {
+      "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/comparison-duplicate-field-audit-1751.json",
+      "bytes": 919,
+      "sha256": "6c54dfc3d78075051ec0919a4e4cf0b10ef25a37fb0289a74186804bbed18926"
+    },
+    "closedProofPreservation": {
+      "path": ".cache/solo-followup/raster-localization-and-checks-preservation-01/receipt.json",
+      "bytes": 1204,
+      "sha256": "80ae31d5f7b82d93d0411f64dde9d30c7abfee0a29ce2c32c0437d945dc17f0a"
+    },
+    "appearance8c1PendingIngestion": {
+      "sourceRevision": "8c1af9d191224893bad9012f7638940a869d6096",
+      "runId": 38939661031,
+      "status": "completed",
+      "conclusion": "success",
+      "artifactId": 12063174018,
+      "bytes": 1090846738,
+      "sha256": "3893c2d7cc10c6d5b75e13f7ef82a8ac0dd7ea0b252d8473d8a7086e0470fd0c",
+      "scope": "GitHub metadata only at this checkpoint; exact focused TAP count and package/source agreement pending acquisition.",
+      "supersededBy": "Full acquisition and ingestion finalizedPASS18:06:27UTC; see solo-artifact-8c1af9d1 and latestCIFocusedPackage. Initial metadata retained as history."
+    },
+    "latestCIFocusedPackage": {
+      "sourceRevision": "8c1af9d191224893bad9012f7638940a869d6096",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "runId": 38939661031,
+      "artifactId": 12063174018,
+      "nodeVersion": "v22.13.1",
+      "completeFiles": 55,
+      "counts": {
+        "tests": 542,
+        "pass": 542,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/ci-focused-8c1af9d1-38939661031.json",
+        "bytes": 12416,
+        "sha256": "0a966d1a574d18e549969398b0d06c71906d19d02ce18bc684bdeb8c436ed1cb"
+      },
+      "originalInventoryCreditAdded": 0,
+      "scope": "Source-bound full55file package focused gate, including7newDemo cases. Existing overlaps remain overlaps; no broad whole-suite claim. Initial raw-byte source comparison failed on supported distribution projection, retained separately in proof, then checked with existing production projection."
+    },
+    "latestRemoteWorkflowMetadata": {
+      "at": "2026-10-16T18:15:45.496566+00:00",
+      "previous73Run": {
+        "id": 38931406471,
+        "status": "completed",
+        "conclusion": "failure",
+        "retention": "51verified targets at17:42 snapshot; final additional artifacts not yet retained; no extra coverage credit"
+      },
+      "new11Run": {
+        "id": 38945838622,
+        "sourceRevision": "d4966516abd693308d4050e9364e4c9a55989212",
+        "status": "queued",
+        "roles": {
+          "canonical": 5,
+          "baseline": 4,
+          "filteredDiagnostic": 2
+        },
+        "canonicalSourceRevision": "d12fcb94535fdb87619da18d63df7e76ee178610",
+        "receipt": {
+          "path": ".cache/solo-followup/regression-audit/remote73-eleven-followup-1810/dispatch-receipt.json",
+          "bytes": 1007,
+          "sha256": "21752f0fbc8b20aaa8f86031006959aeaa125db82162316743590f81697e645b"
+        }
+      },
+      "scope": "Metadata only, no new canonical result claim.",
+      "supersededBy": "closedLatestRuns at18:35; prior queued/pending metadata retained as history only."
+    },
+    "previousCheckpoint1821": {
+      "checkpointAt": "2026-10-16T17:50:47.635857+00:00",
+      "remoteUniqueCompleteFiles": 683,
+      "totalUniqueOriginalFilesObserved": 1919,
+      "originalFilesStillUnobserved": 29,
+      "checkpointProof": {
+        "path": ".cache/solo-followup/regression-audit/remote73-ledger-checkpoint-1721/coverage-checkpoint-1742.json",
+        "bytes": 196879,
+        "sha256": "90a46367c5f81779816e268e595f81542b13eca48ce7a26894880f6bfa4b53d2"
+      }
+    },
+    "retainedClosure1835": {
+      "coverage": {
+        "path": ".cache/solo-followup/regression-audit/retained-closure-1835/coverage.json",
+        "bytes": 218702,
+        "sha256": "3454ffd1985f16399641d0311b86ec890f4cdbd7fdb6c63745432f7c49a5771b"
+      },
+      "orderedComparison": {
+        "path": ".cache/solo-followup/regression-audit/retained-closure-1835/comparisons.json",
+        "bytes": 223171,
+        "sha256": "e22462c00b13980e3228457d8b02a4a8ea9081e2b9ae2f0370254a6e8cda1cd5"
+      },
+      "restorationIdentityMapping": {
+        "path": ".cache/solo-followup/regression-audit/retained-closure-1835/restoration-identity-mapping.json",
+        "bytes": 3680,
+        "sha256": "e0d166273d28d5f14f7a87a06af7174371feca52552d92a83fd5ed0c9b068993"
+      },
+      "newUnclassifiedFailures": {
+        "path": ".cache/solo-followup/regression-audit/retained-closure-1835/new-unclassified-failures.json",
+        "bytes": 28754,
+        "sha256": "03540118ea861dfddbbf900fe11db872bdf86bd5b928db93403fba1b1c440fe9"
+      },
+      "ioClosure": {
+        "path": ".cache/solo-followup/regression-audit/retention-lane-closure-1834.json",
+        "bytes": 1360,
+        "sha256": "7d1053524a70dcde8afe1bebc17c3b86bbe5a5654d539ef3c2795d7447cfdac5"
+      },
+      "remainingOriginalFiles": [
+        "game/test/couch-encounter-help.test.mjs"
+      ],
+      "whollySkippedFile": "scripts/test-practice-directory-accessibility.mjs",
+      "scope": "1947 is complete file-result observations, including one wholly skipped script; not1947 fully executed/passing files. The last Couch file has only filtered/partial diagnostics."
+    },
+    "closedLatestRuns": [
+      {
+        "runId": 38931406471,
+        "workflowSourceRevision": "085e738d467e7006e111d76b9dd48fb0119ceb68",
+        "verifiedTargets": 73,
+        "retainedArtifacts": 146,
+        "pending": 0,
+        "integrityProblems": 0,
+        "proof": {
+          "path": ".cache/solo-followup/regression-audit/remote-successor-73-38931406471/verified-results-final.json",
+          "bytes": 535248,
+          "sha256": "1d014596810c44f1e78d97bdd4f8f8d5c05d4c19f752c2a149396715d1161e09"
+        }
+      },
+      {
+        "runId": 38945838622,
+        "workflowSourceRevision": "d4966516abd693308d4050e9364e4c9a55989212",
+        "verifiedTargets": 11,
+        "retainedArtifacts": 22,
+        "pending": 0,
+        "integrityProblems": 0,
+        "proof": {
+          "path": ".cache/solo-followup/regression-audit/remote-followup-11-38945838622/verified-results-1831.json",
+          "bytes": 81463,
+          "sha256": "22e727774b834fd9dbd4a33ad25b0e8cf443509d5e83e4c5245573048722bbd4"
+        }
+      },
+      {
+        "runId": 38947271805,
+        "workflowSourceRevision": "74845b1a29fc5f54608d2083b2c8b1e7b6924db5",
+        "verifiedTargets": 2,
+        "retainedArtifacts": 4,
+        "pending": 0,
+        "integrityProblems": 0,
+        "proof": {
+          "path": ".cache/solo-followup/regression-audit/remote-couch-pair-38947271805/verified-results-1833.json",
+          "bytes": 21211,
+          "sha256": "202ace7c41d04c84d7a8095aab4019eb75a2ede98949a20ebb2d5c36fbb3d6c0"
+        }
+      }
+    ],
+    "latestCanonicalCouch": {
+      "sourceRevision": "6b9dadba4fab8717681f320e0495e1dd63e6d1b5",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "tests": 36,
+      "pass": 2,
+      "fail": 34,
+      "cancelled": 0,
+      "skipped": 0,
+      "comparison": "All34 named failures match b117 with the identical declared corrected fixture. This is not untouched-baseline coverage.",
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/retained-closure-1835/comparisons.json",
+        "bytes": 223171,
+        "sha256": "e22462c00b13980e3228457d8b02a4a8ea9081e2b9ae2f0370254a6e8cda1cd5"
+      }
+    },
+    "finalCouchEncounterGap": {
+      "file": "game/test/couch-encounter-help.test.mjs",
+      "case5": "Both filtered arms complete the terminal/checkpoint/boards assertions and fail final focus identity: BUTTON#race-help-back versus BUTTON#race-help.",
+      "case3": "Earlier diagnostic arms pass DOM-array deep equality and fail final focus identity: BUTTON#race-help-read versus BUTTON#race-help.",
+      "next": "Parent authorized a narrow canonical formatting proposal for the two proven failing identity calls, then source-paired complete remote files. No new run or credit yet.",
+      "scope": "Filtered case5 and incomplete prior full diagnostics grant no canonical complete-file credit."
     }
-  }
+  },
+  "historicalTopLevelContext": "Top-level frozenRuntimeRevision/currentHeadContext, completeInventory and supplementaryTooling describe the original06:33 local checkpoint; remoteContinuation holds the current deduplicated inventory and16 later files."
 }
