@@ -297,6 +297,13 @@ export async function disposeHistoricalOrdinaryWindow(g) {
       results.push({ name, passed: false, error: error.message });
     }
   }
+  // Target-bound sessions must detach while the page still exists. The updater
+  // control is separate and remains attached to close only our exact target.
+  for (const session of g.sessions)
+    if (session !== g.control)
+      await attempt('detach owned page CDP session before target close', () =>
+        detachSession(g, session),
+      );
   if (g.targetId && g.control)
     await attempt('close exact owned normal target', () => closeExactTarget(g, g.targetId));
   if (g.page)
