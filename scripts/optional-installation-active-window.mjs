@@ -3,13 +3,14 @@ import assert from 'node:assert/strict';
 import { performance } from 'node:perf_hooks';
 import { setTimeout as pause } from 'node:timers/promises';
 import { validateHistoricalSessionURL } from './optional-installation-active-session.mjs';
+import { ORDINARY_WINDOW_MODE } from './optional-installation-ordinary-window.mjs';
 export const ACTIVE_WINDOW_MODE = 'owned-window-minimize-98ad851';
 export const FOCUS_SOURCE_SHA256 =
   '9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac';
 const owned = new WeakSet();
 export function selectHistoricalWindowMode(value) {
   if (value === undefined) return false;
-  assert.equal(value, ACTIVE_WINDOW_MODE);
+  assert([ACTIVE_WINDOW_MODE, ORDINARY_WINDOW_MODE].includes(value));
   return true;
 }
 async function deadline(work, ms) {
@@ -167,7 +168,10 @@ export async function configureHistoricalSessionWindow({
   };
   owned.add(g);
   Object.assign(receipt, {
-    format: 'HistoricalOwnedWindowMinimization.v1',
+    format:
+      mode === ORDINARY_WINDOW_MODE
+        ? 'HistoricalOrdinaryWindowMinimization.v1'
+        : 'HistoricalOwnedWindowMinimization.v1',
     mode,
     configured: false,
     ordinaryWindowSwitchQualified: false,
@@ -177,6 +181,17 @@ export async function configureHistoricalSessionWindow({
     commands: [],
   });
   try {
+    if (mode === ORDINARY_WINDOW_MODE) {
+      assert.equal(
+        await call(g, 'verify normal browser display mode', () =>
+          previousPage.evaluate(() => globalThis.matchMedia('(display-mode: standalone)').matches),
+        ),
+        false,
+      );
+      receipt.standaloneQualified = false;
+      receipt.scope =
+        'Owned ordinary browser window only; installed-PWA minimization failures remain unqualified.';
+    }
     g.sa = await call(
       g,
       'acquire owned A session',

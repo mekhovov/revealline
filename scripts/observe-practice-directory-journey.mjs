@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { readFile, writeFile, mkdir, stat, realpath } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
 import path from 'node:path';
@@ -48,10 +49,21 @@ export const DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL = Object.freeze({
   ...DIRECTORY_JOURNEY_PROTOCOL,
   id: 'practice-directory-production-personal-appearance.v1',
 });
+export const DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL = Object.freeze({
+  ...DIRECTORY_JOURNEY_PROTOCOL,
+  id: 'practice-directory-production-personal-appearance.v2',
+});
+const productionProtocol = (plan) =>
+  [
+    DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id,
+    DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id,
+  ].includes(plan.protocol);
 export function directoryJourneyProtocol(plan) {
   if (plan.protocol === DIRECTORY_JOURNEY_PROTOCOL.id) return DIRECTORY_JOURNEY_PROTOCOL;
   if (plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id)
     return DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL;
+  if (plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id)
+    return DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL;
   assert.equal(plan.protocol, DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id);
   return DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL;
 }
@@ -105,7 +117,14 @@ export function validateDirectoryJourneyPlan(input) {
     'shellTree',
   ];
   assert(plan && !Array.isArray(plan) && typeof plan === 'object');
-  const production = directoryJourneyProtocol(plan) === DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL;
+  directoryJourneyProtocol(plan);
+  const production = productionProtocol(plan);
+  const independentObserver = plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id;
+  if (independentObserver) {
+    fields.push('observerRevision', 'observerTree');
+    for (const key of ['observerRevision', 'observerTree'])
+      assert.match(plan[key], /^[a-f0-9]{40}$/);
+  }
   if (production) {
     fields.push('distribution', 'distributionManifestSha256');
     assert(
@@ -122,7 +141,9 @@ export function validateDirectoryJourneyPlan(input) {
   assert.equal(
     plan.format,
     production
-      ? 'revealline-practice-directory-production-personal-appearance-plan.v1'
+      ? independentObserver
+        ? 'revealline-practice-directory-production-personal-appearance-plan.v2'
+        : 'revealline-practice-directory-production-personal-appearance-plan.v1'
       : personal
         ? 'revealline-practice-directory-personal-appearance-plan.v1'
         : 'revealline-practice-directory-journey-plan.v1',
@@ -142,6 +163,40 @@ export function validateDirectoryJourneyPlan(input) {
   validateFPVArtifactBinding(plan);
   assert(path.isAbsolute(plan.bundle), 'Use an absolute admitted candidate path.');
   return plan;
+}
+
+/** V1 keeps its original checkout==shell requirement. V2 separately pins the
+ * clean observer checkout and resolves the original build commit's actual tree.
+ * Neither route substitutes source files for generated distribution members.
+ */
+export function verifyDirectoryJourneySources(plan, root = ROOT) {
+  const independentObserver = plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id;
+  const observer = {
+    sourceRevision: independentObserver ? plan.observerRevision : plan.shellRevision,
+    sourceTree: independentObserver ? plan.observerTree : plan.shellTree,
+  };
+  assert.deepEqual(frozenSource(root), observer, 'Frozen observer source mismatch.');
+  if (independentObserver) {
+    for (const key of ['shellRevision', 'shellTree']) assert.match(plan[key], /^[a-f0-9]{40}$/);
+    const resolve = (ref) =>
+      execFileSync('git', ['rev-parse', '--verify', ref], {
+        cwd: root,
+        encoding: 'utf8',
+        timeout: 10_000,
+        maxBuffer: 4096,
+      }).trim();
+    assert.equal(
+      resolve(`${plan.shellRevision}^{commit}`),
+      plan.shellRevision,
+      'Original shell revision must identify an exact commit.',
+    );
+    assert.equal(
+      resolve(`${plan.shellRevision}^{tree}`),
+      plan.shellTree,
+      'Original shell commit tree mismatch.',
+    );
+  }
+  return observer;
 }
 
 // These are local observation bounds, not publisher/hosting eligibility limits.
@@ -177,7 +232,9 @@ async function distributionTarget(root, name, expectedBytes) {
 async function boundedDistributionBytes(target, limit) {
   const chunks = [];
   let count = 0;
-  for await (const chunk of createReadStream(target, { signal: AbortSignal.timeout(30000) })) {
+  for await (const chunk of createReadStream(target, {
+    signal: AbortSignal.timeout(30000),
+  })) {
     count += chunk.length;
     assert(count <= limit, 'Production file exceeded read bound.');
     chunks.push(chunk);
@@ -189,7 +246,7 @@ async function boundedDistributionBytes(target, limit) {
  * The external manifest pin is supplied by the build owner, never synthesized.
  */
 export async function verifyDirectoryDistribution(plan) {
-  assert.equal(plan.protocol, DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id);
+  assert(productionProtocol(plan));
   assert(path.isAbsolute(plan.distribution));
   const root = await realpath(plan.distribution);
   assert((await stat(root)).isDirectory());
@@ -654,13 +711,16 @@ async function runJourney(page, spec, fixture, report, output, password) {
     const personal = [
       DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id,
       DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id,
+      DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id,
     ].includes(report.protocol.id);
     await openMainGamePractice(
       page,
       click,
       personal
         ? async () => {
-            result.personalAppearance = { main: await observePersonalAppearance(page) };
+            result.personalAppearance = {
+              main: await observePersonalAppearance(page),
+            };
             await screenshot(page, spec.id + '-main-appearance.png');
           }
         : null,
@@ -829,13 +889,16 @@ export async function observePracticeDirectoryJourney({
   assert((await stat(planFile)).size <= 65536);
   const planBytes = await readFile(planFile),
     plan = validateDirectoryJourneyPlan(planBytes.toString());
-  const production = plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id;
+  const production = productionProtocol(plan);
+  const independentObserver = plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id;
   const personal = production || plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id;
   await mkdir(output);
   const scrub = (s) => (password ? String(s).split(password).join('[REDACTED]') : String(s));
   const report = {
     format: production
-      ? 'PracticeDirectoryProductionPersonalAppearanceObservation.v1'
+      ? independentObserver
+        ? 'PracticeDirectoryProductionPersonalAppearanceObservation.v2'
+        : 'PracticeDirectoryProductionPersonalAppearanceObservation.v1'
       : plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id
         ? 'PracticeDirectoryPersonalAppearanceObservation.v1'
         : 'PracticeDirectoryJourneyObservation.v1',
@@ -875,10 +938,13 @@ export async function observePracticeDirectoryJourney({
       report.authority.push(pin(name, bytes));
       await writeFile(path.join(output, 'authority', path.basename(name)), bytes, { flag: 'wx' });
     }
-    assert.deepEqual(frozenSource(ROOT), {
-      sourceRevision: plan.shellRevision,
-      sourceTree: plan.shellTree,
-    });
+    const observerSource = verifyDirectoryJourneySources(plan);
+    if (independentObserver)
+      report.observerSource = {
+        ...observerSource,
+        verifiedBefore: true,
+        verifiedAfter: false,
+      };
     const tree = committedInputMap(ROOT),
       overlay = await deadline(
         directoryJourneyOverlay(plan),
@@ -895,8 +961,9 @@ export async function observePracticeDirectoryJourney({
         manifest: pin('manifest.json', distribution.manifestBytes),
         sourceRevision: distribution.manifest.sourceRevision,
         sourceTree: plan.shellTree,
-        sourceTreeAuthority:
-          'Frozen source binding; generated build manifest records revision only.',
+        sourceTreeAuthority: independentObserver
+          ? 'Original shell commit resolved independently to its exact Git tree; generated build manifest records original revision only.'
+          : 'Frozen source binding; generated build manifest records revision only.',
         version: distribution.manifest.version,
         entry: distribution.manifest.entry,
         totalBytes: distribution.manifest.totalBytes,
@@ -1001,10 +1068,8 @@ export async function observePracticeDirectoryJourney({
         source.sha256,
         'Source changed during journey.',
       );
-    assert.deepEqual(frozenSource(ROOT), {
-      sourceRevision: plan.shellRevision,
-      sourceTree: plan.shellTree,
-    });
+    verifyDirectoryJourneySources(plan);
+    if (independentObserver) report.observerSource.verifiedAfter = true;
     report.procedureComplete = true;
   } catch (error) {
     report.failure = scrub(error.message);
