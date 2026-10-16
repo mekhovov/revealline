@@ -1,0 +1,77 @@
+{
+  "scope": "Five original Team equipment image records only",
+  "qualityStage": "reviewed",
+  "sourceBase": "44f6217fcdc44441bb1cbed8441cc61466192008",
+  "sourcePatch": "78ff34e62c0b8134796e86fe049bad1a4cbf2c9f1f4bcd5efdd0225f8faf9cbd",
+  "sourceFingerprint": "b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037",
+  "observedSourcePatch": "9ae319ab23da3ab022aca3e53e2ce4f61866c8fca90e370a4851075580d88ebb",
+  "observedBundle": "be818f3afc020230f444976e3ccd4a255d58ba6c5ca2b603810d32a4aa6bf40a",
+  "originals": [
+    {
+      "slot": "team.anchor.available",
+      "sha256": "88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3",
+      "width": 24,
+      "height": 24,
+      "bytes": 181
+    },
+    {
+      "slot": "team.anchor.captured",
+      "sha256": "a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466",
+      "width": 24,
+      "height": 24,
+      "bytes": 195
+    },
+    {
+      "slot": "team.core.shielded",
+      "sha256": "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a",
+      "width": 64,
+      "height": 64,
+      "bytes": 389
+    },
+    {
+      "slot": "team.core.exposed",
+      "sha256": "6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a",
+      "width": 64,
+      "height": 64,
+      "bytes": 395
+    },
+    {
+      "slot": "team.core.secured",
+      "sha256": "28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d",
+      "width": 64,
+      "height": 64,
+      "bytes": 366
+    }
+  ],
+  "evidence": [
+    {
+      "path": "originals.json",
+      "sha256": "bfa088982d36cf9ce2f3b3bdad9bb67ab523ae52980ff3579eceabf0a642a713"
+    },
+    {
+      "path": "pixel-analysis.json",
+      "sha256": "b02e013450d414e663889ca43aabd1f6511482f1ebf8662a9d0bb988ab74de31"
+    },
+    {
+      "path": "native-studio.json",
+      "sha256": "08266acb28e0149d7cf3730300c1c38d311455cca205e176a335273a3a204708"
+    },
+    {
+      "path": "inputs.json",
+      "sha256": "457dcbd7aa84ab202cc2abdc71713f9a5dd4f932690611a1d13ed7a8cec28ecb"
+    }
+  ],
+  "observations": [
+    "Available and captured anchors differ in mast height and coupler silhouette without color alone.",
+    "Shielded, exposed and secured cores differ in closed/open shutters and antenna height.",
+    "Exact transparent PNG borders and occupied bounds match metadata.",
+    "Coordinator native inspection covers1x light/dark and enlargedgrayscale originals plus actualStudio initial/exposed/secured/reduced states with independent labels."
+  ],
+  "limits": [
+    "No approval for the other37 Team recipe roles.",
+    "NativeStudio secured state uses a truthfully identified two-relay neutral specimen, not canonical RelayYard full art.",
+    "No live full-gameplay, full-arena reveal, physical device/controller, offline or public acceptance.",
+    "Native screenshot observations are attributed to coordinator; no screenshots saved."
+  ],
+  "adoption": "Source-only review gate; do not regenerate/publish as part of this packet. Immutable history writer must retain produced ancestors and all132 original blobs on later adoption."
+}

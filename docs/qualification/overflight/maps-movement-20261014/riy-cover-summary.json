@@ -1,0 +1,175 @@
+{
+  "candidateCommit": "60b0c25ab2703371691d4d203df7d5067638ca14",
+  "complete": true,
+  "sourceStable": true,
+  "dependencyCount": 33,
+  "wallSeconds": 13.349966167,
+  "rawSha256": "a10f6bf924c63f37aa45ec32fb826cca50d1802e71a48c9719509b588b5d5a7a",
+  "gzipSha256": "b7cfa7f433176119ca47006c7291c2400895f58ff7ef3b65f69059428109bd61",
+  "case": {
+    "index": 1,
+    "layout": "field-crossing-supply-orchard-edge",
+    "mode": "riy",
+    "seed": 303907,
+    "build": "echo",
+    "difficulty": "veteran",
+    "airframes": 1
+  },
+  "baseline": {
+    "phase": "lost",
+    "time": 243.6,
+    "choices": 9,
+    "stats": {
+      "kills": 1361,
+      "spawned": 2293,
+      "enemiesAlive": 932,
+      "enemiesVisible": 336,
+      "peakAlive": 932,
+      "peakVisible": 404,
+      "heaviesAlive": 1,
+      "specialistsAlive": 2,
+      "priorityAttacks": 0,
+      "damageDealt": 76490.15000000001,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 2,
+      "xpEarned": 2135,
+      "xpCollected": 1830,
+      "xpOnGround": 305,
+      "pickupsAlive": 225,
+      "pickupMerges": 0,
+      "boostsUsed": 44,
+      "airframesLost": 1,
+      "upgradesChosen": 9,
+      "rerollsUsed": 0,
+      "droppedVisualEffects": 0,
+      "collisionCandidates": 110216,
+      "hits": 8144,
+      "retired": 0,
+      "spawnDeferred": 0,
+      "fixtureDefeats": 0,
+      "projectileDeferrals": 0,
+      "guardDamageBlocked": 606.9375,
+      "armorSegmentsBroken": 190,
+      "warningDeferrals": 296,
+      "motionDeferrals": 23
+    },
+    "longestSafeFarming": {
+      "seconds": 85.96666666666667,
+      "kills": 229,
+      "collected": 300
+    }
+  },
+  "priorCaseIdenticalBaseline": false,
+  "priorCaseIdenticalOriginalBranches": false,
+  "parkedSharesOriginalEarnedSnapshot": true,
+  "branches": [
+    {
+      "checkpoint": 60,
+      "policy": "heading-3",
+      "phase": "lost",
+      "time": 101.51666666666667,
+      "elapsed": 41.516666666666666,
+      "initialHull": 100,
+      "initialChoices": 3,
+      "finalChoices": 3,
+      "livesAtStart": 1,
+      "gate": "pass",
+      "longestSafeFarming": {
+        "seconds": 18.25,
+        "kills": 12,
+        "collected": 4
+      },
+      "draftError": null
+    },
+    {
+      "checkpoint": 120,
+      "policy": "heading-4",
+      "phase": "lost",
+      "time": 134.98333333333332,
+      "elapsed": 14.98333333333332,
+      "initialHull": 60,
+      "initialChoices": 6,
+      "finalChoices": 6,
+      "livesAtStart": 1,
+      "gate": "pass",
+      "longestSafeFarming": {
+        "seconds": 13.88333333333334,
+        "kills": 14,
+        "collected": 1
+      },
+      "draftError": null
+    },
+    {
+      "checkpoint": 180,
+      "policy": "heading-5",
+      "phase": "lost",
+      "time": 188.18333333333334,
+      "elapsed": 8.183333333333337,
+      "initialHull": 40,
+      "initialChoices": 8,
+      "finalChoices": 8,
+      "livesAtStart": 1,
+      "gate": "pass",
+      "longestSafeFarming": {
+        "seconds": 6.316666666666663,
+        "kills": 21,
+        "collected": 21
+      },
+      "draftError": null
+    },
+    {
+      "checkpoint": 240,
+      "policy": "heading-6",
+      "phase": "lost",
+      "time": 241.21666666666667,
+      "elapsed": 1.2166666666666686,
+      "initialHull": 20,
+      "initialChoices": 9,
+      "finalChoices": 9,
+      "livesAtStart": 1,
+      "gate": "pass",
+      "longestSafeFarming": {
+        "seconds": 0.7333333333333201,
+        "kills": 0,
+        "collected": 6
+      },
+      "draftError": null
+    },
+    {
+      "checkpoint": 120,
+      "policy": "park",
+      "phase": "lost",
+      "time": 121.75,
+      "elapsed": 1.75,
+      "initialHull": 60,
+      "initialChoices": 6,
+      "finalChoices": 6,
+      "livesAtStart": 1,
+      "gate": "pass",
+      "longestSafeFarming": {
+        "seconds": 0.7333333333333343,
+        "kills": 4,
+        "collected": 1
+      },
+      "draftError": null
+    }
+  ],
+  "unavailable": 0,
+  "limitations": [
+    "One locked Riy Echo baseline and its four original held-heading branches, plus one explicitly supplemental parked continuation at 120 seconds. This is a bounded cover-fix sanity check, not full qualification.",
+    "Build names are draft preferences; exact earned cards and builds are recorded, never injected.",
+    "Missing checkpoints are unavailable, interrupted/capped branches inconclusive; neither is a pass.",
+    "Policies continue unchanged after replacement and auto-resolve earned drafts; boost and Focus remain off.",
+    "Wall holds one initial direction toward the closest cover/boundary; destroyed cover may cease blocking it.",
+    "Tiny-circle/orbit are timed steering patterns, not teleportation or exact geometric routes after collisions.",
+    "Direct-path reachable salvage is a geometric lower bound; it does not establish safe reachability.",
+    "Active pilots and unattended losses do not establish ordinary-player difficulty, readability or enjoyment.",
+    "Headless gameplay evidence does not establish browser render cadence or native presentation quality."
+  ]
+}

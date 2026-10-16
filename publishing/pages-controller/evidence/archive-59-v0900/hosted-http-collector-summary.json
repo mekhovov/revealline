@@ -1,0 +1,112 @@
+{
+  "status": "SUCCESSFUL_RUN_ORIGINALS_COLLECTED_AWAITING_RAW_ROW_REVIEW",
+  "runId": 35824389581,
+  "head": "b1119f5782189962efb0d2216e27758273a17210",
+  "branch": "codex/audit-archive59-http",
+  "runConclusion": "success",
+  "jobConclusion": "success",
+  "artifactId": 10735090573,
+  "requestSha256": "5a259a735883bda615516bc5d9183c9aee7f27affc17c033bcf1ecd1fc00dd65",
+  "pins": {
+    "hosted-http-run-original.json": {
+      "bytes": 13166,
+      "sha256": "fb6dd49053ae410aeced9ef635bb88740e0ffd9a0d53f9d5e911542f86b7c05e"
+    },
+    "hosted-http-jobs-original.json": {
+      "bytes": 2782,
+      "sha256": "55c6ee5212cd393cbec1cbd7d9e754c4172b560224ea5bfbd2ffd9e82f0b9067"
+    },
+    "hosted-http-artifacts-original.json": {
+      "bytes": 772,
+      "sha256": "fdc7498c120de021cb0850f80f1780aef029fb2d961c4a13834e4328c1d4445f"
+    },
+    "hosted-http-evidence-original.zip": {
+      "bytes": 320712,
+      "sha256": "c2f68c3c30d4d2bccc474e7ca3f0d60a36eca9a5ed010462f00eaafd4e749346"
+    }
+  },
+  "extraction": {
+    "status": "CRC_AND_SAFE_MEMBER_EXTRACTION_COMPLETE",
+    "directory": "http-20260923T055455Z-b49086ab",
+    "files": 14,
+    "bytes": 2112828,
+    "allMembersCRCVerified": true,
+    "missingExpectedMembers": [],
+    "records": [
+      {
+        "path": "http-20260923T055455Z-b49086ab/audit_binding.py",
+        "bytes": 9018,
+        "sha256": "9a048c5e5759a6b543bf0c80c882cf67be5f63763cd7bc9314fe57d34f8dea38"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/auditor.py",
+        "bytes": 14812,
+        "sha256": "8cf5803ca17249314b963832b45c66407101ef68d4a9d5878d0721bbe5695e89"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/artifacts.json",
+        "bytes": 1454,
+        "sha256": "198f26cc585d346ec0a750b4685212591457306003e58132d62c3f611fbd3e35"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/commit.json",
+        "bytes": 2773,
+        "sha256": "3e419008bb8de64f07fa4269cfc51c46ddd379c9772c806df405a48254cdff59"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/deployment.json",
+        "bytes": 3856,
+        "sha256": "33424e6660faf443e9ef6fc85f86f7213f54a803094adb3e998fd918496aa487"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/main.json",
+        "bytes": 358,
+        "sha256": "155d31d9a03650a18e411312d51168121982e9727e3e39f4af0a04f26f8c48c7"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/receiptZIP.zip",
+        "bytes": 57780,
+        "sha256": "616434ea2712d5982a7c3b7bcff276b4b925c55179776718b8b41d2248944208"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/run.json",
+        "bytes": 13189,
+        "sha256": "9f6b227bf483a669eb978708eb88b300d4746be2e5a536dee40eab2acd31db4f"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/authority-originals/statuses.json",
+        "bytes": 6817,
+        "sha256": "e81e0fc9237b2412272a4586a415893399d243c483a15f7b9fc07a28f81b8373"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/execution-request.json",
+        "bytes": 1638,
+        "sha256": "5a259a735883bda615516bc5d9183c9aee7f27affc17c033bcf1ecd1fc00dd65"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/expected-inventory.json",
+        "bytes": 222653,
+        "sha256": "787197923251ee6049d5103bbd48e41f094f5cc34ff57dad3cff0c7849a7edf1"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/http-attempts.jsonl",
+        "bytes": 888421,
+        "sha256": "058c7e447c38a44eda371e27828c30a548d3e4884f3c262ae96031acf26c440c"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/http-report.json",
+        "bytes": 1638,
+        "sha256": "e3813f65a5e8a48c7d350fcfe1c9020759ecb75d7454dfa833b89d675f1d85a9"
+      },
+      {
+        "path": "http-20260923T055455Z-b49086ab/http-results.jsonl",
+        "bytes": 888421,
+        "sha256": "058c7e447c38a44eda371e27828c30a548d3e4884f3c262ae96031acf26c440c"
+      }
+    ]
+  },
+  "error": null,
+  "publicAcceptance": false,
+  "rawRowsIndependentlyReviewed": false,
+  "automaticRetry": false
+}

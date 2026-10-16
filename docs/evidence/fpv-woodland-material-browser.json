@@ -1,0 +1,43 @@
+{
+  "baseline": "e0e1db0968884f9fecf0dc57cb49986fbd9818cc",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "renderer": "WebKit WebGL",
+  "imported": [
+    {
+      "id": "woodland-08",
+      "before": {
+        "bytes": 884724,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 24,
+        "triangles": 2594
+      },
+      "after": {
+        "bytes": 884864,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 24,
+        "triangles": 2594
+      }
+    },
+    {
+      "id": "beginner-40",
+      "before": {
+        "bytes": 884696,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 22,
+        "triangles": 2342
+      },
+      "after": {
+        "bytes": 884840,
+        "placements": 52,
+        "verticesOutsideArena": 16080,
+        "calls": 22,
+        "triangles": 2342
+      }
+    }
+  ],
+  "pixelVariantsUnchanged": 5,
+  "passed": true
+}

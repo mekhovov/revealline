@@ -1,0 +1,482 @@
+{
+  "format": "FPVCumulativeGroundLibrary.v1",
+  "verifiedAt": "2026-10-13T19:51:38.429Z",
+  "nodeVersion": "v20.19.5",
+  "baseMain": "fba236ef80bd0310ae3b9c33fd7c26b1529b245c",
+  "index": {
+    "path": "authoring/fpv-worlds/published/ground-motion-v1/index.json",
+    "bytes": 1337,
+    "sha256": "6455724501491a725cdd4222945ede4bc4bd7ba3ed69dd62c259ae455ccd9479"
+  },
+  "rows": [
+    {
+      "id": "mountain-reservoir",
+      "title": [
+        "Mountain Reservoir",
+        "Гірське водосховище"
+      ],
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "bytes": 1379988,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack"
+    },
+    {
+      "id": "festival-grounds",
+      "title": [
+        "Festival Grounds",
+        "Фестивальний майданчик"
+      ],
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "path": "authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "bytes": 1256875,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack"
+    },
+    {
+      "id": "harbor-docks",
+      "title": [
+        "Harbor Docks",
+        "Портові доки"
+      ],
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "path": "authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "bytes": 879213,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack"
+    }
+  ],
+  "requests": [
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "status": 200,
+      "bytes": 1379988,
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "etag": "W/\"acec44fb6d26f6dc676658481ff133acd673734fbb68b0b7dbf23e601e5aebae\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.proofs.json",
+      "status": 200,
+      "bytes": 908574,
+      "sha256": "073ee3e359764d35039f607d02d0815ac0768b892d046b1426c5c4a55f4cacfb",
+      "etag": "W/\"adfa2b0f06b546459db5c982a9f695d1153929b3045852cc8be54c8043c345b5\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "status": 200,
+      "bytes": 1256875,
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "etag": "W/\"f2d36d022770cabab635a85c3e197d929cdefd3f08cebd912f034438ec0e8b28\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.proofs.json",
+      "status": 200,
+      "bytes": 1098458,
+      "sha256": "277503e86f3cb0b9cd60bc405ec41562bed1533c3f8a779391141ac3985884b6",
+      "etag": "W/\"36bf24e0b67cbd1f334328a033e5467e657567a46b1dc3013454a95e3f5209db\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "status": 200,
+      "bytes": 879213,
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "etag": "W/\"08142734d6f45bac32ca26e3320ef4c6d5a954a8b49cb775c71980cadf4f1b9a\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.proofs.json",
+      "status": 200,
+      "bytes": 1018615,
+      "sha256": "7341d203aa2d3a61199a0000cc87a31f50553588dad610d878a5238aab433102",
+      "etag": "W/\"8431fa071e2b9043669d4d8c85b5fd2e07f9b234810fdcdaceee927e6e667f9a\""
+    }
+  ],
+  "checks": [
+    {
+      "name": "Current parser accepts exactly Reservoir, Festival and Harbor",
+      "passed": true
+    },
+    {
+      "name": "Older player feed remains byte-exact: index.json",
+      "passed": true
+    },
+    {
+      "name": "Older player feed remains byte-exact: surface-coating-v1/index.json",
+      "passed": true
+    },
+    {
+      "name": "Every eligible older row and immutable URL survives unchanged",
+      "passed": true
+    },
+    {
+      "name": "Previously published ground cohort rows survive unchanged",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir: immutable content is already merged",
+      "passed": true
+    },
+    {
+      "name": "HTTP bytes match immutable commit and current main: authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir: exact listed size and SHA-256",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir: listed identity, revision and eight distinct courses",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir: lossless pack import/export",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir: ground-motion cohort requirement",
+      "passed": true
+    },
+    {
+      "name": "HTTP bytes match immutable commit and current main: authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.proofs.json",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir: sixteen unique course/mode dependencies",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-01/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-01/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-02/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-02/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-03/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-03/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-04/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-04/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-05/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-05/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-06/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-06/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-07/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-07/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-08/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-08/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds: immutable content is already merged",
+      "passed": true
+    },
+    {
+      "name": "HTTP bytes match immutable commit and current main: authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds: exact listed size and SHA-256",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds: listed identity, revision and eight distinct courses",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds: lossless pack import/export",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds: ground-motion cohort requirement",
+      "passed": true
+    },
+    {
+      "name": "HTTP bytes match immutable commit and current main: authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.proofs.json",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds: sixteen unique course/mode dependencies",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-01/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-01/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-02/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-02/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-03/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-03/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-04/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-04/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-05/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-05/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-06/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-06/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-07/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-07/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-08/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "festival-grounds-08/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks: immutable content is already merged",
+      "passed": true
+    },
+    {
+      "name": "HTTP bytes match immutable commit and current main: authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks: exact listed size and SHA-256",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks: listed identity, revision and eight distinct courses",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks: lossless pack import/export",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks: ground-motion cohort requirement",
+      "passed": true
+    },
+    {
+      "name": "HTTP bytes match immutable commit and current main: authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.proofs.json",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks: sixteen unique course/mode dependencies",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-01/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-01/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-02/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-02/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-03/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-03/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-04/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-04/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-07/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-07/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-08/self-level: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-08/acro: exact pack and normalized course",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-library.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualification source matches frozen main: game/data-json.mjs",
+      "passed": true
+    }
+  ],
+  "source": [
+    {
+      "path": "optional-practice/civilian-fpv/world-library.mjs",
+      "bytes": 9118,
+      "sha256": "508220ad83fc747a31e5ee4a7efbc860428cfaaffe91bc7f9ba1d1428fa51331"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "bytes": 50090,
+      "sha256": "4e2822f1c94bdef24f62fb14629dd4909c8d8ed3aea6708f2fdf2e8ca5b8081b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "bytes": 11475,
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 60704,
+      "sha256": "539b0dcb1a368b258730b5ed248806f8750bf41bd05c41cf68167e69d81a9f39"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "bytes": 23925,
+      "sha256": "d49d22de9ac821e7b5cee5614fdffca8510bd12be0d6eaaee28ff7225365b8c4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/content-definitions.mjs",
+      "bytes": 11313,
+      "sha256": "c3cc752eaef2b2e8d2865e4ba371e49097ba5fd6d069c1ca35f19cf94406ffad"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    }
+  ],
+  "limitations": [
+    "Data-only catalogue change; no runtime, package, physics, course or recording bytes changed.",
+    "HTTP/parser/import/roundtrip and 48 exact recording dependency checks; recordings were not flown again.",
+    "Historical content flight/replay/native/offline qualification remains attributed to the individual world receipts.",
+    "Proof archives remain separate explicit imports, not automatic Library downloads.",
+    "No fresh browser, offline, physical-device or sustained performance claim from this receipt.",
+    "Protected publication and public Browse/download/install are separate verification steps."
+  ]
+}

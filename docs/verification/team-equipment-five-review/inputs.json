@@ -1,0 +1,151 @@
+{
+  "base": "44f6217fcdc44441bb1cbed8441cc61466192008",
+  "inputs": [
+    {
+      "path": "game/presentation/team-equipment-art.mjs",
+      "sha256": "b5bce8f5b0f6992bec918022de0ebce110f8836c879bc86600fdcc6471668b21",
+      "bytes": 5403
+    },
+    {
+      "path": "game/presentation/pixel-art.mjs",
+      "sha256": "544c975f88686455607dbed2f4babb472dc1ad5d9992d878c8c91dc2b123e582",
+      "bytes": 21430
+    },
+    {
+      "path": "scripts/produce-field-kit-sprites.mjs",
+      "sha256": "0dbdb1324508f1bead6a04d5035481ef05b18196caf168563139981a60f430bc",
+      "bytes": 20154
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "sha256": "488d960661f4948340a9c0c932c09e07941282f9f74f16a8eb8cc7853a44e566",
+      "bytes": 26171
+    },
+    {
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "sha256": "71b03615300e6e08fcf6917d5fd72d658a2ef10a9bb9b5d98c6681df1ac7fcac",
+      "bytes": 11308
+    },
+    {
+      "path": "game/couch/coop-anchor-presentation.mjs",
+      "sha256": "6ebb070eb711dd43aebcf902397869aa48dad55d70c85d82addb1765f284d7ac",
+      "bytes": 2538
+    },
+    {
+      "path": "game/couch/coop-core-presentation.mjs",
+      "sha256": "16701efa5c505eb0aa010e6cba4754c28486356103dc6ac67acc5f5ba4638b3f",
+      "bytes": 3157
+    },
+    {
+      "path": "game/couch/coop-support-presentation.mjs",
+      "sha256": "ad88b255255ade91db8c0d5b330218283c3314533c2adfefaa5a23c5e771e146",
+      "bytes": 3414
+    },
+    {
+      "path": "game/couch/coop-emitter-presentation.mjs",
+      "sha256": "c0ca370cf65d215e9408fd618e3bb7b57150aa6f83225edb9e01ea0c68b9e8b4",
+      "bytes": 2782
+    },
+    {
+      "path": "game/couch/coop-rescue-presentation.mjs",
+      "sha256": "f8513ddb03b2479d8f7ee5e115eb53682a5283d42caea9ccfd4279560a7c76e3",
+      "bytes": 2553
+    },
+    {
+      "path": "game/couch/coop-pilot-slots.mjs",
+      "sha256": "a5d057c9c7eb6c1aaca43a9597a6ad40a812f0b17d537c2bd205584eb57571c9",
+      "bytes": 2254
+    },
+    {
+      "path": "game/couch/coop-enemy-slots.mjs",
+      "sha256": "e2bf67f2aa9bc9bbc645ea9c0b76dbe370d4d7e34601637ce345bde82371b47d",
+      "bytes": 2606
+    },
+    {
+      "path": "game/couch/coop-outcome-presentation.mjs",
+      "sha256": "36621833ada91639d262913a5957a8404de4817f7ed4b03c2b8dd5e7040c74e4",
+      "bytes": 4738
+    },
+    {
+      "path": "game/presentation/team-runtime-slots.mjs",
+      "sha256": "4d078cf93726755540e83d1f84143808f385c0b56ea6212a502ab4a438418738",
+      "bytes": 1669
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "sha256": "c08e21ef55704c10c3ba107323c650c184a257fc6d7080f5f5c40ef2440e701a",
+      "bytes": 27651
+    },
+    {
+      "path": "game/presentation/catalog.mjs",
+      "sha256": "47bcd260ab9d215f51dd2fdb2b0da11cb6d26b3e6ccfd7128a66a40e1469f5b8",
+      "bytes": 23493
+    },
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "sha256": "a244c145cf791634c0724365ca6b4f58b259dedadaf913997beec67956bbf02d",
+      "bytes": 4245
+    },
+    {
+      "path": "game/couch/coop-terrain-trail.mjs",
+      "sha256": "012512a4000018e4e824ed4f7465b7c6798e5c9d8c7d888ecf47032ea014934b",
+      "bytes": 2159
+    },
+    {
+      "path": "game/couch/coop-bonus-view.mjs",
+      "sha256": "24f62457633411690e16572b3646a090b38a2f39711c220f1962c76ca2098030",
+      "bytes": 10204
+    },
+    {
+      "path": "game/couch/candidate-team-pictures.mjs",
+      "sha256": "f4f062727dd61aa123df501a9ea5557ff91f86efa61d54d532f0aaf0ab403bec",
+      "bytes": 6496
+    },
+    {
+      "path": "game/content-design/material-markers.mjs",
+      "sha256": "46a9317e370edec59b61cef0939d2bae4f27b97cd2e0e8e3595ab2c70e5b085e",
+      "bytes": 858
+    },
+    {
+      "path": "game/presentation/journey-actor-materials.mjs",
+      "sha256": "f95a3f2751b0159b008b1f60f34ba3741060ff909cc836cbad35d8b6ff14aee6",
+      "bytes": 7887
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "sha256": "16f55a0a9c8751a9c9ab9e1ea7f741ac727e2786ade9ed288688748e641a8b71",
+      "bytes": 6660
+    },
+    {
+      "path": "game/ui/classic-view.mjs",
+      "sha256": "34f8c536e837fdcc86a32a7df3878421229bb63d33f234baa493a182cfda4f60",
+      "bytes": 27836
+    },
+    {
+      "path": "game/ui/presentation-draw-image.mjs",
+      "sha256": "d3f0804c19dcfbedb0a886516b14d28eed45233607b6718e1b45f136e030740e",
+      "bytes": 389
+    },
+    {
+      "path": "game/ui/enemy-body-motion.mjs",
+      "sha256": "b23cff03deada23ea77efe8d8834e31f693712775cafcb00aa236b629cb6a554",
+      "bytes": 1179
+    },
+    {
+      "path": "authoring/motion-lab/animation.mjs",
+      "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40",
+      "bytes": 8068
+    },
+    {
+      "path": "game/content-design/actor-marker.mjs",
+      "sha256": "a4d80ec0de485a426c6df89d0203036cb02cf214afdef3f276b1a81a4b813a24",
+      "bytes": 5233
+    },
+    {
+      "path": "game/enemy-catalog.mjs",
+      "sha256": "0c64df28a25ac55c55d1890ec9521b5f8284a0a85d76a42163e84d564ad9478a",
+      "bytes": 5965
+    }
+  ],
+  "sha256": "b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037"
+}

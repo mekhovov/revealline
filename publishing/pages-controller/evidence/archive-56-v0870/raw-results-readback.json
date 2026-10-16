@@ -1,0 +1,19 @@
+{
+  "status": "PASS_INDEPENDENT_RAW_ROW_READBACK",
+  "checkedAt": "2026-09-23T02:01:45.697Z",
+  "archiveCommit": "592d0afe42f66dfb9fe95962c80adfaf236cd8ef",
+  "productionRunId": 35808261588,
+  "deploymentId": 6604670353,
+  "paths": 1088,
+  "attempts": 1088,
+  "bytes": 590907537,
+  "failedAttempts": 0,
+  "retriedFiles": 0,
+  "retries": 0,
+  "reportSha256": "8c782be9457baf5dd1923ed61860a39f5c1908e821a626ed657ef25067353c1f",
+  "resultsSha256": "aa19c0214a7d2d8c2f408f5434709fd2a6bc45382ad5370784e8616f8c60690d",
+  "attemptsSha256": "aa19c0214a7d2d8c2f408f5434709fd2a6bc45382ad5370784e8616f8c60690d",
+  "inventorySha256": "28dc81e2809efb48b83896e00f18aaf3a7878719ab339543dc1766862525a455",
+  "failed": 0,
+  "scope": "Every final body/URL/MIME/size/hash reconciled with its complete raw attempt history. Initial failures and actual retries retained; no duplicate network requests."
+}

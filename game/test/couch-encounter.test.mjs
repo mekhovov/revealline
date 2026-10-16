@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { couchPage } from './helpers/couch-host.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { normalizedLevel } from '../core/level.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const pack = await read('../content/packs/sentinel-relay.json');
@@ -55,12 +57,21 @@ for (const [format, turnPolicy] of [
     assert.match(app.cue(0).title, /^READY · 1 \/ 2/);
     assert.deepEqual(app.cue(0), app.cue(1));
     app.elements['race-start'].onclick();
+    assert.deepEqual(
+      app.renders[0].level,
+      normalizedLevel(applyGameplayTuning(pack.campaigns[0].levels[0], resolveGameplayTuning())),
+      'The current host uses the approved v4 preset without changing authored objectives.',
+    );
     const route = proofs.routes.find(
       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
     );
     let direction = null;
     let paused = false;
     let divergent = false;
+    // The retained route still earns the release cut at current pacing; its
+    // final crossing takes four/eight more ticks under v4. Keep the historical
+    // recorded proof unchanged and qualify the actual host completion exactly.
+    const winTick = turnPolicy === 'immediate' ? 1796 : 1800;
     for (const [index, segment] of route.segments.entries()) {
       app.key('keyup', direction);
       // The archived route waited against the top/bottom border with null input.
@@ -68,12 +79,14 @@ for (const [format, turnPolicy] of [
       // preserving elapsed attack cycles and every original cue/win assertion.
       direction = segment.input.direction ?? (index === 2 ? 'up' : 'down');
       app.key('keydown', direction);
-      for (let n = 0; n < segment.ticks; n++) {
+      const ticks = segment.ticks + (index === route.segments.length - 1 ? winTick - 1792 : 0);
+      for (let n = 0; n < ticks; n++) {
         app.frame();
         const run = app.renders[0];
         if (run.tick === 1084) {
           assert.equal(app.cue(0).phase, 'transition');
-          assert.equal(app.cue(1).phase, 'warning');
+          assert.equal(app.cue(1).phase, 'active');
+          assert.equal(app.cue(1).phase, encounterView(app.renders[1]).phase);
           divergent = true;
           app.elements['race-pause'].onclick();
           app.frame();
@@ -100,7 +113,8 @@ for (const [format, turnPolicy] of [
     }
     assert.ok(paused && divergent);
     assert.equal(app.renders[0].status, 'won');
-    assert.equal(app.renders[0].tick, 1792);
+    assert.equal(app.renders[0].tick, winTick);
+    assert.equal(app.renders[0].lives, 3, 'The release route remains lossless.');
     assert.equal(app.renders[1].status, 'running');
     const noun = format === 'single' ? 'race' : 'round';
     assert.equal(app.cue(0).title, `${noun.toUpperCase()} ENDED · 2 / 2 · CORE RELEASED`);

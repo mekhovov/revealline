@@ -1,13 +1,30 @@
+import { MOVEMENT_AUDIO_KEY } from '../ui/movement-audio.mjs';
+import { RADIO_AUDIO_KEY } from '../ui/radio-audio.mjs';
+import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { MENU_AUDIO_KEY } from '../ui/menu-audio.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { setImmediate } from 'node:timers/promises';
+import { setImmediate, setTimeout as delay } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { attachFieldKitSurfaces } from '../ui/field-kit-surfaces.mjs';
+import { ENCOUNTER_DISPLAY_PREFERENCES_KEY } from '../encounter-display-preferences.mjs';
+import { ENEMY_ARTWORK_PREFERENCES_KEY } from '../hunt/preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import {
+  THEME_PREFERENCES_KEY,
+  LEGACY_THEME_PREFERENCES_KEY,
+} from '../presentation/theme-system.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
+import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
+import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
+import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
+import { createJourneyVisualThemeIdentityAdapter } from '../presentation/journey-visual-theme-identities.mjs';
+import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { exportReplayPresentation } from '../replay-presentation.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const html = readFileSync(new URL('../replay-theater/index.html', import.meta.url), 'utf8');
@@ -46,7 +63,14 @@ async function until(predicate, label) {
 }
 function fixture(
   t,
-  { stored = encode(), systemReduced = false, holdBoot = false, failBoot = false } = {},
+  {
+    stored = encode(),
+    systemReduced = false,
+    holdBoot = false,
+    failBoot = false,
+    edition = null,
+    failEdition = false,
+  } = {},
 ) {
   const doc = new Document(),
     win = new Events(),
@@ -78,7 +102,8 @@ function fixture(
     paints = [],
     frames = new Map(),
     writes = [],
-    reads = [];
+    reads = [],
+    requests = [];
   const data = new Map([
     [DISPLAY_PREFERENCES_KEY, stored],
     ['revealline.library.dev.v1', 'untouched player profile'],
@@ -119,7 +144,9 @@ function fixture(
     document: doc,
     window: win,
     localStorage: storage,
-    location: { href: 'https://example.test/game/replay-theater/' },
+    location: {
+      href: `https://example.test/game/replay-theater/${edition ? '?edition=sample-public' : ''}`,
+    },
     navigator: { getGamepads: () => [] },
     matchMedia: () => media,
     requestAnimationFrame: (fn) => {
@@ -128,6 +155,8 @@ function fixture(
     },
     cancelAnimationFrame: (id) => frames.delete(id),
     fetch: async (path) => {
+      requests.push(String(path));
+      if (edition) return failEdition ? new Response('', { status: 503 }) : edition.fetcher(path);
       if (String(path).includes('content/themes') || String(path).includes('motion-lab/presets')) {
         markBootStarted();
         await bootGate;
@@ -198,6 +227,7 @@ function fixture(
     storage,
     writes,
     reads,
+    requests,
     paints,
     frames,
     original,
@@ -248,6 +278,63 @@ function fixture(
     },
   };
 }
+
+test('edition theater boots from selected presentation, imports raw replays, and never requests historical examples', async (t) => {
+  const edition = await editionProviderFixture(),
+    p = fixture(t, { edition });
+  await p.loading;
+  assert.equal(p.doc.body.dataset.editionId, 'sample-public');
+  assert.equal(p.$('example').hidden, true);
+  assert.equal(p.$('load-example').disabled, true);
+  assert.equal(p.$('theme').children.length, 1);
+  assert.ok(
+    !p.requests.some((path) => /fieldcraft|motion-lab\/presets|content\/themes/.test(path)),
+  );
+  p.$('replay-text').value = JSON.stringify(p.original);
+  p.$('load-text').click();
+  await until(
+    () => p.$('recording-name').textContent === 'Display proof',
+    'The selected edition must import a verified recording.',
+  );
+  assert.equal(p.frame(0).tick, 0);
+  noPlayerAccess(p);
+});
+
+test('edition theater reports unavailable catalog through its ordinary boot status', async (t) => {
+  const p = fixture(t, { edition: await editionProviderFixture(), failEdition: true });
+  await p.loading;
+  assert.match(p.$('boot-status').textContent, /could not start/i);
+  assert.equal(p.frames.size, 0);
+});
+
+test('an empty edition recovers a focused Cancel to Verify because bundled examples are unavailable', async (t) => {
+  const p = fixture(t, { edition: await editionProviderFixture() });
+  await p.loading;
+  const cancel = p.$('cancel-load');
+  let finish,
+    hidden = cancel.hidden;
+  Object.defineProperty(cancel, 'hidden', {
+    configurable: true,
+    get: () => hidden,
+    set: (value) => {
+      hidden = value;
+      if (value && p.doc.activeElement === cancel) p.doc.body.focus();
+    },
+  });
+  p.$('replay-file').files = [
+    { name: 'invalid.json', size: 2, text: () => new Promise((resolve) => (finish = resolve)) },
+  ];
+  p.$('replay-file').emit('change');
+  await until(() => finish, 'file read began');
+  cancel.focus();
+  finish('{}');
+  await until(() => cancel.hidden, 'file rejected');
+  assert.equal(p.$('load-example').disabled, true);
+  assert.equal(p.doc.activeElement, p.$('load-text'));
+  assert.equal(p.$('replay-import-feedback').dataset.error, 'true');
+  assert.equal(p.$('play-pause').disabled, true);
+  noPlayerAccess(p);
+});
 async function ready(page) {
   await page.loading;
   await until(
@@ -259,8 +346,38 @@ function raw(page) {
   return JSON.parse(page.data.get(DISPLAY_PREFERENCES_KEY));
 }
 function noPlayerAccess(page) {
-  assert.ok(page.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
-  assert.ok(page.writes.every(({ key }) => key === DISPLAY_PREFERENCES_KEY));
+  assert.ok(
+    page.reads.every((key) =>
+      [
+        DISPLAY_PREFERENCES_KEY,
+        ENCOUNTER_DISPLAY_PREFERENCES_KEY,
+        ENEMY_ARTWORK_PREFERENCES_KEY,
+        AUDIO_PREFERENCES_KEY,
+        MENU_AUDIO_KEY,
+        RADIO_AUDIO_KEY,
+        MOVEMENT_AUDIO_KEY,
+        THEME_PREFERENCES_KEY,
+        LEGACY_THEME_PREFERENCES_KEY,
+        'revealline.menu-style.v1',
+        'revealline.destruction.v1',
+        'revealline.journey-reactions.v1',
+        'revealline.reaction-presentation.v1',
+        'revealline.hunt-records.v1',
+      ].includes(key),
+    ),
+    `Unexpected reads: ${JSON.stringify([...new Set(page.reads)])}`,
+  );
+  assert.ok(
+    page.writes.every(({ key }) =>
+      [
+        DISPLAY_PREFERENCES_KEY,
+        AUDIO_PREFERENCES_KEY,
+        MENU_AUDIO_KEY,
+        RADIO_AUDIO_KEY,
+        MOVEMENT_AUDIO_KEY,
+      ].includes(key),
+    ),
+  );
   assert.equal(page.data.get('revealline.library.dev.v1'), 'untouched player profile');
   assert.equal(page.data.get('revealline.suspended.dev.v1'), 'untouched saved flight');
 }
@@ -406,5 +523,165 @@ test('terminal exit during delayed boot retires authority and fences late replay
     'A completed fetch after terminal exit cannot start playback or RAF.',
   );
   assert.equal(p.writes.length, 0);
+  noPlayerAccess(p);
+});
+
+for (const denied of [false, true])
+  test(`history-restored replay controls follow unchanged ${denied ? 'session-only' : 'saved'} intent without touching playback`, async (t) => {
+    const p = fixture(t, {
+      stored: encode(denied ? {} : { textFace: 'plain', textSize: 'large' }),
+    });
+    await ready(p);
+    p.frame(1000);
+    p.$('step').emit('click');
+    const before = p.frame(1010).checkpoint;
+    if (denied) {
+      p.failWrites(true);
+      p.change('replay-text-face', 'plain');
+      p.change('replay-text-size', 'large');
+    }
+    const writes = p.writes.length,
+      stored = p.data.get(DISPLAY_PREFERENCES_KEY),
+      warning = p.$('replay-display-status').textContent;
+    p.$('replay-text').value = 'Keep this unsubmitted recording';
+    p.$('replay-text-size').focus();
+    p.win.emit('pagehide', { persisted: true });
+    const restoreStaleControls = () => {
+      p.$('replay-text-face').value = 'pixel';
+      p.$('replay-text-size').value = 'standard';
+      p.$('reduced').checked = true;
+    };
+    restoreStaleControls();
+    p.win.emit('pageshow', { persisted: true });
+    assert.equal(p.$('replay-text-face').value, 'plain');
+    assert.equal(p.$('replay-text-size').value, 'large');
+    assert.equal(p.$('reduced').checked, false);
+    // Browsers may restore controls after pageshow listeners have run.
+    restoreStaleControls();
+    await delay(0);
+    assert.equal(p.$('replay-text-face').value, 'plain');
+    assert.equal(p.$('replay-text-size').value, 'large');
+    assert.equal(p.$('reduced').checked, false);
+    assert.equal(p.doc.body.dataset.textFace, 'plain');
+    assert.equal(p.doc.body.dataset.textSize, 'large');
+    assert.equal(p.$('replay-display-status').textContent, warning);
+    assert.equal(p.$('replay-text').value, 'Keep this unsubmitted recording');
+    assert.equal(p.doc.activeElement, p.$('replay-text-size'));
+    assert.equal(p.writes.length, writes);
+    assert.equal(p.data.get(DISPLAY_PREFERENCES_KEY), stored);
+    assert.deepEqual(p.frame(3000).checkpoint, before);
+    assert.equal(p.$('playback-phase').textContent, 'paused');
+    noPlayerAccess(p);
+    // A newer explicit choice wins over an already queued repair.
+    p.win.emit('pageshow', { persisted: true });
+    p.change('replay-text-size', 'standard');
+    await delay(0);
+    assert.equal(p.$('replay-text-size').value, 'standard');
+    assert.equal(p.doc.body.dataset.textSize, 'standard');
+    assert.equal(p.writes.length, writes + 1);
+    assert.deepEqual(p.frame(4000).checkpoint, before);
+    assert.equal(p.$('playback-phase').textContent, 'paused');
+    // A queued repair must not paint after terminal departure.
+    p.win.emit('pageshow', { persisted: true });
+    p.win.emit('pagehide', { persisted: false });
+    restoreStaleControls();
+    await delay(0);
+    assert.equal(p.$('replay-text-face').value, 'pixel');
+    assert.equal(p.$('replay-text-size').value, 'standard');
+    assert.equal(p.writes.length, writes + 1);
+  });
+
+test('recorded company receipt restores selected actors and rejects changed artwork while retaining playback', async (t) => {
+  const edition = await editionProviderFixture();
+  const provider = await loadRuntimeContentProvider({
+    locationRef: { href: 'https://example.test/game/index.html?edition=sample-public' },
+    documentRef: { documentElement: { dataset: {} } },
+    fetcher: edition.fetcher,
+  });
+  const host = createCandidateSoloHost(provider.route.source, {
+    themes: provider.themes,
+    corePackIds: provider.route.corePackIds,
+  });
+  const entry = host.entries.find((item) => item.difficulty === 'standard'),
+    level = entry.campaign.levels[0];
+  const adapter = await createJourneyVisualThemeIdentityAdapter(provider.route.source, {
+    mode: 'solo',
+  });
+  const content = await adapter.prepareHostSelection({
+    host,
+    selection: entry,
+    level,
+    association: { editionId: provider.editionId, contentThemeId: provider.theme.id, mode: 'solo' },
+  });
+  const lease = await prepareActorAppearanceLease({
+    style: 'campaign',
+    scope: 'journey',
+    content,
+    authoredPresentationSha256: provider.authoredPresentationSha256,
+  });
+  const tuned = applyGameplayTuning(level, resolveGameplayTuning('standard')),
+    options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+  const run = createRun(tuned, options),
+    recorder = createRecorder(tuned, options, 'receipt-test');
+  for (let tick = 0; tick < 12; tick++) {
+    stepRun(run, {}, FIXED_DT);
+    recordInput(recorder, {});
+  }
+  const envelope = exportReplayPresentation({
+    execution: { campaignKey: entry.executionKey, sourcePackId: entry.sourcePackId ?? null },
+    actorAppearancePin: lease.pin(),
+    replay: exportReplay(recorder, run),
+  });
+  lease.release();
+  host.preparer.dispose();
+  const p = fixture(t, { edition });
+  await p.loading;
+  p.$('replay-text').value = JSON.stringify(envelope);
+  p.$('load-text').click();
+  await until(
+    () => p.$('recording-name').textContent === level.name,
+    'Matching company recording must load.',
+  );
+  assert.equal(p.$('theme').disabled, true);
+  assert.match(p.$('recorded-appearance').textContent, /exact artwork receipt/);
+  p.$('step').click();
+  assert.equal(p.frame(0).tick, 1);
+  p.$('restart').click();
+  assert.equal(p.frame(0).tick, 0);
+  const changed = structuredClone(envelope);
+  changed.actorAppearancePin.authoredPresentationSha256 = 'f'.repeat(64);
+  p.$('replay-text').value = JSON.stringify(changed);
+  p.$('load-text').click();
+  await until(
+    () => /matching release/.test(p.$('import-status').textContent),
+    'Wrong receipt must be rejected.',
+  );
+  assert.equal(p.$('recording-name').textContent, level.name);
+  assert.equal(p.frame(0).tick, 0);
+  assert.ok(
+    !p.requests.some((path) =>
+      /fieldcraft|content-design\/themes|mission-library-index/.test(path),
+    ),
+  );
+});
+
+test('Theater adopts global remains without rewriting recordings or advancing a paused replay', async (t) => {
+  const p = fixture(t);
+  await ready(p);
+  const before = p.frame(0),
+    original = JSON.stringify(p.original);
+  assert.equal(before.showCombatScrap, true);
+  const raw = JSON.stringify({ format: 'EncounterDisplayPreferencesV1', showRemains: false });
+  p.data.set(ENCOUNTER_DISPLAY_PREFERENCES_KEY, raw);
+  p.win.emit('storage', {
+    key: ENCOUNTER_DISPLAY_PREFERENCES_KEY,
+    storageArea: p.storage,
+    newValue: raw,
+  });
+  const after = p.frame(16);
+  assert.equal(after.showCombatScrap, false);
+  assert.deepEqual(after.checkpoint, before.checkpoint);
+  assert.equal(JSON.stringify(p.original), original);
+  assert.deepEqual(p.writes, []);
   noPlayerAccess(p);
 });

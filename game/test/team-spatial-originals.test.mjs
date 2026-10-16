@@ -9,6 +9,7 @@ import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { readCoopPack } from '../coop/library.mjs';
 import { assessTeamPressureRoute } from '../../scripts/lib/team-pressure-assessment.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playTeamSpatialRoute } from './helpers/team-spatial-host-route.mjs';
 
 const source = createTeamSpatialOriginalCandidates(),
   old = createTeamPressureOriginalCandidates();
@@ -19,14 +20,6 @@ const evidence = JSON.parse(
   await readFile(new URL('./fixtures/team-roamer-spatial-routes.json', import.meta.url)),
 );
 const changed = new Set(['shared-lookout', 'twin-depots']);
-const hostClears = {
-  'shared-lookout/gentle': [5480, '78.1%'],
-  'shared-lookout/standard': [4422, '81.5%'],
-  'shared-lookout/expert': [3559, '81.5%'],
-  'twin-depots/gentle': [3163, '81.7%'],
-  'twin-depots/standard': [4303, '76.3%'],
-  'twin-depots/expert': [3531, '77.3%'],
-};
 const resolve = (p, id, difficulty) => resolveMission(p, id, { mode: 'team', difficulty });
 
 test('spatial route inventory covers both revised maps and every preset exactly once', () => {
@@ -95,37 +88,13 @@ for (const row of evidence.rows) {
     const f = await page(t, { nativeFocus: true, nativeVisibility: true });
     await f.selectFile(JSON.stringify(createTeamTestPack(source, row.missionId, row.difficulty)));
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
+    await f.choose('coop-difficulty', row.difficulty);
     f.$('coop-start').focus();
     f.tap('Enter');
     f.tick(2);
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1;
-    for (const s of row.log) {
-      for (const [seat, d] of [s.a, s.b].entries())
-        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    const reserves = { gentle: 4, standard: 2, expert: 1 }[row.difficulty];
-    assert.equal(
-      f.$('coop-reserves').textContent,
-      `${reserves} reserve${reserves === 1 ? '' : 's'}`,
-    );
-    assert.deepEqual(
-      [frames, f.$('coop-coverage').textContent],
-      hostClears[`${row.missionId}/${row.difficulty}`],
-    );
+    const reference = playTeamSpatialRoute(f, source, row.missionId, row.difficulty);
     t.diagnostic(
-      `keyboard host: ${frames}frames, ${f.$('coop-coverage').textContent}; not historical seed1/delay0 checkpoint`,
+      `current keyboard host: ${reference.run.tick} ticks, ${f.$('coop-coverage').textContent}; historical authored-rule checkpoints remain above`,
     );
   });
 }

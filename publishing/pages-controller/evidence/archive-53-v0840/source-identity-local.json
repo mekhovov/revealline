@@ -1,0 +1,9 @@
+{
+  "source": "1107f570508e0d107440236b6aeedbce8506cd7d",
+  "tree": "793ee7e682e206e0914754cf60fd93af0792c463",
+  "tagObject": "13c6d9632d1f2e41bc32c6b39a5db7999050c76e",
+  "version": "v0.84.0",
+  "policyPath": "publishing/test-policy.json",
+  "policyBytes": 490,
+  "policySha256": "b6887ba7f2b84a007b96de14fc867ac38ac8135d7c231c7ade7ebc52ba31704a"
+}

@@ -1,0 +1,30 @@
+test_complete_receipt_uses_all_aliases_originals_and_historical_bridges (test_binding.BindingTests.test_complete_receipt_uses_all_aliases_originals_and_historical_bridges) ... ok
+test_duplicate_unsafe_and_changed_original_rows_refused_even_with_new_inventory_pin (test_binding.BindingTests.test_duplicate_unsafe_and_changed_original_rows_refused_even_with_new_inventory_pin) ... ok
+test_inventory_count_and_zip_members_fail_closed (test_binding.BindingTests.test_inventory_count_and_zip_members_fail_closed) ... ok
+test_latest_failed_status_and_other_deployment_refused (test_binding.BindingTests.test_latest_failed_status_and_other_deployment_refused) ... ok
+test_nonregular_zip_member_refused_without_extraction (test_binding.BindingTests.test_nonregular_zip_member_refused_without_extraction) ... ok
+test_pending_request_and_changed_authority_are_refused (test_binding.BindingTests.test_pending_request_and_changed_authority_are_refused) ... ok
+test_symlink_fifo_and_oversized_inputs_refused_before_open (test_binding.BindingTests.test_symlink_fifo_and_oversized_inputs_refused_before_open) ... ok
+test_wrong_source_preview_receipt_and_missing_canonical_refused (test_binding.BindingTests.test_wrong_source_preview_receipt_and_missing_canonical_refused) ... ok
+test_wrong_workflow_preview_or_skipped_deploy_refused (test_binding.BindingTests.test_wrong_workflow_preview_or_skipped_deploy_refused) ... ok
+test_absent_actual_binding_refuses_without_transport (test_http_audit.AuditTests.test_absent_actual_binding_refuses_without_transport) ... ok
+test_body_deadline_is_checked_during_stream (test_http_audit.AuditTests.test_body_deadline_is_checked_during_stream) ... ok
+test_encoding_and_declared_length_mismatch_fail (test_http_audit.AuditTests.test_encoding_and_declared_length_mismatch_fail) ... ok
+test_expired_deadline_makes_no_request_and_records_failure (test_http_audit.AuditTests.test_expired_deadline_makes_no_request_and_records_failure) ... ok
+test_failure_retry_preserves_every_attempt (test_http_audit.AuditTests.test_failure_retry_preserves_every_attempt) ... ok
+test_full_body_hash_size_mime_and_final_url (test_http_audit.AuditTests.test_full_body_hash_size_mime_and_final_url) ... ok
+test_low_capacity_refuses_before_output_or_transport (test_http_audit.AuditTests.test_low_capacity_refuses_before_output_or_transport) ... ok
+test_malformed_size_and_hash_are_rejected (test_http_audit.AuditTests.test_malformed_size_and_hash_are_rejected) ... ok
+test_mime_failure_occurs_after_full_body_verification (test_http_audit.AuditTests.test_mime_failure_occurs_after_full_body_verification) ... ok
+test_oversized_body_stops_one_byte_beyond_pin (test_http_audit.AuditTests.test_oversized_body_stops_one_byte_beyond_pin) ... ok
+test_redirect_handler_refuses_without_following (test_http_audit.AuditTests.test_redirect_handler_refuses_without_following) ... ok
+test_retries_are_bounded (test_http_audit.AuditTests.test_retries_are_bounded) ... ok
+test_truncation_and_equal_length_hash_mismatch_fail (test_http_audit.AuditTests.test_truncation_and_equal_length_hash_mismatch_fail) ... ok
+test_unsafe_paths_and_unsupported_mime_never_request (test_http_audit.AuditTests.test_unsafe_paths_and_unsupported_mime_never_request) ... ok
+test_wrong_status_and_final_url_fail (test_http_audit.AuditTests.test_wrong_status_and_final_url_fail) ... ok
+test_zero_byte_hidden_file_is_read_and_verified (test_http_audit.AuditTests.test_zero_byte_hidden_file_is_read_and_verified) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.183s
+
+OK

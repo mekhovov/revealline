@@ -10,7 +10,14 @@ function boot(mode, search) {
   const document = new Document();
   document.baseURI = `https://game.invalid/releases/v0.1/site/game/couch/${mode === 'team' ? 'relay-rescue.html' : ''}${search}`;
   document.currentScript = { dataset: { mode } };
-  for (const id of ['boot-return', 'coop-home', 'coop-solo', 'coop-versus', 'coop-race']) {
+  for (const id of [
+    'boot-return',
+    'mode-boot-return',
+    'coop-home',
+    'coop-solo',
+    'coop-versus',
+    'coop-race',
+  ]) {
     const link = document.createElement('a');
     link.id = id;
     link.setAttribute('href', 'unchanged');
@@ -31,23 +38,51 @@ for (const route of AUTHORED_JOURNEY_ROUTE_IDS)
         ready = authoredTeamReturn(`https://game.invalid/game/couch/relay-rescue.html${search}`),
         team = boot('team', search);
       assert.equal(team('coop-home'), ready.solo);
+      assert.equal(team('mode-boot-return'), ready.solo);
       assert.equal(team('coop-solo'), ready.solo);
       assert.equal(team('coop-versus'), ready.versus);
       assert.equal(team('coop-race'), ready[origin]);
       assert.equal(team('coop-race', true), origin === 'solo' ? 'Back to Solo' : 'Race mode ↗');
     }
   });
-test('bootstrap never accepts duplicate, unknown or competing Team origins', () => {
+test('Legacy bootstrap escapes preserve the catalogue before mode modules prepare', () => {
+  assert.equal(boot('versus', '?journey=legacy')('boot-return'), '../?journey=legacy');
+  for (const origin of ['solo', 'versus']) {
+    const links = boot('team', `?journey=legacy&return=${origin}`);
+    assert.equal(links('coop-home'), '../?journey=legacy');
+    assert.equal(links('coop-solo'), '../?journey=legacy');
+    assert.equal(links('coop-versus'), './?journey=legacy');
+    assert.equal(
+      links('coop-race'),
+      origin === 'solo' ? '../?journey=legacy' : './?journey=legacy',
+    );
+  }
+});
+test('bootstrap preserves resolved Legacy intent while rejecting untrusted destinations', () => {
   for (const search of [
     '?journey=x',
-    '?journey=opening&journey=authored',
+    '?journey=',
     '?journey=https://other.invalid',
-  ])
-    assert.equal(boot('versus', search)('boot-return'), 'unchanged');
+    '?practice=1',
+    '?pack=fieldcraft',
+    '?return-token=invalid',
+    '?workshop=playground',
+  ]) {
+    assert.equal(boot('versus', search)('boot-return'), '../?journey=legacy');
+    assert.equal(boot('team', search)('coop-race'), './?journey=legacy');
+  }
+  assert.equal(
+    boot('versus', '?journey=opening&journey=authored')('boot-return'),
+    '../?journey=opening',
+  );
+  assert.equal(
+    boot('team', '?journey=team-spatial-originals-1&journey=legacy')('coop-race'),
+    './?journey=legacy',
+  );
   const base = '?return=solo&journey-return=opening';
+  for (const suffix of ['&return=versus', '&journey-return=authored'])
+    assert.equal(boot('team', base + suffix)('coop-race'), 'unchanged');
   for (const suffix of [
-    '&return=versus',
-    '&journey-return=authored',
     '&return-token=x',
     '&return-token-v2=x',
     '&mode-return=x',
@@ -55,6 +90,58 @@ test('bootstrap never accepts duplicate, unknown or competing Team origins', () 
     '&practice=1',
     '&journey=opening',
   ])
-    assert.equal(boot('team', base + suffix)('coop-race'), 'unchanged');
+    assert.equal(boot('team', base + suffix)('coop-race'), '../?journey=legacy');
   assert.equal(boot('other', '?journey=opening')('boot-return'), 'unchanged');
+});
+
+test('Team bootstrap gives a validated authored return the same priority as the ready host', () => {
+  for (const key of ['pack', 'campaign', 'level', 'play', 'course', 'lesson', 'workshop']) {
+    const search = `?return=solo&journey-return=opening&${key}=legacy-value`;
+    const ready = authoredTeamReturn(`https://game.invalid/game/couch/relay-rescue.html${search}`);
+    const links = boot('team', search);
+    assert.equal(links('coop-home'), ready.solo);
+    assert.equal(links('coop-versus'), ready.versus);
+    assert.equal(links('coop-race'), ready.solo);
+  }
+});
+
+test('Team keeps original live boot feedback available through errors and restores it only when ready', () => {
+  const document = new Document();
+  document.baseURI = 'https://game.invalid/game/couch/relay-rescue.html';
+  document.currentScript = { dataset: { mode: 'team' } };
+  document.documentElement.dataset.toolState = 'loading';
+  const boot = document.createElement('section');
+  boot.id = 'mode-boot';
+  const status = document.createElement('p');
+  status.id = 'coop-boot';
+  status.textContent = 'Preparing';
+  boot.append(status);
+  const menu = document.createElement('section');
+  const slot = document.createElement('span');
+  slot.id = 'coop-boot-slot';
+  menu.append(slot);
+  document.body.append(boot, menu);
+  let changed,
+    disconnected = false;
+  class MutationObserver {
+    constructor(callback) {
+      changed = callback;
+    }
+    observe() {}
+    disconnect() {
+      disconnected = true;
+    }
+  }
+  runInNewContext(source, { document, URL, MutationObserver, addEventListener() {} });
+  document.documentElement.dataset.toolState = 'error';
+  status.textContent = 'Could not prepare';
+  changed();
+  assert.equal(status.parentNode, boot);
+  assert.equal(disconnected, false);
+  document.documentElement.dataset.toolState = 'ready';
+  changed();
+  assert.equal(status.parentNode, menu);
+  assert.equal(status.textContent, 'Could not prepare');
+  assert.equal(document.getElementById('coop-boot'), status);
+  assert.equal(disconnected, true);
 });

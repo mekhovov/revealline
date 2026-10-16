@@ -45,21 +45,20 @@
   ],
   "successorAdaptations": [
     {
+      "baseCommit": "e0f99c9642355aa3daf62ce3e551675b8c9d2e14",
+      "paths": ["release_artifact.py", "assemble_waived_qualification.py"],
+      "scope": "Explicit user-authorized temporary automated-test waiver with truthful v2 records, exact committed policy and actual skipped-job originals. Legacy v1 remains unchanged. Source/build, frozen artifact, immutable upload and final reconciliation guards remain mandatory; upload engines and historical provenance are unchanged.",
+      "regression": "Focused waiver consumer, assembler and cross-consumer tests exercise accepted waived records and reject forged pass counts, borrowed source/run evidence, missing policy, failed mandatory gates and changed immutable bytes. These synthetic checks do not qualify a real release."
+    },
+    {
       "baseCommit": "7db26c148cced9b51315dc24902569234061b17d",
-      "paths": [
-        "upload_source.py",
-        "upload_distribution.py",
-        "release_artifact.py"
-      ],
+      "paths": ["upload_source.py", "upload_distribution.py", "release_artifact.py"],
       "scope": "Safe bounded Ambiguous phase/client-completed-send-count/observed-status diagnostics and receipt retention. Separately reviewed shared API lifetime changes from 1800 to 5400 seconds (90 minutes) within the unchanged 180-minute hosted upload-job timeout. Original provenance rows remain historical. Socket timeout stays 120 seconds; upload policy, member limits, preflight and final reconciliation remain unchanged. No timeout diagnosis of earlier attempts is established.",
       "regression": "test_upload_diagnostics.py adds real loopback send/response failures and hosted-result manifest checks."
     },
     {
       "baseCommit": "77e1d61f040725a54ee3162a06cda0918b6e7139",
-      "paths": [
-        "upload_source.py",
-        "upload_distribution.py"
-      ],
+      "paths": ["upload_source.py", "upload_distribution.py"],
       "scope": "Add six standard SSL subtype names to the existing fixed safe diagnostic labels. No exception text, arbitrary class names or errno field; transport, timeouts, chunking, headers, preflight, POST, no-retry and reconciliation guards remain unchanged. Historical OtherError receipts do not establish a TLS failure or its subtype.",
       "regression": "test_upload_diagnostics.py checks actual standard SSL subtype classification in both engines and suppression of arbitrary SSL subclass names and messages."
     }

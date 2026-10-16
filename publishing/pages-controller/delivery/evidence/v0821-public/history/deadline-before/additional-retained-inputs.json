@@ -1,0 +1,31 @@
+{
+  "status": "ADDITIONAL_ORIGINAL_INPUTS_RETAINED",
+  "files": [
+    {
+      "path": "execution-request.template.json",
+      "bytes": 1389,
+      "sha256": "653329e58ef8857b3e3667af497dbc4fc85bd56946bc2884e55e63ee4b6ebb39"
+    },
+    {
+      "path": "metadata-pins.json",
+      "bytes": 389,
+      "sha256": "924024d37a4c91d0eafd9cac2efb5749065b032ab72ecf4c7d72d75e25d1baef"
+    },
+    {
+      "path": "inputs/release.json",
+      "bytes": 465,
+      "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e"
+    },
+    {
+      "path": "inputs/manifest.json",
+      "bytes": 192123,
+      "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d"
+    },
+    {
+      "path": "inputs/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588"
+    }
+  ],
+  "priorHistoryManifestUnchanged": true
+}

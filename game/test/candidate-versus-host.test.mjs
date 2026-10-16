@@ -6,19 +6,32 @@ import { memoryStorage } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
-import { createJourneyBackend } from '../journey/profile.mjs';
-import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { createJourneyBackend, JOURNEY_PROFILE_DATABASE } from '../journey/profile.mjs';
+import { CLASSES } from '../core/index.mjs';
+import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
+import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
+import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
+import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { dataIdentity } from '../data-json.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 async function setup(t, difficulty = 'standard', options = {}) {
   const memory = managedIndexedDB();
+  const databases = new Map([[JOURNEY_PROFILE_DATABASE, memory]]);
   const storage = memoryStorage({
     [JOURNEY_PREFERENCES_KEY]: JSON.stringify({ format: 'JourneyPreferencesV1', difficulty }),
   });
   const p = await couchPage(t, {
     href: 'http://localhost/game/couch/?journey=opening',
     initialLevel: null,
-    assetDatabase: memory.indexedDB,
+    assetDatabase: {
+      open(name, ...args) {
+        if (!databases.has(name)) databases.set(name, managedIndexedDB());
+        return databases.get(name).indexedDB.open(name, ...args);
+      },
+    },
     seconds: '90',
     storage,
     fetchResponse: async (url) => {
@@ -30,6 +43,59 @@ async function setup(t, difficulty = 'standard', options = {}) {
   p.preferencesStorage = storage;
   return p;
 }
+async function openMissions(p) {
+  p.$('race-journey-find').click();
+  try {
+    await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  } catch (error) {
+    error.message += ` ${p.$('race-message').textContent}`;
+    throw error;
+  }
+  p.$('journey-collection').value = 'Journey';
+  p.$('journey-collection').emit('change');
+}
+
+test('Versus save warning uses existing pause and recovery without changing either board', async (t) => {
+  const p = await setup(t, 'standard', { assetDatabase: undefined });
+  const reveals = [];
+  t.mock.method(p.$('race-start'), 'scrollIntoView', (options) => reveals.push(options));
+  assert.equal(p.$('race-journey-save').parentNode, p.$('race-settings-panel-data'));
+  assert.equal(p.$('race-journey-save').hidden, false);
+  assert.equal(p.$('race-journey-save-options').hidden, false);
+  assert.equal(p.$('race-pause').dataset.journeyUnsaved, 'true');
+  p.$('race-start').focus();
+  p.key('Escape');
+  p.key('Escape', false);
+  assert.deepEqual(reveals.at(-1), { block: 'nearest', inline: 'nearest', behavior: 'auto' });
+  p.$('race-start').click();
+  await waitFor(() => {
+    p.frame();
+    return !p.$('race-pause').disabled;
+  });
+  assert.equal(p.$('race-main').hidden, true);
+  p.$('race-pause').click();
+  p.frame(0);
+  assert.deepEqual(reveals.at(-1), { block: 'center', inline: 'nearest', behavior: 'auto' });
+  const previous = [...p.renders],
+    checkpoint = p.checkpoint();
+  p.$('race-journey-save-options').click();
+  assert.equal(p.$('race-options-panel').hidden, false);
+  assert.equal(p.$('race-settings-panel-data').hidden, false);
+  assert.equal(p.doc.activeElement, p.$('race-journey-save-retry'));
+  assert.equal(p.state(), 'paused');
+  p.$('race-journey-save-retry').click();
+  await waitFor(() => !p.$('race-journey-save').hidden);
+  assert.deepEqual(p.renders, previous);
+  p.frames(30);
+  assert.deepEqual(p.checkpoint(), checkpoint);
+  assert.equal(p.state(), 'paused');
+  p.$('race-options-back').click();
+  assert.equal(p.$('race-main').hidden, false);
+  p.$('race-start').click();
+  p.frame();
+  assert.equal(p.renders[0].status, 'running');
+  assert.equal(p.renders[1].status, 'running');
+});
 
 for (const difficulty of ['gentle', 'standard', 'expert'])
   test(`real paired-board host loads the authored ${difficulty} opening with one original and equal rules`, async (t) => {
@@ -44,7 +110,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.$('race-time-field').hidden, true);
     assert.equal(p.$('race-clock').textContent, 'No countdown');
     assert.equal(p.$('race-clock').dataset.compact, '∞');
-    assert.match(p.$('race-summary').textContent, /No race countdown/);
+    assert.equal(p.$('race-summary').textContent, 'One race · First return');
     assert.match(p.$('race-format-help').textContent, /No race countdown/);
     assert.doesNotMatch(p.$('race-format-help').textContent, /At the time limit/);
     assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
@@ -64,6 +130,7 @@ for (const difficulty of ['gentle', 'standard', 'expert'])
     assert.equal(p.renders[1].status, 'won');
     assert.equal(p.renders[0].coverage, p.renders[1].coverage);
     assert.match(p.$('race-message').textContent, /Draw.*First clear/);
+    assert.equal(p.$('race-journey-next').textContent, 'Next: Choose your share');
     const previous = p.renders[0],
       picture = p.drawOptions[0].backdrop;
     assert.equal(p.$('race-journey-next').hidden, false);
@@ -142,14 +209,16 @@ test('cross-campaign theme controls commit with the accepted picture, never a fa
   });
   const previous = [...p.renders],
     picture = p.drawOptions[0].backdrop;
-  const chooseBorder = () => {
-    p.$('race-journey-find').click();
+  const chooseBorder = async () => {
+    await openMissions(p);
     p.$('journey-cards')
-      .children.find((card) => card.dataset.missionId.endsWith('/behind-the-patrol'))
+      .children.find((card) => JSON.parse(card.dataset.missionId)[3].endsWith('/behind-the-patrol'))
       .click();
+    await waitFor(() => p.$('race-library-replace')?.open);
+    p.$('race-library-play').click();
   };
   assert.equal(p.$('race-theme').value, 'horizon');
-  chooseBorder();
+  await chooseBorder();
   await waitFor(() => p.$('race-preparation').dataset.state === 'error');
   p.frame(0);
   assert.equal(p.renders[0], previous[0]);
@@ -161,7 +230,7 @@ test('cross-campaign theme controls commit with the accepted picture, never a fa
     ['horizon'],
   );
   refuse = false;
-  chooseBorder();
+  await chooseBorder();
   await waitFor(() => {
     p.frame(0);
     return p.renders[0].levelId === 'behind-the-patrol' && !p.$('race-pause').disabled;
@@ -195,14 +264,18 @@ test('Versus Skip requires two actions and flat chooser can launch an island mis
     return p.renders[0] !== previous && !p.$('race-pause').disabled;
   });
   assert.equal(p.renders[0].levelId, 'choose-your-share');
-  p.$('race-journey-find').click();
+  await openMissions(p);
   assert.equal(p.$('journey-chooser').open, true);
   const cards = p.$('journey-cards').children;
   assert.equal(cards.length, 10);
   assert.match(cards[0].textContent, /Skipped/);
   assert.doesNotMatch(cards[0].textContent, /Cleared/);
-  const island = [...cards].find((card) => card.dataset.missionId.endsWith('/nearby-shore'));
+  const island = [...cards].find((card) =>
+    JSON.parse(card.dataset.missionId)[3].endsWith('/nearby-shore'),
+  );
   island.click();
+  await waitFor(() => p.$('race-library-replace')?.open);
+  p.$('race-library-play').click();
   await waitFor(() => {
     p.frame(0);
     return p.renders[0].levelId === 'nearby-shore' && !p.$('race-pause').disabled;
@@ -225,9 +298,35 @@ test('controller can open and leave the flat chooser without starting or clearin
   p.join(0);
   p.focus('race-journey-find');
   p.pulse(0, 0);
+  await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  p.frame(); // The asynchronously mounted scope observes a neutral controller frame.
   assert.equal(p.$('journey-chooser').open, true);
-  assert.equal(p.$('journey-cards').children.length, 10);
-  const card = p.$('journey-cards').children[0];
+  p.$('journey-lifecycle').value = 'archive';
+  p.$('journey-lifecycle').emit('change');
+  const cards = [...p.$('journey-cards').children];
+  const route = createAuthoredJourneyRoute('opening'),
+    themes = JSON.parse(
+      await readFile(new URL('../content-design/themes.json', import.meta.url)),
+    ).themes,
+    currentInventory = createCandidateVersusHost(route.source, {
+      themes,
+      corePackIds: route.corePackIds,
+      optionalCampaignIds: route.optionalCampaignIds,
+    }).catalog.forMode('versus'),
+    currentCards = cards.filter((card) => {
+      const [ownerId, editionId] = JSON.parse(card.dataset.missionId);
+      return ownerId === 'journey:opening' && editionId === 'opening';
+    });
+  assert.equal(
+    currentCards.length,
+    currentInventory.length,
+    'the archived opening owner exposes exactly one card per mission',
+  );
+  assert.deepEqual(
+    currentCards.map((card) => JSON.parse(card.dataset.missionId)[3]),
+    currentInventory.map((mission) => mission.id),
+  );
+  const card = currentCards[0];
   assert.match(card.textContent, /Band 1\/12.*Standard.*Optional challenge/);
   card.focus();
   const raw = JSON.stringify({ format: 'JourneyPreferencesV1', difficulty: 'expert' });
@@ -259,7 +358,7 @@ test('authored races ignore the Legacy timer and do not mint an idle clear after
   assert.equal(p.$('race-clock').dataset.compact, '∞');
   assert.doesNotMatch(p.$('race-message').textContent, /Time/);
   assert.equal(p.$('race-journey-next').hidden, true);
-  p.$('race-journey-find').click();
+  await openMissions(p);
   assert.doesNotMatch(p.$('journey-cards').children[0].textContent, /Cleared/);
   assert.equal(p.renders[0].levelId, 'first-return');
 });
@@ -397,76 +496,91 @@ for (const route of ['opening', 'authored'])
       p.frame(0);
       return !p.$('race-pause').disabled;
     });
-    const rows = JSON.parse(
-      await readFile(new URL('./fixtures/horizon-greybox-routes.json', import.meta.url)),
-    ).rows.slice(0, 9);
-    if (route === 'authored')
-      rows.push(
-        ...JSON.parse(
-          await readFile(new URL('./fixtures/border-clear-routes.json', import.meta.url)),
-        )
-          .sets.find(
-            (set) => set.bonuses && set.difficulty === 'standard' && set.turnPolicy === 'immediate',
-          )
-          .rows.slice(0, 6),
-      );
-    const keys = {
-      up: ['KeyW', 'ArrowUp'],
-      down: ['KeyS', 'ArrowDown'],
-      left: ['KeyA', 'ArrowLeft'],
-      right: ['KeyD', 'ArrowRight'],
-    };
-    const gesture = (direction) => {
-      for (const key of keys[direction] ?? []) {
-        p.key(key);
-        p.key(key, false);
-      }
-    };
-    for (const [id, , , segments] of rows) {
+    const fixture = JSON.parse(
+      await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
+    );
+    const rows = fixture.rows.slice(0, route === 'opening' ? 9 : 15);
+    const project = compileContentProject(createAuthoredJourneyRoute(route).source);
+    for (const [id, authoredIdentity, gameplayIdentity, , segments] of rows) {
       assert.equal(p.renders[0].levelId, id);
-      const reference = createRun(p.renders[0].level, { seed: 1, classId: 'scout' });
-      // Starting the paired-board host consumes one neutral input tick equally.
-      stepRun(reference, { direction: null }, FIXED_DT);
-      p.frame(FIXED_DT * 1000);
-      for (const [direction, ticks] of segments) {
-        gesture(direction);
-        let frameTicks = 0;
-        for (let tick = 0; tick < ticks; tick++) {
-          stepRun(reference, { direction }, FIXED_DT);
-          frameTicks++;
-          const closure = reference.events.some((event) => event.type === 'capture.stopped');
-          if (closure || frameTicks === 12 || tick === ticks - 1) {
-            p.frame(frameTicks * FIXED_DT * 1000);
-            frameTicks = 0;
-            if (closure && tick < ticks - 1 && reference.status !== 'won') gesture(direction);
-          }
-        }
+      const manifest = resolveMission(project, id);
+      assert.equal(manifest.simulationIdentity, authoredIdentity);
+      const level = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
+      for (const run of p.renders) {
+        assert.deepEqual(run.level, level);
+        assert.equal(
+          dataIdentity({ ruleset: run.ruleset, level, classes: CLASSES }),
+          gameplayIdentity,
+        );
       }
+      assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);
+      assert.deepEqual(p.drawOptions[0].backdrop.assetRevision, manifest.background);
+      playKeyboardRoute(
+        p,
+        () => p.renders,
+        [
+          { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
+          { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
+        ],
+        {
+          seed: 1,
+          turnPolicy: 'immediate',
+          evidence: expectedRouteEvidence(fixture.evidence, id),
+          segments: segments.map(([direction, ticks]) => ({ direction, ticks })),
+        },
+      );
       assert.equal(p.renders[0].status, 'won', id);
       assert.equal(p.renders[1].status, 'won', id);
-      assert.equal(
-        authoritativeCheckpoint(p.renders[0]).hash,
-        authoritativeCheckpoint(reference).hash,
-        id,
-      );
       assert.equal(
         authoritativeCheckpoint(p.renders[0]).hash,
         authoritativeCheckpoint(p.renders[1]).hash,
         id,
       );
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (id !== rows.at(-1)[0]) {
-        const previous = p.renders[0];
-        p.$('race-journey-next').click();
-        await waitFor(() => {
-          p.frame(0);
-          return p.renders[0] !== previous && !p.$('race-pause').disabled;
-        });
+        const previous = p.renders[0],
+          next = p.$('race-journey-next'),
+          handler = next.onclick;
+        let operation, timer;
+        next.onclick = function (...args) {
+          operation = handler.apply(this, args);
+          return operation;
+        };
+        try {
+          next.click();
+        } finally {
+          next.onclick = handler;
+        }
+        assert.equal(
+          typeof operation?.then,
+          'function',
+          `${id} activates the real owned continuation operation.`,
+        );
+        try {
+          await Promise.race([
+            operation,
+            new Promise((_, reject) => {
+              timer = setTimeout(
+                () => reject(new Error(`Versus did not prepare the mission after ${id}.`)),
+                15_000,
+              );
+            }),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+        p.frame(0);
+        assert.notEqual(p.renders[0], previous, `${id} advances to its exact successor.`);
+        assert.equal(p.$('race-pause').disabled, false, `${id} successor starts immediately.`);
       }
     }
-    assert.equal(p.$('race-journey-next').hidden, true);
+    assert.equal(p.$('race-journey-next').hidden, false);
+    assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
     assert.equal(p.renders[0].levelId, rows.at(-1)[0]);
-    assert.match(p.$('race-message').textContent, /End of this test route.*optional Remixes/);
+    assert.match(
+      p.$('race-message').textContent,
+      /End of the main Journey.*Browse missions.*Rematch/,
+    );
     let persisted;
     for (let attempt = 0; attempt < 200; attempt++) {
       persisted = await p.journeyBackend.read();
@@ -476,4 +590,66 @@ for (const route of ['opening', 'authored'])
     assert.equal(Object.keys(persisted.clears.versus).length, rows.length);
     assert.equal(Object.keys(persisted.clears.solo).length, 0);
     assert.equal(Object.keys(persisted.clears.team).length, 0);
+    const receipts = Object.entries(persisted.clears.versus);
+    for (const [id, , gameplayIdentity] of rows) {
+      const [, receipt] = receipts.find(([missionId]) => missionId.endsWith('/' + id));
+      assert.equal(receipt.gameplayId, gameplayIdentity);
+      assert.equal(receipt.difficulty, 'standard');
+    }
+    assert.equal(new Set(receipts.map(([, receipt]) => receipt.runId)).size, rows.length);
+    assert.deepEqual(persisted.skipped.versus, []);
+    const retained = (await p.journeyBackend.readState()).pictures.records;
+    assert.equal(retained.length, rows.length);
+    assert(retained.every((record) => record.mode === 'versus'));
+    assert(retained.every((record) => record.editionId === route));
+    assert.equal(
+      retained.some((record) => record.mode === 'solo' || record.mode === 'team'),
+      false,
+      'Paired-board wins never infer Solo or Team rewards.',
+    );
+    for (const record of retained) {
+      const mission = resolveMission(project, record.levelId);
+      assert.deepEqual(record.asset, mission.background);
+    }
+    p.$('race-journey-pictures').focus();
+    p.$('race-journey-pictures').click();
+    await waitFor(
+      () =>
+        p.$('versus-journey-pictures')?.open &&
+        p.$('versus-journey-pictures').querySelectorAll('.journey-mode-picture-card').length ===
+          rows.length,
+    );
+    assert.match(p.$('versus-journey-pictures').textContent, /earned Versus originals/);
+    assert.doesNotMatch(p.$('versus-journey-pictures').textContent, /earned Solo|earned Team/);
+    p.$('versus-journey-pictures').querySelector('header').querySelector('button').click();
+    assert.equal(p.doc.activeElement, p.$('race-journey-pictures'));
+    const previous = [...p.renders],
+      pictures = p.drawOptions.map((options) => options.backdrop),
+      checks = p.checkpoint();
+    p.$('race-journey-next').focus();
+    p.$('race-journey-next').click();
+    await waitFor(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+    p.frame(0);
+    assert(p.renders.every((run, index) => run === previous[index]));
+    assert.deepEqual(p.checkpoint(), checks);
+    assert(p.drawOptions.every((options, index) => options.backdrop === pictures[index]));
+    p.$('journey-back').click();
+    assert.equal(p.doc.activeElement, p.$('race-journey-next'));
+    assert.deepEqual((await p.journeyBackend.read()).clears, persisted.clears);
   });
+
+test('source pursuit greybox uses equal paired boards without acquiring an original picture', async (t) => {
+  const p = await setup(t, 'standard', {
+    href: 'http://localhost/game/couch/?journey=pursuit-pilots-v1',
+  });
+  assert.equal(p.renders[0].levelId, 'crossing-post');
+  assert.deepEqual(p.renders[0], p.renders[1]);
+  assert.equal(p.drawOptions[0].backdrop, null);
+  assert.equal(p.drawOptions[1].backdrop, null);
+  p.$('race-start').click();
+  await waitFor(() => {
+    p.frame();
+    return p.renders.every((run) => run.status === 'running');
+  });
+  assert.ok(p.renders.every((run) => run.level.pursuit.actors.length > 0));
+});

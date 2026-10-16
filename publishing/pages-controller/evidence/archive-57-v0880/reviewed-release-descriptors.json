@@ -1,0 +1,73 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1619701760,
+      "copiedToDisk": false,
+      "name": "source.tar",
+      "originalMember": "v0.88.0/source.tar",
+      "sha256": "83cab59895dcd692cc378d44051c0a6d255f799cecb761ad7528fc70d00d7d98"
+    },
+    {
+      "bytes": 591074583,
+      "copiedToDisk": false,
+      "name": "distribution.zip",
+      "originalMember": "v0.88.0/site/distribution.zip",
+      "sha256": "8d7cc857a2eb2d31432b27220d31b6a1ed33990fb6158de1e8c3fdf5d756706f"
+    },
+    {
+      "bytes": 83,
+      "name": "distribution.zip.sha256",
+      "sha256": "076e6f66943d68cabe7cc11d8c951305b20f6ca31c445079414d0de699598e4e"
+    },
+    {
+      "bytes": 197131,
+      "name": "manifest.json",
+      "sha256": "d5e33d0320608e6745a2d3803c886984ef43b5afb1314ec9f897139ad66481b1"
+    },
+    {
+      "bytes": 1986,
+      "name": "qualification-evidence-record.json",
+      "sha256": "3c890f16742bad5ae8ad7f10bd54aa56fca5b9bace790f2be0a117c214155929"
+    },
+    {
+      "bytes": 465,
+      "name": "release.json",
+      "sha256": "b5d286fa2cac21cfc90ee579b36eda21454a41cc227a76687058a71f4f3b8a38"
+    },
+    {
+      "bytes": 307627,
+      "name": "source-qualification-evidence.zip",
+      "sha256": "ac19a41f65b4490cbb8428053cdb951df2fb933aee96e68bd0f661fe090dfe22"
+    },
+    {
+      "bytes": 14001,
+      "name": "source-qualification.json",
+      "sha256": "79ac76e512b4c5a7652014af33ba73a403b6253b00993f051862f0cf3ea4720e"
+    },
+    {
+      "bytes": 1915,
+      "name": "verification.json",
+      "sha256": "52a247272a91853f81b81ca8f345213710b88fb3a15c6c0b2c137fec1da183d0"
+    }
+  ],
+  "consumer": {
+    "allQualificationPinsResolved": true,
+    "everyMemberCRCAndHashVerified": true,
+    "files": 53,
+    "manifestSha256": "4fc04642bcb062f07927817586a7e0c1b60e9d2bb5946ba0056f653cf2955d72",
+    "originalBytes": 1042691
+  },
+  "releaseAuthority": null,
+  "remoteWrites": false,
+  "scope": "Offline metadata only; independent review and owner publication authority still required.",
+  "source": {
+    "commit": "950f19045facacf5151c90661de1ca28d30658df",
+    "tree": "0c288a694a4c2cba04a7ae331eb3a376bdd4c811",
+    "version": "v0.88.0"
+  },
+  "status": "OFFLINE_CONSUMER_VERIFIED_SMALL_PACKAGE",
+  "tests": {
+    "counts": null,
+    "status": "waived"
+  }
+}

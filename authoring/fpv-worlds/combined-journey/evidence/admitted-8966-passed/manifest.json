@@ -1,0 +1,62 @@
+{
+  "sourceRevision": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "fixtureOrigin": "http://127.0.0.1:8966/",
+  "fixtureMode": "admitted",
+  "overlays": [],
+  "outcome": "453/453 native online controls passed on the exact102-member admitted player; file import, not published Browse or offline acceptance.",
+  "sourceComparison": "Same453 named controls as source8965; all passed separately.",
+  "completedWatchTicks": 1616,
+  "offlineEligible": true,
+  "offlinePassed": false,
+  "hosts": [
+    {
+      "name": "online original owner",
+      "rendererCreations": 1,
+      "registered": {
+        "geometries": 0,
+        "materials": 0,
+        "textures": 0
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "online reopened owner",
+      "rendererCreations": 0,
+      "registered": null,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "limitations": [
+    "Native file import is not published Browse/download acceptance.",
+    "Proof archive is explicitly uploaded separately from the world pack.",
+    "Scripted public inner controls; only outer Run is a trusted action.",
+    "Named native transaction faults are not real quota pressure.",
+    "Offline, endurance and performance are separate coordinator phases, not this online result."
+  ],
+  "files": [
+    {
+      "file": "fpv-combined-journey-8966-admitted-passed.json.gz",
+      "rawBytes": 6456634,
+      "rawSHA256": "fcf9d54eec002f5b1eb0cc7d48f746fb460fb27b4f7718bc751531f092dfd465",
+      "storedBytes": 1027254,
+      "storedSHA256": "cb0341392129042a695223182b44c6f91d0bd8aeaad0f809fbc6fa1b175128bd"
+    },
+    {
+      "file": "fpv-combined-journey-8966-admitted-passed.png",
+      "rawBytes": 128271,
+      "rawSHA256": "c6218e6242c15174c23e521d37532e8949af68fc66df0b96b0b515626ea33c55",
+      "storedBytes": 128271,
+      "storedSHA256": "c6218e6242c15174c23e521d37532e8949af68fc66df0b96b0b515626ea33c55"
+    },
+    {
+      "file": "fixture.json.gz",
+      "rawBytes": 47433,
+      "rawSHA256": "d7e0cb7c4b508f0641f05d57f2a85a4a2bf433f29911195744d618baa10c0776",
+      "storedBytes": 8962,
+      "storedSHA256": "373480a6dcfd62881dd82117a5764982b187977c8e3b15e6223f5fd3927b4397"
+    }
+  ],
+  "restore": "gzip -dc <file.json.gz> > <original-file.json>; compare rawBytes/rawSHA256"
+}

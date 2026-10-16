@@ -1,3 +1,4 @@
+import { t, localizedText, localizedMessage, formatNumber } from '../i18n/index.mjs';
 import { JOURNEY_MODES } from '../journey/catalog.mjs';
 import { exportJSONFile } from '../platform.mjs';
 
@@ -10,32 +11,48 @@ export function attachJourneyBackup({
 }) {
   const element = (tag, text, id) => {
     const node = doc.createElement(tag);
-    if (text) node.textContent = text;
+    if (text) localizedText(node, () => text);
     if (id) node.id = id;
     return node;
   };
   const dialog = element('dialog', '', 'journey-backup');
   dialog.className = 'journey-backup';
   dialog.setAttribute('aria-labelledby', 'journey-backup-title');
-  const title = element('h2', 'Keep your Journey', 'journey-backup-title');
+  const title = element(
+    'h2',
+    localizedMessage('interface:keepYourJourney'),
+    'journey-backup-title',
+  );
   const copy = element(
     'p',
-    'Export a local backup or inspect one before restoring. Restore adds missing progress; current clears and Continue positions win. It never replaces this attempt, awards scores or unlocks content.',
+    localizedMessage('interface:exportALocalBackupOrInspectOneBeforeRestoringRestore'),
   );
-  const exportButton = element('button', 'Export progress', 'journey-backup-export');
-  const label = element('label', 'Inspect Journey backup');
+  const exportButton = element(
+    'button',
+    localizedMessage('interface:exportProgress'),
+    'journey-backup-export',
+  );
+  const label = element('label', localizedMessage('interface:inspectJourneyBackup'));
   const input = element('input', '', 'journey-backup-file');
   input.type = 'file';
   input.accept = 'application/json,.json';
   label.append(input);
   const status = element(
     'p',
-    'Choose a backup to inspect. Nothing is restored automatically.',
+    localizedMessage('interface:chooseABackupToInspectNothingIsRestoredAutomatically'),
     'journey-backup-status',
   );
   status.setAttribute('role', 'status');
-  const apply = element('button', 'Restore inspected progress', 'journey-backup-apply');
-  const back = element('button', 'Back to missions', 'journey-backup-back');
+  const apply = element(
+    'button',
+    localizedMessage('interface:restoreInspectedProgress'),
+    'journey-backup-apply',
+  );
+  const back = element(
+    'button',
+    localizedMessage('interface:backToMissions'),
+    'journey-backup-back',
+  );
   for (const button of [exportButton, apply, back]) {
     button.type = 'button';
     button.className = 'button secondary';
@@ -51,8 +68,11 @@ export function attachJourneyBackup({
   doc.body.append(dialog);
   let revision = 0,
     inspected = null,
-    opener = null;
+    opener = null,
+    operation = null;
   function reset() {
+    operation?.abort();
+    operation = null;
     revision++;
     inspected = null;
     input.value = '';
@@ -64,18 +84,29 @@ export function attachJourneyBackup({
     opener?.focus({ preventScroll: true });
   }
   input.onchange = async () => {
+    operation?.abort();
+    const controller = new AbortController();
+    operation = controller;
     const file = input.files?.[0],
       ticket = ++revision;
     inspected = null;
     apply.disabled = true;
     if (!file) {
-      status.textContent = 'No backup selected. Progress is unchanged.';
+      localizedText(status, () => t('interface:noBackupSelectedProgressIsUnchanged'));
       return;
     }
     try {
-      if (file.size > 8 * 1024 * 1024) throw new Error('Backup exceeds the 8 MiB file limit.');
-      status.textContent = 'Inspecting the local backup…';
-      const { backup, merged } = profile.inspectBackup(await file.text());
+      if (file.size > 16 * 1024 * 1024)
+        throw new Error(t('interface:backupExceedsThe16MibFileLimit'));
+      localizedText(status, () => t('interface:inspectingTheLocalBackup'));
+      const raw = await file.text();
+      if (ticket !== revision || controller.signal.aborted) return;
+      const { backup, merged, pictures } = profile.inspectBackupAsync
+        ? await profile.inspectBackupAsync(raw, { signal: controller.signal })
+        : profile.inspectBackup(raw);
+      const addedPictures = pictures
+        ? pictures.records.length - (profile.pictures?.().records.length ?? 0)
+        : 0;
       if (ticket !== revision) return;
       const current = profile.snapshot();
       const counts = JOURNEY_MODES.map((mode) => {
@@ -89,46 +120,85 @@ export function attachJourneyBackup({
             Object.hasOwn(current.clears[mode], id) &&
             JSON.stringify(current.clears[mode][id]) !== JSON.stringify(receipt),
         ).length;
-        return `${mode}: ${added} missing clears, ${skips} missing skips, ${conflicts} receipt conflicts kept as current`;
+        return { mode, added, skips, conflicts };
       });
       inspected = backup;
       apply.disabled = false;
-      status.textContent = `${counts.join('. ')}. Existing Continue positions are kept; an empty position may be restored. Unknown mission IDs are retained for other editions. Restore is still required.`;
+      localizedText(status, () =>
+        t('interface:journeyBackup.inspectionSummary', {
+          counts: counts
+            .map(({ mode, added, skips, conflicts }) =>
+              t('interface:journeyBackup.modeCounts', {
+                mode: t(`interface:journeyBackup.mode.${mode}`),
+                added: formatNumber(added),
+                skips: formatNumber(skips),
+                conflicts: formatNumber(conflicts),
+              }),
+            )
+            .join(' '),
+          count: addedPictures,
+          pictures: formatNumber(addedPictures),
+        }),
+      );
     } catch (error) {
       if (ticket === revision)
-        status.textContent = `Cannot inspect: ${error.message} Progress is unchanged.`;
+        localizedText(status, () =>
+          t('interface:journeyBackup.inspectFailed', { error: error.message }),
+        );
     }
   };
   apply.onclick = async () => {
     if (!inspected) return;
+    operation?.abort();
+    const controller = new AbortController();
+    operation = controller;
     const backup = inspected,
       ticket = revision;
     inspected = null;
+    // Disabling the focused action drops native keyboard focus to the page.
+    // Hand it off only during this deliberate activation, never after saving.
+    if (dialog.open && doc.activeElement === apply) back.focus();
     apply.disabled = true;
     try {
-      profile.restore(backup);
+      const restored = profile.restoreAsync
+        ? await profile.restoreAsync(backup, { signal: controller.signal })
+        : (profile.restore(backup), null);
+      if (ticket !== revision || controller.signal.aborted) return;
       onRestore();
       const durable = await profile.flush();
       if (ticket !== revision) return;
-      status.textContent = durable
-        ? 'Merged and saved locally. Current attempt and existing progress are unchanged; missing records were added.'
-        : 'Merged in this session only. Storage failed; export now or use Retry save. This attempt is unchanged.';
+      localizedText(status, () =>
+        durable
+          ? restored?.performance?.durable === false
+            ? t(
+                restored.performance.saveUnconfirmed
+                  ? 'interface:journeyBest.backupUnconfirmed'
+                  : 'interface:journeyBest.backupPartial',
+              )
+            : t('interface:mergedAndSavedLocallyCurrentAttemptAndExistingProgressAre')
+          : t('interface:mergedInThisSessionOnlyStorageFailedExportNowOr'),
+      );
     } catch (error) {
       if (ticket === revision)
-        status.textContent = `Restore failed: ${error.message}. Existing progress is retained.`;
+        localizedText(status, () =>
+          t('interface:journeyBackup.restoreFailed', { error: error.message }),
+        );
     }
   };
   exportButton.onclick = async () => {
     const ticket = revision;
     try {
       const result = await exportFile(JSON.parse(profile.export()), profile.backupFilename);
-      if (ticket === revision) status.textContent = result.message;
+      if (ticket === revision) localizedText(status, () => result.message);
     } catch (error) {
       if (ticket === revision)
-        status.textContent = `Export failed: ${error.message}. Your progress remains in this session.`;
+        localizedText(status, () =>
+          t('interface:journeyBackup.exportFailed', { error: error.message }),
+        );
     }
   };
   back.onclick = close;
+  dialog.addEventListener('close', reset);
   dialog.addEventListener('cancel', (event) => {
     if (event.target === dialog) {
       event.preventDefault();
@@ -139,7 +209,9 @@ export function attachJourneyBackup({
     open(origin = doc.activeElement) {
       reset();
       opener = origin;
-      status.textContent = 'Choose a backup to inspect. Nothing is restored automatically.';
+      localizedText(status, () =>
+        t('interface:chooseABackupToInspectNothingIsRestoredAutomatically'),
+      );
       dialog.showModal();
       exportButton.focus({ preventScroll: true });
     },

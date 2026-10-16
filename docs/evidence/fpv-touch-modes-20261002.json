@@ -1,0 +1,13 @@
+{
+  "format": "FPVModeChoiceFunctionalProbe.v1",
+  "sourceSha256": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+  "passed": true,
+  "admittedLessonModePairs": 116,
+  "skillSelfLevelUnscored": 16,
+  "scoredSkillSelfLevelRejected": 16,
+  "authoredModeIdenticalStateAndIdentityAtEveryTick": {
+    "lessons": 58,
+    "ticks": 60
+  },
+  "scope": "Functional model boundary/state comparison, not new unit coverage, human touch acceptance or full demonstration replay"
+}

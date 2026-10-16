@@ -1,0 +1,73 @@
+{
+  "format": "ThemePickerStudioMergedOptionalPackageEvidence.v1",
+  "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/bundle-optional-practice.mjs --out /private/tmp/theme-picker-studio-merged-20261003-optional --packages civilian-flight,civilian-fpv,fpv-worlds",
+  "exitCode": 0,
+  "output": "/private/tmp/theme-picker-studio-merged-20261003-optional",
+  "version": "v0.142.4",
+  "sourceRevision": "83181816a50778bae92c86f7eb7a182f26c228f7",
+  "sourceTree": "c51b2380201729811949b802f4c7cc8da8b3547a",
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "publicEligible": false,
+  "envelopeSha256": "9eb87ac31bf839be676a5289aadde3438af9ce50d9b1ed67115c190683507712",
+  "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+  "measurement": "Uncompressed archive members, including manifest and source inventory metadata.",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "revision": "b6a9e0e252405519494353aeff25fdc1ea73efe89cce65b9c183f345008fb472",
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      },
+      "runtimeFiles": 35,
+      "runtimeBytes": 546048,
+      "runtimeSpareFiles": 29,
+      "runtimeSpareBytes": 7842560,
+      "sourceFiles": 37,
+      "sourceBytes": 569611,
+      "sourceSpareFiles": 27,
+      "sourceSpareBytes": 7818997
+    },
+    {
+      "id": "civilian-fpv",
+      "revision": "e6baf7b4a939e2892f9bb0018e28e94203f65bd08ac57480e6e20425afd4a4b2",
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      },
+      "runtimeFiles": 67,
+      "runtimeBytes": 4215454,
+      "runtimeSpareFiles": 5,
+      "runtimeSpareBytes": 4173154,
+      "sourceFiles": 69,
+      "sourceBytes": 4243711,
+      "sourceSpareFiles": 3,
+      "sourceSpareBytes": 4144897
+    },
+    {
+      "id": "fpv-worlds",
+      "revision": "fdb622469e3202f7d8c96c96256a13cfae802d7868f880239a3324efbd5787e7",
+      "limits": {
+        "files": 104,
+        "bytes": 16777216
+      },
+      "runtimeFiles": 102,
+      "runtimeBytes": 14550348,
+      "runtimeSpareFiles": 2,
+      "runtimeSpareBytes": 2226868,
+      "sourceFiles": 104,
+      "sourceBytes": 14583783,
+      "sourceSpareFiles": 0,
+      "sourceSpareBytes": 2193433
+    }
+  ],
+  "worldSuite": {
+    "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node --test game/test/fpv-world-appearance-ui.test.mjs",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "tap": "post-merge-world-tests.tap"
+  }
+}

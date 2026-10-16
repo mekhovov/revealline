@@ -1,0 +1,37 @@
+{
+  "format": "archive57-actual-acceptance-context.v1",
+  "status": "BOUND_NOT_PUBLIC_ACCEPTANCE",
+  "requestSha256": "3df3a6e6dcbfecaf14693e6ee2ea79a88eafc410ea9b7b801cc3a05665f08994",
+  "archiveCommit": "de23f0600a8410d0060f2bbcc1887bfb37d049a0",
+  "archiveTree": "5d00558b78f917cd7bb40d718fbcf0ef55b2ed86",
+  "productionRunId": 35810246159,
+  "auditHead": "e7004b43caf3e3906887410d7403efdd01b16068",
+  "auditRunId": 35810397541,
+  "sourcePins": [
+    [
+      "auditor.py",
+      "audit/http-tools/http_audit.py",
+      "0edc142394e6ddedd3953e490c35c5815aadac18487913d561349d241a60e21b"
+    ],
+    [
+      "audit_binding.py",
+      "audit/http-tools/audit_binding.py",
+      "cf1dbd0599ac654f14bbebee5ee03b1cad518cf1b6fefe12f28690662d6d3f29"
+    ],
+    [
+      "execution-request.json",
+      "audit/execution-request.reviewed.json",
+      "3df3a6e6dcbfecaf14693e6ee2ea79a88eafc410ea9b7b801cc3a05665f08994"
+    ],
+    [
+      null,
+      ".github/workflows/deploy.yml",
+      "4cb1646b097a371b59324dc0d5c7328160e9886d4ed5f0b59dc163c695ae55bb"
+    ]
+  ],
+  "artifact": {
+    "id": 10729507285,
+    "bytes": 321490,
+    "sha256": "026d7a09f1cf22e2267319f7fdbefaa7f4ea35e8fd4adbc77b9e083fb866351f"
+  }
+}

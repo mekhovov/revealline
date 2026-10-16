@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-09-23T04:09:30.875Z",
+  "releaseId": 394259144,
+  "version": "v0.89.0",
+  "tagObject": "08e1aeb0aa8b0a02e3ac535f00f62dc907bdf9f3",
+  "assets": [
+    [
+      582791010,
+      "distribution.zip",
+      591098295,
+      "sha256:afabe1075b6c2bbdc9c1aae98ffbfa462a8a3f1b2478ae36aeac65d60afac622",
+      "uploaded"
+    ],
+    [
+      582785900,
+      "distribution.zip.sha256",
+      83,
+      "sha256:43982112a0a25a50f6606c609319ac390e7ca55c37aa65e428740094d081d368",
+      "uploaded"
+    ],
+    [
+      582785899,
+      "manifest.json",
+      197455,
+      "sha256:397d8fd8f1ab32de6c4d1cfe905a3e3a161691ff8b488ac74c84d9171cae572a",
+      "uploaded"
+    ],
+    [
+      582785898,
+      "qualification-evidence-record.json",
+      1987,
+      "sha256:8b8d7382be646b391b9e3bce021fdf581b147def810c4ca7c3fd0c6b8b0f356a",
+      "uploaded"
+    ],
+    [
+      582785897,
+      "release.json",
+      465,
+      "sha256:4d6896382e916edf3b5cf73fde8f59cabc7e3ecd0d93bd77708e904e780543c8",
+      "uploaded"
+    ],
+    [
+      582785901,
+      "source-qualification-evidence.zip",
+      1075449,
+      "sha256:cd26c5d878cd23b971913c5b56c632aa429bbf0fb72c1aa956b778d47d0b9383",
+      "uploaded"
+    ],
+    [
+      582785909,
+      "source-qualification.json",
+      14169,
+      "sha256:e2a149840ab107913873c562d4486bb81877427aa9fd1ad5776541b0355eb373",
+      "uploaded"
+    ],
+    [
+      582789937,
+      "source.tar",
+      1622640640,
+      "sha256:d382f64d6ac256d42fbfd2229dc80f19d2e3cf570545531f3dce79431a3e6ba8",
+      "uploaded"
+    ],
+    [
+      582785913,
+      "verification.json",
+      1915,
+      "sha256:68043302042cdfbd7411db50a9e500d8678907d8a176d3c9eacba2e561825a04",
+      "uploaded"
+    ]
+  ],
+  "scope": "Original published release/tag/all nine asset identities unchanged; policy/hash preservation, not a GitHub immutable flag."
+}

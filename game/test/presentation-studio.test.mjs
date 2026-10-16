@@ -89,7 +89,7 @@ test('a complete required collection can retain separate compact edit revisions'
   assert.deepEqual(next.themes.at(-1).bindings, {});
   assert.deepEqual(resolvePresentation(next).bindings, bindings);
   assert.equal(resolvePresentation(next).tokens.amber, '#ffcc00');
-  assert.equal(JSON.stringify(next).length < 1024 * 1024, true);
+  assert.equal(new TextEncoder().encode(JSON.stringify(next)).length < 1024 * 1024, true);
   assert.deepEqual(next.themes.slice(0, -1), accepted.themes);
 });
 

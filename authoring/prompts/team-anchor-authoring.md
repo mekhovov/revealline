@@ -1,0 +1,5 @@
+# Team relay-anchor variation
+
+Create original available/captured relay-anchor decorations for Reveal Line's selected pixel FPV collection. Output separate 24×24 transparent PNGs for `team.anchor.available` and `team.anchor.captured`. Use the resolved palette and crisp pixel clusters; keep a centered pivot (0.5, 0.5), all pixels inside the frame, and a quiet center. Do not bake letters, numbers, captured checkmarks, text, logos, blur or glow. The runtime owns the fixed square and readable labels, and artwork cannot change capture or collision behavior. These are relay anchors, not pickups or Support icons.
+
+Supply original sources, prepared files, provenance and rights. In Asset Studio, add missing Team anchor slots explicitly, upload/stage each frame, and inspect Native size plus Team / Relay Yard / Initial field and Anchors captured. Verify both states over revealed light/dark art, reduced effects and compact canvases; labels must not cover the decoration. Save, export, import and verify exact bytes/history. Record evidence before marking reviewed. Do not claim deployment or whole-Team coverage from this asset edit.

@@ -1,12 +1,49 @@
 # RevealLine delivery plan
 
-## Status reconciliation — 22 September 2026
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
 
-The [current remaining-work checkpoint](ux-delivery-status-20260922.md) records public v0.82.0, the qualifying v0.82.1 candidate and the remaining feature queue. This update does not accept unfinished phases or qualify draft PRs. Each candidate requires its final source/version, immutable release and public verification.
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
 
-The dated snapshots below are retained verbatim. Their earlier “current” and “next” descriptions are historical; use the checkpoint above and its linked live PRs for the newer delivery state.
+> **Current status:** use the [29 September register](plan-status-2026-09-29.md)
+> for completed source work, remaining implementation and evidence limits.
+> Dated versions and queues below retain their historical scope; source work
+> is not automatically public delivery.
 
-## Historical checkpoint retained below
+## Current instruction — 29 September 2026
+
+Continue **A current characters/reliable play → B optional encounter guidance →
+C one Ukrainian/FPV cohort**, with independent implementation in parallel.
+The user explicitly deferred production review. Do not make production approval,
+physical-device qualification or the publishing queue prerequisites for source
+work. Keep focused correctness, compatibility and artifact-integrity checks;
+record extended qualification as **deferred, not passed**. C2's formal human
+study stays last. The [character plan](character-game-feel-plan.md) describes
+scope and the existing PR757/761 batches preserve related changes. Publication
+remains with the single canonical publisher; no competing versions or approvals.
+
+## Historical integration checkpoint — 23 September 2026 (v0.85 delivery state)
+
+v0.85.0 recovery was published and publicly accepted at this cutoff. PR256 was then a draft retained-presentation successor rebased onto that accepted source; that integration did not allocate a release or accept its remaining qualification. The superseding [current plan](plan-status-2026-09-23.md) now controls release status and queue order. Each feature still requires final source/version, qualification and public verification.
+
+The earlier checkpoints below are retained as historical evidence, including the original [default Journey plan](default-journey-release.md). They do not describe the current publication queue.
+
+## Current priority — 2026-09-22 default Journey delivery
+
+The [six-hour default Journey release plan](default-journey-release.md) is the
+current delivery register. v0.82.0 was the accepted public baseline at start;
+v0.82.1 has passed exact-source qualification and is being published. The one
+successor, reserved v0.83.0, makes the existing 91 Solo/Versus and 12 Team missions
+the ordinary default while keeping explicit Legacy access. No new production,
+save migration or unrelated queued feature is on this critical path. The later
+approved Release B unified tagged selector follows A public acceptance immediately;
+queued recovery/Studio/presentation work follows B. See the current plan for scope
+and the7–11-hour B estimate.
+
+Earlier checkpoints below retain their original evidence and dates. Their “next”
+versions/order are historical, not the current publication queue. Full programme,
+human-balance, physical-device and comprehensive offline gates remain open.
 
 **Current public baseline, 20 September 2026: [v0.65.0 — imported-Team continuation](https://mekhovov.github.io/revealline/releases/v0.65.0/site/game/).** Its [scoped acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p07/v0650-public/README.md) covers imported pictures, earned-picture viewing, Next and Retry. Whole navigation, rewards, presentation and browser qualification remain incomplete.
 

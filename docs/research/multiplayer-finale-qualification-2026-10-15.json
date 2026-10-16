@@ -1,0 +1,109 @@
+{
+  "format": "revealline-bounded-finale-qualification.v1",
+  "date": "2026-10-15",
+  "sourceBase": "da0b0108206a0270b4b870e747f2d1bc0e6695cb",
+  "runtime": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "scope": {
+    "chapterFinales": 24,
+    "isolatedSuccessfulRoutes": 48,
+    "mixedRouteDuelMatches": 24,
+    "exactPublicRecorderReplays": 72,
+    "unfinishedMistakeCoreReplays": 4,
+    "pausedOpenCuts": 48,
+    "pausedFailureStates": 4
+  },
+  "sourceFiles": [
+    {
+      "path": "game/test/helpers/multiplayer-finale-qualification.mjs",
+      "sha256": "869d6e6ca15c230e98a3454b465171346d358d1d8c990147692c1687082f3fc6"
+    },
+    {
+      "path": "game/test/multiplayer-finale-strategies.test.mjs",
+      "sha256": "0b17c4293b0e987c7c72d7d5c8976604153595f1db1df34a97db125ebf0fd8b9"
+    },
+    {
+      "path": "game/test/multiplayer-finale-mistakes.test.mjs",
+      "sha256": "43bc77f509c2ef95c51b4124dea60098bb59186af7c80714390fdfa4f931a9f8"
+    },
+    {
+      "path": "game/test/fixtures/multiplayer-expansion/finale-strategies.json",
+      "sha256": "052246a9f23ffddb91e1cf6b6cac07173a10dc6bd2f12463b7aa5a40347efda7"
+    },
+    {
+      "path": "game/test/fixtures/multiplayer-expansion/finale-mistakes.json",
+      "sha256": "c28612ae327549d32e28c1b78647e3cec63c0448956db912d45d16b5038bfa29"
+    },
+    {
+      "path": "scripts/discover-multiplayer-finale-strategies.mjs",
+      "sha256": "a383db0b6b1b936e3b64ab82ca4563fb840556b913c237afd73478bc096034c1"
+    },
+    {
+      "path": "scripts/discover-multiplayer-finale-recovery.mjs",
+      "sha256": "1ec0291abc6c123bea0216a7c1f9de38664f62ade0093216280f9bdafe585455"
+    }
+  ],
+  "tests": [
+    {
+      "suite": "finale-strategies",
+      "tests": 38,
+      "pass": 38,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 259093.658375,
+      "tapSHA256": "3cf7eb5c09c85a00db79c98ecfef92c0c4e5b8517513349bf0adf765dbaf6ae4"
+    },
+    {
+      "suite": "finale-mistakes",
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 107094.565583,
+      "tapSHA256": "61454e8de367ba1d7067f318256aef4f31f014ccabbe9eefd195aa2bbbba66c6"
+    },
+    {
+      "suite": "existing-pilot-strategies-and-interactions",
+      "tests": 33,
+      "pass": 33,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 67025.689708,
+      "tapSHA256": "06cf76f0d2edb630e3b502388b75bed158f0acda097fccbf15ea00b5084188a9"
+    }
+  ],
+  "earlierAttempts": [
+    {
+      "suite": "new finale strategies",
+      "outcome": "interrupted after detecting a fresh-state comparator defect",
+      "reason": "structuredClone erases the null prototype of the core loadout lookup; use an untouched owned fresh run for exact comparison."
+    },
+    {
+      "suite": "new finale mistakes",
+      "tests": 4,
+      "pass": 0,
+      "fail": 4,
+      "reason": "Public match export intentionally rejects unfinished rounds. Final tests assert that rejection and compare full direct core replay instead."
+    }
+  ],
+  "limitations": [
+    "Standard, seed17 only for new alternate and mistake routes. Duel Scout/Immediate/untimed-first-clear.",
+    "Same-runtime exact replay; hosted Ubuntu/x64/Node22 qualification remains separate.",
+    "Four mistake continuations remain running. No same-attempt recovery win found in 42 probes.",
+    "Spatial alternatives and risk events do not establish human balance, pacing or enjoyment. Human playtesting remains waived.",
+    "No public delivery, native input, physical-controller, audio or device-performance acceptance."
+  ],
+  "totalTests": 75,
+  "formatting": "focused Prettier passed",
+  "lint": "focused ESLint passed",
+  "whitespace": "git diff --check passed"
+}

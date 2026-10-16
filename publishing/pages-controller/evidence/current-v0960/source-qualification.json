@@ -1,0 +1,421 @@
+{
+  "actualCheckoutCommit": "781e1c3b82236003bf8600a2cac0b5022e4298c1",
+  "actualCheckoutTree": "37030950049bdc752eff86cb9664b12e6f74c0c0",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "evidencePins": [
+    {
+      "bytes": 22944,
+      "path": "inspection-authorities/publishing/utility/assemble_waived_qualification.py",
+      "sha256": "4d5c06bb43f83b0816ab7c15924839ebf3e635382cbdd6c70770d9ae21604b9b"
+    },
+    {
+      "bytes": 26552,
+      "path": "inspection-authorities/publishing/utility/inspect_qualified_artifact.py",
+      "sha256": "ba42416b30c920b7dff98e0f1d90878162d1b74b1381e51d555bfa644e949398"
+    },
+    {
+      "bytes": 40977,
+      "path": "inspection-authorities/publishing/utility/release_artifact.py",
+      "sha256": "2df9b3b6a5f25ba96b4250288dcf3facde219c1cf47a0f97f3010fe5f2582859"
+    },
+    {
+      "bytes": 586,
+      "path": "inspection-authorities/publishing/utility/release_limits.py",
+      "sha256": "e0bb0cd13f814f35ec5c1530ac81d28d4eb90fca8f313cad83d54af286336bcc"
+    },
+    {
+      "bytes": 11761,
+      "path": "inspection-authorities/publishing/utility/test_assemble_waived_qualification.py",
+      "sha256": "b6b6eb5f17f62179e26e3c9f6a92a006cd0bf4e86ca88c856f171c5bcfdf0b79"
+    },
+    {
+      "bytes": 37637,
+      "path": "inspection-authorities/publishing/utility/test_release_artifact.py",
+      "sha256": "b29f54f22be8b8e85468c53a0c1a9e9fc8cc656984349dd0b2b11afae611291e"
+    },
+    {
+      "bytes": 12712,
+      "path": "inspection-authorities/publishing/utility/test_upload_diagnostics.py",
+      "sha256": "14a87102a09eabeba741d19e7839b9320ac5b634bc2d790baf14ebb7f8687045"
+    },
+    {
+      "bytes": 15332,
+      "path": "inspection-authorities/publishing/utility/test_upload_distribution.py",
+      "sha256": "55be05c463e26a320265bb5d89175ce82cf003add64818cef9fc4485e9882017"
+    },
+    {
+      "bytes": 14451,
+      "path": "inspection-authorities/publishing/utility/test_upload_source.py",
+      "sha256": "d304013e9d8ba2a514c0034ebd35e32a211b595e4faaf1bdb5c3b93cd1955d79"
+    },
+    {
+      "bytes": 13770,
+      "path": "inspection-authorities/publishing/utility/test_waived_qualification.py",
+      "sha256": "6432bc3655a59870100747be4d088c0114b9bd0f93f7711e056fa910796064ad"
+    },
+    {
+      "bytes": 20058,
+      "path": "inspection-authorities/publishing/utility/upload_distribution.py",
+      "sha256": "a92440f0a82c04f66453de0f5110003b98fb6b68e71809cac8b0ccc00be3cf39"
+    },
+    {
+      "bytes": 19932,
+      "path": "inspection-authorities/publishing/utility/upload_source.py",
+      "sha256": "993fcc897682277998df54c40dee83335d9d4b6746611084731c6af63abac6e6"
+    },
+    {
+      "bytes": 10600,
+      "path": "inspection-authorities/publishing/utility/verify_frozen_offline.py",
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    {
+      "bytes": 728,
+      "path": "inspection/api/001.json",
+      "sha256": "fb3e03215b3e07266b87a4ae75fe69f2c586cfa7b8c05ae9d9209b82cd4613be"
+    },
+    {
+      "bytes": 304,
+      "path": "inspection/api/001.request.json",
+      "sha256": "91ae8c07f664622d76249ed0577f1f9053d90f6882c3b18774c1cf93e98a049b"
+    },
+    {
+      "bytes": 12211,
+      "path": "inspection/api/002.json",
+      "sha256": "e5a49ef072365e444295c1cf980d1c788c665ed5b1da07c58b430576edb0fb75"
+    },
+    {
+      "bytes": 301,
+      "path": "inspection/api/002.request.json",
+      "sha256": "f516419d1c52f89bbc470b5093cfe174b8d23261c3f0416f3ac7c5fa77191d60"
+    },
+    {
+      "bytes": 8884,
+      "path": "inspection/api/003.json",
+      "sha256": "4a63cc0a2498ae007a32717333c1f31571f4a8677628559bf5c6113052f80bbb"
+    },
+    {
+      "bytes": 325,
+      "path": "inspection/api/003.request.json",
+      "sha256": "3b87046c7e308115f650a6f42d31dc3023517dc4096ef5bdbbd7f0b037152970"
+    },
+    {
+      "bytes": 728,
+      "path": "inspection/api/004.json",
+      "sha256": "fb3e03215b3e07266b87a4ae75fe69f2c586cfa7b8c05ae9d9209b82cd4613be"
+    },
+    {
+      "bytes": 304,
+      "path": "inspection/api/004.request.json",
+      "sha256": "a855b581bddb2332222b7f6cb2ee18fe044f5eb3006d4bd27f10a58cdf2a92e0"
+    },
+    {
+      "bytes": 12211,
+      "path": "inspection/api/005.json",
+      "sha256": "e5a49ef072365e444295c1cf980d1c788c665ed5b1da07c58b430576edb0fb75"
+    },
+    {
+      "bytes": 301,
+      "path": "inspection/api/005.request.json",
+      "sha256": "3b5a5f506359ad46e0e7720633f1259077577ac0e63320d78319a0d501cf57d3"
+    },
+    {
+      "bytes": 8884,
+      "path": "inspection/api/006.json",
+      "sha256": "4a63cc0a2498ae007a32717333c1f31571f4a8677628559bf5c6113052f80bbb"
+    },
+    {
+      "bytes": 325,
+      "path": "inspection/api/006.request.json",
+      "sha256": "3cc112df11e71716af16538df08a94b115d6fc28ab71055dd747321f5c65db54"
+    },
+    {
+      "bytes": 811,
+      "path": "inspection/artifact-authority.json",
+      "sha256": "13f131aa4ff8554cbefde038315ed33d3a52cdb58aa4127c01b3d1c710f54bf5"
+    },
+    {
+      "bytes": 394,
+      "path": "inspection/binding.json",
+      "sha256": "c811d730aedbd114b9fe357ee770015069bee05baf231ece7a3005fde3014442"
+    },
+    {
+      "bytes": 3378,
+      "path": "inspection/execution.json",
+      "sha256": "0a410dcae24741e78994ab735d5ccaa74fa1e914c26dd28c1c1c9649c94a1e78"
+    },
+    {
+      "bytes": 143,
+      "path": "inspection/frozen-offline-review/originals/game/build-info.json",
+      "sha256": "33c7f8f4a4134be5f589028f6bf662a6587e28e4e88cc787fda36bf12f51a9a5"
+    },
+    {
+      "bytes": 106189,
+      "path": "inspection/frozen-offline-review/originals/game/index.html",
+      "sha256": "a1fb09ff2058fd453ef9de0b36686c17e8bf352663cef9bb5cf2d05de64ee146"
+    },
+    {
+      "bytes": 197335,
+      "path": "inspection/frozen-offline-review/originals/offline-cache.json",
+      "sha256": "4c3baf4b2c81ee5e5932888ad728f6972e271a9f8cd065b917916352ede1b158"
+    },
+    {
+      "bytes": 172715,
+      "path": "inspection/frozen-offline-review/originals/service-worker.js",
+      "sha256": "0c3e84164637c02d9a3e263003e2047a90a2b98837d03e564c88ee4bddcc8cd4"
+    },
+    {
+      "bytes": 3412,
+      "path": "inspection/frozen-offline-review/review.json",
+      "sha256": "375c30070194cdbb5ba1332ce27c033adc7d2308722a77bf9e30cb2b4eb14599"
+    },
+    {
+      "bytes": 5052,
+      "path": "inspection/inspection.log",
+      "sha256": "cbd7adc11e9b4890c813d17c20d31afb6cae2a33655fe62241bc927bce248d0b"
+    },
+    {
+      "bytes": 194,
+      "path": "inspection/offline-review.log",
+      "sha256": "58a9ac93a496d3e50c2f1d9f555420301aa9e4650e7f2e9f3314e86ad2ad530f"
+    },
+    {
+      "bytes": 594,
+      "path": "inspection/qualified-artifact-original.download.json",
+      "sha256": "29eb3ba066fbd6ac488cfbfd0f0071096ba1acb2b9926e2a923c8b79a72d1b04"
+    },
+    {
+      "bytes": 83,
+      "path": "inspection/qualified-artifact-verified/distribution.zip.sha256",
+      "sha256": "388f0071bc41f98ba54068523307a37c97f80366c27391c53ac1b8f61a3a98c2"
+    },
+    {
+      "bytes": 1915,
+      "path": "inspection/qualified-artifact-verified/inspection.json",
+      "sha256": "3f82f02be807b090b41dddd02eec6260b50a3c3bbfaa1405cbf46d3d65abe540"
+    },
+    {
+      "bytes": 203132,
+      "path": "inspection/qualified-artifact-verified/manifest.json",
+      "sha256": "567822ecca0103181b6f84de09fad9ba6def3d91bcb32d1b5c983499b8adfcf4"
+    },
+    {
+      "bytes": 465,
+      "path": "inspection/qualified-artifact-verified/release.json",
+      "sha256": "864063a14659e586594ff70794061834d76490c1f712593115c0685e4ac2f19a"
+    },
+    {
+      "bytes": 548,
+      "path": "inspection/result.json",
+      "sha256": "17a478d3c8662c037694177fd21b1e10e72d1a4ba420ad450cfab4b2293e87b5"
+    },
+    {
+      "bytes": 6781,
+      "path": "inspection/retained-manifest.json",
+      "sha256": "cf1173f496e14851700700789878e7afd877682529e520c3e7e712c57a6deef4"
+    },
+    {
+      "bytes": 159,
+      "path": "inspection/source-after.json",
+      "sha256": "1519be65a1b6a725b53ba58554962d95e5660329e74904cd2733ffffd2458bc7"
+    },
+    {
+      "bytes": 159,
+      "path": "inspection/source-before.json",
+      "sha256": "1519be65a1b6a725b53ba58554962d95e5660329e74904cd2733ffffd2458bc7"
+    },
+    {
+      "bytes": 1547,
+      "path": "preparation/inputs.json",
+      "sha256": "01e5cbf3e62770bb56f3aa2c6c880f6d68015ca4c5db5d5a5e834637c5568188"
+    },
+    {
+      "bytes": 468,
+      "path": "preparation/pr-to-source.diff",
+      "sha256": "807a4d4732aa86f309a6e0d690c3ad2a0b7be93dbeaee71f5cefee72f804e332"
+    },
+    {
+      "bytes": 690,
+      "path": "preparation/source-equivalence.json",
+      "sha256": "b218de15afb2ab007f0837f719df7e3f16bb65ee2f825646a32c17774ff9f69b"
+    },
+    {
+      "bytes": 490,
+      "path": "publishing/test-policy.json",
+      "sha256": "b6887ba7f2b84a007b96de14fc867ac38ac8135d7c231c7ade7ebc52ba31704a"
+    },
+    {
+      "bytes": 6884,
+      "path": "runs/inspection/jobs.json",
+      "sha256": "89716332dd4a245904b0bb09acaad97f8d4418fa80450611853973f6cd5b71a5"
+    },
+    {
+      "bytes": 12211,
+      "path": "runs/inspection/run.json",
+      "sha256": "662421aa8d658381cbb6250f2f814c0a3e62bc3d71a0a144475e912456ad96e5"
+    },
+    {
+      "bytes": 8884,
+      "path": "runs/manual/jobs.json",
+      "sha256": "4a63cc0a2498ae007a32717333c1f31571f4a8677628559bf5c6113052f80bbb"
+    },
+    {
+      "bytes": 12211,
+      "path": "runs/manual/run.json",
+      "sha256": "e5a49ef072365e444295c1cf980d1c788c665ed5b1da07c58b430576edb0fb75"
+    },
+    {
+      "bytes": 8270,
+      "path": "runs/pr/jobs.json",
+      "sha256": "a90e5bb73feb59ddb7125a5f6a8102f104d5ca13fdfb22a31f34459e5da3f5a8"
+    },
+    {
+      "bytes": 12566,
+      "path": "runs/pr/run.json",
+      "sha256": "cd77e8929a1d175287f9206e0174b2a771ec4ce6d3402de5bd4f3ea4c863d7e4"
+    }
+  ],
+  "format": "revealline-source-qualification.v2",
+  "frozenArtifactCorroboration": {
+    "allInnerZipManifestBytesVerified": true,
+    "artifactId": 10765533490,
+    "frozenOfflineInventoryAndBindingsVerified": true,
+    "inputs": {
+      "checksum": {
+        "bytes": 83,
+        "path": "distribution.zip.sha256",
+        "sha256": "388f0071bc41f98ba54068523307a37c97f80366c27391c53ac1b8f61a3a98c2"
+      },
+      "inspection": {
+        "bytes": 1915,
+        "path": "verification.json",
+        "sha256": "3f82f02be807b090b41dddd02eec6260b50a3c3bbfaa1405cbf46d3d65abe540"
+      },
+      "manifest": {
+        "bytes": 203132,
+        "path": "manifest.json",
+        "sha256": "567822ecca0103181b6f84de09fad9ba6def3d91bcb32d1b5c983499b8adfcf4"
+      },
+      "releaseRecord": {
+        "bytes": 465,
+        "path": "release.json",
+        "sha256": "864063a14659e586594ff70794061834d76490c1f712593115c0685e4ac2f19a"
+      }
+    },
+    "inspectionRunId": 35896091020,
+    "runId": 35892776329,
+    "sourceTarGitBlobTypeModeAndPaxCommitVerified": true,
+    "wholeOriginalArtifactVerifiedBeforeQualification": true
+  },
+  "gates": [
+    {
+      "command": "npm run validate",
+      "gate": "validate",
+      "jobId": 107289100478,
+      "step": {
+        "conclusion": "success",
+        "name": "Validate source",
+        "number": 8,
+        "status": "completed"
+      }
+    },
+    {
+      "command": "npm run lint",
+      "gate": "lint",
+      "jobId": 107289100478,
+      "step": {
+        "conclusion": "success",
+        "name": "Lint source",
+        "number": 9,
+        "status": "completed"
+      }
+    },
+    {
+      "command": "npm run format:check",
+      "gate": "format",
+      "jobId": 107289100478,
+      "step": {
+        "conclusion": "success",
+        "name": "Check formatting",
+        "number": 10,
+        "status": "completed"
+      }
+    },
+    {
+      "command": "npm run format:native:check",
+      "gate": "native-format",
+      "jobId": 107289100478,
+      "step": {
+        "conclusion": "success",
+        "name": "Check native formatting",
+        "number": 11,
+        "status": "completed"
+      }
+    },
+    {
+      "command": "node --check authoring/motion-lab/app.js",
+      "gate": "motion-syntax",
+      "jobId": 107289100478,
+      "step": {
+        "conclusion": "success",
+        "name": "Check motion lab syntax",
+        "number": 12,
+        "status": "completed"
+      }
+    }
+  ],
+  "limits": [
+    "Automated test suites were waived, not passed. No test totals are asserted.",
+    "Retained API originals are operator-provided evidence, not cryptographic authentication.",
+    "Public deployment, browser acceptance, and release permission are not established."
+  ],
+  "ordinaryBuildCorroboration": {
+    "command": "npm run build",
+    "jobId": 107436352949,
+    "runId": 35936765953,
+    "scope": "Separately identified PR build; only proven unchanged build inputs.",
+    "sourceRevision": "83501f0260d1c63dbc230bc0bb7bd53af30f426a",
+    "sourceTree": "c92e3663ecddc4beb513e77b100ba711da4b1fd9",
+    "step": {
+      "conclusion": "success",
+      "name": "Build pull-request artifact",
+      "number": 7,
+      "status": "completed"
+    }
+  },
+  "qualifiedAt": "2026-09-23T17:08:34Z",
+  "releaseEligible": true,
+  "runId": 35892776329,
+  "sourcePR": 317,
+  "sourceRevision": "781e1c3b82236003bf8600a2cac0b5022e4298c1",
+  "sourceTree": "37030950049bdc752eff86cb9664b12e6f74c0c0",
+  "status": "qualified-with-test-waiver",
+  "testPolicy": {
+    "authorization": "explicit-user-request-20260922",
+    "mode": "waived",
+    "policyEvidence": {
+      "bytes": 490,
+      "path": "publishing/test-policy.json",
+      "sha256": "b6887ba7f2b84a007b96de14fc867ac38ac8135d7c231c7ade7ebc52ba31704a"
+    },
+    "reason": "Temporarily prioritize release publication at explicit user request; automated test suites are not run."
+  },
+  "tests": {
+    "counts": null,
+    "status": "waived"
+  },
+  "version": "v0.96.0",
+  "waiverEvidence": {
+    "jobsEvidence": {
+      "bytes": 8884,
+      "path": "runs/manual/jobs.json",
+      "sha256": "4a63cc0a2498ae007a32717333c1f31571f4a8677628559bf5c6113052f80bbb"
+    },
+    "runEvidence": {
+      "bytes": 12211,
+      "path": "runs/manual/run.json",
+      "sha256": "e5a49ef072365e444295c1cf980d1c788c665ed5b1da07c58b430576edb0fb75"
+    },
+    "runId": 35892776329
+  },
+  "workflowPath": ".github/workflows/qualify-release-source.yml"
+}

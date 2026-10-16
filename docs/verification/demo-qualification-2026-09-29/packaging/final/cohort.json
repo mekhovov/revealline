@@ -1,0 +1,35 @@
+[
+  {
+    "file": "game/test/boot-build.test.mjs",
+    "exitCode": 0,
+    "durationSeconds": 9.579464583017398,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  {
+    "file": "game/test/edition-runtime.test.mjs",
+    "exitCode": 0,
+    "durationSeconds": 3.079643125005532,
+    "tests": 9,
+    "pass": 9,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  {
+    "file": "scripts/test-offline-core-closure.mjs",
+    "exitCode": 0,
+    "durationSeconds": 0.20422583300387487,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+]

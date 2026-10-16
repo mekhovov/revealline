@@ -1,5 +1,5 @@
 import { createRun, releaseInputs } from './core/index.mjs';
-import { resolveVersions, versionsForCampaign } from './core/versions.mjs';
+import { resolveVersions, versionsForCampaign, isRunningEnemyLevel } from './core/versions.mjs';
 import {
   createRecorder,
   exportReplay,
@@ -11,7 +11,12 @@ import {
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
+import { matchRecordedGameplayTuning, recoverGameplayTuning } from './gameplay-tuning.mjs';
+import { prepareRunningEnemyLevel, runningEnemyBaseLevel } from './hunt/running-enemies.mjs';
 import { snapshotSessionVisualPin } from './session-visual-pin.mjs';
+import { snapshotSessionActorPin } from './session-actor-pin.mjs';
+import { ACTOR_APPEARANCE_PIN_BYTES } from './presentation/actor-appearance-pin.mjs';
+import { matchReplayInstalledRules } from './replay-installed-rules.mjs';
 import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
 import {
   FLIGHT_MEDIA_PINS_FORMAT,
@@ -25,10 +30,18 @@ export const CONTINUOUS_SESSION_FORMAT = 'xonix-session.v2';
 export const PRESENTATION_SESSION_FORMAT = 'xonix-session.v3';
 export const STORY_SESSION_FORMAT = 'xonix-session.v4';
 export const VISUAL_SESSION_FORMAT = 'xonix-session.v5';
-const pictureFormats = [PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT, VISUAL_SESSION_FORMAT];
+export const ACTOR_SESSION_FORMAT = 'xonix-session.v6';
+const pictureFormats = [
+  PRESENTATION_SESSION_FORMAT,
+  STORY_SESSION_FORMAT,
+  VISUAL_SESSION_FORMAT,
+  ACTOR_SESSION_FORMAT,
+];
 const continuationFormats = [CONTINUOUS_SESSION_FORMAT, ...pictureFormats];
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
-export const SESSION_IMPORT_BYTES = MAX_REPLAY_BYTES + 16384;
+const legacyImportBytes = MAX_REPLAY_BYTES + 16384;
+// Additional bounded metadata only; the embedded replay keeps its 32 MiB limit.
+export const SESSION_IMPORT_BYTES = legacyImportBytes + ACTOR_APPEARANCE_PIN_BYTES;
 const canonical = (v) =>
   v === null || typeof v !== 'object'
     ? JSON.stringify(v)
@@ -75,6 +88,12 @@ function envelope(candidate) {
     maxArray: MAX_REPLAY_TICKS,
     maxString: 262144,
   });
+  if (session.format !== ACTOR_SESSION_FORMAT)
+    required(
+      new TextEncoder().encode(typeof candidate === 'string' ? candidate : JSON.stringify(session))
+        .byteLength <= legacyImportBytes,
+      'JSON file exceeds its byte budget.',
+    );
   exactKeys(
     session,
     [
@@ -87,7 +106,10 @@ function envelope(candidate) {
       'replay',
       ...(continuationFormats.includes(session.format) ? ['continuation'] : []),
       ...(pictureFormats.includes(session.format) ? ['presentationPins'] : []),
-      ...(session.format === VISUAL_SESSION_FORMAT ? ['visualThemePin'] : []),
+      ...(session.format === VISUAL_SESSION_FORMAT || session.format === ACTOR_SESSION_FORMAT
+        ? ['visualThemePin']
+        : []),
+      ...(session.format === ACTOR_SESSION_FORMAT ? ['actorAppearancePin'] : []),
     ],
     'saved attempt',
   );
@@ -98,15 +120,24 @@ function envelope(candidate) {
       PRESENTATION_SESSION_FORMAT,
       STORY_SESSION_FORMAT,
       VISUAL_SESSION_FORMAT,
+      ACTOR_SESSION_FORMAT,
     ].includes(session.format),
     'Unsupported saved attempt format.',
   );
   if (continuationFormats.includes(session.format))
     session.continuation = continuationValue(session.continuation);
-  if (pictureFormats.includes(session.format)) {
+  const authoredJourneyPictures =
+    session.format === ACTOR_SESSION_FORMAT && session.presentationPins === null;
+  if (authoredJourneyPictures)
+    required(
+      session.visualThemePin === null,
+      'Authored Journey pictures cannot carry a Classic visual pin.',
+    );
+  if (pictureFormats.includes(session.format) && !authoredJourneyPictures) {
     session.presentationPins = snapshotFlightPresentationPins(session.presentationPins);
     required(
       session.format === VISUAL_SESSION_FORMAT ||
+        session.format === ACTOR_SESSION_FORMAT ||
         session.presentationPins.format ===
           (session.format === STORY_SESSION_FORMAT
             ? FLIGHT_MEDIA_PINS_FORMAT
@@ -119,18 +150,33 @@ function envelope(candidate) {
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
     'Saved attempt replay is missing.',
   );
+  if (session.format === ACTOR_SESSION_FORMAT)
+    required(
+      new TextEncoder().encode(JSON.stringify(session.replay)).byteLength <= MAX_REPLAY_BYTES,
+      'Saved replay exceeds its unchanged byte budget.',
+    );
   resolveVersions({
     levelVersion: session.replay.level?.version,
     ruleset: session.replay.ruleset,
     replayVersion: session.replay.version,
     checkpointAlgorithm: session.replay.checkpoint?.algorithm,
   });
-  if (session.format === VISUAL_SESSION_FORMAT)
+  if (
+    session.format === VISUAL_SESSION_FORMAT ||
+    (session.format === ACTOR_SESSION_FORMAT && session.visualThemePin !== null)
+  )
     session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
       pictures: session.presentationPins,
       campaignKey: session.campaignKey,
       themeId: session.themeId,
-      level: session.replay.level,
+      simulationLevel: session.replay.level,
+    });
+  if (session.format === ACTOR_SESSION_FORMAT)
+    session.actorAppearancePin = snapshotSessionActorPin(session.actorAppearancePin, {
+      pictures: session.presentationPins,
+      campaignKey: session.campaignKey,
+      themeId: session.themeId,
+      simulationLevel: session.replay.level,
     });
   return session;
 }
@@ -148,7 +194,9 @@ export function suspendSession({
   savedAt = new Date().toISOString(),
   continuation,
   presentationPins,
+  presentationLevel,
   visualThemePin,
+  actorAppearancePin,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -160,49 +208,95 @@ export function suspendSession({
   const intent = continuation === undefined ? undefined : continuationValue(continuation);
   const pictures =
     presentationPins === undefined ? undefined : snapshotFlightPresentationPins(presentationPins);
+  const tuning = recoverGameplayTuning(run.level);
+  const projected = !!(tuning || run.level.runningEnemies);
+  let pictureRevision = run.level.revision;
+  if (presentationLevel && projected) {
+    const matched = tuning
+      ? matchRecordedGameplayTuning(presentationLevel, run.level, { classes: run.classRecipes })
+      : prepareRunningEnemyLevel(presentationLevel, {
+          classes: run.classRecipes,
+          style: run.level.pursuit ? 'varied' : 'original',
+          generation: run.level.pursuit?.version ?? 'pursuit-goals.v1',
+        });
+    required(matched, 'Tuned picture source differs from this flight.');
+    const expected = createRun(matched, {
+      classId: run.classId,
+      classRecipes: run.classRecipes,
+    });
+    required(
+      canonical(expected.level) === canonical(run.level),
+      'Tuned picture source differs from this flight.',
+    );
+    pictureRevision = presentationLevel.revision;
+  }
+  if (pictures !== undefined && projected)
+    required(presentationLevel, 'Tuned pictures require their authored presentation level.');
   if (pictures !== undefined)
     required(
       intent !== undefined &&
         pictures.executionKey === campaignKey &&
         pictures.levelId === run.level.id &&
-        pictures.levelRevision === run.level.revision &&
+        pictures.levelRevision === pictureRevision &&
         presentationPicturePins(pictures).choices.some(
           (choice) => choice.identity.themeId === themeId,
         ),
       'Saved pictures require matching flight identity and explicit continuation.',
     );
   const visuals =
-    visualThemePin === undefined
+    visualThemePin === undefined || (actorAppearancePin !== undefined && visualThemePin === null)
       ? undefined
       : snapshotSessionVisualPin(visualThemePin, {
           pictures,
           campaignKey,
           themeId,
-          level: run.level,
+          simulationLevel: run.level,
+          presentationLevel: projected ? presentationLevel : run.level,
         });
+  let actors;
+  if (actorAppearancePin !== undefined) {
+    required(intent !== undefined, 'Saved actors require explicit continuation.');
+    actors = snapshotSessionActorPin(actorAppearancePin, {
+      pictures,
+      campaignKey,
+      themeId,
+      simulationLevel: run.level,
+      presentationLevel: projected ? presentationLevel : run.level,
+    });
+  }
   if (intent === undefined) {
     releaseInputs(run);
     recordRelease(recorder);
   }
   return {
     format:
-      visuals !== undefined
-        ? VISUAL_SESSION_FORMAT
-        : pictures !== undefined
-          ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
-            ? STORY_SESSION_FORMAT
-            : PRESENTATION_SESSION_FORMAT
-          : intent === undefined
-            ? SESSION_FORMAT
-            : CONTINUOUS_SESSION_FORMAT,
+      actors !== undefined
+        ? ACTOR_SESSION_FORMAT
+        : visuals !== undefined
+          ? VISUAL_SESSION_FORMAT
+          : pictures !== undefined
+            ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
+              ? STORY_SESSION_FORMAT
+              : PRESENTATION_SESSION_FORMAT
+            : intent === undefined
+              ? SESSION_FORMAT
+              : CONTINUOUS_SESSION_FORMAT,
     campaignKey,
     themeId,
     bodyId,
     runId,
     savedAt,
     ...(intent === undefined ? {} : { continuation: intent }),
-    ...(pictures === undefined ? {} : { presentationPins: pictures }),
-    ...(visuals === undefined ? {} : { visualThemePin: visuals }),
+    ...(pictures === undefined
+      ? actors !== undefined
+        ? { presentationPins: null }
+        : {}
+      : { presentationPins: pictures }),
+    ...(actors !== undefined
+      ? { visualThemePin: visuals ?? null, actorAppearancePin: actors }
+      : visuals === undefined
+        ? {}
+        : { visualThemePin: visuals }),
     replay: exportReplay(recorder, run),
   };
 }
@@ -219,7 +313,9 @@ export async function restoreSession(
   const installed = boundedJSON(campaign);
   const versions = versionsForCampaign(installed);
   required(
-    session.replay.ruleset === versions.ruleset,
+    session.replay.ruleset === versions.ruleset ||
+      (isRunningEnemyLevel(session.replay.level) &&
+        runningEnemyBaseLevel(session.replay.level).version === versions.levelVersion),
     'Saved attempt and installed campaign simulation versions differ.',
   );
   const mastery =
@@ -242,24 +338,36 @@ export async function restoreSession(
     throw new Error('Saved attempt verification failed. The current game is unchanged.');
   if (!['running', 'respawning'].includes(checked.state.status))
     throw new Error('This attempt has already ended.');
-  const level = installed.levels.find((l) => l.id === checked.state.levelId);
-  if (!level) throw new Error('Install the matching campaign pack before loading this attempt.');
-  const expected = createRun(level, {
-    ...session.replay.options,
-    classRecipes: installed.classRecipes,
+  const level = matchReplayInstalledRules({
+    campaign: installed,
+    replay: session.replay,
+    state: checked.state,
   });
-  if (
-    canonical(expected.level) !== canonical(checked.state.level) ||
-    canonical(expected.classRecipes ?? installed.classRecipes) !==
-      canonical(session.replay.options.classRecipes)
-  )
-    throw new Error('Saved rules differ from the installed campaign.');
-  if (pictureFormats.includes(session.format))
+  if (pictureFormats.includes(session.format) && session.presentationPins !== null)
     validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
       campaignKey,
       level,
       themeId: session.themeId,
+    });
+  if (
+    session.format === VISUAL_SESSION_FORMAT ||
+    (session.format === ACTOR_SESSION_FORMAT && session.visualThemePin !== null)
+  )
+    session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
+      pictures: session.presentationPins,
+      campaignKey,
+      themeId: session.themeId,
+      simulationLevel: checked.state.level,
+      presentationLevel: level,
+    });
+  if (session.format === ACTOR_SESSION_FORMAT)
+    session.actorAppearancePin = snapshotSessionActorPin(session.actorAppearancePin, {
+      pictures: session.presentationPins,
+      campaignKey,
+      themeId: session.themeId,
+      simulationLevel: checked.state.level,
+      presentationLevel: level,
     });
   const recorder = createRecorder(
     session.replay.level,

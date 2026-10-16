@@ -1,0 +1,160 @@
+{
+  "version": "v0.83.0",
+  "gameSource": "01b189f6427601a15cbb3eb1563b5f82eabbafa3",
+  "publisher": "e0f99c9642355aa3daf62ce3e551675b8c9d2e14",
+  "pagesRun": 35775874062,
+  "status": "PASS_SCOPED_PUBLIC_JOURNEYS",
+  "updatedAt": "2026-09-22T20:06:10.338392+00:00",
+  "entry": {
+    "requested": "https://mekhovov.github.io/revealline/",
+    "resolved": "https://mekhovov.github.io/revealline/releases/v0.83.0/site/game/",
+    "visibleVersion": "v0.83.0",
+    "visibleDefault": "NEW JOURNEY / 91 MISSIONS",
+    "profile": "existing returning test profile; no data reset",
+    "soloActualMissionButtons": 91,
+    "homeMissionsKeyboardTabReturn": true,
+    "BackRestoresMissionsFocus": true
+  },
+  "soloInitialPlay": {
+    "mission": "First return",
+    "keyboardCaptureAndWin": true,
+    "coverage": 34.3,
+    "score": 8160,
+    "lives": 3,
+    "time": "0:30",
+    "next": "Choose your share",
+    "visiblePreparationWhileResultsRetained": true,
+    "noSecondStart": true,
+    "scope": "session-only because another agent-ownedpublictab held saveWebLock; that owner laterclosedtesttabs193-196 normally. No locksteal/storageclear."
+  },
+  "versus": {
+    "requested": "https://mekhovov.github.io/revealline/game/couch/",
+    "resolved": "https://mekhovov.github.io/revealline/releases/v0.83.0/site/game/couch/index.html",
+    "actualMissionButtons": 91,
+    "defaultNewJourney": true,
+    "mission": "First return",
+    "keyboardP1Win": {
+      "coverage": 34.3,
+      "score": 8160,
+      "lives": 3
+    },
+    "P2": {
+      "coverage": 0,
+      "score": 0,
+      "lives": 3
+    },
+    "next": "Choose your share",
+    "noSecondStart": true,
+    "nextBothBoardsReset": true,
+    "Legacy": {
+      "explicitParameter": true,
+      "departureWarning": true,
+      "legacyOrchardStartPause": true,
+      "NewJourneyReturnRestoresChooseYourShare": true
+    },
+    "consoleWarningsErrors": [],
+    "temporaryTabClosed": true
+  },
+  "remaining": [],
+  "limits": [
+    "Existing returning test profile; no fresh-user data reset.",
+    "Native keyboard and browser-pointer checks are distinct from modeled controller/touch tests and physical hardware qualification.",
+    "Responsive checks are bounded visual spotchecks, not all accessibility states, touch controls or 200% zoom.",
+    "This is not a fresh exhaustive 546-configuration Journey playthrough per Solo/Versus mode.",
+    "Full human balance, physical controllers/touch, comprehensive offline and later campaign/arc endings remain separate qualification.",
+    "Current campaign pictures require network; public cold-offline readiness was not established.",
+    "Screenshots were inspected inline; this record does not invent screenshot artifact paths."
+  ],
+  "savedSolo": {
+    "mission": "Choose your share",
+    "newRootOwnedCaptureThenReload": true,
+    "coverage": 34.3,
+    "score": 8160,
+    "lives": 3,
+    "pausedAfterExplicitContinue": true,
+    "writerWarningResolvedByOwnerClosingTestTabs": true,
+    "noStorageReset": true
+  },
+  "legacyInstall": {
+    "chapter": "FPV Front \u00b7 Illustrated Pressure",
+    "advertisedDownload": "10.2 MiB",
+    "visibleDownloadVerificationCancellation": true,
+    "actualLaunch": "Orchard Crossing",
+    "target": 68,
+    "lives": 3,
+    "departureVerifiedSavedFlight": true,
+    "returnJourney": "Choose your share",
+    "restoredCoverage": 34.3,
+    "restoredScore": 8160,
+    "restoredLives": 3
+  },
+  "team": {
+    "requested": "https://mekhovov.github.io/revealline/game/couch/relay-rescue.html",
+    "resolved": "https://mekhovov.github.io/revealline/releases/v0.83.0/site/game/couch/relay-rescue.html",
+    "querylessDefaultJourney": true,
+    "actualJourneyMissionCards": 12,
+    "additionalStarterArenaCards": 2,
+    "firstMission": "Twin landings",
+    "directKeyboardPlay": true,
+    "bothCraftSeparateKeyboardInput": true,
+    "jointCutVisible": true,
+    "recoveryVisible": true,
+    "reviewedArtworkVisuallyRevealed": true,
+    "win": {
+      "coverage": 60.7,
+      "time": "2:18",
+      "reserves": 0
+    },
+    "next": {
+      "name": "Stepping exchange",
+      "retainedResultsDuringArtworkCheck": true,
+      "cancelAvailable": true,
+      "directPlayWithoutSecondStart": true,
+      "coverage": 0,
+      "target": 66,
+      "reserves": 2
+    },
+    "Legacy": {
+      "explicitJourneyParameter": true,
+      "protectedDiscardWarning": true,
+      "FirstConnectionAndRelayYardSelectable": true,
+      "NewJourneyReturnRetainedSteppingExchange": true
+    },
+    "consoleWarningsErrors": []
+  },
+  "playground": {
+    "entry": "Workshop > Mission playground",
+    "outerJourneyParameter": "whole-spatial-v5",
+    "previewURL": "https://mekhovov.github.io/revealline/releases/v0.83.0/site/game/?practice=1&revision=1",
+    "deliberateMission": "First Signal",
+    "target": 45,
+    "visiblePracticeNoCampaignRewards": true,
+    "actualStartPause": true,
+    "pauseClock": "0:07",
+    "previewViewport": "390x844",
+    "reportedWholeArenaVisible": true,
+    "reportedHorizontalOverflow": false,
+    "reportedPausedActionHeightsCssPx": [
+      48,
+      46,
+      48,
+      48,
+      48
+    ],
+    "consoleWarningsErrors": []
+  },
+  "responsiveSpotchecks": {
+    "scope": "browser viewport plus native keyboard; no hardware touch emulation claim",
+    "desktop": "1280x720 observed Team gameplay and catalogue",
+    "shortLandscape": "844x390 Team whole board and critical HUD; pause/results main actions visible",
+    "portrait": "390x844 Team whole board and critical HUD; pause actions visible; Playground actual preview whole board/no horizontal overflow",
+    "touchControlsQualified": false,
+    "viewportReset": true
+  },
+  "cleanup": {
+    "rootCreatedTabs347349Closed": true,
+    "versus348ClosedEarlier": true,
+    "noUserTabsClosed": true,
+    "noStorageClear": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "format": "revealline.native-offline-multiplayer-qualification.v1",
+  "recordedAt": "2026-10-15T05:09:49.656665+00:00",
+  "sourceRevision": "2a29a9dcfe7c61333c68dd80676205e67809e56c",
+  "packageVersion": "0.151.1",
+  "archiveSha256": "dfd07078fceeb2d376a14e8c27a8891977a043cc071da61357f3bb4020ad32bd",
+  "target": "This Mac, Codex in-app Chromium 155, native keyboard",
+  "origin": "http://127.0.0.1:8790",
+  "serverStoppedBeforeFirstTeamAndDuelNavigation": {
+    "checkedAt": "2026-10-15T05:04:16.272268+00:00",
+    "host": "127.0.0.1",
+    "port": 8790,
+    "serverConnectionRefused": true,
+    "packageSourceRevision": "2a29a9dcfe7c61333c68dd80676205e67809e56c"
+  },
+  "serverStillConnectionRefusedAfterChecks": true,
+  "download": {
+    "selected": [
+      "Solo Starter (required)",
+      "Team \u00b7 Horizon Harbors",
+      "Duel \u00b7 Horizon Harbors"
+    ],
+    "displayedTransferMiB": 112.0,
+    "finalVisibleStatus": "Your selected game is verified and ready offline. Recorded soundtracks remain optional.",
+    "standaloneAppIconInstalled": false
+  },
+  "team": {
+    "mission": "Harbor Handoff",
+    "goalPercent": 56,
+    "nativeKeysBothSeats": true,
+    "observedBankedTerritoryPercent": 0.7,
+    "laterPausedTerritoryPercent": 2.7,
+    "transition": {
+      "action": "Confirmed Skip; no clear awarded",
+      "destination": "Tidal Ladder",
+      "goalPercent": 60,
+      "reloadedOfflineAndStartedSameMission": true
+    }
+  },
+  "duel": {
+    "mission": "Harbor Gambit",
+    "goalPercent": 54,
+    "nativeKeysBothSeats": true,
+    "observedSeats": [
+      {
+        "player": 1,
+        "coveragePercent": 1.2,
+        "points": 280,
+        "lives": 3
+      },
+      {
+        "player": 2,
+        "coveragePercent": 1.3,
+        "points": 290,
+        "lives": 3
+      }
+    ],
+    "transition": {
+      "action": "Confirmed Skip; no clear awarded",
+      "destination": "Short Shore",
+      "goalPercent": 50,
+      "bothBoardsRunning": true
+    }
+  },
+  "screenshots": [
+    {
+      "path": "docs/verification/team-duel-desktop/package-offline-ready-native.png",
+      "sha256": "54453375f6eba524da9223254f06e5ec1e73d7158651414f7098e46a453344c7"
+    },
+    {
+      "path": "docs/verification/team-duel-desktop/package-team-offline-native.png",
+      "sha256": "6e232fdd8cc13910b896cdfd18fd9eddd919c7bc8ebc8fe6818892dc12e8ffd6"
+    },
+    {
+      "path": "docs/verification/team-duel-desktop/package-team-next-offline-native.png",
+      "sha256": "f971e7a6493784c352f4f8fd934a92b57a926f7d594022f93eb8ee6d10271b61"
+    },
+    {
+      "path": "docs/verification/team-duel-desktop/package-duel-offline-native.png",
+      "sha256": "c61a90861201dcfed3f4224eff0def243fdc53a9bcdf16b59e60d0ea7ac50783"
+    },
+    {
+      "path": "docs/verification/team-duel-desktop/package-duel-next-offline-native.png",
+      "sha256": "9f09aabe9f0026269f1cf3ab425b10f4b1e9bfcce7a0ca69cb1e0f5142f7add4"
+    }
+  ],
+  "limits": [
+    "Bounded native local-package play and confirmed-skip transitions, not completed mission wins.",
+    "Team reload preserved selected next mission; an in-flight checkpoint restoration is not claimed.",
+    "This does not qualify public deployment, cross-version update, Studio media round trips, storage-quota exhaustion, immutable release publication or native app capacity.",
+    "No network emulation or injected engine/browser state was used; the owned HTTP server was stopped and its port refused connections."
+  ],
+  "passed": true
+}

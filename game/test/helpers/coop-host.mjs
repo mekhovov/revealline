@@ -6,6 +6,7 @@ import { Document, Events, Element } from './couch-dom.mjs';
 import { mountCouch } from './couch-host.mjs';
 import { FIXED_DT } from '../../coop/core.mjs';
 import { installCoopPresentation, waitFor } from './coop-presentation-fixture.mjs';
+import { installActorAppearanceTransport } from './actor-appearance-transport.mjs';
 
 const html = await readFile(new URL('../../couch/relay-rescue.html', import.meta.url), 'utf8');
 const entrySource = await readFile(new URL('../../couch/team-entry.js', import.meta.url), 'utf8');
@@ -39,9 +40,10 @@ export async function page(
   t,
   {
     touch = false,
-    href = 'http://localhost/game/couch/relay-rescue.html',
+    href = 'http://localhost/game/couch/relay-rescue.html?journey=legacy',
     returnStorage = null,
     beforeImport = () => {},
+    beforeActorRequest,
     nativeFocus = false,
     nativeVisibility = false,
     onReady = () => {},
@@ -58,6 +60,25 @@ export async function page(
 ) {
   const doc = new Document(),
     win = new Events();
+  const createElement = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = createElement(tag);
+    // Native field-guide and combat sprite painters need an inert 2D boundary.
+    // Gameplay and briefing canvases receive observable contexts below; this
+    // does not claim browser rasterization or artistic qualification.
+    if (tag.toLowerCase() === 'canvas') {
+      const context = new Proxy(
+        { canvas: element },
+        {
+          get(target, key) {
+            return Object.hasOwn(target, key) ? target[key] : () => {};
+          },
+        },
+      );
+      element.getContext = () => context;
+    }
+    return element;
+  };
   doc.parentNode = win;
   mountCouch(doc, html);
   const $ = (id) => doc.getElementById(id);
@@ -194,7 +215,8 @@ export async function page(
   $('coop-canvas').getContext = () => context;
   const frames = new Map(),
     originals = new Map();
-  let nextFrame = 0;
+  let nextFrame = 0,
+    now = 0;
   const pads = [];
   const touchListeners = new Set();
   const touchQuery = {
@@ -210,6 +232,7 @@ export async function page(
     document: doc,
     window: win,
     navigator: { getGamepads: () => pads },
+    performance: { now: () => now },
     location: { href, assign: (url) => visits.push(url) },
     matchMedia: (query) => (query === '(any-pointer: coarse)' ? touchQuery : { matches: false }),
     requestAnimationFrame(callback) {
@@ -235,6 +258,9 @@ export async function page(
   t.after(() => {
     win.emit('pagehide');
     frames.clear();
+    // A retired fixture must not remain a connected document in the shared
+    // localization registry after its browser globals have been restored.
+    doc.documentElement.remove();
     for (const [key, original] of originals)
       if (original) Object.defineProperty(globalThis, key, original);
       else delete globalThis[key];
@@ -262,6 +288,11 @@ export async function page(
     },
   });
   const artwork = installCoopPresentation({ doc, win, install, ...presentation });
+  const actorTransport = installActorAppearanceTransport({
+    install,
+    baseURL: new URL('../presentation/compiled/', href),
+    beforeRequest: beforeActorRequest,
+  });
   const entryHost = {
     document: doc,
     addEventListener: (...args) => win.addEventListener(...args),
@@ -286,9 +317,30 @@ export async function page(
     assert.ok(frames.size);
   }
   if (!retainInitialDifficulty) $('coop-difficulty').value = 'standard';
-  const selectFile = (text, read = async () => text) => {
+  const fileReads = new WeakMap();
+  let blobReadersMocked = false;
+  const selectFile = (text, read = null) => {
     $('coop-pack-file').closest('details').open = true;
-    $('coop-pack-file').files = [{ size: Buffer.byteLength(text), text: read }];
+    const file = new Blob([text], { type: 'application/json' });
+    if (read) {
+      fileReads.set(file, read);
+      if (!blobReadersMocked) {
+        blobReadersMocked = true;
+        const nativeSlice = Blob.prototype.slice;
+        const nativeText = Blob.prototype.text;
+        t.mock.method(Blob.prototype, 'slice', function (...args) {
+          const owned = Reflect.apply(nativeSlice, this, args),
+            reader = fileReads.get(this);
+          if (reader) fileReads.set(owned, reader);
+          return owned;
+        });
+        t.mock.method(Blob.prototype, 'text', function () {
+          const reader = fileReads.get(this);
+          return reader ? reader() : Reflect.apply(nativeText, this, []);
+        });
+      }
+    }
+    $('coop-pack-file').files = [file];
     return $('coop-pack-file').onchange();
   };
   const choose = (id, value) => {
@@ -334,16 +386,16 @@ export async function page(
     press(key);
     doc.activeElement.emit('keyup', { key, code: key });
   };
-  let now = 0;
-  const tick = (count = 1) => {
+  const tick = (count = 1, elapsed = FIXED_DT * 1000) => {
     for (let index = 0; index < count; index++) {
       const [id, callback] = frames.entries().next().value;
       frames.delete(id);
-      callback((now += FIXED_DT * 1000));
+      callback((now += elapsed));
     }
   };
   return {
     artwork,
+    actorTransport,
     drawImages,
     earnedDrawImages,
     failNextEarnedPaint() {

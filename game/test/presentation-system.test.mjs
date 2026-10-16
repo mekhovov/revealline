@@ -498,7 +498,7 @@ test('portable bundles compile through the CLI without rewriting their asset byt
 test('every current base, playable archive, optional and external picture owner has a stable slot', async () => {
   const current = await inventoryCurrentPictures();
   assert.deepEqual(current, CURRENT_PICTURES);
-  assert.equal(CURRENT_PICTURES.length, 155);
+  assert.equal(CURRENT_PICTURES.length, 209);
   assert.equal(CURRENT_PICTURES.filter((row) => row.owner.themeId === 'fpv').length, 56);
   const doc = baseline();
   assert.deepEqual(

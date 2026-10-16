@@ -46,14 +46,17 @@ export function createCandidateVersusHost(
           candidate.levelId === manifest.level.id,
       );
       const theme = ownedThemes.find((candidate) => candidate.id === manifest.presentation.themeId);
+      required(theme, 'Candidate needs its exact authored theme.');
+      // A compiled null is an intentional greybox, never an unverified asset.
       required(
-        theme && manifest.background,
-        'Candidate needs its exact authored theme and original.',
+        manifest.background === null || typeof manifest.background === 'object',
+        'Candidate original must be a compiled asset revision or an explicit greybox.',
       );
       const row = freezeDesign({
         key: `${mission.id}/${entry.difficulty}`,
         chapter: mission.campaignTitle,
         mission,
+        ...(entry.campaignFeedback ? { campaignFeedback: entry.campaignFeedback } : {}),
         difficulty: entry.difficulty,
         level: entry.campaign.levels[index],
         classes: CLASSES,
@@ -74,6 +77,14 @@ export function createCandidateVersusHost(
     catalog,
     rows: Object.freeze(rows),
     owns: (row) => owned.has(row),
+    manifest(mission, difficulty = 'standard') {
+      if (!mission || catalog.find(mission.id) !== mission) return null;
+      return (
+        executions
+          .select(mission.packId, mission.campaignId, difficulty)
+          ?.manifests.find((item) => item.missionId === mission.levelId) ?? null
+      );
+    },
     visualThemeSelection(row, level) {
       if (!owned.has(row) || row.level !== level) return null;
       return Object.freeze({ entry: rawEntries.get(row), level });

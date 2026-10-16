@@ -14,6 +14,8 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
 import { attachJourneyBackup } from '../ui/journey-backup.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+import { t as translate } from '../i18n/index.mjs';
 
 const receipt = (runId = 'old-run') => ({
   runId,
@@ -57,6 +59,30 @@ test('Journey restore merges missing progress for every mode while current recei
     merged,
     'Preserve the v1 record shape for rollback',
   );
+});
+
+test('restore keeps the current receipt identity and merges the separate highest star result', async () => {
+  const current = createJourneyProfileStore({ backend: createJourneyBackend(managedIndexedDB()) });
+  const incoming = createJourneyProfileStore({ backend: createJourneyBackend(managedIndexedDB()) });
+  const complete = (runId, stars) => ({
+    type: 'complete',
+    mode: 'solo',
+    missionId: 'shared',
+    ...receipt(runId),
+    stars,
+  });
+  current.record(complete('current-run', 1));
+  incoming.record(complete('backup-run', 3));
+  await Promise.all([current.flush(), incoming.flush()]);
+  const exported = incoming.export();
+  current.restore(exported);
+  assert.equal(await current.flush(), true);
+  assert.equal(current.snapshot().clears.solo.shared.runId, 'current-run');
+  assert.equal(current.bestStars('solo', 'shared'), 3);
+  const before = current.export();
+  current.restore(exported);
+  assert.equal(await current.flush(), true);
+  assert.equal(current.export(), before, 'Restore is idempotent');
 });
 
 test('malformed, oversized, prototype and invented receipt backups cannot modify state', () => {
@@ -162,11 +188,12 @@ test('corrupt durable data is not replaced by a valid imported backup', async ()
   assert.equal(store.snapshot().clears.team.missing.runId, 'missing-run');
 });
 
-function dialogFixture() {
+function dialogFixture({ flush } = {}) {
   const document = new Document();
   document.createElement = (tag) => new SoloElement(document, tag);
   const memory = managedIndexedDB(),
     profile = createJourneyProfileStore({ backend: createJourneyBackend(memory) });
+  if (flush) profile.flush = flush;
   let restored = 0,
     exported = null;
   const api = attachJourneyBackup({
@@ -180,6 +207,7 @@ function dialogFixture() {
   });
   return {
     api,
+    document,
     profile,
     $: (id) => document.getElementById(id),
     restored: () => restored,
@@ -205,6 +233,71 @@ test('backup dialog inspects without mutation, restores only on Apply, and expor
   api.close();
   assert.equal($('journey-backup').open, false);
 });
+
+test('explicit Restore hands focus to Back before disabling Apply and never reclaims it later', async () => {
+  let finish;
+  const { api, document, $, profile } = dialogFixture({
+    flush: () => new Promise((resolve) => (finish = resolve)),
+  });
+  await profile.load();
+  api.open();
+  $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+  await $('journey-backup-file').onchange();
+  $('journey-backup-apply').focus();
+  const restoring = $('journey-backup-apply').onclick();
+  assert.equal($('journey-backup-apply').disabled, true);
+  assert.equal(document.activeElement, $('journey-backup-back'));
+  assert.equal(document.activeElement.disabled, false);
+  $('journey-backup-export').focus();
+  await waitFor(() => typeof finish === 'function');
+  finish(true);
+  await restoring;
+  assert.equal(document.activeElement, $('journey-backup-export'));
+  assert.match($('journey-backup-status').textContent, /saved locally/);
+});
+
+test('Restore does not take focus from another control or a later reopened dialog', async () => {
+  let finish;
+  const { api, document, $, profile } = dialogFixture({
+    flush: () => new Promise((resolve) => (finish = resolve)),
+  });
+  await profile.load();
+  api.open();
+  $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+  await $('journey-backup-file').onchange();
+  $('journey-backup-file').focus();
+  const restoring = $('journey-backup-apply').onclick();
+  assert.equal(document.activeElement, $('journey-backup-file'));
+  await waitFor(() => typeof finish === 'function');
+  api.close();
+  api.open();
+  finish(false);
+  await restoring;
+  assert.equal(document.activeElement, $('journey-backup-export'));
+  assert.match($('journey-backup-status').textContent, /Nothing is restored automatically/);
+});
+
+for (const failure of ['storage', 'restore']) {
+  test(`${failure} failure leaves the deliberate Restore successor enabled and focused`, async () => {
+    const { api, document, $, profile } = dialogFixture({ flush: async () => false });
+    await profile.load();
+    api.open();
+    $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+    await $('journey-backup-file').onchange();
+    if (failure === 'restore')
+      profile.restoreAsync = async () => {
+        throw new Error('Rejected fixture');
+      };
+    $('journey-backup-apply').focus();
+    await $('journey-backup-apply').onclick();
+    assert.equal(document.activeElement, $('journey-backup-back'));
+    assert.equal(document.activeElement.disabled, false);
+    assert.match(
+      $('journey-backup-status').textContent,
+      failure === 'storage' ? /Merged in this session only/ : /Restore failed: Rejected fixture/,
+    );
+  });
+}
 
 test('closed dialogs and later file choices invalidate in-flight inspection; failed imports leave no Apply', async () => {
   const { api, profile, $ } = dialogFixture();
@@ -235,3 +328,76 @@ test('closed dialogs and later file choices invalidate in-flight inspection; fai
   await $('journey-backup-apply').onclick();
   assert.equal(profile.snapshot().generation, 0);
 });
+
+test('closing the backup dialog aborts replay inspection and cannot expose a stale Apply action', async () => {
+  const { api, profile, $ } = dialogFixture();
+  let signal, finish;
+  const inspect = profile.inspectBackupAsync;
+  profile.inspectBackupAsync = async (raw, options) => {
+    signal = options.signal;
+    await new Promise((resolve) => {
+      finish = resolve;
+    });
+    return inspect(raw, options);
+  };
+  api.open();
+  $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+  const pending = $('journey-backup-file').onchange();
+  await waitFor(() => signal !== undefined);
+  api.close();
+  assert.equal(signal.aborted, true);
+  api.open();
+  finish();
+  await pending;
+  assert.equal($('journey-backup-apply').disabled, true);
+  assert.match($('journey-backup-status').textContent, /Nothing is restored automatically/);
+  assert.equal(profile.snapshot().generation, 0);
+});
+
+test('closing during asynchronous verification aborts restore before its completion callback', async () => {
+  const { api, profile, $, restored } = dialogFixture();
+  let signal, finish;
+  const restore = profile.restoreAsync;
+  profile.restoreAsync = async (raw, options) => {
+    signal = options.signal;
+    await new Promise((resolve) => {
+      finish = resolve;
+    });
+    return restore(raw, options);
+  };
+  api.open();
+  $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+  await $('journey-backup-file').onchange();
+  const pending = $('journey-backup-apply').onclick();
+  await waitFor(() => signal !== undefined);
+  api.close();
+  assert.equal(signal.aborted, true);
+  finish();
+  await pending;
+  assert.equal(restored(), 0);
+  assert.equal(profile.snapshot().generation, 0);
+});
+
+for (const saveUnconfirmed of [false, true])
+  test(`backup status separates saved clears from optional evidence (${saveUnconfirmed ? 'unconfirmed' : 'session only'})`, async () => {
+    const { api, profile, $, restored } = dialogFixture();
+    const restore = profile.restoreAsync;
+    profile.restoreAsync = async (...args) => ({
+      ...(await restore(...args)),
+      performance: { durable: false, saveUnconfirmed },
+    });
+    api.open();
+    $('journey-backup-file').files = [{ size: 1000, text: async () => JSON.stringify(backup()) }];
+    await $('journey-backup-file').onchange();
+    await $('journey-backup-apply').onclick();
+    assert.equal(restored(), 1);
+    assert.equal(
+      $('journey-backup-status').textContent,
+      translate(
+        saveUnconfirmed
+          ? 'interface:journeyBest.backupUnconfirmed'
+          : 'interface:journeyBest.backupPartial',
+      ),
+    );
+    assert.doesNotMatch($('journey-backup-status').textContent, /^Merged and saved locally/);
+  });

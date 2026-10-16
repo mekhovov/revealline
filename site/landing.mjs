@@ -1,3 +1,5 @@
+import { t, localizedText } from '../game/i18n/index.mjs';
+import { contentText } from '../game/i18n/content.mjs';
 import { attachAboutNavigation } from './about-navigation.mjs';
 import { preparePackCatalog, packLaunchHref } from '../game/content-launch.mjs';
 import { archivedPlayHrefFromCatalog, releaseHistoryHref } from './release-links.mjs';
@@ -5,11 +7,12 @@ import { archivedPlayHrefFromCatalog, releaseHistoryHref } from './release-links
 const navigation = attachAboutNavigation();
 const root = document.documentElement;
 const currentVersion = root.dataset.currentVersion;
-const currentLabel = currentVersion.startsWith('__')
-  ? 'DEV'
-  : currentVersion.startsWith('v')
-    ? currentVersion
-    : `v${currentVersion}`;
+const currentLabel = () =>
+  currentVersion.startsWith('__')
+    ? t('website:dev')
+    : currentVersion.startsWith('v')
+      ? currentVersion
+      : `v${currentVersion}`;
 const picker = document.querySelector('#version-picker');
 const versionPlay = document.querySelector('#version-play');
 const status = document.querySelector('#version-status');
@@ -26,9 +29,11 @@ historyLink.href = historyHref;
 historyLink.hidden = false;
 
 for (const label of document.querySelectorAll('[data-current-label]')) {
-  label.textContent = currentLabel;
+  localizedText(label, currentLabel);
 }
-picker.options[0].textContent = `${currentLabel} · current`;
+localizedText(picker.options[0], () =>
+  t('website:reveallineVersionCurrent', { version: currentLabel() }),
+);
 
 const savedClears = (campaign) => {
   try {
@@ -50,10 +55,15 @@ const savedClears = (campaign) => {
   }
 };
 
-function addOption(label, href) {
+function createOption(label, value) {
   const option = document.createElement('option');
-  option.value = href;
-  option.textContent = label;
+  option.value = value;
+  localizedText(option, label);
+  return option;
+}
+
+function addOption(label, href) {
+  const option = createOption(label, href);
   picker.append(option);
 }
 
@@ -81,13 +91,18 @@ async function loadCatalogs() {
         archivedPlayHrefFromCatalog(record.canonicalPlay, fetchedCatalog) ??
         archivedPlayHrefFromCatalog(record.play, fetchedCatalog);
       if (!href) continue;
-      addOption(`${record.version} · preserved`, href);
+      addOption(() => t('website:preserved', { value1: record.version }), href);
       available++;
     }
-    status.textContent = `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
+    localizedText(status, () =>
+      t('website:preservedBuildStatus', {
+        count: available,
+        current: currentLabel(),
+      }),
+    );
   } catch {
     if (!navigation.current()) return;
-    status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
+    localizedText(status, () => t('website:theCurrentBuildIsReadyPreservedBuildsWillAppearWhen'));
   }
 
   if (!navigation.current()) return;
@@ -107,8 +122,17 @@ async function loadCatalogs() {
           return campaign.levels.map((level, index) => {
             const available =
               index === 0 || clears.has(level.id) || clears.has(campaign.levels[index - 1].id);
-            const option = new Option(
-              `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
+            const option = createOption(
+              () =>
+                t(
+                  available
+                    ? 'website:quickSelector.levelAvailable'
+                    : 'website:quickSelector.levelLocked',
+                  {
+                    number: String(index + 1).padStart(2, '0'),
+                    name: contentText(level, 'name'),
+                  },
+                ),
               level.id,
             );
             option.dataset.campaignId = campaign.id;
@@ -120,21 +144,31 @@ async function loadCatalogs() {
     };
     const updatePackLaunch = () => {
       const pack = catalog.packs.find((item) => item.id === packSelect.value);
-      const level = levelSelect.selectedOptions[0];
-      if (!pack || !level) return;
+      const option = levelSelect.selectedOptions[0];
+      if (!pack || !option) return;
+      const campaign = pack.campaigns.find((item) => item.id === option.dataset.campaignId);
+      const level = campaign?.levels.find((item) => item.id === option.value);
+      if (!level) return;
       packPlay.href = packLaunchHref('../game/', {
         packId: pack.id,
-        campaignId: level.dataset.campaignId,
-        levelId: level.value,
+        campaignId: campaign.id,
+        levelId: level.id,
         play: true,
       });
-      packStatus.textContent = `${pack.name} · ${level.textContent.replace(/^\d+ · /, '')} ready to install and play.`;
+      localizedText(packStatus, () =>
+        t('website:readyToInstallAndPlay', {
+          value1: contentText(pack, 'name'),
+          value2: contentText(level, 'name'),
+        }),
+      );
     };
 
     packSelect.replaceChildren(
-      ...catalog.packs.map(
-        (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r5'),
-      ),
+      ...catalog.packs.map((pack) => {
+        const option = createOption(() => contentText(pack, 'name'), pack.id);
+        option.defaultSelected = option.selected = pack.id === 'fpv-arcade-r5';
+        return option;
+      }),
     );
     populateLevels();
     updatePackLaunch();
@@ -147,7 +181,7 @@ async function loadCatalogs() {
     if (!navigation.current()) return;
     packSelect.disabled = true;
     levelSelect.disabled = true;
-    packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
+    localizedText(packStatus, () => t('website:quickSelectorUnavailableUseAnyPackCardBelow'));
   }
 }
 await loadCatalogs();

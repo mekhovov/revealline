@@ -1,0 +1,52 @@
+[
+  {
+    "path": "model-final.tap",
+    "bytes": 12115,
+    "sha256": "76be1bb4f78bc5ce632a298b885830090d33d3661e6c9be0317d8500bec0b80d"
+  },
+  {
+    "path": "host-final.tap",
+    "bytes": 3934,
+    "sha256": "0171c2082bab4ff4053b192d2734378032290a105ddc2f386c6de5f4b2fcb8d0"
+  },
+  {
+    "path": "terminal-red.tap",
+    "bytes": 1540,
+    "sha256": "2f58e520d8c39f86628d7b0aadf0d1c4a4147282dce25695357ccb9fbf1ae03f"
+  },
+  {
+    "path": "missing-section-red.tap",
+    "bytes": 4764,
+    "sha256": "81421106f13e2491c549f5d20ccd3e3cd82f986676290ed4fb682a6b26ff0d01"
+  },
+  {
+    "path": "lint.log",
+    "bytes": 167,
+    "sha256": "e370760101251ff05f1cd882320d73cd50099f4b574ab292d4da3e38b10d74f5"
+  },
+  {
+    "path": "format.log",
+    "bytes": 216,
+    "sha256": "546026481d5775f491de85cfb08571c5dded91e55565ecc1293188f4ba42bca2"
+  },
+  {
+    "path": "format-native.log",
+    "bytes": 255,
+    "sha256": "074b697b506d8b888ba2b284391a2aec86c3c70b9432a93e981bc65d2f58e08c"
+  },
+  {
+    "path": "validate.log",
+    "bytes": 1182,
+    "sha256": "12ae5eec5bf0df85316993189c4c43908ebf45dd9b10c2a5ed94fcf397ff9be0"
+  },
+  {
+    "path": "motion-syntax.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "build.log",
+    "bytes": 321,
+    "sha256": "641615ed3082e5862ceb88b0fc2400965e58f641983cf364f8e4a0f6f7b669f9"
+  }
+]

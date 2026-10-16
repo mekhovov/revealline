@@ -1,0 +1,38 @@
+{
+  "format": "FPVOptionalWorldRelease.v1",
+  "id": "mountain-reservoir",
+  "revision": "r8",
+  "title": { "en": "Mountain Reservoir", "uk": "Гірське водосховище" },
+  "worldCount": 1,
+  "courseCount": 8,
+  "proofCount": 16,
+  "modes": ["self-level", "acro"],
+  "files": {
+    "pack": {
+      "path": "mountain-reservoir.r8.rlpack",
+      "bytes": 1312937,
+      "sha256": "e76fd8aa7c2d1ae1b24daacc98a06cc8e78c137204aca68464de0415f158c0fa"
+    },
+    "editable": {
+      "path": "mountain-reservoir.r8.zip",
+      "bytes": 1312998,
+      "sha256": "89c3e42e99d93b9f6f64042bf6346045be7000533704f5f2e2c69e6b307baa94"
+    },
+    "proofs": {
+      "path": "mountain-reservoir.r8.proofs.json",
+      "bytes": 908558,
+      "sha256": "a4390166600173c3bdbeef3bcd107680865d87418c3387d345c7eb2f8f7ac9c9"
+    }
+  },
+  "license": "CC0-1.0",
+  "defaultCatalogueChanges": 0,
+  "waterPolicy": "Lake scenery lies outside playable land-side bounds; no water physics or island-flight claim.",
+  "qualification": {
+    "ordinaryFlightChecks": 575,
+    "actualImportedBrowserChecks": 304,
+    "actualWatchReplays": 16,
+    "browserReceipt": "../../evidence/r8-full-world-browser.json",
+    "offlineReceipt": "../../evidence/r8-offline-native.json",
+    "limits": "Controlled-RAF playback is functional evidence, not FPS or physical-hardware qualification. Native-clock and offline receipts are recorded separately."
+  }
+}

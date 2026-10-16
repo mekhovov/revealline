@@ -1,0 +1,64 @@
+{
+  "file": "game/test/boot.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/boot.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 0.11,
+  "failures": [
+    {
+      "test": "downloaded file shows usable native launch options without importing or redirecting",
+      "location": "/privategame/test/boot.test.mjs:155:1",
+      "detail": "\n  ---\n  duration_ms: 2.959916\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:155:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'loading'\n    - 'file'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'file'\n  actual: 'loading'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:159:10)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    node:internal/test_runner/harness:255:12\n    node:internal/process/task_queues:140:7\n    AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)"
+    },
+    {
+      "test": "early renderer or stylesheet errors retain inert controls and close partially opened dialogs",
+      "location": "/privategame/test/boot.test.mjs:174:1",
+      "detail": "\n  ---\n  duration_ms: 0.962917\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:174:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'loading'\n    - 'failed'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'failed'\n  actual: 'loading'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:181:12)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "missing renderer does not expose legacy controls or request an app startup",
+      "location": "/privategame/test/boot.test.mjs:190:1",
+      "detail": "\n  ---\n  duration_ms: 0.619375\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:190:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'loading'\n    - 'failed'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'failed'\n  actual: 'loading'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:194:10)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "cached and delayed styles both finish before app initialization is admitted",
+      "location": "/privategame/test/boot.test.mjs:233:1",
+      "detail": "\n  ---\n  duration_ms: 2.653917\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:233:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    'print' !== 'all'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'all'\n  actual: 'print'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:251:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "resolved legacy app cannot substitute hidden status for the ready handshake",
+      "location": "/privategame/test/boot.test.mjs:260:1",
+      "detail": "\n  ---\n  duration_ms: 3.837791\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:260:1'\n  failureType: 'testCodeFailure'\n  error: 'the actual inline guard conceals failed gameplay even if an older app removed inert'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: |-\n    <!doctype html>\n    <html\n      lang=\"en\"\n      data-build-version=\"__REVEALLINE_VERSION__\"\n      data-boot-state=\"loading\"\n      data-access-state=\"locked\"\n    >\n      <head>\n        <meta charset=\"utf-8\" />\n    \n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\" />\n        <meta name=\"theme-color\" content=\"#070914\" />\n        <meta name=\"revealline-access-id\" content=\"revealline\" />\n        <meta name=\"revealline-access-title\" content=\"FPV / LINE\" />\n        <meta\n          name=\"revealline-access-salt\"\n          content=\"bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx\"\n        />\n        <meta name=\"revealline-access-verifier\" content=\"fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg\" />\n        <!-- Safari uses these when a player adds the game to the Home Screen. -->\n        <meta name=\"mobile-web-app-capable\" content=\"yes\" />\n        <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\n        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black-translucent\" />\n        <title>FPV / LINE</title>\n        <style>\n          html {\n            background: #070914;\n            color-scheme: dark;\n          }\n          body {\n            margin: 0;\n            background: #070914;\n            color: #edf2ff;\n          }\n          html:not([data-boot-state='ready']) body > :not(#boot-screen):not(#access-gate):not(script) {\n            display: none !important;\n          }\n          #boot-screen {\n            min-height: 100vh;\n            min-height: 100svh;\n            display: grid;\n            place-items: center;\n            box-sizing: border-box;\n            padding: 24px;\n            font:\n              18px/1.5 'Field Kit UI',\n              system-ui,\n              sans-serif;\n          }\n          #boot-screen .launch-card {\n            width: min(100%, 620px);\n          "
+    },
+    {
+      "test": "boot keyboard and controller navigation requires fresh input and yields after pointer use",
+      "location": "/privategame/test/boot.test.mjs:375:1",
+      "detail": "\n  ---\n  duration_ms: 11.215875\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:375:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    held pad at startup cannot activate\n    + actual - expected ... Lines skipped\n    \n    + <ref *3> Element {\n    - <ref *4> Element {\n        _rect: {\n          height: 44,\n    ...\n        },\n        _text: '',\n    +   attributes: Map(0) {},\n    +   captureListeners: Map(0) {},\n    +   captures: Set(0) {},\n    +   checked: false,\n    +   children: [\n    +     <ref *5> Element {\n    +       _rect: {\n    +         height: 44,\n    +         width: 100,\n    +         x: 0,\n    +         y: 0\n    +       },\n    +       _text: '',\n    +       attributes: Map(1) {\n    +         'id' => 'boot-screen'\n    +       },\n    +       captureListeners: Map(0) {},\n    +       captures: Set(0) {},\n    +       checked: false,\n    +       children: [\n    +         Element {\n    +           _rect: {\n    +             height: 44,\n    ...\n    -   attributes: Map(1) {\n    -     'id' => 'boot-retry'\n    -   },\n    -   captureListeners: Map(0) {},\n    -   captures: Set(0) {},\n    -   checked: false,\n    -   children: [],\n    -   classList: Classes {\n    -     values: Set(0) {}\n    -   },\n    -   clientHeight: 44,\n    -   dataset: {},\n    -   disabled: false,\n    -   hidden: false,\n    -   id: 'boot-retry',\n    -   inert: false,\n    -   listeners: Map(0) {},\n    -   nodeName: 'A',\n    -   nodeType: 1,\n    -   open: false,\n    -   options: [],\n    -   ownerDocument: <ref *1> Document {\n    -     activeElement: <ref *6> Element {\n    ...\n  code: 'ERR_TEST_FAILURE'"
+    },
+    {
+      "test": "public root enters the native game within source, Pages and frozen prefixes with exact queries",
+      "location": "/privategame/test/boot.test.mjs:405:1",
+      "detail": "\n  ---\n  duration_ms: 0.940209\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:405:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n    + []\n    - [\n    -   'http://localhost:8768/game/'\n    - ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0: 'http://localhost:8768/game/'\n  actual:\n    0: 'http://localhost:8768/game/'\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:427:12)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "file launch and a cross-origin script never automatically leave the current document",
+      "location": "/privategame/test/boot.test.mjs:432:1",
+      "detail": "\n  ---\n  duration_ms: 0.392084\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:432:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    false !== true\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/boot.test.mjs:443:14)\n    Test.runInAsyncScope (node:async_hooks:206:9)\n    Test.run (node:internal/test_runner/test:796:25)\n    Test.processPendingSubtests (node:internal/test_runner/test:526:18)\n    Test.postRun (node:internal/test_runner/test:889:19)\n    Test.run (node:internal/test_runner/test:835:12)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 14",
+    "# pass 6",
+    "# fail 8",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 76.133916"
+  ]
+}

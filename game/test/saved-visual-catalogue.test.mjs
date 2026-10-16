@@ -16,7 +16,7 @@ import { validateCompiledPresentation } from '../presentation/host.mjs';
 const read = async (path) => JSON.parse(await fs.readFile(new URL(path, import.meta.url)));
 const baseURL = 'https://game.test/releases/v1/game/presentation/compiled/';
 
-test('shipped catalogue retains the released FPV revision and exact First Signal coverage', async () => {
+test('shipped catalogue retains exact released FPV revisions and First Signal coverage', async () => {
   const source = await read('../presentation/visual-themes.json'),
     catalogue = createVisualThemeCatalogue(source);
   const campaign = {
@@ -27,49 +27,47 @@ test('shipped catalogue retains the released FPV revision and exact First Signal
   const entry = createExecutionCatalog([{ campaign, themes }]).entries.find(
     (row) => row.difficulty === 'standard',
   );
-  const published = source.entries.find((row) => row.id === 'field-kit-fpv' && row.revision === 54);
-  assert.ok(published);
-  assert.equal(
-    published.presentation.sha256,
-    "8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501",
-  );
-  assert.equal(published.coverage.length, 12);
-  let bytes = new Uint8Array(
-    await fs.readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
-  );
-  if ((await hashPresentationBytes(bytes)) !== published.presentation.sha256)
-    bytes = new Uint8Array(
+  const releases = new Map([
+    [54, "8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501"],
+    [58, "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c"],
+  ]);
+  for (const [revision, sha256] of releases) {
+    const published = source.entries.find(
+      (row) => row.id === 'field-kit-fpv' && row.revision === revision,
+    );
+    assert.ok(published);
+    assert.equal(published.presentation.sha256, sha256);
+    assert.equal(published.coverage.length, 12);
+    const bytes = new Uint8Array(
       await fs.readFile(
-        new URL(
-          `../presentation/compiled/runtime.${published.presentation.sha256}.json`,
-          import.meta.url,
-        ),
+        new URL(`../presentation/compiled/runtime.${sha256}.json`, import.meta.url),
       ),
     );
-  assert.equal(await hashPresentationBytes(bytes), published.presentation.sha256);
-  const runtime = validateCompiledPresentation(new TextDecoder().decode(bytes));
-  for (const level of entry.campaign.levels) {
-    const content = await prepareCampaignVisualThemeContext({
-      entry,
-      level,
-      association: { editionId: 'field-kit', contentThemeId: 'fpv', mode: 'solo' },
-    });
-    const match = catalogue.resolve({ id: published.id, revision: published.revision }, content);
-    assert.equal(match.kind, 'compatible');
-    catalogue.verifyPresentationIdentity(
-      match,
-      {
-        source: runtime.source,
-        theme: { id: runtime.resolved.theme.id, revision: runtime.resolved.theme.revision },
-        collection: runtime.resolved.collection,
-        sha256: published.presentation.sha256,
-        slots: Object.keys(runtime.resolved.bindings),
-      },
-      SAVED_SOLO_VISUAL_SLOTS,
-    );
+    assert.equal(await hashPresentationBytes(bytes), sha256);
+    const runtime = validateCompiledPresentation(new TextDecoder().decode(bytes));
+    for (const level of entry.campaign.levels) {
+      const content = await prepareCampaignVisualThemeContext({
+        entry,
+        level,
+        association: { editionId: 'field-kit', contentThemeId: 'fpv', mode: 'solo' },
+      });
+      const match = catalogue.resolve({ id: published.id, revision }, content);
+      assert.equal(match.kind, 'compatible');
+      catalogue.verifyPresentationIdentity(
+        match,
+        {
+          source: runtime.source,
+          theme: { id: runtime.resolved.theme.id, revision: runtime.resolved.theme.revision },
+          collection: runtime.resolved.collection,
+          sha256,
+          slots: Object.keys(runtime.resolved.bindings),
+        },
+        SAVED_SOLO_VISUAL_SLOTS,
+      );
+    }
+    for (const slot of SAVED_SOLO_VISUAL_SLOTS)
+      assert.equal(runtime.resolved.assets[slot].quality.stage, 'reviewed', slot);
   }
-  for (const slot of SAVED_SOLO_VISUAL_SLOTS)
-    assert.equal(runtime.resolved.assets[slot].quality.stage, 'reviewed', slot);
 });
 
 test('catalogue reader uses the code-owned URL and rejects redirect, oversized and malformed replies', async () => {

@@ -1,0 +1,9 @@
+{
+  "status": "PREFLIGHT_FAILED_NO_PUBLIC_REQUESTS",
+  "command": "python3 .cache/archive52-v0830/http-tools/http_audit.py --run",
+  "exitCode": 1,
+  "error": "ValueError: At least 1 GiB local free space required",
+  "stage": "After actual deployment binding validation, before HTTP audit output directory creation and requests",
+  "guardPreserved": true,
+  "nextStep": "Coordinator to approve a capacity-safe execution environment; no shared cache cleanup or guard bypass performed"
+}

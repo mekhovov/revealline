@@ -1,0 +1,1825 @@
+{
+  "format": "FlightRetentionEvidence.v1",
+  "qualification": false,
+  "scope": "Three isolated headless Chrome development-package observations on one desktop. The first run diagnosed a disposal defect; the second repeated 20 cycles after its correction; the third records separate checkpoints at 20 and 40 cycles. Explicit garbage collection precedes each snapshot. No player wins or stored progress, radio input, installed PWA or physical-device evidence. No p95 or natural-pacing comparison.",
+  "method": "docs/fpv-retention-observer.md",
+  "runtimeBaseFiles": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5108,
+      "sha256": "c238667bfb7315a93a76fb798b53b06a684c9438750faeffc0f8b032b272483a"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 3219,
+      "sha256": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/key-bindings.mjs",
+      "bytes": 13649,
+      "sha256": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2"
+    },
+    {
+      "path": "game/profile-database.mjs",
+      "bytes": 152,
+      "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "bytes": 6205,
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+    },
+    {
+      "path": "game/rewards/audio-groups.mjs",
+      "bytes": 2937,
+      "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+    },
+    {
+      "path": "game/rewards/exploration.mjs",
+      "bytes": 9341,
+      "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+    },
+    {
+      "path": "game/rewards/learning-profiles.mjs",
+      "bytes": 1519,
+      "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+    },
+    {
+      "path": "game/rewards/model.mjs",
+      "bytes": 34442,
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+    },
+    {
+      "path": "game/rewards/store.mjs",
+      "bytes": 17038,
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+    },
+    {
+      "path": "game/ui/reward-knowledge.mjs",
+      "bytes": 2251,
+      "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/vendor/I18NEXT-LICENSE.txt",
+      "bytes": 1082,
+      "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "bytes": 23779,
+      "sha256": "354c81b84549d215064e66c303ab38c64c03086616c65d859f971682ba35e243"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.webmanifest",
+      "bytes": 513,
+      "sha256": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/attempts.mjs",
+      "bytes": 11259,
+      "sha256": "29e7376488703566e0995612464e0256747561896dd366497828c6f8f9349a8c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/copy.mjs",
+      "bytes": 12886,
+      "sha256": "f01b02317a6771d3636026a8638e9944b1f5e7a037edec9a8bd8d648d64ce03f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/icons/icon-192.png",
+      "bytes": 608,
+      "sha256": "a8f31c77674e13440ed3cb812dba4485bd7f5af4dda919f5b74042b001375cb8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/icons/icon-512.png",
+      "bytes": 2987,
+      "sha256": "c65fa7947235ff38f49d5389762441ce00c9e749ca4e1bc6433bebe29c8f6dbc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/index.html",
+      "bytes": 7273,
+      "sha256": "dc88666e1dbcb596e4cd0006c2ac41bfa26198f221bcf05d7955a3a7a0fa82ed"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 4971,
+      "sha256": "a905d26b4b147bb39f701531a27c695499463b7eb8849c209018d0ea79779c0f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "bytes": 16717,
+      "sha256": "922a2c819ddb6a26af90addf9fa866aceda700af9ad7eba755f416d9ac576060"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/notebook.mjs",
+      "bytes": 18359,
+      "sha256": "966745ecf19f49568fcb454c9fe6aa7ca86bb8717834b6eb424c730600425a8c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/offline.mjs",
+      "bytes": 2359,
+      "sha256": "cab65ff2adab654958f9fede86a9fc19a807e06fcd174047ecbd91da02c5c997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 8607,
+      "sha256": "a9f2f829a05062e6b1fa712eaec445edc106320c0abef5eb48e106695bd3ce0e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "bytes": 5852,
+      "sha256": "00882477ee8fe8a3f716148d1a243d5a08e45c2448f4f218b20ffa7a9606fda9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "bytes": 22119,
+      "sha256": "b44b4b210fe8a0ee72c9c3540ee988337fc24b5ee6c367d8e72d35dd5a4664b7"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/README.md",
+      "bytes": 4367,
+      "sha256": "002d2d0327949da1a125fd72d33432c56d9166d8577f5ba5f0ca68b18c390d52"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 14837,
+      "sha256": "01f7c5b141bde07d5b8a22929007463139564305f462a66a38d7027d6b44e925"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/studio.mjs",
+      "bytes": 17754,
+      "sha256": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "bytes": 10865,
+      "sha256": "9e2f61c26cdc30a46b9a6e8ea99276d1a3b18d24c3dad7e7ece150ac606ba93b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/worker.js",
+      "bytes": 8635,
+      "sha256": "470e8fd632771318276602b76f4b1759782f5731ad3b7011e158122f6f303e5d"
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "bytes": 4273,
+      "sha256": "7745cad36e9c003d0745b361744d4fea1dee3edb4653a66fd666944683c0cddb"
+    }
+  ],
+  "runChanges": [
+    {
+      "runtimeRevision": "0ab15ae0c80f853d0891b0df8891c947be325243d47916852913e7032768f3df",
+      "baseRuntimeRevision": "28417e4f5748b6a0c29c915eb0b593ed4480bb4b4e3a4a8d4c874440214fa0f6",
+      "changedFiles": [
+        {
+          "path": "optional-practice/civilian-fpv/app.mjs",
+          "bytes": 23994,
+          "sha256": "d63a6573a597916cb38bd665bc026f08bf6ffda682e17524dd2d8868ad63692a"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/worker.js",
+          "bytes": 8635,
+          "sha256": "7b6af5856d9bfa217cedc3ae41ea8cea92ac878f70e1c081ea8baad9657f95a8"
+        }
+      ],
+      "removedFiles": []
+    },
+    {
+      "runtimeRevision": "0ab15ae0c80f853d0891b0df8891c947be325243d47916852913e7032768f3df",
+      "baseRuntimeRevision": "28417e4f5748b6a0c29c915eb0b593ed4480bb4b4e3a4a8d4c874440214fa0f6",
+      "changedFiles": [
+        {
+          "path": "optional-practice/civilian-fpv/app.mjs",
+          "bytes": 23994,
+          "sha256": "d63a6573a597916cb38bd665bc026f08bf6ffda682e17524dd2d8868ad63692a"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/worker.js",
+          "bytes": 8635,
+          "sha256": "7b6af5856d9bfa217cedc3ae41ea8cea92ac878f70e1c081ea8baad9657f95a8"
+        }
+      ],
+      "removedFiles": []
+    }
+  ],
+  "runs": [
+    {
+      "id": "before-disposal-fix",
+      "createdAt": "2026-09-28T21:27:01.688Z",
+      "browser": "154.0.8037.57",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      "qualification": false,
+      "runtime": {
+        "revision": "28417e4f5748b6a0c29c915eb0b593ed4480bb4b4e3a4a8d4c874440214fa0f6",
+        "sourceKind": "compiled-development-package",
+        "engineCommit": null,
+        "engineTree": null,
+        "qualification": "development-only",
+        "manifest": {
+          "bytes": 7813,
+          "sha256": "222bde20aafc3d0db71c6fc1afffaa897f37c3340dc99db89693b27ddff59d29"
+        },
+        "members": 42,
+        "totalBytes": 2717947,
+        "httpVerifiedMembers": 42
+      },
+      "instrumentation": {
+        "observer": {
+          "bytes": 10599,
+          "sha256": "ad747005bd2b66de45c65f5d37e24dda1cf84811d714fda7b91adb0bbb62c375"
+        },
+        "analyzer": {
+          "bytes": 9043,
+          "sha256": "f04fcad832ef483f073eeac7019bc4e26792257b44a722fc7c13fd92f2627d05"
+        },
+        "html": {
+          "bytes": 7289,
+          "sha256": "69066e11caedcaafd7c287f569b4df523e3966d6bb008f65d4c8e89e841811c0"
+        },
+        "wrapper": {
+          "bytes": 86,
+          "sha256": "f819f84f7892157ac0d7e50ab6bc2a7e123f00b4da9574711b35a40dfd855ae8"
+        }
+      },
+      "observation": {
+        "bytes": 45550,
+        "sha256": "5b79e701bf5d982be835c661769b8290f9d100a433fe86a6bb99e7afae74cb91"
+      },
+      "snapshotFiles": {
+        "before": {
+          "bytes": 19920141,
+          "sha256": "189108a227e40c4c0c9d58102321f7e51752fc72994187ad5505541435207eee"
+        },
+        "after": {
+          "bytes": 19892005,
+          "sha256": "cc9258569659a5a032a18fe612767e8a9035caa275c5afc4c2d8d788bb9e883f"
+        },
+        "released": {
+          "bytes": 18871492,
+          "sha256": "8ea400786318bc494a3c6cabea57eea98b85940f29280287904116aa7c9bdd56"
+        }
+      },
+      "analysisFiles": {
+        "before-analysis.json": {
+          "bytes": 327668,
+          "sha256": "2435f619cd238c16aa1a24128aa66c6eafb4b96706ae8cbbae7d706a204220b6"
+        },
+        "after-analysis.json": {
+          "bytes": 327572,
+          "sha256": "8147d749b59a6783d150f4f76a8009f1e222f362586e087f9ddd555daa4f3b28"
+        },
+        "released-analysis.json": {
+          "bytes": 517428,
+          "sha256": "1811bd7df11c95745569cf0df1cec26568df02517257f53d57669c219c27e4cf"
+        }
+      },
+      "warmCycles": 12,
+      "measuredCycles": 20,
+      "domCounters": {
+        "before": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "after": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "released": {
+          "documents": 1,
+          "nodes": 1235,
+          "jsEventListeners": 40
+        }
+      },
+      "firstInterval": {
+        "shallowBytes": {
+          "before": 14006405,
+          "after": 14473901
+        },
+        "shallowByteDelta": 467496,
+        "byType": [
+          {
+            "type": "array",
+            "shallowByteDelta": 84352
+          },
+          {
+            "type": "code",
+            "shallowByteDelta": 341184
+          },
+          {
+            "type": "native",
+            "shallowByteDelta": 41080
+          },
+          {
+            "type": "number",
+            "shallowByteDelta": 84
+          },
+          {
+            "type": "object",
+            "shallowByteDelta": 544
+          },
+          {
+            "type": "object shape",
+            "shallowByteDelta": -24
+          },
+          {
+            "type": "string",
+            "shallowByteDelta": 276
+          }
+        ],
+        "namedCohorts": 62,
+        "allNamedPopulationCountsUnchanged": true
+      },
+      "detachedNodes": {
+        "before": 4,
+        "after": 4,
+        "released": 74
+      },
+      "selectedPopulationCounts": [
+        {
+          "name": "closure:frame",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightApp",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightNotebook",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightStudio",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountRadioSetup",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:onFreeze",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:paint",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:render",
+          "warm": 6,
+          "after20": 6,
+          "released": 6
+        },
+        {
+          "name": "closure:setLocale",
+          "warm": 3,
+          "after20": 3,
+          "released": 3
+        },
+        {
+          "name": "object:BoxGeometry",
+          "warm": 39,
+          "after20": 39,
+          "released": 39
+        },
+        {
+          "name": "object:BufferGeometry",
+          "warm": 22,
+          "after20": 22,
+          "released": 22
+        },
+        {
+          "name": "object:CanvasTexture",
+          "warm": 4,
+          "after20": 4,
+          "released": 4
+        },
+        {
+          "name": "object:DataTexture",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "object:Group",
+          "warm": 5,
+          "after20": 5,
+          "released": 5
+        },
+        {
+          "name": "object:LineBasicMaterial",
+          "warm": 4,
+          "after20": 4,
+          "released": 4
+        },
+        {
+          "name": "object:Mesh",
+          "warm": 56,
+          "after20": 56,
+          "released": 56
+        },
+        {
+          "name": "object:MeshStandardMaterial",
+          "warm": 50,
+          "after20": 50,
+          "released": 50
+        },
+        {
+          "name": "object:PerspectiveCamera",
+          "warm": 4,
+          "after20": 4,
+          "released": 4
+        },
+        {
+          "name": "object:Scene",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "object:WebGL2RenderingContext",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLProgram",
+          "warm": 5,
+          "after20": 5,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLRenderer",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLTexture",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        }
+      ],
+      "resources": {
+        "warm": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "after20": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "disposed": {
+          "available": true,
+          "disposed": true,
+          "registered": {
+            "geometries": 0,
+            "materials": 0,
+            "textures": 0
+          },
+          "renderer": {
+            "geometries": 0,
+            "textures": 1,
+            "programs": 0,
+            "contextLost": true
+          }
+        }
+      },
+      "allCycleResourceCountsMatchWarm": true
+    },
+    {
+      "id": "after-disposal-fix-20",
+      "createdAt": "2026-09-28T21:29:03.766Z",
+      "browser": "154.0.8037.57",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      "qualification": false,
+      "runtime": {
+        "revision": "0ab15ae0c80f853d0891b0df8891c947be325243d47916852913e7032768f3df",
+        "sourceKind": "compiled-development-package",
+        "engineCommit": null,
+        "engineTree": null,
+        "qualification": "development-only",
+        "manifest": {
+          "bytes": 7813,
+          "sha256": "a735c5bb870a7817d72d5809b867d5df5712363650118d130e1230fc8070bfbb"
+        },
+        "members": 42,
+        "totalBytes": 2718162,
+        "httpVerifiedMembers": 42
+      },
+      "instrumentation": {
+        "observer": {
+          "bytes": 10599,
+          "sha256": "ad747005bd2b66de45c65f5d37e24dda1cf84811d714fda7b91adb0bbb62c375"
+        },
+        "analyzer": {
+          "bytes": 9043,
+          "sha256": "f04fcad832ef483f073eeac7019bc4e26792257b44a722fc7c13fd92f2627d05"
+        },
+        "html": {
+          "bytes": 7289,
+          "sha256": "69066e11caedcaafd7c287f569b4df523e3966d6bb008f65d4c8e89e841811c0"
+        },
+        "wrapper": {
+          "bytes": 86,
+          "sha256": "f819f84f7892157ac0d7e50ab6bc2a7e123f00b4da9574711b35a40dfd855ae8"
+        }
+      },
+      "observation": {
+        "bytes": 45571,
+        "sha256": "d1891ccd3bfe626204ceebcdfb6f2ea9d9adb3d055de14939eb5a7c563af11f9"
+      },
+      "snapshotFiles": {
+        "before": {
+          "bytes": 19804641,
+          "sha256": "76ef8395e89bec0b79e49da6df701ddd09e728b4b29bc74b6fbedd111869d8b9"
+        },
+        "after": {
+          "bytes": 20005139,
+          "sha256": "3309eb3fcd6d0366a08bf74827372933b56bc84bd07fc4a5964cf29e2ad4f2a2"
+        },
+        "released": {
+          "bytes": 17342172,
+          "sha256": "bc34aa9507b8bc9f2562bd2525746f857801bafae7f1cbb739a20274351ac880"
+        }
+      },
+      "analysisFiles": {
+        "before-analysis.json": {
+          "bytes": 326792,
+          "sha256": "65eff5ce9f7fb24ff6059aac03fa4e33df8f4d2d4002f13c547b18e607b49168"
+        },
+        "after-analysis.json": {
+          "bytes": 324551,
+          "sha256": "c7fd176e9ebcac57ee509ba54b7c7fb53e3ee2b80830c15d07ee340904f8330d"
+        },
+        "released-analysis.json": {
+          "bytes": 223139,
+          "sha256": "c07e9b4f918845f0b28bf7e4af133a3363a2b0cb9971c04c2aaf050268fdd0c2"
+        }
+      },
+      "warmCycles": 12,
+      "measuredCycles": 20,
+      "domCounters": {
+        "before": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "after": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "released": {
+          "documents": 1,
+          "nodes": 484,
+          "jsEventListeners": 28
+        }
+      },
+      "firstInterval": {
+        "shallowBytes": {
+          "before": 14003403,
+          "after": 14574339
+        },
+        "shallowByteDelta": 570936,
+        "byType": [
+          {
+            "type": "array",
+            "shallowByteDelta": 93056
+          },
+          {
+            "type": "code",
+            "shallowByteDelta": 330756
+          },
+          {
+            "type": "native",
+            "shallowByteDelta": 147012
+          },
+          {
+            "type": "number",
+            "shallowByteDelta": 84
+          },
+          {
+            "type": "object",
+            "shallowByteDelta": 64
+          },
+          {
+            "type": "object shape",
+            "shallowByteDelta": 8
+          },
+          {
+            "type": "string",
+            "shallowByteDelta": -44
+          }
+        ],
+        "namedCohorts": 62,
+        "allNamedPopulationCountsUnchanged": true
+      },
+      "detachedNodes": {
+        "before": 4,
+        "after": 4,
+        "released": 0
+      },
+      "selectedPopulationCounts": [
+        {
+          "name": "closure:frame",
+          "warm": 1,
+          "after20": 1,
+          "released": 0
+        },
+        {
+          "name": "closure:mountFlightApp",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightNotebook",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightStudio",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountRadioSetup",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:onFreeze",
+          "warm": 1,
+          "after20": 1,
+          "released": 0
+        },
+        {
+          "name": "closure:paint",
+          "warm": 1,
+          "after20": 1,
+          "released": 0
+        },
+        {
+          "name": "closure:render",
+          "warm": 6,
+          "after20": 6,
+          "released": 1
+        },
+        {
+          "name": "closure:setLocale",
+          "warm": 3,
+          "after20": 3,
+          "released": 1
+        },
+        {
+          "name": "object:BoxGeometry",
+          "warm": 39,
+          "after20": 39,
+          "released": 0
+        },
+        {
+          "name": "object:BufferGeometry",
+          "warm": 22,
+          "after20": 22,
+          "released": 20
+        },
+        {
+          "name": "object:CanvasTexture",
+          "warm": 4,
+          "after20": 4,
+          "released": 0
+        },
+        {
+          "name": "object:DataTexture",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "object:Group",
+          "warm": 5,
+          "after20": 5,
+          "released": 0
+        },
+        {
+          "name": "object:LineBasicMaterial",
+          "warm": 4,
+          "after20": 4,
+          "released": 1
+        },
+        {
+          "name": "object:Mesh",
+          "warm": 56,
+          "after20": 56,
+          "released": 6
+        },
+        {
+          "name": "object:MeshStandardMaterial",
+          "warm": 50,
+          "after20": 50,
+          "released": 1
+        },
+        {
+          "name": "object:PerspectiveCamera",
+          "warm": 4,
+          "after20": 4,
+          "released": 1
+        },
+        {
+          "name": "object:Scene",
+          "warm": 1,
+          "after20": 1,
+          "released": 0
+        },
+        {
+          "name": "object:WebGL2RenderingContext",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLProgram",
+          "warm": 5,
+          "after20": 5,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLRenderer",
+          "warm": 1,
+          "after20": 1,
+          "released": 0
+        },
+        {
+          "name": "object:WebGLTexture",
+          "warm": 1,
+          "after20": 1,
+          "released": 1
+        }
+      ],
+      "resources": {
+        "warm": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "after20": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "disposed": {
+          "available": true,
+          "disposed": true,
+          "registered": {
+            "geometries": 0,
+            "materials": 0,
+            "textures": 0
+          },
+          "renderer": {
+            "geometries": 0,
+            "textures": 1,
+            "programs": 0,
+            "contextLost": true
+          }
+        }
+      },
+      "allCycleResourceCountsMatchWarm": true
+    },
+    {
+      "id": "after-disposal-fix-40",
+      "createdAt": "2026-09-28T21:33:21.903Z",
+      "browser": "154.0.8037.57",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "deviceScaleFactor": 1
+      },
+      "qualification": false,
+      "runtime": {
+        "revision": "0ab15ae0c80f853d0891b0df8891c947be325243d47916852913e7032768f3df",
+        "sourceKind": "compiled-development-package",
+        "engineCommit": null,
+        "engineTree": null,
+        "qualification": "development-only",
+        "manifest": {
+          "bytes": 7813,
+          "sha256": "a735c5bb870a7817d72d5809b867d5df5712363650118d130e1230fc8070bfbb"
+        },
+        "members": 42,
+        "totalBytes": 2718162,
+        "httpVerifiedMembers": 42
+      },
+      "instrumentation": {
+        "observer": {
+          "bytes": 11959,
+          "sha256": "fc67b61d434c9de7bfe6bb8a6efdc0daf75d3478d506d152c440a4668d877379"
+        },
+        "analyzer": {
+          "bytes": 9043,
+          "sha256": "f04fcad832ef483f073eeac7019bc4e26792257b44a722fc7c13fd92f2627d05"
+        },
+        "html": {
+          "bytes": 7289,
+          "sha256": "69066e11caedcaafd7c287f569b4df523e3966d6bb008f65d4c8e89e841811c0"
+        },
+        "wrapper": {
+          "bytes": 86,
+          "sha256": "f819f84f7892157ac0d7e50ab6bc2a7e123f00b4da9574711b35a40dfd855ae8"
+        }
+      },
+      "observation": {
+        "bytes": 77997,
+        "sha256": "6623d8390ecc4522ff2cd5af853e647d8a780f38e3689fc9d951503484cb814b"
+      },
+      "snapshotFiles": {
+        "before": {
+          "bytes": 19844952,
+          "sha256": "7ce4b938fd3eaf52a71a5574d30f01891c46d18f20d46cd38d62a6605296c560"
+        },
+        "after": {
+          "bytes": 19982683,
+          "sha256": "0fa0dc65a0b4c180acea01c854e2ea9b0a6432bf2a401962923bad2106180f75"
+        },
+        "after40": {
+          "bytes": 19953829,
+          "sha256": "7e86f8a4836320b9869c48130b433cec5d547dd4bc75010d515b1530dfaa17d6"
+        },
+        "released": {
+          "bytes": 17384869,
+          "sha256": "927653c7d471fa451c609b79ff2e2dafd4e4726cf1e6889e335283015c34f3a2"
+        }
+      },
+      "analysisFiles": {
+        "before-analysis.json": {
+          "bytes": 329598,
+          "sha256": "9460feb887143d6da608319472dbe7d7bf174092764af08e622105afb4b0e166"
+        },
+        "after-analysis.json": {
+          "bytes": 325773,
+          "sha256": "ad8e886ee45594c9e020214ab07bd5d912e01ef1a7cbf3c862cb148dc7c474ab"
+        },
+        "after40-analysis.json": {
+          "bytes": 326030,
+          "sha256": "517a9e0bf1d61719061e1e4a38ec22565f61fdc0c74138a81eefbf914139a92b"
+        },
+        "released-analysis.json": {
+          "bytes": 223182,
+          "sha256": "0372bb829a43efbd87dc268376de0b1b6feaa65b0e7f4d9ebab7cda054752f64"
+        }
+      },
+      "warmCycles": 12,
+      "measuredCycles": 40,
+      "domCounters": {
+        "before": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "after": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "after40": {
+          "documents": 1,
+          "nodes": 1258,
+          "jsEventListeners": 123
+        },
+        "released": {
+          "documents": 1,
+          "nodes": 484,
+          "jsEventListeners": 28
+        }
+      },
+      "firstInterval": {
+        "shallowBytes": {
+          "before": 14019803,
+          "after": 14501839
+        },
+        "shallowByteDelta": 482036,
+        "byType": [
+          {
+            "type": "array",
+            "shallowByteDelta": 94080
+          },
+          {
+            "type": "code",
+            "shallowByteDelta": 341148
+          },
+          {
+            "type": "native",
+            "shallowByteDelta": 46592
+          },
+          {
+            "type": "number",
+            "shallowByteDelta": 84
+          },
+          {
+            "type": "object",
+            "shallowByteDelta": 128
+          },
+          {
+            "type": "string",
+            "shallowByteDelta": 4
+          }
+        ],
+        "namedCohorts": 62,
+        "allNamedPopulationCountsUnchanged": true
+      },
+      "detachedNodes": {
+        "before": 4,
+        "after": 4,
+        "after40": 4,
+        "released": 0
+      },
+      "selectedPopulationCounts": [
+        {
+          "name": "closure:frame",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 0
+        },
+        {
+          "name": "closure:mountFlightApp",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightNotebook",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountFlightStudio",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:mountRadioSetup",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        },
+        {
+          "name": "closure:onFreeze",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 0
+        },
+        {
+          "name": "closure:paint",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 0
+        },
+        {
+          "name": "closure:render",
+          "warm": 6,
+          "after20": 6,
+          "after40": 6,
+          "released": 1
+        },
+        {
+          "name": "closure:setLocale",
+          "warm": 3,
+          "after20": 3,
+          "after40": 3,
+          "released": 1
+        },
+        {
+          "name": "object:BoxGeometry",
+          "warm": 39,
+          "after20": 39,
+          "after40": 39,
+          "released": 0
+        },
+        {
+          "name": "object:BufferGeometry",
+          "warm": 22,
+          "after20": 22,
+          "after40": 22,
+          "released": 20
+        },
+        {
+          "name": "object:CanvasTexture",
+          "warm": 4,
+          "after20": 4,
+          "after40": 4,
+          "released": 0
+        },
+        {
+          "name": "object:DataTexture",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        },
+        {
+          "name": "object:Group",
+          "warm": 5,
+          "after20": 5,
+          "after40": 5,
+          "released": 0
+        },
+        {
+          "name": "object:LineBasicMaterial",
+          "warm": 4,
+          "after20": 4,
+          "after40": 4,
+          "released": 1
+        },
+        {
+          "name": "object:Mesh",
+          "warm": 56,
+          "after20": 56,
+          "after40": 56,
+          "released": 6
+        },
+        {
+          "name": "object:MeshStandardMaterial",
+          "warm": 50,
+          "after20": 50,
+          "after40": 50,
+          "released": 1
+        },
+        {
+          "name": "object:PerspectiveCamera",
+          "warm": 4,
+          "after20": 4,
+          "after40": 4,
+          "released": 1
+        },
+        {
+          "name": "object:Scene",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 0
+        },
+        {
+          "name": "object:WebGL2RenderingContext",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLProgram",
+          "warm": 5,
+          "after20": 5,
+          "after40": 5,
+          "released": 1
+        },
+        {
+          "name": "object:WebGLRenderer",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 0
+        },
+        {
+          "name": "object:WebGLTexture",
+          "warm": 1,
+          "after20": 1,
+          "after40": 1,
+          "released": 1
+        }
+      ],
+      "resources": {
+        "warm": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "after20": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "after40": {
+          "renderer": {
+            "available": true,
+            "disposed": false,
+            "registered": {
+              "geometries": 52,
+              "materials": 52,
+              "textures": 4
+            },
+            "renderer": {
+              "geometries": 34,
+              "textures": 2,
+              "programs": 4,
+              "contextLost": false
+            }
+          },
+          "connected": {
+            "all": 324,
+            "canvases": 1,
+            "dialogs": 5
+          },
+          "openDialogs": 0
+        },
+        "disposed": {
+          "available": true,
+          "disposed": true,
+          "registered": {
+            "geometries": 0,
+            "materials": 0,
+            "textures": 0
+          },
+          "renderer": {
+            "geometries": 0,
+            "textures": 1,
+            "programs": 0,
+            "contextLost": true
+          }
+        }
+      },
+      "allCycleResourceCountsMatchWarm": true,
+      "secondInterval": {
+        "shallowByteDelta": -27588,
+        "byType": [
+          {
+            "type": "array",
+            "shallowByteDelta": -136980
+          },
+          {
+            "type": "code",
+            "shallowByteDelta": 105812
+          },
+          {
+            "type": "concatenated string",
+            "shallowByteDelta": -20
+          },
+          {
+            "type": "native",
+            "shallowByteDelta": 3868
+          },
+          {
+            "type": "number",
+            "shallowByteDelta": 36
+          },
+          {
+            "type": "object",
+            "shallowByteDelta": -304
+          }
+        ],
+        "allNamedPopulationCountsUnchanged": true,
+        "fullShallowByteDelta": 454448
+      }
+    }
+  ],
+  "diagnosis": {
+    "before": "A connected generated course button retained its onclick closure after app disposal, retaining the app renderer, Scene and WebGLRenderer. The wrapper API had already been released.",
+    "fix": "Clear only app-owned generated course-button handlers and remove those owned buttons during disposal. Old generated handlers are also cleared on translation replacement. No engine or replay rule change.",
+    "beforeSceneStrongPaths": [
+      {
+        "target": "Scene",
+        "strongPath": [
+          {
+            "name": "",
+            "via": null
+          },
+          {
+            "name": "(GC roots)",
+            "via": "1"
+          },
+          {
+            "name": "(Global handles)",
+            "via": "10"
+          },
+          {
+            "name": "InjectedScript",
+            "via": "14 / DevTools console"
+          },
+          {
+            "name": "HTMLDocument",
+            "via": "document"
+          },
+          {
+            "name": "blink::TreeOrderedMap",
+            "via": "64"
+          },
+          {
+            "name": "blink::HeapHashTableBacking<blink::HashTable<blink::AtomicString, blink::KeyValuePair<blink::AtomicString, cppgc::internal::BasicMember<blink::TreeOrderedMap::MapEntry, cppgc::inte",
+            "via": "1"
+          },
+          {
+            "name": "blink::TreeOrderedMap::MapEntry",
+            "via": "46"
+          },
+          {
+            "name": "<div id=\"course-list\" class=\"course-list\">",
+            "via": "1"
+          },
+          {
+            "name": "<button type=\"button\" data-course=\"flight-01\">",
+            "via": "4"
+          },
+          {
+            "name": "blink::EventTargetData",
+            "via": "13"
+          },
+          {
+            "name": "blink::BasicHeapVector<blink::internal::HeapCollectionType::kGCed, cppgc::internal::BasicMember<blink::RegisteredEventListener, cppgc::internal::StrongMemberTag, cppgc::internal::D",
+            "via": "1"
+          },
+          {
+            "name": "blink::RegisteredEventListener",
+            "via": "1"
+          },
+          {
+            "name": "EventListener",
+            "via": "1"
+          },
+          {
+            "name": "V8EventHandlerNonNull",
+            "via": "1"
+          },
+          {
+            "name": "",
+            "via": "1"
+          },
+          {
+            "name": "system / Context / scope @158823",
+            "via": "context"
+          },
+          {
+            "name": "system / Context / scope @66445",
+            "via": "previous"
+          },
+          {
+            "name": "Object",
+            "via": "renderer"
+          },
+          {
+            "name": "setCourse",
+            "via": "setCourse"
+          },
+          {
+            "name": "system / Context / scope @67035",
+            "via": "context"
+          },
+          {
+            "name": "Scene",
+            "via": "scene"
+          }
+        ],
+        "truncated": false
+      }
+    ],
+    "after": "The corrected runs have no Scene, WebGLRenderer, Group, CanvasTexture, frame or paint cohort members after disposal and wrapper-reference release. Host DOM remains mounted.",
+    "remainingLibraryObjectCaveat": "Named cohorts also include module scratch objects and exported constructor prototypes. Only up to two paths per cohort were sampled; these are not an exhaustive classification of all remaining objects.",
+    "remainingSampledPaths": {
+      "object:DataTexture": [
+        {
+          "target": "DataTexture",
+          "strongPath": [
+            {
+              "name": "",
+              "via": null
+            },
+            {
+              "name": "(GC roots)",
+              "via": "1"
+            },
+            {
+              "name": "C++ Persistent roots",
+              "via": "29"
+            },
+            {
+              "name": "blink::ScriptStateImpl",
+              "via": "blink::ScriptState::ScriptState(v8::Local<v8::Context>, DOMWrapperWorld *, scoped_refptr<scheduler::EventLoop>)@../../third_party/blink/renderer/platform/bindings/script_state.cc:1"
+            },
+            {
+              "name": "blink::V8PerContextData",
+              "via": "1"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<const char *, blink::KeyValuePair<const char *, cppgc::internal::BasicMember<blink::V8PerContextData::Data, cppgc::internal::StrongMemb",
+              "via": "3"
+            },
+            {
+              "name": "Modulator",
+              "via": "1"
+            },
+            {
+              "name": "blink::ModuleRecordResolverImpl",
+              "via": "4"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<cppgc::internal::BasicMember<blink::BoxedV8Module, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>, blin",
+              "via": "2"
+            },
+            {
+              "name": "blink::BoxedV8Module",
+              "via": "5"
+            },
+            {
+              "name": "system / SourceTextModule",
+              "via": "1"
+            },
+            {
+              "name": "Generator",
+              "via": "5"
+            },
+            {
+              "name": "system / Context / scope @53027",
+              "via": "context"
+            },
+            {
+              "name": "DataTexture",
+              "via": "lut"
+            }
+          ],
+          "truncated": false
+        }
+      ],
+      "object:Mesh": [
+        {
+          "target": "Mesh",
+          "strongPath": [
+            {
+              "name": "",
+              "via": null
+            },
+            {
+              "name": "(GC roots)",
+              "via": "1"
+            },
+            {
+              "name": "C++ Persistent roots",
+              "via": "29"
+            },
+            {
+              "name": "blink::ScriptStateImpl",
+              "via": "blink::ScriptState::ScriptState(v8::Local<v8::Context>, DOMWrapperWorld *, scoped_refptr<scheduler::EventLoop>)@../../third_party/blink/renderer/platform/bindings/script_state.cc:1"
+            },
+            {
+              "name": "blink::V8PerContextData",
+              "via": "1"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<const char *, blink::KeyValuePair<const char *, cppgc::internal::BasicMember<blink::V8PerContextData::Data, cppgc::internal::StrongMemb",
+              "via": "3"
+            },
+            {
+              "name": "Modulator",
+              "via": "1"
+            },
+            {
+              "name": "blink::ModuleRecordResolverImpl",
+              "via": "4"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<cppgc::internal::BasicMember<blink::BoxedV8Module, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>, blin",
+              "via": "2"
+            },
+            {
+              "name": "blink::BoxedV8Module",
+              "via": "5"
+            },
+            {
+              "name": "system / SourceTextModule",
+              "via": "1"
+            },
+            {
+              "name": "",
+              "via": "0"
+            },
+            {
+              "name": "system / Cell",
+              "via": "924"
+            },
+            {
+              "name": "BatchedMesh",
+              "via": "value"
+            },
+            {
+              "name": "Mesh",
+              "via": "prototype"
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "target": "Mesh",
+          "strongPath": [
+            {
+              "name": "",
+              "via": null
+            },
+            {
+              "name": "(GC roots)",
+              "via": "1"
+            },
+            {
+              "name": "C++ Persistent roots",
+              "via": "29"
+            },
+            {
+              "name": "blink::ScriptStateImpl",
+              "via": "blink::ScriptState::ScriptState(v8::Local<v8::Context>, DOMWrapperWorld *, scoped_refptr<scheduler::EventLoop>)@../../third_party/blink/renderer/platform/bindings/script_state.cc:1"
+            },
+            {
+              "name": "blink::V8PerContextData",
+              "via": "1"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<const char *, blink::KeyValuePair<const char *, cppgc::internal::BasicMember<blink::V8PerContextData::Data, cppgc::internal::StrongMemb",
+              "via": "3"
+            },
+            {
+              "name": "Modulator",
+              "via": "1"
+            },
+            {
+              "name": "blink::ModuleRecordResolverImpl",
+              "via": "4"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<cppgc::internal::BasicMember<blink::BoxedV8Module, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>, blin",
+              "via": "2"
+            },
+            {
+              "name": "blink::BoxedV8Module",
+              "via": "15"
+            },
+            {
+              "name": "system / SourceTextModule",
+              "via": "1"
+            },
+            {
+              "name": "Generator",
+              "via": "5"
+            },
+            {
+              "name": "system / Context / scope @99749",
+              "via": "context"
+            },
+            {
+              "name": "Mesh",
+              "via": "_mesh"
+            }
+          ],
+          "truncated": false
+        }
+      ],
+      "object:MeshStandardMaterial": [
+        {
+          "target": "MeshStandardMaterial",
+          "strongPath": [
+            {
+              "name": "",
+              "via": null
+            },
+            {
+              "name": "(GC roots)",
+              "via": "1"
+            },
+            {
+              "name": "C++ Persistent roots",
+              "via": "29"
+            },
+            {
+              "name": "blink::ScriptStateImpl",
+              "via": "blink::ScriptState::ScriptState(v8::Local<v8::Context>, DOMWrapperWorld *, scoped_refptr<scheduler::EventLoop>)@../../third_party/blink/renderer/platform/bindings/script_state.cc:1"
+            },
+            {
+              "name": "blink::V8PerContextData",
+              "via": "1"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<const char *, blink::KeyValuePair<const char *, cppgc::internal::BasicMember<blink::V8PerContextData::Data, cppgc::internal::StrongMemb",
+              "via": "3"
+            },
+            {
+              "name": "Modulator",
+              "via": "1"
+            },
+            {
+              "name": "blink::ModuleRecordResolverImpl",
+              "via": "4"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<cppgc::internal::BasicMember<blink::BoxedV8Module, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>, blin",
+              "via": "2"
+            },
+            {
+              "name": "blink::BoxedV8Module",
+              "via": "5"
+            },
+            {
+              "name": "system / SourceTextModule",
+              "via": "1"
+            },
+            {
+              "name": "",
+              "via": "0"
+            },
+            {
+              "name": "system / Cell",
+              "via": "1904"
+            },
+            {
+              "name": "MeshPhysicalMaterial",
+              "via": "value"
+            },
+            {
+              "name": "MeshStandardMaterial",
+              "via": "prototype"
+            }
+          ],
+          "truncated": false
+        }
+      ],
+      "object:PerspectiveCamera": [
+        {
+          "target": "PerspectiveCamera",
+          "strongPath": [
+            {
+              "name": "",
+              "via": null
+            },
+            {
+              "name": "(GC roots)",
+              "via": "1"
+            },
+            {
+              "name": "C++ Persistent roots",
+              "via": "29"
+            },
+            {
+              "name": "blink::ScriptStateImpl",
+              "via": "blink::ScriptState::ScriptState(v8::Local<v8::Context>, DOMWrapperWorld *, scoped_refptr<scheduler::EventLoop>)@../../third_party/blink/renderer/platform/bindings/script_state.cc:1"
+            },
+            {
+              "name": "blink::V8PerContextData",
+              "via": "1"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<const char *, blink::KeyValuePair<const char *, cppgc::internal::BasicMember<blink::V8PerContextData::Data, cppgc::internal::StrongMemb",
+              "via": "3"
+            },
+            {
+              "name": "Modulator",
+              "via": "1"
+            },
+            {
+              "name": "blink::ModuleRecordResolverImpl",
+              "via": "4"
+            },
+            {
+              "name": "blink::HeapHashTableBacking<blink::HashTable<cppgc::internal::BasicMember<blink::BoxedV8Module, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>, blin",
+              "via": "2"
+            },
+            {
+              "name": "blink::BoxedV8Module",
+              "via": "5"
+            },
+            {
+              "name": "system / SourceTextModule",
+              "via": "1"
+            },
+            {
+              "name": "",
+              "via": "0"
+            },
+            {
+              "name": "system / Cell",
+              "via": "202"
+            },
+            {
+              "name": "ArrayCamera",
+              "via": "value"
+            },
+            {
+              "name": "PerspectiveCamera",
+              "via": "prototype"
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Shallow heap totals are not dominator/exclusive retained memory. Population stability does not prove total memory stability.",
+    "Forced GC and snapshots perturb the process; no natural runtime pacing claim.",
+    "No native decoder, browser-process RSS or GPU byte accounting.",
+    "Three renderer texture bookkeeping may retain 1 after disposal; actual WebGL contextLost=true is recorded without rewriting counters.",
+    "At most two shortest strong paths per named cohort are sampled; weak edges are excluded and missing detachedness would remain unknown.",
+    "Development-package source pins describe exact compiled bytes, not release admission or a committed-source build.",
+    "Raw heaps may include source and fixture strings and stay in ignored local evidence; only bounded hashes/counts/diagnosis are public."
+  ],
+  "sources": [
+    "https://playwright.dev/docs/api/class-cdpsession",
+    "https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler/",
+    "https://developer.chrome.com/docs/devtools/memory-problems/heap-snapshots"
+  ],
+  "observation": {
+    "diagnosedDisposalPathRemoved": true,
+    "measuredNamedPopulationsUnchangedAcross40Cycles": true,
+    "first20ShallowByteDelta": 482036,
+    "next20ShallowByteDelta": -27588,
+    "interpretation": "The second forced-GC interval did not continue the first interval's shallow-byte growth in this run. This narrows the earlier growth concern but does not prove leak freedom or stable process/native/GPU memory.",
+    "qualification": false
+  }
+}

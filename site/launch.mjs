@@ -1,9 +1,16 @@
 // Classic script so a downloaded file can explain how to launch even when ES
 // modules are blocked. Only the current origin's game is entered automatically.
-(() => {
+(async () => {
   const host = globalThis;
+  const scriptURL = host.document.currentScript.src;
+  await host.RevealLineAccess?.ready;
+  const fallback = {
+    'errors:thisIsADownloadedCopyChoosePlayOnlineOrStart':
+      'This is a downloaded copy. Choose Play online, or start a local server to play this copy.',
+    'errors:openYourArcade': 'Open your arcade.',
+  };
+  const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
-  const scriptURL = doc.currentScript.src;
   const target = new URL('../game/', scriptURL);
   const current = new URL(host.location.href);
   const game = doc.getElementById('launch-game');
@@ -12,9 +19,10 @@
   game.href = target.href;
   if (current.protocol === 'file:') {
     game.hidden = true;
-    doc.getElementById('boot-title').textContent = 'Open your arcade.';
-    doc.getElementById('boot-status').textContent =
-      'This is a downloaded copy. Choose Play online, or start a local server to play this copy.';
+    doc.getElementById('boot-title').textContent = t('errors:openYourArcade');
+    doc.getElementById('boot-status').textContent = t(
+      'errors:thisIsADownloadedCopyChoosePlayOnlineOrStart',
+    );
     doc.getElementById('boot-local').open = true;
     return;
   }

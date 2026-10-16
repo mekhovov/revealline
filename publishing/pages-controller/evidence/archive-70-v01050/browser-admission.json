@@ -1,0 +1,22 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-70",
+  "infrastructureCommit": "e575dd18228feecf72da6ebd3609f0e73c8207fd",
+  "deploymentId": 6647931936,
+  "versions": [
+    "v0.105.0"
+  ],
+  "scope": "Historical online preservation only: exact archive routes, full-body hashes and bounded in-app-browser boot/version/menu/release-bridge inspection. This is not renewed v0.105.0 gameplay acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-70-v01050/public-observation.json",
+      "sha256": "8fb28baf0dc9b97869f314ea010530376974af9c4b1f5a1f64cd1ddf7632b7b0"
+    }
+  ],
+  "limitations": [
+    "No mission was started or completed during this archive-only observation.",
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "The browser shared existing local preferences; its selected difficulty is not evidence of a fresh-profile default."
+  ]
+}

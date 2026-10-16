@@ -1,12 +1,67 @@
 # Reveal Line cross-mode execution register
 
-## Status reconciliation — 22 September 2026
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
 
-The [current remaining-work checkpoint](ux-delivery-status-20260922.md) records public v0.82.0, the qualifying v0.82.1 candidate and the remaining feature queue. This update does not accept unfinished phases or qualify draft PRs. Each candidate requires its final source/version, immutable release and public verification.
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
 
-The dated snapshots below are retained verbatim. Their earlier “current” and “next” descriptions are historical; use the checkpoint above and its linked live PRs for the newer delivery state.
+> **Current status:** use the
+> [30 September plan and source audit](plan-status-2026-09-30.md).
+> Immutable v0.142.3, current main and active source inputs have separate
+> acceptance boundaries. Historical release queues below are not today’s
+> execution order. Whole-game and physical-device qualification remain open.
 
-## Historical checkpoint retained below
+## Original whole-game phases: remaining-work crosswalk
+
+The later Xposed Journey contract reuses P00–P15 for different gameplay phases.
+Its phase numbers are **not** the original whole-game P00–P18 identifiers below.
+Keep both scopes traceable; a Journey phase acceptance does not automatically
+close UI, presentation, community-production or physical-device requirements.
+The linked current plan controls near-term priority; this table preserves the
+original programme's unfinished obligations. Estimates are conditional ranges
+from an item's start, not simultaneous commitments or an overall completion date.
+
+| Original phase / area | Status | Remaining acceptance | Planning range after start |
+| --- | --- | --- | --- |
+| P00/P01 baseline and loading | Initial scope accepted; regression closure open | New async paths acknowledge activation; delayed, cancelled, failed and stale work preserves state. | Within owning features |
+| P02 / P03 / P05 sound, Settings, navigation, accessibility | Partly released | All screens/modes, actual opener restoration, consistent mute/labels, EN/UA fonts, 44px targets, Large/Plain text, zoom, responsive focus and input prompts. | 1–3 days |
+| P06/P07 catalogue and progression | Default entry and library released; closure open | Every compatible campaign, safe Download & play, retained Retry/Next, optional/final endings, campaign-specific offline readiness and repair. | 2–4 days |
+| P08-A existing map presentation | Partial; see current queue | Genuine shared decoded assets and approved art in Solo/Versus/Team; no missing required roles; full boards and both players' controls; imported coverage/stronghold paths. | 1–3 days |
+| P04/P05 Studio and complete themes | Partial | Genuine cross-mode previews, immutable history, complete collection binding, exact Retry/restoration, bounded byte-preserving bundles and FPV/Ukrainian benchmark. | 2–5 days |
+| P08-B/P02-B feedback and audio | Partial | Countdown/loss/capture/rescue/results readability, reduced effects, actual soundtrack listening and cross-mode parity. | 1–3 days plus listening/device access |
+| P09 encounter/difficulty benchmark | Partial; pressure and motion increments delivered/in progress | Deterministic optional encounters, readable counterplay, difficulty fairness, historical saves/replays and human playtest findings. | 3–6 days together with P10 |
+| P10 Team encounters | Unfinished qualification | Separate 36-case matrix; Support, rescue, strongholds and two-player readability preserved. | Included in benchmark estimate |
+| P16 remaining workflows | Partial | Collection/records/mastery, learning, replay, legacy categories, supporting pages and published help/link closure. | 2–4 days |
+| P17 community creation guide | Unfinished | Independent fresh-workspace creation → install → play → recovery trial; current prompts/templates and release instructions. | 1–2 days |
+| P18 whole-game qualification | Unfinished | Performance, storage/download budgets, accessibility, real devices/controllers, offline/lifecycle and complete public journeys; no unresolved required acceptance. | 3–5 days after blockers close |
+
+## Historical execution register
+
+The original text below is retained without rewriting. Its release status and
+queue order are superseded by the linked current delivery plan.
+## Historical integration checkpoint — 23 September 2026 (v0.85 delivery state)
+
+v0.85.0 recovery was published and publicly accepted at this cutoff. PR256 was then a draft retained-presentation successor rebased onto that accepted source; that integration did not allocate a release or accept its remaining qualification. The superseding [current plan](plan-status-2026-09-23.md) now controls release status and queue order. Each feature still requires final source/version, qualification and public verification.
+
+The earlier checkpoints below are retained as historical evidence, including the original [default Journey plan](default-journey-release.md). They do not describe the current publication queue.
+
+## Current priority — 2026-09-22 default Journey delivery
+
+The [six-hour default Journey release plan](default-journey-release.md) is the
+current delivery register. v0.82.0 was the accepted public baseline at start;
+v0.82.1 has passed exact-source qualification and is being published. The one
+successor, reserved v0.83.0, makes the existing 91 Solo/Versus and 12 Team missions
+the ordinary default while keeping explicit Legacy access. No new production,
+save migration or unrelated queued feature is on this critical path. The later
+approved Release B unified tagged selector follows A public acceptance immediately;
+queued recovery/Studio/presentation work follows B. See the current plan for scope
+and the7–11-hour B estimate.
+
+Earlier checkpoints below retain their original evidence and dates. Their “next”
+versions/order are historical, not the current publication queue. Full programme,
+human-balance, physical-device and comprehensive offline gates remain open.
+
 
 ## Current delivery — v0.76.1 publicly verified; v0.77.0 device candidate
 

@@ -10,6 +10,9 @@ import { createWholeSortingCandidates } from '../content-design/whole-spatial-ca
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { chooseJourneyMission } from './helpers/library-selection.mjs';
 
 class Picture {
   width = 1774;
@@ -47,7 +50,11 @@ for (const { direction, ticks } of row.segments)
 assert.equal(reference.status, 'won');
 assert.equal(reference.classic.livesLost, 0);
 assert.equal(authoritativeCheckpoint(reference).hash, row.checkpoint);
-const recording = row;
+const recording = JSON.parse(
+  await readFile(new URL('./fixtures/whole-sorting-tuned-host-route.json', import.meta.url)),
+);
+recording.evidence = expectedRouteEvidence(recording.routeEvidence, 'sorting-yard');
+const approvedLevel = applyGameplayTuning(level, resolveGameplayTuning('standard'));
 const runs = (p, mode) => (mode === 'solo' ? [p.rendered.run] : p.renders);
 const ids = (mode) =>
   mode === 'solo'
@@ -78,13 +85,7 @@ async function page(t, mode, disk, storage) {
         fetchResponse,
       });
 }
-function choose(p, mode, id) {
-  p.$(ids(mode).find).click();
-  const card = p.$('journey-cards').children.find((n) => n.dataset.missionId.endsWith('/' + id));
-  assert(card);
-  card.click();
-  return card.dataset.missionId;
-}
+const choose = (p, mode, id) => chooseJourneyMission(p, ids(mode).find, 'whole-spatial-v5', id);
 async function profileWhen(backend, predicate) {
   let result;
   await settle(() => {
@@ -116,9 +117,10 @@ for (const mode of ['solo', 'versus']) {
     ]);
     const oldBefore = await old.read();
     const p = await page(t, mode, disk, storage);
-    const mission = choose(p, mode, 'sorting-yard');
+    const mission = await choose(p, mode, 'sorting-yard');
     await running(p, mode, 'sorting-yard');
     assert.equal(p.$('journey-chooser').open, false);
+    for (const run of runs(p, mode)) assert.deepEqual(run.level, approvedLevel);
     playKeyboardRoute(
       p,
       () => runs(p, mode),
@@ -139,7 +141,7 @@ for (const mode of ['solo', 'versus']) {
     const disk = managedIndexedDB(),
       backend = createJourneyBackend({ ...disk, profileKey: 'journey-whole-spatial-v5' });
     const p = await page(t, mode, disk, memoryStorage());
-    const mission = choose(p, mode, 'sorting-yard');
+    const mission = await choose(p, mode, 'sorting-yard');
     await running(p, mode, 'sorting-yard');
     p.$(ids(mode).skip).click();
     assert.equal(runs(p, mode)[0].levelId, 'sorting-yard');
@@ -148,7 +150,17 @@ for (const mode of ['solo', 'versus']) {
     const profile = await profileWhen(backend, (x) => x.skipped[mode].includes(mission));
     assert.deepEqual(profile.clears[mode], {});
     assert.deepEqual(profile.skipped[mode], [mission]);
-    choose(p, mode, 'sorting-yard');
+    const previous = [...runs(p, mode)];
+    const checkpoints = previous.map(authoritativeCheckpoint);
+    await choose(p, mode, 'sorting-yard');
+    if (mode === 'versus') {
+      await settle(() => p.$('race-library-replace')?.open);
+      p.frame(0);
+      assert(runs(p, mode).every((run, index) => run === previous[index]));
+      assert.deepEqual(runs(p, mode).map(authoritativeCheckpoint), checkpoints);
+      assert.deepEqual(await backend.read(), profile);
+      p.$('race-library-play').click();
+    }
     await running(p, mode, 'sorting-yard');
     assert.equal(runs(p, mode)[0].coverage, 0);
   });

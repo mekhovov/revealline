@@ -1,0 +1,158 @@
+{
+  "format": "revealline-public-auditor-independent-review.v1",
+  "reviewedAt": "2026-09-22T14:46:34.676571+00:00",
+  "disposition": "NO_BLOCKER_FOR_ACTUAL_DEPLOYMENT_BINDING_REVIEW",
+  "preparedOnly": true,
+  "actualBindingReviewed": false,
+  "publicExecutionApproved": false,
+  "publicNetworkRequests": 0,
+  "payloadDownloads": 0,
+  "sourceEdits": false,
+  "remoteMutations": false,
+  "scope": "Independent static review and offline tests of author-owned cache-only v0.82.1 main public-byte auditor. No deployment, browser, gameplay, offline-cache or listening acceptance.",
+  "source": {
+    "version": "v0.82.1",
+    "commit": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+    "tree": "402f5f12d83cb86dbceb9d9dceec12731ea48980",
+    "distributionSha256": "eb98abe00155176d77facbcedcd1510219031057afc56a5669f98c7330b2b3af",
+    "gitTreeIndependentlyMatched": true,
+    "controllerCommit": null,
+    "controllerTree": null,
+    "deploymentRun": null,
+    "finiteInventory": null
+  },
+  "authorPreparation": {
+    "path": "helper-preparation-v2.json",
+    "bytes": 2801,
+    "sha256": "67075a42847c142dfb2dfab5f2ce03ea86b1b599b537a7debd0a335150c38ccf"
+  },
+  "reviewedFiles": [
+    {
+      "path": "tools/binding.py",
+      "bytes": 13158,
+      "sha256": "7431d7b7e286d75e186d6ca5da9f48ee8680dd3d06afc6947f4473a9f6f2f623"
+    },
+    {
+      "path": "tools/http_audit.py",
+      "bytes": 14555,
+      "sha256": "861c0b17808b0b4d8d57c84eec4ad2dc1b66e1f9a6dea908af07c27e12beac96"
+    },
+    {
+      "path": "tools/test_binding.py",
+      "bytes": 10977,
+      "sha256": "0c8f418553a27123d33102a650e28ec6268025b0b497fe54442b89e4dd686b3b"
+    },
+    {
+      "path": "tools/test_http_audit.py",
+      "bytes": 9847,
+      "sha256": "630da51fecbf077a0bad59c275e0a64bd23df412efd1f4beaa0a62bc63e62e4d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6505,
+      "sha256": "4d8bfc1815fb48f30b83d73b0abd102cce9f510bc3f31d11b841ff210a2b444d"
+    },
+    {
+      "path": "execution-request.template.json",
+      "bytes": 1389,
+      "sha256": "653329e58ef8857b3e3667af497dbc4fc85bd56946bc2884e55e63ee4b6ebb39"
+    },
+    {
+      "path": "metadata-pins.json",
+      "bytes": 389,
+      "sha256": "924024d37a4c91d0eafd9cac2efb5749065b032ab72ecf4c7d72d75e25d1baef"
+    }
+  ],
+  "sourceMetadata": [
+    {
+      "path": "inputs/release.json",
+      "bytes": 465,
+      "sha256": "bba2db9c5ed2c0d136224472dde33117cae6c8518c6d162f279f1cb5ed27bb5e"
+    },
+    {
+      "path": "inputs/manifest.json",
+      "bytes": 192123,
+      "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d"
+    },
+    {
+      "path": "inputs/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "cd471011a9f229a656943a4b9e37363e86b2fc4660fe762dc3e3e158b9bc3588"
+    }
+  ],
+  "originalMetadataComparison": {
+    "equal": true,
+    "originalDirectory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-inspection/evidence/qualified-artifact-verified",
+    "details": {
+      "path": "independent-preparation-review-initial.json",
+      "bytes": 3452,
+      "sha256": "13a3dc3eb7c8a7c9d90e2b18f0852ff0b46bb7a41c0bf54aa2fc41309508df9f"
+    }
+  },
+  "verified": [
+    "All thirteen successor preparation pins match actual bytes before and after independent tests. Every retained pre-fix history-manifest pin also matches.",
+    "No invented future identities: template reviewed=false with null controller/run/deployment/artifact/inventory fields; execution requires an actual reviewed request and all ten retained authority roles.",
+    "Controller commit/tree are independently bound to main, commit API, successful named publication run/jobs/required steps, Pages deployment/latest retained status, receipt artifact descriptor and exact committed publication/catalog bytes. Frozen game source/tree remain separate fixed identities.",
+    "ZIP receipt validation binds its exact bytes/SHA to artifact metadata, permits only two expected ordinary bounded members, and validates CRC, extraction identity and canonical source metadata.",
+    "Finite inventory preserves every actual receipt row and its order, validates unique safe paths/hash/length/totals and the reviewed serialized digest; every original canonical manifest member must be included. It does not substitute the game manifest subset for the complete deployment.",
+    "Transport is fixed to HTTPS mekhovov.github.io/revealline; safe relative paths are quoted, redirects are refused, exact status/final URL/encoding/body size/hash/MIME are checked, and read size stops at at most one byte beyond the descriptor.",
+    "Four workers and at most three attempts per row; every attempt is flushed before retry and every final row retained. Reports distinguish failed attempts, final failures and unstarted rows. Bodies are hashed in memory and not saved as payload files.",
+    "Before network/output execution the helper checks at least 1 GiB free; new timestamp/UUID output avoids overwrite, copies metadata/authorities/helpers, and revalidates bound request/source/helper inputs before PASS.",
+    "Updated deadline logic prefers read1, checks before/after each body read including EOF, and refuses late completion after response close. README/report now correctly distinguish acceptance deadlines from blocking-transport wall duration."
+  ],
+  "independentTests": {
+    "command": "Python -B unittest discovery of tools/test_*.py with socket.connect/connect_ex/getaddrinfo/sendto denied by sys.addaudithook",
+    "tests": 29,
+    "passed": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "networkDenied": true,
+    "beforeAfterPinsEqual": true,
+    "log": {
+      "path": "independent-local-tests-v2.log",
+      "bytes": 5895,
+      "sha256": "ef10ac32f3004f38ea211f73ab3b3ef104d72c7d9c4f156a7ecc13ee8763c17c"
+    }
+  },
+  "resolvedFindings": [
+    {
+      "id": "deadline-late-eof",
+      "status": "FIXED_AND_RETESTED",
+      "initialReview": {
+        "path": "independent-preparation-review-initial.json",
+        "bytes": 3452,
+        "sha256": "13a3dc3eb7c8a7c9d90e2b18f0852ff0b46bb7a41c0bf54aa2fc41309508df9f"
+      },
+      "exactRedProbe": {
+        "path": "independent-deadline-probe.json",
+        "bytes": 867,
+        "sha256": "eb22d21d6ec2a7506ba9443cbbad1d848199e2c2371097fd6c47a59aad405e0c"
+      },
+      "originalAuthorRedLog": {
+        "path": "deadline-regression-before-complete.log",
+        "bytes": 5919,
+        "sha256": "0409f4bffce1bfbb7ef710c76dafd4e57c8dd6b8f075b08203e715837ed35e65"
+      },
+      "originalHelperHistory": {
+        "path": "history/deadline-before/history-manifest.json",
+        "bytes": 1504,
+        "sha256": "24072986011f98b32cb534e68b7db53953e7161b43237f601e41040ddb470f02"
+      },
+      "resolution": "Four added regressions exercise late EOF past attempt/global limits, delayed body, read1 preference, and late close. All 29 pass independently."
+    }
+  ],
+  "openBlockers": [],
+  "requiredBeforePublicExecution": [
+    "Retain the actual completed main publisher/deployment/receipt originals and exact controller Git objects; fill the null candidate fields without relabeling the frozen game source as controller.",
+    "Independently review actual ten-role authority pins, deployment freshness, full finite inventory and supported MIME coverage; parent then controls reviewed:true and execution authorization.",
+    "Preserve failed attempts and final report; separately perform required native/public/offline journeys and owner acceptance."
+  ],
+  "limits": [
+    "This audit checks a prepared helper. No actual deployed inventory or future run has been admitted, and no public HTTP response has been observed.",
+    "Raw API observations must be captured faithfully by the owner. The helper validates retained bindings but makes no fresh API request to prove they remain latest during execution.",
+    "Socket timeout is an inactivity bound. A blocking DNS/connect/TLS/header/read/close call may return after its acceptance deadline; expired completions cannot PASS. This is not a strict process wall timer.",
+    "The 1 GiB guard is a pre-execution free-space check, not a reservation against unrelated concurrent disk consumption.",
+    "Local transport fixtures do not measure real network behavior. No browser, physical-device, musical or release approval is supplied."
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "status": "PASS_FRESH_POST_AUDIT_AUTHORITIES",
+  "checkedAt": "2026-09-22T23:13:19.878Z",
+  "archiveCommit": "ec1a56b00013f36190f208bf37b6e98a1a0e8e85",
+  "archiveTree": "62d60cfb85f6c0e2824109da6b2cdc8734e8e7a2",
+  "productionRunId": 35795834460,
+  "deploymentId": 6602604137,
+  "deploymentStatusId": 18701974712,
+  "pins": [
+    {
+      "path": "after-main-original.json",
+      "bytes": 358,
+      "sha256": "6323463d5cfbe8b35d96d79fe631be3b41dfc991a4d08ea8144a89daebac921e"
+    },
+    {
+      "path": "after-commit-original.json",
+      "bytes": 2771,
+      "sha256": "a35e33e682df6d3af6a857ed132417bdfc34e5e34446acd85b555cbfa795d26e"
+    },
+    {
+      "path": "after-production-run-original.json",
+      "bytes": 13268,
+      "sha256": "fab33b681236cc82bde77e0ff6775b1849b8d2e9ecffd29200b57e6f390752a1"
+    },
+    {
+      "path": "after-deployment-statuses-original.json",
+      "bytes": 6817,
+      "sha256": "0554b40cce3b16fba4c86b3513c5655d648a4064ef006eb8a2687a70d8e84e0c"
+    },
+    {
+      "path": "after-deployments-original.json",
+      "bytes": 3858,
+      "sha256": "ddcd821ddc5cc2139103c739f82b8d0c780cec0544fc5f97aeb1c927dded39b1"
+    },
+    {
+      "path": "after-public-release-original.json",
+      "bytes": 465,
+      "sha256": "eefe1495aa5f43178e1e92c25a3ffe104aeeb0528a9775f6fcc9d7ef87f0fc80"
+    }
+  ],
+  "scope": "Fresh GitHub main/archive/run/latest Pages deployment authority and public release marker after completed full-body audit. Separate from the auditor final local-pins validation."
+}

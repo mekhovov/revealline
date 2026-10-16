@@ -20,7 +20,7 @@ Choose the next unused version only after the coordinated parent release is acce
 
 This packet does not establish physical-device, production-artwork, full-suite or public acceptance. Earlier PR233 native evidence remains attributed to its original source. Synthetic diagnostic PNGs are not visual-art approval.
 
-## Native same-origin restoration follow-up
+## Historical native same-origin restoration follow-up (source `3563ef77344de3b7fa27263cefd90a38a4326be1`)
 
 Exact source `3563ef77344de3b7fa27263cefd90a38a4326be1` passed an ordinary First Signal win → direct Next → Relay Orchard pause → v5 game-data export → Keep → deliberate Replace → Load paused → Undo → reload → explicit Continue journey at1280×720. The visible post-load export retained the identical run, complete simulation checkpoint, picture pins, visual-theme pin and library. Undo focused enabled Export; title Continue explicitly resumed the retained flight.
 

@@ -1,0 +1,237 @@
+{
+  "passed": true,
+  "identity": {
+    "id": "hillside-town-study",
+    "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+  },
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json",
+    "bytes": 6558,
+    "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+  },
+  "sourceRevision": "town-r2",
+  "starts": 4,
+  "modes": 2,
+  "tiers": 3,
+  "results": [
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "start": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "texturedMaterials": 96,
+      "resourceBytes": 3333668,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "start": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "texturedMaterials": 144,
+      "resourceBytes": 3779324,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "start": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "start": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "start": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "texturedMaterials": 96,
+      "resourceBytes": 3333668,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "start": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "texturedMaterials": 144,
+      "resourceBytes": 3779324,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "start": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "start": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "start": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "texturedMaterials": 96,
+      "resourceBytes": 3333668,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "start": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "texturedMaterials": 144,
+      "resourceBytes": 3779324,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "start": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "start": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "start": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "texturedMaterials": 96,
+      "resourceBytes": 3333668,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "start": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "texturedMaterials": 144,
+      "resourceBytes": 3779324,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "start": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "start": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "start": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "texturedMaterials": 96,
+      "resourceBytes": 3333668,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "start": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "texturedMaterials": 144,
+      "resourceBytes": 3779324,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "start": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "start": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "start": "lower-square",
+      "geometryDigest": "d9b7489f29c3143b42a78d58175f006139bfc4ae0e6d43822be88f7e2b52825f",
+      "texturedMaterials": 96,
+      "resourceBytes": 3333668,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "start": "middle-courtyard",
+      "geometryDigest": "51f835bff34c7b58dc324bd01393e191c06d768ec294813f29a0b5a7156ddb03",
+      "texturedMaterials": 144,
+      "resourceBytes": 3779324,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "start": "upper-terrace",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "start": "elevated-pad",
+      "geometryDigest": "1e05bf5a29d16a2d009ec399a0b709f44407f0284d4eca768f4c754090cade33",
+      "texturedMaterials": 64,
+      "resourceBytes": 3053988,
+      "paused": true
+    }
+  ],
+  "disposed": true,
+  "nativePlayerVerified": false,
+  "claim": "Verified-byte Library configuration and production prepare only; native source/player review and package/offline remain required."
+}

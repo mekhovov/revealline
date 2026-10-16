@@ -1,0 +1,89 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-73",
+    "repository": "mekhovov/revealline-archive-73",
+    "url": "https://mekhovov.github.io/revealline-archive-73/"
+  },
+  "preservedRelease": {
+    "version": "v0.108.0",
+    "sourceRevision": "4755a331bf06be1490d2e41bc4d1a59515a5cd0c",
+    "sourceTree": "aee02242e8bd1cc7c5bd449624d92ea00fbd435e",
+    "tagObject": "0c95c88e8af58f6726945f838e90f6c175c122bd",
+    "releaseId": 396142968,
+    "distributionSha256": "61dc150364418e0fad8e2b53440a3866fc08ffe5b4a2a075053f3e22eb11cb33"
+  },
+  "archiveSource": {
+    "pr": 2,
+    "head": "580cf595092838ac1a58b86216f56ef5e769b7b5",
+    "mergeCommit": "988d20ea6f09d478003033774aa839409489b04c",
+    "mergeTree": "c3e9e7cbc88240cc75b7210ee4b82147cb0c4194",
+    "review": "SAFE",
+    "reviewedExactHead": "580cf595092838ac1a58b86216f56ef5e769b7b5"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36076131393,
+    "exactMainRun": 36076252577,
+    "buildJob": 107888006181,
+    "deployJob": 107888165174,
+    "receiptsArtifact": {
+      "id": 10839829688,
+      "name": "archive73-verification-receipts",
+      "bytes": 60579,
+      "sha256": "f50d009ad317d796095ec78acab108f3558d8ee92033e75566c895460bd3e1f1"
+    },
+    "pagesArtifact": {
+      "id": 10839774818,
+      "name": "github-pages",
+      "bytes": 534681418,
+      "sha256": "5620c88a12a6609fb7f4306823be726712acb7d0a16c2f44e5e5cbbe0506d29d"
+    },
+    "deployment": {
+      "id": 6650793363,
+      "statusId": 18811504098,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-73/",
+      "createdAt": "2026-09-25T00:10:52Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "f2f84c870a176fa65ff783eb81dab3c9dbb03de7a4082d4e513cd7e48e993d01",
+      "receiptSha256": "73b76224b82145a133ec5ffdee602f0fcbe184d531c6db89b922d01d1e69026a",
+      "zipReceiptSha256": "348bccb5a7f15e5da5d0044db426b91f15e6d2a984eea3a3ada56cb96c8ec90b",
+      "files": 1145,
+      "bytes": 595439394,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "preservedFailureEvidence": {
+    "run": 36076035496,
+    "attempt": 1,
+    "deployJob": 107887464651,
+    "failure": "Pages deployment returned 404 before Pages was enabled; build, extraction, reread and upload had already passed. Attempt 2 deployed the superseded pre-fix main; PR #2 and exact-main run supersede it."
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path with Accept-Encoding: identity; stream and compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1145,
+    "bytes": 595439394,
+    "failures": 0,
+    "durationSeconds": 125.4,
+    "verifiedAt": "2026-09-25T00:15:53.438384+00:00"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-73/releases/v0.108.0/site/game/",
+    "observations": [
+      "fresh main menu loaded as Reveal / Line with Continue/Missions/Collection/Settings",
+      "saved Journey Continue reached live Solo gameplay",
+      "Pause exposed Resume/Restart/Missions/How to play/Settings/Home and Resume returned to gameplay",
+      "Versus query loaded the 91-mission two-board menu with Start race enabled",
+      "Team query loaded the 12-mission shared-arena menu and Start together enabled after exact artwork preparation",
+      "clean cache-busted navigation loaded the main menu without fallback or a new tab"
+    ],
+    "scope": "Browser/native interaction admission only; does not claim physical iPhone/controller or cold-server-offline acceptance.",
+    "transient": "The first browser navigation began while the new Pages deployment was still propagating and reported one failed app.mjs import; immediate reload after public-byte availability succeeded, and a later clean navigation succeeded. This transient is retained rather than counted as a product failure."
+  },
+  "accepted": true
+}

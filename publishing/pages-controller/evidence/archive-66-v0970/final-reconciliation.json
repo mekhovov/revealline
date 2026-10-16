@@ -1,0 +1,46 @@
+{
+  "format": "revealline-archive66-combined-reconciliation.v1",
+  "status": "HTTP_PASS_WITH_NATIVE_LIMITATIONS",
+  "recordedAt": "2026-09-24T05:45:39.290112+00:00",
+  "preservedRelease": "v0.97.0",
+  "sourceRevision": "1518e15e248b59c6470cc6931023eaf6f1ac363c",
+  "http": {
+    "path": "http-reconciliation.json",
+    "bytes": 3125,
+    "sha256": "c0a3d7fe84d0dd8fc09a3c0ce1b59dd4ed9da2982fdc452511b521b47b313a9c"
+  },
+  "native": {
+    "path": "native-observation.json",
+    "bytes": 4054,
+    "sha256": "b4fb32189acdec61db464cbced58fb49d059912d73bf89c833a69bef4baf8134"
+  },
+  "interruptedAttempt": {
+    "path": "interrupted-audit.json",
+    "bytes": 1434,
+    "sha256": "c96e28b5f8f15a41b77bc404026c0a0d9ec739ab14c74ddf3f54f06feaad30e3"
+  },
+  "deployment": {
+    "repository": "mekhovov/revealline-archive-66",
+    "archiveCommit": "49b8f62624fef9d1bb80d72d5bba92d61dfb57ea",
+    "archiveTree": "346f208297297bf48838e86ceb01e6e5d7ac99ab",
+    "runId": 35960534164,
+    "deploymentId": 6630982630,
+    "deploymentStatusId": 18766514385,
+    "receiptArtifactId": 10791604998,
+    "unchangedAfterHTTP": true
+  },
+  "nativeScope": "Bounded native desktop keyboard/mouse historical online preservation: Solo Home/version/catalogue, Team capture/pause, guarded mode departure, real Versus win and deliberate direct Next. Studio inspection only; no draft apply or successor-level clear.",
+  "limitations": [
+    "The physical test machine is out of disk space. Team and Versus reported FILE_ERROR_NO_SPACE or database-connection-closing and visibly offered Retry saving and Export. Session play worked, but persistence, offline readiness and storage recovery are not passing results.",
+    "Raw database error text is exposed to players; retain a UX5 friendly-recovery-copy follow-up without hiding Retry/Export or failure status.",
+    "Studio return navigation needs a separate normal-capacity/browser investigation. Frozen release bytes were not modified.",
+    "No physical controller, physical touch, screen reader, mobile viewport, exhaustive mission, replay, full Solo completion, cross-campaign ending or comprehensive offline qualification is claimed.",
+    "No user saves were cleared, no source draft was applied, and no clean-console verdict is claimed."
+  ],
+  "storageIncident": {
+    "firstAudit": "Failed closed on metadata ENOSPC; original partial rows retained, not accepted.",
+    "repeatAudit": "Full fixed1121-file inventory passed unchanged.",
+    "repeatRamMinimumFreeBytes": 70914048
+  },
+  "notNewUX0Acceptance": true
+}

@@ -1,6 +1,12 @@
 import { createRun, stepRun, releaseInputs, getSummary, FIXED_DT, CLASSES } from './core/index.mjs';
 import {
   LEGACY_VERSIONS,
+  isRunningEnemyRuleset,
+  SNAKE_VERSIONS,
+  SNAKE_PURSUIT_VERSIONS,
+  SNAKE_PURSUIT_V2_VERSIONS,
+  isPursuitRuleset,
+  baseLevelVersion,
   ENCOUNTER_VERSIONS,
   WIDE_VERSIONS,
   CLASSIC_VERSIONS,
@@ -50,22 +56,40 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  isRelayRuleset(versions.ruleset)
-    ? [
-        ...SECTIONS,
-        'encounter',
-        'classic',
-        'foundations',
-        'relays',
-        ...(isDirectionalRuleset(versions.ruleset) ? ['directionalFields'] : []),
-      ]
-    : versions.ruleset === FOUNDATION_VERSIONS.ruleset
-      ? [...SECTIONS, 'encounter', 'classic', 'foundations']
-      : versions.ruleset === CLASSIC_VERSIONS.ruleset
-        ? [...SECTIONS, 'encounter', 'classic']
-        : versions.ruleset !== LEGACY_VERSIONS.ruleset
-          ? [...SECTIONS, 'encounter']
-          : SECTIONS;
+  versions.ruleset === SNAKE_VERSIONS.ruleset
+    ? [...SECTIONS, 'encounter', 'classic', 'foundations', 'relays', 'directionalFields', 'snake']
+    : isRunningEnemyRuleset(versions.ruleset)
+      ? [
+          ...SECTIONS,
+          'encounter',
+          'classic',
+          'foundations',
+          'relays',
+          'directionalFields',
+          'runningEnemies',
+          ...(isPursuitRuleset(versions.ruleset) ? ['pursuit'] : []),
+          ...([SNAKE_PURSUIT_VERSIONS.ruleset, SNAKE_PURSUIT_V2_VERSIONS.ruleset].includes(
+            versions.ruleset,
+          )
+            ? ['snake']
+            : []),
+        ]
+      : isRelayRuleset(versions.ruleset)
+        ? [
+            ...SECTIONS,
+            'encounter',
+            'classic',
+            'foundations',
+            'relays',
+            ...(isDirectionalRuleset(versions.ruleset) ? ['directionalFields'] : []),
+          ]
+        : versions.ruleset === FOUNDATION_VERSIONS.ruleset
+          ? [...SECTIONS, 'encounter', 'classic', 'foundations']
+          : versions.ruleset === CLASSIC_VERSIONS.ruleset
+            ? [...SECTIONS, 'encounter', 'classic']
+            : versions.ruleset !== LEGACY_VERSIONS.ruleset
+              ? [...SECTIONS, 'encounter']
+              : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -233,7 +257,32 @@ const physicsRecipe = (recipe) =>
     'moveSpeedMultiplier',
   ]);
 function authoritativeSections(state, versions) {
+  const pursuit = isPursuitRuleset(versions.ruleset);
+  const supplemental = isRunningEnemyRuleset(versions.ruleset);
+  if (supplemental) versions = resolveVersions({ levelVersion: baseLevelVersion(state.level) });
   return {
+    ...(pursuit ? { pursuit: structuredClone(state.level.pursuit) } : {}),
+    ...(state.snake
+      ? {
+          snake: {
+            definition: structuredClone(state.level.snake),
+            state: structuredClone(state.snake),
+          },
+        }
+      : {}),
+    ...(supplemental
+      ? {
+          encounter: null,
+          classic: null,
+          foundations: null,
+          relays: null,
+          directionalFields: null,
+          runningEnemies: {
+            definition: structuredClone(state.level.runningEnemies),
+            state: structuredClone(state.runningEnemies ?? null),
+          },
+        }
+      : {}),
     identity: pick(state, [
       'ruleset',
       'levelId',
@@ -280,6 +329,7 @@ function authoritativeSections(state, versions) {
       pick(enemy, [
         'id',
         'type',
+        'course',
         'x',
         'y',
         'radius',

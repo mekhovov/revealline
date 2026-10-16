@@ -1,0 +1,19 @@
+{
+  "status": "PASS_SCOPED_APPROVED_ADMISSION_INPUTS",
+  "controllerSource": "7a8bf9aa3ec0a8264e8a6d0f15c7e4e8dcd7e6f0",
+  "checks": [
+    "51 exact evidence pins",
+    "50 historical allocation entries preserved",
+    "requireBrowser true accepts independently reviewed owner-approved archive51",
+    "pending browser record refused",
+    "missing browser authority refused",
+    "changed evidence refused"
+  ],
+  "admittedArchive": "archive-51",
+  "files": 1059,
+  "bytes": 590404002,
+  "futureSelectorValidated": false,
+  "networkRequests": 0,
+  "liveConfigurationChanged": false,
+  "boundary": "Bounded original821 metadata/admission check only. Later083 must supply its actual source qualification, complete catalogue/routing and capacity/build checks."
+}

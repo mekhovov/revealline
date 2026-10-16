@@ -1,0 +1,182 @@
+{
+  "format": "revealline-archive-http-independent-preparation-review.v1",
+  "status": "PASS_SCOPED_BINDING_AND_HELPER_REVIEW",
+  "reviewedAt": "2026-09-22T15:33:35.799492+00:00",
+  "reviewer": "Codex subagent /root/soundtrack_references",
+  "authorship": "Reviewer did not author binding/transport/tests or collect deployment evidence. Reviewed exact diff, owner tests/logs, actual retained authority and local conditional binding.",
+  "candidate": {
+    "path": "execution-request.candidate.json",
+    "bytes": 1639,
+    "sha256": "2e87858755458497adb2a512be95a7c668fbda218a473670480cd286b8d63ff5",
+    "reviewed": false,
+    "unchanged": true
+  },
+  "helperPreparation": {
+    "path": "http-helper-preparation.json",
+    "bytes": 4683,
+    "sha256": "acd411be885e08a9633581d1bae3f8df9827fafd1d31bdfa97957fb641d520f8"
+  },
+  "actual": {
+    "archiveCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+    "archiveTree": "c057f683ae6f7afcf3696120d9d5d65fb9fb38d7",
+    "sourceCheckoutCommit": "8bf0ed6c3947ca8c47ad2d9246db3e57acd986cf",
+    "runId": 35747012670,
+    "deploymentId": 6594278854,
+    "deploymentStatusId": 18683226213,
+    "receiptArtifactId": 10703815435
+  },
+  "inventory": {
+    "files": 1059,
+    "bytes": 590404002,
+    "sha256": "7687ea84796d955b63b6bc11b41465a7777be7e7f24ccd07b2becd2eeee246c0"
+  },
+  "pins": [
+    {
+      "path": "http-tools/audit_binding.py",
+      "bytes": 9046,
+      "sha256": "84cd4a00c22919e8cf8423ae4a8c4cb8b3e0312bfe8cfd00ab2a25be20922f16"
+    },
+    {
+      "path": "http-tools/http_audit.py",
+      "bytes": 14812,
+      "sha256": "cb73e372f9dcd1eba016aca9e654315654f5d4d945bcdefee3ac0014a172ead7"
+    },
+    {
+      "path": "http-tools/test_http_audit.py",
+      "bytes": 12086,
+      "sha256": "391e55851d2faff675849dd5e32e7aaa477a6a4ddf7589b9109b35a5a3d6f23f"
+    },
+    {
+      "path": "http-transport-tests.log",
+      "bytes": 3053,
+      "sha256": "e0d9eb3eaa0800864acfffff93e16f08b40d7d19e78d969be22469c51a741d53"
+    },
+    {
+      "path": "http-final-deadline-before.log",
+      "bytes": 3887,
+      "sha256": "9e700b38d08d0a7ec75459ab86ab18413b031159ed1561f282b9f2fa6cc3f115"
+    },
+    {
+      "path": "http-helper-tests-final.log",
+      "bytes": 3225,
+      "sha256": "20f06a65dcab494165566bef9a873017b0147282098c853092aab9fb8327fd0f"
+    },
+    {
+      "path": "http-prepare.json",
+      "bytes": 133,
+      "sha256": "39fc77d9a93db4f39197bccd7124474456346a0e73dd161e345e44ffd021bfb1"
+    },
+    {
+      "path": "execution-request.candidate.json",
+      "bytes": 1639,
+      "sha256": "2e87858755458497adb2a512be95a7c668fbda218a473670480cd286b8d63ff5"
+    },
+    {
+      "path": "conditional-binding-preflight.json",
+      "bytes": 734,
+      "sha256": "0b2cb1d8e75e0c21479e9a40bab89a6ea188ea1c90bc0e85b4fb923a3ea618a0"
+    },
+    {
+      "path": "deploy-jobs-original.json",
+      "bytes": 4836,
+      "sha256": "bc0f84dc2628bb78834f2059ac4bbe5dcc688ac49a36440f2f79c003b1243570"
+    },
+    {
+      "path": "deploy-run.log",
+      "bytes": 236401,
+      "sha256": "cba4052777587edcd643b9e1433d5dd72ee2b929fdae4ad3ab4e67fd2e109113"
+    },
+    {
+      "path": "original-release-preservation.json",
+      "bytes": 2676,
+      "sha256": "c26bb7d90e7ba78a67b3e64ffdf9b2e95747190854f2d081f0f944bd8bc183a3"
+    },
+    {
+      "path": "DEPLOYED-HTTP-PREPARATION.md",
+      "bytes": 3294,
+      "sha256": "5abde9ab84ce3b361819d873966f6cf5480c61f4e8d46049863121b4da5a063e"
+    },
+    {
+      "path": "deployed-main-original.json",
+      "bytes": 358,
+      "sha256": "384471ec29bd8defe5385985818fd5e8ac6c4f81ddc49969e40e4b8097819ee2"
+    },
+    {
+      "path": "deployed-commit-original.json",
+      "bytes": 2753,
+      "sha256": "4c4506e02e7dfa990fa46becf3e0fd8e764b82fbccd77da821e56296a5e5f26a"
+    },
+    {
+      "path": "deploy-run-original.json",
+      "bytes": 13168,
+      "sha256": "f3caf107280d4df167b6ff98356815e21cf1400c6a17ac37a3b574826552b9a5"
+    },
+    {
+      "path": "deployment-actual-original.json",
+      "bytes": 3856,
+      "sha256": "68b6e37fa8de5b5e7d33dab27262a7d145ad9fff26f88d561bba81b8139a0f18"
+    },
+    {
+      "path": "deployment-statuses-original.json",
+      "bytes": 6817,
+      "sha256": "fcdc9ea4d671814537e9d08bf58bafafbd6e582858464f27d65d083172e26616"
+    },
+    {
+      "path": "deploy-artifacts-original.json",
+      "bytes": 1454,
+      "sha256": "c7f89c0b137b6de6ebe6578c719dd9363e7699906d0e83b3cb9657580e1dc548"
+    },
+    {
+      "path": "deploy-receipts-original.zip",
+      "bytes": 56129,
+      "sha256": "2a21fdc23f35506f827a7c382422675dbaeddd9b368db4dcee3a52e774d030f0"
+    }
+  ],
+  "receiptMembers": [
+    {
+      "path": "expected-inventory.json",
+      "bytes": 216442,
+      "sha256": "7687ea84796d955b63b6bc11b41465a7777be7e7f24ccd07b2becd2eeee246c0"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1091,
+      "sha256": "7100e5d3ac817ccd0ed0b181fb66eb0bd5b05c0404d01e3c08c4bf44bbf5920f"
+    },
+    {
+      "path": "zip-receipt-v0.82.1.json",
+      "bytes": 409,
+      "sha256": "7d78408dc1b06f56f40c75ea34ab239fce8f046c7558c1ac5d6118e486c261b8"
+    }
+  ],
+  "checks": [
+    "All20 preparation pins and seven raw deployment authority roles match exact size/hash.",
+    "Actual completed deployment run35747012670 and complete build/deploy jobs succeeded; required tag/extraction/reread/upload/deployment steps successful.",
+    "Merged archive8bf0ed6c/treec057f683 and held exact checkout/source-lock/inventory bind to actual API and hosted receipt.",
+    "56129-byte receiptZIP matches artifact10703815435 digest; exactly3 regular unencrypted stored/deflated members pass CRC/hash/inventory checks.",
+    "Binding donor changes only51 identities, Git lazy-fetch disable and exact deployed-checkout requirement; no authority relaxation.",
+    "Transport fetch_once AST matches independently reviewed821v2 except fixed User-Agent; post-read EOF and response-close deadlines preserved.",
+    "New final whole-audit deadline refusal occurs after authority revalidation and controls exit status; meaningful23rd regression preserves earlier22-test history and red failure.",
+    "Four workers,3attempts,25s inactivity/90s per-attempt/1800s global acceptance,1GiB reserve,exact URL/hash/size/MIME and no body persistence retained.",
+    "All1059 inventory rows pass MIME/path descriptors. Actual reviewed:false request refuses; conditional local replay passes only under explicit in-memory reviewed:true assumption. No reviewed file or audit output created."
+  ],
+  "conditionalReplay": {
+    "negativeActualCandidateRefused": "Actual request requires explicit review",
+    "positiveAssumption": "Only local_bytes(REQUEST) was replaced in memory with identical candidate plus reviewed:true. All original authority/Git/ZIP inputs remained actual. This is an offline validator probe, not root approval or execution.",
+    "positiveRows": 1059,
+    "networkAuditHookEvents": []
+  },
+  "ownerTests": {
+    "count": 23,
+    "passed": 23,
+    "independentlyRerun": false
+  },
+  "blockers": [],
+  "publicExecutionApproved": false,
+  "limitations": [
+    "No new network requests, source changes, browser/server actions, public audit, remote mutations or large payload downloads.",
+    "Actual API metadata is a retained observation; no fresh current-main/deployment query.",
+    "No native/offline/device/music-quality approval. Root must separately approve actual request and execution.",
+    "Deadline checks are acceptance bounds, not guaranteed operating-system wall-time interruption."
+  ]
+}

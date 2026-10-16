@@ -1,0 +1,3 @@
+# Team secured-core Studio follow-up
+
+Add an honest deterministic Studio scene showing a secured core while another required stronghold remains active. Preserve the existing starter arena choices and inherited scenes. Use a valid authored Team recipe and actual public commands; do not alter simulation rules or assign earned outcomes. Keep the specimen's identity distinct from canonical Relay Yard and use a neutral backdrop rather than borrowing its picture binding. Retain normal picture identity validation and explicitly scope visual acceptance. Verify independent command replay, loop/reset, live painter bodies and labels, scene selection, absence of picture decoding and normal-scene regressions on Node 20 and Node 22.

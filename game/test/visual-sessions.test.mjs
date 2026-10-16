@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { createRecorder, recordInput, authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import {
@@ -9,13 +10,19 @@ import {
   saveSession,
   VISUAL_SESSION_FORMAT,
 } from '../sessions.mjs';
-import { validateMediaLibrary } from '../media-library.mjs';
+import { createMediaIdentityCatalog, validateMediaLibrary } from '../media-library.mjs';
 import { createPresentationPins } from '../presentation-pins.mjs';
 import { mediaFixture, libraryRecord } from './helpers/media-fixtures.mjs';
 import { prepareAttemptExport } from '../attempt-export.mjs';
 import { emptyLibrary } from '../library.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { prepareBackup, exportBackup } from '../backup.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-identities.mjs';
+import * as gp1 from '../gameplay-tuning-v1.mjs';
+import * as gp2 from '../gameplay-tuning-v2.mjs';
+import * as gp3 from '../gameplay-tuning-v3.mjs';
+import * as gp4 from '../gameplay-tuning.mjs';
 function fixture(mode = 'standard', turnPolicy = 'grid-center') {
   const f = mediaFixture(true),
     entry = f.catalog.entries.find((item) => item.difficulty === mode),
@@ -81,7 +88,13 @@ const options = (f) => ({
   mediaIdentityCatalog: f.identityCatalog,
 });
 const savedFlight = (f, extra = {}) =>
-  suspendSession({ ...f.flight, presentationPins: f.pins, visualThemePin: visualPin(f), ...extra });
+  suspendSession({
+    ...f.flight,
+    presentationPins: f.pins,
+    presentationLevel: f.level,
+    visualThemePin: visualPin(f),
+    ...extra,
+  });
 for (const mode of ['standard', 'gentle'])
   for (const turn of ['immediate', 'grid-center'])
     test(`v5 ${mode}/${turn}: preserves original artwork owner, full visual reference and continuing simulation`, async () => {
@@ -118,6 +131,209 @@ for (const mode of ['standard', 'gentle'])
           restored.session.visualThemePin.content.level.revision,
         );
     });
+
+for (const [revision, tuning] of [
+  ['gp1', gp1],
+  ['gp2', gp2],
+  ['gp3', gp3],
+  ['gp4', gp4],
+])
+  for (const profile of [
+    { mode: 'gentle', overrides: undefined },
+    {
+      mode: 'standard',
+      overrides: { enemySpeed: 1.1, playerSpeed: 1, enemyDensity: 1 },
+    },
+  ])
+    test(`v5 ${revision}/${profile.mode}${profile.overrides ? '/admin' : ''}: separates tuned simulation, authored pictures and visual owner`, async () => {
+      const f = fixture(profile.mode),
+        runOptions = { classId: 'scout', classRecipes: f.entry.campaign.classRecipes ?? CLASSES },
+        recipe = tuning.resolveGameplayTuning(profile.mode, profile.overrides),
+        tuned = tuning.applyGameplayTuning(f.level, recipe);
+      f.flight.run = createRun(tuned, runOptions);
+      f.flight.recorder = createRecorder(tuned, runOptions);
+      const saved = savedFlight(f),
+        checkpoint = authoritativeCheckpoint(f.flight.run),
+        artworkRevision = visualPin(f).content.level.revision;
+      assert.match(saved.replay.level.revision, new RegExp(`^${revision}`));
+      assert.equal(saved.presentationPins.levelRevision, f.level.revision);
+      assert.equal(saved.visualThemePin.content.level.revision, artworkRevision);
+      assert.notEqual(saved.replay.level.revision, saved.presentationPins.levelRevision);
+      if (profile.mode === 'gentle') {
+        assert.notEqual(saved.presentationPins.levelRevision, artworkRevision);
+        assert.notEqual(saved.replay.level.revision, artworkRevision);
+      }
+      assert.equal(recipe.adminOverride, !!profile.overrides);
+      assert.deepEqual(snapshotSession(saved), saved);
+
+      const restored = await restoreSession(saved, options(f));
+      assert.deepEqual(authoritativeCheckpoint(restored.run), checkpoint);
+      assert.deepEqual(restored.session.visualThemePin, visualPin(f));
+      for (const direction of ['right', 'down', 'left', 'up']) {
+        const command = { direction, boost: false, action: false, pickup: false };
+        stepRun(f.flight.run, command, FIXED_DT);
+        stepRun(restored.run, command, FIXED_DT);
+        assert.deepEqual(
+          authoritativeCheckpoint(restored.run),
+          authoritativeCheckpoint(f.flight.run),
+        );
+      }
+
+      assert.throws(
+        () => savedFlight(f, { presentationLevel: undefined }),
+        /authored presentation level/i,
+      );
+      const wrongAuthoredLevel = structuredClone(f.level);
+      wrongAuthoredLevel.revision += '-other';
+      assert.throws(
+        () => savedFlight(f, { presentationLevel: wrongAuthoredLevel }),
+        /Tuned picture source differs|presentation level/i,
+      );
+      const wrongPictures = structuredClone(f.pins);
+      wrongPictures.levelRevision += '-other';
+      assert.throws(
+        () => savedFlight(f, { presentationPins: wrongPictures }),
+        /matching flight identity/i,
+      );
+
+      const forgedPictures = structuredClone(saved);
+      forgedPictures.presentationPins.levelRevision += '-other';
+      assert.doesNotThrow(() => snapshotSession(forgedPictures));
+      await assert.rejects(
+        restoreSession(forgedPictures, options(f)),
+        /different flight context|matching flight identity/i,
+      );
+      const alteredCampaign = structuredClone(f.entry.campaign);
+      alteredCampaign.levels[0].goal.coverage += 0.01;
+      await assert.rejects(
+        restoreSession(saved, { ...options(f), campaign: alteredCampaign }),
+        /Saved rules differ/i,
+      );
+      const forgedReplay = structuredClone(saved);
+      forgedReplay.replay.level.goal.coverage = 0.99;
+      await assert.rejects(restoreSession(forgedReplay, options(f)), /verification|rules differ/i);
+    });
+
+test('v5 restores gameplay tuning with the exact published fpv58 owner and never upgrades it to current62', async () => {
+  const read = async (path) =>
+      JSON.parse(await fs.readFile(new URL(path, import.meta.url), 'utf8')),
+    campaign = await read('../content/campaign.json'),
+    classes = await read('../content/classes.json'),
+    themes = (await read('../content/themes.json')).themes,
+    visualCatalogue = await read('../presentation/visual-themes.json');
+  campaign.classRecipes = classes;
+  const executionCatalog = createExecutionCatalog([{ campaign, themes }]),
+    identityCatalog = createMediaIdentityCatalog(executionCatalog),
+    entry = executionCatalog.entries.find((row) => row.difficulty === 'standard'),
+    level = entry.campaign.levels[0],
+    request = {
+      executionKey: entry.executionKey,
+      levelId: level.id,
+      levelRevision: level.revision,
+      themeId: 'fpv',
+    },
+    identity = identityCatalog.resolve(request),
+    library = validateMediaLibrary(libraryRecord(identity), { identityCatalog }),
+    pins = createPresentationPins({
+      library,
+      identityCatalog,
+      ...request,
+      themeIds: ['fpv'],
+    }),
+    published = visualCatalogue.entries.find(
+      (row) => row.id === 'field-kit-fpv' && row.revision === 58,
+    ),
+    content = await prepareCampaignVisualThemeContext({
+      entry,
+      level,
+      association: { editionId: 'field-kit', contentThemeId: 'fpv', mode: 'solo' },
+    });
+  assert.ok(published, 'The exact accepted fpv58 owner remains in the shipped catalogue.');
+  assert.deepEqual(
+    published.coverage.find((candidate) => candidate.level.id === level.id),
+    content,
+  );
+  assert.deepEqual(published.presentation, {
+    source: { id: 'field-kit', revision: 58 },
+    theme: { id: 'fpv', revision: 58 },
+    collection: null,
+    sha256: "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c",
+  });
+  const exact58 = {
+      format: 'revealline-visual-theme-pin.v1',
+      content,
+      selection: { id: published.id, revision: published.revision },
+      presentation: published.presentation,
+    },
+    runOptions = { classId: 'scout', classRecipes: classes },
+    recipe = gp4.resolveGameplayTuning('expert', {
+      enemySpeed: 1.1,
+      playerSpeed: 1,
+      enemyDensity: 1,
+    }),
+    tuned = gp4.applyGameplayTuning(level, recipe),
+    run = createRun(tuned, runOptions),
+    recorder = createRecorder(tuned, runOptions);
+  for (const direction of ['down', 'down', 'right']) {
+    const command = { direction, boost: false, action: false, pickup: false };
+    stepRun(run, command, FIXED_DT);
+    recordInput(recorder, command);
+  }
+  const saved = suspendSession({
+      run,
+      recorder,
+      campaignKey: entry.executionKey,
+      themeId: 'fpv',
+      bodyId: 'fpv-body',
+      runId: 'published-fpv58-tuned-flight',
+      savedAt: '2026-09-23T12:00:00.000Z',
+      continuation: { direction: 'right' },
+      presentationPins: pins,
+      presentationLevel: level,
+      visualThemePin: exact58,
+    }),
+    savedCheckpoint = authoritativeCheckpoint(run);
+  assert.equal(saved.format, VISUAL_SESSION_FORMAT);
+  assert.equal(saved.replay.level.revision.startsWith('gp4'), true);
+  assert.deepEqual(saved.visualThemePin, exact58);
+
+  const restored = await restoreSession(saved, {
+    campaign: entry.campaign,
+    campaignKey: entry.executionKey,
+    mediaIdentityCatalog: identityCatalog,
+  });
+  assert.deepEqual(authoritativeCheckpoint(restored.run), savedCheckpoint);
+  assert.deepEqual(restored.session.visualThemePin, exact58);
+  for (const direction of [saved.continuation.direction, 'right', 'down', 'left']) {
+    const command = { direction, boost: false, action: false, pickup: false };
+    stepRun(run, command, FIXED_DT);
+    recordInput(recorder, command);
+    stepRun(restored.run, command, FIXED_DT);
+    recordInput(restored.recorder, command);
+    assert.deepEqual(authoritativeCheckpoint(restored.run), authoritativeCheckpoint(run));
+  }
+  const resumedCheckpoint = authoritativeCheckpoint(restored.run),
+    resaved = suspendSession({
+      run: restored.run,
+      recorder: restored.recorder,
+      campaignKey: entry.executionKey,
+      themeId: 'fpv',
+      bodyId: 'fpv-body',
+      runId: 'published-fpv58-tuned-flight',
+      savedAt: '2026-09-23T12:01:00.000Z',
+      continuation: saved.continuation,
+      presentationPins: restored.session.presentationPins,
+      presentationLevel: level,
+      visualThemePin: restored.session.visualThemePin,
+    });
+  assert.deepEqual(authoritativeCheckpoint(restored.run), resumedCheckpoint);
+  assert.equal(verifyReplay(resaved.replay).match, true);
+  assert.deepEqual(resaved.visualThemePin, exact58);
+  assert.equal(resaved.visualThemePin.selection.revision, 58);
+  assert.equal(resaved.visualThemePin.presentation.source.revision, 58);
+  assert.equal(resaved.visualThemePin.presentation.theme.revision, 58);
+  assert.notEqual(resaved.visualThemePin.presentation.source.revision, 62);
+});
 
 test('v5 retains still and story envelopes without changing v3/v4 output', async () => {
   const f = fixture();

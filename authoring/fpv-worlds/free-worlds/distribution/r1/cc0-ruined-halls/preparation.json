@@ -1,0 +1,108 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-ruined-halls",
+  "title": [
+    "Ruined Halls",
+    "Зруйновані зали"
+  ],
+  "kit": "modular-dungeon-kit",
+  "sourceURL": "https://kenney.nl/assets/modular-dungeon-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/modular-dungeon-kit/7bed87605b-1771926065/kenney_modular-dungeon-kit_1.0.zip",
+  "archiveSha256": "dd0aa6776db8912283cdca60161dee6a8839bbda3558eba2ea501419eb5b4623",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 1241596,
+  "modelSha256": "ab670042084afd2b8a9bac6f65bc192787bff808ef72165e389ad5074655a205",
+  "packBytes": 1750695,
+  "packSha256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+  "collisionSurfaces": 6,
+  "collisionTriangles": 13656,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/room-large.glb",
+      "sha256": "07873ae13a1ddbc0e067fb91a792c1fd4f26f876e73d415502e558baec40023d",
+      "placement": {
+        "model": "room-large",
+        "x": -27,
+        "z": 0,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.1999400359555397
+    },
+    {
+      "model": "Models/GLB format/room-wide.glb",
+      "sha256": "8b953028a4254ea4e342768cb561e01a02ca7ec5d0b752d3cabf83347de413b0",
+      "placement": {
+        "model": "room-wide",
+        "x": 27,
+        "z": 0,
+        "size": 24,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.2
+    },
+    {
+      "model": "Models/GLB format/corridor-wide.glb",
+      "sha256": "0a24c93238ebd1178c522e5effc7f0bfc1963133f2d50635a84c2465d5dd0f43",
+      "placement": {
+        "model": "corridor-wide",
+        "x": -27,
+        "z": -20,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.2499997019768472
+    },
+    {
+      "model": "Models/GLB format/corridor-wide.glb",
+      "sha256": "0a24c93238ebd1178c522e5effc7f0bfc1963133f2d50635a84c2465d5dd0f43",
+      "placement": {
+        "model": "corridor-wide",
+        "x": 27,
+        "z": 20,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 1.2499997019768472
+    },
+    {
+      "model": "Models/GLB format/template-wall.glb",
+      "sha256": "58a34df2429968d82b45f0666ed1371cdcaa1e42468c1d4697c04bff47e9fbe5",
+      "placement": {
+        "model": "template-wall",
+        "x": -20,
+        "z": 30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 2
+    },
+    {
+      "model": "Models/GLB format/template-wall-corner.glb",
+      "sha256": "fbccb15028552ba779cd765b5d41ea328f3b4a5e2c61be11fda5de87b1b81f9d",
+      "placement": {
+        "model": "template-wall-corner",
+        "x": 22,
+        "z": -30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.984071086204206
+    }
+  ]
+}

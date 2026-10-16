@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-80",
+  "infrastructureCommit": "224002dd166475e25d8b7b23927dc8a6554d43be",
+  "deploymentId": 6658568593,
+  "versions": [
+    "v0.113.1"
+  ],
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh keyboard title, Continue, flight, Pause and explicit Resume through the archived native UI. This does not claim physical-device/controller, comprehensive offline, every multiplayer mode, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-80-v01131/public-acceptance.json",
+      "sha256": "ef1820e280f7790864924e84daccbfe7fdac5f64029ba60c1ac7814217e7a5cf"
+    }
+  ],
+  "limitations": [
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.113.1; v0.114.0 is the separate immutable release selected by this controller change."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "archiveId": "archive-99",
+  "baseUrl": "https://mekhovov.github.io/revealline-archive-99/",
+  "evidenceCategory": "built-in browser interaction",
+  "limitations": [
+    "Built-in-browser interaction is not physical touch certification.",
+    "Built-in-browser interaction is not physical-controller certification.",
+    "No full mission playthrough was performed during this bounded archive admission check."
+  ],
+  "observations": [
+    {
+      "surface": "archive index",
+      "observed": "RevealLine archive 99 / original v0.141.5 build",
+      "result": "PASS"
+    },
+    {
+      "surface": "Play -> archived Home",
+      "observed": "v0.141.5 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+      "result": "PASS"
+    },
+    {
+      "surface": "Missions",
+      "observed": "Library opened; 286 missions · Solo; first card focused; 91 Journey missions and playable/downloadable entries visible",
+      "result": "PASS"
+    },
+    {
+      "surface": "First return launch",
+      "observed": "Mission 01 briefing loaded with 1 enemy, Start mission, Learn by playing and mission brief actions",
+      "result": "PASS"
+    },
+    {
+      "surface": "browser logs",
+      "observed": "No warnings or errors",
+      "result": "PASS"
+    }
+  ],
+  "observedAt": "2026-09-26T21:02:46.6NZ",
+  "version": "v0.141.5"
+}

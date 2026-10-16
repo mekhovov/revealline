@@ -111,7 +111,7 @@ export function validateExternalChapter(candidate) {
         hash(o.sha256) &&
         !hashes.has(o.sha256) &&
         integer(o.bytes, 4 * 1024 * 1024) &&
-        ['image/png', 'image/jpeg'].includes(o.mime) &&
+        ['image/png', 'image/jpeg', 'image/webp'].includes(o.mime) &&
         integer(o.width, 1920) &&
         integer(o.height, 1080),
       'Invalid original facts.',
@@ -262,7 +262,7 @@ export function validateExternalChapterIndex(candidate) {
   required(
     index.format === EXTERNAL_CHAPTER_INDEX_FORMAT &&
       Array.isArray(index.chapters) &&
-      index.chapters.length <= PACK_LIMITS.installed,
+      index.chapters.length <= EXTERNAL_CHAPTER_LIMITS.catalogChoices,
     'Invalid external chapter index.',
   );
   const ids = new Set(),

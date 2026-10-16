@@ -1,0 +1,504 @@
+{
+  "format": "FPVRailworksSourcePackageParity.v1",
+  "candidate": "9efa36364425e2846002748bb29478b378d2b5cb",
+  "baseline": "a46aded0b56c612fbbfb1736cfb27ee0746c2b1f",
+  "exactFields": [
+    "checks",
+    "samples",
+    "resourceCycles",
+    "controlDiagnostics",
+    "finalResources",
+    "contextLosses",
+    "limitations"
+  ],
+  "changedFiles": {
+    "before": [
+      "optional-practice/civilian-fpv/renderer.mjs"
+    ],
+    "after": [
+      "game/i18n/catalogs.mjs",
+      "optional-practice/civilian-fpv/renderer.mjs"
+    ]
+  },
+  "inputs": {
+    "fpv-railworks-source-browser.json": {
+      "bytes": 50988,
+      "sha256": "d0cb90e5849aa1d6c803f30191122cfce96266f9ab54b073f9125d1733da0041"
+    },
+    "fpv-railworks-package-browser.json": {
+      "bytes": 51037,
+      "sha256": "29f9fd5a4c379327f898e49a788cb6b98df260c7d2a5fed0c25a35c056b6966f"
+    },
+    "fpv-railworks-source-fixture.json": {
+      "bytes": 8315,
+      "sha256": "25ebcf7ad97d745ae0bfbfb24cd8e8efd7a3542432f28cde06a3905d1733c525"
+    },
+    "fpv-railworks-package-fixture.json": {
+      "bytes": 8364,
+      "sha256": "16b10c7081a1c3272b31326f6a0980847b54db03d7b0cfb570ddd0ec89a25928"
+    },
+    "fpv-railworks-admitted-player.json": {
+      "bytes": 46389,
+      "sha256": "c299580adde8c028d110fc93ba6b8e4c2406488cde5f42e18349feef221876c0"
+    }
+  },
+  "checks": [
+    {
+      "name": "checks: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "samples: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "resourceCycles: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "controlDiagnostics: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "finalResources: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "contextLosses: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "limitations: complete JSON records identical",
+      "passed": true
+    },
+    {
+      "name": "both actual browser matrices passed136checks56pairs3cycles",
+      "passed": true
+    },
+    {
+      "name": "same executed harness",
+      "passed": true
+    },
+    {
+      "name": "source and package receipts bind their own frozen files",
+      "passed": true
+    },
+    {
+      "name": "integrated package uses current-main baseline",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "packaged fixture member matches exact admitted file: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "only incomingD1renderer changes baseline closure",
+      "passed": true
+    },
+    {
+      "name": "package closure changes only D1renderer and standard i18n pruning",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/copy.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/flight-fullscreen.css",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/guide.html",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/index.html",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/preview.png",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/studio.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-actor-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-audio.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-hangar.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-hunt-reactions.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-progress.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "historically replayed input still exact after integration: game/presentation/theme-system.mjs",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "limitations": [
+    "Original source matrix remains attributed to96e baseline and renderer444e; packaged matrix uses a46baseline and integrated renderer1057.",
+    "Exact scoped browser records and input hashes do not imply arbitrary imported raster determinism, named-device timing, installed/offline or public qualification."
+  ]
+}

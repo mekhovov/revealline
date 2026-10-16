@@ -58,7 +58,7 @@ async function fixture(t) {
   await fs.writeFile(path.join(directory, 'private-notes.txt'), 'Do not package');
   const info = {
     name: 'revealline-desktop',
-    productName: 'Reveal Line',
+    productName: 'FPV LINE',
     version: '0.3.0',
     description: 'Game shell',
     devDependencies: { electron: '44.3.0', '@electron/packager': '20.3.0' },
@@ -83,6 +83,8 @@ test('packaging copies only runtime plus verified site, pins the host engine and
     assert.equal(info.version, '0.3.0');
     assert.equal(info.devDependencies, undefined);
     assert.equal(options.electronVersion, '44.3.0');
+    assert.equal(options.name, 'FPV LINE');
+    assert.equal(options.extendInfo.CFBundleDisplayName, 'FPV / LINE');
     assert.equal(options.platform, process.platform);
     assert.equal(options.arch, process.arch);
     assert.equal(options.overwrite, false);
@@ -95,8 +97,8 @@ test('packaging copies only runtime plus verified site, pins the host engine and
         await fs.readFile(path.join(f.directory, 'assets/revealline.icns')),
       );
     } else assert.equal(options.icon, undefined);
-    await fs.mkdir(path.join(options.out, 'Reveal Line-test'), { recursive: true });
-    await fs.writeFile(path.join(options.out, 'Reveal Line-test', 'host-bundle'), 'original');
+    await fs.mkdir(path.join(options.out, 'FPV LINE-test'), { recursive: true });
+    await fs.writeFile(path.join(options.out, 'FPV LINE-test', 'host-bundle'), 'original');
   };
   const result = await packageDesktop({
     directory: f.directory,
@@ -112,7 +114,7 @@ test('packaging copies only runtime plus verified site, pins the host engine and
   assert.equal(result.fuses.RunAsNode, false);
   assert.deepEqual(await fs.readdir(path.join(f.directory, 'out')), ['v0.3.0']);
   assert.equal(
-    await fs.readFile(path.join(result.out, 'Reveal Line-test/host-bundle'), 'utf8'),
+    await fs.readFile(path.join(result.out, 'FPV LINE-test/host-bundle'), 'utf8'),
     'original',
   );
   await assert.rejects(
@@ -125,7 +127,7 @@ test('packaging copies only runtime plus verified site, pins the host engine and
 test('candidate labels keep a separate immutable artifact and invalid labels cannot escape output', async (t) => {
   const f = await fixture(t);
   const implementation = async (options) => {
-    await fs.mkdir(path.join(options.out, 'Reveal Line-test'), { recursive: true });
+    await fs.mkdir(path.join(options.out, 'FPV LINE-test'), { recursive: true });
   };
   const result = await packageDesktop({
     directory: f.directory,
@@ -144,7 +146,7 @@ test('candidate labels keep a separate immutable artifact and invalid labels can
 test('fuse failure prevents publishing output and clears only owned staging files', async (t) => {
   const f = await fixture(t);
   const implementation = async (options) => {
-    await fs.mkdir(path.join(options.out, 'Reveal Line-test'), { recursive: true });
+    await fs.mkdir(path.join(options.out, 'FPV LINE-test'), { recursive: true });
   };
   const api = fakeFuseAPI();
   api.getCurrentFuseWire = async () => ({ version: '1', 0: 49 });

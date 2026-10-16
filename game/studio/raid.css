@@ -1,0 +1,134 @@
+@import url('./overflight.css');
+#raid-studio {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 24px;
+  color: var(--ui-text, #f0ecd7);
+}
+#raid-studio nav,
+.raid-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+#raid-studio h1 {
+  margin-bottom: 8px;
+}
+#raid-studio h2 {
+  font-size: 1.1rem;
+}
+#raid-studio button,
+#raid-studio input,
+#raid-studio select,
+#raid-studio textarea {
+  font: inherit;
+}
+#raid-studio button,
+#raid-studio select {
+  min-height: 40px;
+}
+#raid-studio label {
+  display: grid;
+  gap: 5px;
+}
+#raid-studio label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: center;
+}
+#raid-studio input[type='number'] {
+  width: 100%;
+  min-width: 70px;
+}
+#raid-studio fieldset {
+  border: 1px solid #657369;
+  margin: 16px 0;
+  padding: 16px;
+}
+#raid-studio legend {
+  font-weight: 700;
+  padding: 0 8px;
+}
+.raid-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 12px;
+}
+.raid-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 20px;
+}
+#raid-map {
+  width: 100%;
+  background: #172a22;
+  border: 1px solid #718176;
+  touch-action: none;
+}
+#raid-map [data-actor],
+#raid-map [data-route] {
+  cursor: grab;
+}
+#raid-map [data-actor]:focus {
+  outline: none;
+  stroke: #fff;
+  stroke-width: 8;
+}
+#raid-map text {
+  fill: #f0ecd7;
+  font: 32px monospace;
+  pointer-events: none;
+}
+#raid-map .raid-sector-label {
+  fill: #95a99a;
+  font-size: 38px;
+}
+#raid-preview {
+  width: 100%;
+  aspect-ratio: 16/9;
+  min-height: 360px;
+  border: 1px solid #718176;
+}
+#raid-source {
+  width: 100%;
+  min-height: 340px;
+  font: 13px monospace !important;
+  box-sizing: border-box;
+}
+#raid-status {
+  min-height: 1.5em;
+  padding: 10px 12px;
+  background: #233b32;
+}
+#raid-status[data-error='true'] {
+  background: #5c2920;
+  color: #fff;
+}
+.raid-hint {
+  color: #aebdb2;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.raid-installed {
+  display: grid;
+  gap: 8px;
+}
+.raid-route-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+  margin: 8px 0;
+}
+@media (max-width: 800px) {
+  #raid-studio {
+    padding: 12px;
+  }
+  .raid-workspace {
+    grid-template-columns: 1fr;
+  }
+  #raid-preview {
+    min-height: 260px;
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "7a8bf9aa3ec0a8264e8a6d0f15c7e4e8dcd7e6f0",
+  "sourceTree": "be7937f7a0b81c87df0e44db2e6d972371efc8b9",
+  "catalogSha256": "6b28e03ffc7723543a349f4c4f18f1af8dd11c0de32484d4d85ec3fe364ac1b6",
+  "files": [
+    {
+      "path": "publishing/pages-controller/assemble.mjs",
+      "sha256": "7807b7f3156f2245e0df84c81d867a01cc297ebd3e7a46e4fffef5ea9c217311"
+    },
+    {
+      "path": "publishing/pages-controller/metadata.mjs",
+      "sha256": "06e4aba58551cba45a6c8db3d95fb5bded8928d30c748cc276490daa7455e3e9"
+    },
+    {
+      "path": "publishing/pages-controller/catalog.mjs",
+      "sha256": "f4b8a843164e2de9a58bb97f313d3cec6b6ec62db19b78ba028d3451576bc127"
+    },
+    {
+      "path": "scripts/pages-archive.mjs",
+      "sha256": "d920b77445160356c4dd5200f55d1d36ef5d26daccf920bb3b9eaad536884afb"
+    },
+    {
+      "path": "scripts/pages-current-entry.mjs",
+      "sha256": "b81b0b52ef6fb3d6b2eec0628fbf3fed94dbcb1383a8e558d34054f61f6b3ec4"
+    }
+  ]
+}

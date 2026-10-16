@@ -1,0 +1,13 @@
+{
+  "source": "f6e592bacda85db5efcf68f5be3ad2240073b661",
+  "tree": "15dcbb22f845ad9825316c54321efa22e5a0054e",
+  "policy": {
+    "path": "publishing/test-policy.json",
+    "bytes": 490,
+    "sha256": "b6887ba7f2b84a007b96de14fc867ac38ac8135d7c231c7ade7ebc52ba31704a"
+  },
+  "qualification": {
+    "sha256": "576ca7669096c514df3ada64fef6e5110e097166b5ad494093674e0da9b47601",
+    "bytes": 14169
+  }
+}

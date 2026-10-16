@@ -1,13 +1,11 @@
 import { freezePresentation } from '../presentation/model.mjs';
 
 /** Exact starter-pack parity reuse of the approved Orchard and Foundry derivatives.
- * The injected lease verifies these identities before reading or decoding; other
- * imports/themes have no implicit procedural or wider FPV-picture fallback.
- * Lease output retains the complete frame with contain fit and nearest sampling.
- * Canonical fpv58 retains accepted main57 artwork while integrating the scoped
- * retained-presentation reader and audio ownership review.
- * The archived unpublished fpv55–58 lineage is not a runtime fallback. All 127 original
- * payloads, including these two derivatives, remain byte-identical. No other revision is admitted.
+ * Current canonical fpv104 preserves both published and preview presentation histories.
+ * Revision101 is admitted only for its published manifest; the preview source-stage
+ * revision101 and fpv98 never gained a picture association. Revision102/103 preview
+ * restores remain pinned by the presentation host to their original runtime manifests.
+ * This association grants no additional artwork or physical-play approval.
  */
 export const COOP_PICTURE_BINDINGS = freezePresentation([
   {
@@ -18,7 +16,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: '31041ad693f59418fb34e91f6f7bdae4d46fb6294b5e4ba49f8035aab4e79246',
     themeId: 'fpv',
-    themeRevision: 58,
+    themeRevision: 104,
     collection: null,
     picture: {
       slot: 'scene.reveal.wide',
@@ -39,7 +37,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
     levelRevision: 2,
     levelSha256: 'fcb1014f8b2c60047a2d10e4c0558b9ca03dcfe50c23ad48a5d2dabf9852c2a7',
     themeId: 'fpv',
-    themeRevision: 58,
+    themeRevision: 104,
     collection: null,
     picture: {
       slot: 'picture.fpv.adf5c9eea274ba7f',
@@ -61,7 +59,7 @@ export const COOP_PICTURE_BINDINGS = freezePresentation([
 export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
   version: 'revealline-team-historical-import-picture.v1',
   themeId: 'fpv',
-  themeRevision: 58,
+  themeRevision: 104,
   collection: null,
   picture: {
     slot: 'scene.reveal.wide',
@@ -74,3 +72,36 @@ export const COOP_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
     width: 1152,
   },
 });
+
+/** Numeric identities shared by published and preview histories require exact
+ * manifest constraints when their picture associations differ.
+ */
+const PUBLISHED_101_MANIFEST = "a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0";
+const retainedIdentity = (themeRevision) => ({
+  themeRevision,
+  ...(themeRevision === 101 ? { manifestSha256: PUBLISHED_101_MANIFEST } : {}),
+});
+const COOP_RETAINED_THEME_REVISIONS = Object.freeze([
+  58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+  82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 100, 101, 102, 103,
+]);
+export const COOP_RETAINED_PICTURE_BINDINGS = freezePresentation(
+  COOP_RETAINED_THEME_REVISIONS.flatMap((themeRevision) =>
+    COOP_PICTURE_BINDINGS.map((row) => ({ ...row, ...retainedIdentity(themeRevision) })),
+  ),
+);
+export const COOP_SUPPORTED_PICTURE_BINDINGS = freezePresentation([
+  ...COOP_PICTURE_BINDINGS,
+  ...COOP_RETAINED_PICTURE_BINDINGS,
+]);
+export const COOP_RETAINED_HISTORICAL_IMPORT_PICTURE_POLICY = freezePresentation({
+  ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  themeRevision: 59,
+});
+export const COOP_HISTORICAL_IMPORT_PICTURE_POLICIES = freezePresentation([
+  COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+  ...COOP_RETAINED_THEME_REVISIONS.map((themeRevision) => ({
+    ...COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
+    ...retainedIdentity(themeRevision),
+  })),
+]);

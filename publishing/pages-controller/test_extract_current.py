@@ -33,6 +33,14 @@ class ExtractCurrentTests(unittest.TestCase):
         args = self.fixture(); output = self.root / 'current'
         receipt = extractor.extract_current(args[0], output, *args[1:])
         self.assertEqual(receipt['membersVerified'], 4)
+        self.assertEqual(receipt['format'], 'revealline-current-extraction.v1')
+        self.assertEqual(
+            [row['path'] for row in receipt['files']],
+            ['.xonix-build.json', 'distribution.zip.sha256', 'game/index.html', 'index.html', 'manifest.json', 'service-worker.js'],
+        )
+        for row in receipt['files']:
+            body = (output / row['path']).read_bytes()
+            self.assertEqual((len(body), hashlib.sha256(body).hexdigest()), (row['bytes'], row['sha256']))
         self.assertEqual((output / 'service-worker.js').read_bytes(), b'original worker')
         self.assertEqual((output / 'manifest.json').read_bytes(), args[2])
         self.assertEqual((output / '.xonix-build.json').read_bytes(), extractor.MARKER)
@@ -63,5 +71,20 @@ class ExtractCurrentTests(unittest.TestCase):
         with self.assertRaises((ValueError, zipfile.BadZipFile, RuntimeError)):
             extractor.extract_current(args[0], self.root / 'current', args[1], args[2], checksum)
         self.assertFalse((self.root / 'current').exists())
+
+    def test_private_release_asset_descriptor_is_exact(self):
+        digest = 'b' * 64
+        asset = {'name': 'distribution.zip', 'size': 42, 'state': 'uploaded', 'digest': 'sha256:' + digest, 'url': 'https://api.github.com/repos/mekhovov/revealline/releases/assets/123'}
+        release = {'tag_name': 'v0.95.0', 'draft': False, 'prerelease': False, 'assets': [asset]}
+        self.assertEqual(extractor.select_release_asset(release, 'v0.95.0', 'distribution.zip', digest), asset)
+        for mutation in [
+            lambda value: value.update({'draft': True}),
+            lambda value: value.update({'tag_name': 'v0.94.0'}),
+            lambda value: value['assets'][0].update({'digest': 'sha256:' + 'c' * 64}),
+            lambda value: value['assets'][0].update({'url': 'https://example.com/asset'}),
+        ]:
+            changed = json.loads(json.dumps(release)); mutation(changed)
+            with self.assertRaises(ValueError):
+                extractor.select_release_asset(changed, 'v0.95.0', 'distribution.zip', digest)
 
 if __name__ == '__main__': unittest.main()

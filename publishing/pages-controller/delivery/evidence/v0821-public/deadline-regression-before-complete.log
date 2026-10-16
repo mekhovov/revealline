@@ -1,0 +1,75 @@
+test_absent_actual_binding_refuses_without_transport (test_http_audit.AuditTests.test_absent_actual_binding_refuses_without_transport) ... ok
+test_body_deadline_is_checked_during_stream (test_http_audit.AuditTests.test_body_deadline_is_checked_during_stream) ... ok
+test_delayed_nonempty_block_is_counted_but_not_accepted (test_http_audit.AuditTests.test_delayed_nonempty_block_is_counted_but_not_accepted) ... ok
+test_encoding_and_declared_length_mismatch_fail (test_http_audit.AuditTests.test_encoding_and_declared_length_mismatch_fail) ... ok
+test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass (test_http_audit.AuditTests.test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass) ... 
+  test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass (test_http_audit.AuditTests.test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass) (deadline=100) ... FAIL
+  test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass (test_http_audit.AuditTests.test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass) (deadline=20) ... FAIL
+test_expired_deadline_makes_no_request_and_records_failure (test_http_audit.AuditTests.test_expired_deadline_makes_no_request_and_records_failure) ... ok
+test_failure_retry_preserves_every_attempt (test_http_audit.AuditTests.test_failure_retry_preserves_every_attempt) ... ok
+test_full_body_hash_size_mime_and_final_url (test_http_audit.AuditTests.test_full_body_hash_size_mime_and_final_url) ... ok
+test_http_read1_is_preferred_over_accumulating_read (test_http_audit.AuditTests.test_http_read1_is_preferred_over_accumulating_read) ... FAIL
+test_late_response_close_cannot_return_a_pass_after_deadline (test_http_audit.AuditTests.test_late_response_close_cannot_return_a_pass_after_deadline) ... FAIL
+test_low_capacity_refuses_before_output_or_transport (test_http_audit.AuditTests.test_low_capacity_refuses_before_output_or_transport) ... ok
+test_malformed_size_and_hash_are_rejected (test_http_audit.AuditTests.test_malformed_size_and_hash_are_rejected) ... ok
+test_mime_failure_occurs_after_full_body_verification (test_http_audit.AuditTests.test_mime_failure_occurs_after_full_body_verification) ... ok
+test_oversized_body_stops_one_byte_beyond_pin (test_http_audit.AuditTests.test_oversized_body_stops_one_byte_beyond_pin) ... ok
+test_redirect_handler_refuses_without_following (test_http_audit.AuditTests.test_redirect_handler_refuses_without_following) ... ok
+test_retries_are_bounded (test_http_audit.AuditTests.test_retries_are_bounded) ... ok
+test_truncation_and_equal_length_hash_mismatch_fail (test_http_audit.AuditTests.test_truncation_and_equal_length_hash_mismatch_fail) ... ok
+test_unsafe_paths_and_unsupported_mime_never_request (test_http_audit.AuditTests.test_unsafe_paths_and_unsupported_mime_never_request) ... ok
+test_wrong_status_and_final_url_fail (test_http_audit.AuditTests.test_wrong_status_and_final_url_fail) ... ok
+test_zero_byte_hidden_file_is_read_and_verified (test_http_audit.AuditTests.test_zero_byte_hidden_file_is_read_and_verified) ... ok
+
+======================================================================
+FAIL: test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass (test_http_audit.AuditTests.test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass) (deadline=100)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/tools/test_http_audit.py", line 173, in test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass
+    self.assertEqual(result['status'], 'FAIL')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PASS' != 'FAIL'
+- PASS
++ FAIL
+
+
+======================================================================
+FAIL: test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass (test_http_audit.AuditTests.test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass) (deadline=20)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/tools/test_http_audit.py", line 173, in test_exact_body_with_eof_after_attempt_or_global_deadline_cannot_pass
+    self.assertEqual(result['status'], 'FAIL')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PASS' != 'FAIL'
+- PASS
++ FAIL
+
+
+======================================================================
+FAIL: test_http_read1_is_preferred_over_accumulating_read (test_http_audit.AuditTests.test_http_read1_is_preferred_over_accumulating_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/tools/test_http_audit.py", line 200, in test_http_read1_is_preferred_over_accumulating_read
+    self.assertEqual(result['status'], 'PASS')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_late_response_close_cannot_return_a_pass_after_deadline (test_http_audit.AuditTests.test_late_response_close_cannot_return_a_pass_after_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/release-v0821-public/tools/test_http_audit.py", line 211, in test_late_response_close_cannot_return_a_pass_after_deadline
+    self.assertEqual(result['status'], 'FAIL')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PASS' != 'FAIL'
+- PASS
++ FAIL
+
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.007s
+
+FAILED (failures=4)

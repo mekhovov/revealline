@@ -5,6 +5,82 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+For the current character programme, use the approved **A → B → C → rest** order
+in [the current register](../../../docs/plan-status-2026-09-29.md): deliver current
+character/reliable-play corrections, qualify optional encounters, then finish one
+Ukrainian/FPV artwork cohort. Necessary tooling/checks travel with the feature;
+broader editions/tools and the formal C2 human benchmark follow later. A pending
+release does not block independent source work, but the single publisher retains
+integration, version and public-acceptance ownership. Existing approval hashes
+cannot be edited to admit changed renderer bytes. Source or imported candidates
+remain unapproved until scoped review and exact production adoption.
+For [current-character admission](../../../docs/actor-presentation-adoption.md),
+`readActorPresentationContinuation` takes a code-owned reviewed pin, never bundle
+authority. Keep group subsets independent, snapshot shared bytes once, reject
+draft/stale inputs and preserve original Team/equipment semantic guards. Its
+synthetic tests confer no production, human or release approval. Audio retains
+its separate review route.
+
+The latest user instruction defers production review, not correctness. Continue
+independent A/B/C implementation without manufacturing new production approvals.
+Keep fractional score formatting confined to the localized HUD callback: use the
+selected game locale, at most three decimal places and no grouping, with minimum
+five-place padding only for integer raw scores. Never round the run, saved replay
+or awards to shorten a label. Exercise a legal fractional capture and paused
+EN/UK refresh while checking exact saved bytes and replay score. Historical HUD
+CSS must be reproduced against current handheld geometry before reuse.
+For current-mission encounter Guide lessons, use `game/encounter-guide.mjs` and
+[the Guide contract](../../../docs/enemy-guide.md): validate role availability,
+clone the effective level and starting craft/seed/recipes before async work,
+retain no-awards practice and reject stale source. Edition hosts reconstruct only
+admitted content and compare exact normalized rules; never double-tune or use
+Playground storage to bypass the edition boundary. Localize native select captions
+without replacing their child controls. Host tests must wait for actual Start
+preparation and use a monotonic clock through neutral/echo input guards.
+
+For player-menu changes, follow the approved [player-first execution order](../../../docs/player-first-ux-execution.md)
+and [navigation maintenance prompt](../../prompts/player-menu-navigation.md).
+Use one menu-key owner and rendered grid geometry; expose chooser `primary()` to
+hosts. Preserve retained selection, current mission identity, remote focus leases
+and explicit return/Resume. Record full test results separately from any temporary
+CI waiver; skipped gates do not establish acceptance.
+Current host-route tests use the exact gameplay-tuning recipe and exposed input
+capabilities; historical proofs remain immutable. Team host fixtures cannot use
+Shift/Boost. Restore a genuine historical attempt to test untuned mastery recovery.
+Do not advertise unprepared image slots in partial painter fixtures or relax the
+production decoder's validation. Final Journey results retain their accepted run
+and picture while Browse missions opens; an optional Remix is not an automatic
+core-campaign successor. In first-to-two Versus, distinguish an unfinished round
+from the completed match before advertising Rematch or a Journey ending.
+Incoming mission links join the captured boot-picture writer before preparing
+their exact original, then recheck the opening lease. Exercise delayed success,
+failed initial artwork and newer input without weakening media-generation guards.
+Await the preparation returned by a real Missions activation in host tests. Assert
+immediate loading and retained state separately; cold catalogue duration is not a
+five-second gameplay contract. For controller or drawable-release paths, observe
+the existing DOM handler's promise while preserving the actual gesture and focus;
+restore observers in finally. Reproduce timing assumptions with controlled fetch
+delay, retain finite case deadlines and leave the global polling helper unchanged.
+Preserve exact checkpoint assertions when checking
+different runtimes and diagnose state differences before changing route fixtures.
+For witnessed cross-platform movement rounding, keep `routeEvidenceCheckpoint`
+strictly inside integration tests: only witnessed per-route scalar differences
+may use the declared 1e-12 bound; all other state remains exact. It must not change
+runtime checkpoints, replay readers or original ownership. Require
+exact same-runtime host/reference and public replay checks alongside the portable
+golden; reject changed identities, cells, lives, ticks, scores and meaningful motion.
+Label retained historical chooser tests as component boundaries; injected campaigns
+are not public catalogue evidence. Current host selection joins the visible action
+and matches the exact source/edition/campaign/runtime identity. Independently resolve
+fresh tuning, retain historical routes and use legal host inputs without neutral
+braking or state injection. Verify decoded background identity, not actor draw order.
+Pause Restart and terminal Retry share the retained-media contract. If the player
+changes difficulty, rebind only the validated execution key/derived level revision
+through `retryFlightPresentationPins`; preserve every accepted picture/story
+choice and complete visual collection. Do not feed old execution pins unchanged
+to a new difficulty context. Prove live-cut, recovery and restored-attempt paths
+with real inputs, exact fresh checkpoints and decoded released originals.
+
 For compact Solo landscape, distinguish manual equipment from authored warning
 capability. `hasFieldWarningBand` uses the validated original level, including
 legacy v1's absent encounter field, never the live enemy list or current warning
@@ -45,6 +121,15 @@ Do not hide this ownership error with a null controller-frame fallback or reuse
 of a stale sample. Keep the original failed CI and red/green evidence.
 Solo and couch seats must use `attachTouchSteering`; preserve independent fingers,
 capture-stop fresh input, held rescue, neutral controller gates and explicit Resume.
+Pointer capture is not guaranteed: pass the host window into shared steering and
+observe matching pointerup/pointercancel in its capture phase. Normal outside
+release retires the finger while preserving continuous heading; cancellation uses
+the existing interruption/pause contract. Ignore unrelated and stale pointer IDs,
+release only once across window/element delivery, and remove window observers on
+destroy. Regression prompt: “Make setPointerCapture throw; steer and lift outside
+the pad, then steer with a fresh finger in stick/swipe/D-pad. Repeat in Solo and
+both couch seats, including a control that stops propagation, unrelated cancel,
+matching cancel, and teardown. Keep adapter evidence separate from real devices.”
 Use the shared validated touch preference record without writing another mode's
 campaign save. Do not claim Steam Deck hardware acceptance from injected standard
 Gamepad samples. Compact HUD work must retain required objectives and complete
@@ -164,7 +249,9 @@ Team first entry uses First Connection; a separate exact starter-pack arena book
 
 Versus starts with the session-only One race format. First to two is an explicit Race setup choice captured by the accepted round recipe, alongside its map, craft, steering, timer and theme. Hidden setup values never rewrite Results or its labels. Name same-mission Rematch and Next round actions with that recipe’s mission; do not imply a campaign successor. Reset series totals only when the confirmed new race commits. Installed continuation uses the same retained-result transaction and uninterrupted activation checks as shipped content, including synchronous focus for an admitted touch activation and revalidation after focus callbacks. Keep authored-original authentication, exact picture-choice confirmation and neutral input guards. See [Versus session formats](../../../docs/versus-session-formats.md); this partial P07 feature does not complete ordered campaign tours or complete-theme retention.
 
-For same-page **Chapters in Couch Versus**, follow [the chapter browser contract](../../../docs/versus-chapter-browser.md). Keep the accepted read-only picture owner separate from the installer that acquires the exact profile writer lease and from the independently staged candidate reader. Capture activation and complete race/recipe/art/series/scope before download; recheck exact installed content, confirm and adopt all new ownership before retiring old media. Cancel or foreground loss must immediately release busy controls even when decode is unresolved; completed installs stay available without granting launch authority. Preserve current boards/results, paused Stay/Replace, terminal cancellation copy and newer callback-owned focus. For a touch click that leaves Play unfocused, capture the attempt before admitting focus to the open catalogue; recheck after that callback. Play is already disabled during work, so do not rely on focusing it. Preserve native decision return and Stay focus, and keep shipped play available if optional catalogue construction encounters denied storage. Test no Solo writes and one-action start through the mounted host. This slice covers embedded optional downloads and checked installed content, not the full unified community/campaign/mission browser or Team installation. Prompt: “Exercise Chapters → Download & play, then held decode → blur/return, Stay, and results replacement with exact picture/checkpoint/score assertions. Prove independent writer ownership and newer focus before qualifying native input and public bytes.”
+For current **All missions** in Solo, Versus and Team, follow [the unified library contract](../../../docs/unified-mission-library.md). Download installs; a separate deliberate Play selects the exact mission. Read-only metadata browsing never decodes reward pictures, creates runtime ownership or proves paired-original readiness. Keep metadata snapshots, the exact-channel installer writer, accepted media and independently staged runtime readers separate. Play validates the complete current source, edition, campaign, mission and revision; matching names or IDs alone do not authorize replacement. Preserve the opaque destination and checked source-return identity through cross-mode handoffs. Recheck installed identity after Stay/Replace and immediately before departure or adoption; a stale remote link must not discard the old paused attempt. Confirm and adopt all new runtime/media ownership before releasing the accepted owner. Cancel, foreground loss or newer input must retire launch/focus authority even while decoding is unresolved; a completed durable install stays installed and requires a fresh Play. Preserve boards/results, picture/checkpoint/series identity, native Stay return and newer callback-owned focus. Read-only metadata arrival may update the current search/filter view without stealing focus; descendant select/input blur is not window focus loss. Denied installed-inventory access must leave Base/Journey playable, with installed content and downloads truthfully unavailable. The earlier [Chapters contract](../../../docs/versus-chapter-browser.md) remains compatibility context, not the current discovery route.
+
+Prompt: “Open All missions, Download a missing trusted chapter, then separately Play an exact nonfirst mission. Exercise held decode → window blur/return, Stay/Replace, storage replacement during the decision, results retention and exact source return. Keep focus, picture, checkpoint, score, save and zero-unintended-write assertions; never substitute the chapter opener. For paired originals, verify the authenticated pack/media pair and current readiness, not just installed metadata. Release B paired-original native end-to-end and public qualification remain pending; report modeled, native and published-byte evidence separately before accepting those gates.”
 
 Menu/audio `pageshow.persisted` reconciliation reads validated current storage and preserves unsaved/session-only local intent. Storage reads, listeners and dialog close callbacks can retire their owner or produce newer intent. Recheck ownership before writes/focus; terminal cleanup retires before closing native surfaces. Test late audio activation after mute, stale restoration, failed saves and actual browser Back separately. A cold Back page load is not BFCache proof. Interface appearance does not pin a complete game theme or change existing map/art identity; exact complete-theme restoration remains a later qualified contract.
 
@@ -180,7 +267,7 @@ For ordinary Solo result continuation, stage the destination media before replac
 
 When browser input produces unexplained repeated keys or latency, reproduce it on a blank page and retain bounded event counts before changing the game. Pair keydown/keyup and verify platform key-code semantics: the recorded macOS driver failure sent Windows `nativeVirtualKeyCode` values, while the corrected paired CDP route omitted that field. Recheck the ordinary game without probes or runtime overrides and confirm idle input is quiet. Preserve original failures and observation bounds; pointer plus emulated keys do not establish keyboard-only, physical-device or general performance acceptance.
 
-For host navigation regressions, enter the actual active surface before changing selection: Missions → Prepare for setup selectors, and Library → Expansion packs for installed campaign Play. Title Start launches the selected mission; Title Continue resumes deliberately, while ordinary Load prepares a paused flight. Confirm unfinished-flight setup/restart decisions through their visible controls. Await the exact pack/campaign/picture and operation completion instead of an already-ready old picture. Keep checkpoint, replay, storage, identity and cancellation assertions. Native focus refuses inert/hidden/closed-dialog descendants; model that boundary locally when relevant instead of changing production focus recovery to match an impossible fixture state. Verify all registered resize observers retire without fixing their implementation count. Direct handler tests remain useful for promise ownership but do not establish a visible keyboard/controller journey. See the [P03 host-flow corrections](../../../docs/verification/cross-mode/p03/host-flow/README.md).
+For host navigation regressions, enter the actual active All missions chooser before changing selection. Solo setup uses its Current Solo flight setup disclosure; mission selection uses the shared cards and collection/campaign/mode filters, not hidden legacy pack/level controls. A missing chapter needs Download followed by separate Play; an installed mission still requires exact current runtime and picture validation. Continue/Resume remain deliberate, while retained legacy generic Load prepares a paused flight. Confirm unfinished-flight setup/restart decisions through their visible controls. Await the exact pack/campaign/mission/revision/picture and operation completion instead of an already-ready old picture. Keep checkpoint, replay, storage, source-return identity and cancellation assertions. Native focus refuses inert/hidden/closed-dialog descendants; model that boundary locally when relevant instead of changing production focus recovery to match an impossible fixture state. Verify all registered resize observers retire without fixing their implementation count. Direct handler tests remain useful for promise ownership but do not establish a visible keyboard/controller journey. The [P03 host-flow corrections](../../../docs/verification/cross-mode/p03/host-flow/README.md) retain historical evidence, not authority to restore their obsolete menu routes.
 
 For phone Missions, use the shared body/control text roles for the menu heading, preserving Standard/Large and Plain/Theme choices. Keep the complete title, all Back/setup/brief/deploy actions and at least 44px targets. Pair sticky footer offsets with local dialog padding; preserve the separate direct-Brief layout. Measure the entire focused card and outline between both sticky bands at 280×568 and 360×568, then the 360/361, 480/481 and 799/800 boundaries. Earlier 280×800 evidence does not establish shorter-phone clearance. Prompt: ‘Fix narrow Missions chrome using semantic text roles; retain all actions, deliberate reading, focus ownership and the original failed measurement. Verify actual chapter, mission, setup and briefing journeys before accepting.’
 
@@ -396,6 +483,15 @@ Use the [five difficulty workflows](../../prompts/round-30-gentle-difficulty.md)
 
 For the retained v0.14 [retry explanation](../../../docs/retry-feedback.md), use `game/ui/retry-view.mjs` only when the actual run is lost. A retained `failureCause` also exists during recovery and can survive a win; mission timeout can replace it without `player.failed`. Preserve the seven finite causes, own-data projection and unknown fallback. Do not infer an actor or add failure metadata to core, replay, sessions or portable profiles. Explicit Retry retains `prepare()`→`resume()`, starting one fresh attempt with the selected starting equipment and cleared live inputs, without changing preferences or earlier collection records. Loss and reading/Done/Back must not grant rewards or start another attempt.
 
+For current optional Sentry recovery, distinguish `combat-projectile` body contact
+from caught-trail feedback on the actual `player.failed` event. Reuse
+`interface:failure.combatProjectile` for ordinary life loss as well as terminal
+Retry advice; the terminal-only `retryExplanation` projection does not cover a
+surviving player. Keep the legal-route fixture's checkpoint, lives, events and
+partial replay assertions intact when checking the visible `run-message`. Do not
+change simulation metadata to repair a caption. Apply the current test waiver
+honestly: added assertions are unexecuted until separately qualified.
+
 Keep both advice and the reset consequence in the named overlay reader. `#retry-consequence` is hidden/emptied on every other overlay; the compact-hidden footer must not be its sole carrier. Replace stale nonterminal territory-retention captions on terminal loss, preserving independent save warnings. Reusable QA prompt: “Reach an actual contact loss and a staged lane loss in both steering modes through normal input. At 320×640 and short landscape, read the cause and reset note, exit with remapped Back without retrying, then activate Try again once. Verify fresh initial equipment and neutral input, no loss award, retained earlier pictures, and no lost explanation on a later win. Preserve existing checkpoint oracles and report browser evidence separately from physical-device or human-comprehension claims.”
 
 ## Flight target layout and geometry
@@ -465,6 +561,8 @@ For the [More worlds browser](../../../docs/more-worlds-browser.md), separate th
 ## Keep live pictures and earned originals stable
 
 When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.
+
+For Journey reward admission, keep strict gameplay receipts unchanged and store the exact presentation descriptor only in the bounded companion ledger. A real Solo, Versus or Team terminal owner may admit only its own mode and only the decoded original already authenticated for that exact edition, mission, campaign execution, level revision, run, gameplay identity, difficulty and theme. Never infer another mode's completion or use a current asset to fill an older clear. Versus requires the completed paired-board recipe and its live accepted backdrop. Team retains presentation through the existing transient attempt owner; do not add a persistent co-op session. Invalid/conflicting artwork may leave the legal gameplay clear intact but must not claim an original. Mode-local viewers filter by exact mode/edition, restore their actual opener and never award, replay or launch. Use [the UX1-A2 contract](../../../docs/ux1-a2-cross-mode-rewards.md), and keep modeled host evidence distinct from reload, physical-device, offline and public-release qualification.
 
 For the bounded [P08-A static Versus parity candidate](../../../docs/shared-static-pictures.md), reuse exact fresh Solo assignment/baseline/release resolution through a read-only picture lease; never call the durable default-materialization path from Versus. Keep one accepted decoded original and fit for both boards. Retry retains the attempt and captured choice; setup changes alone establish a new choice. Confirm current metadata before Start, fence stale/cancelled completion, and release only owned resources. During a focused Retry or asynchronous Start confirmation, transfer only that action’s owned focus to visible Cancel; later navigation, foreground loss and stale completion must prevent focus restoration. Expire Start/Next intent on suspend or controller loss even if the page returns before preparation resolves; keep completed picture readiness and require a fresh Start gesture. Keep the [scoped evidence](../../../docs/verification/cross-mode/p08-a/README.md) distinct from full phase or release acceptance. A failed selected image must refuse Start visibly. Preserve the separate optional whole-release snapshot fallback and historical procedural/training behavior, with an explicit notice; do not infer a stricter global release policy. The shared store may perform its established schema initialization, but this lease must not commit media, assignments or Solo progress. Check user-original priority, saved/earned pin preservation, both aspect ratios and actual native fit independently of modeled source tests. Team adoption and new asset production remain separate.
 
@@ -537,6 +635,14 @@ Keep software release history in About’s Build information disclosure, separat
 Keep standalone Enemy workshop departure a static same-edition `../../game/` link beside the page actions, available before module startup and during failure. Do not route it through catalog Apply, implicit saving, history/referrer inference, or a new return-context owner. Modal Back still closes only the panel; the practice iframe retains its scoped return bridge and input ownership. The startup auto-open lease begins before the first await and belongs only to untouched foreground body/root focus. Existing meaningful focus, later focus/input, blur, hidden or pagehide retires it permanently; remove intent listeners on retirement and all startup listeners on settlement or terminal departure. Prevent late terminal responses from initializing owners; defer cached-page readiness/failure until pageshow without reviving auto-open. Ready status must not open a modal over a newer Return choice or engage navigation to force a default. Preserve ordinary untouched auto-open and explicit Open workshop. The existing controller owner starts only after themes load, so distinguish ready-state modeled controller routing from pre-ready/failure native-link availability. Use the [Enemy workshop return prompt](../../../docs/enemy-catalog.md#returning-to-the-game); native navigation and physical-device checks remain separate.
 
 For untouched Enemy startup auto-open, pass the enabled Open workshop button as the dialog's explicit return target; BODY is not a useful invoker. Keep ordinary callers bound to their actual invoker. Restore only on an actual foreground close that still owns focus, and recheck after native close callbacks: repeated Back, reopened dialogs, newer focus and child practice must not inherit a retired close's authority. Test Escape and modal Back from Presentation, the returned Open action, then forward page traversal to Level playground and Return to game without storage writes. Keep the loading-intent lease and practice bridge unchanged; finite DOM/default-action tests do not establish painted focus, native modal Tab or physical-controller acceptance.
+
+Keep the Enemy page's five current actions in one wrapping group: Open workshop,
+Level playground, Return to Workshop, Return to game and Feedback comparison.
+Preserve DOM order, localization and return-context attributes. Targets are at
+least 44px with a 16px gap clearing the shared 7px outward focus paint. Do not
+restore an old three-action page, hide a focus ring or shrink text to repair
+crowding. Use the [layout review prompt](../../../docs/enemy-catalog.md#returning-to-the-game)
+for responsive keyboard review; browser layout is not physical-device acceptance.
 
 Preserve the actual dialog hierarchy: Main menu stays beneath Settings or Collection; Workshop stays beneath Field Guide, with its menu parent retained. Let the existing modal stack restore that exact opener on Close, Escape or controller Back. An already-open Main menu remains the return screen even while its underlying flight is paused; a direct flight opener returns to that paused flight. Nested practice returns to the guide first. Preserve Settings → Music Studio → Close studio → Settings, transaction cancellation and neutral input gates. On a first Studio read, disabling the initially focused Close button can move browser focus to the document; restore it after the read only if that disabling displaced focus and no later focus choice or dialog exit superseded it. Remember the initial target before the read rather than requiring immediate BODY focus: native blur may arrive later. Exercise both immediate and deferred disabled blur during read success/failure separately from cached reopening; never steal focus after a user choice, close or disposal. Explicit Replay or mission/appearance selection closes the appropriate parent dialogs; simply inspecting Collection or its picture retains its entry screen. Read [Collection return behavior](../../../docs/collection-title-return.md). Regression prompt: “Open title Settings and Music Studio, return twice; then open Field Guide, enter and leave practice, and close the guide. Repeat from a real paused cut. Verify the original screen/focus, exact saved state and explicit Resume.” Inspect both keyboard and modeled controller paths, then native browser focus and compact illustration clipping separately. The browser milestone still needs complete source gates and packaged/native-browser/public qualification; source or preview success grants no gate waiver. Full physical-device comfort and supported-device qualification remain P7, with no certification inferred here.
 
@@ -719,6 +825,8 @@ Real embedded-art chapter tests validate and store multi-megabyte originals. Use
 Keep filesystem staging budgets separate from the JavaScript heap. Use the repository's established test invocation for embedded-art hosts; imposing the worktree's byte limit on V8 can terminate verification before its assertions. Retain such execution-configuration failures separately from reproduced product regressions.
 
 ## More worlds selection ownership
+
+This section preserves the older More worlds adapter contract and its historical tests. Current player discovery uses All missions with Download followed by separate Play, as specified above; do not reintroduce the older combined action or nested menu route into the unified chooser.
 
 Keep **More chapters** beside Back in the existing sticky Missions heading, outside the collapsed Game mode controls. Preserve selected-chapter focus and the measured heading/footer clearance; scrolling must not hide the chapter-discovery action. Reuse `shell-worlds` and its handler, explicitly hide it in briefing, preserve Training's visibility authority, and qualify keyboard/controller reachability with Game mode closed. Use the existing `navigation.missions` copy key for the concise heading, retaining Standard/Large text sizes. Check narrow portrait and short landscape with Large/Plain text before accepting the layout. Do not add a second installation entry or change launch authority when reorganizing the menu.
 
@@ -937,6 +1045,30 @@ Prompt: “Start an exposed cut in both turning modes, pause, open Field details
 
 Flight Details regression prompt: “Start and pause an exposed cut. Enter Field details and Read. Tab to adjacent Done without clearing Read; Shift+Tab back to the text; activate Done and return to Read. Read again, Tab through Done to Back, close and verify the identical paused checkpoint. Reopen after scrolling and verify the heading starts in view. Test Standard/Large at600×400 and portrait/landscape without reducing text size. Keep the native Read/text/Done/Back order, and omit only the zero-required-objective Details row.”
 
+#### Live language changes in Flight Details
+
+Keep the open visit's accepted information, controls, content identities and
+historical notices. An explicit locale change may re-render explanatory text from
+those captured facts; it must not sample a newer run, refresh notice history,
+reset input, restart the reader or resume flight. Capture keyboard/controller
+configurations and device identity, not already translated button labels. Derive
+role, powerup and encounter copy from typed facts. Keep impact carriers distinct
+from ordinary field hunters; preserve the observed notice text byte for byte.
+Use the shared locale transaction to preserve Read/Done ownership, focus and
+scroll. Unsubscribe on disposal and retire visits on close, suspension or owner
+replacement. Locale catalogs use literal flat keys (`keySeparator: false`);
+regenerate the combined catalog after resolving concurrent translation additions.
+
+Prompt: “Pause an unfinished cut with a pending turn in Immediate and Grid + buffer.
+Enter Flight Details → Read → Done focus. Switch EN → UK → EN. Verify translated
+roles, clocks, objective/action descriptions, generic controller and modifier-key
+names, while accepted notices, checkpoint, owner, scroll and reading state stay
+unchanged. Back stays paused; only explicit Resume moves. Exercise an impact
+carrier, an active multi-relay encounter, changed live preferences and a retired
+visit. Keep controller pulses neutral for the configured Confirm rearm interval;
+do not weaken the runtime echo guard to satisfy a synthetic fixture. Run the
+focused host/model regressions and record physical/public checks separately.”
+
 #### Details lifetime through backup completion
 
 Keep the installed Field details presenter owned by the page, not by a backup transaction. Editing the shared declaration must not accidentally rewrite unrelated `backupBusy = false` assignments in finally blocks. Verify actual app-mounted successful import, Undo and failure, then persisted and terminal pagehide. A presentation reference reset can leave click handlers alive while breaking lifecycle cleanup; testing only whether the dialog opens is insufficient.
@@ -1003,17 +1135,17 @@ A nested Stay can return browser focus to Cancel. Include only that same owned C
 
 ## Team artwork discovery previews (P06 successor)
 
-- Team cards use bounded artwork teasers and an explicit enlarged, concealed Preview within the same gallery dialog. The full picture is the win reward; ordinary discovery must not expose its centre. Preview is not an earned picture, completion, bookmark, installation or simulation start. Keep Play a single deliberate action and preserve the old attempt/result until its existing preparation gate succeeds.
-- Resolve the exact row pack, level, theme and authenticated local artwork through a dedicated preview lease. Never borrow or dispose the accepted attempt's picture or the opened pack's opaque source. Copy pixels into 288×144 teasers or one 1152×576 expanded teaser, mask the centre with proportional 24/96-pixel borders, then release each temporary decoded image. Keep one actual preparation permit until the underlying work settles, across cancellation and reopened visits.
-- Back from expanded Preview restores the exact Preview opener; the next Back closes the gallery. Cancellation, foreground loss, disposal and newer visits fence late reads and draws. Keep Retry focused while preparing, expose progress without fabricated percentages, and retain newer focus choices. Recheck visit ownership after abort callbacks; an old close cannot clear a new dialog.
+- Unified Team mission cards remain metadata-only and artwork-lazy. The selected card exposes an explicit full Preview inside the shared chooser. Preview is not an earned picture, completion, bookmark, installation or simulation start. Keep Play a separate deliberate action and preserve the old attempt/result until its existing preparation gate succeeds.
+- Resolve the exact row pack, level, theme and authenticated local artwork through a dedicated preview lease. Never borrow or dispose the accepted attempt's picture or the opened pack's opaque source. Copy the complete original only into the explicit 1152×576 preview, then release the transient decoded image. The ready lobby separately borrows its accepted image for a broad-border concealed teaser. Keep one actual preview preparation permit until the underlying work settles, across cancellation and reopened visits.
+- Shared chooser Back closes directly to the exact lobby/result game opener; selection changes close the inline preview. Cancellation, foreground loss, disposal and newer visits fence late reads and draws. Keep Retry focused while preparing, expose progress without fabricated percentages, and retain newer focus choices. Recheck visit ownership after abort callbacks; an old close cannot clear a new chooser visit.
 - Qualify scheduler/resource lifetimes and real-host authenticated artwork separately. Preserve legal win→Preview→Back→Next/Retry outcomes and record attempted storage mutations. Native layout, physical controllers, public bytes and offline play remain separate release evidence.
-- Prompt example: “Extend Reveal Line’s Team gallery preview from its reviewed release. Preserve exact content/artwork identity, optional concealed player Preview, unchanged full creator/earned views, one actual preparation permit, copied-pixel limits, cancellation ownership, focus and accepted originals. Exercise read/decode/paint failure, Retry, abort reentry, local `.rlteam` identity and legal earned-result continuation. Update the guide and prompts, then qualify the exact integrated source and deployed journey.”
+- Prompt example: “Extend Reveal Line’s unified Team mission-library preview from its reviewed release. Preserve artwork-lazy cards, exact content/artwork identity, optional full player Preview without awards, unchanged full creator/earned views, one actual preparation permit, cancellation ownership, direct chooser Back focus and accepted originals. Exercise read/decode/paint failure, Retry, abort reentry, local `.rlteam` identity and legal earned-result continuation. Update the guide and prompts, then qualify the exact integrated source and deployed journey.”
 
 ### Team preview viewport allocation
 
 Follow the expanded-preview responsive layout in [Team discovery](../../../docs/team-discovery.md). Fit the whole 2:1 artwork into the space remaining after Back and readable text. Landscape uses a bounded viewport; portrait uses natural picture height to avoid excessive empty letterboxing. Keep gallery-only copy out of the picture view, retain visible failure/recovery messages and accessible successful status announcements, and preserve exact artwork and focus ownership.
 
-Prompt: “Review the concealed Team picture preview at 844×390, 600×400, 390×844 and desktop with Large/Plain text and meaningful 200% zoom. Verify the complete preview frame, opaque centre, caption and at-least-44px Back action together; rotate while keeping the exact picture and focus. Fail decoding, Retry, return to the precise card and close to the prior opener. Capture settled native screenshots and geometry; do not call CSS declarations or fabricated rectangles visual proof. Keep original artwork, simulation and release evidence unchanged.”
+Prompt: “Review the full Team picture preview at 844×390, 600×400, 390×844 and desktop with Large/Plain text and meaningful 200% zoom. Verify the complete preview frame, exact centre/border, no-award caption and at-least-44px chooser Back action together; rotate while keeping the exact picture and focus. Fail decoding, Retry, then use chooser Back to return directly to the exact game opener. Capture settled native screenshots and geometry; do not call CSS declarations or fabricated rectangles visual proof. Keep original artwork, simulation and release evidence unchanged.”
 
 ### Team guidance follows actual arena content
 
@@ -1097,6 +1229,15 @@ When a confirmation disables its focused button while awaiting a picture or chap
 Example: “Verify Replace & play with a bounded local download delay. Keep Stay focused during preparation, retain the current flight on cancellation, and prove background/hidden or moved-focus cases do not reclaim focus. Preserve failed observations and distinguish local preview from deployed acceptance.”
 
 ### Compact Pause acceptance
+
+Keep Pause as the sole in-flight menu authority. While a run is active or paused,
+the compact shell may retain Game menu, fullscreen and Pause, but it must not repeat
+Missions, Skip, Collection or Settings above the Pause panel. Order the visible
+Pause actions around Resume, Restart, Missions, Help, Settings, quick Sound and Home; put Field
+details and Mission brief in one collapsed Mission info group. Child screens must
+return to their exact Pause opener without resuming or replacing the attempt.
+Verify controller access to the disclosure as well as its child actions, and keep
+held Confirm/Back from leaking across the returned focus boundary.
 
 Verify focused Pause actions at568×320,844×390 and390×844 with Plain/Large text. Record actual viewport and document dimensions after resizing settles; an immediate scaled screenshot alone is not layout evidence. Tab through visible actions and verify the complete focus outline after internal scroll. Reset viewport overrides afterward. Keep keyboard, mouse inspection, screen-reader listening and physical device results distinct. A mounted empty polite status is not proof that a missing-picture announcement was heard. Preserve the original public receipt and scope when updating the execution register.
 
@@ -1221,30 +1362,50 @@ When integrating historical preflight changes, include the Undo handler’s logi
 
 During an active Library replacement review, handle an unmodified, unhandled keyboard Escape in the review owner before the browser dialog close request. Native close-watcher cancel events may be non-cancelable after a previous request; do not rely only on cancel.preventDefault or reopen a closed dialog. Preserve nested dialog, composition, reader/edit and repeat ownership. After the review ends, the next Escape uses ordinary modal closing. Retain native failure traces and verify repeated review cycles; keyboard evidence does not certify mobile Back or assistive-technology gestures.
 
+For bundled-chapter recovery, describe the existing explicit retry path accurately.
+HTTP and unreadable-body failures permit selecting the same uninstalled chapter
+again while online; do not require reload when each selection creates a new
+request. Preserve the current flight, library, status code, diagnostic cause,
+abort semantics and ordinary pack validation. Verify controlled failure then
+success in the same page without reload. See `docs/chapter-download-retry.md` and
+`authoring/prompts/chapter-download-retry.md`; local faults do not qualify public
+network recovery or physical-device input.
+
+## Replay Theater history-restored display controls
+
+When a browser restores form values, an unchanged shared preference owner may legitimately emit no subscription update. Replay Theater must use the shared view-only preference-restoration adapter after its owner listeners. Repaint current snapshots immediately and in the next task; never treat restored controls as explicit intent. Preserve denied-save session choices, raw effects choice, system reduction, focus, warnings, input and paused recording checkpoints. Cancel pending repaint on departure and dispose on terminal exit. Test unchanged saved/session-only values and stale controls both before and after pageshow, separately from physical browser/device qualification. See `docs/replay-display-restoration.md` and `authoring/prompts/replay-display-restoration.md`.
+
+## 2026-09-22 — Responsive authoring toolbar minimums
+
+For [Studio preview controls](../../../docs/verification/studio-responsive-toolbar.md), inspect later shared host selectors when a narrow toolbar ignores its minimum widths. A logical `min-inline-size: 0` can override an earlier `min-width`, and `flex: 1` can then collapse every label into one row. Keep a bounded track minimum rather than relying on the children's minimum alone; constrain native select text, preserve DOM/tab order and measure actual 44px action rows. Verify portrait, short landscape, wide layout and Plain/Large text. Attribute native checks to the exact source and CSS overlay, preserve the full existing maintainer history, and keep responsive emulation separate from physical-device or complete authoring acceptance. Use the [focused prompt](../../prompts/studio-responsive-toolbar.md).
+
+## 2026-09-22 — Native validation keeps its field label visible
+
+For [Studio validation labels](../../prompts/studio-validation-labels.md), keep the browser’s chosen invalid field and native error behavior. Reveal the complete associated label plus outline clearance after one bounded animation frame; a tall wrapper falls back to the control. Bind queued scrolling to the live connected form, current focus and foreground, and recheck ownership after layout reads. Background, disposal or stale focus must not move another field. Keep the adapter scoped to the affected form rather than broadening modal helpers. Qualify both real form editing semantics and native invalid-submission geometry, preserve draft JSON, and distinguish narrow local keyboard evidence from physical-device, actual zoom, all-form and public acceptance. See [verification and limits](../../../docs/studio-validation-labels.md).
+
+## Sprite history keyboard focus
+
+Before disabling an owned Undo or Redo endpoint, enable and focus its available opposite action; use the canvas if neither history action remains. Let normal focus reveal the successor after responsive reflow or rotation. Canvas shortcuts, intermediate history, background redraws and newer unrelated focus retain their owners. Verify real pixel/history outcomes as well as focus; a modeled pass does not prove visible native focus. Preserve failed native iterations. Follow [the verification prompt](../../prompts/studio-pixel-history-focus.md).
+
 ## Retained presentation publication
 
 When a release must preserve complete saved-attempt visuals, pass the verified previous compiler output explicitly as `previousOutput`; see `docs/retained-presentation-output.md`. Preserve exact hash-named runtime manifests and their lazy dependencies. The controlled writer refuses removal of admitted history or bad manifest/dependency bytes before staging. Capacity failures require an explicit retention design, never pruning. Run retained-output, output, dependency, host and compiler-system tests, then full reproduction/release and actual restoration/offline journeys. Do not equate this transport with a completed theme catalogue or player-save migration. Use `authoring/prompts/retained-presentation-output.md` for release work.
-
 
 ## Exact retained presentation reader
 
 Restore complete visual pins with a fresh host configured with the same `retainedManifestSha256` and `expectedManifestSha256`. Read only the hash-named retained runtime and its exact dependencies; never substitute current runtime after a missing/corrupt historical file. Keep an accepted attempt's resources independently owned while staging and release them only after replacement succeeds. Qualify the reader together with `previousOutput` compilation and controlled writer adoption: the real output-directory update test must restore the old original after current image/token changes and leave accepted owners alive after corrupt-history failure. Transport qualification is not live attempt integration, offline cold-start or public acceptance.
 
-
 ### Complete visual save references
 
 `xonix-session.v5` retains a full `visualThemePin` alongside existing still/story pins and explicit continuation. Treat this as owned metadata, never as decoded or approved assets. Bind Solo mode, content theme, original picture owner and original level revision separately from the difficulty execution identity. Preserve v1-v4 readers and ordinary writers. `restoreSession` verifies replay and picture ownership; the live attempt owner must separately verify the exact content hash, catalogue declaration, retained manifest and decoded dependencies before adoption. Until that staged owner is connected, the Solo host must refuse v5 playback visibly while preserving the current run and original saved bytes. File export and backup may retain verified references; they do not bundle the referenced assets or prove offline readiness. See [Visual session references](../../../docs/visual-session-references.md) and [verification prompt](../../prompts/visual-session-references.md).
-
 
 ### Live saved-presentation ownership
 
 The live restore owner supersedes the temporary v5 playback refusal described above for shipped FPV/First Signal catalogue coverage. Follow [Live visual restoration](../../../docs/saved-visual-restoration.md) and its [prompt](../../prompts/saved-visual-restoration.md). Keep the shipped declaration, original authored context, exact manifest, decoded assets and retained picture as separate verified boundaries. Stage a fresh lease; never reuse the page owner. A slow page load must neither block restore nor overwrite its accepted lease. Retry and explicit Restart keep visual/picture choices; fresh mission selection retires the lease. Save on pagehide before disposal. Keep audio source replacement generation-safe and preserve master mute/manual playlists. Catalogue availability does not enable fresh theme selection or prove the two-collection benchmark; those remain separate acceptance work.
 
-
 ### Campaign snapshot memory
 
 For large installed campaign pointers, follow `docs/pack-snapshot-memory.md` and `authoring/prompts/pack-snapshot-memory.md`. Compare already serialized pointers byte-exactly without serializing their embedded originals again; keep canonical legacy-object equality, journal/lock checks, ownership validation and single-use stale-write protection. Separate filtered diagnostics from full-file, browser and public release evidence.
-
 
 ## Fresh complete presentation benchmark
 
@@ -1262,7 +1423,6 @@ Node retains evaluated top-level-await game modules and completed test hooks unt
 
 For fresh-presentation audio regression, browser object URLs include both images and music. Count audio-MIME allocations, assert the exact music URL is retained and not revoked, and keep playback count/position checks through results, Next and Collection. Never weaken continuity checks by merely allowing another arbitrary URL.
 
-
 Keep confirmed-Restart picture retention independent of complete-theme leases.
 Capture both the existing picture pins and its legacy-reader flag before disposal.
 Exercise imported v4 and v2 attempts after assignment A changes to B: Restart must
@@ -1270,14 +1430,12 @@ retain A or the historical legacy reader, preserve session format, and begin a
 fresh verified simulation. A complete visual pin is not required for picture
 ownership. See `game/test/restart-picture-retention.test.mjs`.
 
-
 Optional-world Play host qualification includes all sixteen independent
 `optional-world-play-*.test.mjs` wrappers plus their fetch-cleanup assertions.
 Keep the 512 MiB limit and every original scenario body. Multi-scenario Node
 module retention and single-journey allocation failures are different findings;
 a failing isolated journey is not resolved by process separation. Whole-browser
 memory, physical input and public release remain separate gates.
-
 
 The optional-world family now adds a separate approved-release-original entry
 to the sixteen scenario wrappers. An unassigned shipped original can select an
@@ -1287,12 +1445,19 @@ actual bytes and retain runtime header/hash/frame guards. Assert exact released
 SHA and frame separately. Verify test discovery: a loader-only source with no
 entry file on disk is not a completed regression. Preserve every original case.
 
-
 ## Immutable retained production runtime input
 
 When a fixed visual policy outlives its current compiled runtime, retain the original raw runtime as an explicit code-owned authoring input. Follow [Retained Field Kit production](../../../docs/field-kit-retained-production.md) and its [prompt](../../prompts/field-kit-retained-production.md). Pin provenance, path, byte count and hash; validate compiled schema and every lazy dependency against the immutable production ledger. Pass verified explicit history to the compiler, never incidental output-directory contents. Skip hash-named retained runtime files in the generator and broad Prettier commands, keeping ordinary runtime.json checked; rebuild the ownership inventory afterward. Refuse missing or corrupt history before adoption. Preserve all existing records and originals; exact input retention does not advance fresh policy, inherit recipe approval or establish native/offline/public acceptance.
 
-
+For fpv38/50 `.rlteam` restoration, follow [Historical Team imports](../../../docs/team-retained-imports.md)
+and its [prompt](../../prompts/team-retained-imports.md). The envelope metadata hash
+is not a theme-runtime hash. Admit the exact code-owned association only, using
+the authenticated live owner. Stage historical picture/painter/audio together,
+restore the old painter after temporary validation, and preserve the old attempt
+on failure/cancellation. Keep the two manifests in their explicit optional Team
+download; do not increase the core cache budget or exclude any existing retained
+dependency. Old themes deliberately use their original fallback roles. Newer
+ambiguous revision lineages require another contract, not a wider numeric range.
 
 ## Preparation live status follows the Resume owner
 
@@ -1305,3 +1470,378 @@ When a reader dependency changes, reopen its recipe group and compare each selec
 ## Session-only tests with complete retained visuals
 
 When integrating complete visual retention with session-only original recovery, keep a valid full visual manifest in the host fixture. Derive the diagnostic picture bindings and exact URL closure from that manifest, validate it, and bind the fixture catalogue to the exact resulting hash. Preserve real role/font dependencies and all original Next, retained-result, no-write and exported-byte assertions. Assert the v5 visual pin before releasing writer authority. A two-picture-only manifest that rejects a required retained-manifest request is an obsolete fixture, not evidence to disable theme verification. Preserve the failed integration run, then rerun the complete affected file on both supported Node versions. Modeled codecs and synthetic pictures do not certify production artwork, native restoration or public acceptance.
+
+## 2026-09-22: Initial modal focus and asynchronous thumbnail geometry
+
+Native showModal may already focus the selected action. Keep guarded visibility correction outside the manual-focus branch so an already focused action is revealed without refocusing. Compare its entire rectangle with the current dialog client scrollport and viewport, and recheck visit, focus, visibility and foreground after layout reads. Preserve fully visible actions and newer destinations. Reserve thumbnail geometry before asynchronous image preparation; keep the canvas hidden until actual paint, instead of growing the card after the initial reveal or scheduling scrolling that can chase newer user intent. Test native autofocus, partial clipping, stable thumbnail ownership and focus/layout reentry. Finite DOM tests do not replace native checks after display preference changes. On return from a picture detail, preserve its exact opener and apply the same guarded visibility check only after the current picture session restores focus. Do not reveal an old opener after a newer focus or panel change. Keep search and attempt activation unchanged.
+
+## Editable Team relay anchors
+
+Team anchor states use dedicated `team.anchor.available` and `team.anchor.captured` slots. Existing snapshots without these optional authoring slots retain their historical cues. Add missing slots only through an explicit Studio draft revision; preserve all old themes/assets/collections and support Undo before save. Artwork uses a centered 24×24 frame and may not own collision geometry, capture state, letter/number labels or the captured checkmark. Keep the functional square and readable label visible beside replacement decoration at small canvas sizes. A missing/malformed advertised frame must fail before the painter adopts the new presentation. The Studio context must decode selected anchor assets through the real Team painter, state when the selected state is inactive, and reject Solo/Versus or arenas without anchors. Qualify upgrade → upload → save → reopen → export → import → undo; byte verification and simulated state tests do not replace native preview review. See [Team anchor authoring](../../../docs/team-anchor-authoring.md) and its [prompt](../../prompts/team-anchor-authoring.md). This feature does not qualify core, Support, rescue, emitter or whole-Team production coverage.
+
+## Team relay-core presentation contract
+
+`team.core.shielded`, `team.core.exposed` and `team.core.secured` accept centered 64×64 transparent bodies or `team.core.v1`. Select from authoritative stronghold state; never change simulation geometry, timers, attacks or capture. Keep functional rings, center cues and status labels game-owned. Validate all frames before adopting a snapshot. Historical absence retains the shared body and original presentation; malformed advertised artwork must fail visibly. Studio's **Add Team objective slots** explicitly appends missing anchor/core contracts without rewriting prior records. Keep the legacy anchor-only upgrade exports compatible. Normal victory shows the reveal picture and hides objectives: do not label hidden artwork as visible. See `docs/team-core-authoring.md` and `authoring/prompts/team-core-authoring.md`. Production artwork and public acceptance remain separate from source/authoring qualification.
+
+## Team Support specimen and scene availability
+
+Studio's `support` scenario uses unchanged winning-trace public inputs at First Connection tick211 and Relay Yard tick291. Both players trigger real pulses and two hunters are slowed. Do not manufacture run fields for this preview. Scene controls derive availability from `isTeamPreviewScenarioAvailable`; keep it synchronized with fixture ticks rather than a second host allowlist. Paused/Reduced effects hold the selected specimen; Play advances actual clocks; switching controls rebuilds it. Preserve historical state hashes and independent replay/expiration/reset tests. Support is not Scan, and procedural-preview coverage is not a claim of new production assets. See `docs/team-support-preview.md` and `authoring/prompts/team-support-preview.md`.
+
+## Editable Team Support roles and current upgrade label
+
+Current Studio action is **Add Team presentation slots**, superseding earlier anchor/objective-only labels. Preserve those historical helper exports; the full upgrade adds only missing anchor/core/Support contracts. `team.support.pulse`64×64 and `team.enemy.slowed`24×24 accept centered transparent decoration or `team.support.v1`. Keep radius/timing/cooldowns/slowdown/rescue/collision authoritative. Clip pulse artwork to the existing radius, bound opacity, paint actors/functional labels above it and keep slowdown rings/labels. Reject all malformed advertised frames before snapshot adoption; historical absence keeps original behavior. Use real Support fixtures in both arenas for active/expired/reduced comparisons. Upload validation, fixture screenshots and zero missing slots do not constitute new art approval or public-release acceptance. See `docs/team-support-authoring.md` and `authoring/prompts/team-support-assets.md`.
+
+## Editable Team emitter roles
+
+`team.emitter.warning` (24×24) and `team.emitter.spark` (16×16) accept centered transparent decoration or `team.emitter.v1`. Full **Add Team presentation slots** appends these without rewriting old bindings or records. Keep warning lines/target squares and spark center/outlines game-owned; take positions from authoritative emitter/impact state. Preserve all timing, targeting, movement, collision, interception and clearing semantics. Prepare every advertised frame before adopting a painter snapshot. Historical absence retains prior appearance. Relay Yard's emitter-warning tick360 and emitter-spark tick430 specimens use public commands, never fabricated fields. First Connection has no emitter: its recovery route is the compatible arena or Native size, not Solo/Versus. See `docs/team-emitter-authoring.md` and `authoring/prompts/team-emitter-assets.md`. QA fixture art and scoped tests do not complete production or public-release acceptance.
+
+## Editable Team rescue and recovery
+
+`team.rescue.progress` and `team.player.recovery` use centered 32×32 frames or `team.rescue.v1`. Full Team slot upgrade appends contracts and a theme revision without replacing existing bindings. Paint decorations before all actor bodies and fixed numbers/shapes. Contact rescue decorates the rescuer; its game-owned target-number label uses the existing one-second progress. Keep post-revival grace's dashed ring above art. Observe state only: do not change rescue eligibility, duration, cancellation, reserves, grace, collision or release gates. Real Pause releases rescue; Studio Paused holds its isolated specimen. Inspect both players using Relay Yard public-command rescue/recovered scenes. Both arenas support the slots; inactive scenes must say so. Prepare all frames before snapshot adoption and retain historical absence. See `docs/team-rescue-authoring.md` and `authoring/prompts/team-rescue-assets.md`. Scoped fixtures do not establish production or deployment acceptance.
+
+## Team runtime image preparation
+
+Studio preview decoding is not proof of runtime asset integration. Every Team image slot must have a renderer contract and appear in `TEAM_RUNTIME_IMAGE_SLOTS` from `game/presentation/team-runtime-slots.mjs`. The shared host uses this exact allowlist with its existing hash, dimensions, decode budget, cancellation and lifetime checks; never broaden it to arbitrary `team.*`. Test actual compiler output through `createPresentationHost`, inspect decoded revisions, then pass that snapshot to the Team painter. Failed replacement must retain the old snapshot and release partial new resources. Keep reveal-picture resolution separate. See `docs/team-runtime-assets.md`; require real browser decoding in addition to mocked host tests before release adoption.
+
+### Team pilot state artwork contract (P04 candidate)
+
+Use the 24 `team.pilot.p{1|2}.{state}.{compact|detailed}` slots and `team.pilot.v1` inheritance recipe; see `docs/team-pilot-assets.md` and `authoring/prompts/team-pilot-assets.md`. Never infer a state from the selected Studio slot. Verify actual painter `sourceSlot`, seat, six states and both sizes through the release host as well as Studio. Invalid custom images/geometry must preserve the accepted snapshot. Preserve four runtime rotors, game-owned identity/contact/rescue cues, frozen downed/crawling rotors and simulation semantics. Prior crawl samples come from public commands; current level identity may alias mutable actors, so inspect prior sampled actor arrays. Recipe coverage and geometric QA fixtures do not prove production art readiness.
+
+For asynchronous Studio exports, retain the exact prepared revision as an explicit download link until replacement or normal page exit. Do not claim download completion from a synthetic click. Preserve prior usable links on preparation failure and verify a real downloaded bundle and browser import.
+
+### Team enemy state slots (P04 candidate)
+
+Use `team.enemy.drifter` and hunter patrol/warning/charge/recovery slots; the charge binding maps to core `commit`. The `team.enemy.v1` recipe explicitly inherits the shared bouncer/border-patrol image without changing Team behavior. Add new slots to the exact runtime allowlist and Studio upgrade, native/context previews, prompts and bundle/geometry validation together. Use actual command-earned Hunter recovery specimens in both arenas; never manufacture phase state for a passing preview. Preserve all warning lines, contact centers, labels, Support and simulation hashes. Follow `docs/team-enemy-assets.md` and `authoring/prompts/team-enemy-assets.md`; source coverage is not finished production art or release acceptance.
+
+## Studio imports into a historical registry
+
+Test real exported collections in a fresh workspace as well as an upgraded one. Import may append only exact code-owned Team slot contracts supported by the running release; unknown IDs, prefix matches and altered contracts fail before staging. Preserve all old slots, assets, themes and collections. Keep slot adoption and asset validation in the existing single atomic import operation; cancellation/failure must leave the old document and bytes usable. An actual downloaded file and its validated payload hashes are required export evidence. Browser upload permissions and in-app download limitations are distinct from product correctness.
+
+## Team joint and reserve outcome presentation
+
+Consume the core’s transient events after every fixed step, before another step replaces them. Rendering is read-only; it must not infer extra rewards or alter simulation. Retain only bounded one-second active-time joint/recovery cues, freeze with pause, clear on new attempts/backward time and terminal states. Preserve warning placement priority and real player identities. Register exact slots in runtime loading, Studio upgrade/import, native/context previews and docs/prompts. Qualify both command-earned arena scenes, multi-step frames, expiry/reset, reduced effects, invalid-image retention and unchanged simulation. Short baseline recipe provenance may reference the full slot prompt; never rewrite historical bundle records.
+
+## Team complete touch-layout qualification
+
+In landscape, reserve the actual HUD, objective, footer and both complete player control groups before fitting the unchanged 2:1 board. The large pad includes its action row; seeing four direction targets is not proof that Boost and Support fit. Inspect Standard/Large text, Plain/theme fonts, Regular/Large pad sizes, visible/hidden/one-seat touch states, and paused/settings return. Measure every visible action against the actual viewport and 44 CSS-pixel minimum, and confirm board/control rectangles do not intersect. Requested viewport dimensions are not evidence until DOM measurements confirm them. Preserve portrait behavior and explicit pause semantics. In short landscape, reserve the actual visible pad width on each side of the board, including when only one seat is visible; floating controls must not cover playable cells. This supersedes the older no-gutters guidance above.
+
+## Studio consumed Stage focus
+
+Successful asset staging consumes its prepared candidate and disables Stage. Advance only that owned foreground completion to Save local revision; retain the ordinary opener on errors and never displace newer guide/preview focus or a background page. Use the existing operation owner and preserve bytes/history. Test real host staging and native Enter → Stage → Enter → Save. In DOM tests compare IDs or booleans for large trees, avoiding huge assertion diffs. Other disabled-action handoffs and cold Back restoration remain separate work.
+
+## Studio history-entry inspection position
+
+Keep Studio view memory outside player saves and workspace/theme revisions. Store only a bounded versioned slot/filter record on the current history entry, preserving other owners and refusing to overwrite future versions or unsupported foreign state. Do not add entries or change URLs. Reconcile against the accepted workspace and current option values after loading. Restore foreground focus only if the body still owns it; preserve Guide, cancellation and newer focus. Native reload and Atlas → Back checks must show retained filters/selection without saving a revision. Model actual implicit option values in host fixtures. Record cached navigation separately from cold document reload and do not claim native background-tab or physical-device evidence from fixtures.
+
+## Team production recipe review scope
+
+When adding or revising Team slots, keep their production recipe fingerprint separate from the Solo effects and motion reviews. The production generator uses the `team` input group for every `team.*` role. Do not copy an existing Solo review digest/evidence into that group. Keep Team roles at source stage until a review tied to the actual Team inputs, roles and state coverage is recorded. Changes to shared actor presentation, Team painter helpers, runtime slot loading or the slot contract must reopen that review. Historical optional slots remain readable; optional compatibility is not production acceptance. See `docs/team-production-review-scope.md` and `authoring/prompts/team-production-review.md`.
+
+Use the explicit `retainFieldKitProductionHistory` adapter when the release builder adopts all 42 Team roles into a historical ledger. It refuses unrelated additions, removed/altered contracts and partial Team role sets, preserves all old records, and advances one document revision. Keep the generic history writer strict. Regenerate the ledger/compiled assets before current-production reproduction tests; do not weaken their byte-equality checks to make an old ledger pass a new generator.
+
+## Team equipment artwork production
+
+Keep the five anchor/core sprites in `game/presentation/team-equipment-art.mjs` original and deterministic. Use the exact registered Team slot palette, centered 24×24/64×64 frames, binary alpha and no baked labels or rotors. Production binds PNGs with measured occupied bounds and source provenance; new images start produced, never inherit Solo review. Preserve the core warning outline and live label with a thin center ring instead of painting the historical solid dot over authored images. Historical and recipe states retain their existing dot. Run equipment, core painter, Team review and history tests; inspect Native size and actual Team context. See `docs/team-equipment-art.md` and `authoring/prompts/team-equipment-art.md`. Exact merged collection review, artwork admission, release gates and public play remain required.
+
+## Team and Journey presentation integration
+
+Preserve Journey claimed-rover rendering, timed bonuses, candidate picture/frame authority and navigation when adding Team's 42-role contract. Merge helpers instead of replacing the host with an older snapshot. Team recipe provenance includes shared image drawing, enemy-body motion, motion-lab animation, actor markers and enemy catalogues as well as direct Team helpers. Fingerprint changes reopen independent Team review; Solo effects approval is not transferable. Regenerate against the latest immutable production ledger, never adopt a provisional preview theme revision. Admit exact unchanged reveal-picture associations only after final compiled-byte review. Follow `docs/team-presentation-integration.md`.
+
+### Team migration fixtures after canonical-main reconciliation
+
+A migration rejection test must reconstruct the immutable pre-migration checkpoint rather than assume the live production ledger still lacks the new contracts. For the 42-role Team migration, authenticate canonical fpv57 with the existing reconciliation oracle's group-prefix hashes, all 127 payload hashes and complete exported bundle hash. Retain the generic writer rejection and exact first successor check, then separately prove current-ledger prefix preservation and no-op repetition after installation. Keep accepted main history and the alternate inert archive exact; an old unpublished Team fpv59 preview is not a canonical successor. Update picture binding revisions only with the actual reviewed generated identity, and treat the changed UI fingerprint as a separate review gate.
+
+## 2026-09-22: Shared admission contracts and review fingerprints
+
+When a reviewed host imports another feature's admission contract, fingerprint that shared contract in every consuming review group. Keep immutable slot authority in a dependency-free leaf and re-export its exact frozen constants from existing owners; avoid duplicated allowlists and unnecessary dependence on renderer implementations. Assert exact historical slot order/public identity and independent invalidation: changing the shared leaf reopens both groups, while Team-only drawing changes reopen Team only. Passing contract tests does not approve UI appearance, Team artwork or generated production.
+
+## 2026-09-22: Scoped UI review continuation and independent navigation findings
+
+A scoped review continuation may carry forward unchanged UI recipe payloads only with exact functional-record/token comparison and a closed dependency fingerprint. Tie runtime and native receipts to the actual pre-approval source/output, preserve discovered navigation defects, and exclude unrelated Team artwork or whole-phase acceptance. Update only the applicable reviewed group and its exact current-review assertions; append immutable production history after review rather than rewriting earlier evidence. Keep stale accepted-audio test reconciliation separate from any new audio approval.
+
+## Bounded complete presentation transfer
+
+When complete immutable collection successors fit the 5 MiB document bound but the
+redundant transfer asset table does not, keep fitting RLTHM1 exports byte-identical
+and use RLTHM2 only for that envelope overflow. Its manifest contains the complete
+validated document; payload order and lengths come from sorted unique file hashes.
+Reject inconsistent kind, MIME, byte count or dimensions for one hash. Preserve
+all history, provenance and original bytes, the 5 MiB decoded document/manifest and
+32 MiB complete file caps, and all structural limits. Do not solve transfer capacity
+with compression, history deletion or evidence trimming. Test both formats, exact
+boundaries, corrupt/truncated/trailing data, aborts, deterministic byte round trips
+and the real full collection plus review/replacement successors. Keep historical
+capacity measurements tied to their exact evidence bytes; concise and older review
+wording can change the deficit without changing the redundant-table cause.
+
+## Exact Team artwork after reviewed asset adoption
+
+When a production successor changes only reviewed equipment metadata, the current Team picture authority still needs an explicit matching theme revision. Retain supported older authorities and match full theme/collection/content/picture identities; never broaden admission to a revision range or "latest". Keep production history and all original payloads immutable.
+
+A paint-order test must inspect a fresh frame: the accepted decoded picture is the first background draw, once, followed by prepared actors. The last draw is no longer a reliable picture oracle. Keep failed/cancelled preparation, release ownership, Retry and stale-completion assertions intact.
+
+Use the [reviewed successor prompt](../../prompts/team-reviewed-successor.md). Equipment-image quality, recipe-functional review and public release acceptance have separate evidence. Exact adoption must reproduce the generated inventory and pass bounded transfer/history and direct host tests before final release qualification.
+
+## Team optional full preview without awards
+
+The current Team discovery contract permits an explicit full picture preview; it supersedes the older card-teaser and locked enlarged-teaser rule. Keep the passive lobby on a meaningful broad-border concealed teaser while unified mission-library cards remain metadata-only and artwork-lazy. Reuse the authenticated original and existing transient preview owner; full viewing is not gameplay, completion or an earned-picture receipt. Preserve accepted attempts, progress/profile bytes and independent image leases. Exercise cancellation, foreground loss, newer visits, decode failure and shared chooser Back returning directly to its exact game opener. Assert actual full-detail centre versus concealed lobby pixels, plus no simulation/start/award/write side effects. Keep native layout and visual recognition separate from finite Canvas tests; no renderer, recipe fingerprint or production-art change is implied.
+
+## Optional encounter practice and render recovery
+
+Follow [the optional encounter maintenance contract](../../../docs/combat-pressure-authoring.md).
+Enabled Solo practice uses the actual additive BoardPainter; absent/disabled
+combat must preserve historical draw commands and exact simulation identity.
+Validate before mutating drawing state. Keep Team and paired-race Studio admission
+closed until their own qualification passes. A post-startup practice failure is
+terminal for that child: stop ticks/drawing/input/audio, destroy held-Confirm
+suppression, expose the failure in the scrollable reading area and retain native
+Return/parent Close. Do not count blur as proof that released Confirm can recover.
+Retire pending loads, monitoring and the iframe on pagehide without stealing
+focus; a deliberate launch gets a fresh owner. Bound the frame to the viewport.
+Reopen exact recipe provenance when a consumed rendering helper changes; never
+rewrite old approvals or claim candidate practice as production/public proof.
+
+## Bounded presentation metadata and immutable history
+
+Keep serialized metadata, expanded logical history and original-payload budgets separate. See [the metadata contract](../../../docs/presentation-metadata.md) and [bounded-history prompt](../../prompts/bounded-theme-history.md). Preserve fitting historical bytes and every retained logical record. Decode compact metadata before semantic validation; do not treat reconstructed objects as trusted. Require encodability before an edit or atomic save is accepted.
+
+When qualifying a new representation, follow it through Studio storage, `.rltheme` framing, compiler newline handling, production formatting and published lazy loading. A bounded compiler result can become too large after pretty-printing. Any narrow generated-file formatting exception needs deterministic replacement validation and full output reproduction. Keep first failures, exact boundaries, stale/atomic guards and all original payloads. Representation readiness is separate from artwork review and public release acceptance.
+
+## Trusted presentation validation reuse
+
+A validation fast path may recognize only exact model-owned logical documents after complete schema, encoded-capacity and recursive-freeze checks succeed. Keep trust in a module-private weak identity set; never infer it from frozen shape, revision, a proxy target or caller-provided hashes. External objects, clones and proxies still cross ownership and validation boundaries. Previous-history and expected-revision constraints, selection options, original-byte verification and storage/operation ownership must remain authoritative. Test stale and rewritten history plus mutated and foreign-frozen inputs. Report actual retained-history and native action timings as scoped observations, separately from correctness tests.
+
+## 2026-09-22 — Same-tick authoring counters
+
+For [Studio progress counters](../../prompts/studio-same-tick-counters.md), compare HUD, painter and description from the same authoritative simulation tick. Reuse the established clamped progress helper and percentage convention; contact rescue floors completed whole percent and must not show 100% before real completion. Preserve rescuer/target identity, cancellation and core timing. Use both command-earned rescue traces across fractional ticks and completion, not only a paused 50% specimen. Record same-render display assertions, complete-file RED/green evidence and exact read bindings. Keep text-only corrections separate from gameplay or production-quality changes.
+
+## 2026-09-22 — Exact scoped recipe reviews and immutable inheritance
+
+For [Team functional review](../../prompts/team-recipe-functional-review.md), bind the accepted evidence hash, exact role/default payloads, ordered renderer fingerprint and inherited image records/originals. Distinguish original produced assembly records from previously reviewed immutable successors; never erase provenance or quality differences to make a gate pass. Explicit coordinator acceptance follows evidence preparation and precedes production adoption. Changed/unknown inputs remain source; missing required evidence fails production. Test the complete producer consumer closure, including temporary-project fixtures with read-only evidence dependencies, and retain old source-stage records unchanged. Scoped functional review does not imply new artwork, complete native motion, physical-device, frozen/offline or public acceptance.
+
+## 2026-09-22 — Team import failure sentences
+
+Preserve an imported file error's existing terminal punctuation when adding the
+shared recovery instruction. Apply the same formatter to JSON and artwork imports;
+never change reader validation or ownership to repair copy. Exercise corrupted
+required artwork through the actual host reader, explicit Retry, the retained old
+picture/selection and successful recovery after a transient read failure. Keep
+modeled host evidence separate from native decoding and release acceptance. See
+[the import-error maintenance prompt](../../../docs/team-import-error-copy.md).
+
+## Optional objective-placement studies
+
+Keep a placement study in its own versioned content source and Studio choice.
+Do not silently replace the default edition, alter capture rules, or infer final
+balance from solver routes. Preserve the old shortcut as a control, prove that
+the proposed placement changes the intended closure, and cover all supported
+difficulty and steering combinations with public-input replay checks. Inspect
+and Apply remain separate actions; the option must say when balance is pending.
+Record automated, native, human and public-release evidence independently. The
+Twin inner-receiver example and its limits are documented in
+`docs/verification/journey-sentinel-inner-study.md`.
+
+## UX0 original ownership and activation focus
+
+Use the same authored-level resolver for picture preparation and Victory Story pin validation when gameplay tuning derives an execution level. Retain campaign/theme/story identity checks and historical readers. Verify real wins, Story, difficulty Restart and unchanged accepted originals. Menu activation must retain the tapped mission even when touch does not move native focus from a different card. Keep ordinary keyboard selection capture on Back; test cancelled and failed launches as well as newer-focus ownership. Home primary focus must select an eligible enabled visible action after boot, with Missions as the disabled-Continue fallback. Join real asynchronous menu operations in host tests and re-query installed cards after source refresh; never bypass departure confirmation or activate stale controls.
+
+## Terminal result preparation promises
+
+Result Next and appearance-to-Missions actions must return the promise of their
+existing owned preparation when the action is asynchronous. Propagate that promise
+without starting another operation or adding an await that changes activation,
+focus leases, cancellation, foreground checks or simulation timing. Retain
+synchronous/unsupported branches and explicit Resume behavior. Host fixtures
+observe actual controller South or native Enter, require immediate named live
+status, and join the real operation under a finite case bound. Reproduce cold
+bitmap and catalogue waits independently; do not lengthen global polling or bypass
+real input to hide an expiry. Keep accepted picture/checkpoint, tick-zero adoption,
+held Confirm and native editing assertions. A settled promise may represent
+failure or cancellation, so final-state and ownership checks remain mandatory.
+Record controlled-delay and complete-file results separately from full CI,
+browser latency and release acceptance.
+
+## UX0 manual Versus content departure
+
+Treat an explicit mission selection and automatic Next as distinct entry actions
+with the same required picture and setup protections. Final Journey results open
+Browse missions. Selecting a same-mode Classic mission must preserve the exact
+match format, steering, timer, touch, controller assignments and difficulty in its
+validated handoff. Start preparation/status/cancellation before materializing the
+selected pack. Verify its original in a separate owner; leave both previous boards
+and picture intact until departure succeeds. Release the opening focus lease while
+Stay/Replace owns input, then acquire a fresh lease and reauthenticate inventory
+before navigating. A failed choice returns to the selected gallery card; Cancel
+keeps the existing race with a reachable control. Retain stale-input, foreground
+and exact-edition guards. Run complete continuation, inventory and capability
+host files; a modeled successful handoff is separate from public browser proof.
+
+## UX1 Journey original receipts
+
+Solo Journey rewards use the separate `revealline-journey-pictures.v1` companion
+ledger, atomically written with the strict historical progress profile. Preserve
+exact mode/edition/mission/run/gameplay and accepted asset descriptors. Do not infer
+an original from a shared profile scope, mission title, current art or Cleared text.
+Unknown historical originals stay explicitly unavailable. Viewing never awards;
+Retry retains accepted art; an asset update must preserve the earlier original.
+Use the shared verified artwork display lease for cards and Collection, releasing
+it on cancellation, filtering, close and offscreen movement. Test second-write
+rollback, session export/retry, conflict rejection and strict older backup readers.
+Backup v3 contains references, not image bytes. Solo admission does not establish
+Versus/Team completion; those hosts remain UX1-A2 qualification work.
+
+## Live language changes in input settings and save recovery
+
+Keyboard remapping must keep captured binding configuration and event-time action,
+key, result and diagnostic facts, but resolve visible key names and status through
+the live locale producer. Do not cancel capture, refocus, reread preferences,
+rewrite bindings or resume gameplay merely to refresh language. Preserve browser
+shortcut/composition guards and exact external warnings. Test EN/UA/EN idle and
+active capture, cancellation, preset/reset, session-only writes and thrown errors.
+
+Earlier-release transfer summaries translate labels from the already-reviewed
+snapshot. Preserve source version, counts, missing-pack IDs, saved-flight facts,
+source selection and copy fingerprint; do not rediscover or recopy on locale change.
+Retain exact unknown diagnostics, busy/cancel state and Undo availability. Capture
+result facts before deferring copy-completion text. Regenerate catalogs from source
+JSON and merge concurrent keys before rebuilding.
+
+Prompt: “Pause a real off-center grid turn; open keyboard settings, start capture,
+switch EN/UA/EN and check focus, instructions, aria labels and unchanged save bytes.
+Assign one fresh key, Back and explicitly Resume. Review an earlier saved flight,
+switch language during review/cancel and after copy; prove no repeated I/O, exact
+reviewed facts, retained destination safety and Undo. Preserve baseline red proof
+and report finite host tests separately from browser, hardware and public release
+evidence. Follow docs/plan-status-2026-09-28-settings.md for this batch’s boundary.”
+
+## Native key identifiers are locale-independent
+
+Settings and other input owners compare browser protocol values, never translated
+labels. Keep `KeyboardEvent.key` Home/End/Arrow identifiers literal even when the
+module first loads in Ukrainian; translated display names belong in labels only.
+Test cold locale initialization before import, later locale switches, first/last
+enabled tabs and one-action ownership with the shared controller navigator. Native
+text/select editing and modified shortcuts must remain excluded. A Settings visit
+must preserve a paused flight and require explicit Resume. Follow the regression
+prompt in [Settings native keys](../../../docs/settings-native-key-navigation.md).
+
+For the A2 [playable roster review](../../playable-benchmark/README.md), select a
+real registered class when preparing the existing scene; never imitate it with
+only a label or sprite. Retry retains the captured class/effective level. V6 uses
+the code-owned exact manifest digest and original construction hashes, validates
+all fourteen records and fetches only the selected pair. Keep Scout v3–v5 and the
+approved actor pin separate. Respect authored Arcade action capabilities: these
+three missions disable Boost/E/R regardless of chosen class. Test native setup
+ownership, stale/cancelled/failed replacement, ordinary-core parity and exact
+optional package membership. Review prompt: “Select each of seven classes, compare
+approved/V6 at real board sizes, record class and exact provenance, exercise Retry
+and failed/cancelled switching; do not add equipment actions to Arcade missions or
+promote loaded candidates to approved art.” See batch15 evidence.
+
+## Global optional-enemy remains and exact practice override
+
+Use the separate `EncounterDisplayPreferencesV1` controller and shared Settings
+controls; never append fields to strict historical display/profile/replay records.
+Ordinary Solo, both Versus boards and Replay read only the cosmetic residue flag.
+Team shares the preference UI but has no new combat mechanic. Preserve invalid or
+future raw bytes, session-only/read-only behavior, verified retry, cross-tab and
+BFCache authority, and disposal. Live enemies, warnings, shots and brief hits stay.
+Studio snapshots explicit Show/Hide only for validated optional Solo previews;
+owned exact practice parameters override the global choice, and ambiguity falls
+back to the global preference. No preview writes player settings or scenario data.
+
+Fixture guidance: open collapsed Mission info before entering its brief; use a
+monotonic controller clock and real neutral release interval. Team starts may
+write the first-cut teaching receipt: assert that exact write separately, then
+measure Settings/disposal writes from their actual boundary. A restored page needs
+its neutral sample before deliberate tab input, even when testing an edit before
+its deferred preference restore. See batch11 evidence; do not relax these guards.
+
+### Optional-encounter teaching
+
+The authoring design card is not part of a compiled playable scenario. Build
+ready-card and full-brief scout/sentry guidance from the enabled versioned actor
+roles. Preserve authored prose and byte-identical no-encounter output. Verify
+fixed aim, early-return cancellation and still-live shots during sentry recovery
+against real core/replay traces; do not describe bracketed optional robots as
+ordinary dangerous region-keeping enemies. New copy alone does not finish Field
+Guide, paused details, full-mission fairness or production review.
+
+Paused patrol details now reuse the strict `combatView` only when paused. Keep
+live event collection free of another geometry validation, absent/off output
+unchanged and invalid active data visibly unavailable. Count live projectiles
+separately from sentry recovery. Enemy freeze holds both warning and shot clocks;
+ended runs must not describe surviving or removed patrols as current danger.
+Allowlist event urgency by exact emitted type, never by prefix. The ordinary
+opener's existing pause may refresh only `savedAt`; reading and Back must preserve
+checkpoint, replay, continuation, focus and Pause. Practice stays write-free.
+See the updated optional encounter maintenance contract and batch13 evidence.
+
+### Current-board encounter Help
+
+Couch guidance reads accepted run.level values at Help entry, never uncommitted
+setup selectors. Preserve per-seat applicability and actual mode semantics. Use
+existing paused reading/return ownership; no per-frame rebuild or live telemetry
+announcements. A missing prepared match is not invalid content. Team two-front
+trail advice requires its explicit runtime edition; Legacy relay guidance stays
+unchanged. Keep reproduced baseline test defects separate from feature passes.
+
+### Edition Field Guide capabilities
+
+An edition may reconstruct only admitted missions. Set the explicit catalog
+practice capability false where generic role/impact lessons cannot enter that
+loader; keep their readable guidance with localized explanation, and preserve
+supported current-mission practice through its exact edition adapter. Guard the
+activation handler before preparation or handoff writes, not only the button.
+Missing canonical palettes cannot be dereferenced or trigger unrelated artwork
+loads; use a valid selected compiled role or an unavailable illustration state.
+Preserve ordinary hosts' captured canonical catalog and restored-pack behavior.
+
+Regression prompt: “Open the guide in custom-theme source and compiled editions,
+change roles/appearances with a working canvas, attempt catalog/impact practice,
+and verify no child or storage changes. Then launch a supported current-mission
+lesson, return to the unchanged paused parent, and repeat in an ordinary restored
+pack. Check both languages, Close/Back and fresh controller input.” Source tests
+and honest unavailable states do not establish new edition lesson support or
+production/device acceptance.
+
+## Recovered Team maintenance guidance
+
+Recovered from closed PR #757 without replacing newer guidance above. The linked
+2026-09-29 records are historical observations, not current test, production or
+device approval. Keep the current native menus; do not restore the former More
+disclosure or historical publication ordering. Apply the following checks to the
+current integrated source and report each remaining acceptance boundary honestly.
+
+## Team canvas text and recovery guidance
+
+Forward the global text-size preference to the Team painter. Apply Large once to
+CSS-sized labels and their measured backings after the existing size clamp; never
+scale actor bodies, contact circles, warning timing or board geometry with text.
+Keep Standard command-stream regression evidence, head exclusions and bounded
+cue placement. Include `game/text-size.mjs` in the Team recipe-source closure;
+changed renderer dependencies require a new reviewed production successor, not
+rewritten old fingerprints. DOM HUD/ability-label wrapping is a separate layout concern from canvas scaling.
+
+On Resume, derive rescue guidance from currently downed players and retained
+knockdown facts, resolving labels through the live locale. Revival and Retry must
+retire old guidance. Mark Support learned only when its emitted event reports an
+actual slowed enemy or intercepted impact; keep existing teaching records intact.
+Use a fresh controller press when opening Settings after assignment rather than
+injecting a mouse click into the compatibility-echo shield. Preserve the guard.
+See the [Team batch evidence](../../../docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/README.md).
+
+For narrow Team play, measure intrinsic HUD/objective/message and complete control
+rows. Keep the direction surface separate from action-label width: all targets
+must retain at least 44px while long translations wrap. Qualify actual downed,
+zero-reserve and recovery states, not only safe ground. Compact labels may summarize
+state and action; preserve full accessible/desktop instructions and exact numeric
+facts. Verify both seats and live language switching. Compare decoded generated
+catalogues, not compressed-line diffs. Record incomplete sparse-content generation
+separately from successful catalogue reproduction. See [Team HUD wrapping](../../../docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/README.md).
+
+Store departure translation keys rather than translated captions at host boot.
+Resolve the selected key inside the live localized callback; keep the departure
+allowlist, currentness checks and warnings unchanged. Test cold Ukrainian → English
+and language changes while the confirmation is open, including native Escape
+return and a stale Confirm after cancellation.

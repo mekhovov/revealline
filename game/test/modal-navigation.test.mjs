@@ -246,15 +246,9 @@ function nativeDialogs(t) {
   const originalOpen = SoloElement.prototype.showModal,
     originalClose = SoloElement.prototype.close;
   const origins = new WeakMap();
-  const nativeClick = SoloElement.prototype.click;
-  t.mock.method(SoloElement.prototype, 'click', function () {
-    nativeClick.call(this);
-    if (this.tagName === 'SUMMARY') {
-      const details = this.parentElement;
-      details.open = !details.open;
-      details.emit('toggle');
-    }
-  });
+  // SoloElement.click() already models the browser's one native <summary>
+  // toggle. Do not add another local toggle here: keyboard, touch and the
+  // controller adapter all finish through that same default click.
   const originalAttribute = SoloElement.prototype.setAttribute;
   SoloElement.prototype.setAttribute = function (key, value) {
     originalAttribute.call(this, key, value);
@@ -283,59 +277,123 @@ function nativeDialogs(t) {
   });
 }
 
-test('actual title → Missions → Collection controller Back closes only the front dialog and never starts flight', async (t) => {
-  nativeDialogs(t);
-  const h = await soloPage(t, { titleScreen: true });
-  const pad = {
-    index: 0,
-    id: 'Menu test',
-    connected: true,
-    mapping: 'standard',
-    axes: [0, 0, 0, 0],
-    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
-  };
-  navigator.getGamepads = () => [pad];
-  const pulse = (index) => {
-    pad.buttons[index] = { pressed: true, value: 1 };
-    h.frame();
-    pad.buttons[index] = { pressed: false, value: 0 };
-    h.frame();
-  };
-  h.frame();
-  pulse(0);
-  h.frame();
-  h.$('shell-play').click();
-  h.frame();
-  h.frame();
-  h.$('collection-button').focus();
-  h.$('collection-button').click();
-  h.frame();
-  h.frame();
-  assert.ok(h.$('collection-dialog').contains(h.doc.activeElement));
-  assert.equal(collectionBack(h).textContent, 'Back to Missions →');
-  const close = h.$('collection-dialog').querySelector('button');
-  close.focus();
-  close.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown' });
-  assert.ok(
-    h.$('collection-dialog').contains(h.doc.activeElement),
-    'Keyboard arrows also use the front modal',
-  );
-  h.frame(); // Native input requires a neutral controller sample before a fresh action.
-  pulse(1);
-  assert.equal(h.$('collection-dialog').open, false);
-  assert.equal(h.$('shell-missions').open, true);
-  assert.equal(h.doc.activeElement, h.$('collection-button'));
-  assert.equal(h.$('flight-state').textContent, 'Ready for launch');
-  assert.equal(h.rendered.run.tick, 0);
-  pulse(1);
-  assert.equal(h.$('shell-missions').open, false);
-  assert.equal(h.rendered.run.tick, 0);
-  assert.deepEqual(h.errors, []);
-});
+for (const activation of ['keyboard', 'touch'])
+  test(`Collection ${activation} disclosure activation toggles exactly once and preserves the paused attempt`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: false, initialReadyTimeoutMs: 15000 });
+    h.$('collection-button').click();
+    const details = h.$('collection-progress'),
+      summary = details.querySelector('summary'),
+      checkpoint = authoritativeCheckpoint(h.rendered.run),
+      storage = [...h.storage.map],
+      writes = h.storage.writes.length;
+    summary.focus();
+    if (activation === 'keyboard') {
+      const key = summary.emit('keydown', { key: 'Enter', code: 'Enter' });
+      assert.equal(key.defaultPrevented, false, 'The browser keeps native summary activation.');
+    } else {
+      const down = summary.emit('pointerdown', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      summary.emit('pointerup', {
+        button: 0,
+        isPrimary: true,
+        pointerId: 4,
+        pointerType: 'touch',
+      });
+      assert.equal(down.defaultPrevented, false, 'Direct touch keeps the browser activation.');
+    }
+    // The test boundary invokes the browser's click default after its input
+    // event. One activation must open rather than immediately reopen/close.
+    summary.click();
+    assert.equal(details.open, true);
+    assert.equal(h.doc.activeElement, summary);
+    summary.click();
+    assert.equal(details.open, false);
+    assert.equal(h.doc.activeElement, summary);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual([...h.storage.map], storage);
+    assert.equal(h.storage.writes.length, writes);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(h.errors, []);
+  });
 
+test(
+  'actual title → Missions → Progress backup controller Back closes only the front dialog and never starts flight',
+  { timeout: 60000 },
+  async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: true });
+    const pad = {
+      index: 0,
+      id: 'Menu test',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    navigator.getGamepads = () => [pad];
+    const pulse = (index) => {
+      pad.buttons[index] = { pressed: true, value: 1 };
+      h.frame();
+      pad.buttons[index] = { pressed: false, value: 0 };
+      h.frame();
+    };
+    h.frame();
+    h.frame();
+    const opener = h.$('shell-play'),
+      activate = opener.onclick;
+    let opening;
+    opener.onclick = function (...args) {
+      opening = activate.apply(this, args);
+      return opening;
+    };
+    try {
+      opener.click();
+    } finally {
+      opener.onclick = activate;
+    }
+    assert.equal(typeof opening?.then, 'function', 'The real Missions action owns preparation.');
+    assert.equal(h.$('mission-library-opening-status').getAttribute('role'), 'status');
+    assert.equal(h.$('mission-library-opening-status').textContent, 'Preparing missions…');
+    await opening;
+    assert.equal(h.$('journey-chooser').open, true);
+    h.frame();
+    h.frame();
+    h.$('journey-backup-open').focus();
+    h.$('journey-backup-open').click();
+    h.frame();
+    h.frame();
+    assert.ok(h.$('journey-backup').contains(h.doc.activeElement));
+    const close = h.$('journey-backup').querySelector('button');
+    close.focus();
+    close.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown' });
+    assert.ok(
+      h.$('journey-backup').contains(h.doc.activeElement),
+      'Keyboard arrows also use the front modal',
+    );
+    h.frame(); // Native input requires a neutral controller sample before a fresh action.
+    pulse(1);
+    assert.equal(h.$('journey-backup').open, false);
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.equal(h.doc.activeElement, h.$('journey-backup-open'));
+    assert.equal(h.$('flight-state').textContent, 'Ready for launch');
+    assert.equal(h.rendered.run.tick, 0);
+    pulse(1);
+    assert.equal(h.$('journey-chooser').open, false);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  },
+);
+
+let controllerClock = 1000;
 function controllerPad(h, t) {
   const prior = Object.getOwnPropertyDescriptor(performance, 'now');
-  let now = 1000;
+  let now = (controllerClock += 10000);
   Object.defineProperty(performance, 'now', { configurable: true, value: () => now });
   t.after(() =>
     prior ? Object.defineProperty(performance, 'now', prior) : delete performance.now,
@@ -350,7 +408,7 @@ function controllerPad(h, t) {
   };
   navigator.getGamepads = () => [pad];
   const frame = (ms = 16) => {
-    now += ms;
+    controllerClock = now += ms;
     h.frame(ms);
   };
   const set = (index, pressed) => {
@@ -361,6 +419,10 @@ function controllerPad(h, t) {
     frame();
     set(index, false);
     frame();
+    // The production host owns Confirm until its neutral-release window has
+    // elapsed. Model a complete fresh press instead of relying on unrelated
+    // host work to advance this safety interval between menu actions.
+    if (index === 0) frame(121);
   };
   frame();
   // The host now adopts a neutral controller automatically. A Confirm pulse
@@ -369,10 +431,42 @@ function controllerPad(h, t) {
   return { frame, set, pulse };
 }
 
+function openSettingsCategory(h, category) {
+  if (!h.$('settings-dialog').open) {
+    h.$('shell-options').focus();
+    h.$('shell-options').click();
+  }
+  h.$(`settings-tab-${category}`).focus();
+  h.$(`settings-tab-${category}`).click();
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.$(`settings-panel-${category}`).hidden, false);
+}
+
+function openSettingsWorkshop(h) {
+  openSettingsCategory(h, 'extras');
+  h.$('shell-workshop').focus();
+  h.$('shell-workshop').click();
+}
+
+async function closeWorkshopAndSettings(h, pad) {
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('shell-workshop-dialog').open, false);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-workshop');
+  pad.frame();
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('settings-dialog').open, false);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-options');
+}
+
 test('actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true }),
     pad = controllerPad(h, t);
+  openSettingsCategory(h, 'extras');
   for (const kind of ['keydown', 'pointerdown']) {
     pad.set(13, true);
     pad.frame();
@@ -416,6 +510,11 @@ for (const [dialog, opener, prefix] of [
     region.clientHeight = 100;
     region.scrollHeight = 480;
     h.$(`${prefix}-read`).focus();
+    // Adopt the newly focused control, then finish the production guard's
+    // 1.25s Steam/native echo window before the next deliberate Confirm.
+    pad.frame();
+    pad.frame(1251);
+    assert.equal(h.$(`${prefix}-read`).classList.contains('controller-focus'), true);
     pad.pulse(0);
     assert.equal(h.doc.activeElement.id, region.id);
     assert.equal(h.$(`${prefix}-reading-done`).disabled, false);
@@ -425,7 +524,13 @@ for (const [dialog, opener, prefix] of [
     assert.equal(h.$(dialog).open, true);
     assert.equal(h.doc.activeElement.id, `${prefix}-read`);
     assert.equal(h.$(`${prefix}-reading-done`).disabled, true);
+    // Back returns ownership to the reader control. A separate deliberate
+    // Confirm must finish the same Steam/native echo window as first entry;
+    // otherwise a slow hosted sample can leave the reader inactive and let
+    // the following native Escape close the dialog.
+    pad.frame(1251);
     pad.pulse(0);
+    assert.equal(h.doc.activeElement.id, region.id);
     const escape = region.emit('keydown', { key: 'Escape', code: 'Escape' });
     assert.equal(escape.defaultPrevented, true);
     assert.equal(h.$(dialog).open, true);
@@ -436,45 +541,56 @@ for (const [dialog, opener, prefix] of [
     assert.equal(h.$(dialog).open, false);
   });
 
-for (const lateFocus of [false, true])
-  test(`Collection disclosure ends reading on collapse without ${lateFocus ? 'stealing later focus' : 'leaving hidden focus or resuming'}`, async (t) => {
-    nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: false }),
-      pad = controllerPad(h, t);
-    h.$('collection-button').click();
-    pad.frame();
-    pad.frame();
-    const details = h.$('collection-progress'),
-      summary = details.querySelector('summary');
-    summary.focus();
-    pad.pulse(0);
-    h.$('collection-read').focus();
-    pad.pulse(0);
-    assert.equal(h.doc.activeElement.id, 'collection-reading');
-    const checkpoint = authoritativeCheckpoint(h.rendered.run),
-      storage = [...h.storage.map],
-      writes = h.storage.writes.length;
-    // Native toggle is queued after open changes; it may arrive after focus moves.
-    details.open = false;
-    if (lateFocus) h.$('gallery-search').focus();
-    details.emit('toggle');
-    const expected = lateFocus ? h.$('gallery-search') : summary;
-    assert.ok(h.doc.activeElement === expected, h.doc.activeElement?.id);
-    assert.equal(h.$('collection-reading-done').disabled, true);
-    assert.equal(h.$('collection-read').getAttribute('aria-pressed'), 'false');
-    pad.frame();
-    assert.equal(h.$('collection-dialog').open, true);
-    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-    assert.deepEqual([...h.storage.map], storage);
-    assert.equal(h.storage.writes.length, writes);
-    assert.equal(h.rendered.paused, true);
-    // A delayed toggle after dialog closure must also preserve its restored opener.
-    h.$('collection-dialog').close();
-    const opener = h.doc.activeElement;
-    details.emit('toggle');
-    assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
-    assert.deepEqual(h.errors, []);
-  });
+test('Collection disclosure collapse preserves reading, focus and the paused attempt', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: false }),
+    pad = controllerPad(h, t),
+    details = h.$('collection-progress'),
+    summary = details.querySelector('summary');
+  for (const lateFocus of [false, true])
+    await t.test(
+      `without ${lateFocus ? 'stealing later focus' : 'leaving hidden focus or resuming'}`,
+      () => {
+        // One real host exercises both queued-toggle orders. This avoids
+        // replacing global browser fixtures between the paired lifecycle cases.
+        pad.frame(1251);
+        h.$('collection-button').click();
+        pad.frame();
+        pad.frame();
+        summary.focus();
+        pad.pulse(0);
+        h.$('collection-read').focus();
+        pad.frame();
+        pad.frame(1251);
+        assert.equal(h.$('collection-read').classList.contains('controller-focus'), true);
+        pad.pulse(0);
+        assert.equal(h.doc.activeElement.id, 'collection-reading');
+        const checkpoint = authoritativeCheckpoint(h.rendered.run),
+          storage = [...h.storage.map],
+          writes = h.storage.writes.length;
+        // Native toggle is queued after open changes; it may arrive after focus moves.
+        details.open = false;
+        if (lateFocus) h.$('gallery-search').focus();
+        details.emit('toggle');
+        const expected = lateFocus ? h.$('gallery-search') : summary;
+        assert.ok(h.doc.activeElement === expected, h.doc.activeElement?.id);
+        assert.equal(h.$('collection-reading-done').disabled, true);
+        assert.equal(h.$('collection-read').getAttribute('aria-pressed'), 'false');
+        pad.frame();
+        assert.equal(h.$('collection-dialog').open, true);
+        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+        assert.deepEqual([...h.storage.map], storage);
+        assert.equal(h.storage.writes.length, writes);
+        assert.equal(h.rendered.paused, true);
+        // A delayed toggle after dialog closure must also preserve its restored opener.
+        h.$('collection-dialog').close();
+        const opener = h.doc.activeElement;
+        details.emit('toggle');
+        assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
+        assert.deepEqual(h.errors, []);
+      },
+    );
+});
 
 test('actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns', async (t) => {
   nativeDialogs(t);
@@ -493,9 +609,18 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   pad.pulse(0);
   assert.equal(h.$('settings-panel-audio').hidden, false);
   h.$('soundtrack-open').focus();
+  pad.frame();
+  pad.frame(1251);
+  assert.equal(h.$('soundtrack-open').classList.contains('controller-focus'), true);
   pad.pulse(0);
-  await settle(() =>
-    /Saved library loaded|Music library ready/.test(h.$('soundtrack-status')?.textContent),
+  assert.equal(
+    h.$('soundtrack-dialog').open,
+    true,
+    'A fresh controller Confirm opens the Studio after changing Settings tabs.',
+  );
+  await settle(
+    () => h.$('soundtrack-dialog').open && !h.$('soundtrack-close').disabled,
+    'The actual Studio reload must finish and restore its Close action.',
   );
   pad.frame();
   pad.frame();
@@ -504,12 +629,16 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   const tracks = h.$('soundtrack-tracks'),
     volume = h.$('soundtrack-volume');
   assert.equal(tracks.size, '7', 'The actual multirow listbox uses the select editor');
+  pad.frame(1251);
   h.$('soundtrack-advanced-library-toggle').click();
+  assert.equal(h.$('soundtrack-advanced-library-toggle').getAttribute('aria-expanded'), 'true');
   for (const [element, direction] of [
     [tracks, 13],
     [volume, 15],
   ]) {
     element.focus();
+    pad.frame();
+    pad.frame(1251);
     const initial = element.value;
     let changes = 0;
     element.addEventListener('change', () => changes++);
@@ -614,6 +743,11 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   assert.equal(h.$('settings-dialog').open, false);
   assert.equal(h.$('shell-home').open, false);
   assert.equal(h.$('flight-state').textContent, 'Paused');
+  assert.equal(
+    h.doc.activeElement,
+    h.$('overlay-settings'),
+    'controller Back returns to the Settings command in the Pause menu',
+  );
   assert.equal(h.rendered.run.tick, tick);
   assert.deepEqual(h.errors, []);
 });
@@ -626,8 +760,7 @@ test('title Workshop Field Guide returns through its visible openers after Back,
     pad = controllerPad(h, t);
   h.win.crypto = globalThis.crypto;
   for (const exit of ['controller', 'escape', 'practice']) {
-    h.$('shell-workshop').focus();
-    h.$('shell-workshop').click();
+    openSettingsWorkshop(h);
     assert.equal(h.$('shell-workshop-dialog').open, true);
     assert.ok(h.$('shell-guide').getClientRects().length);
     h.$('shell-guide').focus();
@@ -657,11 +790,7 @@ test('title Workshop Field Guide returns through its visible openers after Back,
     // Escape/practice close outside the controller sample. Adopt the returned
     // Workshop scope with neutral controls before a separate Back press.
     pad.frame();
-    pad.pulse(1);
-    await Promise.resolve();
-    assert.equal(h.$('shell-workshop-dialog').open, false);
-    assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.doc.activeElement.id, 'shell-workshop');
+    await closeWorkshopAndSettings(h, pad);
     assert.equal(h.rendered.run.tick, 0, 'Leaving Workshop never starts the campaign');
     pad.frame();
   }
@@ -679,8 +808,7 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
   pad.frame();
   h.$('overlay-menu').click();
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-workshop').focus();
-  h.$('shell-workshop').click();
+  openSettingsWorkshop(h);
   assert.equal(h.$('shell-workshop-dialog').open, true);
   assert.ok(h.$('shell-guide').getClientRects().length);
   h.$('shell-guide').focus();
@@ -698,11 +826,7 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
   assert.equal(h.$('shell-home').open, true);
   assert.equal(h.$('shell-workshop-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'shell-guide');
-  pad.pulse(1);
-  await Promise.resolve();
-  assert.equal(h.$('shell-workshop-dialog').open, false);
-  assert.equal(h.$('shell-home').open, true);
-  assert.equal(h.doc.activeElement.id, 'shell-workshop');
+  await closeWorkshopAndSettings(h, pad);
   assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
   pad.pulse(1);
   await Promise.resolve();
@@ -716,7 +840,8 @@ test('Main menu Workshop Field Guide returns through both menus over an unchange
 // native dialog focus/events are modeled, as in the existing modal host cases.
 async function earnedTitleCollection(t) {
   nativeDialogs(t);
-  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  // Keep SoloElement's shared Canvas boundary: the live field guide also draws
+  // during host preparation, before the earned Collection picture opens.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const classRecipes = JSON.parse(
     await readFile(new URL('../content/classes.json', import.meta.url)),
@@ -765,11 +890,14 @@ function collectionBack(h) {
   return h.$('collection-back');
 }
 function openTitleCollection(h) {
+  openSettingsCategory(h, 'data');
+  assert.ok(h.$('shell-gallery').getClientRects().length, 'The real Settings entry is visible');
   h.$('shell-gallery').focus();
   h.$('shell-gallery').click();
   assert.equal(h.$('shell-home').open, true);
   assert.equal(h.$('collection-dialog').open, true);
-  assert.equal(collectionBack(h).textContent, 'Back to menu →');
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(collectionBack(h).textContent, 'Back to Settings');
 }
 async function openFirstPicture(h) {
   const card = h.$('gallery-grid').querySelector('button');
@@ -785,8 +913,72 @@ function nativeEscape(dialog) {
   const event = dialog.emit('cancel');
   if (!event.defaultPrevented) dialog.close();
 }
+
+async function activateOwnedPromise(button, message) {
+  const handler = button.onclick;
+  let operation;
+  button.onclick = (...args) => (operation = handler.apply(button, args));
+  try {
+    button.click();
+  } finally {
+    button.onclick = handler;
+  }
+  assert.ok(operation instanceof Promise, message);
+  await operation;
+}
+
+async function startPreparedFlight(h) {
+  assert.equal(
+    h.doc.body.dataset.flightState,
+    'briefing',
+    'The explicit Start gesture must own the transition from briefing to flight.',
+  );
+  const bodyDataset = h.doc.body.dataset,
+    status = h.$('flight-preparation-status'),
+    statusDataset = status.dataset;
+  let complete, fail;
+  const terminal = new Promise((resolve, reject) => {
+    complete = resolve;
+    fail = reject;
+  });
+  h.doc.body.dataset = new Proxy(bodyDataset, {
+    set(target, property, value, receiver) {
+      const updated = Reflect.set(target, property, value, receiver);
+      if (property === 'flightState' && value === 'running') complete();
+      return updated;
+    },
+  });
+  status.dataset = new Proxy(statusDataset, {
+    set(target, property, value, receiver) {
+      const updated = Reflect.set(target, property, value, receiver);
+      if (property === 'state' && ['error', 'cancelled', 'detached'].includes(value))
+        fail(new Error(`Flight preparation ended as ${value}: ${status.textContent}`));
+      return updated;
+    },
+  });
+  try {
+    h.$('start-button').click();
+    // Join the operation's real terminal adoption signal. This remains stable
+    // when manifest/decode work takes longer than a wall-clock polling window.
+    await terminal;
+  } finally {
+    h.doc.body.dataset = bodyDataset;
+    status.dataset = statusDataset;
+  }
+  assert.equal(
+    h.doc.body.dataset.flightState,
+    'running',
+    JSON.stringify({
+      state: h.doc.body.dataset.flightState,
+      picture: h.doc.body.dataset.pictureState,
+      preparation: h.$('flight-preparation-status').dataset.state,
+      message: h.$('flight-preparation-status').textContent,
+      errors: h.errors.map(String),
+    }),
+  );
+}
 for (const exit of ['controller', 'escape', 'close button'])
-  test(`title picture ${exit} returns through Collection to its exact title opener`, async (t) => {
+  test(`title picture ${exit} returns through Collection and Settings to its exact opener`, async (t) => {
     const { page: h } = await earnedTitleCollection(t),
       pad = controllerPad(h, t);
     const checkpoint = authoritativeCheckpoint(h.rendered.run),
@@ -823,8 +1015,13 @@ for (const exit of ['controller', 'escape', 'close button'])
     assert.equal(
       h.doc.activeElement === h.$('shell-gallery'),
       true,
-      'The title Collection opener owns focus.',
+      'The visible Settings Collection opener owns focus.',
     );
+    assert.equal(h.$('settings-dialog').open, true);
+    nativeEscape(h.$('settings-dialog'));
+    await Promise.resolve();
+    assert.equal(h.$('settings-dialog').open, false);
+    assert.equal(h.doc.activeElement.id, 'shell-options');
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual([...h.storage.map], before);
     assert.equal(h.storage.writes.length, writes);
@@ -839,7 +1036,13 @@ test('picture Replay deliberately leaves title and Collection for the selected r
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
   await Promise.resolve();
   h.frame(0);
-  for (const id of ['gallery-view-dialog', 'collection-dialog', 'shell-home', 'shell-missions'])
+  for (const id of [
+    'gallery-view-dialog',
+    'collection-dialog',
+    'settings-dialog',
+    'shell-home',
+    'shell-missions',
+  ])
     assert.equal(h.$(id).open, false, `${id} must not cover the chosen briefing`);
   assert.equal(h.doc.activeElement, h.$('start-button'));
   assert.equal(h.rendered.run.level.id, 'return-picture');
@@ -852,7 +1055,7 @@ test('picture Replay deliberately leaves title and Collection for the selected r
   assert.deepEqual(h.errors, []);
 });
 
-test('Collection Choose appearance deliberately leaves title for Missions setup', async (t) => {
+test('Collection Choose appearance opens Missions setup over retained Settings and title', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true }),
     checkpoint = authoritativeCheckpoint(h.rendered.run);
@@ -860,27 +1063,38 @@ test('Collection Choose appearance deliberately leaves title for Missions setup'
   h.$('collection-progress').querySelector('summary').click();
   assert.equal(h.$('collection-progress').open, true);
   h.$('collection-choose-appearance').click();
-  await Promise.resolve();
+  await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
   h.frame(0);
   assert.equal(h.$('collection-dialog').open, false);
-  assert.equal(h.$('shell-home').open, false);
-  assert.equal(h.$('shell-missions').open, true);
+  assert.equal(h.$('shell-home').open, true, 'The mission library retains its Home parent.');
+  assert.equal(
+    h.$('settings-dialog').open,
+    true,
+    'Settings retains the visible Collection opener.',
+  );
+  assert.equal(h.$('journey-chooser').open, true);
   assert.equal(h.doc.activeElement, h.$('body-select'));
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
   assert.deepEqual(h.errors, []);
 });
 
-test('Collection resets its return label from title to a direct paused-flight visit', async (t) => {
+test('Collection resets its return label from Settings to a direct paused-flight visit', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, { titleScreen: true });
   openTitleCollection(h);
   collectionBack(h).click();
   await Promise.resolve();
   assert.equal(h.$('shell-home').open, true);
-  h.$('shell-play').click();
-  h.$('shell-briefing').click();
-  h.$('start-button').click();
-  await settle(() => h.doc.body.dataset.flightState === 'running');
+  assert.equal(h.$('settings-dialog').open, true);
+  nativeEscape(h.$('settings-dialog'));
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement.id, 'shell-options');
+  await activateOwnedPromise(
+    h.$('shell-featured'),
+    'The title Start control owns its actual flight preparation.',
+  );
+  await startPreparedFlight(h);
+  assert.equal(h.doc.body.dataset.flightState, 'running');
   h.key('ArrowDown');
   h.key('ArrowDown', false);
   for (let i = 0; i < 20; i++) h.frame();
@@ -911,8 +1125,7 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
   await openFirstPicture(h);
   h.$('gallery-replay').click();
   await settle(() => h.doc.body.dataset.pictureState === 'ready');
-  h.$('start-button').click();
-  await settle(() => h.doc.body.dataset.flightState === 'running');
+  await startPreparedFlight(h);
   h.key('ArrowDown');
   for (let i = 0; i < 1000 && h.rendered.run.status === 'running'; i++) h.frame();
   h.key('ArrowDown', false);
@@ -955,65 +1168,112 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
 });
 
 for (const origin of ['title', 'paused flight'])
-  for (const [opener, dialogId] of [
-    ['shell-library', 'library-dialog'],
-    ['shell-help', 'help-dialog'],
-  ])
-    test(`${origin} Workshop ${opener} returns through actual openers for button, Escape and controller Back`, async (t) => {
-      nativeDialogs(t);
-      const h = await soloPage(t, { titleScreen: origin === 'title' }),
-        pad = controllerPad(h, t);
-      if (origin === 'paused flight') {
-        h.$('start-button').click();
-        await settle(() => h.doc.body.dataset.flightState === 'running');
-        h.key('ArrowDown');
-        for (let i = 0; i < 24; i++) h.frame();
-        h.key('ArrowDown', false);
-        h.$('overlay-menu').click();
-        assert.equal(h.rendered.run.player.cutting, true);
-      }
-      for (const exit of ['button', 'escape', 'controller']) {
-        h.$('shell-workshop').focus();
-        h.$('shell-workshop').click();
-        h.$(opener).focus();
-        h.$(opener).click();
-        pad.frame();
-        pad.frame();
-        const checkpoint = authoritativeCheckpoint(h.rendered.run),
-          stored = [...h.storage.map];
-        assert.equal(h.$('shell-home').open, true);
-        assert.equal(h.$('shell-workshop-dialog').open, true);
-        assert.equal(h.$(dialogId).open, true);
-        if (exit === 'controller') pad.pulse(1);
-        else if (exit === 'escape') nativeEscape(h.$(dialogId));
-        else h.$(dialogId).querySelector('[data-close]').click();
-        await Promise.resolve();
-        pad.frame();
-        assert.equal(h.$(dialogId).open, false);
-        assert.equal(h.$('shell-workshop-dialog').open, true);
-        assert.equal(h.doc.activeElement.id, opener);
-        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-        assert.deepEqual([...h.storage.map], stored);
-        pad.pulse(1);
-        await Promise.resolve();
-        assert.equal(h.$('shell-workshop-dialog').open, false);
-        assert.equal(h.$('shell-home').open, true);
-        assert.equal(h.doc.activeElement.id, 'shell-workshop');
-        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-        assert.deepEqual([...h.storage.map], stored);
-        pad.frame();
-      }
-      if (origin === 'paused flight') {
-        const checkpoint = authoritativeCheckpoint(h.rendered.run);
-        pad.pulse(1);
-        await Promise.resolve();
-        assert.equal(h.$('shell-home').open, false);
-        assert.equal(h.doc.activeElement.id, 'start-button');
-        assert.equal(h.rendered.paused, true);
-        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
-      } else assert.equal(h.rendered.run.tick, 0);
-      assert.deepEqual(h.errors, []);
-    });
+  test(`${origin} Workshop Library returns through actual openers for button, Escape and controller Back`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: origin === 'title' }),
+      pad = controllerPad(h, t);
+    if (origin === 'paused flight') {
+      h.$('start-button').click();
+      await settle(() => h.doc.body.dataset.flightState === 'running');
+      h.key('ArrowDown');
+      for (let i = 0; i < 24; i++) h.frame();
+      h.key('ArrowDown', false);
+      h.$('overlay-menu').click();
+      assert.equal(h.rendered.run.player.cutting, true);
+    }
+    for (const exit of ['button', 'escape', 'controller']) {
+      openSettingsWorkshop(h);
+      h.$('shell-library').focus();
+      h.$('shell-library').click();
+      pad.frame();
+      pad.frame();
+      const checkpoint = authoritativeCheckpoint(h.rendered.run),
+        stored = [...h.storage.map];
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.$('shell-workshop-dialog').open, true);
+      assert.equal(h.$('library-dialog').open, true);
+      if (exit === 'controller') pad.pulse(1);
+      else if (exit === 'escape') nativeEscape(h.$('library-dialog'));
+      else h.$('library-dialog').querySelector('[data-close]').click();
+      await Promise.resolve();
+      pad.frame();
+      assert.equal(h.$('library-dialog').open, false);
+      assert.equal(h.$('shell-workshop-dialog').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-library');
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      assert.deepEqual([...h.storage.map], stored);
+      await closeWorkshopAndSettings(h, pad);
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      assert.deepEqual([...h.storage.map], stored);
+      pad.frame();
+    }
+    if (origin === 'paused flight') {
+      const checkpoint = authoritativeCheckpoint(h.rendered.run);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('shell-home').open, false);
+      assert.equal(h.doc.activeElement.id, 'start-button');
+      assert.equal(h.rendered.paused, true);
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    } else assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
+
+for (const origin of ['title', 'paused flight'])
+  test(`${origin} Settings How to play returns through its exact retained openers`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: origin === 'title' }),
+      pad = controllerPad(h, t);
+    if (origin === 'paused flight') {
+      h.$('start-button').click();
+      await settle(() => h.doc.body.dataset.flightState === 'running');
+      h.key('ArrowDown');
+      for (let i = 0; i < 24; i++) h.frame();
+      h.key('ArrowDown', false);
+      h.$('overlay-menu').click();
+      assert.equal(h.rendered.run.player.cutting, true);
+    }
+    for (const exit of ['button', 'escape', 'controller']) {
+      openSettingsCategory(h, 'extras');
+      assert.ok(h.$('shell-help').getClientRects().length);
+      h.$('shell-help').focus();
+      h.$('shell-help').click();
+      pad.frame();
+      pad.frame();
+      const checkpoint = authoritativeCheckpoint(h.rendered.run),
+        stored = [...h.storage.map];
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.$('shell-workshop-dialog').open, false);
+      assert.equal(h.$('help-dialog').open, true);
+      if (exit === 'controller') pad.pulse(1);
+      else if (exit === 'escape') nativeEscape(h.$('help-dialog'));
+      else h.$('help-dialog').querySelector('[data-close]').click();
+      await Promise.resolve();
+      pad.frame();
+      assert.equal(h.$('help-dialog').open, false);
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-help');
+      assert.equal(h.$('settings-dialog').open, true);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('settings-dialog').open, false);
+      assert.equal(h.$('shell-home').open, true);
+      assert.equal(h.doc.activeElement.id, 'shell-options');
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      assert.deepEqual([...h.storage.map], stored);
+      pad.frame();
+    }
+    if (origin === 'paused flight') {
+      const checkpoint = authoritativeCheckpoint(h.rendered.run);
+      pad.pulse(1);
+      await Promise.resolve();
+      assert.equal(h.$('shell-home').open, false);
+      assert.equal(h.doc.activeElement.id, 'start-button');
+      assert.equal(h.rendered.paused, true);
+      assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    } else assert.equal(h.rendered.run.tick, 0);
+    assert.deepEqual(h.errors, []);
+  });
 
 for (const origin of ['title', 'paused flight'])
   test(`Workshop Library explicit challenge selection leaves retained parents from ${origin}`, async (t) => {
@@ -1110,6 +1370,8 @@ for (const exit of ['button', 'escape', 'controller'])
     h.key('ArrowDown', false);
     h.$('overlay-menu').click();
     h.$('shell-packs').click();
+    await settle(() => h.$('journey-chooser')?.open);
+    h.$('mission-picker-setup').open = true;
     h.$('shell-mode-choice').open = true;
     h.$('shell-team').focus();
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
@@ -1123,9 +1385,9 @@ for (const exit of ['button', 'escape', 'controller'])
     else h.$('mode-leave-stay').click();
     await Promise.resolve();
     assert.equal(h.$('mode-leave-dialog').open, false);
-    assert.equal(h.$('shell-missions').open, true);
+    assert.equal(h.$('journey-chooser').open, true);
     assert.equal(h.doc.activeElement.id, 'shell-team');
-    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    assert.equal(globalThis.location.href, 'http://localhost/game/?journey=legacy');
     for (let i = 0; i < 30; i++) h.frame();
     assert.equal(h.rendered.paused, true);
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
@@ -1183,38 +1445,54 @@ test('actual nested Collection picture Tab wraps only its current modal and clos
 
 // Native autofocus and queued close events are modeled by the existing adapter.
 // This follows actual source handlers; no display or physical device claim.
-for (const nested of [false, true]) {
-  test(`Missions preserves its Home opener after ${nested ? 'nested' : 'direct'} Collection appearance setup`, async (t) => {
+for (const context of ['Home', 'field']) {
+  test(`Missions preserves its ${context} opener after Collection appearance setup`, async (t) => {
     nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: true });
+    const h = await soloPage(t, { titleScreen: context === 'Home' });
     const checkpoint = authoritativeCheckpoint(h.rendered.run);
-    if (nested) {
-      // Touch-like activation: the title primary still owns DOM focus.
-      h.$('shell-featured').focus();
-      h.$('shell-play').click();
-      h.$('collection-button').focus();
-      h.$('collection-button').click();
-    } else openTitleCollection(h);
+    const opener = h.$(context === 'Home' ? 'shell-gallery' : 'shell-collection');
+    if (context === 'Home') openTitleCollection(h);
+    else {
+      opener.focus();
+      opener.click();
+    }
     h.$('collection-progress').querySelector('summary').click();
     h.$('collection-choose-appearance').click();
-    await Promise.resolve();
-    assert.equal(h.$('shell-missions').open, true);
+    await settle(() => h.$('journey-chooser')?.open && h.doc.activeElement === h.$('body-select'));
+    assert.equal(h.$('journey-chooser').open, true);
     assert.equal(h.doc.activeElement.id, 'body-select');
-    h.$('shell-missions-back').click();
+    h.$('journey-back').click();
     await Promise.resolve();
     h.frame(0);
-    assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.doc.activeElement.id, 'shell-play');
+    assert.equal(h.$('shell-home').open, context === 'Home');
+    assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
+    assert.equal(h.$('settings-dialog').open, context === 'Home');
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual(h.errors, []);
   });
 }
 
+async function legacyMissionShell(t) {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: true });
+  // The normal host delegates Missions to the unified library. Preserve this
+  // older component's return-guard tests with one explicit legacy shell owner.
+  h.win.emit('pagehide', { persisted: false });
+  const shell = attachGameShell({
+    document: h.doc,
+    initial: false,
+    canContinue: () => false,
+    pause() {},
+  });
+  t.after(() => shell.destroy());
+  return h;
+}
+
 for (const unavailable of ['disabled', 'hidden', 'detached']) {
-  test(`Missions Back uses an available Home fallback when its opener is ${unavailable}`, async (t) => {
-    nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: true });
+  test(`legacy Missions Back uses an available Home fallback when its opener is ${unavailable}`, async (t) => {
+    const h = await legacyMissionShell(t);
     h.$('shell-play').click();
+    assert.equal(h.$('shell-missions').open, true);
     const opener = h.$('shell-play');
     if (unavailable === 'detached') opener.remove();
     else opener[unavailable] = true;
@@ -1227,10 +1505,10 @@ for (const unavailable of ['disabled', 'hidden', 'detached']) {
   });
 }
 for (const replacement of ['dialog', 'focus', 'background']) {
-  test(`Missions close callback retains newer ${replacement} ownership before reopening Home`, async (t) => {
-    nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: true });
+  test(`legacy Missions close callback retains newer ${replacement} ownership before reopening Home`, async (t) => {
+    const h = await legacyMissionShell(t);
     h.$('shell-play').click();
+    assert.equal(h.$('shell-missions').open, true);
     const close = h.$('shell-missions').close;
     h.$('shell-missions').close = function () {
       close.call(this);

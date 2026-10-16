@@ -1,0 +1,46 @@
+{
+  "author": "Ron Kapaun / 3TD Studios; original coastal arrangement and connected harbour geometry by Reveal Line contributors",
+  "license": "CC0-1.0",
+  "assetSource": {
+    "sourcePage": "https://opengameart.org/content/3td-tropical-environment-pack-v20",
+    "downloadUrl": "https://opengameart.org/sites/default/files/Tropical_Environment_Pack_v2.0.zip",
+    "author": "Ron Kapaun / 3TD Studios",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "licenseVerifiedDate": "2026-10-15",
+    "archive": {
+      "name": "Tropical_Environment_Pack_v2.0.zip",
+      "bytes": 135821309,
+      "sha256": "32c9a3fcf2dea6e8094742c08b9dcc59cdfd0d6806b0906541eecc0bcf0f76ec",
+      "members": 468,
+      "uncompressedBytes": 380546034
+    },
+    "scope": "Eight authoring-only base-colour GLB assets. Not an installed world or collision authority.",
+    "converter": {
+      "assimpjs": "0.0.10",
+      "gltfTransform": "4.5.1",
+      "gltfValidator": "2.0.0-dev.3.10"
+    },
+    "changes": [
+      "Keep one explicit highest-detail visual subtree; omit Torque LOD and collision helper siblings.",
+      "Retain authored up-axis/unit transforms; no guessed rescaling.",
+      "Resolve each obsolete absolute image reference to exactly one same-directory archive texture.",
+      "Embed exact PNG/JPEG bytes without resizing or recompression.",
+      "Map declarative doubleSided and alphaTest/alphaRef properties; when missing alphaRef use explicit glTF default 0.5.",
+      "Reduce UVW coordinates to glTF UV (S/T) channels without modifying positions.",
+      "Deduplicate and join compatible primitives without mesh simplification.",
+      "Drop unsupported optional FB_ngon_encoding metadata after triangulation; retain rendered triangles."
+    ],
+    "excluded": [
+      "Torque wind/subsurface shaders",
+      "normal/specular texture channels",
+      "LOD and collision authoring",
+      "terrain or regional delivery",
+      "full native performance qualification"
+    ]
+  },
+  "compositionSource": "f82604963cf8781e3e657ca9af37cf57300bc492",
+  "terrainManifestSHA256": "afd29e7dc274087cc3cae309942c6a4b64d4858fd1a86fa39fbcffff73b78b7a",
+  "sceneryManifestSHA256": "7e973e3651fea67852f7a235a33465364160398c31463f8efa54a07bcf1752fc",
+  "scope": "Same reviewed harbour-r3 geometry/material bytes. No re-export, runtime budget or accepted old-pins change."
+}

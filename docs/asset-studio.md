@@ -52,7 +52,9 @@ Host instructions and actions retain their readable roles even when the draft pr
 
 The system reduced-motion preference caps the saved choice. The checkbox retains the user's raw choice and an explanation identifies an active system cap. Preview changes affect owned frames only; clearing the cap resumes retained Playing with a reset clock, while Paused and Reduced remain still. Text changes do not restart the animation or audio. Persisted navigation may rebuild the existing owned preview views; changing an Interface control does not.
 
-A successful foreground inventory selection retains the replacement selected button on desktop if its activating button owned focus. At widths up to 700px, selection keeps the existing Inspector handoff. A rejected prepared-upload or dirty-sprite selection leaves the original button and work in place. This scoped correction does not fix cold Back filter/selection restoration or focus after a successful mutation disables its own action; those remain separate P04 work.
+A successful foreground inventory selection retains the replacement selected button on desktop if its activating button owned focus. At widths up to 700px, selection keeps the existing Inspector handoff. A rejected prepared-upload or dirty-sprite selection leaves the original button and work in place. After a successful **Validate and stage replacement**, the consumed Stage action becomes disabled. If that operation still owns foreground focus, focus advances to **Save local revision**. Errors retain the ordinary opener, and a newer focused control or background page prevents that handoff. Other mutation-specific focus handoffs remain separate P04 work.
+
+The current history entry retains the selected slot and Search, Screen, State, Kind and Readiness filters across reload and Back. Restoration waits for the accepted workspace, reconciles removed slots and unavailable filter choices, and preserves a newer focus owner. Desktop returns idle foreground focus to the selected row; narrow screens use the Inspector. Search memory is bounded to 160 characters. This is inspection position only: it does not save edits, select a theme, resume animation or create a workspace revision. Unavailable history storage leaves ordinary authoring usable.
 
 ## Replacing an asset
 
@@ -64,6 +66,16 @@ A successful foreground inventory selection retains the replacement selected but
 6. Inspect the comparison, then save locally or export. Candidates enter the **produced** stage; successful technical validation alone does not establish a reviewed release. After performing real review, enter concrete evidence in revision history and use **Record reviewed revision**. This appends an immutable reviewed revision without overwriting the candidate.
 
 Crops retain their source as a separate immutable asset and link the derivative through provenance. Historical originals and derivatives remain in subsequent exports. A metadata-only revision retains the previous record as its provenance parent. It starts as **produced**, with no inherited review evidence: unchanged image bytes do not approve a changed pivot, rotor layout or nine-slice. The previously reviewed record stays intact and can be rebound from history. Font/audio originals remain the immutable source bytes of their file asset.
+
+### Motor hub controls
+
+For a prepared player/enemy image, **Motor hubs** selects one existing anchor and exposes its normalized X/Y, radius, direction and phase. Centers use the existing frame-local 0–1 coordinates from the top-left corner, independent of the pivot; these are not Motion Lab's center-relative coordinates. Radius stays in the existing presentation geometry schema. **Apply hub to preview** checks the complete record and slot binding through the production validator, including full rotor envelopes, duplicate centers, required motor count and supported geometry. It accepts the whole edit or leaves the previous draft preview unchanged. It does not move pixels, correct a rig automatically or change gameplay collisions.
+
+**Inherit historical default** omits direction; a blank phase omits phase. The effective direction and phase are shown using the same reader as the renderer. This preserves historical index defaults and untouched JSON fields. Explicit direction/phase belong to a new revision for a compatible reader; they are not written into historical asset records. Blade counts remain unchanged by these controls and are still available in the advanced JSON.
+
+The rotor JSON, pivot and nine-slice inputs remain available. Apply advanced edits with **Apply geometry to preview** before using the hub controls; malformed, unknown or unapplied advanced values cannot be silently overwritten by a hub edit. A changed preparation, accepted geometry or crop also invalidates an old control action. No-anchor images show disabled controls with guidance; unsupported and nonimage slots do not offer hub editing. Existing Stage, Undo/Redo, Save and `.rltheme` transfer continue to own revisions and exact original bytes. No additional store or recipe format is introduced.
+
+Maintenance prompt: “Prepare an existing raster with inherited anchors, select a hub with the keyboard and change X/Y/radius, then explicit direction/phase. Verify complete-sweep and duplicate-center rejection preserve the accepted preview; malformed advanced JSON and stale crop/control work must not overwrite it. Return direction/phase to inheritance, stage/save/reload, and compare every original byte sequence and historical geometry. Check EN/UK, 44px controls, Plain/Large, portrait and short landscape separately in a native browser. These source and modeled-host checks do not establish production or device acceptance.”
 
 ## Pixel editor
 
@@ -86,6 +98,8 @@ The three copyable AI briefs cover a new variation, editing an attached current 
 ## Release verification
 
 Unit tests in `game/test/asset-studio-helpers.test.mjs` exercise crop bounds, normalized occupied-pixel measurement, and combined inventory/readiness filtering. `game/test/asset-studio-fixture.test.mjs` verifies every enemy role resolves to a normalized built-in mission, selected terrain/pickup fixtures remain valid, and preview runs are isolated and leave source packs unchanged. Core model, bundle, session, persistence, and sprite behavior have independent tests in `game/test/`. Browser release checks should cover upload → crop → stage → save → reload → export → import, geometry rejection/recovery, all pixel tools, keyboard focus, portrait and short-landscape layouts, unavailable storage, and a stale save from two tabs. Do not mark a source recipe or candidate as fully reviewed solely because these technical checks pass.
+
+`game/test/asset-studio-rotor-controls.test.mjs` covers exact historical omissions, explicit/inherited runtime phases, production envelope/duplicate/unknown-field validation, late ownership changes, no-anchor/nonimage controls and EN/UK catalogs. The real Studio-handler harness in `game/test/asset-studio-host-loading.test.mjs` covers accepted/rejected hub edits, advanced JSON, crop/discard guards and Stage → Save → Reload while preserving historical geometry and exact PNG bytes. This is modeled host evidence; native layout and actual pointer/keyboard/device qualification remain separate.
 
 The phase source check exercised a new 64×64 sprite, pixel undo/redo, invalid-pivot rejection and recovery, staging, draft undo/redo, atomic local save, reload, restoring the original through history, and the Export action in the in-app browser. The single-pixel QA fixture remains historical data in that local test workspace and is not a production asset. Unit coverage verifies corrupt imports, byte round trips and stale saves. Native file-dialog upload/download acceptance and physical touch/controller checks remain separate release checks.
 
@@ -136,3 +150,10 @@ and Studio opener, then Back to Home. Separately exercise Return to game. Prove 
 run advancement or player-save writes, and verify hidden/blurred, disposed, newer
 focus/dialog, duplicate-hint and history-unavailable cases. Preserve each tool's
 unsaved-edit safeguards. Record native checks separately from modeled host tests.”
+
+## Exact raster handoff to rewards
+
+A selected bound raster revision can be prepared as its exact original file for
+Company or Level Studio. The destination still requires its approved selected
+asset inventory and an explicit teaser, reveal or registered-character binding.
+No asset store or approval path is added. See [the shared handoff](discovery-asset-handoff.md).

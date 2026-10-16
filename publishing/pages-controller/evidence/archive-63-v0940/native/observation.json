@@ -1,0 +1,39 @@
+{
+  "status": "PASS_BOUNDED_NATIVE_AVAILABILITY",
+  "verifiedAt": "2026-09-23T15:59:38Z",
+  "browser": "Codex in-app browser",
+  "archive": "Archive63",
+  "archiveCommit": "2c12b49492cc5029e8eb0d1009c0e7875d314451",
+  "release": "v0.94.0",
+  "sourceRevision": "28f75fbda8d4a9011df8520754b68ab7d75fef22",
+  "observations": [
+    {
+      "url": "https://mekhovov.github.io/revealline-archive-63/",
+      "title": "RevealLine archive 63",
+      "evidence": [
+        "Archive63 visibly identifies the original v0.94.0 build",
+        "Preserved play and current release explorer links are present"
+      ]
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline-archive-63/releases/v0.94.0/site/game/",
+      "title": "Reveal / Line",
+      "evidence": [
+        "NEW JOURNEY / 91 MISSIONS",
+        "VERSION V0.94.0",
+        "Solo, Versus and Team entry links are present"
+      ]
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline-archive-63/releases/v0.94.0/site/game/couch/relay-rescue.html",
+      "title": "Relay Rescue · RevealLine",
+      "evidence": [
+        "Team Journey / 12 missions loaded",
+        "Twin landings picture reached ready state",
+        "Start together enabled",
+        "Start entered the shared arena with Sunflower 1, Skyline 2, Team territory, Pause and Skip mission"
+      ]
+    }
+  ],
+  "scope": "Availability and one Team start only. Extended gameplay, physical devices, full input matrix, offline, balance and clean-console qualification remain deferred or unclaimed."
+}

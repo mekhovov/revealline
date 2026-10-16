@@ -1,0 +1,82 @@
+[
+  {
+    "source": "/tmp/team-hunter-focused-final.tap",
+    "stored": "team-hunter-focused.tap",
+    "sourceBytes": 18383,
+    "storedBytes": 18383,
+    "sourceSha256": "77e9c6f914b62e68e2b018b3b08185ba7f9962dad939033dcfb1aa7b75461272",
+    "storedSha256": "77e9c6f914b62e68e2b018b3b08185ba7f9962dad939033dcfb1aa7b75461272"
+  },
+  {
+    "source": "/tmp/actor-practice-remains-final.tap",
+    "stored": "practice-remains-focused.tap",
+    "sourceBytes": 9016,
+    "storedBytes": 9016,
+    "sourceSha256": "2fc70bba1f00a33f530fa56daca008e5ce7b5a4737983e2acc91b9f7c2fd98b0",
+    "storedSha256": "2fc70bba1f00a33f530fa56daca008e5ce7b5a4737983e2acc91b9f7c2fd98b0"
+  },
+  {
+    "source": "/tmp/revealline-c6-increments-focused.tap",
+    "stored": "motion-parts-focused.tap",
+    "sourceBytes": 23057,
+    "storedBytes": 23057,
+    "sourceSha256": "c07b6268751d50a26d9b20d71cc7043e2ae68dfd3ff017eeb8f8cbff74e9f223",
+    "storedSha256": "c07b6268751d50a26d9b20d71cc7043e2ae68dfd3ff017eeb8f8cbff74e9f223"
+  },
+  {
+    "source": "/tmp/actor-artwork-late-raster-abort-final.tap",
+    "stored": "artwork-focused.tap",
+    "sourceBytes": 6664,
+    "storedBytes": 6664,
+    "sourceSha256": "0357be40b3e347e0a7b58a820593ca09a8d4c2911f3183072ed3f01751ce62a9",
+    "storedSha256": "0357be40b3e347e0a7b58a820593ca09a8d4c2911f3183072ed3f01751ce62a9"
+  },
+  {
+    "source": "/tmp/actor-batch10-production-guard.tap",
+    "stored": "production-guard.tap",
+    "sourceBytes": 3329,
+    "storedBytes": 3313,
+    "sourceSha256": "dd0a25712605fdb5a0916deec124ee067519e42405436b4cf5eaa5f9283d584d",
+    "storedSha256": "591da4592c9249f84985661e3a8c74b311c52abaf519a02e47cc7fbb609a83d8"
+  },
+  {
+    "source": "/tmp/team-hunter-warning-final.png",
+    "stored": "team-hunter-warning.png",
+    "sourceBytes": 99977,
+    "storedBytes": 99977,
+    "sourceSha256": "b0cf7774cddf6dc081af67a82adb6bd1e75fd6db3c4a8d640840471c83654105",
+    "storedSha256": "b0cf7774cddf6dc081af67a82adb6bd1e75fd6db3c4a8d640840471c83654105"
+  },
+  {
+    "source": "/tmp/team-hunter-recovery-final.png",
+    "stored": "team-hunter-recovery.png",
+    "sourceBytes": 136347,
+    "storedBytes": 136347,
+    "sourceSha256": "390b413e9fc0d91e8baa29697cb652d5b4e74640c6c2b194aeeb81589b890683",
+    "storedSha256": "390b413e9fc0d91e8baa29697cb652d5b4e74640c6c2b194aeeb81589b890683"
+  },
+  {
+    "source": "/tmp/actor-batch10-practice-uk.png",
+    "stored": "practice-remains-uk.png",
+    "sourceBytes": 130815,
+    "storedBytes": 130815,
+    "sourceSha256": "30a151415517c6ad4b774dade0048dd78a74c5df82c366276012ed9943745887",
+    "storedSha256": "30a151415517c6ad4b774dade0048dd78a74c5df82c366276012ed9943745887"
+  },
+  {
+    "source": "/tmp/revealline-artwork-chrome-downloads/chrome-r5-reimport-classic.png",
+    "stored": "native-artwork-reimport.png",
+    "sourceBytes": 453728,
+    "storedBytes": 453728,
+    "sourceSha256": "cf3bfc36c4341b00190638414f4d0833ac1cefb6b3ed781fc5944b7b09461a1f",
+    "storedSha256": "cf3bfc36c4341b00190638414f4d0833ac1cefb6b3ed781fc5944b7b09461a1f"
+  },
+  {
+    "source": "/tmp/revealline-artwork-chrome-downloads/chrome-r5-reimport-observed.json",
+    "stored": "native-artwork-reimport-observed.json",
+    "sourceBytes": 2971,
+    "storedBytes": 2971,
+    "sourceSha256": "7a949d288c9fff551837b167a9804cd46c4af7b3ca520e8907cec657a783e1c1",
+    "storedSha256": "7a949d288c9fff551837b167a9804cd46c4af7b3ca520e8907cec657a783e1c1"
+  }
+]

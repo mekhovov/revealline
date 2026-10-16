@@ -67,12 +67,80 @@ test('missing credits, synthesis and unsafe websites have truthful non-link fall
   assert.match(f.credit.element.textContent, /Artist not recorded/);
   assert.match(f.credit.element.textContent, /Built-in synthesized music/);
   assert.match(f.credit.element.textContent, /Source website not recorded/);
-  assert.equal(f.credit.element.querySelector('a').getAttribute('href'), null);
+  assert.equal(f.credit.element.children[3].hidden, false);
+  assert.equal(f.credit.element.querySelector('a'), null);
   f.credit.render({
     track: { kind: 'mp3', title: '<img src=x>', rights: { source: 'https://artist.example' } },
   });
   assert.match(f.credit.element.textContent, /Original filename not recorded/);
   assert.equal(f.credit.element.querySelectorAll('img').length, 0);
   assert.equal(f.credit.element.querySelector('a').getAttribute('href'), 'https://artist.example/');
+  f.credit.dispose();
+});
+
+test('language switches refresh credits and pause captions without touching transport or focus', async (context) => {
+  const { getLocale, setLocale } = await import('../i18n/index.mjs');
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = setup();
+  const playback = Object.freeze({ track: recording, playing: true, volume: 1 });
+  const master = Object.freeze({ muted: true, volume: 1 });
+  f.credit.render(playback, master);
+  const original = f.credit.element.textContent;
+  setLocale('uk', { persist: false });
+  assert.match(f.credit.element.textContent, /Композиція: Orchard night/);
+  assert.match(f.credit.element.textContent, /Виконавець: Original artist/);
+  assert.match(f.credit.element.textContent, /Файл: original mix 01.mp3/);
+  assert.equal(f.pause.getAttribute('data-track-caption'), 'Звук вимкнено: Orchard night');
+  assert.match(f.pause.getAttribute('aria-description'), /Повні відомості про музику/);
+  assert.equal(f.doc.activeElement, f.pause);
+  assert.equal(f.pause.textContent, 'Pause');
+  assert.equal(f.clicks(), 0);
+  setLocale('en', { persist: false });
+  assert.equal(f.credit.element.textContent, original);
+  f.credit.dispose();
+  setLocale('uk', { persist: false });
+  assert.equal(f.pause.getAttribute('aria-description'), 'Existing instruction');
+  assert.equal(f.pause.getAttribute('data-track-caption'), null);
+});
+
+test('creator links retain focus across track ticks, exclude licence and provenance links, and clear stale credits', () => {
+  const f = setup();
+  const track = {
+    ...recording,
+    websites: [
+      { label: 'CC BY 4.0 International', url: 'https://creativecommons.org/licenses/by/4.0/' },
+      { label: 'Historical provenance', url: 'https://history.example/article' },
+      { label: 'Creator source', url: 'https://artist.example/song' },
+    ],
+    rights: { source: 'https://artist.example/song' },
+  };
+  f.credit.render({ track, playing: true, volume: 1 });
+  const link = f.credit.element.querySelector('a');
+  assert.equal(link.getAttribute('href'), 'https://artist.example/song');
+  assert.equal(link.getAttribute('target'), '_blank');
+  assert.equal(link.getAttribute('rel'), 'noopener noreferrer');
+  assert.equal(f.credit.element.querySelectorAll('a').length, 1);
+  link.focus();
+  f.credit.render({
+    track: { ...track, title: 'New title, same creator' },
+    playing: true,
+    volume: 1,
+    positionSeconds: 12,
+  });
+  assert.equal(f.credit.element.querySelector('a'), link);
+  assert.equal(f.doc.activeElement, link);
+  assert.equal(f.clicks(), 0);
+  f.credit.render({
+    track: {
+      title: 'Local original',
+      artist: 'My artist',
+      kind: 'mp3',
+      rights: { source: 'local-file.mp3' },
+    },
+  });
+  assert.equal(f.credit.element.querySelector('a'), null);
+  assert.match(f.credit.element.textContent, /Source website not recorded/);
   f.credit.dispose();
 });

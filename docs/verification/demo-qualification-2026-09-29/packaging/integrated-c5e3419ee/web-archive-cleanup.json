@@ -1,0 +1,7 @@
+{
+  "at": "2026-09-29T02:42:00.524552+00:00",
+  "reason": "Root-authorized removal of task-generated ZIP after independent hash and manifest retention; site retained for staging",
+  "path": "/private/tmp/revealline-demo-qualification-web-final-20260929/distribution.zip",
+  "sha256": "a67d0d021851a6e9bbfa416219d9eabc8f998563aa18afad09f87a0de0f0035f",
+  "bytes": 756572220
+}

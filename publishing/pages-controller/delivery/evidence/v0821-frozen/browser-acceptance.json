@@ -1,0 +1,150 @@
+{
+  "format": "revealline-frozen-browser-acceptance.v1",
+  "status": "PASS_SCOPED",
+  "checkedAt": "2026-09-22T14:52:18.359849+00:00",
+  "version": "v0.82.1",
+  "sourceRevision": "64ec9fd2e5688f4248fe005ac6a47c0c1394ea9e",
+  "distributionSha256": "eb98abe00155176d77facbcedcd1510219031057afc56a5669f98c7330b2b3af",
+  "origin": "http://127.0.0.1:18821",
+  "browser": "isolated persistent Chromium via agent-browser",
+  "checks": [
+    "Two same-origin game tabs: second visibly session-only while first owns saving.",
+    "Ordinary keyboard First Signal victory; Next preserved results while preparing and entered Relay Orchard without a second Start.",
+    "Actual native .rlmedia download contains one exact 46655-byte frozen PNG original; separate8025-byte game-dataJSON download parsed.",
+    "Closed holder and navigated to Workshop: additive restore preserved existing original; generation1->2 with2retainedrecords. Saved Relay revision previewed. Native re-export104198bytes contains both exact originals87465bytes; session-original byte-for-byte match.",
+    "Prepared896of896coreofflinefiles. Closed browser, stopped localserver (exit0); separatecurl connectionrefused. Reopened persistentprofile ataboutblank, setoffline before navigation, loaded v0.82.1 cachedtitle and wonFirstSignal with ordinarykeys."
+  ],
+  "limits": [
+    "Desktop Chromium functional acceptance, not physical-device, fullcampaign, acoustic/music or Ukrainianreview.",
+    "No earned transient Relay victory is claimed; only successororiginal retention andpreview.",
+    "GameJSON downloaded but not imported during this scopedflow; originalmedia additive restore was exercised.",
+    "Frozenlocalhost result doesnotreplace actualPages byte andbrowser acceptance."
+  ],
+  "attempts": [
+    "An incorrect #canvas wait was terminated; subsequent ready-DOM guidance used.",
+    "Initial offscreen click/download automation didnotactivateExportgame data; scrolling exposedthebutton. Download tooltimedoutbusy; actualnativeUUIDfile was retained/copied underexpectedname withidenticalbytes.",
+    "Initial restore-reload selection was issuedtooearly andcancelledpendingwork. OfferedReload completed normally, thenexactRelayselectionpreview passed."
+  ],
+  "files": [
+    {
+      "path": "browser/cold-offline-title.txt",
+      "bytes": 1103,
+      "sha256": "28f6c0941f597ae4f60687c24401ddbbfb343ba4e4627ca775d5d13b51066e54"
+    },
+    {
+      "path": "browser/cold-offline-win.txt",
+      "bytes": 2014,
+      "sha256": "43ce0ee9ac711cf3c5b4543abfc1cbeefb5e11365330119c2108f0a8434d6af7"
+    },
+    {
+      "path": "browser/downloads/RevealLine-session-originals.rlmedia",
+      "bytes": 62224,
+      "sha256": "5998ad61d6bfddb873e939b577361241a9b4c008b0ecdfe8c0a2ca7ae01f2fbf"
+    },
+    {
+      "path": "browser/downloads/d6691834-91aa-441e-933e-49251bc02674",
+      "bytes": 8025,
+      "sha256": "8c5d0bb3fd7aabbd5d5deec5e004a72dff66dc86670a32505642847e419e3518"
+    },
+    {
+      "path": "browser/downloads/revealline-complete-backup.json",
+      "bytes": 8025,
+      "sha256": "8c5d0bb3fd7aabbd5d5deec5e004a72dff66dc86670a32505642847e419e3518"
+    },
+    {
+      "path": "browser/downloads/roundtrip-originals.rlmedia",
+      "bytes": 104198,
+      "sha256": "26496d7d88c23f08176dba7e6dcd73c6fa7608f5ee7c01fcdd05356a020146db"
+    },
+    {
+      "path": "browser/errors-after-cold.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser/errors-before-cold.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser/first-signal-win.txt",
+      "bytes": 2213,
+      "sha256": "ad6db18e9edb339e18fe179d2c3a6e73ce331cc7dcbbbac125826635d746e561"
+    },
+    {
+      "path": "browser/holder-title.txt",
+      "bytes": 1103,
+      "sha256": "28f6c0941f597ae4f60687c24401ddbbfb343ba4e4627ca775d5d13b51066e54"
+    },
+    {
+      "path": "browser/offline-prepared.txt",
+      "bytes": 1958,
+      "sha256": "cb52dbd9c65aee44e29c74c582a6fb0c67fcc06f9ea08e802c0264ffdc0c5b9e"
+    },
+    {
+      "path": "browser/relay-started-without-start.txt",
+      "bytes": 1265,
+      "sha256": "71278e8c308abfc9c113b574e3e2539991f212ca23d95980cffce5764e4bfe3e"
+    },
+    {
+      "path": "browser/restore-completed.txt",
+      "bytes": 8418,
+      "sha256": "8ecbf5b9f42b0c9f8304df1402c2b0c7c585fa1b41735f887f8bcc36d8c79492"
+    },
+    {
+      "path": "browser/restore-reviewed.txt",
+      "bytes": 8092,
+      "sha256": "6b96c3ceea2e1c76805943da3846cf00977428cc4ef06a749716cb9f48d977e6"
+    },
+    {
+      "path": "browser/restored-relay-preview.txt",
+      "bytes": 8020,
+      "sha256": "2ab3c0883ed93a2875cc37f1ba464015a25b9c952211a876865e5773eed4cd77"
+    },
+    {
+      "path": "browser/roundtrip-byte-review.json",
+      "bytes": 447,
+      "sha256": "0988933bdbf7516841ef2b16f22c6ee40bad132ebe886d7d93725b8e59106179"
+    },
+    {
+      "path": "browser/screenshot-1790087985616.png",
+      "bytes": 39475,
+      "sha256": "2b5fe600ab5b43047650ba84a6a82058fbe2c72a79b675816a6e040e5ec6b231"
+    },
+    {
+      "path": "browser/screenshot-1790088138434.png",
+      "bytes": 86132,
+      "sha256": "2918f610ca04ce4b880c206ed1bf062d5893b1dd6d2c35cdfb0d0507bfae9d7e"
+    },
+    {
+      "path": "browser/screenshot-1790088540719.png",
+      "bytes": 92822,
+      "sha256": "04acf6cbbec6f76abcac424eba462f7b79487b4cdca8e55c225a0b2df547c448"
+    },
+    {
+      "path": "browser/screenshot-1790088569472.png",
+      "bytes": 165315,
+      "sha256": "3e326ce4c391ddd54c9bd9ae50122550158bd35767de3e04822bcce84b3cf7f9"
+    },
+    {
+      "path": "browser/screenshot-1790088699998.png",
+      "bytes": 109742,
+      "sha256": "c95224f857855a62bf44fa69b17f985497eb2ebe142675aab4e18c449e6d4965"
+    },
+    {
+      "path": "browser/session-bundle-byte-review.json",
+      "bytes": 656,
+      "sha256": "bdd2abadba5e5d02dfdae2bc27d2835249980150eaa3569bf41df544f50139d0"
+    },
+    {
+      "path": "browser/session-recovery-before.txt",
+      "bytes": 2937,
+      "sha256": "9fac8ab462e9ded014ae669d715c31a19fb6f439d77802ff97d54bbcbc60f688"
+    },
+    {
+      "path": "browser/session-warning.txt",
+      "bytes": 1295,
+      "sha256": "b5a0352f9386629ddbcb022a09326fadf91eca54da1d3a46a3bdc21762b91052"
+    }
+  ]
+}

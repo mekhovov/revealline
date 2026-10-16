@@ -1,8 +1,33 @@
+import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
+import {
+  OVERFLIGHT_FIELD_KIT_IDS,
+  overflightFieldKitArt,
+} from '../../game/presentation/overflight-field-kit-art.mjs';
+import {
+  TEAM_OUTCOME_SLOTS,
+  drawTeamOutcomeBadge,
+} from '../../game/couch/coop-outcome-presentation.mjs';
+import { TEAM_ENEMY_SLOTS, teamEnemyInheritance } from '../../game/couch/coop-enemy-slots.mjs';
+import {
+  TEAM_EMITTER_SLOTS,
+  drawTeamEmitterWarning,
+  drawTeamEmitterSpark,
+} from '../../game/couch/coop-emitter-presentation.mjs';
+import {
+  TEAM_SUPPORT_SLOTS,
+  drawTeamSupportPulse,
+  drawTeamSlowed,
+} from '../../game/couch/coop-support-presentation.mjs';
+import { TEAM_CORE_SLOTS, drawTeamCoreCue } from '../../game/couch/coop-core-presentation.mjs';
+import { TEAM_ANCHOR_SLOTS, drawTeamAnchor } from '../../game/couch/coop-anchor-presentation.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { bindAudioMasterMedia } from '../../game/ui/audio-master.mjs';
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
 import { pictureOwnerContext } from './picture-context.mjs';
+import { assetStudioErrorMessage, assetStudioErrorText } from './error-copy.mjs';
+import { isStudioActorSlot, studioActorCanvas } from './actor-resources.mjs';
 import {
+  croppedImage,
   playerRecipePreview,
   boardContextPreview,
   audioRecipePreview,
@@ -20,7 +45,7 @@ import { drawClassicTerrain, drawPickupIcon } from '../../game/ui/classic-view.m
 const fonts = new Map();
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
-  node.textContent = value;
+  localizedText(node, typeof value === 'function' ? value : () => value);
   node.className = className;
   if (hostRole) node.dataset.studioHost = hostRole;
   return node;
@@ -37,7 +62,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     state = 'default',
     statusTarget,
     cancelButton,
-    label = 'Asset preview',
+    label = () => t('tools:assetPreview'),
     isCurrent: hostCurrent = () => true,
     audioMaster = null,
     motionPreferences = null,
@@ -47,9 +72,16 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   surface.previewMarker = marker;
   const isCurrent = () => surface.previewMarker === marker && hostCurrent();
   const presenter = statusTarget ? createOperationStatus(statusTarget, { isCurrent }) : null;
-  const lease = presenter?.begin({ message: `${label}: preparing ${slot.label}…` });
+  const valueOf = (value) => (typeof value === 'function' ? value() : value);
+  const lease = presenter?.begin({
+    message: () => t('tools:studio.preview.preparing', { label: valueOf(label), slot: slot.label }),
+  });
   const phase = (message, stage = 'preparing') =>
-    lease?.update({ message: `${label}: ${message}`, stage });
+    lease?.update({
+      message: () =>
+        t('tools:studio.preview.status', { label: valueOf(label), message: valueOf(message) }),
+      stage,
+    });
   let failed = false;
   surface.setAttribute('aria-busy', 'true');
   surface.replaceChildren();
@@ -77,6 +109,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     'pickups',
     'effects',
     'pictures',
+    'objectives',
   ].includes(slot.group);
   let cleaned = false;
   surface.previewCleanup = (preserveStatus = false) => {
@@ -96,27 +129,30 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   };
   if (cancelButton) {
     cancelButton.hidden = false;
-    cancelButton.textContent = 'Stop waiting';
+    localizedText(cancelButton, () => t('common:actions.stopWaiting'));
     cancelButton.onclick = () => {
       if (!isCurrent()) return;
-      lease?.finish({ message: `${label}: stopped waiting.`, state: 'detached' });
+      lease?.finish({
+        message: () => t('tools:studio.preview.stoppedWaiting', { label: valueOf(label) }),
+        state: 'detached',
+      });
       // A decoder or shared fixture fetch may finish, but cannot draw after this fence.
       surface.previewCleanup(true);
-      cancelButton.textContent = 'Retry preview';
+      localizedText(cancelButton, () => t('common:preview.retry'));
       cancelButton.onclick = () =>
         drawAssetPreview(surface, slot, asset, resolved, blobs, settings);
     };
   }
   try {
     if (!asset) {
-      surface.append(text('p', 'No binding. Upload a candidate for this slot.', '', 'body'));
+      surface.append(text('p', t('tools:noBindingUploadACandidateForThisSlot'), '', 'body'));
       return;
     }
     if (mode === 'context' && !fieldSlot)
       surface.append(
         text(
           'small',
-          'Game mode applies to field previews. This slot uses its own font, audio or component specimen.',
+          t('tools:gameModeAppliesToFieldPreviewsThisSlotUsesIts'),
           'bounded-label',
           'secondary',
         ),
@@ -125,18 +161,109 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       const fontAsset = resolved.assets[id];
       if (fontAsset?.kind !== 'font') continue;
       const fontBlob = blobs.get(fontAsset.file.sha256);
-      if (!fontBlob)
-        throw new Error(`Missing bytes for ${id}. Re-import the complete theme bundle.`);
-      phase(`reading and decoding ${id}…`, 'decoding');
+      if (!fontBlob) throw new Error(t('tools:studio.preview.missingBytes', { id }));
+      phase(() => t('tools:studio.preview.readingAndDecodingAsset', { id }), 'decoding');
       await prepareFont(fontAsset, fontBlob, resolved);
       if (!isCurrent()) return;
     }
+    if (OVERFLIGHT_FIELD_KIT_IDS.includes(slot.id) && asset.kind === 'recipe') {
+      const pixels = overflightFieldKitArt(slot.id);
+      const canvas = document.createElement('canvas');
+      canvas.width = pixels.width;
+      canvas.height = pixels.height;
+      const ctx = canvas.getContext('2d');
+      const data = ctx.createImageData(pixels.width, pixels.height);
+      data.data.set(pixels.rgba);
+      ctx.putImageData(data, 0, 0);
+      canvas.style.imageRendering = 'pixelated';
+      canvas.style.width = mode === 'native' ? '16px' : '192px';
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', slot.label);
+      surface.append(canvas);
+      return;
+    }
+    if (TEAM_OUTCOME_SLOTS.includes(slot.id)) {
+      if (mode === 'context' && fieldMode !== 'team')
+        throw new Error(t('tools:teamOutcomesUseCouchTeamContextChooseItsActualEvent'));
+      if (asset.kind === 'recipe' && mode !== 'context') {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 32;
+        canvas.setAttribute('role', 'img');
+        localizedAttribute(canvas, 'aria-label', () =>
+          t('tools:studio.preview.recipeLabel', { slot: slot.label }),
+        );
+        drawTeamOutcomeBadge(
+          canvas.getContext('2d'),
+          { kind: 'recipe' },
+          { left: 4, y: 16 },
+          1,
+          [resolved.tokens.amber, resolved.tokens.cyan],
+          true,
+          0,
+        );
+        canvas.style.width = mode === 'native' ? '32px' : '192px';
+        canvas.style.maxWidth = '100%';
+        surface.append(
+          canvas,
+          text(
+            'small',
+            t('tools:isolatedTwoPlayerBadgeRecipeChooseTheActualJointCapture'),
+            'bounded-label',
+            'secondary',
+          ),
+        );
+        return;
+      }
+    }
+    if (TEAM_ENEMY_SLOTS.includes(slot.id)) {
+      if (mode === 'context' && fieldMode !== 'team')
+        throw new Error(t('tools:teamEnemyStateBodiesUseCouchTeamContextChooseCouch'));
+      if (asset.kind === 'recipe' && mode !== 'context') {
+        const inherited = teamEnemyInheritance(slot.id);
+        asset = resolved.assets[inherited];
+        if (asset?.kind !== 'image')
+          throw new Error(t('tools:studio.preview.sharedEnemyBodyMissing', { slotId: inherited }));
+        surface.append(
+          text(
+            'small',
+            () => t('tools:studio.preview.sharedEnemyBody', { slotId: inherited }),
+            'bounded-label',
+            'secondary',
+          ),
+        );
+      }
+    }
+    if (slot.id.startsWith('team.pilot.')) {
+      if (mode === 'context' && fieldMode !== 'team')
+        throw new Error(t('tools:teamPlayerStateBodiesUseCouchTeamContextChooseCouch'));
+      if (asset.kind === 'recipe' && mode !== 'context') {
+        const inherited = `player.scout.${slot.id.split('.').at(-1)}`;
+        asset = resolved.assets[inherited];
+        if (asset?.kind !== 'image')
+          throw new Error(t('tools:studio.preview.sharedPilotBodyMissing', { slotId: inherited }));
+        surface.append(
+          text(
+            'small',
+            () => t('tools:studio.preview.sharedPilotBody', { slotId: inherited }),
+            'bounded-label',
+            'secondary',
+          ),
+        );
+      }
+    }
     const blob = asset.file && blobs.get(asset.file.sha256);
     if (asset.file && !blob) {
-      throw new Error('File bytes are unavailable. Re-import the complete bundle.');
+      throw new Error(t('tools:fileBytesAreUnavailableReImportTheCompleteBundle'));
+    }
+    if (
+      asset.kind === 'audio' &&
+      (slot.id.startsWith('audio.destroy-') || slot.id.startsWith('audio.human-reaction-'))
+    ) {
+      audioRecipePreview(surface, slot, own, { audioMaster, readAudio: async () => ({ blob }) });
+      return;
     }
     if (asset.kind === 'audio') {
-      phase('loading audio metadata…', 'decoding');
+      phase(() => t('tools:studio.preview.loadingAudioMetadata'), 'decoding');
       const audio = document.createElement('audio');
       const audioBinding = audioMaster
         ? bindAudioMasterMedia({ audioMaster, element: audio })
@@ -147,7 +274,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       audio.controls = true;
       audio.preload = 'metadata';
       if (audioBinding) {
-        const label = text('label', 'Audition volume', '', 'control'),
+        const label = text('label', t('tools:auditionVolume'), '', 'control'),
           fader = document.createElement('input');
         fader.type = 'range';
         fader.min = '0';
@@ -158,12 +285,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         label.append(fader);
         surface.append(
           label,
-          text(
-            'small',
-            'Use Audition volume for this preview. Master sound applies to both previews.',
-            '',
-            'body',
-          ),
+          text('small', t('tools:useAuditionVolumeForThisPreviewMasterSoundAppliesTo'), '', 'body'),
         );
       }
       await new Promise((resolve, reject) => {
@@ -177,14 +299,14 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         };
         const error = () => {
           clear();
-          reject(new Error('Audio metadata could not be decoded.'));
+          reject(new Error(t('tools:audioMetadataCouldNotBeDecoded')));
         };
         own(() => {
           clear();
           audio.pause();
           audio.removeAttribute('src');
           audio.load();
-          reject(new DOMException('Audio preview closed.', 'AbortError'));
+          reject(new DOMException(t('tools:audioPreviewClosed'), 'AbortError'));
         });
         audio.addEventListener('loadedmetadata', ready);
         audio.addEventListener('error', error);
@@ -196,7 +318,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     }
     if (asset.kind === 'font') {
       const family = `RLAsset-${asset.file.sha256}`;
-      phase('reading and decoding the font…', 'decoding');
+      phase(() => t('tools:studio.preview.readingAndDecodingFont'), 'decoding');
       await prepareFont(asset, blob, resolved);
       if (!isCurrent()) return;
       // The selected slot owns the specimen, even when several roles share a file.
@@ -223,11 +345,191 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     const palette = canvasPresentation(resolved).palette;
+    if (
+      [...TEAM_ANCHOR_SLOTS, ...TEAM_CORE_SLOTS].includes(slot.id) &&
+      mode === 'context' &&
+      fieldMode !== 'team'
+    )
+      throw new Error(t('tools:relayObjectivesBelongToTeamChooseTeamRelayYardOr'));
+    if (TEAM_EMITTER_SLOTS.includes(slot.id) && mode === 'context' && fieldMode !== 'team')
+      throw new Error(t('tools:emitterHazardsBelongToTeamChooseCouchTeamRelayYard'));
+    if (TEAM_EMITTER_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const warning = slot.id.endsWith('warning'),
+        size = warning ? 24 : 16,
+        canvas = document.createElement('canvas');
+      canvas.width = canvas.height = size;
+      canvas.setAttribute('role', 'img');
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.fixedRecipeLabel', { slot: slot.label }),
+      );
+      const ctx = canvas.getContext('2d'),
+        frames = { [slot.id]: { kind: 'recipe' } };
+      ctx.save();
+      if (warning) {
+        ctx.scale(size / 4, size / 4);
+        drawTeamEmitterWarning(ctx, frames, { x: 0.4, y: 0.4 }, { x: 2.4, y: 2.4 }, palette);
+      } else {
+        ctx.scale(size / 2, size / 2);
+        drawTeamEmitterSpark(ctx, frames, { x: 1, y: 1 }, palette);
+      }
+      ctx.restore();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, size, size);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const a = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = a;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? `${size}px` : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          t('tools:nativeGlyphDemonstrationRelayYardEmitterWarningAndTravellingSpark'),
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
+    if (TEAM_SUPPORT_SLOTS.includes(slot.id) && mode === 'context' && fieldMode !== 'team')
+      throw new Error(t('tools:supportBelongsToTeamChooseCouchTeamSupportPulseOr'));
+    if (TEAM_SUPPORT_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const pulse = slot.id === 'team.support.pulse',
+        size = pulse ? 64 : 24;
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = size;
+      canvas.setAttribute('role', 'img');
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.fixedRecipeLabel', { slot: slot.label }),
+      );
+      const ctx = canvas.getContext('2d'),
+        frames = { [slot.id]: { kind: 'recipe' } };
+      ctx.save();
+      if (pulse) {
+        ctx.scale(size / 13, size / 13);
+        drawTeamSupportPulse(
+          ctx,
+          frames,
+          { x: 6.5, y: 6.5, player: 0 },
+          [palette.accent, palette.safe],
+          true,
+        );
+      } else {
+        ctx.scale(size / 2, size / 2);
+        ctx.translate(1, 1);
+        drawTeamSlowed(ctx, frames, palette);
+      }
+      ctx.restore();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, size, size);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const alpha = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = alpha;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? `${size}px` : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          t('tools:fixedFunctionalRecipeUploadsAddBoundedDecorationTeamSupportPulse'),
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
+    if (TEAM_ANCHOR_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 24;
+      canvas.setAttribute('role', 'img');
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.anchorDecorationLabel', { slot: slot.label }),
+      );
+      const ctx = canvas.getContext('2d');
+      drawTeamAnchor(
+        ctx,
+        { [slot.id]: { kind: 'recipe' } },
+        { x: 12, y: 12, captured: slot.id.endsWith('.captured') },
+        palette,
+        20,
+      );
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, 24, 24);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const alpha = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = alpha;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? '24px' : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          t('tools:decorationOnlyAnchorIdentityAndCapturedCheckmarkStayVisibleIn'),
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
+
+    if (TEAM_CORE_SLOTS.includes(slot.id) && asset.kind === 'recipe' && mode !== 'context') {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 64;
+      canvas.setAttribute('role', 'img');
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.coreOverlayLabel', { slot: slot.label }),
+      );
+      const ctx = canvas.getContext('2d');
+      ctx.save();
+      ctx.scale(64 / 3, 64 / 3);
+      drawTeamCoreCue(
+        ctx,
+        { [slot.id]: { kind: 'recipe' } },
+        {
+          core: { x: 1.5, y: 1.5 },
+          shielded: slot.id.endsWith('.shielded'),
+          defeated: slot.id.endsWith('.secured'),
+        },
+        palette,
+      );
+      ctx.restore();
+      if (mode === 'alpha') {
+        const pixels = ctx.getImageData(0, 0, 64, 64);
+        for (let i = 0; i < pixels.data.length; i += 4) {
+          const alpha = pixels.data[i + 3];
+          pixels.data[i] = pixels.data[i + 1] = pixels.data[i + 2] = alpha;
+          pixels.data[i + 3] = 255;
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+      canvas.style.width = mode === 'native' ? '64px' : '192px';
+      canvas.style.maxWidth = '100%';
+      surface.append(
+        canvas,
+        text(
+          'small',
+          t('tools:stateOverlayRecipeTeamContextKeepsTheSharedRelayBody'),
+          'bounded-label',
+          'secondary',
+        ),
+      );
+      return;
+    }
     if (mode === 'context' && fieldMode === 'team' && fieldSlot) {
       if (asset.kind === 'recipe' && slot.group === 'pictures')
-        throw new Error(
-          'This picture recipe has no Team field preview. Choose Solo or inspect its original pixels; no substitute picture is shown.',
-        );
+        throw new Error(t('tools:thisPictureRecipeHasNoTeamFieldPreviewChooseSolo'));
       // Team owns its arena/artwork applicability check. A bound Team picture
       // can also have a Solo owner, which must not redirect this inspection.
       await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
@@ -236,13 +538,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (asset.kind === 'recipe' && slot.group === 'pictures') {
       const loader = createCurrentArtPreview();
       own(() => loader.close());
-      phase('loading the exact current picture…', 'downloading');
+      phase(() => t('tools:studio.preview.loadingCurrentPicture'), 'downloading');
       try {
         const source = await loader.load(slot.id);
         if (!isCurrent()) return;
         surface.replaceChildren();
         if (mode === 'context') {
-          phase('preparing the exact picture scene…');
+          phase(() => t('tools:studio.preview.preparingPictureScene'));
           await boardContextPreview(
             surface,
             slot,
@@ -255,9 +557,10 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         } else {
           const canvas = document.createElement('canvas');
           canvas.setAttribute('role', 'img');
-          canvas.setAttribute(
-            'aria-label',
-            `${source.descriptor.label} — exact current source preview`,
+          localizedAttribute(canvas, 'aria-label', () =>
+            t('tools:studio.preview.currentSourceLabel', {
+              label: source.descriptor.label,
+            }),
           );
           canvas.width = source.image.width;
           canvas.height = source.image.height;
@@ -285,7 +588,12 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
           surface.append(
             text(
               'small',
-              `${source.descriptor.label} · ${source.origin.label} · ${source.fit} · source stage`,
+              () =>
+                t('tools:studio.preview.sourceStage', {
+                  label: source.descriptor.label,
+                  origin: source.origin.label,
+                  fit: source.fit,
+                }),
               'bounded-label',
               'secondary',
             ),
@@ -302,7 +610,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         const controller = new AbortController();
         own(() => controller.abort());
         try {
-          phase('loading exact picture owner metadata…', 'downloading');
+          phase(() => t('tools:studio.preview.loadingPictureOwner'), 'downloading');
           options.pictureOwner = await pictureOwnerContext(slot.id, { signal: controller.signal });
         } catch (error) {
           if (!isCurrent()) return;
@@ -335,7 +643,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     ) {
       let url = null;
       if (blob) {
-        phase('decoding the component artwork…', 'decoding');
+        phase(() => t('tools:studio.preview.decodingComponent'), 'decoding');
         const bitmap = await createImageBitmap(blob),
           frame = asset.geometry.frame,
           canvas = document.createElement('canvas');
@@ -367,18 +675,31 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       return;
     }
     if (asset.kind === 'image') {
-      phase('decoding the asset image…', 'decoding');
-      const bitmap = await createImageBitmap(blob);
+      phase(() => t('tools:studio.preview.decodingImage'), 'decoding');
+      const actor = isStudioActorSlot(slot.id),
+        actorOptions = { ...options, slotId: slot.id },
+        bitmap = actor
+          ? await croppedImage(asset, blobs, actorOptions, own)
+          : await createImageBitmap(blob);
       if (!isCurrent()) {
-        bitmap.close();
+        if (!actor) bitmap.close();
         return;
       }
       const frame = asset.geometry.frame,
-        canvas = document.createElement('canvas');
-      const contextual = mode === 'context';
-      canvas.width = contextual ? 320 : frame.width;
-      canvas.height = contextual ? 200 : frame.height;
-      canvas.setAttribute('aria-label', `${slot.label} ${mode} preview`);
+        contextual = mode === 'context',
+        width = contextual ? 320 : frame.width,
+        height = contextual ? 200 : frame.height,
+        canvas = actor
+          ? await studioActorCanvas(width, height, actorOptions, own)
+          : document.createElement('canvas');
+      if (!isCurrent()) return;
+      if (!actor) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      localizedAttribute(canvas, 'aria-label', () =>
+        t('tools:studio.preview.imageLabel', { slot: slot.label, mode }),
+      );
       const ctx = canvas.getContext('2d');
       ctx.imageSmoothingEnabled = slot.sampling !== 'nearest';
       const scale = contextual ? Math.min(1, 140 / frame.width, 120 / frame.height) : 1;
@@ -387,8 +708,8 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       if (contextual) field(ctx, palette);
       ctx.drawImage(
         bitmap,
-        frame.x,
-        frame.y,
+        actor && !asset.animation ? 0 : frame.x,
+        actor && !asset.animation ? 0 : frame.y,
         frame.width,
         frame.height,
         x,
@@ -396,7 +717,7 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
         frame.width * scale,
         frame.height * scale,
       );
-      bitmap.close();
+      if (!actor) bitmap.close();
       if (mode === 'alpha') {
         const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
         for (let at = 0; at < pixels.data.length; at += 4) {
@@ -423,9 +744,9 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (slot.group === 'fonts') {
       const sample = text('div', '', 'recipe-sample');
       sample.append(
-        text('p', 'Flight ready · Політ готовий', `font-${slot.id.split('.')[1]}`),
+        text('p', t('tools:flightReady'), `font-${slot.id.split('.')[1]}`),
         text('p', 'Ґґ Єє Іі Її · 0123456789 ₴'),
-        text('small', 'Bundled production font / source recipe', 'bounded-label', 'secondary'),
+        text('small', t('tools:bundledProductionFontSourceRecipe'), 'bounded-label', 'secondary'),
       );
       surface.append(sample);
       return;
@@ -478,7 +799,12 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
       }
       surface.append(
         canvas,
-        text('small', 'Bounded sample · actual game drawing helper', 'bounded-label', 'secondary'),
+        text(
+          'small',
+          t('tools:boundedSampleActualGameDrawingHelper'),
+          'bounded-label',
+          'secondary',
+        ),
       );
       return;
     }
@@ -486,10 +812,18 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
   } catch (error) {
     if (!isCurrent()) return;
     failed = true;
-    lease?.finish({ message: `${label}: ${error.message || error}`, state: 'error' });
-    surface.replaceChildren(text('p', error.message || String(error), '', 'body'));
+    lease?.finish({
+      message: () =>
+        t('tools:studio.preview.status', {
+          label: valueOf(label),
+          message: assetStudioErrorText(error),
+        }),
+      state: 'error',
+    });
+    surface.previewCleanup(true);
+    surface.replaceChildren(text('p', assetStudioErrorMessage(error), '', 'body'));
     if (cancelButton) {
-      cancelButton.textContent = 'Retry preview';
+      localizedText(cancelButton, () => t('common:preview.retry'));
       cancelButton.onclick = () =>
         drawAssetPreview(surface, slot, asset, resolved, blobs, settings);
     }
@@ -497,7 +831,13 @@ export async function drawAssetPreview(surface, slot, asset, resolved, blobs, se
     if (isCurrent()) {
       surface.setAttribute('aria-busy', 'false');
       if (!failed) {
-        lease?.finish({ message: `${label}: ${asset ? 'ready.' : 'no asset bound.'}` });
+        lease?.finish({
+          message: () =>
+            t('tools:studio.preview.status', {
+              label: valueOf(label),
+              message: asset ? t('common:status.ready') : t('tools:noAssetBound'),
+            }),
+        });
         if (cancelButton) cancelButton.hidden = true;
       }
     }

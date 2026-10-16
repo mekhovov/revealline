@@ -1,0 +1,134 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-skate-plaza",
+  "title": [
+    "Skate Plaza",
+    "Скейт-площа"
+  ],
+  "kit": "mini-skate",
+  "sourceURL": "https://kenney.nl/assets/mini-skate",
+  "downloadURL": "https://kenney.nl/media/pages/assets/mini-skate/00b0c2b304-1791798670/kenney_mini-skate.zip",
+  "archiveSha256": "0ded0e7f95cdc2c0513a41986fde49977e7d1f4fa8653b375a5c7e909ef9d74a",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 132024,
+  "modelSha256": "7c4d3b80a3b7e71dda937351c72c5550c62aaa5ba1ce3dd834634a459aa3205a",
+  "packBytes": 214473,
+  "packSha256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+  "collisionSurfaces": 12,
+  "collisionTriangles": 1783,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/half-pipe.glb",
+      "sha256": "0593969ac2b59ec1e30e9a603e8c394c65d9e542bdc043f608b2c51d626e386e",
+      "placement": {
+        "model": "half-pipe",
+        "x": -22,
+        "z": 0,
+        "size": 17,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 17
+    },
+    {
+      "model": "Models/GLB format/half-pipe-low.glb",
+      "sha256": "99c400bc20b3a781d39a2f5d3242d962ffff18ddb343c5a5e130038584c095c7",
+      "placement": {
+        "model": "half-pipe-low",
+        "x": 22,
+        "z": -20,
+        "size": 15,
+        "yaw": 90,
+        "y": 0
+      },
+      "scale": 15
+    },
+    {
+      "model": "Models/GLB format/ramp.glb",
+      "sha256": "87a373eb956a746cf7bc2b6355f73942edbbe2c4ac2a68864f6d5576f1b615e0",
+      "placement": {
+        "model": "ramp",
+        "x": 22,
+        "z": 15,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 10
+    },
+    {
+      "model": "Models/GLB format/obstacle-box-grind.glb",
+      "sha256": "f2109c23ebd1916e36dee1783f8e9735b81d906dda3c71d57ad8ac3bc8b0982c",
+      "placement": {
+        "model": "obstacle-box-grind",
+        "x": -20,
+        "z": -28,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 10
+    },
+    {
+      "model": "Models/GLB format/structure-platform.glb",
+      "sha256": "4327385c12831100fda8f4d7f63f74cb6cb6604df4ed362381267423b74a56cc",
+      "placement": {
+        "model": "structure-platform",
+        "x": 30,
+        "z": 32,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 11.999999284744305
+    },
+    {
+      "model": "Models/GLB format/rail-high.glb",
+      "sha256": "17bee11b3444fec207a6e8791687efb424ba2c5a74b7a204b755c6dd089f0241",
+      "placement": {
+        "model": "rail-high",
+        "x": -15,
+        "z": 28,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.999999046325797
+    },
+    {
+      "model": "Models/GLB format/bench.glb",
+      "sha256": "c8b7248ea4a4b701dd1ef940fd59bef9546ccc9ae8f00f236d751132768228d0",
+      "placement": {
+        "model": "bench",
+        "x": -34,
+        "z": 26,
+        "size": 6,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 7.709141014151546
+    },
+    {
+      "model": "Models/GLB format/vehicle.glb",
+      "sha256": "487c1de7580430563b6d4146446ac2d63c1e33e2825929ede8aa9cfaab83f461",
+      "placement": {
+        "model": "vehicle",
+        "x": 35,
+        "z": -36,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.625877428741871
+    }
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "format": "OverflightMeasurementsV1",
+  "capturedAt": "2026-10-14T00:45:20.196Z",
+  "fixture": null,
+  "benchmarkTrial": null,
+  "prototype": null,
+  "review": {
+    "automated": true,
+    "build": "echo",
+    "route": "tight",
+    "inputHz": 10,
+    "upgradeDelayMs": 1500
+  },
+  "clipCaptureUsed": false,
+  "viewport": {
+    "width": 1159,
+    "height": 1143,
+    "devicePixelRatio": 2
+  },
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "appearance": {
+    "projectIdentity": "11785299349e9b77",
+    "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+    "presentation": {
+      "id": "field-kit",
+      "revision": 104
+    },
+    "themeIdentity": "9670af00f1ea5378",
+    "familyId": "industrial-workshop",
+    "familyRevision": "r3",
+    "interfaceId": "industrial-workshop",
+    "interfaceRevision": "r3",
+    "arcade": {
+      "id": "industrial-workshop",
+      "revision": "r2"
+    },
+    "actorArtRevision": "industrial-roster-v3",
+    "equipment": {
+      "id": "overflight-field-kit",
+      "revision": 1
+    },
+    "materialStyle": "steel",
+    "materialVariant": "steel",
+    "characterId": "interceptor",
+    "playerSlot": "player.interceptor.detailed",
+    "cast": "authored"
+  },
+  "projectIdentity": "11785299349e9b77",
+  "seed": 17031991,
+  "summary": {
+    "flight": {
+      "id": "interceptor",
+      "speed": 198,
+      "boostSpeed": 350,
+      "maxHull": 80
+    },
+    "format": "OverflightRunSummaryV1",
+    "projectId": "riy-overflight-front",
+    "projectIdentity": "11785299349e9b77",
+    "seed": 17031991,
+    "phase": "playing",
+    "outcome": "incomplete",
+    "reason": null,
+    "fixture": null,
+    "fixtureWorkload": null,
+    "time": 211.31666666666666,
+    "tick": 12679,
+    "airframes": 3,
+    "airframesRemaining": 2,
+    "stats": {
+      "kills": 792,
+      "spawned": 1429,
+      "enemiesAlive": 637,
+      "enemiesVisible": 149,
+      "peakAlive": 647,
+      "peakVisible": 223,
+      "heaviesAlive": 0,
+      "specialistsAlive": 7,
+      "priorityAttacks": 0,
+      "damageDealt": 44580.69999999998,
+      "damageTaken": 100,
+      "damageCauses": {
+        "contact": 100,
+        "lane": 0,
+        "fan": 0,
+        "ground": 0
+      },
+      "shieldBlocks": 2,
+      "xpEarned": 1202,
+      "xpCollected": 1145,
+      "xpOnGround": 57,
+      "pickupsAlive": 45,
+      "pickupMerges": 0,
+      "boostsUsed": 34,
+      "airframesLost": 1,
+      "upgradesChosen": 7,
+      "rerollsUsed": 0,
+      "droppedVisualEffects": 0,
+      "collisionCandidates": 83073,
+      "hits": 5067,
+      "retired": 0,
+      "spawnDeferred": 0,
+      "fixtureDefeats": 0,
+      "projectileDeferrals": 0,
+      "guardDamageBlocked": 504,
+      "armorSegmentsBroken": 118,
+      "cachesClaimed": 1
+    },
+    "build": {
+      "primary": {
+        "rank": 4,
+        "branch": "double",
+        "evolved": true
+      },
+      "combat": [],
+      "support": {
+        "id": "shield",
+        "rank": 1
+      },
+      "reinforcement": 0,
+      "repair": 0
+    },
+    "upgrades": [
+      {
+        "id": "primary:double:2",
+        "time": 19.45,
+        "tick": 1167
+      },
+      {
+        "id": "riy-sweeper:trail:2",
+        "time": 32.3,
+        "tick": 1938
+      },
+      {
+        "id": "riy-breaker:burst:2",
+        "time": 49.983333333333334,
+        "tick": 2999
+      },
+      {
+        "id": "primary:double:3",
+        "time": 68.28333333333333,
+        "tick": 4097
+      },
+      {
+        "id": "primary:double:4",
+        "time": 88.13333333333334,
+        "tick": 5288
+      },
+      {
+        "id": "riy-sweeper:trail:3",
+        "time": 121.96666666666667,
+        "tick": 7318
+      },
+      {
+        "id": "shield:1",
+        "time": 159.11666666666667,
+        "tick": 9547
+      }
+    ],
+    "goals": {
+      "eliteSpawned": true,
+      "eliteDefeated": true,
+      "finalSpawned": false,
+      "finalDefeated": false,
+      "finalId": null
+    },
+    "operation": "overflight-riy",
+    "escortCommands": 25,
+    "escortShots": [
+      {
+        "role": "sweeper",
+        "shots": 163
+      },
+      {
+        "role": "breaker",
+        "shots": 124
+      }
+    ],
+    "escortUpgrades": [
+      {
+        "role": "sweeper",
+        "rank": 3,
+        "branch": "trail"
+      },
+      {
+        "role": "breaker",
+        "rank": 2,
+        "branch": "burst"
+      }
+    ],
+    "appearance": {
+      "projectIdentity": "11785299349e9b77",
+      "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+      "presentation": {
+        "id": "field-kit",
+        "revision": 104
+      },
+      "themeIdentity": "9670af00f1ea5378",
+      "familyId": "industrial-workshop",
+      "familyRevision": "r3",
+      "interfaceId": "industrial-workshop",
+      "interfaceRevision": "r3",
+      "arcade": {
+        "id": "industrial-workshop",
+        "revision": "r2"
+      },
+      "actorArtRevision": "industrial-roster-v3",
+      "equipment": {
+        "id": "overflight-field-kit",
+        "revision": 1
+      },
+      "materialStyle": "steel",
+      "materialVariant": "steel",
+      "characterId": "interceptor",
+      "playerSlot": "player.interceptor.detailed",
+      "cast": "authored"
+    },
+    "review": {
+      "automated": true,
+      "build": "echo",
+      "route": "tight",
+      "inputHz": 10,
+      "upgradeDelayMs": 1500
+    }
+  },
+  "feedback": {
+    "audioEnabled": true,
+    "contextState": "running",
+    "masterMuted": true,
+    "commentator": {
+      "cache": {
+        "buffers": 0,
+        "decodedBytes": 0,
+        "loading": 0,
+        "generation": 15,
+        "closed": false
+      },
+      "incidents": 3,
+      "suspended": false,
+      "speaking": false
+    }
+  },
+  "renderer": {
+    "renderer": "Phaser 4.2.1 WebGL",
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "backingWidth": 960,
+    "backingHeight": 540,
+    "atlas": {
+      "width": 2040,
+      "height": 2040,
+      "textures": 2,
+      "baseRGBABytes": 16908544,
+      "retainedCanvasBytes": 16908544,
+      "soldierFrames": 216,
+      "machineryFrames": 36,
+      "heroFrames": 12,
+      "equipmentFrames": 13,
+      "remainsFrames": 120,
+      "defeatFrames": 480,
+      "frameCount": 883
+    },
+    "heroArtwork": {
+      "assetId": "player.interceptor.detailed.field-kit",
+      "playerSlot": "player.interceptor.detailed",
+      "rotorCount": 4,
+      "visibleDiameter": 34,
+      "bakedFrameSize": 64,
+      "rotorFrames": 12,
+      "rotorRadii": [
+        9.254350728498977,
+        9.254350728498977,
+        9.254350728498977,
+        9.254350728498977
+      ],
+      "paintedWidth": 44.06833680237608,
+      "paintedHeight": 44.06833680237608
+    },
+    "counts": {
+      "alive": 637,
+      "visible": 149,
+      "rendered": 169,
+      "effects": 4,
+      "pickups": 37,
+      "warnings": 0,
+      "behaviorCues": 60,
+      "remains": 320,
+      "defeats": 0,
+      "quads": 625
+    },
+    "allocatedSprites": 991,
+    "remains": {
+      "stored": 792,
+      "capacity": 1024,
+      "sequence": 792,
+      "evicted": 0,
+      "missed": 0,
+      "limits": {
+        "capacity": 1024,
+        "visible": 320,
+        "moving": 24,
+        "settleSeconds": 0.34
+      }
+    },
+    "destruction": {
+      "showRemains": true,
+      "brutal": false,
+      "blood": true
+    },
+    "fixture": null,
+    "reducedEffects": false,
+    "preparationMs": 39.900000005960464,
+    "contextLosses": 1,
+    "contextRestores": 1,
+    "contextRecoveryTests": 1,
+    "lost": false,
+    "failed": false,
+    "valid": false,
+    "invalidReasons": [
+      "interrupted",
+      "context-lost",
+      "context-restored"
+    ],
+    "cadenceMs": {
+      "samples": 25602,
+      "p50": 8.300000011920929,
+      "p95": 9.899999976158142,
+      "p99": 12.5,
+      "worst": 49.099999994039536
+    },
+    "submissionMs": {
+      "samples": 25611,
+      "p50": 0.4000000059604645,
+      "p95": 0.9000000059604645,
+      "p99": 1,
+      "worst": 1.6999999582767487
+    },
+    "cadenceHz": 119.99775021794764,
+    "measuredIntervals": 25602,
+    "measuredSeconds": 213.354,
+    "retainedIntervals": 25602,
+    "sampleCapacity": 120000,
+    "submissionTotalMs": 11772.200004339218,
+    "over33Ms": 5,
+    "over50Ms": 0,
+    "over100Ms": 0,
+    "exclusions": {
+      "context-lost": 1,
+      "context-restored": 1
+    },
+    "highWater": {
+      "alive": 647,
+      "visible": 223,
+      "rendered": 237,
+      "effects": 72,
+      "pickups": 84
+    },
+    "protocol": {
+      "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+      "warmupSeconds": 30,
+      "measurementSeconds": 120,
+      "repetitions": 3,
+      "windows": [
+        {
+          "index": 1,
+          "complete": true,
+          "measuredSeconds": 119.99539999997616,
+          "cadenceMs": {
+            "samples": 14401,
+            "p50": 8.300000011920929,
+            "p95": 9.900000005960464,
+            "p99": 11.900000005960464,
+            "worst": 48.69999998807907
+          },
+          "cadenceHz": 120.01293382915397,
+          "slowFraction": 0.00006943962224845496,
+          "passes": true
+        },
+        {
+          "index": 2,
+          "complete": false,
+          "measuredSeconds": 63.35360000002384,
+          "cadenceMs": {
+            "samples": 7600,
+            "p50": 8.300000011920929,
+            "p95": 9.700000017881393,
+            "p99": 11.700000017881393,
+            "worst": 44.099999994039536
+          },
+          "cadenceHz": 119.96161228402396,
+          "slowFraction": 0.0002631578947368421,
+          "passes": null
+        },
+        {
+          "index": 3,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        }
+      ],
+      "acceptance": null,
+      "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+    }
+  },
+  "resourceSamples": [],
+  "trialValid": false,
+  "rawOverflow": 0,
+  "invalidReasons": [
+    "interrupted",
+    "context-lost",
+    "context-restored"
+  ],
+  "simulationSamples": 12670,
+  "clock": {
+    "steps": 12679,
+    "droppedSeconds": 0,
+    "accumulator": 0.009733333339294027
+  },
+  "longFrames": 0,
+  "frameSamples": 25602,
+  "rawPages": 22
+}

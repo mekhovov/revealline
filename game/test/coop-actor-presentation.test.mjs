@@ -7,17 +7,37 @@ import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
-import { actorDiameter } from '../ui/actor-presentation.mjs';
+import { actorDiameter, actorImagePaintMetrics } from '../ui/actor-presentation.mjs';
 import {
   COOP_ACTOR_ROLES,
   createCoopActorPresentation,
 } from '../couch/coop-actor-presentation.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import { TEAM_CORE_SLOTS } from '../couch/coop-core-presentation.mjs';
+import {
+  TEAM_ANCHOR_SLOTS,
+  TEAM_RUNTIME_IMAGE_SLOTS,
+} from '../presentation/team-runtime-slots.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { createEnemyPresentations } from '../enemy-presentations.mjs';
 
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
+);
+const approvedActors = validateCompiledPresentation(
+  JSON.parse(
+    await readFile(
+      new URL(
+        "../presentation/compiled/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json",
+        import.meta.url,
+      ),
+    ),
+  ),
+);
+const enemyMotionCatalog = createEnemyPresentations(
+  JSON.parse(await readFile(new URL('../content/enemy-presentations.json', import.meta.url))),
 );
 const SLOTS = [
   [
@@ -64,11 +84,22 @@ const palette = Object.freeze({
   sky: '#233950',
   land: '#526e67',
 });
-function prepared({ missing = null, motionScale = 1 } = {}) {
+function prepared({ missing = null, motionScale = 1, teamSlots = true } = {}) {
   const reads = [],
     images = new Map();
   let closed = 0;
-  for (const [slot] of SLOTS) {
+  const assets = teamSlots
+    ? compiled.resolved.assets
+    : Object.fromEntries(
+        Object.entries(compiled.resolved.assets).filter(
+          ([slot]) => !TEAM_RUNTIME_IMAGE_SLOTS.includes(slot),
+        ),
+      );
+  const preparedSlots = new Set([
+    ...SLOTS.map(([slot]) => slot),
+    ...TEAM_RUNTIME_IMAGE_SLOTS.filter((slot) => assets[slot]?.kind === 'image'),
+  ]);
+  for (const slot of preparedSlots) {
     const asset = compiled.resolved.assets[slot];
     images.set(
       slot,
@@ -89,7 +120,7 @@ function prepared({ missing = null, motionScale = 1 } = {}) {
     images,
     closed: () => closed,
     snapshot: Object.freeze({
-      resolved: compiled.resolved,
+      resolved: { ...compiled.resolved, assets },
       canvas: { palette, motionScale },
       fonts: { ui: 'Prepared UI', numeric: 'Prepared Mono' },
       image(slot) {
@@ -145,18 +176,155 @@ const poses = (adapter, run) => [
 ];
 const labels = (calls) => calls.filter((call) => call.name === 'fillText');
 
+// Inspect the actual shared painter between its body image and body restore.
+// Rotor rotations and connected polygons are observable even when a pause
+// intentionally removes the decorative translucent sweep disc.
+function paintedRotorCommands(adapter, id, view) {
+  view.reset();
+  assert.equal(adapter.draw(view.ctx, 'pilot', id, palette), true);
+  const index = view.calls.findIndex((call) => call.name === 'drawImage');
+  assert.ok(index >= 0, 'the prepared Team pilot image is painted');
+  let depth = 0;
+  for (const call of view.calls.slice(0, index + 1))
+    depth += call.name === 'save' ? 1 : call.name === 'restore' ? -1 : 0;
+  const bodyDepth = depth,
+    calls = [];
+  for (const call of view.calls.slice(index + 1)) {
+    depth += call.name === 'save' ? 1 : call.name === 'restore' ? -1 : 0;
+    if (depth < bodyDepth) break;
+    calls.push(call);
+  }
+  assert.equal(view.stack.length, 0, 'painting restores the caller canvas state');
+  return {
+    calls,
+    angles: calls.filter((call) => call.name === 'rotate').map((call) => call.args[0]),
+  };
+}
+
+for (const seat of [0, 1])
+  test(`Team pilot ${seat + 1} paints spinning blades and freezes them when paused, downed or reduced`, () => {
+    const run = createCoop(FIRST_CONNECTION),
+      adapter = createCoopActorPresentation(),
+      view = surface();
+    adapter.setPresentation(prepared().snapshot);
+    startCoop(run);
+    adapter.update(run);
+    const first = paintedRotorCommands(adapter, seat, view);
+    assert.equal(first.angles.length, 12, 'four declared hubs each paint three blades');
+    assert.ok(
+      first.calls.some((call) => call.name === 'lineTo'),
+      'blades are connected polygons',
+    );
+    stepCoop(run, neutral(), 1 / 120);
+    adapter.update(run);
+    const running = paintedRotorCommands(adapter, seat, view),
+      phase = adapter.frame('pilot', seat).rotorPhase;
+    assert.notDeepEqual(running.angles, first.angles, 'playing advances actual blade rotations');
+    pauseCoop(run);
+    const pausedRun = structuredClone(run);
+    adapter.update(run);
+    assert.deepEqual(paintedRotorCommands(adapter, seat, view).angles, running.angles);
+    assert.equal(adapter.frame('pilot', seat).rotorPhase, phase);
+    assert.deepEqual(run, pausedRun, 'paused rendering is read-only');
+    run.status = 'running';
+    run.players[seat].status = 'downed';
+    run.tick++;
+    run.time += 1 / 60;
+    const downedRun = structuredClone(run);
+    adapter.update(run);
+    const downed = paintedRotorCommands(adapter, seat, view);
+    assert.deepEqual(downed.angles, running.angles, 'downed craft stops its propellers');
+    assert.ok(
+      downed.calls.some((call) => call.name === 'fill' && call.state.globalAlpha === 0.45),
+      'blade opacity preserves the downed state',
+    );
+    assert.deepEqual(run, downedRun, 'downed rendering is read-only');
+    run.players[seat].status = 'active';
+    run.tick++;
+    run.time += 1 / 60;
+    adapter.update(run, { reduced: true });
+    const reduced = paintedRotorCommands(adapter, seat, view);
+    run.tick++;
+    run.time += 1 / 60;
+    const reducedRun = structuredClone(run);
+    adapter.update(run, { reduced: true });
+    assert.deepEqual(paintedRotorCommands(adapter, seat, view).angles, reduced.angles);
+    assert.equal(reduced.angles.length, 12, 'reduced effects retains all stationary blades');
+    assert.deepEqual(run, reducedRun, 'reduced-effects rendering is read-only');
+  });
+
+for (const bladeCount of [2, 3, 4])
+  for (const fps of [4, 30, 60, 120])
+    test(`Team rendered ${bladeCount}-blade hubs keep a forward bounded phase at ${fps}FPS`, () => {
+      const p = prepared(),
+        adapter = createCoopActorPresentation(),
+        run = createCoop(FIRST_CONNECTION),
+        view = surface(),
+        tau = Math.PI * 2;
+      for (const slot of ['player.scout.compact', 'player.scout.detailed']) {
+        const source = p.images.get(slot);
+        p.images.set(slot, {
+          ...source,
+          geometry: {
+            ...source.geometry,
+            rotors: source.geometry.rotors.map((anchor) => ({ ...anchor, bladeCount })),
+          },
+        });
+      }
+      adapter.setPresentation(p.snapshot);
+      startCoop(run);
+      adapter.update(run);
+      let previous = paintedRotorCommands(adapter, 0, view).angles[0];
+      // Bounded render observations isolate the displayed frame rate from the
+      // fixed-step simulation. This includes phase wrap and a degraded 4FPS.
+      for (let step = 1; step <= fps * 2; step++) {
+        run.tick++;
+        run.time = step / fps;
+        const before = structuredClone(run);
+        adapter.update(run);
+        const drawn = paintedRotorCommands(adapter, 0, view),
+          angle = drawn.angles[0],
+          advance = (((angle - previous) % tau) + tau) % tau;
+        assert.equal(drawn.angles.length, 4 * bladeCount);
+        assert.ok(advance > 0, 'each displayed running frame advances the rotor');
+        assert.ok(
+          advance <= (tau / bladeCount) * 0.22 + 1e-12,
+          'the visible repeated blade pattern cannot step backward or alias across half a turn',
+        );
+        assert.equal(angle, adapter.frame('pilot', 0).rotorPhase);
+        assert.deepEqual(run, before, 'render sampling leaves the authoritative run unchanged');
+        previous = angle;
+      }
+    });
+
+test('tuned Team revisions keep both prepared pilot bodies and every extra keeper visible', () => {
+  const level = applyGameplayTuning(FIRST_CONNECTION, resolveGameplayTuning('expert'));
+  const run = createCoop(level),
+    before = structuredClone(run);
+  const p = prepared(),
+    view = surface(),
+    painter = createCoopPainter(view.canvas);
+  painter.setPresentation(p.snapshot);
+  painter.paint(run, { reduced: true, pictureLevel: FIRST_CONNECTION });
+  const bodies = view.calls.filter((call) => call.name === 'drawImage');
+  assert.equal(bodies.filter((call) => call.args[0].slot === 'player.scout.detailed').length, 2);
+  assert.equal(bodies.length, run.players.length + run.enemies.length + run.strongholds.length);
+  assert(run.enemies.length > FIRST_CONNECTION.enemies.length);
+  assert.deepEqual(run, before);
+});
+
 // The source slots are existing artwork, not newly produced Team character sets.
 test('six approved source frames retain exact IDs, revisions, PNG hashes and dimensions', async () => {
-  assert.deepEqual(compiled.resolved.theme, {
+  assert.deepEqual(approvedActors.resolved.theme, {
     id: 'fpv',
-    revision: 58,
-    name: compiled.resolved.theme.name,
+    revision: 62,
+    name: approvedActors.resolved.theme.name,
   });
-  assert.equal(compiled.resolved.collection, null);
+  assert.equal(approvedActors.resolved.collection, null);
   for (const [slot, sha, size, width] of SLOTS) {
-    const asset = compiled.resolved.assets[slot],
+    const asset = approvedActors.resolved.assets[slot],
       bytes = await readFile(
-        new URL(`../presentation/compiled/${compiled.urls[sha]}`, import.meta.url),
+        new URL(`../presentation/compiled/${approvedActors.urls[sha]}`, import.meta.url),
       );
     assert.equal(asset.id, `${slot}.field-kit`);
     assert.equal(asset.revision, 2);
@@ -196,11 +364,46 @@ test('explicit Team roles reuse prepared slots without changing actual types or 
   assert.deepEqual(run, before);
   assert.deepEqual(
     new Set(p.reads),
-    new Set(SLOTS.map(([slot]) => slot).filter((slot) => slot !== 'enemy.claimed-rover')),
+    new Set([
+      ...SLOTS.map(([slot]) => slot).filter((slot) => slot !== 'enemy.claimed-rover'),
+      ...TEAM_CORE_SLOTS,
+    ]),
   );
 });
 
-test('qualified Team roamers borrow the existing tracked body once and freeze locomotion until activation', () => {
+test('Team prepared enemies reuse catalog surface motion without loading another body image', async () => {
+  let catalogLoads = 0;
+  const p = prepared(),
+    adapter = createCoopActorPresentation({
+      loadEnemyCatalog: async () => {
+        catalogLoads++;
+        return enemyMotionCatalog;
+      },
+    }),
+    run = createCoop(RELAY_YARD),
+    view = surface();
+  await adapter.setPresentation(p.snapshot);
+  adapter.update(run);
+  const drifter = run.enemies.find((enemy) => enemy.type === 'drifter'),
+    hunter = run.enemies.find((enemy) => enemy.type === 'hunter');
+
+  assert.equal(adapter.draw(view.ctx, 'enemy', drifter.id, palette), true);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillRect' && call.state.globalAlpha === 0.55).length,
+    enemyMotionCatalog.entries.find((record) => record.type === 'bouncer').motion.length,
+  );
+  view.reset();
+  assert.equal(adapter.draw(view.ctx, 'enemy', hunter.id, palette), true);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillRect' && call.state.globalAlpha === 0.55).length,
+    0,
+    'The baked patrol body keeps its catalog-declared no-extra-parts treatment.',
+  );
+  assert.equal(catalogLoads, 1);
+  assert.equal(p.closed(), 0);
+});
+
+test('qualified Team roamers borrow the tracked body and its bounded motion treatment', async () => {
   const source = createTeamOpeningCandidates();
   source.actorCatalogId = 'journey-actors-v2';
   source.missions[0].team.format = 'TeamMissionV3';
@@ -218,9 +421,10 @@ test('qualified Team roamers borrow the existing tracked body once and freeze lo
     ),
   );
   const p = prepared(),
-    adapter = createCoopActorPresentation(),
-    actor = run.enemies.find((e) => e.id === 'roamer');
-  adapter.setPresentation(p.snapshot);
+    adapter = createCoopActorPresentation({ loadEnemyCatalog: async () => enemyMotionCatalog }),
+    actor = run.enemies.find((e) => e.id === 'roamer'),
+    view = surface();
+  await adapter.setPresentation(p.snapshot);
   for (const mode of ['dormant', 'warning', 'active']) {
     actor.rover.mode = mode;
     run.tick++;
@@ -233,6 +437,11 @@ test('qualified Team roamers borrow the existing tracked body once and freeze lo
     assert.equal(frame.locked, mode !== 'active');
     assert.deepEqual(run, before);
   }
+  assert.equal(adapter.draw(view.ctx, 'enemy', actor.id, palette), true);
+  assert.equal(
+    view.calls.filter((call) => call.name === 'fillRect' && call.state.globalAlpha === 0.55).length,
+    enemyMotionCatalog.entries.find((record) => record.type === 'claimed-rover').motion.length,
+  );
   assert.equal(p.reads.filter((slot) => slot === 'enemy.claimed-rover').length, 1);
   assert.equal(p.closed(), 0);
 });
@@ -265,7 +474,7 @@ for (const [width, style, source] of [
           canvasCSSWidth: width,
         }),
       );
-      assert.ok(css >= (width >= 480 ? 24 : 16) - 1e-9);
+      assert.ok(css >= (width >= 480 ? 24 : 20) - 1e-9);
       assert.ok(css <= (core ? 40 : 32) + 1e-9);
     }
     assert.equal(adapter.frame('pilot', 0).radius, run.players[0].radius * 16);
@@ -390,7 +599,18 @@ test('prepared image and pivot geometry are borrowed once; reset and replacement
       const draw = view.calls.find((call) => call.name === 'drawImage');
       assert.equal(draw.args[0], p.images.get(frame.sourceSlot).image);
       assert.equal(draw.state.imageSmoothingEnabled, false);
-      assert.equal(draw.args.at(-1), frame.diameter);
+      const geometry = p.images.get(frame.sourceSlot).geometry;
+      const paint = actorImagePaintMetrics(frame.diameter, geometry);
+      if (kind === 'core') {
+        assert.equal(draw.args.at(-2), paint.width);
+        assert.equal(draw.args.at(-1), paint.height);
+        const visibleWidth = draw.args.at(-2) * (paint.visible.right - paint.visible.left),
+          visibleHeight = draw.args.at(-1) * (paint.visible.bottom - paint.visible.top);
+        assert.ok(
+          Math.abs(Math.max(visibleWidth, visibleHeight) - frame.diameter) < 1e-9,
+          'stronghold visible body should resolve to its boss cosmetic diameter',
+        );
+      } else assert.equal(draw.args.at(-1), paint.height);
       assert.equal(view.stack.length, 0);
       if (kind === 'core')
         assert.equal(
@@ -400,7 +620,7 @@ test('prepared image and pivot geometry are borrowed once; reset and replacement
         );
     }
   }
-  assert.equal(p.reads.length, 5);
+  assert.equal(p.reads.length, 5 + TEAM_CORE_SLOTS.length);
   adapter.reset();
   adapter.setPresentation(null);
   adapter.update(run);
@@ -435,72 +655,94 @@ test('absent prepared roles keep truthful geometric fallback and failed snapshot
   );
 });
 
-test('actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues', () => {
-  const run = createCoop(RELAY_YARD),
-    p = prepared(),
-    view = surface(),
-    painter = createCoopPainter(view.canvas);
-  run.status = 'paused';
-  run.time = 2;
-  run.players[0].status = 'downed';
-  run.players[1].graceUntil = 4;
-  const hunters = run.enemies.filter((enemy) => enemy.type === 'hunter');
-  Object.assign(hunters[0], { phase: 'warning', target: 1, targetPoint: { x: 40, y: 20 } });
-  Object.assign(hunters[1], { phase: 'recovery', speedScale: 0.5, slowUntil: 4 });
-  run.strongholds[0].anchors[0].captured = true;
-  const before = structuredClone(run);
-  painter.setPresentation(p.snapshot);
-  painter.paint(run, { reduced: true });
-  const lastBody = view.calls.findLastIndex((call) => call.name === 'drawImage');
-  assert.equal(
-    view.calls.filter((call) => call.name === 'drawImage').length,
-    run.players.length + run.enemies.length + run.strongholds.length,
-  );
-  for (const label of ['1', '+', '2', '✓', 'B', 'SHIELD', 'LOCK 2', 'RECOVER', 'SLOWED']) {
-    const call = labels(view.calls).find((item) => item.args[0] === label);
-    assert.ok(call, label);
-    assert.ok(view.calls.indexOf(call) > lastBody, `${label} is never covered by a later body`);
-  }
-  const first = view.calls.slice();
-  view.reset();
-  painter.paint(run, { reduced: true });
-  assert.equal(view.stack.length, 0);
-  assert.deepEqual(view.calls, first, 'Paused reduced painting has no independent clock.');
-  assert.deepEqual(run, before);
-  assert.ok(
-    first.some((call) => call.name === 'setLineDash' && call.args[0][0] === 0.2),
-    'Grace stays patterned.',
-  );
-});
-
-test('stronghold boss body stays beneath authored anchors and marker labels clear its envelope', () => {
-  const run = createCoop(RELAY_YARD),
-    view = surface(479),
-    painter = createCoopPainter(view.canvas),
-    p = prepared();
-  painter.setPresentation(p.snapshot);
-  painter.paint(run);
-  const index = view.calls.findIndex(
-    (call) => call.name === 'drawImage' && call.args[0].slot === 'enemy.relay-sentinel',
-  );
-  assert.ok(index >= 0);
-  const body = view.calls[index],
-    d = body.args.at(-1),
-    core = run.strongholds[0].core;
-  const label = labels(view.calls).find((call) => call.args[0] === 'SHIELD');
-  assert.ok(label.args[2] < core.y - d / 32);
-  for (const anchor of run.strongholds[0].anchors)
-    assert.ok(
-      view.calls
-        .slice(index + 1)
-        .some(
-          (call) =>
-            call.name === 'strokeRect' &&
-            call.args[0] === anchor.x - 0.7 &&
-            call.args[1] === anchor.y - 0.7,
-        ),
+for (const teamSlots of [true, false])
+  test(`actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (${teamSlots ? 'current slots' : 'optional slots absent'})`, () => {
+    const run = createCoop(RELAY_YARD),
+      p = prepared({ teamSlots }),
+      view = surface(),
+      painter = createCoopPainter(view.canvas);
+    run.status = 'paused';
+    run.time = 2;
+    run.players[0].status = 'downed';
+    run.players[1].graceUntil = 4;
+    const hunters = run.enemies.filter((enemy) => enemy.type === 'hunter');
+    Object.assign(hunters[0], { phase: 'warning', target: 1, targetPoint: { x: 40, y: 20 } });
+    Object.assign(hunters[1], { phase: 'recovery', speedScale: 0.5, slowUntil: 4 });
+    run.strongholds[0].anchors[0].captured = true;
+    const before = structuredClone(run);
+    painter.setPresentation(p.snapshot);
+    painter.paint(run, { reduced: true });
+    const lastBody = view.calls.findLastIndex(
+      (call) => call.name === 'drawImage' && !TEAM_ANCHOR_SLOTS.includes(call.args[0].slot),
     );
-});
+    const anchorImages = view.calls.filter(
+      (call) => call.name === 'drawImage' && TEAM_ANCHOR_SLOTS.includes(call.args[0].slot),
+    );
+    assert.deepEqual(
+      anchorImages.map((call) => call.args[0].slot),
+      teamSlots ? ['team.anchor.captured', 'team.anchor.available'] : [],
+    );
+    const enemySlots = { drifter: 'enemy.bouncer', hunter: 'enemy.border-patrol' },
+      expectedSlots = [
+        teamSlots ? 'team.core.shielded' : 'enemy.relay-sentinel',
+        'player.scout.detailed',
+        'player.scout.detailed',
+        ...run.enemies.map((enemy) => enemySlots[enemy.type]),
+        ...(teamSlots ? ['team.anchor.captured', 'team.anchor.available'] : []),
+      ];
+    assert.deepEqual(
+      view.calls.filter((call) => call.name === 'drawImage').map((call) => call.args[0]),
+      expectedSlots.map((slot) => p.images.get(slot).image),
+      'Exact core, two pilot, enemy and two anchor image identities retain their draw order',
+    );
+    for (const label of ['1', '+', '2', '✓', 'B', 'SHIELD', 'LOCK 2', 'RECOVER', 'SLOWED']) {
+      const call = labels(view.calls).find((item) => item.args[0] === label);
+      assert.ok(call, label);
+      assert.ok(view.calls.indexOf(call) > lastBody, `${label} is never covered by a later body`);
+    }
+    const first = view.calls.slice();
+    view.reset();
+    painter.paint(run, { reduced: true });
+    assert.equal(view.stack.length, 0);
+    assert.deepEqual(view.calls, first, 'Paused reduced painting has no independent clock.');
+    assert.deepEqual(run, before);
+    assert.ok(
+      first.some((call) => call.name === 'setLineDash' && call.args[0][0] === 0.2),
+      'Grace stays patterned.',
+    );
+  });
+
+for (const teamSlots of [true, false])
+  test(`stronghold boss body stays beneath authored anchors and marker labels clear its envelope (${teamSlots ? 'current slots' : 'optional slots absent'})`, () => {
+    const run = createCoop(RELAY_YARD),
+      view = surface(479),
+      painter = createCoopPainter(view.canvas),
+      p = prepared({ teamSlots });
+    painter.setPresentation(p.snapshot);
+    painter.paint(run);
+    const index = view.calls.findIndex(
+      (call) =>
+        call.name === 'drawImage' &&
+        call.args[0].slot === (teamSlots ? 'team.core.shielded' : 'enemy.relay-sentinel'),
+    );
+    assert.ok(index >= 0);
+    const body = view.calls[index],
+      d = body.args.at(-1),
+      core = run.strongholds[0].core;
+    const label = labels(view.calls).find((call) => call.args[0] === 'SHIELD');
+    assert.ok(label.args[2] < core.y - d / 32);
+    for (const anchor of run.strongholds[0].anchors)
+      assert.ok(
+        view.calls
+          .slice(index + 1)
+          .some(
+            (call) =>
+              call.name === 'strokeRect' &&
+              call.args[0] === anchor.x - 0.7 &&
+              call.args[1] === anchor.y - 0.7,
+          ),
+      );
+  });
 
 test('bright required picture stays exact beneath actors while painting and body detail never change gameplay', () => {
   const run = createCoop(FIRST_CONNECTION),
@@ -610,35 +852,41 @@ test('charging hunters keep explicit phase text and slow pattern above their bor
   assert.deepEqual(run, before);
 });
 
-test('exposed and secured strongholds retain functional labels and anchors over stationary body art', () => {
-  const run = createCoop(RELAY_YARD),
-    p = prepared(),
-    view = surface(),
-    painter = createCoopPainter(view.canvas),
-    stronghold = run.strongholds[0];
-  painter.setPresentation(p.snapshot);
-  for (const defeated of [false, true]) {
-    stronghold.shielded = false;
-    stronghold.defeated = defeated;
-    for (const anchor of stronghold.anchors) anchor.captured = true;
-    const before = structuredClone(run);
-    view.reset();
-    painter.paint(run, { reduced: true });
-    const draw = view.calls.find(
-      (call) => call.name === 'drawImage' && call.args[0].slot === 'enemy.relay-sentinel',
-    );
-    assert.equal(draw.state.globalAlpha, defeated ? 0.45 : 1);
-    const text = labels(view.calls),
-      expected = defeated ? 'SECURED' : 'CAPTURE';
-    assert.ok(
-      text.some(
-        (call) => call.args[0] === expected && view.calls.indexOf(call) > view.calls.indexOf(draw),
-      ),
-    );
-    assert.equal(text.filter((call) => call.args[0] === '✓').length, stronghold.anchors.length);
-    assert.deepEqual(run, before);
-  }
-});
+for (const teamSlots of [true, false])
+  test(`exposed and secured strongholds retain functional labels and anchors over stationary body art (${teamSlots ? 'current slots' : 'optional slots absent'})`, () => {
+    const run = createCoop(RELAY_YARD),
+      p = prepared({ teamSlots }),
+      view = surface(),
+      painter = createCoopPainter(view.canvas),
+      stronghold = run.strongholds[0];
+    painter.setPresentation(p.snapshot);
+    for (const defeated of [false, true]) {
+      stronghold.shielded = false;
+      stronghold.defeated = defeated;
+      for (const anchor of stronghold.anchors) anchor.captured = true;
+      const before = structuredClone(run);
+      view.reset();
+      painter.paint(run, { reduced: true });
+      const draw = view.calls.find(
+        (call) =>
+          call.name === 'drawImage' &&
+          call.args[0].slot ===
+            (teamSlots ? `team.core.${defeated ? 'secured' : 'exposed'}` : 'enemy.relay-sentinel'),
+      );
+      assert.ok(draw, 'The exact current-state or legacy fallback core is drawn');
+      assert.equal(draw.state.globalAlpha, defeated && !teamSlots ? 0.45 : 1);
+      const text = labels(view.calls),
+        expected = defeated ? 'SECURED' : 'CAPTURE';
+      assert.ok(
+        text.some(
+          (call) =>
+            call.args[0] === expected && view.calls.indexOf(call) > view.calls.indexOf(draw),
+        ),
+      );
+      assert.equal(text.filter((call) => call.args[0] === '✓').length, stronghold.anchors.length);
+      assert.deepEqual(run, before);
+    }
+  });
 
 test('minimum authored Team radius stays exact in the sampled frame and final footprint', () => {
   const level = structuredClone(FIRST_CONNECTION);
@@ -695,48 +943,54 @@ function earnedRescue(seat) {
 }
 
 for (const seat of [0, 1]) {
-  test(`actual rescue of player ${seat + 1} has a legible static role cue without a second progress gauge`, () => {
-    const earned = earnedRescue(seat),
-      before = structuredClone(earned);
-    for (const width of [200, 240, 390, 479, 844, 1152]) {
-      const run = structuredClone(earned),
-        view = surface(width),
-        painter = createCoopPainter(view.canvas);
-      painter.setPresentation(prepared().snapshot);
-      painter.paint(run, { reduced: true });
-      const text = labels(view.calls),
-        cue = text.find((call) => call.args[0] === `RESCUE ${seat + 1}`);
-      assert.ok(cue, `${width}px rescue target is visible without colour alone`);
-      assert.equal(text.filter((call) => String(call.args[0]).startsWith('RESCUE ')).length, 1);
-      assert.ok(text.some((call) => call.args[0] === '1'));
-      assert.ok(text.some((call) => call.args[0] === '2'));
-      assert.ok(text.some((call) => call.args[0] === '+'));
-      assert.equal(
-        text.some((call) => /%/.test(String(call.args[0]))),
-        false,
-      );
-      const index = view.calls.indexOf(cue),
-        backing = view.calls[index - 1],
-        cell = width / 72;
-      assert.ok(index > view.calls.findLastIndex((call) => call.name === 'drawImage'));
-      assert.equal(backing.name, 'fillRect');
-      assert.equal(backing.state.fillStyle, '#07111c');
-      const [x, y, w, h] = backing.args;
-      assert.ok(x >= 0 && y >= 0 && x + w <= 72 + 1e-9 && y + h <= 36 + 1e-9);
-      const fontSize = Number(/600 ([\d.]+)px/.exec(cue.state.font)[1]) * cell;
-      assert.ok(fontSize >= 14 - 1e-9, `${width}px rescue label remains readable`);
-      const held = view.calls.slice();
-      view.reset();
-      painter.paint(run, { reduced: true });
-      assert.deepEqual(view.calls, held, 'Held rescue has no independent animation clock.');
-      assert.deepEqual(run, before);
-      pauseCoop(run);
-      view.reset();
-      painter.paint(run, { reduced: true });
-      assert.equal(
-        labels(view.calls).some((call) => String(call.args[0]).startsWith('RESCUE ')),
-        false,
-      );
-    }
-  });
+  for (const teamSlots of [true, false])
+    test(`actual rescue of player ${seat + 1} has one legible cue (${teamSlots ? 'current progress' : 'legacy static role'})`, () => {
+      const earned = earnedRescue(seat),
+        before = structuredClone(earned);
+      for (const width of [200, 240, 390, 479, 844, 1152]) {
+        const run = structuredClone(earned),
+          view = surface(width),
+          painter = createCoopPainter(view.canvas);
+        painter.setPresentation(prepared({ teamSlots }).snapshot);
+        painter.paint(run, { reduced: true });
+        const text = labels(view.calls),
+          elapsed = run.time - run.players[1 - seat].rescue.startedAt,
+          expected = teamSlots
+            ? `RESCUE ${seat + 1} · ${Math.floor(elapsed * 100)}%`
+            : `RESCUE ${seat + 1}`,
+          cue = text.find((call) => call.args[0] === expected);
+        assert.ok(cue, `${width}px rescue target is visible without colour alone`);
+        assert.equal(text.filter((call) => String(call.args[0]).startsWith('RESCUE ')).length, 1);
+        assert.ok(text.some((call) => call.args[0] === '1'));
+        assert.ok(text.some((call) => call.args[0] === '2'));
+        assert.ok(text.some((call) => call.args[0] === '+'));
+        assert.deepEqual(
+          text.filter((call) => /%/.test(String(call.args[0]))).map((call) => call.args[0]),
+          teamSlots ? [expected] : [],
+          'Current progress is part of the single rescue cue; legacy role has no progress gauge',
+        );
+        const index = view.calls.indexOf(cue),
+          backing = view.calls[index - 1],
+          cell = width / 72;
+        assert.ok(index > view.calls.findLastIndex((call) => call.name === 'drawImage'));
+        assert.equal(backing.name, 'fillRect');
+        assert.equal(backing.state.fillStyle, '#07111c');
+        const [x, y, w, h] = backing.args;
+        assert.ok(x >= 0 && y >= 0 && x + w <= 72 + 1e-9 && y + h <= 36 + 1e-9);
+        const fontSize = Number(/600 ([\d.]+)px/.exec(cue.state.font)[1]) * cell;
+        assert.ok(fontSize >= 14 - 1e-9, `${width}px rescue label remains readable`);
+        const held = view.calls.slice();
+        view.reset();
+        painter.paint(run, { reduced: true });
+        assert.deepEqual(view.calls, held, 'Held rescue has no independent animation clock.');
+        assert.deepEqual(run, before);
+        pauseCoop(run);
+        view.reset();
+        painter.paint(run, { reduced: true });
+        assert.equal(
+          labels(view.calls).some((call) => String(call.args[0]).startsWith('RESCUE ')),
+          false,
+        );
+      }
+    });
 }

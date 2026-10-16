@@ -1,0 +1,30 @@
+{
+  "format": "fpv-hunt-momentum-proof-archive.v1",
+  "file": "momentum-contact-practice.proofs.json",
+  "archiveFormat": "FPVProofArchive.v2",
+  "archiveId": "b404a56ce9a7c3a03c33cb8be25aada8d8addd55639075f0b2c1b2fe292ee82d",
+  "archiveSHA256": "e3fc2b1caccc85eadbbc6c4b68c8253220c94e870948c5912cd8686d402ab9c5",
+  "fileSHA256": "56cdcf1067a7840622b418708e70071ec0f805f867c0929eed25caebb756886b",
+  "bytes": 41774,
+  "packIdentity": "fpv-pack:01c247ba293abc36af8ff26667b2e12f8fdd0f85ec8e429d1d27f320de7b9c9e",
+  "reproducible": true,
+  "nativeImportPassed": true,
+  "changedDependencyChecksumRejected": true,
+  "examples": [
+    {
+      "id": "1cd8264200aacbf8",
+      "mode": "self-level",
+      "ticks": 1044,
+      "finalStateIdentity": "2972f5edffe94e0f",
+      "status": "complete"
+    },
+    {
+      "id": "3a4137ca34113a16",
+      "mode": "acro",
+      "ticks": 1044,
+      "finalStateIdentity": "0ae105ccc50b100b",
+      "status": "complete"
+    }
+  ],
+  "boundary": "Native producer/importer and exact runtime replay; browser import is a separate check."
+}

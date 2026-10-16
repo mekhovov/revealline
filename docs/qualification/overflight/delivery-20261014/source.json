@@ -1,0 +1,197 @@
+{
+  "revision": "0b2000fff38f507ede22b1d419adea67dc7dc811",
+  "files": [
+    {
+      "path": "game/community/client.mjs",
+      "sha256": "90213bfc09487a1839940bee364b58e8e15b101f497aa5a9bb43f0dfbf603307"
+    },
+    {
+      "path": "game/community/library.mjs",
+      "sha256": "c524493e860678814f60b41728c2532a987231c98ca3a4abf5aa4abc9008d188"
+    },
+    {
+      "path": "game/community/native-installed.mjs",
+      "sha256": "5387319d5b57bab41f335ed3c7aef3c77825551c74c3760eccd17ffd200225e1"
+    },
+    {
+      "path": "game/community/package-family.mjs",
+      "sha256": "cb03192f2717a52e7e87ac2789fc2e41bdc663f84311ec1c6d8a8f33d9beaf25"
+    },
+    {
+      "path": "game/community/page.mjs",
+      "sha256": "60351bd024c3aa953541e41a2491b570a9964d0e6b6136b39165846bad62ea0f"
+    },
+    {
+      "path": "game/community/state.mjs",
+      "sha256": "3a68bd986e0760d7a71a15cd41f60732090361ace4372b633f6522f17b3f1c62"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "4b30c5c22604ee6a2a6fbac4d6531eaab14f8f65df5b79403e38f67340d3e761"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "sha256": "38fb47bc83bb6ee1c16d435ab5bbd51aa3c6aac0f475a2af1f16ee79d413548c"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "sha256": "d19b855cf24a0f9b891d9be3e404e4af34685ffcc74ed4f49dd281aa1355b1c8"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "88b33b3b81dcdcddcaa080190c60ac14b6cb0ec42fd9d1d8529e6945b692508c"
+    },
+    {
+      "path": "game/overflight/controller.mjs",
+      "sha256": "b653f6a67b89d92b5685faf3889b565d5ed154889b291c7f5294e24ff21ecdf7"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "sha256": "db344e464d182f17aa283875ea9ec8818f0b3e12cc97b6585dcb7c6b378171ed"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "ab79b70c65e67cd4af5499729a19d45519caff73eeb324441f424ad734d0c2bf"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "sha256": "a6a22ec488447049a5620216fb07df069c98f08bedcfee7de871735210ea092d"
+    },
+    {
+      "path": "game/overflight/mission-library.mjs",
+      "sha256": "ba5b52837fd37430abc4287f5ae28342b62f9f03857d8344518c107b19414235"
+    },
+    {
+      "path": "game/overflight/operation-view.mjs",
+      "sha256": "cdbf7cf67c0634b3daad561147baaca6919b4bdf5e73168038a0fd1ccb4edad5"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "sha256": "f719b97d33c6bc777d55e1103a036604199f8b7c5d2dbeda41f6b267c04c7c4c"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "03ad466207933d8b4330e159aad6cd319f4aa04021dbbaf78cfde45105e89e41"
+    },
+    {
+      "path": "game/overflight/raid-core.mjs",
+      "sha256": "2f5cacd5bbab28552e61a87fed42ff9f086dc1554072688e2849bd02f2238bf3"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "690459b66610fbcda18a5512972cf317423aabe2bb01a82abe13bac118a7c51f"
+    },
+    {
+      "path": "game/overflight/raid-records.mjs",
+      "sha256": "484b4187e0f4d91305b10806f1d3fa80c52fa64958800ac484c05f857b6e42a4"
+    },
+    {
+      "path": "game/overflight/raid-variants.mjs",
+      "sha256": "9fb923ff006d87b083a827e20fc96a9afef299b773b5deec9cdfe7c217c242bf"
+    },
+    {
+      "path": "game/overflight/raid.html",
+      "sha256": "c9b708d6c7066a6229129b3ffdd3cd68760362fec07411a1fbb5f6bd73e3bdb7"
+    },
+    {
+      "path": "game/overflight/review-recorder.mjs",
+      "sha256": "b7f5727b366f57b939994e441efca5907176d46aabad8fe611627d3b39c6118a"
+    },
+    {
+      "path": "game/overflight/riy-community.mjs",
+      "sha256": "cc894e3a2705b43c8c6a23e0db7c6df9035d302932b75b26cce098fb4dcb735b"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "b207a7365cf0c19a53ebab0905e82b68fe7704d9449bc0fab931fe5bd5debbc7"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "f7d9b0d5524adb91499e98016bd57ec7e06ccaf1d6cf23f7c21219f29a6ed181"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "2a4b92d49987b00d948daedf8d272afd30e6f5e0885e92b2faaffcd1093af7d3"
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "sha256": "dc955a083344b4a06e6014c4f26c917b40175118030860d86b8e1021053acf18"
+    },
+    {
+      "path": "game/studio/raid.mjs",
+      "sha256": "a1727a891da6aa4f5f91cc3108d29c9c6048cd19c2a34ad578ce8ea810a64546"
+    },
+    {
+      "path": "game/studio/riy-editor.mjs",
+      "sha256": "4f65b6426f0295d4215b115fb12a5e3be1a062f7e075cf2cb63c7c757bb96f7c"
+    },
+    {
+      "path": "game/test/overflight-controller.test.mjs",
+      "sha256": "5d69c5a88d92dcd340be3e9aab4688902807b1c891422a4558ecfd2aaa310805"
+    },
+    {
+      "path": "game/test/overflight-flight-profile.test.mjs",
+      "sha256": "8c92b5cfd13d30e065ce0c24aa00ae1178be896e0aa4930a9d002271b75be049"
+    },
+    {
+      "path": "game/test/overflight-host.test.mjs",
+      "sha256": "800701b6b7af80e9b8aa662afdd4f474f409c3005bcad20cb86438fb6df4273a"
+    },
+    {
+      "path": "game/test/overflight-raid-variants.test.mjs",
+      "sha256": "01307f2fe18f36d6d9a5480c12640127fcbc263bcbc27c6affa19b26749b8fdd"
+    },
+    {
+      "path": "game/test/overflight-review-audio.test.mjs",
+      "sha256": "1602d7cb31f3de0bd981a97b6d3eb5d64fe205a71c68c527b5be442012727900"
+    },
+    {
+      "path": "game/test/overflight-riy-community.test.mjs",
+      "sha256": "8f9f272f8a2a086ed063b39d49cd74adc210c52942aaac17ed8376e0ea64bf27"
+    },
+    {
+      "path": "game/test/overflight-riy-project.test.mjs",
+      "sha256": "e48b39b6970cfa951d4210f34a6277c91b190916ee75d9e03d264e4aadaed3b5"
+    },
+    {
+      "path": "game/test/overflight-variety-presentation.test.mjs",
+      "sha256": "3659a1e3fa941226b42389c1350839d3ce7498e1345ab69f87fa73953624b8fa"
+    },
+    {
+      "path": "game/test/raid-project.test.mjs",
+      "sha256": "45a7119db6ea9340930e89767a5866af3096bff0556cc5208fb0b26c90bcefec"
+    },
+    {
+      "path": "publishing/industrial-feature-tests.json",
+      "sha256": "cefab75e6c0b20e8b3445a1461c374fbcbf51a88eca87e0d9bf3305c6eb01165"
+    },
+    {
+      "path": "scripts/offline-experiences.mjs",
+      "sha256": "3bcedaabb4be3cd0b83a1e6c12d6a403b9af140b041c8ad3bce4846b204c46e0"
+    },
+    {
+      "path": "scripts/test-offline-core-closure.mjs",
+      "sha256": "73d86c8fe345988d215dd901c040ecda60adb1042f6c34542775b0e7449230e7"
+    },
+    {
+      "path": "services/community/src/domain.mjs",
+      "sha256": "104815ba4647816144598e35fd810826d8f5ef913a0a130a865833e07894e8ce"
+    },
+    {
+      "path": "services/community/src/validator.mjs",
+      "sha256": "add0831ee2e12800ac6e905ba8ef8d409714eda5a9b4f15ccddeaa250c83b5d9"
+    },
+    {
+      "path": "services/community/test/overflight-authenticated-lifecycle.test.mjs",
+      "sha256": "4cd014773a45334adca2d8491afcbb0dd1053598a5f12e32aeee9687bdb3ad32"
+    },
+    {
+      "path": "services/community/test/overflight-package.test.mjs",
+      "sha256": "f392f599fdf4e3cf1f59cc446a62b94e2921444f28528135eb2e87745fb3e0d7"
+    }
+  ]
+}

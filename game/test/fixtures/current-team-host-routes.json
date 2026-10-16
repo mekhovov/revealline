@@ -1,0 +1,5151 @@
+{
+  "format": "CurrentTeamHostRoutesV1",
+  "method": "Current approved gameplay-pressure.v4 level, seed17, full teamwork. Public direction commands only; no Boost, Support, forced state or authored target changes. Legal safe-ground path and straight-return search, or retimed historical command routes. Routes are host regression fixtures, not human balance qualification. Historical core routes remain separate.",
+  "rows": [
+    {
+      "missionId": "changing-courtyard",
+      "difficulty": "expert",
+      "authoredIdentity": "0c5bdc3f0e23b26e",
+      "tunedIdentity": "e12271ae94b01c9d",
+      "tick": 5014,
+      "closed": [3, 5],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 577
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 42
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 178
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 489
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 191
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 476
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        }
+      ]
+    },
+    {
+      "missionId": "changing-courtyard",
+      "difficulty": "gentle",
+      "authoredIdentity": "703f2f72aa9c7c97",
+      "tunedIdentity": "dba0f47c54930a2d",
+      "tick": 2471,
+      "closed": [3, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 577
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 42
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 178
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 178
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 88
+        }
+      ]
+    },
+    {
+      "missionId": "changing-courtyard",
+      "difficulty": "standard",
+      "authoredIdentity": "685c5003a532c7c9",
+      "tunedIdentity": "5aa0e62eaa52d323",
+      "tick": 2636,
+      "closed": [3, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 577
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 42
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 178
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 178
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 88
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 198
+        }
+      ]
+    },
+    {
+      "missionId": "coolant-crossing",
+      "difficulty": "expert",
+      "authoredIdentity": "c113c5ec287329bf",
+      "tunedIdentity": "7bb076641aec28cd",
+      "tick": 5722,
+      "closed": [8, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 251
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 326
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 67
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 442
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 15
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 96
+        }
+      ]
+    },
+    {
+      "missionId": "coolant-crossing",
+      "difficulty": "gentle",
+      "authoredIdentity": "e94f29603dc72425",
+      "tunedIdentity": "18e9188b97bc369d",
+      "tick": 3553,
+      "closed": [3, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 666
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        }
+      ]
+    },
+    {
+      "missionId": "coolant-crossing",
+      "difficulty": "standard",
+      "authoredIdentity": "64149e4bf831d465",
+      "tunedIdentity": "d05df6f9d3d439b9",
+      "tick": 4110,
+      "closed": [3, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 366
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 672
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "expert",
+      "authoredIdentity": "cacc6cf1b63065dd",
+      "tunedIdentity": "48c5fca646569eb7",
+      "tick": 7593,
+      "closed": [9, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 319
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 273
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 584
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 727
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 686
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 530
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 313
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "gentle",
+      "authoredIdentity": "8ad3b199679df302",
+      "tunedIdentity": "689ff4dd4f4ed992",
+      "tick": 4192,
+      "closed": [3, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 56
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 266
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 585
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 272
+        }
+      ]
+    },
+    {
+      "missionId": "crossed-gardens",
+      "difficulty": "standard",
+      "authoredIdentity": "4a045217f26765b4",
+      "tunedIdentity": "3106d1524dab6dcb",
+      "tick": 6056,
+      "closed": [4, 6],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 56
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 266
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 273
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 190
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 476
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 693
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 266
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 319
+        }
+      ]
+    },
+    {
+      "missionId": "depot-dash",
+      "difficulty": "expert",
+      "authoredIdentity": "13950c503e34eb27",
+      "tunedIdentity": "3960cac1655b760f",
+      "tick": 6418,
+      "closed": [4, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 747
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 448
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 361
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 21
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 80
+        }
+      ]
+    },
+    {
+      "missionId": "depot-dash",
+      "difficulty": "gentle",
+      "authoredIdentity": "9613b4111d03c888",
+      "tunedIdentity": "fe49ba8d73064f46",
+      "tick": 2356,
+      "closed": [2, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 55
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        }
+      ]
+    },
+    {
+      "missionId": "depot-dash",
+      "difficulty": "standard",
+      "authoredIdentity": "4679cf6283e58eea",
+      "tunedIdentity": "ab1a8c06d6c5bdb0",
+      "tick": 4384,
+      "closed": [3, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 21
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 21
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 366
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 366
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 320
+        }
+      ]
+    },
+    {
+      "missionId": "divided-workshop",
+      "difficulty": "expert",
+      "authoredIdentity": "ee63acb135a46597",
+      "tunedIdentity": "b80213f3d9c5802d",
+      "tick": 2981,
+      "closed": [3, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 27
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 183
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 455
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 149
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "divided-workshop",
+      "difficulty": "gentle",
+      "authoredIdentity": "cb3a84dd96bcd930",
+      "tunedIdentity": "e2aab2eebbdd218b",
+      "tick": 2914,
+      "closed": [3, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 265
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 244
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "divided-workshop",
+      "difficulty": "standard",
+      "authoredIdentity": "651a272edab1682e",
+      "tunedIdentity": "5961b0d82b0a4561",
+      "tick": 2316,
+      "closed": [3, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 217
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 244
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 211
+        }
+      ]
+    },
+    {
+      "missionId": "last-rendezvous",
+      "difficulty": "expert",
+      "authoredIdentity": "c72ef636daa51750",
+      "tunedIdentity": "228711294c47080f",
+      "tick": 6656,
+      "closed": [1, 7],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 795
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 327
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 190
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 340
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 570
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 428
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 449
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 251
+        }
+      ]
+    },
+    {
+      "missionId": "last-rendezvous",
+      "difficulty": "gentle",
+      "authoredIdentity": "250fe12c19269c4f",
+      "tunedIdentity": "0c6d6d307d14a703",
+      "tick": 4914,
+      "closed": [2, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 795
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 122
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 618
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 217
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 571
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 190
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 340
+        }
+      ]
+    },
+    {
+      "missionId": "last-rendezvous",
+      "difficulty": "standard",
+      "authoredIdentity": "4a89303dbc733f07",
+      "tunedIdentity": "41f61c155efb9aa8",
+      "tick": 4193,
+      "closed": [1, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 795
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 354
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 129
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 571
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 190
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 611
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 197
+        }
+      ]
+    },
+    {
+      "missionId": "shared-detour",
+      "difficulty": "expert",
+      "authoredIdentity": "b12fefd86a1779be",
+      "tunedIdentity": "1c31c945151356f5",
+      "tick": 3415,
+      "closed": [3, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 109
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 739
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 727
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 341
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 177
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 129
+        }
+      ]
+    },
+    {
+      "missionId": "shared-detour",
+      "difficulty": "gentle",
+      "authoredIdentity": "48ba5fdff6eb2183",
+      "tunedIdentity": "aa47fb98b5413b8b",
+      "tick": 4260,
+      "closed": [2, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 901
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 27
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 5
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 159
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 97
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 210
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 5
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 241
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 262
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 235
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 607
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 672
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 366
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 235
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 14
+        }
+      ]
+    },
+    {
+      "missionId": "shared-detour",
+      "difficulty": "standard",
+      "authoredIdentity": "c4ed54bcbd942939",
+      "tunedIdentity": "1195b6e7343c746a",
+      "tick": 4507,
+      "closed": [3, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 31
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 27
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 4
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 248
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 980
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 235
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 166
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 83
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 206
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 285
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 235
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 566
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 672
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 12
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "expert",
+      "authoredIdentity": "cda6b9e6ff5cc5ca",
+      "tunedIdentity": "014369242808d3ea",
+      "tick": 3252,
+      "closed": [1, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 808
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 564
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 285
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 42
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 197
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "gentle",
+      "authoredIdentity": "2af239e989b191ef",
+      "tunedIdentity": "e6a45dff736cd7a3",
+      "tick": 4638,
+      "closed": [3, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 91
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 345
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 221
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 8
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 345
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 524
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 8
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 483
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 166
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 566
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 292
+        }
+      ]
+    },
+    {
+      "missionId": "shared-lookout",
+      "difficulty": "standard",
+      "authoredIdentity": "477c9fb1360c29ec",
+      "tunedIdentity": "cc9d2e76adc469e2",
+      "tick": 3210,
+      "closed": [2, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 808
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 951
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 958
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "expert",
+      "authoredIdentity": "a8f51e9018611e06",
+      "tunedIdentity": "14c845f809a55329",
+      "tick": 4887,
+      "closed": [5, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 394
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 713
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 319
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 326
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "gentle",
+      "authoredIdentity": "f1d82178bfdedbd1",
+      "tunedIdentity": "991d3938efcb1564",
+      "tick": 3239,
+      "closed": [4, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 217
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 190
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 713
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 312
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 306
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        }
+      ]
+    },
+    {
+      "missionId": "split-orchards",
+      "difficulty": "standard",
+      "authoredIdentity": "bfcac7902120fd03",
+      "tunedIdentity": "d6efdfa10a7e82bc",
+      "tick": 3511,
+      "closed": [3, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 313
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 204
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 665
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 143
+        }
+      ]
+    },
+    {
+      "missionId": "stepping-exchange",
+      "difficulty": "expert",
+      "authoredIdentity": "ea2e52d867cc8dac",
+      "tunedIdentity": "04cb39ec51b90c92",
+      "tick": 2357,
+      "closed": [1, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 339
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "missionId": "stepping-exchange",
+      "difficulty": "gentle",
+      "authoredIdentity": "dfc3b0b975184563",
+      "tunedIdentity": "f6adac5cab64f05a",
+      "tick": 2811,
+      "closed": [1, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 92
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 273
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 475
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 665
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "stepping-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "3f18f1e9b8e4ee75",
+      "tunedIdentity": "9514e707c7509e9b",
+      "tick": 2721,
+      "closed": [1, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 333
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 273
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 475
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 665
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "switchback-partners",
+      "difficulty": "expert",
+      "authoredIdentity": "5d84a325f3683a36",
+      "tunedIdentity": "397592a8ad36aedd",
+      "tick": 7694,
+      "closed": [7, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 29
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 735
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 177
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 448
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 353
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 347
+        }
+      ]
+    },
+    {
+      "missionId": "switchback-partners",
+      "difficulty": "gentle",
+      "authoredIdentity": "ee8cda75de2b914d",
+      "tunedIdentity": "447c4ea0358b077a",
+      "tick": 6375,
+      "closed": [4, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 333
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 129
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 29
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 340
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 409
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 900
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 390
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 15
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 177
+        }
+      ]
+    },
+    {
+      "missionId": "switchback-partners",
+      "difficulty": "standard",
+      "authoredIdentity": "90fa2ceece9b0f09",
+      "tunedIdentity": "2a0552e056517941",
+      "tick": 5309,
+      "closed": [4, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 734
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 436
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "authoredIdentity": "77055fc7eca5a0a5",
+      "tunedIdentity": "7c75293e0664a8fa",
+      "tick": 3946,
+      "closed": [3, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 720
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 272
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 306
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 238
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "gentle",
+      "authoredIdentity": "9afc51549cf470c2",
+      "tunedIdentity": "bf11f150327fcd29",
+      "tick": 2703,
+      "closed": [2, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 55
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 374
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 460
+        }
+      ]
+    },
+    {
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "authoredIdentity": "e52b314fbbc1723c",
+      "tunedIdentity": "6104dd35085c2784",
+      "tick": 4260,
+      "closed": [3, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 706
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 557
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 149
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        }
+      ]
+    },
+    {
+      "missionId": "twin-landings",
+      "difficulty": "expert",
+      "authoredIdentity": "29bd153868e4d293",
+      "tunedIdentity": "d889d4ec6d9ce631",
+      "tick": 3405,
+      "closed": [2, 4],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 241
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 17
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 252
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 29
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 29
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 195
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 634
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "missionId": "twin-landings",
+      "difficulty": "gentle",
+      "authoredIdentity": "7a141419ce9b8d58",
+      "tunedIdentity": "cd42b8059637ded4",
+      "tick": 2454,
+      "closed": [2, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 361
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 853
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 138
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 579
+        }
+      ]
+    },
+    {
+      "missionId": "twin-landings",
+      "difficulty": "standard",
+      "authoredIdentity": "af754e2d0945dad2",
+      "tunedIdentity": "33789e348863c1d1",
+      "tick": 2154,
+      "closed": [2, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 241
+        },
+        {
+          "a": "down",
+          "b": "right",
+          "ticks": 24
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 120
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 853
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 138
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 138
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 579
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "expert",
+      "authoredIdentity": "3866bec3604113c6",
+      "tunedIdentity": "b44b33b36fe90d3a",
+      "tick": 8220,
+      "closed": [5, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 780
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 394
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 958
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 720
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 387
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 387
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 285
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 394
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 516
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 252
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 755
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 69
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 258
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "gentle",
+      "authoredIdentity": "5dd0897e78e5c3c3",
+      "tunedIdentity": "af4daf701524cbcc",
+      "tick": 4261,
+      "closed": [2, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 780
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 530
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 190
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 476
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 706
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        }
+      ]
+    },
+    {
+      "missionId": "weaver-crossing",
+      "difficulty": "standard",
+      "authoredIdentity": "7fbf3392499df47f",
+      "tunedIdentity": "9940e3c3f76899d0",
+      "tick": 4480,
+      "closed": [5, 1],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 123
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 780
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 598
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 422
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 144
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 835
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 435
+        }
+      ]
+    },
+    {
+      "missionId": "window-exchange",
+      "difficulty": "expert",
+      "authoredIdentity": "907a871567aaaf99",
+      "tunedIdentity": "1da06739b03697fa",
+      "tick": 6847,
+      "closed": [2, 9],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 278
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 217
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 292
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 435
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 56
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 27
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 900
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 310
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 306
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 326
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 130
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 15
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 55
+        }
+      ]
+    },
+    {
+      "missionId": "window-exchange",
+      "difficulty": "gentle",
+      "authoredIdentity": "30a30ec14fe18a5c",
+      "tunedIdentity": "195176ed5b7bea96",
+      "tick": 5642,
+      "closed": [5, 2],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 202
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 550
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 503
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        }
+      ]
+    },
+    {
+      "missionId": "window-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "ac40708971c3c610",
+      "tunedIdentity": "e82f1e989b953de6",
+      "tick": 3519,
+      "closed": [2, 3],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 81
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 279
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 279
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 110
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 183
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 279
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 300
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 320
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 35
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 558
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 143
+        }
+      ]
+    }
+  ]
+}

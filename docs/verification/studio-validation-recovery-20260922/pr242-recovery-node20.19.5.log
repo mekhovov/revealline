@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: timed schedule CRUD compiles all modes/presets, preserves maps and fixed bonuses, and undoes exactly
+ok 1 - timed schedule CRUD compiles all modes/presets, preserves maps and fixed bonuses, and undoes exactly
+  ---
+  duration_ms: 238.807375
+  ...
+# Subtest: invalid schedule and Team imports fail closed, not silently dropping or publishing mechanics
+ok 2 - invalid schedule and Team imports fail closed, not silently dropping or publishing mechanics
+  ---
+  duration_ms: 99.200125
+  ...
+# Subtest: shared preview/transport preserves schedules, numbers possible anchors, and explains contact expiry
+ok 3 - shared preview/transport preserves schedules, numbers possible anchors, and explains contact expiry
+  ---
+  duration_ms: 43.677875
+  ...
+# Subtest: bounded view distinguishes hollow announcement and available countdown, independent of effects settings
+ok 4 - bounded view distinguishes hollow announcement and available countdown, independent of effects settings
+  ---
+  duration_ms: 49.246792
+  ...
+# Subtest: paused field details explain upcoming/available pickups and do not classify known schedule events as unknown
+ok 5 - paused field details explain upcoming/available pickups and do not classify known schedule events as unknown
+  ---
+  duration_ms: 42.338542
+  ...
+# Subtest: malformed timed view fails closed without executing a getter or mutating the run
+ok 6 - malformed timed view fails closed without executing a getter or mutating the run
+  ---
+  duration_ms: 34.346458
+  ...
+# Subtest: Studio adds, replaces and confirms removal; invalid/stale fields never partially apply
+ok 7 - Studio adds, replaces and confirms removal; invalid/stale fields never partially apply
+  ---
+  duration_ms: 102.615625
+  ...
+# Subtest: Studio explains bounded, conditional relocation consistently for Solo and Team
+ok 8 - Studio explains bounded, conditional relocation consistently for Solo and Team
+  ---
+  duration_ms: 0.215584
+  ...
+# Subtest: native validation reveals the selected field label after all invalid events, without choosing focus
+ok 9 - native validation reveals the selected field label after all invalid events, without choosing focus
+  ---
+  duration_ms: 0.943709
+  ...
+# Subtest: ordinary forward/reverse focus reveals labels and oversized labels fall back to the control
+ok 10 - ordinary forward/reverse focus reveals labels and oversized labels fall back to the control
+  ---
+  duration_ms: 0.13225
+  ...
+# Subtest: stale validation, background, hidden controls and disposal cannot scroll a new target
+ok 11 - stale validation, background, hidden controls and disposal cannot scroll a new target
+  ---
+  duration_ms: 0.534375
+  ...
+# Subtest: layout callbacks cannot scroll a field that lost focus while its label was measured
+ok 12 - layout callbacks cannot scroll a field that lost focus while its label was measured
+  ---
+  duration_ms: 0.133708
+  ...
+# Subtest: timed editor keeps invalid drafts unchanged and still applies a real valid schedule
+ok 13 - timed editor keeps invalid drafts unchanged and still applies a real valid schedule
+  ---
+  duration_ms: 51.560083
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 679.434292

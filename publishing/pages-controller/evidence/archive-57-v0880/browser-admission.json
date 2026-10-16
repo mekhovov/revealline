@@ -1,0 +1,26 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-57",
+  "repository": "mekhovov/revealline-archive-57",
+  "infrastructureCommit": "de23f0600a8410d0060f2bbcc1887bfb37d049a0",
+  "deploymentId": 6605004645,
+  "workflowRunId": 35810246159,
+  "versions": [
+    "v0.88.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-57-v0880/native/observation.json",
+      "sha256": "a8c7aa8702aa3b2444586e956cd50aa2eca4ed26fb176c277cb3e1b0989df2c4"
+    }
+  ],
+  "scope": "Independent scoped native observer receipt; actual actions/results, failures and retries are retained verbatim in the pinned observation. No second browser witness or extended acceptance is claimed.",
+  "limits": [
+    "Source/deployment/marker authority supplied by coordinator handoff.",
+    "Full HTTP audit is separate and was not duplicated.",
+    "No gameplay, failure-copy, offline, physical device/controller, listening or full-suite claim.",
+    "No public v0.89 check."
+  ],
+  "approval": "Releases independently reviewed exact production originals, every expected public path/size/SHA/MIME and all raw attempts, six fresh authority pins and UX scoped native observations. Archive57 preservation of v0.88.0 is approved; tests and extended gameplay/offline/responsive/device matrices remain waived/deferred, never passed. No v0.89 public or no-bugs assurance."
+}

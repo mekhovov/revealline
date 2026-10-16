@@ -1,0 +1,40 @@
+- heading "Mountain Reservoir · imported eight-course world" [level=1]
+- paragraph: Eight courses, sixteen exact-pack demonstrations. Actual identified admitted player, native storage and unchanged flight physics. Keep this tab visible and focused while all sixteen Watch replays run. Controlled animation timestamps do not support a performance claim. Native-clock launch and offline qualification are separate checks.
+- button "Run import, collision and sixteen Watch and editor checks" [disabled]
+- button "Open native-clock flight for manual launch" [disabled]
+- status: Native-clock course ready. Manually Arm, inspect, then Pause in the actual player.
+- iframe [active] [id="sim"]:
+  - link "Skip to flight selection":
+    - /url: "#explore"
+  - dialog:
+    - banner:
+      - button "Menu"
+      - generic: FPV SIM · Worlds
+      - button "Resume"
+    - paragraph: Shoreline check-in
+    - button "Arm / resume"
+    - generic: +
+    - generic: 0.5 m · 0 m/s · 47.1 s · ♥ 100
+    - strong: 1/4 · Hold position
+    - status: Paused. Arm deliberately to continue.
+    - generic "Yaw 0%, Throttle 0%":
+    - generic "Roll 0%, Pitch 0%":
+    - complementary "Drone response. Paused · actual pose retained vertical speed near zero. 0.5 m · +0.0 m/s vertical · 0.0 m/s drift":
+      - button "Hide drone response": ×
+      - status: Drone upright
+  - status: Preparing flight…
+  - dialog "FPV / LINE":
+    - heading "FPV / LINE" [level=1]:
+      - img "FPV / LINE"
+    - paragraph: FPV SIM · Worlds
+    - navigation "Choose game mode":
+      - navigation
+    - paragraph: Shoreline check-in
+    - navigation "Main menu":
+      - button "Continue" [active]
+      - button "Select Mission"
+      - button "Settings"
+      - button "Full screen"
+      - 'button "Sound: off"'
+    - button "Retry"
+    - paragraph: "Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."
