@@ -14,6 +14,7 @@ import {
   trackNativeServerRequests,
   runNativeA11yCase,
   nativeProfileRemovalAllowed,
+  selectMainSettingsLocale,
 } from './observe-practice-directory-native-a11y.mjs';
 const zoom = { dpr: 4, outerWidth: 1280, innerWidth: 640 };
 function witness() {
@@ -109,6 +110,165 @@ test('Tab reachability uses real keyboard events and stops on verified focus', a
   await keyboardReach(page, target, async (_, work) => work(), receipt, zoom);
   assert.equal(tabs, 3);
   assert.equal(receipt[0].tabs, 3);
+  assert.equal(receipt[0].passed, true);
+});
+test('failed focus retains exact target geometry and reason without relaxing clipping', async () => {
+  const receipt = [],
+    w = witness();
+  w.id = 'prepare';
+  w.rect = { x: 32, y: 350.6, width: 576, height: 56 };
+  w.viewport.height = 406;
+  w.viewport.visualHeight = 406.5;
+  await assert.rejects(
+    keyboardReach(
+      { keyboard: { press: async () => {} } },
+      { evaluate: async (fn) => (fn === readNativeFocusWitness ? w : true) },
+      async (_, work) => work(),
+      receipt,
+      zoom,
+    ),
+    /Focused control is clipped/,
+  );
+  assert.equal(receipt.length, 1);
+  assert.equal(receipt[0].id, 'prepare');
+  assert.deepEqual(receipt[0].rect, w.rect);
+  assert.equal(receipt[0].viewport.visualHeight, 406.5);
+  assert.equal(receipt[0].passed, false);
+  assert.equal(receipt[0].failure, 'Focused control is clipped.');
+});
+function localeFixture({
+  initial = 'en',
+  responds = true,
+  count = 1,
+  compact = true,
+  backCloses = true,
+} = {}) {
+  let lang = initial,
+    selected = initial,
+    open = false,
+    view = 'categories';
+  const actions = [];
+  return {
+    actions,
+    page: {
+      locator(selector) {
+        if (selector === 'html') return { getAttribute: async () => lang };
+        // Home has no language control after maintained native-menu relocation.
+        // Hidden duplicated mounts remain inside Settings; only one is visible.
+        assert.notEqual(selector, '#shell-home[open] [data-language-select]');
+        const waits = ['#settings-dialog[open]', '#settings-panel-display', '#shell-home[open]'];
+        if (waits.includes(selector))
+          return {
+            waitFor: async (opts) => {
+              assert.deepEqual(opts, { state: 'visible', timeout: 10000 });
+              if (selector === '#settings-dialog[open]') assert(open);
+              if (selector === '#settings-panel-display') assert(open && view === 'panel');
+              // Underlying Home stays visible even while Settings is a blocking modal.
+              actions.push(selector);
+            },
+          };
+        if (selector === '#settings-dialog')
+          return { getAttribute: async (name) => (name === 'open' ? (open ? '' : null) : view) };
+        const clicks = [
+          '#shell-options',
+          '#settings-tab-display',
+          '#settings-dialog[open] [data-close="settings-dialog"]',
+        ];
+        if (clicks.includes(selector))
+          return {
+            click: async (opts) => {
+              assert.deepEqual(opts, { timeout: 10000 });
+              actions.push(selector);
+              if (selector === '#shell-options') open = true;
+              else if (selector === '#settings-tab-display') {
+                assert(open);
+                view = 'panel';
+              } else if (compact && view === 'panel') view = 'categories';
+              else if (backCloses) open = false;
+            },
+          };
+        assert.equal(selector, '#settings-dialog[open] [data-language-select]:visible');
+        return {
+          count: async () => {
+            assert(open && view === 'panel');
+            return count;
+          },
+          waitFor: async (opts) => {
+            assert.deepEqual(opts, { state: 'visible', timeout: 10000 });
+            actions.push('visible');
+          },
+          inputValue: async () => selected,
+          selectOption: async (value, opts) => {
+            assert.deepEqual(opts, { timeout: 10000 });
+            actions.push(['select', value]);
+            if (responds) lang = selected = value;
+          },
+        };
+      },
+      waitForFunction: async (_, arg, opts) => {
+        assert.equal(arg.selector, '#settings-dialog[open] [data-language-select]');
+        assert.deepEqual(opts, { timeout: 10000 });
+        actions.push('observe');
+      },
+    },
+  };
+}
+test('relocated visible Settings language selects Ukrainian, ignores hidden duplicates, and returns through compact Back twice', async () => {
+  const f = localeFixture(),
+    receipt = {};
+  await selectMainSettingsLocale(f.page, 'uk', async (_, work) => work(), receipt);
+  assert.equal(receipt.before, 'en');
+  assert.equal(receipt.action, 'ordinary-select-option');
+  assert.equal(receipt.after, 'uk');
+  assert.equal(receipt.controlAfter, 'uk');
+  assert.equal(receipt.settingsOpened, true);
+  assert.equal(receipt.settingsClosed, true);
+  assert.deepEqual(receipt.route, [
+    '#shell-options',
+    '#settings-tab-display',
+    '#settings-dialog[open] [data-close="settings-dialog"]',
+    '#settings-dialog[open] [data-close="settings-dialog"]',
+  ]);
+  assert.deepEqual(receipt.back, [
+    { open: true, view: 'categories' },
+    { open: false, view: 'categories' },
+  ]);
+  assert(f.actions.some((x) => Array.isArray(x) && x[0] === 'select' && x[1] === 'uk'));
+});
+test('matching actual document locale does not require a nonexistent Home control or open Settings', async () => {
+  const f = localeFixture({ initial: 'uk' }),
+    receipt = {};
+  await selectMainSettingsLocale(f.page, 'uk', async (_, work) => work(), receipt);
+  assert.equal(receipt.action, 'none');
+  assert.equal(receipt.after, 'uk');
+  assert.equal(receipt.settingsOpened, false);
+  assert.deepEqual(f.actions, []);
+});
+test('language UI failure or ambiguous control cannot pass using query locale alone', async () => {
+  for (const options of [{ responds: false }, { count: 2 }, { count: 0 }]) {
+    const f = localeFixture(options),
+      receipt = {};
+    await assert.rejects(
+      selectMainSettingsLocale(f.page, 'uk', async (_, work) => work(), receipt),
+    );
+    assert.equal(receipt.before, 'en');
+  }
+  await assert.rejects(selectMainSettingsLocale({}, 'fr', async (_, work) => work(), {}));
+});
+test('wide Settings closes in one native Back and can select English from saved Ukrainian', async () => {
+  const f = localeFixture({ initial: 'uk', compact: false }),
+    receipt = {};
+  await selectMainSettingsLocale(f.page, 'en', async (_, work) => work(), receipt);
+  assert.equal(receipt.after, 'en');
+  assert.equal(receipt.back.length, 1);
+  assert.equal(receipt.settingsClosed, true);
+});
+test('underlying visible Home cannot hide a Settings modal that remains open after two Back presses', async () => {
+  const f = localeFixture({ backCloses: false }),
+    receipt = {};
+  await assert.rejects(selectMainSettingsLocale(f.page, 'uk', async (_, work) => work(), receipt));
+  assert.equal(receipt.back.length, 2);
+  assert.equal(receipt.settingsClosed, undefined);
 });
 test('unreachable target is a bounded failure, not direct focus injection', async () => {
   let tabs = 0;

@@ -2,6 +2,17 @@
 
 ## Decision boundary and current baseline
 
+**Newest source-bound receipts:** onboarding candidate `1b339bfe6`/`f559fdd7…`
+passes the complete six-case original-production journey at observer `888672706`,
+all six restarted-offline short flights and installed Academy activation/update
+continuity. Every original 3,493-file build member is checked before/after; all
+three results have independent audits in the [continuation](flight-practice-continuation-2026-10-16.md).
+These do not qualify every active app, performance, physical input, screenshots
+at native zoom or publication. Current expanded suites pass 397/397 practice and
+363 observer tests with one explicit historical-fixture skip. The main-only
+session language handoff correction and mounted-language observer repair still
+need their fresh source-shell browser result.
+
 **Latest 16 October checkpoint:** the [integrated continuation](flight-practice-continuation-2026-10-16.md)
 records independently audited six-route EN restarted-offline flight/pause and
 historical Academy installed-PWA activation/update/return/resume passes on exact

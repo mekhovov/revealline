@@ -145,6 +145,10 @@ export function readNativeFocusWitness(el) {
       height: globalThis.innerHeight,
       dpr: globalThis.devicePixelRatio,
       visualScale: globalThis.visualViewport?.scale ?? null,
+      visualWidth: globalThis.visualViewport?.width ?? null,
+      visualHeight: globalThis.visualViewport?.height ?? null,
+      visualOffsetLeft: globalThis.visualViewport?.offsetLeft ?? null,
+      visualOffsetTop: globalThis.visualViewport?.offsetTop ?? null,
       outerWidth: globalThis.outerWidth,
       outerHeight: globalThis.outerHeight,
     },
@@ -202,12 +206,105 @@ export async function keyboardReach(page, target, run, receipt, zoom) {
       const witness = await run('Read visible keyboard focus', () =>
         target.evaluate(readNativeFocusWitness),
       );
-      assertNativeFocusWitness(witness, zoom);
-      receipt.push({ tabs: i + 1, ...witness });
+      const entry = { tabs: i + 1, ...witness, passed: false };
+      receipt.push(entry);
+      try {
+        assertNativeFocusWitness(witness, zoom);
+        entry.passed = true;
+      } catch (error) {
+        entry.failure = error.message;
+        throw error;
+      }
       return witness;
     }
   }
   throw Error('Target was not reachable within32 ordinary Tab actions.');
+}
+/** Native menus reparent Language into Settings > Display; boot/Home mounts are not stable. */
+export async function selectMainSettingsLocale(page, locale, run, receipt) {
+  assert(['en', 'uk'].includes(locale));
+  const selector = '#settings-dialog[open] [data-language-select]',
+    control = page.locator(`${selector}:visible`),
+    settings = page.locator('#settings-dialog');
+  const click = async (selector) => {
+    receipt.route.push(selector);
+    await run('Ordinary visible locale route ' + selector, () =>
+      page.locator(selector).click({ timeout: 10000 }),
+    );
+  };
+  receipt.requested = locale;
+  receipt.selector = `${selector}:visible`;
+  receipt.route = [];
+  receipt.before = await run('Read initial main locale', () =>
+    page.locator('html').getAttribute('lang'),
+  );
+  receipt.action = 'none';
+  if (receipt.before === locale) {
+    receipt.after = receipt.before;
+    receipt.settingsOpened = false;
+    return;
+  }
+  await click('#shell-options');
+  await run('Locale Settings actually open', () =>
+    page.locator('#settings-dialog[open]').waitFor({ state: 'visible', timeout: 10000 }),
+  );
+  receipt.settingsOpened = true;
+  await click('#settings-tab-display');
+  await run('Display language panel visible', () =>
+    page.locator('#settings-panel-display').waitFor({ state: 'visible', timeout: 10000 }),
+  );
+  assert.equal(await run('Unique visible Settings language control', () => control.count()), 1);
+  await run('Visible Settings language control', () =>
+    control.waitFor({ state: 'visible', timeout: 10000 }),
+  );
+  receipt.controlBefore = await run('Read Settings language value', () => control.inputValue());
+  receipt.action = 'ordinary-select-option';
+  await run('Select public Settings language', () =>
+    control.selectOption(locale, { timeout: 10000 }),
+  );
+  await run('Observe selected main language', () =>
+    page.waitForFunction(
+      ({ selector, locale }) => {
+        const visible = [...globalThis.document.querySelectorAll(selector)].filter((el) =>
+          el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }),
+        );
+        return (
+          globalThis.document.documentElement.lang === locale &&
+          visible.length === 1 &&
+          visible[0].value === locale
+        );
+      },
+      { selector, locale },
+      { timeout: 10000 },
+    ),
+  );
+  receipt.after = await run('Read selected main locale', () =>
+    page.locator('html').getAttribute('lang'),
+  );
+  receipt.controlAfter = await run('Read selected Settings language value', () =>
+    control.inputValue(),
+  );
+  assert.equal(receipt.after, locale);
+  assert.equal(receipt.controlAfter, locale);
+  receipt.back = [];
+  for (let i = 0; i < 2; i++) {
+    await click('#settings-dialog[open] [data-close="settings-dialog"]');
+    const open = await run('Read actual Settings open state', () => settings.getAttribute('open'));
+    const view = await run('Read Settings navigation state', () =>
+      settings.getAttribute('data-settings-view'),
+    );
+    receipt.back.push({ open: open !== null, view });
+    if (open === null) break;
+    assert.equal(view, 'categories', 'Back must leave the panel before closing Settings.');
+  }
+  assert.equal(
+    await run('Settings modal actually closed', () => settings.getAttribute('open')),
+    null,
+  );
+  await run('Home restored after locale selection', () =>
+    page.locator('#shell-home[open]').waitFor({ state: 'visible', timeout: 10000 }),
+  );
+  receipt.settingsClosed = true;
 }
 const closeServer = async (owned) => {
   owned.stop?.();
@@ -320,10 +417,8 @@ export async function runNativeA11yCase({
     await run('Main Home visible', () =>
       page.locator('#shell-home[open]').waitFor({ state: 'visible', timeout: 10000 }),
     );
-    assert.equal(
-      await run('Main locale', () => page.locator('html').getAttribute('lang')),
-      spec.locale,
-    );
+    result.mainLocaleSelection = {};
+    await selectMainSettingsLocale(page, spec.locale, run, result.mainLocaleSelection);
     await openPractice(page, click);
     const dialog = page.locator('#optional-practice-dialog[open]'),
       rows = dialog.locator('.optional-practice-packages > li');
