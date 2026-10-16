@@ -24,6 +24,10 @@ import {
 import { acquirePointerResource } from './observe-practice-pointer.mjs';
 import { withDirectoryDistributionIO } from './practice-distribution-io.mjs';
 import {
+  createProductionMemory,
+  selectProductionMemoryMode,
+} from './practice-production-memory.mjs';
+import {
   unlockObservedPage,
   matchesLaunchedAppURL,
 } from './optional-installation-observer-helpers.mjs';
@@ -86,6 +90,7 @@ export const DIRECTORY_JOURNEY_CASES = Object.freeze(
   ),
 );
 const AUTHORITY = [
+  'scripts/practice-production-memory.mjs',
   'scripts/practice-distribution-io.mjs',
   'scripts/observe-practice-directory-journey.mjs',
   'scripts/fpv-observation-artifact.mjs',
@@ -264,13 +269,13 @@ async function boundedDistributionBytes(target, limit, io) {
  * serving. Four bounded streams never retain a whole distribution in memory.
  * The external manifest pin is supplied by the build owner, never synthesized.
  */
-export async function verifyDirectoryDistribution(plan, diagnostics = {}) {
+export async function verifyDirectoryDistribution(plan, diagnostics = {}, deliveryReceipt = null) {
   return withDirectoryDistributionIO(
-    (io) => verifyDirectoryDistributionInIO(plan, io),
+    (io) => verifyDirectoryDistributionInIO(plan, io, deliveryReceipt),
     diagnostics,
   );
 }
-async function verifyDirectoryDistributionInIO(plan, io) {
+async function verifyDirectoryDistributionInIO(plan, io, deliveryReceipt) {
   assert(productionProtocol(plan));
   assert(path.isAbsolute(plan.distribution));
   const root = await io.perform('distribution root realpath', () => realpath(plan.distribution));
@@ -346,9 +351,13 @@ async function verifyDirectoryDistributionInIO(plan, io) {
     files.has('game/index.html') && files.has('game/build-info.json'),
     'Production entry/build-info missing.',
   );
+  const memory = deliveryReceipt
+    ? createProductionMemory([...files.values()], deliveryReceipt)
+    : null;
   await io.members([...files.values()], async (row) => {
     const target = await distributionTarget(root, row.path, row.bytes, io);
     const hash = createHash('sha256');
+    const chunks = memory?.selected(row.path) ? [] : null;
     let count = 0;
     await io.consume(
       row.path,
@@ -357,12 +366,15 @@ async function verifyDirectoryDistributionInIO(plan, io) {
         count += chunk.length;
         assert(count <= row.bytes, 'Production member grew while hashing.');
         hash.update(chunk);
+        if (chunks) chunks.push(Buffer.from(chunk));
       },
     );
     assert.equal(count, row.bytes);
     assert.equal(hash.digest('hex'), row.sha256, `Production member hash mismatch: ${row.path}`);
+    if (chunks) memory.retain(row.path, Buffer.concat(chunks, count));
   });
-  const verified = { root, manifest, manifestBytes, files };
+  memory?.ready();
+  const verified = { root, manifest, manifestBytes, files, ...(memory ? { memory } : {}) };
   const buildInfo = JSON.parse(
     await readDirectoryDistributionFile(verified, 'game/build-info.json', io),
   );
@@ -518,74 +530,101 @@ export async function directoryJourneyServer(overlay, tree, report, distribution
       [...overlay.keys()].every((name) => name.startsWith('practice/')),
       'Only the explicit practice fixture may overlay production.',
     );
-  const served = new Map();
-  const server = createServer(async (req, res) => {
-    try {
-      if (!['GET', 'HEAD'].includes(req.method)) {
-        res.writeHead(405, distribution ? security : undefined);
-        res.end();
-        return;
-      }
-      const name = directorySourcePath(req.url);
-      let bytes = overlay.get(name);
-      if (!bytes && distribution) {
-        bytes = await readDirectoryDistributionFile(distribution, name);
-        if (!served.has(name)) {
-          const value = pin(name, bytes);
-          served.set(name, value);
-          (report.servedDistribution ??= []).push(value);
+  const served = new Map(),
+    pending = new Set();
+  let accepting = true;
+  const server = createServer((req, res) => {
+    const work = (async () => {
+      try {
+        assert(accepting, 'Directory server stopped.');
+        if (!['GET', 'HEAD'].includes(req.method)) {
+          res.writeHead(405, distribution ? security : undefined);
+          res.end();
+          return;
         }
-      } else if (!bytes) {
-        assert(
-          /^(game|site|optional-practice|authoring|docs)\//.test(name),
-          'Not a public source file.',
-        );
-        assert(tree.get(name), 'Not a committed regular file.');
-        const target = path.join(ROOT, name);
-        bytes = await readFile(target);
-        verifyCommittedInputs(new Map([[name, bytes]]), tree);
-        if (!served.has(name)) {
-          const value = pin(name, bytes);
-          served.set(name, value);
-          report.servedSources.push(value);
+        const name = directorySourcePath(req.url);
+        let bytes = overlay.get(name);
+        if (!bytes && distribution) {
+          bytes = name === 'manifest.json' ? null : (distribution.memory?.read(name) ?? null);
+          const delivery = bytes ? 'verified-memory' : 'verified-original-file';
+          if (!bytes) bytes = await readDirectoryDistributionFile(distribution, name);
+          if (name !== 'manifest.json') distribution.memory?.delivered(name, delivery, bytes);
+          if (!served.has(name)) {
+            const value = pin(name, bytes);
+            served.set(name, value);
+            (report.servedDistribution ??= []).push(value);
+          }
+        } else if (!bytes) {
+          assert(
+            /^(game|site|optional-practice|authoring|docs)\//.test(name),
+            'Not a public source file.',
+          );
+          assert(tree.get(name), 'Not a committed regular file.');
+          const target = path.join(ROOT, name);
+          bytes = await readFile(target);
+          verifyCommittedInputs(new Map([[name, bytes]]), tree);
+          if (!served.has(name)) {
+            const value = pin(name, bytes);
+            served.set(name, value);
+            report.servedSources.push(value);
+          }
         }
-      }
-      res.writeHead(200, {
-        'content-type':
-          (distribution ? PRODUCTION_MIME : MIME)[path.extname(name)] ?? 'application/octet-stream',
-        'content-length': bytes.length,
-        'cache-control': 'no-store',
-        ...security,
-      });
-      res.end(req.method === 'HEAD' ? undefined : bytes);
-    } catch (error) {
-      if (report.requestFailures.length < 100)
-        report.requestFailures.push({
-          path: String(req.url).split('?')[0],
-          message: error.message,
+        if (!accepting || res.destroyed) return;
+        res.writeHead(200, {
+          'content-type':
+            (distribution ? PRODUCTION_MIME : MIME)[path.extname(name)] ??
+            'application/octet-stream',
+          'content-length': bytes.length,
+          'cache-control': 'no-store',
+          ...security,
         });
-      res.writeHead(404, {
-        'content-type': 'text/plain',
-        ...security,
-      });
-      res.end(
-        distribution
-          ? 'Not a verified production member.'
-          : 'Not part of the source-shell fixture.',
-      );
-    }
+        res.end(req.method === 'HEAD' ? undefined : bytes);
+      } catch (error) {
+        if (report.requestFailures.length < 100)
+          report.requestFailures.push({
+            path: String(req.url).split('?')[0],
+            message: error.message,
+          });
+        if (!accepting || res.destroyed) return;
+        res.writeHead(404, {
+          'content-type': 'text/plain',
+          ...security,
+        });
+        res.end(
+          distribution
+            ? 'Not a verified production member.'
+            : 'Not part of the source-shell fixture.',
+        );
+      }
+    })();
+    pending.add(work);
+    void work.then(
+      () => pending.delete(work),
+      () => pending.delete(work),
+    );
   });
   await new Promise((resolve, reject) => {
     server.once('error', reject);
     server.listen(0, '127.0.0.1', resolve);
   });
-  return { server, url: `http://127.0.0.1:${server.address().port}/` };
+  return {
+    server,
+    url: `http://127.0.0.1:${server.address().port}/`,
+    stop: () => {
+      accepting = false;
+    },
+    pending: () => pending.size,
+    settled: () => Promise.allSettled([...pending]),
+  };
 }
-const closeServer = ({ server }) =>
-  new Promise((resolve, reject) => {
-    server.close((e) => (e ? reject(e) : resolve()));
-    server.closeAllConnections?.();
+const closeServer = async (owned) => {
+  owned.stop?.();
+  await new Promise((resolve, reject) => {
+    owned.server.close((e) => (e ? reject(e) : resolve()));
+    owned.server.closeAllConnections?.();
   });
+  await owned.settled?.();
+};
 
 export function assertDirectoryLink(href, { origin, id, locale, play }) {
   const url = new URL(href);
@@ -924,6 +963,10 @@ export async function observePracticeDirectoryJourney({
   const production = productionProtocol(plan);
   const independentObserver = plan.protocol === DIRECTORY_PRODUCTION_APPEARANCE_V2_PROTOCOL.id;
   const personal = production || plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id;
+  const memoryDelivery = selectProductionMemoryMode(
+    process.env.PRACTICE_DIRECTORY_DELIVERY,
+    independentObserver,
+  );
   await mkdir(output);
   const scrub = (s) => (password ? String(s).split(password).join('[REDACTED]') : String(s));
   const report = {
@@ -990,7 +1033,8 @@ export async function observePracticeDirectoryJourney({
     if (production) {
       const ioPhase = { label: 'before-browser' };
       report.distributionIO.push(ioPhase);
-      distribution = await verifyDirectoryDistribution(plan, ioPhase);
+      if (memoryDelivery) report.productionDelivery = {};
+      distribution = await verifyDirectoryDistribution(plan, ioPhase, report.productionDelivery);
       report.distribution = {
         directory: distribution.root,
         manifest: pin('manifest.json', distribution.manifestBytes),
@@ -1094,6 +1138,12 @@ export async function observePracticeDirectoryJourney({
       }
     }
     if (production) {
+      // No outstanding HTTP reads may overlap the full after-verification.
+      if (memoryDelivery) {
+        server.stop();
+        await deadline(server.settled(), 10000, 'Original delivery read settlement');
+        assert.equal(server.pending(), 0);
+      }
       const ioPhase = { label: 'after-browser' };
       report.distributionIO.push(ioPhase);
       await verifyDirectoryDistribution(plan, ioPhase);
@@ -1115,6 +1165,11 @@ export async function observePracticeDirectoryJourney({
       ...(browser ? [['browser', () => browser.close()]] : []),
       ...(server ? [['server', () => closeServer(server)]] : []),
     ]);
+    if (report.productionDelivery) {
+      report.productionDelivery.pendingReads = server?.pending() ?? 0;
+      if (!report.productionDelivery.pendingReads) distribution?.memory?.clear();
+      else report.cleanup.completed = false;
+    }
     if (report.resourceAcquisitions.some((r) => r.pending || (r.timedOut && !r.lateClosed)))
       report.cleanup.completed = false;
     if (production && report.distributionIO.some((row) => !row.cleanup?.completed))
