@@ -9,7 +9,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { parse as parseModule } from 'acorn';
+import { parse as parseModule } from '../publishing/vendor/acorn-8.18.0.mjs';
 import {
   readPackIndexes,
   packNavigationSummary,
