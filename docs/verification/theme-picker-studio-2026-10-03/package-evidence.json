@@ -1,0 +1,66 @@
+{
+  "format": "ThemePickerStudioOptionalPackageEvidence.v1",
+  "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/bundle-optional-practice.mjs --out /private/tmp/theme-picker-studio-20261003-optional --packages civilian-flight,civilian-fpv,fpv-worlds",
+  "exitCode": 0,
+  "output": "/private/tmp/theme-picker-studio-20261003-optional",
+  "version": "v0.142.4",
+  "sourceRevision": "5a529f5aa7f167f59f9992cbe0ddcccbe037a32d",
+  "sourceTree": "d8c30a5d942caa73eb25992cfd78aaf89abc7bd8",
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "publicEligible": false,
+  "envelopeSha256": "483f067b68b3ef0b18641fb1f5ba50f3ee7ad8452b9859233964bd5feaef9481",
+  "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+  "measurement": "Uncompressed archive members, including manifest and source inventory metadata.",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "revision": "9cc21fd47d28b7ae5a35ba68beb5977f8ed8a0f3eea9519cdeeca169e3c153a6",
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      },
+      "runtimeFiles": 35,
+      "runtimeBytes": 546048,
+      "runtimeSpareFiles": 29,
+      "runtimeSpareBytes": 7842560,
+      "sourceFiles": 37,
+      "sourceBytes": 569611,
+      "sourceSpareFiles": 27,
+      "sourceSpareBytes": 7818997
+    },
+    {
+      "id": "civilian-fpv",
+      "revision": "b8ea64a1b201333b518f87df86b6ef8f7ab03a366f85f3447b469e4e2804367a",
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      },
+      "runtimeFiles": 67,
+      "runtimeBytes": 4215454,
+      "runtimeSpareFiles": 5,
+      "runtimeSpareBytes": 4173154,
+      "sourceFiles": 69,
+      "sourceBytes": 4243711,
+      "sourceSpareFiles": 3,
+      "sourceSpareBytes": 4144897
+    },
+    {
+      "id": "fpv-worlds",
+      "revision": "cf772ef179c8b3942b093545bd19a5ccad2de38b0c60eacc6956079c729d991b",
+      "limits": {
+        "files": 104,
+        "bytes": 16777216
+      },
+      "runtimeFiles": 102,
+      "runtimeBytes": 14550160,
+      "runtimeSpareFiles": 2,
+      "runtimeSpareBytes": 2227056,
+      "sourceFiles": 104,
+      "sourceBytes": 14583595,
+      "sourceSpareFiles": 0,
+      "sourceSpareBytes": 2193621
+    }
+  ]
+}

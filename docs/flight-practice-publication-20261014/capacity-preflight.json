@@ -1,0 +1,51 @@
+{
+  "format": "revealline-practice-capacity-preflight.v1",
+  "sourceRevision": "b13d3adac4001fadc2b31622c4197c6eba560abd",
+  "corePayloadBytesIncludingManifest": 920089874,
+  "coreFiles": 3195,
+  "selectedPracticeBytes": 6512,
+  "selectedPracticeFiles": 4,
+  "maximumHostedBytes": 950000000,
+  "completeHostedOutput": false,
+  "publicEligible": false,
+  "note": "Sizing only, not publication approval. Admitted archive payload totals exclude additional stable launcher copies, directory and final publication metadata; totals are lower bounds. The earlier development candidate models retained-version cost, not an approved previous release. Core and package revisions differ by documentation only.",
+  "currentPackagePayload": {
+    "sourceRevision": "8718babd1827383a22596c5a0156b280a594929d",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "bytes": 3618524
+      },
+      {
+        "id": "civilian-fpv",
+        "bytes": 6614940
+      },
+      {
+        "id": "fpv-worlds",
+        "bytes": 17026424
+      }
+    ],
+    "totalBytes": 27259888
+  },
+  "examplePreviousGeneration": {
+    "sourceRevision": "449344bcbd800c2c2fdc67829cdfbf8062925564",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "bytes": 3618545
+      },
+      {
+        "id": "civilian-fpv",
+        "bytes": 6614961
+      },
+      {
+        "id": "fpv-worlds",
+        "bytes": 17026173
+      }
+    ],
+    "totalBytes": 27259679
+  },
+  "oneGenerationLowerBound": 947349762,
+  "twoGenerationLowerBound": 974609441,
+  "twoGenerationMinimumExcess": 24609441
+}

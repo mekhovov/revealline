@@ -1,0 +1,16 @@
+{
+  "format": "FPVUrbanRegionalPreparation.v1",
+  "sourceSceneSHA256": "33f3f260df3e0f6b87f204728152d281ef9cbe3f44b51209dc73f8114bf7dbb9",
+  "sourceReceipt": "authoring/fpv-worlds/regions/urban-bando/preparation.json",
+  "licenseReceipt": "authoring/fpv-worlds/assets/kenney/city-industrial/provenance.json",
+  "licenseReceiptSHA256": "68ec564541de04d76afd571df44cd7e90557cdb351feebc97ac6be5b57b78373",
+  "cells": 9,
+  "sourceBytes": 561044,
+  "triangles": 4421,
+  "flightReady": false,
+  "limitations": [
+    "Colour-only derivative; textures remain in original preserved study",
+    "Triangle clipping at 128 m cell boundaries; positions quantized to 1 mm",
+    "No production host, combined terrain transaction, package or default catalogue admission"
+  ]
+}

@@ -141,10 +141,34 @@ test('specialist authoring fails closed and briefing names both complementary jo
     difficulty: 'standard',
   }).level;
   const guidance = coopArenaGuidance(level);
-  assert.match(guidance.supportText, /Interceptor Support removes/);
-  assert.match(guidance.supportText, /Disruptor Support slows/);
+  assert.match(guidance.supportText, /Player 1 Interceptor Support removes/);
+  assert.match(guidance.supportText, /Player 2 Disruptor Support slows/);
   assert.deepEqual(guidance.supportBySeat, [
     'Interceptor · removes nearby travelling impacts',
     'Disruptor · slows nearby enemies',
   ]);
+
+  const reversed = coopArenaGuidance({
+    ...level,
+    supportRoles: ['disruptor', 'interceptor'],
+  });
+  assert.match(reversed.supportText, /Player 2 Interceptor Support removes/);
+  assert.match(reversed.supportText, /Player 1 Disruptor Support slows/);
+  assert.deepEqual(reversed.supportBySeat, [
+    'Disruptor · slows nearby enemies',
+    'Interceptor · removes nearby travelling impacts',
+  ]);
+
+  const calm = structuredClone(level);
+  calm.enemies = [];
+  delete calm.lineImpact;
+  const calmGuidance = coopArenaGuidance(calm);
+  assert.deepEqual(calmGuidance.supportCapabilities, {
+    intercept: false,
+    slow: false,
+    specialist: true,
+    interceptorSeat: 1,
+    disruptorSeat: 2,
+  });
+  assert.doesNotMatch(calmGuidance.supportText, /Interceptor|Disruptor/);
 });

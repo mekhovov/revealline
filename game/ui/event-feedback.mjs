@@ -1,3 +1,4 @@
+import { captureRecipe } from './feedback-cues.mjs';
 import { t } from '../i18n/index.mjs';
 import { PICKUP_COLORS, drawPickupIcon } from './classic-view.mjs';
 
@@ -7,6 +8,7 @@ export function presentationEvent(event, run = null) {
   const known = [
     'cut.closed',
     'cells.claimed',
+    'relay.opened',
     'player.failed',
     'run.completed',
     'craft.redeployed',
@@ -29,6 +31,10 @@ export function presentationEvent(event, run = null) {
   return {
     type: event.type,
     age: 0,
+    ...(event.type === 'relay.opened' ? { revealDuration: 0.4 } : {}),
+    ...(event.type === 'cells.claimed'
+      ? { revealDuration: captureRecipe(event, run).duration }
+      : {}),
     tick: event.tick,
     ...(point ? { x: point.x, y: point.y } : {}),
     ...(PICKUP_COLORS[event.kind] ? { kind: event.kind } : {}),
@@ -44,6 +50,7 @@ export function drawEventFeedback(
   palette,
   {
     themeId = 'fpv',
+    themeFamily = null,
     reduced = false,
     screenScale = 1,
     width = 1152,
@@ -52,7 +59,13 @@ export function drawEventFeedback(
   } = {},
 ) {
   if (!finitePoint(event) || event.age >= 0.7) return;
-  const pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
+  const feedbackTheme =
+      themeFamily === 'fpv'
+        ? 'fpv'
+        : themeFamily === 'atlas'
+          ? 'ukraine'
+          : themeId,
+    pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
     failed = event.type === 'player.failed',
     lineHit = event.type === 'lineImpact.seeded',
     recovered = ['player.respawned', 'shield.absorbed'].includes(event.type);
@@ -91,7 +104,7 @@ export function drawEventFeedback(
   } else if (failed) {
     // Small themed debris stays local to the failed craft, never follows respawn.
     const offset = reduced ? 5 : 4 + Math.min(event.age, 0.35) * 15;
-    if (themeId === 'fpv') {
+    if (feedbackTheme === 'fpv') {
       // Four solid rotor fragments communicate the broken FPV frame without
       // putting bright square brackets around the craft silhouette.
       for (const [x, y] of [
@@ -104,7 +117,7 @@ export function drawEventFeedback(
         ctx.fillRect(x * (offset + 2) - 1, y * (offset + 2) - 1, 2, 2);
       }
       ctx.fillRect(-2, -4, 4, 8);
-    } else if (themeId === 'ukraine') {
+    } else if (feedbackTheme === 'ukraine') {
       for (let i = 0; i < 6; i++) {
         ctx.save();
         ctx.rotate((i * Math.PI) / 3);
@@ -134,7 +147,7 @@ export function drawEventFeedback(
     : failed
       ? t('gameplay:1Life', {
           value1:
-            themeId === 'fpv'
+            feedbackTheme === 'fpv'
               ? t('interface:craftLost')
               : t('interface:lifeLost'),
         })

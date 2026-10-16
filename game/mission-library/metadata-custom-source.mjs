@@ -19,6 +19,7 @@ export async function metadataCustomLibrarySources(
     launch,
     prepare,
     progress,
+    progressState,
   } = {},
 ) {
   if (
@@ -26,7 +27,7 @@ export async function metadataCustomLibrarySources(
     [isCurrent, isOfficial, compatibility, describe, availability, launch].some(
       (fn) => typeof fn !== 'function',
     ) ||
-    [prepare, progress].some((fn) => fn !== undefined && typeof fn !== 'function')
+    [prepare, progress, progressState].some((fn) => fn !== undefined && typeof fn !== 'function')
   )
     throw new TypeError(
       'Metadata browsing needs an inspected inventory and explicit owner adapters.',
@@ -129,6 +130,13 @@ export async function metadataCustomLibrarySources(
             if (!descriptions.has(binding)) throw new TypeError('Unknown metadata mission owner.');
             if (isCurrent(metadata) !== true) return '';
             return progress(binding, mode);
+          }
+        : undefined,
+      progressState: progressState
+        ? (binding, mode) => {
+            if (!descriptions.has(binding)) throw new TypeError('Unknown metadata mission owner.');
+            if (isCurrent(metadata) !== true) return { state: 'new', bestStars: null };
+            return progressState(binding, mode);
           }
         : undefined,
     });

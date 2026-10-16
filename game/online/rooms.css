@@ -1,0 +1,352 @@
+:root {
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--text, #f4f0df);
+  background: var(--background, #080d19);
+  font-family: var(--font-ui, system-ui);
+}
+main {
+  max-width: 1400px;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  margin: auto;
+}
+header,
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+header h1 {
+  flex: 1;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+}
+a {
+  color: #ffda71;
+}
+section {
+  padding: 12px;
+  border: 1px solid #76959d;
+  margin-block: 12px;
+}
+#setup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 12px;
+}
+label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+select,
+input,
+button {
+  min-height: 48px;
+  max-width: 100%;
+  font: inherit;
+  border: 2px solid #8ae3f2;
+  padding: 8px 12px;
+  background: #172331;
+  color: #fff8e9;
+  border-radius: 4px;
+}
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #ffda71;
+  outline-offset: 3px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+input {
+  width: 100%;
+}
+.identity {
+  font-family: monospace;
+  overflow-wrap: anywhere;
+  color: #bbc8c8;
+  font-size: 0.8rem;
+}
+#boards {
+  display: grid;
+  gap: 12px;
+  align-items: center;
+}
+#boards.paired {
+  grid-template-columns: 1fr 1fr;
+}
+canvas {
+  display: block;
+  width: 100%;
+  max-height: 62dvh;
+  object-fit: contain;
+  border: 2px solid #8ae3f2;
+  image-rendering: pixelated;
+}
+#controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: sticky;
+  bottom: max(0px, env(safe-area-inset-bottom));
+  padding: 8px;
+  background: #080d19ee;
+}
+#controls button {
+  min-width: 48px;
+  min-height: 56px;
+}
+#notice,
+#result {
+  color: #ffda71;
+  min-height: 1.5em;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 650px) {
+  #boards.paired {
+    grid-template-columns: 1fr;
+  }
+  #support {
+    font-size: 0.7rem;
+    padding: 4px;
+    flex: 1;
+  }
+  #controls {
+    gap: 4px;
+  }
+  #controls button {
+    min-width: 44px;
+  }
+}
+
+.selection-source,
+#share-selection {
+  grid-column: 1 / -1;
+}
+.accepted-content {
+  border-block: 1px solid #76959d;
+  padding-block: 12px;
+  margin-block: 12px;
+}
+.accepted-content h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+.accepted-content summary {
+  min-height: 44px;
+  padding-block: 12px;
+  cursor: pointer;
+}
+.accepted-content pre {
+  white-space: pre-wrap;
+}
+#result-scope {
+  font-size: 0.85rem;
+  color: #bbc8c8;
+}
+
+/* Shared title/menus own preparation; the active scene uses measured space. */
+#room-source {
+  display: contents;
+}
+#room-source > header {
+  display: none;
+}
+.mode-play-shell section {
+  margin: 0;
+  border: 0;
+}
+#room-play {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  padding: 4px 8px;
+  min-height: 0;
+  overflow: hidden;
+}
+#room-live-status {
+  font-size: 0.85rem;
+  margin: 2px 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#boards {
+  min-height: 0;
+  min-width: 0;
+  gap: 8px;
+  /* The canvas is absolute: its card must fill the allocated grid track so
+     the measured board slot cannot collapse to the HUD's intrinsic height. */
+  align-items: stretch;
+}
+#boards[data-arrangement='paired'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+}
+#boards[data-arrangement='stacked'] {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+.room-board {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.room-hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  font-size: 0.8rem;
+  padding: 3px;
+}
+.room-hud > span:last-child {
+  flex-basis: 100%;
+}
+.room-board-wrap {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+}
+#boards canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  touch-action: none;
+}
+#controls {
+  position: static;
+  padding: 4px 0;
+  min-width: 0;
+  background: transparent;
+  flex-wrap: wrap;
+}
+.direction-controls,
+.room-equipment {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  min-width: 0;
+}
+#controls button {
+  min-height: 56px;
+  min-width: 44px;
+  padding: 6px 10px;
+}
+.room-equipment button {
+  font-size: 0.8rem;
+}
+#room-play #result {
+  display: none;
+}
+#room-settings label {
+  margin-block: 8px;
+}
+#room-settings label:has(input[type='checkbox']) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#room-settings input[type='checkbox'] {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+}
+#room-settings :is(img, canvas) {
+  max-width: 100%;
+}
+.room-mode-links {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+}
+.room-mode-links a {
+  padding: 8px 4px !important;
+  font-size: 0.85rem !important;
+  text-decoration: none;
+}
+#room-settings .theme-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: 8px;
+}
+#room-settings .theme-gallery button {
+  min-width: 0;
+}
+#room-settings .theme-gallery canvas {
+  position: static;
+  width: 100%;
+  max-height: 150px;
+}
+@media (max-width: 480px) {
+  #room-play {
+    padding-inline: 4px;
+  }
+  .room-mode-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .room-hud {
+    font-size: 0.7rem;
+    gap: 2px 6px;
+  }
+  #controls {
+    gap: 4px;
+  }
+}
+/* Match room-input's layout boundary, including narrow keyboard/hybrid windows. */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 899px),
+  (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  #room-play {
+    grid-template: auto minmax(0, 1fr) auto / minmax(0, 1fr) auto;
+  }
+  #room-live-status {
+    grid-column: 1/-1;
+  }
+  #boards {
+    grid-area: 2 / 1;
+  }
+  #room-reaction-caption {
+    grid-row: 3;
+    grid-column: 1 / -1;
+  }
+  #controls {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    flex-direction: column;
+  }
+  .direction-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 44px);
+  }
+  .room-equipment {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(44px, 1fr));
+    max-width: 200px;
+  }
+  .room-equipment button {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  #controls button {
+    min-height: 44px;
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "format": "FPVReplayBindingEvidence.v1",
+  "dateUtc": "2026-10-02T20:27:35.718Z",
+  "baselineReceipt": "docs/evidence/fpv-meadow-groves-replay-main959.json",
+  "baselineSourceHead": "1975948b32aa4c3b016cb58b987a15b1f98e5661",
+  "baselineReplay": {
+    "passed": 178,
+    "total": 178,
+    "frames": 327795
+  },
+  "scope": "Reuses the 178 previously executed fixed-step demonstrations via exact equality of every bound runtime, catalogue and proof input. This is not a fresh 178-recording replay run.",
+  "inputs": {
+    "optional-practice/civilian-fpv/model.mjs": {
+      "bytes": 17641,
+      "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/world-model.mjs": {
+      "bytes": 53026,
+      "sha256": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/world-collision.mjs": {
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/math.mjs": {
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/radio-profile.mjs": {
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/world-themes.mjs": {
+      "bytes": 7637,
+      "sha256": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/flight-sectors.mjs": {
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/catalogue.mjs": {
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/world-catalogue.mjs": {
+      "bytes": 239978,
+      "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/demonstrations.mjs": {
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+      "equalToReplay": true
+    },
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": {
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+      "equalToReplay": true
+    },
+    "game/data-json.mjs": {
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "equalToReplay": true
+    }
+  },
+  "limitations": [
+    "No unit coverage, physical-device, novice or sustained performance acceptance."
+  ]
+}

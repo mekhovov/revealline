@@ -1,0 +1,70 @@
+{
+  "format": "FPVCatalogueNativeQualification.v1",
+  "sourceRevision": "8999ee4e0ca6a860dea10228f67dfa4f535f5864",
+  "checksPassed": 424,
+  "samples": 14,
+  "modeObservation": {
+    "before": [
+      {
+        "title": "catalogue-mode-split",
+        "metadata": "Follow a subject",
+        "watch": false
+      },
+      {
+        "title": "catalogue-mixed",
+        "metadata": "Authored challenge",
+        "watch": false
+      },
+      {
+        "title": "catalogue-gate",
+        "metadata": "Authored challenge",
+        "watch": false
+      }
+    ],
+    "after": [
+      {
+        "title": "catalogue-mode-split",
+        "metadata": "Observe a subject",
+        "watch": false
+      },
+      {
+        "title": "catalogue-mixed",
+        "metadata": "Authored challenge",
+        "watch": false
+      },
+      {
+        "title": "catalogue-gate",
+        "metadata": "Authored challenge",
+        "watch": false
+      }
+    ],
+    "selectedMode": "acro",
+    "expected": "Observe a subject",
+    "actual": "Observe a subject",
+    "stale": false
+  },
+  "files": [
+    {
+      "path": "fpv-imported-catalogue-8976-passed.json.gz",
+      "bytes": 437686,
+      "sha256": "1c33522c4f56a87657b91674096afba2e5b14b2a2e3ce4dbb6204878c7b18f7f",
+      "storedBytes": 55974,
+      "storedSHA256": "6fa5f78a1d3eed765c4add8469224d9221efd9f04b9e7d268828b0dc154485e2"
+    },
+    {
+      "path": "fpv-imported-catalogue-8976-passed.png",
+      "bytes": 8394,
+      "sha256": "a4ff22c0806f6c9fae2e57dae5d6822de5783ca1eeb9c6a009ce6a39e49f2816",
+      "storedBytes": 8394,
+      "storedSHA256": "a4ff22c0806f6c9fae2e57dae5d6822de5783ca1eeb9c6a009ce6a39e49f2816"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 71507,
+      "sha256": "4ac9b2f3337ab8458aa037ec73bd50329e7afcd303fd7e0166ddf47716f708f2",
+      "storedBytes": 18913,
+      "storedSHA256": "94a1213e8db549e145b9c299df515cde187b7be914f0a1606ab2e7199fe7c585"
+    }
+  ],
+  "scope": "Native source fixture, exact102 admitted baseline plus one committed host overlay. Both modes/EN/UK, immutable pack and separate proof imports, native Watch/pause, immediate replay-selected Acro catalogue ownership, durable reopen and disposal. No published Browse, cached offline or successful GPU submission timing claim."
+}

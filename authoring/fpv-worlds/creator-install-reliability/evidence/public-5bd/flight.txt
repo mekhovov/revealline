@@ -1,0 +1,21 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Pause"
+  - paragraph: Lift and land
+  - generic: +
+  - generic: 0.0 m · 0 m/s · 13.6 s
+  - strong: 1/2 · Hold position
+  - status: Flight active.
+  - generic "Yaw 0%, Throttle 0%":
+    - generic: Yaw / Throttle
+    - status: 0% · held
+  - generic "Roll 0%, Pitch 0%":
+    - generic: Roll / Pitch
+  - complementary "Drone response. vertical speed near zero. 0.0 m · +0.0 m/s vertical · 0.0 m/s drift":
+    - button "Hide drone response": ×
+    - status: Drone upright
+- status: Preparing flight…

@@ -1,0 +1,65 @@
+{
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "packages": [
+      {
+        "bytes": 679266,
+        "files": 48,
+        "id": "civilian-flight",
+        "revision": "4bf500370d5864de8632ee3b296ce9706e756e32d71275ca60195766a94edfcb"
+      },
+      {
+        "bytes": 4408761,
+        "files": 69,
+        "id": "civilian-fpv",
+        "revision": "1bdb1dcb9d83d17bb9f9deb74be9fb0ea743c71e37f15da25b284997f91644e1"
+      },
+      {
+        "bytes": 15552760,
+        "files": 102,
+        "id": "fpv-worlds",
+        "revision": "04fb76f9d7ef8ab1585d4c8eb861ee34e586be58de7b851b52d40a30a44012c2"
+      }
+    ],
+    "publicEligible": false,
+    "sourceRevision": "45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a",
+    "sourceTree": "412ed6c18bde25813875e13c3487e1c89567e858",
+    "version": "v0.142.4",
+    "zipMembersVerified": true
+  },
+  "committedInputsVerified": true,
+  "envelopeSha256": "21372889de77077ec2704c47fd7f82a29b508781a47a81211aa4ca10587386cf",
+  "format": "revealline-optional-package-candidate-verification.v1",
+  "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "sourceRevision": "45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a",
+  "sourceTree": "412ed6c18bde25813875e13c3487e1c89567e858",
+  "version": "v0.142.4",
+  "footprints": [
+    {
+      "id": "civilian-flight",
+      "inputs": 41,
+      "inputBytes": 1902195,
+      "sourceInventoryEntries": 49,
+      "runtimeManifestEntries": 47,
+      "admittedFiles": 48
+    },
+    {
+      "id": "civilian-fpv",
+      "inputs": 62,
+      "inputBytes": 5626411,
+      "sourceInventoryEntries": 70,
+      "runtimeManifestEntries": 68,
+      "admittedFiles": 69
+    },
+    {
+      "id": "fpv-worlds",
+      "inputs": 95,
+      "inputBytes": 16758922,
+      "sourceInventoryEntries": 103,
+      "runtimeManifestEntries": 101,
+      "admittedFiles": 102
+    }
+  ]
+}

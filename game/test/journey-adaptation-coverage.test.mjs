@@ -76,6 +76,118 @@ test('explicit spatial-v5 audit resolves current revisions without promoting his
   assert.deepEqual(JSON.parse(cli.stdout), report);
 });
 
+test('spatial-v37 audit uses current execution identities and unchanged historical declarations', async () => {
+  const evidenceURLs = [
+    'xposed-journey-ledger',
+    'horizon-reference-crosswalk',
+    'border-reference-crosswalk',
+    'signal-reference-crosswalk',
+  ].map((name) => new URL(`../../docs/research/${name}.json`, import.meta.url));
+  const evidenceBefore = await Promise.all(evidenceURLs.map((url) => readFile(url)));
+  const currentInputs = await loadJourneyAdaptationInputs({ edition: 'whole-spatial-v37' });
+  const historicalInputs = await loadJourneyAdaptationInputs({ edition: 'actor-originals' });
+  assert.deepEqual(currentInputs.chapters, historicalInputs.chapters);
+  assert.deepEqual(currentInputs.ledger, historicalInputs.ledger);
+  const before = JSON.stringify(currentInputs);
+  const report = inspectJourneyAdaptations(currentInputs);
+  const route = createAuthoredJourneyRoute('whole-spatial-v37');
+  const project = compileContentProject(route.source);
+  assert.equal(report.contentEdition, 'whole-spatial-v37');
+  assert.deepEqual(report.selectedProject, {
+    id: route.source.id,
+    revision: route.source.revision,
+  });
+  assert.deepEqual(report.counts, {
+    sourceFiles: 64,
+    numberedReferences: 48,
+    coveredReferences: 48,
+    adaptationLinks: 66,
+    authoredSoloCandidates: 91,
+    finalDispositions: 0,
+  });
+  assert.deepEqual(report.unlinkedReferences, []);
+  for (const reference of report.references) {
+    assert.deepEqual(
+      reference.source,
+      historicalInputs.ledger.references.find((row) => row.designKey === reference.designKey)
+        .source,
+    );
+    for (const link of reference.adaptations) {
+      const mission = route.source.missions.find((row) => row.id === link.missionId);
+      const chapter = historicalInputs.chapters.find((row) => row.id === link.chapter);
+      const declaration = chapter.declarations.find(
+        (row) => row.missionId === link.missionId && row.reference === reference.designKey,
+      );
+      const declaredMission = chapter.source.missions.find((row) => row.id === link.missionId);
+      assert.equal(link.projectId, route.source.id);
+      assert.equal(link.missionRevision, mission.revision);
+      assert.deepEqual(link.map, mission.map);
+      assert.equal(link.designRationale, declaration.reason);
+      assert.deepEqual(link.declarationProvenance, {
+        projectId: chapter.source.id,
+        missionRevision: declaredMission.revision,
+        map: declaredMission.map,
+        designReview: 'requires-selected-edition-review',
+      });
+      assert.equal(link.finalDisposition, false);
+      assert.equal(link.humanValidation, 'pending');
+      assert.equal(link.releaseValidation, 'not-qualified-by-this-audit');
+      assert.equal(link.editions.length, 6);
+      for (const edition of link.editions)
+        assert.equal(
+          edition.simulationIdentity,
+          resolveMission(project, link.missionId, edition).simulationIdentity,
+        );
+    }
+  }
+  assert.equal(report.originalMissionsWithoutReference.length, 29);
+  assert.equal(
+    new Set(report.originalMissionsWithoutReference.map((row) => row.missionId)).size,
+    29,
+  );
+  assert.equal(JSON.stringify(currentInputs), before);
+  for (const [key, value, expected] of [
+    ['standardSimulationIdentity', 'f'.repeat(16), /Stale declared simulation/],
+    ['referenceSHA256', 'f'.repeat(64), /reference pin/],
+    ['final', true, /final disposition/],
+    ['missionId', 'missing-selected-mission', /mission/i],
+  ]) {
+    const invalid = structuredClone(currentInputs);
+    invalid.chapters[0].declarations[0][key] = value;
+    assert.throws(() => inspectJourneyAdaptations(invalid), expected);
+  }
+  const missingCurrent = structuredClone(currentInputs);
+  missingCurrent.selectedSource = missingCurrent.chapters[0].source;
+  assert.throws(() => inspectJourneyAdaptations(missingCurrent), /mission/i);
+  const cli = spawnSync(
+    process.execPath,
+    [
+      new URL('../../scripts/audit-journey-adaptations.mjs', import.meta.url).pathname,
+      '--edition',
+      'whole-spatial-v37',
+    ],
+    { encoding: 'utf8', maxBuffer: 1024 * 1024 },
+  );
+  assert.equal(cli.status, 0, cli.stderr);
+  assert.deepEqual(JSON.parse(cli.stdout), report);
+  assert.deepEqual(await Promise.all(evidenceURLs.map((url) => readFile(url))), evidenceBefore);
+});
+
+test('audit rejects aliases, unregistered spatial editions and unrelated route families', async () => {
+  for (const edition of [
+    'latest',
+    'whole-spatial-v9999',
+    'whole-spatial-v037',
+    'whole-spatial-v4',
+    'opening',
+    'authored',
+    'whole-originals',
+    'whole-ornament-v2',
+    'team-complete-specialist-originals-1',
+  ])
+    await assert.rejects(() => loadJourneyAdaptationInputs({ edition }), /Unknown.*edition/);
+});
+
 test('explicit teaching audit resolves the same editions as the playable shared route', async () => {
   const route = createAuthoredJourneyRoute('whole-originals-v2');
   const project = compileContentProject(route.source);
@@ -242,4 +354,6 @@ test('CLI derives the same coverage without touching the original observation le
   );
   assert.equal(invalid.status, 1);
   assert.match(invalid.stderr, /Usage/);
+  assert.match(invalid.stderr, /whole-spatial-vN/);
+  assert.match(invalid.stderr, /registered route with N >= 5/);
 });

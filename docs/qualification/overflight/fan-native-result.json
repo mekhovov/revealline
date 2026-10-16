@@ -1,0 +1,7 @@
+{
+  "recordedAt": "2026-10-05T06:08:30.450Z",
+  "sourceCommit": "5a1f3a0c4",
+  "route": "reviewBuild=fan",
+  "automated": true,
+  "resultText": "\n        Sortie complete\n        Automated review · Fan build\n        Time05:49Cleared4863Salvage7360Your buildSaturation Fan 4 · Proximity pulse 3 · Side burst 3 · Salvage scanner 1\n        Try another combination on the same battlefield.\n      "
+}

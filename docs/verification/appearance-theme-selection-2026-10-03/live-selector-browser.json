@@ -1,0 +1,106 @@
+[
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["follow-game"],
+    "resolved": "industrial-workshop",
+    "selected": "follow-game"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["legacy"],
+    "resolved": "legacy",
+    "selected": "legacy"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["industrial-workshop"],
+    "resolved": "industrial-workshop",
+    "selected": "industrial-workshop"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["vyshyvanka"],
+    "resolved": "vyshyvanka",
+    "selected": "vyshyvanka"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["dnipro-porcelain"],
+    "resolved": "dnipro-porcelain",
+    "selected": "dnipro-porcelain"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["tryzub"],
+    "resolved": "tryzub",
+    "selected": "tryzub"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["windows-classic"],
+    "resolved": "windows-classic",
+    "selected": "windows-classic"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["dos"],
+    "resolved": "dos",
+    "selected": "dos"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["orchard-workshop"],
+    "resolved": "orchard-workshop",
+    "selected": "orchard-workshop"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["neon-ruins"],
+    "resolved": "neon-ruins",
+    "selected": "neon-ruins"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["pocket-lcd"],
+    "resolved": "pocket-lcd",
+    "selected": "pocket-lcd"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["copper-observatory"],
+    "resolved": "copper-observatory",
+    "selected": "copper-observatory"
+  },
+  {
+    "apply": false,
+    "cardCount": 13,
+    "options": 13,
+    "pressed": ["sakura-station"],
+    "resolved": "sakura-station",
+    "selected": "sakura-station"
+  }
+]

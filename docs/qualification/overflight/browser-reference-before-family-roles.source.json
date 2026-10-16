@@ -1,0 +1,122 @@
+{
+  "recordedAt": "2026-10-05T05:41:04.217731+00:00",
+  "baseMain": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "scope": "M4 Pro local browser candidate; not Iris Xe target approval",
+  "hardware": "Apple M4 Pro",
+  "os": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+  "requestedViewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "logicalAndBacking": {
+    "width": 960,
+    "height": 540
+  },
+  "sourceFiles": [
+    {
+      "path": "game/overflight/app.mjs",
+      "bytes": 40145,
+      "sha256": "95479e6d8328c13bb629ca9568ffbfaed4ccce405968cd9ab8fa3035f1a87f20"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "bytes": 10254,
+      "sha256": "81b73babe10e4dc55c91571a3dec7c75e5d96ee5699968d64791d21ee0b273ac"
+    },
+    {
+      "path": "game/overflight/audio.mjs",
+      "bytes": 2149,
+      "sha256": "f87fc9c7a0ef3057128e956225fa8846b8d667a1a5c1db351c35707f0565b787"
+    },
+    {
+      "path": "game/overflight/benchmark.mjs",
+      "bytes": 6752,
+      "sha256": "5bba8a44cd0a781cfb3aa4911f2fbdd314def10708afc15fffc25ea125a681a9"
+    },
+    {
+      "path": "game/overflight/community.mjs",
+      "bytes": 4485,
+      "sha256": "1ccdf74977e279ce9bc89819f6d47a7a9e04f908436fe6ee3fdc23742c117b8d"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "bytes": 12040,
+      "sha256": "2f77f2cfd5da48b3c3d3241c201636a4d3107b90da0569a419870b0cd55da282"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "bytes": 48542,
+      "sha256": "8cd0ee3b5354821a05198cee588bdb704957e51e38b29a2d82c72cba9ff105d6"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "bytes": 2552,
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "bytes": 6843,
+      "sha256": "8bfd50af4d6b9d85d8ccc971a7851a21bb8c263504906cc8e5ed2d095974afa3"
+    },
+    {
+      "path": "game/overflight/play.html",
+      "bytes": 6734,
+      "sha256": "82fb2fc560fb13b3ff9e56091386ff75f91472ab815850807921a6bcd262ff65"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "bytes": 19134,
+      "sha256": "6484222c485e6943da74a60cd87d10b44b21bc1f02b3df0de638d9fcf839e60d"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "bytes": 4408,
+      "sha256": "3391710682e438fb4353321097009fad91cb9ebbd8a15256bcae4f658bb4e263"
+    },
+    {
+      "path": "game/overflight/review-recorder.mjs",
+      "bytes": 4049,
+      "sha256": "dfc6a5d8b24fb4310ad2c300352815539483ac3a4f21eca36306e289f15bc48d"
+    },
+    {
+      "path": "game/overflight/style.css",
+      "bytes": 6274,
+      "sha256": "1b55cfbff40c2ed266e79dd4749258d41f6d064da4107f05caa8752d340c5de2"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "bytes": 13107,
+      "sha256": "b1c37abfd2d3a34839cc49e0892a13b69c85cc7b9e11cc43426a9c6553c5a793"
+    },
+    {
+      "path": "game/presentation/overflight-field-kit-art.mjs",
+      "bytes": 4688,
+      "sha256": "b86032fe18ac326c4ff0029c883e8ee0ceeeea4719edbfa1c7a6ef010325c4e7"
+    },
+    {
+      "path": "game/presentation/overflight-motion.mjs",
+      "bytes": 3411,
+      "sha256": "40aec991021863bbb5c080f1e56485e748d46a602ada2228d3bb32a5b56f9a31"
+    },
+    {
+      "path": "game/studio/overflight.css",
+      "bytes": 2083,
+      "sha256": "e502d111bd9400fc038363062d29a860debb8523902413bb0dc04363a2d8e538"
+    },
+    {
+      "path": "game/studio/overflight.html",
+      "bytes": 944,
+      "sha256": "2d266638a1f27d252f8c330329f206afb2c8c7ea79219eac50653bcff89701eb"
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "bytes": 18032,
+      "sha256": "2363c96a4ce6de4270f46fb35c5c2c06ad38228b8696e0eaab3df2a67fc57386"
+    }
+  ]
+}

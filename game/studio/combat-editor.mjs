@@ -48,7 +48,7 @@ export function createCombatEditor({ document, getSource, getMission, apply }) {
       const next = prepare
         ? prepareCombatAuthoring(getSource(), mission.id)
         : setMissionCombatEnabled(getSource(), mission.id, $('enabled').checked);
-      if (apply(next) === false) return;
+      if (apply(next, () => commit(prepare)) === false) return;
       revision = null;
       sync();
       localizedText($('result'), localizedMessage('tools:studio.combat.applied'));

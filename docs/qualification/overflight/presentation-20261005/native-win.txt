@@ -1,0 +1,52 @@
+- main:
+  - button "Menu"
+  - generic: Overflight
+  - button "Pause" [disabled]
+  - region "Overflight battlefield":
+    - generic: Hull 40 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 1
+    - generic: Sortie
+    - strong: 05:42
+    - generic: Level 11
+    - generic: 4,733 Cleared
+    - paragraph: Automated review · Fan + shield · no pulse
+    - generic: Saturation Fan 4
+    - generic: Side burst 3
+    - generic: Slow field 3
+    - generic: Recovery shield 1
+    - generic: Boost 1.9s
+    - generic "Diagnostics"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [active] [level=1]
+    - generic: ✦
+    - paragraph: Field cleared
+    - heading "Sortie complete" [level=2]
+    - paragraph: Final target down. This battlefield tells your story.
+    - paragraph: Automated review · Fan + shield · no pulse
+    - term: Cleared
+    - definition: 4,733
+    - term: Time
+    - definition: 05:42
+    - term: Salvage
+    - definition: 5,443
+    - term: Upgrades earned
+    - definition: "10"
+    - generic: ✓ Elite defeated
+    - generic: ✓ Final tank defeated
+    - generic: ✓ Weapon evolved
+    - heading "Your build" [level=3]
+    - strong: Saturation Fan
+    - generic: Level 4
+    - strong: Side burst
+    - generic: Level 3
+    - strong: Slow field
+    - generic: Level 3
+    - strong: Recovery shield
+    - generic: Level 1
+    - generic: Engineer — A fine route through a complicated place.
+    - paragraph: Try another combination on the same battlefield.
+    - button "Back"
+    - button "Retry"
+- text: + + + + + + + + +

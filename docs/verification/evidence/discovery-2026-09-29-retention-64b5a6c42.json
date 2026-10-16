@@ -1,0 +1,400 @@
+{
+  "format": "revealline-discovery-retention-summary.v1",
+  "qualified": false,
+  "source": {
+    "artifactSha256": "ea951de382f211d8347827a8c60810ebfce1dcd19e6e8b6fcca2fcdec8745c87",
+    "manifestSha256": "9fd5132770972ca1d169b01df48c423d7359592883e623147312a7e9a1be6a1b",
+    "sourceRevision": "64b5a6c42a0bb261bf3a3c21dd1ec13196430d63",
+    "sourceTree": "d524b404bfc1468ecbdada1a4297a7be1aedd856",
+    "editionId": "fpv-learning",
+    "gameplayId": "7feffc97157784af"
+  },
+  "scope": {
+    "missionId": "fpv-meet-aircraft-01",
+    "ordinaryFirstWin": {
+      "coverage": "62.8%",
+      "lives": 3,
+      "attempts": 1,
+      "input": "Trusted Playwright keyboard press/wait via ordinary game controls; no core or progress injection"
+    },
+    "viewerCycles": 40,
+    "intervals": 2,
+    "cyclesPerInterval": 20,
+    "sameDocument": true,
+    "sameCDPIsolate": true,
+    "editionNavigation": false,
+    "headerPolicy": "packaged-preview",
+    "quietWindow": false,
+    "concurrentMachineWork": true
+  },
+  "status": {
+    "capture": "complete",
+    "offlineAnalysis": "validated",
+    "automaticLeakGate": "not-defined",
+    "gracefulCleanup": "failed",
+    "manualCleanup": "complete"
+  },
+  "evidence": [
+    {
+      "path": "capture.json",
+      "bytes": 7739,
+      "sha256": "2aabc97e71bec39ba34aa24f6f967d555421da77bdcf77fe5ec46151ef10a7d7"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 71516,
+      "sha256": "32e3adf2fe11ff2f8614aa1702f96673f2614fda6e036d016e1bcd1462fc8574"
+    },
+    {
+      "path": "attempt-1.json",
+      "bytes": 3606,
+      "sha256": "518881e893671c108704fa5c7f12caf5ae03c3beb7b6ed3c539cebcbf8b55c84"
+    },
+    {
+      "path": "warm-view.json",
+      "bytes": 18711,
+      "sha256": "8f248be529ea6c4489f0e248ae7f763e612f59eca14c39ee2c0eab98a68807bc"
+    },
+    {
+      "path": "cycles-after20.json",
+      "bytes": 267342,
+      "sha256": "b20f0b2cd1a3a90e8a3f17a95ff926569e5bf6624529fb082dc8b0df10516f9f"
+    },
+    {
+      "path": "cycles-after40.json",
+      "bytes": 267251,
+      "sha256": "b201c1b445ebc40d16b648efdcc69b6fc18a1a4bf5d45a9743467084da254783"
+    },
+    {
+      "path": "cleanup-failure.json",
+      "bytes": 1694,
+      "sha256": "413cb65e9ef7ba56840ee949a6215be76ced2dd34e479564a1b4f36736083d3a"
+    },
+    {
+      "path": "manual-cleanup.json",
+      "bytes": 378,
+      "sha256": "1c54163a3cdaab565b417c36fbbb3151a0101e3fc7908a8df1e5cd23ec0b6699"
+    },
+    {
+      "path": "source-postcheck.json",
+      "bytes": 3291,
+      "sha256": "72f96921662b37177fe43c386ee7d1e71f8f21dd6a4bbf2621fd1393970bdb1b"
+    },
+    {
+      "path": "capture.mjs",
+      "bytes": 13012,
+      "sha256": "8a21f56501a9ecb534e57fd99786c2605e4451d337011e468db1dc102e9a8f38"
+    }
+  ],
+  "instrumentation": [
+    {
+      "path": "instrumentation/scripts/analyze-discovery-heap.mjs",
+      "bytes": 13204,
+      "sha256": "0b9dd7a6867bb7ea461578b5e24ce8424c40a8851972a29944438206cc3f3c8b"
+    },
+    {
+      "path": "instrumentation/scripts/analyze-fpv-heap.mjs",
+      "bytes": 9820,
+      "sha256": "4e1bc4fd0932cec11fdf5e7083a779a277f6c9b58590dae4a7e6cd99b18ae25a"
+    },
+    {
+      "path": "instrumentation/scripts/observe-discovery-runtime.mjs",
+      "bytes": 29607,
+      "sha256": "e4f5fc195eaa358bd05854aaaa9114e00c87eedb8100fbd6dce9363b18bcaad7"
+    },
+    {
+      "path": "instrumentation/scripts/observe-discovery-cycles.mjs",
+      "bytes": 11051,
+      "sha256": "b297771b78108204025765ca2e433911fbdaf9e15155f16ea187b628408f9bf3"
+    },
+    {
+      "path": "instrumentation/scripts/game-cli.mjs",
+      "bytes": 79596,
+      "sha256": "f7530f224ccce1e49c81aa70b438fdebfe76da47b90a09065ed29505cf32541b"
+    },
+    {
+      "path": "instrumentation/publishing/edition-zip.mjs",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+    },
+    {
+      "path": "instrumentation/docs/verification/discovery-observer.mjs",
+      "bytes": 17910,
+      "sha256": "76a5738cf196a21e7e74e6309f4296c2b7db7765552374e9d7d98c882f52f72b"
+    },
+    {
+      "path": "instrumentation/docs/verification/discovery-comparison.mjs",
+      "bytes": 11187,
+      "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+    },
+    {
+      "path": "instrumentation/docs/verification/company-review-model.mjs",
+      "bytes": 7785,
+      "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+    },
+    {
+      "path": "capture.mjs",
+      "bytes": 13012,
+      "sha256": "8a21f56501a9ecb534e57fd99786c2605e4451d337011e468db1dc102e9a8f38"
+    }
+  ],
+  "instrumentationUnchangedAfterRebase": true,
+  "sourcePostcheck": {
+    "initialInterruption": "Rebase temporarily removed an instrumentation source; original ENOENT retained in private postcheck.",
+    "retryHead": "2ba9741464f7e38e18ca2c34d84c94355f372f63",
+    "changedSources": []
+  },
+  "snapshots": [
+    {
+      "phase": "warm",
+      "file": {
+        "path": "heap-warm.heapsnapshot",
+        "bytes": 68612407,
+        "sha256": "8492b97fda1c49699793489056fe6cb4a87fe474981e4ea8bd00e4d7e2b91460"
+      },
+      "nodes": 632575,
+      "edges": 2631717,
+      "strongReachableNodes": 632496,
+      "shallowBytes": 52354943,
+      "detachedNodes": 16
+    },
+    {
+      "phase": "after20",
+      "file": {
+        "path": "heap-after20.heapsnapshot",
+        "bytes": 67937492,
+        "sha256": "62a4c29fd9d5ecf58576e3d562ad3673d4d9a9a5454fc28a8983f7bdf091d620"
+      },
+      "nodes": 637176,
+      "edges": 2646954,
+      "strongReachableNodes": 637097,
+      "shallowBytes": 53034507,
+      "detachedNodes": 16
+    },
+    {
+      "phase": "after40",
+      "file": {
+        "path": "heap-after40.heapsnapshot",
+        "bytes": 68174684,
+        "sha256": "449de77715451ba128decdcf85d6a8c70826101e3e79d971e6017e2e077c936b"
+      },
+      "nodes": 637859,
+      "edges": 2651232,
+      "strongReachableNodes": 637780,
+      "shallowBytes": 53170599,
+      "detachedNodes": 16
+    }
+  ],
+  "descriptiveComparison": {
+    "selectedCohorts": 73,
+    "allSelectedCountsUnchanged": true,
+    "namedRewardClosures": [
+      {
+        "name": "closure:createRewardStore",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountDiscoveryDiagram",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountDiscoveryExploration",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountEditionRewards",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountRewardAudioGroup",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountRewardCosmetic",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountRewardKnowledge",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:mountRewardMedia",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:openReward",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:releaseMedia",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:releaseResultImage",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:releaseShelfPictures",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:renderViewer",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      },
+      {
+        "name": "closure:retainReadingFocus",
+        "before": 1,
+        "after": 1,
+        "delta": 0,
+        "survivingIds": 1,
+        "addedIds": 0
+      }
+    ],
+    "representativeNativeWrappers": [
+      {
+        "name": "native:<audio",
+        "before": 3,
+        "after": 3,
+        "delta": 0,
+        "survivingIds": 3,
+        "addedIds": 0
+      },
+      {
+        "name": "native:<dialog",
+        "before": 26,
+        "after": 26,
+        "delta": 0,
+        "survivingIds": 26,
+        "addedIds": 0
+      },
+      {
+        "name": "native:<img",
+        "before": 9,
+        "after": 9,
+        "delta": 0,
+        "survivingIds": 9,
+        "addedIds": 0
+      },
+      {
+        "name": "native:HTMLDocument",
+        "before": 2,
+        "after": 2,
+        "delta": 0,
+        "survivingIds": 2,
+        "addedIds": 0
+      }
+    ],
+    "replacedCohorts": [
+      {
+        "name": "native:<option",
+        "before": 834,
+        "after": 834,
+        "delta": 0,
+        "survivingIds": 831,
+        "addedIds": 3
+      },
+      {
+        "name": "native:<slot",
+        "before": 1054,
+        "after": 1054,
+        "delta": 0,
+        "survivingIds": 1051,
+        "addedIds": 3
+      },
+      {
+        "name": "native:<small",
+        "before": 197,
+        "after": 197,
+        "delta": 0,
+        "survivingIds": 196,
+        "addedIds": 1
+      },
+      {
+        "name": "native:<span",
+        "before": 1413,
+        "after": 1413,
+        "delta": 0,
+        "survivingIds": 1410,
+        "addedIds": 3
+      }
+    ],
+    "firstIntervalShallowByteDelta": 679564,
+    "secondIntervalShallowByteDelta": 136092,
+    "completeShallowByteDelta": 815656,
+    "detachedNodeDelta": 0
+  },
+  "cleanup": {
+    "failure": "After complete snapshots Chrome exited, but the task-owned capture process stalled before its final receipt. Read-only diagnostics found an unclosed zero-connection listener and PipeWrap. The exact pending cleanup await was not established.",
+    "resolution": "The owned Node process required SIGTERM; its listener disappeared. Its remaining temporary Chrome profile was removed explicitly. This is not a clean natural shutdown or an established product/server leak.",
+    "gracefulShutdown": false,
+    "taskProcessGone": true,
+    "browserProcessGone": true,
+    "listenerGone": true,
+    "profileRemoved": true
+  },
+  "limitations": [
+    "One declared CDP isolate/document with exact artifact and instrumentation pins; ordinary closed-view cycles only.",
+    "Forced-GC heap diagnostics alter execution. They are not natural pacing or a five-percent regression comparison.",
+    "Shallow sizes and named populations are not dominator retained sizes or exclusive reward ownership.",
+    "Names may match other modules; exported factory closures can remain resident without a mounted viewer.",
+    "No threshold automatically qualifies stability. Surviving and added IDs require investigation.",
+    "Native media wrappers do not measure decoders, GPU/process allocations or all outstanding object URLs.",
+    "Raw heaps may contain player data and must stay private; this summary omits object strings, IDs and retaining paths.",
+    "Repeated viewing of one earned reward is not edition-switching, twenty new wins or physical-device evidence.",
+    "The warm observer records one cycle; subsequent observations record20. Whole-heap growth includes browser/game/instrumentation and is not exclusive reward retention.",
+    "No clean capture shutdown was obtained; the original failure and manual cleanup receipts remain hash-bound.",
+    "No page-error/request inventory survived the interrupted final receipt; this capture must not assert zero network/runtime errors."
+  ]
+}

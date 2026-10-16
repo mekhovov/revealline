@@ -90,12 +90,20 @@ for (const action of ['cancel', 'failure', 'ready'])
       scenario: null,
       courseSession: null,
       dialogOpen: () => false,
+      guardInstallOfflineBlur: (callback) => callback,
       journeyEnabled: true,
       journeyMission: () => ({ id: 'finished' }),
       authoredRoute: { id: 'edition' },
       librarySuccessor,
+      currentSoloLibraryMission: (host) => host.library.forMode('solo')[0],
       getUnifiedMissionLibrary: async () => ({ library, refreshInstalled: async () => {} }),
       libraryActivationContext: () => ({ isCurrent: () => true }),
+      preparationButtonBusy(button, busy) {
+        // The production helper deliberately keeps the opener focusable while
+        // exposing its asynchronous state through ARIA instead of disabled.
+        button.disabled = false;
+        button.busy = busy;
+      },
       beginPreparation(_text, onCancel) {
         cancel = onCancel;
         return {

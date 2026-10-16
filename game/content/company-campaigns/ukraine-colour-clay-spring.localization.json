@@ -1,0 +1,206 @@
+{
+  "campaignId": "ukraine-colour-clay-spring",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Colour, Clay and Spring", "uk": "Колір, глина і весна" } },
+      "id": "ukraine-colour-clay-spring",
+      "identity": "4aea566bf159b039",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.lesson": {
+          "en": "Open the painted courtyard and reveal where a living craft can appear. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Відкрийте розписане подвір’я та дізнайтеся, де живе ремесло. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original imaginative exhibition courtyard: a whitewashed wall, a wooden household object and paper studies occupy different planes; lively flower-like colour gestures, no facsimile of a named artist or claimed historic mural.",
+          "uk": "Оригінальне уявне виставкове подвір’я: побілена стіна, дерев’яний побутовий предмет і паперові етюди розміщені в різних площинах. Жваві квіткоподібні кольорові мазки не відтворюють твір конкретного митця й не видаються за історичний стінопис."
+        },
+        "design.routeDecision": {
+          "en": "Close the shallow courtyard first or use the paired garden islands to cross into the long painted wing. Read the moving boundary before committing to the next connection.",
+          "uk": "Спершу замкніть неглибоке подвір’я або перейдіть до довгого розписаного крила через парні садові острови. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "A Painted Home", "uk": "Розписана оселя" }
+      },
+      "id": "ukraine-colour-clay-spring-01",
+      "identity": "bfa1e0c6b82ee1e5",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.lesson": {
+          "en": "Connect the portrait alcove with the study tables and keep both artists’ names visible. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте портретну нішу зі столами етюдів і збережіть імена обох митців. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original art-school gallery with an empty labelled portrait frame and two generations of worktables; warm daylight and brushes, no fabricated portrait of Pata or Panko and no museum image reproduction.",
+          "uk": "Оригінальна галерея художньої школи з порожньою підписаною портретною рамою та робочими столами двох поколінь; тепле денне світло й пензлі. Немає вигаданих портретів Пати чи Панка або репродукцій музейних зображень."
+        },
+        "design.routeDecision": {
+          "en": "Take the portrait alcove through its short return or secure the wide study hall before entering the narrow side gallery. Read the moving boundary before committing to the next connection.",
+          "uk": "Захопіть портретну нішу з коротким поверненням або закріпіть широку залу етюдів перед вузькою бічною галереєю. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "The Teacher in the Portrait", "uk": "Учителька на портреті" }
+      },
+      "id": "ukraine-colour-clay-spring-02",
+      "identity": "cd8e191781a8435a",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.lesson": {
+          "en": "Link the three kiln-yard bays and discover the named tradition behind their colours. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Поєднайте три двори біля печі та відкрийте традицію, пов’язану з їхніми кольорами. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original ceramics museum courtyard with three generous display bays, green yellow and brown accents against cream clay vessels; no copied potter motifs, working kiln instructions or invented archaeological attribution.",
+          "uk": "Оригінальне подвір’я музею кераміки з трьома просторими вітринами, зеленими, жовтими й коричневими акцентами на кремових посудинах. Без копіювання авторських мотивів, інструкцій роботи з піччю чи вигаданої археологічної атрибуції."
+        },
+        "design.routeDecision": {
+          "en": "Secure the low kiln-yard bay for a short retreat or link the offset display islands to capture the upper gallery. Read the moving boundary before committing to the next connection.",
+          "uk": "Закріпіть нижній двір для короткого відступу або поєднайте зміщені острови вітрин, щоб захопити верхню галерею. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Clay, Glaze and Place", "uk": "Глина, полива і місце" }
+      },
+      "id": "ukraine-colour-clay-spring-03",
+      "identity": "d1fb88725c326d56",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Сплячий вузол прокидається лише після захоплення всього його тіла; залиште зону попередження, перш ніж користуватися новою територією."
+        },
+        "design.lesson": {
+          "en": "Explore the spacious vase and plate galleries without merging their object records. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Дослідіть просторі галереї вази й тарелі, не змішуючи описи предметів. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original spacious ceramics exhibition with one tall vessel silhouette and one circular plate display; large readable caption cards, spring window light; do not imitate the linked artists’ exact works.",
+          "uk": "Оригінальна простора виставка кераміки з високим силуетом посудини й круглою тарілкою, великими читабельними картками та весняним світлом із вікна. Не імітує точні твори митців із наведених джерел."
+        },
+        "design.routeDecision": {
+          "en": "Cross the open centre for a broad reveal or follow the outer alcoves to inspect each display separately. Read the moving boundary before committing to the next connection.",
+          "uk": "Перетніть відкритий центр для широкого відкриття або рухайтеся зовнішніми нішами, оглядаючи вітрини окремо. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "Two Objects, Two Makers", "uk": "Два предмети — два автори" }
+      },
+      "id": "ukraine-colour-clay-spring-04",
+      "identity": "a1a70fb755235832",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Сплячий вузол прокидається лише після захоплення всього його тіла; залиште зону попередження, перш ніж користуватися новою територією."
+        },
+        "design.lesson": {
+          "en": "Connect the layered colour stations and reveal the idea behind wax-resist decoration. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "З’єднайте станції шарів кольору та відкрийте принцип воскового резерву. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original paper teaching display of three egg-shaped silhouettes and protected white shapes against successive colours, visibly a conceptual diagram rather than an authentic regional pysanka or a heated workshop.",
+          "uk": "Оригінальний паперовий навчальний стенд із трьома яйцеподібними силуетами й захищеними білими ділянками на послідовних кольорах. Це умовна схема, а не автентична регіональна писанка чи майстерня з нагріванням."
+        },
+        "design.routeDecision": {
+          "en": "Build two short colour-band captures or use the central foundation to close a larger layered reveal. Read the moving boundary before committing to the next connection.",
+          "uk": "Зробіть два короткі захоплення кольорових смуг або замкніть більше багатошарове відкриття через центральну основу. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "What the Wax Keeps", "uk": "Що зберігає віск" }
+      },
+      "id": "ukraine-colour-clay-spring-05",
+      "identity": "fd0c508146e449bc",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "Frontier patrols follow the changed boundary after capture; check the return edge before departing. A dormant backlog knot wakes only after you reclaim its whole body; leave its warning area before using the new ground.",
+          "uk": "Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся. Сплячий вузол прокидається лише після захоплення всього його тіла; залиште зону попередження, перш ніж користуватися новою територією."
+        },
+        "design.lesson": {
+          "en": "Bring the painted-home, ceramic and spring galleries into one clearly attributed exhibition. Frontier patrols follow the changed boundary after capture; check the return edge before departing.",
+          "uk": "Поєднайте розписану оселю, кераміку й весняну галерею у виставку з точними підписами. Після захоплення патрулі рухаються вздовж зміненого кордону; перед виходом перевірте край, до якого повертатиметеся."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original spring museum gathering with three distinctly framed display zones for painted surfaces, ceramics and paper egg studies; blank personal gift card as focal point, no copied community installation or claimed traditional symbol.",
+          "uk": "Оригінальна весняна музейна зустріч із трьома окремо оформленими зонами розписаних поверхонь, кераміки й паперових етюдів яєць. У центрі — порожня особиста подарункова картка; без копіювання громадської інсталяції чи тверджень про традиційний символ."
+        },
+        "design.routeDecision": {
+          "en": "Secure the three exhibition wings separately or connect the central islands before opening the finale court. Read the moving boundary before committing to the next connection.",
+          "uk": "Закріпіть три крила виставки окремо або поєднайте центральні острови перед відкриттям фінального двору. Перед наступним з’єднанням простежте за рухом на кордоні."
+        },
+        "name": { "en": "A Gift with a Story", "uk": "Подарунок з історією" }
+      },
+      "id": "ukraine-colour-clay-spring-06",
+      "identity": "f05a47ebbcd506ce",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

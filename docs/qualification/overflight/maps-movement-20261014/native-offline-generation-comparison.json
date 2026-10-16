@@ -1,0 +1,224 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "e2ff4bf6065a37c4fb2550e10580ec277da48f6d8c6ae013120ee16d828fc518",
+  "originalGitBlob": "88ce2f3cdb7d502ce82f8c2403b665aab8810f40",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "createdAt": "2026-10-14T16:04:11.940Z",
+    "previous": {
+      "commit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+      "buildId": "b2edbc1dc1578b5a5d1bfe88a99def3d7f7df380dfe52d329bb91d61905f3df6",
+      "bytes": 66185808
+    },
+    "candidate": {
+      "commit": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "buildId": "8d1da69f5f02e29e87ac7597ceab0cfa5660bb7c66111683be4c35e77b3d84f0",
+      "version": "0.151.1",
+      "files": 1673,
+      "bytes": 66190965
+    },
+    "changedMandatoryFiles": [
+      {
+        "path": "app/current.json",
+        "bytes": 95,
+        "sha256": "f33c0ae1e8d2db5699414cc9fa36bc68c8d6794fe76ab0603ac649a00f160688"
+      },
+      {
+        "path": "game/assets/field-kit/icons/review.html",
+        "bytes": 9234,
+        "sha256": "e4e21d2aa408827e5f4c88020c35ba0f8dba87a2296ff12842facfd453ea7873"
+      },
+      {
+        "path": "game/assets/field-kit/sprites/review.html",
+        "bytes": 205968,
+        "sha256": "8600df55107d9982456a312f8ed2b6b3e3c733762277654a5d77135cc11ec323"
+      },
+      {
+        "path": "game/audio/effects/licenses.html",
+        "bytes": 28014,
+        "sha256": "47ddab76ff5d766b5113cec863363e31301b01d156a19d35868b2f5c4e848604"
+      },
+      {
+        "path": "game/build-info.json",
+        "bytes": 143,
+        "sha256": "cd4b8036ac980a3ef588ab4d78db30a7bb8921d368f4d87013edc397a3a73549"
+      },
+      {
+        "path": "game/communities/droneaid-community/index.html",
+        "bytes": 3487,
+        "sha256": "bb9784a2c4e6cc663004649d34782a3c64edcfd67493e92c50134453a3301d40"
+      },
+      {
+        "path": "game/communities/droneaid/index.html",
+        "bytes": 3449,
+        "sha256": "d6d9d9b9f31df8beeaadd920bbdda200ba724327cca722380410a3c7bc1cea11"
+      },
+      {
+        "path": "game/communities/fpv-learning/index.html",
+        "bytes": 3456,
+        "sha256": "f5d0f9a4aa7bb29af01bf9014447b49b9c650fae623af257a158107c57680e90"
+      },
+      {
+        "path": "game/communities/index.html",
+        "bytes": 13055,
+        "sha256": "4be9a0c561272b33f52c40aea8969d62cb5194fda00d551587c9596ce98d355c"
+      },
+      {
+        "path": "game/communities/social-drone-ua/index.html",
+        "bytes": 3471,
+        "sha256": "d4e944dc3fbc230274e6e840d0025c59e049575be9ff8b40e5624c4fca9bb0a8"
+      },
+      {
+        "path": "game/communities/ukraine-culture/index.html",
+        "bytes": 3503,
+        "sha256": "d91b0ce270b363839ad8143366079c72aa2d4e69ec4028e948c77544f146080d"
+      },
+      {
+        "path": "game/communities/victory-drones/index.html",
+        "bytes": 3466,
+        "sha256": "4db48adc17c08c1534b3299d131e67f40fbefd9c29dc02a9f7aa7ef4b4c234b6"
+      },
+      {
+        "path": "game/community/index.html",
+        "bytes": 7326,
+        "sha256": "b92447beb4ebd8bf69182b7e16763d1625ff9f56ead15628ac21da9de1406da2"
+      },
+      {
+        "path": "game/company.html",
+        "bytes": 7168,
+        "sha256": "102e8f1932e8cf2f79329e13cc37410099f2fe70a1b43f27fa427f70506995bd"
+      },
+      {
+        "path": "game/creator/player.html",
+        "bytes": 20258,
+        "sha256": "b9bcf7ddb5d9c8273710e471c538bba22c2686604247d415bed1822a0d175005"
+      },
+      {
+        "path": "game/downloads.html",
+        "bytes": 17318,
+        "sha256": "4558ff7b77001ca8caa8799b288f5cf20884defc5abbae8bab74924ab2a8fe82"
+      },
+      {
+        "path": "game/index.html",
+        "bytes": 145952,
+        "sha256": "b0eb9e3c390d598aa719f571a9d4cb62622cd71f25c57c64422665f1b5516d9f"
+      },
+      {
+        "path": "game/overflight/benchmark.mjs",
+        "bytes": 9544,
+        "sha256": "566fef1c347a70e88b8964fd2b42d891f81c3967c9d63f07a30b2743901f2c5a"
+      },
+      {
+        "path": "game/overflight/mastery.mjs",
+        "bytes": 9223,
+        "sha256": "171b5c46779a116186b235cdacf30219a113385fbde3b83e626e8c1ece57bb2d"
+      },
+      {
+        "path": "game/overflight/operation-view.mjs",
+        "bytes": 10105,
+        "sha256": "316845b617ed72f394df7c7b484577647860428fa92c51dda6da9b0fa21fb531"
+      },
+      {
+        "path": "game/overflight/play.html",
+        "bytes": 17125,
+        "sha256": "c9a6d0fec6e58f0ff8bce3d4541c78528075c85b0dd90227d17b3feb1a7501a8"
+      },
+      {
+        "path": "game/overflight/raid.html",
+        "bytes": 17964,
+        "sha256": "3b51395b75e123b42f4707513975cf3dea3102009654765f4b08e51bed80e8e8"
+      },
+      {
+        "path": "game/overflight/renderer.mjs",
+        "bytes": 37850,
+        "sha256": "77777580739486aa4d5cd0d8654878767a2c2c940148fcf98dc2bd4caa90f2ef"
+      },
+      {
+        "path": "game/overflight/worlds.mjs",
+        "bytes": 18852,
+        "sha256": "00bbd568642d79f8542abbde2e38124026c9c00e8b54fa123b75f5865d6a002c"
+      },
+      {
+        "path": "game/presentation/battlefield-ground.mjs",
+        "bytes": 5826,
+        "sha256": "759f5a714c0e82bf27af54a9434f14a9c77b1c52de409bb45e5fcd98ca924eb0"
+      },
+      {
+        "path": "game/profile-recovery.html",
+        "bytes": 11820,
+        "sha256": "003edb583932ae1889a1e4324db659b94eeb68b7d807a3132d393cdb2e9d6121"
+      },
+      {
+        "path": "game/replay-theater/index.html",
+        "bytes": 22052,
+        "sha256": "aa081cf6ed84ed565522be7ec1df6feb4505fe093e7f87c433650f08932f1671"
+      },
+      {
+        "path": "game/snake/index.html",
+        "bytes": 10998,
+        "sha256": "8ef074d664c0adaabe1c488aaf1813fc6ffa9d8e869b3a292f0fa638e6324d79"
+      },
+      {
+        "path": "game/snake/play.html",
+        "bytes": 17697,
+        "sha256": "8dd44b4a433bbd056128e3f4b2483839cbf2a59a823c069cae7bf990929d6f4b"
+      },
+      {
+        "path": "game/studio/index.html",
+        "bytes": 163563,
+        "sha256": "b98a68c51084c75f8f85fb9ee303d19849ac8c87bf0794b7b226f4eb5f2e377e"
+      },
+      {
+        "path": "game/ui/battlefield-ground-controls.mjs",
+        "bytes": 3474,
+        "sha256": "0a286bb44290cb20a48e186e3cf0640f636122fc54db3f001324ce772ed7b54e"
+      },
+      {
+        "path": "offline-content.json",
+        "bytes": 836069,
+        "sha256": "2053b06d863d5a1572c89d2ac40bee77a5e4c31b0251a066375b0cfa58b79112"
+      }
+    ],
+    "failureResource": {
+      "path": "game/ui/battlefield-ground-controls.mjs",
+      "bytes": 3474,
+      "sha256": "0a286bb44290cb20a48e186e3cf0640f636122fc54db3f001324ce772ed7b54e"
+    },
+    "exactSourceChecks": [
+      {
+        "path": "game/ui/battlefield-ground-controls.mjs",
+        "bytes": 3474,
+        "sha256": "0a286bb44290cb20a48e186e3cf0640f636122fc54db3f001324ce772ed7b54e"
+      },
+      {
+        "path": "game/overflight/app.mjs",
+        "bytes": 86929,
+        "sha256": "efb7f8e02de907766ba210b6ecb48fdd5470755c5fa8514c9a35e1a4c7e5c6cd"
+      },
+      {
+        "path": "game/overflight/operation-view.mjs",
+        "bytes": 10105,
+        "sha256": "316845b617ed72f394df7c7b484577647860428fa92c51dda6da9b0fa21fb531"
+      },
+      {
+        "path": "game/overflight/renderer.mjs",
+        "bytes": 37850,
+        "sha256": "77777580739486aa4d5cd0d8654878767a2c2c940148fcf98dc2bd4caa90f2ef"
+      }
+    ],
+    "dispatcher": {
+      "upstream": 8935,
+      "online": false
+    },
+    "evidence": "Authentic generated-byte comparison only; candidate not yet switched or browser-update tested.",
+    "failureRequest": {
+      "candidateUpdateDocument": "/app/update.html",
+      "scope": "http://127.0.0.1:8936/",
+      "worker": "http://127.0.0.1:8936/service-worker.js",
+      "url": "http://127.0.0.1:8936/game/ui/battlefield-ground-controls.mjs",
+      "dispatcherPath": "/game/ui/battlefield-ground-controls.mjs",
+      "reason": "Unmodified generated updater and downloads scopes plus generated worker file-path URL mapping; no version-prefix rewrite."
+    }
+  }
+}

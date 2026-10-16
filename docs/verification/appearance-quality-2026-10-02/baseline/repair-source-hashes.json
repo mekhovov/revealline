@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "game/couch/mode-entry.js",
+      "sha256": "2885d96e96588bbb28bf2bd15dfaa3ee86f5de9b75f092f3bf6c8194702fff58",
+      "headSha256": "5726ad2a1a92c97039b14405bac20e19ee05c1980d4738b3b58c7c268068d087"
+    },
+    {
+      "path": "game/test/acceptance-inspector.test.mjs",
+      "sha256": "e72f40a58cd6dd9b1dab4e669a883e3aa12b5e72876310bf8a648bbbe500ae06",
+      "headSha256": "837aa4a9156bc40d4e721b5c393401098972eb3e892bf0b4607aa14d72d057b9"
+    },
+    {
+      "path": "game/test/asset-studio-audio-master.test.mjs",
+      "sha256": "22954301cbb4feaa50dbffeba581578777c0780b48c9cf3296991dfeeae202f9",
+      "headSha256": "a3fb8b1a8140a4b528d956c30cc0f86b8a47902eddf018529bf99342324d915a"
+    },
+    {
+      "path": "game/test/asset-studio-font-cache.test.mjs",
+      "sha256": "0d73ab2e94d16da8292669621e6d46bae865d5814d43928354dd21d2fdf7333c",
+      "headSha256": "3bbe2c50ad70df6a90ccbb063703d9a3058138c2d60da88379007c9eb069428e"
+    },
+    {
+      "path": "game/test/authored-mode-entry-host.test.mjs",
+      "sha256": "c99a330f9a9688190e741d70c5184c7fc04edc0905015ae052cd8a4fd37e272b",
+      "headSha256": "54f6811ef3bd84d9cd9904c45e3295252c312a039500e428806f37e033af9633"
+    },
+    {
+      "path": "game/test/border-timed-detour-pair.test.mjs",
+      "sha256": "c419aac93a6f46e6024705faa89d21d453a30e5d36773eee46f6acb84cafced8",
+      "headSha256": "580ad4f5f1316885e89d5bebcdbd7579efbc7fdea420bcf0ee6592d43cb5a455"
+    },
+    {
+      "path": "game/test/company-studio-ui.test.mjs",
+      "sha256": "8f2860422364662fed10d3159b0e1dc11b642a373a1b0f5f56e0ac514109dd6d",
+      "headSha256": "a046fc35bb4ee8e3a079cfd420a7a058737ff6f25b51bd564cf92727ce00af8b"
+    },
+    {
+      "path": "game/test/controller-practice-pause-host.test.mjs",
+      "sha256": "04b26a93be7026493056f11fb9d93fbfd6f22e7f5079d20b39731162616f8dbb",
+      "headSha256": "ccdac9fc1d93e5c1f6c33e069cfd3bc4fa68dd9df8233040735741e864191d23"
+    },
+    {
+      "path": "game/test/coop-picture-host.test.mjs",
+      "sha256": "ce191068ed7edbac0647aa1d595e85ba8cf00488265f36762254bc811a1d718e",
+      "headSha256": "5d1b893365817a13f8bf5d8d80d7ccb8abd49e4a0de3016523d09074486898dc"
+    }
+  ]
+}

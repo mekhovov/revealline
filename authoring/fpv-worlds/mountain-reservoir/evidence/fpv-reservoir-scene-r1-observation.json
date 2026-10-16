@@ -1,0 +1,141 @@
+{
+  "format": "FPVMountainReservoirStaticViews.v1",
+  "fixture": "eb94767ef8f4c630eb93ec26c586cbef1a4867ea93593f58bc987cb705568a0c",
+  "observations": [
+    {
+      "pose": "shore",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -24,
+        5,
+        26
+      ],
+      "targetMetres": [
+        14,
+        5,
+        -20
+      ],
+      "pixelSHA256": "5f800bbc38ee3613108afd31bc7f9250a8e2cb15137f9499dc188d894efc4491",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 2
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 142,
+          "materials": 210,
+          "textures": 29
+        },
+        "renderer": {
+          "calls": 127,
+          "triangles": 10362,
+          "geometries": 86,
+          "textures": 23,
+          "programs": 13,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "pose": "wide",
+      "quality": "balanced",
+      "appearance": "authored",
+      "positionMetres": [
+        -39,
+        19,
+        35
+      ],
+      "targetMetres": [
+        14,
+        5,
+        -18
+      ],
+      "pixelSHA256": "6d613a4b6d8ed5004abcd992c4068e8b236d95bbe1fa4163aee00aaf9b377502",
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "ukrainian",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 2
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 142,
+          "materials": 210,
+          "textures": 29
+        },
+        "renderer": {
+          "calls": 141,
+          "triangles": 10426,
+          "geometries": 94,
+          "textures": 25,
+          "programs": 13,
+          "contextLost": false
+        }
+      }
+    }
+  ],
+  "errors": []
+}

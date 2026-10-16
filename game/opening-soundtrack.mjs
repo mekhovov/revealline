@@ -29,14 +29,12 @@ export async function prepareOpeningTheme(player, library, options) {
     'Opening-theme preparation requires the soundtrack player.',
   );
   if (!usesOpeningThemeDefault(library, options)) return player.prepare({ allowNetwork: false });
-  await player.selectPlaylist(OPENING_THEME_PLAYLIST_ID);
-  const prepared = await player.prepare({ allowNetwork: true });
-  if (player.snapshot().status !== 'error') return prepared;
-
-  // The opening recording is optional in installed editions and a bounded web
-  // acquisition can also fail. Do not leave the first-run transport on a dead,
-  // one-song queue: hand it to the always-available synthesized collection so
-  // Play and Next remain usable without changing the saved music preference.
-  await player.selectPlaylist(OPENING_THEME_FALLBACK_PLAYLIST_ID);
-  return player.prepare({ allowNetwork: false });
+  await player.selectPlaylist(OPENING_THEME_PLAYLIST_ID, {
+    // Keep recovery with the transport because a muted first visit must defer
+    // acquisition until a later Play gesture. A newer explicit selection
+    // replaces this one-shot fallback before it can affect the user's choice.
+    failureFallbackPlaylistId: OPENING_THEME_FALLBACK_PLAYLIST_ID,
+  });
+  if (player.snapshot().selection !== OPENING_THEME_PLAYLIST_ID) return false;
+  return player.prepare({ allowNetwork: true });
 }

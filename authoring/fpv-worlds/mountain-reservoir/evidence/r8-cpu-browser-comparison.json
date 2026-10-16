@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "pairs": [
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "acro",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "self-level",
+      "exact": true
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "acro",
+      "exact": true
+    }
+  ],
+  "checks": 304,
+  "errors": [],
+  "scope": "Exact ordinary-flight terminal records versus actual admitted controlled-RAF Watch; no timing/FPS claim."
+}

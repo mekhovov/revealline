@@ -1,3 +1,4 @@
+import { FIXED_DT } from '../coop/core.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
@@ -60,6 +61,10 @@ test('earned First Connection focuses Next and one explicit action prepares and 
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-play').hidden, true);
   assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(Boolean(f.$('coop-menu-goal').closest('[hidden],[inert]')), false);
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
+  f.disclose('coop-help');
   assertYardBriefing(f, { visible: true });
 });
 
@@ -71,19 +76,25 @@ function assertYardBriefing(f, { visible = false } = {}) {
   assert.equal(f.$('coop-briefing-title').textContent, 'TAKE THE STRONGHOLD TOGETHER');
   assert.match(f.$('coop-menu-goal').textContent, /both anchors, then the exposed core/i);
   if (visible) {
-    for (const node of [help, f.$('coop-briefing-title'), f.$('coop-menu-goal')])
+    for (const node of [help, f.$('coop-briefing-title')])
       assert.equal(Boolean(node.closest('[hidden],[inert]')), false);
   }
 }
 
 function recordText(t, node, onWrite = () => {}) {
   const own = Object.getOwnPropertyDescriptor(node, 'textContent');
+  const ownAppend = Object.getOwnPropertyDescriptor(node, 'append');
+  const append = node.append;
   let prototype = node;
   while (!Object.getOwnPropertyDescriptor(prototype, 'textContent'))
     prototype = Object.getPrototypeOf(prototype);
   const original = Object.getOwnPropertyDescriptor(prototype, 'textContent');
   assert.equal(typeof original.set, 'function');
   const writes = [];
+  const record = (value) => {
+    writes.push(String(value));
+    onWrite(String(value));
+  };
   Object.defineProperty(node, 'textContent', {
     configurable: true,
     get() {
@@ -91,13 +102,20 @@ function recordText(t, node, onWrite = () => {}) {
     },
     set(value) {
       original.set.call(this, value);
-      writes.push(String(value));
-      onWrite(String(value));
+      record(value);
     },
   });
+  // Localized captions own a text node so later locale changes retain icons and controls.
+  // Observe that initial append synchronously, including blur inside a status publication.
+  node.append = function (...children) {
+    append.apply(this, children);
+    record(this.textContent);
+  };
   t.after(() => {
     if (own) Object.defineProperty(node, 'textContent', own);
     else delete node.textContent;
+    if (ownAppend) Object.defineProperty(node, 'append', ownAppend);
+    else delete node.append;
   });
   return writes;
 }
@@ -234,7 +252,9 @@ test('menu, lifecycle, mode departure and newer focus retire a pending Next with
         menuPad.buttons[0] = { pressed: true, value: 1 };
         f.tick(2);
         menuPad.buttons[0] = { pressed: false, value: 0 };
-        f.tick(2);
+        // This case joins by controller, then deliberately activates Next by
+        // keyboard. Advance beyond the 1250 ms native Confirm echo window.
+        f.tick(Math.ceil(1.5 / FIXED_DT));
         assertResult(f, result);
       }
       const held = control.hold();

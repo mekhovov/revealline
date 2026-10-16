@@ -1,0 +1,17 @@
+{
+  "source": "d9ad2561e",
+  "url": "http://127.0.0.1:8878/dist/fpv-world-disposal-admitted-player-d9ad2561e/optional-practice/fpv-worlds/index.html",
+  "challenge": "Clearing check-in",
+  "armedSeconds": 0.2,
+  "paused": true,
+  "logs": [],
+  "priorAttempt": {
+    "tab": "198",
+    "challenge": "Lift and land",
+    "stage": "briefing Start",
+    "result": "Browser transport target-closed/focus-emulation timeout; no launch pass or runtime cause established."
+  },
+  "limitations": [
+    "Normal render/arm/pause only; no physical-controller or sustained-performance claim."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "sourceRevision": null,
+  "baseRevision": "ca03d7d7d84dcf50bbab6d2734a6d09097e27ed6",
+  "note": "Built with sourceRevision:null; manifest and runtime source hashes pin exact served bytes.",
+  "profile": "main-pages",
+  "version": "0.151.1",
+  "buildId": "5c1dcffbada0f3a176512d431af3db7e9611d2cafec1004dfac0f8c113b1b44b",
+  "origin": "http://127.0.0.1:8901",
+  "files": 3192,
+  "totalBytes": 918989235,
+  "coreFiles": 1650,
+  "coreBytes": 65381834,
+  "changedDuringPreparation": []
+}

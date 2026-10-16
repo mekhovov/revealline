@@ -1,0 +1,96 @@
+{
+  "parent": "0d7e0d28a6e928bc56f2b5960d02ad3233162633",
+  "productionReview": "deferred-not-passed",
+  "scope": "Sentry detour actual modeled Solo host, Standard seed1, grid-center and immediate",
+  "tests": {
+    "pass": 2,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 96618.310208
+  },
+  "files": [
+    {
+      "path": "game/test/sentry-practice-qualification.test.mjs",
+      "bytes": 12712,
+      "sha256": "505656e41512fcd4794ccfbfc8cc02727fd40c9e46c1285bda310f539b89532e"
+    },
+    {
+      "path": "game/content-design/combat-candidates.mjs",
+      "bytes": 6419,
+      "sha256": "241cca3ee64dcadd779e433687143549bb16c1054c05fbb63f5b0c51eb71495e"
+    },
+    {
+      "path": "game/test/fixtures/combat-candidate-routes.json",
+      "bytes": 41471,
+      "sha256": "ebc478f63149a503609a14611fff4aa78ca1f37f12e0b847c1645137dfbcae8a"
+    },
+    {
+      "path": "game/test/fixtures/combat-candidate-observations.json",
+      "bytes": 17206,
+      "sha256": "171a59c99480ce841e9c4ad7d4ec2a653f366cb837e9d094f7050ccb2188569f"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 461075,
+      "sha256": "593c938cbe320200a262b53b277bbf0fcc761b92bef1485e89e803491fea5a4d"
+    },
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "bytes": 18658,
+      "sha256": "45a09d2b08ba04d01166c5ed130656df6d9ab97d167319e1d4e3c809d56c88fc"
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "bytes": 24406,
+      "sha256": "d310870d2f4a492f944d84a382572048f07c14af237d395f204d5ba4cd1930af"
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "bytes": 37810,
+      "sha256": "826fa1d2b0bf7a4d0f89deeb1c586ba462646e12cc7c83e612d9721aa79855e9"
+    },
+    {
+      "path": "docs/combat-pressure-authoring.md",
+      "bytes": 12152,
+      "sha256": "ceb38a788d42e9187a2e0bde3146f50a101523140df8ec1d8b3b5e8e055a10f0"
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "bytes": 9044,
+      "sha256": "bc7441944debac822f1bfd188e3500b151ccb50eff887e1ca3bc0b47ec680757"
+    },
+    {
+      "path": "docs/verification/actor-batch-19/README.md",
+      "bytes": 4952,
+      "sha256": "a7d7c321fc7c40194ac905d9674ded23182f610a68b679e94443514cb198f48d"
+    },
+    {
+      "path": "docs/verification/actor-batch-19/fixture-gesture-mismatch.tap.gz",
+      "bytes": 677,
+      "sha256": "79d413664048080825ed44aa2eef97685e7f328dcea576115bb299fc73be26d5"
+    },
+    {
+      "path": "docs/verification/actor-batch-19/focused.tap",
+      "bytes": 671,
+      "sha256": "c8ebe8d39296f3748dc83d4fddefd09c6cfc6cde9436b50e94f515bcc5ed4caf"
+    },
+    {
+      "path": "docs/verification/actor-batch-19/recorder-gesture-diagnostic.tap.gz",
+      "bytes": 699,
+      "sha256": "3901e5c29daaebeb771176e647b776e8aec000475bddd4da28c45e01db61313f"
+    }
+  ],
+  "preservedLogDecoding": [
+    {
+      "path": "docs/verification/actor-batch-19/fixture-gesture-mismatch.tap.gz",
+      "decodedBytes": 1906,
+      "decodedSha256": "c8af11a6cf6597382d64a3698a20bba1dc24b8b58e220d672afe5bb8d5f64862"
+    },
+    {
+      "path": "docs/verification/actor-batch-19/recorder-gesture-diagnostic.tap.gz",
+      "decodedBytes": 1621,
+      "decodedSha256": "4d70a376acc25cbd12a67f4d0c73fe0ed4d8701a01966e4a535232b1e44aff1e"
+    }
+  ]
+}

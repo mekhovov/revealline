@@ -1,0 +1,138 @@
+{
+  "format": "OverflightEarnedPulseBalanceV1",
+  "protocol": "One airframe, default front encounters, ordinary 10 Hz pilot until selected pulse rank, legal earned drafts throughout; park releases movement, move continues the same pilot.",
+  "injectedBuild": false,
+  "fixture": false,
+  "directStateWrites": false,
+  "mode": "park",
+  "wanted": 2,
+  "seed": 17031991,
+  "limit": 240,
+  "revision": "working-tree",
+  "sourceBindings": [
+    {
+      "path": "package.json",
+      "sha256": "f53e728f3f044062709c9c9154e73811c56994642c9dba0a2cf5400c442ff55a"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "2e4f2232cd6f7d0b5869f20733aacbc17c5c5200b801cf51e54baae5570fbfea"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "3391710682e438fb4353321097009fad91cb9ebbd8a15256bcae4f658bb4e263"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "064ac8894ef56734a96b690b0c6237e2c6e359b4dba475fb81e04b52b3d7d715"
+    }
+  ],
+  "outcome": "lost",
+  "time": 66.75,
+  "rankEarnedAt": 44.766666666666666,
+  "firstDamageAfterRank": 56.21666666666667,
+  "hullAtRank": 100,
+  "hull": 0,
+  "damageAfterRank": 100,
+  "kills": 177,
+  "xp": 147,
+  "build": {
+    "primary": {
+      "rank": 2,
+      "branch": "double",
+      "evolved": false
+    },
+    "combat": [
+      {
+        "id": "proximity-pulse",
+        "rank": 2
+      }
+    ],
+    "support": null,
+    "reinforcement": 0,
+    "repair": 0
+  },
+  "history": [
+    {
+      "id": "primary:double:2",
+      "time": 19.166666666666668,
+      "tick": 1150
+    },
+    {
+      "id": "proximity-pulse:1",
+      "time": 28.15,
+      "tick": 1689
+    },
+    {
+      "id": "proximity-pulse:2",
+      "time": 44.766666666666666,
+      "tick": 2686
+    }
+  ],
+  "samples": [
+    {
+      "time": 10,
+      "hull": 100,
+      "kills": 2,
+      "xp": 2
+    },
+    {
+      "time": 20,
+      "hull": 100,
+      "kills": 15,
+      "xp": 14
+    },
+    {
+      "time": 30,
+      "hull": 100,
+      "kills": 50,
+      "xp": 50
+    },
+    {
+      "time": 40,
+      "hull": 100,
+      "kills": 87,
+      "xp": 83
+    },
+    {
+      "time": 50,
+      "hull": 100,
+      "kills": 108,
+      "xp": 102
+    },
+    {
+      "time": 60,
+      "hull": 60,
+      "kills": 148,
+      "xp": 131
+    }
+  ]
+}

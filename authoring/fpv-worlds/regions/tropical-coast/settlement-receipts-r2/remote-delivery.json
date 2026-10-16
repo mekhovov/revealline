@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "sourceCommit": "9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c",
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json",
+    "bytes": 6609,
+    "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49"
+  },
+  "files": 38,
+  "totalBytes": 7857157,
+  "requests": 39,
+  "preparedBlobs": 39,
+  "scope": "Actual immutable GitHub source fetched through production descriptor/pair/dependency hash validation. No native install or player admission claim."
+}

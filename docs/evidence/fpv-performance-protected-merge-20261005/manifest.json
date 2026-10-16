@@ -1,0 +1,38 @@
+{
+  "format": "FPVProtectedPerformanceMergeEvidence.v1",
+  "sourceDirectory": "/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test/.cache/pr1099-protected-merge-20261005",
+  "pullRequest": 1099,
+  "head": "823fd48afb771b49700bd18f29593f22a016664a",
+  "merge": "e3e1e8b8d3b061a85c77f7bc82159db810dff688",
+  "files": [
+    {
+      "path": "eligibility.json.gz",
+      "originalBytes": 4317,
+      "originalSHA256": "4cf57802546b0cf6f477adbf8261e0a89702d39175446424c23d3a3c3790fee8",
+      "archiveBytes": 654,
+      "archiveSHA256": "a3a3e8e613ee7f6e2a07a3ce09dfbe26ccfa2f97fc0c1267e26bded0c47cbcd4"
+    },
+    {
+      "path": "merged.json.gz",
+      "originalBytes": 741,
+      "originalSHA256": "3f41e9625bbe2493db45a36ca9f57bd5e059e2186a2975eeab380d77b665ed4e",
+      "archiveBytes": 390,
+      "archiveSHA256": "848138dfad06dee697663b906a9dd78002c629f24002bbd62e7123b8583f7ef3"
+    },
+    {
+      "path": "request-response.json.gz",
+      "originalBytes": 246,
+      "originalSHA256": "c221923443f4922ea70906049f7f76dc8a3d2e927d75c9c285c32e6ade96122c",
+      "archiveBytes": 203,
+      "archiveSHA256": "1ab56964f09436465823fb1fc06cf1528e41dbbd50fd21c13f0f69825ab293a4"
+    },
+    {
+      "path": "publication-observation.json.gz",
+      "originalBytes": 2233,
+      "originalSHA256": "6ee8effc77fcdea15a68c972a52d6a15a61b57600cf8220f17f5e92fd5073c73",
+      "archiveBytes": 834,
+      "archiveSHA256": "46e245610fcc00f6e8b2ab042b0d95f42aa81a740867ce68784e07add603aca9"
+    }
+  ],
+  "scope": "Lossless retention of the protected merge lane receipts. Public markers were still on prior main at the recorded observation; actual public launch is not verified."
+}

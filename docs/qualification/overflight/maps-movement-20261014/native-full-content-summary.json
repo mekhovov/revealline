@@ -1,0 +1,3695 @@
+{
+  "schema": "OverflightNativeFullContentQualificationV1",
+  "conditions": {
+    "hardware": "Apple M4 Pro/macOS26.7.1/CodexChromium155",
+    "viewport": "936×1143CSS,DPR2; requested1920×1080 override didnotchangeactualreportedviewport",
+    "backing": "960×540",
+    "quality": "normal",
+    "audio": "mastermuted",
+    "recording": false,
+    "trials": "Each fresh restart30s warmup+120s completed rendering including normal draftwalltime",
+    "background": "Otherdesktopappsopen; normal production preparation mayrun concurrently; foreground stalls retained; no isolated-machineclaim"
+  },
+  "runs": [
+    {
+      "sourceRevision": "b12d4a1346786ba38bd707e008110a549a1bea7e",
+      "file": "native/full-survivor-trial-1.json.gz",
+      "sha256Raw": "c3d3800b06429e64620c2b512ecfe77d5dffcd4c6581a71c290c551927c1b764",
+      "capturedAt": "2026-10-14T15:54:39.965Z",
+      "operation": "Single Drone",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.00009999999963,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13437,
+            "seconds": 111.9746999999987
+          },
+          "upgrade": {
+            "samples": 961,
+            "seconds": 8.025400000000365
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14398,
+          "p50": 8.300000000745058,
+          "p95": 9.5,
+          "p99": 10.5,
+          "worst": 17.09999999962747
+        },
+        "cadenceHz": 119.98323334730591,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "616b18b39fd279b5",
+        "seed": 17031991,
+        "phase": "upgrade",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 138.73333333333332,
+        "tick": 8324,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 547,
+          "spawned": 630,
+          "enemiesAlive": 83,
+          "enemiesVisible": 54,
+          "peakAlive": 101,
+          "peakVisible": 69,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 2,
+          "damageDealt": 20985,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 803,
+          "xpCollected": 752,
+          "xpOnGround": 51,
+          "pickupsAlive": 36,
+          "pickupMerges": 0,
+          "boostsUsed": 24,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 18295,
+          "hits": 799,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 64,
+          "warningDeferrals": 43
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "slow-field:1",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "slow-field:2",
+            "time": 46.85,
+            "tick": 2811
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 67.25,
+            "tick": 4035
+          },
+          {
+            "id": "slow-field:3",
+            "time": 106.9,
+            "tick": 6414
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "616b18b39fd279b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f910e9a1b740854f"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 101,
+        "visible": 69,
+        "rendered": 72,
+        "effects": 48,
+        "pickups": 36
+      }
+    },
+    {
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "file": "native/full-survivor-trial-2.json.gz",
+      "sha256Raw": "f93fdcf88a6b4485eb74978acb9eab444a8b760826d7890e62614cbf8af64f22",
+      "capturedAt": "2026-10-14T15:59:02.673Z",
+      "operation": "Single Drone",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "trial": 2,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.00359999999962,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13458,
+            "seconds": 111.96379999999992
+          },
+          "upgrade": {
+            "samples": 963,
+            "seconds": 8.039799999998865
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14421,
+          "p50": 8.300000000745058,
+          "p95": 10.200000001117587,
+          "p99": 12.5,
+          "worst": 18.5
+        },
+        "cadenceHz": 120.17139485815463,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "616b18b39fd279b5",
+        "seed": 17031991,
+        "phase": "upgrade",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 138.73333333333332,
+        "tick": 8324,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 547,
+          "spawned": 630,
+          "enemiesAlive": 83,
+          "enemiesVisible": 54,
+          "peakAlive": 101,
+          "peakVisible": 69,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 2,
+          "damageDealt": 20985,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 803,
+          "xpCollected": 752,
+          "xpOnGround": 51,
+          "pickupsAlive": 36,
+          "pickupMerges": 0,
+          "boostsUsed": 24,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 18295,
+          "hits": 799,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 64,
+          "warningDeferrals": 43
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "slow-field:1",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "slow-field:2",
+            "time": 46.85,
+            "tick": 2811
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 67.25,
+            "tick": 4035
+          },
+          {
+            "id": "slow-field:3",
+            "time": 106.9,
+            "tick": 6414
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "616b18b39fd279b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f910e9a1b740854f"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 101,
+        "visible": 69,
+        "rendered": 72,
+        "effects": 48,
+        "pickups": 36
+      }
+    },
+    {
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "file": "native/full-survivor-trial-3.json.gz",
+      "sha256Raw": "228349a77f983f372420f48e105103fdcdfdc386722abcfd2b425f6ce4b45d7b",
+      "capturedAt": "2026-10-14T16:02:06.462Z",
+      "operation": "Single Drone",
+      "layout": "chalk-quarry-haul-switchbacks",
+      "trial": 3,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99609999999963,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13497,
+            "seconds": 111.9523
+          },
+          "upgrade": {
+            "samples": 967,
+            "seconds": 8.043799999998864
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14464,
+          "p50": 8.300000000745058,
+          "p95": 9.700000001117587,
+          "p99": 12,
+          "worst": 123.40000000037253
+        },
+        "cadenceHz": 120.53725079398451,
+        "slowFraction": 0.00048396017699115044,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "616b18b39fd279b5",
+        "seed": 17031991,
+        "phase": "upgrade",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 138.73333333333332,
+        "tick": 8324,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 547,
+          "spawned": 630,
+          "enemiesAlive": 83,
+          "enemiesVisible": 54,
+          "peakAlive": 101,
+          "peakVisible": 69,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 2,
+          "damageDealt": 20985,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 803,
+          "xpCollected": 752,
+          "xpOnGround": 51,
+          "pickupsAlive": 36,
+          "pickupMerges": 0,
+          "boostsUsed": 24,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 18295,
+          "hits": 799,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 64,
+          "warningDeferrals": 43
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "slow-field:1",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "slow-field:2",
+            "time": 46.85,
+            "tick": 2811
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 67.25,
+            "tick": 4035
+          },
+          {
+            "id": "slow-field:3",
+            "time": 106.9,
+            "tick": 6414
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "616b18b39fd279b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f910e9a1b740854f"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 101,
+        "visible": 69,
+        "rendered": 72,
+        "effects": 48,
+        "pickups": 36
+      }
+    },
+    {
+      "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+      "file": "native/full-riy-trial-1.json.gz",
+      "sha256Raw": "700fbee6168590eed86b4733cab0570107f808dd2d98aff61be06f2df51d8a2b",
+      "capturedAt": "2026-10-14T16:20:31.815Z",
+      "operation": "Riy",
+      "layout": "freight-depot-loading-loop",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.00539999999852,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13564,
+            "seconds": 112.48839999999825
+          },
+          "upgrade": {
+            "samples": 900,
+            "seconds": 7.516999999999989
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14464,
+          "p50": 8.299999998882413,
+          "p95": 10.099999999627471,
+          "p99": 12.800000000745058,
+          "worst": 58
+        },
+        "cadenceHz": 120.52790957740385,
+        "slowFraction": 0.00048396017699115044,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-freight-depot-loading-loop",
+        "projectIdentity": "7b35283aef479c94",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 139.21666666666667,
+        "tick": 8353,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 441,
+          "spawned": 590,
+          "enemiesAlive": 149,
+          "enemiesVisible": 63,
+          "peakAlive": 165,
+          "peakVisible": 106,
+          "heaviesAlive": 1,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 17401.2,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 676,
+          "xpCollected": 573,
+          "xpOnGround": 103,
+          "pickupsAlive": 61,
+          "pickupMerges": 0,
+          "boostsUsed": 31,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 43037,
+          "hits": 1759,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 59,
+          "warningDeferrals": 91,
+          "motionDeferrals": 39
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "double",
+            "evolved": true
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:double:2",
+            "time": 22.816666666666666,
+            "tick": 1369
+          },
+          {
+            "id": "riy-sweeper:trail:2",
+            "time": 42.68333333333333,
+            "tick": 2561
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 58.88333333333333,
+            "tick": 3533
+          },
+          {
+            "id": "primary:double:3",
+            "time": 71.08333333333333,
+            "tick": 4265
+          },
+          {
+            "id": "primary:double:4",
+            "time": 96.28333333333333,
+            "tick": 5777
+          },
+          {
+            "id": "riy-sweeper:trail:3",
+            "time": 129.16666666666666,
+            "tick": 7750
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 16,
+        "escortEngagements": 16,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 102
+          },
+          {
+            "role": "breaker",
+            "shots": 81
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 2,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "7b35283aef479c94",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f17fbcbbdc5d4666"
+        },
+        "review": {
+          "automated": true,
+          "build": "echo",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 165,
+        "visible": 106,
+        "rendered": 109,
+        "effects": 39,
+        "pickups": 46
+      }
+    },
+    {
+      "sourceRevision": "e914f3bdd8e36b9b78d794da4f1342dcda449e00",
+      "file": "native/full-riy-trial-2.json.gz",
+      "sha256Raw": "99de2d7b778ff0746ccb6691279c764ed1d3dbeaeebf3b8b2d35820da3fa5255",
+      "capturedAt": "2026-10-14T16:23:43.972Z",
+      "operation": "Riy",
+      "layout": "freight-depot-loading-loop",
+      "trial": 2,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99990000000037,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13504,
+            "seconds": 112.48989999999972
+          },
+          "upgrade": {
+            "samples": 900,
+            "seconds": 7.509999999999997
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14404,
+          "p50": 8.300000000745058,
+          "p95": 10.5,
+          "p99": 12.599999999627471,
+          "worst": 53.5
+        },
+        "cadenceHz": 120.0334333611941,
+        "slowFraction": 0.00006942515967786726,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-freight-depot-loading-loop",
+        "projectIdentity": "7b35283aef479c94",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 139.25,
+        "tick": 8355,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 441,
+          "spawned": 590,
+          "enemiesAlive": 149,
+          "enemiesVisible": 64,
+          "peakAlive": 165,
+          "peakVisible": 106,
+          "heaviesAlive": 1,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 17439,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 676,
+          "xpCollected": 573,
+          "xpOnGround": 103,
+          "pickupsAlive": 61,
+          "pickupMerges": 0,
+          "boostsUsed": 31,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 43062,
+          "hits": 1760,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 59,
+          "warningDeferrals": 91,
+          "motionDeferrals": 39
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "double",
+            "evolved": true
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:double:2",
+            "time": 22.816666666666666,
+            "tick": 1369
+          },
+          {
+            "id": "riy-sweeper:trail:2",
+            "time": 42.68333333333333,
+            "tick": 2561
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 58.88333333333333,
+            "tick": 3533
+          },
+          {
+            "id": "primary:double:3",
+            "time": 71.08333333333333,
+            "tick": 4265
+          },
+          {
+            "id": "primary:double:4",
+            "time": 96.28333333333333,
+            "tick": 5777
+          },
+          {
+            "id": "riy-sweeper:trail:3",
+            "time": 129.16666666666666,
+            "tick": 7750
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 16,
+        "escortEngagements": 16,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 102
+          },
+          {
+            "role": "breaker",
+            "shots": 82
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 2,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "7b35283aef479c94",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f17fbcbbdc5d4666"
+        },
+        "review": {
+          "automated": true,
+          "build": "echo",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 165,
+        "visible": 106,
+        "rendered": 109,
+        "effects": 39,
+        "pickups": 46
+      }
+    },
+    {
+      "sourceRevision": "0b1aa412dac310c752d562b1029e5bcab79e581c",
+      "file": "native/full-riy-trial-3.json.gz",
+      "sha256Raw": "9db6fa13d6cb5afe8f07de2c53ac63742768282fad4c5a1ac21b2b4be30ed4c9",
+      "capturedAt": "2026-10-14T16:26:27.357Z",
+      "operation": "Riy",
+      "layout": "freight-depot-loading-loop",
+      "trial": 3,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.9938999999985,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13492,
+            "seconds": 112.47639999999618
+          },
+          "upgrade": {
+            "samples": 902,
+            "seconds": 7.517500000001865
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14394,
+          "p50": 8.300000000745058,
+          "p95": 9.5,
+          "p99": 10.300000000745058,
+          "worst": 52.40000000037253
+        },
+        "cadenceHz": 119.95609776830472,
+        "slowFraction": 0.00006947339169098236,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-freight-depot-loading-loop",
+        "projectIdentity": "7b35283aef479c94",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 139.21666666666667,
+        "tick": 8353,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 441,
+          "spawned": 590,
+          "enemiesAlive": 149,
+          "enemiesVisible": 63,
+          "peakAlive": 165,
+          "peakVisible": 106,
+          "heaviesAlive": 1,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 17401.2,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 676,
+          "xpCollected": 573,
+          "xpOnGround": 103,
+          "pickupsAlive": 61,
+          "pickupMerges": 0,
+          "boostsUsed": 31,
+          "airframesLost": 0,
+          "upgradesChosen": 6,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 43037,
+          "hits": 1759,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 0,
+          "armorSegmentsBroken": 59,
+          "warningDeferrals": 91,
+          "motionDeferrals": 39
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "double",
+            "evolved": true
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:double:2",
+            "time": 22.816666666666666,
+            "tick": 1369
+          },
+          {
+            "id": "riy-sweeper:trail:2",
+            "time": 42.68333333333333,
+            "tick": 2561
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 58.88333333333333,
+            "tick": 3533
+          },
+          {
+            "id": "primary:double:3",
+            "time": 71.08333333333333,
+            "tick": 4265
+          },
+          {
+            "id": "primary:double:4",
+            "time": 96.28333333333333,
+            "tick": 5777
+          },
+          {
+            "id": "riy-sweeper:trail:3",
+            "time": 129.16666666666666,
+            "tick": 7750
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 16,
+        "escortEngagements": 16,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 102
+          },
+          {
+            "role": "breaker",
+            "shots": 81
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "trail"
+          },
+          {
+            "role": "breaker",
+            "rank": 2,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "7b35283aef479c94",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "f17fbcbbdc5d4666"
+        },
+        "review": {
+          "automated": true,
+          "build": "echo",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 165,
+        "visible": 106,
+        "rendered": 109,
+        "effects": 39,
+        "pickups": 46
+      }
+    },
+    {
+      "format": "OverflightHuntMeasurementsV1",
+      "fixture": "raid-reference",
+      "sourceRevision": "0b1aa412dac310c752d562b1029e5bcab79e581c",
+      "file": "native/raid-workload-trial-1.json.gz",
+      "sha256Raw": "40f105fb9978d9ed24a9b747fc66a7e7767e49add92e49be0e67a27150408338",
+      "capturedAt": "2026-10-14T16:31:42.069Z",
+      "operation": "Raid controlled workload",
+      "layout": "field-crossing-broken-crossroads",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99630000000074,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14382,
+            "seconds": 119.99630000000018
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14382,
+          "p50": 8.300000000745058,
+          "p95": 9.599999999627471,
+          "p99": 11,
+          "worst": 77.79999999888241
+        },
+        "cadenceHz": 119.8536954889435,
+        "slowFraction": 0.00013906271728549575,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v4",
+        "projectId": "raid-field-crossing-broken-crossroads",
+        "projectIdentity": "98ffa43d48b11d97",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "raid-reference",
+        "fixtureWorkload": {
+          "kind": "raid-reference",
+          "gameplayResult": false,
+          "alive": 403,
+          "visible": 200,
+          "fullBuild": true,
+          "independentProjectiles": true,
+          "movingContactCollisions": true,
+          "partitionWrapping": true,
+          "recycledActors": 1435,
+          "ordinaryFamilyBehaviors": true,
+          "poolPolicy": "same-owned-pools",
+          "progressionPolicy": "disabled-for-controlled-fixture"
+        },
+        "time": 150.01666666666668,
+        "tick": 9001,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 1435,
+          "spawned": 1838,
+          "enemiesAlive": 403,
+          "enemiesVisible": 200,
+          "peakAlive": 403,
+          "peakVisible": 200,
+          "heaviesAlive": 2,
+          "specialistsAlive": 14,
+          "priorityAttacks": 2,
+          "damageDealt": 1436,
+          "damageTaken": 148,
+          "damageCauses": {
+            "contact": 0,
+            "lane": 148,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 0,
+          "xpCollected": 0,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 154,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 105450,
+          "hits": 1436,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 1436,
+          "projectileDeferrals": 0,
+          "blockedContacts": 15,
+          "cleanArmorHits": 1,
+          "boostRefunds": 149,
+          "rushActivations": 19,
+          "noTargetSeconds": 0,
+          "distanceFlown": 28249.964640927425,
+          "objectiveChoices": 0,
+          "optionalChoices": 0,
+          "projectilesFired": 160,
+          "motionDeferrals": 11
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 2,
+            "slow-wake": 2,
+            "rush-charge": 2,
+            "boost-cooldown": 2,
+            "boost-duration": 2,
+            "chain-window": 2,
+            "heavy-exposure": 2,
+            "guard-interrupt": 2,
+            "recovery-shield": 2,
+            "plating": 2
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 101,
+              "completed": false
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 102,
+              "completed": false
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 103,
+              "completed": false
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 228,
+              "completed": false
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 229,
+              "completed": false
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 230,
+              "completed": false
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 403,
+              "completed": false
+            }
+          ],
+          "score": 773450,
+          "chain": 166,
+          "bestChain": 427,
+          "chainRemaining": 5.433333333333334,
+          "multiplier": 5,
+          "rushCharge": 18,
+          "rushRemaining": 0,
+          "ordinaryKills": 0,
+          "couriersCaught": 180,
+          "couriersEscaped": 0,
+          "armorHits": 1,
+          "objectivesCompleted": 0,
+          "pendingChoices": 0
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "98ffa43d48b11d97",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "eb5cda0d8f2f7bbb"
+        },
+        "review": null
+      },
+      "resourceHighWater": {
+        "alive": 403,
+        "visible": 200,
+        "rendered": 200,
+        "effects": 39,
+        "pickups": 0
+      }
+    },
+    {
+      "format": "OverflightHuntMeasurementsV1",
+      "fixture": "raid-reference",
+      "sourceRevision": "0b1aa412dac310c752d562b1029e5bcab79e581c",
+      "file": "native/raid-workload-trial-2.json.gz",
+      "sha256Raw": "e2753d6985e945aeb624c299ab6cd3d61dd115cf10f25478866b4389b4ae31d2",
+      "capturedAt": "2026-10-14T16:34:40.095Z",
+      "operation": "Raid controlled workload",
+      "layout": "field-crossing-broken-crossroads",
+      "trial": 2,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99919999999925,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14387,
+            "seconds": 119.9991999999984
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14387,
+          "p50": 8.300000000745058,
+          "p95": 10.300000000745058,
+          "p99": 12.300000000745058,
+          "worst": 73.10000000149012
+        },
+        "cadenceHz": 119.89246594977374,
+        "slowFraction": 0.00006950719399457844,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v4",
+        "projectId": "raid-field-crossing-broken-crossroads",
+        "projectIdentity": "98ffa43d48b11d97",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "raid-reference",
+        "fixtureWorkload": {
+          "kind": "raid-reference",
+          "gameplayResult": false,
+          "alive": 403,
+          "visible": 200,
+          "fullBuild": true,
+          "independentProjectiles": true,
+          "movingContactCollisions": true,
+          "partitionWrapping": true,
+          "recycledActors": 1435,
+          "ordinaryFamilyBehaviors": true,
+          "poolPolicy": "same-owned-pools",
+          "progressionPolicy": "disabled-for-controlled-fixture"
+        },
+        "time": 150,
+        "tick": 9000,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 1435,
+          "spawned": 1838,
+          "enemiesAlive": 403,
+          "enemiesVisible": 200,
+          "peakAlive": 403,
+          "peakVisible": 200,
+          "heaviesAlive": 2,
+          "specialistsAlive": 14,
+          "priorityAttacks": 2,
+          "damageDealt": 1436,
+          "damageTaken": 148,
+          "damageCauses": {
+            "contact": 0,
+            "lane": 148,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 0,
+          "xpCollected": 0,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 154,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 105432,
+          "hits": 1436,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 1436,
+          "projectileDeferrals": 0,
+          "blockedContacts": 15,
+          "cleanArmorHits": 1,
+          "boostRefunds": 149,
+          "rushActivations": 19,
+          "noTargetSeconds": 0,
+          "distanceFlown": 28245.74612313529,
+          "objectiveChoices": 0,
+          "optionalChoices": 0,
+          "projectilesFired": 160,
+          "motionDeferrals": 11
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 2,
+            "slow-wake": 2,
+            "rush-charge": 2,
+            "boost-cooldown": 2,
+            "boost-duration": 2,
+            "chain-window": 2,
+            "heavy-exposure": 2,
+            "guard-interrupt": 2,
+            "recovery-shield": 2,
+            "plating": 2
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 101,
+              "completed": false
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 102,
+              "completed": false
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 103,
+              "completed": false
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 228,
+              "completed": false
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 229,
+              "completed": false
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 230,
+              "completed": false
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 403,
+              "completed": false
+            }
+          ],
+          "score": 773450,
+          "chain": 166,
+          "bestChain": 427,
+          "chainRemaining": 5.45,
+          "multiplier": 5,
+          "rushCharge": 18,
+          "rushRemaining": 0,
+          "ordinaryKills": 0,
+          "couriersCaught": 180,
+          "couriersEscaped": 0,
+          "armorHits": 1,
+          "objectivesCompleted": 0,
+          "pendingChoices": 0
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "98ffa43d48b11d97",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "eb5cda0d8f2f7bbb"
+        },
+        "review": null
+      },
+      "resourceHighWater": {
+        "alive": 403,
+        "visible": 200,
+        "rendered": 200,
+        "effects": 39,
+        "pickups": 0
+      }
+    },
+    {
+      "format": "OverflightHuntMeasurementsV1",
+      "fixture": "raid-reference",
+      "sourceRevision": "186d8b748953daae5a65b1a0f4d318380accabf6",
+      "file": "native/raid-workload-trial-3.json.gz",
+      "sha256Raw": "87e621bc2f7b7a3cbd8fbfd73704090fa72b1456b6a98be9878b9f143cfd62b7",
+      "capturedAt": "2026-10-14T16:37:21.103Z",
+      "operation": "Raid controlled workload",
+      "layout": "field-crossing-broken-crossroads",
+      "trial": 3,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99369999999925,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14374,
+            "seconds": 119.99369999999901
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14374,
+          "p50": 8.300000000745058,
+          "p95": 10.300000000745058,
+          "p99": 12.900000000372529,
+          "worst": 100.30000000074506
+        },
+        "cadenceHz": 119.78962228850422,
+        "slowFraction": 0.00020871017114234034,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightHuntRunSummaryV1",
+        "rules": "overflight-raid.v4",
+        "projectId": "raid-field-crossing-broken-crossroads",
+        "projectIdentity": "98ffa43d48b11d97",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "raid-reference",
+        "fixtureWorkload": {
+          "kind": "raid-reference",
+          "gameplayResult": false,
+          "alive": 403,
+          "visible": 200,
+          "fullBuild": true,
+          "independentProjectiles": true,
+          "movingContactCollisions": true,
+          "partitionWrapping": true,
+          "recycledActors": 1435,
+          "ordinaryFamilyBehaviors": true,
+          "poolPolicy": "same-owned-pools",
+          "progressionPolicy": "disabled-for-controlled-fixture"
+        },
+        "time": 150,
+        "tick": 9000,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "slowResume": true,
+        "stats": {
+          "kills": 1435,
+          "spawned": 1838,
+          "enemiesAlive": 403,
+          "enemiesVisible": 200,
+          "peakAlive": 403,
+          "peakVisible": 200,
+          "heaviesAlive": 2,
+          "specialistsAlive": 14,
+          "priorityAttacks": 2,
+          "damageDealt": 1436,
+          "damageTaken": 148,
+          "damageCauses": {
+            "contact": 0,
+            "lane": 148,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 0,
+          "xpCollected": 0,
+          "xpOnGround": 0,
+          "pickupsAlive": 0,
+          "pickupMerges": 0,
+          "boostsUsed": 154,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 105432,
+          "hits": 1436,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 1436,
+          "projectileDeferrals": 0,
+          "blockedContacts": 15,
+          "cleanArmorHits": 1,
+          "boostRefunds": 149,
+          "rushActivations": 19,
+          "noTargetSeconds": 0,
+          "distanceFlown": 28245.74612313529,
+          "objectiveChoices": 0,
+          "optionalChoices": 0,
+          "projectilesFired": 160,
+          "motionDeferrals": 11
+        },
+        "build": {
+          "primary": {
+            "rank": 1,
+            "branch": null,
+            "evolved": false
+          },
+          "combat": [],
+          "support": null,
+          "reinforcement": 0,
+          "repair": 0,
+          "hunt": {
+            "strike-width": 2,
+            "slow-wake": 2,
+            "rush-charge": 2,
+            "boost-cooldown": 2,
+            "boost-duration": 2,
+            "chain-window": 2,
+            "heavy-exposure": 2,
+            "guard-interrupt": 2,
+            "recovery-shield": 2,
+            "plating": 2
+          }
+        },
+        "upgrades": [],
+        "hunt": {
+          "sector": 2,
+          "objectives": [
+            {
+              "id": "leader-1",
+              "family": "patroller",
+              "sector": 0,
+              "enemyId": 101,
+              "completed": false
+            },
+            {
+              "id": "leader-2",
+              "family": "shield-bearer",
+              "sector": 0,
+              "enemyId": 102,
+              "completed": false
+            },
+            {
+              "id": "leader-3",
+              "family": "brace-trooper",
+              "sector": 0,
+              "enemyId": 103,
+              "completed": false
+            },
+            {
+              "id": "light-1",
+              "family": "utility-car",
+              "sector": 1,
+              "enemyId": 228,
+              "completed": false
+            },
+            {
+              "id": "light-2",
+              "family": "cargo-truck",
+              "sector": 1,
+              "enemyId": 229,
+              "completed": false
+            },
+            {
+              "id": "carrier",
+              "family": "armored-carrier",
+              "sector": 1,
+              "enemyId": 230,
+              "completed": false
+            },
+            {
+              "id": "command-tank",
+              "family": "tracked-tank",
+              "sector": 2,
+              "enemyId": 403,
+              "completed": false
+            }
+          ],
+          "score": 773450,
+          "chain": 166,
+          "bestChain": 427,
+          "chainRemaining": 5.45,
+          "multiplier": 5,
+          "rushCharge": 18,
+          "rushRemaining": 0,
+          "ordinaryKills": 0,
+          "couriersCaught": 180,
+          "couriersEscaped": 0,
+          "armorHits": 1,
+          "objectivesCompleted": 0,
+          "pendingChoices": 0
+        },
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "98ffa43d48b11d97",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "eb5cda0d8f2f7bbb"
+        },
+        "review": null
+      },
+      "resourceHighWater": {
+        "alive": 403,
+        "visible": 200,
+        "rendered": 200,
+        "effects": 39,
+        "pickups": 0
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": "stress",
+      "sourceRevision": "186d8b748953daae5a65b1a0f4d318380accabf6",
+      "file": "native/stress-trial-2.json.gz",
+      "sha256Raw": "06190f91a5afd352aa5a2c2deb82cd4652583a7090f8ec76d624ee13a65033dd",
+      "capturedAt": "2026-10-14T16:40:10.952Z",
+      "operation": "Stress controlled workload",
+      "layout": "field-crossing-broken-crossroads",
+      "trial": 2,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99879999999888,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14408,
+            "seconds": 119.99879999999848
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14408,
+          "p50": 8.300000000745058,
+          "p95": 10.699999999254942,
+          "p99": 12.400000000372529,
+          "worst": 84.5
+        },
+        "cadenceHz": 120.06786734534124,
+        "slowFraction": 0.0000694058856191005,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-field-crossing-broken-crossroads",
+        "projectIdentity": "663de52a773259b5",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "stress",
+        "fixtureWorkload": {
+          "pulseChargePolicy": "controlled-full-charge-release",
+          "alive": 2500,
+          "visible": 1200,
+          "heavies": 4,
+          "specialists": 8,
+          "supportSources": 6,
+          "aimedAttackSources": 2,
+          "ordinaryFamilyBehaviors": true,
+          "frozenPositions": false,
+          "partitionWrapping": true,
+          "recycledEnemyHull": true,
+          "repositionAfterDefeat": true,
+          "maximumActorLifetimeSeconds": 24,
+          "distributionColumns": 10,
+          "distributionRows": 6,
+          "recycledActors": 60673,
+          "gameplayResult": false,
+          "occupiedScreenBuckets": 60,
+          "maximumScreenBucketPopulation": 76
+        },
+        "time": 150.01666666666668,
+        "tick": 9001,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 0,
+          "spawned": 2500,
+          "enemiesAlive": 2500,
+          "enemiesVisible": 1200,
+          "peakAlive": 2500,
+          "peakVisible": 1200,
+          "heaviesAlive": 4,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 3002859.9999999995,
+          "damageTaken": 0,
+          "damageCauses": {
+            "contact": 0,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 480,
+          "xpCollected": 0,
+          "xpOnGround": 480,
+          "pickupsAlive": 480,
+          "pickupMerges": 0,
+          "boostsUsed": 0,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 2050855,
+          "hits": 99733,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 49956,
+          "projectileDeferrals": 0
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [],
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "663de52a773259b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "eb5cda0d8f2f7bbb"
+        },
+        "review": null
+      },
+      "resourceHighWater": {
+        "alive": 2500,
+        "visible": 1200,
+        "rendered": 1200,
+        "effects": 681,
+        "pickups": 480
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": "stress",
+      "sourceRevision": "3b120c945191673b532160d8e80d642235668984",
+      "file": "native/stress-trial-3.json.gz",
+      "sha256Raw": "f0a87ad3349b53cfa74f8d943f5331e38976e0b73c42c2456c373c15fdea81d9",
+      "capturedAt": "2026-10-14T16:43:24.522Z",
+      "operation": "Stress controlled workload",
+      "layout": "field-crossing-broken-crossroads",
+      "trial": 3,
+      "valid": false,
+      "invalidReasons": [
+        "dropped-catch-up-time"
+      ],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.993,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14367,
+            "seconds": 119.99300000000015
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14367,
+          "p50": 8.300000000745058,
+          "p95": 11.099999999627471,
+          "p99": 13.699999999254942,
+          "worst": 268
+        },
+        "cadenceHz": 119.73198436575467,
+        "slowFraction": 0.00013920790700911812,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-field-crossing-broken-crossroads",
+        "projectIdentity": "663de52a773259b5",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "stress",
+        "fixtureWorkload": {
+          "pulseChargePolicy": "controlled-full-charge-release",
+          "alive": 2500,
+          "visible": 1200,
+          "heavies": 4,
+          "specialists": 8,
+          "supportSources": 6,
+          "aimedAttackSources": 2,
+          "ordinaryFamilyBehaviors": true,
+          "frozenPositions": false,
+          "partitionWrapping": true,
+          "recycledEnemyHull": true,
+          "repositionAfterDefeat": true,
+          "maximumActorLifetimeSeconds": 24,
+          "distributionColumns": 10,
+          "distributionRows": 6,
+          "recycledActors": 60666,
+          "gameplayResult": false,
+          "occupiedScreenBuckets": 60,
+          "maximumScreenBucketPopulation": 80
+        },
+        "time": 149.98333333333332,
+        "tick": 8999,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 0,
+          "spawned": 2500,
+          "enemiesAlive": 2500,
+          "enemiesVisible": 1200,
+          "peakAlive": 2500,
+          "peakVisible": 1200,
+          "heaviesAlive": 4,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 3002859.9999999995,
+          "damageTaken": 0,
+          "damageCauses": {
+            "contact": 0,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 480,
+          "xpCollected": 0,
+          "xpOnGround": 480,
+          "pickupsAlive": 480,
+          "pickupMerges": 0,
+          "boostsUsed": 0,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 2050521,
+          "hits": 99733,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 49956,
+          "projectileDeferrals": 0
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [],
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "663de52a773259b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "eb5cda0d8f2f7bbb"
+        },
+        "review": null
+      },
+      "resourceHighWater": {
+        "alive": 2500,
+        "visible": 1200,
+        "rendered": 1200,
+        "effects": 681,
+        "pickups": 480
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": "stress",
+      "sourceRevision": "3b120c945191673b532160d8e80d642235668984",
+      "file": "native/stress-trial-3-retry.json.gz",
+      "sha256Raw": "bc32e1a65c9437152e2c92c303e3b053a48dd38517f3a593ed5d9656e24b85f4",
+      "capturedAt": "2026-10-14T16:46:53.476Z",
+      "operation": "Stress controlled workload",
+      "layout": "field-crossing-broken-crossroads",
+      "trial": 3,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 120.0031000000015,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14394,
+            "seconds": 120.00310000000135
+          },
+          "upgrade": {
+            "samples": 0,
+            "seconds": 0
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14394,
+          "p50": 8.300000000745058,
+          "p95": 10.400000000372529,
+          "p99": 11.900000000372529,
+          "worst": 54.5
+        },
+        "cadenceHz": 119.94690137171307,
+        "slowFraction": 0.00006947339169098236,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-field-crossing-broken-crossroads",
+        "projectIdentity": "663de52a773259b5",
+        "seed": 17031991,
+        "phase": "playing",
+        "outcome": "technical-fixture",
+        "reason": null,
+        "fixture": "stress",
+        "fixtureWorkload": {
+          "pulseChargePolicy": "controlled-full-charge-release",
+          "alive": 2500,
+          "visible": 1200,
+          "heavies": 4,
+          "specialists": 8,
+          "supportSources": 6,
+          "aimedAttackSources": 2,
+          "ordinaryFamilyBehaviors": true,
+          "frozenPositions": false,
+          "partitionWrapping": true,
+          "recycledEnemyHull": true,
+          "repositionAfterDefeat": true,
+          "maximumActorLifetimeSeconds": 24,
+          "distributionColumns": 10,
+          "distributionRows": 6,
+          "recycledActors": 60673,
+          "gameplayResult": false,
+          "occupiedScreenBuckets": 60,
+          "maximumScreenBucketPopulation": 76
+        },
+        "time": 150.01666666666668,
+        "tick": 9001,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 0,
+          "spawned": 2500,
+          "enemiesAlive": 2500,
+          "enemiesVisible": 1200,
+          "peakAlive": 2500,
+          "peakVisible": 1200,
+          "heaviesAlive": 4,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 3002859.9999999995,
+          "damageTaken": 0,
+          "damageCauses": {
+            "contact": 0,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 480,
+          "xpCollected": 0,
+          "xpOnGround": 480,
+          "pickupsAlive": 480,
+          "pickupMerges": 0,
+          "boostsUsed": 0,
+          "airframesLost": 0,
+          "upgradesChosen": 0,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 2050855,
+          "hits": 99733,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 49956,
+          "projectileDeferrals": 0
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "slow-field",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [],
+        "goals": {
+          "eliteSpawned": false,
+          "eliteDefeated": false,
+          "finalSpawned": false,
+          "finalDefeated": false,
+          "finalId": null
+        },
+        "appearance": {
+          "projectIdentity": "663de52a773259b5",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "eb5cda0d8f2f7bbb"
+        },
+        "review": null
+      },
+      "resourceHighWater": {
+        "alive": 2500,
+        "visible": 1200,
+        "rendered": 1200,
+        "effects": 681,
+        "pickups": 480
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": null,
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "reducedEffects": false,
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-trial-1.json.gz",
+      "sha256Raw": "c14feb1f10acc5298339747814b472df342d6c4d94dedd6a37b0856ebe69091b",
+      "capturedAt": "2026-10-14T17:32:58.115Z",
+      "operation": "Riy",
+      "layout": "relay-ruins-receiver-gardens",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.999,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14175,
+            "seconds": 118.49300000000038
+          },
+          "upgrade": {
+            "samples": 177,
+            "seconds": 1.5060000000000002
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14352,
+          "p50": 8.300000000745058,
+          "p95": 10.800000000745058,
+          "p99": 13,
+          "worst": 67.40000000037253
+        },
+        "cadenceHz": 119.6009966749723,
+        "slowFraction": 0.0002787068004459309,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-relay-ruins-receiver-gardens",
+        "projectIdentity": "08200dc0e73fe617",
+        "seed": 202604,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 328.18333333333334,
+        "tick": 19691,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2797,
+          "spawned": 3476,
+          "enemiesAlive": 679,
+          "enemiesVisible": 244,
+          "peakAlive": 1048,
+          "peakVisible": 483,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 1,
+          "damageDealt": 281498.7000000017,
+          "damageTaken": 180,
+          "damageCauses": {
+            "contact": 180,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 5,
+          "xpEarned": 3869,
+          "xpCollected": 2873,
+          "xpOnGround": 996,
+          "pickupsAlive": 797,
+          "pickupMerges": 0,
+          "boostsUsed": 66,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 80437,
+          "hits": 7003,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1521.7500000000002,
+          "armorSegmentsBroken": 480,
+          "warningDeferrals": 293,
+          "motionDeferrals": 616,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [],
+          "support": {
+            "id": "shield",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 21.65,
+            "tick": 1299
+          },
+          {
+            "id": "riy-sweeper:broad:2",
+            "time": 32.28333333333333,
+            "tick": 1937
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 60.28333333333333,
+            "tick": 3617
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 77.46666666666667,
+            "tick": 4648
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 91.81666666666666,
+            "tick": 5509
+          },
+          {
+            "id": "shield:1",
+            "time": 114.88333333333334,
+            "tick": 6893
+          },
+          {
+            "id": "riy-sweeper:broad:3",
+            "time": 134.36666666666667,
+            "tick": 8062
+          },
+          {
+            "id": "riy-breaker:burst:3",
+            "time": 151.3,
+            "tick": 9078
+          },
+          {
+            "id": "shield:2",
+            "time": 172.63333333333333,
+            "tick": 10358
+          },
+          {
+            "id": "shield:3",
+            "time": 232.91666666666666,
+            "tick": 13975
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": false,
+          "finalId": 3003
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 41,
+        "escortEngagements": 41,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 237
+          },
+          {
+            "role": "breaker",
+            "shots": 200
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "08200dc0e73fe617",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "7991fdd94797933d"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 1048,
+        "visible": 483,
+        "rendered": 511,
+        "effects": 152,
+        "pickups": 343
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": null,
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "reducedEffects": false,
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-trial-2.json.gz",
+      "sha256Raw": "3609f80f4ca4db4c44ed839a91a2cf227e6948dc626b8906437da9a7573851d9",
+      "capturedAt": "2026-10-14T17:39:33.469Z",
+      "operation": "Riy",
+      "layout": "relay-ruins-receiver-gardens",
+      "trial": 2,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.9965,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 13718,
+            "seconds": 118.49690000000054
+          },
+          "upgrade": {
+            "samples": 179,
+            "seconds": 1.499599999999628
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 13897,
+          "p50": 8.399999998509884,
+          "p95": 12.099999999627471,
+          "p99": 18.09999999962747,
+          "worst": 92
+        },
+        "cadenceHz": 115.81171117490926,
+        "slowFraction": 0.0008634957185003957,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-relay-ruins-receiver-gardens",
+        "projectIdentity": "08200dc0e73fe617",
+        "seed": 202604,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 328.2,
+        "tick": 19692,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2797,
+          "spawned": 3476,
+          "enemiesAlive": 679,
+          "enemiesVisible": 245,
+          "peakAlive": 1048,
+          "peakVisible": 483,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 1,
+          "damageDealt": 281498.7000000017,
+          "damageTaken": 180,
+          "damageCauses": {
+            "contact": 180,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 5,
+          "xpEarned": 3869,
+          "xpCollected": 2873,
+          "xpOnGround": 996,
+          "pickupsAlive": 797,
+          "pickupMerges": 0,
+          "boostsUsed": 66,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 80437,
+          "hits": 7003,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1521.7500000000002,
+          "armorSegmentsBroken": 480,
+          "warningDeferrals": 293,
+          "motionDeferrals": 616,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [],
+          "support": {
+            "id": "shield",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 21.65,
+            "tick": 1299
+          },
+          {
+            "id": "riy-sweeper:broad:2",
+            "time": 32.28333333333333,
+            "tick": 1937
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 60.28333333333333,
+            "tick": 3617
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 77.46666666666667,
+            "tick": 4648
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 91.81666666666666,
+            "tick": 5509
+          },
+          {
+            "id": "shield:1",
+            "time": 114.88333333333334,
+            "tick": 6893
+          },
+          {
+            "id": "riy-sweeper:broad:3",
+            "time": 134.36666666666667,
+            "tick": 8062
+          },
+          {
+            "id": "riy-breaker:burst:3",
+            "time": 151.3,
+            "tick": 9078
+          },
+          {
+            "id": "shield:2",
+            "time": 172.63333333333333,
+            "tick": 10358
+          },
+          {
+            "id": "shield:3",
+            "time": 232.91666666666666,
+            "tick": 13975
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": false,
+          "finalId": 3003
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 41,
+        "escortEngagements": 41,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 237
+          },
+          {
+            "role": "breaker",
+            "shots": 200
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "08200dc0e73fe617",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "7991fdd94797933d"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 1048,
+        "visible": 483,
+        "rendered": 511,
+        "effects": 152,
+        "pickups": 343
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": null,
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "reducedEffects": false,
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-trial-3.json.gz",
+      "sha256Raw": "3d43068d4674c86d5ba2bc3e44e07d1e75e6272703fc92f45171b666dd96772e",
+      "capturedAt": "2026-10-14T17:46:10.711Z",
+      "operation": "Riy",
+      "layout": "relay-ruins-receiver-gardens",
+      "trial": 3,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99329999999888,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14215,
+            "seconds": 118.49169999999918
+          },
+          "upgrade": {
+            "samples": 180,
+            "seconds": 1.501599999999627
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14395,
+          "p50": 8.300000000745058,
+          "p95": 10.199999999254942,
+          "p99": 11.099999999627471,
+          "worst": 26.300000000745058
+        },
+        "cadenceHz": 119.96503138091988,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-relay-ruins-receiver-gardens",
+        "projectIdentity": "08200dc0e73fe617",
+        "seed": 202604,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 328.2,
+        "tick": 19692,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2797,
+          "spawned": 3476,
+          "enemiesAlive": 679,
+          "enemiesVisible": 245,
+          "peakAlive": 1048,
+          "peakVisible": 483,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 1,
+          "damageDealt": 281498.7000000017,
+          "damageTaken": 180,
+          "damageCauses": {
+            "contact": 180,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 5,
+          "xpEarned": 3869,
+          "xpCollected": 2873,
+          "xpOnGround": 996,
+          "pickupsAlive": 797,
+          "pickupMerges": 0,
+          "boostsUsed": 66,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 80437,
+          "hits": 7003,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1521.7500000000002,
+          "armorSegmentsBroken": 480,
+          "warningDeferrals": 293,
+          "motionDeferrals": 616,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [],
+          "support": {
+            "id": "shield",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 21.65,
+            "tick": 1299
+          },
+          {
+            "id": "riy-sweeper:broad:2",
+            "time": 32.28333333333333,
+            "tick": 1937
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 60.28333333333333,
+            "tick": 3617
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 77.46666666666667,
+            "tick": 4648
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 91.81666666666666,
+            "tick": 5509
+          },
+          {
+            "id": "shield:1",
+            "time": 114.88333333333334,
+            "tick": 6893
+          },
+          {
+            "id": "riy-sweeper:broad:3",
+            "time": 134.36666666666667,
+            "tick": 8062
+          },
+          {
+            "id": "riy-breaker:burst:3",
+            "time": 151.3,
+            "tick": 9078
+          },
+          {
+            "id": "shield:2",
+            "time": 172.63333333333333,
+            "tick": 10358
+          },
+          {
+            "id": "shield:3",
+            "time": 232.91666666666666,
+            "tick": 13975
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": false,
+          "finalId": 3003
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 41,
+        "escortEngagements": 41,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 237
+          },
+          {
+            "role": "breaker",
+            "shots": 200
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "08200dc0e73fe617",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "9670af00f1ea5378",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "7991fdd94797933d"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 1048,
+        "visible": 483,
+        "rendered": 511,
+        "effects": 152,
+        "pickups": 343
+      }
+    },
+    {
+      "format": "OverflightMeasurementsV1",
+      "fixture": null,
+      "measureAt": 180,
+      "scheduledStart": {
+        "requestedGameplaySeconds": 180,
+        "actualGameplaySeconds": 180,
+        "measurementGameplaySeconds": 210,
+        "pending": false,
+        "semantics": "Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.",
+        "highWaterScope": "Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline."
+      },
+      "reducedEffects": true,
+      "sourceRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+      "file": "native/late-riy-reduced-trial-1.json.gz",
+      "sha256Raw": "2681ca83fcf92304967af58bfa5c469d31fe77c07329bdc2428b89dcfdb40855",
+      "capturedAt": "2026-10-14T17:53:23.070Z",
+      "operation": "Riy",
+      "layout": "relay-ruins-receiver-gardens",
+      "trial": 1,
+      "valid": true,
+      "invalidReasons": [],
+      "window": {
+        "index": 1,
+        "complete": true,
+        "measuredSeconds": 119.99239999999851,
+        "phaseCoverage": {
+          "playing": {
+            "samples": 14211,
+            "seconds": 118.49039999999826
+          },
+          "upgrade": {
+            "samples": 180,
+            "seconds": 1.5020000000000007
+          },
+          "other": {
+            "samples": 0,
+            "seconds": 0
+          }
+        },
+        "cadenceMs": {
+          "samples": 14391,
+          "p50": 8.300000000745058,
+          "p95": 10.300000000745058,
+          "p99": 11.299999997019768,
+          "worst": 18.399999998509884
+        },
+        "cadenceHz": 119.93259573106445,
+        "slowFraction": 0,
+        "passes": true
+      },
+      "viewport": {
+        "width": 936,
+        "height": 1143,
+        "devicePixelRatio": 2
+      },
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "riy-survivor-relay-ruins-receiver-gardens",
+        "projectIdentity": "08200dc0e73fe617",
+        "seed": 202604,
+        "phase": "playing",
+        "outcome": "incomplete",
+        "reason": null,
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 328.2,
+        "tick": 19692,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2797,
+          "spawned": 3476,
+          "enemiesAlive": 679,
+          "enemiesVisible": 245,
+          "peakAlive": 1048,
+          "peakVisible": 483,
+          "heaviesAlive": 1,
+          "specialistsAlive": 8,
+          "priorityAttacks": 1,
+          "damageDealt": 281498.7000000017,
+          "damageTaken": 180,
+          "damageCauses": {
+            "contact": 180,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 5,
+          "xpEarned": 3869,
+          "xpCollected": 2873,
+          "xpOnGround": 996,
+          "pickupsAlive": 797,
+          "pickupMerges": 0,
+          "boostsUsed": 66,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 0,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 80437,
+          "hits": 7003,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1521.7500000000002,
+          "armorSegmentsBroken": 480,
+          "warningDeferrals": 293,
+          "motionDeferrals": 616,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [],
+          "support": {
+            "id": "shield",
+            "rank": 3
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 21.65,
+            "tick": 1299
+          },
+          {
+            "id": "riy-sweeper:broad:2",
+            "time": 32.28333333333333,
+            "tick": 1937
+          },
+          {
+            "id": "riy-breaker:burst:2",
+            "time": 60.28333333333333,
+            "tick": 3617
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 77.46666666666667,
+            "tick": 4648
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 91.81666666666666,
+            "tick": 5509
+          },
+          {
+            "id": "shield:1",
+            "time": 114.88333333333334,
+            "tick": 6893
+          },
+          {
+            "id": "riy-sweeper:broad:3",
+            "time": 134.36666666666667,
+            "tick": 8062
+          },
+          {
+            "id": "riy-breaker:burst:3",
+            "time": 151.3,
+            "tick": 9078
+          },
+          {
+            "id": "shield:2",
+            "time": 172.63333333333333,
+            "tick": 10358
+          },
+          {
+            "id": "shield:3",
+            "time": 232.91666666666666,
+            "tick": 13975
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": false,
+          "finalId": 3003
+        },
+        "operation": "overflight-riy",
+        "escortCommands": 41,
+        "escortEngagements": 41,
+        "escortShots": [
+          {
+            "role": "sweeper",
+            "shots": 237
+          },
+          {
+            "role": "breaker",
+            "shots": 200
+          }
+        ],
+        "escortUpgrades": [
+          {
+            "role": "sweeper",
+            "rank": 3,
+            "branch": "broad"
+          },
+          {
+            "role": "breaker",
+            "rank": 3,
+            "branch": "burst"
+          }
+        ],
+        "appearance": {
+          "projectIdentity": "08200dc0e73fe617",
+          "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+          "presentation": {
+            "id": "field-kit",
+            "revision": 104
+          },
+          "themeIdentity": "8473d3188da790ad",
+          "familyId": "industrial-workshop",
+          "familyRevision": "r3",
+          "interfaceId": "industrial-workshop",
+          "interfaceRevision": "r3",
+          "arcade": {
+            "id": "industrial-workshop",
+            "revision": "r2"
+          },
+          "actorArtRevision": "industrial-roster-v3",
+          "equipment": {
+            "id": "overflight-field-kit",
+            "revision": 1
+          },
+          "materialStyle": "steel",
+          "materialVariant": "steel",
+          "characterId": "scout",
+          "playerSlot": "player.scout.detailed",
+          "cast": "authored",
+          "visualIdentity": "7991fdd94797933d"
+        },
+        "review": {
+          "automated": true,
+          "build": "fan-shield",
+          "stopAt": null,
+          "route": "tight",
+          "inputHz": 10,
+          "upgradeDelayMs": 1500
+        }
+      },
+      "resourceHighWater": {
+        "alive": 1048,
+        "visible": 483,
+        "rendered": 511,
+        "effects": 76,
+        "pickups": 343
+      }
+    }
+  ]
+}

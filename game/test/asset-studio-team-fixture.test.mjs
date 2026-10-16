@@ -8,6 +8,7 @@ import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
 import { buildCoopLevel, createCoopLevelRecipe, validateCoopPack } from '../coop/recipes.mjs';
 import { COOP_RULESET } from '../coop/core.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import {
   createStudioTeamFixture,
   TEAM_PREVIEW_SCENARIOS,
@@ -206,6 +207,18 @@ test('Team Studio rejects unknown arenas/scenarios and unavailable arena roles',
   assert.equal(createStudioTeamFixture().scenario, 'initial');
   assert.ok(Object.isFrozen(TEAM_PREVIEW_SCENARIOS));
   assert.ok(TEAM_PREVIEW_SCENARIOS.every(Object.isFrozen));
+});
+
+test('Team Studio scene labels switch locale without rebuilding fixture state', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const fixture = createStudioTeamFixture({ scenario: 'capture' });
+  const run = fixture.run;
+  setLocale('en', { persist: false });
+  assert.equal(fixture.label, 'Joint capture');
+  setLocale('uk', { persist: false });
+  assert.equal(fixture.label, 'Спільне захоплення');
+  assert.equal(fixture.run, run);
 });
 
 test('Team Studio accumulates real fixed steps and drops excess frame backlog', () => {

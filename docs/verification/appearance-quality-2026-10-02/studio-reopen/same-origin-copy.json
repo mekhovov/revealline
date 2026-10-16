@@ -1,0 +1,17 @@
+{
+  "output": "/Users/oleksandr.mekhovov/work/my_projects/go_test/dist/appearance-packaged-20261002",
+  "receipts": [
+    {
+      "context": "north",
+      "files": 745,
+      "bytes": 19601025,
+      "manifestSha256": "a4fbeec46bf1f71187bd2d421a93ce4a45b9a6883a2dbc729d2034ad0ef64f6a"
+    },
+    {
+      "context": "south",
+      "files": 745,
+      "bytes": 19600947,
+      "manifestSha256": "365c176429e591cad60f707d4c35890bbe3c2a3fa19f7a73209f62c921b578c6"
+    }
+  ]
+}

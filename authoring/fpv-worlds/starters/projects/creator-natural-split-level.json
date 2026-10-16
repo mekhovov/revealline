@@ -1,0 +1,873 @@
+{
+  "format": "FPVWorldProject.v1",
+  "id": "creator-natural-split-level",
+  "title": "Natural starter · Split level",
+  "world": {
+    "id": "creator-natural-split-level",
+    "title": "Natural starter · Split level"
+  },
+  "source": {
+    "hash": null,
+    "anchors": [],
+    "colliders": []
+  },
+  "overrides": {},
+  "courses": [],
+  "themes": [],
+  "campaigns": [],
+  "playlists": [],
+  "provenance": [
+    {
+      "asset": "project.json",
+      "author": "RevealLine contributors",
+      "license": "original",
+      "source": "Original D4 route and collider data; no external scene assets included."
+    }
+  ],
+  "authoring": {
+    "format": "FPVCreatorStarterNotes.v1",
+    "revision": "r1",
+    "shape": "split-level",
+    "environment": "natural",
+    "title": {
+      "en": "Natural starter · Split level",
+      "uk": "Природний шаблон · Два рівні"
+    },
+    "guidance": {
+      "en": "Use the open side zone to change height. Self-level passes below then above the deck; Acro reverses that order. Finish on the ground pad. These are editable starter routes, not timed mastery tests.",
+      "uk": "Змінюйте висоту у відкритій бічній зоні. Самовирівнювання проходить під настилом, потім над ним; Acro змінює порядок. Завершіть посадкою на землі. Це редаговані шаблони маршрутів, а не іспити на швидкість."
+    },
+    "clearance": {
+      "droneRadiusMm": 220,
+      "extraMarginMm": 500,
+      "coordinateReference": "drone-lower-point",
+      "nominalPaths": {
+        "self-level": [
+          {
+            "x": -24000,
+            "y": 0,
+            "z": 24000
+          },
+          {
+            "x": -24000,
+            "y": 3000,
+            "z": 24000
+          },
+          {
+            "z": 18000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 15000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 11500,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 3000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -3500,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -12000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -15000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -18500,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "x": 18000,
+            "y": 2000,
+            "z": -21000
+          },
+          {
+            "x": 18000,
+            "y": 7500,
+            "z": -17000
+          },
+          {
+            "z": -3000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 3500,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 12000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 15000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 18500,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "x": 21000,
+            "y": 7500,
+            "z": 23000
+          },
+          {
+            "x": 24000,
+            "y": 0,
+            "z": 24000
+          }
+        ],
+        "acro": [
+          {
+            "x": -24000,
+            "y": 0,
+            "z": 24000
+          },
+          {
+            "x": -24000,
+            "y": 3000,
+            "z": 24000
+          },
+          {
+            "x": -18000,
+            "y": 7500,
+            "z": 19000
+          },
+          {
+            "z": 18000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 15000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": 11500,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": -12000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": -15000,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "z": -18500,
+            "x": 0,
+            "y": 7500
+          },
+          {
+            "x": 18000,
+            "y": 7500,
+            "z": -21000
+          },
+          {
+            "x": 18000,
+            "y": 2000,
+            "z": -21000
+          },
+          {
+            "z": -18000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -15000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -11500,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": -3000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 3500,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 12000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 15000,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "z": 18500,
+            "x": 0,
+            "y": 2000
+          },
+          {
+            "x": 21000,
+            "y": 2000,
+            "z": 23000
+          },
+          {
+            "x": 24000,
+            "y": 0,
+            "z": 24000
+          }
+        ]
+      }
+    },
+    "limitations": {
+      "en": "The current spatial editor edits Self-level only when mode routes differ. Edit Acro in Challenge JSON. This metadata describes r1 and is not recomputed after edits. Built-in scenery belongs to the compatible simulator runtime.",
+      "uk": "Поточний просторовий редактор змінює лише самовирівнювання, якщо маршрути режимів різняться. Acro редагуйте в JSON завдання. Ці метадані описують r1 та не перераховуються після змін. Вбудовані декорації належать сумісному симулятору."
+    }
+  },
+  "definitions": {
+    "worlds": [
+      {
+        "format": "World.v1",
+        "id": "creator-natural-split-level",
+        "revision": "r1",
+        "presentation": {
+          "id": "creator-natural-split-level",
+          "theme": "ukrainian",
+          "style": "woodland",
+          "themeProfile": {
+            "format": "ThemeProfile.v1",
+            "id": "ukrainian",
+            "revision": "r1",
+            "title": {
+              "en": "Ukrainian Horizons",
+              "uk": "Українські обрії"
+            },
+            "palette": {
+              "sky": 12244968,
+              "fog": 13097428,
+              "ground": 7242589,
+              "wall": 14996918,
+              "accent": 7322847,
+              "warm": 15847270
+            },
+            "textureFilter": "linear",
+            "drone": "racer",
+            "characters": "civilian",
+            "assets": {
+              "gate": "builtin:timber-gate",
+              "marker": "builtin:ceramic-beacon",
+              "enemy": "builtin:practice-drone",
+              "vehicle": "builtin:utility-van"
+            },
+            "audio": {
+              "ambience": "woodland",
+              "motor": "quad",
+              "gate": "bell"
+            },
+            "ui": {
+              "accent": "#e5c36e",
+              "font": "system-ui",
+              "borderRadius": 12
+            }
+          }
+        },
+        "environment": "woodland",
+        "spawn": {
+          "x": -24000,
+          "y": 0,
+          "z": 24000
+        },
+        "bounds": {
+          "min": {
+            "x": -38000,
+            "y": 0,
+            "z": -38000
+          },
+          "max": {
+            "x": 38000,
+            "y": 16000,
+            "z": 38000
+          }
+        },
+        "obstacles": [
+          {
+            "id": "west-outcrop",
+            "min": {
+              "x": -33000,
+              "y": 0,
+              "z": -4000
+            },
+            "max": {
+              "x": -27000,
+              "y": 2800,
+              "z": 4000
+            }
+          },
+          {
+            "id": "east-outcrop",
+            "min": {
+              "x": 27000,
+              "y": 0,
+              "z": -4000
+            },
+            "max": {
+              "x": 33000,
+              "y": 2400,
+              "z": 4000
+            }
+          },
+          {
+            "id": "north-ridge",
+            "min": {
+              "x": -8000,
+              "y": 0,
+              "z": -35000
+            },
+            "max": {
+              "x": 8000,
+              "y": 2200,
+              "z": -31000
+            }
+          },
+          {
+            "id": "practice-deck",
+            "min": {
+              "x": -7000,
+              "y": 4000,
+              "z": -10000
+            },
+            "max": {
+              "x": 7000,
+              "y": 5000,
+              "z": 10000
+            }
+          },
+          {
+            "id": "deck-west-support",
+            "min": {
+              "x": -7000,
+              "y": 0,
+              "z": -1000
+            },
+            "max": {
+              "x": -6000,
+              "y": 4000,
+              "z": 1000
+            }
+          },
+          {
+            "id": "deck-east-support",
+            "min": {
+              "x": 6000,
+              "y": 0,
+              "z": -1000
+            },
+            "max": {
+              "x": 7000,
+              "y": 4000,
+              "z": 1000
+            }
+          }
+        ]
+      }
+    ],
+    "layouts": [
+      {
+        "format": "CourseLayout.v1",
+        "id": "creator-natural-split-level-layout",
+        "revision": "r1",
+        "worldId": "creator-natural-split-level",
+        "objectives": [
+          {
+            "id": "level-001",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": -25500,
+                "y": 2350,
+                "z": 22500
+              },
+              "max": {
+                "x": -22500,
+                "y": 3650,
+                "z": 25500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "level-002",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 15000,
+              "direction": -1,
+              "minSide": -3000,
+              "maxSide": 3000,
+              "minY": 1000,
+              "maxY": 3000
+            }
+          },
+          {
+            "id": "level-003",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 0,
+              "direction": -1,
+              "minSide": -3000,
+              "maxSide": 3000,
+              "minY": 1000,
+              "maxY": 3000
+            }
+          },
+          {
+            "id": "level-004",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": -15000,
+              "direction": -1,
+              "minSide": -3000,
+              "maxSide": 3000,
+              "minY": 1000,
+              "maxY": 3000
+            }
+          },
+          {
+            "id": "level-005",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": 16500,
+                "y": 1350,
+                "z": -22500
+              },
+              "max": {
+                "x": 19500,
+                "y": 2650,
+                "z": -19500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "level-006",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": 16500,
+                "y": 6850,
+                "z": -18500
+              },
+              "max": {
+                "x": 19500,
+                "y": 8150,
+                "z": -15500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "level-007",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 0,
+              "direction": 1,
+              "minSide": -3000,
+              "maxSide": 3000,
+              "minY": 6500,
+              "maxY": 8500
+            }
+          },
+          {
+            "id": "level-008",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 15000,
+              "direction": 1,
+              "minSide": -3000,
+              "maxSide": 3000,
+              "minY": 6500,
+              "maxY": 8500
+            }
+          },
+          {
+            "id": "level-009",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": 19500,
+                "y": 6850,
+                "z": 21500
+              },
+              "max": {
+                "x": 22500,
+                "y": 8150,
+                "z": 24500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "level-010",
+            "criterion": {
+              "type": "land",
+              "min": {
+                "x": 22500,
+                "y": 0,
+                "z": 22500
+              },
+              "max": {
+                "x": 25500,
+                "y": 500,
+                "z": 25500
+              },
+              "ticks": 30,
+              "maxSpeed": 1300,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null,
+              "surface": "$floor"
+            }
+          },
+          {
+            "id": "acro-001",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": -25500,
+                "y": 2350,
+                "z": 22500
+              },
+              "max": {
+                "x": -22500,
+                "y": 3650,
+                "z": 25500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "acro-002",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": -19500,
+                "y": 6850,
+                "z": 17500
+              },
+              "max": {
+                "x": -16500,
+                "y": 8150,
+                "z": 20500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "acro-003",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 15000,
+              "direction": -1,
+              "minSide": -2250,
+              "maxSide": 2250,
+              "minY": 6500,
+              "maxY": 8500
+            }
+          },
+          {
+            "id": "acro-004",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": -15000,
+              "direction": -1,
+              "minSide": -2250,
+              "maxSide": 2250,
+              "minY": 6500,
+              "maxY": 8500
+            }
+          },
+          {
+            "id": "acro-005",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": 16500,
+                "y": 6850,
+                "z": -22500
+              },
+              "max": {
+                "x": 19500,
+                "y": 8150,
+                "z": -19500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "acro-006",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": 16500,
+                "y": 1350,
+                "z": -22500
+              },
+              "max": {
+                "x": 19500,
+                "y": 2650,
+                "z": -19500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "acro-007",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": -15000,
+              "direction": 1,
+              "minSide": -2250,
+              "maxSide": 2250,
+              "minY": 1000,
+              "maxY": 3000
+            }
+          },
+          {
+            "id": "acro-008",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 0,
+              "direction": 1,
+              "minSide": -2250,
+              "maxSide": 2250,
+              "minY": 1000,
+              "maxY": 3000
+            }
+          },
+          {
+            "id": "acro-009",
+            "criterion": {
+              "type": "gate",
+              "axis": "z",
+              "at": 15000,
+              "direction": 1,
+              "minSide": -2250,
+              "maxSide": 2250,
+              "minY": 1000,
+              "maxY": 3000
+            }
+          },
+          {
+            "id": "acro-010",
+            "criterion": {
+              "type": "hold",
+              "min": {
+                "x": 19500,
+                "y": 1350,
+                "z": 21500
+              },
+              "max": {
+                "x": 22500,
+                "y": 2650,
+                "z": 24500
+              },
+              "ticks": 30,
+              "maxSpeed": 2500,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null
+            }
+          },
+          {
+            "id": "acro-011",
+            "criterion": {
+              "type": "land",
+              "min": {
+                "x": 22500,
+                "y": 0,
+                "z": 22500
+              },
+              "max": {
+                "x": 25500,
+                "y": 500,
+                "z": 25500
+              },
+              "ticks": 30,
+              "maxSpeed": 1300,
+              "maxTilt": 4000,
+              "minTilt": 0,
+              "centred": false,
+              "heading": null,
+              "surface": "$floor"
+            }
+          }
+        ],
+        "orders": {
+          "self-level": [
+            "level-001",
+            "level-002",
+            "level-003",
+            "level-004",
+            "level-005",
+            "level-006",
+            "level-007",
+            "level-008",
+            "level-009",
+            "level-010"
+          ],
+          "acro": [
+            "acro-001",
+            "acro-002",
+            "acro-003",
+            "acro-004",
+            "acro-005",
+            "acro-006",
+            "acro-007",
+            "acro-008",
+            "acro-009",
+            "acro-010",
+            "acro-011"
+          ]
+        },
+        "actors": [],
+        "bindings": {},
+        "spawn": {
+          "x": -24000,
+          "y": 0,
+          "z": 24000
+        }
+      }
+    ],
+    "challenges": [
+      {
+        "format": "Challenge.v1",
+        "id": "creator-natural-split-level-route",
+        "revision": "r1",
+        "worldId": "creator-natural-split-level",
+        "layoutId": "creator-natural-split-level-layout",
+        "locales": {
+          "en": {
+            "title": "Natural starter · Split level",
+            "brief": "Use the open side zone to change height. Self-level passes below then above the deck; Acro reverses that order. Finish on the ground pad. These are editable starter routes, not timed mastery tests.",
+            "lesson": "Gate openings are objective regions, not collision guarantees. Keep at least 0.5 m of extra nominal clearance around the 0.22 m drone radius. Height is measured at the drone lower point. Recheck every edited route in both modes."
+          },
+          "uk": {
+            "title": "Природний шаблон · Два рівні",
+            "brief": "Змінюйте висоту у відкритій бічній зоні. Самовирівнювання проходить під настилом, потім над ним; Acro змінює порядок. Завершіть посадкою на землі. Це редаговані шаблони маршрутів, а не іспити на швидкість.",
+            "lesson": "Отвори воріт — це області цілей, а не гарантія відсутності зіткнень. Залишайте принаймні 0,5 м додаткового запасу навколо радіуса дрона 0,22 м. Висота вимірюється за нижньою точкою дрона. Перевіряйте кожен змінений маршрут в обох режимах."
+          }
+        },
+        "rules": {
+          "seed": 1,
+          "maxTicks": 36000,
+          "droneRadius": 220,
+          "playerHealth": 100,
+          "collisionDamage": 0,
+          "playerDamage": 25,
+          "fireCooldown": 8,
+          "projectileSpeed": 20000,
+          "projectileTicks": 150
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      }
+    ]
+  }
+}

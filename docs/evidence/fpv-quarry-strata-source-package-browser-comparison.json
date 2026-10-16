@@ -1,0 +1,57 @@
+{
+  "format": "FPVQuarrySourcePackageBrowserComparison.v1",
+  "sourceReceiptSha256": "f6d3b3d82dd23867698c0c07b2fb3a05f52c94d4a5c6017003ab064faff5065d",
+  "packageReceiptSha256": "c6a4ba0a3f80d9faacd539eab8b9b371c4e077a5c136828b9ee17fa75705b6c9",
+  "sourceAndPackageChecksExact": true,
+  "checks": 116,
+  "samplePairs": 56,
+  "exactQuarrySamples": 54,
+  "exactCourtyardSamples": 1,
+  "intentionalCoastDifference": {
+    "id": "adventure-coast-01",
+    "quality": "balanced",
+    "appearance": "authored",
+    "camera": "overview",
+    "wall": "terrace",
+    "source": {
+      "id": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "authored",
+      "camera": "overview",
+      "wall": "terrace",
+      "changedPixels": 0,
+      "nonBlackPixels": 518400,
+      "beforeHash": "ac1e44724d4b3411e3053ea43c9c1456762e164011d27a67c315bd70f6f6a296",
+      "afterHash": "ac1e44724d4b3411e3053ea43c9c1456762e164011d27a67c315bd70f6f6a296",
+      "drawCalls": [
+        153,
+        153
+      ],
+      "triangles": [
+        7132,
+        7132
+      ]
+    },
+    "package": {
+      "id": "adventure-coast-01",
+      "quality": "balanced",
+      "appearance": "authored",
+      "camera": "overview",
+      "wall": "terrace",
+      "changedPixels": 0,
+      "nonBlackPixels": 518400,
+      "beforeHash": "c830f7cf281b498402b9424b8cb738522af0f380cd253ec84c23b1cf13a25fc1",
+      "afterHash": "c830f7cf281b498402b9424b8cb738522af0f380cd253ec84c23b1cf13a25fc1",
+      "drawCalls": [
+        157,
+        157
+      ],
+      "triangles": [
+        7240,
+        7240
+      ]
+    }
+  },
+  "explanation": "Package before/after both include normally merged Lighthouse, adding4 opaque draws and108 triangles with zero pixel difference within each pair. All54 Quarry sample records and Courtyard sample record are byte-equivalent JSON objects between source and package. Original source receipt remains historical pre-integration.",
+  "productionLoaderChanged": false
+}

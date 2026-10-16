@@ -7,6 +7,9 @@ import { prepareChapterFocus } from './chapter-focus-clearance.mjs';
 import { mountModeChoices } from './mode-choice.mjs';
 import { WORKSHOP_TOOLS } from './workshop-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
+import { guardInstallOfflineBlur } from './install-offline-panel.mjs';
+import { mountOptionalPracticePanel } from './optional-practice-panel.mjs';
+import { commitMenuRetune } from './menu-retune.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -32,6 +35,7 @@ export function attachGameShell({
   focusMissions,
   focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
+  getAppearanceDefault = () => null,
 } = {}) {
   // A registered embedded lesson already owns a token-checked return action.
   // Its shell must not expose campaign destinations inside the practice frame.
@@ -50,6 +54,22 @@ export function attachGameShell({
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const surfaces = attachFieldKitSurfaces({ document: doc });
+  const optionalPractice = !isolated
+    ? mountOptionalPracticePanel({
+        document: doc,
+        container: workshop?.querySelector('.more-destinations'),
+        pause,
+        href: doc.defaultView?.location?.href ?? globalThis.location?.href,
+        getAppearanceDefault,
+      })
+    : null;
+  const homeFPV = $('shell-home-fpv');
+
+  const homePractice = $('shell-home-practice');
+  if (homePractice && optionalPractice?.open) {
+    homePractice.hidden = false;
+    homePractice.onclick = () => optionalPractice.open(homePractice);
+  }
   const releaseExplorer = $('shell-release-explorer');
   if (releaseExplorer)
     releaseExplorer.setAttribute(
@@ -171,6 +191,7 @@ export function attachGameShell({
   };
   const openMissions = ({ opener = null } = {}) => {
     if (destroyed) return;
+    const fromHome = home.open;
     if (practiceReturn) {
       if (!practiceReturn.disabled) openBrief(opener);
       return;
@@ -200,6 +221,7 @@ export function attachGameShell({
     syncPreparation();
     focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
+    if (fromHome && visit.home && missions.open) commitMenuRetune(home, missions);
   };
   const primary = () => {
     const preferred = isolated
@@ -213,20 +235,7 @@ export function attachGameShell({
       ...home.querySelectorAll('button,a,select,input,summary'),
     ].find((element) => availableReturn(element, home));
   };
-  const openHome = ({ focus = true, returnGuard = null } = {}) => {
-    if (destroyed) return;
-    if (practiceReturn) {
-      practiceReturn.click();
-      return;
-    }
-    titleModeIntent = null;
-    retireMissionsVisit();
-    const revision = missionsRevision;
-    pause(true);
-    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
-    if (missions.open) missions.close();
-    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
-    restoreMissionView();
+  const refreshHomeCopy = () => {
     const continued = !isolated && canContinue();
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
@@ -242,6 +251,22 @@ export function attachGameShell({
               })
             : titleDestination?.() || copy('title.deployDestination'),
       );
+  };
+  const openHome = ({ focus = true, returnGuard = null } = {}) => {
+    if (destroyed) return;
+    if (practiceReturn) {
+      practiceReturn.click();
+      return;
+    }
+    titleModeIntent = null;
+    retireMissionsVisit();
+    const revision = missionsRevision;
+    pause(true);
+    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
+    if (missions.open) missions.close();
+    if (destroyed || missionsRevision !== revision || returnGuard?.() === false) return;
+    restoreMissionView();
+    refreshHomeCopy();
     if (!home.open) {
       // A prior successful chapter selection is not the next title action.
       // Keep errors visible; fresh operation feedback still arrives normally.
@@ -269,21 +294,38 @@ export function attachGameShell({
     const entry = tool ? WORKSHOP_TOOLS.find((item) => item.id === tool) : null;
     if (tool && (!entry || !$(entry.opener)?.isConnected)) return false;
     const previousFocus = doc.activeElement;
+    const parent = topDialog();
     pause(true);
     // A pause callback or boot handoff may have established a newer screen.
     if (
       destroyed ||
-      !home.open ||
-      topDialog() !== home ||
+      !parent?.open ||
+      ![home, $('settings-dialog')].includes(parent) ||
+      topDialog() !== parent ||
       doc.activeElement !== previousFocus ||
       doc.hidden ||
       doc.hasFocus?.() === false
     )
       return false;
+    // Controller Lab belongs to Settings → Controls after native-menu layout.
+    // Retain the fixed tool-return protocol while restoring its actual owner.
+    const entryOpener = entry ? $(entry.opener) : null;
+    const settings = $('settings-dialog');
+    if (entry?.id === 'controller-lab' && settings?.contains(entryOpener)) {
+      if (!settings.open) {
+        $('shell-options').focus();
+        $('settings-button').click();
+      }
+      if (destroyed || !settings.open || topDialog() !== settings) return false;
+      $('settings-tab-controls')?.click();
+      if (destroyed || topDialog() !== settings || !availableReturn(entryOpener, settings))
+        return false;
+      entryOpener.focus();
+      return doc.activeElement === entryOpener;
+    }
     $('shell-workshop').focus();
     workshop.showModal();
     if (destroyed || !workshop.open || topDialog() !== workshop) return false;
-    const entryOpener = entry ? $(entry.opener) : null;
     const entrySection = entryOpener?.closest('details');
     if (entrySection) entrySection.open = true;
     const target =
@@ -305,6 +347,7 @@ export function attachGameShell({
   workshop?.addEventListener('cancel', cancelWorkshop);
   const backFromMissions = () => {
     if (destroyed || !missions.open) return;
+    const reading = missions.dataset.view === 'brief';
     const visit = missionsVisit,
       previousFocus = doc.activeElement;
     retireMissionsVisit();
@@ -368,6 +411,7 @@ export function attachGameShell({
       availableReturn(node, parent),
     );
     target?.focus({ preventScroll: true });
+    if (!reading && visit?.home && !missions.open && home.open) commitMenuRetune(missions, home);
   };
   if ($('shell-missions-back')) $('shell-missions-back').onclick = backFromMissions;
   const cancelMissions = (event) => {
@@ -450,8 +494,6 @@ export function attachGameShell({
   if (overlayBrief) overlayBrief.onclick = () => openBrief();
   const overlayMissions = $('overlay-missions');
   if (overlayMissions) overlayMissions.onclick = () => openMissions({ opener: overlayMissions });
-  const overlayHelp = $('overlay-help');
-  if (overlayHelp) overlayHelp.onclick = () => $('help-button').click();
   const overlaySettings = $('overlay-settings');
   if (overlaySettings) overlaySettings.onclick = () => $('settings-button').click();
   const pauseMissionInfo = $('pause-mission-info');
@@ -465,6 +507,10 @@ export function attachGameShell({
   $('shell-play').onclick = () => openMissions({ opener: $('shell-play') });
   const featured = $('shell-featured');
   let titleAction = null;
+  const liveLabel = (labelNode) => {
+    const key = labelNode.getAttribute('data-field-kit-copy');
+    return key ? () => copy(key) : () => labelNode.textContent;
+  };
   const cancelTitle = () => {
     if (!titleAction) return;
     const { button, labelNode, label } = titleAction;
@@ -473,7 +519,7 @@ export function attachGameShell({
     button.removeAttribute('aria-disabled');
     button.removeAttribute('aria-busy');
     delete button.dataset.busy;
-    localizedText(labelNode, () => label);
+    localizedText(labelNode, label);
   };
   const titleCancel = $('shell-flight-cancel');
   const cancelTitleAndRestore = (operation) => {
@@ -508,7 +554,7 @@ export function attachGameShell({
     if (button.disabled || titleAction || destroyed || topDialog() !== home) return;
     const visit = homeVisit;
     const labelNode = button.querySelector('[data-field-kit-copy]') ?? button;
-    const operation = { button, labelNode, label: labelNode.textContent };
+    const operation = { button, labelNode, label: liveLabel(labelNode) };
     titleAction = operation;
     button.setAttribute('aria-disabled', 'true');
     button.setAttribute('aria-busy', 'true');
@@ -538,14 +584,21 @@ export function attachGameShell({
   };
   home.addEventListener('click', leaveFeatured, true);
   const titleModes = $('shell-title-modes');
+  let modeChoices = null;
   if (titleModes) {
-    mountModeChoices({
+    modeChoices = mountModeChoices({
       root: titleModes,
       current: 'solo',
+      getAppearanceDefault,
+      pause,
       separateTeam,
       actions: { versus: $('shell-title-versus'), team: $('shell-title-team') },
     });
     titleModes.hidden = isolated || !onModeDeparture;
+    if (homeFPV && !isolated && modeChoices.openSimulator) {
+      homeFPV.hidden = false;
+      homeFPV.onclick = () => modeChoices.openSimulator(homeFPV);
+    }
     for (const kind of ['versus', 'team']) {
       const opener = $(`shell-title-${kind}`);
       opener.onclick = (event) => {
@@ -590,7 +643,7 @@ export function attachGameShell({
       if (featured.disabled || destroyed) return;
       const visit = homeVisit;
       const labelNode = featured.querySelector('[data-field-kit-copy]') ?? featured;
-      const label = labelNode.textContent;
+      const label = liveLabel(labelNode);
       pause(true);
       featured.disabled = true;
       localizedText(labelNode, () => copy('title.preparing'));
@@ -601,7 +654,7 @@ export function attachGameShell({
       } finally {
         if (!destroyed) {
           featured.disabled = false;
-          localizedText(labelNode, () => label);
+          localizedText(labelNode, label);
         }
       }
     };
@@ -681,6 +734,10 @@ export function attachGameShell({
   }
   const cancelHome = (event) => {
     titleModeIntent = null;
+    if (modeChoices?.closeMore()) {
+      event.preventDefault();
+      return;
+    }
     if (titleAction) {
       // Back during preparation cancels that operation and keeps its opener.
       // Closing the title too would strand focus on the underlying ready field.
@@ -707,7 +764,8 @@ export function attachGameShell({
   };
   const titleWindow =
     typeof doc.defaultView?.addEventListener === 'function' ? doc.defaultView : globalThis.window;
-  titleWindow?.addEventListener('blur', suspendedTitle);
+  const titleWindowBlur = guardInstallOfflineBlur(suspendedTitle, doc);
+  titleWindow?.addEventListener('blur', titleWindowBlur);
   titleWindow?.addEventListener('pagehide', suspendedTitle);
   doc.addEventListener('visibilitychange', hiddenTitle);
   home.addEventListener('close', titleClosed);
@@ -742,12 +800,19 @@ export function attachGameShell({
     event.preventDefault();
   };
   doc.addEventListener('keydown', keydown);
+  surfaces.refreshGlobalSettings();
   if (initial) openHome({ focus: initialFocus });
   return {
     primary,
     openHome,
     openMissions,
     openWorkshop,
+    refreshHome() {
+      if (!destroyed) refreshHomeCopy();
+    },
+    refreshLocale() {
+      if (!destroyed && home.open) refreshHomeCopy();
+    },
     destroy() {
       destroyed = true;
       retireMissionsVisit();
@@ -757,7 +822,7 @@ export function attachGameShell({
         const opener = $(`shell-title-${kind}`);
         if (opener) opener.onclick = null;
       }
-      titleWindow?.removeEventListener('blur', suspendedTitle);
+      titleWindow?.removeEventListener('blur', titleWindowBlur);
       titleWindow?.removeEventListener('pagehide', suspendedTitle);
       doc.removeEventListener('visibilitychange', hiddenTitle);
       home.removeEventListener('close', titleClosed);
@@ -774,6 +839,16 @@ export function attachGameShell({
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
       surfaces.destroy();
+      optionalPractice?.dispose();
+      modeChoices?.dispose();
+      if (homeFPV) {
+        homeFPV.onclick = null;
+        homeFPV.hidden = true;
+      }
+      if (homePractice) {
+        homePractice.onclick = null;
+        homePractice.hidden = true;
+      }
       preparationObserver?.disconnect();
     },
   };
