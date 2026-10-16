@@ -98,6 +98,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     throttle = 0,
     keyboardPreset = 'two-stick',
     touchResponse = 'precise',
+    ratesApplied = false,
     disposed = false;
   const keys = new Set(),
     touch = neutralFlightInput(),
@@ -189,6 +190,12 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
       if (value !== touchResponse) clear();
       touchResponse = value;
     },
+    // Portable curves already shape rotation. Legacy touch precision is an
+    // explicit device aid; it must not be applied again to an imported curve.
+    ratesApplied(value) {
+      ratesApplied = Boolean(value);
+      clear();
+    },
     throttle(value) {
       if (owner === 'touch' && enabled && Number.isFinite(value))
         touch.throttle = clamp(value, 0, 1);
@@ -241,7 +248,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
             dy: pickup.y - event.clientY,
             travel: pickup.travel,
             throttle: pickup.throttle,
-            response: touchResponse,
+            response: ratesApplied ? 'direct' : touchResponse,
           }),
         );
         event.preventDefault();

@@ -1,0 +1,29 @@
+{
+  "format": "AdvancedQualificationGolden.v2",
+  "backend": "civilian-quad-advanced-experimental.v2",
+  "identity": "1a64282d0e2c0237",
+  "initialHash": "7c81fc38",
+  "hashes": [
+    [10, "b09f0a19"],
+    [20, "1698afc2"],
+    [30, "f8dacf66"],
+    [40, "1dec3aa7"],
+    [50, "a047e282"],
+    [60, "b40ddcc0"],
+    [70, "394c1f38"],
+    [80, "7d63c7aa"],
+    [90, "4d1a4e4a"],
+    [100, "d11d7cf7"],
+    [110, "0f021467"],
+    [120, "c4437239"],
+    [130, "c2ecba96"],
+    [140, "00427b7a"],
+    [150, "de0dd196"],
+    [160, "e4223107"],
+    [170, "1876b192"],
+    [180, "67ce3d16"],
+    [190, "0f60702a"],
+    [200, "46294848"]
+  ],
+  "finalHash": "46294848"
+}
