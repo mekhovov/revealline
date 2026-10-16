@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFile } from 'node:fs/promises';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
@@ -147,15 +171,15 @@ test('repeated forced Pause keeps the chosen menu action after Settings closes',
   assert.equal(page.$('settings-dialog').open, false);
   page.$('start-button').focus();
   key(page, 'Tab');
-  assert.equal(page.doc.activeElement, page.$('overlay-restart'));
+  boundedIdentity(page.doc.activeElement, page.$('overlay-restart'));
   key(page, 'Tab');
-  assert.equal(page.doc.activeElement, page.$('journey-skip'));
+  boundedIdentity(page.doc.activeElement, page.$('journey-skip'));
   key(page, 'Tab');
-  assert.equal(page.doc.activeElement, page.$('overlay-missions'));
+  boundedIdentity(page.doc.activeElement, page.$('overlay-missions'));
   // A repeated platform suspension can arrive while focus is still reported
   // inside this document. It may neutralize input, but cannot restart menu focus.
   page.win.emit('blur', { bubbles: false });
-  assert.equal(page.doc.activeElement, page.$('overlay-missions'));
+  boundedIdentity(page.doc.activeElement, page.$('overlay-missions'));
   unchangedPaused(page, run, checkpoint);
   assert.deepEqual(page.errors, []);
 });

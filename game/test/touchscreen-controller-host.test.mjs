@@ -584,6 +584,7 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     assert.equal(page.doc.body.dataset.flightState, 'running');
     pointer('pointerdown', 78, mode === 'dpad' ? 145 : 78, 33);

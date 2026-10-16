@@ -157,8 +157,7 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     p.key('ArrowDown', false);
     for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
-    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++)
-      p.frame();
+    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++) p.frame();
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('next-button').hidden, false);
   }
@@ -204,14 +203,38 @@ function showAllLifecycles(p) {
   p.$('journey-lifecycle').emit('change');
 }
 async function startPrepared(p, id) {
-  await running(p, id);
+  let activated = false,
+    acceptedRun;
+  await running(p, id, () => {
+    if (activated) return;
+    const start = p.$('start-button');
+    if (
+      p.rendered.run.levelId !== id ||
+      p.doc.body.dataset.flightState !== 'briefing' ||
+      p.doc.body.dataset.pictureState !== 'ready' ||
+      !p.rendered.paused ||
+      p.rendered.run.tick !== 0 ||
+      p.$('shell-home').open ||
+      p.$('journey-chooser')?.open ||
+      start.hidden ||
+      start.disabled ||
+      start.closest('[hidden],[inert]')
+    )
+      return;
+    acceptedRun = p.rendered.run;
+    activated = true;
+    start.click();
+  });
+  assert.equal(activated, true, 'The exact prepared briefing needs one explicit Start.');
+  assert.equal(p.rendered.run === acceptedRun, true, 'Start retains the accepted mission run.');
   assert.equal(p.rendered.paused, false);
   assert.equal(p.$('game-overlay').hidden, true);
 }
-async function running(p, id) {
+async function running(p, id, beforeRead) {
   try {
     await settle(() => {
       p.frame(0);
+      beforeRead?.();
       return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
     });
   } catch (error) {
