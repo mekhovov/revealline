@@ -442,6 +442,8 @@ try {
       ? createPerformanceSession()
       : null;
   let fieldScene = null,
+    performanceRunGeneration = 0,
+    performanceResultGeneration = 0,
     hudRevision = 0,
     hudWorkMs = 0,
     simulationWorkMs = 0;
@@ -2679,6 +2681,7 @@ try {
   });
   const missionThumbnails = createMissionPictureThumbnails({
     readMedia: pictureMedia,
+    isActive: missionListVisible,
     onUpdate: () => missionPicker?.sync(),
     render(picture, backdrop) {
       if (!backdrop && picture.visualOverrides?.background?.dataUrl)
@@ -2703,6 +2706,47 @@ try {
       }
     },
   });
+  let missionListDirty = true,
+    missionListInitialized = false,
+    missionThumbnailRefreshPending = true,
+    missionThumbnailTargets = [];
+  function missionListVisible() {
+    return (
+      !document.hidden &&
+      document.hasFocus() &&
+      !(started && !paused && run?.status === 'running') &&
+      $('shell-missions').open &&
+      !$('shell-mission-content').hidden &&
+      !$('missions').closest('[hidden],[inert]')
+    );
+  }
+  function retireMissionThumbnails() {
+    missionThumbnailRefreshPending = true;
+    missionThumbnails.cancel();
+  }
+  function refreshMissionThumbnails() {
+    if (!missionThumbnailRefreshPending || !missionListVisible()) return;
+    missionThumbnailRefreshPending = false;
+    void missionThumbnails
+      .refresh({
+        library,
+        entries: executionCatalog.entries,
+        entry: activeEntry,
+        themeId: theme.id,
+        targets: missionThumbnailTargets,
+      })
+      .catch(() => {
+        /* Preserve honest unavailable thumbnails. */
+      });
+  }
+  const reconcileMissionListVisibility = () => {
+    if (missionListVisible()) refreshVisibleMissions();
+    else retireMissionThumbnails();
+  };
+  $('shell-missions').addEventListener('focusin', reconcileMissionListVisibility);
+  $('shell-missions').addEventListener('toggle', reconcileMissionListVisibility);
+  $('shell-missions').addEventListener('close', reconcileMissionListVisibility);
+  window.addEventListener('focus', reconcileMissionListVisibility);
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) return;
     painter.dispose();
@@ -3495,7 +3539,7 @@ try {
     masteryAwards.cancelAll();
     cancelRestore();
     cancelPictureStart({ retirePrewarm: true });
-    missionThumbnails.cancel();
+    retireMissionThumbnails();
     clearInput();
     if (replayDownload) replayDownload.observed = false;
     replayFeedback?.clear();
@@ -3564,6 +3608,10 @@ try {
       gameplayTuning.dispose();
       if (browsingJourneyPreferences !== journeyPreferences) browsingJourneyPreferences.dispose();
       missionThumbnails.close();
+      $('shell-missions').removeEventListener('focusin', reconcileMissionListVisibility);
+      $('shell-missions').removeEventListener('toggle', reconcileMissionListVisibility);
+      $('shell-missions').removeEventListener('close', reconcileMissionListVisibility);
+      window.removeEventListener('focus', reconcileMissionListVisibility);
       libraryPanel.dispose();
       window.removeEventListener('beforeunload', protectSessionOriginals);
       sessionPictures.dispose();
@@ -7231,6 +7279,9 @@ try {
       recorder = restored.recorder;
       runId = restored.session.runId;
       const informationOwner = flightInformation.adopt(run, runId);
+      performanceRunGeneration = informationOwner?.generation ?? 0;
+      if (informationOwner)
+        performanceSession?.markEvent('run-adopted', performanceRunGeneration, run.tick);
       masteryDefinition = recoverGameplayTuning(run.level)
         ? null
         : masteryFor(campaignKey(campaign), run.levelId, masteryCatalog);
@@ -8714,7 +8765,24 @@ try {
     setTheme();
   }
   function paintMissions() {
-    missionThumbnails.cancel();
+    missionListDirty = true;
+    retireMissionThumbnails();
+    // Keep the native selection mirror current without rebuilding a closed
+    // browser. The authoritative selection and Start remain owned by the run.
+    $('level-select').value = campaign.levels[levelIndex].id;
+    // Retained Legacy controls synchronously inspect their first prepared
+    // snapshot. Build it once while paused; later hidden updates stay lazy.
+    refreshVisibleMissions(!missionListInitialized && paused && !started);
+  }
+  function refreshVisibleMissions(initialPreparation = false) {
+    if (!initialPreparation && !missionListVisible()) return;
+    if (!missionListDirty) {
+      refreshMissionThumbnails();
+      return;
+    }
+    missionListDirty = false;
+    missionListInitialized = true;
+    missionThumbnailTargets = [];
     $('missions').replaceChildren();
     if (courseSession) {
       localizedText($('campaign-progress'), () =>
@@ -8725,7 +8793,6 @@ try {
       );
       return;
     }
-    const thumbnailTargets = [];
     campaign.levels.forEach((level, index) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -8738,7 +8805,7 @@ try {
         !!progress.clears[level.id] ||
         !!difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed;
       b.dataset.pictureState = earnedPicture ? 'unavailable' : 'concealed';
-      thumbnailTargets.push({ button: b, level, earned: earnedPicture });
+      missionThumbnailTargets.push({ button: b, level, earned: earnedPicture });
       localizedAttribute(b, 'aria-label', () =>
         t(b.disabled ? 'interface:missions.lockedLabel' : 'interface:missions.label', {
           number: index + 1,
@@ -8774,23 +8841,14 @@ try {
       };
       $('missions').append(b);
     });
-    void missionThumbnails
-      .refresh({
-        library,
-        entries: executionCatalog.entries,
-        entry: activeEntry,
-        themeId: theme.id,
-        targets: thumbnailTargets,
-      })
-      .catch(() => {
-        /* Preserve honest unavailable thumbnails. */
-      });
+    refreshMissionThumbnails();
     localizedText(
       $('campaign-progress'),
       () =>
         `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? t('gameplay:medals', { value1: difficultyLabel(activeEntry) }) : ''}`,
     );
     refreshContentSelectors();
+    missionPicker?.sync();
   }
   function updateLoadout() {
     const recipe =
@@ -8918,6 +8976,12 @@ try {
   }
   function overlay(kind, { preserveFocus = false } = {}) {
     if (practiceRenderFailure.failed) return;
+    const newResultObservation =
+      performanceSession &&
+      ['won', 'lost', 'campaign-complete'].includes(kind) &&
+      ($('game-overlay').hidden ||
+        $('game-overlay').dataset.kind !== kind ||
+        performanceResultGeneration !== performanceRunGeneration);
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
     const repeatedPause =
@@ -9174,6 +9238,10 @@ try {
     // finished presenting.
     if (kind === 'won' && !celebrationActive) armResultAutoAdvance();
     else clearResultAutoAdvance();
+    if (newResultObservation && !$('game-overlay').hidden) {
+      performanceSession.markEvent('result-overlay-shown', performanceRunGeneration, run.tick);
+      performanceResultGeneration = performanceRunGeneration;
+    }
   }
   function resultAttemptCurrent(ticket) {
     if (
@@ -10092,6 +10160,9 @@ try {
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     refreshRunningEnemies();
     const informationOwner = flightInformation.adopt(run, runId);
+    performanceRunGeneration = informationOwner?.generation ?? 0;
+    if (informationOwner)
+      performanceSession?.markEvent('run-adopted', performanceRunGeneration, run.tick);
     courseObserver = null;
     courseUnavailable = null;
     if (courseSession)
@@ -10311,13 +10382,12 @@ try {
       !!freshSoloVisualSelection(activeEntry, theme.id);
     const needsFreshActors = !practice && !flightActorsReady;
     const needsCaptureEnvironment = !captureEnvironmentReady;
-    if (
+    const needsFlightAssets =
       !flightPictures?.ready(theme.id) ||
       needsFreshVisuals ||
       needsFreshActors ||
-      needsCaptureEnvironment ||
-      !fieldScene?.prepared()
-    ) {
+      needsCaptureEnvironment;
+    if (needsFlightAssets || !fieldScene?.prepared()) {
       if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
@@ -10338,7 +10408,7 @@ try {
       performanceSession?.setPhase('preparing');
       void sound.prepareGameplayAudio().catch(() => {});
       clearInput();
-      warning(picturePreparingMessage, null, 'host.picture');
+      if (needsFlightAssets) warning(picturePreparingMessage, null, 'host.picture');
       const notify = flightInformation.captureWarning('host.picture');
       const feedback = beginPreparation(picturePreparingMessage, cancelPictureStart);
       const prewarm =
@@ -10385,18 +10455,22 @@ try {
         })
         .then(async () => {
           if (
+            controller.signal.aborted ||
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
             owner !== flightPictures ||
             run !== selectedRun ||
             theme.id !== selectedTheme ||
-            (needsFreshActors && actorPreferences.snapshot().revision !== actorChoice.revision) ||
-            document.hidden ||
-            !document.hasFocus() ||
-            dialogOpen() ||
-            courseBlocked()
+            (needsFreshActors && actorPreferences.snapshot().revision !== actorChoice.revision)
           )
             return;
+          if (document.hidden || !document.hasFocus()) {
+            // Asset completion is useful feedback while paused. It grants no
+            // adoption, rendering or Resume authority to an unfocused page.
+            feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
+            return;
+          }
+          if (dialogOpen() || courseBlocked()) return;
           if (stagedVisuals) {
             adoptFlightVisualLease(stagedVisuals);
             stagedVisuals = null;
@@ -10484,6 +10558,7 @@ try {
     void updatePlayedLevelLink();
     started = true;
     paused = false;
+    retireMissionThumbnails();
     sound.setPreparationPhase('playing');
     performanceSession?.setPhase('playing');
     qualityPolicy.safeTransition(performance.now());
@@ -10910,10 +10985,12 @@ try {
       journeyEnabled &&
       !practice &&
       (candidateHost ? activeEntry.campaignId === 'prologue' : levelIndex < 2);
+    let captureExplanation;
     const captureTeaching = () => {
+      if (captureExplanation !== undefined) return captureExplanation;
       const occupied = inspectCaptureSnapshot(run).components.filter((region) => region.retained);
       const anchors = occupied.flatMap((region) => region.enemyIds);
-      return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
+      return (captureExplanation = `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`);
     };
     const openedGates = events.filter((event) => event.type === 'relay.opened').length;
     const captureTerrain = [
@@ -11345,7 +11422,23 @@ try {
         const simulationStart = performanceSession ? performance.now() : 0;
         stepRun(run, command, FIXED_DT);
         if (performanceSession) {
-          simulationWorkMs += performance.now() - simulationStart;
+          const acceptedAt = performance.now();
+          simulationWorkMs += acceptedAt - simulationStart;
+          for (let i = 0; i < run.events.length; i++)
+            if (run.events[i].type === 'cells.claimed')
+              performanceSession.markEvent(
+                'capture-accepted',
+                performanceRunGeneration,
+                run.tick,
+                acceptedAt,
+              );
+          if (beforeStatus !== run.status && (run.status === 'won' || run.status === 'lost'))
+            performanceSession.markEvent(
+              run.status === 'won' ? 'victory-accepted' : 'defeat-accepted',
+              performanceRunGeneration,
+              run.tick,
+              acceptedAt,
+            );
           for (let i = 0; i < inputTokenCount; i++) performanceSession.tick(inputTokens[i]);
           inputAppliedCount = inputTokenCount;
         }
@@ -11417,6 +11510,7 @@ try {
         eventFeedback(run.events);
       }
       if (!handled && ['won', 'lost'].includes(run.status)) {
+        performanceSession?.markEvent('terminal-work-begin', performanceRunGeneration, run.tick);
         let journeyRewardFailure = null;
         handled = true;
         paused = true;
@@ -11676,6 +11770,7 @@ try {
             'host.lost',
           );
         }
+        performanceSession?.markEvent('terminal-work-end', performanceRunGeneration, run.tick);
       }
     } else {
       pendingAction = false;
@@ -12320,6 +12415,7 @@ try {
     lastReplay && downloadCurrentReplay(lastReplayPresentation ?? lastReplay);
   $('download-raw-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
+    retireMissionThumbnails();
     cancelUnifiedOpening?.();
     // Returning to focus must not revive a picker or launch requested before
     // the interruption, even when its asynchronous work finishes afterward.
@@ -14072,7 +14168,10 @@ try {
       $('mission-brief-read').focus({ preventScroll: true });
       return true;
     },
-    focusMissions: () => missionPicker?.focusSelectedChapter(),
+    focusMissions: () => {
+      refreshVisibleMissions();
+      return missionPicker?.focusSelectedChapter();
+    },
     focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
     pause,
     getTopDialog: controllerDialog,
@@ -14375,6 +14474,7 @@ try {
       return;
     }
     try {
+      if (!manual && !demoLibrary.enabled) return;
       const result = await demoLibrary.keep(exportReplay(recorder, run), {
         entry: activeEntry,
         practice: false,

@@ -26,6 +26,16 @@ const BOUNDS = Object.freeze([
   Infinity,
 ]);
 const INPUT_KINDS = Object.freeze(['keyboard', 'touch', 'pointer', 'controller']);
+const EVENT_KINDS = Object.freeze([
+  'run-adopted',
+  'capture-accepted',
+  'victory-accepted',
+  'defeat-accepted',
+  'terminal-work-begin',
+  'terminal-work-end',
+  'result-overlay-shown',
+]);
+const EVENT_CAPACITY = 256;
 const clean = (value) => (Number.isFinite(value) && value >= 0 ? value : 0);
 const aggregate = () => ({
   count: 0,
@@ -128,6 +138,12 @@ export function createPerformanceSession({
     inputToRender = INPUT_KINDS.map(aggregate);
   // id, input stamp, first tick stamp, kind. A consumed slot has id 0.
   const inputs = new Float64Array(32 * 4);
+  // Timestamp, kind, accepted-run generation, tick, phase. Never retain a run.
+  const eventRows = new Float64Array(EVENT_CAPACITY * 5);
+  const eventCounts = new Float64Array(EVENT_KINDS.length);
+  let eventCount = 0,
+    rejectedEvents = 0,
+    lastEventAt = startedAt;
   let longTaskSupported = false,
     longAnimationFrameSupported = false;
   function setPhase(name, atMs = now()) {
@@ -202,6 +218,31 @@ export function createPerformanceSession({
   return {
     setPhase,
     recordFrame,
+    markEvent(kind, generation, tick, atMs) {
+      // A default-parameter clock read would still run when collection is off.
+      if (!enabled) return;
+      const type = EVENT_KINDS.indexOf(kind);
+      if (atMs === undefined) atMs = now();
+      if (
+        type < 0 ||
+        !Number.isSafeInteger(generation) ||
+        generation < 1 ||
+        !Number.isSafeInteger(tick) ||
+        tick < 0 ||
+        !Number.isFinite(atMs) ||
+        atMs < lastEventAt
+      ) {
+        rejectedEvents++;
+        return;
+      }
+      const offset = (eventCount++ % EVENT_CAPACITY) * 5;
+      eventRows[offset] = lastEventAt = atMs;
+      eventRows[offset + 1] = type;
+      eventRows[offset + 2] = generation;
+      eventRows[offset + 3] = tick;
+      eventRows[offset + 4] = phase;
+      eventCounts[type]++;
+    },
     setBaseline(value) {
       if (phase === 3 || !Number.isFinite(value) || value < 4 || value > 50) return false;
       baselineMs = value;
@@ -335,6 +376,20 @@ export function createPerformanceSession({
           message: failureMessages[row],
         });
       }
+      const recentEvents = [];
+      const retainedEventsByKind = new Float64Array(EVENT_KINDS.length);
+      for (let i = Math.max(0, eventCount - EVENT_CAPACITY); i < eventCount; i++) {
+        const offset = (i % EVENT_CAPACITY) * 5;
+        const kind = eventRows[offset + 1];
+        retainedEventsByKind[kind]++;
+        recentEvents.push({
+          atMs: eventRows[offset],
+          kind: EVENT_KINDS[kind],
+          runGeneration: eventRows[offset + 2],
+          tick: eventRows[offset + 3],
+          phase: PHASES[eventRows[offset + 4]],
+        });
+      }
       let resources = { supported: false };
       if (typeof resourceSnapshot === 'function')
         try {
@@ -377,6 +432,27 @@ export function createPerformanceSession({
         },
         interruptions: { count: interruptions, maxMs: worstInterruptionMs },
         failures: { count: failureCount, recent: recentFailures },
+        eventWitnesses: {
+          version: 1,
+          definition:
+            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability.',
+          capacity: EVENT_CAPACITY,
+          total: eventCount,
+          retained: recentEvents.length,
+          omitted: Math.max(0, eventCount - EVENT_CAPACITY),
+          rejected: rejectedEvents,
+          byKind: Object.fromEntries(
+            EVENT_KINDS.map((kind, index) => [
+              kind,
+              {
+                total: eventCounts[index],
+                retained: retainedEventsByKind[index],
+                omitted: eventCounts[index] - retainedEventsByKind[index],
+              },
+            ]),
+          ),
+          recent: recentEvents,
+        },
         longTasks: longTaskSupported
           ? { supported: true, ...summarize(longTasks) }
           : { supported: false },
