@@ -274,10 +274,21 @@ export function overflightReviewStopAt(value, { build, diagnostics = false } = {
     : null;
 }
 
+/** Keep the native tight-route default and allow explicit matched controls.
+ * Raid's pilot argument selects its hunting build instead of a flight route. */
+export function overflightReviewControls({ mode, build, route } = {}) {
+  if (!build) return { route: null, pilotArgument: null };
+  if (mode === 'overflight-hunt')
+    return { route: build === 'objectives' ? 'objectives' : 'packs', pilotArgument: build };
+  const selected = ['tight', 'figure-eight'].includes(route) ? route : 'tight';
+  return { route: selected, pilotArgument: selected };
+}
+
 export function createOverflightReviewPlayback({
   build,
   pilot,
   selectCard,
+  route = 'tight',
   stopAt = null,
   enabled = true,
 }) {
@@ -309,7 +320,7 @@ export function createOverflightReviewPlayback({
       if (stopSeconds !== null && run.time >= stopSeconds) stopped = true;
       if (stopped) return { x: 0, y: 0, boost: false, focus: false };
       if (lastTick === null || run.tick < lastTick || run.tick - lastTick >= 6) {
-        input = pilot(run, 'tight');
+        input = pilot(run, route);
         lastTick = run.tick;
       }
       return input;

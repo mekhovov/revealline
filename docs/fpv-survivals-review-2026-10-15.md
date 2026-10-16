@@ -4,6 +4,8 @@
 
 ## Latest implementation follow-up
 
+PR #1489 is merged at `4defb04b81`. The next continuation incorporates main `691351e1d`, adds final-tank armor/hull to native flight reports, and adds explicit native review routes while preserving the tight default. [Echo approach evidence](qualification/overflight/echo-approach-20261015/README.md) records a reproduced Receiver Gardens loss plus two isolated comparisons. All three lost; build viability is still open. The combined changed-flow/records/offline checks pass 72/72.
+
 PR #1344 is now merged at `51647de73d`. Its bounded performance and native cached-launch checks are complete. The next follow-up, runtime `f494367b7`, displays all pending Echo/Fan impacts and the actual accepted Riy chain path. See [attack-readability evidence](qualification/overflight/attack-readability-20261015/README.md). Combat tuning is unchanged; earlier build losses remain open.
 
 PR #1319 is merged at `47c3e26e25`. The local checkout safely rebased onto main `da0b010820`, preserving all pushed work. [PR #1344](https://github.com/mekhovov/revealline/pull/1344) fixes overlapping squad/review controls, rotates audible escort feedback without increasing its cadence, and explicitly guards corrective-module offline inclusion. Native desktop/narrow screenshots, a passing local opening frame-time trial, focused checks and fixed-seed build comparisons are recorded in the [follow-up report](qualification/overflight/quality-followup-20261015/README.md).
@@ -130,7 +132,7 @@ PR1192, PR1215, PR1226, PR1248 and PR1319 are merged. Corrective runtime `60b0c2
 
 ## Suggested next batch
 
-1. Review and integrate the bounded attack-readability follow-up; PR1319 and PR1344 have merged.
+1. Review and integrate the flight-report and explicit review-route follow-up; PR1319, PR1344 and PR1489 have merged.
 2. Review Riy Echo and the three intended build techniques; adjust only evidenced problems.
 3. Polish readability and the complete audio mix on those same runs.
 4. Calibrate replay targets, then choose further cross-mode polish.

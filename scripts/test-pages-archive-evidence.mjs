@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
 const workflow = await readFile(
@@ -13,11 +14,16 @@ const workflow = await readFile(
 const step = workflow
   .split('      - name: Verify the uploaded Pages archive against its inventory\n')[1]
   .split('\n      - name:')[0];
-const python = step
-  .match(/python3 - <<'PY'\n([\s\S]*?)\n          PY/)[1]
-  .split('\n')
-  .map((line) => line.slice(10))
-  .join('\n');
+const script = fileURLToPath(new URL('./pages-archive-evidence.py', import.meta.url));
+test('archive extraction is byte-identical to the frozen production body', async () => {
+  const body = (await readFile(script, 'utf8')).replace(/\n$/, '');
+  assert.equal(
+    createHash('sha256').update(body).digest('hex'),
+    'f948bdc99cd255f852ea232177dab698ee369b01e52edaf873c66ceb47cbae6f',
+  );
+  assert.match(step, /python3 scripts\/pages-archive-evidence\.py\n?$/);
+  assert.doesNotMatch(step, /<<'PY'/);
+});
 const source = 'a'.repeat(40);
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
@@ -69,7 +75,7 @@ with tarfile.open(sys.argv[1], 'w', format=tarfile.PAX_FORMAT) as archive:
 }
 
 async function run(f, maximum = 980000000) {
-  const result = spawnSync('python3', ['-c', python], {
+  const result = spawnSync('python3', [script], {
     encoding: 'utf8',
     env: {
       ...process.env,

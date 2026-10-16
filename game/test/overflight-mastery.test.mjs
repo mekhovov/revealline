@@ -9,7 +9,10 @@ import {
   validateOverflightMastery,
   OVERFLIGHT_MASTERY_FORMAT,
 } from '../overflight/mastery.mjs';
-import { renderOverflightRunReport } from '../overflight/mastery-view.mjs';
+import {
+  renderOverflightRunReport,
+  overflightFinalTargetReport,
+} from '../overflight/mastery-view.mjs';
 import { OVERFLIGHT_HUNT_MODE } from '../overflight/raid-mode.mjs';
 import { createOverflightRaidVariant } from '../overflight/raid-variants.mjs';
 import { createOverflightWorldPresentation } from '../overflight/worlds.mjs';
@@ -193,6 +196,64 @@ test('report distinguishes earned, collected, ground salvage and upgrade gaps wi
   assert.equal(report.salvageRemaining, 300);
   assert.equal(report.longestChoiceGap, 50);
   assert.equal(report.sinceLastChoice, 270);
+});
+
+test('flight report shows actual final armor and hull without treating missing targets as defeated', () => {
+  const current = run();
+  current.phase = 'lost';
+  assert.equal(overflightFinalTargetReport(current), null);
+  current.goals = { ...current.goals, finalSpawned: true, finalId: 123 };
+  assert.equal(overflightFinalTargetReport(current), null, 'an absent snapshot is not zero health');
+  const target = current.enemies[0];
+  Object.assign(target, {
+    id: 123,
+    active: true,
+    role: 'final',
+    hp: 1750,
+    maxHp: 3500,
+    armor: 750,
+    maxArmor: 1500,
+  });
+  const before = structuredClone(target);
+  assert.deepEqual(overflightFinalTargetReport(current), {
+    armor: 750,
+    maxArmor: 1500,
+    hull: 1750,
+    maxHull: 3500,
+  });
+  assert.deepEqual(target, before);
+  const document = new Document();
+  const root = document.createElement('section');
+  renderOverflightRunReport({ document, root, run: current });
+  const meters = root.querySelectorAll('progress');
+  assert.equal(meters.length, 2);
+  assert.equal(meters[0].getAttribute('value'), '750');
+  assert.equal(meters[0].getAttribute('max'), '1500');
+  assert.equal(meters[1].getAttribute('value'), '1750');
+  assert.match(root.textContent, /Armor remaining: 50%/);
+  assert.match(root.textContent, /Hull remaining: 50%/);
+  renderOverflightRunReport({ document, root, run: current, locale: 'uk' });
+  assert.match(root.textContent, /Залишок броні: 50%/);
+  target.id = 124;
+  assert.equal(
+    overflightFinalTargetReport(current),
+    null,
+    'pool reuse cannot report another actor',
+  );
+  target.id = 123;
+  target.active = false;
+  assert.equal(overflightFinalTargetReport(current), null);
+  current.goals.finalDefeated = true;
+  target.hp = 0;
+  target.armor = 0;
+  assert.deepEqual(overflightFinalTargetReport(current), {
+    armor: 0,
+    maxArmor: 1500,
+    hull: 0,
+    maxHull: 3500,
+  });
+  current.hunt = { bestChain: 5 };
+  assert.equal(overflightFinalTargetReport(current), null, 'Raid retains its objective report');
 });
 
 test('failed profile writes retain session achievements; review fixtures never write', async () => {

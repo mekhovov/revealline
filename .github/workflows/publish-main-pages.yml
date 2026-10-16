@@ -99,34 +99,7 @@ jobs:
         run: |
           set -euo pipefail
           SOURCE_COMMITTED_AT="$(git show -s --format=%cI "$SOURCE_SHA")" \
-            node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import path from 'node:path';
-          import { protectPageHTML } from './scripts/access-pages.mjs';
-          const root = path.join(process.env.RUNNER_TEMP, 'main-pages');
-          const deployment = {
-            format: 'revealline-main-deployment.v1',
-            channel: 'main',
-            sourceRevision: process.env.SOURCE_SHA,
-            sourceCommittedAt: process.env.SOURCE_COMMITTED_AT,
-            buildVersion: process.env.BUILD_VERSION,
-            play: 'game/',
-            releases: 'https://github.com/mekhovov/revealline/releases',
-          };
-          const json = JSON.stringify(deployment, null, 2) + '\n';
-          fs.writeFileSync(path.join(root, 'main-deployment.json'), json, { flag: 'wx' });
-          fs.writeFileSync(path.join(root, 'release.json'), json, { flag: 'wx' });
-          fs.mkdirSync(path.join(root, 'releases'), { recursive: true });
-          fs.writeFileSync(
-            path.join(root, 'releases/index.html'),
-            protectPageHTML(
-              '<!doctype html><meta charset="utf-8"><title>RevealLine releases</title><p>Immutable downloads and release notes are available on <a href="https://github.com/mekhovov/revealline/releases">GitHub</a>.',
-              'releases/index.html',
-              fs.readFileSync(path.join(root, 'game/index.html'), 'utf8'),
-            ),
-            { flag: 'wx' },
-          );
-          NODE
+            node scripts/write-main-pages-metadata.mjs
 
       - name: Verify Pages capacity and record the exact inventory
         id: inventory
@@ -134,82 +107,7 @@ jobs:
           SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import hashlib, json, os, pathlib, stat
-          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'main-pages'
-          rows, errors = [], []
-          if root.is_symlink() or not root.is_dir():
-            errors.append('Staging root must be an ordinary directory.')
-          else:
-            def scan_error(error):
-              errors.append('Could not enumerate staged directory: ' +
-                            pathlib.Path(error.filename).relative_to(root).as_posix())
-            entries = []
-            for directory, directories, names in os.walk(root, onerror=scan_error, followlinks=False):
-              entries.extend(pathlib.Path(directory) / name for name in sorted(directories + names))
-            for entry in entries:
-              relative = entry.relative_to(root).as_posix()
-              try:
-                before = entry.lstat()
-                if stat.S_ISDIR(before.st_mode):
-                  continue
-                if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
-                  errors.append(f'Unsupported file type or link: {relative}')
-                  continue
-                # These names are excluded by the pinned Pages upload action.
-                if any(part in ('.git', '.github') for part in entry.relative_to(root).parts):
-                  errors.append(f'File would be excluded from the Pages archive: {relative}')
-                  continue
-                digest, size = hashlib.sha256(), 0
-                with entry.open('rb') as body:
-                  for chunk in iter(lambda: body.read(1024 * 1024), b''):
-                    digest.update(chunk)
-                    size += len(chunk)
-                after = entry.lstat()
-                identity = lambda item: (item.st_dev, item.st_ino, item.st_size,
-                                         item.st_mtime_ns, item.st_ctime_ns, item.st_nlink)
-                if identity(before) != identity(after) or size != before.st_size:
-                  errors.append(f'File changed during inventory: {relative}')
-                  continue
-                rows.append({'path': relative, 'bytes': size, 'sha256': digest.hexdigest()})
-              except OSError:
-                errors.append(f'Could not inspect staged file: {relative}')
-          files = len(rows)
-          rows.sort(key=lambda row: row['path'])
-          total = sum(row['bytes'] for row in rows)
-          if not files:
-            errors.append('Staging inventory has no ordinary files.')
-          maximum = int(os.environ['MAX_PUBLISHED_BYTES'])
-          inventory = {
-            'format': 'revealline-main-pages-inventory.v1',
-            'sourceRevision': os.environ['SOURCE_SHA'],
-            'completeInventory': not errors,
-            'files': rows,
-          }
-          inventory_bytes = (json.dumps(inventory, separators=(',', ':')) + '\n').encode('utf-8')
-          pathlib.Path(os.environ['RUNNER_TEMP'], 'main-pages-inventory.json').write_bytes(inventory_bytes)
-          receipt = {
-            'format': 'revealline-main-pages-receipt.v1',
-            'sourceRevision': os.environ['SOURCE_SHA'],
-            'files': files,
-            'bytes': total,
-            'maximumBytes': maximum,
-            'measurement': 'raw-final-staged-file-bytes; not tar archive size',
-            'completeInventory': not errors,
-            'withinCapacity': total <= maximum,
-            'capacityAccepted': not errors and total <= maximum,
-            'inventorySha256': hashlib.sha256(inventory_bytes).hexdigest(),
-            'largestFiles': sorted(rows, key=lambda row: (-row['bytes'], row['path']))[:20],
-            'errors': errors,
-          }
-          pathlib.Path(os.environ['RUNNER_TEMP'], 'main-pages-receipt.json').write_text(
-            json.dumps(receipt, indent=2) + '\n'
-          )
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-            output.write(f'files={files}\nbytes={total}\n')
-          assert not errors, 'Invalid Pages inventory: ' + '; '.join(errors)
-          assert total <= maximum, f'Pages snapshot exceeds {maximum} bytes: {total}'
-          PY
+          python3 scripts/pages-capacity-evidence.py
 
       - name: Verify exact tracked source after build
         run: |
@@ -245,79 +143,7 @@ jobs:
           PAGES_ARTIFACT_ID: ${{ steps.pages_artifact.outputs.artifact_id }}
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import hashlib, json, os, pathlib, stat, tarfile
-          temporary = pathlib.Path(os.environ['RUNNER_TEMP'])
-          archive = temporary / 'artifact.tar'
-          maximum = int(os.environ['MAX_PUBLISHED_BYTES'])
-          receipt = {
-            'format': 'revealline-main-pages-archive-receipt.v1',
-            'sourceRevision': os.environ['SOURCE_SHA'],
-            'artifactId': os.environ['PAGES_ARTIFACT_ID'],
-            'measurement': 'actual uncompressed artifact.tar emitted by the pinned Pages action',
-            'maximumArchiveBytes': maximum,
-            'archiveAccepted': False,
-            'errors': [],
-          }
-          try:
-            inventory_bytes = (temporary / 'main-pages-inventory.json').read_bytes()
-            inventory = json.loads(inventory_bytes)
-            staged = json.loads((temporary / 'main-pages-receipt.json').read_bytes())
-            inventory_hash = hashlib.sha256(inventory_bytes).hexdigest()
-            assert staged['sourceRevision'] == inventory['sourceRevision'] == os.environ['SOURCE_SHA'], 'Source identity mismatch'
-            assert staged['capacityAccepted'] is True and staged['completeInventory'] is True, 'Staging was not accepted'
-            assert staged['inventorySha256'] == inventory_hash, 'Inventory checksum mismatch'
-            assert receipt['artifactId'].isdigit(), 'Missing uploaded artifact identity'
-            expected = {row['path']: row for row in inventory['files']}
-            assert len(expected) == len(inventory['files']) == staged['files'] > 0, 'Invalid inventory count'
-            assert sum(row['bytes'] for row in expected.values()) == staged['bytes'], 'Invalid inventory byte count'
-            before = archive.lstat()
-            assert stat.S_ISREG(before.st_mode) and before.st_nlink == 1, 'Archive must be a regular, unlinked file'
-            receipt.update(archiveBytes=before.st_size, stagedBytes=staged['bytes'], inventorySha256=inventory_hash)
-            digest = hashlib.sha256()
-            with archive.open('rb') as stream:
-              while block := stream.read(1024 * 1024):
-                digest.update(block)
-            receipt['archiveSha256'] = digest.hexdigest()
-            seen = set()
-            # Never extract archive-controlled paths or links onto the runner.
-            with tarfile.open(archive, mode='r:') as bundle:
-              for member in bundle:
-                name = member.name
-                if name.startswith('./'):
-                  name = name[2:]
-                if member.isdir() and name in ('', '.'):
-                  continue
-                parts = name.split('/')
-                assert name and not name.startswith('/') and all(part not in ('', '.', '..') for part in parts), f'Unsafe archive path: {member.name}'
-                if member.isdir():
-                  continue
-                assert member.isfile(), f'Unsupported archive member: {name}'
-                assert name not in seen, f'Duplicate archive file: {name}'
-                assert name in expected, f'Unexpected archive file: {name}'
-                row = expected[name]
-                assert member.size == row['bytes'], f'Archive size differs: {name}'
-                file_hash = hashlib.sha256()
-                size = 0
-                with bundle.extractfile(member) as stream:
-                  while block := stream.read(1024 * 1024):
-                    size += len(block)
-                    file_hash.update(block)
-                assert size == row['bytes'] and file_hash.hexdigest() == row['sha256'], f'Archive content differs: {name}'
-                seen.add(name)
-            assert seen == set(expected), 'Archive is missing inventoried files'
-            after = archive.lstat()
-            signature = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns, value.st_nlink)
-            assert signature(before) == signature(after), 'Archive changed during verification'
-            receipt['files'] = len(seen)
-            receipt['overheadBytes'] = before.st_size - staged['bytes']
-            assert before.st_size <= maximum, f'Pages archive exceeds {maximum} bytes: {before.st_size}'
-            receipt['archiveAccepted'] = True
-          except Exception as error:
-            receipt['errors'].append(str(error))
-          (temporary / 'main-pages-archive-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
-          assert receipt['archiveAccepted'], '; '.join(receipt['errors'])
-          PY
+          python3 scripts/pages-archive-evidence.py
 
       - name: Preserve archive acceptance or failure evidence
         if: ${{ !cancelled() && (steps.archive.outcome == 'success' || steps.archive.outcome == 'failure') }}

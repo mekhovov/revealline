@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, writeFile, readFile, rm, symlink, link, chmod } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
 const workflow = await readFile(
@@ -13,11 +14,16 @@ const workflow = await readFile(
 const inventoryStep = workflow
   .split('      - name: Verify Pages capacity and record the exact inventory\n')[1]
   .split('\n      - name:')[0];
-const python = inventoryStep
-  .match(/python3 - <<'PY'\n([\s\S]*?)\n          PY/)[1]
-  .split('\n')
-  .map((line) => line.slice(10))
-  .join('\n');
+const script = fileURLToPath(new URL('./pages-capacity-evidence.py', import.meta.url));
+test('inventory extraction is byte-identical to the frozen production body', async () => {
+  const body = (await readFile(script, 'utf8')).replace(/\n$/, '');
+  assert.equal(
+    createHash('sha256').update(body).digest('hex'),
+    '085b446b5820b164b39c3f92ea427a4808a426f05090c28debec8b4566f6006f',
+  );
+  assert.match(inventoryStep, /python3 scripts\/pages-capacity-evidence\.py\n?$/);
+  assert.doesNotMatch(inventoryStep, /<<'PY'/);
+});
 const source = 'a'.repeat(40);
 
 async function fixture(t, files = { 'index.html': 'hello' }) {
@@ -32,7 +38,7 @@ async function fixture(t, files = { 'index.html': 'hello' }) {
   return { directory, root };
 }
 function run(f, maximum = 100) {
-  return spawnSync('python3', ['-c', python], {
+  return spawnSync('python3', [script], {
     encoding: 'utf8',
     env: {
       ...process.env,

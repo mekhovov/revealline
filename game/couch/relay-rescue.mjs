@@ -3155,6 +3155,11 @@ export function bootCoop({
           ? null
           : acceptedPicture.artworkSource,
       nextDiscoveryRow?.installedEditionId ?? acceptedPicture.installedEditionId ?? null,
+      nextDiscoveryRow
+        ? (nextDiscoveryRow.teamMedia ?? null)
+        : navigation.nextRow
+          ? null
+          : acceptedPicture.teamMedia,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {

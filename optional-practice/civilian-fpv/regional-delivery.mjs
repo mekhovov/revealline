@@ -186,6 +186,9 @@ export async function inspectRegionalDownload(
 }
 export async function prepareRegionalDownload(pin, options = {}) {
   const checked = await inspectRegionalDownload(pin, options);
+  return prepareInspectedRegionalDownload(checked, options);
+}
+async function prepareInspectedRegionalDownload(checked, options) {
   const { descriptor, bytes } = checked;
   const base = new URL('.', checked.pin.url),
     blobs = new Map();
@@ -313,7 +316,8 @@ export async function openRegionalLibrary({
   indexedDB = globalThis.indexedDB,
   name = 'revealline-fpv-regions-v1',
 } = {}) {
-  const store = await openWorldStore({ indexedDB, name });
+  // The approved scenery budget is independent of the 256 MiB Worldpack default.
+  const store = await openWorldStore({ indexedDB, name, maxRetainedBytes: 512 * 1024 * 1024 });
   const metadata = (row) => ({
     id: row.id,
     sha256: row.sha256,
@@ -332,9 +336,23 @@ export async function openRegionalLibrary({
       const existing = await store.get(options.id, { sha256: pin.sha256 });
       assert(existing, 'The exact regional revision is no longer installed');
     }
-    const checked = await prepareRegionalDownload(pin, options);
-    const { descriptor, sha256, assets } = checked;
+    const checked = await inspectRegionalDownload(pin, options);
+    const { descriptor, sha256 } = checked;
     if (repair) assert(descriptor.id === options.id, 'Regional repair identity mismatch');
+    const project = {
+      id: descriptor.id,
+      title: descriptor.title.en,
+      format: descriptor.format,
+      descriptor,
+      pin: checked.pin,
+    };
+    await store.checkInstallCapacity({
+      project,
+      sha256,
+      assetBytes: descriptor.totalBytes + checked.bytes.length,
+    });
+    options.signal?.throwIfAborted();
+    const { assets } = await prepareInspectedRegionalDownload(checked, options);
     options.signal?.throwIfAborted();
     // Once this atomic commit starts, success is reported even if UI cancellation arrives later.
     options.onProgress?.({
@@ -343,13 +361,7 @@ export async function openRegionalLibrary({
       totalBytes: descriptor.totalBytes,
     });
     const result = await store.install({
-      project: {
-        id: descriptor.id,
-        title: descriptor.title.en,
-        format: descriptor.format,
-        descriptor,
-        pin: checked.pin,
-      },
+      project,
       assets,
       sha256,
       expectedGeneration: generation,

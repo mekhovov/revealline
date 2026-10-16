@@ -78,6 +78,12 @@ recovery and a fresh host reopening the clear. A physical fresh-browser import/r
 run remains pending. Team uses separately authored cooperative templates and the
 [Team campaign creator](../../game/creator/team.html).
 
+At the bottom of either creator, open **Download retention** to check whether the browser protects
+this site's saved data from automatic removal. **Keep downloads on this device** asks the browser
+for that protection; opening the section alone does not request permission. The browser may decline
+or lack support. Keep your downloaded `.rlpack` and private source backup regardless: this action
+does not download anything, increase the game's media budget, approve a campaign or replace backups.
+
 Each installed edition is immutable and identified by the complete package SHA-256. Installing an
 update beside an older edition does not reinterpret the older edition's saved attempt, completion
 or earned picture. A matching official name never turns Custom content into Journey content.

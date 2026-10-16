@@ -26,6 +26,9 @@ const words = {
     lane: 'Aimed attack',
     fan: 'Fan attack',
     ground: 'Ground attack',
+    finalTarget: 'Final tank',
+    armorRemaining: 'Armor remaining',
+    hullRemaining: 'Hull remaining',
   },
   uk: {
     title: 'Майстерність на полі',
@@ -52,8 +55,28 @@ const words = {
     lane: 'Прицільна атака',
     fan: 'Віялова атака',
     ground: 'Удар по землі',
+    finalTarget: 'Фінальний танк',
+    armorRemaining: 'Залишок броні',
+    hullRemaining: 'Залишок міцності',
   },
 };
+
+/** Read the final actor by its stable identity. Missing/recycled snapshots are
+ * unknown; neither absence nor an unfinished objective means zero health. */
+export function overflightFinalTargetReport(run) {
+  if (run.hunt || !run.goals?.finalSpawned) return null;
+  const target = run.enemies?.find(
+    (enemy) => enemy.id === run.goals.finalId && enemy.role === 'final',
+  );
+  if (!target || (!target.active && !run.goals.finalDefeated) || !(target.maxHp > 0)) return null;
+  const bound = (value, maximum) => Math.max(0, Math.min(maximum, value));
+  return {
+    armor: bound(target.armor, target.maxArmor),
+    maxArmor: target.maxArmor,
+    hull: bound(target.hp, target.maxHp),
+    maxHull: target.maxHp,
+  };
+}
 
 export function renderOverflightRunReport({
   document,
@@ -96,6 +119,25 @@ export function renderOverflightRunReport({
       ),
     );
   if (!run.hunt) {
+    const final = overflightFinalTargetReport(run);
+    if (final) {
+      const target = make('section', '', 'overflight-final-report');
+      target.setAttribute('aria-label', text.finalTarget);
+      target.append(make('h4', text.finalTarget));
+      for (const [value, maximum, label] of [
+        [final.armor, final.maxArmor, text.armorRemaining],
+        [final.hull, final.maxHull, text.hullRemaining],
+      ]) {
+        if (maximum <= 0) continue;
+        target.append(make('p', `${label}: ${Math.ceil((value / maximum) * 100)}%`));
+        const meter = make('progress', '');
+        meter.setAttribute('aria-label', `${text.finalTarget} · ${label}`);
+        meter.setAttribute('max', String(maximum));
+        meter.setAttribute('value', String(value));
+        target.append(meter);
+      }
+      root.append(target);
+    }
     const progression = make('details', '', 'overflight-run-progression');
     progression.append(make('summary', text.progression));
     progression.append(

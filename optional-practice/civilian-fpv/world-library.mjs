@@ -10,6 +10,11 @@ const check = (condition) => {
 };
 
 export function worldImportErrorCopy(error) {
+  if (error?.code === 'world-library-full')
+    return [
+      'The installed world library is full. Existing worlds and recorded flights are kept. Export any edited world you want to keep, then review Remove for a world you choose to replace and retry. You can keep flying installed worlds.',
+      'Бібліотеку встановлених світів заповнено. Наявні світи та записи польотів залишаться. Експортуйте змінений світ, який хочете зберегти, потім перегляньте «Вилучити» для світу, який вирішите замінити, і повторіть спробу. У встановлених світах можна й далі літати.',
+    ];
   if (!['unsupported-world-extension', 'unsupported-ground-motion'].includes(error?.code))
     return null;
   return [
