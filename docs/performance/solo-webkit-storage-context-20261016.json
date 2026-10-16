@@ -1,0 +1,407 @@
+{
+  "format": "SoloWebKitStorageContextEvidenceV1",
+  "createdAt": "2026-10-16T15:06:19.242477+00:00",
+  "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+  "artifactBuildInfoSHA256": "21251c33974e6ec1288a190cb7d87d9074e9b7e58604622814934452b5c5a4e0",
+  "runs": [
+    {
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/webkit-blob-primitive-attempt01/report.json",
+        "bytes": 21948,
+        "sha256": "140629f37ca89082f7d0d28fab6e8799a5c4c82622b6d6d282da2f9155764f78"
+      },
+      "status": "fail",
+      "performanceGateStatus": "excluded-storage-primitive-correctness",
+      "startedAt": "2026-10-16T14:59:36.078Z",
+      "completedAt": "2026-10-16T14:59:38.346Z",
+      "plan": {
+        "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/webkit-blob-primitive-plan01/plan.json",
+        "sha256": "118594fe9b2c8c7818a8bdce1cc367c763ffc362ee47a12ca8902f6aab0998f2"
+      },
+      "cases": [
+        {
+          "id": "ram",
+          "status": "fail",
+          "contextMode": "nonpersistent-newContext",
+          "browserVersion": "26.5",
+          "scratchFilesystem": {
+            "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/tmp/blob-primitive-ram-01",
+            "device": 16777237,
+            "type": 25,
+            "freeBytes": 1009238016,
+            "blockSize": 4096
+          },
+          "inputBlobTypes": {
+            "full": {
+              "type": "image/png",
+              "size": 41769
+            },
+            "emptyReference": {
+              "type": "application/x-revealline-official-reference",
+              "size": 0
+            }
+          },
+          "initialStorage": {
+            "estimate": {
+              "quota": 1048576000,
+              "usage": 0
+            },
+            "persisted": false,
+            "databases": []
+          },
+          "operations": [
+            {
+              "name": "metadata-control",
+              "status": "pass",
+              "error": null,
+              "readback": {
+                "id": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+                "size": 41769,
+                "contentType": "image/png",
+                "probe": true
+              }
+            },
+            {
+              "name": "full-png-blob",
+              "status": "fail",
+              "error": {
+                "name": "UnknownError",
+                "message": "Error preparing Blob/File data to be stored in object store",
+                "code": 0,
+                "stack": null
+              },
+              "readback": null
+            },
+            {
+              "name": "empty-official-reference-blob",
+              "status": "fail",
+              "error": {
+                "name": "UnknownError",
+                "message": "Error preparing Blob/File data to be stored in object store",
+                "code": 0,
+                "stack": null
+              },
+              "readback": null
+            }
+          ],
+          "managed": null,
+          "modulesObserved": 0,
+          "allObservedModulesMatchArtifact": null,
+          "cleanup": {
+            "serverClosed": true,
+            "forced": false,
+            "scratchConsumers": [],
+            "knownSurvivors": [],
+            "scratchRemoved": true,
+            "closedAt": "2026-10-16T14:59:37.486Z"
+          }
+        },
+        {
+          "id": "local-apfs",
+          "status": "fail",
+          "contextMode": "nonpersistent-newContext",
+          "browserVersion": "26.5",
+          "scratchFilesystem": {
+            "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/webkit-blob-primitive-plan01/blob-primitive-local-01",
+            "device": 16777235,
+            "type": 26,
+            "freeBytes": 1694834688,
+            "blockSize": 4096
+          },
+          "inputBlobTypes": {
+            "full": {
+              "type": "image/png",
+              "size": 41769
+            },
+            "emptyReference": {
+              "type": "application/x-revealline-official-reference",
+              "size": 0
+            }
+          },
+          "initialStorage": {
+            "estimate": {
+              "quota": 1048576000,
+              "usage": 0
+            },
+            "persisted": false,
+            "databases": []
+          },
+          "operations": [
+            {
+              "name": "metadata-control",
+              "status": "pass",
+              "error": null,
+              "readback": {
+                "id": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+                "size": 41769,
+                "contentType": "image/png",
+                "probe": true
+              }
+            },
+            {
+              "name": "full-png-blob",
+              "status": "fail",
+              "error": {
+                "name": "UnknownError",
+                "message": "Error preparing Blob/File data to be stored in object store",
+                "code": 0,
+                "stack": null
+              },
+              "readback": null
+            },
+            {
+              "name": "empty-official-reference-blob",
+              "status": "fail",
+              "error": {
+                "name": "UnknownError",
+                "message": "Error preparing Blob/File data to be stored in object store",
+                "code": 0,
+                "stack": null
+              },
+              "readback": null
+            }
+          ],
+          "managed": null,
+          "modulesObserved": 0,
+          "allObservedModulesMatchArtifact": null,
+          "cleanup": {
+            "serverClosed": true,
+            "forced": false,
+            "scratchConsumers": [],
+            "knownSurvivors": [],
+            "scratchRemoved": true,
+            "closedAt": "2026-10-16T14:59:38.346Z"
+          }
+        }
+      ]
+    },
+    {
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/webkit-blob-persistent-attempt01/report.json",
+        "bytes": 49128,
+        "sha256": "46dab2c27dc570db72cf41a2235df308062086e1be74df258bdf39c808af8f65"
+      },
+      "status": "pass",
+      "performanceGateStatus": "excluded-storage-primitive-correctness",
+      "startedAt": "2026-10-16T15:04:32.904Z",
+      "completedAt": "2026-10-16T15:04:35.201Z",
+      "plan": {
+        "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/webkit-blob-persistent-plan01/plan.json",
+        "sha256": "846df63085d4e210cfd8aead39ef8bc178905b9b602806fb30e45b72c5ea9199"
+      },
+      "cases": [
+        {
+          "id": "persistent-ram",
+          "status": "pass",
+          "contextMode": "fresh-owned-persistent",
+          "browserVersion": "26.5",
+          "scratchFilesystem": {
+            "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/tmp/blob-persistent-ram-01",
+            "device": 16777237,
+            "type": 25,
+            "freeBytes": 1009213440,
+            "blockSize": 4096
+          },
+          "inputBlobTypes": {
+            "full": {
+              "type": "image/png",
+              "size": 41769
+            },
+            "emptyReference": {
+              "type": "application/x-revealline-official-reference",
+              "size": 0
+            }
+          },
+          "initialStorage": {
+            "estimate": {
+              "quota": 20615843021,
+              "usage": 0
+            },
+            "persisted": false,
+            "databases": []
+          },
+          "operations": [
+            {
+              "name": "metadata-control",
+              "status": "pass",
+              "error": null,
+              "readback": {
+                "id": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+                "size": 41769,
+                "contentType": "image/png",
+                "probe": true
+              }
+            },
+            {
+              "name": "full-png-blob",
+              "status": "pass",
+              "error": null,
+              "readback": {
+                "isBlob": true,
+                "type": "image/png",
+                "bytes": 41769,
+                "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f"
+              }
+            },
+            {
+              "name": "empty-official-reference-blob",
+              "status": "pass",
+              "error": null,
+              "readback": {
+                "isBlob": true,
+                "type": "application/x-revealline-official-reference",
+                "bytes": 0,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            }
+          ],
+          "managed": {
+            "status": "pass",
+            "scope": "Exact production generic managed byte prepare/commit/read API; no store override, no game boot.",
+            "database": "revealline-soundtrack-v1",
+            "prepared": {
+              "library": {
+                "format": "revealline-managed-bytes.v1",
+                "items": [
+                  {
+                    "id": "probe-sentinel",
+                    "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f"
+                  }
+                ]
+              },
+              "assets": [
+                {
+                  "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+                  "type": "",
+                  "bytes": 41769
+                }
+              ]
+            },
+            "before": {
+              "generation": 0,
+              "library": {
+                "format": "revealline-managed-bytes.v1",
+                "items": []
+              }
+            },
+            "commit": {
+              "generation": 1,
+              "library": {
+                "format": "revealline-managed-bytes.v1",
+                "items": [
+                  {
+                    "id": "probe-sentinel",
+                    "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f"
+                  }
+                ]
+              }
+            },
+            "readback": {
+              "generation": 1,
+              "library": {
+                "format": "revealline-managed-bytes.v1",
+                "items": [
+                  {
+                    "id": "probe-sentinel",
+                    "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f"
+                  }
+                ]
+              },
+              "assets": [
+                {
+                  "sha256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+                  "type": "",
+                  "bytes": 41769,
+                  "actualSHA256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f"
+                }
+              ]
+            },
+            "usage": {
+              "usedBytes": 46182,
+              "externalBytes": 0,
+              "reservedBytes": 0,
+              "limitBytes": 268435456,
+              "generations": {
+                "audio": 0,
+                "media": 1
+              },
+              "reservations": 0
+            },
+            "databaseDeleted": true
+          },
+          "modulesObserved": 88,
+          "allObservedModulesMatchArtifact": true,
+          "cleanup": {
+            "serverClosed": true,
+            "forced": false,
+            "scratchConsumers": [],
+            "knownSurvivors": [],
+            "scratchRemoved": true,
+            "closedAt": "2026-10-16T15:04:35.201Z"
+          }
+        }
+      ]
+    }
+  ],
+  "finding": "The exact native Blob write error reproduces without the game in both nonpersistent WebKit contexts. The same primitives and the exact production generic managed-store commit/read API succeed in a separately declared persistent context. This supports an automated ephemeral-context limitation, not a demonstrated application regression or disk-space cause.",
+  "sourceEvidence": [
+    {
+      "url": "https://github.com/microsoft/playwright/issues/42795",
+      "reviewedAt": "2026-10-16",
+      "scope": "Open issue; maintainer identifies upstream lack of Blob/File private-mode support; contributor reports exact error and persistent control success."
+    },
+    {
+      "url": "https://bugs.webkit.org/show_bug.cgi?id=156347",
+      "reviewedAt": "2026-10-16",
+      "scope": "Open upstream private backing-store Blob support issue."
+    }
+  ],
+  "installedPlaywright": {
+    "version": "1.62.1",
+    "bundle": {
+      "path": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright-core/lib/coreBundle.js",
+      "bytes": 3425603,
+      "sha256": "9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac"
+    },
+    "newContextCallLine": 47625,
+    "persistentOnlyUserDataDirLine": 50612
+  },
+  "limitations": [
+    "No timing, CPU, power, thermal, latency, physical Safari or iOS qualification; focused Node tests could overlap.",
+    "Changing TMPDIR in a nonpersistent context does not select a persistent browser data store. Actual ephemeral backend storage paths were not observed.",
+    "The persistent managed check uses the existing generic byte-storage boundary; it does not certify rich still-picture adoption or successful Sentinel public Start.",
+    "All earlier stage01 baseline/candidate startup failures and both primitive failures remain unchanged. No browser mode is retroactively relabeled.",
+    "No persistence fallback, quota alteration, privacy preference override or source mutation was used.",
+    "Persistent canvas behavior was not tested; no conclusion about the retained strict canvas control mismatch.",
+    "Actual iPhone normal/private browsing mode remains unobserved."
+  ],
+  "preservation": {
+    "localReceipt": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/webkit-storage-context-preservation-01.json",
+    "externalReceipt": "/Volumes/alex/solo-performance-b1174522/evidence/webkit-storage-context-controls-20261016-01/preservation.json",
+    "sha256": "0fce908405594d40661f737a97bf8d975f9c668b72ffd6cf15671d54f641aa43",
+    "allEightFilesReadBack": true,
+    "sourceDeletion": false
+  },
+  "prospectiveQualifierSupport": {
+    "option": "--browser=webkit --context=persistent",
+    "default": "ephemeral unchanged",
+    "scope": "Explicit prospective persistent WebKit stratum; fresh task-owned profile per observation, same source/CSP/recipe and numerical gates, no retrospective reclassification.",
+    "tests": {
+      "command": "node --test scripts/test-solo-qualification-browser-context.mjs scripts/test-solo-qualification.mjs scripts/test-solo-qualification-cadence.mjs",
+      "node": "22.22.2",
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 312.516875,
+      "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/webkit-context-option-tests-02.log",
+      "sha256": "8581efccfe9b526312fd7b6fd7f323f57794a8af05dc44353d05a5c7f6025647"
+    },
+    "initialFixtureFailure": {
+      "log": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/webkit-context-option-tests-01.log",
+      "passed": 4,
+      "failed": 1,
+      "reason": "Test compared /var temp alias with helper-canonical /private/var path; fixture now canonicalizes its temporary root."
+    },
+    "nativeQualifierExecution": "not yet run; separate native persistent storage control passed"
+  }
+}
