@@ -8,6 +8,7 @@ import {
   beginQualificationUploadWitness,
   readPublicQualificationReplay,
   qualificationControlReady,
+  waitQualificationPreparation,
 } from './solo-qualification-export.mjs';
 import {
   assertReplayVerificationIdentity,
@@ -50,6 +51,125 @@ const scenario = (actions, extra = {}) => ({
   coverage: ['declared request, not observed mechanics'],
   actions,
   ...extra,
+});
+
+const preparationSelector = '[data-presentation-status="auxiliary"]';
+function preparationPage(initial, settled = initial, failure = null) {
+  let state = initial;
+  const observed = { waits: 0, timeout: null };
+  const evaluate = (fn, selector) => {
+    assert.equal(selector, preparationSelector);
+    return vm.runInNewContext(`(${fn.toString()})(selector)`, {
+      selector,
+      document: {
+        URL: 'https://example.test/game/playground/',
+        querySelector: () =>
+          state === null
+            ? null
+            : { getAttribute: () => state, textContent: 'Public preparation message' },
+      },
+    });
+  };
+  return {
+    observed,
+    evaluate: async (...args) => evaluate(...args),
+    waitForFunction: async (fn, selector, { timeout }) => {
+      observed.waits++;
+      observed.timeout = timeout;
+      assert.equal(evaluate(fn, selector), false);
+      state = settled;
+      if (failure) throw failure;
+      assert.equal(evaluate(fn, selector), true);
+    },
+  };
+}
+
+test('follow preparation accepts only bounded optional public status selectors', () => {
+  const follow = { type: 'follow', selector: '#open-preview' };
+  assert.doesNotThrow(() => validateQualification(scenario([follow])));
+  assert.doesNotThrow(() =>
+    validateQualification(
+      scenario([{ ...follow, preparationStatusSelector: preparationSelector }]),
+    ),
+  );
+  for (const preparationStatusSelector of ['', false, 'x'.repeat(4097)])
+    assert.throws(() =>
+      validateQualification(scenario([{ ...follow, preparationStatusSelector }])),
+    );
+  assert.throws(() =>
+    validateQualification(
+      scenario([{ ...follow, type: 'click', preparationStatusSelector: preparationSelector }]),
+    ),
+  );
+});
+
+test('follow preparation waits for public ready and retains its actual initial and final states', async () => {
+  const page = preparationPage('busy', 'ready'),
+    evidence = {};
+  let elapsed = 0;
+  await waitQualificationPreparation(page, preparationSelector, 1000, evidence, () => elapsed++);
+  assert.equal(evidence.initial.state, 'busy');
+  assert.equal(evidence.final.state, 'ready');
+  assert.equal(evidence.initial.url, 'https://example.test/game/playground/');
+  assert.equal(evidence.final.url, evidence.initial.url);
+  assert.equal(evidence.status, 'ready');
+  assert.equal(evidence.elapsedMs, 2);
+  assert.equal(page.observed.timeout, 999);
+  const alreadyReady = preparationPage('ready');
+  await waitQualificationPreparation(alreadyReady, preparationSelector, 1000, {});
+  assert.equal(alreadyReady.observed.waits, 0);
+});
+
+test('follow preparation fails both existing and newly reported public errors', async () => {
+  for (const initial of ['error', 'busy']) {
+    const page = preparationPage(initial, 'error'),
+      evidence = {};
+    await assert.rejects(
+      waitQualificationPreparation(page, preparationSelector, 1000, evidence),
+      /Public preparation failed: Public preparation message/,
+    );
+    assert.equal(evidence.status, 'failed');
+    assert.equal(evidence.initial.state, initial);
+    assert.equal(evidence.final.state, 'error');
+    assert.equal(page.observed.waits, initial === 'error' ? 0 : 1);
+  }
+});
+
+test('follow preparation retains missing or busy timeout evidence instead of treating absence as ready', async () => {
+  for (const state of [null, 'busy']) {
+    const failure = new Error('Observed preparation deadline'),
+      page = preparationPage(state, state, failure),
+      evidence = {};
+    await assert.rejects(
+      waitQualificationPreparation(page, preparationSelector, 1000, evidence),
+      (error) => error === failure,
+    );
+    assert.equal(evidence.status, 'failed');
+    assert.equal(evidence.initial.present, state !== null);
+    assert.equal(evidence.final.state, state);
+    assert.equal(evidence.failure, failure.message);
+    assert(evidence.elapsedMs >= 0);
+  }
+});
+
+test('follow preparation preserves the original failure when the departing page can no longer be read', async () => {
+  const page = preparationPage('busy'),
+    evidence = {},
+    failure = new Error('Document closed during wait');
+  page.waitForFunction = async () => {
+    page.evaluate = async () => {
+      throw new Error('Document unavailable');
+    };
+    throw failure;
+  };
+  await assert.rejects(
+    waitQualificationPreparation(page, preparationSelector, 1000, evidence),
+    (error) => error === failure,
+  );
+  assert.equal(evidence.initial.state, 'busy');
+  assert.equal(evidence.final, null);
+  assert.equal(evidence.finalReadFailure, 'Document unavailable');
+  assert.equal(evidence.failure, failure.message);
 });
 
 test('public replay export refuses active play or a disabled ordinary control', async () => {
