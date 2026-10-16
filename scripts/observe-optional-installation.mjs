@@ -12,6 +12,8 @@ import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
 import { practiceWorkerCacheInventory } from './practice-worker-cache-inventory.mjs';
 import {
   selectInstallationDownloadFaults,
+  installationDownloadFaultMatrix,
+  requireInstallationDownloadFaultBudget,
   readPreparedCacheFingerprints,
   observeInstallationDownloadFault,
 } from './optional-installation-download-check.mjs';
@@ -20,6 +22,13 @@ import {
   selectHistoricalInstallationMode,
   revealHistoricalAcademyControl,
 } from './practice-historical-ui.mjs';
+import {
+  selectHistoricalActiveSession,
+  prepareHistoricalAcademySession,
+  snapshotPausedAfterTransfer,
+  verifyHistoricalSessionAfterUpdate,
+  disposeHistoricalAcademySession,
+} from './optional-installation-active-session.mjs';
 import {
   INSTALLATION_WORLD_SEED,
   selectInstallationWorldSeed,
@@ -182,10 +191,23 @@ const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
 const downloadFaultsEnabled = selectInstallationDownloadFaults(
   process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
 );
-assert(
-  !downloadFaultsEnabled || worldSeedEnabled,
-  'Short download faults require the saved-world seed.',
+const downloadMatrix = installationDownloadFaultMatrix(
+  process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
 );
+const activeSessionMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION;
+const activeSessionEnabled = selectHistoricalActiveSession(activeSessionMode);
+assert(
+  !activeSessionEnabled || (historicalPrevious && !downloadFaultsEnabled),
+  'Active-session observation requires pinned historical admission and a separate fault-free run.',
+);
+const activeSessionURL = new URL('./optional-installation-active-session.mjs', import.meta.url);
+const activeSession = activeSessionEnabled
+  ? {
+      sourceSha256: sha(await readFile(activeSessionURL)),
+      passed: false,
+    }
+  : null;
+assert(!downloadFaultsEnabled || worldSeedEnabled, 'Download faults require the saved-world seed.');
 const downloadAuthority = downloadFaultsEnabled
   ? await Promise.all(
       [
@@ -198,7 +220,12 @@ const downloadAuthority = downloadFaultsEnabled
       })),
     )
   : [];
-const downloadFaults = { mode: 'all-short', cases: [], retries: [], publicEligible: false };
+const downloadFaults = {
+  mode: downloadMatrix?.selection,
+  cases: [],
+  retries: [],
+  publicEligible: false,
+};
 const transition = {
   kind: historicalPrevious
     ? 'distinct-historically-admitted-candidates'
@@ -241,6 +268,11 @@ const statusDiagnostics = { events: [], dropped: 0 };
 const diagnosticURL = new URL('./optional-installation-diagnostics.mjs', import.meta.url);
 const diagnosticSha256 = statusDiagnosticsEnabled ? sha(await readFile(diagnosticURL)) : null;
 const quotaProbeEnabled = process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE === '1';
+assert(
+  !quotaProbeEnabled ||
+    (!activeSessionEnabled && !downloadMatrix?.selection.startsWith('overall-')),
+  'Active-session and overall-timeout lanes must remain separate from quota faults.',
+);
 const quotaProbeURL = new URL('./optional-installation-quota-probe.mjs', import.meta.url);
 const quotaProbeSha256 = quotaProbeEnabled ? sha(await readFile(quotaProbeURL)) : null;
 let quotaProbeReport = null;
@@ -889,13 +921,21 @@ try {
               ),
             );
         }
-        for (const id of packageIds) {
+        for (const id of downloadMatrix.ids) {
           const member = `optional-practice/${id}/README.md`,
             body = entries.get(id).get(member);
           assert(body, 'The exact admitted README dependency is required.');
-          for (const mode of ['idle', 'cancel-hold']) {
+          for (const mode of downloadMatrix.modes) {
+            requireInstallationDownloadFaultBudget(
+              downloadMatrix,
+              observationDeadline - Date.now(),
+            );
             await open(id, failedFixture);
             await revealOfflineUI(id);
+            requireInstallationDownloadFaultBudget(
+              downloadMatrix,
+              observationDeadline - Date.now(),
+            );
             currentStep = `real download fault ${id} ${mode}`;
             const observed = { id, mode, passed: false };
             downloadFaults.cases.push(observed);
@@ -951,25 +991,59 @@ try {
           });
         }
       }
-      await stageLauncher(fpv);
-      await pointer(fpv, version);
-      await page.goto(url(relativeRoot(fpv) + 'app/'));
-      await page.locator('#check').click();
-      await page.locator('#prepare').click();
-      await page.waitForURL((observed) => matchesLaunchedAppURL(observed, url(entry(fpv))));
-      assert.ok(matchesLaunchedAppURL(page.url(), url(entry(fpv))));
-      await prepare(fpv);
-      assert.equal(await exportedProof(), savedProof);
-      assert.equal(await exportedProfiles(), savedProfiles);
-      const upgraded = await inspect(
-        previous
-          ? 'candidate-installed-over-previous-candidate'
-          : 'candidate-installed-over-alternate-path',
-      );
-      assert.equal(installed(upgraded, fpv).active.version, version);
-      assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
-      assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
-      assert.equal(upgraded.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
+      let sessionGuard, upgraded;
+      try {
+        if (activeSessionEnabled) {
+          const priorWindow = appWindows.get(fpv);
+          assert(priorWindow, 'Retained historical standalone window is required.');
+          currentStep = 'prepare real historical active Academy session';
+          sessionGuard = await prepareHistoricalAcademySession(priorWindow, {
+            expectedURL: url(entry(fpv, priorVersion)) + '?lang=en',
+            receipt: activeSession,
+            mode: activeSessionMode,
+          });
+          await page.bringToFront();
+          await snapshotPausedAfterTransfer(sessionGuard);
+        }
+        await stageLauncher(fpv);
+        await pointer(fpv, version);
+        await page.goto(url(relativeRoot(fpv) + 'app/'));
+        await page.locator('#check').click();
+        await page.locator('#prepare').click();
+        await page.waitForURL((observed) => matchesLaunchedAppURL(observed, url(entry(fpv))));
+        assert.ok(matchesLaunchedAppURL(page.url(), url(entry(fpv))));
+        await prepare(fpv);
+        assert.equal(await exportedProof(), savedProof);
+        assert.equal(await exportedProfiles(), savedProfiles);
+        upgraded = await inspect(
+          previous
+            ? 'candidate-installed-over-previous-candidate'
+            : 'candidate-installed-over-alternate-path',
+        );
+        assert.equal(installed(upgraded, fpv).active.version, version);
+        assert.equal(installed(upgraded, fpv).previous.version, priorVersion);
+        assert.equal(upgraded.keys[keyFor(gym)], both.keys[keyFor(gym)]);
+        assert.equal(upgraded.keys[keyFor(worlds)], both.keys[keyFor(worlds)]);
+        if (sessionGuard) {
+          activeSession.update = {
+            activeVersion: installed(upgraded, fpv).active.version,
+            previousVersion: installed(upgraded, fpv).previous.version,
+            checkpoint: 'candidate-installed-over-previous-candidate',
+          };
+          await verifyHistoricalSessionAfterUpdate(sessionGuard);
+          const image = await sessionGuard.page.screenshot({ timeout: 5000 });
+          const imagePath = output + '.active-session-paused.png';
+          await writeFile(imagePath, image, { flag: 'wx' });
+          activeSession.screenshot = { path: imagePath, bytes: image.length, sha256: sha(image) };
+        }
+      } finally {
+        if (sessionGuard) {
+          await disposeHistoricalAcademySession(sessionGuard);
+          await boundedOperation('Restore observer foreground after old-session check', () =>
+            page.bringToFront(),
+          );
+        }
+      }
       if (quotaProbeEnabled) {
         // The pristine alternate path is not installed. Unlock it before quota
         // denial, so authentication writes are not mistaken for install errors.
@@ -1359,14 +1433,36 @@ try {
     ).every(Boolean);
     downloadFaults.passed =
       downloadFaults.sourceStable &&
-      downloadFaults.cases.length === 6 &&
+      downloadFaults.cases.length === downloadMatrix.ids.length * downloadMatrix.modes.length &&
+      downloadFaults.cases.every(
+        (item, index) =>
+          item.id === downloadMatrix.ids[Math.floor(index / downloadMatrix.modes.length)] &&
+          item.mode === downloadMatrix.modes[index % downloadMatrix.modes.length],
+      ) &&
       downloadFaults.cases.every((item) => item.passed && item.recordsPreserved) &&
-      downloadFaults.retries.length === 3 &&
+      downloadFaults.retries.length === downloadMatrix.ids.length &&
+      downloadFaults.retries.every((item, index) => item.id === downloadMatrix.ids[index]) &&
       downloadFaults.retries.every((item) => item.preparedAndRemoved && item.recordsPreserved);
     downloadFaults.scope =
-      'Six native download idle/cancel cases on exact admitted bytes at explicitly synthetic v0.0.1 paths. One original byte then held EOF at a pinned owned-loopback dependency. No virtual clocks, runtime modifications, actual verification-phase cancellation, five-minute limit, real eviction or physical hardware. Gym records are unpopulated; Academy synthetic proof/profile and populated World fingerprints are retained.';
+      downloadMatrix.selection === 'all-short'
+        ? 'Six native download idle/cancel cases on exact admitted bytes at explicitly synthetic v0.0.1 paths. One original byte then held EOF. No actual verification-phase cancellation or five-minute qualification.'
+        : 'One selected-app real five-minute overall-timeout case with continuing original-byte server writes at a synthetic v0.0.1 path. Server writes are not direct browser-receipt evidence; generic failure copy cannot identify the internal timer.';
+    downloadFaults.scope +=
+      ' Owned loopback only; no virtual clocks, runtime modifications, real eviction or physical hardware. Gym records are unpopulated; Academy synthetic proof/profile and populated World fingerprints are retained.';
     report.downloadFaults = downloadFaults;
     report.passed &&= downloadFaults.passed;
+  }
+  if (activeSessionEnabled) {
+    activeSession.sourceStable =
+      activeSession.sourceSha256 === sha(await readFile(activeSessionURL));
+    report.activeSession = activeSession;
+    report.passed &&= Boolean(
+      activeSession.passed &&
+        activeSession.cleanup?.completed &&
+        activeSession.sourceStable &&
+        activeSession.update?.activeVersion === version &&
+        activeSession.update?.previousVersion === priorVersion,
+    );
   }
   if (statusDiagnosticsEnabled) {
     report.statusDiagnostics = {

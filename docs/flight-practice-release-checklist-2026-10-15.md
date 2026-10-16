@@ -346,6 +346,16 @@ to omit fields from comparisons.
 
 ### C6 — Slow/stalled/cancelled/denied preparation
 
+Latest [integrated-main continuation](flight-practice-continuation-2026-10-16.md):
+all six real 30-second idle/native download-cancel cases pass on the unchanged
+admitted candidate, with 22 total checkpoints, six exact prepared-cache inventories
+and preserved proof/profile/World records after every fault and retry/removal.
+Earlier failed observer attempts remain retained. This closes the named short
+download subcases, not local-verification cancellation or the overall bound.
+Separate one-app five-minute observers and a historical Academy active-session
+observer are implemented and independently reviewed; their native results are
+still pending. Default and all-short journeys remain compatible.
+
 16 October correction: both package worker families now announce their return to
 Downloading before awaiting the next dependency. Previously a stalled next response
 could leave Verifying visible after local verification had ended. Two deterministic

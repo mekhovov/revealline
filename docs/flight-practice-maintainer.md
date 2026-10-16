@@ -179,6 +179,25 @@ positive appearance selection, physical input and full guide usability remain
 separate. Keep failed receipts, authority and screenshots alongside any retry.
 See the [source-shell report](flight-practice-directory-journey-2026-10-15.md).
 
+For positive **personal preference** transfer, use format
+`revealline-practice-directory-personal-appearance-plan.v1` and protocol
+`practice-directory-personal-appearance.v1`. It chooses Tryzub through ordinary
+Settings and compares the bounded main/app preferences. This does not qualify a
+positive compiled-edition appearance URL pair; null edition pins are expected.
+
+For the generated distribution, use format
+`revealline-practice-directory-production-personal-appearance-plan.v1`, protocol
+`practice-directory-production-personal-appearance.v1`, and add an absolute
+`distribution` directory plus `distributionManifestSha256` for its original
+generated `manifest.json`. Build from the same clean `shellRevision`/`shellTree`;
+the manifest's revision and generated `game/build-info.json` must agree. The
+observer hashes every original member before and after, serves only listed
+generated files with public security headers, and retains the original manifest.
+There is no source-file fallback. Only its reported admitted practice catalogue/
+release fixture overlays the build. A local distribution journey is still not
+hosting, capacity, public release selection or human approval. Preserve failed
+attempts, full original outputs and source identities before retrying.
+
 ### Publish only after the existing review gates pass
 
 ```sh

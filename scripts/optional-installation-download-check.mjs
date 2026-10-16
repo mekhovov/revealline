@@ -1,4 +1,4 @@
-/** Native short C6 checks; all faults are confined to an owned local server. */
+/** Native C6 checks; all faults are confined to an owned local server. */
 import assert from 'node:assert/strict';
 import { setTimeout as pause } from 'node:timers/promises';
 import { performance } from 'node:perf_hooks';
@@ -7,8 +7,35 @@ import { activateOfflineAction } from './optional-installation-observer-helpers.
 
 export function selectInstallationDownloadFaults(value) {
   if (value === undefined) return false;
-  assert.equal(value, 'all-short', 'Download faults must be omitted or all-short.');
+  assert(
+    ['all-short', 'overall-civilian-flight', 'overall-civilian-fpv', 'overall-fpv-worlds'].includes(
+      value,
+    ),
+    'Use all-short or one explicitly named overall package.',
+  );
   return true;
+}
+
+export function installationDownloadFaultMatrix(value) {
+  if (!selectInstallationDownloadFaults(value)) return null;
+  return Object.freeze({
+    selection: value,
+    ids: Object.freeze(
+      value === 'all-short'
+        ? ['civilian-flight', 'civilian-fpv', 'fpv-worlds']
+        : [value.slice('overall-'.length)],
+    ),
+    modes: Object.freeze(value === 'all-short' ? ['idle', 'cancel-hold'] : ['overall-trickle']),
+    minimumRemainingMs: value === 'all-short' ? 0 : 390000,
+  });
+}
+
+export function requireInstallationDownloadFaultBudget(matrix, remainingMs) {
+  assert(matrix && Number.isFinite(remainingMs));
+  assert(
+    remainingMs >= matrix.minimumRemainingMs,
+    'Insufficient existing observation time before fault.',
+  );
 }
 
 export function assertDownloadFaultTiming(receipt, statusSelector) {
@@ -18,6 +45,33 @@ export function assertDownloadFaultTiming(receipt, statusSelector) {
       'Require the real approximately 30-second inactivity limit, not the server safety limit.',
     );
     assert(!/cancelled|canceled/i.test(receipt.status), 'Idle failure cannot be a cancellation.');
+  } else if (receipt.mode === 'overall-trickle') {
+    const fault = receipt.fault;
+    assert(
+      receipt.heldMs >= 295000 && receipt.heldMs <= 315000,
+      'Require the real approximately five-minute client limit.',
+    );
+    assert(!/cancelled|canceled/i.test(receipt.status) && !receipt.cancelAction);
+    assert(
+      /failed|timed out|exceeded five minutes/i.test(receipt.status),
+      'Require failure feedback.',
+    );
+    assert(['client-disconnect', 'request-aborted'].includes(fault?.outcome));
+    assert.equal(fault.delegatedTargetRequests, 0);
+    const writes = fault.events.filter((event) => event.kind === 'body-byte-written');
+    const ended = fault.events.find((event) => event.kind === 'ended');
+    assert(
+      writes.length >= 55 &&
+        writes.length === fault.bytesSent &&
+        fault.bytesSent < fault.dependency.bytes,
+    );
+    assert(ended && ended.elapsedMs - writes[0].elapsedMs === receipt.heldMs);
+    for (let index = 0; index < writes.length; index++) {
+      assert.equal(writes[index].offset, index);
+      assert.equal(writes[index].bytesSent, index + 1);
+      const gap = (writes[index + 1] ?? ended).elapsedMs - writes[index].elapsedMs;
+      assert(gap >= 0 && gap < 30000, 'Continuing writes must not cross the inactivity boundary.');
+    }
   } else {
     assert.equal(receipt.mode, 'cancel-hold');
     assert(
@@ -127,7 +181,10 @@ export async function observeInstallationDownloadFault({
   status,
   receipt,
 }) {
-  assert(['idle', 'cancel-hold'].includes(mode), 'This procedure covers only short faults.');
+  assert(
+    ['idle', 'cancel-hold', 'overall-trickle'].includes(mode),
+    'Unknown fixed fault procedure.',
+  );
   assert(receipt && typeof receipt === 'object');
   receipt.passed = false;
   const fault = attachPracticeDownloadFault({ server, origin, dependency, body, mode });
@@ -138,7 +195,8 @@ export async function observeInstallationDownloadFault({
     operation = activateOfflineAction(page, {
       button: prepare,
       status,
-      expected: /failed|timed out|stalled|cancelled|canceled|not available|not supported/i,
+      expected:
+        /failed|timed out|stalled|exceeded five minutes|cancelled|canceled|not available|not supported/i,
     });
     // Join immediately; a UI failure must never become an unhandled rejection.
     void operation.catch((error) => {
@@ -190,13 +248,14 @@ export async function observeInstallationDownloadFault({
       ['client-disconnect', 'request-aborted'].includes(observed.outcome),
       `Fault ended at the server rather than the app: ${observed.outcome}`,
     );
-    assert.equal(observed.bytesSent, 1);
+    if (mode !== 'overall-trickle') assert.equal(observed.bytesSent, 1);
     assert.equal(observed.delegatedTargetRequests, 0, 'No silent request retry is permitted.');
     const first = observed.events.find((event) => event.kind === 'body-byte-written'),
       last = observed.events.find((event) => event.kind === 'ended');
     assert(first && last);
     receipt.heldMs = last.elapsedMs - first.elapsedMs;
     receipt.mode = mode;
+    receipt.fault = observed;
     if (mode === 'cancel-hold') {
       receipt.cancelLatencyMs = performance.now() - cancelAt;
       receipt.cancelFeedback =
