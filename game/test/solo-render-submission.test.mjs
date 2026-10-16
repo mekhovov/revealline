@@ -7,6 +7,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { FIXED_DT, stepRun } from '../core/index.mjs';
 import { sharedBattlefieldGround } from '../presentation/battlefield-ground.mjs';
 
 const options = () => ({
@@ -340,5 +341,55 @@ test('paused display choices repaint once without advancing play or resuming ste
   } finally {
     ground.set(previousGround);
   }
+  assert.deepEqual(page.errors, []);
+});
+
+test('real submission observes cheap irregular delivery without changing fixed ticks or restoring before Resume', async (t) => {
+  let workClock = 1000;
+  const page = await soloPage(t, {
+    ...options(),
+    browserSetup({ globals }) {
+      globals.performance = { now: () => workClock };
+    },
+  });
+  await start(page);
+  const run = page.rendered.run;
+  const reference = structuredClone(run);
+  const initialTick = run.tick;
+  let elapsedMs = 0;
+  function deliver(seconds, intervals) {
+    const target = elapsedMs + seconds * 1000;
+    for (let i = 0; elapsedMs < target; i++) {
+      assert.ok(i < 10000, 'Synthetic host schedule must stay bounded.');
+      const ms = intervals[i % intervals.length];
+      elapsedMs += ms;
+      workClock += ms;
+      page.frame(ms, { beforeRender: () => (workClock += 2) });
+    }
+    // POST_RENDER updates policy after draw; a zero-time callback exposes the
+    // chosen painter tier without adding any simulation time.
+    page.frame(0, { beforeRender: () => (workClock += 2) });
+    const expectedTicks = Math.floor((elapsedMs + 1e-7) / (FIXED_DT * 1000));
+    assert.equal(run.tick - initialTick, expectedTicks);
+    while (reference.tick < initialTick + expectedTicks) stepRun(reference, {}, FIXED_DT);
+    assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+  }
+  deliver(3, [1000 / 30]);
+  assert.equal(page.rendered.quality, 'full', 'Steady slow callbacks retain the full painter.');
+  deliver(3.2, [1000 / 30, 50]);
+  assert.equal(
+    page.rendered.quality,
+    'reduced',
+    'Irregular missed delivery reaches the real painter.',
+  );
+  deliver(13, [1000 / 60]);
+  assert.equal(page.rendered.quality, 'reduced', 'Headroom alone cannot restore during play.');
+  page.$('pause-button').click();
+  const paused = authoritativeCheckpoint(run);
+  await start(page);
+  assert.strictEqual(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), paused);
+  assert.equal(page.rendered.quality, 'full', 'Public Resume is the safe restoration boundary.');
   assert.deepEqual(page.errors, []);
 });
