@@ -195,6 +195,22 @@ export async function prepareTerrainWindow(
       live,
     }),
     group,
+    collisionMeshes() {
+      live();
+      return cells.map((cell) => {
+        const { positions, indices } = compileTerrainCell(cell);
+        return {
+          id: `terrain:${cell.chunkId}`,
+          vertices: Array.from(positions),
+          indices: Array.from(indices),
+          translation: {
+            x: (cell.x * cell.cellSizeMm - originMm.x) / 1000,
+            y: -originMm.y / 1000,
+            z: (cell.z * cell.cellSizeMm - originMm.z) / 1000,
+          },
+        };
+      });
+    },
     // Read actual Rapier sets only on explicit diagnostic demand, never after free().
     collisionSnapshot: () => ({
       worlds: disposed ? 0 : 1,
