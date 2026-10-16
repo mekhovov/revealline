@@ -47,7 +47,7 @@ function fixture() {
     return { ...compiled, assets, blobs };
   })());
 }
-function environment(f) {
+function environment(t, f) {
   const decoded = [],
     requests = [],
     revoked = [];
@@ -83,6 +83,7 @@ function environment(f) {
     createObjectURL: () => `blob:test-${decoded.length}`,
     revokeObjectURL: (url) => revoked.push(url),
   });
+  t.after(() => host.close());
   return {
     host,
     decoded,
@@ -124,9 +125,9 @@ test('only explicitly registered Team roles join the release host image set', ()
   ])
     assert(!isTeamRuntimeImageSlot(id));
 });
-test('actual compiler output fetches, verifies and prepares every Team role for the real painter', async () => {
+test('actual compiler output fetches, verifies and prepares every Team role for the real painter', async (t) => {
   const f = await fixture(),
-    e = environment(f),
+    e = environment(t, f),
     snapshot = await e.host.load();
   assert.equal(e.decoded.length, 42);
   assert.equal(e.requests.length, 43);
@@ -204,12 +205,13 @@ test('actual compiler output fetches, verifies and prepares every Team role for 
   assert(e.decoded.every((image) => image.closed === 1));
 });
 for (const type of ['missing', 'hash'])
-  test(`a ${type} Team image cannot replace or dispose the accepted snapshot`, async () => {
+  test(`a ${type} Team image cannot replace or dispose the accepted snapshot`, async (t) => {
     const f = await fixture(),
-      e = environment(f),
+      e = environment(t, f),
       before = await e.host.load(),
       old = [...e.decoded],
       asset = f.assets.find((a) => a.id.endsWith('team.player.recovery'));
+    assert.equal(old.length, TEAM_RUNTIME_IMAGE_SLOTS.length);
     e.fail({ type, name: `assets/${asset.file.sha256}.png` });
     await assert.rejects(e.host.load());
     assert.equal(e.host.current(), before);
@@ -218,8 +220,19 @@ for (const type of ['missing', 'hash'])
     e.fail(null);
     const recovered = await e.host.load();
     assert.notEqual(recovered, before);
-    assert(old.every((image) => image.closed === 1));
+    assert.equal(e.decoded.length, old.length, 'Identical admitted artwork is decoded once.');
+    for (const id of TEAM_RUNTIME_IMAGE_SLOTS)
+      assert.equal(recovered.image(id).image, before.image(id).image);
+    assert(
+      old.every((image) => image.closed === 0),
+      'The adopted snapshot retains shared images.',
+    );
     assert(recovered.image('team.player.recovery'));
     e.host.close();
     assert(e.decoded.every((image) => image.closed === 1));
+    e.host.close();
+    assert(
+      e.decoded.every((image) => image.closed === 1),
+      'The last lease closes each image once.',
+    );
   });
