@@ -29,22 +29,16 @@ jobs:
       matrix:
         include:
           - label: baseline
-            case: demo-recordings
+            case: team-default-entry-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
-            case: demo-recordings
+            case: team-default-entry-host
             source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
           - label: baseline
-            case: coop-lobby-preview
+            case: coop-picture-recovery-focus
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
-            case: coop-lobby-preview
-            source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
-          - label: baseline
-            case: couch-reading
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-reading
+            case: coop-picture-recovery-focus
             source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
     env:
       CI: '1'
@@ -116,9 +110,19 @@ jobs:
               return (actual, expected, message) => {
                 const reference = (value) => value !== null &&
                   (typeof value === 'object' || typeof value === 'function');
-                if (reference(actual) || reference(expected))
-                  return nativeAssert.ok(Object.is(actual, expected),
-                    message ?? 'Strict object identity mismatch (bounded diagnostic).');
+                if (reference(actual) || reference(expected)) {
+                  if (Object.is(actual, expected)) return;
+                  const describe = (value) => {
+                    if (value === null) return 'null';
+                    if (value === undefined) return 'undefined';
+                    return [value.tagName, value.id, value.sha256]
+                      .filter((part) => typeof part === 'string' && part.length > 0)
+                      .map((part) => part.slice(0, 80)).join('#') || typeof value;
+                  };
+                  return nativeAssert.ok(false,
+                    (message ?? 'Strict object identity mismatch.') +
+                    ' Actual: ' + describe(actual) + '; expected: ' + describe(expected) + '.');
+                }
                 return nativeAssert.equal(actual, expected, message);
               };
             },
@@ -347,7 +351,7 @@ jobs:
                                                    stdout=stream, stderr=errors).returncode
               observed = {row['file'] for row in rows}
               unobserved = [entry for entry in selected if entry['path'] not in observed]
-              complete = not unobserved and not fatal and not interrupted and all(row['completeTap'] and not row['resourceExhausted'] for row in rows)
+              complete = not unobserved and not fatal and not interrupted and all(row['completeTap'] and not row['resourceExhausted'] and not row['timedOut'] and not row['interrupted'] for row in rows)
               verified = source_code == 0
               passed = complete and verified and all(row['passed'] for row in rows)
               summary = {'format': 'SoloRemoteRemainingCheckpointV2', 'startedAt': started, 'finishedAt': now(),

@@ -1,66 +1,46 @@
 {
-  "format": "SoloBoundedMemoryDiagnosticManifestV2",
-  "purpose": "Temporary exact-source Linux comparisons: unchanged demo recordings and diagnostic copies of two memory-heavy host fixtures with unchanged strict object-identity truth and bounded failure formatting. No runtime, goldens, assertions or deadlines are weakened.",
+  "format": "SoloBoundedMemoryDiagnosticManifestV3",
+  "purpose": "Temporary paired Linux diagnosis of two additional memory-heavy host fixtures. Exact b117/90f source; diagnostic copies preserve Object.is identity truth and bound mismatch labels. No production edits, assertion/golden/deadline changes or canonical pass credit.",
   "entries": [
     {
       "label": "baseline",
-      "case": "demo-recordings",
-      "mode": "original",
+      "case": "team-default-entry-host",
+      "mode": "bounded-object-identity",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/demo-recordings.test.mjs",
-      "testSHA256": "68aa45b1b0a8fc4dc473f56b6393333227660c27f277eef65b1ad01cca409cc2",
-      "bytes": 19210
+      "file": "game/test/team-default-entry-host.test.mjs",
+      "testSHA256": "0a8193a2ca061638e687ad71c568263a9086840a15daec89257ccc221b7bc566",
+      "bytes": 13855
     },
     {
       "label": "candidate",
-      "case": "demo-recordings",
-      "mode": "original",
+      "case": "team-default-entry-host",
+      "mode": "bounded-object-identity",
       "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "file": "game/test/demo-recordings.test.mjs",
-      "testSHA256": "68aa45b1b0a8fc4dc473f56b6393333227660c27f277eef65b1ad01cca409cc2",
-      "bytes": 19210
+      "file": "game/test/team-default-entry-host.test.mjs",
+      "testSHA256": "0a8193a2ca061638e687ad71c568263a9086840a15daec89257ccc221b7bc566",
+      "bytes": 13855
     },
     {
       "label": "baseline",
-      "case": "coop-lobby-preview",
+      "case": "coop-picture-recovery-focus",
       "mode": "bounded-object-identity",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/coop-lobby-preview.test.mjs",
-      "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
-      "bytes": 28942
+      "file": "game/test/coop-picture-recovery-focus.test.mjs",
+      "testSHA256": "78987dc3302fb885ae2ad500929012c0792cf5ef28efe2195168a7a85637e922",
+      "bytes": 13694
     },
     {
       "label": "candidate",
-      "case": "coop-lobby-preview",
+      "case": "coop-picture-recovery-focus",
       "mode": "bounded-object-identity",
       "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "file": "game/test/coop-lobby-preview.test.mjs",
-      "testSHA256": "d0d1f508f4192a7b4e33ad8d4747b900e43de4bafed57b117f49ebaa944cdb1b",
-      "bytes": 28942
-    },
-    {
-      "label": "baseline",
-      "case": "couch-reading",
-      "mode": "bounded-object-identity",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/couch-reading.test.mjs",
-      "testSHA256": "c7a02f718299a4764619ec657be7fff572858a33f1f416ec7091ae183e3f1b33",
-      "bytes": 11819
-    },
-    {
-      "label": "candidate",
-      "case": "couch-reading",
-      "mode": "bounded-object-identity",
-      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "file": "game/test/couch-reading.test.mjs",
-      "testSHA256": "c7a02f718299a4764619ec657be7fff572858a33f1f416ec7091ae183e3f1b33",
-      "bytes": 11819
+      "file": "game/test/coop-picture-recovery-focus.test.mjs",
+      "testSHA256": "78987dc3302fb885ae2ad500929012c0792cf5ef28efe2195168a7a85637e922",
+      "bytes": 13694
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -75,17 +55,30 @@
   },
   "priorEvidence": {
     "runId": 38865274741,
-    "jobId": 116856540740,
     "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-    "sampledRSSBytes": 15758639104,
-    "sampledAvailableBytes": 204603392,
-    "scope": "Sample before shutdown establishes severe memory pressure, not a captured kernel OOM verdict."
+    "interruptions": [
+      {
+        "batch": 6,
+        "jobId": 116856540908,
+        "file": "game/test/team-default-entry-host.test.mjs",
+        "sampledPeakGroupRSSBytes": 15751061504,
+        "jobLogSHA256": "01bfc6acdcdb2e53c6888e2fa2d7e83f4d733c4864df398c78bb8b7795bdacad"
+      },
+      {
+        "batch": 7,
+        "jobId": 116856540852,
+        "file": "game/test/coop-picture-recovery-focus.test.mjs",
+        "sampledPeakGroupRSSBytes": 15877931008,
+        "sampledAvailableBytes": 282599424,
+        "jobLogSHA256": "d1eeead620ada985e019f44530b5eb982342b54d1e988eaa753ea42c6723647d"
+      }
+    ],
+    "scope": "Runner shutdown and sampled severe memory pressure; no kernel OOM verdict or independently proven failing assertion yet."
   },
-  "scope": "Two separate exact checkouts retain workflow and target revisions independently. Aborted/resource-exhausted files are incomplete. Later358 layout correction is not part of this historical comparison.",
+  "scope": "Exact historical49c candidate and originalmain targets are separate from this workflow revision and current e025 runtime. Only bounded diagnostic copies run; completed failed assertions remain failures, aborted runs remain incomplete.",
   "sameTestBytesByCase": {
-    "demo-recordings": true,
-    "coop-lobby-preview": true,
-    "couch-reading": true
+    "team-default-entry-host": true,
+    "coop-picture-recovery-focus": true
   },
   "commandTemplate": [
     "node",
@@ -94,7 +87,7 @@
     "--test-reporter=tap",
     "selectedTestPath"
   ],
-  "diagnosticOverlay": "Only strict equality comparisons involving objects/functions use assert.ok(Object.is(actual, expected), message). This is the same acceptance condition as strictEqual; original primitive comparisons and all deep equality, values, deadlines and production code remain exact. Copies are untracked siblings of the source tests, explicitly hashed and retained.",
+  "diagnosticOverlay": "Only strict equality comparisons involving objects/functions use nativeAssert.ok(Object.is(actual, expected), bounded tag/id/sha labels). Acceptance is exactly strict Object.is identity; original primitive/deep comparisons, runtime and test deadlines remain exact. Copies are untracked siblings with retained exact hashes.",
   "priorBoundedPair": {
     "runId": 38866775177,
     "workflowSourceRevision": "266823b7b968251dd56de81dd5a7011a215b849e",
