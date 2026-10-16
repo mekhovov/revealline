@@ -28,6 +28,7 @@ import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -177,6 +178,7 @@ async function harness({
   if (cosmetics) storage.set('revealline.classic-snake.presentation.v1', JSON.stringify(cosmetics));
   const created = [],
     drawings = [],
+    previewDrawings = [],
     celebrations = [],
     resultReactions = [],
     scheduledFrames = [],
@@ -274,18 +276,27 @@ async function harness({
     createMissionLibrary,
     createMissionLibrarySessionState,
     classicSnakeLibrarySource,
-    renderClassicSnakeLibraryPreview,
+    renderClassicSnakeLibraryPreview(options) {
+      previewDrawings.push({ ...options.appearance });
+      return renderClassicSnakeLibraryPreview(options);
+    },
     mountModePlayShell(options) {
       shell = mountModePlayShell(options);
       return shell;
     },
     attachModalNavigation,
     mountGlobalSettings,
-    attachThemeFamilyControls({ root }) {
+    mountBattlefieldGroundControls,
+    attachThemeFamilyControls({ root, mountEnemyAppearance }) {
       const group = document.createElement('section');
       group.setAttribute('data-theme-controls', '');
       root.append(group);
-      return { dispose() {} };
+      const enemies = mountEnemyAppearance({
+        document,
+        container: group,
+        locale: () => harnessLocale,
+      });
+      return { dispose: enemies.dispose };
     },
     mountGlobalSettingsTools: (options) =>
       (tools = sharedTools
@@ -548,6 +559,7 @@ async function harness({
     },
     created,
     drawings,
+    previewDrawings,
     celebrations,
     resultReactions,
     artworkSelections,
@@ -915,6 +927,67 @@ test('Living Circuit links override cosmetics and changing paused scenes preserv
   assert.equal(state.document.body.dataset.playing, 'false');
 });
 
+test('Snake settings have one canonical enemy appearance selector inside shared appearance controls', async () => {
+  const state = await harness();
+  state.shell.open('settings');
+  const selectors = state.document.querySelectorAll('[data-enemy-appearance]');
+  assert.equal(selectors.length, 1);
+  assert.ok(selectors[0].closest('[data-theme-controls]'));
+  assert.equal(state.$('snake-enemy-appearance'), null);
+});
+
+test('Battlefield appearance refreshes reopened mission previews and result replay without replacing the attempt', async () => {
+  const state = await harness({
+    query: '&board=fpv-battlefield&scene=freight',
+    cosmetics: { boardStyle: 'retro', boardScene: 'orchard' },
+  });
+  assert.equal(state.document.body.dataset.boardStyle, 'fpv-battlefield');
+  state.shell.open('missions');
+  assert.ok(state.previewDrawings.length > 0);
+  assert.ok(state.previewDrawings.every((options) => options.boardStyle === 'fpv-battlefield'));
+  assert.ok(state.previewDrawings.every((options) => options.boardScene === 'freight'));
+  state.$('journey-back').click();
+  state.shell.open('settings');
+  state.$('board-style').value = 'night-arcade';
+  state.$('board-style').emit('change');
+  state.$('board-scene').value = 'relay';
+  state.$('board-scene').emit('change');
+  const previousPreviews = state.previewDrawings.length;
+  state.shell.open('missions');
+  assert.ok(state.previewDrawings.length > previousPreviews);
+  assert.ok(
+    state.previewDrawings
+      .slice(previousPreviews)
+      .every((options) => options.boardStyle === 'night-arcade' && options.boardScene === 'relay'),
+    'reopened cached mission cards use the newly selected appearance',
+  );
+  state.$('journey-back').click();
+  await importSession(state.$, clearedSession());
+  const before = core.exportClassicSnakeReplay(state.created.at(-1));
+  state.shell.openHome();
+  state.shell.open('settings');
+  state.$('board-style').value = 'fpv-battlefield';
+  state.$('board-style').emit('change');
+  state.$('board-scene').value = 'harbor';
+  state.$('board-scene').emit('change');
+  state.shell.openHome();
+  state.shell.elements.buttons['home-results'].click();
+  state.frame(0);
+  state.frame(240);
+  const preview = state.drawings
+    .filter((item) => item.canvas.classList.contains('snake-result-board'))
+    .at(-1);
+  assert.equal(preview.options.boardStyle, 'fpv-battlefield');
+  assert.equal(preview.options.boardScene, 'harbor');
+  assert.deepEqual(core.exportClassicSnakeReplay(state.created.at(-1)), before);
+  assert.equal(state.document.body.dataset.playing, 'false');
+  const saved = JSON.parse(state.storage.get('revealline.classic-snake.presentation.v1'));
+  const restored = await harness({ cosmetics: saved });
+  restored.frame(0);
+  assert.equal(restored.drawings.at(-1).options.boardStyle, 'fpv-battlefield');
+  assert.equal(restored.drawings.at(-1).options.boardScene, 'harbor');
+});
+
 test('saved Living Circuit cosmetics apply when no explicit scene is linked', async () => {
   const state = await harness({
     cosmetics: { boardStyle: 'living-circuit', boardScene: 'workshop' },
@@ -1181,6 +1254,32 @@ for (const input of ['dpad', 'stick']) {
   });
 }
 
+for (const phase of ['celebration', 'replay']) {
+  test(`controller Menu during ${phase} stops automatic progression and opens results`, async () => {
+    const state = await harness();
+    let now = 0;
+    if (phase === 'celebration') now = flyVerifiedRoute(state);
+    else {
+      state.frame(0);
+      while (state.shell.elements.root.dataset.transitionPhase !== 'replay' && now < 10000)
+        state.frame((now += 50));
+    }
+    const pad = menuPad();
+    state.pads.push(pad);
+    state.frame((now += 50));
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, phase);
+    pad.buttons[9] = { pressed: true, value: 1 };
+    state.frame((now += 50));
+    assert.equal(state.shell.elements.root.dataset.transitionPhase, 'cancelled');
+    assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.results);
+    pad.buttons[9] = { pressed: false, value: 0 };
+    const stoppedAt = now;
+    while (now < stoppedAt + 11000) state.frame((now += 50));
+    assert.equal(state.created.length, 1, 'releasing Menu cannot rearm automatic Next or Retry');
+    assert.equal(state.document.body.dataset.playing, 'false');
+  });
+}
+
 test('controller steering during live play still moves immediately and Confirm launches Next during celebration', async () => {
   const playing = await harness();
   const pad = menuPad();
@@ -1192,6 +1291,13 @@ test('controller steering during live play still moves immediately and Confirm l
   playing.frame(200);
   assert.equal(playing.created[0].snakes[0].direction, 'down');
   assert.equal(playing.document.body.dataset.playing, 'true');
+  pad.buttons[9] = { pressed: true, value: 1 };
+  playing.frame(250);
+  assert.equal(playing.shell.topDialog(), playing.shell.elements.dialogs.pause);
+  assert.equal(playing.document.body.dataset.playing, 'false');
+  const pausedTick = playing.created[0].tick;
+  playing.frame(500);
+  assert.equal(playing.created[0].tick, pausedTick, 'Menu still pauses a live attempt');
 
   const completed = await harness();
   const now = flyVerifiedRoute(completed);
@@ -1942,6 +2048,116 @@ for (const profile of ['local-burst-v1', 'local-burst-v2'])
     assert.equal(run.tick, 0, 'these host checks do not advance the fixture simulation');
   });
 
+test('reception live status writes only changed text and accessible labels', async () => {
+  const state = await receptionHarness('local-burst-v2');
+  const run = state.created[0];
+  receptionFixtureBoard(run);
+  state.frame(0);
+  const [label] = receptionLabels(state);
+  const text = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
+  const setAttribute = label.setAttribute;
+  let textWrites = 0;
+  let labelWrites = 0;
+  Object.defineProperty(label, 'textContent', {
+    get() {
+      return text.get.call(this);
+    },
+    set(value) {
+      textWrites++;
+      text.set.call(this, value);
+    },
+  });
+  label.setAttribute = function (name, value) {
+    if (name === 'aria-label') labelWrites++;
+    return setAttribute.call(this, name, value);
+  };
+  for (let now = 1; now <= 5; now++) state.frame(now);
+  assert.deepEqual([textWrites, labelWrites], [0, 0], 'unchanged reception stays quiet');
+  receptionFixtureBoard(run, { inside: true, phase: 'warning' });
+  state.frame(6);
+  assert.deepEqual([textWrites, labelWrites], [1, 1]);
+  assert.match(label.textContent, /warning/i);
+  state.frame(7);
+  assert.deepEqual([textWrites, labelWrites], [1, 1], 'a warning is not rewritten every frame');
+  receptionFixtureBoard(run, { inside: true });
+  state.frame(8);
+  assert.deepEqual([textWrites, labelWrites], [2, 2]);
+  assert.match(label.getAttribute('aria-label'), /Enemies keep moving unseen/);
+  receptionFixtureBoard(run);
+  state.frame(9);
+  assert.deepEqual([textWrites, labelWrites], [3, 3]);
+  assert.match(label.textContent, /Clear reception/);
+  assert.equal(run.tick, 0, 'presentation checks do not change the accepted simulation');
+});
+
+// Observe writes in the lightweight DOM fixture; this does not model an actual
+// screen reader's announcement queue.
+function observeLiveStatusWrites(node) {
+  const text = Object.getOwnPropertyDescriptor(Element.prototype, 'textContent');
+  const setAttribute = node.setAttribute;
+  const writes = { text: 0, label: 0 };
+  Object.defineProperty(node, 'textContent', {
+    get() {
+      return text.get.call(this);
+    },
+    set(value) {
+      writes.text++;
+      text.set.call(this, value);
+    },
+  });
+  node.setAttribute = function (name, value) {
+    if (name === 'aria-label') writes.label++;
+    return setAttribute.call(this, name, value);
+  };
+  return writes;
+}
+
+for (const locale of ['en', 'uk']) {
+  test(`${locale} pause announcements update only when their message changes`, async () => {
+    const state = await harness({ query: `&lang=${locale}` });
+    state.window.emit('blur');
+    const announcement = state.$('announcement');
+    assert.equal(announcement.getAttribute('role'), 'status');
+    assert.equal(announcement.textContent, CLASSIC_COPY[locale].paused);
+    const writes = observeLiveStatusWrites(announcement);
+    for (let now = 0; now < 5; now++) state.frame(now);
+    assert.equal(writes.text, 0, 'unchanged pause status stays quiet');
+    state.start();
+    assert.equal(announcement.textContent, '');
+    assert.equal(writes.text, 1, 'resume clears the old pause announcement once');
+    state.window.emit('blur');
+    assert.equal(announcement.textContent, CLASSIC_COPY[locale].paused);
+    assert.equal(writes.text, 2, 'a new pause is still announced');
+    for (let now = 5; now < 10; now++) state.frame(now);
+    assert.equal(writes.text, 2);
+  });
+
+  test(`${locale} completed grade and session-only saving status stay quiet between changes`, async () => {
+    const state = await harness({
+      query: `&lang=${locale}`,
+      recordReceipt: { verified: true, saved: false },
+    });
+    const now = flyVerifiedRoute(state);
+    await flush();
+    const stars = state.$('snake-stars');
+    const notice = state.$('result-save-notice');
+    assert.equal(stars.textContent, '★★★');
+    assert.equal(notice.textContent, CLASSIC_COPY[locale].verifiedNotSaved);
+    const starsWrites = observeLiveStatusWrites(stars);
+    const noticeWrites = observeLiveStatusWrites(notice);
+    const outcomeWrites = observeLiveStatusWrites(state.$('announcement'));
+    state.window.emit('blur');
+    for (let offset = 1; offset <= 6; offset++) state.frame(now + offset * 1000);
+    assert.deepEqual(starsWrites, { text: 0, label: 0 });
+    assert.equal(noticeWrites.text, 0);
+    assert.equal(outcomeWrites.text, 0);
+    state.shell.elements.buttons.retry.click();
+    assert.equal(notice.hidden, true);
+    assert.equal(notice.textContent, '');
+    assert.equal(noticeWrites.text, 1, 'retry clears the previous save failure once');
+  });
+}
+
 test('Versus reception belongs to each board rather than the most exposed opponent', async () => {
   const state = await receptionHarness('local-burst-v2', 'versus');
   const [left, right] = state.created;
@@ -2161,7 +2377,7 @@ test('Snake reveals shared controls for real touch on hybrid devices and hides t
   );
 });
 
-for (const worldStyle of ['toybox', 'atmospheric-ruins', 'night-arcade']) {
+for (const worldStyle of ['toybox', 'atmospheric-ruins', 'night-arcade', 'fpv-battlefield']) {
   test(`${worldStyle} changes paused scenery without a new attempt`, async () => {
     const state = await harness({ query: `&board=${worldStyle}&scene=harbor` });
     state.shell.open('settings');

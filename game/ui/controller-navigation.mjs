@@ -219,7 +219,7 @@ export function attachControllerNavigation({
     previous.region.removeAttribute('data-controller-reading');
     if (focused === previous.region || focused === previous.exit) mark(null);
     readingInvalidated ||= invalidated;
-    onReadingChange(null);
+    onReadingChange(null, { restoreFocus, invalidated });
     if (message) readingMessage(message, previous);
     if (
       restoreFocus &&

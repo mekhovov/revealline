@@ -2242,3 +2242,133 @@ test('prepare joins a pending cached inspection before repair and final verifica
   assert.equal(h.calls.length, 6);
   assert.equal((await h.report()).status, 'ready');
 });
+
+const expandedOverflightPaths = [
+  'game/overflight/play.html',
+  'game/overflight/raid.html',
+  'game/overflight/app.mjs',
+  'game/overflight/raid-mode.mjs',
+  'game/overflight/riy-mode.mjs',
+  'game/overflight/raid-variants.mjs',
+  'game/overflight/battlefields.mjs',
+  'game/overflight/motion.mjs',
+  'game/overflight/coordinated-movement.mjs',
+  'game/overflight/terrain.mjs',
+  'game/overflight/worlds.mjs',
+  'game/overflight/world-layout-presentation.mjs',
+  'game/presentation/overflight-world-art.mjs',
+  'game/presentation/overflight-world-art-v2.mjs',
+  'game/presentation/overflight-world-slots.mjs',
+  'game/snake/classic-structure-art.mjs',
+];
+async function expandedOverflightFixture() {
+  const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs'),
+    { OVERFLIGHT_OPERATIONS } = await import('../overflight/operation-view.mjs'),
+    entries = await Promise.all(
+      expandedOverflightPaths.map(async (name) => [
+        name,
+        await fs.readFile(new URL(`../../${name}`, import.meta.url)),
+      ]),
+    );
+  assert.equal(OVERFLIGHT_BATTLEFIELDS.length, 18);
+  assert.equal(OVERFLIGHT_OPERATIONS.length, 5);
+  return {
+    entries,
+    bookmarks(base) {
+      return OVERFLIGHT_BATTLEFIELDS.flatMap((layout) =>
+        OVERFLIGHT_OPERATIONS.map((operation) => {
+          const url = new URL(operation.path, new URL('game/overflight/play.html', base));
+          url.searchParams.set('layout', layout.id);
+          url.searchParams.set('lang', 'uk');
+          url.searchParams.set('seed', '37');
+          return url;
+        }),
+      );
+    },
+  };
+}
+async function verifyExpandedOverflightOffline(runtime, fixture, base) {
+  const sources = new Map(fixture.entries);
+  runtime.network.clear();
+  runtime.calls.length = 0;
+  for (const url of fixture.bookmarks(base)) {
+    const path = url.pathname.slice(new URL(base).pathname.length),
+      response = await runtime.dispatch('fetch', { request: navigationRequest(url) });
+    assert.equal(response.status, 200, url.href);
+    assert.equal(digest(await response.arrayBuffer()), digest(sources.get(path)), url.href);
+  }
+  for (const [path, bytes] of fixture.entries) {
+    const response = await runtime.dispatch('fetch', { request: new Request(new URL(path, base)) });
+    assert.equal(digest(await response.arrayBuffer()), digest(bytes), path);
+  }
+  assert.deepEqual(
+    runtime.calls,
+    [],
+    'first visits use verified cache bytes without page prewarming',
+  );
+}
+
+test('fresh installed PWA serves all 18 real layouts in all five operations and their new native resources offline', async () => {
+  const fixture = await expandedOverflightFixture();
+  for (const base of ['https://game.example/', scope]) {
+    const runtime = host({ downloadFiles: [] }, new Map(), {
+      entries: fixture.entries,
+      scope: base,
+    });
+    await runtime.dispatch('install');
+    await runtime.dispatch('activate');
+    assert.equal((await runtime.report()).status, 'ready');
+    await verifyExpandedOverflightOffline(runtime, fixture, base);
+    assert.equal(runtime.claimed, 1);
+  }
+});
+
+test('interrupted coordinated-movement update preserves prior native resources and retry commits the exact expanded sortie bytes', async () => {
+  const fixture = await expandedOverflightFixture(),
+    storage = new Map(),
+    changedPaths = new Set([
+      'game/overflight/motion.mjs',
+      'game/overflight/coordinated-movement.mjs',
+    ]),
+    previousEntries = fixture.entries.map(([name, bytes]) => [
+      name,
+      changedPaths.has(name)
+        ? Buffer.concat([bytes, Buffer.from('\n// Prior verified build fixture.\n')])
+        : bytes,
+    ]),
+    previous = host({ downloadFiles: [] }, storage, { entries: previousEntries });
+  await previous.dispatch('install');
+  await previous.dispatch('activate');
+  const candidate = host({ downloadFiles: [], buildId: 'b'.repeat(64) }, storage, {
+      entries: fixture.entries,
+    }),
+    failedURL = new URL('game/overflight/coordinated-movement.mjs', scope).href;
+  candidate.network.set(failedURL, () => {
+    throw new Error('interrupted movement download');
+  });
+  await assert.rejects(candidate.dispatch('install'), /interrupted movement download/);
+  assert.equal((await candidate.report()).status, 'not-ready');
+  await assert.rejects(candidate.dispatch('activate'), /Incomplete/);
+  assert.equal(candidate.claimed, 0);
+  assert.equal(
+    (await previous.report()).status,
+    'ready',
+    'the accepted previous build stays complete',
+  );
+  await verifyExpandedOverflightOffline(previous, { ...fixture, entries: previousEntries }, scope);
+  candidate.network.set(
+    failedURL,
+    new Map(fixture.entries).get('game/overflight/coordinated-movement.mjs'),
+  );
+  candidate.calls.length = 0;
+  await candidate.dispatch('install');
+  assert.deepEqual(
+    candidate.calls,
+    [failedURL],
+    'retry reuses already verified files and fetches only the interrupted source',
+  );
+  await candidate.dispatch('activate');
+  assert.equal((await candidate.report()).status, 'ready');
+  await verifyExpandedOverflightOffline(candidate, fixture, scope);
+  assert.equal(candidate.claimed, 1);
+});

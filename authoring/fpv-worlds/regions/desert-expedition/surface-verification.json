@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "districts": [
+    {
+      "district": "crescent-dunes",
+      "windows": 4,
+      "cells": 9,
+      "geometryBytes": 456408,
+      "collisionIdentical": true
+    },
+    {
+      "district": "dry-wash",
+      "windows": 4,
+      "cells": 9,
+      "geometryBytes": 456408,
+      "collisionIdentical": true
+    },
+    {
+      "district": "salt-basin",
+      "windows": 4,
+      "cells": 9,
+      "geometryBytes": 456408,
+      "collisionIdentical": true
+    },
+    {
+      "district": "sunrise-escarpment",
+      "windows": 4,
+      "cells": 9,
+      "geometryBytes": 456408,
+      "collisionIdentical": true
+    },
+    {
+      "district": "mesa-corridor",
+      "windows": 4,
+      "cells": 9,
+      "geometryBytes": 456408,
+      "collisionIdentical": true
+    },
+    {
+      "district": "rocky-plain",
+      "windows": 4,
+      "cells": 9,
+      "geometryBytes": 456408,
+      "collisionIdentical": true
+    }
+  ],
+  "maxGeometryBytes": 456408,
+  "sourceAndCollisionUnchanged": true,
+  "texturesAdded": 0,
+  "shaderAssemblyOnly": true,
+  "nativeGpuVerified": false,
+  "playerAdmission": false
+}

@@ -177,3 +177,58 @@ test('clear ordinary Team canvas adds no overflow action or announcement', async
   assert.equal(f.$('coop-field-details-section').hidden, true);
   assert.equal(f.$('coop-cue-announcement').textContent, '');
 });
+
+test('Field Details Done returns to its paused invoker, while ordinary Help stays in Settings', async (t) => {
+  const f = await page(t, {
+    nativeFocus: true,
+    beforeImport({ $ }) {
+      $('coop-canvas').clientWidth = 212;
+    },
+  });
+  await f.selectFile(JSON.stringify(densePack()));
+  f.$('coop-start').click();
+  f.tick(3);
+  f.$('coop-field-details').focus();
+  f.tap('Enter');
+  f.tick(3);
+  f.$('coop-help-reading-done').focus();
+  f.$('coop-help-reading-done').click();
+  assert.equal(f.$('coop-options').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-field-details');
+  assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
+
+  f.$('coop-settings-open').focus();
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
+  f.$('coop-help').open = true;
+  f.$('coop-help-read').focus();
+  f.tap('Enter');
+  assert.equal(f.doc.activeElement.id, 'coop-help-reading');
+  f.press('Escape');
+  assert.equal(f.$('coop-options').open, true);
+  assert.equal(f.doc.activeElement.id, 'coop-help-read');
+});
+
+test('leaving Field Details for another Settings category does not close or steal the newer focus', async (t) => {
+  const f = await page(t, {
+    nativeFocus: true,
+    beforeImport({ $ }) {
+      $('coop-canvas').clientWidth = 212;
+    },
+  });
+  await f.selectFile(JSON.stringify(densePack()));
+  f.$('coop-start').click();
+  f.tick(3);
+  f.$('coop-field-details').focus();
+  f.tap('Enter');
+  const clock = f.$('coop-clock').textContent;
+  const newer = f.$('coop-settings-tab-audio');
+  newer.focus();
+  newer.click();
+  f.tick(20);
+  assert.equal(f.$('coop-options').open, true);
+  assert.equal(f.doc.activeElement, newer);
+  assert.equal(f.$('coop-clock').textContent, clock);
+  f.$('coop-settings-close').click();
+  assert.equal(f.doc.activeElement.id, 'coop-field-details');
+});

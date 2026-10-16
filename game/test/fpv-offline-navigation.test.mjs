@@ -12,12 +12,14 @@ test('FPV offline entry navigation retains language and game return while using 
       registration: { scope: base },
       addEventListener: (name, listener) => listeners.set(name, listener),
       caches: {
-        open: async () => ({
-          match: async (url) => {
-            matches.push(url);
-            return new Response('verified cached bytes');
-          },
-        }),
+        match: async (url, options) => {
+          assert.deepEqual(options, {
+            cacheName:
+              'revealline.optional.package.v1:/revealline/optional-practice/civilian-fpv/:exact-revision',
+          });
+          matches.push(url);
+          return new Response('verified cached bytes');
+        },
       },
       fetch: async (request) => {
         fetches.push(request.url);
@@ -52,7 +54,7 @@ test('FPV offline entry navigation retains language and game return while using 
   for (const [url, method, mode] of [
     [base + 'index.html?lang=uk', 'POST', 'navigate'],
     [base + 'index.html?lang=uk', 'GET', 'cors'],
-    [base + 'app.mjs?changed=1', 'GET', 'navigate'],
+    [base + 'app.mjs?changed=1', 'GET', 'cors'],
     [base + 'unknown.html?lang=uk', 'GET', 'navigate'],
     [new URL('../civilian-flight/index.html?lang=uk', base).href, 'GET', 'navigate'],
     ['https://foreign.test/revealline/optional-practice/civilian-fpv/?lang=uk', 'GET', 'navigate'],
@@ -64,13 +66,18 @@ test('FPV offline entry navigation retains language and game return while using 
     });
     assert.equal(intercepted, false, `${method} ${mode} ${url}`);
   }
-  let resource;
-  listeners.get('fetch')({
-    request: { url: base + 'app.mjs', method: 'GET', mode: 'cors' },
-    respondWith: (value) => (resource = value),
-  });
-  assert.equal(await (await resource).text(), 'verified cached bytes');
-  assert.equal(matches.at(-1), base + 'app.mjs', 'exact resource requests are unchanged');
+  for (const [relative, mode] of [
+    ['app.mjs', 'cors'],
+    ['app.mjs?changed=1', 'navigate'],
+  ]) {
+    let resource;
+    listeners.get('fetch')({
+      request: { url: base + relative, method: 'GET', mode },
+      respondWith: (value) => (resource = value),
+    });
+    assert.equal(await (await resource).text(), 'verified cached bytes');
+    assert.equal(matches.at(-1), base + 'app.mjs', 'only exact admitted bytes are returned');
+  }
 });
 
 test('entry navigation never substitutes an unadmitted document', () => {

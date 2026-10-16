@@ -1,5 +1,8 @@
 import { localizedOverflight, overflightText } from './copy.mjs';
-import { overflightUpgradePreview } from './upgrade-preview.mjs';
+import {
+  createOverflightUpgradePreviewSprites,
+  overflightUpgradePreview,
+} from './upgrade-preview.mjs';
 
 /** The native draft and its review sheet share the same card, not a second mock-up. */
 export function createOverflightUpgradeCard({
@@ -13,6 +16,7 @@ export function createOverflightUpgradeCard({
   reducedEffects = false,
   disabled = false,
   moduleIcon,
+  paintSprite,
   onChoose = () => {},
 }) {
   const text = (key) => overflightText(locale, key);
@@ -55,6 +59,7 @@ export function createOverflightUpgradeCard({
     reducedEffects,
     rulesVersion,
     riySettings,
+    sprites: createOverflightUpgradePreviewSprites(document, paintSprite, reducedEffects),
   });
   const next = local(offer.next ?? offer.description);
   button.append(heading, preview, node('span', next, 'upgrade-description'));

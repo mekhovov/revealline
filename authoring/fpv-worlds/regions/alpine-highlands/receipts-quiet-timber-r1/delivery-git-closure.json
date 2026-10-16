@@ -1,0 +1,22 @@
+{
+  "format": "FPVAlpineQuietTimberGitClosure.v1",
+  "passed": true,
+  "head": "02f2b140d06cc930d8d4dd6b01abcd860db75436",
+  "base": "65367f3725e87d5a984ca875a8d291b9f5e7476c",
+  "originalStationR3Pin": "ffb79b67479f9ed5c8104610695ac8b5cb04edc7",
+  "originalStationR3Files": 723,
+  "allOriginalR3GitBlobsExact": true,
+  "newFiles": 723,
+  "reusedPayloadBlobs": 716,
+  "changedPayloadsPlusDescriptor": [
+    "delivery.json",
+    "scenery/alpine-13-11.glb",
+    "scenery/alpine-13-11.json",
+    "scenery/alpine-13-12.glb",
+    "scenery/alpine-13-12.json",
+    "scenery/region.json",
+    "terrain/region.json"
+  ],
+  "changedPathsTotal": 727,
+  "changesOnlyNewDeliveryAndExplicitDocumentation": true
+}

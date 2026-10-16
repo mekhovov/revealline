@@ -83,6 +83,7 @@ function fixture(t, options = {}) {
       if (name === 'class') element.className = value;
       if (name === 'hidden') element.hidden = true;
       if (name === 'value') element.value = value;
+      if (name === 'type') element.type = value;
       if (['min', 'max'].includes(name)) element[name] = value;
     }
     parent.append(element);
@@ -119,6 +120,7 @@ function fixture(t, options = {}) {
       frames.delete(id);
     },
     matchMedia: () => ({ matches: false }),
+    getComputedStyle: doc.defaultView.getComputedStyle,
     setTimeout,
     clearTimeout,
     MutationObserver: class {
@@ -1067,6 +1069,146 @@ test('World categories retain every authored preference and restore Home and Pau
   h.$('close-sim-settings').click();
   assert.equal(h.doc.activeElement, pauseSettings);
   assert.equal(h.app.snapshot().state.status, 'paused');
+});
+
+test('World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener', async (t) => {
+  const prior = getLocale();
+  t.after(() => setLocale(prior, { persist: false }));
+  const h = fixture(t, {
+    url: 'https://example.test/optional-practice/fpv-worlds/index.html?lang=en#packs',
+  });
+  await h.app.ready;
+  h.doc.defaultView.innerWidth = 390;
+  const shortcut = h.$('library-flight-records'),
+    backup = h.$('backup-proofs'),
+    restore = h.$('import-proofs'),
+    recovery = h.$('proof-records').closest('details'),
+    records = h.app.snapshot().records;
+  assert.equal(shortcut.closest('dialog').id, 'worlds-shell-missions-dialog');
+  assert.equal(shortcut.closest('[hidden],[inert]'), null);
+  assert.equal(shortcut.textContent, 'Recorded flights & recovery');
+  assert.equal(shortcut.getAttribute('type'), 'button');
+  shortcut.focus();
+  const enter = h.doc.emit('keydown', { key: 'Enter', code: 'Enter', target: shortcut });
+  assert.equal(enter.defaultPrevented, false, 'The native button retains keyboard activation.');
+  shortcut.click(); // Model the browser's default button activation, not a synthetic key handler.
+  h.doc.emit('keyup', { key: 'Enter', code: 'Enter', target: shortcut });
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-settings').dataset.settingsView, 'panel');
+  assert.equal(h.$('worlds-settings-tab-data').getAttribute('aria-selected'), 'true');
+  assert.equal(h.doc.activeElement, backup);
+  for (const control of [backup, restore, recovery]) {
+    assert(h.$('worlds-settings-panel-data').contains(control));
+    assert.equal(control.closest('[hidden],[inert]'), null);
+  }
+  assert.equal(h.doc.querySelectorAll('#backup-proofs').length, 1);
+  assert.equal(h.doc.querySelectorAll('#import-proofs').length, 1);
+  h.$('world-language').value = 'uk';
+  h.$('world-language').emit('change');
+  assert.equal(shortcut.textContent, 'Записи польотів і відновлення');
+  assert.equal(h.$('worlds-settings-tab-data').textContent, 'Прогрес і колекція');
+  assert.equal(h.$('backup-proofs'), backup);
+  assert.equal(h.doc.activeElement, backup);
+  const escape = () => {
+    h.doc.emit('keydown', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+    h.doc.emit('keyup', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+  };
+  escape();
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('sim-settings').dataset.settingsView, 'categories');
+  escape();
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.doc.activeElement, shortcut);
+  assert.deepEqual(h.app.snapshot().records, records);
+  assert.equal(h.app.snapshot().state, undefined);
+});
+
+test('World Library records controller confirmation cannot activate backup or resume its paused flight', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  h.doc.defaultView.innerWidth = 390;
+  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
+  h.$('world-arm').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+  h.$('worlds-shell-action-menu').click();
+  h.$('worlds-shell-action-missions').click();
+  h.doc.querySelector('[data-sim-mission-tools] > summary').click();
+  h.doc.querySelector('[data-sim-mission-tool="packs"]').click();
+  const paused = h.app.snapshot().state,
+    records = h.app.snapshot().records,
+    shortcut = h.$('library-flight-records'),
+    pad = menuPad();
+  assert.equal(paused.status, 'paused');
+  let backups = 0;
+  h.$('backup-proofs').addEventListener('click', () => backups++);
+  h.pads.push(pad);
+  h.tick(2);
+  shortcut.focus();
+  // The first deliberate press/release joins the normal menu owner.
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick();
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick(2);
+  shortcut.focus();
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick(3);
+  assert.equal(h.$('sim-settings').open, false, 'Confirm still requires release.');
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick();
+  assert.equal(
+    h.$('sim-settings').open,
+    true,
+    JSON.stringify({
+      active: h.doc.activeElement?.id,
+      dialogs: h.doc.modalDialogs.map((node) => node.id),
+      shortcutDialog: shortcut.closest('dialog')?.id,
+      hidden: shortcut.closest('[hidden],[inert]')?.id,
+      hint: h.doc.querySelector('.sim-menu-hint')?.textContent,
+    }),
+  );
+  assert.equal(h.doc.activeElement, h.$('backup-proofs'));
+  h.tick(3);
+  assert.equal(backups, 0, 'The opener confirm cannot leak into the newly opened settings panel.');
+  for (let press = 0; press < 2; press++) {
+    pad.buttons[1] = { pressed: true, value: 1 };
+    h.tick();
+    pad.buttons[1] = { pressed: false, value: 0 };
+    h.tick();
+  }
+  assert.equal(h.$('sim-settings').open, false);
+  assert.equal(h.doc.activeElement, shortcut);
+  assert.equal(backups, 0);
+  assert.deepEqual(h.app.snapshot().state, paused);
+  assert.deepEqual(h.app.snapshot().records, records);
+});
+
+test('World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host', async (t) => {
+  const h = fixture(t, {
+    url: 'https://example.test/optional-practice/fpv-worlds/index.html?lang=en#packs',
+  });
+  await h.app.ready;
+  const shortcut = h.$('library-flight-records'),
+    settings = h.$('sim-settings'),
+    tab = h.$('worlds-settings-tab-data'),
+    ownedId = tab.getAttribute('aria-controls'),
+    foreign = h.doc.createElement('section'),
+    field = h.doc.createElement('input');
+  foreign.id = 'foreign-records-panel';
+  foreign.append(field);
+  h.doc.body.append(foreign);
+  tab.setAttribute('aria-controls', foreign.id);
+  shortcut.focus();
+  shortcut.click();
+  assert.equal(settings.open, true);
+  assert.equal(h.$('worlds-settings-tab-gameplay').getAttribute('aria-selected'), 'true');
+  assert.equal(foreign.contains(h.doc.activeElement), false);
+  assert.equal(h.$('backup-proofs').closest('[role="tabpanel"]').id, ownedId);
+  tab.setAttribute('aria-controls', ownedId);
+  h.$('close-sim-settings').click();
+  await h.app.dispose();
+  shortcut.click();
+  assert.equal(settings.open, false);
+  assert.equal(h.app.snapshot().state, undefined);
 });
 
 test('Worlds uses shared display and master settings ahead of old SIM-local preferences', async (t) => {

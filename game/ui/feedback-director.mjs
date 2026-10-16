@@ -106,6 +106,7 @@ export class FeedbackDirector {
       !s.enabled ||
       s.paused ||
       s.audioMaster.muted ||
+      s.audioMaster.volume === 0 ||
       !c ||
       c.state !== 'running' ||
       (!ui && s.gameplayPaused)
@@ -138,10 +139,17 @@ export class FeedbackDirector {
     if (priority >= 4)
       for (const voice of [...s.voices])
         if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
-    const buffer = this.buffers.get(name);
+    let buffer = this.buffers.get(name);
     if (!buffer) {
       this.load(name);
-      return null;
+      // Optional variants may decode in any order. Use an already decoded
+      // rendition of this family while preparing the selected variation.
+      const ready = [cueFamily, `${cueFamily}-1`, `${cueFamily}-2`].find((candidate) =>
+        this.buffers.has(candidate),
+      );
+      if (!ready) return null;
+      name = ready;
+      buffer = this.buffers.get(ready);
     }
     const owned = [...s.voices].filter((v) => v.feedback);
     // Reserve headroom for music and urgent one-shots; never steal music.
@@ -340,20 +348,11 @@ export class FeedbackDirector {
         // preserves published cues and campaign phrases while giving every
         // ordinary win the same soft, audio-clocked picture reveal resolution.
         for (const voice of [...this.sound.voices]) if (voice.radio) voice.stop();
-        this.sound.event?.(event, {}, options.resultContext);
-        return;
-      }
-      if (
-        this.sound.enabled &&
-        !this.sound.paused &&
-        !this.sound.gameplayPaused &&
-        !this.sound.audioMaster.muted &&
-        this.buffers.size === 0
-      ) {
-        // A first interaction or a decode failure remains audible immediately.
-        // Decoding only prepares future cues; it never queues this event.
-        if (!(final && event.type !== 'run.completed'))
-          this.sound.event?.(event, {}, options.resultContext);
+        this.sound.event?.(
+          { ...event, board: options.board ?? 'solo', feedback: true },
+          {},
+          options.resultContext,
+        );
         return;
       }
       const board = options.board ?? 'solo';
@@ -365,10 +364,16 @@ export class FeedbackDirector {
       const pan = Number.isFinite(source?.x)
         ? screenPan(source.x, run.width, options.placement)
         : 0;
+      // Each cue has its own readiness. One decoded menu effect must not
+      // silence missing gameplay recordings. Keep board identity in fallback
+      // too, so simultaneous Duel events do not share a cooldown bucket.
+      const fallback = () =>
+        this.sound.event?.({ ...event, board, pan, feedback: true }, {}, options.resultContext);
       if (event.type === 'cells.claimed') {
         if (!final) {
           const recipe = captureRecipe(event, run);
           this.play(`reveal-${recipe.tier}`, { priority: 4, board });
+          if (!this.buffers.has(`reveal-${recipe.tier}`)) fallback();
           const [material, rate] = materialProfile(theme);
           const indices = event.indices ?? [];
           const center = indices.length
@@ -395,14 +400,19 @@ export class FeedbackDirector {
           run.definition?.classic?.hunt?.targets?.some((target) => target.id === event.id);
         // One material accent replaces pickup; simultaneous removals remain throttled.
         const cue = destruction ? (humanoid ? 'contact-soft' : 'contact-metal') : eventCue(event);
-        if (cue)
-          this.play(cue, {
+        if (cue) {
+          const voice = this.play(cue, {
             priority: cue === 'warning' || cue === 'win' || cue === 'loss' ? 5 : 3,
             board,
             pan: cue === 'warning' ? 0 : pan,
             gain: destruction ? (fullDestruction ? 0.55 : 0.22) : 0.55,
             rate: destruction ? (humanoid ? 0.8 : 0.72) : 1 + ((this.serial++ % 3) - 1) * 0.025,
           });
+          // A ready cue denied by pause, cooldown or voice ownership stays
+          // denied. Decoding completion never queues an expired event.
+          if (!voice && ![cue, `${cue}-1`, `${cue}-2`].some((name) => this.buffers.has(name)))
+            fallback();
+        }
       }
       if (!final && terrainTransitionCaption(run, event))
         this.play(event.type === 'cells.claimed' ? 'neutralized' : 'reactivated', {

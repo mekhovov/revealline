@@ -1,0 +1,29 @@
+{
+  "format": "FPVCanyonSourceReceipt.v1",
+  "reviewed": "2026-10-14",
+  "sourceURL": "https://opengameart.org/content/canyon-terrain-asset",
+  "downloadURL": "https://opengameart.org/sites/default/files/canyonterrain_blend_fbx_glb.zip",
+  "author": "loafbrr_1 / loafbrr",
+  "license": "CC0-1.0",
+  "licenseEvidence": "README-upstream.txt from exact archive; publisher page also lists CC0",
+  "archiveBytes": 64599746,
+  "archiveSHA256": "90a59ca7d7cfcdd6b73b464c9ee8ed50fd1857a105c9a5e7ef2c85b562d5d00a",
+  "modelArchivePath": "glb/CanyonPlantsRocksTiles.glb",
+  "modelSHA256": "0b24bb22f0089767990d58401e516ec1853380eda6a33802036a377f8519d623",
+  "modelBytes": 945596,
+  "nodes": 160,
+  "meshes": 160,
+  "materials": 5,
+  "images": 0,
+  "requiredExtensions": [],
+  "inventory": {
+    ".blend": 1,
+    ".fbx": 174,
+    ".glb": 1,
+    ".png": 16,
+    ".dds": 4,
+    ".tga": 3,
+    ".txt": 1
+  },
+  "admission": "Authoring source only. No source model is referenced by the terrain manifest, player package, catalogue or runtime. Individual optimization, placement and collision checks remain before scenery admission. Godot addons and preview HDRI are not included."
+}

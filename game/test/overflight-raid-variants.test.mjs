@@ -27,6 +27,48 @@ const victory = (run, { score = 1000, time = 30 } = {}) => {
   run.time = time;
 };
 
+test('native Raid uses current rules at every difficulty without changing legacy authoring defaults', () => {
+  assert.equal(compileOverflightHuntProject(createOverflightHuntProject()).rulesVersion, 2);
+  assert.equal(
+    OVERFLIGHT_HUNT_MODE.compileProject(OVERFLIGHT_HUNT_MODE.defaultProject).rulesVersion,
+    4,
+  );
+  for (const difficulty of ['relaxed', 'standard', 'veteran']) {
+    const project = OVERFLIGHT_HUNT_MODE.createProject({ difficulty });
+    assert.equal(project.difficulty, difficulty);
+    assert.equal(OVERFLIGHT_HUNT_MODE.compileProject(project).rulesVersion, 4);
+  }
+});
+
+test('pre-run variant record lookup uses the same revision as its completed run', () => {
+  for (const variantId of ['time-attack', 'marathon'])
+    for (const rulesVersion of [2, 3, 4]) {
+      const mode = variant(variantId);
+      const definition = compileOverflightHuntProject(
+        createOverflightHuntProject({ rulesVersion }),
+      );
+      const run = mode.createRun(definition);
+      victory(run);
+      if (variantId === 'marathon') mode.bankContract(run);
+      const saved = overflightRaidVariantRecord(run);
+      const beforeRun = mode.recordQuery({ compiled: definition });
+      assert.equal(beforeRun.compiled.projectIdentity, saved.compiled.projectIdentity);
+    }
+});
+
+test('Time Attack and Marathon reject experimental terrain rather than silently changing routes', () => {
+  const definition = { ...compiled(), terrain: { obstacles: [] } };
+  for (const id of ['time-attack', 'marathon']) {
+    const mode = variant(id);
+    assert.throws(() => mode.createRun(definition), /Experimental terrain/);
+    const acceptingBase = { ...OVERFLIGHT_HUNT_MODE, compileProject: () => definition };
+    assert.throws(
+      () => createOverflightRaidVariant(acceptingBase, { variant: id }).compileProject({}),
+      /Experimental terrain/,
+    );
+  }
+});
+
 test('Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears', () => {
   const mode = variant('time-attack'),
     run = mode.createRun(compiled());
@@ -127,7 +169,10 @@ test('five contracts are bounded and auto-bank; generated escalation keeps proje
   for (const difficulty of ['standard', 'veteran'])
     for (const encounterSet of ['patrol', 'crossing', 'mixed'])
       for (let c = 1; c <= 5; c++) {
-        const original = createOverflightHuntProject({ difficulty, encounterSet });
+        const original = createOverflightHuntProject({
+          difficulty,
+          encounterSet,
+        });
         const before = JSON.stringify(original);
         const next = overflightMarathonProject(original, c, 100 + c);
         assert.equal(JSON.stringify(original), before);
@@ -174,7 +219,11 @@ test('variant records have independent contexts and shared durable/session stora
   assert.equal(new Set(contexts.map((c) => c.project)).size, 3);
   let state = { format: OVERFLIGHT_HUNT_RECORDS_FORMAT, entries: {} };
   const records = timeMode.createRecords({
-    backend: { read: async () => state, update: async (fn) => (state = fn(state)), close() {} },
+    backend: {
+      read: async () => state,
+      update: async (fn) => (state = fn(state)),
+      close() {},
+    },
   });
   const saved = await records.record(overflightRaidVariantRecord(timed));
   assert.equal(saved.durable, true);
@@ -221,7 +270,10 @@ test('an ordinary-input pilot can complete all five escalated contracts with car
   const mode = variant(),
     run = mode.createRun(compiled(), { airframes: 3 });
   for (let contract = 1; contract <= 5; contract++) {
-    const pilot = createOverflightHuntReviewPilot({ route: 'objectives', build: 'pursuer' });
+    const pilot = createOverflightHuntReviewPilot({
+      route: 'objectives',
+      build: 'pursuer',
+    });
     mode.start(run);
     while (['playing', 'upgrade'].includes(run.phase) && run.time < 180) {
       if (run.phase === 'upgrade') {
@@ -358,9 +410,17 @@ test('Time Attack renders hundredths and an old async result cannot overwrite a 
   const { document, base } = resultUI(),
     mode = createOverflightRaidVariant(base, { variant: 'time-attack' }),
     resolvers = [];
-  const records = { record: () => new Promise((resolve) => resolvers.push(resolve)) };
+  const records = {
+    record: () => new Promise((resolve) => resolvers.push(resolve)),
+  };
   const show = (run) =>
-    mode.renderResults({ run, document, formatTime: () => 'floored', text: (key) => key, records });
+    mode.renderResults({
+      run,
+      document,
+      formatTime: () => 'floored',
+      text: (key) => key,
+      records,
+    });
   const first = mode.createRun(compiled());
   victory(first, { time: 65.375 });
   show(first);
@@ -369,10 +429,18 @@ test('Time Attack renders hundredths and an old async result cannot overwrite a 
   show(second);
   const stats = document.getElementById('result-stats').children;
   assert.equal(stats[0].children[1].textContent, '1:02.13');
-  resolvers[0]({ durable: true, fastestClear: { time: 65.375 }, bestScore: { score: 1 } });
+  resolvers[0]({
+    durable: true,
+    fastestClear: { time: 65.375 },
+    bestScore: { score: 1 },
+  });
   await Promise.resolve();
   assert.equal(document.getElementById('raid-records').textContent, '1:02.13');
-  resolvers[1]({ durable: true, fastestClear: { time: 62.125 }, bestScore: { score: 2 } });
+  resolvers[1]({
+    durable: true,
+    fastestClear: { time: 62.125 },
+    bestScore: { score: 2 },
+  });
   await Promise.resolve();
   assert.match(document.getElementById('raid-records').textContent, /1:02.13/);
   assert.doesNotMatch(document.getElementById('raid-records').textContent, /1:05/);

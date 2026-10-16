@@ -21,7 +21,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#17191b" />
-    <title>Survive · FPV / LINE</title>
+    <title>FPV Survivals · Single Drone · FPV / LINE</title>
     <script
       src="../presentation/theme-bootstrap.mjs"
       data-theme-density="player"
@@ -44,7 +44,7 @@
     <script src="app.mjs" type="application/x-revealline-locked" data-access-type="module"></script>
   </head>
   <body class="field-kit overflight-player">
-    <p id="boot-status" role="status">Preparing Survive…</p>
+    <p id="boot-status" role="status">Preparing FPV Survivals…</p>
     <main id="overflight-shell" hidden></main>
     <div id="overflight-panels" hidden>
       <nav id="overflight-mode-links"></nav>
@@ -188,11 +188,13 @@
         </div>
         <p data-copy="resultHint"></p>
       </section>
-      <section id="overflight-game" aria-label="Survive battlefield">
+      <section id="overflight-game" aria-label="FPV Survivals battlefield">
         <div id="render-host" tabindex="0"></div>
         <aside id="overflight-music-now-playing" class="overflight-music-credit" hidden></aside>
         <div id="overflight-hud" aria-live="off">
-          <div class="overflight-xp"><div id="xp-fill"></div></div>
+          <div id="hud-salvage-meter" class="overflight-xp" role="progressbar">
+            <div id="xp-fill"></div>
+          </div>
           <div class="overflight-topline">
             <div class="overflight-vitals">
               <span id="hud-hull"></span>
@@ -204,12 +206,17 @@
             <div class="overflight-clock">
               <span class="overflight-eyebrow" data-copy="sortie"></span
               ><strong id="hud-time">00:00</strong>
+              <span id="hud-final-objective" role="status" hidden></span>
             </div>
             <div class="overflight-tally">
-              <span id="hud-level"></span><span id="hud-kills"></span>
+              <span id="hud-level"></span><span id="hud-kills"></span><span id="hud-salvage"></span>
             </div>
           </div>
-          <p id="hud-review" hidden></p>
+          <div id="overflight-field-controls">
+            <div id="overflight-review-controls">
+              <p id="hud-review" hidden></p>
+            </div>
+          </div>
           <p id="hud-cache" class="overflight-cache-hint" role="status" hidden></p>
           <div id="hud-reward" class="overflight-reward-toast" role="status" hidden></div>
           <div id="overflight-commentator" class="overflight-commentator"></div>

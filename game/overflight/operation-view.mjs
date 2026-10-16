@@ -2,30 +2,82 @@
 export const OVERFLIGHT_OPERATIONS = Object.freeze([
   {
     id: 'overflight',
+    group: 'survival',
     path: './play.html',
     key: 'survivorOperation',
     detail: 'survivorOperationHelp',
   },
   {
     id: 'overflight-riy',
+    group: 'survival',
     path: './play.html?operation=riy',
     key: 'riyOperation',
     detail: 'riyOperationHelp',
   },
-  { id: 'overflight-hunt', path: './raid.html', key: 'raidOperation', detail: 'raidOperationHelp' },
+  {
+    id: 'overflight-hunt',
+    group: 'raid',
+    path: './raid.html',
+    key: 'raidOperation',
+    detail: 'raidOperationHelp',
+  },
   {
     id: 'time-attack',
+    group: 'raid',
     path: './raid.html?operation=time-attack',
     key: 'timeAttackOperation',
     detail: 'timeAttackOperationHelp',
   },
   {
     id: 'marathon',
+    group: 'raid',
     path: './raid.html?operation=marathon',
     key: 'marathonOperation',
     detail: 'marathonOperationHelp',
   },
 ]);
+
+export const OVERFLIGHT_FAMILY_PREFERENCE = 'revealline.overflight.family-operation.v1';
+
+export function overflightOperation(id) {
+  return OVERFLIGHT_OPERATIONS.find((operation) => operation.id === id) ?? OVERFLIGHT_OPERATIONS[0];
+}
+
+export function overflightOperationContext(id, text) {
+  const operation = overflightOperation(id);
+  return `FPV Survivals · ${text(`${operation.group}Group`)} · ${text(operation.key)}`;
+}
+
+/** Only the generic family entry restores a choice; old explicit URLs stay exact. */
+export function overflightRememberedOperationURL(href, stored) {
+  const source = new URL(href);
+  if (
+    source.searchParams.get('family') !== '1' ||
+    !source.pathname.endsWith('/overflight/play.html') ||
+    ['community', 'studio', 'operation', 'prototype'].some((key) => source.searchParams.has(key))
+  )
+    return null;
+  const operation = OVERFLIGHT_OPERATIONS.find(({ id }) => id === stored);
+  if (!operation) return null;
+  const target = new URL(operation.path, source);
+  for (const [key, value] of source.searchParams)
+    if (
+      ![
+        'family',
+        'operation',
+        'prototype',
+        'reviewBuild',
+        'reviewStopAt',
+        'autoplay',
+        'fixture',
+        'benchmark',
+        'trial',
+        'measureAt',
+      ].includes(key)
+    )
+      target.searchParams.set(key, value);
+  return target.href;
+}
 
 export function paintOverflightOperation(context, kind, paintSprite = () => {}) {
   context.clearRect(0, 0, 320, 132);
@@ -75,12 +127,26 @@ export function createOverflightOperationCards({
   current,
   text,
   destination,
-  onSelect,
-  onLeave,
+  onSelect = () => {},
+  onLeave = () => {},
 }) {
   const root = document.createElement('section');
   root.className = 'overflight-operation-grid';
   root.setAttribute('aria-label', text('chooseOperation'));
+  const groups = ['survival', 'raid'].map((id) => {
+    const section = document.createElement('section');
+    section.className = 'overflight-operation-group';
+    const title = document.createElement('h2');
+    title.id = `operation-group-${id}`;
+    section.setAttribute('aria-labelledby', title.id);
+    const canvas = document.createElement('canvas');
+    canvas.width = 320;
+    canvas.height = 132;
+    canvas.setAttribute('aria-hidden', 'true');
+    section.append(canvas, title);
+    root.append(section);
+    return { id, section, title, canvas };
+  });
   const cards = OVERFLIGHT_OPERATIONS.map((operation, index) => {
     const selected = operation.id === current;
     const card = document.createElement(selected ? 'button' : 'a');
@@ -100,35 +166,97 @@ export function createOverflightOperationCards({
         }).join(' '),
       );
     if (selected) card.setAttribute('aria-current', 'true');
-    const canvas = document.createElement('canvas');
-    canvas.width = 320;
-    canvas.height = 132;
-    canvas.setAttribute('aria-hidden', 'true');
     const title = document.createElement('strong');
     const detail = document.createElement('span');
     const status = document.createElement('small');
-    card.append(canvas, title, detail, status);
-    card.addEventListener('click', () => {
-      if (selected) onSelect();
-      else {
+    card.append(title, detail, status);
+    card.addEventListener('click', (event) => {
+      if (!selected) {
         card.setAttribute('href', destination(operation.path));
-        onLeave();
+        onLeave(operation, event);
+        onSelect(operation, event);
       }
     });
-    root.append(card);
-    return { operation, canvas, title, detail, status, selected };
+    groups.find(({ id }) => id === operation.group).section.append(card);
+    return { operation, card, title, detail, status, selected };
   });
   return {
     root,
     refresh(paintSprite) {
       root.setAttribute('aria-label', text('chooseOperation'));
-      for (const { operation, canvas, title, detail, status, selected } of cards) {
+      for (const { id, title, canvas } of groups) {
+        title.textContent = text(`${id}Group`);
+        const context = canvas.getContext('2d');
+        if (context)
+          paintOverflightOperation(
+            context,
+            id === 'survival' ? 'overflight-riy' : 'overflight-hunt',
+            paintSprite,
+          );
+      }
+      for (const { operation, card, title, detail, status, selected } of cards) {
+        if (!selected) card.setAttribute('href', destination(operation.path));
         title.textContent = text(operation.key);
         detail.textContent = text(operation.detail);
-        status.textContent = text(selected ? 'selectEncounter' : 'switchOperation');
-        const context = canvas.getContext('2d');
-        if (context) paintOverflightOperation(context, operation.id, paintSprite);
+        status.textContent = text(selected ? 'selectedOperation' : 'switchOperation');
       }
+    },
+  };
+}
+
+/** A native, controller-navigable confirmation; cancelling leaves the run paused. */
+export function createOverflightRunChangeDialog({ document, text, releaseInput = () => {} }) {
+  const dialog = document.createElement('dialog');
+  dialog.className = 'mode-play-dialog overflight-change-dialog';
+  dialog.id = 'overflight-change-dialog';
+  const title = document.createElement('h2');
+  title.id = 'overflight-change-title';
+  dialog.setAttribute('aria-labelledby', title.id);
+  const detail = document.createElement('p');
+  const actions = document.createElement('div');
+  actions.className = 'overflight-result-actions';
+  const cancel = document.createElement('button');
+  const accept = document.createElement('button');
+  cancel.type = accept.type = 'button';
+  cancel.id = 'overflight-change-cancel';
+  accept.id = 'overflight-change-accept';
+  actions.append(cancel, accept);
+  dialog.append(title, detail, actions);
+  document.body.append(dialog);
+  let resolve = null;
+  function finish(accepted) {
+    if (!resolve) return;
+    const done = resolve;
+    resolve = null;
+    if (dialog.open) dialog.close();
+    releaseInput();
+    done?.(accepted);
+  }
+  cancel.addEventListener('click', () => finish(false));
+  accept.addEventListener('click', () => finish(true));
+  dialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    finish(false);
+  });
+  dialog.addEventListener('close', () => finish(false));
+  return {
+    root: dialog,
+    ask() {
+      if (resolve) return Promise.resolve(false);
+      title.textContent = text('endSortieTitle');
+      detail.textContent = text('endSortieHelp');
+      cancel.textContent = text('keepSortie');
+      accept.textContent = text('endSortie');
+      return new Promise((done) => {
+        resolve = done;
+        dialog.showModal();
+        cancel.focus({ preventScroll: true });
+      });
+    },
+    cancel: () => finish(false),
+    dispose() {
+      finish(false);
+      dialog.remove();
     },
   };
 }

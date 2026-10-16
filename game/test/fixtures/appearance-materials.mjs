@@ -736,8 +736,14 @@ function mount(document, window) {
         resolved.tokens,
         { forcedColors, styled: surface.dataset.themeStyled === 'true' },
       );
+    const failures = [...semantics.checks, ...controlSemantics.checks].filter(
+      (check) => !check.passed,
+    );
     control('semantic-status').textContent =
-      `Action semantics: ${semantics.status} · Field semantics: ${controlSemantics.status}${semantics.reason ? ` · ${semantics.reason}` : ` · ${[...semantics.checks, ...controlSemantics.checks].filter((check) => !check.passed).length} failures`}`;
+      `Action semantics: ${semantics.status} · Field semantics: ${controlSemantics.status}${semantics.reason ? ` · ${semantics.reason}` : ` · ${failures.length} failures`}` +
+      failures
+        .map((check) => `\n${check.id}: expected ${check.expected}; received ${check.actual}`)
+        .join('');
     control('semantic-status').dataset.result = [
       semantics.status,
       controlSemantics.status,
@@ -850,6 +856,11 @@ function mount(document, window) {
     'focusout',
   ])
     samples.addEventListener(event, () => window.setTimeout(measure, 200));
+  // Theme changes may transition native control color and relief. The initial
+  // frame can legitimately contain the previous theme's paint; refresh the
+  // report after the last transition instead of retaining that transient failure.
+  for (const event of ['transitionend', 'transitioncancel'])
+    samples.addEventListener(event, measure);
   window.addEventListener('resize', measure);
   window.addEventListener('scroll', measure);
   refresh();

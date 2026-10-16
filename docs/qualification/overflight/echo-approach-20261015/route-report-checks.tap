@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 1 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 2.389417
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 2 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 153.919334
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 3 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 230.54375
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 4 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 88.442208
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 5 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 861.941708
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 6 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.511583
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 7 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.070292
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 8 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.130542
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 9 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.155833
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 10 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 5.324333
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 11 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 1.14875
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 12 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.220875
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 13 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.219291
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 14 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 23.649833
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 15 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 2.928
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 16 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 1.617458
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 17 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.615
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 18 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.63325
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 19 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 1.615833
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 20 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.911959
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 21 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.243542
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 22 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.05825
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 23 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.923167
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 24 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 4.4375
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 25 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 20.263416
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 26 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.1135
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 27 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.122541
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 28 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 42.312666
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 29 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.514334
+  ...
+# Subtest: mastery follows completed actions, preserves earned flags and compares the prior same-seed run
+ok 30 - mastery follows completed actions, preserves earned flags and compares the prior same-seed run
+  ---
+  duration_ms: 122.91925
+  ...
+# Subtest: all six battlefield worlds persist mastery across reopened stores and retain legacy entries
+ok 31 - all six battlefield worlds persist mastery across reopened stores and retain legacy entries
+  ---
+  duration_ms: 202.877125
+  ...
+# Subtest: Riy requires reached attack range and Raid requires an earned chain, not selected upgrades
+ok 32 - Riy requires reached attack range and Raid requires an earned chain, not selected upgrades
+  ---
+  duration_ms: 13.611292
+  ...
+# Subtest: world artwork does not split mastery for unchanged authored encounters or legacy rules
+ok 33 - world artwork does not split mastery for unchanged authored encounters or legacy rules
+  ---
+  duration_ms: 42.240541
+  ...
+# Subtest: report distinguishes earned, collected, ground salvage and upgrade gaps without claiming reachability
+ok 34 - report distinguishes earned, collected, ground salvage and upgrade gaps without claiming reachability
+  ---
+  duration_ms: 5.815667
+  ...
+# Subtest: flight report shows actual final armor and hull without treating missing targets as defeated
+ok 35 - flight report shows actual final armor and hull without treating missing targets as defeated
+  ---
+  duration_ms: 4.475917
+  ...
+# Subtest: failed profile writes retain session achievements; review fixtures never write
+ok 36 - failed profile writes retain session achievements; review fixtures never write
+  ---
+  duration_ms: 20.205167
+  ...
+# Subtest: Marathon is recorded only after banking and its mode stays separate from Single Raid
+ok 37 - Marathon is recorded only after banking and its mode stays separate from Single Raid
+  ---
+  duration_ms: 63.11775
+  ...
+# Subtest: mastery evicts the oldest context at capacity while retaining recently replayed achievements
+ok 38 - mastery evicts the oldest context at capacity while retaining recently replayed achievements
+  ---
+  duration_ms: 383.482875
+  ...
+# Subtest: Marathon mastery totals damage and airframe loss across contracts exactly once
+ok 39 - Marathon mastery totals damage and airframe loss across contracts exactly once
+  ---
+  duration_ms: 96.981
+  ...
+# Subtest: native report presents three goals, measured progression and understandable prior-run differences
+ok 40 - native report presents three goals, measured progression and understandable prior-run differences
+  ---
+  duration_ms: 10.0605
+  ...
+# Subtest: review steering routes around cover to collect salvage through public movement input
+ok 41 - review steering routes around cover to collect salvage through public movement input
+  ---
+  duration_ms: 68.440792
+  ...
+# Subtest: review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+ok 42 - review avoidance predicts the actual V4 crossing, independently of obsolete pursuit steering
+  ---
+  duration_ms: 37.015291
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2017.54675

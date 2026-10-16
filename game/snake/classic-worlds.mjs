@@ -1,4 +1,5 @@
 import { CLASSIC_MISSION_COMPOSITIONS } from './classic-compositions.mjs';
+import { CLASSIC_STRUCTURE_REVISION } from './classic-structure-art.mjs';
 import {
   CLASSIC_SNAKE_OPERATION_CHAPTERS_B,
   CLASSIC_SNAKE_OPERATION_LEVELS_B,
@@ -9,7 +10,7 @@ import {
 } from './classic-catalogue-operations-a.mjs';
 /** Cosmetic composition only. Never part of a level recipe, random stream or proof.
  * Shared material/actor providers remain the owners of artwork bytes. */
-export const CLASSIC_WORLD_REVISION = 'snake-worlds-v6';
+export const CLASSIC_WORLD_REVISION = 'snake-worlds-v7';
 export const CLASSIC_BOARD_STYLES = Object.freeze([
   'theme',
   'retro',
@@ -17,6 +18,7 @@ export const CLASSIC_BOARD_STYLES = Object.freeze([
   'toybox',
   'atmospheric-ruins',
   'night-arcade',
+  'fpv-battlefield',
 ]);
 export const CLASSIC_BOARD_SCENES = Object.freeze([
   'auto',
@@ -97,7 +99,7 @@ export function resolveClassicWorld({
   const explicitScene = boardScene !== 'auto' && scene !== authored?.scene;
   return Object.freeze({
     version: 2,
-    structureRevision: 'modular-dioramas-v1',
+    structureRevision: CLASSIC_STRUCTURE_REVISION,
     actorSet: 'snake-tactical-silhouettes-v1',
     reactions: 'material-consequences-v1',
     revision: CLASSIC_WORLD_REVISION,

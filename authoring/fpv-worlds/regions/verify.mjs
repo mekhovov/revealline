@@ -103,8 +103,15 @@ check("out-of-bounds spawn rejected", () =>
     x.spawns[0].position.x = 9000000;
   }, /outside region/),
 );
-check("integer positions required", () =>
-  assert.throws(() => planner({ x: 0.5, y: 0, z: 0 }), /integer/),
+check(
+  "finite runtime positions retain fractions; authored positions remain integer",
+  () => {
+    assert.equal(planner({ x: 0.5, y: 0, z: 0 }).blocked, null);
+    assert.throws(() => planner({ x: NaN, y: 0, z: 0 }), /finite/);
+    rejected((x) => {
+      x.spawns[0].position.x = 0.5;
+    }, /integer/);
+  },
 );
 check("source budget failure cannot present a loadable plan", () => {
   const plan = planner(fixture.spawns[0].position, { maxSourceBytes: 1 });

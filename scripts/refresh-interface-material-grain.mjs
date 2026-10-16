@@ -35,13 +35,17 @@ for (let i = 0; i < 26; i++) {
     w = 5 + random(29);
   brush[i % 2] += rect(x, y, w);
 }
-const thread = ['', ''];
-for (let y = 0; y < 32; y += 4) {
-  for (let x = 0; x < 32; x += 4) {
+const thread = ['', '', ''];
+for (let y = 0; y < 48; y += 4) {
+  for (let x = 0; x < 48; x += 4) {
     const even = ((x + y) / 4) % 2 === 0;
-    // Alternating over/under yarn, paired highlight and recess; no grid lines.
-    thread[0] += rect(x, y, even ? 3 : 1, even ? 1 : 3);
+    // A plain weave with small yarn-length variations, not a uniform checker.
+    // The index is independent of the other materials' random sequence.
+    const yarn = (x * 7 + y * 11) % 19;
+    const length = yarn < 5 ? 2 : 3;
+    thread[0] += rect(x, y, even ? length : 1, even ? 1 : length);
     thread[1] += rect(x + 2, y + 2, even ? 1 : 2, even ? 2 : 1);
+    if (yarn === 0) thread[2] += rect(x + 1, y, even ? 2 : 1, even ? 1 : 2);
   }
 }
 const wood = ['', ''];
@@ -82,7 +86,25 @@ const tiles = {
     layer('#000', '.023', powder[2]),
   ]),
   brush: tile(192, 96, [layer('#fff', '.045', brush[0]), layer('#000', '.055', brush[1])]),
-  thread: tile(32, 32, [layer('#fff', '.026', thread[0]), layer('#000', '.075', thread[1])]),
+  thread: tile(48, 48, [
+    layer('#fff', '.021', thread[0]),
+    layer('#000', '.065', thread[1]),
+    layer('#fff', '.018', thread[2]),
+  ]),
+  // Sparse mineral inclusions in glaze. Unlike paper fiber these are tiny paired
+  // pits/catchlights, with long clean areas and no directional scratch marks.
+  glaze: tile(256, 192, [
+    layer(
+      '#183858',
+      '.045',
+      'M19 27h1v1h-1zM107 68h1v1h-1zM214 21h1v1h-1zM64 143h1v1h-1zM182 155h1v1h-1zM236 108h1v1h-1z',
+    ),
+    layer(
+      '#fff',
+      '.18',
+      'M20 28h1v1h-1zM108 69h1v1h-1zM215 22h1v1h-1zM65 144h1v1h-1zM183 156h1v1h-1zM237 109h1v1h-1z',
+    ),
+  ]),
   timber: tile(192, 128, wood),
   stone: tile(192, 128, [layer('#fff', '.028', stone[0]), layer('#000', '.04', stone[1])]),
   fiber: tile(192, 128, [layer('#fff', '.035', fiber[0]), layer('#000', '.033', fiber[1])]),

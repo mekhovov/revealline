@@ -32,6 +32,17 @@ their own source revision; they are not presented as fresh results for later edi
 | English/Ukrainian, canonical generation, offline packages                  | Existing validation commands, generated runtime checks and optional-package suites remain release gates. Current clean-build receipt is in `catalogue-quality-validation.json` (374 combined regressions and 16 optional-package tests passed).                                                                                                                                           | Build source `b2f07266da55ad72df3a6da04318828630fa93aa` was clean and contains the verified implementation; later receipt-only documentation does not change shipped source.                                                                                                                                                                        |
 | Performance comparison                                                     | `renderer-comparison.json` and retained gallery observations compare shared scenarios. Decorative detail is reduced before changing steering or hazard clarity.                                                                                                                                                                                                                           | The gallery limits each page to six missions × four looks (24 canvases). Desktop samples are not sustained active-match FPS or low-end phone/thermal qualification.                                                                                                                                                                                 |
 
+## Latest packaging closure
+
+`full-archive-validation.json` supersedes the earlier disk-blocked full-build
+status: the clean full default distribution at merged main `1a2e87d50` contains
+3,277 files and passes archive CRC, archived-entry hashes, expanded-entry hashes
+and exact output inventory. Both PR #1194 and #1196 are included in that main.
+Fourteen current offline dependency tests and the changed optional-worker
+canonical check pass. Existing host/visual proofs remain attached to their own
+source revisions; unchanged suites were not relabelled as newly executed.
+This is packaging verification, not deployment or physical-device qualification.
+
 ## External evidence and intentional limits
 
 The final acceptance follow-up adds `browser-acceptance-followup.md` (all 240 Lively FPV starting boards and bounded alternate-look/mobile samples), `visual-acceptance-polish.md` (construction-family corrections), `pacing-acceptance-followup.md` (optional-courier clarity and route evidence), and `rating-calibration-followthrough.md` (no unsupported higher-grade publication). The combined suite passes 390 tests, followed by 98 final host tests after the catch-quota layout correction; 16 optional-package tests pass. `acceptance-validation.json` records the successful clean Main Pages production build and archive integrity. The archive-inclusive full distribution exceeded disk capacity; no fresh full-archive build is claimed. Physical testing and waiting for player feedback are explicitly deferred by user request; they are not implementation blockers or claimed completed observations.

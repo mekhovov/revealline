@@ -50,11 +50,11 @@ creator artwork. This is automated evidence, not another 240-board visual study.
 
 ## Remaining evidence outside implementation
 
-- **Full archive-inclusive build:** the previous attempt exceeded local disk
-  capacity. Main Pages was built and checked at the source recorded in
-  `acceptance-validation.json`; it is not a fresh build of this update. Do not
-  run another large archive build without sufficient space or claim its result
-  from focused package tests. Existing CI release policy remains authoritative.
+- **Full archive-inclusive build — completed in the follow-up:** the full default
+  distribution now passes on clean main `1a2e87d50`, with 3,277 files, archive CRCs
+  and all ZIP/expanded manifest hashes verified. `full-archive-validation.json`
+  records the exact source and command. This supersedes the earlier disk block;
+  it does not claim deployment or hosted-publication admission.
 - **Physical hardware:** deferred. Desktop responsive checks do not establish
   thumb reach, actual controller connection behavior, sustained phone frame
   times or battery/thermal behavior. This is the highest-value next external
@@ -111,3 +111,19 @@ for deployment-owned app, diagnostics, releases, privacy and credits routes. No
 new browser playthrough or distribution build is claimed for these host-only
 fixes. [PR #1196](https://github.com/mekhovov/revealline/pull/1196) contains the
 implementation and report.
+
+## Merge and packaging closure
+
+PR #1196 is merged into main through `b04487da4`; the preceding PR #1194 is also
+merged. The later full archive verification runs on main
+`1a2e87d50670f6c4e2c79faf6dd46d9a52479c93`, which contains both complete PRs.
+No new Snake runtime changes appeared after the tested host fixes. The changed
+optional worker passes its canonical check, and 14 focused offline-core tests
+pass. The build, per-entry hash verification and safe generated-output cleanup
+are recorded in `full-archive-validation.json`. Earlier “no fresh build” statements
+describe the preceding host-fix delivery and are now superseded by this receipt.
+
+All identified implementation and automated packaging work is complete. The
+remaining physical-device/player checks are explicitly deferred; new higher-grade
+calibration is optional. No new source change or broad test rerun was needed
+solely to produce this documentation follow-up.

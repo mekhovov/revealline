@@ -2,8 +2,12 @@ import {
   overflightTacticalEnemyLayers,
   overflightAttackLayers,
   overflightCacheLayers,
+  overflightFinalTargetLayers,
+  overflightPendingPayloadLayers,
+  overflightEscortShotLayers,
 } from './tactical-view.mjs';
-import { bakeOverflightAtlas, overflightEnemyFrame, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
+import { bakeOverflightAtlas, OVERFLIGHT_HERO_FRAMES } from './atlas.mjs';
+import { createOverflightPresentationState } from './presentation-state.mjs';
 import { createOverflightBenchmark, insideOverflightCamera } from './benchmark.mjs';
 import { OVERFLIGHT_MACHINERY } from './project.mjs';
 import { overflightHuntEnemyLayers, overflightHuntStrikeLayers } from './raid-render-cues.mjs';
@@ -45,7 +49,7 @@ function registerTexture(scene, Phaser, key, canvas, frames = []) {
   return texture;
 }
 
-function imagePool(scene, key, depth) {
+function imagePool(scene, textureForFrame, depth) {
   const images = [];
   let used = 0,
     previouslyUsed = 0;
@@ -54,18 +58,21 @@ function imagePool(scene, key, depth) {
       used = 0;
     },
     take(frame, x, y, width, height = width, tint = 0xffffff, alpha = 1, rotation = 0) {
+      const key = textureForFrame(frame);
       let entry = images[used];
       if (!entry)
         images[used] = entry = {
           image: scene.add.image(0, 0, key, frame).setDepth(depth),
         };
       const image = entry.image,
-        changed = entry.frame !== frame;
-      if (changed) image.setFrame(frame);
+        changed = entry.frame !== frame || entry.key !== key;
+      if (entry.key !== key) image.setTexture(key, frame);
+      else if (changed) image.setFrame(frame);
       if (changed || entry.width !== width || entry.height !== height)
         image.setDisplaySize(width, height);
       if (entry.tint !== tint) image.setTint(tint);
       if (entry.alpha !== alpha) image.setAlpha(alpha);
+      entry.key = key;
       entry.frame = frame;
       entry.width = width;
       entry.height = height;
@@ -99,6 +106,8 @@ const colors = Object.freeze({
 export async function createOverflightRenderer({
   parent,
   appearance,
+  presentation = null,
+  arena = { width: 2880, height: 1080 },
   onFrame = () => {},
   onContextLost = () => {},
   onContextRestored = () => {},
@@ -114,12 +123,16 @@ export async function createOverflightRenderer({
   if (Phaser.VERSION && Phaser.VERSION !== '4.2.1')
     throw new Error('Overflight requires the bundled Phaser 4.2.1 renderer.');
   const preparedAt = performance.now();
-  const atlas = bakeOverflightAtlas(appearance, document);
-  const previewFrames = new Map(atlas.inventory.frames.map((frame) => [frame.id, frame]));
+  let atlas;
+  const previewFrames = new Map();
+  const frameTextures = new Map();
+  const textureForFrame = (frame) => frameTextures.get(frame);
+  const presentationState = createOverflightPresentationState();
   const key = `overflight-art-${++rendererSequence}`,
     groundKey = `${key}-ground`;
   let benchmark = createOverflightBenchmark();
   let game, scene, pools, poolList, hero, heroShadow, ground;
+  const worldImages = [];
   const remains = createOverflightRemains();
   let lost = false,
     destroyed = false,
@@ -183,7 +196,12 @@ export async function createOverflightRenderer({
   };
   const postRender = () => {
     const now = performance.now();
-    benchmark.frame(now, frameActive && !lost && !destroyed && !document.hidden);
+    benchmark.frame(
+      now,
+      frameActive && !lost && !destroyed && !document.hidden,
+      current?.phase,
+      current?.time,
+    );
     if (frameActive) benchmark.submission(presentMs + Math.max(0, now - renderStarted), now);
   };
   try {
@@ -214,31 +232,50 @@ export async function createOverflightRenderer({
             if (this.game.renderer.type !== Phaser.WEBGL)
               throw new Error('Overflight requires WebGL; a Canvas fallback cannot run the horde.');
             const gl = this.game.renderer.gl;
-            if (
-              gl &&
-              Math.max(atlas.inventory.width, atlas.inventory.height) >
-                gl.getParameter(gl.MAX_TEXTURE_SIZE)
-            )
-              throw new Error('This WebGL device cannot hold the native Overflight atlas.');
-            registerTexture(scene, Phaser, key, atlas.canvas, atlas.inventory.frames);
-            registerTexture(scene, Phaser, groundKey, atlas.ground);
-            ground = scene.add.tileSprite(0, 0, 2880, 1080, groundKey).setOrigin(0).setDepth(0);
+            atlas = bakeOverflightAtlas(appearance, document, {
+              maxTextureSize: gl ? gl.getParameter(gl.MAX_TEXTURE_SIZE) : 2048,
+              presentation,
+              arena,
+            });
+            for (const page of atlas.inventory.pages) {
+              const pageKey = `${key}-${page.index}`;
+              registerTexture(scene, Phaser, pageKey, atlas.pages[page.index], page.frames);
+              for (const frame of page.frames) {
+                previewFrames.set(frame.id, frame);
+                frameTextures.set(frame.id, pageKey);
+              }
+            }
+            if (atlas.ground) {
+              registerTexture(scene, Phaser, groundKey, atlas.ground);
+              ground = scene.add
+                .tileSprite(0, 0, arena.width, arena.height, groundKey)
+                .setOrigin(0)
+                .setDepth(0);
+            }
+            for (const tile of atlas.worldTiles) {
+              const tileKey = `${groundKey}-${tile.index}`;
+              registerTexture(scene, Phaser, tileKey, tile.canvas);
+              worldImages.push(scene.add.image(tile.x, tile.y, tileKey).setOrigin(0).setDepth(0));
+            }
             pools = {
-              remains: imagePool(scene, key, 3),
-              props: imagePool(scene, key, 5),
-              pickups: imagePool(scene, key, 10),
-              defeats: imagePool(scene, key, 19),
-              enemies: imagePool(scene, key, 20),
-              effects: imagePool(scene, key, 30),
-              projectiles: imagePool(scene, key, 35),
-              warnings: imagePool(scene, key, 60),
-              status: imagePool(scene, key, 65),
-              escorts: imagePool(scene, key, 69),
-              heroStatus: imagePool(scene, key, 72),
+              remains: imagePool(scene, textureForFrame, 3),
+              props: imagePool(scene, textureForFrame, 5),
+              pickups: imagePool(scene, textureForFrame, 10),
+              defeats: imagePool(scene, textureForFrame, 19),
+              enemies: imagePool(scene, textureForFrame, 20),
+              effects: imagePool(scene, textureForFrame, 30),
+              projectiles: imagePool(scene, textureForFrame, 35),
+              warnings: imagePool(scene, textureForFrame, 60),
+              status: imagePool(scene, textureForFrame, 65),
+              escorts: imagePool(scene, textureForFrame, 69),
+              heroStatus: imagePool(scene, textureForFrame, 72),
             };
             poolList = Object.values(pools);
-            heroShadow = scene.add.image(0, 0, key, 'shadow').setDepth(38).setAlpha(0.8);
-            hero = scene.add.image(0, 0, key, 'hero:0').setDepth(71);
+            heroShadow = scene.add
+              .image(0, 0, textureForFrame('shadow'), 'shadow')
+              .setDepth(38)
+              .setAlpha(0.8);
+            hero = scene.add.image(0, 0, textureForFrame('hero:0'), 'hero:0').setDepth(71);
             hero.setVisible(false);
             heroShadow.setVisible(false);
             this.game.canvas.tabIndex = -1;
@@ -259,13 +296,19 @@ export async function createOverflightRenderer({
             frameActive = false;
             return;
           }
-          frameActive = current?.phase === 'playing' && !document.hidden;
           presentMs = 0;
           try {
             onFrame(performance.now());
           } catch (error) {
             fail(error);
           }
+          // A normal draft pauses simulation, not foreground rendering. Decide
+          // after the host transition so card work and its complete render interval
+          // remain measured; manual pause, hidden state and failures still interrupt.
+          frameActive =
+            (current?.phase === 'playing' || current?.phase === 'upgrade') &&
+            !document.hidden &&
+            !failed;
         },
       },
     });
@@ -277,7 +320,7 @@ export async function createOverflightRenderer({
       // document's RAF. This occurs outside the engine's current frame.
       game.step(performance.now(), 0);
     }
-    atlas.dispose();
+    atlas?.dispose();
     throw error;
   }
 
@@ -325,6 +368,7 @@ export async function createOverflightRenderer({
       previousHull = previousHeading = previousTime = null;
       hitAt = -Infinity;
       bank = 0;
+      presentationState.reset();
     }
     current = run;
     const camera = run.camera;
@@ -332,7 +376,7 @@ export async function createOverflightRenderer({
       throw new TypeError('Overflight presentation requires a finite camera center and size.');
     const arena = run.project?.arena ?? run.compiled?.arena ?? { width: 2880, height: 1080 };
     scene.cameras.main.setBounds(0, 0, arena.width, arena.height).centerOn(camera.x, camera.y);
-    if (ground.width !== arena.width || ground.height !== arena.height)
+    if (ground && (ground.width !== arena.width || ground.height !== arena.height))
       ground.setSize(arena.width, arena.height);
     const reduced = appearance.reducedEffects === true;
     for (const pool of poolList) pool.begin();
@@ -381,18 +425,36 @@ export async function createOverflightRenderer({
       if (!enemy.active) continue;
       counts.alive++;
       if (insideOverflightCamera(enemy.x, enemy.y, camera)) counts.visible++;
+      const state = presentationState.enemy(enemy, run.time);
       const machine = OVERFLIGHT_MACHINERY.includes(enemy.family);
       const size = enemy.heavy ? (machine ? 54 : 32) : machine ? 32 : enemy.specialist ? 23 : 21;
+      if (!run.hunt && !run.goals?.finalDefeated && enemy.id === run.goals?.finalId)
+        // Objective navigation stays below hostile warnings and the player.
+        for (const cue of overflightFinalTargetLayers(
+          enemy,
+          camera,
+          atlas.enemyFrame(enemy, run.time, true, appearance.cast, state),
+        ))
+          pools.effects.take(
+            cue.frame,
+            cue.x,
+            cue.y,
+            cue.width,
+            cue.height,
+            cue.tint,
+            cue.alpha,
+            cue.rotation,
+          );
       if (insideOverflightCamera(enemy.x, enemy.y, camera, size)) {
         pools.enemies.take(
-          overflightEnemyFrame(enemy, run.time, reduced, appearance.cast),
+          atlas.enemyFrame(enemy, run.time, reduced, appearance.cast, state),
           enemy.x,
           enemy.y,
           size,
           size,
           0xffffff,
           enemy.warning > 0 ? 0.55 : 1,
-          (enemy.heading ?? 0) + Math.PI / 2,
+          state.heading + Math.PI / 2,
         );
         counts.rendered++;
         const behaviorCueStart = pools.status.used();
@@ -400,16 +462,21 @@ export async function createOverflightRenderer({
         // Body-local marks communicate behavior without painting hundreds of
         // attack-range circles. These state cues remain in both quality
         // settings and never depend on cosmetic animation or flashing.
-        if (phase === 'windup' || phase === 'burst') {
-          const heading = enemy.heading ?? 0,
+        const crosscut =
+          enemy.movementPreset === 'crosscut' || enemy.movementPreset === 'crosscut-interceptor';
+        const preparingMovement = crosscut && enemy.movementPhase === 'preparing';
+        const committedMovement = crosscut && enemy.movementPhase === 'committed';
+        if (phase === 'windup' || phase === 'burst' || preparingMovement || committedMovement) {
+          const heading =
+              preparingMovement || committedMovement ? state.heading : (enemy.heading ?? 0),
             distance = size * 0.55;
           pools.status.take(
             'arrow',
             enemy.x + Math.cos(heading) * distance,
             enemy.y + Math.sin(heading) * distance,
-            phase === 'windup' ? 16 : 24,
-            phase === 'windup' ? 16 : 24,
-            phase === 'windup' ? colors.amber : colors.danger,
+            phase === 'windup' || preparingMovement ? 16 : 24,
+            phase === 'windup' || preparingMovement ? 16 : 24,
+            phase === 'windup' || preparingMovement ? colors.amber : colors.danger,
             1,
             heading,
           );
@@ -549,6 +616,65 @@ export async function createOverflightRenderer({
         pickup.value > 2 ? 13 : 11,
       );
     }
+    for (const obstacle of run.terrain?.obstacles ?? []) {
+      // V2 permanent cover is baked from the shared modular art at preparation.
+      // Breakable barriers remain dynamic and keep their damage-state marks.
+      if (
+        !obstacle.breakable &&
+        run.compiled?.presentation?.format === 'OverflightWorldPresentationV2' &&
+        run.compiled.presentation.assemblies.some((item) => item.coverId === obstacle.id)
+      )
+        continue;
+      const x = obstacle.x + obstacle.width / 2,
+        y = obstacle.y + obstacle.height / 2;
+      if (!insideOverflightCamera(x, y, camera, Math.max(obstacle.width, obstacle.height)))
+        continue;
+      const alpha = obstacle.active ? 1 : 0.28;
+      pools.props.take(
+        'bar',
+        x + 4,
+        y + 5,
+        obstacle.width + 6,
+        obstacle.height + 6,
+        0x14201d,
+        alpha,
+      );
+      pools.props.take(
+        'bar',
+        x,
+        y,
+        obstacle.width,
+        obstacle.height,
+        obstacle.breakable ? 0x625640 : 0x414d48,
+        alpha,
+      );
+      pools.props.take(
+        'bar',
+        x,
+        obstacle.y + 2,
+        obstacle.width,
+        4,
+        obstacle.breakable ? 0xa69569 : 0x899486,
+        alpha,
+      );
+      pools.props.take('bar', obstacle.x + 2, y, 4, obstacle.height, 0x778373, alpha);
+      for (let row = 1; row < 4; row++)
+        pools.props.take(
+          'bar',
+          x,
+          obstacle.y + (obstacle.height * row) / 4,
+          obstacle.width - 8,
+          3,
+          0x26352e,
+          alpha,
+        );
+      if (obstacle.active && obstacle.breakable) {
+        for (let plate = 0; plate < obstacle.hp; plate++)
+          pools.status.take('bar', x - 6 + plate * 12, obstacle.y - 8, 8, 4, colors.amber);
+        if (obstacle.hp === 1)
+          pools.props.take('bar', x, y, obstacle.height * 0.7, 4, 0x14201d, 1, Math.PI / 3);
+      }
+    }
     for (const prop of run.props ?? run.project?.props ?? run.compiled?.props ?? []) {
       if (insideOverflightCamera(prop.x, prop.y, camera, 20))
         pools.props.take(
@@ -572,8 +698,27 @@ export async function createOverflightRenderer({
           cue.rotation,
         );
     }
+    for (const payload of run._echoes ?? []) {
+      if (!payload.active) continue;
+      for (const cue of overflightPendingPayloadLayers(payload)) {
+        if (!insideOverflightCamera(cue.x, cue.y, camera, Math.max(cue.width, cue.height)))
+          continue;
+        pools.effects.take(
+          cue.frame,
+          cue.x,
+          cue.y,
+          cue.width,
+          cue.height,
+          cue.tint,
+          cue.alpha,
+          cue.rotation,
+        );
+      }
+    }
     for (const effect of run.effects ?? []) {
       if (!effect.active) continue;
+      // The simulation queue supplies all actual fan/echo footprints above.
+      if (effect.kind === 'drop-warning' && run._echoes) continue;
       const radius = effect.radius ?? 20;
       if (effect.kind === 'warning') {
         danger(effect.x, effect.y, radius, camera, run.time);
@@ -626,7 +771,7 @@ export async function createOverflightRenderer({
     for (const escort of run.riy?.escorts ?? []) {
       const tint = escort.role === 'sweeper' ? colors.cyan : colors.amber;
       pools.escorts.take(
-        `hero:${reduced ? 0 : Math.floor(run.time * 60) % OVERFLIGHT_HERO_FRAMES}`,
+        `escort:${escort.role}:${reduced ? 0 : Math.floor(run.time * 60) % OVERFLIGHT_HERO_FRAMES}`,
         escort.x,
         escort.y,
         44,
@@ -676,18 +821,16 @@ export async function createOverflightRenderer({
             phase === 'returning' ? Math.PI : 0,
           );
       }
-      if (escort.beamRemaining > 0) {
-        const dx = escort.targetX - escort.x,
-          dy = escort.targetY - escort.y;
+      for (const cue of overflightEscortShotLayers(escort, reduced)) {
         pools.projectiles.take(
-          'bar',
-          escort.x + dx / 2,
-          escort.y + dy / 2,
-          Math.hypot(dx, dy),
-          2,
-          tint,
-          reduced ? 0.45 : 0.8,
-          Math.atan2(dy, dx),
+          cue.frame,
+          cue.x,
+          cue.y,
+          cue.width,
+          cue.height,
+          cue.tint,
+          cue.alpha,
+          cue.rotation,
         );
       }
     }
@@ -735,8 +878,9 @@ export async function createOverflightRenderer({
       .setPosition(player.x + 2 + bank * 2, player.y + 7)
       .setDisplaySize(boosting ? 43 : 39, 26)
       .setVisible(true);
+    const heroFrame = `hero:${reduced ? 0 : Math.floor(run.time * 60) % OVERFLIGHT_HERO_FRAMES}`;
     hero
-      .setFrame(`hero:${reduced ? 0 : Math.floor(run.time * 60) % OVERFLIGHT_HERO_FRAMES}`)
+      .setTexture(textureForFrame(heroFrame), heroFrame)
       .setPosition(player.x, player.y)
       .setDisplaySize(64 * (1 - Math.abs(bank) * 0.09), boosting && !reduced ? 65 : 64)
       .setRotation(heading + Math.PI / 2 + bank * 0.045)
@@ -800,7 +944,8 @@ export async function createOverflightRenderer({
     counts.warnings = pools.warnings.used();
     counts.remains = pools.remains.used();
     counts.defeats = pools.defeats.used();
-    counts.quads = 3 + poolList.reduce((sum, pool) => sum + pool.used(), 0);
+    counts.quads =
+      2 + (ground ? 1 : worldImages.length) + poolList.reduce((sum, pool) => sum + pool.used(), 0);
     benchmark.observe(counts);
     presentMs += performance.now() - started;
   }
@@ -814,18 +959,21 @@ export async function createOverflightRenderer({
       const id =
         kind === 'drone'
           ? `hero:${Math.floor(time * 30) % OVERFLIGHT_HERO_FRAMES}`
-          : kind === 'machine'
-            ? 'machine:tracked-tank:0'
-            : overflightEnemyFrame(
-                {
-                  id: 0,
-                  family: kind === 'shield' ? 'shield-bearer' : 'runner',
-                  wardrobe: 0,
-                },
-                time,
-                appearance.reducedEffects,
-                appearance.cast,
-              );
+          : atlas.enemyFrame(
+              {
+                id: 0,
+                family:
+                  kind === 'machine'
+                    ? 'tracked-tank'
+                    : kind === 'shield'
+                      ? 'shield-bearer'
+                      : 'runner',
+                wardrobe: 0,
+              },
+              time,
+              appearance.reducedEffects,
+              appearance.cast,
+            );
       const frame = previewFrames.get(id);
       if (!frame) return;
       context.save();
@@ -833,7 +981,7 @@ export async function createOverflightRenderer({
       context.translate(x, y);
       context.rotate(Math.PI / 2);
       context.drawImage(
-        atlas.canvas,
+        atlas.pages[frame.page],
         frame.x,
         frame.y,
         frame.width,
@@ -903,7 +1051,16 @@ export async function createOverflightRenderer({
         logicalHeight: 540,
         backingWidth: game.canvas?.width ?? 0,
         backingHeight: game.canvas?.height ?? 0,
-        atlas: raw ? atlas.inventory : { ...inventory, frameCount: frames.length },
+        // Raw timing samples are useful evidence; thousands of repeated frame
+        // rectangles are not. The preparer owns the full deterministic atlas.
+        atlas: {
+          ...inventory,
+          pages: inventory.pages.map(({ frames, ...page }) => ({
+            ...page,
+            frameCount: frames.length,
+          })),
+          frameCount: frames.length,
+        },
         heroArtwork: atlas.heroArtwork,
         counts: { ...counts },
         allocatedSprites: poolList.reduce((sum, pool) => sum + pool.size(), 2),
@@ -940,6 +1097,9 @@ export async function createOverflightRenderer({
           queueMicrotask(() => {
             atlas.dispose();
             remains.reset();
+            presentationState.reset();
+            frameTextures.clear();
+            previewFrames.clear();
             current = null;
             resolve();
           }),

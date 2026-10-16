@@ -1,7 +1,7 @@
 /** Original editable 28px construction kit. Draw commands are the source art;
  * shared material textures remain supplied by classic-scenes. No bitmap cache,
  * randomness, simulation mutation or decoration outside accepted wall cells. */
-export const CLASSIC_STRUCTURE_REVISION = 'modular-dioramas-v1';
+export const CLASSIC_STRUCTURE_REVISION = 'modular-dioramas-v2';
 export const CLASSIC_STRUCTURE_FAMILIES = Object.freeze({
   orchard: Object.freeze(['glasshouse', 'planter', 'irrigator']),
   freight: Object.freeze(['container', 'platform', 'dispatch']),
@@ -147,7 +147,9 @@ export function drawClassicStructureModule(ctx, wall, scene, options = {}) {
     put(dark, 2, 2, 2, 2);
     put(dark, 23, 23, 2, 2);
   } else if (['dispatch', 'shelter', 'receiver'].includes(m.family)) {
-    put(m.family === 'dispatch' ? copper : light, 0, 0, 28, 28);
+    // Night equipment glows at its fittings, not across the entire roof.
+    // Large luminous islands otherwise overpower prey and objective markers.
+    put(night ? '#294451' : m.family === 'dispatch' ? copper : light, 0, 0, 28, 28);
     if (m.row === 0) put(metal, 0, 2, 28, 3);
     if (m.row === m.height - 1) put(dark, 0, 24, 28, 3);
     const centerColumn = m.column === Math.floor(m.width / 2);

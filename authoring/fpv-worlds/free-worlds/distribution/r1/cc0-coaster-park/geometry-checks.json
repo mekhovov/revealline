@@ -1,0 +1,33 @@
+{
+  "format": "FPVFreeWorldGeometryChecks.v1",
+  "packSha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+  "checks": [
+    {
+      "name": "Launch supported by the landing floor",
+      "passed": true
+    },
+    {
+      "name": "Loop left opening passes a 500 mm diameter drone",
+      "passed": true
+    },
+    {
+      "name": "Loop left top rail has collision",
+      "passed": true
+    },
+    {
+      "name": "Loop right opening passes a 500 mm diameter drone",
+      "passed": true
+    },
+    {
+      "name": "Loop right top rail has collision",
+      "passed": true
+    },
+    {
+      "name": "Beginner avenue clear above paving",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Representative openings and rails; not exhaustive collision qualification or device performance."
+  ]
+}

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { OVERFLIGHT_BATTLEFIELDS } from '../overflight/battlefields.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { overflightCacheHint } from '../overflight/copy.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -8,8 +9,19 @@ import {
   createOverflightHuntProject,
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
-import { overflightMissionSource, paintOverflightMission } from '../overflight/mission-library.mjs';
-import { createOverflightOperationCards } from '../overflight/operation-view.mjs';
+import {
+  overflightMissionSource,
+  overflightPlayableMissionDefinitions,
+  paintOverflightMission,
+} from '../overflight/mission-library.mjs';
+import { OVERFLIGHT_HUNT_MODE } from '../overflight/raid-mode.mjs';
+import { createOverflightRaidVariant } from '../overflight/raid-variants.mjs';
+import { createExperimentalOverflightWorldProject } from '../overflight/worlds.mjs';
+import {
+  createOverflightOperationCards,
+  createOverflightRunChangeDialog,
+  overflightRememberedOperationURL,
+} from '../overflight/operation-view.mjs';
 import {
   overflightTacticalEnemyLayers,
   overflightAttackLayers,
@@ -74,6 +86,66 @@ test('official and installed encounters retain exact compiler identities and own
   library.dispose();
 });
 
+test('installed experimental Raid remains discoverable but unavailable in open-arena variants', async () => {
+  const terrain = createExperimentalOverflightWorldProject(OVERFLIGHT_HUNT_MODE.createProject);
+  const current = OVERFLIGHT_HUNT_MODE.createProject();
+  const legacy = createOverflightHuntProject({ rulesVersion: 2 });
+  assert.equal(overflightPlayableMissionDefinitions(OVERFLIGHT_HUNT_MODE, [terrain]).length, 1);
+  for (const variant of ['time-attack', 'marathon']) {
+    const operation = createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant });
+    const entries = [terrain, current, legacy].map((project, index) => ({
+      identity: `community:installed-${index}`,
+      project,
+    }));
+    const progressRead = [],
+      launched = [];
+    const source = overflightMissionSource({
+      id: 'installed',
+      entries,
+      mode: operation,
+      installed: true,
+      progress(entry) {
+        operation.compileProject(entry.project);
+        progressRead.push(entry);
+        return { state: 'completed', bestStars: null };
+      },
+      launch: (entry) => launched.push(entry),
+    });
+    const library = createMissionLibrary([source]);
+    assert.equal(
+      library.missions.length,
+      3,
+      'incompatible packages do not hide any installed rows',
+    );
+    const [blocked, playable, old] = library.missions;
+    assert.equal(
+      JSON.parse(blocked.id).at(-1),
+      compileOverflightHuntProject(terrain).projectIdentity,
+    );
+    assert.match(library.presentation(blocked).name, /Experimental/);
+    assert.equal(library.availability(blocked, 'solo').state, 'unavailable');
+    assert.match(library.availability(blocked, 'solo').reason, /requires open arenas/);
+    assert.deepEqual(library.progressState(blocked, 'solo'), { state: 'new', bestStars: null });
+    assert.equal(progressRead.length, 0, 'unsupported rows never compile through progress lookup');
+    assert.throws(() => library.launch(blocked, { mode: 'solo' }));
+    assert.equal(launched.length, 0);
+    for (const row of [playable, old]) {
+      assert.equal(library.availability(row, 'solo').state, 'ready');
+      assert.equal(library.progressState(row, 'solo').state, 'completed');
+      await library.launch(row, { mode: 'solo' });
+    }
+    assert.deepEqual(launched, entries.slice(1));
+    assert.deepEqual(
+      overflightPlayableMissionDefinitions(operation, [terrain, current, legacy]).map(
+        (project) => project.projectIdentity,
+      ),
+      [current, legacy].map((project) => compileOverflightHuntProject(project).projectIdentity),
+      'pre-run record queries include supported current and legacy projects only',
+    );
+    library.dispose();
+  }
+});
+
 test('different authored schedules produce different diagrams without mutating projects', () => {
   const projects = ['front', 'crossing', 'mixed'].map((encounterSet) =>
     createOverflightProject({ encounterSet }),
@@ -89,7 +161,10 @@ test('different authored schedules produce different diagrams without mutating p
   const hunt = createOverflightHuntProject();
   assert.doesNotThrow(() => compileOverflightHuntProject(hunt));
   assert.doesNotThrow(() =>
-    paintOverflightMission(context().value, { operation: 'overflight-hunt', project: hunt }),
+    paintOverflightMission(context().value, {
+      operation: 'overflight-hunt',
+      project: hunt,
+    }),
   );
 });
 
@@ -102,27 +177,76 @@ test('family home exposes all five operations and preserves operation queries wi
     return node;
   };
   let selected = 0,
-    left = 0;
+    left = 0,
+    layout = '';
   const view = createOverflightOperationCards({
     document,
     current: 'overflight',
     text: (key) => key,
-    destination: (path) => `${path}${path.includes('?') ? '&' : '?'}lang=uk`,
+    destination: (path) => `${path}${path.includes('?') ? '&' : '?'}lang=uk${layout}`,
     onSelect: () => selected++,
     onLeave: () => left++,
   });
   view.refresh();
-  assert.equal(view.root.children.length, 5);
-  const [survivor, riy, raid, timeAttack, marathon] = view.root.children;
+  assert.equal(view.root.children.length, 2, 'two groups contain all five operation choices');
+  const [survivor, riy, raid, timeAttack, marathon] =
+    view.root.querySelectorAll('[data-home-choice]');
   assert.equal(survivor.getAttribute('aria-current'), 'true');
   assert.equal(raid.getAttribute('href'), './raid.html?lang=uk');
   assert.equal(riy.getAttribute('href'), './play.html?operation=riy&lang=uk');
   assert.equal(timeAttack.getAttribute('href'), './raid.html?operation=time-attack&lang=uk');
   assert.equal(marathon.getAttribute('href'), './raid.html?operation=marathon&lang=uk');
   survivor.click();
+  assert.equal(selected, 0, 'the selected operation is a no-op, not a mission launch');
   for (const card of [riy, raid, timeAttack, marathon]) card.click();
-  assert.equal(selected, 1);
+  assert.equal(selected, 4);
   assert.equal(left, 4);
+  layout = '&layout=river-port-twin-docks';
+  view.refresh();
+  assert.equal(raid.getAttribute('href'), './raid.html?lang=uk&layout=river-port-twin-docks');
+});
+
+test('only a generic family entry restores a valid saved operation while keeping appearance and locale', () => {
+  const base = 'https://example.test/game/overflight/play.html';
+  assert.equal(overflightRememberedOperationURL(base, 'marathon'), null);
+  assert.equal(overflightRememberedOperationURL(`${base}?family=1`, 'deleted-operation'), null);
+  const destination = new URL(
+    overflightRememberedOperationURL(`${base}?family=1&lang=uk&appearance=accepted`, 'marathon'),
+  );
+  assert.equal(destination.pathname, '/game/overflight/raid.html');
+  assert.equal(destination.searchParams.get('operation'), 'marathon');
+  assert.equal(destination.searchParams.get('lang'), 'uk');
+  assert.equal(destination.searchParams.get('appearance'), 'accepted');
+  assert.equal(destination.searchParams.has('family'), false);
+});
+
+test('changing a live sortie requires explicit end, supports cancel and releases confirmation input', async () => {
+  const document = new Document();
+  let released = 0;
+  const change = createOverflightRunChangeDialog({
+    document,
+    text: (key) => key,
+    releaseInput: () => released++,
+  });
+  const cancelled = change.ask();
+  assert.equal(change.root.open, true);
+  assert.equal(document.activeElement.id, 'overflight-change-cancel');
+  assert.equal(
+    await change.ask(),
+    false,
+    'a second mutation cannot steal an existing confirmation',
+  );
+  change.root.querySelector('#overflight-change-cancel').click();
+  assert.equal(await cancelled, false);
+  const accepted = change.ask();
+  change.root.querySelector('#overflight-change-accept').click();
+  assert.equal(await accepted, true);
+  const back = change.ask();
+  change.root.emit('cancel');
+  assert.equal(await back, false);
+  assert.equal(change.root.open, false);
+  assert.ok(released >= 3);
+  change.dispose();
 });
 
 test('committed fan and lane warnings match each damaging ray and full half-width', () => {
@@ -146,7 +270,12 @@ test('committed fan and lane warnings match each damaging ray and full half-widt
     assert.ok(Math.abs(arrow.y - (50 + Math.sin(angle) * 620)) < 1e-10);
   }
   assert.equal(overflightAttackLayers({ ...attack, kind: 'lane' }).length, 3);
-  const [ground] = overflightAttackLayers({ kind: 'ground', x: 70, y: 80, radius: 45 });
+  const [ground] = overflightAttackLayers({
+    kind: 'ground',
+    x: 70,
+    y: 80,
+    radius: 45,
+  });
   assert.equal(ground.frame, 'ring');
   assert.equal(ground.width, 90);
 });
@@ -165,7 +294,13 @@ test('guard facing, damage and armor opening remain geometrically distinct', () 
   const broken = overflightTacticalEnemyLayers({ ...enemy, guardIntegrity: 0 });
   assert.ok(broken.length < guarded.length);
   assert.ok(broken.some((layer) => layer.frame === 'arrow'));
-  const armor = { x: 10, y: 20, armor: 80, maxArmor: 100, exposureRemaining: 0 };
+  const armor = {
+    x: 10,
+    y: 20,
+    armor: 80,
+    maxArmor: 100,
+    exposureRemaining: 0,
+  };
   assert.equal(
     overflightTacticalEnemyLayers(armor).filter((layer) => layer.frame === 'arrow').length,
     0,
@@ -195,7 +330,13 @@ test('open cache shows two physical choices with distinct glyphs and disabled st
 });
 
 test('distant armor stays compact without losing state, while approaches and priority targets stay detailed', () => {
-  const enemy = { x: 500, y: 200, maxArmor: 100, armor: 50, exposureRemaining: 0 };
+  const enemy = {
+    x: 500,
+    y: 200,
+    maxArmor: 100,
+    armor: 50,
+    exposureRemaining: 0,
+  };
   const before = structuredClone(enemy);
   const full = overflightTacticalEnemyLayers(enemy, 32);
   const near = overflightTacticalEnemyLayers(enemy, 32, { x: 400, y: 200 });
@@ -221,18 +362,30 @@ test('distant armor stays compact without losing state, while approaches and pri
     { objectiveId: 'required' },
   ])
     assert.deepEqual(
-      overflightTacticalEnemyLayers({ ...enemy, ...priority }, 32, { x: 100, y: 200 }),
+      overflightTacticalEnemyLayers({ ...enemy, ...priority }, 32, {
+        x: 100,
+        y: 200,
+      }),
       full,
     );
   for (const state of [{ exposureRemaining: 3 }, { armor: 0 }]) {
-    const open = overflightTacticalEnemyLayers({ ...enemy, ...state }, 32, { x: 100, y: 200 });
+    const open = overflightTacticalEnemyLayers({ ...enemy, ...state }, 32, {
+      x: 100,
+      y: 200,
+    });
     assert.equal(
       open.filter((cue) => cue.frame === 'arrow').length,
       2,
       'opening still has geometry in addition to color',
     );
   }
-  const guard = { ...enemy, maxArmor: 0, maxGuardIntegrity: 50, guardIntegrity: 30, heading: 1 };
+  const guard = {
+    ...enemy,
+    maxArmor: 0,
+    maxGuardIntegrity: 50,
+    guardIntegrity: 30,
+    heading: 1,
+  };
   assert.deepEqual(
     overflightTacticalEnemyLayers(guard, 24, { x: 0, y: 0 }),
     overflightTacticalEnemyLayers(guard, 24),
@@ -242,7 +395,12 @@ test('distant armor stays compact without losing state, while approaches and pri
 });
 
 test('mission discovery labels Relaxed V3 encounters in both native languages', () => {
-  const entry = { project: createOverflightProject({ rulesVersion: 3, difficulty: 'relaxed' }) };
+  const entry = {
+    project: createOverflightProject({
+      rulesVersion: 3,
+      difficulty: 'relaxed',
+    }),
+  };
   for (const [locale, label] of [
     ['en', 'Relaxed'],
     ['uk', 'Спокійна'],
@@ -276,4 +434,30 @@ test('cache instructions explain stored V3 Overdrive without changing legacy or 
     }),
     /Overdrive/,
   );
+});
+
+test('all eighteen battlefields register in six localized campaign groups', () => {
+  const entries = OVERFLIGHT_BATTLEFIELDS.map(({ id }) => ({
+    project: createOverflightProject({ rulesVersion: 4, layout: id }),
+  }));
+  for (const locale of ['en', 'uk']) {
+    const source = overflightMissionSource({
+      id: 'official',
+      entries,
+      mode,
+      locale: () => locale,
+      launch() {},
+    });
+    const library = createMissionLibrary([source]);
+    assert.equal(library.missions.length, 18);
+    const campaigns = new Set(library.missions.map((row) => row.campaignKey));
+    assert.equal(campaigns.size, 6);
+    for (const row of library.missions) {
+      assert.equal(row.campaignLevelCount, 3);
+      assert.ok(row.levelIndex >= 0 && row.levelIndex < 3);
+      assert.equal(library.availability(row, 'solo').state, 'ready');
+      assert.deepEqual(row.tags, ['Classic', 'FPV', 'Arcade']);
+    }
+    library.dispose();
+  }
 });

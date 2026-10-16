@@ -247,6 +247,19 @@
       "sha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
       "bytes": 310434,
       "courses": 1
+    },
+    {
+      "id": "cc0-coaster-park",
+      "title": [
+        "Coaster Practice Park",
+        "Тренувальний парк атракціонів"
+      ],
+      "revision": "r1",
+      "commit": "f1b6373996a53c84bca77b485e73630ffe6b00c7",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-coaster-park/cc0-coaster-park.r1.rlpack",
+      "sha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "bytes": 1201279,
+      "courses": 1
     }
   ],
   "next": null

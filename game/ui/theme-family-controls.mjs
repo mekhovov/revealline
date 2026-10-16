@@ -11,6 +11,8 @@ export function attachThemeFamilyControls({
   prefix = '',
   legacyPalette,
   legacyOrnaments,
+  mountBattlefieldGroundControls,
+  mountEnemyAppearance = mountEnemyAppearanceControls,
 }) {
   if (!root || !host) return { dispose() {} };
   const group = doc.createElement('section');
@@ -24,7 +26,7 @@ export function attachThemeFamilyControls({
   const heading = doc.createElement('h3');
   text(heading, 'appearance');
   group.append(heading);
-  const enemyAppearance = mountEnemyAppearanceControls({
+  const enemyAppearance = mountEnemyAppearance({
     document: doc,
     container: group,
     locale: getLocale,
@@ -32,6 +34,14 @@ export function attachThemeFamilyControls({
     applyAuthored: () => host.set({ arcadeArt: 'authored' }),
   });
   release.push(enemyAppearance.dispose, onLocaleChange(enemyAppearance.refresh));
+  if (mountBattlefieldGroundControls) {
+    const battlefield = mountBattlefieldGroundControls({
+      document: doc,
+      container: group,
+      locale: getLocale,
+    });
+    release.push(battlefield.dispose, onLocaleChange(battlefield.refresh));
+  }
   const row = (key, parent = group) => {
     const label = doc.createElement('label'),
       title = doc.createElement('span');

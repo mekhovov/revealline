@@ -24,8 +24,9 @@ admission stage; a valid manifest alone never certifies a safe spawn or traversa
 Assets declare unique local paths, size, SHA-256 and kind (`scene`, `collision`,
 `texture`). Scenes use GLB; collision declarations use JSON; textures use PNG/JPEG.
 No URL, executable file, traversal path, case-insensitive duplicate path or unresolved
-asset reference is allowed. Collision JSON is a declared future payload, not an
-already implemented regional collision schema. Existing provenance receipts remain
+asset reference is allowed. Terrain-only collision payloads now have an authoring schema and isolated query
+admission stage; see [terrain preparation](fpv-regional-terrain.md). Other scenery
+collision payloads remain future work. Existing provenance receipts remain
 mandatory in the content-production pipeline; this contract does not replace licenses.
 
 Authoring limits are explicit: 128 m cells; at most 128×128 cells; 4,096 assets;
@@ -88,8 +89,9 @@ coverage remains in D6.
 
 Still required before any regional world can be advertised playable:
 
-1. A regional collision payload/compiler and verified terrain seams; concrete source
-   assets, provenance, optimization, authored landmarks and safe-spawn checks.
+1. Extend the implemented terrain-only collision compiler and isolated seam/query
+   checks to scenery/overhangs; add concrete assets, provenance, optimization, authored
+   landmarks and safe-spawn checks.
 2. Cancellable bounded asset loading, decoded/GPU memory accounting, atomic origin
    relocation, collision installation/removal and safe missing-section recovery.
 3. An unscored regional free-flight host and versioned bookmark adapter; existing

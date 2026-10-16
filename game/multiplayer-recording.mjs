@@ -10,7 +10,7 @@ import {
 } from './coop/core.mjs';
 import { createDuel, resumeDuel, stepDuel } from './multiplayer.mjs';
 import {
-  LOCAL_TERMINAL_OBSERVATIONS,
+  localTerminalObservationContract,
   assertLocalTerminalObservationSupport,
   localTerminalObservations,
 } from './multiplayer-terminal-observation.mjs';
@@ -281,7 +281,7 @@ export function createLocalMatchRecorder({
       if (observations) value.inputSha256 = await sha256(value.segments);
       value.final = { tick: native.tick, status: native.status, stateSha256: await sha256(native) };
       if (observations) {
-        value.final.observationContract = LOCAL_TERMINAL_OBSERVATIONS;
+        value.final.observationContract = observations.contract;
         value.final.observationSha256 = await sha256(observations);
       }
       return snapshotLocalMatchRecording(value);
@@ -355,7 +355,7 @@ export function snapshotLocalMatchRecording(source) {
   );
   if (portable)
     required(
-      value.final.observationContract === LOCAL_TERMINAL_OBSERVATIONS &&
+      value.final.observationContract === localTerminalObservationContract(mode, accepted.state) &&
         digest(value.final.observationSha256),
       'Invalid recorded terminal observation contract.',
     );
@@ -409,8 +409,9 @@ export async function verifyLocalMatchRecordingAsync(
   };
   const portable = value.format === LOCAL_MATCH_RECORDING_V2;
   if (portable) {
-    actual.observationContract = LOCAL_TERMINAL_OBSERVATIONS;
-    actual.observationSha256 = await sha256(localTerminalObservations(mode, state));
+    const observations = localTerminalObservations(mode, state);
+    actual.observationContract = observations.contract;
+    actual.observationSha256 = await sha256(observations);
   }
   aborted();
   const terminalMatch =
@@ -419,7 +420,9 @@ export async function verifyLocalMatchRecordingAsync(
     value.final.status === actual.status;
   const exactStateMatch = terminalMatch && value.final.stateSha256 === actual.stateSha256;
   const terminalObservationMatch = portable
-    ? terminalMatch && value.final.observationSha256 === actual.observationSha256
+    ? terminalMatch &&
+      value.final.observationContract === actual.observationContract &&
+      value.final.observationSha256 === actual.observationSha256
     : null;
   // V1 never falls back to the narrower successor observation contract.
   const match = portable ? terminalObservationMatch : exactStateMatch;
@@ -428,7 +431,7 @@ export async function verifyLocalMatchRecordingAsync(
     match,
     exactStateMatch,
     terminalObservationMatch,
-    verificationScope: portable ? LOCAL_TERMINAL_OBSERVATIONS : 'exact-native-state.v1',
+    verificationScope: portable ? actual.observationContract : 'exact-native-state.v1',
     diagnostics: !match
       ? [
           portable

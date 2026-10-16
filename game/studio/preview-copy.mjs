@@ -265,6 +265,18 @@ export function studioGeometryText(mission, preview) {
           }),
         ]
       : []),
+    ...(markers.expedition
+      ? [
+          t('tools:studio.geometry.teamEnvironment', {
+            relays: markers.expedition.relays.length,
+            stages: markers.expedition.stages.length,
+            currents: markers.expedition.currents.length,
+            emitters: markers.expedition.emitters.length,
+            patrols: markers.expedition.patrols.length,
+            erosion: markers.expedition.erosion.length,
+          }),
+        ]
+      : []),
   ].join(' ');
 }
 

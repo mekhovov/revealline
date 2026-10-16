@@ -4,6 +4,7 @@ import { createMenuAppearance } from './menu-appearance.mjs';
 import { attachPreferenceRestoration } from './preference-restoration.mjs';
 import { installThemeHost } from '../presentation/theme-host.mjs';
 import { attachThemeFamilyControls } from './theme-family-controls.mjs';
+import { mountBattlefieldGroundControls } from './battlefield-ground-controls.mjs';
 
 /** Existing Options owns navigation. These native selectors own only the separate
  * menu-style record, and never call a flight's preferences, prepare or Resume. */
@@ -48,6 +49,7 @@ export function attachMenuStyleControls({
     prefix,
     legacyPalette: palette,
     legacyOrnaments: ornaments,
+    mountBattlefieldGroundControls,
   });
   const stopThemeOrnaments = themeHost.preferences.subscribe((state) =>
     appearance.set({

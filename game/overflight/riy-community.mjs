@@ -1,3 +1,4 @@
+import { overflightWorldDependencies } from './worlds.mjs';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { createNativeProjectLibrary } from '../community/native-project-library.mjs';
 import {
@@ -13,7 +14,7 @@ export function createOverflightRiyPackage(project) {
   return {
     format: OVERFLIGHT_RIY_PACKAGE_FORMAT,
     project: accepted,
-    dependencies: structuredClone(accepted.resources),
+    dependencies: overflightWorldDependencies(accepted),
   };
 }
 export function validateOverflightRiyPackage(source) {
@@ -30,7 +31,7 @@ export function validateOverflightRiyPackage(source) {
   );
   pack.project = validateOverflightRiyProject(pack.project);
   required(
-    canonicalJSON(pack.dependencies) === canonicalJSON(pack.project.resources),
+    canonicalJSON(pack.dependencies) === canonicalJSON(overflightWorldDependencies(pack.project)),
     'Incomplete or unsupported Overflight dependency closure.',
   );
   compileOverflightRiyProject(pack.project);

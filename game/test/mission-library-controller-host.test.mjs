@@ -1,4 +1,4 @@
-import test from 'node:test';
+import nodeTest from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
@@ -12,6 +12,7 @@ import { deferred } from './helpers/media-fixtures.mjs';
 import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
+const test = (name, run) => nodeTest(name, { timeout: 180000 }, run);
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
 const device = () => ({
   index: 0,
@@ -246,10 +247,20 @@ async function host(
     mode === 'solo' ? 'shell-play' : mode === 'versus' ? 'race-chapters' : 'coop-discovery-open',
   );
   reach(opener);
-  pulse(0);
-  await waitFor(() => p.$('journey-chooser')?.open, {
-    timeoutMs: 30000,
-  });
+  const handler = opener.onclick;
+  let preparation;
+  opener.onclick = function (event) {
+    return (preparation = handler.call(this, event));
+  };
+  try {
+    pulse(0);
+    // Cold catalogue/media admission is asynchronous. Join the real controller
+    // activation, rather than letting a polling deadline retire its live host.
+    await preparation;
+  } finally {
+    opener.onclick = handler;
+  }
+  assert.equal(p.$('journey-chooser')?.open, true);
   frame();
   return { p, pulse, reach, frame, opener, before, snapshot };
 }

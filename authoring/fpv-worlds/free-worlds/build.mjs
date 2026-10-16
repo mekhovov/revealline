@@ -285,6 +285,10 @@ for (const spec of candidates.filter((s) => !selection || s.id === selection)) {
         'Новий тренувальний майданчик із моделей CC0. Видимі об’єкти мають зіткнення зі збереженням отворів. Доступні обидва режими польоту. Почніть із вільної смуги, потім досліджуйте будівлі та орієнтири.',
     },
   };
+  if (spec.locales) {
+    for (const language of ['en', 'uk'])
+      Object.assign(course.locales[language], spec.locales[language]);
+  }
   if (spec.scene) {
     course.locales.en.brief =
       'Lift above the road, circle the construction site via the outer road markers, return and land.';

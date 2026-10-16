@@ -27,6 +27,10 @@ isolated loopback server with production-style headers. It never opens the user'
 normal browser profile. All three test apps are uninstalled and the temporary profile
 removed on completion. Cleanup failures retain that directory and identify it in
 the receipt instead of hiding the failure.
+Pending browser/server startup also retains the directory as unverified cleanup:
+a resource that resolves after the observation deadline cannot silently recreate
+a supposedly deleted profile. Delayed-start and late-close-failure regressions
+cover that ownership boundary.
 
 The public UI prepares each package offline and imports one explicitly scripted,
 replay-verified FPV attempt. No database records, reward receipts or completion flags
@@ -44,6 +48,10 @@ The check covers:
   launchers offline. An uncached network probe must fail before each launch.
 - Reopening three new installed standalone windows while still offline, then
   reaching each app's mounted start screen through the public launcher action.
+- Closing the persistent browser context, requiring its close event, and launching
+  a new browser on the same disk profile with offline enabled before application
+  navigation. All three stable launchers and installed windows must reopen again;
+  the uncached network probe and unchanged profile/proof exports are rechecked.
 - Offline startup and byte-identical exported FPV flight proofs and profile settings.
 - Installation over the admitted previous candidate or the declared path fixture.
 - A truncated dependency rejected without advancing installation pointers.
@@ -62,18 +70,46 @@ Progress & Collection, and Controls; Gym's and World's Content & Offline. Launch
 transitions verify the exact origin, app/version path and English language query;
 the helper also tests Ukrainian routing. Academy's Workshop & offline disclosure
 is expanded through its summary's native keyboard Enter action before preparation, failed-download and removal
-checks. It does not click
-hidden controls or directly invoke application functions. Preparation waits up to
+checks. Radio Setup's **Back up or import a profile** disclosure is likewise expanded
+before importing a profile and before every subsequent export; closing Setup recreates
+that editor with its transfer tools collapsed. The adapter checks actual visibility
+and leaves already-open disclosures open. Profile import/export uses native button
+Enter; a current-runtime controlled diagnostic confirmed a first pointer click can
+leave the export empty while Enter produces the profile JSON. The initial export
+must match every fixture field, including the retained radios array in the current
+`FlightProfiles.v2` library (older `FlightProfiles.v1` exports remain supported).
+Proof import/export also uses native Enter: in the full current controlled journey,
+the first pointer export after offline reopening left the textarea empty rather
+than producing even an empty-attempt JSON backup. Later exports must remain
+byte-identical through offline use, update and rollback.
+Unknown export formats fail instead of silently dropping fields. It does not click
+hidden controls or directly invoke application functions. Offline preparation and
+removal also use native button Enter. A read-only DOM witness requires fresh status
+or progress activity within 30 seconds, then a fresh terminal status; stale success
+text cannot pass a new action. Error statuses fail promptly. Preparation waits up to
 315 seconds, allowing the application's five-minute overall transfer deadline plus
 status rendering. Ordinary browser operations and protocol/cleanup calls are
-bounded to 30 seconds. The unit regression is
+bounded to 30 seconds. The complete staging/browser journey has a ten-minute deadline;
+failure still enters the independently bounded cleanup and writes a failure receipt.
+Bundle admission happens before that deadline. The unit regression is
 `node --test scripts/test-optional-installation-observer.mjs`.
 
 The receipt's `closedTabsRelaunch` identifies the zero-surviving-page transition;
-each installed app also records its new `offlineWindow`. This is an offline
-**window** relaunch in the same isolated persistent browser process, not an OS
-reboot or browser-process restart. Those remain separate qualification steps.
+each installed app also records its new `offlineWindow`. The new `browserRestart`
+field separately records attempted/passed process restart, confirmed context
+closure, and each app's `restartedOfflineWindow`. An overall pass now requires
+both transitions. Failure receipts retain the attempted/passed distinction.
+Browser-context offline emulation and a failed uncached probe are not an OS
+reboot, physical airplane-mode test or proof that every external origin was
+unreachable. Those remain separate qualification steps. Historical receipts
+without these restart fields only establish their original window-relaunch scope.
 Both observer and helper hashes are recorded and rechecked before declaring a pass.
+
+The [15 October observation](flight-practice-observation-2026-10-15.md) passed nine
+checkpoints on unchanged candidate runtime bytes from `da0b010820`, using authorized
+normal-form access. It includes the new browser restart, while retaining a prior
+hidden-Open-link timeout. Its update remains a same-payload path fixture, not a
+distinct-release migration. Current reports must retain those separate boundaries.
 
 The October 14 three-app extension has helper/contract regressions, but its first
 source-bound attempt against `8718babd1827383a22596c5a0156b280a594929d`
@@ -87,6 +123,27 @@ the first pointer press on Academy's Workshop & offline summary can move the dia
 before mouseup, leaving the disclosure closed. Native keyboard Enter opens it.
 The observer uses and records that keyboard route; it does **not** claim the first
 pointer interaction has passed. Simulator/UI follow-up and device checks remain necessary.
+This controlled fixture predates the later October 14 SIM world-catalogue/shared-worker
+changes and is only an observer-adapter diagnostic, not current runtime qualification.
+
+A refreshed, unpublished fixture built from baseline
+`caab4312e42d9193faa3a0450aaba015b3c6ae5e` completed all eight checkpoints on Chrome
+155.0.8059.40 on October 14. Its own frozen commit is
+`7997fd5c1144bfa9ae5922a9c619b44644c4cab9`; only copied password metadata and the
+development version were changed for ordinary-form test access. All three apps
+prepared, all four open tabs/windows closed, the uncached network probe failed,
+and all three launchers reopened offline both in tabs and installed standalone
+windows. Profile-library and proof exports remained byte-identical through the
+same-payload path update, rejected damaged dependency, rollback and scoped gym
+removal. No page errors occurred; observer/helper hashes remained unchanged and
+all test applications/profile were removed successfully.
+
+This is a passing **controlled observer regression**, not qualification of the
+unchanged release candidate, distinct-version schema migration, a browser-process
+restart, physical input or public deployment. Real-package qualification still
+requires authorized access and the release's original frozen bytes. The first
+pointer interactions described above remain unqualified; the passing run records
+native keyboard transfer actions explicitly.
 
 Gameplay offline checks run in the browser tab; standalone windows additionally
 verify the apps' mounted start screens and coexistence. A passing report requires browser preparation,

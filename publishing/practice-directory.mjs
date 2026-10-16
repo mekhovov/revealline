@@ -6,7 +6,7 @@ const escape = (value) =>
   );
 const bilingual = (tag, en, uk) =>
   `<${tag} data-en="${escape(en)}" data-uk="${escape(uk)}">${escape(en)}</${tag}>`;
-export const PRACTICE_DIRECTORY_SCRIPT = `const select=document.getElementById('locale'); select.value=new URL(location.href).searchParams.get('lang')==='uk'?'uk':'en'; function render(){const lang=select.value==='uk'?'uk':'en';document.documentElement.lang=lang;for(const node of document.querySelectorAll('[data-en]'))node.textContent=node.dataset[lang];for(const link of document.querySelectorAll('[data-launch]')){const url=new URL(link.href);url.searchParams.set('lang',lang);link.href=url.href;}}select.onchange=render;render();\n(${mountPracticeNavigation.toString()})();\n`;
+export const PRACTICE_DIRECTORY_SCRIPT = `const select=document.getElementById('locale'); select.value=new URL(location.href).searchParams.get('lang')==='uk'?'uk':'en'; function render(){const lang=select.value==='uk'?'uk':'en';document.documentElement.lang=lang;for(const node of document.querySelectorAll('[data-en]'))node.textContent=node.dataset[lang];for(const link of document.querySelectorAll('[data-launch], [data-locale]')){const url=new URL(link.href);url.searchParams.set('lang',lang);link.href=url.href;}}select.onchange=render;render();\n(${mountPracticeNavigation.toString()})();\n`;
 
 /** Lightweight metadata only. No simulator modules or installation side effects. */
 export function practiceDirectoryHTML(packages, details) {
@@ -22,7 +22,7 @@ ${bilingual('p', 'Choose a practice app. No unlocks, installation, or campaign p
     })
     .join('')}</main>
 ${packages.length ? '' : `<div class="notice">${bilingual('p', 'No reviewed packages are selected on this host yet. You can still use the existing FPV flight simulator shortcut in the main game.', 'На цьому сайті ще не вибрано перевірених пакетів. Скористайтеся наявним ярликом симулятора FPV в основній грі.')}</div>`}
-<nav><a href="../game/" data-en="Main game / FPV shortcut" data-uk="Основна гра / ярлик FPV">Main game / FPV shortcut</a> <a href="../optional-practice/civilian-fpv/guide.html" data-en="Player guide" data-uk="Посібник гравця">Player guide</a></nav>
+<nav><a data-locale href="../game/" data-en="Main game / FPV shortcut" data-uk="Основна гра / ярлик FPV">Main game / FPV shortcut</a> <a data-locale href="../optional-practice/civilian-fpv/guide.html" data-en="Player guide" data-uk="Посібник гравця">Player guide</a></nav>
 ${bilingual('p', '.rlpack files add content inside World Studio. They are not executable packages for this directory.', 'Файли .rlpack додають контент усередині World Studio. Це не виконувані пакети каталогу.')}
 <script type="module" src="./directory.mjs"></script></body></html>\n`;
 }

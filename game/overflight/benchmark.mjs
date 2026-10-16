@@ -36,6 +36,21 @@ export const OVERFLIGHT_BENCHMARK_PROTOCOL = Object.freeze({
   repetitions: 3,
 });
 
+/** Late timing is an explicit, finite earned-build review option, never a seek. */
+export function overflightBenchmarkMeasureAt(params, { fixture = null, reviewBuild = null } = {}) {
+  if (
+    fixture ||
+    !reviewBuild ||
+    params.get('benchmark') !== '1' ||
+    !['1', '2', '3'].includes(params.get('trial'))
+  )
+    return null;
+  const value = params.get('measureAt');
+  if (typeof value !== 'string' || !/^(?:0|[1-9]\d*)(?:\.\d+)?$/.test(value)) return null;
+  const seconds = Number(value);
+  return Number.isFinite(seconds) && seconds <= 360 ? seconds : null;
+}
+
 function distribution(values) {
   if (!values.length) return { samples: 0, p50: null, p95: null, p99: null, worst: null };
   const sorted = [...values].sort((a, b) => a - b);
@@ -49,15 +64,19 @@ function distribution(values) {
   };
 }
 
+const renderPhaseNames = ['playing', 'upgrade', 'other'];
+
 /** Raw render cadence and CPU submission are deliberately distinct. Long
- * foreground intervals are retained. Only known lifecycle/modal gaps rebase
- * sampling; an overloaded foreground frame is never trimmed as an outlier. */
+ * foreground intervals, including ordinary upgrade drafts, are retained. Only
+ * known lifecycle/manual-pause gaps rebase sampling and invalidate an unfinished
+ * trial; an overloaded foreground frame is never trimmed as an outlier. */
 export function createOverflightBenchmark({
   capacity = 120000,
   warmupSeconds = 30,
   measurementSeconds = 120,
   repetitions = 3,
   stopAtEnd = false,
+  measureAt = null,
 } = {}) {
   if (!Number.isInteger(capacity) || capacity < 2) throw new RangeError('Invalid sample capacity.');
   if (
@@ -69,11 +88,14 @@ export function createOverflightBenchmark({
     repetitions > 10
   )
     throw new RangeError('Invalid benchmark protocol.');
+  if (measureAt !== null && (!Number.isFinite(measureAt) || measureAt < 0 || measureAt > 360))
+    throw new RangeError('Invalid benchmark gameplay start.');
   const cadence = new Float64Array(capacity),
     submission = new Float64Array(capacity);
   const frameTimes = new Float64Array(capacity),
     submissionTimes = new Float64Array(capacity),
-    windows = new Int16Array(capacity).fill(-1);
+    windows = new Int16Array(capacity).fill(-1),
+    renderPhases = new Uint8Array(capacity);
   const windowCounts = new Uint32Array(repetitions);
   let count = 0,
     cpuCount = 0,
@@ -88,20 +110,37 @@ export function createOverflightBenchmark({
   const exclusions = {},
     highWater = { alive: 0, visible: 0, rendered: 0, effects: 0, pickups: 0 };
   const invalidReasons = new Set();
+  let armed = measureAt === null,
+    attemptStarted = false,
+    actualStart = null,
+    measurementStart = null;
   const complete = () => elapsed / 1000 >= warmupSeconds + measurementSeconds * repetitions;
   return {
     complete,
-    frame(nowMs, active = true) {
+    frame(nowMs, active = true, phase = 'playing', gameplaySeconds = null) {
       if (!Number.isFinite(nowMs)) return;
       if (stopAtEnd && complete()) return;
-      if (!active && enabled && count > 0 && !complete()) invalidReasons.add('interrupted');
-      if (enabled && active && previous !== null && nowMs > previous) {
+      if (active) attemptStarted = true;
+      if (
+        !active &&
+        ((enabled && count > 0) || (measureAt !== null && attemptStarted)) &&
+        !complete()
+      )
+        invalidReasons.add('interrupted');
+      if (!armed && active && Number.isFinite(gameplaySeconds) && gameplaySeconds >= measureAt) {
+        armed = true;
+        actualStart = gameplaySeconds;
+      }
+      if (armed && enabled && active && previous !== null && nowMs > previous) {
         const delta = nowMs - previous;
         const at = count % capacity;
         cadence[at] = delta;
         frameTimes[at] = nowMs;
+        renderPhases[at] = phase === 'playing' ? 0 : phase === 'upgrade' ? 1 : 2;
         const window = Math.floor((elapsed / 1000 - warmupSeconds) / measurementSeconds);
         windows[at] = window >= 0 && window < repetitions ? window : -1;
+        if (windows[at] >= 0 && measurementStart === null && Number.isFinite(gameplaySeconds))
+          measurementStart = gameplaySeconds;
         if (windows[at] >= 0) windowCounts[windows[at]]++;
         count++;
         total++;
@@ -115,12 +154,13 @@ export function createOverflightBenchmark({
     },
     exclude(reason) {
       exclusions[reason] = (exclusions[reason] ?? 0) + 1;
-      if (count > 0 && !complete()) invalidReasons.add(reason);
+      if ((count > 0 || (measureAt !== null && attemptStarted)) && !complete())
+        invalidReasons.add(reason);
       previous = null;
       enabled = false;
     },
     submission(ms, nowMs = 0) {
-      if (!Number.isFinite(ms) || ms < 0) return;
+      if (!armed || !Number.isFinite(ms) || ms < 0) return;
       submission[cpuCount % capacity] = ms;
       submissionTimes[cpuCount % capacity] = nowMs;
       cpuCount++;
@@ -134,7 +174,16 @@ export function createOverflightBenchmark({
       const retained = Math.min(count, capacity);
       const reports = Array.from({ length: repetitions }, (_, index) => {
         const samples = [];
-        for (let at = 0; at < retained; at++) if (windows[at] === index) samples.push(cadence[at]);
+        const phaseCoverage = Object.fromEntries(
+          renderPhaseNames.map((phase) => [phase, { samples: 0, seconds: 0 }]),
+        );
+        for (let at = 0; at < retained; at++)
+          if (windows[at] === index) {
+            samples.push(cadence[at]);
+            const coverage = phaseCoverage[renderPhaseNames[renderPhases[at]]];
+            coverage.samples++;
+            coverage.seconds += cadence[at] / 1000;
+          }
         const measuredMs = samples.reduce((sum, ms) => sum + ms, 0);
         const cadenceMs = distribution(samples);
         const cadenceHz = measuredMs > 0 ? (samples.length * 1000) / measuredMs : null;
@@ -149,6 +198,7 @@ export function createOverflightBenchmark({
           index: index + 1,
           complete,
           measuredSeconds: measuredMs / 1000,
+          phaseCoverage,
           cadenceMs,
           cadenceHz,
           slowFraction,
@@ -184,6 +234,24 @@ export function createOverflightBenchmark({
           warmupSeconds,
           measurementSeconds,
           repetitions,
+          ...(measureAt !== null
+            ? {
+                scheduledStart: {
+                  requestedGameplaySeconds: measureAt,
+                  actualGameplaySeconds: actualStart,
+                  measurementGameplaySeconds: measurementStart,
+                  pending: !armed,
+                  semantics:
+                    'Warm-up arms at the first completed active render reaching the requested earned gameplay time. Its preceding foreground interval is retained whole, including threshold-crossing stalls. Earlier lifecycle and simulation-clock failures remain invalidating.',
+                  highWaterScope:
+                    'Population high-water marks cover the whole attempt, including pre-arm play. Use the gameplay-time resourceSamples for the late population timeline.',
+                },
+              }
+            : {}),
+          renderClock:
+            'Foreground rendering continues through ordinary upgrade drafts; draft wall-time is included while the simulation is paused.',
+          phaseAttribution:
+            'Intervals are labelled by the run phase at completed render; transition intervals include work leading into that phase.',
           windows: reports,
           acceptance: reports.every((report) => report.complete)
             ? invalidReasons.size === 0 &&
@@ -201,6 +269,7 @@ export function createOverflightBenchmark({
             endMs: frameTimes[at],
             intervalMs: cadence[at],
             window: windows[at] < 0 ? null : windows[at] + 1,
+            phase: renderPhaseNames[renderPhases[at]],
           };
         });
         result.rawSubmission = Array.from({ length: Math.min(cpuCount, capacity) }, (_, index) => {

@@ -85,6 +85,76 @@ test('launcher health detects eviction without fetching and repair verifies only
   assert.equal(requests.length, 4);
 });
 
+test('returning from an updater uses the cached launcher while update resources stay network-only', async () => {
+  const template = await readFile(
+    new URL('../offline/app-worker.template.js', import.meta.url),
+    'utf8',
+  );
+  for (const scope of ['https://game.example/app/', 'https://game.example/revealline/app/']) {
+    const config = {
+        id: 'return-navigation',
+        files: [{ path: 'index.html' }, { path: 'app.mjs' }],
+      },
+      handlers = new Map(),
+      caches = memoryCaches(),
+      requests = [];
+    let unavailable = '503';
+    const cache = await caches.open(
+      `revealline-launcher:${encodeURIComponent(scope)}:${config.id}`,
+    );
+    await cache.put(new URL('index.html', scope).href, new Response('cached launcher'));
+    await cache.put(new URL('app.mjs', scope).href, new Response('cached script'));
+    vm.runInNewContext(template.replace('__REVEALLINE_LAUNCHER_CONFIG__', JSON.stringify(config)), {
+      self: {
+        registration: { scope },
+        clients: { get: async () => ({ url: new URL('update.html?check=1', scope).href }) },
+        addEventListener: (type, handler) => handlers.set(type, handler),
+      },
+      caches,
+      URL,
+      fetch: async (request, options) => {
+        requests.push({ url: request.url, cache: options?.cache });
+        if (unavailable === 'throw') throw new TypeError('Network unavailable');
+        return new Response('Origin unavailable', { status: 503 });
+      },
+    });
+    const request = (relative, mode) => {
+      let response;
+      handlers.get('fetch')({
+        clientId: 'updater',
+        request: { url: new URL(relative, scope).href, method: 'GET', mode },
+        respondWith: (value) => {
+          response = value;
+        },
+      });
+      return response;
+    };
+    for (unavailable of ['503', 'throw'])
+      for (const route of ['./?manage', 'index.html?manage']) {
+        const response = await request(route, 'navigate');
+        assert.equal(response.status, 200);
+        assert.equal(await response.text(), 'cached launcher');
+      }
+    assert.equal(requests.length, 0, 'Returning to a prepared launcher needs no origin request.');
+    unavailable = '503';
+    for (const [route, mode] of [
+      ['update.html?check=2', 'navigate'],
+      ['app.mjs', 'cors'],
+      ['index.html', 'cors'],
+      ['../game/overflight/app.mjs', 'cors'],
+      ['other.html', 'navigate'],
+    ]) {
+      assert.equal((await request(route, mode)).status, 503);
+      assert.equal(requests.at(-1).cache, 'no-store');
+    }
+    assert.equal(
+      requests.length,
+      5,
+      'Updater documents and imported resources never use old bytes.',
+    );
+  }
+});
+
 test('installed launch preserves only opted-in controller diagnostics and its selected edition', async () => {
   const source = (await readFile(new URL('../offline/app.mjs', import.meta.url), 'utf8'))
     .replace(/import \{[\s\S]*?\} from '\.\/installed-app\.mjs';/, '')

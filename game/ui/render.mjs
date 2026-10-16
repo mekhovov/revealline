@@ -1,4 +1,10 @@
 import { createActorDefeatPresentation } from './actor-defeat-presentation.mjs';
+import {
+  sharedBattlefieldGround,
+  createBattlefieldGroundSurface,
+  battlefieldGroundAllowed,
+  paintBattlefieldGroundSpan,
+} from '../presentation/battlefield-ground.mjs';
 import { requireAcceptedAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { canvasInterfaceFonts } from '../presentation/theme-system.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
@@ -142,6 +148,7 @@ export class BoardPainter {
     } = {},
   ) {
     this.presets = presets;
+    this.battlefieldGround = createBattlefieldGroundSurface();
     this.onAsset = onAsset;
     this.onAssetStatus = onAssetStatus;
     this.lookWarning = '';
@@ -175,6 +182,7 @@ export class BoardPainter {
     this.signalReception = createSignalReception({ canvasFactory: signalCanvasFactory });
   }
   dispose() {
+    this.battlefieldGround.clear();
     this.arcadeAdapter.clear();
     // Retired scenes cannot adopt a late decode or retain shared enemy leases.
     ++this.loadToken;
@@ -722,6 +730,16 @@ export class BoardPainter {
     }
     ctx.restore();
     if (!fullReveal || revealAlpha > 0) {
+      const ground = this.battlefieldGround.prepare(
+        sharedBattlefieldGround().snapshot().world,
+        W,
+        H,
+        battlefieldGroundAllowed({
+          environmentPin: this.acceptedAttemptAppearance?.environmentPin,
+          presentation: this.presentation,
+          overrides: this.overrides,
+        }),
+      );
       ctx.fillStyle = this.theme.coverColor ?? '#000000';
       ctx.globalAlpha = revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
@@ -731,7 +749,19 @@ export class BoardPainter {
           const covered = x < columns && state.cells[y * columns + x] === 0;
           if (covered && start < 0) start = x;
           if (!covered && start >= 0) {
-            ctx.fillRect(start * CELL, y * CELL, (x - start) * CELL, CELL);
+            if (
+              !paintBattlefieldGroundSpan(
+                ctx,
+                ground,
+                start * CELL,
+                y * CELL,
+                (x - start) * CELL,
+                CELL,
+                W,
+                H,
+              )
+            )
+              ctx.fillRect(start * CELL, y * CELL, (x - start) * CELL, CELL);
             start = -1;
           }
         }

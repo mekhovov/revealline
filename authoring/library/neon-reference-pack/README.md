@@ -51,7 +51,9 @@ The sixteen original layouts, in submission order:
 The separate [Words & Symbols pack](../neon-mosaic/README.md) contains 38 varied arenas and its own preview gallery.
 
 Open the main game's **Missions** catalog and search **Neon Reference Pack**.
-All sixteen levels are bundled and available offline in Solo and Versus. They also
+All sixteen levels are published in the downloadable pack for Solo and Versus.
+Install the pack while online before relying on offline play; the initial core
+download does not include this pack's paintings. They also
 have a pack selector entry and a launch card on the About page. The catalog's
 Current rules edition is projected by the existing Classic adapter; original
 authored rules remain available in Archive.
@@ -71,7 +73,10 @@ Enemy types are matched to existing behaviors using appearance and trails;
 speeds, lives and coverage goals are authored defaults because still images do
 not establish them. See each level's README for specific projection choices.
 Earlier checks for the first four levels cover source reproduction, import, discovery, opening captures and replay.
-Full-clear balance, device qualification and public deployment are unverified.
+The playable pack and its artwork were published with PR #883. Review-page
+publication and current moving-enemy route evidence are tracked separately in
+`docs/qualification/neon-level-completion/README.md`. Full human balance and
+physical-device approval must not be inferred from a geometry audit.
 
 Ukrainian localization is deferred. Neon entries currently display English in both
 locales; matching placeholder keys preserve the existing catalog contract. Further

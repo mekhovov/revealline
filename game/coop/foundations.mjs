@@ -17,6 +17,7 @@ import {
   TEAM_RUNNING_PACK_VERSION,
 } from './running-enemies.mjs';
 import { compileMapGeometry } from '../content-design/map.mjs';
+import { EXPEDITION_LEVEL, EXPEDITION_PACK, EXPEDITION_RULESET } from './expedition-version.mjs';
 import {
   TEAM_SNAKE_LEVEL_VERSION,
   TEAM_SNAKE_RULESET,
@@ -47,6 +48,7 @@ export const COOP_HUNT_RULESET = 'revealline-coop.v10';
 export const COOP_HUNT_PACK_VERSION = 'revealline-coop-pack.v8';
 
 const editions = Object.freeze({
+  [EXPEDITION_LEVEL]: Object.freeze({ version: EXPEDITION_PACK, ruleset: EXPEDITION_RULESET }),
   [TEAM_PURSUIT_V2_LEVEL_VERSION]: Object.freeze({
     version: TEAM_PURSUIT_V2_PACK_VERSION,
     ruleset: TEAM_PURSUIT_V2_RULESET,

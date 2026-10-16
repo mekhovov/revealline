@@ -1613,6 +1613,9 @@
   .coop-launch-actions > button {
     width: 100%;
   }
+  .coop-launch-actions > #coop-picture-preparation .coop-picture-actions {
+    display: grid;
+  }
   .coop-launch-actions .objective {
     margin: 0;
     padding: 0 0 8px;

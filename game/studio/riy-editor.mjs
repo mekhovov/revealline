@@ -7,7 +7,7 @@ import {
 
 /** Escort authoring is an additional section of the existing Survivor editor. */
 export function overflightRiyEditor({ document, project, locale, onChange }) {
-  const v2 = project.format === 'OverflightRiyProjectV2';
+  const v2 = ['OverflightRiyProjectV2', 'OverflightRiyProjectV3'].includes(project.format);
   const words = (en, uk) => (locale === 'uk' ? uk : en);
   const root = document.createElement('fieldset');
   const legend = document.createElement('legend');
