@@ -113,11 +113,12 @@ function scope(page, options, report) {
       'Imported-world page navigated away.',
     );
   };
-  async function run(action, { cleanup = false } = {}) {
+  async function run(action, { cleanup = false, timeoutMs = 8000 } = {}) {
+    assert(Number.isFinite(timeoutMs) && timeoutMs > 0 && timeoutMs <= 8000);
     if (!cleanup) check();
     const limit = cleanup
       ? cleanupMs
-      : Math.min(8000, end - performance.now(), deadlineAt - Date.now());
+      : Math.min(timeoutMs, end - performance.now(), deadlineAt - Date.now());
     assert(limit > 0);
     const operationEnd = performance.now() + limit;
     let timer, listener;
@@ -434,8 +435,10 @@ export async function flyRetainedC4WorldOffline(page, options) {
       await g.run(() => page.waitForTimeout(100));
     }
     await g.run(() => page.locator('#world-viewport').click({ timeout: 8000 }));
-    const sample = async () => {
-      const value = parseImportedWorldHUD(await g.run(() => page.evaluate(readImportedWorldDOM)));
+    const sample = async (timeoutMs = 8000) => {
+      const value = parseImportedWorldHUD(
+        await g.run(() => page.evaluate(readImportedWorldDOM), { timeoutMs }),
+      );
       assert(receipt.samples.length < 200);
       receipt.samples.push(value);
       return value;
@@ -458,9 +461,27 @@ export async function flyRetainedC4WorldOffline(page, options) {
     }
     await g.run(() => page.keyboard.press('Space'));
     receipt.explicitPause = true;
-    receipt.paused = [];
-    for (let i = 0; i < 4; i++) {
-      if (i) await g.run(() => page.waitForTimeout(210));
+    // The native pause action updates the model immediately, but the public
+    // flight-state attribute is painted on a later frame. Keep that transition
+    // separate from the four stable paused observations; never retry Space.
+    const pauseStarted = performance.now(),
+      pauseEnd = pauseStarted + 1500;
+    receipt.pauseTransition = { limitMs: 1500, observations: [], passed: false };
+    let paused;
+    for (;;) {
+      assert(performance.now() < pauseEnd, 'Native paused HUD did not arrive in time.');
+      paused = await sample(pauseEnd - performance.now());
+      receipt.pauseTransition.observations.push(paused);
+      assert(performance.now() < pauseEnd, 'Native paused HUD arrived after its deadline.');
+      assert(['active', 'paused'].includes(paused.phase), 'Unexpected native pause transition.');
+      if (paused.phase === 'paused') break;
+      await g.run(() => page.waitForTimeout(50), { timeoutMs: pauseEnd - performance.now() });
+    }
+    receipt.pauseTransition.elapsedMs = performance.now() - pauseStarted;
+    receipt.pauseTransition.passed = true;
+    receipt.paused = [paused];
+    for (let i = 1; i < 4; i++) {
+      await g.run(() => page.waitForTimeout(210));
       receipt.paused.push(await sample());
     }
     receipt.acceptance = assertC4OfflineFlight(receipt);
