@@ -18,230 +18,98 @@
     "--test-reporter=tap",
     "selectedTestPath"
   ],
-  "format": "SoloNewResourceDiagnosticPairManifestV1",
-  "purpose": "Two exact-source paired diagnostic copies: selected large-buffer deep equality and selected Couch DOM/binding identity. No production or expected authority changes.",
+  "format": "SoloMissingBaselineAndCanonicalDeviceV1",
+  "purpose": "Six missing exact original-main baseline comparisons plus the corrected complete canonical device fixture after historical observer closure.",
   "entries": [
     {
-      "label": "baseline",
-      "case": "field-kit-retained-runtime",
-      "mode": "selected-deep-bytes",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/field-kit-retained-runtime.test.mjs",
-      "testSHA256": "a04d4f8c5a646fa7858ade933fce292847904f8fd2d788a28b4aa2308a718f41",
-      "bytes": 19913,
-      "selectedBytesOverlay": {
-        "diagnosticSHA256": "9eb05564d95532da870a3aea5598abc6e9949e33750271f50ad169e9265d66a4",
-        "selectedCallReplacements": [
-          {
-            "line": 395,
-            "before": "  assert.deepEqual(files.get(`runtime.${pin58.sha256}.json`), original58);\n",
-            "after": "  boundedBytesEqual(files.get(`runtime.${pin58.sha256}.json`), original58);\n"
-          },
-          {
-            "line": 407,
-            "before": "  assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));\n",
-            "after": "  boundedBytesEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));\n"
-          },
-          {
-            "line": 408,
-            "before": "  assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));\n",
-            "after": "  boundedBytesEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));\n"
-          },
-          {
-            "line": 409,
-            "before": "  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));\n",
-            "after": "  boundedBytesEqual(files.get('runtime.json'), await read(pinRadio102.path));\n"
-          },
-          {
-            "line": 450,
-            "before": "    assert.deepEqual(retained, original);\n",
-            "after": "    boundedBytesEqual(retained, original);\n"
-          }
-        ],
-        "helperInsertion": {
-          "after": "import assert from 'node:assert/strict';\n",
-          "source": "import { isDeepStrictEqual } from 'node:util';\n// Diagnostic copy only: preserve deep strict equality without an unbounded byte diff.\nfunction boundedBytesEqual(actual, expected, message) {\n  if (isDeepStrictEqual(actual, expected)) return;\n  const label = (value) => {\n    if (value instanceof Uint8Array)\n      return value.constructor.name + '(' + value.byteLength + ' bytes, sha256=' +\n        createHash('sha256').update(value).digest('hex') + ')';\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    return typeof value;\n  };\n  assert.ok(false, (message ?? 'Deep strict byte mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
-        }
-      }
-    },
-    {
       "label": "candidate",
-      "case": "field-kit-retained-runtime",
-      "mode": "selected-deep-bytes",
-      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
-      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
-      "file": "game/test/field-kit-retained-runtime.test.mjs",
-      "testSHA256": "a04d4f8c5a646fa7858ade933fce292847904f8fd2d788a28b4aa2308a718f41",
-      "bytes": 19913,
-      "selectedBytesOverlay": {
-        "diagnosticSHA256": "9eb05564d95532da870a3aea5598abc6e9949e33750271f50ad169e9265d66a4",
-        "selectedCallReplacements": [
-          {
-            "line": 395,
-            "before": "  assert.deepEqual(files.get(`runtime.${pin58.sha256}.json`), original58);\n",
-            "after": "  boundedBytesEqual(files.get(`runtime.${pin58.sha256}.json`), original58);\n"
-          },
-          {
-            "line": 407,
-            "before": "  assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));\n",
-            "after": "  boundedBytesEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));\n"
-          },
-          {
-            "line": 408,
-            "before": "  assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));\n",
-            "after": "  boundedBytesEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));\n"
-          },
-          {
-            "line": 409,
-            "before": "  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));\n",
-            "after": "  boundedBytesEqual(files.get('runtime.json'), await read(pinRadio102.path));\n"
-          },
-          {
-            "line": 450,
-            "before": "    assert.deepEqual(retained, original);\n",
-            "after": "    boundedBytesEqual(retained, original);\n"
-          }
-        ],
-        "helperInsertion": {
-          "after": "import assert from 'node:assert/strict';\n",
-          "source": "import { isDeepStrictEqual } from 'node:util';\n// Diagnostic copy only: preserve deep strict equality without an unbounded byte diff.\nfunction boundedBytesEqual(actual, expected, message) {\n  if (isDeepStrictEqual(actual, expected)) return;\n  const label = (value) => {\n    if (value instanceof Uint8Array)\n      return value.constructor.name + '(' + value.byteLength + ' bytes, sha256=' +\n        createHash('sha256').update(value).digest('hex') + ')';\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    return typeof value;\n  };\n  assert.ok(false, (message ?? 'Deep strict byte mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
-        }
-      }
+      "case": "device-controls-host",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "game/test/device-controls-host.test.mjs",
+      "testSHA256": "cc41ce2bd886ae0b9a6105e198b38258a293464cbf8f3c69e44d8672ac346883",
+      "bytes": 32370
     },
     {
       "label": "baseline",
-      "case": "couch-installed-chapters",
-      "mode": "selected-object-identity",
+      "case": "journey-owned-controls",
+      "mode": "original",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/couch-installed-chapters.test.mjs",
-      "testSHA256": "a1ab1d26c3d4868ef1d8ec39eee85bb27ab87f6951fc600da52e6e93fcc97283",
-      "bytes": 55922,
-      "selectedIdentityOverlay": {
-        "diagnosticSHA256": "0b62b699d503daef760a050d2202c1d56c90322389d37834685ace5298b268b5",
-        "selectedCallReplacements": [
-          {
-            "line": 832,
-            "before": "  assert.equal(binding, page.drawOptions[1].backdrop);\n",
-            "after": "  boundedIdentity(binding, page.drawOptions[1].backdrop);\n"
-          },
-          {
-            "line": 853,
-            "before": "  assert.equal(page.drawOptions[0].backdrop, binding);\n",
-            "after": "  boundedIdentity(page.drawOptions[0].backdrop, binding);\n"
-          },
-          {
-            "line": 856,
-            "before": "  assert.equal(page.drawOptions[1].backdrop, binding);\n",
-            "after": "  boundedIdentity(page.drawOptions[1].backdrop, binding);\n"
-          },
-          {
-            "line": 868,
-            "before": "  assert.equal(page.doc.activeElement, refresh);\n",
-            "after": "  boundedIdentity(page.doc.activeElement, refresh);\n"
-          },
-          {
-            "line": 885,
-            "before": "  assert.equal(page.$('race-preparation').closest('[hidden]'), null);\n",
-            "after": "  boundedIdentity(page.$('race-preparation').closest('[hidden]'), null);\n"
-          },
-          {
-            "line": 886,
-            "before": "  assert.equal(page.$('race-preparation').closest('[inert]'), null);\n",
-            "after": "  boundedIdentity(page.$('race-preparation').closest('[inert]'), null);\n"
-          },
-          {
-            "line": 900,
-            "before": "  assert.equal(page.doc.activeElement, page.$('race-start'));\n",
-            "after": "  boundedIdentity(page.doc.activeElement, page.$('race-start'));\n"
-          },
-          {
-            "line": 918,
-            "before": "  assert.equal(\n",
-            "after": "  boundedIdentity(\n"
-          },
-          {
-            "line": 938,
-            "before": "  assert.equal(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');\n",
-            "after": "  boundedIdentity(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');\n"
-          }
-        ],
-        "helperInsertion": {
-          "after": "import assert from 'node:assert/strict';\n",
-          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
-        }
-      }
+      "file": "game/test/journey-owned-controls.test.mjs",
+      "testSHA256": "7ef79f50e1c89329a45d7a5709bd4b50d28b51b8f0b3b4dbfaf39034c12efa2e",
+      "bytes": 5375
     },
     {
-      "label": "candidate",
-      "case": "couch-installed-chapters",
-      "mode": "selected-object-identity",
-      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
-      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
-      "file": "game/test/couch-installed-chapters.test.mjs",
-      "testSHA256": "a1ab1d26c3d4868ef1d8ec39eee85bb27ab87f6951fc600da52e6e93fcc97283",
-      "bytes": 55922,
-      "selectedIdentityOverlay": {
-        "diagnosticSHA256": "0b62b699d503daef760a050d2202c1d56c90322389d37834685ace5298b268b5",
-        "selectedCallReplacements": [
-          {
-            "line": 832,
-            "before": "  assert.equal(binding, page.drawOptions[1].backdrop);\n",
-            "after": "  boundedIdentity(binding, page.drawOptions[1].backdrop);\n"
-          },
-          {
-            "line": 853,
-            "before": "  assert.equal(page.drawOptions[0].backdrop, binding);\n",
-            "after": "  boundedIdentity(page.drawOptions[0].backdrop, binding);\n"
-          },
-          {
-            "line": 856,
-            "before": "  assert.equal(page.drawOptions[1].backdrop, binding);\n",
-            "after": "  boundedIdentity(page.drawOptions[1].backdrop, binding);\n"
-          },
-          {
-            "line": 868,
-            "before": "  assert.equal(page.doc.activeElement, refresh);\n",
-            "after": "  boundedIdentity(page.doc.activeElement, refresh);\n"
-          },
-          {
-            "line": 885,
-            "before": "  assert.equal(page.$('race-preparation').closest('[hidden]'), null);\n",
-            "after": "  boundedIdentity(page.$('race-preparation').closest('[hidden]'), null);\n"
-          },
-          {
-            "line": 886,
-            "before": "  assert.equal(page.$('race-preparation').closest('[inert]'), null);\n",
-            "after": "  boundedIdentity(page.$('race-preparation').closest('[inert]'), null);\n"
-          },
-          {
-            "line": 900,
-            "before": "  assert.equal(page.doc.activeElement, page.$('race-start'));\n",
-            "after": "  boundedIdentity(page.doc.activeElement, page.$('race-start'));\n"
-          },
-          {
-            "line": 918,
-            "before": "  assert.equal(\n",
-            "after": "  boundedIdentity(\n"
-          },
-          {
-            "line": 938,
-            "before": "  assert.equal(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');\n",
-            "after": "  boundedIdentity(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');\n"
-          }
-        ],
-        "helperInsertion": {
-          "after": "import assert from 'node:assert/strict';\n",
-          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
-        }
-      }
+      "label": "baseline",
+      "case": "key-capture-navigation-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/key-capture-navigation-host.test.mjs",
+      "testSHA256": "70c293f92e4f6e58d3836aed8eaecd8d140960737c8957c8b1a468258702696f",
+      "bytes": 5886
+    },
+    {
+      "label": "baseline",
+      "case": "mission-library-solo-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/mission-library-solo-host.test.mjs",
+      "testSHA256": "8a7801ab3b62613a45fb9fd78224933a4075b5cafc89d1dd474f03c89e267d46",
+      "bytes": 25426
+    },
+    {
+      "label": "baseline",
+      "case": "mission-library-team-return-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/mission-library-team-return-host.test.mjs",
+      "testSHA256": "e39412d6735f5407733efc38534a6cc89a82328e028249787ae245b164e2533a",
+      "bytes": 10772
+    },
+    {
+      "label": "baseline",
+      "case": "mission-library-versus-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/mission-library-versus-host.test.mjs",
+      "testSHA256": "5ff01b24d80e9d4d869d0717452b0b117e70ebbd6b6dabc41e27a113af3faae3",
+      "bytes": 26716
+    },
+    {
+      "label": "baseline",
+      "case": "team-pressure-opening-routes",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/team-pressure-opening-routes.test.mjs",
+      "testSHA256": "ccbe7d7e10577d4b305c4a621ffb4f7e3e411c1d11a56ce17f4f7abed268d887",
+      "bytes": 4505
     }
   ],
-  "scope": "Diagnostic copies grant no canonical inventory credit. Original interrupted/resource-incomplete attempts remain unchanged. Complete guarded executions only reveal assertions they reach, not proof of all possible memory owners.",
+  "scope": "Complete failures remain failures. Baseline observations classify only matching named assertions. Historical device observer remains a separate diagnostic outcome and gains no canonical coverage. No assertion, production authority, internal deadline or resource-boundary changes.",
   "priorEvidence": {
-    "runId": 38898131413,
-    "proofPath": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/retained-recovery-1323.json",
-    "proofSHA256": "bbf829b677f25b306d646d379695cd03b360c61c96311a5741102a808f1ba5e1"
+    "newSix": {
+      "path": ".cache/solo-followup/regression-audit/new-six-baseline-coverage-1410.json",
+      "sha256": "512f0f5dc84a2b1c352ab00f3dc2eeba5d75003968011dd91d712f145e0648e2"
+    },
+    "historicalDeviceObserver": {
+      "runId": 38895477339,
+      "id": 116954803137,
+      "name": "memory (historical-candidate, device-controls-host, 845e2a1e1c72ee0d2900b2974589efbf7bb35273)",
+      "status": "completed",
+      "conclusion": "failure",
+      "startedAt": "2026-10-16T11:50:59Z",
+      "completedAt": "2026-10-16T14:18:08Z",
+      "activeStep": null,
+      "scope": "Metadata establishes closure only; full artifacts await permitted retention, no failure-cause or completion-credit claim."
+    },
+    "active179Run": 38898131413,
+    "previous33Run": 38910232838
   }
 }

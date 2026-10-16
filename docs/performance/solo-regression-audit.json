@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T13:41:06.224638+00:00",
-  "status": "Incomplete repository regression inventory:1805/1948 original files have complete mixed-source observations;143 remain unobserved. Complete failures, resource stops and source-scoped supplementary proofs remain explicit.",
+  "updatedAt": "2026-10-16T15:14:07.047959+00:00",
+  "status": "Incomplete repository regression inventory:1870/1948 original files have complete mixed-source observations;78 remain unobserved. Complete failures, resource stops and source-scoped supplementary proofs remain explicit.",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
   "frozenRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
@@ -2673,13 +2673,13 @@
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
   ],
   "remoteContinuation": {
-    "checkpointAt": "2026-10-16T13:41:06.224638+00:00",
-    "currentRuntimeContext": "Verified production source8c727777; later aa88d829 contains four test-only fixture corrections. Historical observations retain their recorded runtime revisions.",
+    "checkpointAt": "2026-10-16T15:14:07.047959+00:00",
+    "currentRuntimeContext": "Verified production source8c727777; newer terminal-work corrections are in the working tree and have separate focused checks, not package or final-runtime acceptance. Historical observations retain their recorded revisions.",
     "originalInventoryFiles": 1948,
     "historicalLocalCompleteFiles": 1233,
-    "remoteUniqueCompleteFiles": 572,
-    "totalUniqueOriginalFilesObserved": 1805,
-    "originalFilesStillUnobserved": 143,
+    "remoteUniqueCompleteFiles": 637,
+    "totalUniqueOriginalFilesObserved": 1870,
+    "originalFilesStillUnobserved": 78,
     "overlap": [],
     "original715": {
       "runId": 38865274741,
@@ -2725,7 +2725,7 @@
         "sha256": "5e4a5d97303970d636d475598930545a5f40ecf99c1cedbb5bf16b6c325db1d0"
       }
     },
-    "classificationStatus": "Incomplete overall. Earlier23 baseline-file comparisons remain retained; latest31 add28 matched named failure groups and3 candidate fixture differences, now corrected and fully reobserved (setup26/26, history5/6baseline-only, Ukraine8/9baseline-only). Other pending comparisons and source-specific failures remain explicit.",
+    "classificationStatus": "Incomplete overall. Previous baseline comparisons remain retained. Latest14 canonical baseline comparisons match12 groups (two only in named random writer/session/attempt IDs); flight-preparation-status and hud-status-cues pass baseline and require candidate-specific readiness review. Fifteen newly complete failures from the179 queue, Whole spatial snapshot and other pending groups remain unclassified where proof is absent.",
     "boundedIdentityPair": {
       "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
       "bytes": 24352,
@@ -3757,9 +3757,9 @@
       "sha256": "3a0b6f5a447ee577259c32b3a858c6207eba8820fc02e1584437f4bf9133be0c"
     },
     "checkpointProof": {
-      "path": ".cache/solo-followup/regression-audit/remote-coverage-checkpoint-1044.json",
-      "bytes": 1100,
-      "sha256": "972cc066a8de4f6c3ae19ff7b6dd92f6fe52700b14b6d7531904f8b8c65af800"
+      "path": ".cache/solo-followup/regression-audit/remote-coverage-checkpoint-1515.json",
+      "bytes": 96888,
+      "sha256": "1af0dec343cb9f4daed27309561aeaa8c56833285e842dc24a3c6400c2a3b561"
     },
     "completedCombinedRun": {
       "runId": 38885848296,
@@ -4203,9 +4203,9 @@
       "scope": "Exact disjoint179+525+11 partition of original715. Dispatch is not passing or completion evidence. No duplicate coverage for earlier failures or supplementary files."
     },
     "currentAdditionsInventory": {
-      "path": ".cache/solo-followup/regression-audit/inventory-additions-1218.json",
-      "bytes": 2392,
-      "sha256": "09e7b0dd737ae4dd9f45e5d3c595d3ae0f4fa61ad192bcba8759c0c590e1e008"
+      "path": ".cache/solo-followup/regression-audit/inventory-additions-1515.json",
+      "bytes": 2825,
+      "sha256": "69f2120021a6a8afed229f53c2de1a6952faaec81ca6b8539df770b8303e57f0"
     },
     "latestSourceBoundary": {
       "revision": "2990a7d013b3ba2657de2482f326a51209769b9c",
@@ -4219,34 +4219,45 @@
     },
     "missingOnly179Latest": {
       "runId": 38898131413,
-      "workflowRevision": "b010df818d9c76e67afd071846e8454b07c262b6",
       "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
       "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
-      "completeFiles": 41,
-      "passedFiles": 27,
-      "failedFiles": 14,
-      "resourceIncompleteFiles": 7,
-      "retainedArtifacts": 58,
-      "proof": {
-        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/retained-recovery-1323.json",
-        "bytes": 136336,
-        "sha256": "bbf829b677f25b306d646d379695cd03b360c61c96311a5741102a808f1ba5e1"
-      },
-      "resourceIncompletePaths": [
+      "completeFiles": 98,
+      "passedFiles": 64,
+      "failedFiles": 34,
+      "incompleteRecords": 13,
+      "incompleteDistinctFiles": [
         "game/test/controller-practice-pause-host.test.mjs",
         "game/test/coop-host.test.mjs",
         "game/test/coop-shared-settings.test.mjs",
         "game/test/couch-encounter-help.test.mjs",
         "game/test/couch-gameplay-pressure-host.test.mjs",
         "game/test/couch-installed-chapters.test.mjs",
-        "game/test/field-kit-retained-runtime.test.mjs"
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/field-kit-retained-runtime.test.mjs",
+        "game/test/optional-chapters-navigation-host.test.mjs",
+        "game/test/settings-panels-locale-host.test.mjs",
+        "game/test/settings-restoration-host.test.mjs",
+        "game/test/shared-settings-reading.test.mjs"
       ],
-      "limits": "As-of retained checkpoint only; later running/queued jobs have no completion credit. Exact active-file mapping correction is retained separately.",
-      "liveMappingCorrection": {
-        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/live-stall-allocation-correction-01.json",
-        "bytes": 1620,
-        "sha256": "71b1053bc88cbe731d144e19211891196a3d8472d5a424c2a9786e99189ae119"
-      }
+      "uncorroboratedPartialArtifacts": [
+        {
+          "batch": 4,
+          "checkpoint": "checkpoint-5",
+          "reason": "Partial artifact lacks source-verified final outcome",
+          "artifactId": 12052614852
+        }
+      ],
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/retained-recovery-1505.json",
+        "bytes": 306815,
+        "sha256": "8eafeba768031c411a9ac1ae93579e4534b7170b431df1c77b834ecc0a8a8262"
+      },
+      "newFailureDetails": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/new-failures-1505.json",
+        "bytes": 36130,
+        "sha256": "d6d95920924c6cd009b13fbdec853535af51efc1191c08a075bc42c2d7a27f13"
+      },
+      "scope": "Historical d56/a159 missing-only queue. Complete failures remain failures;13 incomplete records include one uncorroborated partial artifact. No current live-file claim is inferred from this retained checkpoint."
     },
     "focusedCI8c": {
       "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
@@ -4514,7 +4525,7 @@
       }
     },
     "nextGuarded33Plan": {
-      "status": "Prepared, not yet committed/pushed/dispatched at this documentation checkpoint.",
+      "status": "Historical dispatch completed; exact retained outcomes are in completedGuarded33 below.",
       "manifest": "docs/performance/solo-regression-memory-diagnostic.json",
       "manifestSHA256": "a99036c794f8b37d3f69ce38757fa3f952f705d7f53451250decc2589a5d2ef0",
       "workflow": ".github/workflows/solo-regression-memory-temporary.yml",
@@ -4534,6 +4545,276 @@
         "game/test/gallery-return-host.test.mjs"
       ],
       "scope": "Three canonical repairs plus six never-launched originals; ten diagnostic targets grant no canonical coverage; fourteen exact-baseline classifications retain failures. Device canonical awaits current observer exit. Existing outer guards and max2 retained."
+    },
+    "completedGuarded33": {
+      "runId": 38910232838,
+      "workflowSourceRevision": "9fb2880ff578aa3ce423c10eb8ea7818aafbd9f7",
+      "retainedTargets": 33,
+      "retainedArtifacts": 66,
+      "integrityProblems": [],
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-guarded-38910232838/verified-results-final.json",
+        "bytes": 233162,
+        "sha256": "1ba0503e789b3d1fd37d126211dda3ade7c27b3b41ab3a789b7cfb6be3528f17"
+      },
+      "canonicalOutcomes": [
+        {
+          "case": "still-workshop-build",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 6,
+            "suites": 0,
+            "pass": 5,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 17540.09144
+          },
+          "complete": true,
+          "passed": false,
+          "tapSHA256": "94ff3f691bf1ad6729bd952990d8fb77be85ccd251bb5d576754ce0fe59c396b"
+        },
+        {
+          "case": "settings-assists-host",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 1,
+            "suites": 0,
+            "pass": 1,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 18377.756365
+          },
+          "complete": true,
+          "passed": true,
+          "tapSHA256": "fe829f54c5cca494fbf94b57e116c3d0843dff56b468f4f644cae3d3550a33fc"
+        },
+        {
+          "case": "text-size-host",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 6,
+            "suites": 0,
+            "pass": 6,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 41736.488937
+          },
+          "complete": true,
+          "passed": true,
+          "tapSHA256": "a0aaa98b71902604d97d214e4101c44f17fd6da838ba88dd5f86c2bb470f637b"
+        },
+        {
+          "case": "team-pressure-opening-routes",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 37,
+            "suites": 0,
+            "pass": 1,
+            "fail": 36,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 3102.457228
+          },
+          "complete": true,
+          "passed": false,
+          "tapSHA256": "cb065c8ffeba3914d810e280a9b6deb02752bf35d545bbcc8526db7ba90b2a29"
+        },
+        {
+          "case": "versus-continuous-next-host",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 9,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 101556.163581
+          },
+          "complete": true,
+          "passed": true,
+          "tapSHA256": "fef390d59bc7558a164c7698eb2bd8a4bada380f65e6f900a4b75cfd11452e86"
+        },
+        {
+          "case": "native-cli",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 18,
+            "suites": 0,
+            "pass": 18,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 3559.325586
+          },
+          "complete": true,
+          "passed": true,
+          "tapSHA256": "1060cea3a02e45d1c476efc67de34f4335e8500237d9983e916cc0ae9e8b0fa6"
+        },
+        {
+          "case": "fpv-content",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 2,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 693.472087
+          },
+          "complete": true,
+          "passed": true,
+          "tapSHA256": "bc16a368101269fc3bbb1727385bba2ae4d9adcb63f2f3736c49728e3955abe4"
+        },
+        {
+          "case": "practice-capacity",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 7,
+            "suites": 0,
+            "pass": 7,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1075.962678
+          },
+          "complete": true,
+          "passed": true,
+          "tapSHA256": "786493fd41d69f55117cb52ba6fd9014c7fedaee235c89506054640da16ca36e"
+        },
+        {
+          "case": "whole-spatial-snapshot",
+          "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+          "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+          "counts": {
+            "tests": 10,
+            "suites": 0,
+            "pass": 8,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 172256.196949
+          },
+          "complete": true,
+          "passed": false,
+          "tapSHA256": "b0e751b5206b38b7db484d8a8d2b4da6d9e922d3c253da578ab4f929e8cba443"
+        }
+      ],
+      "newUniqueOriginalFiles": [
+        "game/test/settings-assists-host.test.mjs",
+        "game/test/team-pressure-opening-routes.test.mjs",
+        "game/test/text-size-host.test.mjs",
+        "game/test/versus-continuous-next-host.test.mjs",
+        "scripts/native-cli.test.mjs",
+        "scripts/test-fpv-content.mjs",
+        "scripts/test-practice-capacity.mjs",
+        "scripts/test-whole-spatial-snapshot.mjs"
+      ],
+      "baselineSemanticComparison": {
+        "path": ".cache/solo-followup/regression-audit/remote-guarded-38910232838/baseline-semantic-comparison-03.json",
+        "bytes": 51654,
+        "sha256": "0b89c298bb5eed58bdf07db365a0ae29f444dbd73307d06357708a32661a3b11"
+      },
+      "candidateOnlyBaselinePassCases": [
+        "flight-preparation-status-host",
+        "hud-status-cues"
+      ],
+      "scope": "Nine complete canonical targets add eight new paths; Still Workshop was already observed. Selected-identity copies remain diagnostic only. Baseline-pass/candidate-fail cases are under separate concrete readiness review, never waived."
+    },
+    "latestBaselineClassification": {
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-guarded-38910232838/baseline-semantic-comparison-03.json",
+        "bytes": 51654,
+        "sha256": "0b89c298bb5eed58bdf07db365a0ae29f444dbd73307d06357708a32661a3b11"
+      },
+      "groupsCompared": 14,
+      "exactSemanticGroups": 10,
+      "groupsAfterNamedRandomStorageIDNormalization": 12,
+      "candidateOnlyGroups": [
+        "flight-preparation-status-host",
+        "hud-status-cues"
+      ],
+      "scope": "Fourteen complete canonical baseline comparisons. Ten byte-identical semantic groups plus two matching only named random writer/session/attempt IDs; two baseline-pass groups remain candidate-specific and owned for diagnosis. Later assertions after any failure remain unobserved."
+    },
+    "boundedFourDiagnosticPairs": {
+      "runId": 38913539736,
+      "workflowSourceRevision": "437e832768ea1e7ab5fd50bfd7766dad296a1881",
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-diagnostic-four-38913539736/verified-results-final.json",
+        "bytes": 29163,
+        "sha256": "468008ec4c2772fcebfce9e2aefc5d8dd9c24f787fc8560f9a40793ea23c4b64"
+      },
+      "comparison": {
+        "path": ".cache/solo-followup/regression-audit/remote-diagnostic-four-38913539736/paired-comparison.json",
+        "bytes": 10839,
+        "sha256": "2d8ec378f0d4d59eae7cbb2087b0c52494860a417673073594d3bd10aa464789"
+      },
+      "fieldKit": "3/8 on both exact b117 and d56; all five named semantic errors identical.",
+      "couchInstalled": "25/27 on both exact b117 and d56; both named semantic errors identical.",
+      "scope": "Truth-preserving bounded diagnostic copies finish without the original output amplification. No canonical completion credit or assertion/golden change; original incomplete attempts remain incomplete."
+    },
+    "closedDeviceObserver": {
+      "runId": 38895477339,
+      "sourceRevision": "845e2a1e1c72ee0d2900b2974589efbf7bb35273",
+      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/verified-results-final.json",
+        "bytes": 34779,
+        "sha256": "0502655b383f893a4ce712d9c09b09ca8961df729f746cf6258c3c6238ca79d5"
+      },
+      "tap": {
+        "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/historical-candidate-device-controls-host.tap",
+        "bytes": 3871,
+        "sha256": "a09958c721bc61e02c00321ab6f82212f9e78bc80acf75a91c4435e0f639ca50"
+      },
+      "elapsedSeconds": 8700.069943521,
+      "timedOut": true,
+      "complete": false,
+      "sourceIdentityVerified": true,
+      "observerReportSHA256": "da5ce54d39ffb086f1cd758ab3830e795382970b59d0e02330262406f875118f",
+      "scope": "15 printed cases do not form a complete TAP footer/normal exit. Historical candidate stopped at145minutes; no canonical credit. Exact baseline observer completed15/15. Corrected aa88 canonical is only queued in the successor."
+    },
+    "successorSeven": {
+      "status": "Prepared, not dispatched at this checkpoint; root owns commit/push.",
+      "sourceForCanonicalDevice": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "baselineSource": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "staticProof": {
+        "path": ".cache/solo-followup/regression-audit/successor-baseline-six-01/static-check.json",
+        "bytes": 743,
+        "sha256": "52b1fd3c7c0821337148fba4379b0a33a1a0f12054434fa2124883f61fc3e655"
+      },
+      "manifest": {
+        "path": "docs/performance/solo-regression-memory-diagnostic.json",
+        "bytes": 5093,
+        "sha256": "ac27b572184bed63a59d9a7231c696fb07f916563992485f701d663db5f73c1c"
+      },
+      "workflow": {
+        "path": ".github/workflows/solo-regression-memory-temporary.yml",
+        "bytes": 27801,
+        "sha256": "5f47a71ff5a1ed25ac9ae4e70d4743c6715795faf1e1146e0b2f51e9fb6fbc87"
+      },
+      "scope": "Six missing exact baseline comparisons plus corrected device canonical after historical observer closure. Max2; no overlap with33 exact source/file pairs; existing guards unchanged."
     }
   }
 }

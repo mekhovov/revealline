@@ -1,4 +1,4 @@
-name: Temporary Solo selected resource diagnostics
+name: Temporary Solo missing baselines and device fixture
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,18 +28,27 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - label: baseline
-            case: field-kit-retained-runtime
-            source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
-            case: field-kit-retained-runtime
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+            case: device-controls-host
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
           - label: baseline
-            case: couch-installed-chapters
+            case: journey-owned-controls
             source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-installed-chapters
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: key-capture-navigation-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-solo-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-team-return-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-versus-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-pressure-opening-routes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
