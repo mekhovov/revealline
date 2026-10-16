@@ -1,0 +1,236 @@
+{
+  "format": "revealline-team-duel-native-active-observations.v1",
+  "runtimeCommit": "b7f54e275b67918e734a92bc860c9380e6f591e1",
+  "runtimeTree": "746dd29079203333e58955a35d57832ecb99cae5",
+  "headAtReceipt": "5fe153256f93e37df5f5771ff535f5b9702e8794",
+  "transport": "Ordinary local development server on 127.0.0.1:8931; not a packaged build or the pinned-Git transport.",
+  "preflight": "The pre-sample check found production roots and observer unchanged from this commit; differences were confined to two tracked and one untracked game/test files.",
+  "postflight": {
+    "changedPaths": [
+      "game/test/coop-picture-host.test.mjs",
+      "game/test/helpers/coop-presentation-fixture.mjs",
+      "game/test/team-duel-studio-gameplay-host.test.mjs"
+    ],
+    "untrackedPaths": [],
+    "productionAndObserverUnchanged": true
+  },
+  "httpOriginalPins": {
+    "docs/verification/journey-performance.html": {
+      "bytes": 5721,
+      "sha256": "0bd1fcc959ca120bdf2e0d628b5511e4bdcb6a058b7dab857ae566a0d26c2491"
+    },
+    "docs/verification/journey-performance.mjs": {
+      "bytes": 33673,
+      "sha256": "5f70fcd849145d32f0d8483b2354f8bec3e5f9a8ac2201503ddf14dea115fd0d"
+    },
+    "game/couch/relay-rescue.html": {
+      "bytes": 57014,
+      "sha256": "c9855acc87aad84b11a26249ff71b92cc0480533e60bf7eeace80ed37ede8b7a"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "bytes": 289250,
+      "sha256": "e974ebd1ca83790ab7a8028e4ca5bc477e6ccf3c33cb19457d0b864e7b270342"
+    },
+    "game/couch/index.html": {
+      "bytes": 46503,
+      "sha256": "5697a4fc994d4591a8b33e8542f77d41e12c935ad89a518d5a28775e240160ea"
+    },
+    "game/couch/couch.mjs": {
+      "bytes": 207154,
+      "sha256": "468d4c3e224de29440cfcfec167dd0067530dc44b25f306d4181229130845eb8"
+    },
+    "game/couch/couch-input.mjs": {
+      "bytes": 20771,
+      "sha256": "116205f58186ae494001021853455290062b7964f4b16143622e463b07d96321"
+    },
+    "game/presentation/compiled/studio.json": {
+      "bytes": 4729041,
+      "sha256": "c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617"
+    }
+  },
+  "results": {
+    "team": {
+      "mission": "team-expedition-homecoming",
+      "scope": "active",
+      "requestedDurationMs": 120000,
+      "durationMs": 120003.5,
+      "frameIntervals": {
+        "count": 14387,
+        "medianMs": 8.299999999813735,
+        "p95Ms": 10.099999999627471,
+        "p99Ms": 11.200000000186265,
+        "maxMs": 37,
+        "over33ms": 2,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "inputs": {
+        "player1Keydowns": 15,
+        "player2Keydowns": 15,
+        "trustedKeydowns": 30,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:00",
+        "coop-coverage": "0.0%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "On reclaimed ground",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "hudAfter": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "2:00",
+        "coop-coverage": "4.9%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "On reclaimed ground",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "encounterObservationVersion": 1,
+      "newResourceEntries": 0,
+      "rawLog": "team-gentle-active-observation-2026-10-16.json",
+      "rawEventIndex": 9,
+      "activitySnapshots": 120,
+      "activityStateCounts": {
+        "coop-state-0": {
+          "Line exposed": 6,
+          "On reclaimed ground": 114
+        },
+        "coop-state-1": {
+          "Line exposed": 6,
+          "On reclaimed ground": 114
+        }
+      },
+      "encounterPhasesByPlayer": {
+        "1": [],
+        "2": []
+      },
+      "heapSampleCount": 25,
+      "heapMaximum": 69132175
+    },
+    "versus": {
+      "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/gentle",
+      "scope": "active",
+      "requestedDurationMs": 30000,
+      "durationMs": 30007.700000000186,
+      "frameIntervals": {
+        "count": 3578,
+        "medianMs": 8.299999999813735,
+        "p95Ms": 11,
+        "p99Ms": 13.100000000558794,
+        "maxMs": 33.200000000186265,
+        "over33ms": 0,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "inputs": {
+        "player1Keydowns": 9,
+        "player2Keydowns": 9,
+        "trustedKeydowns": 18,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 0.0% / 70% \u00b7 5 lives \u00b7 0 points",
+        "racer-stats-1": "2: 0.0% / 70% \u00b7 5 lives \u00b7 0 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "hudAfter": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 2.7% / 70% \u00b7 5 lives \u00b7 600 points",
+        "racer-stats-1": "2: 2.7% / 70% \u00b7 5 lives \u00b7 600 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "encounterObservationVersion": 1,
+      "newResourceEntries": 0,
+      "rawLog": "duel-warning-active-observation-2026-10-16.json",
+      "rawEventIndex": 14,
+      "activitySnapshots": 60,
+      "activityStateCounts": {
+        "racer-state-0": {
+          "running": 60
+        },
+        "racer-state-1": {
+          "running": 60
+        }
+      },
+      "encounterPhasesByPlayer": {
+        "1": [
+          "active",
+          "rest",
+          "warning"
+        ],
+        "2": [
+          "active",
+          "rest",
+          "warning"
+        ]
+      },
+      "heapSampleCount": 7,
+      "heapMaximum": 122797202
+    }
+  },
+  "files": {
+    "team-gentle-active-observation-2026-10-16.json": {
+      "bytes": 102001,
+      "sha256": "e041628f7a494b41c01900fff1b31549e167fbfb4bd33890a808dc264b08671c"
+    },
+    "team-gentle-active-observation-2026-10-16.jpg": {
+      "bytes": 112608,
+      "sha256": "fcf0a32e3262638d88daa890feda22b574749d6a85d99efa568b4ff3a179905d"
+    },
+    "team-gentle-input-attempts-2026-10-16.json": {
+      "bytes": 933,
+      "sha256": "043597016aa1a047832f2a968799d84cc30dd9a3afe05a8409282772bb18cd2f"
+    },
+    "duel-warning-active-observation-2026-10-16.json": {
+      "bytes": 208739,
+      "sha256": "198d489cfc9116b7297d4cc9869fb6d42fdf4a4de6404a126eb6e3f85e445548"
+    },
+    "duel-warning-active-observation-2026-10-16.jpg": {
+      "bytes": 194208,
+      "sha256": "a0cc5f7a44fc7bccb425c7ae0eb682e8214c4fcaa06456c16a96b42b94f64872"
+    },
+    "duel-warning-input-attempts-2026-10-16.json": {
+      "bytes": 367,
+      "sha256": "e049cd17935012041e4f26053762a479715f77662521284c164ef79c6037d868"
+    },
+    "team-pressure-pinned-load-discard-2026-10-16.json": {
+      "bytes": 5215,
+      "sha256": "356be00f7eeed815d36ffa6bdd465b502d24703e47681bdbce8dc2cd2899a79c"
+    }
+  },
+  "pinnedLoadFailure": {
+    "binding": "phase-pressure-pinned-load-binding-2026-10-16.json",
+    "requestReceipt": "phase-pressure-pinned-load-requests-2026-10-16.jsonl.gz",
+    "receiptSemantics": "Response-prepared pins identify offered bytes, not confirmed browser consumption.",
+    "uncompressedBytes": 787427,
+    "uncompressedSha256": "8e1131688297d7466016efa17471cce5ccc6707aa079bf2769af7543be835a9a",
+    "events": 1387,
+    "result": "Cold load exceeded the unchanged 30-second readiness guard; no frame sample or pressured-load claim."
+  },
+  "scope": [
+    "Both modes used Gentle, sound off and trusted keyboard inputs. Team auto-next/auto-retry were disabled before starting.",
+    "Cuts alternate with safe-ground/idle intervals. Snapshot counts do not measure time spent cutting.",
+    "The first Team action-list entry attempted Resume before true iframe focus and was outside the sample; its timeout remains in raw events.",
+    "Screenshots follow the windows and explicit pause. Team banked more ground before its screenshot; screenshot HUD values are not measurement endpoints.",
+    "Owned heavy checks finished before sampling; unrelated workstation processes and observer overhead remain.",
+    "No sustained-pressure qualification, matched-baseline improvement, retained/GPU-memory budget, acoustic listening, publication or all-device claim."
+  ]
+}

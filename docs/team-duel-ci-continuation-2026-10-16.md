@@ -1,5 +1,9 @@
 # Team and Duel CI continuation — 16 October 2026
 
+The [reviewed continuation plan](team-duel-plan-continuation-2026-10-16.md) records
+the latest main integration, original-byte/worker corrections and additional
+gameplay-host/observer work. The older results below retain their actual sources.
+
 This continues the [acceptance register](team-duel-qualification-2026-10-15.md)
 and [PR #1496](https://github.com/mekhovov/revealline/pull/1496). The branch
 rebased without conflicts onto fetched main `b11745223`; the replayed checkpoint
@@ -171,3 +175,45 @@ Workshop/offline publication checks. The log is
 `.cache/multiplayer-desktop/post-rebase-3e43-scoped.log`. Scoped lint, formatting
 and whitespace checks also pass. These checks do not run the full real-source
 external build; final pushed-source hosted verification remains required.
+
+## Production originals and optional worker ownership
+
+After rebasing onto main `2169552a0`, the local complete external integration run
+passed the original-body, core-budget, selected-source and Workshop ownership
+checks. It then failed an obsolete whole-text worker URL exclusion after
+1,271.7 seconds. The [retained failure](verification/team-duel-public/continuation-external-build-failure-2026-10-16.tap.gz)
+preserves three passing top-level cases and that one failure. The executed test
+body is the `scripts/test-external-distribution.mjs` blob at `b7f54e275`; this was a
+working-tree preparation, without a frozen artifact or final-source build claim.
+
+The earlier hosted authoring-exclusion failure conflicted with main's existing
+explicit Production admissions. The test now derives the exact selected source
+pins from the build configuration and checks all matching manifest members,
+loose originals and ZIP bytes. Missing/duplicate/corrupt members and unselected
+neighboring authoring inputs fail. No original is dropped to satisfy the test.
+
+The second failure came from the worker deliberately embedding the complete
+optional `downloadFiles` inventory. URL presence alone does not establish core
+installation. The corrected assertion requires exact worker/offline agreement,
+source-pinned gameplay members, exclusive `chapter:<id>` ownership and correct
+mission download resolution, while keeping those members out of core and legacy
+optional packs. A small real generated chapter reproduced the old failure before
+correction. Negative cases cover core/legacy/shared leaks, missing/duplicate/
+corrupt pins, wrong mission selection and divergent worker metadata.
+
+Four bounded external cases pass; their run excludes the unchanged expensive
+full-build case. [Retained bounded result](verification/team-duel-public/continuation-external-worker-green-2026-10-16.tap.gz).
+The independently executed remaining capacity tail uses all 32 canonical bodies
+(130,442,755 bytes): twelve gameplay packs install, the thirteenth is refused,
+and the existing owners remain unchanged. The source mission counts for all
+sixteen chapters also match. Five selected worker/finalization cases pass;
+fifty-five unrelated cases are excluded from that diagnostic run. These filtered
+runs do not establish a complete file/suite pass. The corrected full build stays
+mandatory in focused CI, with every original and budget retained.
+
+The actual Studio gameplay-host cohort passes all six cases without skips or
+cleanup errors; its [retained result](verification/team-duel-public/continuation-audio-host-green-2026-10-16.tap.gz)
+complements the native receipts. Default Team picture/bootstrap hosts pass 24/24,
+observer/routing 89/89 and the industrial verifier 7/7, each as a complete scoped
+cohort. Counts overlap and are not a whole-repository result. Targeted lint,
+formatting and whitespace checks pass. Final-head hosted results remain required.
