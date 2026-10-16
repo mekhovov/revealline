@@ -26,6 +26,8 @@ import {
   assertMigrationWorldRetention,
   openHistoricalMigrationSurface,
   seedHistoricalMigrationWorld,
+  waitForMigrationLauncher,
+  readMigrationLauncherState,
 } from './optional-installation-migration.mjs';
 import {
   selectHistoricalInstallationMode,
@@ -321,6 +323,7 @@ const migration = {
   passed: false,
   transitions: [],
   checks: [],
+  launcherChecks: [],
   authority: migrationAuthority,
 };
 let served, context, cdp, report;
@@ -808,6 +811,7 @@ try {
           launchers = new Map();
         async function openMigrationLauncher(id, selected) {
           requireObservationTime();
+          currentStep = `open admitted stable launcher ${id} for ${selected}`;
           const files = selected === priorVersion ? migrationOldEntries.get(id) : entries.get(id);
           const workerBytes = files.get('launcher/worker.js');
           const revision = workerBytes.toString('utf8').match(/,\s*"([a-f0-9]{64})"\);\s*$/)?.[1];
@@ -819,6 +823,21 @@ try {
             baseURL: workerScope,
             cacheName,
           });
+          const previousLauncher = launchers.get(id);
+          const retainedInventories = [
+            ...(previousLauncher && previousLauncher.cacheName !== cacheName
+              ? [previousLauncher.inventory]
+              : []),
+            inventory,
+          ];
+          const expected = {
+            scope: workerScope,
+            revision,
+            legacyStatus: selected === priorVersion,
+            cacheNames: retainedInventories.map((row) => row.name),
+          };
+          const launcherCheck = { id, selected, expected, passed: false };
+          migration.launcherChecks.push(launcherCheck);
           await page.goto(workerScope);
           await unlockObservedPage(page, password);
           await page.locator('#prepare').waitFor({ state: 'visible' });
@@ -837,26 +856,39 @@ try {
           await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor({ state: 'visible' });
           // Leave the old launcher client through its public Play action before
           // awaiting ordinary replacement activation. Never force skipWaiting.
-          await page.waitForFunction(
-            async ({ scope, cacheName }) => {
-              const caches = (await globalThis.caches.keys()).filter((name) =>
-                name.includes(`:${new URL(scope).pathname}:`),
-              );
-              const worker = (await globalThis.navigator.serviceWorker.getRegistrations()).find(
-                (row) => row.scope === scope,
-              );
-              return (
-                worker?.active?.state === 'activated' &&
-                caches.length === 1 &&
-                caches[0] === cacheName
-              );
-            },
-            { scope: workerScope, cacheName },
+          currentStep = `verify admitted stable launcher ${id} for ${selected}`;
+          await boundedOperation('Wait for admitted stable launcher owner', () =>
+            waitForMigrationLauncher(page, expected, launcherCheck, {
+              requireActive: requireObservationTime,
+            }),
           );
-          await boundedOperation('Read admitted stable launcher hashes', () =>
-            readPreparedCacheFingerprints(page, [inventory]),
-          );
-          launchers.set(id, { workerScope, cacheName, inventory });
+          currentStep = `hash admitted stable launcher caches ${id} for ${selected}`;
+          try {
+            launcherCheck.fingerprints = await boundedOperation(
+              'Read admitted stable launcher hashes',
+              () => readPreparedCacheFingerprints(page, retainedInventories),
+            );
+          } catch (error) {
+            launcherCheck.hashFailure = String(error.message).slice(0, 1000);
+            try {
+              launcherCheck.afterHashFailure = await boundedOperation(
+                'Read launcher state after hash failure',
+                () => page.evaluate(readMigrationLauncherState, { scope: workerScope }),
+                2000,
+              );
+            } catch {
+              launcherCheck.afterHashFailureUnavailable = true;
+            }
+            throw error;
+          }
+          launcherCheck.passed = true;
+          launchers.set(id, {
+            workerScope,
+            cacheName,
+            inventory,
+            retainedInventories,
+            cacheNames: retainedInventories.map((row) => row.name),
+          });
         }
         for (const id of MIGRATION_IDS) {
           for (const selected of [priorVersion, version]) {
@@ -934,7 +966,7 @@ try {
                     .filter(Boolean)
                     .map((ref) => inventories.get(`${id}:${ref.version}`)),
                 ),
-                ...[...launchers.values()].map((row) => row.inventory),
+                ...[...launchers.values()].flatMap((row) => row.retainedInventories),
               ]),
           );
           migration.checks.push({
